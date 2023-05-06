@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.template.DDMTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -33,11 +32,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.template.TemplateResourceParser;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tina Tian
  * @author Juan Fernández
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"lang.type=" + TemplateConstants.LANG_TYPE_FTL,
 		"lang.type=" + TemplateConstants.LANG_TYPE_VM

@@ -88,13 +88,6 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 		_configurationProviders.clear();
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		_configurationAdmin = configurationAdmin;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -144,7 +137,9 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPConfigurationListener.class);
 
+	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
 	private final Map<String, ConfigurationProvider<?>>
 		_configurationProviders = new HashMap<>();
 

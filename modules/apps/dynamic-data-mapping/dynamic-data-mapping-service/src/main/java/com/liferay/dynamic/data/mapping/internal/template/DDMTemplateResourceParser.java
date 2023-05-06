@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.internal.template;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.template.DDMTemplateResource;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -81,26 +81,26 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 						ddmTemplateKey, "}"));
 			}
 
-			DDMTemplate ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 				groupId, classNameId, ddmTemplateKey);
 
 			if (ddmTemplate == null) {
 				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 					companyId);
 
-				ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(
+				ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 					companyGroup.getGroupId(), classNameId, ddmTemplateKey);
 
 				if (ddmTemplate == null) {
 					classNameId = PortalUtil.getClassNameId(
 						DDMStructureManagerUtil.getDDMStructureModelClass());
 
-					ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(
+					ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 						groupId, classNameId, ddmTemplateKey);
 				}
 
 				if (ddmTemplate == null) {
-					ddmTemplate = DDMTemplateManagerUtil.fetchTemplate(
+					ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 						companyGroup.getGroupId(), classNameId, ddmTemplateKey);
 				}
 			}

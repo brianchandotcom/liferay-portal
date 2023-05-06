@@ -749,11 +749,7 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
-		Navigator.gotoNavTab(navTab = "Design");
-
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		PagesAdmin.uploadLogo(logoFile = ${logoFile});
+		PagesAdmin.uploadIcon(logoFile = ${logoFile});
 	}
 
 	macro changeSiteCurrentTheme {
@@ -881,20 +877,19 @@ definition {
 				menuItem = "Configure",
 				pageName = ${pageName});
 
-			Navigator.gotoNavTab(navTab = "Design");
-
-			Navigator.gotoNavTab(navTab = "Advanced");
+			Click(
+				key_title = "Clear Icon",
+				locator1 = "Button#ANY_TITLE");
 		}
 		else {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
 			Panel.expandPanel(panel = "Logo");
-		}
 
-		AssertClick(
-			key_text = "Delete",
-			locator1 = "Button#ANY",
-			value1 = "Delete");
+			Click(
+				key_title = "Clear Logo",
+				locator1 = "Button#ANY_TITLE");
+		}
 
 		PortletEntry.save();
 	}
@@ -1430,6 +1425,34 @@ definition {
 				key_itemName = ${privacy},
 				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 		}
+	}
+
+	macro uploadIcon {
+		Click(
+			ariaLabel = "Change Icon",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_text = "Select",
+			locator1 = "Button#ANY");
+
+		WaitForEditable(locator1 = "TextInput#FILE");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = ${logoFile});
+
+		WaitForElementPresent(
+			key_text = "Done",
+			locator1 = "Button#ANY_ENABLED");
+
+		Button.clickDone();
+
+		SelectFrameTop();
+
+		PortletEntry.save();
 	}
 
 	macro uploadLogo {

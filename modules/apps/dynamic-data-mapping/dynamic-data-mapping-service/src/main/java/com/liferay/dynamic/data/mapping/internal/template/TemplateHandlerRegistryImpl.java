@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.internal.template;
 
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.internal.util.ResourceBundleLoaderProvider;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
@@ -260,7 +260,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				String type = templateElement.elementText("type");
 
 				if (type == null) {
-					type = DDMTemplateManager.TEMPLATE_TYPE_DISPLAY;
+					type = DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY;
 				}
 
 				String language = templateElement.elementText("language");

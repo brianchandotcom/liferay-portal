@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.portlet.display.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -150,7 +150,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandlerTest {
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-				null, DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null,
+				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 				TemplateConstants.LANG_TYPE_FTL, script, false, false, null,
 				null, serviceContext);
 

@@ -223,8 +223,10 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 			let ordered = storedFDSSorts;
 			let notOrdered: FDSSort[] = [];
 
-			if (fdsView.fdsSortsOrder) {
-				const fdsSortsOrderArray = fdsView.fdsSortsOrder.split(',');
+			if (responseJSON.fdsSortsOrder) {
+				const fdsSortsOrderArray = responseJSON.fdsSortsOrder.split(
+					','
+				) as string[];
 
 				ordered = fdsSortsOrderArray
 					.map((fdsSortId) =>

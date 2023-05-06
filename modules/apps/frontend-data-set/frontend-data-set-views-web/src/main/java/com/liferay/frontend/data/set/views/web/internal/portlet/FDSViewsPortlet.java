@@ -193,8 +193,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "sorts-order"),
-						"fdsSortsOrder", false)));
+						_language.get(locale, "sorts-order"), "fdsSortsOrder",
+						false)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId());
@@ -322,9 +322,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 		ObjectDefinition fdsSortObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				userId, false, false,
-				LocalizedMapUtil.getLocalizedMap("FDS Sort"),
-				"FDSSort", "300", null,
-				LocalizedMapUtil.getLocalizedMap("FDS Sorts"),
+				LocalizedMapUtil.getLocalizedMap("FDS Sort"), "FDSSort", "300",
+				null, LocalizedMapUtil.getLocalizedMap("FDS Sorts"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
@@ -335,7 +334,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "sorting"), "sortingDirection", true)));
+						_language.get(locale, "sorting"), "sortingDirection",
+						true)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsSortObjectDefinition.getObjectDefinitionId());
@@ -344,8 +344,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
 			fdsSortObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(
-				"FDSView FDSSort Relationship"),
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSSort Relationship"),
 			"fdsViewFDSSortRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}

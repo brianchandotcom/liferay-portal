@@ -41,7 +41,6 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalHelper;
-import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -125,16 +124,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getDDMStructureInfoFieldValues(
 		JournalArticle article) {
 
-		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
-			new JournalArticleDDMFormValuesReader(article);
-
-		try {
-			return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
-				article, journalArticleDDMFormValuesReader.getDDMFormValues());
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
+			article, article.getDDMFormValues());
 	}
 
 	private List<InfoFieldValue<Object>> _getDDMTemplateInfoFieldValues(

@@ -27,7 +27,7 @@ import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.document.library.web.internal.info.item.FileEntryInfoItemFields;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;
@@ -146,7 +146,7 @@ public class FileEntryInfoItemFieldValuesProvider
 						_ddmFormValuesInfoFieldValuesProvider.
 							getInfoFieldValues(
 								fileEntry,
-								StorageEngineManagerUtil.getDDMFormValues(
+								_storageEngineManager.getDDMFormValues(
 									dlFileEntryMetadata.getDDMStorageId())));
 				}
 
@@ -371,6 +371,9 @@ public class FileEntryInfoItemFieldValuesProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

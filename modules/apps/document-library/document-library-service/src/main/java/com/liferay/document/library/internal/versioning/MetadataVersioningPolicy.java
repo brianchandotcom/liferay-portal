@@ -22,7 +22,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.versioning.VersioningPolicy;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -93,10 +93,10 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 						nextDLFileVersion.getFileVersionId());
 
 				DDMFormValues previousDDMFormValues =
-					StorageEngineManagerUtil.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						previousFileEntryMetadata.getDDMStorageId());
 				DDMFormValues nextDDMFormValues =
-					StorageEngineManagerUtil.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						nextFileEntryMetadata.getDDMStorageId());
 
 				if (!previousDDMFormValues.equals(nextDDMFormValues)) {
@@ -139,5 +139,8 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.layout.seo.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -153,7 +153,7 @@ public class LayoutSEOEntryLocalServiceTest {
 				true, Collections.singletonMap(LocaleUtil.US, "title"),
 				serviceContext);
 
-		DDMFormValues ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
+		DDMFormValues ddmFormValues = _storageEngineManager.getDDMFormValues(
 			layoutSEOEntry.getDDMStorageId());
 
 		Assert.assertNotNull(ddmFormValues);
@@ -384,5 +384,8 @@ public class LayoutSEOEntryLocalServiceTest {
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Inject
+	private StorageEngineManager _storageEngineManager;
 
 }

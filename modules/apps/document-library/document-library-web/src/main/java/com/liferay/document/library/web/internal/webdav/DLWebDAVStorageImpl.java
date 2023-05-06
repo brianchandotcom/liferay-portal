@@ -43,7 +43,7 @@ import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
@@ -1216,7 +1216,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + StringPool.POUND +
 					ddmStructure.getStructureId(),
-				StorageEngineManagerUtil.getDDMFormValues(
+				_storageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId()));
 		}
 	}
@@ -1282,5 +1282,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Reference
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -143,7 +143,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				(layoutSEOEntry.getDDMStorageId() != 0)) {
 
 				DDMFormValues ddmFormValues =
-					StorageEngineManagerUtil.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						layoutSEOEntry.getDDMStorageId());
 
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
@@ -499,6 +499,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private StorageEngine _storageEngine;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
 
 	private volatile TitleProvider _titleProvider;
 

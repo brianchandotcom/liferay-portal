@@ -35,7 +35,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -248,7 +248,7 @@ public class DocumentDTOConverter
 
 			ddmFormValues.add(
 				_ddmBeanTranslator.translate(
-					StorageEngineManagerUtil.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId())));
 		}
 
@@ -429,6 +429,9 @@ public class DocumentDTOConverter
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -746,7 +745,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 						fileVersion.getFileVersionId());
 
 				DDMFormValues finalDDMFormValues =
-					StorageEngineManagerUtil.getDDMFormValues(
+					_storageEngineManager.getDDMFormValues(
 						fileEntryMetadata.getDDMStorageId());
 
 				Assert.assertTrue(
@@ -995,5 +994,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	private final Map<String, String> _lockMap = new HashMap<>();
+
+	@Inject
+	private StorageEngineManager _storageEngineManager;
 
 }

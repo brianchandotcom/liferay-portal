@@ -44,7 +44,7 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -625,7 +626,7 @@ public class DLFileEntryLocalServiceTest {
 					copyDLFileVersion.getFileVersionId());
 
 			com.liferay.dynamic.data.mapping.kernel.DDMFormValues
-				copyDDMFormValues = StorageEngineManagerUtil.getDDMFormValues(
+				copyDDMFormValues = _storageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 
 			List<com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue>
@@ -1398,5 +1399,8 @@ public class DLFileEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private StorageEngineManager _storageEngineManager;
 
 }

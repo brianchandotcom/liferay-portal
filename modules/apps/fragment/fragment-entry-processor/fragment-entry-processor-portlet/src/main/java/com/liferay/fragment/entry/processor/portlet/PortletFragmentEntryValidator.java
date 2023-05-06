@@ -23,11 +23,10 @@ import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -47,26 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException {
 
-		_validateFragmentEntryHTMLDocument(_getDocument(html));
-	}
-
-	private Document _getDocument(String html) {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		return document;
-	}
-
-	private void _validateFragmentEntryHTMLDocument(Document document)
-		throws PortalException {
+		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {
 			String htmlTagName = element.tagName();
@@ -81,8 +65,8 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(
 					_language.format(
-						_resourceBundle,
-						"there-is-no-widget-available-for-alias-x", alias));
+						locale, "there-is-no-widget-available-for-alias-x",
+						alias));
 			}
 
 			String id = element.id();
@@ -90,7 +74,7 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 			if (Validator.isNotNull(id) && !Validator.isAlphanumericName(id)) {
 				throw new FragmentEntryContentException(
 					_language.format(
-						_resourceBundle,
+						locale,
 						"widget-id-must-contain-only-alphanumeric-characters",
 						alias));
 			}
@@ -100,8 +84,7 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 
 				if (elements.size() > 1) {
 					throw new FragmentEntryContentException(
-						_language.get(
-							_resourceBundle, "widget-id-must-be-unique"));
+						_language.get(locale, "widget-id-must-be-unique"));
 				}
 
 				if (id.length() > GetterUtil.getInteger(
@@ -109,8 +92,7 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 
 					throw new FragmentEntryContentException(
 						_language.format(
-							_resourceBundle,
-							"widget-id-cannot-exceed-x-characters",
+							locale, "widget-id-cannot-exceed-x-characters",
 							ModelHintsConstants.TEXT_MAX_LENGTH));
 				}
 			}
@@ -120,7 +102,7 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 			if ((elements.size() > 1) && Validator.isNull(id)) {
 				throw new FragmentEntryContentException(
 					_language.get(
-						_resourceBundle,
+						locale,
 						"duplicate-widgets-within-the-same-fragment-must-" +
 							"have-an-id"));
 			}
@@ -132,12 +114,24 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 				if (!portlet.isInstanceable()) {
 					throw new FragmentEntryContentException(
 						_language.format(
-							_resourceBundle,
+							locale,
 							"you-cannot-add-the-widget-x-more-than-once",
 							alias));
 				}
 			}
 		}
+	}
+
+	private Document _getDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
 	}
 
 	@Reference
@@ -148,8 +142,5 @@ public class PortletFragmentEntryValidator implements FragmentEntryValidator {
 
 	@Reference
 	private PortletRegistry _portletRegistry;
-
-	private final ResourceBundle _resourceBundle = ResourceBundleUtil.getBundle(
-		"content.Language", getClass());
 
 }

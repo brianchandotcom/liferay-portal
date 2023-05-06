@@ -23,13 +23,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -53,19 +52,20 @@ import org.osgi.service.component.annotations.Reference;
 public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException {
 
 		Document document = _getDocument(html);
 
-		_validateAttributes(document);
+		_validateAttributes(document, locale);
 
 		Elements elements = document.select(
 			"lfr-editable,*[data-lfr-editable-id]");
 
-		_validateDuplicatedIds(elements);
+		_validateDuplicatedIds(elements, locale);
 
-		_validateEditableElements(elements);
+		_validateEditableElements(elements, locale);
 	}
 
 	@Activate
@@ -114,47 +114,45 @@ public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 		return false;
 	}
 
-	private void _validateAttribute(Element element, String attributeName)
+	private void _validateAttribute(
+			Element element, String attributeName, Locale locale)
 		throws FragmentEntryContentException {
 
 		if (Validator.isNotNull(element.attr(attributeName))) {
 			return;
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		throw new FragmentEntryContentException(
 			_language.format(
-				resourceBundle,
+				locale,
 				"you-must-define-all-required-attributes-x-for-each-editable-" +
 					"element",
 				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
 	}
 
-	private void _validateAttributes(Document document)
+	private void _validateAttributes(Document document, Locale locale)
 		throws FragmentEntryContentException {
 
 		for (Element element : document.getElementsByTag("lfr-editable")) {
 			for (String attributeName : _REQUIRED_ATTRIBUTE_NAMES) {
-				_validateAttribute(element, attributeName);
+				_validateAttribute(element, attributeName, locale);
 			}
 
-			_validateType(element);
+			_validateType(element, locale);
 		}
 
 		for (Element element :
 				document.select(
 					"*[data-lfr-editable-id],*[data-lfr-editable-type]")) {
 
-			_validateAttribute(element, "data-lfr-editable-id");
-			_validateAttribute(element, "data-lfr-editable-type");
+			_validateAttribute(element, "data-lfr-editable-id", locale);
+			_validateAttribute(element, "data-lfr-editable-type", locale);
 
-			_validateType(element);
+			_validateType(element, locale);
 		}
 	}
 
-	private void _validateDuplicatedIds(Elements elements)
+	private void _validateDuplicatedIds(Elements elements, Locale locale)
 		throws FragmentEntryContentException {
 
 		Set<String> ids = new HashSet<>();
@@ -166,17 +164,14 @@ public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 				continue;
 			}
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
 			throw new FragmentEntryContentException(
 				_language.get(
-					resourceBundle,
+					locale,
 					"you-must-define-a-unique-id-for-each-editable-element"));
 		}
 	}
 
-	private void _validateEditableElements(Elements elements)
+	private void _validateEditableElements(Elements elements, Locale locale)
 		throws FragmentEntryContentException {
 
 		for (Element element : elements) {
@@ -187,13 +182,13 @@ public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 				continue;
 			}
 
-			_validateNestedEditableElements(element);
+			_validateNestedEditableElements(element, locale);
 
 			editableElementParser.validate(element);
 		}
 	}
 
-	private void _validateNestedEditableElements(Element element)
+	private void _validateNestedEditableElements(Element element, Locale locale)
 		throws FragmentEntryContentException {
 
 		Elements attributeElements = element.getElementsByAttribute(
@@ -206,18 +201,15 @@ public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 		if ((attributeElements.size() > 0) || (dropZoneElements.size() > 0) ||
 			_hasNestedWidget(element) || (tagElements.size() > 0)) {
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
 			throw new FragmentEntryContentException(
 				_language.get(
-					resourceBundle,
+					locale,
 					"editable-fields-cannot-include-nested-editables-drop-" +
 						"zones-or-widgets-in-it"));
 		}
 	}
 
-	private void _validateType(Element element)
+	private void _validateType(Element element, Locale locale)
 		throws FragmentEntryContentException {
 
 		EditableElementParser editableElementParser = _getEditableElementParser(
@@ -227,12 +219,9 @@ public class EditableFragmentEntryValidator implements FragmentEntryValidator {
 			return;
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		throw new FragmentEntryContentException(
 			_language.get(
-				resourceBundle,
+				locale,
 				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
 

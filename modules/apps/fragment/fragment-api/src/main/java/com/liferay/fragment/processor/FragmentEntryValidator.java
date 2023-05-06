@@ -16,12 +16,15 @@ package com.liferay.fragment.processor;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Locale;
+
 /**
  * @author Eudaldo Alonso
  */
 public interface FragmentEntryValidator {
 
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException;
 
 }

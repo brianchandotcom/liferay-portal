@@ -36,11 +36,10 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +58,8 @@ public class FreeMarkerFragmentEntryValidator
 	implements FragmentEntryValidator {
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException {
 
 		FreeMarkerFragmentEntryProcessorConfiguration
@@ -132,16 +132,14 @@ public class FreeMarkerFragmentEntryValidator
 		}
 		catch (TemplateException templateException) {
 			throw new FragmentEntryContentException(
-				_getMessage(templateException), templateException);
+				_getMessage(templateException, locale), templateException);
 		}
 	}
 
-	private String _getMessage(TemplateException templateException) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
+	private String _getMessage(
+		TemplateException templateException, Locale locale) {
 
-		String message = _language.get(
-			resourceBundle, "freemarker-syntax-is-invalid");
+		String message = _language.get(locale, "freemarker-syntax-is-invalid");
 
 		Throwable causeThrowable = templateException.getCause();
 

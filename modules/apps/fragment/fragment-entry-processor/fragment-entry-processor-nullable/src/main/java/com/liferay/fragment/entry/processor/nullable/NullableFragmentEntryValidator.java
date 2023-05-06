@@ -18,10 +18,9 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ResourceBundle;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,15 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 public class NullableFragmentEntryValidator implements FragmentEntryValidator {
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException {
 
 		if (Validator.isNull(html)) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
 			String message = _language.get(
-				resourceBundle, "html-content-must-not-be-empty");
+				locale, "html-content-must-not-be-empty");
 
 			throw new FragmentEntryContentException(message);
 		}

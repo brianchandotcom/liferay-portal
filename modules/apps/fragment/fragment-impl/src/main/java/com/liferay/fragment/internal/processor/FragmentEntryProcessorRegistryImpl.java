@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -174,7 +175,7 @@ public class FragmentEntryProcessorRegistryImpl
 				_fragmentEntryValidators) {
 
 			fragmentEntryValidator.validateFragmentEntryHTML(
-				html, configuration);
+				html, configuration, LocaleUtil.getDefault());
 		}
 
 		validHTMLs.add(html);

@@ -18,11 +18,10 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -43,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 public class DropZoneFragmentEntryValidator implements FragmentEntryValidator {
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException {
 
 		Document document = _getDocument(html);
@@ -69,8 +69,7 @@ public class DropZoneFragmentEntryValidator implements FragmentEntryValidator {
 
 			throw new FragmentEntryContentException(
 				_language.get(
-					_portal.getResourceBundle(LocaleUtil.getDefault()),
-					"you-must-define-a-unique-id-for-each-drop-zone"));
+					locale, "you-must-define-a-unique-id-for-each-drop-zone"));
 		}
 	}
 
@@ -88,8 +87,5 @@ public class DropZoneFragmentEntryValidator implements FragmentEntryValidator {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

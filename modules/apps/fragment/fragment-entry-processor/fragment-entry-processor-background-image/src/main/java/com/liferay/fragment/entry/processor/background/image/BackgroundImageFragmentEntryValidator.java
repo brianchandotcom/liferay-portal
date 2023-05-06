@@ -18,10 +18,9 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.HashSet;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -43,7 +42,8 @@ public class BackgroundImageFragmentEntryValidator
 	implements FragmentEntryValidator {
 
 	@Override
-	public void validateFragmentEntryHTML(String html, String configuration)
+	public void validateFragmentEntryHTML(
+			String html, String configuration, Locale locale)
 		throws PortalException {
 
 		Document document = _getDocument(html);
@@ -57,12 +57,9 @@ public class BackgroundImageFragmentEntryValidator
 				continue;
 			}
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
 			throw new FragmentEntryContentException(
 				_language.get(
-					resourceBundle,
+					locale,
 					"you-must-define-a-unique-id-for-each-background-image-" +
 						"element"));
 		}

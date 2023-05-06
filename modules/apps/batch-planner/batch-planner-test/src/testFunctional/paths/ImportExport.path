@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPDATE_STRATEGY</td>
+	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Update Strategy')]]/select[not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONAL_IMPORT_FIELD</td>
 	<td>//select[contains(@aria-required,'false')][contains(@id,'${key_destinationField}')]</td>
 	<td></td>

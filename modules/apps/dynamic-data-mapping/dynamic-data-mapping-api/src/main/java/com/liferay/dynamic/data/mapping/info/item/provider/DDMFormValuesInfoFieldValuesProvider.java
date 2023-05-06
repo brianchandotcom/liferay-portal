@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.info.item.provider;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.localized.InfoLocalizedValue;
 

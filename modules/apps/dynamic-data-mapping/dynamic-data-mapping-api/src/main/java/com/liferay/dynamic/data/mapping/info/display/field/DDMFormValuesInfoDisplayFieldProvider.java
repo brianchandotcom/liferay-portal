@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.info.display.field;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupedModel;
 

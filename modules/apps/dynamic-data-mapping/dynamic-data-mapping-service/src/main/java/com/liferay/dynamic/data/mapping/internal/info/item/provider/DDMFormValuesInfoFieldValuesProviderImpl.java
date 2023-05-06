@@ -19,15 +19,14 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
-import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -130,8 +129,7 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 		return new InfoFieldValue<>(
 			_ddmFormFieldInfoFieldConverter.convert(
-				_ddmBeanTranslator.translate(
-					ddmFormFieldValue.getDDMFormField())),
+				ddmFormFieldValue.getDDMFormField()),
 			InfoLocalizedValue.builder(
 			).defaultLocale(
 				value.getDefaultLocale()
@@ -412,9 +410,6 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormValuesInfoFieldValuesProviderImpl.class);
-
-	@Reference
-	private DDMBeanTranslator _ddmBeanTranslator;
 
 	@Reference
 	private DDMFormFieldInfoFieldConverter _ddmFormFieldInfoFieldConverter;

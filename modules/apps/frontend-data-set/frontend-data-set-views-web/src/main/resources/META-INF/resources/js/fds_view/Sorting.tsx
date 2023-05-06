@@ -142,6 +142,7 @@ const AddFDSSortModalContent = ({
 
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('field')}
+						defaultValue=""
 						name="field"
 						onChange={(event) => {
 							setSelectedField(event.target.value);
@@ -150,7 +151,6 @@ const AddFDSSortModalContent = ({
 							{
 								disabled: true,
 								label: Liferay.Language.get('choose-an-option'),
-								selected: true,
 								value: '',
 							},
 							...fields.map((item) => ({

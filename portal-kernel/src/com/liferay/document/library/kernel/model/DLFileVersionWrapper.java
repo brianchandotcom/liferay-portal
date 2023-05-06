@@ -353,6 +353,11 @@ public class DLFileVersionWrapper
 		return model.getCtCollectionId();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 DLFileEntryTypeUtil#getDDMStructures(DLFileEntryType)}
+	 */
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			getDDMStructures()

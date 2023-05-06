@@ -43,8 +43,9 @@ import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1216,8 +1217,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + StringPool.POUND +
 					ddmStructure.getStructureId(),
-				_storageEngineManager.getDDMFormValues(
-					dlFileEntryMetadata.getDDMStorageId()));
+				_ddmBeanTranslator.translate(
+					_ddmStorageEngineManager.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId())));
 		}
 	}
 
@@ -1266,6 +1268,12 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private DDMBeanTranslator _ddmBeanTranslator;
+
+	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -1282,8 +1290,5 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Reference
 	private DLTrashService _dlTrashService;
-
-	@Reference
-	private StorageEngineManager _storageEngineManager;
 
 }

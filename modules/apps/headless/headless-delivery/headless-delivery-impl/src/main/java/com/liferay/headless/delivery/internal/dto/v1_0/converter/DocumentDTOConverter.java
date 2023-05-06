@@ -35,11 +35,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
@@ -247,9 +247,8 @@ public class DocumentDTOConverter
 			}
 
 			ddmFormValues.add(
-				_ddmBeanTranslator.translate(
-					_storageEngineManager.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId())));
+				_ddmStorageEngineManager.getDDMFormValues(
+					dlFileEntryMetadata.getDDMStorageId()));
 		}
 
 		return ddmFormValues;
@@ -391,6 +390,9 @@ public class DocumentDTOConverter
 	private DDMBeanTranslator _ddmBeanTranslator;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
@@ -429,9 +431,6 @@ public class DocumentDTOConverter
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	@Reference
-	private StorageEngineManager _storageEngineManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

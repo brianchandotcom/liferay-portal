@@ -21,9 +21,9 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.document.library.versioning.VersioningPolicy;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -93,10 +93,10 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 						nextDLFileVersion.getFileVersionId());
 
 				DDMFormValues previousDDMFormValues =
-					_storageEngineManager.getDDMFormValues(
+					_ddmStorageEngineManager.getDDMFormValues(
 						previousFileEntryMetadata.getDDMStorageId());
 				DDMFormValues nextDDMFormValues =
-					_storageEngineManager.getDDMFormValues(
+					_ddmStorageEngineManager.getDDMFormValues(
 						nextFileEntryMetadata.getDDMStorageId());
 
 				if (!previousDDMFormValues.equals(nextDDMFormValues)) {
@@ -138,9 +138,9 @@ public class MetadataVersioningPolicy implements VersioningPolicy {
 		MetadataVersioningPolicy.class);
 
 	@Reference
-	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+	private DDMStorageEngineManager _ddmStorageEngineManager;
 
 	@Reference
-	private StorageEngineManager _storageEngineManager;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 
 }

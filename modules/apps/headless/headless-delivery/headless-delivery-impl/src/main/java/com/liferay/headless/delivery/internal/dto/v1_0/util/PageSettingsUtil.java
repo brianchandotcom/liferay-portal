@@ -16,10 +16,10 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
-import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.PageSettings;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -42,10 +42,10 @@ import java.util.Map;
 public class PageSettingsUtil {
 
 	public static PageSettings getPageSettings(
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DLAppService dlAppService, DLURLHelper dlURLHelper,
 		DTOConverterContext dtoConverterContext,
-		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout,
-		StorageEngineManager storageEngineManager) {
+		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
 		return new PageSettings() {
 			{
@@ -59,7 +59,8 @@ public class PageSettingsUtil {
 				setCustomMetaTags(
 					() -> _getCustomMetaTags(
 						dtoConverterContext, layout, layoutSEOEntryLocalService,
-						dtoConverterContext.getLocale(), storageEngineManager));
+						dtoConverterContext.getLocale(),
+						ddmStorageEngineManager));
 			}
 		};
 	}
@@ -67,7 +68,7 @@ public class PageSettingsUtil {
 	private static CustomMetaTag[] _getCustomMetaTags(
 			DTOConverterContext dtoConverterContext, Layout layout,
 			LayoutSEOEntryLocalService layoutSEOEntryLocalService,
-			Locale locale, StorageEngineManager storageEngineManager)
+			Locale locale, DDMStorageEngineManager ddmStorageEngineManager)
 		throws PortalException {
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -83,7 +84,7 @@ public class PageSettingsUtil {
 
 		List<CustomMetaTag> customMetaTags = new ArrayList<>();
 
-		DDMFormValues ddmFormValues = storageEngineManager.getDDMFormValues(
+		DDMFormValues ddmFormValues = ddmStorageEngineManager.getDDMFormValues(
 			layoutSEOEntry.getDDMStorageId());
 
 		List<DDMFormFieldValue> ddmFormFieldValues =

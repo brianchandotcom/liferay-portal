@@ -31,8 +31,9 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -744,12 +745,14 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 						structure.getStructureId(),
 						fileVersion.getFileVersionId());
 
-				DDMFormValues finalDDMFormValues =
-					_storageEngineManager.getDDMFormValues(
-						fileEntryMetadata.getDDMStorageId());
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues
+					finalDDMFormValues =
+						_ddmStorageEngineManager.getDDMFormValues(
+							fileEntryMetadata.getDDMStorageId());
 
 				Assert.assertTrue(
-					expectedDDDMFormValues.equals(finalDDMFormValues));
+					expectedDDDMFormValues.equals(
+						DDMBeanTranslatorUtil.translate(finalDDMFormValues)));
 			}
 		}
 		finally {
@@ -870,7 +873,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(), null,
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()),
 			null, nameMap, null, ddmForm,
-			StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			DDMStorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 	}
 
@@ -985,6 +988,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private static byte[] _testMetaBytes;
 
 	@Inject
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
@@ -994,8 +1000,5 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	private final Map<String, String> _lockMap = new HashMap<>();
-
-	@Inject
-	private StorageEngineManager _storageEngineManager;
 
 }

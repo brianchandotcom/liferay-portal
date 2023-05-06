@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.headless.delivery.dto.v1_0.Experience;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PagePermission;
@@ -125,8 +125,8 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 						Layout.class.getName(), layout.getPlid()),
 					AssetTag.NAME_ACCESSOR);
 				pageSettings = PageSettingsUtil.getPageSettings(
-					_dlAppService, _dlURLHelper, dtoConverterContext,
-					_layoutSEOEntryLocalService, layout, _storageEngineManager);
+					_ddmStorageEngineManager, _dlAppService, _dlURLHelper,
+					dtoConverterContext, _layoutSEOEntryLocalService, layout);
 				renderedPage = RenderedPageUtil.getRenderedPage(
 					dtoConverterContext, layout,
 					_layoutPageTemplateEntryLocalService, _portal);
@@ -340,6 +340,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -388,9 +391,6 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private StorageEngineManager _storageEngineManager;
 
 	@Reference
 	private TeamLocalService _teamLocalService;

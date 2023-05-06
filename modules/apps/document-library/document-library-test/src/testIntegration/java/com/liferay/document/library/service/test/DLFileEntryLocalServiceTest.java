@@ -44,7 +44,6 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -53,6 +52,7 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
@@ -625,18 +625,16 @@ public class DLFileEntryLocalServiceTest {
 					copyDDMStructure.getStructureId(),
 					copyDLFileVersion.getFileVersionId());
 
-			com.liferay.dynamic.data.mapping.kernel.DDMFormValues
-				copyDDMFormValues = _storageEngineManager.getDDMFormValues(
+			DDMFormValues copyDDMFormValues =
+				_ddmStorageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 
-			List<com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue>
-				ddmFormFieldValues = copyDDMFormValues.getDDMFormFieldValues();
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				copyDDMFormValues.getDDMFormFieldValues();
 
-			com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
-				ddmFormFieldValue = ddmFormFieldValues.get(0);
+			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
 
-			com.liferay.dynamic.data.mapping.kernel.Value value =
-				ddmFormFieldValue.getValue();
+			Value value = ddmFormFieldValue.getValue();
 
 			Assert.assertEquals("Text1", ddmFormFieldValue.getName());
 
@@ -1397,10 +1395,10 @@ public class DLFileEntryLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext, new HashMap<>());
 	}
 
+	@Inject
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private StorageEngineManager _storageEngineManager;
 
 }

@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.Group;
@@ -314,7 +314,7 @@ public class DDMStructureManagerTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, "Test Structure Description"
 			).build(),
-			createDDMForm(), StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			createDDMForm(), DDMStorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, _serviceContext);
 	}
 

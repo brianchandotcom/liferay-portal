@@ -21,9 +21,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -197,13 +199,16 @@ public class DLFileEntryModelDocumentContributor
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			try {
 				DDMFormValues ddmFormValues =
-					_storageEngineManager.getDDMFormValues(
+					_ddmStorageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId());
 
 				if (ddmFormValues != null) {
-					_ddmStructureManager.addAttributes(
-						dlFileEntryMetadata.getDDMStructureId(), document,
-						ddmFormValues);
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.getStructure(
+							dlFileEntryMetadata.getDDMStructureId());
+
+					_ddmIndexer.addAttributes(
+						document, ddmStructure, ddmFormValues);
 				}
 			}
 			catch (Exception exception) {
@@ -226,14 +231,17 @@ public class DLFileEntryModelDocumentContributor
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			try {
 				DDMFormValues ddmFormValues =
-					_storageEngineManager.getDDMFormValues(
+					_ddmStorageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId());
 
 				if (ddmFormValues != null) {
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.getStructure(
+							dlFileEntryMetadata.getDDMStructureId());
+
 					sb.append(
-						_ddmStructureManager.extractAttributes(
-							dlFileEntryMetadata.getDDMStructureId(),
-							ddmFormValues, locale));
+						_ddmIndexer.extractIndexableAttributes(
+							ddmStructure, ddmFormValues, locale));
 
 					sb.append(StringPool.SPACE);
 				}
@@ -335,7 +343,13 @@ public class DLFileEntryModelDocumentContributor
 		DLFileEntryModelDocumentContributor.class);
 
 	@Reference
-	private DDMStructureManager _ddmStructureManager;
+	private DDMIndexer _ddmIndexer;
+
+	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
@@ -351,9 +365,6 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
-
-	@Reference
-	private StorageEngineManager _storageEngineManager;
 
 	@Reference
 	private TrashHelper _trashHelper;

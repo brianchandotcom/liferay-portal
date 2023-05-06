@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -206,6 +207,7 @@ const AddFDSSortModalContent = ({
 const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 	const [fields, setFields] = React.useState<Field[]>([]);
 	const [fdsSorts, setFDSSorts] = useState<Array<FDSSort>>([]);
+	const [loading, setLoading] = useState(true);
 	const [newFDSSortsOrder, setNewFDSSortsOrder] = React.useState<string>('');
 
 	useEffect(() => {
@@ -245,6 +247,8 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 			}
 
 			setFDSSorts([...ordered, ...notOrdered]);
+
+			setLoading(false);
 		};
 
 		getFDSSort();
@@ -285,7 +289,8 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 			alertSuccess();
 
 			setNewFDSSortsOrder('');
-		} else {
+		}
+		else {
 			alertFailed();
 		}
 	};
@@ -304,42 +309,56 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 
 	return (
 		<ClayLayout.ContainerFluid>
-			<ClayAlert className="c-mt-5" displayType="info">
-				{Liferay.Language.get(
-					'the-hierarchy-of-the-default-sorting-will-be-defined-by-the-vertical-order-of-the-fields'
-				)}
-			</ClayAlert>
+			{loading ? (
+				<ClayLoadingIndicator />
+			) : (
+				<>
+					<ClayAlert className="c-mt-5" displayType="info">
+						{Liferay.Language.get(
+							'the-hierarchy-of-the-default-sorting-will-be-defined-by-the-vertical-order-of-the-fields'
+						)}
+					</ClayAlert>
 
-			<OrderableTable
-				disableSave={!newFDSSortsOrder.length}
-				fields={[
-					{
-						label: Liferay.Language.get('name'),
-						name: 'fieldName',
-					},
-					{
-						label: Liferay.Language.get('value'),
-						name: 'sortingDirection',
-					},
-				]}
-				items={fdsSorts}
-				noItemsButtonLabel={Liferay.Language.get('new-default-sort')}
-				noItemsDescription={Liferay.Language.get(
-					'start-creating-a-sort-to-display-specific-data'
-				)}
-				noItemsTitle={Liferay.Language.get(
-					'no-default-sort-created-yet'
-				)}
-				onCancelButtonClick={() => navigate(fdsViewsURL)}
-				onCreationButtonClick={onCreationButtonClick}
-				onOrderChange={({orderedItems}: {orderedItems: FDSSort[]}) => {
-					setNewFDSSortsOrder(
-						orderedItems.map((fdsSort) => fdsSort.id).join(',')
-					);
-				}}
-				onSaveButtonClick={updateFDSFieldsOrder}
-				title={Liferay.Language.get('sorting')}
-			/>
+					<OrderableTable
+						disableSave={!newFDSSortsOrder.length}
+						fields={[
+							{
+								label: Liferay.Language.get('name'),
+								name: 'fieldName',
+							},
+							{
+								label: Liferay.Language.get('value'),
+								name: 'sortingDirection',
+							},
+						]}
+						items={fdsSorts}
+						noItemsButtonLabel={Liferay.Language.get(
+							'new-default-sort'
+						)}
+						noItemsDescription={Liferay.Language.get(
+							'start-creating-a-sort-to-display-specific-data'
+						)}
+						noItemsTitle={Liferay.Language.get(
+							'no-default-sort-created-yet'
+						)}
+						onCancelButtonClick={() => navigate(fdsViewsURL)}
+						onCreationButtonClick={onCreationButtonClick}
+						onOrderChange={({
+							orderedItems,
+						}: {
+							orderedItems: FDSSort[];
+						}) => {
+							setNewFDSSortsOrder(
+								orderedItems
+									.map((fdsSort) => fdsSort.id)
+									.join(',')
+							);
+						}}
+						onSaveButtonClick={updateFDSFieldsOrder}
+						title={Liferay.Language.get('sorting')}
+					/>
+				</>
+			)}
 		</ClayLayout.ContainerFluid>
 	);
 };

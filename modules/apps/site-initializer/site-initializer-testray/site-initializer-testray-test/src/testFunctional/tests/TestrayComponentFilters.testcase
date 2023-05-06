@@ -201,4 +201,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an Administrator I should be able to filter component by team name"
+	@priority = 3
+	test AdminCanFilterComponentByTeamName {
+		task ("Given that the user has two component different in the table") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a component by team") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayFilter.multiSelect(
+				header = "Team",
+				label = "Team",
+				listMultiSelect = "Team 1");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only component 1 in the table related to team 1") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the component 2 in the table related to team 2") {
+			AssertElementNotPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

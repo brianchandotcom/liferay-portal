@@ -19,8 +19,6 @@ import com.liferay.poshi.core.util.Validator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
@@ -69,12 +67,11 @@ public final class PoshiStackTrace {
 	}
 
 	public String getCurrentNamespace(String namespacedClassCommandName) {
-		String defaultNamespace = PoshiContext.getDefaultNamespace();
+		String namespace =
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
+				namespacedClassCommandName);
 
-		String namespace = getNamespaceFromNamespacedClassCommandName(
-			namespacedClassCommandName);
-
-		if (Validator.isNull(namespace) || namespace.equals(defaultNamespace)) {
+		if (Validator.isNull(namespace) || namespace.isEmpty()) {
 			namespace = getCurrentNamespace();
 		}
 
@@ -84,21 +81,14 @@ public final class PoshiStackTrace {
 	public String getNamespaceFromNamespacedClassCommandName(
 		String namespacedClassCommandName) {
 
-		Matcher matcher = _namespacedClassCommandNamePattern.matcher(
+		String namespace = PoshiGetterUtil.getNamespaceFromNamespacedClassName(
 			namespacedClassCommandName);
 
-		if (matcher.find()) {
-			String namespace = matcher.group("namespace");
-
-			if (Validator.isNull(namespace)) {
-				namespace = getCurrentNamespace();
-			}
-
-			return namespace;
+		if (namespace.isEmpty()) {
+			namespace = getCurrentNamespace();
 		}
 
-		throw new RuntimeException(
-			"Unable to find namespace in " + namespacedClassCommandName);
+		return namespace;
 	}
 
 	public String getSimpleStackTrace() {
@@ -240,10 +230,6 @@ public final class PoshiStackTrace {
 		_filePaths.push(filePath + "[" + commandName + "]");
 	}
 
-	private static final Pattern _namespacedClassCommandNamePattern =
-		Pattern.compile(
-			"((?<namespace>\\w+)\\.)?(?<className>\\w+)(\\#(?<commandName>" +
-				"(\\w+(\\-\\w+)*|\\$\\{\\w+\\}|\\w+|\\s*\\w+)*))?");
 	private static final Map<String, PoshiStackTrace> _poshiStackTraces =
 		new HashMap<>();
 

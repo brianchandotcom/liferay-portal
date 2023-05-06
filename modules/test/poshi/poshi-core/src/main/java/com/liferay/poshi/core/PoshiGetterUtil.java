@@ -337,7 +337,7 @@ public class PoshiGetterUtil {
 			String namespace = matcher.group("namespace");
 
 			if (Validator.isNull(namespace)) {
-				namespace = PoshiContext.getDefaultNamespace();
+				return "";
 			}
 
 			return namespace;

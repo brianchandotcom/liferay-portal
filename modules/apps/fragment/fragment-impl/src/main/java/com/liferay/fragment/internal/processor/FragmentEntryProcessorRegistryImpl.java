@@ -16,6 +16,7 @@ package com.liferay.fragment.internal.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.CSSFragmentEntryProcessor;
+import com.liferay.fragment.processor.DocumentFragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryAutocompleteContributor;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -35,6 +36,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -154,7 +159,18 @@ public class FragmentEntryProcessorRegistryImpl
 				fragmentEntryLink, html, fragmentEntryProcessorContext);
 		}
 
-		return html;
+		Document document = _getDocument(html);
+
+		for (DocumentFragmentEntryProcessor documentFragmentEntryProcessor :
+				_documentFragmentEntryProcessors) {
+
+			documentFragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, document, fragmentEntryProcessorContext);
+		}
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
 	}
 
 	@Override
@@ -188,6 +204,11 @@ public class FragmentEntryProcessorRegistryImpl
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
+		_documentFragmentEntryProcessors = ServiceTrackerListFactory.open(
+			bundleContext, DocumentFragmentEntryProcessor.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator<>(
+					"fragment.entry.processor.priority")));
 		_fragmentEntryAutocompleteContributors = ServiceTrackerListFactory.open(
 			bundleContext, FragmentEntryAutocompleteContributor.class,
 			Collections.reverseOrder(
@@ -208,9 +229,22 @@ public class FragmentEntryProcessorRegistryImpl
 	@Deactivate
 	protected void deactivate() {
 		_cssFragmentEntryProcessors.close();
+		_documentFragmentEntryProcessors.close();
 		_fragmentEntryAutocompleteContributors.close();
 		_fragmentEntryProcessors.close();
 		_fragmentEntryValidators.close();
+	}
+
+	private Document _getDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
 	}
 
 	private static final ThreadLocal<Set<String>> _validHTMLsThreadLocal =
@@ -221,6 +255,8 @@ public class FragmentEntryProcessorRegistryImpl
 
 	private ServiceTrackerList<CSSFragmentEntryProcessor>
 		_cssFragmentEntryProcessors;
+	private ServiceTrackerList<DocumentFragmentEntryProcessor>
+		_documentFragmentEntryProcessors;
 	private ServiceTrackerList<FragmentEntryAutocompleteContributor>
 		_fragmentEntryAutocompleteContributors;
 	private ServiceTrackerList<FragmentEntryProcessor> _fragmentEntryProcessors;

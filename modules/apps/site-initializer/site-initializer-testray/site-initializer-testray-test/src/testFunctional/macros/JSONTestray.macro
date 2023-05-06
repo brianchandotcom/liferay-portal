@@ -44,13 +44,7 @@ definition {
 	}
 
 	macro addCases {
-		Variables.assertDefined(parameterList = "${caseName},${projectName},${componentName}");
-
-		if (!(isSet(caseType))) {
-			var caseType = "Case Type 1";
-		}
-
-		JSONTestray.addCaseType(caseType = ${caseType});
+		Variables.assertDefined(parameterList = "${caseName},${caseType},${projectName},${componentName}");
 
 		var caseTypeId = JSONTestraySetter.getCaseTypeId(caseType = ${caseType});
 		var componentId = JSONTestraySetter.getComponentId(componentName = ${componentName});

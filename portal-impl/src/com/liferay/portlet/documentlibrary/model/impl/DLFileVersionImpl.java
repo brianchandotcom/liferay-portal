@@ -62,6 +62,11 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 			getFileEntryId(), getVersion(), incrementCounter);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             DLFileEntryTypeUtil#getDDMStructures(DLFileEntryType)}
+	 */
+	@Deprecated
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
 		DLFileEntryType dlFileEntryType =

@@ -38,6 +38,11 @@ import java.util.Locale;
  */
 public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             DLFileEntryTypeUtil#getDDMStructures(DLFileEntryType)}
+	 */
+	@Deprecated
 	@Override
 	public List<DDMStructure> getDDMStructures() {
 		List<DDMStructureLink> ddmStructureLinks =

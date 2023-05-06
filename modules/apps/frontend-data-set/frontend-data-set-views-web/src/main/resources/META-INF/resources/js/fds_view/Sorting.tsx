@@ -216,34 +216,33 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 
 			const responseJSON = await response.json();
 
-			let fdsSortsOrdered = responseJSON[
+			const storedFDSSorts = responseJSON[
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT
 			] as FDSSort[];
 
+			let ordered = storedFDSSorts;
+			let notOrdered: FDSSort[] = [];
+
 			if (fdsView.fdsSortsOrder) {
-				const order = fdsView.fdsSortsOrder.split(',');
+				const fdsSortsOrderArray = fdsView.fdsSortsOrder.split(',');
 
-				let notOrdered: FDSSort[] = [];
-
-				if (fdsSortsOrdered.length > order.length) {
-					notOrdered = fdsSortsOrdered.filter(
-						(filter) => !order.includes(String(filter.id))
-					);
-				}
-
-				fdsSortsOrdered = fdsView.fdsSortsOrder
-					.split(',')
+				ordered = fdsSortsOrderArray
 					.map((fdsSortId) =>
-						fdsSortsOrdered.find(
+						storedFDSSorts.find(
 							(fdsSort) => fdsSort.id === Number(fdsSortId)
 						)
 					)
 					.filter(Boolean) as FDSSort[];
 
-				fdsSortsOrdered = [...fdsSortsOrdered, ...notOrdered];
+				if (storedFDSSorts.length > fdsSortsOrderArray.length) {
+					notOrdered = storedFDSSorts.filter(
+						(filter) =>
+							!fdsSortsOrderArray.includes(String(filter.id))
+					);
+				}
 			}
 
-			setFDSSorts(fdsSortsOrdered);
+			setFDSSorts([...ordered, ...notOrdered]);
 		};
 
 		getFDSSort();

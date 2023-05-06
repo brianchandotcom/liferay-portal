@@ -15,7 +15,6 @@
 package com.liferay.document.library.internal.search.spi.model.query.contributor;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -85,9 +84,6 @@ public class DLFileEntryModelPreFilterContributor
 
 	@Reference
 	protected DDMIndexer ddmIndexer;
-
-	@Reference
-	protected DDMStructureManager ddmStructureManager;
 
 	protected RelatedEntryIndexer relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();

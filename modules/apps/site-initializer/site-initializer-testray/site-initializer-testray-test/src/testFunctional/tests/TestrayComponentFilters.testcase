@@ -160,4 +160,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-173528 | Test Summary: Verify if as an Administrator I should be able to filter component by run"
+	@priority = 3
+	test AdminCanFilterComponentByRun {
+		task ("Given that the user has two component different in the table") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user filter a component by team") {
+			TestrayFilter.clickFilter();
+
+			ScrollWebElementIntoView(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+
+			Select(
+				locator1 = "Select#SELECT_FIELD_LABEL",
+				selectFieldLabel = "Run",
+				value1 = 00);
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user see only component 1 in the table related to run 1") {
+			AssertElementPresent(
+				key_projectName = "Component 1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And do not see the component 2 in the table related to run 2") {
+			AssertElementNotPresent(
+				key_projectName = "Component 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

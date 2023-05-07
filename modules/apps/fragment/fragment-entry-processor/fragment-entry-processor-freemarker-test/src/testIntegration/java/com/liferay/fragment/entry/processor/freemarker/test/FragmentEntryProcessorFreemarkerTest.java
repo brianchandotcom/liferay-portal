@@ -521,7 +521,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			defaultFragmentEntryProcessorContext =
 				new DefaultFragmentEntryProcessorContext(
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					null, null);
+					null, LocaleUtil.getDefault());
 
 		expectedException.expect(FragmentEntryContentException.class);
 		expectedException.expectMessage("FreeMarker syntax is invalid");

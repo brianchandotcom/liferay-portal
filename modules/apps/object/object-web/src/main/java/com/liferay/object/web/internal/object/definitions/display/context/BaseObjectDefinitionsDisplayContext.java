@@ -54,24 +54,22 @@ public abstract class BaseObjectDefinitionsDisplayContext {
 		return creationMenu;
 	}
 
-	public String getObjectDefinitionExternalReferenceCode() {
+	public ObjectDefinition getObjectDefinition() {
 		HttpServletRequest httpServletRequest =
 			objectRequestHelper.getRequest();
 
-		ObjectDefinition objectDefinition =
-			(ObjectDefinition)httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION);
+		return (ObjectDefinition)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
+	public String getObjectDefinitionExternalReferenceCode() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		return objectDefinition.getExternalReferenceCode();
 	}
 
 	public long getObjectDefinitionId() {
-		HttpServletRequest httpServletRequest =
-			objectRequestHelper.getRequest();
-
-		ObjectDefinition objectDefinition =
-			(ObjectDefinition)httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION);
+		ObjectDefinition objectDefinition = getObjectDefinition();
 
 		return objectDefinition.getObjectDefinitionId();
 	}

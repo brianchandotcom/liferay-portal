@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
@@ -71,7 +70,6 @@ public class FieldsObjectDefinitionsScreenNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
 				httpServletRequest, _listTypeDefinitionService,
-				_objectDefinitionLocalService,
 				_objectDefinitionModelResourcePermission,
 				_objectFieldBusinessTypeRegistry,
 				_objectFieldSettingLocalService,
@@ -82,9 +80,6 @@ public class FieldsObjectDefinitionsScreenNavigationEntry
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

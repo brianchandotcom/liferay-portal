@@ -62,11 +62,8 @@ public class LayoutPageTemplateStructureTable
 	public final Column<LayoutPageTemplateStructureTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<LayoutPageTemplateStructureTable, Long> classNameId =
-		createColumn(
-			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<LayoutPageTemplateStructureTable, Long> classPK =
-		createColumn("classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LayoutPageTemplateStructureTable, Long> plid =
+		createColumn("plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private LayoutPageTemplateStructureTable() {
 		super(

@@ -69,6 +69,4 @@ public interface LayoutPageTemplateStructure
 
 	public String getDefaultSegmentsExperienceData();
 
-	public long getPlid();
-
 }

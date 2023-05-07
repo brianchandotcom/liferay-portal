@@ -730,80 +730,71 @@ public class LayoutPageTemplateStructureUtil {
 	}
 
 	/**
-	 * Returns the layout page template structure where groupId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPageTemplateStructureException</code> if it could not be found.
+	 * Returns the layout page template structure where groupId = &#63; and plid = &#63; or throws a <code>NoSuchPageTemplateStructureException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param plid the plid
 	 * @return the matching layout page template structure
 	 * @throws NoSuchPageTemplateStructureException if a matching layout page template structure could not be found
 	 */
-	public static LayoutPageTemplateStructure findByG_C_C(
-			long groupId, long classNameId, long classPK)
+	public static LayoutPageTemplateStructure findByG_P(long groupId, long plid)
 		throws com.liferay.layout.page.template.exception.
 			NoSuchPageTemplateStructureException {
 
-		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
+		return getPersistence().findByG_P(groupId, plid);
 	}
 
 	/**
-	 * Returns the layout page template structure where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout page template structure where groupId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param plid the plid
 	 * @return the matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
 	 */
-	public static LayoutPageTemplateStructure fetchByG_C_C(
-		long groupId, long classNameId, long classPK) {
+	public static LayoutPageTemplateStructure fetchByG_P(
+		long groupId, long plid) {
 
-		return getPersistence().fetchByG_C_C(groupId, classNameId, classPK);
+		return getPersistence().fetchByG_P(groupId, plid);
 	}
 
 	/**
-	 * Returns the layout page template structure where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout page template structure where groupId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param plid the plid
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template structure, or <code>null</code> if a matching layout page template structure could not be found
 	 */
-	public static LayoutPageTemplateStructure fetchByG_C_C(
-		long groupId, long classNameId, long classPK, boolean useFinderCache) {
+	public static LayoutPageTemplateStructure fetchByG_P(
+		long groupId, long plid, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_C_C(
-			groupId, classNameId, classPK, useFinderCache);
+		return getPersistence().fetchByG_P(groupId, plid, useFinderCache);
 	}
 
 	/**
-	 * Removes the layout page template structure where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes the layout page template structure where groupId = &#63; and plid = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param plid the plid
 	 * @return the layout page template structure that was removed
 	 */
-	public static LayoutPageTemplateStructure removeByG_C_C(
-			long groupId, long classNameId, long classPK)
+	public static LayoutPageTemplateStructure removeByG_P(
+			long groupId, long plid)
 		throws com.liferay.layout.page.template.exception.
 			NoSuchPageTemplateStructureException {
 
-		return getPersistence().removeByG_C_C(groupId, classNameId, classPK);
+		return getPersistence().removeByG_P(groupId, plid);
 	}
 
 	/**
-	 * Returns the number of layout page template structures where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of layout page template structures where groupId = &#63; and plid = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param plid the plid
 	 * @return the number of matching layout page template structures
 	 */
-	public static int countByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
-		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
+	public static int countByG_P(long groupId, long plid) {
+		return getPersistence().countByG_P(groupId, plid);
 	}
 
 	/**

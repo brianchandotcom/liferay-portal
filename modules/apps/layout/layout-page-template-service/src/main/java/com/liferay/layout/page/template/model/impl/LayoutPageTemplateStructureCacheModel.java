@@ -82,7 +82,7 @@ public class LayoutPageTemplateStructureCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,10 +104,8 @@ public class LayoutPageTemplateStructureCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append("}");
 
 		return sb.toString();
@@ -156,8 +154,7 @@ public class LayoutPageTemplateStructureCacheModel
 				new Date(modifiedDate));
 		}
 
-		layoutPageTemplateStructureImpl.setClassNameId(classNameId);
-		layoutPageTemplateStructureImpl.setClassPK(classPK);
+		layoutPageTemplateStructureImpl.setPlid(plid);
 
 		layoutPageTemplateStructureImpl.resetOriginalValues();
 
@@ -182,9 +179,7 @@ public class LayoutPageTemplateStructureCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		classNameId = objectInput.readLong();
-
-		classPK = objectInput.readLong();
+		plid = objectInput.readLong();
 	}
 
 	@Override
@@ -218,9 +213,7 @@ public class LayoutPageTemplateStructureCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(classNameId);
-
-		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(plid);
 	}
 
 	public long mvccVersion;
@@ -233,7 +226,6 @@ public class LayoutPageTemplateStructureCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long classNameId;
-	public long classPK;
+	public long plid;
 
 }

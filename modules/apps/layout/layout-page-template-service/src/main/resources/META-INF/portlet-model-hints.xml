@@ -59,8 +59,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
+		<field name="plid" type="long" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel">
 		<field name="mvccVersion" type="long" />

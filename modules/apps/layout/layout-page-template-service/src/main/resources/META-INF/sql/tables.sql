@@ -56,8 +56,7 @@ create table LayoutPageTemplateStructure (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	classNameId LONG,
-	classPK LONG,
+	plid LONG,
 	primary key (layoutPageTemplateStructureId, ctCollectionId)
 );
 

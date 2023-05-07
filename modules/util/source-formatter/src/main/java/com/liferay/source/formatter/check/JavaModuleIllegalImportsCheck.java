@@ -59,7 +59,9 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			}
 		}
 
-		if (content.contains("com.liferay.portal.kernel.util.StringBundler")) {
+		if (isAttributeValue(_ENFORCE_PETRA_STRING_BUNDLER_KEY, absolutePath) &&
+			content.contains("com.liferay.portal.kernel.util.StringBundler")) {
+
 			addMessage(
 				fileName,
 				"Use com.liferay.petra.string.StringBundler instead of " +
@@ -101,6 +103,9 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 
 	private static final String _CHECK_REGISTRY_IN_TEST_CLASSES_KEY =
 		"checkRegistryInTestClasses";
+
+	private static final String _ENFORCE_PETRA_STRING_BUNDLER_KEY =
+		"enforcePetraStringBundler";
 
 	private static final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");

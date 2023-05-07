@@ -516,18 +516,14 @@ public class ExportImportPerformanceTest {
 		return layoutStructure.toString();
 	}
 
-	private String _getInvokerName() {
+	private Closeable _startTimer() {
 		Thread thread = Thread.currentThread();
 
-		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
+		StackTraceElement stackTraceElement = thread.getStackTrace()[2];
 
-		return StringBundler.concat(
+		String invokerName = StringBundler.concat(
 			stackTraceElement.getClassName(), StringPool.POUND,
 			stackTraceElement.getMethodName());
-	}
-
-	private Closeable _startTimer() {
-		String invokerName = _getInvokerName();
 
 		long startTime = System.currentTimeMillis();
 

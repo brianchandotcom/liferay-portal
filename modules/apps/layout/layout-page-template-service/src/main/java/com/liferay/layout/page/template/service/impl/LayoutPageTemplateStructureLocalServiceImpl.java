@@ -83,9 +83,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		layoutPageTemplateStructure.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		layoutPageTemplateStructure.setClassNameId(
-			_portal.getClassNameId(Layout.class));
-		layoutPageTemplateStructure.setClassPK(plid);
+		layoutPageTemplateStructure.setPlid(plid);
 
 		layoutPageTemplateStructure =
 			layoutPageTemplateStructurePersistence.update(
@@ -146,8 +144,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructurePersistence.findByG_C_C(
-				groupId, _portal.getClassNameId(Layout.class), plid);
+			layoutPageTemplateStructurePersistence.findByG_P(groupId, plid);
 
 		layoutPageTemplateStructureLocalService.
 			deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
@@ -159,8 +156,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long groupId, long plid) {
 
-		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
-			groupId, _portal.getClassNameId(Layout.class), plid);
+		return layoutPageTemplateStructurePersistence.fetchByG_P(groupId, plid);
 	}
 
 	@Override
@@ -222,8 +218,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		// Layout page template structure
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			layoutPageTemplateStructurePersistence.findByG_C_C(
-				groupId, _portal.getClassNameId(Layout.class), plid);
+			layoutPageTemplateStructurePersistence.findByG_P(groupId, plid);
 
 		layoutPageTemplateStructure.setModifiedDate(new Date());
 

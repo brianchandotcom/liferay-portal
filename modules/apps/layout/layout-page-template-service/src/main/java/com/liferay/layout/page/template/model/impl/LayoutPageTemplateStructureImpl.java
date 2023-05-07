@@ -75,9 +75,4 @@ public class LayoutPageTemplateStructureImpl
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public long getPlid() {
-		return getClassPK();
-	}
-
 }

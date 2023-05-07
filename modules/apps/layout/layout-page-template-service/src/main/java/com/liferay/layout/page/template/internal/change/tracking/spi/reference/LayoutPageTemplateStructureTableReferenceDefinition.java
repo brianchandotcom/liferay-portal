@@ -19,8 +19,6 @@ import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfo
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureTable;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateStructurePersistence;
-import com.liferay.portal.kernel.model.ClassNameTable;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
@@ -55,15 +53,8 @@ public class LayoutPageTemplateStructureTableReferenceDefinition
 				LayoutPageTemplateStructureTable.INSTANCE.groupId.eq(
 					LayoutTable.INSTANCE.groupId
 				).and(
-					LayoutPageTemplateStructureTable.INSTANCE.classPK.eq(
+					LayoutPageTemplateStructureTable.INSTANCE.plid.eq(
 						LayoutTable.INSTANCE.plid)
-				)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				LayoutPageTemplateStructureTable.INSTANCE.classNameId.eq(
-					ClassNameTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(Layout.class.getName())
 				)
 			)
 		);

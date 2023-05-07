@@ -106,14 +106,13 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				stringValueOfMethodCall);
 
-			if (parameterList.size() != 1) {
-				return parameter;
+			if (parameterList.size() == 1) {
+				return parameterList.get(0);
 			}
-
-			return parameterList.get(0);
 		}
-		else if (parameter.endsWith(".toString()") &&
-				 !StringUtil.equals(parameter, "super.toString()")) {
+
+		if (parameter.endsWith(".toString()") &&
+			!StringUtil.equals(parameter, "super.toString()")) {
 
 			return parameter.substring(0, parameter.lastIndexOf(".toString()"));
 		}

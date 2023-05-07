@@ -31,11 +31,15 @@ import java.util.Locale;
  */
 public class InvalidFolderException extends PortalException {
 
-	public static final int CANNOT_MOVE_INTO_CHILD_FOLDER = 1;
+	public static final int CANNOT_COPY_INTO_CHILD_FOLDER = 1;
 
-	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
+	public static final int CANNOT_COPY_INTO_ITSELF = 2;
 
-	public static final int INVALID_ROOT_FOLDER = 3;
+	public static final int CANNOT_MOVE_INTO_CHILD_FOLDER = 3;
+
+	public static final int CANNOT_MOVE_INTO_ITSELF = 4;
+
+	public static final int INVALID_ROOT_FOLDER = 5;
 
 	public InvalidFolderException(int type, long folderId) {
 		_type = type;
@@ -66,7 +70,13 @@ public class InvalidFolderException extends PortalException {
 	}
 
 	public String getMessageKey() {
-		if (_type == CANNOT_MOVE_INTO_CHILD_FOLDER) {
+		if (_type == CANNOT_COPY_INTO_CHILD_FOLDER) {
+			return "unable-to-copy-folder-x-into-one-of-its-children";
+		}
+		else if (_type == CANNOT_COPY_INTO_ITSELF) {
+			return "unable-to-copy-folder-x-into-itself";
+		}
+		else if (_type == CANNOT_MOVE_INTO_CHILD_FOLDER) {
 			return "unable-to-move-folder-x-into-one-of-its-children";
 		}
 		else if (_type == CANNOT_MOVE_INTO_ITSELF) {

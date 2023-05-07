@@ -586,7 +586,7 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
-		_validateEncryptedObjectFieldProperties(
+		_validateEncryptedObjectField(
 			businessType, newObjectField.getObjectDefinitionId());
 		_validateExternalReferenceCode(
 			externalReferenceCode, newObjectField.getObjectFieldId(),
@@ -721,8 +721,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_validateEncryptedObjectFieldProperties(
-			businessType, objectDefinitionId);
+		_validateEncryptedObjectField(businessType, objectDefinitionId);
 		_validateExternalReferenceCode(
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
@@ -1017,7 +1016,7 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
-	private void _validateEncryptedObjectFieldProperties(
+	private void _validateEncryptedObjectField(
 			String businessType, long objectDefinitionId)
 		throws PortalException {
 

@@ -182,6 +182,13 @@ public class IllegalImportsCheck extends BaseFileCheck {
 					"org.slf4j.Logger");
 		}
 
+		if (content.contains("com.liferay.portal.kernel.util.StringBundler")) {
+			addMessage(
+				fileName,
+				"Use com.liferay.petra.string.StringBundler instead of " +
+					"com.liferay.portal.kernel.util.StringBundler");
+		}
+
 		SourceProcessor sourceProcessor = getSourceProcessor();
 
 		SourceFormatterArgs sourceFormatterArgs =

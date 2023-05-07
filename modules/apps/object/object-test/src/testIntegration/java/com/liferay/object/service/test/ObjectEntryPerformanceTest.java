@@ -104,7 +104,7 @@ public class ObjectEntryPerformanceTest {
 
 		_addObjectEntries(
 			GetterUtil.getInteger(
-				properties.getProperty("number.of.object.entries")));
+				properties.getProperty("object.entries.count")));
 	}
 
 	@After

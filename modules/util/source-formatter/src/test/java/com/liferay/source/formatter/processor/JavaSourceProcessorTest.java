@@ -770,11 +770,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testStringBundlerParameter() throws Exception {
-		test("StringBundlerParameter.testjava");
-	}
-
-	@Test
 	public void testStringConcatenation() throws Exception {
 		test(
 			"StringConcatenation.testjava",
@@ -842,6 +837,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"'getWebCachePool'",
 				79
 			));
+	}
+
+	@Test
+	public void testUnnecessaryTypeCastInStringBundlerConcat()
+		throws Exception {
+
+		test("UnnecessaryTypeCastInStringBundlerConcat.testjava");
 	}
 
 	@Test

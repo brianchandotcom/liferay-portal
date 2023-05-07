@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,8 +83,9 @@ public class EncryptedObjectFieldBusinessType
 	}
 
 	@Override
-	public boolean isVisible() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-178057") &&
+	public boolean isVisible(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isDefaultStorageType() &&
+			FeatureFlagManagerUtil.isEnabled("LPS-178057") &&
 			!PropsValues.ENCRYPTED_OBJECT_FIELD_RESTRICTED) {
 
 			return true;

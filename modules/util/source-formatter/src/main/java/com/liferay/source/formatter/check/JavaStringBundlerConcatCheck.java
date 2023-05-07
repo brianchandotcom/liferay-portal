@@ -74,7 +74,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 			}
 
 			for (String parameter : parameterList) {
-				String newParameter = _simplyStringBundlerParameter(parameter);
+				String newParameter = _removeUnnecessaryTypeCast(parameter);
 
 				if (StringUtil.equals(parameter, newParameter)) {
 					continue;
@@ -98,7 +98,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private String _simplyStringBundlerParameter(String parameter) {
+	private String _removeUnnecessaryTypeCast(String parameter) {
 		if (parameter.startsWith("String.valueOf(")) {
 			String stringValueOfMethodCall = JavaSourceUtil.getMethodCall(
 				parameter, 0);

@@ -16,19 +16,13 @@ package com.liferay.source.formatter.dependencies;
 
 import com.liferay.petra.string.StringBundler;
 
-import java.util.Date;
-
 /**
  * @author Qi Zhang
  */
 public class UnnecessaryTypeCastInStringBundlerConcat {
 
-	public String method1(Date date) {
-		return StringBundler.concat("Method1 time is ", date, ".");
-	}
-
-	public String method2(Date date) {
-		return StringBundler.concat("Method2 time is ", date, ".");
+	public String method(String s1, String s2, String s3) {
+		return StringBundler.concat(s1, s2, s3);
 	}
 
 }

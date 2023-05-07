@@ -109,7 +109,7 @@ public class RollingFileAppenderBuilder
 	public Appender parseAppender(
 		String name, String appenderPrefix, String layoutPrefix,
 		String filterPrefix, Properties props,
-		PropertiesConfiguration configuration) {
+		PropertiesConfiguration propertiesConfiguration) {
 
 		throw new UnsupportedOperationException("Not implemented");
 	}

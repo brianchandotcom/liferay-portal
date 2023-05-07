@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.dependency.manager;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,7 +27,8 @@ public interface DependencyManagerSync {
 
 	public void registerSyncCallable(Callable<Void> syncCallable);
 
-	public void registerSyncFuture(Future<Void> syncFuture);
+	public void registerSyncFutureTask(
+		FutureTask<Void> syncFutureTask, String taskName);
 
 	public void sync();
 

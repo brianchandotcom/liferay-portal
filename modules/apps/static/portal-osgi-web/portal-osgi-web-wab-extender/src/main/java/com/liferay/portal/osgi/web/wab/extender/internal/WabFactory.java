@@ -139,21 +139,14 @@ public class WabFactory
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, this);
 
-		FutureTask<Void> futureTask = new FutureTask<>(
-			() -> {
-				_bundleTracker.open();
+		DependencyManagerSyncUtil.registerSyncFutureTask(
+			new FutureTask<>(
+				() -> {
+					_bundleTracker.open();
 
-				return null;
-			});
-
-		Thread bundleTrackerOpenerThread = new Thread(
-			futureTask, WabFactory.class.getName() + "-BundleTrackerOpener");
-
-		bundleTrackerOpenerThread.setDaemon(true);
-
-		bundleTrackerOpenerThread.start();
-
-		DependencyManagerSyncUtil.registerSyncFuture(futureTask);
+					return null;
+				}),
+			WabFactory.class.getName() + "-BundleTrackerOpener");
 	}
 
 	@Deactivate

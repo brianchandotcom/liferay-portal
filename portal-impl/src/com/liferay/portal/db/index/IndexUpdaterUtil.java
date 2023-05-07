@@ -15,7 +15,6 @@
 package com.liferay.portal.db.index;
 
 import com.liferay.portal.db.DBResourceUtil;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -29,6 +28,8 @@ import com.liferay.portal.module.util.BundleUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import java.util.concurrent.FutureTask;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
@@ -75,21 +76,21 @@ public class IndexUpdaterUtil {
 
 			});
 
-		DefaultNoticeableFuture<Void> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>(bundleTracker::open, null);
+		DependencyManagerSyncUtil.registerSyncFutureTask(
+			new FutureTask<>(
+				() -> {
+					bundleTracker.open();
 
-		defaultNoticeableFuture.addFutureListener(
-			future -> bundleTracker.close());
+					DependencyManagerSyncUtil.registerSyncCallable(
+						() -> {
+							bundleTracker.close();
 
-		Thread bundleTrackerOpenerThread = new Thread(
-			defaultNoticeableFuture,
+							return null;
+						});
+
+					return null;
+				}),
 			IndexUpdaterUtil.class.getName() + "-BundleTrackerOpener");
-
-		bundleTrackerOpenerThread.setDaemon(true);
-
-		bundleTrackerOpenerThread.start();
-
-		DependencyManagerSyncUtil.registerSyncFuture(defaultNoticeableFuture);
 	}
 
 	public static void updateIndexes(Bundle bundle) throws Exception {

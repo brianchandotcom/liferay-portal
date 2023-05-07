@@ -284,39 +284,33 @@ public class PortletTracker
 		_serviceTracker = new ServiceTracker<>(
 			_bundleContext, Portlet.class, this);
 
-		FutureTask<Void> futureTask = new FutureTask<>(
-			() -> {
-				_portalPortletModel = _portletLocalService.getPortletById(
-					CompanyConstants.SYSTEM, PortletKeys.PORTAL);
+		DependencyManagerSyncUtil.registerSyncFutureTask(
+			new FutureTask<>(
+				() -> {
+					_portalPortletModel = _portletLocalService.getPortletById(
+						CompanyConstants.SYSTEM, PortletKeys.PORTAL);
 
-				ServiceRegistration<IndividualPortletResourcePermissionProvider>
-					serviceRegistration = bundleContext.registerService(
-						IndividualPortletResourcePermissionProvider.class,
-						new StartupIndividualPortletResourcePermissionProvider(
-							_resourcePermissionLocalService),
-						null);
+					ServiceRegistration
+						<IndividualPortletResourcePermissionProvider>
+							serviceRegistration = bundleContext.registerService(
+								IndividualPortletResourcePermissionProvider.
+									class,
+								new StartupIndividualPortletResourcePermissionProvider(
+									_resourcePermissionLocalService),
+								null);
 
-				DependencyManagerSyncUtil.registerSyncCallable(
-					() -> {
-						serviceRegistration.unregister();
+					DependencyManagerSyncUtil.registerSyncCallable(
+						() -> {
+							serviceRegistration.unregister();
 
-						return null;
-					});
+							return null;
+						});
 
-				_serviceTracker.open();
+					_serviceTracker.open();
 
-				return null;
-			});
-
-		Thread serviceTrackerOpenerThread = new Thread(
-			futureTask,
+					return null;
+				}),
 			PortletTracker.class.getName() + "-ServiceTrackerOpener");
-
-		serviceTrackerOpenerThread.setDaemon(true);
-
-		serviceTrackerOpenerThread.start();
-
-		DependencyManagerSyncUtil.registerSyncFuture(futureTask);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Activated");

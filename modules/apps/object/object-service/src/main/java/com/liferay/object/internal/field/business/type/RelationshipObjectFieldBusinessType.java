@@ -172,11 +172,6 @@ public class RelationshipObjectFieldBusinessType
 		return objectEntry.getObjectEntryId();
 	}
 
-	@Override
-	public boolean isVisible() {
-		return true;
-	}
-
 	@Reference
 	private Language _language;
 

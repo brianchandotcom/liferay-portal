@@ -114,7 +114,7 @@ public class ObjectEntryPerformanceTest {
 
 	@Test
 	public void testGetObjectEntries() throws Exception {
-		try (Closeable closeable = _timeSpent()) {
+		try (Closeable closeable = _startTimer()) {
 			_objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
@@ -122,7 +122,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	private void _addObjectEntries(Integer numberOfEntries) throws Exception {
-		try (Closeable closeable = _timeSpent()) {
+		try (Closeable closeable = _startTimer()) {
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType());
@@ -148,7 +148,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	private void _deleteObjectEntries() throws Exception {
-		try (Closeable closeable = _timeSpent()) {
+		try (Closeable closeable = _startTimer()) {
 			for (com.liferay.object.model.ObjectEntry objectEntry :
 					_objectEntries) {
 
@@ -157,7 +157,7 @@ public class ObjectEntryPerformanceTest {
 		}
 	}
 
-	private Closeable _timeSpent() {
+	private Closeable _startTimer() {
 		Thread thread = Thread.currentThread();
 
 		StackTraceElement stackTraceElement = thread.getStackTrace()[2];

@@ -28,12 +28,13 @@ public interface MenuAccessConfigurationProvider {
 
 	public void deleteRoleFromMenuAccess(Role role) throws Exception;
 
-	public String[] getRolesCanSeeControlMenu(long groupId) throws Exception;
+	public String[] getRoleIdsCanAccessControlMenu(long groupId)
+		throws Exception;
 
 	public boolean isShowControlMenuByRole(long groupId) throws Exception;
 
 	public void updateMenuAccessConfiguration(
-			long groupId, String[] rolesCanSeeControlMenu,
+			long groupId, String[] roleIdsCanAccessControlMenu,
 			boolean showControlMenuByRole)
 		throws Exception;
 

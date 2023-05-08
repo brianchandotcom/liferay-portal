@@ -45,12 +45,14 @@ public class MenuAccessConfigurationProviderImpl
 	}
 
 	@Override
-	public String[] getRolesCanSeeControlMenu(long groupId) throws Exception {
+	public String[] getRoleIdsCanAccessControlMenu(long groupId)
+		throws Exception {
+
 		MenuAccessConfiguration menuAccessConfiguration =
 			_configurationProvider.getGroupConfiguration(
 				MenuAccessConfiguration.class, groupId);
 
-		return menuAccessConfiguration.rolesCanSeeControlMenu();
+		return menuAccessConfiguration.roleIdsCanAccessControlMenu();
 	}
 
 	@Override
@@ -64,14 +66,14 @@ public class MenuAccessConfigurationProviderImpl
 
 	@Override
 	public void updateMenuAccessConfiguration(
-			long groupId, String[] rolesCanSeeControlMenu,
+			long groupId, String[] roleIdsCanAccessControlMenu,
 			boolean showControlMenuByRole)
 		throws Exception {
 
 		_configurationProvider.saveGroupConfiguration(
 			MenuAccessConfiguration.class, groupId,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"rolesCanSeeControlMenu", rolesCanSeeControlMenu
+				"roleIdsCanAccessControlMenu", roleIdsCanAccessControlMenu
 			).put(
 				"showControlMenuByRole", showControlMenuByRole
 			).build());
@@ -94,24 +96,24 @@ public class MenuAccessConfigurationProviderImpl
 			}
 
 			String roleId = String.valueOf(role.getRoleId());
-			String[] rolesCanSeeControlMenu =
-				menuAccessConfiguration.rolesCanSeeControlMenu();
+			String[] roleIdsCanAccessControlMenu =
+				menuAccessConfiguration.roleIdsCanAccessControlMenu();
 
-			if (ArrayUtil.contains(rolesCanSeeControlMenu, roleId)) {
+			if (ArrayUtil.contains(roleIdsCanAccessControlMenu, roleId)) {
 				if (!add) {
-					rolesCanSeeControlMenu = ArrayUtil.remove(
-						rolesCanSeeControlMenu, roleId);
+					roleIdsCanAccessControlMenu = ArrayUtil.remove(
+						roleIdsCanAccessControlMenu, roleId);
 				}
 			}
 			else if (add) {
-				rolesCanSeeControlMenu = ArrayUtil.append(
-					rolesCanSeeControlMenu, roleId);
+				roleIdsCanAccessControlMenu = ArrayUtil.append(
+					roleIdsCanAccessControlMenu, roleId);
 			}
 
 			_configurationProvider.saveGroupConfiguration(
 				MenuAccessConfiguration.class, group.getGroupId(),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"rolesCanSeeControlMenu", rolesCanSeeControlMenu
+					"roleIdsCanAccessControlMenu", roleIdsCanAccessControlMenu
 				).put(
 					"showControlMenuByRole",
 					menuAccessConfiguration.showControlMenuByRole()

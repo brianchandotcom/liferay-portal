@@ -43,8 +43,8 @@ class TestrayRequirementsImpl extends Rest<Requirement, TestrayRequirement> {
 				r_projectToRequirements_c_projectId,
 				summary,
 			}),
-			nestedFields: 'component, team',
-
+			nestedFields:
+				'component, team, componentToRequirements.teamToComponents',
 			transformData: (testrayRequirement) => ({
 				...testrayRequirement,
 				component: testrayRequirement.r_componentToRequirements_c_component

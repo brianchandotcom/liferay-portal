@@ -39,8 +39,7 @@ definition {
 			var curl = '''
 				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
 			''';
-		}
-		else if (isSet(filter)) {
+			if (isSet(filter)) {
 			var curl = '''
 				${analyticsCloudURL}/api/reports/${type}\?${filter}=${filterValue} -H "Authorization: Bearer ${token}"
 			''';
@@ -51,7 +50,7 @@ definition {
 			''';
 		}
 
-		static var apiResponse = JSONCurlUtil.get(${curl}, "$");
+		static var apiResponse = JSONCurlUtil.get(${curl});
 
 		return ${apiResponse};
 	}

@@ -41,7 +41,6 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 				deleteResource(`/suites/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
-					.then(() => navigate(-1))
 					.catch(form.onError),
 			icon: 'trash',
 			name: isHeaderActions

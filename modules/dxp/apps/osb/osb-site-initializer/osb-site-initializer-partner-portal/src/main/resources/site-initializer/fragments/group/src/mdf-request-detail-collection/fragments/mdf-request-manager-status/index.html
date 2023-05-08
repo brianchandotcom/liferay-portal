@@ -88,7 +88,14 @@
 										const textarea = document.getElementById("descriptionTextArea");
 
 										if(textarea.value){
-											return updateStatus(status);
+											const commentParagraph = document.querySelector("iframe").contentWindow.document.querySelector("body.portlet-page-comments p");
+											const postCommentButton = document.querySelector("button.btn-comment");
+
+											commentParagraph.innerHTML = Liferay.Util.escape(textarea.value);
+											postCommentButton.disabled = false;
+											postCommentButton.click();
+
+											return updateRequestStatus(status);
 										}
 
 										Liferay.Util.openToast({
@@ -104,7 +111,7 @@
 						});
 				}
 
-				return updateStatus(status);
+				return updateRequestStatus(status);
 			};
 		</script>
 

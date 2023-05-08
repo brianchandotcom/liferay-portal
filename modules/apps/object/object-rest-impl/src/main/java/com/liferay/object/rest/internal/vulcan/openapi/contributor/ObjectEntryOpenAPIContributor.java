@@ -453,7 +453,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 		Map<String, Schema> actionSchemas = new HashMap<>();
 
-		String pathObjectEntryIdParam = StringBundler.concat(
+		String objectEntryIdPathName = StringBundler.concat(
 			StringPool.SLASH, StringPool.OPEN_CURLY_BRACE,
 			StringUtil.lowerCaseFirstLetter(_objectDefinition.getShortName()),
 			"Id}");
@@ -466,16 +466,18 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			Map<PathItem.HttpMethod, Operation> operations =
 				pathItem.readOperationsMap();
 
-			if (pathName.equals(pathObjectEntryIdParam)) {
+			if (pathName.equals(objectEntryIdPathName)) {
 				_setEntityActionsValues(
 					actionSchemas, openAPIContext, operations, pathName);
 			}
-			else if (pathName.equals(pathObjectEntryIdParam + "/permissions")) {
+			else if (pathName.equals(
+						objectEntryIdPathName + "/permissions")) {
+
 				_setEntityActionsValues(
 					actionSchemas, openAPIContext, operations, pathName);
 			}
-			else if (pathName.contains("object-actions") &&
-					 pathName.contains("by-external-reference-code")) {
+			else if (pathName.contains("by-external-reference-code") &&
+					 pathName.contains("object-actions")) {
 
 				_setEntityActionsValues(
 					actionSchemas, openAPIContext, operations, pathName);

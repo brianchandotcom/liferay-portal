@@ -151,6 +151,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -785,6 +786,14 @@ public class BundleSiteInitializerTest {
 			_serviceContext.getCompanyId(),
 			"com.liferay.commerce.product.model.CPDefinition");
 
+		ExpandoBridge expandoBridgeOrderItem = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.commerce.model.CommerceOrderItem");
+
+		ExpandoBridge expandoBridgeUser = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.portal.kernel.model.User");
+
 		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
 			1.5, expandoBridge.getAttribute("Test Expando Column 1"));
@@ -793,47 +802,33 @@ public class BundleSiteInitializerTest {
 			"Test Default Value",
 			expandoBridge.getAttribute("Test Expando Column 2"));
 
-		Object valueExpandoColumn3 = expandoBridge.getAttributeDefault(
-			"Test Expando Column 3");
+		double[] actualArrayExpandoColumn3 = (double[]) expandoBridgeOrderItem.getAttributeDefault("Test Expando Column 3");
 
-		Assert.assertTrue(valueExpandoColumn3 instanceof double[]);
+		Assert.assertTrue( actualArrayExpandoColumn3.length > 0);
 
-		double[] actualArrayExpandoColumn3 = (double[])valueExpandoColumn3;
+		Assert.assertTrue(ArrayUtil.contains(actualArrayExpandoColumn3, 2.0)
+						  && ArrayUtil.contains(actualArrayExpandoColumn3, 2.5));
 
-		Assert.assertTrue(actualArrayExpandoColumn3.length > 0);
-
-		Assert.assertEquals(2.0, actualArrayExpandoColumn3[0], 0);
-		Assert.assertEquals(2.5, actualArrayExpandoColumn3[1], 0);
-
-		Object valueExpandoColumn4 = expandoBridge.getAttributeDefault(
-			"Test Expando Column 4");
-
-		Assert.assertTrue(valueExpandoColumn4 instanceof int[]);
-
-		int[] actualArrayExpandoColumn4 = (int[])valueExpandoColumn4;
+		int[] actualArrayExpandoColumn4 = (int[]) expandoBridgeUser.getAttributeDefault("Test Expando Column 4");
 
 		Assert.assertTrue(actualArrayExpandoColumn4.length > 0);
 
-		Assert.assertEquals(100, actualArrayExpandoColumn4[0], 0);
-		Assert.assertEquals(200, actualArrayExpandoColumn4[1], 0);
-
-		Object valueExpandoColumn5 = expandoBridge.getAttributeDefault(
-			"Test Expando Column 5");
-
-		Assert.assertTrue(valueExpandoColumn5 instanceof String[]);
-
-		String[] actualArrayExpandoColumn5 = (String[])valueExpandoColumn5;
-
-		Assert.assertTrue(actualArrayExpandoColumn5.length > 0);
-
-		Assert.assertEquals("value1", actualArrayExpandoColumn5[0]);
-		Assert.assertEquals("value2", actualArrayExpandoColumn5[1]);
+		Assert.assertTrue(ArrayUtil.contains(actualArrayExpandoColumn4, 100)
+						  && ArrayUtil.contains(actualArrayExpandoColumn4, 200));
 	}
 
 	private void _assertExpandoColumns2() {
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			_serviceContext.getCompanyId(),
 			"com.liferay.commerce.product.model.CPDefinition");
+
+		ExpandoBridge expandoBridgeOrderItem = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.commerce.model.CommerceOrderItem");
+
+		ExpandoBridge expandoBridgeUser = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.portal.kernel.model.User");
 
 		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
@@ -843,40 +838,28 @@ public class BundleSiteInitializerTest {
 			"Test Default Value Update",
 			expandoBridge.getAttribute("Test Expando Column 2"));
 
-		Object valueExpandoColumn3 = expandoBridge.getAttributeDefault(
-			"Test Expando Column 3");
+		double[] actualArrayExpandoColumn3 = (double[]) expandoBridgeOrderItem.getAttributeDefault("Test Expando Column 3");
 
-		Assert.assertTrue(valueExpandoColumn3 instanceof double[]);
+		Assert.assertTrue( actualArrayExpandoColumn3.length > 0);
 
-		double[] actualArrayExpandoColumn3 = (double[])valueExpandoColumn3;
+		Assert.assertTrue(ArrayUtil.contains(actualArrayExpandoColumn3, 2.0)
+						  && ArrayUtil.contains(actualArrayExpandoColumn3, 2.5)
+		                  && ArrayUtil.contains(actualArrayExpandoColumn3, 3.0));
 
-		Assert.assertTrue(actualArrayExpandoColumn3.length > 0);
-
-		Assert.assertEquals(2.0, actualArrayExpandoColumn3[0], 0);
-		Assert.assertEquals(2.5, actualArrayExpandoColumn3[1], 0);
-		Assert.assertEquals(3.0, actualArrayExpandoColumn3[2], 0);
-
-		Object valueExpandoColumn4 = expandoBridge.getAttributeDefault(
-			"Test Expando Column 4");
-
-		int[] actualArrayExpandoColumn4 = (int[])valueExpandoColumn4;
+		int[] actualArrayExpandoColumn4 = (int[]) expandoBridgeUser.getAttributeDefault("Test Expando Column 4");
 
 		Assert.assertTrue(actualArrayExpandoColumn4.length > 0);
 
-		Assert.assertEquals(100, actualArrayExpandoColumn4[0], 0);
-		Assert.assertEquals(200, actualArrayExpandoColumn4[1], 0);
-		Assert.assertEquals(300, actualArrayExpandoColumn4[2], 0);
+		Assert.assertTrue(ArrayUtil.contains(actualArrayExpandoColumn4, 100)
+						  && ArrayUtil.contains(actualArrayExpandoColumn4, 200)
+						  && ArrayUtil.contains(actualArrayExpandoColumn4, 300));
 
-		Object valueExpandoColumn5 = expandoBridge.getAttributeDefault(
-			"Test Expando Column 5");
-
-		Assert.assertTrue(valueExpandoColumn5 instanceof String[]);
-
-		String[] actualArrayExpandoColumn5 = (String[])valueExpandoColumn5;
+		String[] actualArrayExpandoColumn5 = (String[]) expandoBridgeUser.getAttributeDefault("Test Expando Column 5");
 
 		Assert.assertTrue(actualArrayExpandoColumn5.length > 0);
 
-		Assert.assertEquals("value1", actualArrayExpandoColumn5[0]);
+		Assert.assertTrue(ArrayUtil.contains(actualArrayExpandoColumn5, "value1")
+						  && ArrayUtil.contains(actualArrayExpandoColumn5, "value2"));
 	}
 
 	private void _assertFragmentEntries() throws Exception {

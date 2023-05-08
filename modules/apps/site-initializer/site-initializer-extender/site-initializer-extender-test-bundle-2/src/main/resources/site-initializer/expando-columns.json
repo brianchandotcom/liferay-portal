@@ -21,7 +21,6 @@
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Test Expando Column 3"
 	},
-
 	{
 		"dataType": 10,
 		"defaultValue": [

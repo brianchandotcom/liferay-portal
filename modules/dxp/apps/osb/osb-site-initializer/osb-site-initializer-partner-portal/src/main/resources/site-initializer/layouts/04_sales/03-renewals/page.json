@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/sales/renewal-opportunities",
-	"hidden": true,
+	"friendlyURL": "/sales/renewals",
+	"hidden": false,
 	"name_i18n": {
-		"en_US": "Renewal Opportunities"
+		"en_US": "Renewals"
 	},
 	"permissions": [
 		{

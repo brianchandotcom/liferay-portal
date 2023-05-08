@@ -62,19 +62,19 @@
 										},
 										"text": {
 											"value_i18n": {
-												"ar_SA": "Partner Deal Registration",
-												"ca_ES": "Partner Deal Registration",
-												"de_DE": "Partner Deal Registration",
-												"en_US": "Partner Deal Registration",
-												"es_ES": "Partner Deal Registration",
-												"fi_FI": "Partner Deal Registration",
-												"fr_FR": "Partner Deal Registration",
-												"hu_HU": "Partner Deal Registration",
-												"ja_JP": "Partner Deal Registration",
-												"nl_NL": "Partner Deal Registration",
-												"pt_BR": "Partner Deal Registration",
-												"sv_SE": "Partner Deal Registration",
-												"zh_CN": "Partner Deal Registration"
+												"ar_SA": "Deal Registration",
+												"ca_ES": "Deal Registration",
+												"de_DE": "Deal Registration",
+												"en_US": "Deal Registration",
+												"es_ES": "Deal Registration",
+												"fi_FI": "Deal Registration",
+												"fr_FR": "Deal Registration",
+												"hu_HU": "Deal Registration",
+												"ja_JP": "Deal Registration",
+												"nl_NL": "Deal Registration",
+												"pt_BR": "Deal Registration",
+												"sv_SE": "Deal Registration",
+												"zh_CN": "Deal Registration"
 											}
 										}
 									}
@@ -91,7 +91,7 @@
 															"fields": [
 																{
 																	"fieldName": "friendlyURL",
-																	"fieldValue": "/sales/partner-opportunities"
+																	"fieldValue": "/sales/opportunities"
 																},
 																{
 																	"fieldName": "privatePage",
@@ -105,19 +105,19 @@
 										},
 										"text": {
 											"value_i18n": {
-												"ar_SA": "Partner Growth Deals",
-												"ca_ES": "Partner Growth Deals",
-												"de_DE": "Partner Growth Deals",
-												"en_US": "Partner Growth Deals",
-												"es_ES": "Partner Growth Deals",
-												"fi_FI": "Partner Growth Deals",
-												"fr_FR": "Partner Growth Deals",
-												"hu_HU": "Partner Growth Deals",
-												"ja_JP": "Partner Growth Deals",
-												"nl_NL": "Partner Growth Deals",
-												"pt_BR": "Partner Growth Deals",
-												"sv_SE": "Partner Growth Deals",
-												"zh_CN": "Partner Growth Deals"
+												"ar_SA": "Opportunities",
+												"ca_ES": "Opportunities",
+												"de_DE": "Opportunities",
+												"en_US": "Opportunities",
+												"es_ES": "Opportunities",
+												"fi_FI": "Opportunities",
+												"fr_FR": "Opportunities",
+												"hu_HU": "Opportunities",
+												"ja_JP": "Opportunities",
+												"nl_NL": "Opportunities",
+												"pt_BR": "Opportunities",
+												"sv_SE": "Opportunities",
+												"zh_CN": "Opportunities"
 											}
 										}
 									}

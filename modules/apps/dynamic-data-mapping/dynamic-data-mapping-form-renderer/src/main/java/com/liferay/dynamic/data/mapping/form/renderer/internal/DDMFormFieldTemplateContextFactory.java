@@ -115,13 +115,6 @@ public class DDMFormFieldTemplateContextFactory {
 			_ddmFormFieldValues, StringPool.BLANK);
 	}
 
-	protected ThemeDisplay getThemeDisplay(
-		HttpServletRequest httpServletRequest) {
-
-		return (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
 	protected void setDDMFormFieldTypeServicesRegistry(
 		DDMFormFieldTypeServicesRegistry ddmFormFieldTypeServicesRegistry) {
 
@@ -170,19 +163,20 @@ public class DDMFormFieldTemplateContextFactory {
 				"ddmFormInstanceRecordId", ddmFormInstanceRecordId);
 		}
 
-		ddmFormFieldRenderingContext.setProperty(
-			"groupId", _ddmFormRenderingContext.getGroupId());
-
-		long groupId = GetterUtil.getLong(
-			ddmFormFieldRenderingContext.getProperty("groupId"));
+		long groupId = _ddmFormRenderingContext.getGroupId();
 
 		if (groupId == 0) {
-			ThemeDisplay themeDisplay = getThemeDisplay(
-				ddmFormFieldRenderingContext.getHttpServletRequest());
+			HttpServletRequest httpServletRequest =
+				ddmFormFieldRenderingContext.getHttpServletRequest();
 
-			ddmFormFieldRenderingContext.setProperty(
-				"groupId", themeDisplay.getScopeGroupId());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			groupId = themeDisplay.getScopeGroupId();
 		}
+
+		ddmFormFieldRenderingContext.setProperty("groupId", groupId);
 
 		ddmFormFieldRenderingContext.setReturnFullContext(
 			_ddmFormRenderingContext.isReturnFullContext());

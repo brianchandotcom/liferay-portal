@@ -7,9 +7,7 @@
 		<suppress checks="ComponentExposureCheck" files="asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/configuration/AssetPublisherSelectionStyleConfigurationUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="asset/asset-taglib/src/main/java/com/liferay/asset/taglib/internal/item/selector/ItemSelectorUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="captcha/captcha-api/src/main/java/com/liferay/captcha/util/CaptchaUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="captcha/captcha-taglib/src/main/java/com/liferay/captcha/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="change-tracking/change-tracking-web/src/main/java/com/liferay/change/tracking/web/internal/timeline/CTCollectionHistoryProviderRegistry\.java" />
-		<suppress checks="ComponentExposureCheck" files="comment/comment-taglib/src/main/java/com/liferay/comment/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-cart-taglib/src/main/java/com/liferay/commerce/cart/taglib/servlet/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-frontend-taglib/src/main/java/com/liferay/commerce/frontend/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="commerce/commerce-product-taglib/src/main/java/com/liferay/commerce/product/taglib/servlet/taglib/internal/servlet/ServletContextUtil\.java" />
@@ -18,7 +16,6 @@
 		<suppress checks="ComponentExposureCheck" files="data-engine/data-engine-taglib/src/main/java/com/liferay/data/engine/taglib/internal/servlet/taglib/util/DataLayoutTaglibUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-item-selector-web/src/main/java/com/liferay/document/library/item/selector/web/internal/criterion/DLItemSelectorCriterionCreationMenuRestrictionUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-taglib/src/main/java/com/liferay/document/library/taglib/internal/display/context/DLViewFileVersionDisplayContextUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="document-library/document-library-taglib/src/main/java/com/liferay/document/library/taglib/internal/servlet/ServletContextUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/util/DLWebComponentProvider\.java" />
 		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-form-web/src/main/java/com/liferay/dynamic/data/mapping/form/web/internal/display/context/util/DDMFormGuestUploadFieldUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="dynamic-data-mapping/dynamic-data-mapping-taglib/src/main/java/com/liferay/dynamic/data/mapping/taglib/internal/servlet/ServletContextUtil\.java" />

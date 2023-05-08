@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * @author Carlos Correa
  */
-public class SystemObjectEntryTestUtil {
+public class UserAccountTestUtil {
 
 	public static JSONObject addUserAccountJSONObject(
 			SystemObjectDefinitionManager systemObjectDefinitionManager,

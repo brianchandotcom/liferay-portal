@@ -44,7 +44,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinition
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.SystemObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.UserAccountTestUtil;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -248,12 +248,11 @@ public class ObjectEntryResourceTest {
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
 			_OBJECT_FIELD_NAME_2);
 
-		_userAccountJSONObject =
-			SystemObjectEntryTestUtil.addUserAccountJSONObject(
-				systemObjectDefinitionManager,
-				HashMapBuilder.<String, Serializable>put(
-					_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
-				).build());
+		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
+			systemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+			).build());
 	}
 
 	@After

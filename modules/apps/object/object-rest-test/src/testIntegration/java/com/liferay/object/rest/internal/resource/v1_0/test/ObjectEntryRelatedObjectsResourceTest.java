@@ -27,7 +27,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinition
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.SystemObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -1044,8 +1044,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_toBody(
 				manyToOne, objectRelationship,
 				JSONFactoryUtil.createJSONObject(
-					String.valueOf(
-						SystemObjectEntryTestUtil.randomUserAccount()))),
+					String.valueOf(UserAccountTestUtil.randomUserAccount()))),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
@@ -1055,7 +1054,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		UserAccount userAccount = SystemObjectEntryTestUtil.randomUserAccount();
+		UserAccount userAccount = UserAccountTestUtil.randomUserAccount();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			_toBody(
@@ -1115,14 +1114,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
 					_SYSTEM_OBJECT_FIELD_NAME_2, _SYSTEM_OBJECT_FIELD_VALUE,
-					SystemObjectEntryTestUtil.randomUserAccount())),
+					UserAccountTestUtil.randomUserAccount())),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		String customObjectEntryId = customObjectEntryJSONObject.getString(
 			"id");
 
-		UserAccount putUserAccount =
-			SystemObjectEntryTestUtil.randomUserAccount();
+		UserAccount putUserAccount = UserAccountTestUtil.randomUserAccount();
 
 		putUserAccount.setExternalReferenceCode(
 			() -> {

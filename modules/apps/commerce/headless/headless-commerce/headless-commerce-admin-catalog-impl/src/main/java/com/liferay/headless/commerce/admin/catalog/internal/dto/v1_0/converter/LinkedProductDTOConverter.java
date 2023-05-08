@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry",
-	service = {DTOConverter.class, LinkedProductDTOConverter.class}
+	service = DTOConverter.class
 )
 public class LinkedProductDTOConverter
 	implements DTOConverter<CPDefinitionGroupedEntry, LinkedProduct> {

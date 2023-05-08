@@ -12,14 +12,14 @@ definition {
 	property testray.main.component.name = "Database Partitioning";
 
 	@priority = 5
-	test CanAutoUpgradeLargePartitionedDatabase7413U47 {
+	test CanAutoUpgradeLargePartitionedDatabase7413U72 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property custom.startup.timeout = "360";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u47";
+		property portal.version = "7.4.13.u72";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
@@ -30,13 +30,13 @@ definition {
 	}
 
 	@priority = 5
-	test CanAutoUpgradeLargePartitionedDatabase7413U47Benchmark {
+	test CanAutoUpgradeLargePartitionedDatabase7413U72Benchmark {
 		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u47";
+		property portal.version = "7.4.13.u72";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
@@ -55,13 +55,13 @@ definition {
 	}
 
 	@priority = 5
-	test CanUpgradeLargePartitionedDatabase7413U47 {
+	test CanUpgradeLargePartitionedDatabase7413U72 {
 		property custom.startup.timeout = "490";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u47";
+		property portal.version = "7.4.13.u72";
 		property test.assert.warning.exceptions = "false";
 
 		User.firstLoginUI(
@@ -71,12 +71,12 @@ definition {
 	}
 
 	@priority = 5
-	test CanUpgradeLargePartitionedDatabase7413U47Benchmark {
+	test CanUpgradeLargePartitionedDatabase7413U72Benchmark {
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";
 		property portal.upstream = "false";
-		property portal.version = "7.4.13.u47";
+		property portal.version = "7.4.13.u72";
 		property test.assert.warning.exceptions = "false";
 		property upgrade.reports.enabled = "true";
 

@@ -196,4 +196,36 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample IFrame 1 - Counter App"
+	@priority = 4
+	test LiferaySampleIFrame1Smoke {
+		property workspaces.client.extension.names = "liferay-sample-iframe-1";
+
+		task ("Given: A user is on a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Then: User can add the Counter App widget to the page which was made available by deploying Liferay Sample IFrame 1") {
+			Portlet.addPG(portletName = "Counter App");
+		}
+
+		task ("And: The user can interact with the Counter App widget") {
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			Click(
+				key_row = 1,
+				locator1 = "ClientExtension#SAMPLE_IFRAME_1_COUNTER_INCREMENT_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_IFRAME_1_COUNTER_CART_TOTAL",
+				value1 = 1);
+		}
+	}
+
 }

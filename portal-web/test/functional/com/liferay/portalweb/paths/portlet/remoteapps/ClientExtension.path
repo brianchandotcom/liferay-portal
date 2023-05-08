@@ -131,6 +131,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAMPLE_IFRAME_1_COUNTER_CART_TOTAL</td>
+	<td>//div[contains(@class,'navbar-brand') and contains(.,'Items')]//span[contains(@class,'badge-pill')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAMPLE_IFRAME_1_COUNTER_INCREMENT_BUTTON</td>
+	<td>//button[.//i[contains(@class,'fa-plus-circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_THEME_SPRITEMAP_CLIENT_EXTENSION</td>
 	<td>//dl[contains(@class, "list-group")]//dd[@data-qa-id="row"][contains(@data-value,'${key_text}')]//div[@data-qa-id="rowItemContent"]</td>
 	<td></td>

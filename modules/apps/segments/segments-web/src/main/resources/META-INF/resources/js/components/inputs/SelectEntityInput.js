@@ -59,10 +59,20 @@ function SelectEntityInput({
 		else {
 			openSelectionModal({
 				onSelect: (event) => {
-					onChange({
-						displayValue: event.entityname,
-						value: event.entityid,
-					});
+					try {
+						const valueJSON = JSON.parse(event.value);
+
+						onChange({
+							displayValue: valueJSON.segmentsEntryName,
+							value: valueJSON.segmentEntryId,
+						});
+					}
+					catch {
+						onChange({
+							displayValue: event.entityname,
+							value: event.entityid,
+						});
+					}
 				},
 				selectEventName: id,
 				title,

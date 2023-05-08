@@ -69,10 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
-	service = {
-		DLExportImportPortletPreferencesProcessor.class,
-		ExportImportPortletPreferencesProcessor.class
-	}
+	service = ExportImportPortletPreferencesProcessor.class
 )
 public class DLExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {

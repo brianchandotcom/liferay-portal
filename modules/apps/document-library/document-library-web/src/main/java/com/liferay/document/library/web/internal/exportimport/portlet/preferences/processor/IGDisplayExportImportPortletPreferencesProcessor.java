@@ -79,8 +79,10 @@ public class IGDisplayExportImportPortletPreferencesProcessor
 				portletDataContext, portletPreferences);
 	}
 
-	@Reference
-	private DLExportImportPortletPreferencesProcessor
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
+	)
+	private ExportImportPortletPreferencesProcessor
 		_dlExportImportPortletPreferencesProcessor;
 
 	@Reference(target = "(name=IGDisplayExportCapability)")

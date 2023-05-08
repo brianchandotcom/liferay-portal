@@ -48,7 +48,9 @@ const DefaultPageHeader: React.FC<IProps> = ({
 				className="lfr-ddm__default-page-header"
 				id={`${portletNamespace}header`}
 			>
-				<h1 className="lfr-ddm__default-page-header-title">{title}</h1>
+				<div className="lfr-ddm__default-page-header-title">
+					{title}
+				</div>
 
 				{description && (
 					<span className="lfr-ddm__default-page-header-description">

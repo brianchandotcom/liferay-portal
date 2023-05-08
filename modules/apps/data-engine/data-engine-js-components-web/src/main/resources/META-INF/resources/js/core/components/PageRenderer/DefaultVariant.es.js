@@ -156,9 +156,11 @@ export function PageHeader({description, title}) {
 
 	return (
 		<>
-			{title && <h2 className="lfr-ddm-form-page-title">{title}</h2>}
+			{title && <div className="lfr-ddm-form-page-title">{title}</div>}
 			{!isWebContentPortlet && description && (
-				<h3 className="lfr-ddm-form-page-description">{description}</h3>
+				<div className="lfr-ddm-form-page-description">
+					{description}
+				</div>
 			)}
 		</>
 	);

@@ -37,6 +37,7 @@ const Goals = ({
 		isSubmitting,
 		isValid,
 		setFieldValue,
+		status,
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
@@ -190,7 +191,7 @@ const Goals = ({
 					<div className="d-flex justify-content-end mr-auto">
 						<Button
 							className="inline-item inline-item-after pl-0"
-							disabled={isSubmitting || !values.company?.id}
+							disabled={status || !values.company?.id}
 							displayType={null}
 							onClick={() =>
 								onSaveAsDraft?.(values, formikHelpers)
@@ -206,7 +207,7 @@ const Goals = ({
 					<div className="d-flex justify-content-between px-2 px-md-0">
 						<Button
 							className="mr-4"
-							disabled={isSubmitting}
+							disabled={isSubmitting || status}
 							displayType="secondary"
 							onClick={onCancel}
 						>
@@ -217,7 +218,8 @@ const Goals = ({
 							className="inline-item inline-item-after"
 							disabled={
 								(!isValid && !isObjectEmpty(goalsErrors)) ||
-								isSubmitting
+								isSubmitting ||
+								status
 							}
 							onClick={() =>
 								onContinue?.(formikHelpers, StepType.ACTIVITIES)

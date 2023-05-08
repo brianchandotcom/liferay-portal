@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,21 +8,3 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-const queryParams = new URLSearchParams(window.location.search);
-const hasNewSuccess = Boolean(queryParams.get('new-success'));
-const hasEditSuccess = Boolean(queryParams.get('edit-success'));
-
-if (hasNewSuccess) {
-	Liferay.Util.openToast({
-		message: 'Your MDF Request was successfully submited.',
-		type: 'success',
-	});
-}
-
-if (hasEditSuccess) {
-	Liferay.Util.openToast({
-		message: 'Your MDF Request was successfully edited.',
-		type: 'success',
-	});
-}

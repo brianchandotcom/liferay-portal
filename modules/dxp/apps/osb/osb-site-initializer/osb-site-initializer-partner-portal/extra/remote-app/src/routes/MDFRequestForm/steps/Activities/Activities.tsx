@@ -42,6 +42,7 @@ const Activities = ({
 		isSubmitting,
 		isValid,
 		setFieldValue,
+		status,
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFRequest>();
@@ -177,7 +178,7 @@ const Activities = ({
 			<PRMForm.Footer>
 				<div className="d-flex justify-content-between mr-auto">
 					<Button
-						disabled={isSubmitting}
+						disabled={status || isSubmitting}
 						displayType={null}
 						onClick={() =>
 							currentActivityIndex !== undefined
@@ -190,7 +191,7 @@ const Activities = ({
 
 					<Button
 						className="inline-item inline-item-after"
-						disabled={isSubmitting}
+						disabled={status || isSubmitting}
 						displayType={null}
 						onClick={onSaveAsDraftForm}
 					>
@@ -204,7 +205,7 @@ const Activities = ({
 				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
 						className="mr-4"
-						disabled={isSubmitting}
+						disabled={status || isSubmitting}
 						displayType="secondary"
 						onClick={onCancel}
 					>

@@ -31,7 +31,7 @@ const Review = ({
 	onPrevious,
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFRequestStepProps) => {
-	const {isSubmitting, values, ...formikHelpers} = useFormikContext<
+	const {isSubmitting, status, values, ...formikHelpers} = useFormikContext<
 		MDFRequest
 	>();
 
@@ -93,7 +93,7 @@ const Review = ({
 						<div className="d-flex justify-content-between mr-auto">
 							<Button
 								className="mr-4"
-								disabled={isSubmitting}
+								disabled={status || isSubmitting}
 								displayType={null}
 								onClick={() =>
 									onPrevious?.(StepType.ACTIVITIES)
@@ -104,7 +104,7 @@ const Review = ({
 
 							<Button
 								className="inline-item inline-item-after pl-0"
-								disabled={isSubmitting}
+								disabled={status || isSubmitting}
 								displayType={null}
 								onClick={() =>
 									onSaveAsDraft?.(values, formikHelpers)
@@ -120,7 +120,7 @@ const Review = ({
 						<div className="d-flex justify-content-between px-2 px-md-0">
 							<Button
 								className="mr-4"
-								disabled={isSubmitting}
+								disabled={status || isSubmitting}
 								displayType="secondary"
 								onClick={onCancel}
 							>
@@ -129,7 +129,7 @@ const Review = ({
 
 							<Button
 								className="inline-item inline-item-after"
-								disabled={isSubmitting}
+								disabled={status || isSubmitting}
 								type="submit"
 							>
 								Submit

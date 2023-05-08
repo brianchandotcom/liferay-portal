@@ -108,7 +108,7 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 	}
 
 	@Override
-	public List<AccountGroup> getAccountGroupsByAccountId(
+	public List<AccountGroup> getAccountGroupsByAccountEntryId(
 			long accountEntryId, int start, int end)
 		throws PortalException {
 
@@ -116,19 +116,19 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 			getPermissionChecker(), accountEntryId,
 			AccountActionKeys.VIEW_ACCOUNT_GROUPS);
 
-		return accountGroupLocalService.getAccountGroupsByAccountId(
+		return accountGroupLocalService.getAccountGroupsByAccountEntryId(
 			accountEntryId, start, end);
 	}
 
 	@Override
-	public int getAccountGroupsByAccountIdCount(long accountEntryId)
+	public int getAccountGroupsCountByAccountEntryId(long accountEntryId)
 		throws PortalException {
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId,
 			AccountActionKeys.VIEW_ACCOUNT_GROUPS);
 
-		return accountGroupLocalService.getAccountGroupsByAccountIdCount(
+		return accountGroupLocalService.getAccountGroupsCountByAccountEntryId(
 			accountEntryId);
 	}
 

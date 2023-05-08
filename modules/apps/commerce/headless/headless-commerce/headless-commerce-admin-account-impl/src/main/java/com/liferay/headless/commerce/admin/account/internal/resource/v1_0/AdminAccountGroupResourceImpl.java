@@ -275,12 +275,12 @@ public class AdminAccountGroupResourceImpl
 
 		return Page.of(
 			transform(
-				_accountGroupService.getAccountGroupsByAccountId(
+				_accountGroupService.getAccountGroupsByAccountEntryId(
 					accountEntryId, pagination.getStartPosition(),
 					pagination.getEndPosition()),
 				accountGroup -> _toAccountGroup(accountGroup)),
 			pagination,
-			_accountGroupService.getAccountGroupsByAccountIdCount(
+			_accountGroupService.getAccountGroupsCountByAccountEntryId(
 				accountEntryId));
 	}
 

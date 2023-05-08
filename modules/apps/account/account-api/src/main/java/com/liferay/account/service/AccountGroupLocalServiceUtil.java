@@ -315,6 +315,20 @@ public class AccountGroupLocalServiceUtil {
 			companyId, name, start, end, orderByComparator);
 	}
 
+	public static List<AccountGroup> getAccountGroupsByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getService().getAccountGroupsByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	public static int getAccountGroupsByAccountEntryIdCount(
+		long accountEntryId) {
+
+		return getService().getAccountGroupsByAccountEntryIdCount(
+			accountEntryId);
+	}
+
 	public static List<AccountGroup> getAccountGroupsByAccountGroupId(
 		long[] accountGroupIds) {
 

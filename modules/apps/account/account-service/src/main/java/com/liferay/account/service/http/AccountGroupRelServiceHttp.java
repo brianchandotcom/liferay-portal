@@ -128,6 +128,47 @@ public class AccountGroupRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountGroupRel
+			deleteAccountGroupRel(
+				HttpPrincipal httpPrincipal, long accountGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupRelServiceUtil.class, "deleteAccountGroupRel",
+				_deleteAccountGroupRelParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountGroupRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountGroupRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void deleteAccountGroupRels(
 			HttpPrincipal httpPrincipal, long accountGroupId, String className,
 			long[] classPKs)
@@ -136,7 +177,7 @@ public class AccountGroupRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupRelServiceUtil.class, "deleteAccountGroupRels",
-				_deleteAccountGroupRelsParameterTypes2);
+				_deleteAccountGroupRelsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountGroupId, className, classPKs);
@@ -165,6 +206,48 @@ public class AccountGroupRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountGroupRel
+			fetchAccountGroupRel(
+				HttpPrincipal httpPrincipal, long accountGroupId,
+				String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupRelServiceUtil.class, "fetchAccountGroupRel",
+				_fetchAccountGroupRelParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountGroupId, className, classPK);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountGroupRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountGroupRelServiceHttp.class);
 
@@ -172,7 +255,11 @@ public class AccountGroupRelServiceHttp {
 		new Class[] {long.class, String.class, long.class};
 	private static final Class<?>[] _addAccountGroupRelsParameterTypes1 =
 		new Class[] {long.class, String.class, long[].class};
-	private static final Class<?>[] _deleteAccountGroupRelsParameterTypes2 =
+	private static final Class<?>[] _deleteAccountGroupRelParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _deleteAccountGroupRelsParameterTypes3 =
 		new Class[] {long.class, String.class, long[].class};
+	private static final Class<?>[] _fetchAccountGroupRelParameterTypes4 =
+		new Class[] {long.class, String.class, long.class};
 
 }

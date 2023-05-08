@@ -405,14 +405,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private MapSchema _getActionsMapSchema(OpenAPI openAPI, String schemaName) {
 		Components components = openAPI.getComponents();
 
-		Map<String, Schema> schemas = components.getSchemas();
+		Map<String, Schema> schemas1 = components.getSchemas();
 
-		Schema objectDefinitionSchema = schemas.get(schemaName);
+		Schema schema = schemas1.get(schemaName);
 
-		Map<String, Schema> openAPIProperties =
-			objectDefinitionSchema.getProperties();
+		Map<String, Schema> schemas2 = schema.getProperties();
 
-		return (MapSchema)openAPIProperties.get("actions");
+		return (MapSchema)schemas2.get("actions");
 	}
 
 	private Map<String, Schema> _getAvailableCollectionActionMethods(

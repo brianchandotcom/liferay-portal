@@ -29,7 +29,7 @@
 			};
 
 			const updateClaimStatus = async (status) => {
-				const responde = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
+				const response = await fetch(`/o/c/mdfclaims/${mdfClaimId}`, {
 					body: `{"mdfClaimStatus": "` + status + `"}`,
 					headers: {
 						'content-type': 'application/json',
@@ -38,7 +38,7 @@
 					method: 'PUT',
 				});
 
-				if (responde.ok) {
+				if (response.ok) {
 					location.reload();
 
 					return;
@@ -82,16 +82,16 @@
 			const callClaimPaidModal = (status) => {
 				return Liferay.Util.openModal({
 					bodyHTML: `<form>
-											<div class="form-group">
-												<label for="paymentReceivedInput">Amount Received</label>
-											<input class="form-control" id="paymentReceivedInput" placeholder="Amount Received" type="number" />
-											</div>
+									<div class="form-group">
+										<label for="paymentReceivedInput">Amount Received</label>
+									<input class="form-control" id="paymentReceivedInput" placeholder="Amount Received" type="number" />
+									</div>
 
-											<div class="form-group">
-												<label for="checkNumberInput">Check Number</label>
-											<input class="form-control" id="checkNumberInput" placeholder="Check Number" type="text" />
-											</div>
-										</form>`,
+									<div class="form-group">
+										<label for="checkNumberInput">Check Number</label>
+									<input class="form-control" id="checkNumberInput" placeholder="Check Number" type="text" />
+									</div>
+								</form>`,
 					buttons: [
 						{
 							displayType: 'secondary',

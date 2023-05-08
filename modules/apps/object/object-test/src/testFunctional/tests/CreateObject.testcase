@@ -2927,124 +2927,130 @@ definition {
 	test CanRelateManyOtherEntriesBothObjects {
 		property test.name.skip.portal.instance = "CreateObject#CanRelateManyOtherEntriesBothObjects";
 
-		for (var nameObject : list "A,B") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${nameObject} 74",
-				objectName = "CustomObject${nameObject}74",
-				pluralLabelName = "Custom Objects ${nameObject} 74");
+		task ("Given two custom objects, A and B, each with a text field and a layout") {
+			for (var nameObject : list "A,B") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object ${nameObject} 74",
+					objectName = "CustomObject${nameObject}74",
+					pluralLabelName = "Custom Objects ${nameObject} 74");
+			}
+
+			for (var nameField : list "A,B") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Custom Field ${nameField}",
+					fieldName = "customObjectField${nameField}",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "CustomObject${nameField}74");
+			}
+
+			for (var letter : list "A,B") {
+				ObjectAdmin.addObjectLayoutViaAPI(
+					layoutName = "Layout ${letter}",
+					objectName = "CustomObject${letter}74");
+			}
 		}
 
-		for (var nameField : list "A,B") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field ${nameField}",
-				fieldName = "customObjectField${nameField}",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject${nameField}74");
+		task ("And given a M:M relationship between Object A and Object B") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObjectA74",
+				objectName_2 = "CustomObjectB74",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "manyToMany");
 		}
 
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectLayoutViaAPI(
-				layoutName = "Layout ${letter}",
-				objectName = "CustomObject${letter}74");
+		task ("And given a relationship tab in the layouts") {
+			for (var letter : list "A,B") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 74");
+
+				ObjectAdmin.goToLayoutsTab();
+
+				ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+				SelectFrame(locator1 = "IFrame#IFRAME");
+
+				Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
+
+				ObjectAdmin.goToLayoutTabOnLayouts();
+
+				ObjectAdmin.addTabFieldsOnLayout(
+					blockName = "Block 1",
+					columnsNumber = 2,
+					fieldLabelName = "Custom Field ${letter}",
+					tabName = "Field Tab");
+
+				ObjectAdmin.addTabRelationshipsOnLayout(
+					relationshipsLabelName = "Relationship",
+					tabName = "Relationship Tab");
+
+				PortletEntry.save();
+			}
 		}
 
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA74",
-			objectName_2 = "CustomObjectB74",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "manyToMany");
+		task ("And given the text field set as the title field") {
+			for (var letter : list "A,B") {
+				ObjectAdmin.openObjectAdmin();
 
-		for (var letter : list "A,B") {
-			ObjectAdmin.openObjectAdmin();
+				ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 74");
 
-			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 74");
+				CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
 
-			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter}");
-
-			PortletEntry.publish();
-
-			ObjectAdmin.goToLayoutsTab();
-
-			WaitForElementPresent(locator1 = "ObjectAdmin#KEBAB_MENU");
-
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
-
-			SelectFrame(locator1 = "IFrame#IFRAME");
-
-			Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
-
-			ObjectAdmin.goToLayoutTabOnLayouts();
-
-			ObjectAdmin.addTabFieldsOnLayout(
-				blockName = "Block 1",
-				columnsNumber = 2,
-				fieldLabelName = "Custom Field ${letter}",
-				tabName = "Field Tab");
-
-			ObjectAdmin.addTabRelationshipsOnLayout(
-				relationshipsLabelName = "Relationship",
-				tabName = "Relationship Tab");
-
-			PortletEntry.save();
-
-			Navigator.openURL();
+				PortletEntry.publish();
+			}
 		}
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA74");
+		task ("When multiple entries are created for the custom objects") {
+			for (var letter : list "A,B,C") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectFieldA",
+					objectName = "CustomObjectA74",
+					value = "Entry ${letter}");
+			}
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB74");
+			for (var letter : list "D,E,F") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customObjectFieldB",
+					objectName = "CustomObjectB74",
+					value = "Entry ${letter}");
+			}
+		}
 
-		for (var letter : list "A,B,C") {
+		task ("Then many entries from Object A can be related to many entries from Object B") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObjectA74");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry ${letter}");
-		}
+			ObjectPortlet.viewEntryDetails(entry = "Entry A");
 
-		Navigator.openURL();
+			ObjectAdmin.gotoRelationshipsTab();
 
-		for (var letter : list "D,E,F") {
+			for (var letter : list "D,E") {
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
+
+				Refresh();
+
+				WaitForPageLoad();
+
+				ObjectPortlet.viewEntry(entry = "Entry ${letter}");
+			}
+
 			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB74");
 
-			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry ${letter}");
-		}
+			ObjectPortlet.viewEntryDetails(entry = "Entry F");
 
-		Navigator.openURL();
+			ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectA74");
+			for (var letter : list "B,C") {
+				CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
 
-		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+				Refresh();
 
-		ObjectAdmin.gotoRelationshipsTab();
+				WaitForPageLoad();
 
-		for (var letter : list "D,E") {
-			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
-
-			Refresh();
-
-			WaitForPageLoad();
-
-			ObjectPortlet.viewEntry(entry = "Entry ${letter}");
-		}
-
-		Navigator.openURL();
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObjectB74");
-
-		ObjectPortlet.viewEntryDetails(entry = "Entry F");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		for (var letter : list "B,C") {
-			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry ${letter}");
-
-			Refresh();
-
-			WaitForPageLoad();
-
-			ObjectPortlet.viewEntry(entry = "Entry ${letter}");
+				ObjectPortlet.viewEntry(entry = "Entry ${letter}");
+			}
 		}
 	}
 

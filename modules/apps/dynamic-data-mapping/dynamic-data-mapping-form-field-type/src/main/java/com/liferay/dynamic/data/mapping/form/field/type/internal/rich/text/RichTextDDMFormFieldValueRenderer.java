@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RICH_TEXT,
-	service = {
-		DDMFormFieldValueRenderer.class, RichTextDDMFormFieldValueRenderer.class
-	}
+	service = DDMFormFieldValueRenderer.class
 )
 public class RichTextDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {

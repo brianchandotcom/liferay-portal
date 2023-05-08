@@ -280,4 +280,95 @@ definition {
 				expectedList = ${blogId});
 		}
 	}
+
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13492 | Test Summary: Check that you can access the activities of a specific individual"
+	@priority = 3
+	test RequestToAccessDataForSpecificIndividual {
+		var type = "individuals";
+		var userNameList = "analytics,cloud";
+		var emailList = "analytics@liferay.com,cloud@liferay.com";
+		var nameList = "analytics analytics,cloud cloud";
+
+		task ("Copy the token value for the API and copy the token for the AC and DXP connection") {
+			var token = ACApi.getTokenValue();
+			
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			TestCase.setUpPortalInstance();
+			
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add 2 users") {
+			for (var name : list ${usernameList}) {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
+			}
+		}
+
+		task ("Connect AC and DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the site page") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = ${emailList},
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Create a data report using analytics cloud API with the type individuals") {
+			var apiResponse = ACApi.createDataReport(
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert the total of the response is two, because we have only two individuals") {
+			var oldTotalValue = ACApi.searchApiResponse(apiDataResponse = ${apiResponse}, JSONQuery = "total");
+
+			TestUtils.assertEquals(
+			actual = ${oldTotalValue},
+			expected = "2");
+		}
+
+		task ("Get the id of the first individual") {
+			var individualId = ACApi.searchApiResponse(
+				apiDataResponse = ${apiResponse}, 
+				resultPosition = "0", 
+				JSONQuery = ".id");
+		}
+
+		task ("Create a new report for the specific individual") {
+			var apiIndividualResponse = ACApi.createIndividualOrAssetDataReport(
+				type = ${type},
+				token = ${token},
+				id = ${individualId});
+		}
+
+		task ("Assert that there is only one result in the response (the individual that is being searched)") {
+			var currentTotalValue = ACApi.searchApiResponse(
+				apiDataResponse = ${apiIndividualResponse}, 
+				JSONQuery = ".total");
+
+			TestUtils.assertEquals(
+			actual = ${currentTotalValue},
+			expected = "");
+		}
+
+		task ("Assert that the id of the individual is present in the response") {
+			ACApi.assertApiResponse(apiDataResponse = ${apiIndividualResponse}, expectedList = ${individualId});
+		}
+	}
 }

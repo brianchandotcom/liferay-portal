@@ -380,14 +380,6 @@ public class SegmentsExperienceUtil {
 
 			String newNamespace = StringUtil.randomId();
 
-			if (SegmentsExperimentLocalServiceUtil.hasSegmentsExperiment(
-					sourceSegmentsExperienceId,
-					PortalUtil.getClassNameId(Layout.class.getName()), plid,
-					null)) {
-
-				newNamespace = fragmentEntryLink.getNamespace();
-			}
-
 			newFragmentEntryLink.setEditableValues(
 				_getNewEditableValues(
 					fragmentEntryLink.getEditableValues(),

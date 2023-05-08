@@ -933,8 +933,6 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryCategory {
-		property test.name.skip.portal.instance = "Search#SearchBlogsEntryCategory";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1172,8 +1170,6 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryTag {
-		property test.name.skip.portal.instance = "Search#SearchBlogsEntryTag";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1793,8 +1789,6 @@ definition {
 
 	@priority = 4
 	test SearchUser {
-		property test.name.skip.portal.instance = "Search#SearchUser";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(
@@ -1927,8 +1921,6 @@ definition {
 
 	@priority = 4
 	test SearchWebContent {
-		property test.name.skip.portal.instance = "Search#SearchWebContent";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",

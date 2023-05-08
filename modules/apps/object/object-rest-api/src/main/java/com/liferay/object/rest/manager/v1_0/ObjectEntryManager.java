@@ -52,6 +52,8 @@ public interface ObjectEntryManager {
 			String scopeKey)
 		throws Exception;
 
+	public String getStorageType();
+
 	public ObjectEntry updateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,

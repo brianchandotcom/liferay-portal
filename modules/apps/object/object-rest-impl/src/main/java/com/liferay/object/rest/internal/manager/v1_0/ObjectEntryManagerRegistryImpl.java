@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -53,8 +54,9 @@ public class ObjectEntryManagerRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ObjectEntryManager.class,
-			"object.entry.manager.storage.type");
+			bundleContext, ObjectEntryManager.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext, ObjectEntryManager::getStorageType));
 	}
 
 	@Deactivate

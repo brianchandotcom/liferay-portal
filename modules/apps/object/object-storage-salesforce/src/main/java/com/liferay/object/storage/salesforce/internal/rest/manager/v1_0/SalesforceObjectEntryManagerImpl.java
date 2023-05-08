@@ -167,6 +167,11 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	@Override
+	public String getStorageType() {
+		return ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE;
+	}
+
+	@Override
 	public ObjectEntry updateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,

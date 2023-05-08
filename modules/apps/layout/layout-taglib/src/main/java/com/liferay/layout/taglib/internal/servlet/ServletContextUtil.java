@@ -37,12 +37,9 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Chema Balsas
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static CollectionPaginationHelper getCollectionPaginationHelper() {

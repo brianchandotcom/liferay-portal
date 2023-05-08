@@ -246,4 +246,14 @@ definition {
 		}
 	}
 
+	macro searchApiResponse {
+		if (!(isSet(resultPosition))) {
+			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.${JSONQuery}");
+		}
+		else {
+			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.results[${resultPosition}]${JSONQuery}");
+		}
+		return ${searchedValue};
+	}
+
 }

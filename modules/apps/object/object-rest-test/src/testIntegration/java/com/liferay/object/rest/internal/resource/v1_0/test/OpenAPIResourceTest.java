@@ -92,6 +92,13 @@ public class OpenAPIResourceTest {
 	@Test
 	public void testGetActionsOpenAPI() throws Exception {
 
+		// Collection actions
+
+		_testGetActionsOpenAPI(
+			Arrays.asList(
+				"create", "updateBatch", "createBatch", "deleteBatch"),
+			"Page" + _objectDefinition1.getShortName());
+
 		// Individual actions
 
 		String objectActionName = RandomTestUtil.randomString();
@@ -104,13 +111,6 @@ public class OpenAPIResourceTest {
 				"get", "permissions", "replace", "update", "delete",
 				objectActionName),
 			_objectDefinition1.getShortName());
-
-		// Collection actions
-
-		_testGetActionsOpenAPI(
-			Arrays.asList(
-				"create", "updateBatch", "createBatch", "deleteBatch"),
-			"Page" + _objectDefinition1.getShortName());
 
 		// Permissions actions
 

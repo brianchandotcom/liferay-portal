@@ -72,9 +72,12 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String javaTermContent = javaTerm.getContent();
 
-		String setExternalReferenceCodeCall = "setExternalReferenceCode";
+		String entityVariableName = StringUtil.lowerCaseFirstLetter(
+			entityReturnType);
 
-		if (javaTermContent.contains(setExternalReferenceCodeCall)) {
+		if (javaTermContent.contains(
+				entityVariableName + ".setExternalReferenceCode(")) {
+
 			return javaTermContent;
 		}
 
@@ -97,9 +100,6 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 		javaTermContent = StringUtil.replaceFirst(
 			javaTermContent, localServiceMethodJavaTerm,
 			localServiceMethodJavaTerm + "String externalReferenceCode, ");
-
-		String entityVariableName = StringUtil.lowerCaseFirstLetter(
-			entityReturnType);
 
 		return StringUtil.replaceFirst(
 			javaTermContent, entityVariableName + ".set",

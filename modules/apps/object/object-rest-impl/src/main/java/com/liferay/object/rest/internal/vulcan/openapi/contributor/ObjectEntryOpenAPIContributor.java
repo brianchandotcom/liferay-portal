@@ -512,10 +512,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return content;
 	}
 
-	private String _getCustomActionName(String pathName) {
-		return StringUtil.extractLast(pathName, StringPool.SLASH);
-	}
-
 	private String _getDescription(ObjectRelationship objectRelationship) {
 		return StringBundler.concat(
 			"Information about the relationship ", objectRelationship.getName(),
@@ -788,7 +784,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					 !pathName.contains("/permissions")) {
 
 				if (pathName.contains("object-actions")) {
-					actions.put(_getCustomActionName(pathName), actionSchema);
+=					actions.put(
+						StringUtil.extractLast(pathName, StringPool.SLASH),
+						actionSchema);
 				}
 				else {
 					actions.put("replace", actionSchema);

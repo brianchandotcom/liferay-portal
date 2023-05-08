@@ -1,0 +1,115 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		FrontendDataSetAdmin.deleteAllDatasetEntries();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-183945. Confirm that pagination requires a default value"
+	@priority = 4
+	test CanAssertDefaultValueIsRequired {
+
+		// TODO LPS-183945 CanAssertDefaultValueIsRequired pending implementation
+
+	}
+
+	@description = "LPS-183938. Confirm the default values for 'Pagination Items' and 'Default Value' fields"
+	@priority = 4
+	test CanAssertDefaultValues {
+
+		// TODO LPS-183938 CanAssertDefaultValues pending implementation
+
+	}
+
+	@description = "LPS-183950. Confirm that pagination creation can be cancelled when clicking on cancel button"
+	@priority = 5
+	test CanCancelPaginationCreationOnCancelButton {
+
+		// TODO LPS-183950 CanCancelPaginationCreationOnCancelButton pending implementation
+
+	}
+
+	@description = "LPS-183947. Confirm that pagination can be created"
+	@priority = 5
+	test CanCreatePagination {
+
+		// TODO LPS-183947 CanCreatePagination pending implementation
+
+	}
+
+	@description = "LPS-183941. Confirm the pagination can be created with one pagination item"
+	@priority = 5
+	test CanCreateWithOnePaginationItem {
+
+		// TODO LPS-183941 CanCreateWithOnePaginationItem pending implementation
+
+	}
+
+	@description = "LPS-183943. Confirm that pagination cannot exceed 25 pagination items"
+	@priority = 5
+	test CannotExceed25PaginationItems {
+
+		// TODO LPS-183943 CannotExceed25PaginationItems pending implementation
+
+	}
+
+	@description = "LPS-183944. Confirm that pagination cannot exceed 1000 items per page"
+	@priority = 5
+	test CannotExceed1000ItemsPerPage {
+
+		// TODO LPS-183944 CannotExceed1000ItemsPerPage pending implementation
+
+	}
+
+	@description = "LPS-183948. Confirm that pagination cannot have characters in default value field"
+	@priority = 4
+	test CannotUseCharactersInDefaultValueField {
+
+		// TODO LPS-183948 CannotUseCharactersInDefaultValueField pending implementation
+
+	}
+
+	@description = "LPS-183949. Confirm that pagination cannot have characters in pagination items field"
+	@priority = 4
+	test CannotUseCharactersInPaginationItems {
+
+		// TODO LPS-183949 CannotUseCharactersInPaginationItems pending implementation
+
+	}
+
+	@description = "LPS-183946. Confirm that the default value cannot be different from some of the pagination items"
+	@priority = 4
+	test DefaultValueCannotDivergeFromPaginationItems {
+
+		// TODO LPS-183946 DefaultValueCannotDivergeFromPaginationItems pending implementation
+
+	}
+
+	@description = "LPS-183940. Confirm that error appears when pagination item is blank"
+	@priority = 5
+	test ErrorAppearsWhenPaginationItemBlank {
+
+		// TODO LPS-183940 ErrorAppearsWhenPaginationItemBlank pending implementation
+
+	}
+
+}

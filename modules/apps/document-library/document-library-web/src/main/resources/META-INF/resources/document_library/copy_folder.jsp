@@ -17,7 +17,9 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLCopyFolderDisplayContext dlCopyFolderDisplayContext = new DLCopyFolderDisplayContext(liferayPortletRequest, liferayPortletResponse);
+DLCopyFolderDisplayContext dlCopyFolderDisplayContext = new DLCopyFolderDisplayContext(request, themeDisplay);
+
+dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
 %>
 
 <portlet:actionURL name="/document_library/copy_folder" var="copyActionURL">

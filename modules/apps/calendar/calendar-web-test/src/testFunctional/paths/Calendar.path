@@ -451,7 +451,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_MONTH_DATE</td>
-	<td>//div[contains(@class,'calendar-header')]</td>
+	<td>//div[contains(@class,'calendar-header-label')]</td>
 	<td></td>
 </tr>
 <tr>

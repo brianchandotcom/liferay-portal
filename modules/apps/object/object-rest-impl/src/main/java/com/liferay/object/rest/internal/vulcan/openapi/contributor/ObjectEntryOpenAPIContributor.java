@@ -777,6 +777,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				}
 			}
 			else if (Objects.equals(
+						pathItemHttpMethod, PathItem.HttpMethod.PATCH)) {
+
+				actions.put("update", actionSchema);
+			}
+			else if (Objects.equals(
 						pathItemHttpMethod, PathItem.HttpMethod.PUT) &&
 					 !pathName.contains("/permissions")) {
 
@@ -786,11 +791,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				else {
 					actions.put("replace", actionSchema);
 				}
-			}
-			else if (Objects.equals(
-						pathItemHttpMethod, PathItem.HttpMethod.PATCH)) {
-
-				actions.put("update", actionSchema);
 			}
 			else if (!pathName.contains("/permissions")) {
 				actions.put(

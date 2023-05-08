@@ -1809,6 +1809,10 @@ public class ContactsEngineClientImpl
 			uriVariables.put("segmentId", individualSegmentId);
 		}
 
+		if (Validator.isNotNull(interestName)) {
+			uriVariables.put("interestName", interestName);
+		}
+
 		if (Validator.isNotNull(notIndividualSegmentId)) {
 			uriVariables.put("notSegmentId", notIndividualSegmentId);
 		}

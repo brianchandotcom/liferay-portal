@@ -91,8 +91,7 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		javaTermContent = StringUtil.replaceFirst(
 			javaTermContent, localServiceMethodJavaTerm,
-			localServiceMethodJavaTerm +
-				"\n\t\tString externalReferenceCode, ");
+			localServiceMethodJavaTerm + "String externalReferenceCode, ");
 
 		String entityVariableName = StringUtil.lowerCaseFirstLetter(
 			entityReturnType);

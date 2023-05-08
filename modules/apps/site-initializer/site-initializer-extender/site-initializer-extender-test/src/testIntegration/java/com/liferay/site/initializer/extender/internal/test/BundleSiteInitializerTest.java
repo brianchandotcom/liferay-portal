@@ -25,6 +25,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CustomElementCET;
 import com.liferay.client.extension.type.factory.CETFactory;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
@@ -557,6 +558,38 @@ public class BundleSiteInitializerTest {
 			"TESTVOC1", commerceChannel.getExternalReferenceCode());
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		Assert.assertEquals(
+			"true",
+			modifiableSettings.getValue(
+				"checkoutRequestedDeliveryDateEnabled", null));
+		Assert.assertEquals(
+			"B2B", modifiableSettings.getValue("commerceSiteType", null));
+		Assert.assertEquals(
+			"false", modifiableSettings.getValue("guestCheckoutEnabled", null));
+		Assert.assertEquals(
+			"true", modifiableSettings.getValue("hideShippingPriceZero", null));
+		Assert.assertEquals(
+			"true",
+			modifiableSettings.getValue("showPurchaseOrderNumber", null));
+
+		settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		modifiableSettings = settings.getModifiableSettings();
+
+		Assert.assertEquals(
+			"3", modifiableSettings.getValue("accountCartMaxAllowed", null));
 
 		_assertCommerceNotificationTemplate(commerceChannel);
 		_assertDefaultCPDisplayLayout(commerceChannel);

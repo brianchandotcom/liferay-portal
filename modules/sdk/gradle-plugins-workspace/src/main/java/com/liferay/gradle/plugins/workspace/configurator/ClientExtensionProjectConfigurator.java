@@ -247,7 +247,9 @@ public class ClientExtensionProjectConfigurator
 		_nodeBuildConfigurer.apply(
 			project, assembleClientExtensionTaskProvider);
 
-		_addDockerTasks(project, assembleClientExtensionTaskProvider);
+		_addDockerTasks(
+			project, assembleClientExtensionTaskProvider,
+			createClientExtensionConfigTaskProvider);
 	}
 
 	@Override
@@ -300,8 +302,9 @@ public class ClientExtensionProjectConfigurator
 	protected static final String NAME = "client.extension";
 
 	private void _addDockerTasks(
-		Project project,
-		TaskProvider<Copy> assembleClientExtensionTaskProvider) {
+		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigTaskProvider) {
 
 		DockerBuildImage dockerBuildImage = GradleUtil.addTask(
 			project, RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME,
@@ -312,7 +315,7 @@ public class ClientExtensionProjectConfigurator
 				"all configs deployed.");
 		dockerBuildImage.setGroup(RootProjectConfigurator.DOCKER_GROUP);
 
-		dockerBuildImage.dependsOn(assembleClientExtensionTaskProvider);
+		dockerBuildImage.dependsOn(createClientExtensionConfigTaskProvider);
 
 		DirectoryProperty inputDirectoryProperty =
 			dockerBuildImage.getInputDir();

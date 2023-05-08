@@ -34,14 +34,16 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 		for (int i = 0; i < lines.length; i++) {
 			String line = lines[i];
 
-			if (line.contains(_VELOCITY_LIFERAY_LANGUAGE_FORMAT)) {
-				lines[i] = _migrateVelocityLanguageFormat(line);
+			if (line.contains(_VELOCITY_LIFERAY_BREADCRUMBS)) {
+				lines[i] = _migrateVelocityLiferayBreadCrumbs(line);
 			}
 			else if (line.contains(_VELOCITY_LIFERAY_LANGUAGE)) {
-				lines[i] = _migrateVelocityLanguage(line);
-			}
-			else if (line.contains(_VELOCITY_LIFERAY_BREADCRUMBS)) {
-				lines[i] = _migrateVelocityLiferayBreadCrumbs(line);
+				if (line.contains(_VELOCITY_LIFERAY_LANGUAGE_FORMAT)) {
+					lines[i] = _migrateVelocityLanguageFormat(line);
+				}
+				else {
+					lines[i] = _migrateVelocityLanguage(line);
+				}
 			}
 			else if (line.contains(_VELOCITY_LIFERAY_THEME_INCLUDE)) {
 				lines[i] = _migrateVelocityLiferayThemeInclude(line);

@@ -113,6 +113,14 @@ public class FolderActionDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "move"));
 					}
 				).add(
+					this::_isCopyActionVisible,
+					dropdownItem -> {
+						dropdownItem.setHref(_getCopyURL());
+						dropdownItem.setIcon("copy");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "copy-to"));
+					}
+				).add(
 					this::_isDeleteExpiredTemporaryFileEntriesActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(
@@ -176,14 +184,6 @@ public class FolderActionDisplayContext {
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_httpServletRequest, "add-shortcut"));
-					}
-				).add(
-					this::_isCopyActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getCopyURL());
-						dropdownItem.setIcon("copy");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "copy-to"));
 					}
 				).add(
 					this::_isAccessFromDesktopActionVisible,

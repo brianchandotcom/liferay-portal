@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.internal.content.type;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -69,17 +68,13 @@ public class DataDefinitionContentTypeRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY, target = "(content.type=*)"
 	)
 	protected void addDataDefinitionContentType(
 		DataDefinitionContentType dataDefinitionContentType,
 		Map<String, Object> properties) {
 
-		if (!properties.containsKey("content.type")) {
-			return;
-		}
-
-		String contentType = MapUtil.getString(properties, "content.type");
+		String contentType = (String)properties.get("content.type");
 
 		_classNameIds.put(
 			contentType, dataDefinitionContentType.getClassNameId());
@@ -101,7 +96,7 @@ public class DataDefinitionContentTypeRegistry {
 		DataDefinitionContentType dataDefinitionContentType,
 		Map<String, Object> properties) {
 
-		String contentType = MapUtil.getString(properties, "content.type");
+		String contentType = (String)properties.get("content.type");
 
 		_dataDefinitionContentTypesByClassNameId.remove(
 			_classNameIds.get(contentType));

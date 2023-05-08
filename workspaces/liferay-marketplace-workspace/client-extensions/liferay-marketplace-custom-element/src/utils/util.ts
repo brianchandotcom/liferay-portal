@@ -1,4 +1,3 @@
-import {ProductSpecificationProps} from '../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 import {
 	createProductSpecification,
 	getAccountGroup,
@@ -53,11 +52,11 @@ export async function userAccountChecker(verifiedAccounts: string[]) {
 }
 
 export function getProductVersionFromSpecifications(
-	specifications: ProductSpecificationProps
+	specifications: ProductSpecification[]
 ) {
 	let productVersion = '0';
 
-	specifications.items.forEach((specification: Specification) => {
+	specifications.forEach((specification) => {
 		if (specification.specificationKey === 'latest-version') {
 			productVersion = specification.value.en_US;
 		}

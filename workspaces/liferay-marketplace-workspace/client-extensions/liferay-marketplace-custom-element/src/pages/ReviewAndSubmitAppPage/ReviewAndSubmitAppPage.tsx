@@ -189,58 +189,52 @@ export function ReviewAndSubmitAppPage({
 			const newCardInfos: {icon: string; link: string; title: string}[] =
 				[];
 
-			productSpecificationsResponse.items.map(
-				(specification: {
-					specificationKey: string;
-					title: {[key: string]: string};
-					value: {[key: string]: string};
-				}) => {
-					const {specificationKey, value} = specification;
-					const localizedValue = value['en_US'];
+			productSpecificationsResponse.map((specification) => {
+				const {specificationKey, value} = specification;
+				const localizedValue = value['en_US'];
 
-					if (specificationKey === 'version') {
-						setVersion(localizedValue);
-					}
-					else if (specificationKey === 'notes') {
-						setNotes(localizedValue);
-					}
-					else if (specificationKey === 'supporturl') {
-						newCardInfos.push({
-							icon: phoneIcon,
-							link: localizedValue,
-							title: 'Support URL',
-						});
-					}
-					else if (specificationKey === 'publisherwebsiteurl') {
-						newCardInfos.push({
-							icon: globeIcon,
-							link: localizedValue,
-							title: 'Publisher website URL',
-						});
-					}
-					else if (specificationKey === 'appusagetermsurl') {
-						newCardInfos.push({
-							icon: usageTermsIcon,
-							link: localizedValue,
-							title: 'App usage terms (EULA) URL',
-						});
-					}
-					else if (specificationKey === 'appdocumentationurl') {
-						newCardInfos.push({
-							icon: documentationIcon,
-							link: localizedValue,
-							title: 'App documentation URL',
-						});
-					}
-					else if (specificationKey === 'appinstallationguideurl') {
-						newCardInfos.push({
-							icon: guideIcon,
-							link: localizedValue,
-							title: 'App installation guide URL',
-						});
-					}
+				if (specificationKey === 'version') {
+					setVersion(localizedValue);
 				}
-			);
+				else if (specificationKey === 'notes') {
+					setNotes(localizedValue);
+				}
+				else if (specificationKey === 'supporturl') {
+					newCardInfos.push({
+						icon: phoneIcon,
+						link: localizedValue,
+						title: 'Support URL',
+					});
+				}
+				else if (specificationKey === 'publisherwebsiteurl') {
+					newCardInfos.push({
+						icon: globeIcon,
+						link: localizedValue,
+						title: 'Publisher website URL',
+					});
+				}
+				else if (specificationKey === 'appusagetermsurl') {
+					newCardInfos.push({
+						icon: usageTermsIcon,
+						link: localizedValue,
+						title: 'App usage terms (EULA) URL',
+					});
+				}
+				else if (specificationKey === 'appdocumentationurl') {
+					newCardInfos.push({
+						icon: documentationIcon,
+						link: localizedValue,
+						title: 'App documentation URL',
+					});
+				}
+				else if (specificationKey === 'appinstallationguideurl') {
+					newCardInfos.push({
+						icon: guideIcon,
+						link: localizedValue,
+						title: 'App installation guide URL',
+					});
+				}
+			});
 
 			setCardInfos(newCardInfos);
 		};

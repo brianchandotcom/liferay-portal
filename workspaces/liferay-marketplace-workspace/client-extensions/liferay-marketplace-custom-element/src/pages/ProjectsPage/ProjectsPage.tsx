@@ -81,7 +81,7 @@ export function ProjectsPage({
 		};
 
 		makeFetch();
-	}, [showNextStepsPage]);
+	}, [selectedAccount, showNextStepsPage]);
 
 	return (
 		<>

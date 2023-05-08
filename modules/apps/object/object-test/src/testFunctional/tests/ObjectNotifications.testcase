@@ -650,7 +650,6 @@ definition {
 	@description = "LPS-178783 - Verify a standalone action can be triggered manually to send an email"
 	@priority = 5
 	test CanSendEmailViaActionStandalone {
-		property custom.properties = "feature.flag.LPS-173894=true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectNotifications.CanSendEmailViaActionStandalone";
 		property test.smtp.server.enabled = "true";

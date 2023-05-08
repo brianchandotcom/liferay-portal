@@ -98,16 +98,15 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		System.out.println("Writing  " + parentJavaClass.getName());
 
-		String localServiceMethodJavaTerm =
-			javaTermName + StringPool.OPEN_PARENTHESIS;
+		String methodName = javaTermName + StringPool.OPEN_PARENTHESIS;
 
 		javaTermContent = StringUtil.replaceFirst(
-			javaTermContent, localServiceMethodJavaTerm,
-			localServiceMethodJavaTerm + "String externalReferenceCode, ");
+			javaTermContent, methodName,
+			methodName + "String externalReferenceCode, ");
 
 		return StringUtil.replaceLast(
-			javaTermContent, localServiceMethodJavaTerm,
-			localServiceMethodJavaTerm + "\n\t\texternalReferenceCode, ");
+			javaTermContent, methodName,
+			methodName + "\n\t\texternalReferenceCode, ");
 	}
 
 }

@@ -206,7 +206,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			collectionActionsMapSchema.setAdditionalProperties(null);
 
 			collectionActionsMapSchema.setProperties(
-				_getAvailableCollectionActionMethods(
+				_getAvailableCollectionActionSchemas(
 					openAPIContext, openAPI.getPaths()));
 
 			MapSchema entityActionsMapSchema = _getActionsMapSchema(
@@ -215,7 +215,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			entityActionsMapSchema.setAdditionalProperties(null);
 
 			entityActionsMapSchema.setProperties(
-				_getAvailableEntityActionMethods(
+				_getAvailableEntityActionSchemas(
 					openAPIContext, openAPI.getPaths()));
 
 			MapSchema permissionActionsMapSchema = _getActionsMapSchema(
@@ -224,7 +224,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			permissionActionsMapSchema.setAdditionalProperties(null);
 
 			permissionActionsMapSchema.setProperties(
-				_getAvailableEntityActionMethods(
+				_getAvailableEntityActionSchemas(
 					openAPIContext, openAPI.getPaths()));
 		}
 	}
@@ -414,7 +414,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return (MapSchema)schemas2.get("actions");
 	}
 
-	private Map<String, Schema> _getAvailableCollectionActionMethods(
+	private Map<String, Schema> _getAvailableCollectionActionSchemas(
 		OpenAPIContext openAPIContext, Paths paths) {
 
 		Map<String, Schema> actionSchemas = new HashMap<>();
@@ -448,7 +448,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return actionSchemas;
 	}
 
-	private Map<String, Schema> _getAvailableEntityActionMethods(
+	private Map<String, Schema> _getAvailableEntityActionSchemas(
 		OpenAPIContext openAPIContext, Paths paths) {
 
 		Map<String, Schema> actionSchemas = new HashMap<>();

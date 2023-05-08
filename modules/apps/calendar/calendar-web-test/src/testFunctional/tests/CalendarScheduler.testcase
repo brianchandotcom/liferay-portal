@@ -53,8 +53,6 @@ definition {
 	@description = "This is a use case for LPS-52517."
 	@priority = 3
 	test ViewCorrectNumberOfWeeksMonthView {
-		property portal.upstream = "quarantine";
-
 		Calendar.viewMonth(dateMonth = "April 2016");
 
 		Calendar.viewWeekCountViaMonthView(weekNumber = 5);

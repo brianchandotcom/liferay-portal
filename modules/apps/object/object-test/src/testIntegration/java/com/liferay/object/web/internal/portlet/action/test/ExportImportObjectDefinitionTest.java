@@ -75,14 +75,14 @@ public class ExportImportObjectDefinitionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
 		_user = TestPropsValues.getUser();
-	}
 
-	@After
-	public void tearDown() {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		_objectDefinitionResource = builder.user(
+			_user
+		).build();
 	}
 
 	@Test
@@ -119,8 +119,7 @@ public class ExportImportObjectDefinitionTest {
 	}
 
 	private MockLiferayResourceRequest _createMockLiferayResourceRequest(
-			long objectDefinitionId)
-		throws Exception {
+			long objectDefinitionId) {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -165,22 +164,37 @@ public class ExportImportObjectDefinitionTest {
 		return mockMultipartHttpServletRequest;
 	}
 
+	private ObjectDefinition _getObjectDefinitionByName(String name)
+		throws Exception {
+
+		Page<ObjectDefinition> page =
+			_objectDefinitionResource.getObjectDefinitionsPage(
+				name, null, null, Pagination.of(1, 1), null);
+
+		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
+
+		return items.get(0);
+	}
+
 	private void _exportImportObjectDefinition(
 			String fileName, String name, boolean system)
 		throws Exception {
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
+		String externalReferenceCode = null;
+		ObjectDefinition objectDefinition = null;
 
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
+		if (system) {
+			objectDefinition = _getObjectDefinitionByName(name);
 
-		_objectDefinitionResource = builder.user(
-			_user
-		).build();
+			externalReferenceCode = objectDefinition.getExternalReferenceCode();
+		}
 
-		ObjectDefinition objectDefinition = _importObjectDefinition(
-			fileName, name, system);
+		_mvcActionCommand.processAction(
+			_createMockLiferayPortletActionRequest(
+				externalReferenceCode, fileName, name),
+			new MockLiferayPortletActionResponse());
+
+		objectDefinition = _getObjectDefinitionByName(name);
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
@@ -216,18 +230,6 @@ public class ExportImportObjectDefinitionTest {
 		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
 	}
 
-	private ObjectDefinition _getObjectDefinitionByName(String name)
-		throws Exception {
-
-		Page<ObjectDefinition> page =
-			_objectDefinitionResource.getObjectDefinitionsPage(
-				name, null, null, Pagination.of(1, 1), null);
-
-		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
-
-		return items.get(0);
-	}
-
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -244,32 +246,6 @@ public class ExportImportObjectDefinitionTest {
 		return themeDisplay;
 	}
 
-	private ObjectDefinition _importObjectDefinition(
-			String fileName, String name, boolean system)
-		throws Exception {
-
-		if (system) {
-			ObjectDefinition objectDefinition = _getObjectDefinitionByName(
-				name);
-
-			_mvcActionCommand.processAction(
-				_createMockLiferayPortletActionRequest(
-					objectDefinition.getExternalReferenceCode(), fileName,
-					name),
-				new MockLiferayPortletActionResponse());
-
-			return _objectDefinitionResource.getObjectDefinition(
-				objectDefinition.getId());
-		}
-
-		_mvcActionCommand.processAction(
-			_createMockLiferayPortletActionRequest(
-				StringPool.BLANK, fileName, name),
-			new MockLiferayPortletActionResponse());
-
-		return _getObjectDefinitionByName(name);
-	}
-
 	@Inject
 	private File _file;
 
@@ -283,13 +259,11 @@ public class ExportImportObjectDefinitionTest {
 	)
 	private MVCResourceCommand _mvcResourceCommand;
 
-	@Inject
 	private ObjectDefinitionResource _objectDefinitionResource;
 
 	@Inject
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
-	private PermissionChecker _originalPermissionChecker;
 	private User _user;
 
 }

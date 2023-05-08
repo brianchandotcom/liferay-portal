@@ -735,14 +735,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			else if (Objects.equals(
 					pathItemHttpMethod, PathItem.HttpMethod.POST)) {
 
-				if (pathName.equals("/")) {
-					actions.put("create", actionSchema);
+				if (pathName.contains("/batch")) {
+					actions.put("createBatch", actionSchema);
 				}
 				else if (pathName.contains("scopeKey")) {
 					actions.put("create", actionSchema);
 				}
-				else if (pathName.contains("/batch")) {
-					actions.put("createBatch", actionSchema);
+				else if (pathName.equals("/")) {
+					actions.put("create", actionSchema);
 				}
 			}
 			else if (Objects.equals(

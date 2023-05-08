@@ -286,7 +286,7 @@ public class GetCollectionFieldMVCResourceCommand
 				numberOfItems, numberOfItemsPerPage, numberOfPages,
 				paginationType));
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds(httpServletRequest, segmentsExperienceId));
+			_getSegmentsEntryIds(segmentsExperienceId));
 
 		String itemType = _infoSearchClassMapperRegistry.getClassName(
 			originalItemType);
@@ -523,17 +523,7 @@ public class GetCollectionFieldMVCResourceCommand
 		return null;
 	}
 
-	private long[] _getSegmentsEntryIds(
-			HttpServletRequest httpServletRequest, long segmentsExperienceId)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179502")) {
-			return _segmentsEntryRetriever.getSegmentsEntryIds(
-				_portal.getScopeGroupId(httpServletRequest),
-				_portal.getUserId(httpServletRequest),
-				_requestContextMapper.map(httpServletRequest));
-		}
-
+	private long[] _getSegmentsEntryIds(long segmentsExperienceId) {
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperienceId);

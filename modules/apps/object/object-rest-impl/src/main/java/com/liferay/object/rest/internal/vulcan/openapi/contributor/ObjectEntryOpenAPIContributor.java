@@ -469,17 +469,17 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			if (pathName.equals(pathObjectEntryIdParam)) {
 				_setEntityActionsValues(
-					actions, operations, pathName, openAPIContext);
+					actions, openAPIContext, operations, pathName);
 			}
 			else if (pathName.equals(pathObjectEntryIdParam + "/permissions")) {
 				_setEntityActionsValues(
-					actions, operations, pathName, openAPIContext);
+					actions, openAPIContext, operations, pathName);
 			}
 			else if (pathName.contains("object-actions") &&
 					 pathName.contains("by-external-reference-code")) {
 
 				_setEntityActionsValues(
-					actions, operations, pathName, openAPIContext);
+					actions, openAPIContext, operations, pathName);
 			}
 		}
 
@@ -755,12 +755,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	}
 
 	private Map<String, Schema> _setEntityActionsValues(
-		Map<String, Schema> actions,
-		Map<PathItem.HttpMethod, Operation> readOperations, String pathName,
-		OpenAPIContext openAPIContext) {
+		Map<String, Schema> actions, OpenAPIContext openAPIContext,
+		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
-				readOperations.entrySet()) {
+				operations.entrySet()) {
 
 			PathItem.HttpMethod pathItemHttpMethod = operation.getKey();
 

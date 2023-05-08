@@ -30,6 +30,11 @@ import java.util.List;
 public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {

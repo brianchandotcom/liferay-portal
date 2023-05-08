@@ -32,7 +32,7 @@ type RequestStatus =
 	| {type: 'idle'}
 	| {type: 'loading'}
 	| {errorMessage: string; type: 'error'}
-	| {text: string; type: 'succcess'};
+	| {text: string; type: 'success'};
 
 export function AICreatorModal({namespace, onClose}: Props) {
 	const {observer, onClose: closeModal} = useModal({
@@ -52,7 +52,7 @@ export function AICreatorModal({namespace, onClose}: Props) {
 
 		setTimeout(() => {
 			if (Math.random() < 0.5) {
-				setStatus({text: 'Random result', type: 'succcess'});
+				setStatus({text: 'Random result', type: 'success'});
 			}
 			else {
 				setStatus({errorMessage: 'Random error', type: 'error'});
@@ -78,7 +78,7 @@ export function AICreatorModal({namespace, onClose}: Props) {
 					<ClayModal.Body>
 						<FormContent namespace={namespace} />
 
-						{status.type === 'succcess' ? (
+						{status.type === 'success' ? (
 							<TextContent
 								content={status.text}
 								namespace={namespace}
@@ -100,14 +100,14 @@ export function AICreatorModal({namespace, onClose}: Props) {
 								onAdd={onAdd}
 								onClose={closeModal}
 								showAddButton={
-									status.type === 'succcess' &&
+									status.type === 'success' &&
 									Boolean(status.text)
 								}
 								showCreateButton={
 									status.type === 'idle' ||
 									status.type === 'error'
 								}
-								showRetryButton={status.type === 'succcess'}
+								showRetryButton={status.type === 'success'}
 							/>
 						}
 					/>

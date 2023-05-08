@@ -111,49 +111,7 @@ public class DLStoreImpl implements DLStore {
 			dlStoreRequest.getFileName(),
 			dlStoreRequest.isValidateFileExtension());
 
-		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED &&
-			AntivirusScannerUtil.isActive()) {
-
-			File tempFile = null;
-
-			try {
-				tempFile = FileUtil.createTempFile();
-
-				FileUtil.write(tempFile, inputStream1);
-
-				AntivirusScannerUtil.scan(tempFile);
-
-				try (InputStream inputStream2 = new FileInputStream(tempFile)) {
-					_store.addFile(
-						dlStoreRequest.getCompanyId(),
-						dlStoreRequest.getRepositoryId(),
-						dlStoreRequest.getFileName(),
-						dlStoreRequest.getVersionLabel(), inputStream2);
-				}
-			}
-			catch (IOException ioException) {
-				throw new SystemException(
-					"Unable to scan file " + dlStoreRequest.getFileName(),
-					ioException);
-			}
-			finally {
-				if (tempFile != null) {
-					tempFile.delete();
-				}
-			}
-		}
-		else {
-			try {
-				_store.addFile(
-					dlStoreRequest.getCompanyId(),
-					dlStoreRequest.getRepositoryId(),
-					dlStoreRequest.getFileName(),
-					dlStoreRequest.getVersionLabel(), inputStream1);
-			}
-			catch (AccessDeniedException accessDeniedException) {
-				throw new PrincipalException(accessDeniedException);
-			}
-		}
+		_addFile(dlStoreRequest, inputStream1);
 	}
 
 	@Override
@@ -392,49 +350,7 @@ public class DLStoreImpl implements DLStore {
 			return;
 		}
 
-		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED &&
-			AntivirusScannerUtil.isActive()) {
-
-			File tempFile = null;
-
-			try {
-				tempFile = FileUtil.createTempFile();
-
-				FileUtil.write(tempFile, inputStream1);
-
-				AntivirusScannerUtil.scan(tempFile);
-
-				try (InputStream inputStream = new FileInputStream(tempFile)) {
-					_store.addFile(
-						dlStoreRequest.getCompanyId(),
-						dlStoreRequest.getRepositoryId(),
-						dlStoreRequest.getFileName(),
-						dlStoreRequest.getVersionLabel(), inputStream);
-				}
-			}
-			catch (IOException ioException) {
-				throw new SystemException(
-					"Unable to scan file " + dlStoreRequest.getFileName(),
-					ioException);
-			}
-			finally {
-				if (tempFile != null) {
-					tempFile.delete();
-				}
-			}
-		}
-		else {
-			try {
-				_store.addFile(
-					dlStoreRequest.getCompanyId(),
-					dlStoreRequest.getRepositoryId(),
-					dlStoreRequest.getFileName(),
-					dlStoreRequest.getVersionLabel(), inputStream1);
-			}
-			catch (AccessDeniedException accessDeniedException) {
-				throw new PrincipalException(accessDeniedException);
-			}
-		}
+		_addFile(dlStoreRequest, inputStream1);
 	}
 
 	@Override
@@ -651,6 +567,55 @@ public class DLStoreImpl implements DLStore {
 			inputStream);
 
 		_validateVersionLabel(versionLabel);
+	}
+
+	private void _addFile(
+			DLStoreRequest dlStoreRequest, InputStream inputStream)
+		throws PortalException {
+
+		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED &&
+			AntivirusScannerUtil.isActive()) {
+
+			File tempFile = null;
+
+			try {
+				tempFile = FileUtil.createTempFile();
+
+				FileUtil.write(tempFile, inputStream);
+
+				AntivirusScannerUtil.scan(tempFile);
+
+				try (InputStream inputStream2 = new FileInputStream(tempFile)) {
+					_store.addFile(
+						dlStoreRequest.getCompanyId(),
+						dlStoreRequest.getRepositoryId(),
+						dlStoreRequest.getFileName(),
+						dlStoreRequest.getVersionLabel(), inputStream2);
+				}
+			}
+			catch (IOException ioException) {
+				throw new SystemException(
+					"Unable to scan file " + dlStoreRequest.getFileName(),
+					ioException);
+			}
+			finally {
+				if (tempFile != null) {
+					tempFile.delete();
+				}
+			}
+		}
+		else {
+			try {
+				_store.addFile(
+					dlStoreRequest.getCompanyId(),
+					dlStoreRequest.getRepositoryId(),
+					dlStoreRequest.getFileName(),
+					dlStoreRequest.getVersionLabel(), inputStream);
+			}
+			catch (AccessDeniedException accessDeniedException) {
+				throw new PrincipalException(accessDeniedException);
+			}
+		}
 	}
 
 	private void _copy(

@@ -29,7 +29,7 @@ const UserOutlet = () => {
 	const {data, mutate} = useFetch(
 		liferayUserAccountsImpl.getResource(userId as string),
 		{
-			swrConfig: {shouldFetch: userId},
+			swrConfig: {shouldFetch: !!userId},
 		}
 	);
 

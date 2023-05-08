@@ -71,7 +71,7 @@ public final class PoshiStackTrace {
 			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
-		if (Validator.isNull(namespace) || namespace.isEmpty()) {
+		if (Validator.isNull(namespace)) {
 			namespace = getCurrentNamespace();
 		}
 

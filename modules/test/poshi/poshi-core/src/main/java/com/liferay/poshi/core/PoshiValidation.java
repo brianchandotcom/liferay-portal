@@ -1263,7 +1263,7 @@ public class PoshiValidation {
 			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
-		if (namespace.isEmpty()) {
+		if (Validator.isNull(namespace)) {
 			namespace = PoshiContext.getNamespaceFromFilePath(
 				_getFilePath(poshiElement));
 		}
@@ -1778,7 +1778,7 @@ public class PoshiValidation {
 			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				testName);
 
-		if (namespace.isEmpty()) {
+		if (Validator.isNull(namespace)) {
 			namespace = PoshiContext.getDefaultNamespace();
 		}
 

@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>CONDITIONS_PROPERTY_NAME</td>
-	<td>//div[@class='criterion'] //span[contains(.,'${propertyName}')]</td>
+	<td>//div[contains(@class,'criterion')]//span[contains(.,'${propertyName}')]</td>
 	<td></td>
 </tr>
 <tr>

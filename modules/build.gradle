@@ -651,6 +651,27 @@ gradle.taskGraph.useFilter {
 		if (deployOnlyProfile && !FileUtil.exists(task.project, ".lfrbuild-${deployOnlyProfile}")) {
 			return false
 		}
+
+		if ((buildProfile != null) && System.properties["liferay.releng.bundle"]) {
+			File appDir = _getRootDir(task.project.projectDir, "app.bnd")
+
+			if (appDir == null) {
+				return false
+			}
+
+			String liferayRelengBundle = System.properties["liferay.releng.bundle"]
+
+			File appBndFile = new File(appDir, "app.bnd")
+			Properties appBndProperties = new Properties()
+
+			appBndFile.withInputStream {
+				appBndProperties.load(it)
+			}
+
+			if (appBndProperties["Liferay-Releng-Bundle"] != liferayRelengBundle) {
+				return false
+			}
+		}
 	}
 	else if (task.name == "test") {
 		if (!_hasTestClasses(task, "src/test/java")) {

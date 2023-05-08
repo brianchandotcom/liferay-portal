@@ -123,7 +123,7 @@ public class AMGIFImageScalerTest {
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
-	@Inject(filter = "mime.type=image/gif", type = AMImageScaler.class)
+	@Inject(filter = "supportedMimeTypes=image/gif", type = AMImageScaler.class)
 	private AMImageScaler _amImageScaler;
 
 	@DeleteAfterTestRun

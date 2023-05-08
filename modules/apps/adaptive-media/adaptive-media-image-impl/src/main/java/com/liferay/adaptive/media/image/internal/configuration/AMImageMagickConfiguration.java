@@ -30,11 +30,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AMImageMagickConfiguration {
 
 	@Meta.AD(
-		deflt = "image/avif,image/gif,image/heic,image/tiff,image/webp",
 		description = "adaptive-media-imagemagick-supported-mime-types-key-description",
 		name = "adaptive-media-imagemagick-supported-mime-type",
 		required = false
 	)
-	public String[] imageMagickSupportedMimeTypes();
+	public String[] supportedMimeTypes();
 
 }

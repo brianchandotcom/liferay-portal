@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -31,8 +30,6 @@ import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.RenderResponse;
 
@@ -44,19 +41,10 @@ import javax.servlet.http.HttpServletRequest;
 public class DLCopyFolderDisplayContext {
 
 	public DLCopyFolderDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
-
-		_httpServletRequest = PortalUtil.getHttpServletRequest(
-			liferayPortletRequest);
-
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_setViewAttributes();
+		_httpServletRequest = httpServletRequest;
+		_themeDisplay = themeDisplay;
 	}
 
 	public String getRedirect() {
@@ -97,7 +85,7 @@ public class DLCopyFolderDisplayContext {
 			return _sourceFolderName;
 		}
 
-		_sourceFolderName = "Home";
+		_sourceFolderName = LanguageUtil.get(_httpServletRequest, "home");
 
 		DLFolder folder = DLFolderLocalServiceUtil.fetchFolder(
 			getSourceFolderId());
@@ -116,6 +104,23 @@ public class DLCopyFolderDisplayContext {
 		}
 
 		return _sourceRepositoryId;
+	}
+
+	public void setViewAttributes(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(getRedirect());
+
+		if (liferayPortletResponse instanceof RenderResponse) {
+			RenderResponse renderResponse =
+				(RenderResponse)liferayPortletResponse;
+
+			renderResponse.setTitle(
+				LanguageUtil.get(_httpServletRequest, "copy-to"));
+		}
 	}
 
 	private FolderItemSelectorCriterion _getFolderItemSelectorCriterion(
@@ -138,16 +143,14 @@ public class DLCopyFolderDisplayContext {
 	}
 
 	private Group _getGroup(long repositoryId) throws PortalException {
-		long groupId = repositoryId;
-
 		Repository repository = RepositoryLocalServiceUtil.fetchRepository(
 			repositoryId);
 
-		if (repository != null) {
-			groupId = repository.getGroupId();
+		if (repository == null) {
+			return GroupLocalServiceUtil.getGroup(repositoryId);
 		}
 
-		return GroupLocalServiceUtil.getGroup(groupId);
+		return GroupLocalServiceUtil.getGroup(repository.getGroupId());
 	}
 
 	private String _getItemSelectedEventName() {
@@ -156,24 +159,7 @@ public class DLCopyFolderDisplayContext {
 		return portletDisplay.getNamespace() + "folderSelected";
 	}
 
-	private void _setViewAttributes() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(getRedirect());
-
-		if (_liferayPortletResponse instanceof RenderResponse) {
-			RenderResponse renderResponse =
-				(RenderResponse)_liferayPortletResponse;
-
-			renderResponse.setTitle(
-				LanguageUtil.get(_httpServletRequest, "copy-to"));
-		}
-	}
-
 	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private long _sourceFolderId = -1;
 	private String _sourceFolderName;

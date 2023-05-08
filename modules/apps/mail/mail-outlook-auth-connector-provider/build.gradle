@@ -1,0 +1,19 @@
+dependencies {
+	compileInclude group: "com.github.stephenc.jcip", name: "jcip-annotations", version: "1.0-1"
+	compileInclude group: "com.liferay", name: "com.nimbusds.jwt", version: "9.30.2.LIFERAY-PATCHED-1"
+	compileInclude group: "com.microsoft.azure", name: "msal4j", version: "1.13.8"
+	compileInclude group: "com.nimbusds", name: "content-type", version: "2.2"
+	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.7"
+	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "10.7.1"
+	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.9"
+	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.10"
+
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-string")
+}

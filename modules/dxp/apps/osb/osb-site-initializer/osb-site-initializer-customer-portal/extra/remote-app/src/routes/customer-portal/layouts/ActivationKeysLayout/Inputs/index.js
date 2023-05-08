@@ -93,10 +93,13 @@ const ActivationKeysInputs = ({
 				const orderItems = data?.orderItems?.items || [];
 
 				if (orderItems.length) {
-					const dateIntervals = getYearlyTerms(orderItems[0].options);
+					const orderItemsByYearlyTerms = orderItems
+						.map((orderItem) => getYearlyTerms(orderItem.options))
+						.flat()
+						.sort((a, b) => a.startDate - b.startDate);
 
-					setAccountOrderItemsDates(dateIntervals);
-					setSelectedDateInterval(dateIntervals[0]);
+					setAccountOrderItemsDates(orderItemsByYearlyTerms);
+					setSelectedDateInterval(orderItemsByYearlyTerms[0]);
 				}
 			}
 		};

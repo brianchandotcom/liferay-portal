@@ -363,6 +363,15 @@ public class AccountGroupLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.account.model.AccountGroup>
+		getAccountGroupsByAccountEntryId(
+			long accountEntryId, int start, int end) {
+
+		return _accountGroupLocalService.getAccountGroupsByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountGroup>
 		getAccountGroupsByAccountGroupId(long[] accountGroupIds) {
 
 		return _accountGroupLocalService.getAccountGroupsByAccountGroupId(
@@ -387,6 +396,12 @@ public class AccountGroupLocalServiceWrapper
 	@Override
 	public long getAccountGroupsCount(long companyId, String name) {
 		return _accountGroupLocalService.getAccountGroupsCount(companyId, name);
+	}
+
+	@Override
+	public int getAccountGroupsCountByAccountEntryId(long accountEntryId) {
+		return _accountGroupLocalService.getAccountGroupsCountByAccountEntryId(
+			accountEntryId);
 	}
 
 	@Override

@@ -17,6 +17,8 @@ package com.liferay.account.service;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 /**
  * Provides the remote service utility for AccountEntryUserRel. This utility wraps
  * <code>com.liferay.account.service.impl.AccountEntryUserRelServiceImpl</code> and is an
@@ -95,6 +97,62 @@ public class AccountEntryUserRelServiceUtil {
 		throws PortalException {
 
 		getService().deleteAccountEntryUserRels(accountEntryId, accountUserIds);
+	}
+
+	public static AccountEntryUserRel fetchAccountEntryUserRel(
+			long accountEntryUserRelId)
+		throws PortalException {
+
+		return getService().fetchAccountEntryUserRel(accountEntryUserRelId);
+	}
+
+	public static AccountEntryUserRel fetchAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws PortalException {
+
+		return getService().fetchAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
+	public static AccountEntryUserRel getAccountEntryUserRel(
+			long accountEntryId, long accountUserId)
+		throws PortalException {
+
+		return getService().getAccountEntryUserRel(
+			accountEntryId, accountUserId);
+	}
+
+	public static List<AccountEntryUserRel>
+			getAccountEntryUserRelsByAccountEntryId(long accountEntryId)
+		throws PortalException {
+
+		return getService().getAccountEntryUserRelsByAccountEntryId(
+			accountEntryId);
+	}
+
+	public static List<AccountEntryUserRel>
+			getAccountEntryUserRelsByAccountEntryId(
+				long accountEntryId, int start, int end)
+		throws PortalException {
+
+		return getService().getAccountEntryUserRelsByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	public static List<AccountEntryUserRel>
+			getAccountEntryUserRelsByAccountUserId(long accountUserId)
+		throws PortalException {
+
+		return getService().getAccountEntryUserRelsByAccountUserId(
+			accountUserId);
+	}
+
+	public static long getAccountEntryUserRelsCountByAccountEntryId(
+			long accountEntryId)
+		throws PortalException {
+
+		return getService().getAccountEntryUserRelsCountByAccountEntryId(
+			accountEntryId);
 	}
 
 	/**

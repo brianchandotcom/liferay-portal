@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -56,8 +57,16 @@ public interface AccountGroupRelService extends BaseService {
 			long accountGroupId, String className, long[] classPKs)
 		throws PortalException;
 
+	public AccountGroupRel deleteAccountGroupRel(long accountGroupRelId)
+		throws PortalException;
+
 	public void deleteAccountGroupRels(
 			long accountGroupId, String className, long[] classPKs)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroupRel fetchAccountGroupRel(
+			long accountGroupId, String className, long classPK)
 		throws PortalException;
 
 	/**

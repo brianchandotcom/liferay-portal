@@ -315,6 +315,13 @@ public class AccountGroupLocalServiceUtil {
 			companyId, name, start, end, orderByComparator);
 	}
 
+	public static List<AccountGroup> getAccountGroupsByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getService().getAccountGroupsByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
 	public static List<AccountGroup> getAccountGroupsByAccountGroupId(
 		long[] accountGroupIds) {
 
@@ -336,6 +343,13 @@ public class AccountGroupLocalServiceUtil {
 
 	public static long getAccountGroupsCount(long companyId, String name) {
 		return getService().getAccountGroupsCount(companyId, name);
+	}
+
+	public static int getAccountGroupsCountByAccountEntryId(
+		long accountEntryId) {
+
+		return getService().getAccountGroupsCountByAccountEntryId(
+			accountEntryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

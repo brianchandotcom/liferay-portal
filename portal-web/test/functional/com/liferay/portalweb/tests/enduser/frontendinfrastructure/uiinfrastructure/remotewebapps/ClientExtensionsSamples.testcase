@@ -113,4 +113,55 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Global CSS"
+	@priority = 4
+	test LiferaySampleGlobalCSSSmoke {
+		property workspaces.client.extension.names = "liferay-sample-global-css";
+
+		task ("Given: A new widget page is created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("When: User accesses the Basic Settings of the widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page");
+
+			Navigator.gotoNavTab(navTab = "Design");
+		}
+
+		task ("Then: User can add Liferay Sample Global CSS as a CSS Client Extension ") {
+			PagesAdmin.addCSSExtensions(extensionNameList = "Liferay Sample Global CSS");
+
+			AssertVisible(
+				key_tableEntry = "Liferay Sample Global CSS",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PortletEntry.save();
+		}
+
+		task ("And: User can view the changes on the widget page") {
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			var pseudoElementContent = Css.getPseudoElementCssValue(
+				attribute = "content",
+				element = "//a[contains(@class,'logo') and contains(@title,'Go to')]",
+				pseudo = ":after");
+
+			TestUtils.assertEquals(
+				actual = ${pseudoElementContent},
+				expected = "\"Liferay Sample Global CSS\"");
+		}
+	}
+
 }

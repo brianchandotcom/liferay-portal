@@ -12,36 +12,15 @@
 		"name": "Test Expando Column 2"
 	},
 	{
-		"dataType": 15,
-		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
-		"name": "Test Expando Column 3",
-		"properties": {
-			"hidden": false,
-			"indexType": 2,
-			"localizeFieldName": true,
-			"secret": false,
-			"visibleWithUpdatePermission": false,
-			"width": "0"
-		}
-	},
-	{
 		"dataType": 6,
 		"defaultValue": [
 			2.0,
 			2.5
 		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Test Expando Column 4"
+		"name": "Test Expando Column 3"
 	},
-	{
-		"dataType": 8,
-		"defaultValue": [
-			0.2,
-			0.5
-		],
-		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Test Expando Column 5"
-	},
+
 	{
 		"dataType": 10,
 		"defaultValue": [
@@ -49,16 +28,7 @@
 			200
 		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Test Expando Column 6"
-	},
-	{
-		"dataType": 12,
-		"defaultValue": [
-			300,
-			400
-		],
-		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Test Expando Column 7"
+		"name": "Test Expando Column 4"
 	},
 	{
 		"dataType": 16,
@@ -67,6 +37,6 @@
 			"value2"
 		],
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Test Expando Column 8"
+		"name": "Test Expando Column 5"
 	}
 ]

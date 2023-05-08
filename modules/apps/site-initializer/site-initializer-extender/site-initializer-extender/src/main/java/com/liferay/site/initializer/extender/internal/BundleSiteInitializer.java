@@ -4400,23 +4400,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getJSONArray("defaultValue"));
 		}
 		else if (jsonObject.getInt("dataType") ==
-					ExpandoColumnConstants.GEOLOCATION) {
-
-			ExpandoValue value = new ExpandoValueImpl();
-			Geo geo = new Geo();
-
-			value.setGeolocationJSONObject(
-				jsonObject.getJSONObject("defaultValue"));
-
-			JSONObject geoJSONObject = value.getGeolocationJSONObject();
-
-			geo.setLatitude(geoJSONObject.getDouble("latitude"));
-
-			geo.setLongitude(geoJSONObject.getDouble("longitude"));
-
-			return geo;
-		}
-		else if (jsonObject.getInt("dataType") ==
 					ExpandoColumnConstants.INTEGER) {
 
 			return jsonObject.getInt("defaultValue");

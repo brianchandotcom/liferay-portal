@@ -15,8 +15,12 @@
 package com.liferay.layout.type.controller.content.internal.model;
 
 import com.liferay.layout.type.controller.model.BaseLayoutTypeAccessPolicy;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,4 +32,14 @@ import org.osgi.service.component.annotations.Component;
 	service = LayoutTypeAccessPolicy.class
 )
 public class ContentLayoutTypeAccessPolicy extends BaseLayoutTypeAccessPolicy {
+
+	@Override
+	public boolean isUpdateLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		return LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
+			permissionChecker, layout);
+	}
+
 }

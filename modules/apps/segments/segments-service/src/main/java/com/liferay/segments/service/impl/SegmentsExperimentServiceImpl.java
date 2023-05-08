@@ -100,8 +100,8 @@ public class SegmentsExperimentServiceImpl
 			int[] statuses)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), classPK, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
+			getPermissionChecker(), classPK);
 
 		return segmentsExperimentLocalService.fetchSegmentsExperiment(
 			segmentsExperienceId, classNameId, classPK, statuses);
@@ -132,8 +132,8 @@ public class SegmentsExperimentServiceImpl
 			int[] statuses, int start, int end)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), classPK, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
+			getPermissionChecker(), classPK);
 
 		return segmentsExperimentLocalService.
 			getSegmentsExperienceSegmentsExperiments(

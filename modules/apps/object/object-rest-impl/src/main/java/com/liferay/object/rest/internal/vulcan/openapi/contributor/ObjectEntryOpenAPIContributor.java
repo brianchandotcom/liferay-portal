@@ -425,23 +425,23 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			PathItem pathItem = key.getValue();
 
-			Map<PathItem.HttpMethod, Operation> readOperationsMap =
+			Map<PathItem.HttpMethod, Operation> operations =
 				pathItem.readOperationsMap();
 
 			if (StringUtil.equals(_objectDefinition.getScope(), "site")) {
 				if (pathName.equals("/scopes/{scopeKey}")) {
 					_setCollectionActionsValues(
-						actions, readOperationsMap, pathName, openAPIContext);
+						actions, openAPIContext, operations, pathName);
 				}
 			}
 			else {
 				if (pathName.equals(StringPool.SLASH)) {
 					_setCollectionActionsValues(
-						actions, readOperationsMap, pathName, openAPIContext);
+						actions, openAPIContext, operations, pathName);
 				}
 				else if (pathName.equals("/batch")) {
 					_setCollectionActionsValues(
-						actions, readOperationsMap, pathName, openAPIContext);
+						actions, openAPIContext, operations, pathName);
 				}
 			}
 		}
@@ -464,22 +464,22 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			PathItem pathItem = key.getValue();
 
-			Map<PathItem.HttpMethod, Operation> readOperationsMap =
+			Map<PathItem.HttpMethod, Operation> operations =
 				pathItem.readOperationsMap();
 
 			if (pathName.equals(pathObjectEntryIdParam)) {
 				_setEntityActionsValues(
-					actions, readOperationsMap, pathName, openAPIContext);
+					actions, operations, pathName, openAPIContext);
 			}
 			else if (pathName.equals(pathObjectEntryIdParam + "/permissions")) {
 				_setEntityActionsValues(
-					actions, readOperationsMap, pathName, openAPIContext);
+					actions, operations, pathName, openAPIContext);
 			}
 			else if (pathName.contains("object-actions") &&
 					 pathName.contains("by-external-reference-code")) {
 
 				_setEntityActionsValues(
-					actions, readOperationsMap, pathName, openAPIContext);
+					actions, operations, pathName, openAPIContext);
 			}
 		}
 
@@ -715,12 +715,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	}
 
 	private Map<String, Schema> _setCollectionActionsValues(
-		Map<String, Schema> actions,
-		Map<PathItem.HttpMethod, Operation> readOperationsMap, String pathName,
-		OpenAPIContext openAPIContext) {
+		Map<String, Schema> actions, OpenAPIContext openAPIContext,
+		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
-				readOperationsMap.entrySet()) {
+				operations.entrySet()) {
 
 			PathItem.HttpMethod pathItemHttpMethod = operation.getKey();
 
@@ -757,11 +756,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	private Map<String, Schema> _setEntityActionsValues(
 		Map<String, Schema> actions,
-		Map<PathItem.HttpMethod, Operation> readOperationsMap, String pathName,
+		Map<PathItem.HttpMethod, Operation> readOperations, String pathName,
 		OpenAPIContext openAPIContext) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
-				readOperationsMap.entrySet()) {
+				readOperations.entrySet()) {
 
 			PathItem.HttpMethod pathItemHttpMethod = operation.getKey();
 

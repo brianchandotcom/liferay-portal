@@ -18,7 +18,6 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutActionsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -111,10 +110,9 @@ public class LayoutActionsProductNavigationControlMenuEntry
 		}
 
 		if (layout.isSystem()) {
-			return _layoutPermission.contains(
+			return _layoutPermission.containsLayoutRestrictedUpdatePermission(
 				themeDisplay.getPermissionChecker(),
-				_layoutLocalService.getLayout(layout.getClassPK()),
-				ActionKeys.UPDATE);
+				_layoutLocalService.getLayout(layout.getClassPK()));
 		}
 
 		return super.isShow(httpServletRequest);

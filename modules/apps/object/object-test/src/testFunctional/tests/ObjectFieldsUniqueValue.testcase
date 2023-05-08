@@ -21,6 +21,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-135398 - Verify unique values are enforced when editing an existing entry"
+	@priority = 5
+	test CanPreventDuplicateIntegerWhenEditing {
+		property portal.acceptance = "true";
+
+		task ("Given a Custom Object that contains an integer field with unique values only") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 183428",
+				objectName = "CustomObject183428",
+				pluralLabelName = "Custom Objects 183428");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Custom Integer Field",
+				fieldName = "customIntegerField",
+				fieldType = "Integer",
+				isRequired = "false",
+				objectName = "CustomObject183428");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 183428");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Integer Field");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Accept Unique Values Only",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject183428");
+		}
+
+		task ("And given two object entries with different integer values") {
+			for (var fieldEntry : list "12345,54321") {
+				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+					fieldName = "customIntegerField",
+					objectName = "CustomObject183428",
+					value = ${fieldEntry});
+			}
+		}
+
+		task ("When the user attempts to edit an entry to match the value of the other entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject183428");
+
+			ObjectPortlet.updateEntry(
+				entry = 12345,
+				invalidEntry = "true",
+				updateEntry = 54321);
+		}
+
+		task ("Then an error is displayed and the entry isn't updated") {
+			Alert.viewErrorMessage(errorMessage = "The Custom Integer Field is already in use. Please enter a unique Custom Integer Field.");
+
+			Navigator.gotoBack();
+
+			ObjectPortlet.viewEntry(entry = 12345);
+		}
+	}
 
 	@description = "LPS-135398 - Verify unique values can be enforced for text fields"
 	@priority = 5

@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -105,12 +104,11 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			javaTermContent, methodName,
 			methodName + "String externalReferenceCode, ");
 
-		return StringUtil.replaceFirst(
-			javaTermContent, entityVariableName + ".set",
-			StringBundler.concat(
-				entityVariableName,
+		return StringUtil.insert(
+			javaTermContent,
+			entityVariableName +
 				".setExternalReferenceCode(externalReferenceCode);\n",
-				entityVariableName, ".set"));
+			javaTermContent.indexOf(entityVariableName + ".set"));
 	}
 
 }

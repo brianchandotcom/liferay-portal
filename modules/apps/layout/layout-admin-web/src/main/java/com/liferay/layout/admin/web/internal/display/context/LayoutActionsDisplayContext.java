@@ -18,6 +18,8 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -111,7 +113,7 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setTarget("_blank");
 						}
 					).add(
-						() -> _isContentLayout(layout),
+						() -> _isShowConvertToPageTemplateAction(layout),
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "convertToPageTemplate");
@@ -351,6 +353,24 @@ public class LayoutActionsDisplayContext {
 
 		return LayoutPermissionUtil.containsLayoutUpdatePermission(
 			_themeDisplay.getPermissionChecker(), layout);
+	}
+
+	private boolean _isShowConvertToPageTemplateAction(Layout layout)
+		throws PortalException {
+
+		if (_isContentLayout(layout) &&
+			LayoutPageTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), layout.getGroupId(),
+				LayoutPageTemplateActionKeys.
+					ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) &&
+			LayoutPageTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), layout.getGroupId(),
+				LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isShowDeleteAction(Layout layout) throws PortalException {

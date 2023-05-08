@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -349,7 +350,7 @@ public class LayoutsTreeDisplayContext {
 				"children",
 				layoutsTree.getLayoutsJSONArray(
 					_getSelectedLayoutIdsArray(), _getSelectPagesGroupId(),
-					_httpServletRequest, false, false, false,
+					_httpServletRequest, false, _isIncomplete(), false,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 					isSelectPagesPrivateLayout(), _getTreeId())
 			).put(
@@ -451,6 +452,16 @@ public class LayoutsTreeDisplayContext {
 				"liferay-staging:select-pages:treeId"));
 
 		return _treeId;
+	}
+
+	private boolean _isIncomplete() {
+		if (LayoutStagingUtil.isBranchingLayoutSet(
+				getSelectPagesGroup(), isSelectPagesPrivateLayout())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _action;

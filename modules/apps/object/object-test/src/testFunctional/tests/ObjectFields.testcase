@@ -2257,27 +2257,27 @@ definition {
 			SelectFrame(locator1 = "Modal#BODY");
 
 			AssertElementPresent(
-				key_tab = "Divided By",
+				key_tabName = "Divided By",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
 
 			AssertElementPresent(
-				key_tab = "Minus",
+				key_tabName = "Minus",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
 
 			AssertElementPresent(
-				key_tab = "Plus",
+				key_tabName = "Plus",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
 
 			AssertElementPresent(
-				key_tab = "Times",
+				key_tabName = "Times",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
 
 			AssertElementNotPresent(
-				key_userName = "And",
+				key_tabName = "And",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
 
 			AssertElementNotPresent(
-				key_userName = "Or",
+				key_tabName = "Or",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");
 		}
 	}

@@ -181,6 +181,7 @@ public class FolderActionDisplayContext {
 					this::_isCopyActionVisible,
 					dropdownItem -> {
 						dropdownItem.setHref(_getCopyURL());
+						dropdownItem.setIcon("copy");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "copy-to"));
 					}

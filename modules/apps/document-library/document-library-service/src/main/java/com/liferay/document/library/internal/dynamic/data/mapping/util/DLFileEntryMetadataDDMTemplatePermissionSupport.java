@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Component;
 		"add.template.action.id=ADD_DOCUMENT_TYPE",
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"
 	},
-	service = {
-		DDMTemplatePermissionSupport.class,
-		DLFileEntryMetadataDDMTemplatePermissionSupport.class
-	}
+	service = DDMTemplatePermissionSupport.class
 )
 public class DLFileEntryMetadataDDMTemplatePermissionSupport
 	implements DDMTemplatePermissionSupport {

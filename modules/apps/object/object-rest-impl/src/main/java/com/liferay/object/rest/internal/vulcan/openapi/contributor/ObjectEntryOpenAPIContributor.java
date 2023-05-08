@@ -425,23 +425,23 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			PathItem pathItem = key.getValue();
 
-			Map<PathItem.HttpMethod, Operation> readOperationMap =
+			Map<PathItem.HttpMethod, Operation> readOperationsMap =
 				pathItem.readOperationsMap();
 
 			if (StringUtil.equals(_objectDefinition.getScope(), "site")) {
 				if (pathName.equals("/scopes/{scopeKey}")) {
 					_setCollectionActionsValues(
-						actions, readOperationMap, pathName, openAPIContext);
+						actions, readOperationsMap, pathName, openAPIContext);
 				}
 			}
 			else {
 				if (pathName.equals(StringPool.SLASH)) {
 					_setCollectionActionsValues(
-						actions, readOperationMap, pathName, openAPIContext);
+						actions, readOperationsMap, pathName, openAPIContext);
 				}
 				else if (pathName.equals("/batch")) {
 					_setCollectionActionsValues(
-						actions, readOperationMap, pathName, openAPIContext);
+						actions, readOperationsMap, pathName, openAPIContext);
 				}
 			}
 		}
@@ -464,22 +464,22 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			PathItem pathItem = key.getValue();
 
-			Map<PathItem.HttpMethod, Operation> readOperationMap =
+			Map<PathItem.HttpMethod, Operation> readOperationsMap =
 				pathItem.readOperationsMap();
 
 			if (pathName.equals(pathObjectEntryIdParam)) {
 				_setEntityActionsValues(
-					actions, readOperationMap, pathName, openAPIContext);
+					actions, readOperationsMap, pathName, openAPIContext);
 			}
 			else if (pathName.equals(pathObjectEntryIdParam + "/permissions")) {
 				_setEntityActionsValues(
-					actions, readOperationMap, pathName, openAPIContext);
+					actions, readOperationsMap, pathName, openAPIContext);
 			}
 			else if (pathName.contains("object-actions") &&
 					 pathName.contains("by-external-reference-code")) {
 
 				_setEntityActionsValues(
-					actions, readOperationMap, pathName, openAPIContext);
+					actions, readOperationsMap, pathName, openAPIContext);
 			}
 		}
 
@@ -716,11 +716,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	private Map<String, Schema> _setCollectionActionsValues(
 		Map<String, Schema> actions,
-		Map<PathItem.HttpMethod, Operation> readOperationMap, String pathName,
+		Map<PathItem.HttpMethod, Operation> readOperationsMap, String pathName,
 		OpenAPIContext openAPIContext) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
-				readOperationMap.entrySet()) {
+				readOperationsMap.entrySet()) {
 
 			PathItem.HttpMethod pathItemHttpMethod = operation.getKey();
 
@@ -757,11 +757,11 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 	private Map<String, Schema> _setEntityActionsValues(
 		Map<String, Schema> actions,
-		Map<PathItem.HttpMethod, Operation> readOperationMap, String pathName,
+		Map<PathItem.HttpMethod, Operation> readOperationsMap, String pathName,
 		OpenAPIContext openAPIContext) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
-				readOperationMap.entrySet()) {
+				readOperationsMap.entrySet()) {
 
 			PathItem.HttpMethod pathItemHttpMethod = operation.getKey();
 

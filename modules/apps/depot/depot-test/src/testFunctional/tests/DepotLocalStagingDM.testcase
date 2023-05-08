@@ -893,6 +893,14 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			item = "Edit");
 
+		MouseOver(
+			key_text = "picture",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(
+			key_content = "Change Image",
+			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
 		BlogsNavigator.gotoBrowseImage();
 
 		ItemSelector.selectRepositoryImage(

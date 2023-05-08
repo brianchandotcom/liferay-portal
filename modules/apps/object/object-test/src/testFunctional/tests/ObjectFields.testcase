@@ -2254,6 +2254,8 @@ definition {
 		}
 
 		task ("Then the Formula Builder contains the principal math operations") {
+			SelectFrame(locator1 = "Modal#BODY");
+
 			AssertElementPresent(
 				key_tab = "Divided By",
 				locator1 = "ObjectAdmin#FORMULA_BUILDER_OPERATORS");

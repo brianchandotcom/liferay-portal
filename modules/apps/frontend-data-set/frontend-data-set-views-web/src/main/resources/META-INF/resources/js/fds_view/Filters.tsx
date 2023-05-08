@@ -21,7 +21,7 @@ import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {isBefore} from 'date-fns';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewType} from '../FDSViews';
@@ -60,9 +60,9 @@ function DateRange({
 	onToChange: (to: string) => void;
 	to: string;
 }) {
-	const [isValid, setIsValid] = React.useState(true);
+	const [isValid, setIsValid] = useState(true);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (from && to) {
 			setIsValid(isBefore(new Date(from), new Date(to)));
 		}
@@ -115,14 +115,6 @@ function DateRange({
 	);
 }
 
-// const FORMAT_MAP = {
-// 	'date-time': DateRange,
-// };
-
-// type FilterTypeInteger = 'int64' | 'int32';
-// type FilterType = 'integer' | 'string' | 'object' | 'array';
-// type FilterFormat = 'date-time' | 'int64' | 'int32';
-
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
 	fdsView: FDSViewType;
@@ -152,10 +144,10 @@ function AddFDSFilterModalContent({
 	namespace,
 	onSave,
 }: IPropsAddFDSFilterModalContent) {
-	const [selectedField, setSelectedField] = React.useState<string>();
-	const [label, setLabel] = React.useState<string>();
-	const [from, setFrom] = React.useState<string>('');
-	const [to, setTo] = React.useState<string>('');
+	const [selectedField, setSelectedField] = useState<string>();
+	const [label, setLabel] = useState<string>();
+	const [from, setFrom] = useState<string>('');
+	const [to, setTo] = useState<string>('');
 
 	const handleFilterSave = async () => {
 		const field = fields.find((item: Field) => item.name === selectedField);
@@ -315,9 +307,9 @@ interface IProps {
 }
 
 function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
-	const [fields, setFields] = React.useState<Field[]>([]);
-	const [filters, setFilters] = React.useState<Filter[]>([]);
-	const [newFiltersOrder, setNewFiltersOrder] = React.useState<string>('');
+	const [fields, setFields] = useState<Field[]>([]);
+	const [filters, setFilters] = useState<Filter[]>([]);
+	const [newFiltersOrder, setNewFiltersOrder] = useState<string>('');
 
 	const updateFDSFiltersOrder = async () => {
 		const response = await fetch(
@@ -367,7 +359,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			),
 		});
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
 				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER},${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER}`

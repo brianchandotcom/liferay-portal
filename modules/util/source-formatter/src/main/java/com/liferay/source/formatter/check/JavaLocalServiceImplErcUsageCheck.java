@@ -45,6 +45,10 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		JavaClass javaClass = javaTerm.getParentJavaClass();
 
+		if (javaClass.getParentJavaClass() != null) {
+			return javaTerm.getContent();
+		}
+
 		String className = javaClass.getName();
 
 		if (!className.endsWith("LocalServiceImpl")) {

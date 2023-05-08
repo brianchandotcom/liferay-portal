@@ -195,11 +195,6 @@ public class ExportImportObjectDefinitionTest {
 			String.valueOf(
 				mockLiferayResourceResponse.getPortletOutputStream()),
 			JSONCompareMode.STRICT_ORDER);
-
-		if (!objectDefinition.getSystem()) {
-			_objectDefinitionResource.deleteObjectDefinition(
-				objectDefinition.getId());
-		}
 	}
 
 	private byte[] _getContent(String boundary, byte[] bytes, String fileName) {

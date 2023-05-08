@@ -233,4 +233,17 @@ definition {
 		}
 	}
 
+	macro assertApiResponse {
+		for (var expected : list ${expectedList}) {
+			if (contains(${apiDataResponse}, "${expected}")) {
+				echo("${expected} - PASSED");
+			}
+			else {
+				echo("${expected} - Not found in response");
+
+				fail(${apiResponse});
+			}
+		}
+	}
+
 }

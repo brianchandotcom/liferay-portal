@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.parser;
 
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -32,33 +31,6 @@ public class JavaParameter {
 		_isFinal = isFinal;
 	}
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-
-		if (!(object instanceof JavaParameter)) {
-			return false;
-		}
-
-		JavaParameter otherJavaParameter = (JavaParameter)object;
-
-		if ((_isFinal == otherJavaParameter._isFinal) &&
-			Objects.equals(
-				_parameterAnnotations,
-				otherJavaParameter._parameterAnnotations) &&
-			Objects.equals(_parameterName, otherJavaParameter._parameterName) &&
-			Objects.equals(
-				getParameterType(true),
-				otherJavaParameter.getParameterType(true))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public Set<String> getParameterAnnotations() {
 		return _parameterAnnotations;
 	}
@@ -73,13 +45,6 @@ public class JavaParameter {
 
 	public String getParameterType(boolean fullyQualifiedName) {
 		return _parameterType.toString(fullyQualifiedName);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(
-			_isFinal, _parameterAnnotations, _parameterName,
-			getParameterType(true));
 	}
 
 	public boolean isFinal() {

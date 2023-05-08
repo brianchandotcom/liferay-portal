@@ -62,7 +62,16 @@ export const ACTIONS = {
 	},
 
 	deactivateUsers(itemData, portletNamespace) {
-		updateUsers(portletNamespace, itemData?.editUsersURL);
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-deactivate-the-selected-users'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateUsers(portletNamespace, itemData?.editUsersURL);
+				}
+			},
+		});
 	},
 
 	deleteOrganization(itemData, portletNamespace) {
@@ -121,7 +130,16 @@ export const ACTIONS = {
 	},
 
 	deleteUsers(itemData, portletNamespace) {
-		updateUsers(portletNamespace, itemData?.editUsersURL);
+		openConfirmModal({
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-permanently-delete-the-selected-users'
+			),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					updateUsers(portletNamespace, itemData?.editUsersURL);
+				}
+			},
+		});
 	},
 
 	permissions(itemData) {

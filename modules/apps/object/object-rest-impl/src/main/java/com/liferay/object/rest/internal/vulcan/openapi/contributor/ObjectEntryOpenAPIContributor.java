@@ -206,16 +206,16 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			collectionActionsMapSchema.setAdditionalProperties(null);
 
 			collectionActionsMapSchema.setProperties(
-				_getAvailableCollectionActionSchemas(
+				_getCollectionActionSchemas(
 					openAPIContext, openAPI.getPaths()));
 
-			MapSchema entityActionsMapSchema = _getActionsMapSchema(
+			MapSchema individualActionsMapSchema = _getActionsMapSchema(
 				openAPI, _objectDefinition.getShortName());
 
-			entityActionsMapSchema.setAdditionalProperties(null);
+			individualActionsMapSchema.setAdditionalProperties(null);
 
-			entityActionsMapSchema.setProperties(
-				_getAvailableEntityActionSchemas(
+			individualActionsMapSchema.setProperties(
+				_getIndividualActionSchemas(
 					openAPIContext, openAPI.getPaths()));
 
 			MapSchema permissionActionsMapSchema = _getActionsMapSchema(
@@ -224,7 +224,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			permissionActionsMapSchema.setAdditionalProperties(null);
 
 			permissionActionsMapSchema.setProperties(
-				_getAvailableEntityActionSchemas(
+				_getIndividualActionSchemas(
 					openAPIContext, openAPI.getPaths()));
 		}
 	}
@@ -414,10 +414,10 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return (MapSchema)schemas2.get("actions");
 	}
 
-	private Map<String, Schema> _getAvailableCollectionActionSchemas(
+	private Map<String, Schema> _getCollectionActionSchemas(
 		OpenAPIContext openAPIContext, Paths paths) {
 
-		Map<String, Schema> actionSchemas = new HashMap<>();
+		Map<String, Schema> collectionActionSchemas = new HashMap<>();
 
 		for (Map.Entry<String, PathItem> key : paths.entrySet()) {
 			String pathName = key.getKey();
@@ -429,62 +429,26 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			if (StringUtil.equals(_objectDefinition.getScope(), "site")) {
 				if (pathName.equals("/scopes/{scopeKey}")) {
-					_setCollectionActionsValues(
-						actionSchemas, openAPIContext, operations, pathName);
+					_setCollectionActionsProperties(
+						collectionActionSchemas, openAPIContext, operations,
+						pathName);
 				}
 			}
 			else {
 				if (pathName.equals(StringPool.SLASH)) {
-					_setCollectionActionsValues(
-						actionSchemas, openAPIContext, operations, pathName);
+					_setCollectionActionsProperties(
+						collectionActionSchemas, openAPIContext, operations,
+						pathName);
 				}
 				else if (pathName.equals("/batch")) {
-					_setCollectionActionsValues(
-						actionSchemas, openAPIContext, operations, pathName);
+					_setCollectionActionsProperties(
+						collectionActionSchemas, openAPIContext, operations,
+						pathName);
 				}
 			}
 		}
 
-		return actionSchemas;
-	}
-
-	private Map<String, Schema> _getAvailableEntityActionSchemas(
-		OpenAPIContext openAPIContext, Paths paths) {
-
-		Map<String, Schema> actionSchemas = new HashMap<>();
-
-		String objectEntryIdPathName = StringBundler.concat(
-			StringPool.SLASH, StringPool.OPEN_CURLY_BRACE,
-			StringUtil.lowerCaseFirstLetter(_objectDefinition.getShortName()),
-			"Id}");
-
-		for (Map.Entry<String, PathItem> key : paths.entrySet()) {
-			String pathName = key.getKey();
-
-			PathItem pathItem = key.getValue();
-
-			Map<PathItem.HttpMethod, Operation> operations =
-				pathItem.readOperationsMap();
-
-			if (pathName.equals(objectEntryIdPathName)) {
-				_setEntityActionsValues(
-					actionSchemas, openAPIContext, operations, pathName);
-			}
-			else if (pathName.equals(
-						objectEntryIdPathName + "/permissions")) {
-
-				_setEntityActionsValues(
-					actionSchemas, openAPIContext, operations, pathName);
-			}
-			else if (pathName.contains("by-external-reference-code") &&
-					 pathName.contains("object-actions")) {
-
-				_setEntityActionsValues(
-					actionSchemas, openAPIContext, operations, pathName);
-			}
-		}
-
-		return actionSchemas;
+		return collectionActionSchemas;
 	}
 
 	private Content _getContent(Content originalContent, String schemaName) {
@@ -517,6 +481,46 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return StringBundler.concat(
 			"Information about the relationship ", objectRelationship.getName(),
 			" can be embedded with \"nestedFields\".");
+	}
+
+	private Map<String, Schema> _getIndividualActionSchemas(
+		OpenAPIContext openAPIContext, Paths paths) {
+
+		Map<String, Schema> individualActionSchemas = new HashMap<>();
+
+		String objectEntryIdPathName = StringBundler.concat(
+			StringPool.SLASH, StringPool.OPEN_CURLY_BRACE,
+			StringUtil.lowerCaseFirstLetter(_objectDefinition.getShortName()),
+			"Id}");
+
+		for (Map.Entry<String, PathItem> key : paths.entrySet()) {
+			String pathName = key.getKey();
+
+			PathItem pathItem = key.getValue();
+
+			Map<PathItem.HttpMethod, Operation> operations =
+				pathItem.readOperationsMap();
+
+			if (pathName.equals(objectEntryIdPathName)) {
+				_setIndividualActionsProperties(
+					individualActionSchemas, openAPIContext, operations,
+					pathName);
+			}
+			else if (pathName.equals(objectEntryIdPathName + "/permissions")) {
+				_setIndividualActionsProperties(
+					individualActionSchemas, openAPIContext, operations,
+					pathName);
+			}
+			else if (pathName.contains("by-external-reference-code") &&
+					 pathName.contains("object-actions")) {
+
+				_setIndividualActionsProperties(
+					individualActionSchemas, openAPIContext, operations,
+					pathName);
+			}
+		}
+
+		return individualActionSchemas;
 	}
 
 	private ApiResponses _getObjectRelationshipApiResponses(
@@ -711,7 +715,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return objectSchema;
 	}
 
-	private Map<String, Schema> _setCollectionActionsValues(
+	private Map<String, Schema> _setCollectionActionsProperties(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 
@@ -753,7 +757,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return actionSchemas;
 	}
 
-	private Map<String, Schema> _setEntityActionsValues(
+	private Map<String, Schema> _setIndividualActionsProperties(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 

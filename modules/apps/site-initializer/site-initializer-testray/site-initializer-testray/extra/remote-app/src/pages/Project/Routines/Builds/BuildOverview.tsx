@@ -14,6 +14,8 @@
 
 import ClayChart from '@clayui/charts';
 import {useRef} from 'react';
+import Form from '~/components/Form';
+import {useCaseResultsChart} from '~/hooks/useCaseResultsChart';
 
 import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
@@ -33,7 +35,13 @@ type BuildOverviewProps = {
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	const totalTestCasesGroup = useTotalTestCases(testrayBuild);
+
+	const {chart, chartSelectData, setEntity} = useCaseResultsChart({
+		buildId: testrayBuild.id,
+	});
+
 	const issues = useIssuesFound({buildId: testrayBuild.id});
+
 	const ref = useRef<any>();
 
 	const [testrayTask] = testrayBuild?.tasks as TestrayTask[];
@@ -110,51 +118,62 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 				collapsable
 				title={i18n.translate('total-test-cases')}
 			>
-				<div className="row">
-					{totalTestCasesGroup.ready && (
-						<div className="col-2">
-							<ClayChart
-								data={{
-									colors: totalTestCasesGroup.colors,
-									columns: totalTestCasesGroup.donut.columns,
-									type: 'donut',
-								}}
-								donut={{
-									expand: false,
-									label: {
-										show: false,
-									},
-									legend: {
-										show: false,
-									},
-									title: totalTestCasesGroup.donut.total.toString(),
-									width: 15,
-								}}
-								legend={{show: false}}
-								onafterinit={() => {
-									getDonutLegend(ref.current, {
-										data: totalTestCasesGroup.donut.columns.map(
-											([name]) => name
-										),
-										elementId:
-											'testrayTotalMetricsGraphLegend',
-										total: totalTestCasesGroup.donut
-											.total as number,
-									});
-								}}
-								ref={ref}
-								size={{
-									height: 200,
-								}}
-							/>
-						</div>
-					)}
+				<div className="d-flex justify-content-between row">
+					<div className="align-items-center col-4 d-flex">
+						{totalTestCasesGroup.ready && (
+							<div className="col-8">
+								<ClayChart
+									data={{
+										colors: totalTestCasesGroup.colors,
+										columns:
+											totalTestCasesGroup.donut.columns,
+										type: 'donut',
+									}}
+									donut={{
+										expand: false,
+										label: {
+											show: false,
+										},
+										legend: {
+											show: false,
+										},
+										title: totalTestCasesGroup.donut.total.toString(),
+										width: 15,
+									}}
+									legend={{show: false}}
+									onafterinit={() => {
+										getDonutLegend(ref.current, {
+											data: totalTestCasesGroup.donut.columns.map(
+												([name]) => name
+											),
+											elementId:
+												'testrayTotalMetricsGraphLegend',
+											total: totalTestCasesGroup.donut
+												.total as number,
+										});
+									}}
+									ref={ref}
+									size={{
+										height: 200,
+									}}
+								/>
+							</div>
+						)}
 
-					<div className="col-2">
-						<div id="testrayTotalMetricsGraphLegend" />
+						<div className="col-">
+							<div id="testrayTotalMetricsGraphLegend" />
+						</div>
 					</div>
 
 					<div className="col-8">
+						<Form.Select
+							className="col-2"
+							defaultOption={false}
+							name="priority"
+							onChange={({target: {value}}) => setEntity(value)}
+							options={chartSelectData}
+						/>
+
 						<ClayChart
 							axis={{
 								y: {
@@ -172,9 +191,9 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 								},
 							}}
 							data={{
-								colors: totalTestCasesGroup.colors,
-								columns: totalTestCasesGroup.donut.columns,
-								groups: [totalTestCasesGroup.statuses],
+								colors: chart.colors,
+								columns: chart.columns,
+								groups: [chart.statuses],
 								type: 'bar',
 							}}
 							legend={{

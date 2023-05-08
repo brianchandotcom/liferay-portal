@@ -50,3 +50,5 @@ const getRandom = (max = 50) => Math.ceil(Math.random() * max);
 export function getRandomMaximumValue(count: number, max: number) {
 	return [...new Array(count)].map(() => getRandom(max));
 }
+
+export {getRandom};

@@ -344,7 +344,7 @@ public class ObjectEntryDTOConverter
 						groupId, objectRelationship.getObjectRelationshipId(),
 						primaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				if (relatedObjectDefinition.isSystem()) {
+				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 					if (!FeatureFlagManagerUtil.isEnabled("LPS-165819")) {
 						return null;
 					}

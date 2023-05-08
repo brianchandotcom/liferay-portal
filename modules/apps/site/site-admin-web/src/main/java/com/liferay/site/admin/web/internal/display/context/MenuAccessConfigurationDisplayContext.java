@@ -95,7 +95,7 @@ public class MenuAccessConfigurationDisplayContext {
 		itemSelectorCriteria.add(regularRoleItemSelectorCriterion);
 
 		String[] roleIds =
-			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
+			_menuAccessConfigurationProvider.getRoleIdsCanSeeControlMenu(
 				_themeDisplay.getScopeGroupId());
 
 		long[] checkedRoleIds = new long[roleIds.length];
@@ -149,11 +149,11 @@ public class MenuAccessConfigurationDisplayContext {
 
 		List<Role> roles = new ArrayList<>();
 
-		String[] rolesCanSeeControlMenu =
-			_menuAccessConfigurationProvider.getRolesCanSeeControlMenu(
+		String[] roleIdsCanSeeControlMenu =
+			_menuAccessConfigurationProvider.getRoleIdsCanSeeControlMenu(
 				_themeDisplay.getScopeGroupId());
 
-		for (String roleId : rolesCanSeeControlMenu) {
+		for (String roleId : roleIdsCanSeeControlMenu) {
 			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
 
 			if (role != null) {
@@ -165,7 +165,7 @@ public class MenuAccessConfigurationDisplayContext {
 			_themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		if (!ArrayUtil.contains(
-				rolesCanSeeControlMenu,
+				roleIdsCanSeeControlMenu,
 				String.valueOf(administratorRole.getRoleId()))) {
 
 			roles.add(administratorRole);
@@ -175,7 +175,7 @@ public class MenuAccessConfigurationDisplayContext {
 			_themeDisplay.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
 		if (!ArrayUtil.contains(
-				rolesCanSeeControlMenu,
+				roleIdsCanSeeControlMenu,
 				String.valueOf(siteAdministratorRole.getRoleId()))) {
 
 			roles.add(siteAdministratorRole);

@@ -35,6 +35,6 @@ public interface MenuAccessConfiguration {
 	public boolean showControlMenuByRole();
 
 	@Meta.AD(deflt = "", required = false)
-	public String[] rolesCanSeeControlMenu();
+	public String[] roleIdsCanSeeControlMenu();
 
 }

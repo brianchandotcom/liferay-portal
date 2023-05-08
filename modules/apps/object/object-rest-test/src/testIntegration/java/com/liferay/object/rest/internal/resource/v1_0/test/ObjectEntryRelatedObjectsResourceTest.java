@@ -27,6 +27,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinition
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.SystemObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -910,44 +911,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		return response.getResponseCode();
 	}
 
-	private UserAccount _randomUserAccount() throws Exception {
-		return new UserAccount() {
-			{
-				additionalName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				alternateName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				birthDate = RandomTestUtil.nextDate();
-				currentPassword = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				dashboardURL = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				dateCreated = RandomTestUtil.nextDate();
-				dateModified = RandomTestUtil.nextDate();
-				emailAddress =
-					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-						"@liferay.com";
-				familyName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				givenName = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				honorificPrefix = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				honorificSuffix = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				jobTitle = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				lastLoginDate = RandomTestUtil.nextDate();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				password = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				profileURL = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-			}
-		};
-	}
-
 	private void _testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(
 			String deleteEndpoint, String getEndpoint)
 		throws Exception {
@@ -1081,7 +1044,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_toBody(
 				manyToOne, objectRelationship,
 				JSONFactoryUtil.createJSONObject(
-					String.valueOf(_randomUserAccount()))),
+					String.valueOf(
+						SystemObjectEntryTestUtil.randomUserAccount()))),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
@@ -1091,7 +1055,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		UserAccount userAccount = _randomUserAccount();
+		UserAccount userAccount = SystemObjectEntryTestUtil.randomUserAccount();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			_toBody(
@@ -1151,13 +1115,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
 					_SYSTEM_OBJECT_FIELD_NAME_2, _SYSTEM_OBJECT_FIELD_VALUE,
-					_randomUserAccount())),
+					SystemObjectEntryTestUtil.randomUserAccount())),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		String customObjectEntryId = customObjectEntryJSONObject.getString(
 			"id");
 
-		UserAccount putUserAccount = _randomUserAccount();
+		UserAccount putUserAccount =
+			SystemObjectEntryTestUtil.randomUserAccount();
 
 		putUserAccount.setExternalReferenceCode(
 			() -> {

@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
-import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -249,11 +248,12 @@ public class ObjectEntryResourceTest {
 			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
 			_OBJECT_FIELD_NAME_2);
 
-		_userAccount = SystemObjectEntryTestUtil.addUserAccount(
-			systemObjectDefinitionManager,
-			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
-			).build());
+		_userAccountJSONObject =
+			SystemObjectEntryTestUtil.addUserAccountJSONObject(
+				systemObjectDefinitionManager,
+				HashMapBuilder.<String, Serializable>put(
+					_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
+				).build());
 	}
 
 	@After
@@ -3305,7 +3305,7 @@ public class ObjectEntryResourceTest {
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _userSystemObjectDefinition,
-			_objectEntry1.getPrimaryKey(), _userAccount.getId(),
+			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
@@ -3321,7 +3321,7 @@ public class ObjectEntryResourceTest {
 
 		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _userSystemObjectDefinition,
-			_objectEntry1.getPrimaryKey(), _userAccount.getId(),
+			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
@@ -5255,7 +5255,7 @@ public class ObjectEntryResourceTest {
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
 
-	private UserAccount _userAccount;
+	private JSONObject _userAccountJSONObject;
 	private ObjectDefinition _userSystemObjectDefinition;
 
 	@DeleteAfterTestRun

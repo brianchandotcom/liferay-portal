@@ -15,8 +15,6 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.source.formatter.check.util.SourceUtil;
-import com.liferay.source.formatter.parser.JavaClassType;
-import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.util.FileUtil;
 
 import java.nio.file.Path;
@@ -26,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -90,11 +87,5 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		throw new IllegalArgumentException(
 			"Service module does not contain service.xml file");
 	}
-
-	protected static final JavaParameter externalReferenceCodeJavaParameter =
-		new JavaParameter(
-			"externalReferenceCode",
-			new JavaClassType("String", "java.lang", Collections.emptyList()),
-			new TreeSet<>(), false);
 
 }

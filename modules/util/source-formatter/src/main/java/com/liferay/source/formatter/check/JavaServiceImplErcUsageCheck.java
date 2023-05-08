@@ -85,10 +85,13 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			return javaTermContent;
 		}
 
-		List<JavaParameter> parameters = javaSignature.getParameters();
+		for (JavaParameter parameter : javaSignature.getParameters()) {
+			if (StringUtil.equals(
+					parameter.getParameterName(), "externalReferenceCode") &&
+				StringUtil.equals(parameter.getParameterType(), "String")) {
 
-		if (parameters.contains(externalReferenceCodeJavaParameter)) {
-			return javaTermContent;
+				return javaTermContent;
+			}
 		}
 
 		JavaClass parentJavaClass = javaTerm.getParentJavaClass();

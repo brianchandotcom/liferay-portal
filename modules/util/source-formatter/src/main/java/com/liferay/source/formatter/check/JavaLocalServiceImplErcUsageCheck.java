@@ -70,16 +70,21 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			return javaTerm.getContent();
 		}
 
-		List<JavaParameter> parameters = javaSignature.getParameters();
-
 		String javaTermContent = javaTerm.getContent();
 
 		String setExternalReferenceCodeCall = "setExternalReferenceCode";
 
-		if (parameters.contains(externalReferenceCodeJavaParameter) ||
-			javaTermContent.contains(setExternalReferenceCodeCall)) {
-
+		if (javaTermContent.contains(setExternalReferenceCodeCall)) {
 			return javaTermContent;
+		}
+
+		for (JavaParameter parameter : javaSignature.getParameters()) {
+			if (StringUtil.equals(
+					parameter.getParameterName(), "externalReferenceCode") &&
+				StringUtil.equals(parameter.getParameterType(), "String")) {
+
+				return javaTermContent;
+			}
 		}
 
 		JavaClass parentJavaClass = javaTerm.getParentJavaClass();

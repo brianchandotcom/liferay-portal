@@ -357,7 +357,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_FORM_NAME_FIELD</td>
-	<td>//h1[contains(@class,'lfr-ddm__default-page-header-title') and contains(.,'${key_formName}')]</td>
+	<td>//div[contains(@class,'lfr-ddm__default-page-header-title') and contains(.,'${key_formName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -713,7 +713,7 @@
 </tr>
 <tr>
 	<td>PAGE_NAME</td>
-	<td>//div[contains(@class,'ddm-form-page-container wizard')]['${key_pageName}']//h2[contains(text(),'${pageName}')]</td>
+	<td>//div[contains(@class,'ddm-form-page-container wizard')]['${key_pageName}']//div[contains(text(),'${pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

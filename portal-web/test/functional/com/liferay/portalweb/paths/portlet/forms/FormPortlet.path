@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>FORM_PAGE</td>
-	<td>//*[contains(@class,'nav-link') and contains(.,'${key_formPageName}')] | //div[@class='ddm-layout-builder ddm-page-container-layout']//h2[text()='${key_formPageName}']</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'${key_formPageName}')] | //div[@class='ddm-layout-builder ddm-page-container-layout']//div[text()='${key_formPageName}']</td>
 	<td></td>
 </tr>
 <tr>

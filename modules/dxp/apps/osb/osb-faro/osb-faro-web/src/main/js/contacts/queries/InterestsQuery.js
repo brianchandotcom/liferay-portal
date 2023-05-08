@@ -10,6 +10,7 @@ const INTERESTS_ID_MAP = {
 export default queryName => gql`
 	query Interests(
 		$active: Boolean!
+		$channelId: String
 		$id: String!
 		$keywords: String
 		$size: Int!
@@ -18,6 +19,7 @@ export default queryName => gql`
 	) {
 		${queryName}(
 			active: $active
+			channelId: $channelId
 			${INTERESTS_ID_MAP[queryName]}: $id
 			keywords: $keywords
 			size: $size

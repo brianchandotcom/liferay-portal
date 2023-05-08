@@ -418,7 +418,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private Map<String, Schema> _getAvailableCollectionActionMethods(
 		OpenAPIContext openAPIContext, Paths paths) {
 
-		Map<String, Schema> actions = new HashMap<>();
+		Map<String, Schema> actionSchemas = new HashMap<>();
 
 		for (Map.Entry<String, PathItem> key : paths.entrySet()) {
 			String pathName = key.getKey();
@@ -431,28 +431,28 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			if (StringUtil.equals(_objectDefinition.getScope(), "site")) {
 				if (pathName.equals("/scopes/{scopeKey}")) {
 					_setCollectionActionsValues(
-						actions, openAPIContext, operations, pathName);
+						actionSchemas, openAPIContext, operations, pathName);
 				}
 			}
 			else {
 				if (pathName.equals(StringPool.SLASH)) {
 					_setCollectionActionsValues(
-						actions, openAPIContext, operations, pathName);
+						actionSchemas, openAPIContext, operations, pathName);
 				}
 				else if (pathName.equals("/batch")) {
 					_setCollectionActionsValues(
-						actions, openAPIContext, operations, pathName);
+						actionSchemas, openAPIContext, operations, pathName);
 				}
 			}
 		}
 
-		return actions;
+		return actionSchemas;
 	}
 
 	private Map<String, Schema> _getAvailableEntityActionMethods(
 		OpenAPIContext openAPIContext, Paths paths) {
 
-		Map<String, Schema> actions = new HashMap<>();
+		Map<String, Schema> actionSchemas = new HashMap<>();
 
 		String pathObjectEntryIdParam = StringBundler.concat(
 			StringPool.SLASH, StringPool.OPEN_CURLY_BRACE,
@@ -469,21 +469,21 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			if (pathName.equals(pathObjectEntryIdParam)) {
 				_setEntityActionsValues(
-					actions, openAPIContext, operations, pathName);
+					actionSchemas, openAPIContext, operations, pathName);
 			}
 			else if (pathName.equals(pathObjectEntryIdParam + "/permissions")) {
 				_setEntityActionsValues(
-					actions, openAPIContext, operations, pathName);
+					actionSchemas, openAPIContext, operations, pathName);
 			}
 			else if (pathName.contains("object-actions") &&
 					 pathName.contains("by-external-reference-code")) {
 
 				_setEntityActionsValues(
-					actions, openAPIContext, operations, pathName);
+					actionSchemas, openAPIContext, operations, pathName);
 			}
 		}
 
-		return actions;
+		return actionSchemas;
 	}
 
 	private Content _getContent(Content originalContent, String schemaName) {
@@ -711,7 +711,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	}
 
 	private Map<String, Schema> _setCollectionActionsValues(
-		Map<String, Schema> actions, OpenAPIContext openAPIContext,
+		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
@@ -724,36 +724,36 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			if (Objects.equals(
 					pathItemHttpMethod, PathItem.HttpMethod.DELETE) &&
-				 pathName.contains("/batch")) {
+				pathName.contains("/batch")) {
 
-				actions.put("deleteBatch", actionSchema);
+				actionSchemas.put("deleteBatch", actionSchema);
 			}
 			else if (Objects.equals(
-					pathItemHttpMethod, PathItem.HttpMethod.POST)) {
+						pathItemHttpMethod, PathItem.HttpMethod.POST)) {
 
 				if (pathName.contains("/batch")) {
-					actions.put("createBatch", actionSchema);
+					actionSchemas.put("createBatch", actionSchema);
 				}
 				else if (pathName.contains("scopeKey")) {
-					actions.put("create", actionSchema);
+					actionSchemas.put("create", actionSchema);
 				}
 				else if (pathName.equals("/")) {
-					actions.put("create", actionSchema);
+					actionSchemas.put("create", actionSchema);
 				}
 			}
 			else if (Objects.equals(
 						pathItemHttpMethod, PathItem.HttpMethod.PUT) &&
 					 pathName.contains("/batch")) {
 
-				actions.put("updateBatch", actionSchema);
+				actionSchemas.put("updateBatch", actionSchema);
 			}
 		}
 
-		return actions;
+		return actionSchemas;
 	}
 
 	private Map<String, Schema> _setEntityActionsValues(
-		Map<String, Schema> actions, OpenAPIContext openAPIContext,
+		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 
 		for (Map.Entry<PathItem.HttpMethod, Operation> operation :
@@ -766,10 +766,10 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			if (Objects.equals(pathItemHttpMethod, PathItem.HttpMethod.GET)) {
 				if (pathName.contains("/permissions")) {
-					actions.put("permissions", actionSchema);
+					actionSchemas.put("permissions", actionSchema);
 				}
 				else {
-					actions.put(
+					actionSchemas.put(
 						StringUtil.toLowerCase(pathItemHttpMethod.name()),
 						actionSchema);
 				}
@@ -777,29 +777,29 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			else if (Objects.equals(
 						pathItemHttpMethod, PathItem.HttpMethod.PATCH)) {
 
-				actions.put("update", actionSchema);
+				actionSchemas.put("update", actionSchema);
 			}
 			else if (Objects.equals(
 						pathItemHttpMethod, PathItem.HttpMethod.PUT) &&
 					 !pathName.contains("/permissions")) {
 
 				if (pathName.contains("object-actions")) {
-=					actions.put(
+					actionSchemas.put(
 						StringUtil.extractLast(pathName, StringPool.SLASH),
 						actionSchema);
 				}
 				else {
-					actions.put("replace", actionSchema);
+					actionSchemas.put("replace", actionSchema);
 				}
 			}
 			else if (!pathName.contains("/permissions")) {
-				actions.put(
+				actionSchemas.put(
 					StringUtil.toLowerCase(pathItemHttpMethod.name()),
 					actionSchema);
 			}
 		}
 
-		return actions;
+		return actionSchemas;
 	}
 
 	private void _setSchemaDescription(

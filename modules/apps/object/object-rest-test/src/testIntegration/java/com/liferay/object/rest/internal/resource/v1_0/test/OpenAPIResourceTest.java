@@ -292,7 +292,7 @@ public class OpenAPIResourceTest {
 	}
 
 	private void _testGetActionsOpenAPI(
-			List<String> availableActions, String schemaName)
+			List<String> actions, String schemaName)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
@@ -302,7 +302,7 @@ public class OpenAPIResourceTest {
 		JSONObject actionsJSONObject = _getActionsJSONObject(
 			jsonObject, schemaName);
 
-		for (String action : availableActions) {
+		for (String action : actions) {
 			JSONObject actionJSONObject = actionsJSONObject.getJSONObject(
 				action);
 

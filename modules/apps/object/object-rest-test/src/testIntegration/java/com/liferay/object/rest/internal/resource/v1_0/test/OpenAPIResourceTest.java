@@ -234,24 +234,6 @@ public class OpenAPIResourceTest {
 		}
 	}
 
-	private JSONObject _getActionsJSONObject(
-		JSONObject jsonObject, String schemaName) {
-
-		return jsonObject.getJSONObject(
-			"components"
-		).getJSONObject(
-			"schemas"
-		).getJSONObject(
-			schemaName
-		).getJSONObject(
-			"properties"
-		).getJSONObject(
-			"actions"
-		).getJSONObject(
-			"properties"
-		);
-	}
-
 	private String _getNestedEntitySchema(
 		JSONObject jsonObject, ObjectRelationship objectRelationship,
 		ObjectDefinition objectDefinition) {
@@ -291,16 +273,26 @@ public class OpenAPIResourceTest {
 		return StringUtil.extractLast(nestedEntitySchema, "/");
 	}
 
-	private void _testGetActionsOpenAPI(
-			List<String> actions, String schemaName)
+	private void _testGetActionsOpenAPI(List<String> actions, String schemaName)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
-		JSONObject actionsJSONObject = _getActionsJSONObject(
-			jsonObject, schemaName);
+		JSONObject actionsJSONObject = jsonObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		).getJSONObject(
+			schemaName
+		).getJSONObject(
+			"properties"
+		).getJSONObject(
+			"actions"
+		).getJSONObject(
+			"properties"
+		);
 
 		for (String action : actions) {
 			JSONObject actionJSONObject = actionsJSONObject.getJSONObject(

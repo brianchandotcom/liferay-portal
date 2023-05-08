@@ -39,12 +39,17 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eric Yan
  */
-@Component(service = AMImageScaler.class)
+@Component(
+	configurationPid = "com.liferay.adaptive.media.image.internal.configuration.AMImageMagickConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
+	service = AMImageScaler.class
+)
 public class AMImageMagickImageScaler implements AMImageScaler {
 
 	@Override

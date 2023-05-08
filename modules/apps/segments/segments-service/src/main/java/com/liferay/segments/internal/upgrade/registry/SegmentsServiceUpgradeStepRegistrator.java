@@ -88,6 +88,13 @@ public class SegmentsServiceUpgradeStepRegistrator
 				"SegmentsExperience", "classPK", "plid LONG"),
 			UpgradeProcessFactory.dropColumns(
 				"SegmentsExperience", "classNameId"));
+
+		registry.register(
+			"2.7.0", "2.8.0",
+			UpgradeProcessFactory.alterColumnName(
+				"SegmentsExperiment", "classPK", "plid LONG"),
+			UpgradeProcessFactory.dropColumns(
+				"SegmentsExperiment", "classNameId"));
 	}
 
 	@Reference

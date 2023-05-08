@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.preview.audio.internal.configuration.DLAudioFFMPEGAudioConverterConfiguration",
-	service = {AudioConverter.class, DLAudioFFMPEGAudioConverter.class}
+	service = AudioConverter.class
 )
 public class DLAudioFFMPEGAudioConverter implements AudioConverter {
 

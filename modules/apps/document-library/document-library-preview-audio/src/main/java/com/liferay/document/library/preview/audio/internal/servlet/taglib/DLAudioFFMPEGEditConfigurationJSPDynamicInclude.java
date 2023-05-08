@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.preview.audio.internal.servlet.taglib;
 
+import com.liferay.document.library.kernel.util.AudioConverter;
 import com.liferay.document.library.preview.audio.internal.DLAudioFFMPEGAudioConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -78,8 +79,10 @@ public class DLAudioFFMPEGEditConfigurationJSPDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAudioFFMPEGEditConfigurationJSPDynamicInclude.class);
 
-	@Reference
-	private DLAudioFFMPEGAudioConverter _dlAudioFFMPEGAudioConverter;
+	@Reference(
+		target = "(component.name=com.liferay.document.library.preview.audio.internal.DLAudioFFMPEGAudioConverter)"
+	)
+	private AudioConverter _dlAudioFFMPEGAudioConverter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"

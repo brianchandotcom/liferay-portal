@@ -135,4 +135,63 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13491 | Test Summary: Check that you can access the data of all individuals in the workspace"
+	@priority = 4
+	test RequestToAccessDataForAllIndividuals {
+		var type = "individuals";
+		var userNameList = "ac,bq";
+		var emailList = "ac@liferay.com,bq@liferay.com";
+		var nameList = "ac ac,bq bq";
+
+		task ("Copy the token value for the API and copy the token for the AC and DXP connection") {
+			var token = ACApi.getTokenValue();
+			
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			TestCase.setUpPortalInstance();
+			
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+		}
+
+		task ("Add 2 users") {
+			for (var name : list ${usernameList}) {
+				JSONUser.addUser(
+					userEmailAddress = "${name}@liferay.com",
+					userFirstName = ${name},
+					userLastName = ${name},
+					userScreenName = ${name});
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
+			}
+		}
+
+		task ("Connect AC and DXP") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the site page") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = ${emailList},
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Create a data report using analytics cloud API with the type individuals") {
+			var apiResponse = ACApi.createDataReport(
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert the two individuals are present in the API response") {
+			ACApi.assertApiResponse(apiDataResponse = ${apiResponse}, expectedList = ${userNameList});
+		}
+	}
+
 }

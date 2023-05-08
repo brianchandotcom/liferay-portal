@@ -34,7 +34,6 @@ Export-Package:\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary,\
 	com.liferay.portlet.documentlibrary.lar,\
-	com.liferay.portlet.documentlibrary.service.permission,\
 	com.liferay.portlet.documentlibrary.store,\
 	com.liferay.portlet.documentlibrary.util,\
 	com.liferay.portlet.expando.model.impl,\

@@ -305,7 +305,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 	private String _buildActionsURL(
 		OpenAPIContext openAPIContext, String pathName) {
 
-		return openAPIContext.getBaseUrl() +
+		return openAPIContext.getBaseURL() +
 			StringUtil.removeFirst(pathName, StringPool.SLASH);
 	}
 

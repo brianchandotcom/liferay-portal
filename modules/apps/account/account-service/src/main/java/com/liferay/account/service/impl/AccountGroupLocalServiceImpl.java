@@ -196,14 +196,7 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
-	public List<AccountGroup> getAccountGroupsByAccountGroupId(
-		long[] accountGroupIds) {
-
-		return accountGroupPersistence.findByAccountGroupId(accountGroupIds);
-	}
-
-	@Override
-	public List<AccountGroup> getAccountGroupsByAccountId(
+	public List<AccountGroup> getAccountGroupsByAccountEntryId(
 		long accountEntryId, int start, int end) {
 
 		List<AccountGroupRel> accountGroupRels =
@@ -222,10 +215,17 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
-	public int getAccountGroupsByAccountIdCount(long accountEntryId) {
+	public int getAccountGroupsByAccountEntryIdCount(long accountEntryId) {
 		return _accountGroupRelPersistence.countByC_C(
 			_classNameLocalService.getClassNameId(AccountEntry.class.getName()),
 			accountEntryId);
+	}
+
+	@Override
+	public List<AccountGroup> getAccountGroupsByAccountGroupId(
+		long[] accountGroupIds) {
+
+		return accountGroupPersistence.findByAccountGroupId(accountGroupIds);
 	}
 
 	@Override

@@ -1,5 +1,18 @@
 definition {
 
+	macro assertApiResponse {
+		for (var expected : list ${expectedList}) {
+			if (contains(${apiDataResponse}, ${expected})) {
+				echo("${expected} - PASSED");
+			}
+			else {
+				echo("${expected} - Not found in response");
+
+				fail(${apiResponse});
+			}
+		}
+	}
+
 	macro assertGenericJSONPathResponse {
 		var actual = JSONUtil.getWithJSONPath(${apiResponse}, "$..${apiPath}");
 
@@ -39,10 +52,12 @@ definition {
 			var curl = '''
 				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
 			''';
+
 			if (isSet(filter)) {
-			var curl = '''
-				${analyticsCloudURL}/api/reports/${type}\?${filter}=${filterValue} -H "Authorization: Bearer ${token}"
-			''';
+				var curl = '''
+					${analyticsCloudURL}/api/reports/${type}\?${filter}=${filterValue} -H "Authorization: Bearer ${token}"
+				''';
+			}
 		}
 		else {
 			var curl = '''
@@ -53,6 +68,23 @@ definition {
 		static var apiResponse = JSONCurlUtil.get(${curl});
 
 		return ${apiResponse};
+	}
+
+	macro createIndividualOrAssetDataReport {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		if (isSet(type) && isSet(id)) {
+			var curl = '''
+				${analyticsCloudURL}/api/reports/${type}/${id} -H "Authorization: Bearer ${token}"
+			''';
+
+			static var apiIndividualOrAssetResponse = JSONCurlUtil.get(${curl});
+
+			return ${apiIndividualOrAssetResponse};
+		}
+		else {
+			fail("Enter both valids type and id");
+		}
 	}
 
 	macro createNewExportSchedule {
@@ -135,6 +167,17 @@ definition {
 		var token = selenium.getAttribute("//button[@aria-label='Click to Copy']@data-clipboard-text");
 
 		return ${token};
+	}
+
+	macro searchApiResponse {
+		if (!(isSet(resultPosition))) {
+			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.${jsonQuery}");
+		}
+		else {
+			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.results[${resultPosition}]${jsonQuery}");
+		}
+
+		return ${searchedValue};
 	}
 
 	macro sendEmailReport {
@@ -233,42 +276,4 @@ definition {
 		}
 	}
 
-	macro assertApiResponse {
-		for (var expected : list ${expectedList}) {
-			if (contains(${apiDataResponse}, "${expected}")) {
-				echo("${expected} - PASSED");
-			}
-			else {
-				echo("${expected} - Not found in response");
-
-				fail(${apiResponse});
-			}
-		}
-	}
-
-	macro searchApiResponse {
-		if (!(isSet(resultPosition))) {
-			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.${JSONQuery}");
-		}
-		else {
-			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.results[${resultPosition}]${JSONQuery}");
-		}
-		return ${searchedValue};
-	}
-
-	macro createIndividualOrAssetDataReport {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-		if (isSet(type) && isSet(id)) {
-			var curl = '''
-				${analyticsCloudURL}/api/reports/${type}/${id} -H "Authorization: Bearer ${token}"
-			''';
-			static var apiIndividualOrAssetResponse = JSONCurlUtil.get(${curl});
-
-			return ${apiIndividualOrAssetResponse};
-		}
-		else {
-			fail("Enter both valids type and id");
-		}
-	}
 }

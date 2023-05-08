@@ -115,7 +115,7 @@ public class ExportImportObjectDefinitionTest {
 	}
 
 	private MockLiferayResourceRequest _createMockLiferayResourceRequest(
-			long objectDefinitionId) {
+		long objectDefinitionId) {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -160,43 +160,6 @@ public class ExportImportObjectDefinitionTest {
 		return mockMultipartHttpServletRequest;
 	}
 
-	private void _testExportImportObjectDefinition(
-			String fileName, String objectDefinitionName, boolean system)
-		throws Exception {
-
-		String externalReferenceCode = null;
-		ObjectDefinition objectDefinition = null;
-
-		if (system) {
-			objectDefinition = _getObjectDefinitionByName(objectDefinitionName);
-
-			externalReferenceCode = objectDefinition.getExternalReferenceCode();
-		}
-
-		_mvcActionCommand.processAction(
-			_createMockLiferayPortletActionRequest(
-				externalReferenceCode, fileName, objectDefinitionName),
-			new MockLiferayPortletActionResponse());
-
-		objectDefinition = _getObjectDefinitionByName(objectDefinitionName);
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			_createMockLiferayResourceRequest(objectDefinition.getId()),
-			mockLiferayResourceResponse);
-
-		Class<?> clazz = getClass();
-
-		JSONAssert.assertEquals(
-			StringUtil.read(
-				clazz.getResourceAsStream("dependencies/" + fileName)),
-			String.valueOf(
-				mockLiferayResourceResponse.getPortletOutputStream()),
-			JSONCompareMode.STRICT_ORDER);
-	}
-
 	private byte[] _getContent(String boundary, byte[] bytes, String fileName) {
 		String start = StringBundler.concat(
 			StringPool.DOUBLE_DASH, boundary,
@@ -235,6 +198,43 @@ public class ExportImportObjectDefinitionTest {
 		themeDisplay.setUser(_user);
 
 		return themeDisplay;
+	}
+
+	private void _testExportImportObjectDefinition(
+			String fileName, String objectDefinitionName, boolean system)
+		throws Exception {
+
+		String externalReferenceCode = null;
+		ObjectDefinition objectDefinition = null;
+
+		if (system) {
+			objectDefinition = _getObjectDefinitionByName(objectDefinitionName);
+
+			externalReferenceCode = objectDefinition.getExternalReferenceCode();
+		}
+
+		_mvcActionCommand.processAction(
+			_createMockLiferayPortletActionRequest(
+				externalReferenceCode, fileName, objectDefinitionName),
+			new MockLiferayPortletActionResponse());
+
+		objectDefinition = _getObjectDefinitionByName(objectDefinitionName);
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		_mvcResourceCommand.serveResource(
+			_createMockLiferayResourceRequest(objectDefinition.getId()),
+			mockLiferayResourceResponse);
+
+		Class<?> clazz = getClass();
+
+		JSONAssert.assertEquals(
+			StringUtil.read(
+				clazz.getResourceAsStream("dependencies/" + fileName)),
+			String.valueOf(
+				mockLiferayResourceResponse.getPortletOutputStream()),
+			JSONCompareMode.STRICT_ORDER);
 	}
 
 	@Inject

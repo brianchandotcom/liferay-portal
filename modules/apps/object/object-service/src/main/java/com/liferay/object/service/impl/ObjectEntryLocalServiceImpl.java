@@ -60,6 +60,8 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
+import com.liferay.object.petra.sql.dsl.DataType;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -2265,8 +2267,7 @@ public class ObjectEntryLocalServiceImpl
 
 				result = _getValue(
 					entryValues,
-					DynamicObjectDefinitionTable.getSQLType(
-						_getDBType(alias, objectDefinitionId)));
+					DataType.getSQLType(_getDBType(alias, objectDefinitionId)));
 			}
 			else if (selectExpression instanceof Column) {
 				Column<?, ?> column = (Column<?, ?>)selectExpression;
@@ -2484,11 +2485,9 @@ public class ObjectEntryLocalServiceImpl
 				selectExpressions.add(
 					DSLQueryFactoryUtil.scalarSubDSLQuery(
 						joinStep.where(predicate),
-						DynamicObjectDefinitionTable.getJavaClass(
-							objectField.getDBType()),
+						DataType.getJavaClass(objectField.getDBType()),
 						objectField.getName(),
-						DynamicObjectDefinitionTable.getSQLType(
-							objectField.getDBType())));
+						DataType.getSQLType(objectField.getDBType())));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
@@ -2635,7 +2634,7 @@ public class ObjectEntryLocalServiceImpl
 
 				columnName = alias.getName();
 
-				javaTypeClass = DynamicObjectDefinitionTable.getJavaClass(
+				javaTypeClass = DataType.getJavaClass(
 					_getDBType(alias, objectDefinitionId));
 			}
 			else if (selectExpression instanceof Column) {

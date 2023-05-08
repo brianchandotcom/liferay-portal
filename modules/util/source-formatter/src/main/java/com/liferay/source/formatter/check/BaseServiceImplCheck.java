@@ -42,7 +42,7 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		return className.substring(0, className.indexOf("ServiceImpl"));
 	}
 
-	protected List<String> getErcEnabledEntityNodeNames(Document document) {
+	protected List<String> getErcEnabledEntityNames(Document document) {
 		if (document == null) {
 			return Collections.emptyList();
 		}
@@ -52,17 +52,17 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		Iterator<Element> iterator = serviceXMLElement.elementIterator(
 			"entity");
 
-		List<String> entities = new ArrayList<>();
+		List<String> ercEnabledEntityNames = new ArrayList<>();
 
 		while (iterator.hasNext()) {
 			Element element = iterator.next();
 
 			if (element.attributeValue("external-reference-code") != null) {
-				entities.add(element.attributeValue("name"));
+				ercEnabledEntityNames.add(element.attributeValue("name"));
 			}
 		}
 
-		return entities;
+		return ercEnabledEntityNames;
 	}
 
 	protected Document getServiceXmlDocument(String absolutePath) {

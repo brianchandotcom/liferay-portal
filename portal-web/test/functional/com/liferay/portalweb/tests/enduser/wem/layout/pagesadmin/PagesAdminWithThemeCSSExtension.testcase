@@ -506,6 +506,8 @@ definition {
 
 			WaitForPageLoad();
 
+			Navigator.gotoNavTab(navTab = "Design");
+
 			AssertTextEquals(
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",

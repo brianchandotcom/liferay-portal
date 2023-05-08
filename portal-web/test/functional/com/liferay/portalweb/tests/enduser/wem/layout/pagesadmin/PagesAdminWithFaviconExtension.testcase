@@ -234,6 +234,8 @@ definition {
 		}
 
 		task ("Then the site designer could clear the favicon extension selection") {
+			Navigator.gotoNavTab(navTab = "Design");
+
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Google Favicon");
@@ -461,6 +463,8 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",

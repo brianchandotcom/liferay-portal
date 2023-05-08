@@ -164,7 +164,7 @@ function SearchBarConfigurationSuggestions({
 				attributes: {
 					characterThreshold: '0',
 					matchDisplayLanguageId: true,
-					minCount: '5',
+					minCounts: '5',
 				},
 				contributorName,
 				displayGroupName:

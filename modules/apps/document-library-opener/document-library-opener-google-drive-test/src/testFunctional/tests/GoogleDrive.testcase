@@ -406,7 +406,7 @@ definition {
 				roleTitle = "Regular Role");
 		}
 
-		for (var resourceAction : list "UPDATE,VIEW") {
+		for (var resourceAction : list "UPDATE,VIEW,DOWNLOAD") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = ${resourceAction},
 				resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",

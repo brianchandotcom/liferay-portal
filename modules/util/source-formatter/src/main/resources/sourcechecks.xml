@@ -886,6 +886,7 @@
 		<check name="JavaLocalServiceImplErcUsageCheck">
 			<category name="Productivity" />
 			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaModuleClassGetResourceCallCheck">
 			<category name="Bug Prevention" />
@@ -933,6 +934,7 @@
 		<check name="JavaServiceImplErcUsageCheck">
 			<category name="Productivity" />
 			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in remote `*ServiceImpl` add method." />
+			<property name="enabled" value="false" />
 		</check>
 
 		<!-- Plugin Source Checks -->

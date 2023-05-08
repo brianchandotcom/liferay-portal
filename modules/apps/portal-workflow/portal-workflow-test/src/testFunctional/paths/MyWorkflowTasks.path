@@ -126,7 +126,7 @@
 </tr>
 <tr>
 	<td>MY_WORKFLOW_TASKS_SEARCH_ICON</td>
-	<td>//button[contains(@class, 'btn btn-monospaced btn-unstyled')][2]</td>
+	<td>//span[@class = 'input-group-inset-item input-group-inset-item-after']//button[contains(@class, 'btn btn-monospaced btn-unstyled')]</td>
 	<td></td>
 </tr>
 <tr>

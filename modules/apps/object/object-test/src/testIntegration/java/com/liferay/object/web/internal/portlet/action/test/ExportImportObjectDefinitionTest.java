@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -48,7 +45,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -87,10 +83,10 @@ public class ExportImportObjectDefinitionTest {
 
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
-		_exportImportObjectDefinition(
+		_testExportImportObjectDefinition(
 			"account_entry_system_object_definition.json", "AccountEntry",
 			true);
-		_exportImportObjectDefinition(
+		_testExportImportObjectDefinition(
 			"custom_object_definition.json", "ImportedCustomObjectDefinition",
 			false);
 	}
@@ -164,37 +160,25 @@ public class ExportImportObjectDefinitionTest {
 		return mockMultipartHttpServletRequest;
 	}
 
-	private ObjectDefinition _getObjectDefinitionByName(String name)
-		throws Exception {
-
-		Page<ObjectDefinition> page =
-			_objectDefinitionResource.getObjectDefinitionsPage(
-				name, null, null, Pagination.of(1, 1), null);
-
-		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
-
-		return items.get(0);
-	}
-
-	private void _exportImportObjectDefinition(
-			String fileName, String name, boolean system)
+	private void _testExportImportObjectDefinition(
+			String fileName, String objectDefinitionName, boolean system)
 		throws Exception {
 
 		String externalReferenceCode = null;
 		ObjectDefinition objectDefinition = null;
 
 		if (system) {
-			objectDefinition = _getObjectDefinitionByName(name);
+			objectDefinition = _getObjectDefinitionByName(objectDefinitionName);
 
 			externalReferenceCode = objectDefinition.getExternalReferenceCode();
 		}
 
 		_mvcActionCommand.processAction(
 			_createMockLiferayPortletActionRequest(
-				externalReferenceCode, fileName, name),
+				externalReferenceCode, fileName, objectDefinitionName),
 			new MockLiferayPortletActionResponse());
 
-		objectDefinition = _getObjectDefinitionByName(name);
+		objectDefinition = _getObjectDefinitionByName(objectDefinitionName);
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
@@ -228,6 +212,18 @@ public class ExportImportObjectDefinitionTest {
 			"\r\n--", boundary, StringPool.DOUBLE_DASH);
 
 		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
+	}
+
+	private ObjectDefinition _getObjectDefinitionByName(String name)
+		throws Exception {
+
+		Page<ObjectDefinition> page =
+			_objectDefinitionResource.getObjectDefinitionsPage(
+				name, null, null, Pagination.of(1, 1), null);
+
+		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
+
+		return items.get(0);
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

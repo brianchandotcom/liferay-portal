@@ -14,7 +14,7 @@
 
 package com.liferay.comment.taglib.servlet.taglib;
 
-import com.liferay.comment.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -99,7 +100,7 @@ public class DiscussionTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		setServletContext(ServletContextUtil.getServletContext());
+		setServletContext(_servletContextSnapshot.get());
 	}
 
 	public void setRatingsEnabled(boolean ratingsEnabled) {
@@ -227,6 +228,11 @@ public class DiscussionTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/discussion/page.jsp";
+
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			DiscussionTag.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.comment.taglib)");
 
 	private boolean _assetEntryVisible = true;
 	private String _className;

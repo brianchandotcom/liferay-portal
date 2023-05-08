@@ -14,13 +14,14 @@
 
 package com.liferay.captcha.taglib.servlet.taglib;
 
-import com.liferay.captcha.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -37,7 +38,7 @@ public class CaptchaTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		setServletContext(ServletContextUtil.getServletContext());
+		setServletContext(_servletContextSnapshot.get());
 	}
 
 	public void setUrl(String url) {
@@ -83,6 +84,11 @@ public class CaptchaTag extends IncludeTag {
 	}
 
 	private static final String _PAGE = "/captcha/page.jsp";
+
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			CaptchaTag.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.captcha.taglib)");
 
 	private String _url;
 

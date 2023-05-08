@@ -206,7 +206,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			collectionActionsMapSchema.setAdditionalProperties(null);
 
 			collectionActionsMapSchema.setProperties(
-				_getAvailableCollectionActionSchemas(
+				_getAvailableCollectionActionsSchemas(
 					openAPIContext, openAPI.getPaths()));
 
 			MapSchema entityActionsMapSchema = _getActionsMapSchema(
@@ -215,7 +215,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			entityActionsMapSchema.setAdditionalProperties(null);
 
 			entityActionsMapSchema.setProperties(
-				_getAvailableEntityActionSchemas(
+				_getAvailableEntityActionsSchemas(
 					openAPIContext, openAPI.getPaths()));
 
 			MapSchema permissionActionsMapSchema = _getActionsMapSchema(
@@ -224,7 +224,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			permissionActionsMapSchema.setAdditionalProperties(null);
 
 			permissionActionsMapSchema.setProperties(
-				_getAvailableEntityActionSchemas(
+				_getAvailableEntityActionsSchemas(
 					openAPIContext, openAPI.getPaths()));
 		}
 	}
@@ -414,7 +414,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return (MapSchema)schemas2.get("actions");
 	}
 
-	private Map<String, Schema> _getAvailableCollectionActionSchemas(
+	private Map<String, Schema> _getAvailableCollectionActionsSchemas(
 		OpenAPIContext openAPIContext, Paths paths) {
 
 		Map<String, Schema> actionSchemas = new HashMap<>();
@@ -429,17 +429,17 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 			if (StringUtil.equals(_objectDefinition.getScope(), "site")) {
 				if (pathName.equals("/scopes/{scopeKey}")) {
-					_setCollectionActionsValues(
+					_setCollectionActionsProperties(
 						actionSchemas, openAPIContext, operations, pathName);
 				}
 			}
 			else {
 				if (pathName.equals(StringPool.SLASH)) {
-					_setCollectionActionsValues(
+					_setCollectionActionsProperties(
 						actionSchemas, openAPIContext, operations, pathName);
 				}
 				else if (pathName.equals("/batch")) {
-					_setCollectionActionsValues(
+					_setCollectionActionsProperties(
 						actionSchemas, openAPIContext, operations, pathName);
 				}
 			}
@@ -448,7 +448,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return actionSchemas;
 	}
 
-	private Map<String, Schema> _getAvailableEntityActionSchemas(
+	private Map<String, Schema> _getAvailableEntityActionsSchemas(
 		OpenAPIContext openAPIContext, Paths paths) {
 
 		Map<String, Schema> actionSchemas = new HashMap<>();
@@ -467,19 +467,17 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				pathItem.readOperationsMap();
 
 			if (pathName.equals(objectEntryIdPathName)) {
-				_setEntityActionsValues(
+				_setEntityActionsProperties(
 					actionSchemas, openAPIContext, operations, pathName);
 			}
-			else if (pathName.equals(
-						objectEntryIdPathName + "/permissions")) {
-
-				_setEntityActionsValues(
+			else if (pathName.equals(objectEntryIdPathName + "/permissions")) {
+				_setEntityActionsProperties(
 					actionSchemas, openAPIContext, operations, pathName);
 			}
 			else if (pathName.contains("by-external-reference-code") &&
 					 pathName.contains("object-actions")) {
 
-				_setEntityActionsValues(
+				_setEntityActionsProperties(
 					actionSchemas, openAPIContext, operations, pathName);
 			}
 		}
@@ -711,7 +709,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return objectSchema;
 	}
 
-	private Map<String, Schema> _setCollectionActionsValues(
+	private Map<String, Schema> _setCollectionActionsProperties(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 
@@ -753,7 +751,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return actionSchemas;
 	}
 
-	private Map<String, Schema> _setEntityActionsValues(
+	private Map<String, Schema> _setEntityActionsProperties(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
 

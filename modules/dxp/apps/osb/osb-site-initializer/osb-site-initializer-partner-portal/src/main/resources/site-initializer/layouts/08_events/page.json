@@ -1,6 +1,6 @@
 {
-	"friendlyURL": "/marketing/events",
-	"hidden": true,
+	"friendlyURL": "/events",
+	"hidden": false,
 	"name_i18n": {
 		"en_US": "Events"
 	},
@@ -14,11 +14,5 @@
 	],
 	"private": false,
 	"system": false,
-	"type": "link_to_layout",
-	"typeSettings": [
-		{
-			"key": "url",
-			"value": "/events"
-		}
-	]
+	"type": "content"
 }

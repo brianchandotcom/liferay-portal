@@ -726,7 +726,15 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			Schema actionSchema = _createActionSchema(
 				openAPIContext, operation, pathName);
 
-			if (Objects.equals(pathItemHttpMethod, PathItem.HttpMethod.POST)) {
+			if (Objects.equals(
+					pathItemHttpMethod, PathItem.HttpMethod.DELETE) &&
+				 pathName.contains("/batch")) {
+
+				actions.put("deleteBatch", actionSchema);
+			}
+			else if (Objects.equals(
+					pathItemHttpMethod, PathItem.HttpMethod.POST)) {
+
 				if (pathName.equals("/")) {
 					actions.put("create", actionSchema);
 				}
@@ -742,12 +750,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					 pathName.contains("/batch")) {
 
 				actions.put("updateBatch", actionSchema);
-			}
-			else if (Objects.equals(
-						pathItemHttpMethod, PathItem.HttpMethod.DELETE) &&
-					 pathName.contains("/batch")) {
-
-				actions.put("deleteBatch", actionSchema);
 			}
 		}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -71,10 +70,6 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String entityReturnType = javaSignature.getReturnType();
 
-		System.out.println(
-			StringBundler.concat(
-				"Checking ", javaTermName, ", returns ", entityReturnType));
-
 		if (!javaTermName.equals("add") &&
 			!javaTermName.equals("add" + entityReturnType)) {
 
@@ -98,10 +93,6 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 				return javaTermContent;
 			}
 		}
-
-		JavaClass parentJavaClass = javaTerm.getParentJavaClass();
-
-		System.out.println("Writing  " + parentJavaClass.getName());
 
 		String methodName = javaTermName + StringPool.OPEN_PARENTHESIS;
 

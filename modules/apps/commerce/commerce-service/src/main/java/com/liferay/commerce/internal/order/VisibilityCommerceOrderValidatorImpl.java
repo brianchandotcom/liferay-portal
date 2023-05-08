@@ -15,8 +15,8 @@
 package com.liferay.commerce.internal.order;
 
 import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidator;
@@ -138,9 +138,8 @@ public class VisibilityCommerceOrderValidatorImpl
 			_accountGroupRelLocalService.getAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-		long[] accountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceOrder.getCommerceAccountId());
+		long[] accountGroupIds = _accountGroupLocalService.getAccountGroupIds(
+			commerceOrder.getCommerceAccountId());
 
 		for (AccountGroupRel accountGroupRel : accountGroupRels) {
 			if (ArrayUtil.contains(
@@ -177,10 +176,10 @@ public class VisibilityCommerceOrderValidatorImpl
 	}
 
 	@Reference
-	private AccountGroupRelLocalService _accountGroupRelLocalService;
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

@@ -35,6 +35,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -181,6 +182,27 @@ public class ObjectEntryOpenAPIResourceImpl
 			dtoProperty.setRequired(objectField.isRequired());
 
 			return dtoProperty;
+		}
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+			return new DTOProperty(
+				HashMapBuilder.<String, Object>put(
+					"x-parent-map", "properties"
+				).put(
+					"x-timeStorage",
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+						objectField)
+				).build(),
+				objectField.getName(), objectField.getDBType()) {
+
+				{
+					setRequired(objectField.isRequired());
+				}
+			};
 		}
 
 		if (objectField.getListTypeDefinitionId() != 0) {

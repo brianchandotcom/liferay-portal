@@ -79,6 +79,9 @@ import io.swagger.v3.oas.models.tags.Tag;
 
 import java.net.URI;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1142,6 +1145,23 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				else if (type.equals("Date")) {
 					schema.setFormat("date");
 					schema.setType("string");
+				}
+				else if (type.equals("DateTime")) {
+					schema.setFormat("date-time");
+					schema.setType("string");
+
+					if (StringUtil.equals(
+							MapUtil.getString(
+								dtoProperty.getExtensions(), "x-timeStorage"),
+							"useInputAsEntered")) {
+
+						LocalDateTime localDateTime = LocalDateTime.now();
+
+						schema.setExample(
+							localDateTime.format(
+								DateTimeFormatter.ofPattern(
+									"yyyy-MM-dd'T'HH:mm:ss.SSS")));
+					}
 				}
 				else if (type.equals("Double")) {
 					schema.setFormat("double");

@@ -105,11 +105,17 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			javaTermContent, methodName,
 			methodName + "String externalReferenceCode, ");
 
-		return StringUtil.insert(
-			javaTermContent,
-			entityVariableName +
-				".setExternalReferenceCode(externalReferenceCode);\n",
-			javaTermContent.indexOf(entityVariableName + ".set"));
+		int x = javaTermContent.indexOf(entityVariableName + ".set");
+
+		if (x != -1) {
+			return StringUtil.insert(
+				javaTermContent,
+				entityVariableName +
+					".setExternalReferenceCode(externalReferenceCode);\n",
+				x);
+		}
+
+		return javaTermContent;
 	}
 
 }

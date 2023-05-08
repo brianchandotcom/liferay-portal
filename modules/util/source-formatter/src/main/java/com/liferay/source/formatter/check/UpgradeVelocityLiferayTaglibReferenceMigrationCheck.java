@@ -59,7 +59,7 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 
 	private String _migrateVelocityLanguage(String line) {
 		String newLine = _replaceLine(
-			line, _VELOCITY_LIFERAY_LANGUAGE, "(",
+			line, _VELOCITY_LIFERAY_LANGUAGE, StringPool.OPEN_PARENTHESIS,
 			_FREEMARKER_LIFERAY_LANGUAGE_KEY);
 
 		int languageKeyIndex = newLine.indexOf(
@@ -99,7 +99,7 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 
 	private String _migrateVelocityLiferayThemeWrap(String line) {
 		String newLine = _replaceLine(
-			line, _VELOCITY_LIFERAY_THEME_WRAP, "(",
+			line, _VELOCITY_LIFERAY_THEME_WRAP, StringPool.OPEN_PARENTHESIS,
 			_FREEMARKER_LIFERAY_THEME_WRAP);
 
 		int newStartIndex = newLine.indexOf(_FREEMARKER_LIFERAY_THEME_WRAP);
@@ -120,7 +120,8 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 				StringPool.TAB, _FREEMARKER_LIFERAY_THEME_INCLUDE),
 			newStartIndex);
 
-		return _replaceLine(newLine, "=", "$", "=");
+		return _replaceLine(
+			newLine, StringPool.EQUAL, StringPool.DOLLAR, StringPool.EQUAL);
 	}
 
 	private String _replaceLine(

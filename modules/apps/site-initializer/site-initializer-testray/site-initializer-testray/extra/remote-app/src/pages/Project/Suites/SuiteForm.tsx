@@ -54,7 +54,7 @@ const SuiteForm = () => {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
-	useHeader({tabs: [], timeout: 100});
+	useHeader({headerActions: {actions: []}, tabs: [], timeout: 150});
 
 	const {projectId} = useParams();
 	const context: {

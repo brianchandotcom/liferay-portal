@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -70,6 +72,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -109,6 +113,13 @@ public class DDMFormFieldTemplateContextFactory {
 	public List<Object> create() {
 		return _createDDMFormFieldTemplateContexts(
 			_ddmFormFieldValues, StringPool.BLANK);
+	}
+
+	protected ThemeDisplay getThemeDisplay(
+		HttpServletRequest httpServletRequest) {
+
+		return (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	protected void setDDMFormFieldTypeServicesRegistry(
@@ -161,6 +172,18 @@ public class DDMFormFieldTemplateContextFactory {
 
 		ddmFormFieldRenderingContext.setProperty(
 			"groupId", _ddmFormRenderingContext.getGroupId());
+
+		long groupId = GetterUtil.getLong(
+			ddmFormFieldRenderingContext.getProperty("groupId"));
+
+		if (groupId == 0) {
+			ThemeDisplay themeDisplay = getThemeDisplay(
+				ddmFormFieldRenderingContext.getHttpServletRequest());
+
+			ddmFormFieldRenderingContext.setProperty(
+				"groupId", themeDisplay.getScopeGroupId());
+		}
+
 		ddmFormFieldRenderingContext.setReturnFullContext(
 			_ddmFormRenderingContext.isReturnFullContext());
 		ddmFormFieldRenderingContext.setViewMode(

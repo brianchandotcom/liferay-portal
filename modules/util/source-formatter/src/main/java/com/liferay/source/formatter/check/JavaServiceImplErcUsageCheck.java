@@ -48,10 +48,10 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			return javaTerm.getContent();
 		}
 
-		List<String> entities = getErcEnabledEntityNodeNames(
+		List<String> ercEnabledEntityNames = getErcEnabledEntityNames(
 			getServiceXmlDocument(absolutePath));
 
-		if (!entities.contains(getEntityName(className))) {
+		if (!ercEnabledEntityNames.contains(getEntityName(className))) {
 			return javaTerm.getContent();
 		}
 

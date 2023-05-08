@@ -27,6 +27,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -177,15 +178,18 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		for (String fileName :
-				_store.getFileNames(companyId, repositoryId, dirName)) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+			for (String fileName :
+					_store.getFileNames(companyId, repositoryId, dirName)) {
 
-			for (String versionLabel :
-					_store.getFileVersions(companyId, repositoryId, fileName)) {
+				for (String versionLabel :
+						_store.getFileVersions(
+							companyId, repositoryId, fileName)) {
 
-				_copy(
-					StoreArea.DELETED, companyId, repositoryId, fileName,
-					versionLabel);
+					_copy(
+						StoreArea.DELETED, companyId, repositoryId, fileName,
+						versionLabel);
+				}
 			}
 		}
 
@@ -201,9 +205,11 @@ public class DLStoreImpl implements DLStore {
 		for (String versionLabel :
 				_store.getFileVersions(companyId, repositoryId, fileName)) {
 
-			_copy(
-				StoreArea.DELETED, companyId, repositoryId, fileName,
-				versionLabel);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+				_copy(
+					StoreArea.DELETED, companyId, repositoryId, fileName,
+					versionLabel);
+			}
 
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
@@ -218,9 +224,11 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		try {
-			_copy(
-				StoreArea.DELETED, companyId, repositoryId, fileName,
-				versionLabel);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+				_copy(
+					StoreArea.DELETED, companyId, repositoryId, fileName,
+					versionLabel);
+			}
 
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
@@ -443,9 +451,11 @@ public class DLStoreImpl implements DLStore {
 				_store.getFileAsStream(
 					companyId, repositoryId, fileName, versionLabel));
 
-			_copy(
-				StoreArea.DELETED, companyId, repositoryId, fileName,
-				versionLabel);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+				_copy(
+					StoreArea.DELETED, companyId, repositoryId, fileName,
+					versionLabel);
+			}
 
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
@@ -512,9 +522,11 @@ public class DLStoreImpl implements DLStore {
 		_store.addFile(
 			companyId, repositoryId, fileName, toVersionLabel, inputStream);
 
-		_copy(
-			StoreArea.DELETED, companyId, repositoryId, fileName,
-			fromVersionLabel);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+			_copy(
+				StoreArea.DELETED, companyId, repositoryId, fileName,
+				fromVersionLabel);
+		}
 
 		_store.deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}

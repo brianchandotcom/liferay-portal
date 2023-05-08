@@ -96,7 +96,7 @@ public class OpenAPIResourceTest {
 
 		_testGetActionsOpenAPI(
 			Arrays.asList(
-				"create", "updateBatch", "createBatch", "deleteBatch"),
+				"create", "createBatch", "deleteBatch", "updateBatch"),
 			"Page" + _objectDefinition1.getShortName());
 
 		// Individual actions
@@ -108,14 +108,14 @@ public class OpenAPIResourceTest {
 
 		_testGetActionsOpenAPI(
 			Arrays.asList(
-				"get", "permissions", "replace", "update", "delete",
+				"delete", "get", "permissions", "replace", "update",
 				objectActionName),
 			_objectDefinition1.getShortName());
 
 		// Permissions actions
 
 		_testGetActionsOpenAPI(
-			Arrays.asList("get", "permissions", "replace", "update", "delete"),
+			Arrays.asList("delete", "get", "permissions", "replace", "update"),
 			"PagePermission");
 
 		_objectActionLocalService.deleteObjectAction(objectAction);

@@ -39,6 +39,8 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -429,6 +431,21 @@ public class ObjectRelationshipLocalServiceTest {
 		}
 	}
 
+	private boolean _hasIndex(String tableName, String columnName)
+		throws Exception {
+
+		IndexMetadata indexMetadata =
+			IndexMetadataFactoryUtil.createIndexMetadata(
+				false, tableName, columnName);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.hasIndex(
+				tableName, indexMetadata.getIndexName());
+		}
+	}
+
 	private boolean _hasTable(String tableName) throws Exception {
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
@@ -633,6 +650,16 @@ public class ObjectRelationshipLocalServiceTest {
 				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName1")));
 		Assert.assertTrue(
 			_hasColumn(
+				objectRelationship.getDBTableName(),
+				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName2")));
+
+		Assert.assertTrue(
+			_hasIndex(
+				objectRelationship.getDBTableName(),
+				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName1")));
+
+		Assert.assertTrue(
+			_hasIndex(
 				objectRelationship.getDBTableName(),
 				pkObjectFieldDBColumnNames.get("pkObjectFieldDBColumnName2")));
 

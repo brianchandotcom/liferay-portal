@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.fields;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -31,11 +33,15 @@ public class NestedFieldsContext {
 		MultivaluedMap<String, String> queryParameters) {
 
 		_depth = depth;
-		_fieldNames = fieldNames;
+		_fieldNames = ListUtil.copy(fieldNames);
 		_message = message;
 		_pathParameters = pathParameters;
 		_resourceVersion = resourceVersion;
 		_queryParameters = queryParameters;
+	}
+
+	public void addFieldName(String fieldName) {
+		_fieldNames.add(fieldName);
 	}
 
 	public void decrementCurrentDepth() {

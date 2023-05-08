@@ -26,6 +26,15 @@ import java.util.Map;
  */
 public class NestedFieldsSupplier<T> {
 
+	public static void addFieldName(String fieldName) {
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if (nestedFieldsContext != null) {
+			nestedFieldsContext.addFieldName(fieldName);
+		}
+	}
+
 	public static <T> T supply(
 			String fieldName,
 			UnsafeFunction<String, T, Exception> unsafeFunction)

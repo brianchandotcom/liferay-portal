@@ -20,6 +20,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -89,7 +90,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-		if (nestedFieldsContext == null) {
+		if ((nestedFieldsContext == null) ||
+			ListUtil.isEmpty(nestedFieldsContext.getFieldNames())) {
+
 			writerInterceptorContext.proceed();
 
 			return;

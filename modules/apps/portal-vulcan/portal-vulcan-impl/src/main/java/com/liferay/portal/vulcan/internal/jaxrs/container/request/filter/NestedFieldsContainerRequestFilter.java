@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -52,24 +53,28 @@ public class NestedFieldsContainerRequestFilter
 
 		String nestedFields = queryParameters.getFirst("nestedFields");
 
+		int depth = Math.max(
+			Math.min(
+				GetterUtil.getInteger(
+					queryParameters.getFirst("nestedFieldsDepth"), 1),
+				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
+			1);
+
+		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
+			depth, _getFieldNames(nestedFields), JAXRSUtils.getCurrentMessage(),
+			uriInfo.getPathParameters(),
+			_getResourceVersion(uriInfo.getPathSegments()), queryParameters);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			nestedFieldsContext);
+	}
+
+	private List<String> _getFieldNames(String nestedFields) {
 		if (Validator.isNotNull(nestedFields)) {
-			List<String> fieldNames = Arrays.asList(
-				nestedFields.split("\\s*,\\s*"));
-
-			int depth = Math.max(
-				Math.min(
-					GetterUtil.getInteger(
-						queryParameters.getFirst("nestedFieldsDepth"), 1),
-					PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH),
-				1);
-
-			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				new NestedFieldsContext(
-					depth, fieldNames, JAXRSUtils.getCurrentMessage(),
-					uriInfo.getPathParameters(),
-					_getResourceVersion(uriInfo.getPathSegments()),
-					queryParameters));
+			return Arrays.asList(nestedFields.split("\\s*,\\s*"));
 		}
+
+		return Collections.emptyList();
 	}
 
 	private String _getResourceVersion(List<PathSegment> pathSegments) {

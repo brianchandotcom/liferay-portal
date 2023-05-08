@@ -19,11 +19,11 @@ definition {
 			FrontendDataSetAdmin.createDatasetEntryViaAPI(
 				datasetName = "Dataset Fields Test",
 				restApplication = "/c/fdsfields",
-                restSchema = "FDSField",
-                restEndpoint = "/");
+				restEndpoint = "/",
+				restSchema = "FDSField");
 		}
 
-       task ("And a dataset view created via api") {
+		task ("And a dataset view created via api") {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
 				datasetName = "Dataset Fields Test",
 				dataSetViewDescription = "FDSViewDescription",
@@ -32,14 +32,13 @@ definition {
 
 		task ("When go to the View page of the dataset created.") {
 			FrontendDataSetAdmin.goToSpecificViewPage(
-                datasetName = "Dataset Fields Test",
-                key_viewName = "View Fields Test");
+				datasetName = "Dataset Fields Test",
+				key_viewName = "View Fields Test");
 		}
 
-        task ("When goes to Fields Tab.") {
-            FrontendDataSetAdmin.gotoTab(tabName = "Fields");
-        }
-
+		task ("When goes to Fields Tab.") {
+			FrontendDataSetAdmin.gotoTab(tabName = "Fields");
+		}
 	}
 
 	tearDown {
@@ -53,122 +52,32 @@ definition {
 		}
 	}
 
-	@description = "LPS-179282. Confirm that the search bar returns works as expected"
-	@priority = 4
-	test CanSearchField {
-        task ("And Clicking to Add a new field"){
-            LexiconEntry.gotoAdd();
-        }
-        
-        task ("And type Account in the search bar and click enter"){
-            FrontendDataSetAdmin.searchField(searchTerm = "name");
-        }
-
-        task ("Then the corresponding option is the just displayed"){
-            AssertElementPresent(
-				key_name = "name",
-				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
-        }
-    }
-
-    @description = "LPS-179282. Confirm that the user can check and uncheck the fields"
-	@priority = 5
-	test CheckandUncheckFields {
-        task ("And Clicking to Add a new field"){
-            LexiconEntry.gotoAdd();
-        }
-        
-        task ("And Check three options (creator,id ,name)"){
-            Check.checkNotVisible(
-				checkboxName = "creator",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-            
-            Check.checkNotVisible(
-				checkboxName = "id",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-            
-            Check.checkNotVisible(
-				checkboxName = "name",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-        }
-
-        task ("Then Confirm that the fields are checked "){
-            FrontendDataSetAdmin.assertFieldsChecked(key_fieldList = "creator,id,name");
-        }
-
-        task ("When Check three options (Phone, User Account, and WebURL)"){
-            Uncheck.uncheckNotVisible(
-				checkboxName = "creator",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-            
-            Uncheck.uncheckNotVisible(
-				checkboxName = "id",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-            
-            Uncheck.uncheckNotVisible(
-				checkboxName = "name",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-        }
-
-        task ("Then Confirm that the fields are unchecked "){
-            FrontendDataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,id,name");
-        }
-    }
-
-    @description = "LPS-179282. Confirm that the user can check and uncheck all the fields"
-	@priority = 4
-	test CanCheckAndUncheckAllFields {
-        task ("And Clicking to Add a new field"){
-            LexiconEntry.gotoAdd();
-        }
-        
-        task ("And select all the fields."){
-            Check.checkNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-        }
-
-        task ("Then Confirm all fields are checked "){
-            FrontendDataSetAdmin.assertFieldsChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
-        }
-
-		task ("When Uncheck all the fields."){
-           Uncheck.uncheckNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-        }
-
-        task ("Then Confirm that all fields are unchecked "){
-            FrontendDataSetAdmin.assertFieldsNotChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
-        }
-    }
-
 	@description = "LPS-179282. Confirm that metadata fields are not present for the user "
 	@priority = 3
-	test  AssertNotPresentMetadataFields {
-        task ("And Clicking to Add a new field"){
-            LexiconEntry.gotoAdd();
-        }
-        
-        task ("Then Confirm the fields are visible and present: creator,name,id"){
-            AssertElementPresent(
+	test AssertNotPresentMetadataFields {
+		task ("And Clicking to Add a new field") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then Confirm the fields are visible and present: creator,name,id") {
+			AssertElementPresent(
 				key_name = "name",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
-			
+
 			AssertElementPresent(
 				key_name = "creator",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
-			
+
 			AssertElementPresent(
 				key_name = "id",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
-        }
+		}
 
-        task ("And is not present metadata fields:x-class-name, x-schema-name and scopeKey"){
-            AssertElementNotPresent(
+		task ("And is not present metadata fields:x-class-name, x-schema-name and scopeKey") {
+			AssertElementNotPresent(
 				key_name = "x-class-name",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
-			
+
 			AssertElementNotPresent(
 				key_name = "x-schema-name",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
@@ -176,7 +85,97 @@ definition {
 			AssertElementNotPresent(
 				key_name = "scopeKey",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
-        }
-    }
+		}
+	}
+
+	@description = "LPS-179282. Confirm that the user can check and uncheck all the fields"
+	@priority = 4
+	test CanCheckAndUncheckAllFields {
+		task ("And Clicking to Add a new field") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And select all the fields.") {
+			Check.checkNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then Confirm all fields are checked ") {
+			FrontendDataSetAdmin.assertFieldsChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+		}
+
+		task ("When Uncheck all the fields.") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then Confirm that all fields are unchecked ") {
+			FrontendDataSetAdmin.assertFieldsNotChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+		}
+	}
+
+	@description = "LPS-179282. Confirm that the search bar returns works as expected"
+	@priority = 4
+	test CanSearchField {
+		task ("And Clicking to Add a new field") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And type Account in the search bar and click enter") {
+			FrontendDataSetAdmin.searchField(searchTerm = "name");
+		}
+
+		task ("Then the corresponding option is the just displayed") {
+			AssertElementPresent(
+				key_name = "name",
+				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+		}
+	}
+
+	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"
+	@priority = 5
+	test CheckandUncheckFields {
+		task ("And Clicking to Add a new field") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Check three options (creator,id ,name)") {
+			Check.checkNotVisible(
+				checkboxName = "creator",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Check.checkNotVisible(
+				checkboxName = "id",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Check.checkNotVisible(
+				checkboxName = "name",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then Confirm that the fields are checked ") {
+			FrontendDataSetAdmin.assertFieldsChecked(key_fieldList = "creator,id,name");
+		}
+
+		task ("When Check three options (Phone, User Account, and WebURL)") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "creator",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Uncheck.uncheckNotVisible(
+				checkboxName = "id",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Uncheck.uncheckNotVisible(
+				checkboxName = "name",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then Confirm that the fields are unchecked ") {
+			FrontendDataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,id,name");
+		}
+	}
 
 }

@@ -122,38 +122,34 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	private void _addObjectEntries(Integer numberOfEntries) throws Exception {
-		try (Closeable closeable = _startTimer()) {
-			ObjectEntryManager objectEntryManager =
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getStorageType());
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				_objectDefinition.getStorageType());
 
-			DTOConverterContext dtoConverterContext =
-				new DefaultDTOConverterContext(
-					false, Collections.emptyMap(), _dtoConverterRegistry, null,
-					LocaleUtil.getDefault(), null, TestPropsValues.getUser());
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
 
-			for (int counter = 0; counter < numberOfEntries; counter++) {
-				objectEntryManager.addObjectEntry(
-					dtoConverterContext, _objectDefinition,
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								"performance", RandomTestUtil.randomString()
-							).build();
-						}
-					},
-					ObjectDefinitionConstants.SCOPE_COMPANY);
-			}
+		for (int counter = 0; counter < numberOfEntries; counter++) {
+			objectEntryManager.addObjectEntry(
+				dtoConverterContext, _objectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"performance", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
 		}
 	}
 
 	private void _deleteObjectEntries() throws Exception {
-		try (Closeable closeable = _startTimer()) {
-			for (com.liferay.object.model.ObjectEntry objectEntry :
-					_objectEntries) {
+		for (com.liferay.object.model.ObjectEntry objectEntry :
+				_objectEntries) {
 
-				_objectEntryLocalService.deleteObjectEntry(objectEntry);
-			}
+			_objectEntryLocalService.deleteObjectEntry(objectEntry);
 		}
 	}
 

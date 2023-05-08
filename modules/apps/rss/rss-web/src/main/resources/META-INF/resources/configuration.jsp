@@ -33,7 +33,7 @@
 			<clay:tabs
 				tabsItems="<%= rssDisplayContext.getTabsItem() %>"
 			>
-				<div>
+				<clay:tabs-panel>
 					<liferay-ui:error exception="<%= ValidatorException.class %>">
 						<liferay-ui:message key="the-following-are-invalid-urls" />
 
@@ -98,9 +98,9 @@
 							sortableHandle: '.field-row',
 						}).render();
 					</aui:script>
-				</div>
+				</clay:tabs-panel>
 
-				<div>
+				<clay:tabs-panel>
 					<div class="display-template">
 						<liferay-template:template-selector
 							className="<%= RSSFeed.class.getName() %>"
@@ -151,7 +151,7 @@
 							<aui:input name="preferences--showFeedItemAuthor--" type="checkbox" value="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() %>" />
 						</clay:col>
 					</clay:row>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</liferay-frontend:edit-form-body>

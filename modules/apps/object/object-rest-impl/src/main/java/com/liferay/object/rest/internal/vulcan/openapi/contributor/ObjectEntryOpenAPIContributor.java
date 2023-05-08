@@ -313,9 +313,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		OpenAPIContext openAPIContext,
 		Map.Entry<PathItem.HttpMethod, Operation> operation, String pathName) {
 
-		Schema actionOperations = new Schema();
+		Schema actionSchema = new Schema();
 
-		actionOperations.setProperties(
+		actionSchema.setProperties(
 			HashMapBuilder.put(
 				"href",
 				() -> {
@@ -337,7 +337,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				}
 			).build());
 
-		return actionOperations;
+		return actionSchema;
 	}
 
 	private PathItem _createObjectActionPathItem(

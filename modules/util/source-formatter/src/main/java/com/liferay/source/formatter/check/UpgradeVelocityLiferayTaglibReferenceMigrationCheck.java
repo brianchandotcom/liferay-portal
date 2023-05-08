@@ -106,7 +106,8 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 
 		String indent = SourceUtil.getIndent(newLine);
 
-		newLine = StringUtil.replace(newLine, ".vm", ".ftl");
+		newLine = StringUtil.replace(
+			newLine, VELOCITY_EXTENSION, FREEMARKER_EXTENSION);
 		newLine = StringUtil.replaceFirst(
 			newLine, StringPool.CLOSE_PARENTHESIS,
 			StringBundler.concat(

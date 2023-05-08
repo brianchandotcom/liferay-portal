@@ -38,7 +38,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	public static JSONObject get(
 		AnalyticsConfiguration analyticsConfiguration,
 		AsahSearchKeywordsConfiguration asahSearchKeywordsConfiguration,
-		long companyId, int minCounts, String displayLanguageId, long groupId,
+		long companyId, String displayLanguageId, long groupId, int minCounts,
 		int size, String sort) {
 
 		try {
@@ -50,7 +50,7 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 					groupId, StringPool.POUND, sort),
 				new AsahSearchKeywordsWebCacheItem(
 					analyticsConfiguration, asahSearchKeywordsConfiguration,
-					minCounts, displayLanguageId, groupId, size, sort));
+					displayLanguageId, groupId, minCounts, size, sort));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -64,14 +64,14 @@ public class AsahSearchKeywordsWebCacheItem implements WebCacheItem {
 	public AsahSearchKeywordsWebCacheItem(
 		AnalyticsConfiguration analyticsConfiguration,
 		AsahSearchKeywordsConfiguration asahSearchKeywordsConfiguration,
-		int minCounts, String displayLanguageId, long groupId, int size,
+		String displayLanguageId, long groupId, int minCounts, int size,
 		String sort) {
 
 		_analyticsConfiguration = analyticsConfiguration;
 		_asahSearchKeywordsConfiguration = asahSearchKeywordsConfiguration;
-		_minCounts = minCounts;
 		_displayLanguageId = displayLanguageId;
 		_groupId = groupId;
+		_minCounts = minCounts;
 		_size = size;
 		_sort = sort;
 	}

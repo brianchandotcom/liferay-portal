@@ -92,9 +92,9 @@ public abstract class BaseAsahKeywordsSuggestionsContributor {
 		JSONArray jsonArray = JSONUtil.getValueAsJSONArray(
 			AsahSearchKeywordsWebCacheItem.get(
 				analyticsConfiguration, asahSearchKeywordsConfiguration,
-				searchContext.getCompanyId(), _getMinCounts(attributes),
+				searchContext.getCompanyId(),
 				_getDisplayLanguageId(attributes, searchContext.getLocale()),
-				_getGroupId(searchContext),
+				_getGroupId(searchContext), _getMinCounts(attributes),
 				GetterUtil.getInteger(
 					suggestionsContributorConfiguration.getSize(), 5),
 				sort),

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Path;
@@ -82,7 +83,13 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 
 		serviceXmlPath = serviceXmlPath.resolve("service.xml");
 
-		return SourceUtil.readXML(FileUtil.read(serviceXmlPath.toFile()));
+		File file = serviceXmlPath.toFile();
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return SourceUtil.readXML(FileUtil.read(file));
 	}
 
 }

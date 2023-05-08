@@ -101,6 +101,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
@@ -775,6 +776,10 @@ public class DefaultObjectEntryManagerImpl
 					_relateNestedObjectEntry(
 						objectDefinition, objectRelationship, primaryKey,
 						nestedObjectEntry.getId());
+				}
+
+				if (!nestedObjectEntries.isEmpty()) {
+					NestedFieldsSupplier.addFieldName(entry.getKey());
 				}
 			}
 		}

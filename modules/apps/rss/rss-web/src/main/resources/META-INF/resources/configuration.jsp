@@ -88,6 +88,16 @@
 						%>
 
 					</div>
+
+					<aui:script use="liferay-auto-fields">
+						new Liferay.AutoFields({
+							contentBox: '#<portlet:namespace />subscriptions',
+							fieldIndexes: '<portlet:namespace />subscriptionIndexes',
+							namespace: '<portlet:namespace />',
+							sortable: true,
+							sortableHandle: '.field-row',
+						}).render();
+					</aui:script>
 				</div>
 
 				<div>
@@ -150,13 +160,3 @@
 		<liferay-frontend:edit-form-buttons />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
-
-<aui:script use="liferay-auto-fields">
-	new Liferay.AutoFields({
-		contentBox: '#<portlet:namespace />subscriptions',
-		fieldIndexes: '<portlet:namespace />subscriptionIndexes',
-		namespace: '<portlet:namespace />',
-		sortable: true,
-		sortableHandle: '.field-row',
-	}).render();
-</aui:script>

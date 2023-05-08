@@ -91,10 +91,6 @@ renderResponse.setTitle((auditEvent == null) ? "audit-event" : auditEvent.getEve
 				<%= Validator.isNotNull(auditEvent.getServerName()) ? auditEvent.getServerName() : LanguageUtil.get(request, "none") %>
 			</aui:field-wrapper>
 
-			<aui:field-wrapper label="session-id">
-				<%= Validator.isNotNull(auditEvent.getSessionID()) ? auditEvent.getSessionID() : LanguageUtil.get(request, "none") %>
-			</aui:field-wrapper>
-
 			<aui:field-wrapper label="additional-information">
 				<%= Validator.isNotNull(auditEvent.getAdditionalInfo()) ? auditEvent.getAdditionalInfo() : LanguageUtil.get(request, "none") %>
 			</aui:field-wrapper>

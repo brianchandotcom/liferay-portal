@@ -35,8 +35,6 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 
 	<aui:input label="resource-action" name="eventType" value="<%= eventType %>" />
 
-	<aui:input label="session-id" name="sessionID" value="<%= sessionID %>" />
-
 	<aui:input label="client-ip" name="clientIP" value="<%= clientIP %>" />
 
 	<aui:input label="client-host" name="clientHost" value="<%= clientHost %>" />

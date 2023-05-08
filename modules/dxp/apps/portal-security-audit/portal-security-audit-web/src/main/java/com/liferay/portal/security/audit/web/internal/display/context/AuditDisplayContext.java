@@ -98,7 +98,7 @@ public class AuditDisplayContext {
 					_themeDisplay.getCompanyId(), _getUserId(), _getUserName(),
 					startDate, endDate, _getEventType(), _getClassName(),
 					_getClassPK(), _getClientHost(), _getClientIP(),
-					_getServerName(), _getServerPort(), _getSessionID(),
+					_getServerName(), _getServerPort(), null,
 					displayTerms.isAndOperator(), _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					new AuditEventCreateDateComparator()),
@@ -106,7 +106,7 @@ public class AuditDisplayContext {
 					_themeDisplay.getCompanyId(), _getUserId(), _getUserName(),
 					startDate, endDate, _getEventType(), _getClassName(),
 					_getClassPK(), _getClientHost(), _getClientIP(),
-					_getServerName(), _getServerPort(), _getSessionID(),
+					_getServerName(), _getServerPort(), null,
 					displayTerms.isAndOperator()));
 		}
 		else {
@@ -119,15 +119,15 @@ public class AuditDisplayContext {
 				() -> AuditEventManagerUtil.getAuditEvents(
 					_themeDisplay.getCompanyId(), Long.valueOf(number),
 					keywords, null, null, keywords, keywords, keywords,
-					keywords, keywords, keywords, Integer.valueOf(number),
-					keywords, false, _searchContainer.getStart(),
+					keywords, keywords, keywords, Integer.valueOf(number), null,
+					false, _searchContainer.getStart(),
 					_searchContainer.getEnd(),
 					new AuditEventCreateDateComparator()),
 				AuditEventManagerUtil.getAuditEventsCount(
 					_themeDisplay.getCompanyId(), Long.valueOf(number),
 					keywords, null, null, keywords, keywords, keywords,
-					keywords, keywords, keywords, Integer.valueOf(number),
-					keywords, false));
+					keywords, keywords, keywords, Integer.valueOf(number), null,
+					false));
 		}
 
 		return _searchContainer;
@@ -286,8 +286,6 @@ public class AuditDisplayContext {
 		).setParameter(
 			"serverPort", _getServerPort()
 		).setParameter(
-			"sessionID", _getSessionID()
-		).setParameter(
 			"startDateAmPm", _getStartDateAmPm()
 		).setParameter(
 			"startDateDay", _getStartDateDay()
@@ -326,16 +324,6 @@ public class AuditDisplayContext {
 		_serverPort = ParamUtil.getInteger(_httpServletRequest, "serverPort");
 
 		return _serverPort;
-	}
-
-	private String _getSessionID() {
-		if (_sessionID != null) {
-			return _sessionID;
-		}
-
-		_sessionID = ParamUtil.getString(_httpServletRequest, "sessionID");
-
-		return _sessionID;
 	}
 
 	private int _getStartDateAmPm() {
@@ -444,7 +432,6 @@ public class AuditDisplayContext {
 	private SearchContainer<AuditEvent> _searchContainer;
 	private String _serverName;
 	private Integer _serverPort;
-	private String _sessionID;
 	private Integer _startDateAmPm;
 	private Integer _startDateDay;
 	private Integer _startDateHour;

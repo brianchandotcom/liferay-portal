@@ -64,7 +64,6 @@ String classPK = ParamUtil.getString(request, "classPK");
 String clientHost = ParamUtil.getString(request, "clientHost");
 String clientIP = ParamUtil.getString(request, "clientIP");
 String eventType = ParamUtil.getString(request, "eventType");
-String sessionID = ParamUtil.getString(request, "sessionID");
 String serverName = ParamUtil.getString(request, "serverName");
 int serverPort = ParamUtil.getInteger(request, "serverPort");
 long userId = ParamUtil.getLong(request, "userId");

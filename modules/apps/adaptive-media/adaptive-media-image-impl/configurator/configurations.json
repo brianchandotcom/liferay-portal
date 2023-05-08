@@ -1,0 +1,11 @@
+{
+	"com.liferay.adaptive.media.image.internal.configuration.AMImageMagickConfiguration": {
+		"supportedMimeTypes:String[]": [
+			"image/avif",
+			"image/gif",
+			"image/heic",
+			"image/tiff",
+			"image/webp"
+		]
+	}
+}

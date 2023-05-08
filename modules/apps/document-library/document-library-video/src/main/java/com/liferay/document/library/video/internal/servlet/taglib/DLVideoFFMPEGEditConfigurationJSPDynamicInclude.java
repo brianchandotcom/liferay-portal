@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.video.internal.servlet.taglib;
 
+import com.liferay.document.library.kernel.util.VideoConverter;
 import com.liferay.document.library.video.internal.converter.DLVideoFFMPEGVideoConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -78,8 +79,10 @@ public class DLVideoFFMPEGEditConfigurationJSPDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLVideoFFMPEGEditConfigurationJSPDynamicInclude.class);
 
-	@Reference
-	private DLVideoFFMPEGVideoConverter _dlVideoFFMPEGVideoConverter;
+	@Reference(
+		target = "(component.name=com.liferay.document.library.video.internal.converter.DLVideoFFMPEGVideoConverter)"
+	)
+	private VideoConverter _dlVideoFFMPEGVideoConverter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.video)"

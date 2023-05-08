@@ -231,18 +231,16 @@ public class Validator {
 	private static boolean _validateReleaseTableState(Connection connection)
 		throws SQLException {
 
-		boolean stateOk = true;
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select servletContextName from Release_ where state_ != 0;");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
-				stateOk = false;
+				return false;
 			}
 		}
 
-		return stateOk;
+		return true;
 	}
 
 }

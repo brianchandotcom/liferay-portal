@@ -16,6 +16,36 @@ definition {
 		}
 	}
 
+	macro assertFieldsChecked {
+		for (var key_fieldItem : list ${key_fieldList}) {
+			Check.checkNotVisible(
+				checkboxName = "${key_fieldItem}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
+	macro assertFieldsNotChecked {
+		for (var key_fieldItem : list ${key_fieldList}) {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "${key_fieldItem}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
+	macro searchField {
+		WaitForElementPresent(locator1 = "FrontendDataSetAdmin#MODAL_SEARCH");
+
+		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
+
+		Type(
+			locator1 = "FrontendDataSetAdmin#MODAL_SEARCH",
+			value1 = ${searchTerm});
+
+		if (!(isSet(modal))) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
+	}
+
 	macro assertDataSetViewDescription {
 		for (var key_dataSetViewDescription : list ${key_dataSetViewDescriptionList}) {
 			AssertElementPresent(
@@ -79,6 +109,12 @@ definition {
 
 			PortletEntry.save();
 		}
+	}
+
+	macro gotoTab {
+		Click(
+			key_tabName = ${tabName},
+			locator1 = "FrontendDataSetAdmin#VIEW_ANY_TAB");
 	}
 
 	macro createFDSViewViaAPI {
@@ -146,6 +182,16 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoBack();
+	}
+
+	macro goToSpecificViewPage {
+		FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = "${datasetName}");
+
+		Click(
+			key_name = ${key_viewName},
+			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+
+		MenuItem.click(menuItem = "View");
 	}
 
 	macro goToDatasetAdminPage {

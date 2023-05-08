@@ -1,0 +1,89 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"defaultDuration": "60",
+									"defaultView": "month",
+									"displaySchedulerHeader": "false",
+									"displaySchedulerOnly": "true",
+									"enableRss": "true",
+									"eventsPerPage": "20",
+									"maxDaysDisplayed": "1",
+									"rssDelta": "20",
+									"rssDisplayStyle": "full-content",
+									"rssFeedType": "atom_1.0",
+									"rssTimeInterval": "604800000",
+									"showAgendaView": "false",
+									"showDayView": "false",
+									"showMonthView": "true",
+									"showUserEvents": "false",
+									"showWeekView": "false",
+									"timeFormat": "locale",
+									"timeZoneId": "",
+									"usePortalTimeZone": "true",
+									"weekStartsOn": "0"
+								},
+								"widgetName": "com_liferay_calendar_web_portlet_CalendarPortlet",
+								"widgetPermissions": [
+									{
+										"actionKeys": [
+											"PERMISSIONS",
+											"PREFERENCES",
+											"CONFIGURATION",
+											"ACCESS_IN_CONTROL_PANEL",
+											"VIEW",
+											"ADD_TO_PAGE"
+										],
+										"roleKey": "Owner"
+									},
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Site Member"
+									},
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Guest"
+									}
+								]
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

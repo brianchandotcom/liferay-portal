@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -210,9 +209,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		if (layout.isEmbeddedPersonalApplication() || !layout.isTypeContent() ||
 			layout.isTypeControlPanel() ||
-			!LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE)) {
+			!LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
+				themeDisplay.getPermissionChecker(), layout)) {
 
 			return false;
 		}

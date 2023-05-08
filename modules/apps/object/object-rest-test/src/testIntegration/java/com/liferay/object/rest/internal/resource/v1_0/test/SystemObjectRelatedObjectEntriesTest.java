@@ -24,7 +24,7 @@ import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
-import com.liferay.object.rest.internal.resource.v1_0.test.util.SystemObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
@@ -281,18 +281,17 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_objectRelationships.add(objectRelationship);
 
-		JSONObject jsonObject =
-			SystemObjectEntryTestUtil.addUserAccountJSONObject(
-				_userSystemObjectDefinitionManager,
-				HashMapBuilder.<String, Serializable>put(
-					objectRelationship.getName(),
-					JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
-						).put(
-							"externalReferenceCode", _ERC_VALUE_1
-						).toString())
-				).build());
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode", _ERC_VALUE_1
+					).toString())
+			).build());
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -323,13 +322,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject jsonObject =
-			SystemObjectEntryTestUtil.addUserAccountJSONObject(
-				_userSystemObjectDefinitionManager,
-				HashMapBuilder.<String, Serializable>put(
-					objectRelationship.getName(),
-					JSONFactoryUtil.createJSONArray()
-				).build());
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(), JSONFactoryUtil.createJSONArray()
+			).build());
 
 		Assert.assertEquals(
 			HttpStatus.BAD_REQUEST.getReasonPhrase(
@@ -381,20 +378,19 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		_objectRelationships.add(objectRelationship);
 
-		JSONObject jsonObject =
-			SystemObjectEntryTestUtil.addUserAccountJSONObject(
-				_userSystemObjectDefinitionManager,
-				HashMapBuilder.<String, Serializable>put(
-					objectRelationship.getName(),
-					JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_1
-						).toString())
-				).build());
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+					).put(
+						"externalReferenceCode", _ERC_VALUE_1
+					).toString())
+			).build());
 
-		SystemObjectEntryTestUtil.updateUserAccountJSONObject(
+		UserAccountTestUtil.updateUserAccountJSONObject(
 			jsonObject, _userSystemObjectDefinitionManager,
 			HashMapBuilder.<String, Serializable>put(
 				objectRelationship.getName(),
@@ -515,7 +511,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		JSONObject jsonObject;
 
 		if (manyToOne) {
-			jsonObject = SystemObjectEntryTestUtil.addUserAccountJSONObject(
+			jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
 				_userSystemObjectDefinitionManager,
 				HashMapBuilder.<String, Serializable>put(
 					objectRelationship.getName(),
@@ -528,7 +524,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				).build());
 		}
 		else {
-			jsonObject = SystemObjectEntryTestUtil.addUserAccountJSONObject(
+			jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
 				_userSystemObjectDefinitionManager,
 				HashMapBuilder.<String, Serializable>put(
 					objectRelationship.getName(),
@@ -546,18 +542,17 @@ public class SystemObjectRelatedObjectEntriesTest {
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject jsonObject =
-			SystemObjectEntryTestUtil.addUserAccountJSONObject(
-				_userSystemObjectDefinitionManager,
-				HashMapBuilder.<String, Serializable>put(
-					objectRelationship.getName(),
-					_createObjectEntriesJSONArray(
-						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-						_OBJECT_FIELD_NAME,
-						new String[] {
-							_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
-						})
-				).build());
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME,
+					new String[] {
+						_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
+					})
+			).build());
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
@@ -582,21 +577,20 @@ public class SystemObjectRelatedObjectEntriesTest {
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject jsonObject =
-			SystemObjectEntryTestUtil.addUserAccountJSONObject(
-				_userSystemObjectDefinitionManager,
-				HashMapBuilder.<String, Serializable>put(
-					objectRelationship.getName(),
-					_createObjectEntriesJSONArray(
-						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-						_OBJECT_FIELD_NAME,
-						new String[] {
-							RandomTestUtil.randomString(),
-							RandomTestUtil.randomString()
-						})
-				).build());
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					})
+			).build());
 
-		jsonObject = SystemObjectEntryTestUtil.updateUserAccountJSONObject(
+		jsonObject = UserAccountTestUtil.updateUserAccountJSONObject(
 			jsonObject, _userSystemObjectDefinitionManager,
 			HashMapBuilder.<String, Serializable>put(
 				objectRelationship.getName(),

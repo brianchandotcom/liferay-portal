@@ -150,12 +150,12 @@
 </tr>
 <tr>
 	<td>TEXT_INPUT</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input</td>
+	<td>//div[@class='ddm-field']//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEXT_INPUT_2</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input[@type='text'])[2]</td>
+	<td>xpath=(//div[@class='ddm-field']//label[normalize-space(text())='${key_fieldFieldLabel}']//..//input[@type='text'])[2]</td>
 	<td></td>
 </tr>
 <tr>

@@ -2225,6 +2225,8 @@ definition {
 	@description = "LPS-176828 - Verify that the Formula Builder has same structure as Expression Builder and contains only the principal math operations"
 	@priority = 5
 	test CanSeeAllOperations {
+		property custom.properties = "feature.flag.LPS-164948=true";
+
 		task ("Given a custom object with a formula field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 176828",

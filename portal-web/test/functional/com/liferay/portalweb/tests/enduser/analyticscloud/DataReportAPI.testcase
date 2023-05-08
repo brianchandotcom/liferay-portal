@@ -80,4 +80,59 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13479 | Test Summary: Check that you can access data from all existing blogs"
+	@priority = 4
+	test RequestToAccessDataForAllBlogs {
+		var blogsTitleList = "Blog AC Title 1,Blog AC Title 2";
+		var type = "blogs";
+		var range = "rangeKey";
+		var rangeValue = "0";
+
+		task ("Copy the token value for the API") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP and create a site and two blogs and then connect Analytics Cloud to DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
+			for (var blogTitle : list ${blogsTitleList}) {
+				ACUtils.createBlogsAndAddToPage(entryTitle = ${blogTitle});
+			}
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the two blogs") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blog AC Title 1,Blog AC Title 2",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Create a data report using analytics cloud API with the type blogs") {
+			var apiResponse = ACApi.createDataReport(
+				token = ${token},
+				type = ${type},
+				filter = ${range},
+				filterValue = ${rangeValue});
+
+			echo(${apiResponse});
+		}
+
+		task ("Assert the two created blogs are present in the response") {
+			ACApi.assertApiResponse(apiDataResponse = ${apiResponse}, expectedList = ${blogsTitleList});
+		}
+	}
+
 }

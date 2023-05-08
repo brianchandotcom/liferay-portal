@@ -21,7 +21,11 @@ import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.io.IOException;
+
 import java.util.List;
+
+import org.dom4j.DocumentException;
 
 /**
  * @author Igor Beslic
@@ -35,8 +39,9 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, JavaTerm javaTerm,
-		String fileContent) {
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
+		throws DocumentException, IOException {
 
 		JavaClass javaClass = javaTerm.getParentJavaClass();
 

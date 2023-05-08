@@ -17,6 +17,8 @@ package com.liferay.source.formatter.check;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
+import java.io.IOException;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -26,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -65,7 +68,9 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		return ercEnabledEntityNames;
 	}
 
-	protected Document getServiceXmlDocument(String absolutePath) {
+	protected Document getServiceXmlDocument(String absolutePath)
+		throws DocumentException, IOException {
+
 		Path serviceXmlPath = Paths.get(absolutePath);
 
 		do {
@@ -77,15 +82,7 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 
 		serviceXmlPath = serviceXmlPath.resolve("service.xml");
 
-		try {
-			return SourceUtil.readXML(FileUtil.read(serviceXmlPath.toFile()));
-		}
-		catch (Exception exception) {
-			addMessage(absolutePath, exception.getMessage());
-		}
-
-		throw new IllegalArgumentException(
-			"Service module does not contain service.xml file");
+		return SourceUtil.readXML(FileUtil.read(serviceXmlPath.toFile()));
 	}
 
 }

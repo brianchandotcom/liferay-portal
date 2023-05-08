@@ -490,6 +490,89 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11355. As a user, I cannot reorder an unavailable product."
+	@priority = 5
+	test CannotReorderUnavailableProduct {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And there is a placed order") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+		}
+
+		task ("When U-Joint's Minium Channel visibility is removed") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+			Click(
+				key_entryName = "Minium Portal",
+				key_table = "Channels",
+				locator1 = "CommerceEntry#TABLE_ENTRY_DELETE_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the buyer asserts that U-Joint is not available in the Catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceProducts.searchProduct(search = "U-Joint");
+
+			AssertElementNotPresent(locator1 = "//a[contains(text(),'U-Joint')]");
+		}
+
+		task ("When the buyer clicks on the 'Reorder' button in the placed order's details page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Click(
+				key_orderAuthor = "Commerce Account",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			Click(
+				key_text = "Reorder",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then an alert message is shown") {
+			AssertTextEquals(
+				locator1 = "Message#ALERT_DISMISSIBLE",
+				value1 = "Close Error: One or more products are no longer available.");
+		}
+	}
+
 	@description = "COMMERCE-9877. A user can search orders by account name"
 	@priority = 5
 	test CanReturnOrdersBySearchForAccountName {

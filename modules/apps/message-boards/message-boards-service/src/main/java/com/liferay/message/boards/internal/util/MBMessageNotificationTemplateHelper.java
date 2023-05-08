@@ -95,7 +95,7 @@ public class MBMessageNotificationTemplateHelper {
 		return message.getBody();
 	}
 
-	public String renderMessageParent(MBMessage parentMessage) {
+	public String renderMessageParentMessageContent(MBMessage parentMessage) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
 			(_maxNumberOfParentMessages == 0) ||
 			(parentMessage.getParentMessageId() ==
@@ -119,7 +119,7 @@ public class MBMessageNotificationTemplateHelper {
 			numberOfMessages--;
 		}
 
-		_numberOfMessagesByParentMessageId.put(
+		_numberOfMessagesByParentMessageIds.put(
 			parentMessage.getMessageId(), messages.size());
 
 		if (ListUtil.isEmpty(messages)) {
@@ -156,9 +156,9 @@ public class MBMessageNotificationTemplateHelper {
 		return sb.toString();
 	}
 
-	public String renderMessageSiblings(MBMessage message) {
+	public String renderMessageSiblingMessagesContent(MBMessage message) {
 		int numberOfMessagesByParentMessageId =
-			_numberOfMessagesByParentMessageId.getOrDefault(
+			_numberOfMessagesByParentMessageIds.getOrDefault(
 				message.getParentMessageId(), 0);
 
 		int numberOfMessages =
@@ -335,7 +335,7 @@ public class MBMessageNotificationTemplateHelper {
 	private final int _maxNumberOfMessages;
 	private final int _maxNumberOfParentMessages;
 	private final MBMessageLocalService _mbMessageLocalService;
-	private final Map<Long, Integer> _numberOfMessagesByParentMessageId =
+	private final Map<Long, Integer> _numberOfMessagesByParentMessageIds =
 		new HashMap<>();
 	private final ServiceContext _serviceContext;
 

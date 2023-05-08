@@ -2127,8 +2127,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String messageBody, String messageSubject,
 			String messageSubjectPrefix, String inReplyTo, String fromName,
 			String fromAddress, String replyToAddress, String emailAddress,
-			String fullName, String messageParent, String messageSiblings,
-			String rootMessageBody,
+			String fullName, String messageParentMessageContent,
+			String messageSiblingMessagesContent, String rootMessageBody,
 			LocalizedValuesMap subjectLocalizedValuesMap,
 			LocalizedValuesMap bodyLocalizedValuesMap,
 			ServiceContext serviceContext)
@@ -2171,9 +2171,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-182020")) {
 			subscriptionSender.setContextAttribute(
-				"[$MESSAGE_PARENT$]", messageParent, false);
+				"[$MESSAGE_PARENT$]", messageParentMessageContent, false);
 			subscriptionSender.setContextAttribute(
-				"[$MESSAGE_SIBLINGS$]", messageSiblings, false);
+				"[$MESSAGE_SIBLINGS$]", messageSiblingMessagesContent, false);
 			subscriptionSender.setContextAttribute(
 				"[$ROOT_MESSAGE_BODY$]", rootMessageBody, false);
 		}
@@ -2487,8 +2487,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String inReplyTo = null;
 		String messageSubject = message.getSubject();
 		String messageSubjectPrefix = StringPool.BLANK;
-		String messageParent = StringPool.BLANK;
-		String messageSiblings = StringPool.BLANK;
+		String messageParentMessageContent = StringPool.BLANK;
+		String messageSiblingMessagesContent = StringPool.BLANK;
 
 		if (message.getParentMessageId() !=
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -2513,13 +2513,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					messageSubjectPrefix.length());
 			}
 
-			messageParent =
-				mbMessageNotificationTemplateHelper.renderMessageParent(
-					parentMessage);
+			messageParentMessageContent =
+				mbMessageNotificationTemplateHelper.
+					renderMessageParentMessageContent(parentMessage);
 
-			messageSiblings =
-				mbMessageNotificationTemplateHelper.renderMessageSiblings(
-					message);
+			messageSiblingMessagesContent =
+				mbMessageNotificationTemplateHelper.
+					renderMessageSiblingMessagesContent(message);
 		}
 
 		String rootMessageBody =
@@ -2529,8 +2529,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			userId, category, message, messageURL, entryTitle, htmlFormat,
 			messageBody, messageSubject, messageSubjectPrefix, inReplyTo,
 			fromName, fromAddress, replyToAddress, emailAddress, fullName,
-			messageParent, messageSiblings, rootMessageBody,
-			subjectLocalizedValuesMap, bodyLocalizedValuesMap, serviceContext);
+			messageParentMessageContent, messageSiblingMessagesContent,
+			rootMessageBody, subjectLocalizedValuesMap, bodyLocalizedValuesMap,
+			serviceContext);
 
 		subscriptionSender.addAssetEntryPersistedSubscribers(
 			MBMessage.class.getName(), message.getMessageId());
@@ -2556,8 +2557,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						userId, category, message, messageURL, entryTitle,
 						htmlFormat, messageBody, messageSubject,
 						messageSubjectPrefix, inReplyTo, fromName, fromAddress,
-						replyToAddress, emailAddress, fullName, messageParent,
-						messageSiblings, rootMessageBody,
+						replyToAddress, emailAddress, fullName,
+						messageParentMessageContent,
+						messageSiblingMessagesContent, rootMessageBody,
 						subjectLocalizedValuesMap, bodyLocalizedValuesMap,
 						serviceContext);
 

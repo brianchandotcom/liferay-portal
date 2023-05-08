@@ -25,7 +25,7 @@
 			});
 
 			const deleteClaimMDFCLaimDetail = async () => {
-				const responde = await fetch(
+				const response = await fetch(
 					`/o/c/mdfclaims/${mdfClaimId}`,
 					{
 						headers: {
@@ -35,7 +35,7 @@
 					}
 				);
 
-				if (responde.ok) {
+				if (response.ok) {
 					Liferay.Util.openToast({
 						message: 'MDF Claim successfully deleted!',
 						type: 'success',

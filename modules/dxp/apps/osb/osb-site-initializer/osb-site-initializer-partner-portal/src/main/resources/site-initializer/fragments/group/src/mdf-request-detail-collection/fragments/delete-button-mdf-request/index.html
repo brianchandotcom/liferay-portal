@@ -23,7 +23,7 @@
 		});
 
 		const deleteMDFRequest = async () => {
-			const responde = await fetch(
+			const response = await fetch(
 				`/o/c/mdfrequests/${mdfRequestId}`,
 				{
 					headers: {
@@ -33,7 +33,7 @@
 				}
 			);
 
-			if (responde.ok) {
+			if (response.ok) {
 				Liferay.Util.openToast({
 					message: 'MDF Request successfully deleted!',
 					type: 'success',

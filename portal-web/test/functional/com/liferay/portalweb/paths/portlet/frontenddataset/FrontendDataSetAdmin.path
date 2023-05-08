@@ -79,8 +79,21 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEWS_FIELD_TABS</td>
-	<td>//li[@class='nav-item']//button[contains(@class,'nav-link')]//*[contains(@class, 'navbar') and (text()='${navTab}')]</td>
+	<td>VIEWS_ANY_TAB</td>
+	<td>//*[contains(@class='nav-item')]//*[contains(@class, 'navbar') and (text()='${key_tabName}')]</td>
+	<td></td>
+</tr>
+
+<!--DATA SET FIELDS-->
+
+<tr>
+	<td>FIELDS_ITEM</td>
+	<td>//span[contains(@class,'custom-control-label')]//span[contains(.,'${key_name}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_SEARCH</td>
+	<td>//div[contains(@class,'modal')]//*[contains(@class, 'input-group-item')]//*[@placeholder="Search"]</td>
 	<td></td>
 </tr>
 </tbody>

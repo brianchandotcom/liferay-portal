@@ -66,10 +66,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
-
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
@@ -130,7 +126,7 @@ definition {
 			Type(
 				key_fieldLabel = "Link",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "google");
+				value1 = "The front page of the internet");
 
 			Button.click(button = "Apply");
 		}

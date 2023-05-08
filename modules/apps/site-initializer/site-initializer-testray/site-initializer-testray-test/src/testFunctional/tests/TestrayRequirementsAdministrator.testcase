@@ -38,11 +38,17 @@ definition {
 				componentName = ${componentName},
 				projectName = ${projectName},
 				teamName = ${teamName});
+
+			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
 
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
@@ -194,12 +200,6 @@ definition {
 
 		task ("Then I assert that the case is not displayed on the Requirements page") {
 			Testray.assertItemNotPresent(itemName = ${caseName});
-		}
-
-		task ("Delete specific object") {
-			JSONTestrayAPI.deleteObjectViaAPI(
-				object = "casetypes",
-				objectName = ${caseType});
 		}
 	}
 

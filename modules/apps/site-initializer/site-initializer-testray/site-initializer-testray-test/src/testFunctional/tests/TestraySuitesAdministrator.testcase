@@ -37,10 +37,6 @@ definition {
 
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
-
 		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
@@ -140,6 +136,8 @@ definition {
 				projectName = ${projectName},
 				teamName = ${teamName});
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -170,6 +168,12 @@ definition {
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
 
 			Testray.assertItemName(text = ${caseName});
+		}
+
+		task ("Delete the case type") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = ${caseType});
 		}
 	}
 

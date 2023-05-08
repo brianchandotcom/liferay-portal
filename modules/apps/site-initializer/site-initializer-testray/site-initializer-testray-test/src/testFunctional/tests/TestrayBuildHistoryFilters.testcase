@@ -44,6 +44,8 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -90,16 +92,8 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "productversions",
-			objectName = ${productVersion});
-
-		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "routines",
 			objectName = ${routineName});
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",

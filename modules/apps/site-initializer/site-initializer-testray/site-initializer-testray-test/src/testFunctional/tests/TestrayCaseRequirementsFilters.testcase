@@ -9,6 +9,7 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	var caseName = "Case 1";
+	var caseType = "Case Type 1";
 	var componentName = "Component 1";
 	var projectName = "Project 1";
 	var teamName = "Team 1";
@@ -36,6 +37,8 @@ definition {
 				componentName = ${componentName},
 				projectName = ${projectName},
 				teamName = ${teamName});
+
+			JSONTestray.addCaseType(caseType = ${caseType});
 
 			JSONTestray.addCases(
 				caseName = ${caseName},
@@ -91,10 +94,6 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",

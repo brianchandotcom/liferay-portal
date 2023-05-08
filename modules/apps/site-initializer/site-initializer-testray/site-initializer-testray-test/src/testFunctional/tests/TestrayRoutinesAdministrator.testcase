@@ -8,6 +8,7 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
+	var caseType = "Case Type 1";
 	var testSiteName = "Testray 2";
 	var projectName = "Project 1";
 	var routineName = "Routine 1";
@@ -26,6 +27,8 @@ definition {
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			Testray.changePagination(
@@ -35,6 +38,10 @@ definition {
 	}
 
 	tearDown {
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = ${caseType});
+
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
@@ -55,28 +62,16 @@ definition {
 			JSONTestray.addRoutine(
 				projectName = ${projectName},
 				routineName = ${routineName});
-
-			Testray.goToProjectPage(projectName = ${projectName});
 		}
 
 		task ("And that the user add default environments factors") {
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
 			JSONTestray.addEnvironmentFactors(environmentFactorsName = "Environment Factors 1");
+
+			Testray.goToProjectPage(projectName = ${projectName});
 		}
 
 		task ("Then the routine is deleted with predefined environment factors, they should not appear in the list") {
-			JSONTestrayAPI.deleteObjectViaAPI(
-				object = "routines",
-				objectName = ${routineName});
-
-			TestrayLayout.clickResultsOnSidebar();
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
+			TestrayRoutines.deleteRoutine(itemName = ${routineName});
 
 			Testray.assertItemNotPresent(itemName = ${routineName});
 		}

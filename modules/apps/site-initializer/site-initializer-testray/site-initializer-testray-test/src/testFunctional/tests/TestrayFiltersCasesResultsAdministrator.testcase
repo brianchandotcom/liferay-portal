@@ -58,7 +58,7 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			JSONTestray.addCaseType(caseType = "Case Type 2");
+			JSONTestray.addCaseType(caseType = ${caseType});
 
 			JSONTestray.addCases(
 				caseName = ${caseName},
@@ -66,6 +66,8 @@ definition {
 				componentName = ${componentName},
 				priority = 5,
 				projectName = ${projectName});
+
+			JSONTestray.addCaseType(caseType = "Case Type 2");
 
 			JSONTestray.addCases(
 				caseName = "Case 2",
@@ -131,6 +133,10 @@ definition {
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
+
+		JSONTestrayAPI.deleteObjectViaAPI(
+			object = "casetypes",
+			objectName = "Case Type 2");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "factorcategories",
@@ -244,9 +250,13 @@ definition {
 	@description = "Story ID: LPS-173524 | Test Summary: Verify if as an Administrator I should be able to filter case results by case type"
 	@priority = 3
 	test CanFilterByCaseType {
-		task ("Given that the user has case type 2 in the table") {
+		task ("Given that the user has two cases different in the table related with the two case types") {
 			AssertElementPresent(
-				key_projectName = "Case Type 2",
+				key_projectName = "Case 1",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Case 2",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
@@ -260,20 +270,20 @@ definition {
 			TestrayFilter.multiSelect(
 				header = "Case Type",
 				label = "Case Type",
-				listMultiSelect = "Case Type 2");
+				listMultiSelect = "Case Type 1");
 
 			Button.click(button = "Apply");
 		}
 
-		task ("Then the user see only case type 2 in the table") {
+		task ("Then the user see only case type 1 in the table") {
 			AssertElementPresent(
-				key_projectName = "Case Type 2",
+				key_projectName = "Case Type 1",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And do not see the case type 1 in the table") {
+		task ("And do not see the case type 2 in the table") {
 			AssertElementNotPresent(
-				key_projectName = "Case Type 1",
+				key_projectName = "Case Type 2",
 				locator1 = "Testray#ITEM_NAME");
 		}
 	}

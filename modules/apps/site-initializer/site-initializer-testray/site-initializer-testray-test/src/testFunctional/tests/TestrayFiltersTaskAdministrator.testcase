@@ -67,6 +67,8 @@ definition {
 				projectName = "Project 2",
 				routineName = "Routine 2");
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},

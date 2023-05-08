@@ -37,6 +37,8 @@ definition {
 				projectName = ${projectName},
 				teamName = ${teamName});
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			JSONTestray.addCases(
 				caseName = "Case 1",
 				caseType = ${caseType},
@@ -71,10 +73,6 @@ definition {
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "teams",
-			objectName = ${teamName});
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",

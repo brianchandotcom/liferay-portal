@@ -24,10 +24,6 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
-
 		Testray.testrayApisTearDown();
 
 		if (${testPortalInstance} == "true") {
@@ -50,6 +46,12 @@ definition {
 
 		task ("Then I assert that the newly created 'Case Type' is present in the list") {
 			Testray.assertItemName(text = ${caseType});
+		}
+
+		task ("Delete object") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = ${caseType});
 		}
 	}
 

@@ -49,6 +49,8 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -392,11 +394,15 @@ definition {
 
 			TestrayTestflow.userAvatarPresent(label = "Dates");
 
-			TestrayHeader.clickBreadcrumbTitle(breadcrumbName = ${buildName});
+			Button.click(button = "Complete Test");
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
+			TestrayTestflow.editStatus(
+				issues = "LPS-111222",
+				selectStatus = "Failed");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Unassign Myself");
+			WaitForPageLoad();
+
+			Button.click(button = "Unassign Myself");
 		}
 
 		task ("Then the user name does not appear in the list") {

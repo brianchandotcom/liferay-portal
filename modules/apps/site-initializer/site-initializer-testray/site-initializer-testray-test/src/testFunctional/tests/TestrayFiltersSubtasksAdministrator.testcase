@@ -56,6 +56,8 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
+			JSONTestray.addCaseType(caseType = ${caseType});
+
 			JSONTestray.addCases(
 				caseName = ${caseName},
 				caseType = ${caseType},
@@ -124,14 +126,6 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "subtasks",
-			objectName = "Subtask_1");
-
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "subtasks",
-			objectName = "Subtask_2");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "tasks",

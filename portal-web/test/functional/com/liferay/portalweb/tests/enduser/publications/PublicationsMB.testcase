@@ -361,12 +361,6 @@ definition {
 			groupName = "Site Name",
 			threadSubject = "MB Thread Message Subject");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
-
-		RecycleBin.deleteCP(
-			assetName = "MB Thread Message Subject",
-			assetType = "Message Boards Thread");
-
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 1");

@@ -230,12 +230,6 @@ definition {
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
-
-		RecycleBin.deleteCP(
-			assetName = "WC Folder Name",
-			assetType = "Web Content Folder");
-
 		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChanges(

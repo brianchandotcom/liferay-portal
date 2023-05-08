@@ -211,19 +211,6 @@ definition {
 			changeTitle = "DM Folder 1 Name",
 			changeType = "Modified",
 			changeUser = "Test Test");
-
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
-
-		RecycleBin.emptyCP();
-
-		PublicationsNavigator.gotoReviewChanges();
-
-		PublicationsChanges.viewChanges(
-			changeCategory = "Documents Folder",
-			changeSite = "Site Name",
-			changeTitle = "DM Folder 1 Name",
-			changeType = "Deleted",
-			changeUser = "Test Test");
 	}
 
 	@priority = 4

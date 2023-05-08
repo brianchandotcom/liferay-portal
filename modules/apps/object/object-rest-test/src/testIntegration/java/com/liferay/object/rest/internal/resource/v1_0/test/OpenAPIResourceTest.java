@@ -123,7 +123,7 @@ public class OpenAPIResourceTest {
 				objectActionName),
 			_objectDefinition1.getShortName());
 
-		// Permissions actions
+		// Permission actions
 
 		_testGetActionsOpenAPI(
 			Arrays.asList("delete", "get", "permissions", "replace", "update"),

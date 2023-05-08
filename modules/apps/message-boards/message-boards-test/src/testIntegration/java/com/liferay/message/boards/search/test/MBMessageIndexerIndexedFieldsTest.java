@@ -85,10 +85,14 @@ public class MBMessageIndexerIndexedFieldsTest {
 
 	@Before
 	public void setUp() throws Exception {
+
+		// Order is important. See LPS-182480.
+
+		setUpUserSearchFixture();
+
 		setUpIndexedFieldsFixture();
 		setUpMBMessageFixture();
 		setUpMBMessageIndexerFixture();
-		setUpUserSearchFixture();
 	}
 
 	@After

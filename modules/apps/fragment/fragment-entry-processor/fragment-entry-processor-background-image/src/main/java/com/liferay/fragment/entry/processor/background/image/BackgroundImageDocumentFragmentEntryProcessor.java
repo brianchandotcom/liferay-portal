@@ -65,10 +65,9 @@ public class BackgroundImageDocumentFragmentEntryProcessor
 
 			String id = element.attr("data-lfr-background-image-id");
 
-			Class<?> clazz = getClass();
-
 			JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
-				clazz.getName());
+				"com.liferay.fragment.entry.processor.background.image." +
+					"BackgroundImageFragmentEntryProcessor");
 
 			if ((editableValuesJSONObject == null) ||
 				!editableValuesJSONObject.has(id)) {

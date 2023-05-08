@@ -17,6 +17,8 @@ package com.liferay.object.rest.internal.resource.v1_0.test.util;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,26 +34,22 @@ import java.util.Map;
  */
 public class SystemObjectEntryTestUtil {
 
-	public static UserAccount addUserAccount(
+	public static JSONObject addUserAccountJSONObject(
 			SystemObjectDefinitionManager systemObjectDefinitionManager,
 			Map<String, Serializable> values)
 		throws Exception {
 
-		UserAccount userAccount = _randomUserAccount();
+		UserAccount userAccount = randomUserAccount();
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		return HTTPTestUtil.invoke(
 			_toBody(values, userAccount),
 			jaxRsApplicationDescriptor.getRESTContextPath(), Http.Method.POST);
-
-		userAccount.setId(jsonObject.getLong("id"));
-
-		return userAccount;
 	}
 
-	private static UserAccount _randomUserAccount() throws Exception {
+	public static UserAccount randomUserAccount() {
 		return new UserAccount() {
 			{
 				additionalName = StringUtil.toLowerCase(
@@ -89,6 +87,25 @@ public class SystemObjectEntryTestUtil {
 		};
 	}
 
+	public static JSONObject updateUserAccountJSONObject(
+			JSONObject userAccountJSONObject,
+			SystemObjectDefinitionManager systemObjectDefinitionManager,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		UserAccount userAccount = randomUserAccount();
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		return HTTPTestUtil.invoke(
+			_toBody(values, userAccount),
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(),
+				StringPool.SLASH, userAccountJSONObject.get("id")),
+			Http.Method.PUT);
+	}
+
 	private static String _toBody(
 			Map<String, Serializable> values, UserAccount userAccount)
 		throws Exception {
@@ -96,8 +113,10 @@ public class SystemObjectEntryTestUtil {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userAccount.toString());
 
-		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			jsonObject.put(entry.getKey(), entry.getValue());
+		if (values != null) {
+			for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+				jsonObject.put(entry.getKey(), entry.getValue());
+			}
 		}
 
 		return jsonObject.toString();

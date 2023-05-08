@@ -584,10 +584,20 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		task ("Given a Minium and a Speedwell sites are created") {
-			for (var siteName : list "Minium,Speedwell") {
-				CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = ${siteName});
-			}
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Catalog is added") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
+		}
+
+		task ("And a simple product is created in the Test Catalog") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Test Catalog",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIM1234");
 		}
 
 		task ("And a business account with a buyer user is created") {
@@ -625,7 +635,7 @@ definition {
 			CommerceProductOptions.editOptionValue(
 				optionValue = 112,
 				priceType = "Static",
-				sku = "SPEED93018");
+				sku = "SIM1234");
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
@@ -676,9 +686,9 @@ definition {
 
 		task ("Then on the order summary the linked product is listed") {
 			AssertTextEquals(
-				key_productName = "Brake Pads",
+				key_productName = "Test Simple Product",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME",
-				value1 = "Brake Pads");
+				value1 = "Test Simple Product");
 		}
 	}
 
@@ -837,10 +847,28 @@ definition {
 	test CanConfigureBundledProductWithDifferentCatalogSkuLinked {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium and a Speedwell sites are created") {
-			for (var siteName : list "Minium,Speedwell") {
-				CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = ${siteName});
-			}
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a new Catalog is added") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
+		}
+
+		task ("And a simple product is created in the Test Catalog") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Test Catalog",
+				productName = "Test Simple Product 1",
+				productType = "Simple",
+				sku = "SIM1001");
+		}
+
+		task ("And another simple product is created in the Master Catalog") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product 2",
+				productType = "Simple",
+				sku = "SIM1002");
 		}
 
 		task ("And a business account is added") {
@@ -883,8 +911,8 @@ definition {
 			Refresh();
 		}
 
-		task ("And SKUs from Speedwell Catalog are selected for each value") {
-			var optionValueList = "Black:SPEED93017,White:SPEED93018";
+		task ("And SKUs from Master and Test Catalog are selected for each value") {
+			var optionValueList = "Black:SIM1001,White:SIM1002";
 
 			for (var optionValue : list ${optionValueList}) {
 				var optionValueName = StringUtil.extractFirst(${optionValue}, ":");
@@ -981,7 +1009,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",
-				value1 = "1 × Brake Pads");
+				value1 = "1 × Test Simple Product 2");
 		}
 	}
 
@@ -1100,10 +1128,8 @@ definition {
 	test CanLinkDifferentCatalogSKUsToOptionValue {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium and a Speedwell sites are created") {
-			for (var siteName : list "Minium,Speedwell") {
-				CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = ${siteName});
-			}
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 
 		task ("And a Test Catalog") {
@@ -1113,9 +1139,17 @@ definition {
 		task ("And a simple product is created in the Test Catalog") {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Test Catalog",
-				productName = "Test Simple Product",
+				productName = "Test Simple Product 1",
 				productType = "Simple",
-				sku = "SIM1234");
+				sku = "SIM1001");
+		}
+
+		task ("And another simple product is created in the Master Catalog") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product 2",
+				productType = "Simple",
+				sku = "SIM1002");
 		}
 
 		task ("And an option is added to ABS Sensor") {
@@ -1134,13 +1168,13 @@ definition {
 			Refresh();
 		}
 
-		task ("When a SKU from Speedwell Catalog is searched and selected for the option value") {
+		task ("When a SKU from Master Catalog is searched and selected for the option value") {
 			CommerceNavigator.gotoEntry(entryName = "Package Quantity");
 
 			CommerceProductOptions.editOptionValue(
 				optionValue = 112,
 				priceType = "Static",
-				sku = "SPEED93018");
+				sku = "SIM1002");
 		}
 
 		task ("Then is listed as the linked product for the option value") {
@@ -1153,7 +1187,7 @@ definition {
 			AssertElementPresent(
 				key_entryTitle = 112,
 				key_index = 6,
-				key_value = "SPEED93018",
+				key_value = "SIM1002",
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			SelectFrame.selectFrameTop();
@@ -1162,7 +1196,7 @@ definition {
 		task ("When the linked SKU is changed to another SKU from the Test Catalog") {
 			CommerceProductOptions.editOptionValue(
 				optionValue = 112,
-				sku = "SIM1234");
+				sku = "SIM1001");
 		}
 
 		task ("Then the new SKU is listed as the linked product for the option value") {
@@ -1175,7 +1209,7 @@ definition {
 			AssertElementPresent(
 				key_entryTitle = 112,
 				key_index = 6,
-				key_value = "SIM1234",
+				key_value = "SIM1001",
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 		}
 	}

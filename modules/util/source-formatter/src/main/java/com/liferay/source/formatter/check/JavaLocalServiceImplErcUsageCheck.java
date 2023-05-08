@@ -94,10 +94,6 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			}
 		}
 
-		JavaClass parentJavaClass = javaTerm.getParentJavaClass();
-
-		System.out.println("Writing  " + parentJavaClass.getName());
-
 		String methodName = javaTermName + StringPool.OPEN_PARENTHESIS;
 
 		javaTermContent = StringUtil.replaceFirst(

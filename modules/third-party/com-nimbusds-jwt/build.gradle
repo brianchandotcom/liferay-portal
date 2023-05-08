@@ -1,0 +1,33 @@
+task jarManifest
+task jarPatched(type: Zip)
+
+dependencies {
+	compileOnly group: "com.nimbusds", name: "nimbus-jose-jwt", transitive: false, version: "9.30.2"
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+	finalizedBy jarManifest
+}
+
+jarManifest {
+	doLast {
+		ant.jar(destfile: jar.archivePath, update: true)
+	}
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	exclude "META-INF/versions/9/module-info.class"
+
+	from sourceSets.main.output
+
+	from {
+		zipTree(configurations.compileOnly.singleFile)
+	}
+}

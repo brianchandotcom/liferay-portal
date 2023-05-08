@@ -1,0 +1,88 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+
+	@description = "LPS-135398 - Verify unique values can be enforced for text fields"
+	@priority = 5
+	test CanPreventDuplicateText {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object that contains a text field with unique values only") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 183427",
+				objectName = "CustomObject183427",
+				pluralLabelName = "Custom Objects 183427");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Text Field",
+				fieldName = "customTextField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject183427");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 183427");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Accept Unique Values Only",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject183427");
+		}
+
+		task ("And given an object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customTextField",
+				objectName = "CustomObject183427",
+				value = "Entry Test");
+		}
+
+		task ("When the user attempts to create an object entry with the same text value as the previous entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject183427");
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(
+				entryValue = "Entry Test",
+				invalidEntry = "true");
+		}
+
+		task ("Then an error is displayed and the entry isn't added") {
+			Alert.viewErrorMessage(errorMessage = "The Custom Text Field is already in use. Please enter a unique Custom Text Field.");
+
+			Navigator.gotoBack();
+
+			AssertElementNotPresent(
+				key_entry = "Entry Test",
+				key_order = 2,
+				locator1 = "ObjectPortlet#ENTRY_VALUE_BY_POSITION");
+		}
+	}
+
+}

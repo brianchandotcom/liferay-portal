@@ -53,10 +53,6 @@ definition {
 		}
 		else if (${sitePageType} == "Link to URL") {
 			if (isSet(targetType)) {
-				Navigator.gotoNavTab(navTab = "Design");
-
-				Navigator.gotoNavTab(navTab = "Advanced");
-
 				Select(
 					key_fieldLabel = "Target type",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -66,10 +62,6 @@ definition {
 			}
 
 			if (isSet(target)) {
-				Navigator.gotoNavTab(navTab = "Design");
-
-				Navigator.gotoNavTab(navTab = "Advanced");
-
 				Type(
 					key_text = "Target",
 					locator1 = "TextInput#ANY",
@@ -77,8 +69,6 @@ definition {
 
 				Button.click(button = "Save");
 			}
-
-			Navigator.gotoNavTab(navTab = "General");
 
 			Type(
 				locator1 = "TextInput#URL",

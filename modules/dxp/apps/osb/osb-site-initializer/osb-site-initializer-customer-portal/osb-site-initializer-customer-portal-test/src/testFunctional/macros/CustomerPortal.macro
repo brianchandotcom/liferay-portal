@@ -60,8 +60,9 @@ definition {
 
 			CustomerPortal.clickAtButton(text = "Confirm");
 		}
-
-		CustomerPortal.clickAtButton(text = "Cancel");
+		else {
+			CustomerPortal.clickAtButton(text = "Cancel");
+		}
 	}
 
 	macro addCPObject {
@@ -354,6 +355,12 @@ definition {
 		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#MODAL_INFO");
+	}
+
+	macro clickOnModalPage {
+		var key_text = ${text};
+
+		Click(locator1 = "CustomerPortalSite#PAGE_INFO");
 	}
 
 	macro clickOnSkipForNowButton {
@@ -844,6 +851,12 @@ definition {
 		var key_text = ${modalText};
 
 		AssertVisible(locator1 = "CustomerPortalSite#MODAL_INFO");
+	}
+
+	macro viewConfirmationTextInTheModalPage {
+		var key_text = ${pageText};
+
+		AssertVisible(locator1 = "CustomerPortalSite#PAGE_INFO");
 	}
 
 	macro viewCPObjectCustomInfo {

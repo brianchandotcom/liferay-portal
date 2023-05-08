@@ -64,6 +64,13 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		CP2Utils.tearDownForCloudEntries(
+			entry = "test@liferay.com",
+			entry1 = "test@liferay.com",
+			portlet = "Analytics Cloud Workspaces",
+			portlet1 = "Incident Report Contacts Analytics Cloud",
+			status = "In-Progress");
+
 		CustomerPortal.customerPortalTearDown();
 
 		if (${testPortalInstance} == "true") {
@@ -108,23 +115,9 @@ definition {
 		}
 
 		task ("I assert that the form has been submitted") {
-			CustomerPortal.viewConfirmationModal(modalText = "Thank you for submitting this request!");
-
-			CustomerPortal.viewConfirmationModal(modalText = "Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.");
+			CustomerPortal.viewConfirmationTextInTheModalPage(pageText = "Thank you for submitting this request! Your Analytics Cloud workspace will be provisioned in 1-2 business days. An email will be sent once your workspace is ready.");
 
 			CustomerPortal.clickAtButton(text = "Done");
-		}
-
-		task ("Delete the entries and objects created") {
-			CustomerPortal.clearStatus(status = "In-Progress");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "test@liferay.com",
-				portlet = "Analytics Cloud Workspaces");
-
-			CP2Utils.deleteSpecificObjectEntry(
-				entry = "test@liferay.com",
-				portlet = "Incident Report Contacts Analytics Cloud");
 		}
 	}
 
@@ -136,7 +129,7 @@ definition {
 				label = "Address",
 				value = "");
 
-			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
+			CustomerPortal.clickOnModalPage(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
 		}
@@ -166,7 +159,7 @@ definition {
 				label = "email",
 				value = "");
 
-			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
+			CustomerPortal.clickOnModalPage(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
 		}
@@ -180,7 +173,7 @@ definition {
 				label = "workspaceName",
 				value = "");
 
-			CustomerPortal.clickOnModal(text = "Set up Analytics Cloud");
+			CustomerPortal.clickOnModalPage(text = "Set up Analytics Cloud");
 
 			CustomerPortal.assertErrorMessageIsVisible(errorMessage = "This field is required.");
 		}

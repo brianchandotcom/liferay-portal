@@ -7,10 +7,10 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal Site";
-	var testSiteURL = "customer-portal-site";
 	var testAccount = "Test Account LXC - SM";
 	var testProduct = "LXC - SM";
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -77,7 +77,7 @@ definition {
 		task ("Go to the product activation page, fill out the form and submit it") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CustomerPortal.clickOnFinishActivationButton();
 
@@ -286,6 +286,10 @@ definition {
 		task ("Then I should be able to assert that the card status has not changed") {
 			CP2DXPCloudSetup.assertCardStatusChanged(status = "In Progress");
 		}
+
+		task ("Clear status") {
+			CustomerPortal.clearStatus(status = "In-Progress");
+		}
 	}
 
 	@description = "Automation ID: LPS-146843 | Test Summary: Verify that the Activation Form Card - DXP Cloud displays (Product logo - Subscription - Start Date - End Date - Page Subtitleis/Not Activated)"
@@ -304,7 +308,7 @@ definition {
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("View card details") {
@@ -343,7 +347,7 @@ definition {
 		task ("Go to the product activation page, fill out the form and submit it") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 
 			CustomerPortal.clickOnFinishActivationButton();
 
@@ -375,10 +379,14 @@ definition {
 			CustomerPortal.enterOnProject(title = ${testAccount});
 		}
 
+		task ("Going through onboarding") {
+			CP2Utils.onboardingFlow();
+		}
+
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Assert that the Finish Activation link is not present on the card") {
@@ -400,7 +408,7 @@ definition {
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Assert that the card activation link is not shown") {
@@ -432,7 +440,7 @@ definition {
 		task ("Go to the product activation page") {
 			CP2NavigationMenu.goToProductActivation();
 
-			CP2NavigationMenu.clickOnProductButton(product = ${testproduct});
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
 		task ("Assert that the activation link is present on the card") {

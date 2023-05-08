@@ -186,6 +186,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_INFO</td>
+	<td>//div[contains(@class, 'container')]/parent::div//*[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_SETUP</td>
 	<td>//*[contains(@class, 'form-control')]</td>
 	<td></td>

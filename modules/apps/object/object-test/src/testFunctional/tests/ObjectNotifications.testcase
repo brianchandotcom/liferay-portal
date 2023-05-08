@@ -699,7 +699,7 @@ definition {
 			ObjectAdmin.goToActionsTab();
 
 			ObjectAdmin.addObjectActionViaUI(
-				actionLabel = "Notification action when entry is added",
+				actionLabel = "Action name",
 				active = "true",
 				errorMessage = "Error",
 				notificationName = "Notification Template",
@@ -718,11 +718,13 @@ definition {
 			Click(locator1 = "Icon#SVG_ELLIPSIS");
 
 			Click(
-				key_columnOption = "Notification action when entry is added",
+				key_columnOption = "Action name",
 				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 		}
 
 		task ("Then the email is sent") {
+			Refresh();
+
 			MockMock.viewMail(
 				asset = "Subject",
 				content = "Email Body",

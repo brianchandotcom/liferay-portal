@@ -18,7 +18,7 @@ import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortle
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -77,9 +77,8 @@ public class SaveFDSFieldsMVCResourceCommand
 		for (int i = 0; i < creationDataJSONArray.length(); i++) {
 			JSONObject jsonObject = creationDataJSONArray.getJSONObject(i);
 
-			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-				themeDisplay.getUserId(), 0,
-				objectDefinition.getObjectDefinitionId(),
+			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
+				0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"label", String.valueOf(jsonObject.get("name"))
 				).put(
@@ -107,7 +106,7 @@ public class SaveFDSFieldsMVCResourceCommand
 			resourceRequest, "deletionIds");
 
 		for (long id : deletionIds) {
-			_objectEntryLocalService.deleteObjectEntry(id);
+			_objectEntryService.deleteObjectEntry(id);
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -121,6 +120,6 @@ public class SaveFDSFieldsMVCResourceCommand
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryService _objectEntryService;
 
 }

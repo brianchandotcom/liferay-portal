@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -203,8 +202,8 @@ public class LayoutAnalyticsReportsInfoItem
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
+		if (!LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, layout)) {
 
 			return false;
 		}

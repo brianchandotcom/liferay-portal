@@ -242,8 +242,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
+		if (!LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, layout)) {
 
 			return false;
 		}

@@ -256,4 +256,19 @@ definition {
 		return ${searchedValue};
 	}
 
+	macro createIndividualOrAssetDataReport {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		if (isSet(type) && isSet(id)) {
+			var curl = '''
+				${analyticsCloudURL}/api/reports/${type}/${id} -H "Authorization: Bearer ${token}"
+			''';
+			static var apiIndividualOrAssetResponse = JSONCurlUtil.get(${curl});
+
+			return ${apiIndividualOrAssetResponse};
+		}
+		else {
+			fail("Enter both valids type and id");
+		}
+	}
 }

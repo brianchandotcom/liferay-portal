@@ -40,8 +40,6 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			return content;
 		}
 
-		// LPS-62989
-
 		if (!absolutePath.contains("/modules/core/jaxws-osgi-bridge") &&
 			!absolutePath.contains("/modules/core/portal-bootstrap") &&
 			!absolutePath.contains("/modules/core/registry-") &&
@@ -61,16 +59,12 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			}
 		}
 
-		// LPS-64238
-
 		if (content.contains("import com.liferay.util.dao.orm.CustomSQLUtil")) {
 			addMessage(
 				fileName,
 				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
 					"modules, see LPS-77361");
 		}
-
-		// LPS-64335
 
 		if (content.contains("import com.liferay.util.ContentUtil")) {
 			addMessage(

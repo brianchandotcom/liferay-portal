@@ -52,5 +52,5 @@ String curlyBraceInQuotes = '''\
 {}'''
 
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

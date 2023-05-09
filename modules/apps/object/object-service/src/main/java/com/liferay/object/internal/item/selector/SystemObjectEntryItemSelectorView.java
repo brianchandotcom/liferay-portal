@@ -23,11 +23,13 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -36,7 +38,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -45,6 +50,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.io.IOException;
 
@@ -226,11 +232,26 @@ public class SystemObjectEntryItemSelectorView
 				return StringPool.BLANK;
 			}
 
-			Map<String, Object> modelAttributes =
-				_baseModel.getModelAttributes();
+			User user = _userLocalService.fetchUser(
+				PrincipalThreadLocal.getUserId());
 
-			return GetterUtil.getString(
-				modelAttributes.get(objectField.getDBColumnName()));
+			Map<String, Object> objectEntryValues =
+				ObjectEntryValuesUtil.getObjectEntryValues(
+					_baseModel, _dtoConverterRegistry,
+					_objectDefinition.getName(),
+					_systemObjectDefinitionManagerRegistry, user);
+
+			String userLanguageId = null;
+
+			if (user != null) {
+				userLanguageId = user.getLanguageId();
+			}
+
+			return String.valueOf(
+				ObjectEntryValuesUtil.getTitleFieldValue(
+					objectField.getBusinessType(),
+					objectEntryValues.get(objectField.getName()),
+					userLanguageId));
 		}
 
 		@Override
@@ -251,7 +272,11 @@ public class SystemObjectEntryItemSelectorView
 		}
 
 		private final BaseModel<?> _baseModel;
+		private final DTOConverterRegistry _dtoConverterRegistry;
 		private final HttpServletRequest _httpServletRequest;
+		private final SystemObjectDefinitionManagerRegistry
+			_systemObjectDefinitionManagerRegistry;
+		private final UserLocalService _userLocalService;
 
 	}
 

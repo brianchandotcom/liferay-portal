@@ -243,9 +243,7 @@ definition {
 			}
 
 			task ("Open info panel sidebar") {
-				LexiconTable.clickEllipsisItem(
-					item = "Info",
-					tableEntry = "Web Content Title Edit");
+				ContentDashboard.openInfoPanel(assetName = "Web Content Title Edit");
 			}
 
 			task ("Go to compare screen") {
@@ -261,14 +259,8 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		task ("Then the document is selected and the Info Panel is open to the Versions tab") {
-			AssertTextPresent(
-				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-				value1 = "Web Content Title Edit");
-
-			AssertVisible(
-				key_version = "Version 1.0",
-				locator1 = "ContentDashboard#VERSION_ELLIPSIS");
+		task ("Then the Info Panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
 		}
 	}
 
@@ -290,9 +282,7 @@ definition {
 			}
 
 			task ("Open info panel sidebar") {
-				LexiconTable.clickEllipsisItem(
-					item = "Info",
-					tableEntry = "DM Document Title");
+				ContentDashboard.openInfoPanel(assetName = "DM Document Title");
 			}
 
 			task ("Open versions tab") {
@@ -310,8 +300,8 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		task ("Then the document is selected and the Info Panel is open to the Versions tab") {
-			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL");
+		task ("Then the Info Panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
 		}
 	}
 
@@ -2809,14 +2799,8 @@ definition {
 			Navigator.gotoBack();
 		}
 
-		task ("Then the document is selected and the Info Panel is open to the Versions tab") {
-			AssertTextPresent(
-				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-				value1 = "DM Document Title");
-
-			AssertTextPresent(
-				locator1 = "ContentDashboard#ASSET_VERSION_NUMBER",
-				value1 = "Version 1.10");
+		task ("Then the Info Panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
 		}
 	}
 
@@ -4989,6 +4973,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-160218: Make the Info Panel closed After navigation"
+	@priority = 3
+	test InfoPanelClosedAfterNavigation {
+		task ("Given the info panel is open") {
+			task ("Crete an Asset") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel") {
+				ContentDashboard.openInfoPanel(assetName = "Web Content Title");
+			}
+		}
+
+		task ("When navigates away from the page") {
+			ApplicationsMenu.gotoSite(site = "Test Site Name");
+		}
+
+		task ("And returns to content dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Then the info panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
+		}
+	}
+
+	@description = "LPS-160218: Make the Info Panel Remain closed After a Page Refresh"
+	@priority = 3
+	test InfoPanelClosedAfterRefresh {
+		task ("Given the info panel is open") {
+			task ("Crete an Asset") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Navigate to Content Dashboard") {
+				ContentDashboard.goToContentDashboard();
+			}
+
+			task ("Open info panel") {
+				ContentDashboard.openInfoPanel(assetName = "Web Content Title");
+			}
+		}
+
+		task ("When the page is refreshed") {
+			Refresh();
+		}
+
+		task ("Then the info panel is closed") {
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
+		}
+	}
+
 	@description = "LPS-134692 Given the info panel of an asset When the user clicks on arrow next to the title of a section not collapsed Then the section will be collapsed"
 	@priority = 3
 	test InfoPanelCollapseSection {
@@ -5078,74 +5124,6 @@ definition {
 			AssertVisible(
 				categoryName = "Category Name",
 				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
-		}
-	}
-
-	@description = "LPS-160218: Make the Info Panel Remain Open After a Page Refresh"
-	@priority = 3
-	test InfoPanelNotOpenAfterNavigation {
-		task ("Given the info panel is open") {
-			task ("Crete an Asset") {
-				JSONWebcontent.addWebContent(
-					content = "Web Content Content",
-					groupName = "Test Site Name",
-					title = "Web Content Title");
-			}
-
-			task ("Navigate to Content Dashboard") {
-				ContentDashboard.goToContentDashboard();
-			}
-
-			task ("Open info panel") {
-				LexiconTable.clickEllipsisItem(
-					item = "Info",
-					tableEntry = "Web Content Title");
-			}
-		}
-
-		task ("When navigates away from the page") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
-		}
-
-		task ("And returns to content dashboard") {
-			ContentDashboard.goToContentDashboard();
-		}
-
-		task ("Then the info panel is closed") {
-			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
-		}
-	}
-
-	@description = "LPS-160218: Make the Info Panel Remain Open After a Page Refresh"
-	@priority = 3
-	test InfoPanelOpenAfterRefresh {
-		task ("Given the info panel is open") {
-			task ("Crete an Asset") {
-				JSONWebcontent.addWebContent(
-					content = "Web Content Content",
-					groupName = "Test Site Name",
-					title = "Web Content Title");
-			}
-
-			task ("Navigate to Content Dashboard") {
-				ContentDashboard.goToContentDashboard();
-			}
-
-			task ("Open info panel") {
-				LexiconTable.clickEllipsisItem(
-					item = "Info",
-					tableEntry = "Web Content Title");
-			}
-		}
-
-		task ("When the page is refreshed") {
-			Refresh();
-		}
-
-		task ("Then the info panel still remains open") {
-			WaitForElementPresent(locator1 = "ContentDashboard#INFO_PANEL");
-
-			AssertVisible(locator1 = "ContentDashboard#INFO_PANEL");
 		}
 	}
 
@@ -5916,9 +5894,7 @@ definition {
 		task ("When the user opens asset Info Panel at Content Dashboard ") {
 			ContentDashboard.goToContentDashboard();
 
-			LexiconTable.clickEllipsisItem(
-				item = "Info",
-				tableEntry = "Blogs Title");
+			ContentDashboard.openInfoPanel(assetName = "Blogs Title");
 		}
 
 		task ("Then a preview of the blog image must appear in the Info Panel") {
@@ -5969,6 +5945,10 @@ definition {
 		}
 
 		task ("Then a new major version is created") {
+			ContentDashboard.openInfoPanel(assetName = "DM Document Title Edit");
+
+			ContentDashboard.openVersionsTab();
+
 			AssertTextPresent(
 				index = 1,
 				locator1 = "ContentDashboard#ASSET_VERSION_NUMBER_INDEX",
@@ -6693,7 +6673,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-161544 Given the Version History page for Web Contents When the user clicks on back Then the Web Content is selected and the Info Panel is open to the Versions tab"
+	@description = "LPS-161544 Given the Version History page for Web Contents When the user clicks on back Then the Web Content is selected and the Info Panel is closed"
 	@priority = 4
 	test ViewMoreWCVersionsBackButton {
 		task ("Create Web Content") {
@@ -6733,12 +6713,12 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "WC Title 1");
 		}
 
-		task ("Click on back and check the user is redirected to the Content Dashboard and the info panel is opened in the Versions tab") {
+		task ("Click on back and check the user is redirected to the Content Dashboard and the info panel is closed") {
 			Navigator.gotoBack();
 
-			AssertElementPresent(
-				key_text = "View More",
-				locator1 = "Button#ANY");
+			ControlMenu.viewHeaderTitle(headerTitle = "Content Dashboard");
+
+			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
 		}
 	}
 

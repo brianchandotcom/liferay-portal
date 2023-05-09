@@ -60,12 +60,8 @@ public class SegmentsEntryTableItemView implements TableItemView {
 
 		nameTextSearchEntry.setName(
 			HtmlUtil.escape(_segmentsEntry.getName(_themeDisplay.getLocale())));
-
 		nameTextSearchEntry.setCssClass(
 			"entry entry-selector table-cell-expand table-cell-minw-200");
-
-		nameTextSearchEntry.setHref("javascript:void(0);");
-
 		nameTextSearchEntry.setData(
 			HashMapBuilder.<String, Object>put(
 				"entityid", String.valueOf(_segmentsEntry.getSegmentsEntryId())
@@ -89,7 +85,6 @@ public class SegmentsEntryTableItemView implements TableItemView {
 
 		modifiedDateTextDateSearchEntry.setDate(
 			_segmentsEntry.getModifiedDate());
-
 		modifiedDateTextDateSearchEntry.setCssClass(
 			"table-cell-expand-smallest table-cell-ws-nowrap");
 

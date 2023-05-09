@@ -31,7 +31,6 @@ import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -295,14 +294,13 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_getLocation(), StringPool.SLASH, jsonObject.getString("id")),
+			String.format("%s/%d", _getLocation(), jsonObject.getLong("id")),
 			Http.Method.GET);
 
 		Assert.assertEquals(
 			jsonObject.getString(
-				StringBundler.concat(
-					"r_", objectRelationship.getName(), "_",
+				String.format(
+					"r_%s_%s", objectRelationship.getName(),
 					StringUtil.replaceLast(
 						_objectDefinition.getPKObjectFieldName(), "Id",
 						"ERC"))),
@@ -480,16 +478,15 @@ public class SystemObjectRelatedObjectEntriesTest {
 		return jaxRsApplicationDescriptor.getRESTContextPath();
 	}
 
-	private String _getLocation(String name) {
-		return StringBundler.concat(
-			_getLocation(), StringPool.SLASH, _user.getUserId(),
-			"?nestedFields=", name);
+	private String _getLocation(long userId, String objectRelationshipName) {
+		return String.format(
+			"%s/%d?nestedFields=%s", _getLocation(), userId,
+			objectRelationshipName);
 	}
 
-	private String _getLocation(String userId, String objectRelationshipName) {
-		return StringBundler.concat(
-			_getLocation(), StringPool.SLASH, userId, "?nestedFields=",
-			objectRelationshipName);
+	private String _getLocation(String name) {
+		return String.format(
+			"%s/%d?nestedFields=%s", _getLocation(), _user.getUserId(), name);
 	}
 
 	private JSONObject _getObjectEntryByExternalReferenceCodeJSONObject(
@@ -498,9 +495,9 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		return HTTPTestUtil.invoke(
 			null,
-			com.liferay.portal.kernel.util.StringBundler.concat(
-				_objectDefinition.getRESTContextPath(),
-				"/by-external-reference-code/", externalReferenceCode),
+			String.format(
+				"%s/by-external-reference-code/%s",
+				_objectDefinition.getRESTContextPath(), externalReferenceCode),
 			Http.Method.GET);
 	}
 
@@ -557,7 +554,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			_getLocation(
-				jsonObject.getString("id"), objectRelationship.getName()),
+				jsonObject.getLong("id"), objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -605,7 +602,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			_getLocation(
-				jsonObject.getString("id"), objectRelationship.getName()),
+				jsonObject.getLong("id"), objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(

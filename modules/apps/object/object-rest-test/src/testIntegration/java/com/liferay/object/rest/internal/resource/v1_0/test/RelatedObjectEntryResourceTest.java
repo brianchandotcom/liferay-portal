@@ -29,8 +29,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -107,10 +105,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				irrelevantUserId, _objectRelationship.getName(),
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
@@ -118,10 +115,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -143,10 +139,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -155,19 +150,17 @@ public class RelatedObjectEntryResourceTest {
 
 		HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
@@ -191,10 +184,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				irrelevantPrimaryKey),
 			Http.Method.DELETE);
 
@@ -202,10 +194,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -220,10 +211,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
@@ -246,10 +236,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				irrelevantUserId, _objectRelationship.getName(),
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
@@ -257,10 +246,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -275,10 +263,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
@@ -299,10 +286,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -311,19 +297,17 @@ public class RelatedObjectEntryResourceTest {
 
 		HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
@@ -347,10 +331,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				irrelevantPrimaryKey),
 			Http.Method.DELETE);
 
@@ -358,10 +341,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -381,10 +363,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
@@ -405,10 +386,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, irrelevantUserId, StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				irrelevantUserId, _objectRelationship.getName()),
 			Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
@@ -426,10 +406,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -464,10 +443,10 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
+			String.format(
+				"%s/%d/%s?page=1&pageSize=1",
 				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), "?page=1&pageSize=1"),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		Assert.assertEquals(2, jsonObject.getLong("lastPage"));
@@ -510,10 +489,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				irrelevantPrimaryKey),
 			Http.Method.PUT);
 
@@ -521,10 +499,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -544,10 +521,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				_objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), _objectRelationship.getName(),
 				objectEntry.getPrimaryKey()),
 			Http.Method.PUT);
 
@@ -584,10 +560,9 @@ public class RelatedObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				objectRelationship.getName(), StringPool.SLASH,
+			String.format(
+				"%s/%d/%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), objectRelationship.getName(),
 				objectEntry.getPrimaryKey()),
 			Http.Method.PUT);
 
@@ -596,10 +571,9 @@ public class RelatedObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, _user.getUserId(), StringPool.SLASH,
-				objectRelationship.getName()),
+			String.format(
+				"%s/%d/%s", jaxRsApplicationDescriptor.getRESTContextPath(),
+				_user.getUserId(), objectRelationship.getName()),
 			Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");

@@ -363,9 +363,7 @@ public class GetCollectionFieldMVCResourceCommand
 		).put(
 			"itemType", originalItemType
 		).put(
-			"length",
-			layoutListRetriever.getListCount(
-				listObjectReference, defaultLayoutListRetrieverContext)
+			"length", listCount
 		).put(
 			"totalNumberOfItems",
 			_collectionPaginationHelper.getTotalNumberOfItems(

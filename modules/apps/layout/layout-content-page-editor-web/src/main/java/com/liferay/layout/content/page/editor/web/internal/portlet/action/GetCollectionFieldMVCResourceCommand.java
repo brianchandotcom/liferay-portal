@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -286,8 +285,13 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutObjectReferenceJSONObject));
 		defaultLayoutListRetrieverContext.setContextObject(
 			_getInfoItem(httpServletRequest));
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds(segmentsExperienceId));
+			new long[] {segmentsExperience.getSegmentsEntryId()});
 
 		if (activePage < 1) {
 			activePage = 1;
@@ -295,6 +299,18 @@ public class GetCollectionFieldMVCResourceCommand
 
 		int listCount = layoutListRetriever.getListCount(
 			listObjectReference, defaultLayoutListRetrieverContext);
+
+		if ((listCount == 0) &&
+			!Objects.equals(
+				SegmentsEntryConstants.KEY_DEFAULT,
+				segmentsExperience.getSegmentsExperienceKey())) {
+
+			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+				new long[] {SegmentsEntryConstants.ID_DEFAULT});
+
+			listCount = layoutListRetriever.getListCount(
+				listObjectReference, defaultLayoutListRetrieverContext);
+		}
 
 		defaultLayoutListRetrieverContext.setPagination(
 			_collectionPaginationHelper.getPagination(
@@ -515,24 +531,6 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		return null;
-	}
-
-	private long[] _getSegmentsEntryIds(long segmentsExperienceId) {
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		if (Objects.equals(
-				SegmentsExperienceConstants.KEY_DEFAULT,
-				segmentsExperience.getSegmentsExperienceKey())) {
-
-			return new long[] {SegmentsEntryConstants.ID_DEFAULT};
-		}
-
-		return new long[] {
-			segmentsExperience.getSegmentsEntryId(),
-			SegmentsEntryConstants.ID_DEFAULT
-		};
 	}
 
 	private boolean _hasViewPermission(

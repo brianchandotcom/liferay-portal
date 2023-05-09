@@ -246,9 +246,9 @@ definition {
 
 		AssertLocation(value1 = "http://localhost:8080/fr/web/guest?SM_USER=test@liferay.com");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest");
+		ApplicationsMenu.gotoSite(key_site = "Test Site Name");
 
-		AssertLocation(value1 = "http://localhost:8080/fr/web/guest");
+		AssertLocation.assertPartialLocation(value1 = "http://localhost:8080/fr/group/test-site-name");
 	}
 
 	@priority = 4

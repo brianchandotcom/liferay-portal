@@ -195,6 +195,14 @@ definition {
 			var unspc = "";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		if (!(isSet(weight))) {
 			var weight = 0;
 		}
@@ -203,18 +211,43 @@ definition {
 			var width = 0;
 		}
 
-		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		if (isSet(categoryName)) {
+			var responseBody = CommerceJSONProductsAPI._getCommerceProductCategoryUsingProductERC(productERC = ${externalReferenceCode});
+
+			var categoryERC = JSONUtil.getWithJSONPath(${responseBody}, "$..categories..externalReferenceCode");
+			var categoryId = JSONUtil.getWithJSONPath(${responseBody}, "$..categories..id");
+			var categoryName = JSONUtil.getWithJSONPath(${responseBody}, "$..categories..name");
+			var categoryVocabulary = JSONUtil.getWithJSONPath(${responseBody}, "$..categories..vocabulary");
+
+			var categories = '''
+				[
+					{
+						"externalReferenceCode": "${categoryERC}",
+						"id": "${categoryId}",
+						"name": "${categoryName}",
+						"vocabulary": "${categoryVocabulary}"
+					}
+				]
+			''';
+		}
+		else {
+			var categories = "[]";
+		}
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(
+			baseURL = ${baseURL},
+			catalogName = ${catalogName},
+			userEmailAddress = ${userEmailAddress});
 
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products \
-				-u ${userLoginInfo} \
+				-u ${userEmailAddress}:${userPassword} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
 					"active": true,
 					"catalogId": "${catalogId}",
-					"categories": [],
+					"categories": ${categories},
 					"customFields": [],
 					"description": {
 						"en_US": "${productDescription}"
@@ -546,6 +579,30 @@ definition {
 		echo(${curl});
 
 		return ${curl};
+	}
+
+	macro _getCommerceProductCategoryUsingProductERC {
+		Variables.assertDefined(parameterList = ${productERC});
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${productERC} \
+				-u ${userEmailAddress}:${userPassword} \
+				-H 'accept: application/json' \
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
 	}
 
 	macro _getCommerceProductIds {

@@ -64,6 +64,14 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
 		if (isSet(catalogCount)) {
 			var catalogsCount = ${catalogCount};
 		}
@@ -71,11 +79,9 @@ definition {
 			var catalogsCount = 100;
 		}
 
-		var userLoginInfo = JSONUtil2.formatJSONUser();
-
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-catalog/v1.0/catalogs?pageSize=${catalogsCount} \
-				-u ${userLoginInfo} \
+				-u ${userEmailAddress}:${userPassword} \
 				-H 'accept: application/json' \
 		''';
 

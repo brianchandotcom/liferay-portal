@@ -616,7 +616,7 @@ definition {
 		}
 
 		task ("Capture the upgrade runtime in upgrade Report") {
-			var upgradeRunTimeReport = RegexUtil.replace(${upgradeReportContent}, "Execution time: (.*[0-9])", 1);
+			var upgradeRunTimeReport = UpgradeReport.getUpgradeExecutionTime(reportFileContent = ${upgradeReportContent});
 
 			echo("Upgrade runtime reported by upgrade_report.info is ${upgradeRunTimeReport}");
 		}

@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.COLOR,
-	service = {
-		ColorDDMFormFieldValueAccessor.class, DDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class ColorDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<String> {

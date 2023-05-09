@@ -58,8 +58,8 @@ public class WorkflowInstanceResourceImpl
 	public void deleteWorkflowInstance(Long workflowInstanceId)
 		throws Exception {
 
-		WorkflowInstance workflowInstance =
-			getWorkflowInstance(workflowInstanceId);
+		WorkflowInstance workflowInstance = getWorkflowInstance(
+			workflowInstanceId);
 
 		_workflowInstanceManager.deleteWorkflowInstance(
 			contextCompany.getCompanyId(), workflowInstance.getId());

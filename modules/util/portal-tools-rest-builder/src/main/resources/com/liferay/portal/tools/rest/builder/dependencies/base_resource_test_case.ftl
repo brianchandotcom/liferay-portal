@@ -310,7 +310,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 								</#if>
 
 								<#sep>, </#sep>
-
 							</#list>
 					);
 

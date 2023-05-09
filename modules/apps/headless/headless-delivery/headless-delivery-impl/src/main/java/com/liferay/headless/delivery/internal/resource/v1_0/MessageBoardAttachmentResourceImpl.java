@@ -60,7 +60,8 @@ public class MessageBoardAttachmentResourceImpl
 		MessageBoardAttachment messageBoardAttachment =
 			getMessageBoardAttachment(messageBoardAttachmentId);
 
-		_portletFileRepository.deletePortletFileEntry(messageBoardAttachment.getId());
+		_portletFileRepository.deletePortletFileEntry(
+			messageBoardAttachment.getId());
 	}
 
 	@Override

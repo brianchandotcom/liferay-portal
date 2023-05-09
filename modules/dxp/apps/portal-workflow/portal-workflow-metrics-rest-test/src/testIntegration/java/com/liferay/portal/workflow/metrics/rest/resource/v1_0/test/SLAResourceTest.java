@@ -32,6 +32,7 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.StopNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
+import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,13 +40,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -218,7 +217,8 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 		for (SLA sla : _slas) {
 			_workflowMetricsSLADefinitionLocalService.
 				deactivateWorkflowMetricsSLADefinition(
-					sla.getId(), new ServiceContext() {
+					sla.getId(),
+					new ServiceContext() {
 						{
 							setCompanyId(testGroup.getCompanyId());
 							setUserId(TestPropsValues.getUserId());

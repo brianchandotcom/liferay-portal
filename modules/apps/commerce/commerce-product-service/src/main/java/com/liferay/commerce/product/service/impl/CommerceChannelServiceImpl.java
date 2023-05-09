@@ -88,11 +88,12 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 	public CommerceChannel deleteCommerceChannel(long commerceChannelId)
 		throws PortalException {
 
-		CommerceChannel commerceChannel = commerceChannelLocalService.
-			getCommerceChannel(commerceChannelId);
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannel(commerceChannelId);
 
 		_commerceChannelModelResourcePermission.check(
-			getPermissionChecker(), commerceChannel.getCommerceChannelId(), ActionKeys.DELETE);
+			getPermissionChecker(), commerceChannel.getCommerceChannelId(),
+			ActionKeys.DELETE);
 
 		return commerceChannelLocalService.deleteCommerceChannel(
 			commerceChannel.getCommerceChannelId());

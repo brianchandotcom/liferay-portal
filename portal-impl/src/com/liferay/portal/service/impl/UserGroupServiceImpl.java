@@ -154,7 +154,6 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 */
 	@Override
 	public void deleteUserGroup(long userGroupId) throws PortalException {
-
 		UserGroup userGroup = userGroupLocalService.getUserGroup(userGroupId);
 
 		UserGroupPermissionUtil.check(

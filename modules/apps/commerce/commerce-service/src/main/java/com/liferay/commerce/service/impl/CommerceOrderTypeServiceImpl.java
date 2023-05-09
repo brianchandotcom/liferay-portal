@@ -77,8 +77,9 @@ public class CommerceOrderTypeServiceImpl
 	public CommerceOrderType deleteCommerceOrderType(long commerceOrderTypeId)
 		throws PortalException {
 
-		CommerceOrderType commerceOrderType = commerceOrderTypeLocalService.
-			getCommerceOrderType(commerceOrderTypeId);
+		CommerceOrderType commerceOrderType =
+			commerceOrderTypeLocalService.getCommerceOrderType(
+				commerceOrderTypeId);
 
 		_commerceOrderTypeModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderType.getCommerceOrderTypeId(),

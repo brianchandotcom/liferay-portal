@@ -261,29 +261,17 @@ public class PortalInstances {
 		return ArrayUtil.toStringArray(_companies.values());
 	}
 
-	public static long initCompany(String webId) {
-		return initCompany(webId, false);
+	public static long initCompany(Company company) {
+		return initCompany(company, false);
 	}
 
-	public static long initCompany(String webId, boolean skipCheck) {
+	public static long initCompany(Company company, boolean skipCheck) {
 
 		// Begin initializing company
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Begin initializing company with web id " + webId);
-		}
-
-		long companyId = 0;
-
-		try {
-			Company company = CompanyLocalServiceUtil.getCompanyByWebId(webId);
-
-			companyId = company.getCompanyId();
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return companyId;
+			_log.debug(
+				"Begin initializing company with web id " + company.getWebId());
 		}
 
 		Long currentThreadCompanyId = CompanyThreadLocal.getCompanyId();
@@ -291,11 +279,11 @@ public class PortalInstances {
 		String currentThreadPrincipalName = PrincipalThreadLocal.getName();
 
 		try {
-			CompanyThreadLocal.setCompanyId(companyId);
+			CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
 			if (!skipCheck) {
 				try {
-					CompanyLocalServiceUtil.checkCompany(webId);
+					CompanyLocalServiceUtil.checkCompany(company.getWebId());
 				}
 				catch (Exception exception) {
 					_log.error(exception);
@@ -309,7 +297,9 @@ public class PortalInstances {
 			if (userId > 0) {
 				User user = UserLocalServiceUtil.fetchUser(userId);
 
-				if ((user != null) && (user.getCompanyId() == companyId)) {
+				if ((user != null) &&
+					(user.getCompanyId() == company.getCompanyId())) {
+
 					principalName = currentThreadPrincipalName;
 				}
 			}
@@ -325,7 +315,7 @@ public class PortalInstances {
 			try {
 				PortletCategory portletCategory =
 					(PortletCategory)WebAppPool.get(
-						companyId, WebKeys.PORTLET_CATEGORY);
+						company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 				if (portletCategory == null) {
 					portletCategory = new PortletCategory();
@@ -342,7 +332,8 @@ public class PortalInstances {
 				}
 
 				WebAppPool.put(
-					companyId, WebKeys.PORTLET_CATEGORY, portletCategory);
+					company.getCompanyId(), WebKeys.PORTLET_CATEGORY,
+					portletCategory);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -358,7 +349,7 @@ public class PortalInstances {
 				EventsProcessorUtil.process(
 					PropsKeys.APPLICATION_STARTUP_EVENTS,
 					PropsValues.APPLICATION_STARTUP_EVENTS,
-					new String[] {String.valueOf(companyId)});
+					new String[] {String.valueOf(company.getCompanyId())});
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -369,11 +360,12 @@ public class PortalInstances {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"End initializing company with web id ", webId,
-						" and company id ", companyId));
+						"End initializing company with web id ",
+						company.getWebId(), " and company id ",
+						company.getCompanyId()));
 			}
 
-			_companies.putIfAbsent(companyId, webId);
+			_companies.putIfAbsent(company.getCompanyId(), company.getWebId());
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
@@ -381,7 +373,7 @@ public class PortalInstances {
 			PrincipalThreadLocal.setName(currentThreadPrincipalName);
 		}
 
-		return companyId;
+		return company.getCompanyId();
 	}
 
 	public static boolean isAutoLoginIgnoreHost(String host) {

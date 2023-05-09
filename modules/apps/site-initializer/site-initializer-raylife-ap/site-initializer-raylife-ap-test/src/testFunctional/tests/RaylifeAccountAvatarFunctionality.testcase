@@ -64,6 +64,28 @@ definition {
 		}
 	}
 
+	@description = " Story ID: LPS-174056 - Verify if the user can access the Account Settings page from Agent Portal by the avatar menu list."
+	@priority = 4
+	test AssertUserCanAccessAccountSettingsPage {
+		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanAccessAccountSettingsPage";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given the User go to RaylifeAp main page") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+		}
+
+		task ("When the user clicks on the avatar and choose 'Account Settings' Option") {
+			RaylifeAP.userAvatarFunctionality(option = "Account Settings");
+		}
+
+		task ("Then Assert that the user is redirect to the Account Settings page") {
+			AssertElementPresent(
+				key_title = "Account Settings",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
 	@description = " Story ID: LPS-174056 | Test Summary: Verify if the user can access the Account Settings page from Agent Portal by the avatar menu list."
 	@priority = 4
 	test AssertUserCanAccessAccountSettingsPage {
@@ -108,7 +130,7 @@ definition {
 		}
 	}
 
-	@description = " Story ID: LPS-174056 | Test Summary: Verify if the user can  Sing Out from Agent Portal by the option in avatar menu list."
+	@description = " Story ID: LPS-174056 - Verify if the user can  Sing Out from Agent Portal by the option in avatar menu list."
 	@priority = 4
 	test AssertUserCanSingOut {
 		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanSingOut";
@@ -127,6 +149,8 @@ definition {
 			AssertElementPresent(
 				key_title = "Liferay DXP",
 				locator1 = "Header#H1_TITLE");
+
+			User.firstLoginPG();
 		}
 	}
 

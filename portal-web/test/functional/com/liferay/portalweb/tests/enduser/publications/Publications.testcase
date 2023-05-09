@@ -516,6 +516,41 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
 	}
 
+	@description = "This is the use case for LPS-183473."
+	@priority = 4
+	test CannotEmptyRecycleBinWithinPublication {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
+
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC WebContent Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+		LexiconTable.viewTableEntryTitle(tableEntry = "WC WebContent Title");
+
+		LexiconTable.viewTableEntryText(
+			tableEntry = "WC WebContent Title",
+			tableEntryText = "Web Content Article");
+
+		Click.waitForMenuToggleJSClick(
+			key_tableEntry = "WC WebContent Title",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Delete");
+	}
+
 	@description = "LPS-136380 - Add localization for translated titles and content."
 	@priority = 4
 	test CanPublishLocalizedContent {

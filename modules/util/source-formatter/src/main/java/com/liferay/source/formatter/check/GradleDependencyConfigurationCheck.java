@@ -36,21 +36,23 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 				content = _fixTransitive(content, dependencies);
 			}
 
-			if (isAttributeValue(_CHECK_API_DEPENDENCIES_KEY, absolutePath)) {
+			if (isAttributeValue(
+					_CHECK_API_DEPENDENCIES_KEY, absolutePath, true)) {
+
 				content = _fixConfigurations(
 					content, dependencies, "compile", "api");
 			}
 
 			if (isAttributeValue(
-					_CHECK_RUNTIME_ONLY_DEPENDENCIES_KEY, absolutePath)) {
+					_CHECK_RUNTIME_ONLY_DEPENDENCIES_KEY, absolutePath, true)) {
 
 				content = _fixConfigurations(
 					content, dependencies, "runtime", "runtimeOnly");
 			}
 
 			if (isAttributeValue(
-					_CHECK_TEST_IMPLEMENTATION_DEPENDENCIES_KEY,
-					absolutePath)) {
+					_CHECK_TEST_IMPLEMENTATION_DEPENDENCIES_KEY, absolutePath,
+					true)) {
 
 				content = _fixConfigurations(
 					content, dependencies, "testCompile", "testImplementation");
@@ -58,7 +60,7 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 
 			if (isAttributeValue(
 					_CHECK_TEST_INTEGRATION_IMPLEMENTATION_DEPENDENCIES_KEY,
-					absolutePath)) {
+					absolutePath, true)) {
 
 				content = _fixConfigurations(
 					content, dependencies, "testIntegrationCompile",
@@ -67,7 +69,7 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 
 			if (isAttributeValue(
 					_CHECK_TEST_INTEGRATION_RUNTIME_ONLY_DEPENDENCIES_KEY,
-					absolutePath)) {
+					absolutePath, true)) {
 
 				content = _fixConfigurations(
 					content, dependencies, "testIntegrationRuntime",
@@ -75,7 +77,8 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 			}
 
 			if (isAttributeValue(
-					_CHECK_TEST_RUNTIME_ONLY_DEPENDENCIES_KEY, absolutePath)) {
+					_CHECK_TEST_RUNTIME_ONLY_DEPENDENCIES_KEY, absolutePath,
+					true)) {
 
 				content = _fixConfigurations(
 					content, dependencies, "testRuntime", "testRuntimeOnly");

@@ -23,6 +23,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
@@ -77,7 +78,7 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SpringBootPlugin.class);

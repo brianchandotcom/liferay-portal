@@ -28,7 +28,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
@@ -53,7 +53,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 		GradleUtil.applyPlugin(project, TargetPlatformPlugin.class);
 
 		Configuration targetPlatformIDEConfiguration =

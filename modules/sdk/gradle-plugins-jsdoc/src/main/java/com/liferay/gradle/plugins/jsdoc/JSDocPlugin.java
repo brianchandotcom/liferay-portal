@@ -17,7 +17,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaBasePlugin;
-import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -61,12 +61,12 @@ public class JSDocPlugin extends BaseJSDocPlugin {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskJSDocForJavaPlugin(jsDocTask);
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskJSDocForJavaLibraryPlugin(jsDocTask);
 				}
 
 			});
@@ -74,7 +74,7 @@ public class JSDocPlugin extends BaseJSDocPlugin {
 		return jsDocTask;
 	}
 
-	private void _configureTaskJSDocForJavaPlugin(JSDocTask jsDocTask) {
+	private void _configureTaskJSDocForJavaLibraryPlugin(JSDocTask jsDocTask) {
 		final Project project = jsDocTask.getProject();
 
 		jsDocTask.setDestinationDir(

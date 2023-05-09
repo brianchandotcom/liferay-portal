@@ -24,6 +24,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
@@ -67,12 +68,12 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskProcessResourcesForJavaPlugin(
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskProcessResourcesForJavaLibraryPlugin(
 						buildCSSTask, copyCSSTask);
 				}
 
@@ -219,12 +220,12 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskCopyCSSForJavaPlugin(copyCSSTask);
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskCopyCSSForJavaLibraryPlugin(copyCSSTask);
 				}
 
 			});
@@ -270,7 +271,9 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskCopyCSSForJavaPlugin(final Sync copyCSSTask) {
+	private void _configureTaskCopyCSSForJavaLibraryPlugin(
+		final Sync copyCSSTask) {
+
 		copyCSSTask.from(
 			new Callable<File>() {
 
@@ -306,7 +309,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskProcessResourcesForJavaPlugin(
+	private void _configureTaskProcessResourcesForJavaLibraryPlugin(
 		BuildCSSTask buildCSSTask, final Sync copyCSSTask) {
 
 		final Project project = buildCSSTask.getProject();

@@ -29,6 +29,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
@@ -51,7 +52,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
+		GradleUtil.applyPlugin(project, JavaLibraryPlugin.class);
 
 		Configuration mavenEmbedderConfiguration =
 			_addConfigurationMavenEmbedder(project);

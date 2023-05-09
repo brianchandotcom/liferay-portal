@@ -22,7 +22,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaBasePlugin;
-import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.Copy;
@@ -125,12 +125,12 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskTLDDocForJavaPlugin(tldDocTask);
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskTLDDocForJavaLibraryPlugin(tldDocTask);
 				}
 
 			});
@@ -147,12 +147,12 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskValidateSchemaForJavaPlugin(
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskValidateSchemaForJavaLibraryPlugin(
 						validateSchemaTask);
 				}
 
@@ -185,7 +185,9 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 		tldDocTask.setClasspath(fileCollection);
 	}
 
-	private void _configureTaskTLDDocForJavaPlugin(TLDDocTask tldDocTask) {
+	private void _configureTaskTLDDocForJavaLibraryPlugin(
+		TLDDocTask tldDocTask) {
+
 		final Project project = tldDocTask.getProject();
 
 		tldDocTask.setDestinationDir(
@@ -216,7 +218,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskValidateSchemaForJavaPlugin(
+	private void _configureTaskValidateSchemaForJavaLibraryPlugin(
 		ValidateSchemaTask validateSchemaTask) {
 
 		final Project project = validateSchemaTask.getProject();

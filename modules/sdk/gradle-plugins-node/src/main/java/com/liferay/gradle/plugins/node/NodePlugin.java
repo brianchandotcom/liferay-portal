@@ -49,6 +49,7 @@ import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
@@ -342,12 +343,12 @@ public class NodePlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskPackageRunBuildForJavaPlugin(
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskPackageRunBuildForJavaLibraryPlugin(
 						packageRunBuildTask);
 				}
 
@@ -676,7 +677,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskPackageRunBuildForJavaPlugin(
+	private void _configureTaskPackageRunBuildForJavaLibraryPlugin(
 		final PackageRunBuildTask packageRunBuildTask) {
 
 		final Project project = packageRunBuildTask.getProject();

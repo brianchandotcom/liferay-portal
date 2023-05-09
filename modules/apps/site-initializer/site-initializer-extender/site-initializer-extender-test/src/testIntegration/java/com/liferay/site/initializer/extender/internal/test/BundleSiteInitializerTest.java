@@ -35,11 +35,13 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -111,6 +113,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -515,7 +518,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(clientExtensionEntry);
 
 		CustomElementCET customElementCET =
-			(CustomElementCET)_cetFactory.create(clientExtensionEntry);
+			(CustomElementCET) _cetFactory.create(clientExtensionEntry);
 
 		Assert.assertEquals(
 			"liferay-test-remote-app", customElementCET.getHTMLElementName());
@@ -562,6 +565,7 @@ public class BundleSiteInitializerTest {
 		_assertDefaultCPDisplayLayout(commerceChannel);
 	}
 
+
 	private void _assertCommerceInventoryWarehouse() {
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseLocalService.
@@ -575,7 +579,7 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCommerceNotificationTemplate(
-			CommerceChannel commerceChannel)
+		CommerceChannel commerceChannel)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -589,7 +593,7 @@ public class BundleSiteInitializerTest {
 				getCommerceNotificationTemplates(
 					commerceChannel.getGroupId(),
 					"com.liferay.object.model.ObjectDefinition#" +
-						objectDefinition.getObjectDefinitionId() + "#create",
+					objectDefinition.getObjectDefinitionId() + "#create",
 					true);
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
@@ -617,7 +621,7 @@ public class BundleSiteInitializerTest {
 
 		ProductSpecificationResource.Builder
 			productSpecificationResourceBuilder =
-				_productSpecificationResourceFactory.create();
+			_productSpecificationResourceFactory.create();
 
 		ProductSpecificationResource productSpecificationResource =
 			productSpecificationResourceBuilder.user(
@@ -635,6 +639,16 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"test-product-specification-1",
 			productSpecification.getSpecificationKey());
+	}
+
+	private void _assertCPOptionCategory() throws Exception {
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryLocalService.fetchCPOptionCategory(
+				_serviceContext.getCompanyId(), "test-commerce-specification-key-2");
+
+		Assert.assertNotNull(cpOptionCategory);
+		Assert.assertEquals(1.0, cpOptionCategory.getPriority(), 0);
+		Assert.assertEquals("Test Commerce Specification 2", cpOptionCategory.getTitle(LocaleUtil.getSiteDefault()));
 	}
 
 	private void _assertCPDefinition() throws Exception {
@@ -2677,6 +2691,7 @@ public class BundleSiteInitializerTest {
 		_assertCommerceSpecificationProducts();
 		_assertCPDefinition();
 		_assertCPInstanceProperties();
+		_assertCPOptionCategory();
 		_assertDDMStructure();
 		_assertDDMTemplate();
 		_assertDLFileEntry();
@@ -2765,6 +2780,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
+
+	@Inject
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

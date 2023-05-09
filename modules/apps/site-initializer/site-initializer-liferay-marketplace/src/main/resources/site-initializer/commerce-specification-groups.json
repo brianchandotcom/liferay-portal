@@ -1,0 +1,32 @@
+[
+	{
+		"description": {
+			"en_US": "Pricing and licensing approach for this app or solution in the Marketplace."
+		},
+		"key": "pricing-licensing-terms",
+		"priority": 1,
+		"title": {
+			"en_US": "Pricing and Licensing Terms"
+		}
+	},
+	{
+		"description": {
+			"en_US": "Support and help references for this app or solution."
+		},
+		"key": "app-support-and-help",
+		"priority": 2,
+		"title": {
+			"en_US": "App Support and Help"
+		}
+	},
+	{
+		"description": {
+			"en_US": "Data about this app or solution."
+		},
+		"key": "product-metadata",
+		"priority": 3,
+		"title": {
+			"en_US": "Product Metadata"
+		}
+	}
+]

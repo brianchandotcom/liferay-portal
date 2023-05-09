@@ -29,307 +29,138 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static CommerceChannelLocalService getCommerceChannelLocalService() {
-		return _servletContextUtil._getCommerceChannelLocalService();
+		return _commerceChannelLocalServiceSnapshot.get();
 	}
 
 	public static CommerceInventoryEngine getCommerceInventoryEngine() {
-		return _servletContextUtil._getCommerceInventoryEngine();
+		return _commerceInventoryEngineSnapshot.get();
 	}
 
 	public static CommerceOrderHttpHelper getCommerceOrderHttpHelper() {
-		return _servletContextUtil._getCommerceOrderHttpHelper();
+		return _commerceOrderHttpHelperSnapshot.get();
 	}
 
 	public static CommerceOrderItemLocalService
 		getCommerceOrderItemLocalService() {
 
-		return _servletContextUtil._getCommerceOrderItemLocalService();
+		return _commerceOrderItemLocalServiceSnapshot.get();
 	}
 
 	public static PortletResourcePermission
 		getCommerceOrderPortletResourcePermission() {
 
-		return _servletContextUtil._getCommerceOrderPortletResourcePermission();
+		return _commerceOrderPortletResourcePermissionSnapshot.get();
 	}
 
 	public static CommerceOrderTypeLocalService
 		getCommerceOrderTypeLocalService() {
 
-		return _servletContextUtil._getCommerceOrderTypeLocalService();
+		return _commerceOrderTypeLocalServiceSnapshot.get();
 	}
 
 	public static ConfigurationProvider getConfigurationProvider() {
-		return _servletContextUtil._getConfigurationProvider();
+		return _configurationProviderSnapshot.get();
 	}
 
 	public static CPCompareHelper getCPCompareHelper() {
-		return _servletContextUtil._getCPCompareHelper();
+		return _cpCompareHelperSnapshot.get();
 	}
 
 	public static CPContentHelper getCPContentHelper() {
-		return _servletContextUtil._getCPContentHelper();
+		return _cpContentHelperSnapshot.get();
 	}
 
 	public static CPDefinitionHelper getCPDefinitionHelper() {
-		return _servletContextUtil._getCPDefinitionHelper();
+		return _cpDefinitionHelperSnapshot.get();
 	}
 
 	public static CPFriendlyURL getCPFriendlyURL() {
-		return _servletContextUtil._getCPFriendlyURL();
+		return _cpFriendlyURLSnapshot.get();
 	}
 
 	public static CPInstanceHelper getCPInstanceHelper() {
-		return _servletContextUtil._getCPInstanceHelper();
+		return _cpInstanceHelperSnapshot.get();
 	}
 
 	public static CPSubscriptionTypeRegistry getCPSubscriptionTypeRegistry() {
-		return _servletContextUtil._getCPSubscriptionTypeRegistry();
+		return _cpSubscriptionTypeRegistrySnapshot.get();
 	}
 
 	public static InfoItemRendererRegistry getInfoItemRendererRegistry() {
-		return _servletContextUtil._getInfoItemRendererRegistry();
+		return _infoItemRendererRegistrySnapshot.get();
 	}
 
 	public static NPMResolver getNPMResolver() {
-		return _servletContextUtil._getNPMResolver();
+		return _npmResolverSnapshot.get();
 	}
 
 	public static ProductHelper getProductHelper() {
-		return _servletContextUtil._getProductHelper();
+		return _productHelperSnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContextUtil._getServletContext();
+		return _servletContextSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	public void setCommerceInventoryEngine(
-		CommerceInventoryEngine commerceInventoryEngine) {
-
-		_commerceInventoryEngine = commerceInventoryEngine;
-	}
-
-	@Reference(unbind = "-")
-	public void setCommerceOrderItemLocalService(
-		CommerceOrderItemLocalService commerceOrderItemLocalService) {
-
-		_commerceOrderItemLocalService = commerceOrderItemLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setCommerceOrderTypeLocalService(
-		CommerceOrderTypeLocalService commerceOrderTypeLocalService) {
-
-		_commerceOrderTypeLocalService = commerceOrderTypeLocalService;
-	}
-
-	@Activate
-	protected void activate() {
-		_servletContextUtil = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_servletContextUtil = null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceChannelLocalService(
-		CommerceChannelLocalService commerceChannelLocalService) {
-
-		_commerceChannelLocalService = commerceChannelLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceOrderHttpHelper(
-		CommerceOrderHttpHelper commerceOrderHttpHelper) {
-
-		_commerceOrderHttpHelper = commerceOrderHttpHelper;
-	}
-
-	@Reference(
-		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")",
-		unbind = "-"
-	)
-	protected void setCommerceOrderPortletResourcePermission(
-		PortletResourcePermission commerceOrderPortletResourcePermission) {
-
-		_commerceOrderPortletResourcePermission =
-			commerceOrderPortletResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPCompareHelper(CPCompareHelper cpCompareHelper) {
-		_cpCompareHelper = cpCompareHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPContentHelper(CPContentHelper cpContentHelper) {
-		_cpContentHelper = cpContentHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPDefinitionHelper(
-		CPDefinitionHelper cpDefinitionHelper) {
-
-		_cpDefinitionHelper = cpDefinitionHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPFriendlyURL(CPFriendlyURL cpFriendlyURL) {
-		_cpFriendlyURL = cpFriendlyURL;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPInstanceHelper(CPInstanceHelper cpInstanceHelper) {
-		_cpInstanceHelper = cpInstanceHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPSubscriptionTypeRegistry(
-		CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry) {
-
-		_cpSubscriptionTypeRegistry = cpSubscriptionTypeRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setInfoItemRendererRegistry(
-		InfoItemRendererRegistry infoItemRendererRegistry) {
-
-		_infoItemRendererRegistry = infoItemRendererRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setNPMResolver(NPMResolver npmResolver) {
-		_npmResolver = npmResolver;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProductHelper(ProductHelper productHelper) {
-		_productHelper = productHelper;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.frontend.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private CommerceChannelLocalService _getCommerceChannelLocalService() {
-		return _commerceChannelLocalService;
-	}
-
-	private CommerceInventoryEngine _getCommerceInventoryEngine() {
-		return _commerceInventoryEngine;
-	}
-
-	private CommerceOrderHttpHelper _getCommerceOrderHttpHelper() {
-		return _commerceOrderHttpHelper;
-	}
-
-	private CommerceOrderItemLocalService _getCommerceOrderItemLocalService() {
-		return _commerceOrderItemLocalService;
-	}
-
-	private PortletResourcePermission
-		_getCommerceOrderPortletResourcePermission() {
-
-		return _commerceOrderPortletResourcePermission;
-	}
-
-	private CommerceOrderTypeLocalService _getCommerceOrderTypeLocalService() {
-		return _commerceOrderTypeLocalService;
-	}
-
-	private ConfigurationProvider _getConfigurationProvider() {
-		return _configurationProvider;
-	}
-
-	private CPCompareHelper _getCPCompareHelper() {
-		return _cpCompareHelper;
-	}
-
-	private CPContentHelper _getCPContentHelper() {
-		return _cpContentHelper;
-	}
-
-	private CPDefinitionHelper _getCPDefinitionHelper() {
-		return _cpDefinitionHelper;
-	}
-
-	private CPFriendlyURL _getCPFriendlyURL() {
-		return _cpFriendlyURL;
-	}
-
-	private CPInstanceHelper _getCPInstanceHelper() {
-		return _cpInstanceHelper;
-	}
-
-	private CPSubscriptionTypeRegistry _getCPSubscriptionTypeRegistry() {
-		return _cpSubscriptionTypeRegistry;
-	}
-
-	private InfoItemRendererRegistry _getInfoItemRendererRegistry() {
-		return _infoItemRendererRegistry;
-	}
-
-	private NPMResolver _getNPMResolver() {
-		return _npmResolver;
-	}
-
-	private ProductHelper _getProductHelper() {
-		return _productHelper;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _servletContextUtil;
-
-	private CommerceChannelLocalService _commerceChannelLocalService;
-	private CommerceInventoryEngine _commerceInventoryEngine;
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
-	private PortletResourcePermission _commerceOrderPortletResourcePermission;
-	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
-	private ConfigurationProvider _configurationProvider;
-	private CPCompareHelper _cpCompareHelper;
-	private CPContentHelper _cpContentHelper;
-	private CPDefinitionHelper _cpDefinitionHelper;
-	private CPFriendlyURL _cpFriendlyURL;
-	private CPInstanceHelper _cpInstanceHelper;
-	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
-	private InfoItemRendererRegistry _infoItemRendererRegistry;
-	private NPMResolver _npmResolver;
-	private ProductHelper _productHelper;
-	private ServletContext _servletContext;
+	private static final Snapshot<CommerceChannelLocalService>
+		_commerceChannelLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceChannelLocalService.class);
+	private static final Snapshot<CommerceInventoryEngine>
+		_commerceInventoryEngineSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceInventoryEngine.class);
+	private static final Snapshot<CommerceOrderHttpHelper>
+		_commerceOrderHttpHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceOrderHttpHelper.class);
+	private static final Snapshot<CommerceOrderItemLocalService>
+		_commerceOrderItemLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceOrderItemLocalService.class);
+	private static final Snapshot<PortletResourcePermission>
+		_commerceOrderPortletResourcePermissionSnapshot = new Snapshot<>(
+			ServletContextUtil.class, PortletResourcePermission.class,
+			"(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")");
+	private static final Snapshot<CommerceOrderTypeLocalService>
+		_commerceOrderTypeLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceOrderTypeLocalService.class);
+	private static final Snapshot<ConfigurationProvider>
+		_configurationProviderSnapshot = new Snapshot<>(
+			ServletContextUtil.class, ConfigurationProvider.class);
+	private static final Snapshot<CPCompareHelper> _cpCompareHelperSnapshot =
+		new Snapshot<>(ServletContextUtil.class, CPCompareHelper.class);
+	private static final Snapshot<CPContentHelper> _cpContentHelperSnapshot =
+		new Snapshot<>(ServletContextUtil.class, CPContentHelper.class);
+	private static final Snapshot<CPDefinitionHelper>
+		_cpDefinitionHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CPDefinitionHelper.class);
+	private static final Snapshot<CPFriendlyURL> _cpFriendlyURLSnapshot =
+		new Snapshot<>(ServletContextUtil.class, CPFriendlyURL.class);
+	private static final Snapshot<CPInstanceHelper> _cpInstanceHelperSnapshot =
+		new Snapshot<>(ServletContextUtil.class, CPInstanceHelper.class);
+	private static final Snapshot<CPSubscriptionTypeRegistry>
+		_cpSubscriptionTypeRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, CPSubscriptionTypeRegistry.class);
+	private static final Snapshot<InfoItemRendererRegistry>
+		_infoItemRendererRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, InfoItemRendererRegistry.class);
+	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
+		new Snapshot<>(ServletContextUtil.class, NPMResolver.class);
+	private static final Snapshot<ProductHelper> _productHelperSnapshot =
+		new Snapshot<>(ServletContextUtil.class, ProductHelper.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.commerce.frontend.taglib)");
 
 }

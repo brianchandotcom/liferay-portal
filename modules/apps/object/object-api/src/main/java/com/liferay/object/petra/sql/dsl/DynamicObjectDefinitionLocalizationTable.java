@@ -19,7 +19,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -35,20 +34,6 @@ import java.util.List;
  */
 public class DynamicObjectDefinitionLocalizationTable
 	extends BaseTable<DynamicObjectDefinitionLocalizationTable> {
-
-	public static String getAlterTableAddColumnSQL(
-		String tableName, String columnName, String type) {
-
-		String sql = StringBundler.concat(
-			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
-			DataType.getDBType(type), StringPool.BLANK);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + sql);
-		}
-
-		return sql;
-	}
 
 	public DynamicObjectDefinitionLocalizationTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {

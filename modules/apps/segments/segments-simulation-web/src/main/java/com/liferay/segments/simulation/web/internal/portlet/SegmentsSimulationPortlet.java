@@ -14,8 +14,6 @@
 
 package com.liferay.segments.simulation.web.internal.portlet;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,25 +64,14 @@ public class SegmentsSimulationPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			SegmentsSimulationDisplayContext segmentsSimulationDisplayContext =
-				new SegmentsSimulationDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_segmentsConfigurationProvider);
-
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				segmentsSimulationDisplayContext);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new SegmentsSimulationDisplayContext(
+				_portal.getHttpServletRequest(renderRequest),
+				_segmentsConfigurationProvider));
 
 		super.render(renderRequest, renderResponse);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsSimulationPortlet.class);
 
 	@Reference
 	private Portal _portal;

@@ -17,13 +17,10 @@ package com.liferay.segments.simulation.web.internal.application.list;
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationConstants;
@@ -86,18 +83,10 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		try {
-			SegmentsSimulationDisplayContext segmentsSimulationDisplayContext =
-				new SegmentsSimulationDisplayContext(
-					httpServletRequest, _segmentsConfigurationProvider);
-
-			httpServletRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				segmentsSimulationDisplayContext);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new SegmentsSimulationDisplayContext(
+				httpServletRequest, _segmentsConfigurationProvider));
 
 		return super.include(httpServletRequest, httpServletResponse);
 	}
@@ -118,14 +107,8 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 		return _servletContext;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsSimulationPanelApp.class);
-
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS_SIMULATION + ")"

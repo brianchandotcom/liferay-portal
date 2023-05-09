@@ -9,8 +9,8 @@
 
 	[#if hasCancelAction && mdfRequestStatusKey != 'canceled']
 		<script>
-			const updateCanceledStatus = async () => {
-				const statusManagerResponse = await fetch(
+			const updateCanceledMDFRequestStatus = async () => {
+				const statusManagerMDFRequestResponse = await fetch(
 					`/o/c/mdfrequests/${mdfRequestId}`,
 					{
 						body: `{"mdfRequestStatus": "canceled"}`,
@@ -22,7 +22,7 @@
 					}
 				);
 
-				if (statusManagerResponse.ok) {
+				if (statusManagerMDFRequestResponse.ok) {
 					location.reload();
 
 					return;
@@ -34,17 +34,17 @@
 				});
 			};
 
-			const callConfirmCancelModal = () => Liferay.Util.openConfirmModal({
+			const callConfirmCancelMDFRequestModal = () => Liferay.Util.openConfirmModal({
 				message: 'Do you want to cancel this MDF?',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						updateCanceledStatus();
+						updateCanceledMDFRequestStatus();
 					}
 				},
 			});
 		</script>
 
-		<button class="border-neutral-10 btn btn-secondary mr-2 mt-2" onclick="callConfirmCancelModal()">
+		<button class="border-neutral-10 btn btn-secondary mr-2 mt-2" onclick="callConfirmCancelMDFRequestModal()">
 			Cancel
 		</button>
 	[/#if]

@@ -9,8 +9,8 @@
 
 	[#if hasCancelAction && (mdfClaimStatusKey == 'approved' || mdfClaimStatusKey == 'draft')]
 		<script>
-			const updateCanceledStatus = async () => {
-				const statusManagerResponse = await fetch(
+			const updateCanceledMDFClaimStatus = async () => {
+				const statusManagerMDFClaimResponse = await fetch(
 					`/o/c/mdfclaims/${mdfClaimId}`,
 					{
 						body: `{"mdfClaimStatus": "canceled"}`,
@@ -22,7 +22,7 @@
 					}
 				);
 
-				if (statusManagerResponse.ok) {
+				if (statusManagerMDFClaimResponse.ok) {
 					location.reload();
 
 					return;
@@ -34,17 +34,17 @@
 				});
 			};
 
-			const callConfirmCancelModal = () => Liferay.Util.openConfirmModal({
+			const callConfirmCancelMDFClaimModal = () => Liferay.Util.openConfirmModal({
 				message: 'Do you want to cancel this Claim?',
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						updateCanceledStatus();
+						updateCanceledMDFClaimStatus();
 					}
 				},
 			});
 		</script>
 
-		<button class="border-neutral-10 btn btn-secondary mr-2 mt-2" onclick="callConfirmCancelModal()">
+		<button class="border-neutral-10 btn btn-secondary mr-2 mt-2" onclick="callConfirmCancelMDFClaimModal()">
 			Cancel
 		</button>
 	[/#if]

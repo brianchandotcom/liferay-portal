@@ -22,6 +22,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -116,6 +117,10 @@ public class Database {
 	private static List<Long> _getCompanyIds(Connection connection)
 		throws SQLException {
 
+		if (_companyIds.containsKey(connection)) {
+			return _companyIds.get(connection);
+		}
+
 		List<Long> companyIds = new ArrayList<>();
 
 		long defaultCompanyId = _getDefaultCompanyIdBySQL(connection);
@@ -136,6 +141,8 @@ public class Database {
 				}
 			}
 		}
+
+		_companyIds.put(connection, companyIds);
 
 		return companyIds;
 	}
@@ -178,9 +185,9 @@ public class Database {
 			Connection connection, String tableName)
 		throws SQLException {
 
-		if ((!_isObjectTable(connection, tableName) &&
-			 _controlTableNames.contains(tableName)) ||
-			!_hasColumn(tableName, "companyId", connection)) {
+		if (!_isObjectTable(connection, tableName) &&
+			(_controlTableNames.contains(tableName) ||
+			 !_hasColumn(tableName, "companyId", connection))) {
 
 			return true;
 		}
@@ -218,6 +225,8 @@ public class Database {
 		return name;
 	}
 
+	private static final HashMap<Connection, List<Long>> _companyIds =
+		new HashMap<>();
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("Company", "VirtualHost"));
 	private static String _schemaPrefix = "lpartition_";

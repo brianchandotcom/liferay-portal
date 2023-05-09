@@ -148,6 +148,10 @@ export default function ChangeTrackingCollectionEditView({
 		roleValues,
 		userIds
 	) => {
+		if (!userIds || !userIds.length) {
+			return;
+		}
+
 		const formData = {
 			[`${namespace}ctCollectionId`]: ctCollectionId,
 			[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(

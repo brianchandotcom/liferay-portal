@@ -42,7 +42,8 @@ export default function GroupLabels({items, portletNamespace}) {
 
 			const hasFilterQuery = normalizedFilterQuery !== '';
 
-			const showItem = !hasFilterQuery ||
+			const showItem =
+				!hasFilterQuery ||
 				item.items ||
 				item.ignoreFilter ||
 				label.toLowerCase().includes(normalizedFilterQuery);

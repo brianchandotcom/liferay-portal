@@ -232,6 +232,8 @@ public class ObjectRelationshipExtensionProvider
 					objectDefinition, objectRelationship, getPrimaryKey(entity),
 					nestedObjectEntry.getId());
 			}
+
+			NestedFieldsSupplier.addFieldName(entry.getKey());
 		}
 	}
 

@@ -554,13 +554,25 @@ public class SystemObjectRelatedObjectEntriesTest {
 					})
 			).build());
 
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(1), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_2);
+
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			_getLocation(
 				jsonObject.getString("id"), objectRelationship.getName()),
 			Http.Method.GET);
 
-		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
 			objectRelationship.getName());
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
@@ -602,13 +614,25 @@ public class SystemObjectRelatedObjectEntriesTest {
 					})
 			).build());
 
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
+
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_1);
+		_assertObjectEntryField(
+			(JSONObject)nestedObjectEntriesJSONArray.get(1), _OBJECT_FIELD_NAME,
+			_NEW_OBJECT_FIELD_VALUE_2);
+
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			_getLocation(
 				jsonObject.getString("id"), objectRelationship.getName()),
 			Http.Method.GET);
 
-		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
 			objectRelationship.getName());
 
 		Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());

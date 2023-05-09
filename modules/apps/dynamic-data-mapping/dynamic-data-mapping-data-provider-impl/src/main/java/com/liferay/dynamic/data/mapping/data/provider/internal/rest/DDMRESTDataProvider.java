@@ -64,8 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -285,7 +284,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, String> pathInputParametersMap, String query,
 		Map<String, Object> requestInputParametersMap) {
 
-		Map<String, String> allParametersMap = new HashMap<>();
+		Map<String, String> allParametersMap = new TreeMap<>();
 
 		for (Map.Entry<String, Object> entry :
 				requestInputParametersMap.entrySet()) {
@@ -515,11 +514,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		String ddmDataProviderId, Map<String, String> allParametersMap,
 		String url) {
 
-		Set<Map.Entry<String, String>> entries = new TreeSet<>(
-			Map.Entry.comparingByKey());
-
-		entries.addAll(allParametersMap.entrySet());
-
 		StringBundler sb = new StringBundler((4 * allParametersMap.size()) + 4);
 
 		sb.append(ddmDataProviderId);
@@ -527,14 +521,14 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		sb.append(url);
 		sb.append(StringPool.QUESTION);
 
-		for (Map.Entry<String, String> entry : entries) {
+		for (Map.Entry<String, String> entry : allParametersMap.entrySet()) {
 			sb.append(entry.getKey());
 			sb.append(StringPool.EQUAL);
 			sb.append(entry.getValue());
 			sb.append(StringPool.AMPERSAND);
 		}
 
-		if (!entries.isEmpty()) {
+		if (!allParametersMap.isEmpty()) {
 			sb.setIndex(sb.index() - 1);
 		}
 

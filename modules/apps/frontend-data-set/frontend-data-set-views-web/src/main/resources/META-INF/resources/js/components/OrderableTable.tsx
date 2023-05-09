@@ -36,12 +36,19 @@ interface Action {
 	onClick: Function;
 }
 
+interface ContentRendererProps {
+	item: any;
+}
+
+interface Field {
+	contentRenderer?: React.FC<ContentRendererProps>;
+	label: string;
+	name: string;
+}
+
 interface OrderableTableRowProps {
 	actions?: Array<Action>;
-	fields: Array<{
-		label: string;
-		name: string;
-	}>;
+	fields: Array<Field>;
 	index: number;
 	item: any;
 	onOrderChange: Function;
@@ -131,6 +138,18 @@ const OrderableTableRow = ({
 			</ClayTable.Cell>
 
 			{fields.map((field) => {
+				if (field.contentRenderer) {
+					const ContentRenderer = field.contentRenderer as React.FC<
+						ContentRendererProps
+					>;
+
+					return (
+						<ClayTable.Cell key={field.name}>
+							<ContentRenderer item={item} />
+						</ClayTable.Cell>
+					);
+				}
+
 				const itemFieldValue = String(item[field.name]);
 
 				const fuzzyMatch = fuzzy.match(
@@ -200,10 +219,7 @@ const OrderableTableRow = ({
 interface OrderableTableProps {
 	actions?: Array<Action>;
 	disableSave?: boolean;
-	fields: Array<{
-		label: string;
-		name: string;
-	}>;
+	fields: Array<Field>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;
@@ -242,9 +258,13 @@ const OrderableTable = ({
 		setItems(
 			query
 				? initialItems.filter((item) =>
-						fields.some((field) =>
-							String(item[field.name]).match(regexp)
-						)
+						fields.some((field) => {
+							if (field.contentRenderer) {
+								return false;
+							}
+
+							return String(item[field.name]).match(regexp);
+						})
 				  ) || []
 				: initialItems
 		);

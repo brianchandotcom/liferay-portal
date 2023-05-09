@@ -104,7 +104,6 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				</div>
 
 				<div class="sidebar-body">
-
 					<div class="sheet-row">
 						<clay:tabs
 							tabsItems="<%= siteAdminDisplayContext.getTabsItem() %>"
@@ -154,19 +153,28 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 									<c:if test="<%= siteAdminDisplayContext.getUsersCount(group) > 0 %>">
 										<div>
-											<aui:a href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount(group) == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(group), false) %>' />
+											<clay:link
+												href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>'
+												label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUsersCount(group) == 1) ? "x-user" : "x-users", siteAdminDisplayContext.getUsersCount(group), false) %>'
+											/>
 										<div>
 									</c:if>
 
 									<c:if test="<%= siteAdminDisplayContext.getOrganizationsCount(group) > 0 %>">
 										<div>
-											<aui:a href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getOrganizationsCount(group) == 1) ? "x-organization" : "x-organizations", siteAdminDisplayContext.getOrganizationsCount(group), false) %>' />
+											<clay:link
+												href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>'
+												label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getOrganizationsCount(group) == 1) ? "x-organization" : "x-organizations", siteAdminDisplayContext.getOrganizationsCount(group), false) %>'
+											/>
 										</div>
 									</c:if>
 
 									<c:if test="<%= siteAdminDisplayContext.getUserGroupsCount(group) > 0 %>">
 										<div>
-											<aui:a href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUserGroupsCount(group) == 1) ? "x-user-groups" : "x-user-groups", siteAdminDisplayContext.getUserGroupsCount(group), false) %>' />
+											<clay:link
+												href='<%= HttpComponentsUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>'
+												label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getUserGroupsCount(group) == 1) ? "x-user-groups" : "x-user-groups", siteAdminDisplayContext.getUserGroupsCount(group), false) %>'
+											/>
 										</div>
 									</c:if>
 								</li>
@@ -181,7 +189,10 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 									</liferay-portlet:renderURL>
 
 									<li class="sidebar-dd">
-										<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getPendingRequestsCount(group) == 1) ? "x-request-pending" : "x-requests-pending", siteAdminDisplayContext.getPendingRequestsCount(group), false) %>' />
+										<clay:link
+											href="<%= viewMembershipRequestsURL %>"
+											label='<%= LanguageUtil.format(request, (siteAdminDisplayContext.getPendingRequestsCount(group) == 1) ? "x-request-pending" : "x-requests-pending", siteAdminDisplayContext.getPendingRequestsCount(group), false) %>'
+										/>
 									</li>
 								</c:if>
 

@@ -1905,9 +1905,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setTitleMap(titleMap);
 		role.setDescriptionMap(descriptionMap);
 		role.setSubtype(subtype);
+
+		role = rolePersistence.update(role);
+
+		// Expando
+
 		role.setExpandoBridgeAttributes(serviceContext);
 
-		return rolePersistence.update(role);
+		return role;
 	}
 
 	@Override

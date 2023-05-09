@@ -3795,11 +3795,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				});
 		}
 
+		group = groupPersistence.update(group);
+
+		// Expando
+
 		if ((serviceContext != null) && group.isSite()) {
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
-
-		group = groupPersistence.update(group);
 
 		if (group.hasStagingGroup() && !group.isStagedRemotely()) {
 			Group stagingGroup = group.getStagingGroup();

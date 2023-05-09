@@ -712,9 +712,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolder.setParentFolderId(parentFolderId);
 			dlFolder.setTreePath(dlFolder.buildTreePath());
-			dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 			dlFolder = dlFolderPersistence.update(dlFolder);
+
+			// Expando
+
+			dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 			rebuildTree(
 				dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
@@ -994,11 +997,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolder.setName(name);
 			dlFolder.setDescription(description);
-			dlFolder.setExpandoBridgeAttributes(serviceContext);
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 			dlFolder.setRestrictionType(restrictionType);
 
 			dlFolder = dlFolderPersistence.update(dlFolder);
+
+			// Expando
+
+			dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 			// File entry types
 

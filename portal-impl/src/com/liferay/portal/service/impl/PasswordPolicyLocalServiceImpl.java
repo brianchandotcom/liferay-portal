@@ -385,9 +385,14 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setRequireUnlock(lockoutDuration == 0);
 		passwordPolicy.setResetFailureCount(resetFailureCount);
 		passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+
+		passwordPolicy = passwordPolicyPersistence.update(passwordPolicy);
+
+		// Expando
+
 		passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 
-		return passwordPolicyPersistence.update(passwordPolicy);
+		return passwordPolicy;
 	}
 
 	protected void validate(long passwordPolicyId, long companyId, String name)

@@ -1020,9 +1020,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 		userGroup.setName(name);
 		userGroup.setDescription(description);
-		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroup = userGroupPersistence.update(userGroup);
+
+		// Expando
+
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		// Indexer
 

@@ -2079,9 +2079,11 @@ public class OrganizationLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxHeight(),
 			_userFileUploadsSettings.getImageMaxWidth());
 
-		organization.setExpandoBridgeAttributes(serviceContext);
-
 		organization = organizationPersistence.update(organization);
+
+		// Expando
+
+		organization.setExpandoBridgeAttributes(serviceContext);
 
 		// Group
 

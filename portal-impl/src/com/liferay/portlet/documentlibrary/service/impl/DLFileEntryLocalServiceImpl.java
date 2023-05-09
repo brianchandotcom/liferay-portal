@@ -3479,11 +3479,13 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusByUserName(user.getFullName());
 		dlFileVersion.setStatusDate(statusDate);
 
+		dlFileVersion = _dlFileVersionPersistence.update(dlFileVersion);
+
+		// Expando
+
 		ExpandoBridgeUtil.setExpandoBridgeAttributes(
 			dlFileVersion.getExpandoBridge(), dlFileVersion.getExpandoBridge(),
 			serviceContext);
-
-		dlFileVersion = _dlFileVersionPersistence.update(dlFileVersion);
 
 		if ((fileEntryTypeId > 0) && (ddmFormValuesMap != null)) {
 			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(

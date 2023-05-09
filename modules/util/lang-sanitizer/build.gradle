@@ -17,7 +17,7 @@ deploy {
 		delete liferay.deployDir
 
 		copy {
-			from (configurations.compile)
+			from (configurations.compileClasspath)
 			into liferay.deployDir
 		}
 	}
@@ -33,7 +33,7 @@ processResources {
 
 processSanitizerConfiguration {
 	from {
-		File antiSamyJarFile = configurations.compile.find {
+		File antiSamyJarFile = configurations.compileClasspath.find {
 			it.name.startsWith "antisamy"
 		}
 

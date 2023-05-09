@@ -81,7 +81,7 @@ copyHotFixZip {
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	from configurations.compileClasspath
 	from jar
 	into gradleTestDependenciesDir
 }

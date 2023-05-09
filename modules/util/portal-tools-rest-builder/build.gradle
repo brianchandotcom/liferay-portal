@@ -31,7 +31,7 @@ dependencies {
 }
 
 deployDependencies {
-	from (configurations.compile) {
+	from (configurations.compileClasspath) {
 		include "checkstyle-*.jar"
 	}
 

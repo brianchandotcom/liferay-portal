@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -82,7 +83,9 @@ public class BatchEngineImportTaskComponent {
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(),
 				batchEngineUnitConfiguration.getParameters(),
-				batchEngineUnitConfiguration.getTaskItemDelegateName());
+				batchEngineUnitConfiguration.getTaskItemDelegateName(),
+				_vulcanBatchEngineTaskItemDelegateAdaptorFactory.create(
+					_vulcanBatchEngineTaskItemDelegate.getValue()));
 
 		executorService.submit(
 			() -> {
@@ -121,5 +124,9 @@ public class BatchEngineImportTaskComponent {
 	@SuppressWarnings("rawtypes")
 	private Map.Entry<Map<String, Object>, VulcanBatchEngineTaskItemDelegate>
 		_vulcanBatchEngineTaskItemDelegate;
+
+	@Reference
+	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
+		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

@@ -159,77 +159,6 @@
 		}
 	}
 
-	.lfr-permission-navigation-container {
-		.search {
-			margin-bottom: 20px;
-			width: 100%;
-
-			> .form-control {
-				background-color: #fff;
-			}
-		}
-
-		.lfr-permission-navigation {
-			overflow: auto;
-			width: 100%;
-
-			.permission-navigation-item-header {
-				.permission-navigation-item-header-icon {
-					display: inline-block;
-					height: 10px;
-					width: 9px;
-				}
-			}
-
-			.selected {
-				font-weight: bold;
-			}
-
-			.toggler-header-collapsed {
-				.icon-caret-down {
-					display: none;
-				}
-			}
-
-			.toggler-header-expanded {
-				.icon-caret-right {
-					display: none;
-				}
-			}
-
-			.permission-navigation-item-header {
-				cursor: pointer;
-				margin: 0.5em;
-			}
-
-			.permission-navigation-item-content
-				.permission-navigation-item-container {
-				cursor: pointer;
-				line-height: 1.8em;
-				overflow: hidden;
-				text-overflow: ellipsis;
-
-				:hover {
-					background-color: rgba(0, 0, 0, 0.04);
-					border-radius: 4px;
-					font-weight: bold;
-				}
-			}
-
-			.permission-navigation-item-summary {
-				margin: 0.5em 0 1.5em 0.5em;
-			}
-
-			.permission-navigation-section .permission-navigation-section {
-				margin-left: 1em;
-			}
-		}
-
-		.toggler-content-wrapper {
-			margin-left: 16px;
-		}
-	}
-
 	.user-status-selector {
 		margin-top: 5px;
 
@@ -269,16 +198,6 @@
 
 	.lfr-asset-summary img.avatar {
 		max-width: 210px;
-	}
-
-	.toggler-header-collapsed {
-		.collapse-icon-closed {
-			display: inline-block;
-		}
-
-		.collapse-icon-open {
-			display: none;
-		}
 	}
 }
 

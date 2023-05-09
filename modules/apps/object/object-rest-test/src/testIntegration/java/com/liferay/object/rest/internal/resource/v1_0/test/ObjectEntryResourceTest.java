@@ -3913,6 +3913,35 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testPostCustomObjectEntryWithEmptyNestedCustomObjectEntriesInOneToManyRelationship()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		JSONObject objectEntryJSONObject = JSONUtil.put(
+			_objectRelationship1.getName(), JSONFactoryUtil.createJSONArray());
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			objectEntryJSONObject.toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			_objectRelationship1.getName());
+
+		Assert.assertEquals(0, jsonArray.length());
+	}
+
+	@Test
 	public void testPostCustomObjectEntryWithInvalidNestedCustomObjectEntries()
 		throws Exception {
 

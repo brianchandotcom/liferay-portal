@@ -755,10 +755,6 @@ public class DefaultObjectEntryManagerImpl
 							relatedObjectDefinition.getCompanyId(),
 							dtoConverterContext.getUser(), nestedObjectEntry));
 				}
-
-				if (!nestedObjectEntries.isEmpty()) {
-					NestedFieldsSupplier.addFieldName(entry.getKey());
-				}
 			}
 			else {
 				ObjectEntryManager objectEntryManager =
@@ -782,10 +778,10 @@ public class DefaultObjectEntryManagerImpl
 						objectDefinition, objectRelationship, primaryKey,
 						nestedObjectEntry.getId());
 				}
+			}
 
-				if (!nestedObjectEntries.isEmpty()) {
-					NestedFieldsSupplier.addFieldName(entry.getKey());
-				}
+			if (properties.containsKey(entry.getKey())) {
+				NestedFieldsSupplier.addFieldName(entry.getKey());
 			}
 		}
 

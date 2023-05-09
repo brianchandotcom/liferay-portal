@@ -182,7 +182,6 @@ function EmailsList({dataLoading, frontendDataSetContext, items}) {
 }
 
 EmailsList.propTypes = {
-	dataRenderers: PropTypes.object,
 	frontendDataSetContext: PropTypes.any,
 	items: PropTypes.array,
 };

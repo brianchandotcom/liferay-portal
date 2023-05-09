@@ -65,7 +65,6 @@ function Timeline({frontendDataSetContext, items}) {
 }
 
 Timeline.propTypes = {
-	dataRenderers: PropTypes.object,
 	frontendDataSetContext: PropTypes.any,
 	items: PropTypes.array,
 };

@@ -669,15 +669,6 @@ const productsDataSetProps = {
 						label: 'Product Type',
 					},
 					{
-						contentRenderer: 'list',
-						details: {
-							multipleItemsLabel: 'Multiple-skus',
-						},
-						fieldName: 'skus',
-						label: 'Sku',
-						labelKey: 'sku',
-					},
-					{
 						fieldName: ['catalog', 'name'],
 						label: 'Catalog',
 					},

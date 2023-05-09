@@ -18,7 +18,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
@@ -75,12 +74,6 @@ public class ServletContextUtil {
 		getCommerceOrderTypeLocalService() {
 
 		return _servletContextUtil._getCommerceOrderTypeLocalService();
-	}
-
-	public static CommerceProductPriceCalculation
-		getCommerceProductPriceCalculation() {
-
-		return _servletContextUtil._getCommerceProductPriceCalculation();
 	}
 
 	public static ConfigurationProvider getConfigurationProvider() {
@@ -184,13 +177,6 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setCommerceProductPriceCalculation(
-		CommerceProductPriceCalculation commerceProductPriceCalculation) {
-
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
-	}
-
-	@Reference(unbind = "-")
 	protected void setConfigurationProvider(
 		ConfigurationProvider configurationProvider) {
 
@@ -282,12 +268,6 @@ public class ServletContextUtil {
 		return _commerceOrderTypeLocalService;
 	}
 
-	private CommerceProductPriceCalculation
-		_getCommerceProductPriceCalculation() {
-
-		return _commerceProductPriceCalculation;
-	}
-
 	private ConfigurationProvider _getConfigurationProvider() {
 		return _configurationProvider;
 	}
@@ -340,7 +320,6 @@ public class ServletContextUtil {
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 	private PortletResourcePermission _commerceOrderPortletResourcePermission;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
-	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private ConfigurationProvider _configurationProvider;
 	private CPCompareHelper _cpCompareHelper;
 	private CPContentHelper _cpContentHelper;

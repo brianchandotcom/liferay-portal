@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "NAVIGATION-ACCOUNT-MENU",
+	"name": "Navigation Account Menu",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

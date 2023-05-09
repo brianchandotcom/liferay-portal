@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext",
+	"ddmTemplateKey": "SOLUTIONS-SEARCH-RESULTS-(OLD)",
+	"name": "Solutions Search Results (old)",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

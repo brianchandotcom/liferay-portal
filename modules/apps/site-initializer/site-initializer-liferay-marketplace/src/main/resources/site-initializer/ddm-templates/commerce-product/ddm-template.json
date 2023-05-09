@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "COMMERCE-PRODUCT",
+	"name": "Commerce Product",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

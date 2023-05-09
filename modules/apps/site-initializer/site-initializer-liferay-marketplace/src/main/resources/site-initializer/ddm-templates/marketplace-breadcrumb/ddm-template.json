@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry",
+	"ddmTemplateKey": "MARKETPLACE-BREADCRUMB",
+	"name": "marketplace_breadcrumb",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

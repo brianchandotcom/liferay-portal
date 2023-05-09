@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.sql.SQLException;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -50,16 +46,8 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the portal instances local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PortalInstancesLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public void addCompanyId(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCompanyId(HttpServletRequest httpServletRequest);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCompanyIds();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCompanyIdsBySQL() throws SQLException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDefaultCompanyId();
@@ -71,31 +59,9 @@ public interface PortalInstancesLocalService extends BaseLocalService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public String[] getWebIds();
-
 	public void initializePortalInstance(
 			long companyId, String siteInitializerKey)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isAutoLoginIgnoreHost(String host);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isAutoLoginIgnorePath(String path);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isCompanyActive(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isVirtualHostsIgnoreHost(String host);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isVirtualHostsIgnorePath(String path);
-
-	public void reload();
-
-	public void removeCompany(long companyId);
 
 	@Clusterable
 	public void synchronizePortalInstances();

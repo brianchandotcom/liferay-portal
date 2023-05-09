@@ -73,6 +73,8 @@ public class CommerceOrderConstants {
 
 	public static final int ORDER_STATUS_PROCESSING = 10;
 
+	public static final int ORDER_STATUS_QUOTE_PROCESSED = 22;
+
 	public static final int ORDER_STATUS_QUOTE_REQUESTED = 21;
 
 	public static final int ORDER_STATUS_REFUNDED = 17;
@@ -175,6 +177,9 @@ public class CommerceOrderConstants {
 		}
 		else if (orderStatus == ORDER_STATUS_PARTIALLY_SHIPPED) {
 			return "partially-shipped";
+		}
+		else if (orderStatus == ORDER_STATUS_QUOTE_PROCESSED) {
+			return "quote-processed";
 		}
 		else if (orderStatus == ORDER_STATUS_QUOTE_REQUESTED) {
 			return "quote-requested";

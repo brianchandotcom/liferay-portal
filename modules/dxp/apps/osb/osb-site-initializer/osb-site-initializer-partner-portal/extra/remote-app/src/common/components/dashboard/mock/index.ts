@@ -20,15 +20,15 @@ export const partnerLevelProperties: IObject = {
 		growthARR: 125000,
 		newProjectExistingBusiness: 2,
 		partnerMarketingUser: 1,
-		partnerSalesUsers: 3,
+		partnerSalesUser: 3,
 	},
 	platinum: {
 		partnerMarketingUser: 1,
-		partnerSalesUsers: 5,
+		partnerSalesUser: 5,
 	},
 	silver: {
 		partnerMarketingUser: 1,
-		partnerSalesUsers: 1,
+		partnerSalesUser: 1,
 	},
 };
 

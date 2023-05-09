@@ -29,7 +29,7 @@ interface CheckedProperties {
 
 interface Headcount {
 	partnerMarketingUser?: number;
-	partnerSalesUsers?: number;
+	partnerSalesUser?: number;
 }
 
 const LevelChart = () => {
@@ -134,7 +134,7 @@ const LevelChart = () => {
 
 							const countHeadcount = {
 								partnerMarketingUser: 0,
-								partnerSalesUsers: 0,
+								partnerSalesUser: 0,
 							};
 
 							accountUsers.forEach((user: any) => {
@@ -155,7 +155,7 @@ const LevelChart = () => {
 											PartnerRoles.SALES_USER
 									)
 								) {
-									countHeadcount['partnerSalesUsers'] += 1;
+									countHeadcount['partnerSalesUser'] += 1;
 								}
 							});
 
@@ -164,10 +164,10 @@ const LevelChart = () => {
 									partnerLevelProperties[
 										accountData.partnerLevel
 									].partnerMarketingUser &&
-								countHeadcount.partnerSalesUsers >=
+								countHeadcount.partnerSalesUser >=
 									partnerLevelProperties[
 										accountData.partnerLevel
-									].partnerSalesUsers
+									].partnerSalesUser
 							) {
 								checkedProperties['headcount'] = true;
 							}

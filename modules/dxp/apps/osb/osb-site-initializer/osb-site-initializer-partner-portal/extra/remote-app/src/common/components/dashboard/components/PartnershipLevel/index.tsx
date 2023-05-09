@@ -132,8 +132,8 @@ const PartnershipLevel = ({
 			return `${headcount.partnerMarketingUser}/${
 				partnerLevelProperties[data.partnerLevel].partnerMarketingUser
 			}
-             Marketing / ${headcount.partnerSalesUsers}/${
-				partnerLevelProperties[data.partnerLevel].partnerSalesUsers
+             Marketing / ${headcount.partnerSalesUser}/${
+				partnerLevelProperties[data.partnerLevel].partnerSalesUser
 			} Sales`;
 		}
 

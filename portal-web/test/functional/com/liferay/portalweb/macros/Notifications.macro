@@ -50,6 +50,10 @@ definition {
 		MenuItem.click(menuItem = ${filterValues});
 	}
 
+	macro goToNotificationQueueAdmin {
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet");
+	}
+
 	macro gotoNotifications {
 		if (IsElementPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT")) {
 			Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
@@ -70,6 +74,10 @@ definition {
 		if (IsElementPresent(locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT")) {
 			Click(locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT");
 		}
+	}
+
+	macro goToNotificationTemplateAdmin {
+		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_notification_web_internal_portlet_NotificationTemplatesPortlet");
 	}
 
 	macro markAsReadViaManagementBar {
@@ -104,14 +112,6 @@ definition {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
 			value1 = ${contentBody});
-	}
-
-	macro notificationQueueAdmin {
-		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet");
-	}
-
-	macro notificationTemplateAdmin {
-		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_notification_web_internal_portlet_NotificationTemplatesPortlet");
 	}
 
 	macro removeNotificationsViaManagementBar {

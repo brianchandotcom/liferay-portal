@@ -1558,9 +1558,7 @@ public class ObjectEntryLocalServiceImpl
 		sb.append(", ");
 		sb.append(
 			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
-		sb.append(", ");
-		sb.append(
-			DynamicObjectDefinitionLocalizationTable.LANGUAGE_ID_COLUMN_NAME);
+		sb.append(", languageId");
 
 		int columnsCount = 3;
 

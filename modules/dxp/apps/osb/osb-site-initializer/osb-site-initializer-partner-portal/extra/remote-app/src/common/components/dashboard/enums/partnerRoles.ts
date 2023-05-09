@@ -11,5 +11,5 @@
 
 export enum PartnerRoles {
 	MARKETING_USER = '[Account] Partner Marketing User (PMU)',
-	SALES_USERS = '[Account] Partner Sales Users (PSU)',
+	SALES_USERS = '[Account] Partner Sales User (PSU)',
 }

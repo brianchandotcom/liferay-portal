@@ -42,8 +42,8 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
@@ -147,10 +147,9 @@ public class ObjectFieldLocalServiceImpl
 
 		if (localized) {
 			runSQL(
-				DynamicObjectDefinitionLocalizationTable.
-					getAlterTableAddColumnSQL(
-						objectDefinition.getL10nDBTableName(),
-						objectField.getDBColumnName(), dbType));
+				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
+					objectDefinition.getL10nDBTableName(),
+					objectField.getDBColumnName(), dbType));
 		}
 		else if (!objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
@@ -158,7 +157,7 @@ public class ObjectFieldLocalServiceImpl
 					 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
 
 			runSQL(
-				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
+				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), dbType));
 
 			if (GetterUtil.getBoolean(

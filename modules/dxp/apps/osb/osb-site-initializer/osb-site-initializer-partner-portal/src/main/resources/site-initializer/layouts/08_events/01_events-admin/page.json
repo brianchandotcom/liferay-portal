@@ -6,57 +6,77 @@
 	},
 	"permissions": [
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [],
+			"actionIds": [
+			],
 			"roleName": "Site Member",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Partner Manager (PM)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Partner Marketing User (PMU)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Partner Sales Users (PSU)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Partner Technical User (PTU)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Channel Account Manager (CAM)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Channel Operations Manager (COM)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Channel Marketing Manager (CMM)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Channel Marketing Director (CMD)",
 			"scope": 4
 		},
 		{
-			"actionIds": ["VIEW"],
+			"actionIds": [
+				"VIEW"
+			],
 			"roleName": "Channel Finance Manager (CFM)",
 			"scope": 4
 		}

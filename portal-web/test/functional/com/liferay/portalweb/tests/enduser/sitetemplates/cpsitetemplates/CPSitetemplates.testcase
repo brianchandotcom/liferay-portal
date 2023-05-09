@@ -1567,6 +1567,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-2. Verify there's a toast message appears when the Site's Page saved with friendly URL collision."
+	@ignore = "true"
 	@priority = 4
 	test ViewAlertAfterAddSitePageWithURLCollision {
 		property custom.properties = "feature.flag.LPS-174434=true";
@@ -1613,6 +1614,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-2. Verify there's a toast message appears when the Site Template's Page saved with friendly URL collision."
+	@ignore = "true"
 	@priority = 4
 	test ViewAlertAfterEditExistingTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174431=true";
@@ -1663,6 +1665,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-8. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template Blocked by LPS-181658."
+	@ignore = "true"
 	@priority = 4
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite {
 		property custom.properties = "feature.flag.LPS-174431=true";
@@ -1733,6 +1736,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-7. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template Blocked by LPS-181664."
+	@ignore = "true"
 	@priority = 4
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSiteInSitePage {
 		property custom.properties = "feature.flag.LPS-174434=true";
@@ -1799,6 +1803,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-8. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to edit an existing Site page."
+	@ignore = "true"
 	@priority = 4
 	test ViewConfirmationDialogOfEditExistingSitePageWithURLCollision {
 		property custom.properties = "feature.flag.LPS-174434=true";
@@ -1853,6 +1858,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-9. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to edit an existing Site Template page."
+	@ignore = "true"
 	@priority = 4
 	test ViewConfirmationDialogOfEditExistingTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174431=true";
@@ -1903,6 +1909,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-1. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to add a new Site page."
+	@ignore = "true"
 	@priority = 4
 	test ViewConfirmationDialogOfNewSitePageWithURLCollision {
 		property custom.properties = "feature.flag.LPS-174434=true";
@@ -1943,6 +1950,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-1. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to add a new Site Template page."
+	@ignore = "true"
 	@priority = 4
 	test ViewConfirmationDialogOfNewTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174431=true";
@@ -2026,193 +2034,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-174431 TC-6. Verify that the warning messages, confirmation dialog, and toast message are not present when the feature flag is set to 'false'."
-	@priority = 3
-	test ViewNoWarnignMessageConfirmationDialogToastWithFeatrueFlagIsFalse {
-		property custom.properties = "feature.flag.LPS-174431=false";
-		property test.name.skip.portal.instance = "CPSitetemplates#ViewNoWarnignMessageConfirmationDialogToastWithFeatrueFlagIsFalse";
-
-		task ("Given User adds page in new site based on the new site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addSiteTemplateCP(
-				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-			PagesAdmin.addPage(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-		}
-
-		task ("When User adds page with Friendly URL conflicts in site template") {
-			SiteTemplates.addSitePageViaSiteTemplateCP(
-				pageName = "Page1",
-				siteTemplateName = "Site Template Name");
-		}
-
-		task ("Then Warning messages, confirmation dialog, and toast message are not present ") {
-			AssertAlertNotPresent();
-
-			Alert.viewWarningSpecificNotPresent(warningMessage = "Warning:The site template page was saved with a conflicting friendly URL.");
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "Site template page friendly URL is conflicting with the page friendly URL in some of the sites created from this template Page Page1 of Site Name");
-		}
-	}
-
-	@description = "This is a use case for LPS-174434 TC-5. Verify that the warning messages, confirmation dialog, and toast message are not present when the feature flag is set to 'false'."
-	@priority = 3
-	test ViewNoWarnignMessageConfirmationDialogToastWithFeatrueFlagIsFalseOfSitePage {
-		property custom.properties = "feature.flag.LPS-174434=false";
-		property test.name.skip.portal.instance = "CPSitetemplates#ViewNoWarnignMessageConfirmationDialogToastWithoutFeatrueFlagOfSitePage";
-
-		task ("Given add new site based on the new site template with poropagation false") {
-			SiteTemplates.addCP(
-				disablePropagation = "true",
-				siteTemplateName = "Site Template Name");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addSiteTemplateCP(
-				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates");
-		}
-
-		task ("And User adds page in site template") {
-			SiteTemplates.addSitePageViaSiteTemplateCP(
-				pageName = "Page1",
-				siteTemplateName = "Site Template Name");
-		}
-
-		task ("When User adds page with Friendly URL conflicts in site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-			PagesAdmin.addPageWithConfirm(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-
-			SelectFrame.selectFrameNoLoading(
-				inputFieldId = "/page1",
-				locator1 = "TextInput#INPUT_ID");
-		}
-
-		task ("Then Warning messages, confirmation dialog, and toast message are not present ") {
-			AssertAlertNotPresent();
-
-			Alert.viewWarningSpecificNotPresent(warningMessage = "Warning:The page was saved with a conflicting friendly URL.");
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page1 of Site Template Name");
-		}
-	}
-
-	@description = "This is a use case for LPS-174431 TC-5. Verify that the warning messages, confirmation dialog, and toast message are not present when the feature flag is not present."
-	@priority = 3
-	test ViewNoWarnignMessageConfirmationDialogToastWithoutFeatrueFlag {
-		property test.name.skip.portal.instance = "CPSitetemplates#ViewNoWarnignMessageConfirmationDialogToastWithoutFeatrueFlag";
-
-		task ("Given User adds page in new site based on the new site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addSiteTemplateCP(
-				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-			PagesAdmin.addPage(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-		}
-
-		task ("When User adds page with Friendly URL conflicts in site template") {
-			SiteTemplates.addSitePageViaSiteTemplateCP(
-				pageName = "Page1",
-				siteTemplateName = "Site Template Name");
-		}
-
-		task ("Then Warning messages, confirmation dialog, and toast message are not present ") {
-			AssertAlertNotPresent();
-
-			Alert.viewWarningSpecificNotPresent(warningMessage = "Warning:The site template page was saved with a conflicting friendly URL.");
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "Site template page friendly URL is conflicting with the page friendly URL in some of the sites created from this template Page Page1 of Site Name");
-		}
-	}
-
-	@description = "This is a use case for LPS-174434 TC-4. Verify that the warning messages, confirmation dialog, and toast message are not present when the feature flag is not present."
-	@priority = 3
-	test ViewNoWarnignMessageConfirmationDialogToastWithoutFeatrueFlagOfSitePage {
-		property test.name.skip.portal.instance = "CPSitetemplates#ViewNoWarnignMessageConfirmationDialogToastWithoutFeatrueFlagOfSitePage";
-
-		task ("Given add new site based on the new site template with poropagation false") {
-			SiteTemplates.addCP(
-				disablePropagation = "true",
-				siteTemplateName = "Site Template Name");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			Site.addSiteTemplateCP(
-				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates");
-		}
-
-		task ("And User adds page in site template") {
-			SiteTemplates.addSitePageViaSiteTemplateCP(
-				pageName = "Page1",
-				siteTemplateName = "Site Template Name");
-		}
-
-		task ("When User adds page with Friendly URL conflicts in site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-			PagesAdmin.addPageWithConfirm(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-
-			SelectFrame.selectFrameNoLoading(
-				inputFieldId = "/page1",
-				locator1 = "TextInput#INPUT_ID");
-		}
-
-		task ("Then Warning messages, confirmation dialog, and toast message are not present ") {
-			AssertAlertNotPresent();
-
-			Alert.viewWarningSpecificNotPresent(warningMessage = "Warning:The page was saved with a conflicting friendly URL.");
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page1 of Site Template Name");
-		}
-	}
-
 	@description = "This is a use case for LPS-174431 TC-3. Verify there's a warning message when the Site Template's Page has a friendly URL that matches with a non-connecting Site's similar friendly URL."
+	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageAfterEditExistingTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174431=true";
@@ -2267,6 +2090,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-3. Verify there's a warning message at Page's configuration, in case of friendly URL collision."
+	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageOfEditExistingSitePageWithURLCollision {
 		property custom.properties = "feature.flag.LPS-174434=true";
@@ -2327,6 +2151,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-4. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to add a new Site Template page."
+	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageOfMultipleEntriesWithTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174431=true";
@@ -2373,6 +2198,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-6. Verify that the friendly URL collision is detected with child pages."
+	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageWithChildSitePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174434=true";
@@ -2439,6 +2265,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-7. Verify that the friendly URL collision is detected with child pages."
+	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageWithChildTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174431=true";

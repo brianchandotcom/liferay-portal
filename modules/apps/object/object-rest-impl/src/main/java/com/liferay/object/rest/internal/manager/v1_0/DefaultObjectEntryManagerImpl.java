@@ -755,6 +755,10 @@ public class DefaultObjectEntryManagerImpl
 							relatedObjectDefinition.getCompanyId(),
 							dtoConverterContext.getUser(), nestedObjectEntry));
 				}
+
+				if (!nestedObjectEntries.isEmpty()) {
+					NestedFieldsSupplier.addFieldName(entry.getKey());
+				}
 			}
 			else {
 				ObjectEntryManager objectEntryManager =

@@ -515,6 +515,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		}
 	}
 
+	@FeatureFlags("LPS-165819")
 	@Test
 	public void testPostCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
@@ -550,6 +551,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 	}
 
+	@FeatureFlags("LPS-165819")
 	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
@@ -1140,6 +1142,22 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"code"
 			));
 
+		if (manyToOne) {
+			_assertSystemObjectEntry(
+				jsonObject.getJSONObject(objectRelationship.getName()),
+				_SYSTEM_OBJECT_FIELD_NAME_1, _SYSTEM_OBJECT_FIELD_VALUE,
+				userAccount);
+		}
+		else {
+			JSONArray relatedSystemObjectEntriesJSONArray =
+				jsonObject.getJSONArray(objectRelationship.getName());
+
+			_assertSystemObjectEntry(
+				relatedSystemObjectEntriesJSONArray.getJSONObject(0),
+				_SYSTEM_OBJECT_FIELD_NAME_1, _SYSTEM_OBJECT_FIELD_VALUE,
+				userAccount);
+		}
+
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
@@ -1209,7 +1227,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		String systemObjectFieldValue = RandomTestUtil.randomString();
 
-		HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invoke(
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
@@ -1219,6 +1237,22 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 				customObjectEntryId),
 			Http.Method.PUT);
+
+		if (manyToOne) {
+			_assertSystemObjectEntry(
+				jsonObject.getJSONObject(objectRelationship.getName()),
+				_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
+				putUserAccount);
+		}
+		else {
+			JSONArray relatedSystemObjectEntriesJSONArray =
+				jsonObject.getJSONArray(objectRelationship.getName());
+
+			_assertSystemObjectEntry(
+				relatedSystemObjectEntriesJSONArray.getJSONObject(0),
+				_SYSTEM_OBJECT_FIELD_NAME_2, systemObjectFieldValue,
+				putUserAccount);
+		}
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();

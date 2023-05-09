@@ -19,7 +19,27 @@ interface IField {
 	name: string;
 	type: string;
 }
-export declare function getFields(
-	fdsView: FDSViewType
-): Promise<IField[] | undefined>;
+export declare function getFields(fdsView: FDSViewType): Promise<IField[]>;
+export interface IPickList {
+	externalReferenceCode: string;
+	id: string;
+	listTypeEntries: IListTypeEntry[];
+	name: string;
+	name_i18n: {
+		[key: string]: string;
+	};
+}
+interface IListTypeEntry {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: {
+		[key: string]: string;
+	};
+}
+export declare function getAllPicklists(
+	page?: number,
+	items?: IPickList[]
+): Promise<IPickList[]>;
 export {};

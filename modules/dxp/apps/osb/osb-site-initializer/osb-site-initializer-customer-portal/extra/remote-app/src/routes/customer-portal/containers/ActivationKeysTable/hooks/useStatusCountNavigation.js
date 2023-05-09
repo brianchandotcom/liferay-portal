@@ -24,6 +24,16 @@ export default function useStatusCountNavigation(activationKeys) {
 		if (activationKeys) {
 			const statusCount = activationKeys.reduce(
 				(statusCountAccumulator, activationKey) => {
+					const isNotActivate = FILTER_TYPES.notActivated(
+						activationKey
+					);
+
+					if (isNotActivate) {
+						statusCountAccumulator.notActiveTotalCount = ++statusCountAccumulator.notActiveTotalCount;
+
+						return statusCountAccumulator;
+					}
+
 					const isActivate = FILTER_TYPES.activated(activationKey);
 					if (isActivate) {
 						statusCountAccumulator.activatedTotalCount = ++statusCountAccumulator.activatedTotalCount;
@@ -34,15 +44,6 @@ export default function useStatusCountNavigation(activationKeys) {
 					const isExpired = FILTER_TYPES.expired(activationKey);
 					if (isExpired) {
 						statusCountAccumulator.expiredTotalCount = ++statusCountAccumulator.expiredTotalCount;
-
-						return statusCountAccumulator;
-					}
-
-					const isNotActivate = FILTER_TYPES.notActivated(
-						activationKey
-					);
-					if (isNotActivate) {
-						statusCountAccumulator.notActiveTotalCount = ++statusCountAccumulator.notActiveTotalCount;
 
 						return statusCountAccumulator;
 					}

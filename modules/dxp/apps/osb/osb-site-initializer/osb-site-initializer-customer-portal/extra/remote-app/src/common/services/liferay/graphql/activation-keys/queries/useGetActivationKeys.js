@@ -30,6 +30,7 @@ const GET_ACTIVATION_KEYS = gql`
 				method: "GET"
 			) {
 			items {
+				active
 				complimentary
 				description
 				expirationDate

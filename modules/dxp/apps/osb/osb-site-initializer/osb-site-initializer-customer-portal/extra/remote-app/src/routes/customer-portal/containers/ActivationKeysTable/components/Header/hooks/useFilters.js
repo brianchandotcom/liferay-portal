@@ -20,7 +20,7 @@ export default function useFilters(setFilterTerm, productName, baseFilter) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	useEffect(() => {
-		let initialFilter = `active eq true and ${baseFilter}`;
+		let initialFilter = baseFilter;
 		let hasFilterPill = false;
 
 		if (filters.searchTerm) {
@@ -223,8 +223,7 @@ export default function useFilters(setFilterTerm, productName, baseFilter) {
 					hasFilterPill = true;
 					filtersKeyType.push('maxClusterNodes gt 0');
 				}
-			}
-			else {
+			} else {
 				hasFilterPill = true;
 			}
 

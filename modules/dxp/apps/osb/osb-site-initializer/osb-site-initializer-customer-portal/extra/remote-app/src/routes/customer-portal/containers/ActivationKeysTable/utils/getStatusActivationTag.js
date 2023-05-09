@@ -14,10 +14,12 @@ export function getStatusActivationTag(activationKey) {
 	let activationStatus = ACTIVATION_STATUS.activated;
 	const now = new Date();
 
-	if (now < new Date(activationKey.startDate)) {
+	if (
+		activationKey.active === false ||
+		now < new Date(activationKey.startDate)
+	) {
 		activationStatus = ACTIVATION_STATUS.notActivated;
-	}
-	else if (now > new Date(activationKey.expirationDate)) {
+	} else if (now > new Date(activationKey.expirationDate)) {
 		activationStatus = ACTIVATION_STATUS.expired;
 	}
 

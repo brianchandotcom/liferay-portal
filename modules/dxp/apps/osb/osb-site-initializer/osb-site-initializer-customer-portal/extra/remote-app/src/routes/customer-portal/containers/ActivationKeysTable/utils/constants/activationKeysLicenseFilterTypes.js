@@ -10,12 +10,19 @@
  */
 
 export const ACTIVATION_KEYS_LICENSE_FILTER_TYPES = {
-	activated: ({expirationDate, startDate}) => {
+	activated: ({active, expirationDate, startDate}) => {
 		const today = new Date();
 
-		return new Date(startDate) < today && new Date(expirationDate) > today;
+		return (
+			active &&
+			new Date(startDate) < today &&
+			new Date(expirationDate) > today
+		);
 	},
-	all: () => Boolean,
-	expired: ({expirationDate}) => new Date(expirationDate) < new Date(),
-	notActivated: ({startDate}) => new Date(startDate) > new Date(),
+	all: () => true,
+	expired: ({active, expirationDate}) =>
+		active === true && new Date(expirationDate) < new Date(),
+	notActivated: ({active}) => {
+		return active === false;
+	},
 };

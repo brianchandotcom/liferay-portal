@@ -222,6 +222,26 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		return false;
 	}
 
+	/**
+	 * Returns <code>true</code> if the given object is an instance of the type
+	 * handled by this UADDisplay instance.
+	 *
+	 * @param object the object instance
+	 * @return <code>true</code> if the given object is an instance of the type
+	 *         handled by this UADDisplay instance.
+	 */
+	public default boolean isTypeEntity(Object object) {
+		Class<T> typeClass = getTypeClass();
+
+		if (typeClass.isInstance(object) ||
+			typeClass.isAssignableFrom(object.getClass())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public default boolean isUserOwned(T t, long userId) {
 		throw new UnsupportedOperationException();
 	}

@@ -1311,3 +1311,26 @@ This affects anyone calling the `CTSQLModeThreadLocal` class from their code.
 ### Why was this change made?
 
 To resolve [LPS-181233](https://issues.liferay.com/browse/LPS-181233), the value of the `CTSQLModeThreadLocal` must be set from the `portal-kernel` module. Moving the class into the `portal-kernel` module allows it to be referenced as required.
+
+---------------------------------------
+
+## Remove Log4j1 compatibility
+
+- **Date:** 2023-May-9
+- **JIRA Ticket:** [LPS-181002](https://issues.liferay.com/browse/LPS-181002)
+
+### What changed?
+
+Log4j1 config format support is removed.
+
+### Who is affected?
+
+Code that's using Log4j1 config format's config files.
+
+### How should I update my code?
+
+Use Log4j2 strict XML format.
+
+### Why was this change made?
+
+Portal has been using Log4j2. After this change, all log4j config files will use log4j2 config format.

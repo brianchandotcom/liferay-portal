@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
-<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender class="org.apache.log4j.ConsoleAppender" name="CONSOLE">
-		<layout class="org.apache.log4j.EnhancedPatternLayout">
-			<param name="ConversionPattern" value="%-5p [%t][%c{1}:%L] %m%n" />
-		</layout>
-	</appender>
+<Configuration strict="true">
+	<Appenders>
+		<Appender name="CONSOLE" type="Console">
+			<Layout pattern="%-5p [%t][%c{1}:%L] %m%n" type="PatternLayout" />
+		</Appender>
+	</Appenders>
 
-	<root>
-		<priority value="INFO" />
-
-		<appender-ref ref="CONSOLE" />
-	</root>
-</log4j:configuration>
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="CONSOLE" />
+		</Root>
+	</Loggers>
+</Configuration>

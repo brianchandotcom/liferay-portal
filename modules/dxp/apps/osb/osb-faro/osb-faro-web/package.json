@@ -20,7 +20,6 @@
 		"@clayui/loading-indicator": "^3.60.0",
 		"@clayui/modal": "^3.0.0-alpha.1",
 		"@clayui/navigation-bar": "^3.93.0",
-		"@clayui/select": "^3.0.0-alpha.1",
 		"@clayui/table": "^3.0.4",
 		"apollo-boost": "^0.1.28",
 		"apollo-cache-inmemory": "^1.6.5",

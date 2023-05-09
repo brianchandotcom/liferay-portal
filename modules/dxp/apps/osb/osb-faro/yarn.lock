@@ -1524,13 +1524,6 @@
   dependencies:
     "@clayui/icon" "^3.56.0"
 
-"@clayui/select@^3.0.0-alpha.1":
-  version "3.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@clayui/select/-/select-3.0.0-alpha.1.tgz#5e19ae63568dc9e4146f540d6770d8b7acebc0d7"
-  integrity sha512-BkfLU0EOlJAUce9ogPm0yTlvF2p8E445We9BgyIaiUnlx5Yxa1hUDmbv5C3knqZYSetZmFI1FTdsg15o13aVLQ==
-  dependencies:
-    classnames "^2.2.6"
-
 "@clayui/shared@^3.0.0-alpha.1":
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.0.0-alpha.1.tgz#d638ecab5685a32a382dbbb7e5e3de2d8fd3d07c"

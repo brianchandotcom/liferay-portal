@@ -15,6 +15,7 @@
 package com.liferay.segments.item.selector.web.internal;
 
 import com.liferay.item.selector.TableItemView;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -76,16 +77,9 @@ public class SegmentsEntryTableItemView implements TableItemView {
 
 		TextSearchEntry scopeTextSearchEntry = new TextSearchEntry();
 
-		try {
-			scopeTextSearchEntry.setName(
-				LanguageUtil.get(
-					locale,
-					HtmlUtil.escape(_getGroupDescriptiveName(_segmentsEntry))));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
+		scopeTextSearchEntry.setName(
+			LanguageUtil.get(
+				locale, HtmlUtil.escape(_getGroupDescriptiveName())));
 		scopeTextSearchEntry.setCssClass(
 			"table-cell-expand-smaller table-cell-minw-150");
 
@@ -104,13 +98,18 @@ public class SegmentsEntryTableItemView implements TableItemView {
 		return searchEntries;
 	}
 
-	private String _getGroupDescriptiveName(SegmentsEntry segmentsEntry)
-		throws PortalException {
+	private String _getGroupDescriptiveName() {
+		try {
+			Group group = GroupLocalServiceUtil.fetchGroup(
+				_segmentsEntry.getGroupId());
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			segmentsEntry.getGroupId());
+			return group.getDescriptiveName(_themeDisplay.getLocale());
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 
-		return group.getDescriptiveName(_themeDisplay.getLocale());
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

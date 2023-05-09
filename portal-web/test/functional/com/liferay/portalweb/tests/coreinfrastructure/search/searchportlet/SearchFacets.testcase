@@ -286,6 +286,8 @@ definition {
 	@description = "This is a use case for LPS-160922."
 	@priority = 4
 	test AssertDefaultSearchResultsDisplayTemplate {
+		property test.name.skip.portal.instance = "SearchFacets#AssertDefaultSearchResultsDisplayTemplate";
+
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 
 		ApplicationDisplayTemplates.addCP(

@@ -90,7 +90,7 @@ definition {
 				searchAssetType = "Web Content Article");
 		}
 
-		task ("Use dot notation within the Aggregation Field") {
+		task ("Configure the Custom Facet widget aggregation field with the DDM nested field name") {
 			SearchFacetPortlet.configureCustomFacet(aggregationField = "ddmFieldArray.${aggregationField}.ddmFieldValueKeyword_en_US");
 
 			Refresh();

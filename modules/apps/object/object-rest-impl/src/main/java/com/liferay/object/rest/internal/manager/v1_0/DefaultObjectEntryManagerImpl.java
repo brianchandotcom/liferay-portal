@@ -156,13 +156,10 @@ public class DefaultObjectEntryManagerImpl
 					objectEntry, dtoConverterContext.getUserId()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			_addOrUpdateNestedObjectEntries(
+			serviceBuilderObjectEntry = _addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				serviceBuilderObjectEntry.getPrimaryKey());
-
-			serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
-				serviceBuilderObjectEntry.getObjectEntryId());
 		}
 
 		return _toObjectEntry(
@@ -674,7 +671,7 @@ public class DefaultObjectEntryManagerImpl
 				objectEntry, dtoConverterContext.getUserId()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			_addOrUpdateNestedObjectEntries(
+			serviceBuilderObjectEntry = _addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				serviceBuilderObjectEntry.getPrimaryKey());
@@ -710,11 +707,12 @@ public class DefaultObjectEntryManagerImpl
 			uriInfo);
 	}
 
-	private void _addOrUpdateNestedObjectEntries(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			Map<String, ObjectRelationship> objectRelationships,
-			long primaryKey)
+	private com.liferay.object.model.ObjectEntry
+			_addOrUpdateNestedObjectEntries(
+				DTOConverterContext dtoConverterContext,
+				ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+				Map<String, ObjectRelationship> objectRelationships,
+				long primaryKey)
 		throws Exception {
 
 		Map<String, Object> properties = objectEntry.getProperties();
@@ -786,6 +784,8 @@ public class DefaultObjectEntryManagerImpl
 				}
 			}
 		}
+
+		return _objectEntryLocalService.getObjectEntry(primaryKey);
 	}
 
 	private void _checkObjectEntryObjectDefinitionId(

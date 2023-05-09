@@ -5,16 +5,19 @@
 		text-align: center;
 	}
 
-	.orderable-table.table-autofit td {
-		width: inherit;
+	.orderable-table.table-autofit {
+		td,
+		th {
+			width: inherit;
 
-		&.actions-cell {
-			padding-right: 18px;
-			width: 0;
-		}
+			&.actions-cell {
+				padding-right: 18px;
+				width: 0;
+			}
 
-		&.drag-handle-cell {
-			width: 0;
+			&.drag-handle-cell {
+				width: 0;
+			}
 		}
 	}
 

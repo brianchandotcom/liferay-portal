@@ -321,7 +321,10 @@ const OrderableTable = ({
 								<ClayTable.Cell className="drag-handle-cell" />
 
 								{fields.map((field) => (
-									<ClayTable.Cell key={field.name}>
+									<ClayTable.Cell
+										headingCell
+										key={field.name}
+									>
 										{field.label}
 									</ClayTable.Cell>
 								))}

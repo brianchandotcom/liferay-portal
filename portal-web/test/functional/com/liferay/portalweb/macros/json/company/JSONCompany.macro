@@ -178,6 +178,43 @@ definition {
 		return ${portalURL};
 	}
 
+	macro getWebId {
+		if (!(isSet(portalInstanceName)) || (${portalInstanceName} == "liferay.com")) {
+			var portalInstanceName = JSONCompany.getPortalInstanceName();
+		}
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(creatorEmailAddress))) {
+			if (${authenticationMethod} == "By Screen Name") {
+				if (!(isSet(userScreenName))) {
+					var creatorEmailAddress = "test";
+				}
+				else {
+					var creatorEmailAddress = ${userScreenName};
+				}
+			}
+			else {
+				var creatorEmailAddress = "test@liferay.com";
+			}
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
+
+		var webId = JSONCurlUtil.get(${curl}, "$['webId']");
+
+		return ${webId};
+	}
+
 	macro parsePortalInstanceURL {
 		Variables.assertDefined(parameterList = ${portalURL});
 

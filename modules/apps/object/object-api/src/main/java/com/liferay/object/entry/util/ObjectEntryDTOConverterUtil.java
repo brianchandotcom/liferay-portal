@@ -30,7 +30,7 @@ import javax.ws.rs.InternalServerErrorException;
 /**
  * @author Carolina Barbosa
  */
-public class DTOConverterUtil {
+public class ObjectEntryDTOConverterUtil {
 
 	public static DTOConverter<BaseModel<?>, ?> getDTOConverter(
 			DTOConverterRegistry dtoConverterRegistry,

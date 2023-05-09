@@ -27,7 +27,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.entry.util.DTOConverterUtil;
+import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -212,7 +212,7 @@ public class ObjectEntryDTOConverter
 											objectDefinition.getName());
 
 							relatedObjectEntryAtomicReference.set(
-								(Serializable)DTOConverterUtil.toDTO(
+								(Serializable)ObjectEntryDTOConverterUtil.toDTO(
 									systemObjectDefinitionManager.
 										getBaseModelByExternalReferenceCode(
 											systemObjectDefinitionManager.
@@ -570,11 +570,11 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		DTOConverter<BaseModel<?>, ?> dtoConverter =
-			DTOConverterUtil.getDTOConverter(
+			ObjectEntryDTOConverterUtil.getDTOConverter(
 				dtoConverterContext.getDTOConverterRegistry(),
 				systemObjectDefinitionManager);
 
-		Object dto = DTOConverterUtil.toDTO(
+		Object dto = ObjectEntryDTOConverterUtil.toDTO(
 			baseModel, dtoConverterContext.getDTOConverterRegistry(),
 			systemObjectDefinitionManager, dtoConverterContext.getUser());
 

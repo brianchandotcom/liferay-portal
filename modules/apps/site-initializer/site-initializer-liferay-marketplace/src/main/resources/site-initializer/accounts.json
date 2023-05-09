@@ -1,21 +1,21 @@
 [
 	{
-		"externalReferenceCode": "MPACCOUNT-001",
+		"externalReferenceCode": "MKT-ACCOUNT-1",
 		"name": "Acme Development",
 		"type": "business"
 	},
 	{
-		"externalReferenceCode": "MPACCOUNT-002",
+		"externalReferenceCode": "MKT-ACCOUNT-2",
 		"name": "Chameleon",
 		"type": "business"
 	},
 	{
-		"externalReferenceCode": "MPACCOUNT-003",
+		"externalReferenceCode": "MKT-ACCOUNT-3",
 		"name": "Jane Acme",
 		"type": "person"
 	},
 	{
-		"externalReferenceCode": "MPACCOUNT-004",
+		"externalReferenceCode": "MKT-ACCOUNT-4",
 		"name": "Ryan Administrator",
 		"type": "person"
 	}

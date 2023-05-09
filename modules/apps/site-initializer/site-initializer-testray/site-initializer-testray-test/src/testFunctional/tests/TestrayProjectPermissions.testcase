@@ -22,7 +22,7 @@ definition {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-        task ("Create a Project via API") {
+		task ("Create a Project via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -43,7 +43,7 @@ definition {
 		}
 
 		task ("Delete all objects, Testray Site and Client Extensions") {
-            JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
@@ -53,7 +53,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the project but can view"
+	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDeleteProject {
 		task ("Given that the user login with the Testray Analyst role") {
@@ -61,7 +61,7 @@ definition {
 				userLoginEmailAddress = "analyst@testray.com",
 				userLoginFullName = "test");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
 		task ("When go to the project page") {
@@ -76,7 +76,7 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-        task ("And can not see add button") {
+		task ("And can not see add button") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 
@@ -104,16 +104,16 @@ definition {
 
 		task ("Then can not see the 'Edit, Delete' options in kebab menu") {
 			AssertElementNotPresent(
-                key_kebabOption = "Edit",
-			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				key_kebabOption = "Edit",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 
 			AssertElementNotPresent(
 				key_kebabOption = "Delete",
-			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 		}
 	}
 
-    @description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the project but can view"
+	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteProject {
 		task ("Given that the user login with the Testray Lead role") {
@@ -121,7 +121,7 @@ definition {
 				userLoginEmailAddress = "lead@testray.com",
 				userLoginFullName = "test");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
 		task ("When go to the project page") {
@@ -136,7 +136,7 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-        task ("And can not see add button") {
+		task ("And can not see add button") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 
@@ -164,16 +164,16 @@ definition {
 
 		task ("Then can not see the 'Edit, Delete' options in kebab menu") {
 			AssertElementNotPresent(
-                key_kebabOption = "Edit",
-			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				key_kebabOption = "Edit",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 
 			AssertElementNotPresent(
 				key_kebabOption = "Delete",
-			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 		}
 	}
 
-    @description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the project but can view"
+	@description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the project but can view"
 	@priority = 3
 	test UserRoleCanNotCreateEditAndDeleteProject {
 		task ("Given that the user login with the Testray User role") {
@@ -181,7 +181,7 @@ definition {
 				userLoginEmailAddress = "user@testray.com",
 				userLoginFullName = "test");
 
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
 		task ("When go to the project page") {
@@ -196,7 +196,7 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-        task ("And can not see add button") {
+		task ("And can not see add button") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 
@@ -224,12 +224,12 @@ definition {
 
 		task ("Then can not see the 'Edit, Delete' options in kebab menu") {
 			AssertElementNotPresent(
-                key_kebabOption = "Edit",
-			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				key_kebabOption = "Edit",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 
 			AssertElementNotPresent(
 				key_kebabOption = "Delete",
-			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 		}
 	}
 

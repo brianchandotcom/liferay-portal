@@ -17,11 +17,10 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		FrontendDataSetAdmin.deleteAllDatasetEntries();
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
-			FrontendDataSetAdmin.deleteAllDatasetEntries();
 		}
 	}
 

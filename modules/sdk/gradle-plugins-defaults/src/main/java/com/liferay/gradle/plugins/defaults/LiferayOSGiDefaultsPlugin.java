@@ -378,7 +378,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			_configureConfigurationTest(
 				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
 			_configureConfigurationTest(
-				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+				project, JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME);
 			_configureEclipse(
 				project, portalConfiguration, portalTestConfiguration);
 			_configureIdea(
@@ -697,12 +697,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			PortalTools.PORTAL_VERSION_7_3_X.equals(portalVersion)) {
 
 			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 				"org.mockito", "mockito-core", "1.10.8");
 
 			ModuleDependency moduleDependency =
 				(ModuleDependency)GradleUtil.addDependency(
-					project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+					project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 					"org.powermock", "powermock-api-mockito", "1.6.1");
 
 			Map<String, String> excludeArgs = new HashMap<>();
@@ -713,30 +713,30 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			moduleDependency.exclude(excludeArgs);
 
 			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 				"org.powermock", "powermock-module-junit4", "1.6.1");
 		}
 		else {
 			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 				"org.mockito", "mockito-core", "4.5.1");
 
 			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 				"org.mockito", "mockito-inline", "4.5.1");
 
 			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, "junit",
-				"junit", "4.12");
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
+				"junit", "junit", "4.12");
 		}
 
 		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 			"com.liferay.portletmvc4spring",
 			"com.liferay.portletmvc4spring.test", "5.2.1");
 
 		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
+			project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 			"org.springframework", "spring-test", "5.2.2.RELEASE");
 	}
 
@@ -904,16 +904,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
 			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-		Configuration runtimeConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+		Configuration runtimeOnlyConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.RUNTIME_ONLY_CONFIGURATION_NAME);
 
-		copy.from(compileOnlyConfiguration, runtimeConfiguration);
+		copy.from(compileOnlyConfiguration, runtimeOnlyConfiguration);
 
 		copy.into(libDir);
 
 		Closure<String> renameDependencyClosure = new RenameDependencyClosure(
 			project, compileOnlyConfiguration.getName(),
-			runtimeConfiguration.getName());
+			runtimeOnlyConfiguration.getName());
 
 		copy.rename(renameDependencyClosure);
 
@@ -2290,7 +2290,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (projectPath.startsWith(":dxp:apps:osb:")) {
 			_configureDependenciesReleaseAPI(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+				project, JavaPlugin.API_CONFIGURATION_NAME);
 			_configureDependenciesReleaseAPI(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
 			_configureDependenciesReleaseAPI(
@@ -2305,13 +2305,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			projectPath.startsWith(":private:core:")) {
 
 			_configureConfigurationTransitive(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);
+				project, JavaPlugin.API_CONFIGURATION_NAME, false);
 			_configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME,
 				false);
 
 			_configureDependenciesGroupPortal(
-				project, appBndFile, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				project, appBndFile, JavaPlugin.API_CONFIGURATION_NAME,
 				publishing);
 			_configureDependenciesGroupPortal(
 				project, appBndFile,
@@ -2896,10 +2896,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		mappings.remove(
 			GradleUtil.getConfiguration(
-				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME));
+				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME));
 		mappings.remove(
 			GradleUtil.getConfiguration(
-				project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME));
+				project, JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME));
 	}
 
 	private void _configurePmd(Project project) {

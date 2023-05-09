@@ -100,11 +100,11 @@ public class LiferayScalaDefaultsPlugin implements Plugin<Project> {
 						ConfigurationContainer configurationContainer =
 							project.getConfigurations();
 
-						Configuration compileConfiguration =
+						Configuration apiConfiguration =
 							configurationContainer.getByName(
-								JavaPlugin.COMPILE_CONFIGURATION_NAME);
+								JavaPlugin.API_CONFIGURATION_NAME);
 
-						for (File file : compileConfiguration) {
+						for (File file : apiConfiguration) {
 							if (file.isDirectory()) {
 								files = files.plus(project.files(file));
 							}

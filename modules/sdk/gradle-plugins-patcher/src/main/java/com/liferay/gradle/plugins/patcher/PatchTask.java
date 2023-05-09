@@ -86,7 +86,7 @@ public class PatchTask extends DefaultTask {
 					return configuration.getName();
 				}
 
-				return JavaPlugin.COMPILE_CONFIGURATION_NAME;
+				return JavaPlugin.API_CONFIGURATION_NAME;
 			}
 
 		};

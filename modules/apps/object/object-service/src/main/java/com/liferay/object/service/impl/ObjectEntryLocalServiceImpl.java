@@ -1561,8 +1561,7 @@ public class ObjectEntryLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isRequired() &&
-				!values.containsKey(
-					objectField.getName() + ObjectFieldConstants.I18N_SUFFIX)) {
+				!values.containsKey(objectField.getI18nObjectFieldName())) {
 
 				throw new ObjectEntryValuesException.Required(
 					objectField.getName());
@@ -1691,8 +1690,7 @@ public class ObjectEntryLocalServiceImpl
 
 				Map<String, String> localizedValues =
 					(Map<String, String>)values.get(
-						objectField.getName() +
-							ObjectFieldConstants.I18N_SUFFIX);
+						objectField.getI18nObjectFieldName());
 
 				if (localizedValues == null) {
 					_setColumn(
@@ -3006,20 +3004,18 @@ public class ObjectEntryLocalServiceImpl
 		for (ObjectField objectField :
 				dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
 
-			String localizedObjectFieldName =
-				objectField.getName() + ObjectFieldConstants.I18N_SUFFIX;
-
-			if (!values.containsKey(localizedObjectFieldName)) {
+			if (!values.containsKey(objectField.getI18nObjectFieldName())) {
 				continue;
 			}
 
 			Map<String, String> localizedValues =
-				(Map<String, String>)values.get(localizedObjectFieldName);
+				(Map<String, String>)values.get(
+					objectField.getI18nObjectFieldName());
 
 			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
 				Map<String, Serializable> localizedValue =
 					HashMapBuilder.<String, Serializable>put(
-						localizedObjectFieldName,
+						objectField.getI18nObjectFieldName(),
 						(Serializable)HashMapBuilder.put(
 							entry.getKey(), entry.getValue()
 						).build()
@@ -3527,9 +3523,7 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionLocalizationTable.getObjectFields();
 
 		for (ObjectField objectField : objectFields) {
-			if (!values.containsKey(
-					objectField.getName() + ObjectFieldConstants.I18N_SUFFIX)) {
-
+			if (!values.containsKey(objectField.getI18nObjectFieldName())) {
 				continue;
 			}
 
@@ -3573,10 +3567,7 @@ public class ObjectEntryLocalServiceImpl
 			int index = 1;
 
 			for (ObjectField objectField : objectFields) {
-				if (!values.containsKey(
-						objectField.getName() +
-							ObjectFieldConstants.I18N_SUFFIX)) {
-
+				if (!values.containsKey(objectField.getI18nObjectFieldName())) {
 					continue;
 				}
 
@@ -3586,8 +3577,7 @@ public class ObjectEntryLocalServiceImpl
 
 				Map<String, String> localizedValues =
 					(Map<String, String>)values.get(
-						objectField.getName() +
-							ObjectFieldConstants.I18N_SUFFIX);
+						objectField.getI18nObjectFieldName());
 
 				String localizedValue = localizedValues.get(languageId);
 

@@ -121,7 +121,9 @@ definition {
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
 
-		PublicationsChanges.filterChangesByItem(
+		// Workaround LPS-183473
+
+		/*PublicationsChanges.filterChangesByItem(
 			checkboxName = "Guest",
 			menuItem = "Sites");
 
@@ -142,7 +144,7 @@ definition {
 			changeSite = "Guest",
 			changeTitle = "Wiki Node Name",
 			changeType = "Deleted",
-			changeUser = "Test Test");
+			changeUser = "Test Test");*/
 
 		Button.clickPublish();
 

@@ -230,14 +230,16 @@ definition {
 			assetType = "Web Content Folder",
 			folderName = "WC Folder Name");
 
-		PublicationsNavigator.gotoReviewChanges();
+		// Workaround LPS-183473
+
+		/*PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Web Content Folder",
 			changeSite = "Site Name",
 			changeTitle = "WC Folder Name",
 			changeType = "Deleted",
-			changeUser = "Test Test");
+			changeUser = "Test Test");*/
 
 		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
 

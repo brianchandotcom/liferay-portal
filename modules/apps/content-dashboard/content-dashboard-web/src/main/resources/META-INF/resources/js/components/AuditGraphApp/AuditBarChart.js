@@ -479,6 +479,7 @@ function CustomXAxisTick(props) {
 		<Text
 			fill={BAR_CHART.fillXAxis}
 			fontSize={14}
+			maxLines={3}
 			textAnchor="middle"
 			verticalAnchor="start"
 			width={120}

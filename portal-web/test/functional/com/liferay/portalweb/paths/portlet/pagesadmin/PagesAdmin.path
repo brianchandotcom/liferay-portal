@@ -174,8 +174,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PANEL</td>
-	<td>//*[contains(@class,'panel')]//*[normalize-space()='${key_panel}']</td>
+	<td>CUSTOMIZATION_BUTTON_SECONDARY_TEXT</td>
+	<td>//div[contains(@class,'panel')]//button[contains(.,'${key_buttonName}')]/following-sibling::p | //div[contains(@class,'panel')]//button[contains(.,'${key_buttonName}')]/../following-sibling::p</td>
 	<td></td>
 </tr>
 <tr>

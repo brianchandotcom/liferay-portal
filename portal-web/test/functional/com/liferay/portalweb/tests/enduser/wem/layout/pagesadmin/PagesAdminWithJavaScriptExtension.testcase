@@ -524,8 +524,8 @@ definition {
 			DropdownMenuItem.click(menuItem = "Delete");
 
 			AssertTextEquals(
-				key_panel = "JavaScript Client Extensions",
-				locator1 = "PagesAdmin#PANEL",
+				key_buttonName = "Add JavaScript Client Extensions",
+				locator1 = "PagesAdmin#CUSTOMIZATION_BUTTON_SECONDARY_TEXT",
 				value1 = "No JavaScript client extensions were loaded.");
 
 			PortletEntry.save();

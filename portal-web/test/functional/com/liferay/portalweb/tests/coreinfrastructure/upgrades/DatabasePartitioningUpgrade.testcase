@@ -12,7 +12,7 @@ definition {
 	property testray.main.component.name = "Database Partitioning";
 
 	@priority = 5
-	test CanAutoUpgradeLargePartitionedDatabase7413U72 {
+	test CanAutoUpgradeLargePartitionedDatabase7413 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property custom.startup.timeout = "300";
 		property data.archive.type = "data-archive-portal-partition-large";
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@priority = 5
-	test CanAutoUpgradeLargePartitionedDatabase7413U72Benchmark {
+	test CanAutoUpgradeLargePartitionedDatabase7413Benchmark {
 		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@priority = 5
-	test CanUpgradeLargePartitionedDatabase7413U72 {
+	test CanUpgradeLargePartitionedDatabase7413 {
 		property custom.startup.timeout = "490";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@priority = 5
-	test CanUpgradeLargePartitionedDatabase7413U72Benchmark {
+	test CanUpgradeLargePartitionedDatabase7413Benchmark {
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
 		property portal.release = "false";

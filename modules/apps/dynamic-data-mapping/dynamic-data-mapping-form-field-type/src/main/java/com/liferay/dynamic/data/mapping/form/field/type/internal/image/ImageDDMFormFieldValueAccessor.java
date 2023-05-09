@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.IMAGE,
-	service = {
-		DDMFormFieldValueAccessor.class, ImageDDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class ImageDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {

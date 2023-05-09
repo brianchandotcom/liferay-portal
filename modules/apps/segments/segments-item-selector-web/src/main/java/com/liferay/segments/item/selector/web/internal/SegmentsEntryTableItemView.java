@@ -64,7 +64,7 @@ public class SegmentsEntryTableItemView implements TableItemView {
 			"entry entry-selector table-cell-expand table-cell-minw-200");
 		nameTextSearchEntry.setData(
 			HashMapBuilder.<String, Object>put(
-				"entityid", String.valueOf(_segmentsEntry.getSegmentsEntryId())
+				"entityid", _segmentsEntry.getSegmentsEntryId()
 			).put(
 				"entityname", _segmentsEntry.getName(_themeDisplay.getLocale())
 			).build());

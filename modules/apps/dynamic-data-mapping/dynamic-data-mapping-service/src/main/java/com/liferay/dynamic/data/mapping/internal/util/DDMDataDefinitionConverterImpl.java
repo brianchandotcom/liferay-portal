@@ -239,11 +239,19 @@ public class DDMDataDefinitionConverterImpl
 			long fieldSetDDMStructureId = GetterUtil.getLong(
 				ddmFormField.getProperty("ddmStructureId"));
 
-			if (fieldSetDDMStructureId != 0) {
+			DEDataDefinitionFieldLink deDataDefinitionFieldLink =
 				_deDataDefinitionFieldLinkLocalService.
-					addDEDataDefinitionFieldLink(
-						groupId, classNameId, dataDefinitionId,
-						fieldSetDDMStructureId, ddmFormField.getName());
+					fetchDEDataDefinitionFieldLinks(
+						classNameId, dataDefinitionId, fieldSetDDMStructureId,
+						ddmFormField.getName());
+
+			if (fieldSetDDMStructureId != 0) {
+				if (deDataDefinitionFieldLink == null) {
+					_deDataDefinitionFieldLinkLocalService.
+						addDEDataDefinitionFieldLink(
+							groupId, classNameId, dataDefinitionId,
+							fieldSetDDMStructureId, ddmFormField.getName());
+				}
 
 				_addDataDefinitionFieldLinks(
 					classNameId, dataDefinitionId,

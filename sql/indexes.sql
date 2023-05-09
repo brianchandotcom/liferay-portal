@@ -4,7 +4,7 @@ create index IX_CF84B7D6 on Address (companyId, classNameId, classPK, mailing, c
 create index IX_23EBCA12 on Address (companyId, classNameId, classPK, primary_, ctCollectionId);
 create index IX_D9B5311E on Address (companyId, classNameId, ctCollectionId);
 create index IX_3E0827AC on Address (companyId, ctCollectionId);
-create unique index IX_CBAD282F on Address (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create unique index IX_CBAD282F on Address (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_34CBC45 on Address (countryId, ctCollectionId);
 create index IX_8C7024DB on Address (regionId, ctCollectionId);
 create index IX_F67F5F32 on Address (userId, ctCollectionId);

@@ -38,7 +38,8 @@ public class WhipPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					addWhipDependencies(
-						project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+						project,
+						JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME);
 				}
 
 			});

@@ -44,11 +44,12 @@ public class AlloyTaglibDefaultsPlugin
 		final Configuration portalToolConfiguration =
 			configurationContainer.create(_PORTAL_TOOL_CONFIGURATION_NAME);
 
-		Configuration runtimeConfiguration = configurationContainer.getByName(
-			JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+		Configuration runtimeOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.RUNTIME_ONLY_CONFIGURATION_NAME);
 
 		_configureConfigurationPortalTool(
-			portalToolConfiguration, runtimeConfiguration);
+			portalToolConfiguration, runtimeOnlyConfiguration);
 
 		// Dependencies
 
@@ -101,13 +102,13 @@ public class AlloyTaglibDefaultsPlugin
 
 	private void _configureConfigurationPortalTool(
 		Configuration portalToolConfiguration,
-		Configuration runtimeConfiguration) {
+		Configuration runtimeOnlyConfiguration) {
 
 		portalToolConfiguration.setDescription(
 			"Configures the Alloy Taglib tool for this project.");
 		portalToolConfiguration.setVisible(false);
 
-		portalToolConfiguration.extendsFrom(runtimeConfiguration);
+		portalToolConfiguration.extendsFrom(runtimeOnlyConfiguration);
 	}
 
 	private void _configurePluginLiferayBase(

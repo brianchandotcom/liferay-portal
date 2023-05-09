@@ -198,7 +198,7 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 		TaskOutputs taskOutputs = buildXSDTask.getOutputs();
 
 		GradleUtil.addDependency(
-			buildXSDTask.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME,
+			buildXSDTask.getProject(), JavaPlugin.API_CONFIGURATION_NAME,
 			taskOutputs.getFiles());
 	}
 

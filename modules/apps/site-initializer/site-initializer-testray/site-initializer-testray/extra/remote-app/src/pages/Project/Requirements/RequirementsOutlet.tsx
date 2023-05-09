@@ -19,7 +19,11 @@ import PageRenderer from '~/components/PageRenderer';
 import {useHeader} from '../../../hooks';
 import {useFetch} from '../../../hooks/useFetch';
 import i18n from '../../../i18n';
-import {TestrayProject, TestrayRequirement} from '../../../services/rest';
+import {
+	TestrayProject,
+	TestrayRequirement,
+	testrayRequirementsImpl,
+} from '../../../services/rest';
 import useRequirementActions from './useRequirementActions';
 
 const RequirementsOutlet = () => {
@@ -31,7 +35,10 @@ const RequirementsOutlet = () => {
 
 	const {data: testrayRequirement, error, loading, mutate} = useFetch<
 		TestrayRequirement
-	>(`/requirements/${requirementId}`);
+	>(testrayRequirementsImpl.getResource(requirementId as string), {
+		transformData: (response: TestrayRequirement) =>
+			testrayRequirementsImpl.transformData(response),
+	});
 
 	const {setHeaderActions, setHeading} = useHeader({
 		timeout: 100,
@@ -52,7 +59,7 @@ const RequirementsOutlet = () => {
 				{
 					category: i18n.translate('requirement').toUpperCase(),
 					path: `/project/${testrayProject.id}/requirements/${testrayRequirement.id}`,
-					title: testrayRequirement?.key,
+					title: testrayRequirement?.summary,
 				},
 			]);
 		}

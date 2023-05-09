@@ -34,8 +34,6 @@ import java.util.List;
 public class DynamicObjectDefinitionLocalizationTable
 	extends BaseTable<DynamicObjectDefinitionLocalizationTable> {
 
-	public static final String LANGUAGE_ID_COLUMN_NAME = "languageId";
-
 	public static String getAlterTableAddColumnSQL(
 		String tableName, String columnName, String type) {
 
@@ -80,8 +78,7 @@ public class DynamicObjectDefinitionLocalizationTable
 			Column.FLAG_PRIMARY);
 
 		createColumn(
-			LANGUAGE_ID_COLUMN_NAME, String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
+			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 		for (ObjectField objectField : objectFields) {
 			createColumn(

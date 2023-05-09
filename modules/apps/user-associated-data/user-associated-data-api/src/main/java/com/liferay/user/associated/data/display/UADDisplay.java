@@ -127,6 +127,12 @@ public interface UADDisplay<T> extends UADComponent<T> {
 		throw new UnsupportedOperationException();
 	}
 
+	public default String getParentContainerTypeKey() {
+		Class<?> parentContainerClass = getParentContainerClass();
+
+		return parentContainerClass.getName();
+	}
+
 	/**
 	 * Returns the primary key of the type {@code T} entity.
 	 *

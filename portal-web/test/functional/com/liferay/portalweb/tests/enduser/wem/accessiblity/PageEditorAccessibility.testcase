@@ -22,6 +22,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-167387. The page creator could go back to button from link on the experience selector via shift + tab shortcuts."
+	@priority = 3
+	test BackToButtonFromLinkOnExperienceSelectorViaKeyboard {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator focuses on the link on the experience selector") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.openExperienceMenu();
+
+			KeyPress(
+				key_text = "New Experience",
+				locator1 = "Button#ANY",
+				value1 = "\TAB");
+
+			TestUtils.assertElementFocused(element = "//a[contains(.,'Content Page Personalization')]");
+		}
+
+		task ("Then the page creator could go back to the button on the experience selector via shift + tab shortcuts") {
+			Type.sendKeys(
+				key_text = "Content Page Personalization",
+				locator1 = "Link#ANY",
+				value1 = "keys=SHIFT,TAB");
+
+			TestUtils.assertElementFocused(element = "//*[not(self::div)][contains(@class,'btn')][normalize-space()='New Experience'][not(contains(@class,'navbar'))]");
+		}
+	}
+
 	@description = "This is a test for LPS-166297. The page creator could go back to the node on the Browser panel via shift + tab shortcuts."
 	@priority = 3
 	test BackToNodeOnBrowserPanelViaKeyboard {

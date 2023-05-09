@@ -291,12 +291,12 @@ public class GetCollectionFieldMVCResourceCommand
 			defaultLayoutListRetrieverContext.setContextObject(infoItem);
 		}
 
-		int listCount = layoutListRetriever.getListCount(
-			listObjectReference, defaultLayoutListRetrieverContext);
-
 		if (activePage < 1) {
 			activePage = 1;
 		}
+
+		int listCount = layoutListRetriever.getListCount(
+			listObjectReference, defaultLayoutListRetrieverContext);
 
 		defaultLayoutListRetrieverContext.setPagination(
 			_collectionPaginationHelper.getPagination(

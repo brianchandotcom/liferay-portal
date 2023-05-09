@@ -775,6 +775,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertTextMatchPattern(String locator, String pattern)
+		throws Exception {
+
+		assertElementPresent(locator);
+
+		Condition textMatchedCondition = getTextMatchedCondition(
+			locator, pattern);
+
+		textMatchedCondition.assertTrue();
+	}
+
+	@Override
 	public void assertTextNotPresent(String pattern) throws Exception {
 		Condition textNotPresentCondition = getTextNotPresentCondition(pattern);
 
@@ -3436,6 +3448,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void waitForTextMatchPattern(String locator, String pattern)
+		throws Exception {
+
+		Condition textMatchedCondition = getTextMatchedCondition(
+			locator, pattern);
+
+		textMatchedCondition.waitFor();
+	}
+
+	@Override
 	public void waitForTextNotPresent(String value) throws Exception {
 		Condition textNotPresentCondition = getTextNotPresentCondition(value);
 
@@ -4195,6 +4217,33 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			@Override
 			public boolean evaluate() throws Exception {
 				return value.equals(getText(locator));
+			}
+
+		};
+	}
+
+	protected Condition getTextMatchedCondition(
+		String locator, String pattern) {
+
+		return new Condition() {
+
+			@Override
+			public void assertTrue() throws Exception {
+				if (!evaluate()) {
+					String message = StringUtil.combine(
+						"Actual text \"", getText(locator),
+						"\" does not match pattern \"", pattern, "\" at \"",
+						locator, "\"");
+
+					throw new Exception(message);
+				}
+			}
+
+			@Override
+			public boolean evaluate() throws Exception {
+				String value = getText(locator);
+
+				return value.matches(pattern);
 			}
 
 		};

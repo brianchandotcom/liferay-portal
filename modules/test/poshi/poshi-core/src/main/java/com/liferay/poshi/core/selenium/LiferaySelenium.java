@@ -148,6 +148,9 @@ public interface LiferaySelenium {
 	public void assertTextCaseInsensitive(String locator, String pattern)
 		throws Exception;
 
+	public void assertTextMatchPattern(String locator, String pattern)
+		throws Exception;
+
 	public void assertTextNotPresent(String pattern) throws Exception;
 
 	public void assertTextPresent(String pattern) throws Exception;
@@ -577,6 +580,9 @@ public interface LiferaySelenium {
 	public void waitForText(String locator, String value) throws Exception;
 
 	public void waitForTextCaseInsensitive(String locator, String pattern)
+		throws Exception;
+
+	public void waitForTextMatchPattern(String locator, String pattern)
 		throws Exception;
 
 	public void waitForTextNotPresent(String value) throws Exception;

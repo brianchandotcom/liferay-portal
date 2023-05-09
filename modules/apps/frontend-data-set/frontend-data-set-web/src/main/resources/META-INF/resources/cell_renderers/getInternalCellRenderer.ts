@@ -12,17 +12,27 @@
  * details.
  */
 
-// Frontend Data Set API
+// @ts-ignore
 
-export {default as FrontendDataSet} from './FrontendDataSet';
+import DefaultRenderer from './DefaultRenderer';
+import {
+	INTERNAL_CELL_RENDERERS,
+	InternalCellRenderer,
+} from './InternalCellRenderer';
 
-// Renderers API
+export function getInternalCellRenderer(name: string): InternalCellRenderer {
+	const renderer = INTERNAL_CELL_RENDERERS.find(
+		(renderer) => renderer.name === name
+	);
 
-export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';
-export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_renderers/getInternalCellRenderer';
-export {default as DateTimeRenderer} from './cell_renderers/DateTimeRenderer';
-export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
+	if (!renderer) {
+		return {
+			component: DefaultRenderer,
+			label: Liferay.Language.get('default'),
+			name: 'default',
+			type: 'internal',
+		};
+	}
 
-// Data Set Events API
-
-export {default as DATA_SET_EVENT} from './utils/eventsDefinitions';
+	return renderer;
+}

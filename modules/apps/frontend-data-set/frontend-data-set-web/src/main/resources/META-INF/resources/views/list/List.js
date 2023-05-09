@@ -23,7 +23,7 @@ import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
-import ImageRenderer from '../../data_renderers/ImageRenderer';
+import ImageRenderer from '../../cell_renderers/ImageRenderer';
 
 const List = ({items, schema}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);

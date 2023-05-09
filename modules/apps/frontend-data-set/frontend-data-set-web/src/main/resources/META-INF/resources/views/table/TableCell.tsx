@@ -13,21 +13,23 @@
  */
 
 import {FDSCellRenderer, FDSCellRendererArgs} from '@liferay/js-api/data-set';
-import React, {RefObject, useContext, useEffect, useState} from 'react';
+import React, {
+	ComponentType,
+	RefObject,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 
 // @ts-ignore
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-
-// @ts-ignore
-
-import DefaultRenderer from '../../data_renderers/DefaultRenderer';
+import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import {
-	AnyDataRenderer,
-	getDataRendererById,
-	getDataRendererByURL,
+	CellRenderer,
+	getCellRendererByURL,
 	getInputRendererById,
-} from '../../utils/dataRenderers';
+} from '../../utils/renderer';
 
 // @ts-ignore
 
@@ -75,7 +77,7 @@ function InlineEditInputRenderer({
 		FrontendDataSetContext as React.Context<any>
 	);
 
-	const [InputRenderer, setInputRenderer] = useState(() =>
+	const [InputRenderer, setInputRenderer] = useState<ComponentType>(() =>
 		getInputRendererById(type)
 	);
 
@@ -126,45 +128,37 @@ function TableCell({
 
 	const [loading, setLoading] = useState(false);
 
-	const contentRenderer = view.contentRenderer;
+	const contentRenderer = view.contentRenderer || 'default';
 
-	let SyncDataRenderer: AnyDataRenderer | null = {
-		Component: DefaultRenderer,
-		type: 'internal',
-	};
+	const [cellRenderer, setCellRenderer] = useState<CellRenderer | null>(
+		() => {
+			if (view.contentRendererModuleURL) {
+				return null;
+			}
 
-	if (contentRenderer) {
-		if (customDataRenderers && customDataRenderers[contentRenderer]) {
-			SyncDataRenderer = {
-				Component: customDataRenderers[contentRenderer],
-				type: 'internal',
-			};
+			if (customDataRenderers && customDataRenderers[contentRenderer]) {
+				return {
+					component: customDataRenderers[contentRenderer],
+					type: 'internal',
+				};
+			}
+
+			return getInternalCellRenderer(contentRenderer);
 		}
-		else {
-			SyncDataRenderer = getDataRendererById(contentRenderer);
-		}
-	}
-
-	if (view.contentRendererModuleURL) {
-		SyncDataRenderer = null;
-	}
-
-	const [dataRenderer, setDataRenderer] = useState<AnyDataRenderer | null>(
-		() => SyncDataRenderer
 	);
 
 	useEffect(() => {
-		if (!loading && view.contentRendererModuleURL && !dataRenderer) {
+		if (!loading && view.contentRendererModuleURL && !cellRenderer) {
 			setLoading(true);
 
-			getDataRendererByURL(
+			getCellRendererByURL(
 				view.contentRendererModuleURL,
 				view.contentRendererClientExtension
 					? 'clientExtension'
 					: 'internal'
 			)
-				.then((dataRenderer) => {
-					setDataRenderer(() => dataRenderer);
+				.then((cellRenderer) => {
+					setCellRenderer(() => cellRenderer);
 
 					setLoading(false);
 				})
@@ -174,12 +168,12 @@ function TableCell({
 						error
 					);
 
-					setDataRenderer(() => getDataRendererById('default'));
+					setCellRenderer(() => getInternalCellRenderer('default'));
 
 					setLoading(false);
 				});
 		}
-	}, [view, loading, dataRenderer]);
+	}, [view, loading, cellRenderer]);
 
 	if (
 		inlineEditSettings &&
@@ -201,7 +195,7 @@ function TableCell({
 		);
 	}
 
-	if (!dataRenderer || loading) {
+	if (!cellRenderer || loading) {
 		return (
 			<DndTableCell columnName={String(options.fieldName)}>
 				<span
@@ -212,20 +206,22 @@ function TableCell({
 		);
 	}
 
-	if (dataRenderer.type === 'clientExtension') {
+	if (cellRenderer.type === 'clientExtension') {
 		return (
 			<DndTableCell columnName={String(options.fieldName)}>
 				<ClientExtensionRendererComponent
 					args={{value}}
-					renderer={dataRenderer.renderer}
+					renderer={cellRenderer.renderer}
 				/>
 			</DndTableCell>
 		);
 	}
 
+	const CellRendererComponent = cellRenderer.component;
+
 	return (
 		<DndTableCell columnName={String(options.fieldName)}>
-			<dataRenderer.Component
+			<CellRendererComponent
 				actions={actions}
 				itemData={itemData}
 				itemId={itemId}

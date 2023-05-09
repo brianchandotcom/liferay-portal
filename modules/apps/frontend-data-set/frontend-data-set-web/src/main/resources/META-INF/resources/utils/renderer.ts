@@ -13,18 +13,33 @@
  */
 
 import {FDSCellRenderer} from '@liferay/js-api/data-set';
-import React from 'react';
+import {ComponentType} from 'react';
 
 // @ts-ignore
 
-import {dataRenderers, inputRenderers} from '../data_renderers/index';
+import InputCheckboxRenderer from '../cell_renderers/InputCheckboxRenderer';
+
+// @ts-ignore
+
+import InputDateTimeRenderer from '../cell_renderers/InputDateTimeRenderer';
+
+// @ts-ignore
+
+import InputTextRenderer from '../cell_renderers/InputTextRenderer';
+import {InternalCellRenderer} from '../cell_renderers/InternalCellRenderer';
 
 // @ts-ignore
 
 import {getJsModule} from './modules';
 
-export function getInputRendererById(id: string): any {
-	const inputRenderer = inputRenderers[id];
+const INPUT_RENDERERS: {[key: string]: ComponentType} = {
+	checkbox: InputCheckboxRenderer,
+	dateTime: InputDateTimeRenderer,
+	text: InputTextRenderer,
+};
+
+export function getInputRendererById(id: string): ComponentType {
+	const inputRenderer = INPUT_RENDERERS[id];
 
 	if (!inputRenderer) {
 		throw new Error(`No input renderer found with id "${id}"`);
@@ -33,57 +48,35 @@ export function getInputRendererById(id: string): any {
 	return inputRenderer;
 }
 
-export type DataRendererType = 'clientExtension' | 'internal';
-
-export interface DataRenderer {
-	type: DataRendererType;
+export interface Renderer {
+	type: 'clientExtension' | 'internal';
 }
 
-export interface InternalDataRenderer extends DataRenderer {
-	Component: React.ComponentClass<any>;
-	type: 'internal';
-}
-
-export interface ClientExtensionDataRenderer extends DataRenderer {
+export interface ClientExtensionCellRenderer extends Renderer {
 	renderer: FDSCellRenderer;
 	type: 'clientExtension';
 }
 
-export type AnyDataRenderer =
-	| ClientExtensionDataRenderer
-	| InternalDataRenderer;
+export type CellRenderer = ClientExtensionCellRenderer | InternalCellRenderer;
 
 const fetchedDataRenderers: Array<{
-	dataRenderer: AnyDataRenderer;
+	cellRenderer: CellRenderer;
 	url: string;
 }> = [];
 
-export function getDataRendererById(id: string): AnyDataRenderer {
-	const dataRenderer = dataRenderers[id];
-
-	if (!dataRenderer) {
-		throw new Error(`No data renderer found with id "${id}"`);
-	}
-
-	return {
-		Component: dataRenderer,
-		type: 'internal',
-	};
-}
-
-export async function getDataRendererByURL(
+export async function getCellRendererByURL(
 	url: string,
 	type: 'clientExtension' | 'internal'
-): Promise<AnyDataRenderer> {
-	const addedDataRenderer = fetchedDataRenderers.find(
+): Promise<CellRenderer> {
+	const addedCellRenderer = fetchedDataRenderers.find(
 		(contentRenderer) => contentRenderer.url === url
 	);
 
-	if (addedDataRenderer) {
-		return addedDataRenderer.dataRenderer;
+	if (addedCellRenderer) {
+		return addedCellRenderer.cellRenderer;
 	}
 
-	let dataRenderer: AnyDataRenderer;
+	let cellRenderer: CellRenderer;
 
 	if (url.includes(' from ')) {
 		const [moduleName, symbolName] = getModuleAndSymbolNames(url);
@@ -92,31 +85,31 @@ export async function getDataRendererByURL(
 		const module = await import(/* webpackIgnore: true */ moduleName);
 
 		if (type === 'clientExtension') {
-			dataRenderer = {
+			cellRenderer = {
 				renderer: module[symbolName],
 				type,
 			};
 		}
 		else {
-			dataRenderer = {
-				Component: module[symbolName],
+			cellRenderer = {
+				component: module[symbolName],
 				type,
 			};
 		}
 	}
 	else {
-		dataRenderer = {
-			Component: await getJsModule(url),
+		cellRenderer = {
+			component: await getJsModule(url),
 			type: 'internal',
 		};
 	}
 
 	fetchedDataRenderers.push({
-		dataRenderer,
+		cellRenderer,
 		url,
 	});
 
-	return dataRenderer;
+	return cellRenderer;
 }
 
 function getModuleAndSymbolNames(url: string): [string, string] {

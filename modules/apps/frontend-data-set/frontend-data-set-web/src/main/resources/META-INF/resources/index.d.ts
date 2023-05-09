@@ -89,7 +89,7 @@ type TViews = {
 	thumbnail?: string;
 };
 
-interface IFrontendDataSetProps {
+export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	activeViewSettings?: string;
 	apiURL?: string;
@@ -141,4 +141,7 @@ interface IFrontendDataSetProps {
 	views: TViews[];
 }
 
-export const DataRenderers: {[key: string]: string};
+export {
+	INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS,
+	InternalCellRenderer as FDSInternalCellRenderer,
+} from './cell_renderers/InternalCellRenderer';

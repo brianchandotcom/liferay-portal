@@ -18,7 +18,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import {getInputRendererById} from '../../utils/dataRenderers';
+import {getInputRendererById} from '../../utils/renderer';
 import DndTable from './dnd_table/index';
 
 function TableInlineAddingRow({fields, selectable}) {

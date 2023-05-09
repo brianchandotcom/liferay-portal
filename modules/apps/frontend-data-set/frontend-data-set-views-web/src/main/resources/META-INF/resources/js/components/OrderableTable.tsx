@@ -134,6 +134,7 @@ const OrderableTableRow = ({
 						item.label || Liferay.Language.get('item')
 					)}
 					displayType={null}
+					size="sm"
 					symbol="drag"
 				/>
 			</ClayTable.Cell>

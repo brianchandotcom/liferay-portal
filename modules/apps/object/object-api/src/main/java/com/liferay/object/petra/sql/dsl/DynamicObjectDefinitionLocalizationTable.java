@@ -51,7 +51,7 @@ public class DynamicObjectDefinitionLocalizationTable
 	}
 
 	public static String getTableName(String tableName) {
-		return tableName + _L10N_SUFFIX;
+		return tableName + "_l10n";
 	}
 
 	public DynamicObjectDefinitionLocalizationTable(
@@ -163,8 +163,6 @@ public class DynamicObjectDefinitionLocalizationTable
 
 		return primaryKeyColumn.getName();
 	}
-
-	private static final String _L10N_SUFFIX = "_l10n";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicObjectDefinitionLocalizationTable.class);

@@ -53,4 +53,64 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178266 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the project but can view"
+	@priority = 3
+	test AnalystRoleCanNotCreateEditAndDeleteProject {
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "test");
+
+			Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		}
+
+		task ("When go to the project page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+		}
+
+		task ("Then can see the project in the table") {
+			AssertElementPresent(
+				key_projectName = ${projectName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+        task ("And can not see add button") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("When right click in project") {
+			RightClick.rightClick(
+				key_projectName = ${projectName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then can not see the 'Edit, Delete' options in right click") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+
+		task ("And when click kebab in project") {
+			TestrayBuild.goToBuild(buildName = ${projectName});
+
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
+
+		task ("Then can not see the 'Edit, Delete' options in kebab menu") {
+			AssertElementNotPresent(
+                key_kebabOption = "Edit",
+			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+			AssertElementNotPresent(
+				key_kebabOption = "Delete",
+			    locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		}
+	}
+
 }

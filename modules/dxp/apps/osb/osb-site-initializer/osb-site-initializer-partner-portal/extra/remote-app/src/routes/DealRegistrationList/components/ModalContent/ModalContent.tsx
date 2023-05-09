@@ -21,8 +21,7 @@ interface ModalContentProps {
 	onClose: () => void;
 }
 
-export default function ModalContent({content, onClose}: ModalContentProps) {	
-
+export default function ModalContent({content, onClose}: ModalContentProps) {
 	return (
 		<ClayModal.Body>
 			<div className="align-items-center d-flex justify-content-between mb-4">
@@ -90,48 +89,36 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							label="Prospect Address"
 						/>
 					)}
-					
+
 					{content[DealRegistrationColumnKey.CURRENCY_NAME] && (
 						<ModalFormatedInformation
 							className="col mb-3"
 							information={
-								content[
-									DealRegistrationColumnKey.CURRENCY_NAME
-								]
+								content[DealRegistrationColumnKey.CURRENCY_NAME]
 							}
-							label="Currency"	
+							label="Currency"
 						/>
-					)}		
+					)}
 
-					{content[
-						DealRegistrationColumnKey.CURRENCY_KEY
-					] && (
+					{content[DealRegistrationColumnKey.CURRENCY_KEY] && (
 						<ModalFormatedInformation
 							className="col mb-3"
 							information={
-								content[
-									DealRegistrationColumnKey
-										.CURRENCY_KEY
-								]
+								content[DealRegistrationColumnKey.CURRENCY_KEY]
 							}
 							label="Currency abreviation"
 						/>
 					)}
 
-					{content[
-						DealRegistrationColumnKey.COUTRY_CODE
-					] && (
+					{content[DealRegistrationColumnKey.COUTRY_CODE] && (
 						<ModalFormatedInformation
 							className="col mb-3"
 							information={
-								content[
-									DealRegistrationColumnKey
-										.COUTRY_CODE
-								]
+								content[DealRegistrationColumnKey.COUTRY_CODE]
 							}
 							label="Country Code"
 						/>
-					)}								
+					)}
 				</div>
 
 				<div className="col">
@@ -142,7 +129,8 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							className="col mb-3"
 							information={
 								content[
-									DealRegistrationColumnKey.PROPECT_BUSINES_UNIT
+									DealRegistrationColumnKey
+										.PROPECT_BUSINES_UNIT
 								]
 							}
 							label="Prospect Busines Unit"
@@ -156,30 +144,28 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							className="col mb-3"
 							information={
 								content[
-									DealRegistrationColumnKey.PROSPECT_ACCOUNT_NAME
+									DealRegistrationColumnKey
+										.PROSPECT_ACCOUNT_NAME
 								]
 							}
 							label="Prospect Account Name"
 						/>
 					)}
 
-					{content[
-						DealRegistrationColumnKey.PROSPECT_DEPARTMENT
-					] && (
+					{content[DealRegistrationColumnKey.PROSPECT_DEPARTMENT] && (
 						<ModalFormatedInformation
 							className="col mb-3"
 							information={
 								content[
-									DealRegistrationColumnKey.PROSPECT_DEPARTMENT
+									DealRegistrationColumnKey
+										.PROSPECT_DEPARTMENT
 								]
 							}
 							label=" Prospect Department"
 						/>
-					)}		
+					)}
 
-					{content[
-						DealRegistrationColumnKey.PROSPECT_JOB_ROLE
-					] && (
+					{content[DealRegistrationColumnKey.PROSPECT_JOB_ROLE] && (
 						<ModalFormatedInformation
 							className="col mb-3"
 							information={
@@ -189,7 +175,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							}
 							label=" Prospect Job Role"
 						/>
-					)}			
+					)}
 
 					{content[DealRegistrationColumnKey.PROSPECT_CITY] && (
 						<ModalFormatedInformation
@@ -243,9 +229,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						/>
 					)}
 
-					{content[
-						DealRegistrationColumnKey.ADDITIONAL_CONTACTS
-					] && (
+					{content[DealRegistrationColumnKey.ADDITIONAL_CONTACTS] && (
 						<ModalFormatedInformation
 							className="col mb-3"
 							information={
@@ -257,7 +241,6 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							label="Additional Contacts"
 						/>
 					)}
-						
 				</div>
 			</div>
 

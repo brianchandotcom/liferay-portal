@@ -52,7 +52,7 @@ const PartnerOpportunitiesList = ({
 	getDates,
 	getFilteredItems,
 	name,
-	newButtonDeal = true,
+	newButtonDeal,
 	sort,
 }: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
@@ -77,6 +77,14 @@ const PartnerOpportunitiesList = ({
 
 	const siteURL = useLiferayNavigate();
 	const columns = [
+		{
+			columnKey: PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME,
+			label: 'Partner Account Name',
+		},
+		{
+			columnKey: PartnerOpportunitiesColumnKey.PARTNER_NAME,
+			label: 'Partner Name',
+		},
 		{
 			columnKey: PartnerOpportunitiesColumnKey.ACCOUNT_NAME,
 			label: 'Account Name',

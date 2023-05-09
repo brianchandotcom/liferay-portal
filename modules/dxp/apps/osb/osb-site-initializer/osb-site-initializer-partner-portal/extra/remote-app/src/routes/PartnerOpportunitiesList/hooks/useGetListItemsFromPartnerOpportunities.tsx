@@ -41,9 +41,12 @@ export default function useGetListItemsFromPartnerOpportunities(
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
-				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.partnerAccountName
+				[PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
 					? item.partnerAccountName
 					: ' - ',
+				[PartnerOpportunitiesColumnKey.PARTNER_NAME]: `${
+					item.partnerFirstName ? item.partnerFirstName : ''
+				}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
 				...(item.projectSubscriptionStartDate
 					? getOpportunityDates(
 							item.projectSubscriptionStartDate,
@@ -53,21 +56,28 @@ export default function useGetListItemsFromPartnerOpportunities(
 							[PartnerOpportunitiesColumnKey.START_DATE]: ' - ',
 							[PartnerOpportunitiesColumnKey.END_DATE]: ' - ',
 					  }),
+				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: ' - ',
 				...(item.amount
 					? getOpportunityAmount(item.amount)
 					: {[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - '}),
-				[PartnerOpportunitiesColumnKey.STAGE]: item.stage
-					? item.stage
-					: '- ',
 				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
-					item.partnerFirstName ? item.partnerFirstName : ' - '
-				}${item.partnerLastName ? ' ' + item.partnerLastName : ' '}`,
-				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.partnerEmail
-					? item.partnerEmail
+					item.primaryContactFirstName
+						? item.primaryContactFirstName
+						: ' - '
+				}${
+					item.primaryContactLastName
+						? ' ' + item.primaryContactLastName
+						: ' '
+				}`,
+				[PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL]: item.primaryContactEmail
+					? item.primaryContactEmail
 					: ' - ',
 				[PartnerOpportunitiesColumnKey.LIFERAY_REP]: item.ownerName
 					? item.ownerName
 					: ' - ',
+				[PartnerOpportunitiesColumnKey.STAGE]: item.stage
+					? item.stage
+					: '- ',
 			})),
 		[swrResponse.data?.items]
 	);

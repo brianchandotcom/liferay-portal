@@ -76,6 +76,7 @@ const appRoutes: AppRouteComponent = {
 			}
 			getFilteredItems={(items) => items}
 			name="Partner Opportunities"
+			newButtonDeal={false}
 			sort="dateCreated:desc"
 		/>
 	),

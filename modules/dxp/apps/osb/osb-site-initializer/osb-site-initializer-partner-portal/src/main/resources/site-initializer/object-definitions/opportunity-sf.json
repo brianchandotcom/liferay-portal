@@ -125,6 +125,45 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "Primary_Contact_Email__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Contact Email"
+			},
+			"name": "primaryContactEmail",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Primary_Contact_First_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Contact First Name"
+			},
+			"name": "primaryContactFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Primary_Contact_Last_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Contact Last Name"
+			},
+			"name": "primaryContactLastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "OwnerId",
 			"indexed": true,
 			"indexedAsKeyword": false,

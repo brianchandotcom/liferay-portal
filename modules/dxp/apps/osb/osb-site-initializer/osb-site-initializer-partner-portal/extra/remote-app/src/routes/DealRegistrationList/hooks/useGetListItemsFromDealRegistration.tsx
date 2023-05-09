@@ -29,18 +29,21 @@ export default function useGetListItemsFromDealRegistration(
 		filtersTerm,
 		sort
 	);
-	
+
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
-				[DealRegistrationColumnKey.ACCOUNT_NAME]:
-					item.prospectAccountName ? item.prospectAccountName : ' - ',
+				[DealRegistrationColumnKey.ACCOUNT_NAME]: item.prospectAccountName
+					? item.prospectAccountName
+					: ' - ',
 				...getDealDates(item.dateCreated),
 
-				[DealRegistrationColumnKey.ADDITIONAL_CONTACTS]:
-					item.additionalContacts ? item.additionalContacts : ' - ',
+				[DealRegistrationColumnKey.ADDITIONAL_CONTACTS]: item.additionalContacts
+					? item.additionalContacts
+					: ' - ',
 				[DealRegistrationColumnKey.STATUS]: item.leadStatus
-					? item.leadStatus : ' - ',				
+					? item.leadStatus
+					: ' - ',
 				[DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
 					? item.partnerAccountName
 					: ' - ',

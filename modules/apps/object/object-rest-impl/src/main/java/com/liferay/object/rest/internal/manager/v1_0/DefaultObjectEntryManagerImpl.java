@@ -160,6 +160,9 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
 				serviceBuilderObjectEntry.getPrimaryKey());
+
+			serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
+				serviceBuilderObjectEntry.getObjectEntryId());
 		}
 
 		return _toObjectEntry(

@@ -4036,26 +4036,27 @@ public class ObjectEntryResourceTest {
 				"code"
 			));
 
+		String nestedFieldName = StringBundler.concat(
+			"r_", _objectRelationship1.getName(), "_",
+			StringUtil.replaceLast(
+				_objectDefinition1.getPKObjectFieldName(), "Id", ""));
+
+		_assertObjectEntryField(
+			jsonObject.getJSONObject(nestedFieldName), _OBJECT_FIELD_NAME_1,
+			_NEW_OBJECT_FIELD_VALUE_1);
+
 		String objectEntryId = jsonObject.getString("id");
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=",
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.replaceLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
+				objectEntryId, "?nestedFields=", nestedFieldName),
 			Http.Method.GET);
 
 		_assertObjectEntryField(
-			jsonObject.getJSONObject(
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.replaceLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
-			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
+			jsonObject.getJSONObject(nestedFieldName), _OBJECT_FIELD_NAME_1,
+			_NEW_OBJECT_FIELD_VALUE_1);
 	}
 
 	@Test

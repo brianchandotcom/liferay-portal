@@ -4,10 +4,11 @@
 	<import file="build-test.xml" />
 
 	<macrodef name="deploy-workspace-client-extension">
+		<attribute default="" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
 
 		<sequential>
-			<local name="workspace.name" />
+			<var name="workspace.name" unset="true" />
 
 			<propertyregex
 				input="@{workspace.client.extension.name}"
@@ -16,21 +17,82 @@
 				replace="\1-workspace"
 			/>
 
-			<local name="workspace.client.extension.dir" />
+			<var name="workspace.client.extension.dir" unset="true" />
 
 			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
+
+			<if>
+				<not>
+					<equals arg1="@{virtual.instance.id}" arg2="" />
+				</not>
+				<then>
+					<delete file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
+
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+							public List getClientExtensionIds() {
+								String fileContent = JenkinsResultsParserUtil.read(new File(project.getProperty("workspace.client.extension.dir"), "client-extension.yaml"));
+
+								List clientExtentionIds = new ArrayList();
+
+								String clientExtentionId = null;
+
+								for (String line : fileContent.split("\\n")) {
+									if (line.matches("([^:^\\s]+):")) {
+										clientExtentionId = line.replaceAll("([^:^\\s]+):", "$1");
+									}
+
+									if (clientExtentionId == null) {
+										continue;
+									}
+
+									if (line.matches("\\s{4}type: .+")) {
+										clientExtentionIds.add(clientExtentionId);
+									}
+								}
+
+								return clientExtentionIds;
+							}
+
+							StringBuilder sb = new StringBuilder();
+
+							for (String clientExtentionId : getClientExtensionIds()) {
+								sb.append(clientExtentionId);
+								sb.append(":\n    dxp.lxc.liferay.com.virtualInstanceId: @{virtual.instance.id}\n");
+							}
+
+							JenkinsResultsParserUtil.write(new File(project.getProperty("workspace.client.extension.dir"), "client-extension.poshi.yaml"), sb.toString());
+						]]>
+					</beanshell>
+
+					<print-file file.name="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
+				</then>
+			</if>
 
 			<if>
 				<available file="${workspace.client.extension.dir}" />
 				<then>
 					<gradle-execute dir="${workspace.client.extension.dir}" task="clean" />
 
-					<gradle-execute dir="${workspace.client.extension.dir}" task="assemble" />
+					<gradle-execute dir="${workspace.client.extension.dir}" task="deployPoshi" />
 
 					<copy
 						file="${workspace.client.extension.dir}/dist/@{workspace.client.extension.name}.zip"
 						todir="${liferay.home}/deploy"
 					/>
+
+					<if>
+						<not>
+							<equals arg1="@{virtual.instance.id}" arg2="" />
+						</not>
+						<then>
+							<wait-for-client-extension-deployment
+								client.extension.deploy.log="STARTED @{workspace.client.extension.name}_"
+							/>
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>
@@ -42,6 +104,8 @@
 
 			<for list="${workspaces.client.extension.names}" param="workspace.client.extension.name">
 				<sequential>
+					<undeploy-workspace-client-extension workspace.client.extension.name="@{workspace.client.extension.name}" />
+
 					<deploy-workspace-client-extension workspace.client.extension.name="@{workspace.client.extension.name}" />
 				</sequential>
 			</for>
@@ -59,10 +123,86 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="undeploy-workspace-client-extension">
+		<attribute default="" name="virtual.instance.id" />
+		<attribute name="workspace.client.extension.name" />
+
+		<sequential>
+			<var name="workspace.name" unset="true" />
+
+			<propertyregex
+				input="@{workspace.client.extension.name}"
+				property="workspace.name"
+				regexp="(liferay-[^-]+)-.*"
+				replace="\1-workspace"
+			/>
+
+			<var name="workspace.client.extension.dir" unset="true" />
+
+			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
+
+			<if>
+				<available file="${liferay.home}/osgi/modules/@{workspace.client.extension.name}.zip" />
+				<then>
+					<delete file="${liferay.home}/osgi/modules/@{workspace.client.extension.name}.zip" />
+
+					<if>
+						<not>
+							<equals arg1="@{virtual.instance.id}" arg2="" />
+						</not>
+						<then>
+							<wait-for-client-extension-deployment
+								client.extension.deploy.log="STOPPED @{workspace.client.extension.name}_"
+							/>
+						</then>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wait-for-client-extension-deployment">
+		<attribute name="client.extension.deploy.log" />
+
+		<sequential>
+			<property name="client.extension.log" value="${project.dir}/client-extension-log" />
+
+			<delete file="${client.extension.log}" />
+
+			<record action="start" name="${client.extension.log}" />
+
+			<local name="deploy.client.extension.timeout" />
+
+			<waitfor checkevery="1" checkeveryunit="second" maxwait="30" maxwaitunit="second" timeoutproperty="deploy.client.extension.timeout">
+				<resourcecontains
+					resource="${client.extension.log}"
+					substring="@{client.extension.deploy.log}"
+				/>
+			</waitfor>
+
+			<record action="stop" name="${client.extension.log}" />
+
+			<delete file="${client.extension.log}" />
+
+			<if>
+				<isset property="deploy.client.extension.timeout" />
+				<then>
+					<echo>WARNING: Unable to confirm the client extension</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="deploy-workspace-client-extension">
 		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
 
-		<deploy-workspace-client-extension workspace.client.extension.name="${workspace.client.extension.name}" />
+		<condition else="" property="virtual.instance.id" value="${virtual.instance.id}">
+			<isset property="virtual.instance.id" />
+		</condition>
+
+		<undeploy-workspace-client-extension virtual.instance.id="${virtual.instance.id}" workspace.client.extension.name="${workspace.client.extension.name}" />
+
+		<deploy-workspace-client-extension virtual.instance.id="${virtual.instance.id}" workspace.client.extension.name="${workspace.client.extension.name}" />
 	</target>
 
 	<target name="start-workspace">
@@ -77,5 +217,15 @@
 		<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
 
 		<stop-workspace />
+	</target>
+
+	<target name="undeploy-workspace-client-extension">
+		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
+
+		<condition else="" property="virtual.instance.id" value="${virtual.instance.id}">
+			<isset property="virtual.instance.id" />
+		</condition>
+
+		<undeploy-workspace-client-extension virtual.instance.id="${virtual.instance.id}" workspace.client.extension.name="${workspace.client.extension.name}" />
 	</target>
 </project>

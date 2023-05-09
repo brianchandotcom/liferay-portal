@@ -55,10 +55,9 @@
 									</#if>
 
 									<#if entry.isLocaleReminderVisible()>
-										<@liferay_ui["icon"]
-											icon="../language/${entry.getLocaleLanguageId()}"
-											message=entry.getLocaleReminder()
-										/>
+										<span class="lfr-portal-tooltip" title="${entry.getLocaleReminder()}">
+											<@clay["icon"] symbol="${entry.getLocaleLanguageId()?lower_case?replace('_', '-')}" />
+										</span>
 									</#if>
 
 									<#if entry.isCreatorVisible()>

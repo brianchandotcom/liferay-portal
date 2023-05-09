@@ -15,9 +15,11 @@
 // / <reference types="react" />
 
 interface Props {
+	disposeModal: () => void;
 	portletNamespace: string;
 }
 declare function ImportModal({
+	disposeModal,
 	portletNamespace,
-}: Props): false | JSX.Element;
+}: Props): JSX.Element;
 export default ImportModal;

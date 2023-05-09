@@ -20,17 +20,17 @@ import classNames from 'classnames';
 import React, {useState} from 'react';
 
 interface Props {
+	disposeModal: () => void;
 	portletNamespace: string;
 }
 
-function ImportModal({portletNamespace}: Props) {
-	const [visible, setVisible] = useState(true);
+function ImportModal({disposeModal, portletNamespace}: Props) {
 	const [error, setError] = useState('');
 	const [isValidForm, setIsValidForm] = useState(false);
 	const [overwrite, setOverwrite] = useState(true);
 
 	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false),
+		onClose: disposeModal,
 	});
 
 	const validateFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +57,7 @@ function ImportModal({portletNamespace}: Props) {
 	};
 
 	return (
-		visible && (
+		(
 			<ClayModal observer={observer}>
 				<ClayModal.Header>
 					{Liferay.Language.get('import')}

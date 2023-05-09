@@ -14,6 +14,7 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 import {openModal, openSelectionModal, openToast} from 'frontend-js-web';
+import {unmountComponentAtNode} from 'react-dom';
 
 import ImportModal from './ImportModal';
 import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
@@ -142,12 +143,24 @@ export const ACTIONS = {
 
 	openImportView({portletNamespace, viewImportURL}) {
 		if (Liferay.FeatureFlags['LPS-174939']) {
+			const modalContainer = document.createElement('div');
+			modalContainer.classList.add('cadmin');
+			document.body.appendChild(modalContainer);
+
+			const disposeModal = () => {
+				if (modalContainer) {
+					unmountComponentAtNode(modalContainer);
+					document.body.removeChild(modalContainer);
+				}
+			};
+
 			render(
 				ImportModal,
 				{
+					disposeModal,
 					portletNamespace,
 				},
-				document.createElement('div')
+				modalContainer
 			);
 		}
 		else {

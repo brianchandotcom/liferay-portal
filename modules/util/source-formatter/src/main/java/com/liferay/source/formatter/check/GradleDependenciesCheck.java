@@ -54,12 +54,12 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			String dependencies = dependenciesBlock.substring(x, y + 1);
 
 			if (isAttributeValue(
-					_CHECK_TEST_INTEGRATION_COMPILE_DEPENDENCIES_KEY,
+					_CHECK_TEST_INTEGRATION_IMPLEMENTATION_DEPENDENCIES_KEY,
 					absolutePath)) {
 
-				content = _formatTestIntegrationCompileDependencies(
+				content = _formatTestIntegrationImplementationDependencies(
 					content, dependencies, _petraPattern);
-				content = _formatTestIntegrationCompileDependencies(
+				content = _formatTestIntegrationImplementationDependencies(
 					content, dependencies, _portalKernelPattern);
 			}
 
@@ -148,7 +148,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Project dependencies '.*-rest-client' can only be used for " +
-					"'testIntegrationCompile'",
+					"'testIntegrationImplementation'",
 				SourceUtil.getLineNumber(
 					content, content.indexOf(matcher.group())));
 		}
@@ -246,7 +246,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return StringUtil.replace(content, dependencies, sb.toString());
 	}
 
-	private String _formatTestIntegrationCompileDependencies(
+	private String _formatTestIntegrationImplementationDependencies(
 		String content, String dependencies, Pattern pattern) {
 
 		Matcher matcher = pattern.matcher(dependencies);
@@ -303,8 +303,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"checkRestClientDependencies";
 
 	private static final String
-		_CHECK_TEST_INTEGRATION_COMPILE_DEPENDENCIES_KEY =
-			"checkTestIntegrationCompileDependencies";
+		_CHECK_TEST_INTEGRATION_IMPLEMENTATION_DEPENDENCIES_KEY =
+			"checkTestIntegrationImplementationDependencies";
 
 	private static final String _RELEASE_PORTAL_API_VERSION_KEY =
 		"releasePortalAPIVersion";
@@ -320,11 +320,11 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
 		"(:|\",)[^ \n]");
 	private static final Pattern _petraPattern = Pattern.compile(
-		"testIntegrationCompile project\\(\":core:petra:.*");
+		"testIntegrationImplementation project\\(\":core:petra:.*");
 	private static final Pattern _portalKernelPattern = Pattern.compile(
-		"testIntegrationCompile.* name: \"com\\.liferay\\.portal\\.kernel\".*");
+		"testIntegrationImplementation.* name: \"com\\.liferay\\.portal\\.kernel\".*");
 	private static final Pattern _restClientPattern = Pattern.compile(
-		"(?<!testIntegrationCompile) project\\(\".*-rest-client\"\\)");
+		"(?<!testIntegrationImplementation) project\\(\".*-rest-client\"\\)");
 
 	private class GradleDependencyComparator implements Comparator<String> {
 

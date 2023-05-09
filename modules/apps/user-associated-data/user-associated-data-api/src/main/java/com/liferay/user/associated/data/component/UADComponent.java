@@ -35,4 +35,10 @@ public interface UADComponent<T> {
 	 */
 	public Class<T> getTypeClass();
 
+	public default String getTypeKey() {
+		Class<T> typeClass = getTypeClass();
+
+		return typeClass.getName();
+	}
+
 }

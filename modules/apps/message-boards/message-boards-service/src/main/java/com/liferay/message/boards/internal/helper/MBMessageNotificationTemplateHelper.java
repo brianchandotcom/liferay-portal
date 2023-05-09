@@ -28,12 +28,18 @@ import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Alicia García
@@ -42,10 +48,11 @@ public class MBMessageNotificationTemplateHelper {
 
 	public MBMessageNotificationTemplateHelper(
 		boolean htmlFormat, MBMessageLocalService mbMessageLocalService,
-		ServiceContext serviceContext) {
+		int maxNumberOfParentMessages, ServiceContext serviceContext) {
 
 		_htmlFormat = htmlFormat;
 		_mbMessageLocalService = mbMessageLocalService;
+		_maxNumberOfParentMessages = maxNumberOfParentMessages;
 		_serviceContext = serviceContext;
 	}
 
@@ -85,6 +92,67 @@ public class MBMessageNotificationTemplateHelper {
 		return message.getBody();
 	}
 
+	public String renderMessageParentMessageContent(MBMessage parentMessage) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+			(_maxNumberOfParentMessages == 0) ||
+			(parentMessage.getParentMessageId() ==
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			return StringPool.BLANK;
+		}
+
+		List<MBMessage> messages = new LinkedList<>();
+
+		int numberOfMessages = _maxNumberOfParentMessages;
+
+		while ((numberOfMessages > 0) && (parentMessage != null) &&
+			   (parentMessage.getParentMessageId() !=
+				   MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			messages.add(0, parentMessage);
+
+			parentMessage = _mbMessageLocalService.fetchMBMessage(
+				parentMessage.getParentMessageId());
+			numberOfMessages--;
+		}
+
+		_numberOfMessagesByParentMessageIds.put(
+			parentMessage.getMessageId(), messages.size());
+
+		if (ListUtil.isEmpty(messages)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(messages.size());
+
+		sb.append(_getMarkupElement(MarkupElement.START_MESSAGE_THREAD));
+
+		int elementCount = 0;
+
+		for (MBMessage message : messages) {
+			sb.append(
+				StringBundler.concat(
+					_getMarkupElement(MarkupElement.START_MESSAGE),
+					_getMarkupElement(MarkupElement.START_USER_MESSAGE),
+					_getUserName(message, _getQuote(elementCount)),
+					_getMarkupElement(MarkupElement.END),
+					_getMarkupElement(MarkupElement.START_MESSAGE_BODY),
+					getMessageBody(message, _getQuote(elementCount)),
+					_getMarkupElement(MarkupElement.END),
+					_getMarkupElement(MarkupElement.END_MESSAGE)));
+
+			elementCount++;
+		}
+
+		for (int i = 0; i < elementCount; i++) {
+			sb.append(_getMarkupElement(MarkupElement.END_ELEMENT));
+		}
+
+		sb.append(_getMarkupElement(MarkupElement.END));
+
+		return sb.toString();
+	}
+
 	public String renderRootMessage(MBMessage message) throws PortalException {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
 			(message.getParentMessageId() ==
@@ -113,6 +181,14 @@ public class MBMessageNotificationTemplateHelper {
 		}
 
 		return _markupElements.getOrDefault(element, StringPool.BLANK);
+	}
+
+	private String _getQuote(int depth) {
+		if (Validator.isBlank(_getQuoteMark())) {
+			return StringPool.BLANK;
+		}
+
+		return StringUtils.repeat(_QUOTE_MARK, depth) + _getQuoteMark();
 	}
 
 	private String _getQuotedMessage(
@@ -200,7 +276,10 @@ public class MBMessageNotificationTemplateHelper {
 			MarkupElement.START_USER_SIBLING,
 			"<div class=\"mb-sibling-message-user\">"
 		).build();
+	private final int _maxNumberOfParentMessages;
 	private final MBMessageLocalService _mbMessageLocalService;
+	private final Map<Long, Integer> _numberOfMessagesByParentMessageIds =
+		new HashMap<>();
 	private final ServiceContext _serviceContext;
 
 	private enum MarkupElement {

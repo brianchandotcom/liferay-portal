@@ -80,15 +80,9 @@ definition {
 				groupName = "Guest",
 				siteURLKey = "guest");
 
-			Button.click(button = "Download");
-
-			DownloadTempFile();
-
-			var fileContent = TestCase.getTempFileContent(fileName = "eicar.com");
-
-			TestUtils.assertEquals(
-				actual = ${fileContent},
-				expected = "");
+			AssertElementNotPresent(
+				key_text = "Download",
+				locator1 = "Button#ANY");
 		}
 	}
 

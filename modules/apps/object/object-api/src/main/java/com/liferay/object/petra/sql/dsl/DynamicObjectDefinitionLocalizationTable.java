@@ -40,8 +40,8 @@ public class DynamicObjectDefinitionLocalizationTable
 		String tableName, String columnName, String type) {
 
 		String sql = StringBundler.concat(
-			"alter table ", getTableName(tableName), " add ", columnName,
-			StringPool.SPACE, DataType.getDBType(type), StringPool.BLANK);
+			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
+			DataType.getDBType(type), StringPool.BLANK);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);
@@ -50,19 +50,16 @@ public class DynamicObjectDefinitionLocalizationTable
 		return sql;
 	}
 
-	public static String getTableName(String tableName) {
-		return tableName + "_l10n";
-	}
-
 	public DynamicObjectDefinitionLocalizationTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
 		String tableName) {
 
-		super(getTableName(tableName), () -> null);
+		super(objectDefinition.getL10nDBTableName(), () -> null);
 
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
-		_tableName = getTableName(tableName);
+
+		_tableName = objectDefinition.getL10nDBTableName();
 
 		String primaryKeyColumnName = TextFormatter.format(
 			objectDefinition.getShortName() + "_l10nId", TextFormatter.I);

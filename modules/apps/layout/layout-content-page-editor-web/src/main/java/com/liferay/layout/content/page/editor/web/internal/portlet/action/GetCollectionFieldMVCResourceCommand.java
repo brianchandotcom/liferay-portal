@@ -218,19 +218,6 @@ public class GetCollectionFieldMVCResourceCommand
 			return jsonObject;
 		}
 
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setConfiguration(
-			LayoutObjectReferenceUtil.getConfiguration(
-				layoutObjectReferenceJSONObject));
-
-		Object infoItem = _getInfoItem(httpServletRequest);
-
-		if (infoItem != null) {
-			defaultLayoutListRetrieverContext.setContextObject(infoItem);
-		}
-
 		ListObjectReference listObjectReference =
 			listObjectReferenceFactory.getListObjectReference(
 				layoutObjectReferenceJSONObject);
@@ -273,21 +260,6 @@ public class GetCollectionFieldMVCResourceCommand
 			return jsonObject;
 		}
 
-		int listCount = layoutListRetriever.getListCount(
-			listObjectReference, defaultLayoutListRetrieverContext);
-
-		if (activePage < 1) {
-			activePage = 1;
-		}
-
-		defaultLayoutListRetrieverContext.setPagination(
-			_collectionPaginationHelper.getPagination(
-				activePage, listCount, displayAllPages, displayAllItems,
-				numberOfItems, numberOfItemsPerPage, numberOfPages,
-				paginationType));
-		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds(segmentsExperienceId));
-
 		String itemType = _infoSearchClassMapperRegistry.getClassName(
 			originalItemType);
 
@@ -305,6 +277,34 @@ public class GetCollectionFieldMVCResourceCommand
 
 			return _jsonFactory.createJSONObject();
 		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setConfiguration(
+			LayoutObjectReferenceUtil.getConfiguration(
+				layoutObjectReferenceJSONObject));
+
+		Object infoItem = _getInfoItem(httpServletRequest);
+
+		if (infoItem != null) {
+			defaultLayoutListRetrieverContext.setContextObject(infoItem);
+		}
+
+		int listCount = layoutListRetriever.getListCount(
+			listObjectReference, defaultLayoutListRetrieverContext);
+
+		if (activePage < 1) {
+			activePage = 1;
+		}
+
+		defaultLayoutListRetrieverContext.setPagination(
+			_collectionPaginationHelper.getPagination(
+				activePage, listCount, displayAllPages, displayAllItems,
+				numberOfItems, numberOfItemsPerPage, numberOfPages,
+				paginationType));
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_getSegmentsEntryIds(segmentsExperienceId));
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 

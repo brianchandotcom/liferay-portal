@@ -636,7 +636,7 @@ definition {
 		}
 
 		task ("Then the Tab 1 should be selected after accessing to page on a new window") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Open.openInTheNewTab(locator1 = "${baseURL}/web/test-site-name/content-page-name?p_l_mode=edit");
 

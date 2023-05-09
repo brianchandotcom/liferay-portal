@@ -393,7 +393,7 @@ definition {
 		}
 
 		task ("View only the last 5 activities shown in page 1") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 

@@ -12051,6 +12051,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			test.dependencies.dir.name=dependencies
 			test.poshi.warnings.file.name=${test.poshi.warnings.file.name}
 			test.retry.command.wait.time=${test.retry.command.wait.time}
+			virtual.instance.portal.url=${virtual.instance.portal.url}
 		</echo>
 
 		<if>

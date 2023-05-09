@@ -43,7 +43,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -1009,7 +1009,7 @@ definition {
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "SSO",
@@ -1471,7 +1471,7 @@ definition {
 		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordChangedNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openURL();
 
@@ -1533,7 +1533,7 @@ definition {
 		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordResetNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",

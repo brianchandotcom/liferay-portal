@@ -656,7 +656,7 @@ definition {
 		}
 
 		task ("View mapped content in display page template") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 			var n = 1;
 
 			for (var content : list "Webcontent Title,Webcontent Content,Test Test,${portalURL}/web/test-site-name/w/webcontent-title") {

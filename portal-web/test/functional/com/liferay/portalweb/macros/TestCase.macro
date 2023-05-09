@@ -111,7 +111,7 @@ definition {
 
 		if ((${siteName} == "Liferay") || !(isSet(siteName))) {
 			if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
-				var portalURL = PropsUtil.get("portal.url");
+				var portalURL = JSONCompany.getPortalURL();
 
 				var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
@@ -120,7 +120,7 @@ definition {
 				return ${portalURL};
 			}
 			else if (${testLiferayVirtualInstance} == "true") {
-				var portalURL = PropsUtil.get("portal.url");
+				var portalURL = JSONCompany.getPortalURL();
 
 				var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
@@ -176,7 +176,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (!(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
@@ -192,7 +192,7 @@ definition {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 

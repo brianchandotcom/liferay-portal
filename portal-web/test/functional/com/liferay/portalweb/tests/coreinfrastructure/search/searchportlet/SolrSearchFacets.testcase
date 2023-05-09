@@ -112,7 +112,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 

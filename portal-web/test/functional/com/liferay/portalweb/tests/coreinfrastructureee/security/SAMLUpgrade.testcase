@@ -25,7 +25,7 @@ definition {
 		property portal.version = "7.1.10.3";
 
 		task ("Given: Add SAP") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -78,7 +78,7 @@ definition {
 		property portal.version = "7.2.10.1";
 
 		task ("Given: Add SAP") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -131,7 +131,7 @@ definition {
 		property portal.version = "7.3.10.1";
 
 		task ("Given: Add SAP") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -184,7 +184,7 @@ definition {
 		property portal.version = "7.0.10.16";
 
 		task ("Given: Add SAP") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 

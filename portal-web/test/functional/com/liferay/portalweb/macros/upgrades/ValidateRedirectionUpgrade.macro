@@ -1,7 +1,7 @@
 definition {
 
 	macro editAndDeleteRedirects {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
@@ -15,7 +15,7 @@ definition {
 	}
 
 	macro ignore404URLs {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
 
@@ -53,7 +53,7 @@ definition {
 	}
 
 	macro viewAndAccessRedirects {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 

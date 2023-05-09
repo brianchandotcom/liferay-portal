@@ -2509,7 +2509,7 @@ catch (Exception e) {
 		}
 
 		task ("View the URL") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			AssertLocation(value1 = "${baseURL}/web/test-site-name/asset-publisher-page");
 		}

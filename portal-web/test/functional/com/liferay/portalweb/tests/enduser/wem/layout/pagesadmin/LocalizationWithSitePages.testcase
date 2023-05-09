@@ -34,7 +34,7 @@ definition {
 		property testray.component.names = "Localization,Sites Administration,Site Localization";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Add widget page") {

@@ -475,7 +475,7 @@ definition {
 
 		FormsAdminNavigator.gotoAddDataProvider();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		FormsAdmin.editDataProviderLocalNetwork(
 			name = "Countries of the World",
@@ -556,7 +556,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsSelectFromListField#CanCreateListUsingDataProvider";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 

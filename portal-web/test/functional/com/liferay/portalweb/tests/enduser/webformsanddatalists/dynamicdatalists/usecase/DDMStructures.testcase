@@ -35,7 +35,7 @@ definition {
 	@description = "This is a use case for LPS-80085."
 	@priority = 3
 	test AddWebContentTemplateWithSmallImage {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONGroup.addGroup(groupName = "Staging Site Name");
 

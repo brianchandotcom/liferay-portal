@@ -660,7 +660,7 @@ definition {
 	}
 
 	macro viewJasperTemplateFromPlacedOrders {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var orderID = selenium.getText("CommerceOrders#PLACED_ORDERS_ID");
 
 		Button.click(button = "View");

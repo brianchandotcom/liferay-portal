@@ -195,7 +195,7 @@ definition {
 
 		Button.clickSave();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "hu/web/test-site-name/test-page");
 
@@ -213,7 +213,7 @@ definition {
 
 		User.logoutPG();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name");
 
@@ -270,7 +270,7 @@ definition {
 
 		PortletEntry.save();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "/web/usa-site-name/test-page");
 

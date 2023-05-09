@@ -469,7 +469,7 @@ definition {
 		}
 
 		var searchPage = StringUtil.toLowerCase(${searchPage});
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var searchURL = "${portalURL}/web/guest/${searchPage}?q=";
 

@@ -276,7 +276,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Add a widget page to each site") {
@@ -350,7 +350,7 @@ definition {
 	@priority = 4
 	test RedirectLocalizedFriendlyURL {
 		task ("Get portal url") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Define English and Hungarian as current site languages") {
@@ -446,7 +446,7 @@ definition {
 		property custom.properties = "locale.use.default.if.not.available=true";
 
 		task ("Get portal url") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Define English and Hungarian as current language for both sites") {
@@ -668,7 +668,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=0";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Add a widget page") {
@@ -715,7 +715,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=1";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Add a widget page") {
@@ -762,7 +762,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=2";
 
 		task ("Get portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		task ("Add a widget page") {

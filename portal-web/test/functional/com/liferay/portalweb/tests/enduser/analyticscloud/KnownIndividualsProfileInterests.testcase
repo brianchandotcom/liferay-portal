@@ -84,7 +84,7 @@ definition {
 		task ("Assert Active pages shown for individuals and assert details") {
 			ACInterests.clickInterest(interestTopic = "ac page 1");
 
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 			ACInterests.viewInterestPage(

@@ -124,7 +124,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Web Content Title");
 
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			ContentPages.focusSlide(slideNumber = 1);
 

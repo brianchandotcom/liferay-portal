@@ -153,7 +153,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Portlet.gotoPortletOptions(
 				portletName = "IFrame",

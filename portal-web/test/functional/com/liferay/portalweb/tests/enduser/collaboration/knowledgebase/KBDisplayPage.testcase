@@ -30,7 +30,7 @@ definition {
 	test CanUpdateMaxNestingForArticleNavigation {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -90,7 +90,7 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.name.skip.portal.instance = "KBDisplayPage#CanViewArticlesViaKBNavigation";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
@@ -175,7 +175,7 @@ definition {
 	@description = "This test ensures that a KB article is displayed with the default template when accessing the KB display page URL."
 	@priority = 4
 	test CanViewArticleWithDefaultTemplate {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Test Site Name",
@@ -210,7 +210,7 @@ definition {
 	@description = "This test covers LPS-166627. It ensures that child article can be viewed after setting nesting level with minimum."
 	@priority = 4
 	test CanViewChildArticleAfterSettingNestingLevelWithMinimum {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",

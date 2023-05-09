@@ -857,7 +857,7 @@ definition {
 		}
 
 		task ("Then the site designer could view the web content with English friendly URL") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			for (var content : list "Web Content Content,${baseURL}/web/test-site-name/w/webcontentenglish") {
 				WebContentDisplayPortlet.viewContent(
@@ -873,7 +873,7 @@ definition {
 		}
 
 		task ("Then the site designer could view the web content with Spanish friendly URL") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			for (var content : list "Web Content Content,${baseURL}/web/test-site-name/w/webcontentspanish") {
 				WebContentDisplayPortlet.viewContent(

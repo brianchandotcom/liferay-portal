@@ -268,7 +268,7 @@ definition {
 	@priority = 3
 	test AssertSitesAcquisitionCardReferrersHighestSession {
 		task ("Get the portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 
@@ -344,7 +344,7 @@ definition {
 	@priority = 3
 	test AssertSitesAcquisitionCardSourceAndMediumHighestSession {
 		task ("Get the portal URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 

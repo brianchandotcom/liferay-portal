@@ -875,7 +875,7 @@ definition {
 		}
 
 		task ("Then verifies the mapped fragments are visible") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "${baseURL}/web/minium/p/simple-product,1/1/23 1:01 AM,1/1/24 1:01 AM");
 		}

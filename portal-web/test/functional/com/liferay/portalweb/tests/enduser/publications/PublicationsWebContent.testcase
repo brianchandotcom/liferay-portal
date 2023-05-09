@@ -560,7 +560,7 @@ definition {
 
 		PortletEntry.publish();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/-/friendlyUrl");
 

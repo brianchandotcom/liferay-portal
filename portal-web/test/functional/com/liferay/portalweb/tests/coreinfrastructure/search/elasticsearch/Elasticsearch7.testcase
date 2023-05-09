@@ -44,7 +44,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Asset Publisher Page");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
 
@@ -287,7 +287,7 @@ definition {
 	test CanReindexSelectedInstance {
 		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexSelectedInstance";
 
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		ServerAdministration.openServerAdmin();
 
@@ -407,7 +407,7 @@ definition {
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curlSecondConnection});
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -544,7 +544,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
@@ -589,7 +589,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 
 		ServerAdministration.openServerAdmin();
 

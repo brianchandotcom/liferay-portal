@@ -48,7 +48,7 @@ definition {
 
 		FormsAdminNavigator.gotoAddDataProvider();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",

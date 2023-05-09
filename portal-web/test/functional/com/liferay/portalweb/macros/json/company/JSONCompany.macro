@@ -118,7 +118,7 @@ definition {
 	}
 
 	macro getDefaultPortalURL {
-		var portalURL = PropsUtil.get("default.portal.url");
+		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(contains(${portalURL}, "http"))) {
 			var portalURL = "http://${portalURL}";
@@ -174,8 +174,16 @@ definition {
 		}
 	}
 
+	@summary = "Use Default Portal URL unless if we need to use the virtual instance created URL, then specify it in virtual.instance.portal.url in test-ext.properties"
 	macro getPortalURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var virtualInstancePortalURL = PropsUtil.get("virtual.instance.portal.url");
+
+		if (isSet(virtualInstancePortalURL)) {
+			var portalURL = ${virtualInstancePortalURL};
+		}
+		else {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
 		return ${portalURL};
 	}

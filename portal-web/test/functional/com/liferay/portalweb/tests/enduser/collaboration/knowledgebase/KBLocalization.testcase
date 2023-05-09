@@ -30,7 +30,7 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test ViewUnchangedKBArticleTitleViaLocalizedPage {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		ApplicationsMenu.gotoPortlet(

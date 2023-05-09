@@ -28,7 +28,7 @@ definition {
 	@description = "This is a use case for LPS-107017. Create user via JSONWSAPUI."
 	@priority = 4
 	test CreateUserViaJSONWSAPIUI {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var userfn = "testfUI";
 		var userln = "testlUI";
 		var key_userScreenName = "testui";
@@ -124,7 +124,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			var authToken = Page.getAuthTokenFromHtmlSource();
 			var plid = Page.getPlidFromHtmlSource();
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
 
@@ -141,7 +141,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test UserCanAccessPermissionsWindowWithPermissionFromAdmin {
 		property test.name.skip.portal.instance = "SecurityUsecase#UserCanAccessPermissionsWindowWithPermissionFromAdmin";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		task ("Define user permissions view control panel menu") {
 			Permissions.definePermissionViaJSONAPI(
@@ -208,7 +208,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		var url = "${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.kernel.service.AccountServiceUtil&serviceMethodName=getOSGiServiceIdentifier&p_auth=";
 
@@ -225,7 +225,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateCannotStealAdminAccount";
 
 		var pAuth = Api.getPAuth();
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		task ("Add new user") {
 			JSONUser.addUser(
@@ -260,7 +260,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		property portal.acceptance = "true";
 
 		task ("Go to home page") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com");
 
@@ -373,7 +373,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 
 		task ("Assert test widget page not present") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/guest/test-widget-page/?p_p_id=asdf&p_p_lifecycle=0&p_p_state=maximized&_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp");
 

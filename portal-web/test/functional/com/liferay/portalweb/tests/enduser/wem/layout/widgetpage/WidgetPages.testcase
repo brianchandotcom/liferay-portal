@@ -439,7 +439,7 @@ definition {
 		}
 
 		task ("When the page designer accesses to the Add menu in a new browser session") {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Open.openInTheNewTab(locator1 = "${baseURL}/web/test-site-name/test-page-name");
 

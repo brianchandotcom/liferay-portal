@@ -9,7 +9,7 @@ definition {
 	property testray.main.component.name = "Portal Configuration";
 
 	setUp {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test/home");
 

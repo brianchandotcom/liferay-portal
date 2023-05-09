@@ -1543,7 +1543,7 @@ definition {
 			var groupId = JSONGroupAPI._getGroupIdByName(
 				groupName = "Minium",
 				site = "true");
-			var basePortalURL = PropsUtil.get("portal.url");
+			var basePortalURL = JSONCompany.getPortalURL();
 
 			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 

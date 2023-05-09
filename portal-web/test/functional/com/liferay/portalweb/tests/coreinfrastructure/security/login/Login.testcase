@@ -91,7 +91,7 @@ definition {
 		task ("Login and configure spanish as default and current portal language") {
 			User.firstLoginPG();
 
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Localization",

@@ -11,7 +11,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
 

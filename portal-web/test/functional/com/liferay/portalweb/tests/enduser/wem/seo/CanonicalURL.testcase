@@ -60,7 +60,7 @@ definition {
 	test SetCustomURLAtPageLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetCustomURLAtPageLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -118,7 +118,7 @@ definition {
 	test SetCustomURLAtPageLevelForEachActiveLanguage {
 		property test.name.skip.portal.instance = "CanonicalURL#SetCustomURLAtPageLevelForEachActiveLanguage";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -193,7 +193,7 @@ definition {
 	test SetDefaultURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetDefaultURLAtSystemLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		User.logoutPG();
 
@@ -235,7 +235,7 @@ definition {
 	test SetLocalizedURLAtSystemLevel {
 		property test.name.skip.portal.instance = "CanonicalURL#SetLocalizedURLAtSystemLevel";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		User.logoutPG();
 

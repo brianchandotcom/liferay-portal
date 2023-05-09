@@ -221,7 +221,7 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Training";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
@@ -258,7 +258,7 @@ definition {
 
 	@priority = 3
 	test AddOrganizationSitePublicPage {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
@@ -988,7 +988,7 @@ definition {
 	@description = "This is a use case for LPS-75084."
 	@priority = 5
 	test NoPermissionUserCannotAddOrganizationViaURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONOrganization.addOrganization(organizationName = "Organization for Test");
 
@@ -1433,7 +1433,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "Organizations#ViewContentInCustomOrganizationTypeSite";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONRole.addOrganizationRole(roleTitle = "Canada Orgrole");

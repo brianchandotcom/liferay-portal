@@ -135,7 +135,7 @@ definition {
 			Navigator.openSpecificURL(url = ${virtualHostsURL});
 		}
 		else {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Open.openNoError(locator1 = "${baseURL}/web/guest/home");
 		}

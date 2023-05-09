@@ -1119,7 +1119,7 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanUtilizeDataProvidersToCreateAnAutofillRule";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 

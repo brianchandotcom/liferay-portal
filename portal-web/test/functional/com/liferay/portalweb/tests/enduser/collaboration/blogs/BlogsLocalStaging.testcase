@@ -182,7 +182,7 @@ definition {
 	@description = "This is a test for LPS-136789. It checks that a blog with a layout reference can be published."
 	@priority = 3
 	test CanPublishBlogWithLayoutReference {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
@@ -286,7 +286,7 @@ definition {
 	@description = "This is a test for LPS-136793 and LPS-139452. It checks that a custom friendly URL for Blogs can be deleted and republished."
 	@priority = 4
 	test CanPublishDeletedCustomFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -763,7 +763,7 @@ definition {
 	@description = "This is a test for LPS-136794. It checks that an updated custom friendly URL for Blogs can be published."
 	@priority = 4
 	test CanPublishUpdatedCustomFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

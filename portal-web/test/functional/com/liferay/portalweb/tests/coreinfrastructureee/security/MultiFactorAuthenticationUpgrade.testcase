@@ -55,7 +55,7 @@ definition {
 		property data.archive.type = "data-archive-mfa-system-level";
 		property portal.version = "7.3.10";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		task ("Login and send OTP email") {
 			User.firstLoginUI(

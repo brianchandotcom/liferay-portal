@@ -1,7 +1,7 @@
 definition {
 
 	macro viewAndEditCustomMetaTag {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		User.logoutPG();
 
@@ -39,7 +39,7 @@ definition {
 	}
 
 	macro viewAndEditOpenGraph {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
 		Navigator.openToGroupPagesPortlet(
@@ -129,7 +129,7 @@ definition {
 	}
 
 	macro viewAndEditSERPPreview {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.gotoPage(pageName = "Test Page");
 

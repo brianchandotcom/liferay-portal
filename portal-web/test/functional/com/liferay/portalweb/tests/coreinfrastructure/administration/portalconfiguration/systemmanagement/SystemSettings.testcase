@@ -232,7 +232,7 @@ definition {
 		}
 
 		task ("And go to Accounts in the new site settings") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${portalURL}/group/site-name/~/control_panel/manage/-/site/settings");
 
@@ -329,7 +329,7 @@ definition {
 		}
 
 		task ("And go to Accounts in the site settings") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/site-name/~/control_panel/manage/-/site/settings");
 

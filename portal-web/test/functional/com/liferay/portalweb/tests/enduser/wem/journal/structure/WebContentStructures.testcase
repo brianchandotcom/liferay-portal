@@ -33,7 +33,7 @@ definition {
 	@priority = 4
 	test AddStructureWhenURLHasLocale {
 		task ("Given a Web Content admin inserts locale to URL") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${portalURL}/en/");
 

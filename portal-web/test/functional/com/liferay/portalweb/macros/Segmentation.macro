@@ -347,7 +347,7 @@ definition {
 	}
 
 	macro getPortalInstanceDefaultLanguageId {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 

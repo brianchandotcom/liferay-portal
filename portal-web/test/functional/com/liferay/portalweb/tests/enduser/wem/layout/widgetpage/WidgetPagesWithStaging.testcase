@@ -82,7 +82,7 @@ definition {
 		}
 
 		task ("When the page admin navigates to the page set via new friendly URL in live site") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
 		}

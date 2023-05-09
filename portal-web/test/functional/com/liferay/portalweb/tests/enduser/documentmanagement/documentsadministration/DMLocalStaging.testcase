@@ -1950,7 +1950,7 @@ definition {
 	@description = "This test covers LPS-155794. It ensures that an image that was published on a site can still be accessed after local staging is disabled."
 	@priority = 5
 	test ImageIsStillAccessibleAfterDisablingStaging {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

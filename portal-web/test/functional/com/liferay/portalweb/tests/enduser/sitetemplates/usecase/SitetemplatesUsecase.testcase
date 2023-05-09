@@ -608,7 +608,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#SiteTemplatePageLinkInWebContentRedirectCorrectly";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Given: User add a new Site Template and 2 page to it") {
@@ -690,7 +690,7 @@ definition {
 	test ViewImportedSitePageWithNumericFriendlyURL {
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#ViewImportedSitePageWithNumericFriendlyURL";
 
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = JSONCompany.getPortalURL();
 
 		task ("Given: User add a new Site and 1 page to it, then verify that it has correct friendly URL") {
 			Site.openSitesAdmin();

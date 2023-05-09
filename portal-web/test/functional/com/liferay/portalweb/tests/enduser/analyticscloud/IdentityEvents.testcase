@@ -398,7 +398,7 @@ definition {
 		}
 
 		task ("Sign in new site") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			User.firstLoginUI(
 				specificURL = "${portalURL}/web/site-name/ac-page",
@@ -465,7 +465,7 @@ definition {
 		}
 
 		task ("Sign in new site") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			User.firstLoginUI(
 				specificURL = "${portalURL}/web/site-name/ac-page",
@@ -518,7 +518,7 @@ definition {
 		}
 
 		task ("Sign in new site") {
-			var portalURL = PropsUtil.get("portal.url");
+			var portalURL = JSONCompany.getPortalURL();
 
 			User.firstLoginUI(
 				specificURL = "${portalURL}/web/site-name/ac-page",

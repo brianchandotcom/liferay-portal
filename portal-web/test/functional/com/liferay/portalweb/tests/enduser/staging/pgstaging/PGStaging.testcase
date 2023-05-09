@@ -694,7 +694,7 @@ definition {
 	@description = "This is a use case for LPS-80295."
 	@priority = 4
 	test PublishWCWithFriendlyURL {
-		var baseURL = PropsUtil.get("portal.url");
+		var baseURL = JSONCompany.getPortalURL();
 		var friendlyURL = "link";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");

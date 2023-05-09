@@ -72,9 +72,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery(userId);
 
-		Class<T> clazz = getTypeClass();
-
-		ZipWriter zipWriter = getZipWriter(userId, clazz.getName());
+		ZipWriter zipWriter = getZipWriter(userId, getTypeKey());
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(T baseModel) -> {

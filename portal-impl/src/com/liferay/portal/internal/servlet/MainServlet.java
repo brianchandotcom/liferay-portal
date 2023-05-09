@@ -752,19 +752,23 @@ public class MainServlet extends HttpServlet {
 				0, true);
 		}
 
-		String[] webIds = PortalInstances.getWebIds();
-
-		for (String webId : webIds) {
-			boolean skipCheck = false;
-
-			if (StartupHelperUtil.isDBNew() &&
-				webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-
-				skipCheck = true;
-			}
-
-			PortalInstances.initCompany(webId, skipCheck);
+		if (Validator.isNull(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+			throw new RuntimeException("Default web id must not be null");
 		}
+
+		CompanyLocalServiceUtil.forEachCompany(
+			company -> {
+				String webId = company.getWebId();
+
+				if (StartupHelperUtil.isDBNew() &&
+					webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+
+					PortalInstances.initCompany(webId, true);
+				}
+				else {
+					PortalInstances.initCompany(webId, false);
+				}
+			});
 	}
 
 	private void _initLayoutTemplates(PluginPackage pluginPackage) {

@@ -95,10 +95,10 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	protected void configureConfigurationJavadocFormatterForJavaLibraryPlugin(
 		Project project, Configuration configuration) {
 
-		Configuration compileConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+		Configuration apiConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.API_CONFIGURATION_NAME);
 
-		configuration.extendsFrom(compileConfiguration);
+		configuration.extendsFrom(apiConfiguration);
 	}
 
 	protected void configureTaskFormatJavadoc(

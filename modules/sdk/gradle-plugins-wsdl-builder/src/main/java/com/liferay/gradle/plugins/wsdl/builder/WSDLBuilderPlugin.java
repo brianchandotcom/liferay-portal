@@ -91,10 +91,10 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		if (buildWSDLTask.getAxisVersion() == 2) {
-			Configuration compileConfiguration = GradleUtil.getConfiguration(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+			Configuration apiConfiguration = GradleUtil.getConfiguration(
+				project, JavaPlugin.API_CONFIGURATION_NAME);
 
-			configuration.extendsFrom(compileConfiguration);
+			configuration.extendsFrom(apiConfiguration);
 		}
 
 		return configuration;
@@ -382,7 +382,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			TaskOutputs taskOutputs = buildWSDLTask.getOutputs();
 
 			GradleUtil.addDependency(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				project, JavaPlugin.API_CONFIGURATION_NAME,
 				taskOutputs.getFiles());
 		}
 

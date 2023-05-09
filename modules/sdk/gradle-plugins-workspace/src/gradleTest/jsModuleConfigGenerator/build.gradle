@@ -1,5 +1,5 @@
 apply plugin: "com.liferay.js.module.config.generator"
-apply plugin: "java"
+apply plugin: "java-library"
 
 node {
 	useNpm = true

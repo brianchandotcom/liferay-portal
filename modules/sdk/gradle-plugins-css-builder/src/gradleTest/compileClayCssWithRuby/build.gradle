@@ -26,7 +26,7 @@ buildscript {
 
 apply plugin: "com.liferay.css.builder"
 apply plugin: "com.liferay.node"
-apply plugin: "java"
+apply plugin: "java-library"
 
 node {
 	useNpm = true

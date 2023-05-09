@@ -213,6 +213,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						</ul>
 					</clay:tabs>
 				</div>
+				</div>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

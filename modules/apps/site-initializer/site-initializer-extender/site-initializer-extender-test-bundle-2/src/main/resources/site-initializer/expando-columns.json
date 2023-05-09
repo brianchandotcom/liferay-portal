@@ -24,7 +24,7 @@
 			"hidden": false,
 			"indexType": 2,
 			"localizeFieldName": true,
-			"secret": false,
+			"secret": true,
 			"visibleWithUpdatePermission": false,
 			"width": "0"
 		}
@@ -33,7 +33,7 @@
 		"dataType": 10,
 		"defaultValue": [
 			100,
-			200,
+			250,
 			300
 		],
 		"modelResource": "com.liferay.portal.kernel.model.User",

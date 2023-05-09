@@ -786,59 +786,61 @@ public class BundleSiteInitializerTest {
 			_serviceContext.getCompanyId(),
 			"com.liferay.commerce.product.model.CPDefinition");
 
-		ExpandoBridge expandoBridgeOrderItem =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				_serviceContext.getCompanyId(),
-				"com.liferay.commerce.model.CommerceOrderItem");
-
-		ExpandoBridge expandoBridgeUser =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				_serviceContext.getCompanyId(),
-				"com.liferay.portal.kernel.model.User");
-
-		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
 			1.5, expandoBridge.getAttribute("Test Expando Column 1"));
 
 		Assert.assertEquals(
 			"Test Default Value",
 			expandoBridge.getAttribute("Test Expando Column 2"));
+		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 
-		double[] actualArrayExpandoColumn3 =
-			(double[])expandoBridgeOrderItem.getAttributeDefault(
-				"Test Expando Column 3");
+		UnicodeProperties unicodeProperties =
+			expandoBridge.getAttributeProperties("Test Expando Column 1");
 
-		Assert.assertTrue(actualArrayExpandoColumn3.length > 0);
+		Assert.assertTrue(unicodeProperties.isEmpty());
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 2");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
+
+		expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.commerce.model.CommerceOrderItem");
 
 		Assert.assertTrue(
-			ArrayUtil.contains(actualArrayExpandoColumn3, 2.0) &&
-			ArrayUtil.contains(actualArrayExpandoColumn3, 2.5));
+			ArrayUtil.containsAll(
+				new double[] {2.0, 2.5},
+				(double[])expandoBridge.getAttributeDefault(
+					"Test Expando Column 3")));
 
-		int[] actualArrayExpandoColumn4 =
-			(int[])expandoBridgeUser.getAttributeDefault(
-				"Test Expando Column 4");
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 3");
 
-		Assert.assertTrue(actualArrayExpandoColumn4.length > 0);
+		Assert.assertFalse(unicodeProperties.isEmpty());
+		Assert.assertFalse(
+			GetterUtil.getBoolean(unicodeProperties.getProperty("secret")));
+
+		expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.portal.kernel.model.User");
 
 		Assert.assertTrue(
-			ArrayUtil.contains(actualArrayExpandoColumn4, 100) &&
-			ArrayUtil.contains(actualArrayExpandoColumn4, 200));
+			ArrayUtil.containsAll(
+				new int[] {100, 200},
+				(int[])expandoBridge.getAttributeDefault(
+					"Test Expando Column 4")));
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 4");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
 	}
 
 	private void _assertExpandoColumns2() {
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			_serviceContext.getCompanyId(),
 			"com.liferay.commerce.product.model.CPDefinition");
-
-		ExpandoBridge expandoBridgeOrderItem =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				_serviceContext.getCompanyId(),
-				"com.liferay.commerce.model.CommerceOrderItem");
-
-		ExpandoBridge expandoBridgeUser =
-			ExpandoBridgeFactoryUtil.getExpandoBridge(
-				_serviceContext.getCompanyId(),
-				"com.liferay.portal.kernel.model.User");
 
 		Assert.assertNotNull(expandoBridge);
 		Assert.assertEquals(
@@ -847,38 +849,62 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Default Value Update",
 			expandoBridge.getAttribute("Test Expando Column 2"));
+		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 
-		double[] actualArrayExpandoColumn3 =
-			(double[])expandoBridgeOrderItem.getAttributeDefault(
-				"Test Expando Column 3");
+		UnicodeProperties unicodeProperties =
+			expandoBridge.getAttributeProperties("Test Expando Column 1");
 
-		Assert.assertTrue(actualArrayExpandoColumn3.length > 0);
+		Assert.assertTrue(unicodeProperties.isEmpty());
 
-		Assert.assertTrue(
-			ArrayUtil.contains(actualArrayExpandoColumn3, 2.0) &&
-			ArrayUtil.contains(actualArrayExpandoColumn3, 2.5) &&
-			ArrayUtil.contains(actualArrayExpandoColumn3, 3.0));
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 2");
 
-		int[] actualArrayExpandoColumn4 =
-			(int[])expandoBridgeUser.getAttributeDefault(
-				"Test Expando Column 4");
+		Assert.assertFalse(unicodeProperties.isEmpty());
+		Assert.assertEquals(
+			2,
+			GetterUtil.getInteger(unicodeProperties.getProperty("index-type")));
 
-		Assert.assertTrue(actualArrayExpandoColumn4.length > 0);
-
-		Assert.assertTrue(
-			ArrayUtil.contains(actualArrayExpandoColumn4, 100) &&
-			ArrayUtil.contains(actualArrayExpandoColumn4, 200) &&
-			ArrayUtil.contains(actualArrayExpandoColumn4, 300));
-
-		String[] actualArrayExpandoColumn5 =
-			(String[])expandoBridgeUser.getAttributeDefault(
-				"Test Expando Column 5");
-
-		Assert.assertTrue(actualArrayExpandoColumn5.length > 0);
+		expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.commerce.model.CommerceOrderItem");
 
 		Assert.assertTrue(
-			ArrayUtil.contains(actualArrayExpandoColumn5, "value1") &&
-			ArrayUtil.contains(actualArrayExpandoColumn5, "value2"));
+			ArrayUtil.containsAll(
+				new double[] {2.0, 2.5, 3.0},
+				(double[])expandoBridge.getAttributeDefault(
+					"Test Expando Column 3")));
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 3");
+
+		Assert.assertFalse(unicodeProperties.isEmpty());
+		Assert.assertTrue(
+			GetterUtil.getBoolean(unicodeProperties.getProperty("secret")));
+
+		expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			_serviceContext.getCompanyId(),
+			"com.liferay.portal.kernel.model.User");
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new int[] {100, 250, 300},
+				(int[])expandoBridge.getAttributeDefault(
+					"Test Expando Column 4")));
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 4");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new String[] {"value1", "value2"},
+				(String[])expandoBridge.getAttributeDefault(
+					"Test Expando Column 5")));
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 4");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
 	}
 
 	private void _assertFragmentEntries() throws Exception {

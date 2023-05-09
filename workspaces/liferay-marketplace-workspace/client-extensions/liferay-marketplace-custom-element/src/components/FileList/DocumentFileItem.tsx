@@ -1,6 +1,6 @@
 import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
-import folderIcon from '../../assets/icons/folder-fill.svg';
+import folderIcon from '../../assets/icons/folder_fill_icon.svg';
 import {UploadedFile} from './FileList';
 
 import './DocumentFileItem.scss';

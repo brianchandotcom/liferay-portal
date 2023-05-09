@@ -4,11 +4,11 @@ import './AccountDetailsPage.scss';
 
 import {useEffect, useState} from 'react';
 
-import creditCartIcon from '../../assets/icons/credit-card.svg';
-import downloadIcon from '../../assets/icons/download-icon.svg';
-import locationIcon from '../../assets/icons/location-on-icon.svg';
-import phoneIcon from '../../assets/icons/phone-icon.svg';
-import userIcon from '../../assets/icons/user-icon.svg';
+import creditCartIcon from '../../assets/icons/credit_card_icon.svg';
+import downloadIcon from '../../assets/icons/download_icon.svg';
+import locationIcon from '../../assets/icons/location_icon.svg';
+import phoneIcon from '../../assets/icons/phone_icon.svg';
+import userIcon from '../../assets/icons/user_icon.svg';
 import {DetailedCard} from '../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../utils/api';
 import {showAccountImage} from '../../utils/util';

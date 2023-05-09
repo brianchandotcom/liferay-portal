@@ -2,10 +2,10 @@ import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 
-import chevronRight from '../../assets/icons/chevron-right.svg';
-import circleFill from '../../assets/icons/circle_fill.svg';
-import dotsIcon from '../../assets/icons/dots-icon.svg';
-import emptyImage from '../../assets/icons/emptyImage.svg';
+import chevronRight from '../../assets/icons/chevron_right_icon.svg';
+import circleFill from '../../assets/icons/circle_fill_icon.svg';
+import dotsIcon from '../../assets/icons/dots_icon.svg';
+import emptyPicture from '../../assets/icons/empty_picture_icon.svg';
 import {showAccountImage} from '../../utils/util';
 
 import './NewAppToolBar.scss';
@@ -83,7 +83,7 @@ export function NewAppToolBar({
 					<img
 						alt="New App logo"
 						className="new-app-tool-bar-new-app-logo-img"
-						src={appImage ?? emptyImage}
+						src={appImage ?? emptyPicture}
 					/>
 
 					<span className="new-app-tool-bar-new-app-logo-text">

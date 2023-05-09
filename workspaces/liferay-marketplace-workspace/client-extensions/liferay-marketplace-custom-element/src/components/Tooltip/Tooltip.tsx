@@ -1,7 +1,7 @@
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
-import helpFillIcon from '../../assets/icons/help_fill.svg';
+import helpFillIcon from '../../assets/icons/help_fill_icon.svg';
 
 import './Tooltip.scss';
 

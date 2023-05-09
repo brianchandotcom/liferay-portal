@@ -1,4 +1,4 @@
-import infoCircleIcon from '../../assets/icons/info-circle-icon.svg';
+import infoCircleIcon from '../../assets/icons/info_circle_icon.svg';
 import {Input} from '../../components/Input/Input';
 import {BillingAddress} from './BillingAddress';
 import {PaymentMethodMode} from './PaymentMethodMode';

@@ -1,4 +1,4 @@
-import emptyImage from '../../assets/icons/emptyImage.svg';
+import emptyPicture from '../../assets/icons/empty_picture_icon.svg';
 
 import './UploadLogo.scss';
 import {UploadedFile} from '../FileList/FileList';
@@ -20,7 +20,7 @@ export function UploadLogo({
 				className="upload-logo-icon"
 				style={{
 					backgroundImage: `url(${
-						uploadedFile?.preview ?? emptyImage
+						uploadedFile?.preview ?? emptyPicture
 					})`,
 					backgroundPosition: '50% 50%',
 					backgroundRepeat: 'no-repeat',

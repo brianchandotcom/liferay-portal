@@ -2,7 +2,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {MouseEvent} from 'react';
 
-import arrowLeft from '../../assets/icons/guide-icon.svg';
+import arrowLeft from '../../assets/icons/guide_icon.svg';
 
 import './CardButton.scss';
 

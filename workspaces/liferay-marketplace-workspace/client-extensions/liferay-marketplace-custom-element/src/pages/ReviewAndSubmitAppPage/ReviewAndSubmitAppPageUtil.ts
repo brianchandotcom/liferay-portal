@@ -1,5 +1,5 @@
-import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
-import scheduleIcon from '../../assets/icons/schedule-icon.svg';
+import brightnessEmptyIcon from '../../assets/icons/brightness_empty_icon.svg';
+import scheduleIcon from '../../assets/icons/schedule_icon.svg';
 
 export type File = {
 	fileDescription: string;

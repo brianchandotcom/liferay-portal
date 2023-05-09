@@ -1,7 +1,7 @@
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 
-import circleFill from '../../assets/icons/circle_fill.svg';
+import circleFill from '../../assets/icons/circle_fill_icon.svg';
 import {showAppImage} from '../../utils/util';
 import {AppProps} from './DashboardTable';
 

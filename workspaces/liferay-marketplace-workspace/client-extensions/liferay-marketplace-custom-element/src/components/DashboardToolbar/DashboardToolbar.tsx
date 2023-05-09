@@ -3,7 +3,7 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classnames from 'classnames';
 
-import liferayIcon from '../../assets/icons/liferay-icon.svg';
+import liferayIcon from '../../assets/icons/liferay_icon.svg';
 
 import './DashboardToolbar.scss';
 

@@ -1,5 +1,5 @@
-import documentIcon from '../../assets/icons/document-icon.svg';
-import downloadIcon from '../../assets/icons/download-icon.svg';
+import documentIcon from '../../assets/icons/document_icon.svg';
+import downloadIcon from '../../assets/icons/download_icon.svg';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../../manage-app-state/AppManageState';

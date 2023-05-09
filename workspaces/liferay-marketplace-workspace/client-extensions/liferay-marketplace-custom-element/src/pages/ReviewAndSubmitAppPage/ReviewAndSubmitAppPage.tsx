@@ -1,12 +1,12 @@
 import {useEffect, useState} from 'react';
 
-import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
-import documentationIcon from '../../assets/icons/documentation-icon.svg';
-import globeIcon from '../../assets/icons/globe-icon.svg';
-import guideIcon from '../../assets/icons/guide-icon.svg';
-import phoneIcon from '../../assets/icons/phone-icon.svg';
-import scheduleIcon from '../../assets/icons/schedule-icon.svg';
-import usageTermsIcon from '../../assets/icons/usage-terms-icon.svg';
+import brightnessEmptyIcon from '../../assets/icons/brightness_empty_icon.svg';
+import documentationIcon from '../../assets/icons/documentation_icon.svg';
+import globeIcon from '../../assets/icons/globe_icon.svg';
+import guideIcon from '../../assets/icons/guide_icon.svg';
+import phoneIcon from '../../assets/icons/phone_icon.svg';
+import scheduleIcon from '../../assets/icons/schedule_icon.svg';
+import usageTermsIcon from '../../assets/icons/usage_terms_icon.svg';
 import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';

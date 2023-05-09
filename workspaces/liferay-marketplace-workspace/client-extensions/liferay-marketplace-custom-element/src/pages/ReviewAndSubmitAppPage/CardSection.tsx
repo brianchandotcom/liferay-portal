@@ -1,9 +1,9 @@
 import ClayButton from '@clayui/button';
 
-import arrowDown from '../../assets/icons/arrow-down.svg';
-import documentIcon from '../../assets/icons/document-icon.svg';
-import folderIcon from '../../assets/icons/folder-fill.svg';
-import unitedStatesIcon from '../../assets/icons/united-states.svg';
+import arrowDown from '../../assets/icons/arrow_down_icon.svg';
+import documentIcon from '../../assets/icons/document_icon.svg';
+import folderIcon from '../../assets/icons/folder_fill_icon.svg';
+import unitedStatesIcon from '../../assets/icons/united_states_icon.svg';
 import {CardLink} from '../../components/Card/CardLink';
 import {CardTags} from '../../components/Card/CardTags';
 import {CardView} from '../../components/Card/CardView';

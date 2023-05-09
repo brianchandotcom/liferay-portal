@@ -1,9 +1,9 @@
 import {DashboardListItems} from 'liferay-marketplace-custom-element/src/components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from 'liferay-marketplace-custom-element/src/components/DashboardTable/DashboardTable';
 
-import solutionsIcon from '../../assets/icons/analytics-icon.svg';
-import appsIcon from '../../assets/icons/apps-fill.svg';
-import membersIcon from '../../assets/icons/person-fill.svg';
+import solutionsIcon from '../../assets/icons/analytics_icon.svg';
+import appsIcon from '../../assets/icons/apps_fill_icon.svg';
+import membersIcon from '../../assets/icons/person_fill_icon.svg';
 
 export const appList: AppProps[] = [];
 

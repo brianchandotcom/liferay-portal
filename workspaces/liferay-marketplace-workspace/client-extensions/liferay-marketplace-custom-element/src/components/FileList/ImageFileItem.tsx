@@ -1,8 +1,8 @@
 import ClayButton from '@clayui/button';
 import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
-import arrowNorth from '../../assets/icons/arrow-north.svg';
-import arrowSouth from '../../assets/icons/arrow-south.svg';
+import arrowNorth from '../../assets/icons/arrow_north_icon.svg';
+import arrowSouth from '../../assets/icons/arrow_south_icon.svg';
 import {Tooltip} from '../Tooltip/Tooltip';
 import {UploadedFile} from './FileList';
 

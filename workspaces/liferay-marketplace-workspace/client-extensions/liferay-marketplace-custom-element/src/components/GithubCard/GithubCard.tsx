@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
 
-import githubIcon from '../../assets/icons/github-icon.svg';
-import linkIcon from '../../assets/icons/link-icon.svg';
+import githubIcon from '../../assets/icons/github_icon.svg';
+import linkIcon from '../../assets/icons/link_icon.svg';
 import AutoComplete from '../AutoComplete';
 
 import './GithubCard.scss';

@@ -4,9 +4,9 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
-import arrowDown from '../../assets/icons/arrow-down.svg';
-import arrowLeft from '../../assets/icons/arrow-left.svg';
-import circleFullIcon from '../../assets/icons/circle_fill.svg';
+import arrowDown from '../../assets/icons/arrow_down_icon.svg';
+import arrowLeft from '../../assets/icons/arrow_left_icon.svg';
+import circleFullIcon from '../../assets/icons/circle_fill_icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
 import {useAppContext} from '../../manage-app-state/AppManageState';

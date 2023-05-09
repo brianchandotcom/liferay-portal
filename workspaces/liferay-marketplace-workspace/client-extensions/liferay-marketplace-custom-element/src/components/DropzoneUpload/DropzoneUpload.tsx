@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 
-import documentIcon from '../../assets/icons/document-icon.svg';
+import documentIcon from '../../assets/icons/document_icon.svg';
 
 import './DropzoneUpload.scss';
 

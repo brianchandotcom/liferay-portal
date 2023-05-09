@@ -3,10 +3,9 @@ import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useState} from 'react';
 
-import checkFillIcon from '../../assets/icons/check_fill.svg';
-import circleFillIcon from '../../assets/icons/circle_fill.svg';
+import checkFillIcon from '../../assets/icons/check_fill_icon.svg';
+import circleFillIcon from '../../assets/icons/circle_fill_icon.svg';
 import {
-	getChannels,
 	getOrderTypes,
 	getProductSKU,
 	getProducts,

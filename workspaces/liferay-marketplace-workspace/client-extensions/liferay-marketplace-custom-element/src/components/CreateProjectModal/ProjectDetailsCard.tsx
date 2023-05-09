@@ -1,9 +1,9 @@
-import calendarIcon from '../../assets/icons/calendar_month.svg';
-import githubIcon from '../../assets/icons/github-icon.svg';
-import guideIcon from '../../assets/icons/guide-icon.svg';
-import liferayIcon from '../../assets/icons/liferay-icon.svg';
-import listIcon from '../../assets/icons/list_alt.svg';
-import serverIcon from '../../assets/icons/serverIcon.svg';
+import calendarIcon from '../../assets/icons/calendar_month_icon.svg';
+import githubIcon from '../../assets/icons/github_icon.svg';
+import guideIcon from '../../assets/icons/guide_icon.svg';
+import liferayIcon from '../../assets/icons/liferay_icon.svg';
+import listIcon from '../../assets/icons/list_alt_icon.svg';
+import serverIcon from '../../assets/icons/server_icon.svg';
 
 const projectDetailsCardValues = [
 	{

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import circleFill from '../../assets/icons/circle_fill.svg';
+import circleFill from '../../assets/icons/circle_fill_icon.svg';
 
 import './DashboardNavigationListItem.scss';
 import {AppProps} from '../DashboardTable/DashboardTable';

@@ -3,9 +3,9 @@ import ClayIcon from '@clayui/icon';
 import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './MemberProfile.scss';
-import catalogIcon from '../../assets/icons/catalog-icon.svg';
-import shieldCheckIcon from '../../assets/icons/shield-check-icon.svg';
-import userIcon from '../../assets/icons/user-icon.svg';
+import catalogIcon from '../../assets/icons/catalog_icon.svg';
+import shieldCheckIcon from '../../assets/icons/shield_check_icon.svg';
+import userIcon from '../../assets/icons/user_icon.svg';
 import {DetailedCard} from '../DetailedCard/DetailedCard';
 
 interface MemberProfileProps {

@@ -3,7 +3,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import {FieldBase} from '../FieldBase';
 
 import './LicensePriceCard.scss';
-import unitedStatesIcon from '../../assets/icons/united-states.svg';
+import unitedStatesIcon from '../../assets/icons/united_states_icon.svg';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 

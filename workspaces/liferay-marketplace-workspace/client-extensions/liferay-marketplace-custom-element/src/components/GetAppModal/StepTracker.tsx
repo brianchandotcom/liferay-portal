@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 
-import checkFill from '../../assets/icons/check_fill.svg';
-import circleFill from '../../assets/icons/circle_fill.svg';
-import radioSelected from '../../assets/icons/radio-button-checked-2.svg';
+import checkFill from '../../assets/icons/check_fill_icon.svg';
+import circleFill from '../../assets/icons/circle_fill_icon.svg';
+import radioSelected from '../../assets/icons/radio_button_checked_2_icon.svg';
 
 interface Steps {
 	checked: boolean;

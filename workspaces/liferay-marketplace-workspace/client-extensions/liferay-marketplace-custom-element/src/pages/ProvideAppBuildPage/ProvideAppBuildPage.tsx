@@ -1,11 +1,11 @@
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
 
-import cancelIcon from '../../assets/icons/cancel-icon.svg';
-import cloudIcon from '../../assets/icons/cloud-fill.svg';
-import githubIcon from '../../assets/icons/github-icon.svg';
-import taskCheckedIcon from '../../assets/icons/task-checked-icon.svg';
-import uploadIcon from '../../assets/icons/upload-fill.svg';
+import cancelIcon from '../../assets/icons/cancel_icon.svg';
+import cloudIcon from '../../assets/icons/cloud_fill_icon.svg';
+import githubIcon from '../../assets/icons/github_icon.svg';
+import taskCheckedIcon from '../../assets/icons/task_checked_icon.svg';
+import uploadIcon from '../../assets/icons/upload_fill_icon.svg';
 import {DropzoneUpload} from '../../components/DropzoneUpload/DropzoneUpload';
 import {FileList, UploadedFile} from '../../components/FileList/FileList';
 import {Header} from '../../components/Header/Header';

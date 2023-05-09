@@ -1,8 +1,8 @@
 import {ClayToggle} from '@clayui/form';
 import classNames from 'classnames';
 
-import radioChecked from '../../assets/icons/radio-button-checked.svg';
-import radioUnchecked from '../../assets/icons/radio-button-unchecked.svg';
+import radioChecked from '../../assets/icons/radio_button_checked_icon.svg';
+import radioUnchecked from '../../assets/icons/radio_button_unchecked_icon.svg';
 import paypal from '../../assets/images/paypal.png';
 
 import './RadioCard.scss';

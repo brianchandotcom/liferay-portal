@@ -1,5 +1,5 @@
 import './LicensePriceChildren.scss';
-import unitedStatesIcon from '../../assets/icons/united-states.svg';
+import unitedStatesIcon from '../../assets/icons/united_states_icon.svg';
 
 type Currency = {
 	icon: string;

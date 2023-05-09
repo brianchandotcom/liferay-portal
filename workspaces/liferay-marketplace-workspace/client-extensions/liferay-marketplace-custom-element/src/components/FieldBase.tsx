@@ -17,8 +17,8 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {ReactNode} from 'react';
 
-import arrowDown from '../assets/icons/arrow-down.svg';
-import asteriskIcon from '../assets/icons/asterisk.svg';
+import arrowDown from '../assets/icons/arrow_down_icon.svg';
+import asteriskIcon from '../assets/icons/asterisk_icon.svg';
 
 import './FieldBase.scss';
 import {Tooltip} from './Tooltip/Tooltip';

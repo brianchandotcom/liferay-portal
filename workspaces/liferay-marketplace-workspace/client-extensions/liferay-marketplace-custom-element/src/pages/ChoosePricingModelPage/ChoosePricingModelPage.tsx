@@ -1,5 +1,5 @@
-import brightnessEmptyIcon from '../../assets/icons/brightness-empty.svg';
-import creditCardIcon from '../../assets/icons/credit-card.svg';
+import brightnessEmptyIcon from '../../assets/icons/brightness_empty_icon.svg';
+import creditCardIcon from '../../assets/icons/credit_card_icon.svg';
 import {Header} from '../../components/Header/Header';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';

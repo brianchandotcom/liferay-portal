@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 
-import magnifyingGlass from '../../assets/images/magnifying-glass.svg';
+import magnifyingGlass from '../../assets/images/magnifying_glass.svg';
 import menu from '../../assets/images/menu.svg';
 import {GateCard} from '../../components/Card/GateCard';
 import {Footer} from '../../components/Footer/Footer';

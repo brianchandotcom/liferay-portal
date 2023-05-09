@@ -1,4 +1,4 @@
-import noApp from '../../assets/images/no-app.png';
+import noApp from '../../assets/images/no_app.png';
 
 import './DashboardEmptyTable.scss';
 

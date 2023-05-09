@@ -7,8 +7,8 @@ import {
 	updateProductSpecification,
 } from './api';
 
-import accountPlaceholder from '../assets/images/account-placeholder.png';
-import appPlaceholder from '../assets/images/app-placeholder.png';
+import accountPlaceholder from '../assets/images/account_placeholder.png';
+import appPlaceholder from '../assets/images/app_placeholder.png';
 
 export function createSkuName(
 	appProductId: number,

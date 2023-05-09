@@ -337,6 +337,7 @@ const Sorting = ({fdsView, fdsViewsURL}: FDSViewSectionInterface) => {
 						disableSave={!newFDSSortsOrder.length}
 						fields={[
 							{
+								headingTitle: true,
 								label: Liferay.Language.get('name'),
 								name: 'fieldName',
 							},

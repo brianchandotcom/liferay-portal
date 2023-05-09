@@ -78,9 +78,9 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private CsdlComplexType _createCsdlComplexType(
+		int depth, EntityField entityField, String namespace,
 		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
-			complexTypeNameDepth,
-		EntityField entityField, String namespace, int depth) {
+			objectValuePairs) {
 
 		if (!Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			return null;
@@ -112,11 +112,10 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 						(ComplexEntityField)curEntityField;
 
 					_handleComplexType(
-						complexTypeNameDepth,
 						_createCsdlComplexType(
-							complexTypeNameDepth, curComplexEntityField,
-							_NAMESPACE, depth++),
-						depth);
+							depth++, curComplexEntityField, _NAMESPACE,
+							objectValuePairs),
+						depth, objectValuePairs);
 
 					depth--;
 				}
@@ -132,21 +131,21 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		Map<String, EntityField> entityFieldsMap, String namespace) {
 
 		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
-			complexTypeNameDepth = new HashMap<>();
+			objectValuePairs = new HashMap<>();
 
 		for (EntityField entityField : entityFieldsMap.values()) {
 			CsdlComplexType csdlComplexType = _createCsdlComplexType(
-				complexTypeNameDepth, entityField, namespace, 1);
+				1, entityField, namespace, objectValuePairs);
 
 			if (csdlComplexType != null) {
-				complexTypeNameDepth.put(
+				objectValuePairs.put(
 					csdlComplexType.getName(),
 					new ObjectValuePair<>(0, csdlComplexType));
 			}
 		}
 
 		return TransformUtil.transform(
-			complexTypeNameDepth.values(), ObjectValuePair::getValue);
+			objectValuePairs.values(), ObjectValuePair::getValue);
 	}
 
 	private CsdlEntityContainer _createCsdlEntityContainer(
@@ -342,11 +341,11 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private void _handleComplexType(
+		CsdlComplexType csdlComplexType, int depth,
 		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
-			complexTypeNameDepth,
-		CsdlComplexType csdlComplexType, int depth) {
+			objectValuePairs) {
 
-		complexTypeNameDepth.compute(
+		objectValuePairs.compute(
 			csdlComplexType.getName(),
 			(key, value) -> {
 				if ((value == null) || (value.getKey() >= depth)) {

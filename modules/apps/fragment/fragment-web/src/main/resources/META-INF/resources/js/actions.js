@@ -12,8 +12,10 @@
  * details.
  */
 
+import {render} from '@liferay/frontend-js-react-web';
 import {openModal, openSelectionModal, openToast} from 'frontend-js-web';
 
+import ImportModal from './ImportModal';
 import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
 
 export const ACTIONS = {
@@ -139,24 +141,35 @@ export const ACTIONS = {
 	},
 
 	openImportView({portletNamespace, viewImportURL}) {
-		openModal({
-			buttons: [
+		if (Liferay.FeatureFlags['LPS-174939']) {
+			render(
+				ImportModal,
 				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('cancel'),
-					type: 'cancel',
+					portletNamespace,
 				},
-				{
-					label: Liferay.Language.get('import'),
-					type: 'submit',
+				document.createElement('div')
+			);
+		}
+		else {
+			openModal({
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						label: Liferay.Language.get('import'),
+						type: 'submit',
+					},
+				],
+				id: `${portletNamespace}openImportView`,
+				onClose: () => {
+					window.location.reload();
 				},
-			],
-			id: `${portletNamespace}openImportView`,
-			onClose: () => {
-				window.location.reload();
-			},
-			title: Liferay.Language.get('import'),
-			url: viewImportURL,
-		});
+				title: Liferay.Language.get('import'),
+				url: viewImportURL,
+			});
+		}
 	},
 };

@@ -441,8 +441,7 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectDefinition.isEnableLocalization()) {
 			_deleteFromTable(
-				DynamicObjectDefinitionLocalizationTable.getTableName(
-					objectDefinition.getDBTableName()),
+				objectDefinition.getL10nDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),
 				objectEntry.getObjectEntryId());
 		}

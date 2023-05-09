@@ -43,8 +43,6 @@ export default interface DealRegistrationDTO
 	ownerName?: string;
 	partnerAccountName?: string;
 	partnerEmail?: string;
-	partnerFirstName?: string;
-	partnerLastName?: string;
 	primaryProspectBusinessUnit?: string;
 	primaryProspectDepartment?: string;
 	primaryProspectEmailAddress?: string;

@@ -32,6 +32,8 @@ const initialFormValues: DealRegistration = {
 	leadStatusDetails: Status.EXPRESSED_INTEREST.name,
 	mdfActivityAssociated: {},
 	partnerAccount: {},
+	partnerFirstName: '',
+	partnerLastName: '',
 	primaryProspect: {
 		businessUnit: '',
 		department: {},

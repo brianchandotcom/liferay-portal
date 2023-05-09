@@ -38,7 +38,15 @@ const General = ({
 		...formikHelpers
 	} = useFormikContext<DealRegistration>();
 
-	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
+	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
+		useCallback(
+			(firstName, lastName) => {
+				setFieldValue('partnerFirstName', firstName);
+				setFieldValue('partnerLastName', lastName);
+			},
+			[setFieldValue]
+		)
+	);
 	const {data: mdfActivities} = useGetMDFActivity(values.partnerAccount.id);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(

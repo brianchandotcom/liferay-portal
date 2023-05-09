@@ -48,6 +48,11 @@ export default interface DealRegistration extends Partial<LiferayObject> {
 	leadStatusDetails?: string;
 	mdfActivityAssociated: Partial<MDFRequestActivityDTO>;
 	partnerAccount: LiferayAccountBrief;
+	partnerFirstName: string;
+	partnerLastName: string;
+	primaryContactEmail?: string;
+	primaryContactFirstName?: string;
+	primaryContactLastName?: string;
 	primaryProspect: PrimaryProspect;
 	projectCategories: string[];
 	projectNeed: string[];

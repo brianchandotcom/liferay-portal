@@ -8,6 +8,45 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
+			"externalReferenceCode": "Partner_First_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner First Name"
+			},
+			"name": "partnerFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Last_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Last Name"
+			},
+			"name": "partnerLastName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Partner_Account_Name__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Account Name"
+			},
+			"name": "partnerAccountName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
 			"externalReferenceCode": "Partner_Account__c",
 			"indexed": true,
 			"indexedAsKeyword": false,

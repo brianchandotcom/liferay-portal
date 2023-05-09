@@ -68,6 +68,14 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 
 	const columns = [
 		{
+			columnKey: DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME,
+			label: 'Partner Account Name',
+		},
+		{
+			columnKey: DealRegistrationColumnKey.PARTNER_NAME,
+			label: 'Partner Name',
+		},
+		{
 			columnKey: DealRegistrationColumnKey.ACCOUNT_NAME,
 			label: 'Account Name',
 		},

@@ -34,14 +34,24 @@ export default function useGetListItemsFromDealRegistration(
 		() =>
 			swrResponse.data?.items.map((item) => ({
 				[DealRegistrationColumnKey.ACCOUNT_NAME]:
-					item.prospectAccountName,
+					item.prospectAccountName ? item.prospectAccountName : ' - ',
 				...getDealDates(item.dateCreated),
 
 				[DealRegistrationColumnKey.ADDITIONAL_CONTACTS]:
-					item.additionalContacts,
-
-				[DealRegistrationColumnKey.STATUS]: item.leadStatus,
-				[DealRegistrationColumnKey.PROSPECT_NAME]: `${
+					item.additionalContacts ? item.additionalContacts : ' - ',
+				[DealRegistrationColumnKey.STATUS]: item.leadStatus
+					? item.leadStatus : ' - ',				
+				[DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME]: item.partnerAccountName
+					? item.partnerAccountName
+					: ' - ',
+				[DealRegistrationColumnKey.PARTNER_NAME]: `${
+					item.partnerFirstName ? item.partnerFirstName : ''
+				}${item.partnerLastName ? ' ' + item.partnerLastName : ''}`,
+				[DealRegistrationColumnKey.ACCOUNT_NAME]: item.accountName
+					? item.accountName
+					: ' - ',
+				...getDealDates(item.dateCreated),
+				[DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME]: `${
 					item.primaryProspectFirstName
 						? item.primaryProspectFirstName
 						: ''
@@ -50,40 +60,30 @@ export default function useGetListItemsFromDealRegistration(
 						? ' ' + item.primaryProspectLastName
 						: ''
 				}`,
-				[DealRegistrationColumnKey.PROSPECT_EMAIL]:
-					item.primaryProspectEmailAddress,
-				[DealRegistrationColumnKey.PROSPECT_PHONE]:
-					item.primaryProspectPhone,
-				[DealRegistrationColumnKey.PROSPECT_ADDRESS]:
-					item.prospectAddress,
-				[DealRegistrationColumnKey.PROSPECT_CITY]: item.prospectCity,
-				[DealRegistrationColumnKey.PROSPECT_INDUSTRY]:
-					item.prospectIndustry,
-				[DealRegistrationColumnKey.PROSPECT_POSTAL_CODE]:
-					item.prospectPostalCode,
-				
-				[DealRegistrationColumnKey.PROPECT_BUSINES_UNIT]:
-					item.primaryProspectBusinessUnit,
-				[DealRegistrationColumnKey.PROSPECT_DEPARTMENT]:
-					item.primaryProspectDepartment,
-				[DealRegistrationColumnKey.PROSPECT_JOB_ROLE]:
-					item.primaryProspectJobRole,
-
-				[DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME]:
-					item.prospectAccountName,
-				
-					
-				[DealRegistrationColumnKey.STATUS_DETAIL]:
-					item.leadStatusDetail,
-				[DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME]:
-					item.partnerAccountName,
-				[DealRegistrationColumnKey.CURRENCY_KEY]:
-					item.currency.key,
-				[DealRegistrationColumnKey.CURRENCY_NAME]:
-					item.currency.name,
-				[DealRegistrationColumnKey.COUTRY_CODE]:
-					item.prospectCountryCode,
-							
+				[DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL]: item.primaryProspectEmailAddress
+					? item.primaryProspectEmailAddress
+					: ' - ',
+				[DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE]: item.primaryProspectPhone
+					? item.primaryProspectPhone
+					: ' - ',
+				[DealRegistrationColumnKey.STATUS]: item.leadStatus
+					? item.leadStatus
+					: ' - ',
+				[DealRegistrationColumnKey.PROSPECT_ADDRESS]: item.prospectAddress
+					? item.prospectAddress
+					: ' - ',
+				[DealRegistrationColumnKey.PROSPECT_CITY]: item.prospectCity
+					? item.prospectCity
+					: ' - ',
+				[DealRegistrationColumnKey.PROSPECT_INDUSTRY]: item.prospectIndustry
+					? item.prospectIndustry
+					: ' - ',
+				[DealRegistrationColumnKey.PROSPECT_POSTAL_CODE]: item.prospectPostalCode
+					? item.prospectPostalCode
+					: ' - ',
+				[DealRegistrationColumnKey.STATUS_DETAIL]: item.leadStatusDetail
+					? item.leadStatusDetail
+					: ' - ',
 			})),
 		[swrResponse.data?.items]
 	);

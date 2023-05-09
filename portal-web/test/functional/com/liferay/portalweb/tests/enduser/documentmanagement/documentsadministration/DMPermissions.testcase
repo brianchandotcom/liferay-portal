@@ -1394,10 +1394,21 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
-			dmDocumentTitle = "DM Document Title",
+		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
 			siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
+			roleTitle = "Guest");
+
+		var dmDocumentURL = JSONDocument.getLatestVersionURL(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		User.logoutPG();
 
@@ -1787,10 +1798,26 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		var dmDocumentURL = DMDocument.getDMLatestVersionURL(
-			dmDocumentTitle = "DM Document Title",
+		DMNavigator.openToFolderInAdmin(
 			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
 			siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
+			roleTitle = "Site Member");
+
+		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+			addOrRemoveViewPermission = "Remove",
+			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
+			roleTitle = "Guest");
+
+		var dmDocumentURL = JSONDocument.getLatestVersionURL(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

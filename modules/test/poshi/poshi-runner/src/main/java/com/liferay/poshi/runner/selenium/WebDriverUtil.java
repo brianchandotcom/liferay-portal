@@ -20,6 +20,7 @@ import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
+import com.liferay.poshi.runner.logger.ParallelPrintStream;
 import com.liferay.poshi.runner.util.ProxyUtil;
 
 import java.io.File;
@@ -35,6 +36,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -152,6 +154,18 @@ public class WebDriverUtil extends PropsValues {
 
 		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_FILE)) {
 			chromeOptions.setBinary(PropsValues.BROWSER_CHROME_BIN_FILE);
+		}
+
+		if (PropsValues.TEST_RUN_TYPE.equals("parallel")) {
+			ChromeDriverService chromeDriverService =
+				ChromeDriverService.createServiceWithConfig(chromeOptions);
+
+			Thread thread = Thread.currentThread();
+
+			chromeDriverService.sendOutputTo(
+				ParallelPrintStream.getPrintStream(thread.getName()));
+
+			return new ChromeDriver(chromeDriverService, chromeOptions);
 		}
 
 		return new ChromeDriver(chromeOptions);

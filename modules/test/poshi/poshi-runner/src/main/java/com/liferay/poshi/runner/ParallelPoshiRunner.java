@@ -20,8 +20,11 @@ import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.junit.ParallelParameterized;
+import com.liferay.poshi.runner.logger.ParallelPrintStream;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,10 +32,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 import org.dom4j.Element;
 
 import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
@@ -40,6 +48,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(ParallelParameterized.class)
 public class ParallelPoshiRunner extends PoshiRunner {
+
+	public static ParallelPrintStream systemErrParallelPrintStream =
+		new ParallelPrintStream(System.err);
+	public static ParallelPrintStream systemOutParallelPrintStream =
+		new ParallelPrintStream(System.out);
 
 	@AfterClass
 	public static void evaluateResults() throws IOException {
@@ -119,10 +132,54 @@ public class ParallelPoshiRunner extends PoshiRunner {
 		return namespacedClassCommandNames;
 	}
 
+	@BeforeClass
+	public static void setUpClass() {
+		System.setErr(systemErrParallelPrintStream);
+		System.setOut(systemOutParallelPrintStream);
+
+		Logger rootLogger = Logger.getLogger("");
+
+		for (Handler handler : rootLogger.getHandlers()) {
+			rootLogger.removeHandler(handler);
+		}
+
+		CustomConsoleHandler customConsoleHandler = new CustomConsoleHandler();
+
+		customConsoleHandler.setOutputStream(systemOutParallelPrintStream);
+
+		rootLogger.addHandler(customConsoleHandler);
+	}
+
 	public ParallelPoshiRunner(String namespacedClassCommandName)
 		throws Exception {
 
 		super(namespacedClassCommandName);
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		PrintStream originalSystemOutPrintStream =
+			systemOutParallelPrintStream.getOriginalPrintStream();
+
+		Thread thread = Thread.currentThread();
+
+		originalSystemOutPrintStream.println(
+			"Writing log for " + getTestNamespacedClassCommandName() + " to " +
+				thread.getName() + ".log");
+
+		super.setUp();
+	}
+
+	public static class CustomConsoleHandler extends ConsoleHandler {
+
+		@Override
+		protected void setOutputStream(OutputStream outputStream)
+			throws SecurityException {
+
+			super.setOutputStream(outputStream);
+		}
+
 	}
 
 	private static final Map<String, List<String>> _testResults =

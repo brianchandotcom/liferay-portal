@@ -159,6 +159,10 @@ public class PoshiRunner {
 					_testNamespacedClassCommandName);
 	}
 
+	public String getTestNamespacedClassCommandName() {
+		return _testNamespacedClassCommandName;
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		System.out.println();

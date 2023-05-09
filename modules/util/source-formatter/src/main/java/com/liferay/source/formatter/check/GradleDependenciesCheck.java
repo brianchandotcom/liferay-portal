@@ -55,7 +55,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 			if (isAttributeValue(
 					_CHECK_TEST_INTEGRATION_IMPLEMENTATION_DEPENDENCIES_KEY,
-					absolutePath)) {
+					absolutePath, true)) {
 
 				content = _formatTestIntegrationImplementationDependencies(
 					content, dependencies, _petraPattern);

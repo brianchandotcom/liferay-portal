@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>CARD_LABEL</td>
-	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'label-item')]</td>
+	<td>xpath=(//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'label-item')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

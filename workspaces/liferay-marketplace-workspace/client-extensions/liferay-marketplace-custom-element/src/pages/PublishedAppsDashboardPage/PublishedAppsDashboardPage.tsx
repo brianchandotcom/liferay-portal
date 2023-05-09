@@ -220,8 +220,19 @@ export function PublishedAppsDashboardPage() {
 		const makeFetch = async () => {
 			const accountsResponse = await getAccounts();
 
-			setAccounts(accountsResponse.items);
-			setSelectedAccount(accountsResponse.items[0]);
+			const accountsPublisher = accountsResponse.items.filter(
+				(currentAccount) => {
+					const catalogIdCustomField =
+						currentAccount.customFields?.find(
+							(customField) => customField.name === 'CatalogId'
+						);
+
+					return catalogIdCustomField?.customValue.data !== '';
+				}
+			);
+
+			setAccounts(accountsPublisher);
+			setSelectedAccount(accountsPublisher[0]);
 		};
 
 		makeFetch();

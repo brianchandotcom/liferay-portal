@@ -69,7 +69,7 @@ buildscript {
 
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "de.undercouch.download"
-apply plugin: "java"
+apply plugin: "java-library"
 apply plugin: "org.ajoberstar.grgit"
 
 apply from: "releng-pom.gradle"

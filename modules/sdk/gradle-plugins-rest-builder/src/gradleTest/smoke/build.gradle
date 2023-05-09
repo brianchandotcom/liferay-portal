@@ -1,7 +1,7 @@
 import com.liferay.gradle.util.GradleUtil
 
 subprojects {
-	apply plugin: "java"
+	apply plugin: "java-library"
 
 	group = "com.example.sample"
 

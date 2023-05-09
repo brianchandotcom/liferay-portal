@@ -53,16 +53,35 @@ definition {
 
 		task ("When the user clicks on the avatar and choose 'Dashboard' Option") {
 			RaylifeAP.userAvatarFunctionality(option = "Dashboard");
-
 		}
 
 		task ("Then Assert that the user is redirect to the Dashboard page") {
 			AssertElementPresent(
-				locator1 = "Header#H2_TITLE",
-				key_title = "Dashboard");
+				key_title = "Dashboard",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
+	@description = " Story ID: LPS-174056 - Verify if the user can access the Account Settings page from Agent Portal by the avatar menu list."
+	@priority = 4
+	test AssertUserCanAccessAccountSettingsPage {
+		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanAccessAccountSettingsPage";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given the User go to RaylifeAp main page") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
 		}
 
-		
+		task ("When the user clicks on the avatar and choose 'Account Settings' Option") {
+			RaylifeAP.userAvatarFunctionality(option = "Account Settings");
+		}
+
+		task ("Then Assert that the user is redirect to the Account Settings page") {
+			AssertElementPresent(
+				key_title = "Account Settings",
+				locator1 = "Header#H2_TITLE");
+		}
 	}
 
 	@description = " Story ID: LPS-174056 - Verify if the user can access the Notification page from Agent Portal by the avatar menu list."
@@ -82,31 +101,8 @@ definition {
 
 		task ("Then Assert that the user is redirect to the Notifications page") {
 			AssertElementPresent(
-				locator1 = "Header#H2_TITLE",
-				key_title = "Notifications");
-		}
-	}
-
-	@description = " Story ID: LPS-174056 - Verify if the user can access the Account Settings page from Agent Portal by the avatar menu list."
-	@priority = 4
-	test AssertUserCanAccessAccountSettingsPage {
-		property test.name.skip.portal.instance = "RaylifeAccountAvatarFunctionality#AssertUserCanAccessAccountSettingsPage";
-
-		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given the User go to RaylifeAp main page") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-		}
-
-		task ("When the user clicks on the avatar and choose 'Account Settings' Option") {
-			RaylifeAP.userAvatarFunctionality(option = "Account Settings");
-
-		}
-
-		task ("Then Assert that the user is redirect to the Account Settings page") {
-			AssertElementPresent(
-				locator1 = "Header#H2_TITLE",
-				key_title = "Account Settings");
+				key_title = "Notifications",
+				locator1 = "Header#H2_TITLE");
 		}
 	}
 
@@ -123,15 +119,15 @@ definition {
 
 		task ("When the user clicks on the avatar and choose 'Sign Out' Option") {
 			RaylifeAP.userAvatarFunctionality(option = "Sign Out");
-
 		}
 
 		task ("Then Assert that the user is redirect to Liferay DXP login page") {
 			AssertElementPresent(
-				locator1 = "Header#H1_TITLE",
-				key_title = "Liferay DXP");
+				key_title = "Liferay DXP",
+				locator1 = "Header#H1_TITLE");
 
 			User.firstLoginPG();
 		}
 	}
+
 }

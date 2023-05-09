@@ -175,7 +175,7 @@ public class PortalInstancesTest {
 
 	@Test
 	public void testGetWebIdsAfterInitCompany() {
-		PortalInstances.initCompany(_company.getWebId());
+		PortalInstances.initCompany(_company);
 
 		List<String> webIds = ListUtil.fromArray(PortalInstances.getWebIds());
 

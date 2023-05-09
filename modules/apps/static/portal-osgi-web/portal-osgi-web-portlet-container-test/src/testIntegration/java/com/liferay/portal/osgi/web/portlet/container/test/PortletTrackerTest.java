@@ -92,8 +92,8 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company1.getWebId());
-		PortalInstances.initCompany(company2.getWebId());
+		PortalInstances.initCompany(company1);
+		PortalInstances.initCompany(company2);
 
 		try {
 			setUpPortlet(
@@ -145,7 +145,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			companies.add(company1);
 
-			PortalInstances.initCompany(company1.getWebId());
+			PortalInstances.initCompany(company1);
 
 			setUpPortlet(
 				_internalClassTestPortlet,
@@ -160,7 +160,7 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			companies.add(company2);
 
-			PortalInstances.initCompany(company2.getWebId());
+			PortalInstances.initCompany(company2);
 
 			Map<String, Portlet> portlets =
 				_portletLocalService.loadGetPortletsMap(
@@ -223,8 +223,8 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 		Company company1 = CompanyTestUtil.addCompany();
 		Company company2 = CompanyTestUtil.addCompany();
 
-		PortalInstances.initCompany(company1.getWebId());
-		PortalInstances.initCompany(company2.getWebId());
+		PortalInstances.initCompany(company1);
+		PortalInstances.initCompany(company2);
 
 		try {
 			setUpPortlet(

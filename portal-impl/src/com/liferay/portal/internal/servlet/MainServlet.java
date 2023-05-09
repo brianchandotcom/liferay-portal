@@ -758,15 +758,15 @@ public class MainServlet extends HttpServlet {
 
 		CompanyLocalServiceUtil.forEachCompany(
 			company -> {
-				String webId = company.getWebId();
-
 				if (StartupHelperUtil.isDBNew() &&
-					webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+					Objects.equals(
+						PropsValues.COMPANY_DEFAULT_WEB_ID,
+						company.getWebId())) {
 
-					PortalInstances.initCompany(webId, true);
+					PortalInstances.initCompany(company, true);
 				}
 				else {
-					PortalInstances.initCompany(webId, false);
+					PortalInstances.initCompany(company, false);
 				}
 			});
 	}

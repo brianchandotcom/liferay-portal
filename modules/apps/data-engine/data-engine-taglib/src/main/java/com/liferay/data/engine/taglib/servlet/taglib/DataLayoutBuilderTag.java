@@ -17,16 +17,20 @@ package com.liferay.data.engine.taglib.servlet.taglib;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
+import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.spi.form.builder.settings.DDMFormBuilderSettingsRetrieverHelper;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -52,6 +56,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -120,7 +125,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		setNamespacedAttribute(
 			httpServletRequest, "config",
-			DataLayoutTaglibUtil.getDataLayoutConfigJSONObject(
+			_getDataLayoutConfigJSONObject(
 				getContentType(), tagHttpServletRequest.getLocale()));
 
 		setNamespacedAttribute(
@@ -158,6 +163,95 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		);
 	}
 
+	private DataLayoutBuilderDefinition _getDataLayoutBuilderDefinition(
+		String contentType) {
+
+		DataLayoutBuilderDefinition dataLayoutBuilderDefinition =
+			_dataLayoutBuilderDefinitionserviceTrackerMap.getService(
+				contentType);
+
+		if (dataLayoutBuilderDefinition == null) {
+			return _dataLayoutBuilderDefinitionserviceTrackerMap.getService(
+				"default");
+		}
+
+		return dataLayoutBuilderDefinition;
+	}
+
+	private JSONObject _getDataLayoutConfigJSONObject(
+		String contentType, Locale locale) {
+
+		DataLayoutBuilderDefinition dataLayoutBuilderDefinition =
+			_getDataLayoutBuilderDefinition(contentType);
+
+		JSONObject dataLayoutConfigJSONObject = JSONUtil.put(
+			"allowFieldSets", dataLayoutBuilderDefinition.allowFieldSets()
+		).put(
+			"allowMultiplePages",
+			dataLayoutBuilderDefinition.allowMultiplePages()
+		).put(
+			"allowNestedFields", dataLayoutBuilderDefinition.allowNestedFields()
+		).put(
+			"allowRules", dataLayoutBuilderDefinition.allowRules()
+		).put(
+			"allowSuccessPage", dataLayoutBuilderDefinition.allowSuccessPage()
+		).put(
+			"disabledProperties",
+			dataLayoutBuilderDefinition.getDisabledProperties()
+		).put(
+			"disabledTabs", dataLayoutBuilderDefinition.getDisabledTabs()
+		).put(
+			"visibleProperties",
+			dataLayoutBuilderDefinition.getVisibleProperties()
+		);
+
+		if (dataLayoutBuilderDefinition.allowRules()) {
+			try {
+				dataLayoutConfigJSONObject.put(
+					"ruleSettings",
+					JSONUtil.put(
+						"dataProviderInstanceParameterSettingsURL",
+						_getDDMDataProviderInstanceParameterSettingsURL()
+					).put(
+						"dataProviderInstancesURL",
+						_getDDMDataProviderInstancesURL()
+					).put(
+						"functionsMetadata",
+						_getFunctionsMetadataJSONObject(locale)
+					).put(
+						"functionsURL", _getFunctionsURL()
+					));
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException);
+			}
+		}
+
+		dataLayoutConfigJSONObject.put(
+			"unimplementedProperties",
+			dataLayoutBuilderDefinition.getUnimplementedProperties());
+
+		return dataLayoutConfigJSONObject;
+	}
+
+	private String _getDDMDataProviderInstanceParameterSettingsURL() {
+		DDMFormBuilderSettingsRetrieverHelper
+			ddmFormBuilderSettingsRetrieverHelper =
+				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
+
+		return ddmFormBuilderSettingsRetrieverHelper.
+			getDDMDataProviderInstanceParameterSettingsURL();
+	}
+
+	private String _getDDMDataProviderInstancesURL() {
+		DDMFormBuilderSettingsRetrieverHelper
+			ddmFormBuilderSettingsRetrieverHelper =
+				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
+
+		return ddmFormBuilderSettingsRetrieverHelper.
+			getDDMDataProviderInstancesURL();
+	}
+
 	private String _getDefaultLanguageId() {
 		Long dataDefinitionId = getDataDefinitionId();
 
@@ -176,6 +270,26 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 
 		return ddmStructure.getDefaultLanguageId();
+	}
+
+	private JSONObject _getFunctionsMetadataJSONObject(Locale locale)
+		throws JSONException {
+
+		DDMFormBuilderSettingsRetrieverHelper
+			ddmFormBuilderSettingsRetrieverHelper =
+				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
+
+		return JSONFactoryUtil.createJSONObject(
+			ddmFormBuilderSettingsRetrieverHelper.
+				getSerializedDDMExpressionFunctionsMetadata(locale));
+	}
+
+	private String _getFunctionsURL() {
+		DDMFormBuilderSettingsRetrieverHelper
+			ddmFormBuilderSettingsRetrieverHelper =
+				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
+
+		return ddmFormBuilderSettingsRetrieverHelper.getDDMFunctionsURL();
 	}
 
 	private String _getModule() {
@@ -224,7 +338,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				"rules",
 				() -> {
 					JSONObject dataLayoutConfigJSONObject =
-						DataLayoutTaglibUtil.getDataLayoutConfigJSONObject(
+						_getDataLayoutConfigJSONObject(
 							getContentType(), httpServletRequest.getLocale());
 
 					if (dataLayoutConfigJSONObject.getBoolean("allowRules")) {
@@ -294,6 +408,12 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutBuilderTag.class);
 
+	private static final ServiceTrackerMap<String, DataLayoutBuilderDefinition>
+		_dataLayoutBuilderDefinitionserviceTrackerMap;
+	private static final Snapshot<DDMFormBuilderSettingsRetrieverHelper>
+		_ddmFormBuilderSettingsRetrieverHelperSnapshot = new Snapshot<>(
+			DataLayoutBuilderTag.class,
+			DDMFormBuilderSettingsRetrieverHelper.class);
 	private static final Snapshot<DDMFormFieldTypeServicesRegistry>
 		_ddmFormFieldTypeServicesRegistrySnapshot = new Snapshot<>(
 			DataLayoutBuilderTag.class, DDMFormFieldTypeServicesRegistry.class);
@@ -305,9 +425,14 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(DataLayoutBuilderTag.class);
 
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_dataLayoutBuilderDefinitionserviceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DataLayoutBuilderDefinition.class,
+				"content.type");
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundle.getBundleContext(), DataDefinitionContentType.class,
-			"content.type");
+			bundleContext, DataDefinitionContentType.class, "content.type");
 	}
 
 }

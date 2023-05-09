@@ -399,3 +399,9 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 		</commerce-ui:panel>
 	</div>
 </div>
+
+<%@ include file="/pending_commerce_orders/request_quote.jspf" %>
+
+<liferay-frontend:component
+	module="js/view"
+/>

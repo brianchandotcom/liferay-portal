@@ -15,7 +15,6 @@
 package com.liferay.commerce.cart.taglib.servlet.taglib.internal.servlet;
 
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 
 import javax.servlet.ServletContext;
 
@@ -32,10 +31,6 @@ public class ServletContextUtil {
 
 	public static CommerceOrderItemService getCommerceOrderItemService() {
 		return _servletContextUtil._getCommerceOrderItemService();
-	}
-
-	public static NPMResolver getNPMResolver() {
-		return _servletContextUtil._getNPMResolver();
 	}
 
 	public static ServletContext getServletContext() {
@@ -59,11 +54,6 @@ public class ServletContextUtil {
 		_commerceOrderItemService = commerceOrderItemService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setNPMResolver(NPMResolver npmResolver) {
-		_npmResolver = npmResolver;
-	}
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.cart.taglib)",
 		unbind = "-"
@@ -76,10 +66,6 @@ public class ServletContextUtil {
 		return _commerceOrderItemService;
 	}
 
-	private NPMResolver _getNPMResolver() {
-		return _npmResolver;
-	}
-
 	private ServletContext _getServletContext() {
 		return _servletContext;
 	}
@@ -87,7 +73,6 @@ public class ServletContextUtil {
 	private static ServletContextUtil _servletContextUtil;
 
 	private CommerceOrderItemService _commerceOrderItemService;
-	private NPMResolver _npmResolver;
 	private ServletContext _servletContext;
 
 }

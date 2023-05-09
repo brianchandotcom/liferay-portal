@@ -2,7 +2,6 @@ import autobind from 'autobind-decorator';
 import DateInput from './DateInput';
 import Form from 'shared/components/form';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {
 	getCompleteDate,
 	getOperator,
@@ -15,6 +14,7 @@ import {
 	SUPPORTED_OPERATORS_MAP
 } from '../utils/constants';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
+import {Option, Picker} from '@clayui/core';
 
 const DATE_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.Date];
 
@@ -27,10 +27,10 @@ export default class CustomDateInput extends React.Component<ISegmentEditorCusto
 	}
 
 	@autobind
-	handleOperatorChange(event) {
+	handleOperatorChange(newValue) {
 		const {onChange, value} = this.props;
 
-		onChange({value: setOperator(value, 0, event.target.value)});
+		onChange({value: setOperator(value, 0, newValue)});
 	}
 
 	@autobind
@@ -39,15 +39,17 @@ export default class CustomDateInput extends React.Component<ISegmentEditorCusto
 
 		return (
 			<Form.GroupItem className='operator' shrink>
-				<ClaySelectWithOption
+				<Picker
 					className='criterion-input operator-input'
-					onChange={this.handleOperatorChange}
-					options={DATE_OPERATORS.map(({key, label}) => ({
+					items={DATE_OPERATORS.map(({key, label}) => ({
 						label,
 						value: key
 					}))}
-					value={getOperator(value, 0)}
-				/>
+					onSelectionChange={this.handleOperatorChange}
+					selectedKey={getOperator(value, 0)}
+				>
+					{({label, value}) => <Option key={value}>{label}</Option>}
+				</Picker>
 			</Form.GroupItem>
 		);
 	}

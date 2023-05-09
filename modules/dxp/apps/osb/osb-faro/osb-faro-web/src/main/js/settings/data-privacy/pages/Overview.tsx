@@ -2,7 +2,6 @@ import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
-import ClaySelect from '@clayui/select';
 import fetch from 'shared/util/fetch';
 import PreferenceMutation from '../queries/PreferenceMutation';
 import PreferenceQuery from '../queries/PreferenceQuery';
@@ -11,6 +10,7 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {get} from 'lodash';
+import {Option, Picker} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useMutation, useQuery} from '@apollo/react-hooks';
@@ -63,9 +63,7 @@ export const Overview: React.FC<IOverviewProps> = ({
 		variables: {key: DATA_RETENTION_PERIOD_KEY}
 	});
 
-	const handleDateRetentionPeriodChange = event => {
-		const {value} = event.target;
-
+	const handleDateRetentionPeriodChange = value => {
 		const curVal = parseInt(data.preference.value);
 		const newVal = parseInt(value);
 
@@ -191,27 +189,26 @@ export const Overview: React.FC<IOverviewProps> = ({
 									</div>
 
 									<div className='col-lg-auto align-self-center'>
-										<ClaySelect
+										<Picker
 											data-testid='data-retention-period-select-input'
 											disabled={!currentUser.isAdmin()}
-											onChange={
+											items={RETENTION_OPTIONS}
+											onSelectionChange={
 												handleDateRetentionPeriodChange
 											}
-											value={get(data, [
+											selectedKey={get(data, [
 												'preference',
 												'value'
 											])}
 										>
-											{RETENTION_OPTIONS.map(val => (
-												<ClaySelect.Option
-													key={val}
-													label={getRetentionLabel(
-														parseInt(val)
+											{item => (
+												<Option key={item}>
+													{getRetentionLabel(
+														parseInt(item)
 													)}
-													value={val}
-												/>
-											))}
-										</ClaySelect>
+												</Option>
+											)}
+										</Picker>
 									</div>
 								</div>
 

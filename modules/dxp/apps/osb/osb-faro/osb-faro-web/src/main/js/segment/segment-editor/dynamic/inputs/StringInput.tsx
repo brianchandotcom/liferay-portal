@@ -4,10 +4,10 @@ import AutocompleteInput from 'shared/components/AutocompleteInput';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {ISegmentEditorInputBase} from '../utils/types';
 import {isNull} from 'lodash';
 import {isValid} from '../utils/utils';
+import {Option, Picker} from '@clayui/core';
 
 interface IStringInputProps extends ISegmentEditorInputBase {
 	touched: boolean;
@@ -106,21 +106,23 @@ export default class StringInput extends React.Component<IStringInputProps> {
 									value={value}
 								/>
 							) : (
-								<ClaySelectWithOption
+								<Picker
 									className={getCN({
 										'has-error': showError
 									})}
 									data-testid='value-select'
-									onBlur={this.handleBlur}
-									onChange={event =>
-										this.handleChange(event.target.value)
-									}
-									options={options.map(o => ({
-										label: o.label,
-										value: o.value
+									items={options.map(option => ({
+										label: option.label,
+										value: option.value
 									}))}
-									value={value}
-								/>
+									onBlur={this.handleBlur}
+									onSelectionChange={this.handleChange}
+									selectedKey={value}
+								>
+									{({label, value}) => (
+										<Option key={value}>{label}</Option>
+									)}
+								</Picker>
 							)}
 						</Form.GroupItem>
 					)}

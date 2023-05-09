@@ -3,7 +3,6 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {getPropertyValue} from '../utils/custom-inputs';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {
@@ -15,6 +14,7 @@ import {
 } from '../utils/constants';
 import {isOfKnownType, isValid} from '../utils/utils';
 import {Map} from 'immutable';
+import {Option, Picker} from '@clayui/core';
 
 const NUMBER_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.Number];
 
@@ -77,9 +77,7 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 	}
 
 	@autobind
-	handleOperatorChange(event) {
-		const {value: operator} = event.target;
-
+	handleOperatorChange(operator) {
 		const {onChange, value: valueIMap} = this.props;
 
 		let newVal = null;
@@ -154,14 +152,18 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>
-						<ClaySelectWithOption
-							onChange={this.handleOperatorChange}
-							options={NUMBER_OPERATORS.map(({key, label}) => ({
+						<Picker
+							items={NUMBER_OPERATORS.map(({key, label}) => ({
 								label,
 								value: key
 							}))}
-							value={selectedOperatorKey}
-						/>
+							onSelectionChange={this.handleOperatorChange}
+							selectedKey={selectedOperatorKey}
+						>
+							{({label, value}) => (
+								<Option key={value}>{label}</Option>
+							)}
+						</Picker>
 					</Form.GroupItem>
 
 					{!knownType && (

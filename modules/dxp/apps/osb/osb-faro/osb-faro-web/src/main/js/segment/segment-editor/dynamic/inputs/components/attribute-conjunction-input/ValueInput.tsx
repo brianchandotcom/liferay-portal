@@ -8,12 +8,12 @@ import NumberInput from '../NumberInput';
 import React from 'react';
 import {BetweenNumber} from '../BetweenNumberInput';
 import {BOOLEAN_OPTIONS} from 'event-analysis/utils/utils';
-import {ClaySelectWithOption} from '@clayui/select';
 import {createOption, validateAttributeValue} from './utils';
 import {Criterion} from '../../../utils/types';
 import {DataTypes} from 'event-analysis/utils/types';
 import {FunctionalOperators} from '../../../utils/constants';
 import {isValid} from '../../../utils/utils';
+import {Option, Picker} from '@clayui/core';
 
 interface IValueInputProps {
 	dataType: DataTypes;
@@ -45,13 +45,14 @@ const ValueInput: React.FC<IValueInputProps> = ({
 	switch (dataType) {
 		case DataTypes.Boolean:
 			return (
-				<ClaySelectWithOption
+				<Picker
 					className='boolean-input'
 					data-testid='attribute-value-boolean-input'
+					items={BOOLEAN_OPTIONS.map(option =>
+						createOption(option, dataType)
+					)}
 					onBlur={handleAttributeValueBlur}
-					onChange={event => {
-						const {value} = event.target;
-
+					onSelectionChange={value => {
 						onChange({
 							criterion: {value},
 							touched: {attributeValue: true},
@@ -63,10 +64,9 @@ const ValueInput: React.FC<IValueInputProps> = ({
 							}
 						});
 					}}
-					options={BOOLEAN_OPTIONS.map(option =>
-						createOption(option, dataType)
-					)}
-				/>
+				>
+					{({label, value}) => <Option key={value}>{label}</Option>}
+				</Picker>
 			);
 		case DataTypes.Date:
 			if (operatorName === FunctionalOperators.Between) {

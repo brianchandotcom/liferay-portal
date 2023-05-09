@@ -2,10 +2,10 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {Criterion} from '../../utils/types';
 import {isValid} from '../../utils/utils';
 import {OCCURENCE_OPTIONS} from '../../utils/constants';
+import {Option, Picker} from '@clayui/core';
 
 const MAX_OCCURENCE_COUNT_LIMIT = 2147483647;
 
@@ -35,21 +35,23 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 }) => (
 	<>
 		<Form.GroupItem shrink>
-			<ClaySelectWithOption
+			<Picker
 				className='operator-input'
-				onChange={({target: {value}}) => {
+				items={OCCURENCE_OPTIONS.map(({key, label}) => ({
+					label,
+					value: key
+				}))}
+				onSelectionChange={value => {
 					onChange({
 						criterion: {
 							operatorName: value as Criterion['operatorName']
 						}
 					});
 				}}
-				options={OCCURENCE_OPTIONS.map(({key, label}) => ({
-					label,
-					value: key
-				}))}
-				value={operatorName}
-			/>
+				selectedKey={operatorName}
+			>
+				{({label, value}) => <Option key={value}>{label}</Option>}
+			</Picker>
 		</Form.GroupItem>
 
 		<Form.GroupItem

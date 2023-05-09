@@ -9,7 +9,6 @@ import {
 	withReferencedObjectsConsumer
 } from '../../../context/referencedObjects';
 import {Attribute} from 'event-analysis/utils/types';
-import {ClaySelectWithOption} from '@clayui/select';
 import {Criterion} from '../../../utils/types';
 import {
 	getDefaultAttributeOperator,
@@ -17,6 +16,7 @@ import {
 	validateAttributeValue
 } from './utils';
 import {Map} from 'immutable';
+import {Option, Picker} from '@clayui/core';
 
 interface IAttributeFilterConjunctionInputProps {
 	addEntity: AddEntity;
@@ -75,9 +75,7 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 		return id;
 	};
 
-	const handleAttributeChange = event => {
-		const {value} = event.target;
-
+	const handleAttributeChange = value => {
 		const attribute = attributes.find(({id}) => id === value);
 
 		setAttribute(attribute);
@@ -123,15 +121,17 @@ const AttributeFilterConjunctionInput: React.FC<IAttributeFilterConjunctionInput
 	return (
 		<>
 			<Form.GroupItem shrink>
-				<ClaySelectWithOption
+				<Picker
 					className='attribute-input'
-					onChange={handleAttributeChange}
-					options={attributes.map(({displayName, id, name}) => ({
+					items={attributes.map(({displayName, id, name}) => ({
 						label: displayName || name,
 						value: id
 					}))}
-					value={getAttributeId()}
-				/>
+					onSelectionChange={handleAttributeChange}
+					selectedKey={getAttributeId()}
+				>
+					{({label, value}) => <Option key={value}>{label}</Option>}
+				</Picker>
 			</Form.GroupItem>
 
 			<OperatorSelect

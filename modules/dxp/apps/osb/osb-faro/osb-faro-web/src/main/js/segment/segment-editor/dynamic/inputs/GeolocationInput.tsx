@@ -7,7 +7,6 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Promise from 'metal-promise';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
 import {GEOLOCATION_OPTIONS} from '../utils/constants';
@@ -22,6 +21,7 @@ import {
 import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {isNull} from 'lodash';
 import {isValid} from '../utils/utils';
+import {Option, Picker} from '@clayui/core';
 
 /**
  * Location Types
@@ -369,10 +369,10 @@ export default class GeolocationInput extends React.Component<
 	}
 
 	@autobind
-	handleOperatorChange(event) {
+	handleOperatorChange(newValue) {
 		const {onChange, value} = this.props;
 
-		onChange({value: updateLocationOperators(value, event.target.value)});
+		onChange({value: updateLocationOperators(value, newValue)});
 	}
 
 	render() {
@@ -406,15 +406,19 @@ export default class GeolocationInput extends React.Component<
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>
-						<ClaySelectWithOption
+						<Picker
 							className='operator-input'
-							onChange={this.handleOperatorChange}
-							options={GEOLOCATION_OPTIONS}
-							value={getOperator(
+							items={GEOLOCATION_OPTIONS}
+							onSelectionChange={this.handleOperatorChange}
+							selectedKey={getOperator(
 								value,
 								getLocationTypeIndex(value, COUNTRY)
 							)}
-						/>
+						>
+							{({label, value}) => (
+								<Option key={value}>{label}</Option>
+							)}
+						</Picker>
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>

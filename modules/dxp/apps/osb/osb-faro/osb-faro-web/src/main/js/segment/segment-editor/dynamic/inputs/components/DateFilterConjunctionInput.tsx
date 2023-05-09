@@ -2,7 +2,6 @@ import DatePickerInput from './DatePickerInput';
 import Form from 'shared/components/form';
 import React, {useState} from 'react';
 import TimePeriodInput from './TimePeriodInput';
-import {ClaySelectWithOption} from '@clayui/select';
 import {Criterion} from '../../utils/types';
 import {
 	EVER,
@@ -14,6 +13,7 @@ import {
 	TimeSpans
 } from '../../utils/constants';
 import {Map} from 'immutable';
+import {Option, Picker} from '@clayui/core';
 
 const {Between} = FunctionalOperators;
 const {EQ, GT, LT} = RelationalOperators;
@@ -50,9 +50,7 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 		getInitialConjunction(conjunctionCriterion)
 	);
 
-	const handleConjunctionChange = event => {
-		const {value} = event.target;
-
+	const handleConjunctionChange = value => {
 		const {propertyName, value: dateFilter} = conjunctionCriterion;
 
 		switch (value) {
@@ -126,13 +124,15 @@ const DateFilterConjunctionInput: React.FC<IDateFilterConjunctionInputProps> = (
 	return (
 		<>
 			<Form.GroupItem shrink>
-				<ClaySelectWithOption
+				<Picker
 					className='conjunction-input'
 					data-testid='conjunction-input'
-					onChange={handleConjunctionChange}
-					options={TIME_CONJUNCTION_OPTIONS}
-					value={conjunction}
-				/>
+					items={TIME_CONJUNCTION_OPTIONS}
+					onSelectionChange={handleConjunctionChange}
+					selectedKey={conjunction}
+				>
+					{({label, value}) => <Option key={value}>{label}</Option>}
+				</Picker>
 			</Form.GroupItem>
 
 			<Form.GroupItem shrink>

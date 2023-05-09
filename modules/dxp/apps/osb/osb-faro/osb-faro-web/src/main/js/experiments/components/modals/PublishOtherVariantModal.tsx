@@ -1,10 +1,10 @@
 import BaseModal from 'experiments/components/modals/BaseModal';
-import ClaySelect from '@clayui/select';
 import DXPLinkButton from './DXPLinkButton';
 import PublishVariant from './PublishVariant';
 import React, {useState} from 'react';
 import {EXPERIMENT_MUTATION} from 'experiments/queries/ExperimentMutation';
 import {getVariantLink, makeAllRefetch} from 'experiments/util/experiments';
+import {Option, Picker} from '@clayui/core';
 import {useMutation} from '@apollo/react-hooks';
 import {useStateValue} from 'experiments/state';
 
@@ -14,22 +14,22 @@ const ChooseVariant = ({dxpVariant, dxpVariants, link, setDxpVariant}) => (
 			{Liferay.Language.get('which-variant-do-you-want-to-publish')}
 		</div>
 
-		<ClaySelect
+		<Picker
 			className='mb-3'
-			onChange={({target: {value}}) =>
+			onSelectionChange={value =>
 				setDxpVariant(
 					dxpVariants.find(({dxpVariantId}) => dxpVariantId === value)
 				)
 			}
-			value={dxpVariant ? dxpVariant.dxpVariantId : ''}
+			selectedKey={dxpVariant ? dxpVariant.dxpVariantId : ''}
 		>
-			<option>{Liferay.Language.get('select-a-variant')}</option>
+			<Option key='select-a-variant'>
+				{Liferay.Language.get('select-a-variant')}
+			</Option>
 			{dxpVariants.map(({dxpVariantId, dxpVariantName}) => (
-				<option key={dxpVariantId} value={dxpVariantId}>
-					{dxpVariantName}
-				</option>
+				<Option key={dxpVariantId}>{dxpVariantName}</Option>
 			))}
-		</ClaySelect>
+		</Picker>
 
 		<DXPLinkButton disabled={!dxpVariant} href={link} />
 

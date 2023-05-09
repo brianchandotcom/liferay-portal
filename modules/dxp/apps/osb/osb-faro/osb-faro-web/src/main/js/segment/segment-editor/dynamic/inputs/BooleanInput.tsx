@@ -2,7 +2,7 @@ import autobind from 'autobind-decorator';
 import Form from 'shared/components/form';
 import React from 'react';
 import {BOOLEAN_OPTIONS} from '../utils/constants';
-import {ClaySelectWithOption} from '@clayui/select';
+import {Option, Picker} from '@clayui/core';
 import {Property} from 'shared/util/records';
 
 interface IBooleanInputProps {
@@ -29,8 +29,8 @@ export default class BooleanInput extends React.Component<IBooleanInputProps> {
 	}
 
 	@autobind
-	handleChange(event) {
-		this.props.onChange({value: event.target.value});
+	handleChange(value) {
+		this.props.onChange({value});
 	}
 
 	render() {
@@ -55,12 +55,16 @@ export default class BooleanInput extends React.Component<IBooleanInputProps> {
 					<OperatorDropdown />
 
 					<Form.GroupItem shrink>
-						<ClaySelectWithOption
+						<Picker
 							className='criterion-input'
-							onChange={this.handleChange}
-							options={BOOLEAN_OPTIONS}
-							value={value}
-						/>
+							items={BOOLEAN_OPTIONS}
+							onSelectionChange={this.handleChange}
+							selectedKey={value}
+						>
+							{({label, value}) => (
+								<Option key={value}>{label}</Option>
+							)}
+						</Picker>
 					</Form.GroupItem>
 				</Form.Group>
 			</div>

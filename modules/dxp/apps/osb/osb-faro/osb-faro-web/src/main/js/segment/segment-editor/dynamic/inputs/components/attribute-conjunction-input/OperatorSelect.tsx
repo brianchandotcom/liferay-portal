@@ -1,6 +1,5 @@
 import Form from 'shared/components/form';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {Criterion} from '../../../utils/types';
 import {DataTypes} from 'event-analysis/utils/types';
 import {
@@ -8,6 +7,7 @@ import {
 	RelationalOperators
 } from '../../../utils/constants';
 import {getDefaultAttributeValue, getOperatorOptions} from './utils';
+import {Option, Picker} from '@clayui/core';
 
 interface IOperatorSelectProps {
 	dataType: DataTypes;
@@ -30,11 +30,10 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 
 	return (
 		<Form.GroupItem shrink>
-			<ClaySelectWithOption
+			<Picker
 				className='operator-input'
-				onChange={event => {
-					const {value: newOperatorName} = event.target;
-
+				items={getOperatorOptions(dataType)}
+				onSelectionChange={newOperatorName => {
 					let criterion: Criterion = {
 						operatorName: newOperatorName as Criterion['operatorName']
 					};
@@ -58,9 +57,10 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 
 					onChange({criterion});
 				}}
-				options={getOperatorOptions(dataType)}
-				value={operatorName}
-			/>
+				selectedKey={operatorName}
+			>
+				{({label, value}) => <Option key={value}>{label}</Option>}
+			</Picker>
 		</Form.GroupItem>
 	);
 };

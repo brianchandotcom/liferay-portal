@@ -1,10 +1,10 @@
 import autobind from 'autobind-decorator';
 import Form from 'shared/components/form';
 import React from 'react';
-import {ClaySelectWithOption} from '@clayui/select';
 import {getPropertyValue, setPropertyValue} from '../utils/custom-inputs';
 import {INTEREST_BOOLEAN_OPTIONS} from '../utils/constants';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
+import {Option, Picker} from '@clayui/core';
 
 export default class InterestBooleanInput extends React.Component<ISegmentEditorCustomInputBase> {
 	componentDidMount() {
@@ -22,11 +22,11 @@ export default class InterestBooleanInput extends React.Component<ISegmentEditor
 	}
 
 	@autobind
-	handleChange(event) {
+	handleChange(newValue) {
 		const {onChange, value} = this.props;
 
 		onChange({
-			value: setPropertyValue(value, 'value', 1, event.target.value)
+			value: setPropertyValue(value, 'value', 1, newValue)
 		});
 	}
 
@@ -44,12 +44,16 @@ export default class InterestBooleanInput extends React.Component<ISegmentEditor
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>
-						<ClaySelectWithOption
+						<Picker
 							className='criterion-input'
-							onChange={this.handleChange}
-							options={INTEREST_BOOLEAN_OPTIONS}
-							value={getPropertyValue(value, 'value', 1)}
-						/>
+							items={INTEREST_BOOLEAN_OPTIONS}
+							onSelectionChange={this.handleChange}
+							selectedKey={getPropertyValue(value, 'value', 1)}
+						>
+							{({label, value}) => (
+								<Option key={value}>{label}</Option>
+							)}
+						</Picker>
 					</Form.GroupItem>
 
 					<Form.GroupItem className='operator' label shrink>

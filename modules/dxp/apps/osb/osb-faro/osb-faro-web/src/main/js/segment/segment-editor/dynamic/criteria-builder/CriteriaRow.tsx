@@ -27,7 +27,6 @@ import {
 	AddProperty,
 	withReferencedObjectsConsumer
 } from '../context/referencedObjects';
-import {ClaySelectWithOption} from '@clayui/select';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {
@@ -56,6 +55,7 @@ import {
 	RelationalOperators
 } from '../utils/constants';
 import {Map} from 'immutable';
+import {Option, Picker} from '@clayui/core';
 import {Property} from 'shared/util/records';
 import {RootState} from 'shared/store';
 
@@ -303,9 +303,7 @@ class CriteriaRow extends React.Component<
 	}
 
 	@autobind
-	handleOperatorChange(event) {
-		const {value} = event.target;
-
+	handleOperatorChange(value) {
 		const {
 			props: {criterion, onChange},
 			state: {supportedOperators}
@@ -369,15 +367,19 @@ class CriteriaRow extends React.Component<
 				{singleOption ? (
 					supportedOperators[0].label
 				) : (
-					<ClaySelectWithOption
+					<Picker
 						className='criterion-input operator-input'
-						onChange={this.handleOperatorChange}
-						options={supportedOperators.map(({key, label}) => ({
+						items={supportedOperators.map(({key, label}) => ({
 							label,
 							value: key
 						}))}
-						value={selectedOperatorKey}
-					/>
+						onSelectionChange={this.handleOperatorChange}
+						selectedKey={selectedOperatorKey}
+					>
+						{({label, value}) => (
+							<Option key={value}>{label}</Option>
+						)}
+					</Picker>
 				)}
 			</Form.GroupItem>
 		);

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -47,12 +48,15 @@ import org.apache.commons.lang.StringUtils;
 public class MBMessageNotificationTemplateHelper {
 
 	public MBMessageNotificationTemplateHelper(
-		boolean htmlFormat, MBMessageLocalService mbMessageLocalService,
-		int maxNumberOfParentMessages, ServiceContext serviceContext) {
+		boolean htmlFormat, int maxNumberOfMessages,
+		int maxNumberOfParentMessages,
+		MBMessageLocalService mbMessageLocalService,
+		ServiceContext serviceContext) {
 
 		_htmlFormat = htmlFormat;
-		_mbMessageLocalService = mbMessageLocalService;
+		_maxNumberOfMessages = maxNumberOfMessages;
 		_maxNumberOfParentMessages = maxNumberOfParentMessages;
+		_mbMessageLocalService = mbMessageLocalService;
 		_serviceContext = serviceContext;
 	}
 
@@ -146,6 +150,59 @@ public class MBMessageNotificationTemplateHelper {
 
 		for (int i = 0; i < elementCount; i++) {
 			sb.append(_getMarkupElement(MarkupElement.END_ELEMENT));
+		}
+
+		sb.append(_getMarkupElement(MarkupElement.END));
+
+		return sb.toString();
+	}
+
+	public String renderMessageSiblingMessagesContent(MBMessage message) {
+		int numberOfMessagesByParentMessageId =
+			_numberOfMessagesByParentMessageIds.getOrDefault(
+				message.getParentMessageId(), 0);
+
+		int numberOfMessages =
+			_maxNumberOfMessages - numberOfMessagesByParentMessageId;
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+			(numberOfMessages == 0)) {
+
+			return StringPool.BLANK;
+		}
+
+		int childMessagesCount = _mbMessageLocalService.getChildMessagesCount(
+			message.getParentMessageId(), WorkflowConstants.STATUS_APPROVED);
+
+		if (childMessagesCount == 1) {
+			return StringPool.BLANK;
+		}
+
+		List<MBMessage> childMessages = _mbMessageLocalService.getChildMessages(
+			message.getParentMessageId(), WorkflowConstants.STATUS_APPROVED,
+			childMessagesCount - numberOfMessages - 1, childMessagesCount - 1);
+
+		if (ListUtil.isEmpty(childMessages)) {
+			return StringPool.BLANK;
+		}
+
+		String quoteMark = _getQuote(numberOfMessagesByParentMessageId + 1);
+
+		StringBundler sb = new StringBundler(childMessages.size() + 2);
+
+		sb.append(_getMarkupElement(MarkupElement.START_SIBLING));
+
+		for (MBMessage childMessage : childMessages) {
+			sb.append(
+				StringBundler.concat(
+					_getMarkupElement(MarkupElement.START_MESSAGE_SIBLING),
+					_getMarkupElement(MarkupElement.START_USER_SIBLING),
+					_getUserName(childMessage, quoteMark),
+					_getMarkupElement(MarkupElement.END),
+					_getMarkupElement(MarkupElement.START_BODY_SIBLING),
+					getMessageBody(childMessage, quoteMark),
+					_getMarkupElement(MarkupElement.END),
+					_getMarkupElement(MarkupElement.END)));
 		}
 
 		sb.append(_getMarkupElement(MarkupElement.END));
@@ -276,6 +333,7 @@ public class MBMessageNotificationTemplateHelper {
 			MarkupElement.START_USER_SIBLING,
 			"<div class=\"mb-sibling-message-user\">"
 		).build();
+	private final int _maxNumberOfMessages;
 	private final int _maxNumberOfParentMessages;
 	private final MBMessageLocalService _mbMessageLocalService;
 	private final Map<Long, Integer> _numberOfMessagesByParentMessageIds =

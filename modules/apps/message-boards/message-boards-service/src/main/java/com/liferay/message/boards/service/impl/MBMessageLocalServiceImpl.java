@@ -2471,13 +2471,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		boolean htmlFormat = mbGroupServiceSettings.isEmailHtmlFormat();
 
+		int maxNumberOfMessages = 3;
+
 		int maxNumberOfParentMessages = 1;
 
 		MBMessageNotificationTemplateHelper
 			mbMessageNotificationTemplateHelper =
 				new MBMessageNotificationTemplateHelper(
-					htmlFormat, mbMessageLocalService,
-					maxNumberOfParentMessages, serviceContext);
+					htmlFormat, maxNumberOfMessages, maxNumberOfParentMessages,
+					mbMessageLocalService, serviceContext);
 
 		String messageBody = mbMessageNotificationTemplateHelper.getMessageBody(
 			message, StringPool.BLANK);
@@ -2486,6 +2488,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String messageSubject = message.getSubject();
 		String messageSubjectPrefix = StringPool.BLANK;
 		String messageParentMessageContent = StringPool.BLANK;
+		String messageSiblingMessagesContent = StringPool.BLANK;
 
 		if (message.getParentMessageId() !=
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
@@ -2513,9 +2516,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			messageParentMessageContent =
 				mbMessageNotificationTemplateHelper.
 					renderMessageParentMessageContent(parentMessage);
-		}
 
-		String messageSiblingMessagesContent = StringPool.BLANK;
+			messageSiblingMessagesContent =
+				mbMessageNotificationTemplateHelper.
+					renderMessageSiblingMessagesContent(message);
+		}
 
 		String rootMessageBody =
 			mbMessageNotificationTemplateHelper.renderRootMessage(message);

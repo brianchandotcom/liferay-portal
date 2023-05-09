@@ -96,6 +96,16 @@ public class UADRegistry {
 		return _uadDisplayServiceTrackerMap.getService(key);
 	}
 
+	public UADDisplay<?> getUADDisplayByObjectInstance(Object object) {
+		for (UADDisplay<?> uadDisplay : getUADDisplays()) {
+			if (uadDisplay.isTypeEntity(object)) {
+				return uadDisplay;
+			}
+		}
+
+		return null;
+	}
+
 	public Collection<UADDisplay<?>> getUADDisplays() {
 		return _uadDisplayServiceTrackerMap.values();
 	}
@@ -112,7 +122,7 @@ public class UADRegistry {
 			return null;
 		}
 
-		return new UADHierarchyDisplay(uadHierarchyDeclaration);
+		return new UADHierarchyDisplay(uadHierarchyDeclaration, this);
 	}
 
 	@Activate

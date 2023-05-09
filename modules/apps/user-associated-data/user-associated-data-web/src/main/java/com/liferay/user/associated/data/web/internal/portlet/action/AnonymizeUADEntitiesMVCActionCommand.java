@@ -96,22 +96,21 @@ public class AnonymizeUADEntitiesMVCActionCommand
 					entity, selectedUserId, anonymousUser);
 			}
 
-			Map<Class<?>, List<Serializable>> containerItemPKsMap =
+			Map<String, List<Serializable>> containerItemPKsMap =
 				uadHierarchyDisplay.getContainerItemPKsMap(
-					entityUADDisplay.getTypeClass(),
+					entityUADDisplay.getTypeKey(),
 					uadHierarchyDisplay.getPrimaryKey(entity), selectedUserId);
 
-			for (Map.Entry<Class<?>, List<Serializable>> entry :
+			for (Map.Entry<String, List<Serializable>> entry :
 					containerItemPKsMap.entrySet()) {
 
-				Class<?> containerItemClass = entry.getKey();
+				String typeKey = entry.getKey();
 
 				UADAnonymizer<Object> containerItemUADAnonymizer =
 					(UADAnonymizer<Object>)uadRegistry.getUADAnonymizer(
-						containerItemClass.getName());
+						typeKey);
 				UADDisplay<Object> containerItemUADDisplay =
-					(UADDisplay<Object>)uadRegistry.getUADDisplay(
-						containerItemClass.getName());
+					(UADDisplay<Object>)uadRegistry.getUADDisplay(typeKey);
 
 				doMultipleAction(
 					entry.getValue(),

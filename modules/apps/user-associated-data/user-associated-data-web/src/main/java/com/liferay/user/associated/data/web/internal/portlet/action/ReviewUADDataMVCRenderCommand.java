@@ -220,7 +220,7 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				getHierarchyUADEntitySearchContainer(
 					liferayPortletResponse, renderRequest, applicationKey,
 					currentURL, scopeDisplay.getGroupIds(),
-					uadHierarchyDisplay.getFirstContainerTypeClass(), 0L, user,
+					uadHierarchyDisplay.getFirstContainerTypeKey(), 0L, user,
 					uadHierarchyDisplay);
 		}
 

@@ -135,7 +135,7 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 				_portal.getLiferayPortletResponse(renderResponse),
 				renderRequest, applicationKey,
 				PortletURLUtil.getCurrent(renderRequest, renderResponse),
-				groupIds, uadDisplay.getTypeClass(),
+				groupIds, uadDisplay.getTypeKey(),
 				ParamUtil.getLong(renderRequest, "parentContainerId"),
 				_selectedUserHelper.getSelectedUser(renderRequest),
 				uadHierarchyDisplay));

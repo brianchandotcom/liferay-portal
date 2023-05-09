@@ -111,7 +111,7 @@ public class UADSearchContainerBuilder {
 	public SearchContainer<UADEntity<?>> getHierarchyUADEntitySearchContainer(
 		LiferayPortletResponse liferayPortletResponse,
 		RenderRequest renderRequest, String applicationKey,
-		PortletURL currentURL, long[] groupIds, Class<?> parentContainerClass,
+		PortletURL currentURL, long[] groupIds, String parentContainerKey,
 		Serializable parentContainerId, User selectedUser,
 		UADHierarchyDisplay uadHierarchyDisplay) {
 
@@ -127,7 +127,7 @@ public class UADSearchContainerBuilder {
 
 			entities.addAll(
 				uadHierarchyDisplay.search(
-					parentContainerClass, parentContainerId,
+					parentContainerKey, parentContainerId,
 					selectedUser.getUserId(), groupIds,
 					displayTerms.getKeywords(), null, null, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS));
@@ -135,7 +135,7 @@ public class UADSearchContainerBuilder {
 			if (Objects.equals(String.valueOf(parentContainerId), "0")) {
 				entities.addAll(
 					uadHierarchyDisplay.search(
-						parentContainerClass, -1L, selectedUser.getUserId(),
+						parentContainerKey, -1L, selectedUser.getUserId(),
 						groupIds, displayTerms.getKeywords(), null, null,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 			}

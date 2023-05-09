@@ -112,10 +112,8 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 					_uadRegistry.getUADHierarchyDisplay(applicationKey);
 
 				if (uadHierarchyDisplay != null) {
-					Class<?> typeClass =
-						uadHierarchyDisplay.getFirstContainerTypeClass();
-
-					uadRegistryKey = typeClass.getName();
+					uadRegistryKey =
+						uadHierarchyDisplay.getFirstContainerTypeKey();
 				}
 				else {
 					uadRegistryKey = ParamUtil.getString(

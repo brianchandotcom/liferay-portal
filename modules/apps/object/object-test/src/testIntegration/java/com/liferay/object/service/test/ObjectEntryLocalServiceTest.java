@@ -35,6 +35,7 @@ import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
@@ -116,6 +117,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -253,6 +256,23 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_CLOB, false, false, null,
 					"Script", "script", false)));
 
+		_addCustomObjectField(
+			new DateTimeObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("DateTimeField")
+			).name(
+				"dateTimeField"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE
+					).value(
+						ObjectFieldSettingConstants.VALUE_USE_INPUT_AS_ENTERED
+					).build())
+			).build());
 		_addCustomObjectField(
 			new PrecisionDecimalObjectFieldBuilder(
 			).labelMap(
@@ -787,7 +807,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		_assertObjectEntryValues(
-			20, values,
+			21, values,
 			_objectEntryLocalService.getValues(objectEntry.getObjectEntryId()));
 
 		values = HashMapBuilder.<String, Serializable>put(
@@ -803,7 +823,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		_assertObjectEntryValues(
-			20, values,
+			21, values,
 			_objectEntryLocalService.getValues(objectEntry.getObjectEntryId()));
 
 		_addOrUpdateObjectEntry(
@@ -1247,7 +1267,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 
 		_assertObjectEntryValues(
-			20, values1, _getValuesFromDatabase(objectEntries.get(0)));
+			21, values1, _getValuesFromDatabase(objectEntries.get(0)));
 
 		// Add second object entry
 
@@ -1271,9 +1291,9 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(2);
 
 		_assertObjectEntryValues(
-			20, values1, _getValuesFromDatabase(objectEntries.get(0)));
+			21, values1, _getValuesFromDatabase(objectEntries.get(0)));
 		_assertObjectEntryValues(
-			20, values2, _getValuesFromDatabase(objectEntries.get(1)));
+			21, values2, _getValuesFromDatabase(objectEntries.get(1)));
 
 		// Add third object entry
 
@@ -1297,11 +1317,11 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(3);
 
 		_assertObjectEntryValues(
-			20, values1, _getValuesFromDatabase(objectEntries.get(0)));
+			21, values1, _getValuesFromDatabase(objectEntries.get(0)));
 		_assertObjectEntryValues(
-			20, values2, _getValuesFromDatabase(objectEntries.get(1)));
+			21, values2, _getValuesFromDatabase(objectEntries.get(1)));
 		_assertObjectEntryValues(
-			20, values3, _getValuesFromDatabase(objectEntries.get(2)));
+			21, values3, _getValuesFromDatabase(objectEntries.get(2)));
 
 		// Irrelevant object definition
 
@@ -1350,6 +1370,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertFalse((boolean)values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));
+		Assert.assertEquals(null, values.get("dateTimeField"));
 		Assert.assertEquals(
 			"john@liferay.com", values.get("emailAddressRequired"));
 		Assert.assertEquals("John", values.get("firstName"));
@@ -1367,7 +1388,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 20, values.size());
+		Assert.assertEquals(values.toString(), 21, values.size());
 
 		_assertFailure(
 			NoSuchObjectEntryException.class,
@@ -1409,7 +1430,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		_assertObjectEntryValues(26, values1, valuesList.get(0));
+		_assertObjectEntryValues(27, values1, valuesList.get(0));
 
 		// Add second object entry
 
@@ -1433,8 +1454,8 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(2);
 
-		_assertObjectEntryValues(26, values1, valuesList.get(0));
-		_assertObjectEntryValues(26, values2, valuesList.get(1));
+		_assertObjectEntryValues(27, values1, valuesList.get(0));
+		_assertObjectEntryValues(27, values2, valuesList.get(1));
 
 		// Add third object entry
 
@@ -1458,9 +1479,9 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(3);
 
-		_assertObjectEntryValues(26, values1, valuesList.get(0));
-		_assertObjectEntryValues(26, values2, valuesList.get(1));
-		_assertObjectEntryValues(26, values3, valuesList.get(2));
+		_assertObjectEntryValues(27, values1, valuesList.get(0));
+		_assertObjectEntryValues(27, values2, valuesList.get(1));
+		_assertObjectEntryValues(27, values3, valuesList.get(2));
 
 		// Irrelevant object definition
 
@@ -1548,7 +1569,7 @@ public class ObjectEntryLocalServiceTest {
 		List<ObjectEntry> objectEntries = baseModelSearchResult.getBaseModels();
 
 		_assertObjectEntryValues(
-			20, values1, _getValuesFromDatabase(objectEntries.get(0)));
+			21, values1, _getValuesFromDatabase(objectEntries.get(0)));
 
 		// Add second object entry
 
@@ -1573,9 +1594,9 @@ public class ObjectEntryLocalServiceTest {
 		objectEntries = baseModelSearchResult.getBaseModels();
 
 		_assertObjectEntryValues(
-			20, values1, _getValuesFromDatabase(objectEntries.get(0)));
+			21, values1, _getValuesFromDatabase(objectEntries.get(0)));
 		_assertObjectEntryValues(
-			20, values2, _getValuesFromDatabase(objectEntries.get(1)));
+			21, values2, _getValuesFromDatabase(objectEntries.get(1)));
 
 		// Add third object entry
 
@@ -1600,11 +1621,11 @@ public class ObjectEntryLocalServiceTest {
 		objectEntries = baseModelSearchResult.getBaseModels();
 
 		_assertObjectEntryValues(
-			20, values1, _getValuesFromDatabase(objectEntries.get(0)));
+			21, values1, _getValuesFromDatabase(objectEntries.get(0)));
 		_assertObjectEntryValues(
-			20, values2, _getValuesFromDatabase(objectEntries.get(1)));
+			21, values2, _getValuesFromDatabase(objectEntries.get(1)));
 		_assertObjectEntryValues(
-			20, values3, _getValuesFromDatabase(objectEntries.get(2)));
+			21, values3, _getValuesFromDatabase(objectEntries.get(2)));
 
 		// With keywords
 
@@ -1713,6 +1734,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0L, values.get("ageOfDeath"));
 		Assert.assertFalse((boolean)values.get("authorOfGospel"));
 		Assert.assertEquals(null, values.get("birthday"));
+		Assert.assertEquals(null, values.get("dateTimeField"));
 		Assert.assertEquals(
 			"john@liferay.com", values.get("emailAddressRequired"));
 		Assert.assertEquals("João", values.get("firstName"));
@@ -1734,7 +1756,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 20, values.size());
+		Assert.assertEquals(values.toString(), 21, values.size());
 
 		Calendar calendar = new GregorianCalendar();
 
@@ -1742,6 +1764,8 @@ public class ObjectEntryLocalServiceTest {
 		calendar.setTimeInMillis(0);
 
 		Date birthdayDate = calendar.getTime();
+
+		Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
 		String script = RandomTestUtil.randomString(1500);
 		FileEntry fileEntry = _addTempFileEntry(StringUtil.randomString());
@@ -1754,6 +1778,8 @@ public class ObjectEntryLocalServiceTest {
 				"authorOfGospel", true
 			).put(
 				"birthday", birthdayDate
+			).put(
+				"dateTimeField", timestamp
 			).put(
 				"height", 180
 			).put(
@@ -1787,6 +1813,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(94L, values.get("ageOfDeath"));
 		Assert.assertTrue((boolean)values.get("authorOfGospel"));
 		Assert.assertEquals(birthdayDate, values.get("birthday"));
+		Assert.assertEquals(timestamp, values.get("dateTimeField"));
 		Assert.assertEquals(
 			"john@liferay.com", values.get("emailAddressRequired"));
 		Assert.assertEquals("João", values.get("firstName"));
@@ -1810,7 +1837,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 20, values.size());
+		Assert.assertEquals(values.toString(), 21, values.size());
 
 		// LPS-180587 Partial updates should not delete existing files
 
@@ -1854,6 +1881,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(94L, values.get("ageOfDeath"));
 		Assert.assertTrue((boolean)values.get("authorOfGospel"));
 		Assert.assertEquals(birthdayDate, values.get("birthday"));
+		Assert.assertEquals(timestamp, values.get("dateTimeField"));
 		Assert.assertEquals(
 			"john@liferay.com", values.get("emailAddressRequired"));
 		Assert.assertEquals("João", values.get("firstName"));
@@ -1876,7 +1904,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(),
 			values.get(_objectDefinition.getPKObjectFieldName()));
-		Assert.assertEquals(values.toString(), 20, values.size());
+		Assert.assertEquals(values.toString(), 21, values.size());
 
 		_assertFailure(
 			NoSuchFileEntryException.class,

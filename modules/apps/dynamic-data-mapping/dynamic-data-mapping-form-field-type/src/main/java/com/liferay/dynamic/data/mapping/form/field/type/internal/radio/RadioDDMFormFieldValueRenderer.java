@@ -42,9 +42,6 @@ public class RadioDDMFormFieldValueRenderer
 	}
 
 	@Reference
-	protected RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor;
-
-	@Reference
 	private Html _html;
 
 }

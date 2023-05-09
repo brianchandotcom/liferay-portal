@@ -84,9 +84,6 @@ public class RadioDDMFormFieldValueRendererTest {
 		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
 			new RadioDDMFormFieldValueRenderer();
 
-		radioDDMFormFieldValueRenderer.radioDDMFormFieldValueAccessor =
-			new RadioDDMFormFieldValueAccessor();
-
 		ReflectionTestUtil.setFieldValue(
 			radioDDMFormFieldValueRenderer, "_html", new HtmlImpl());
 

@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
+	enabled = false,
 	property = "utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
 	service = LayoutUtilityPageEntryViewRenderer.class
 )

@@ -12,6 +12,30 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Given access to the Datasets admin page") {
+			FrontendDataSetAdmin.goToDatasetAdminPage();
+		}
+
+		task ("The user goes to add a new Dataset") {
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "/c/fdsentries");
+		}
+
+		task ("Add a new view") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+
+			FrontendDataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "View Test");
+		}
+
+		task ("When goes to Fields Tab") {
+			FrontendDataSetAdmin.goToFieldTabs(
+				dataSetViewName = "View Test",
+				navTab = "Pagination");
+		}
 	}
 
 	tearDown {

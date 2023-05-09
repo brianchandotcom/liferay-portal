@@ -69,8 +69,6 @@ import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
 
-import java.sql.SQLException;
-
 import java.util.List;
 
 import javax.portlet.PortletConfig;
@@ -94,33 +92,13 @@ public class PortalInstancesLocalServiceImpl
 	extends PortalInstancesLocalServiceBaseImpl {
 
 	@Override
-	public void addCompanyId(long companyId) {
-		PortalInstances.addCompanyId(companyId);
-	}
-
-	@Override
-	public long getCompanyId(HttpServletRequest httpServletRequest) {
-		return PortalInstances.getCompanyId(httpServletRequest);
-	}
-
-	@Override
 	public long[] getCompanyIds() {
 		return PortalInstances.getCompanyIds();
 	}
 
 	@Override
-	public long[] getCompanyIdsBySQL() throws SQLException {
-		return PortalInstances.getCompanyIdsBySQL();
-	}
-
-	@Override
 	public long getDefaultCompanyId() {
 		return PortalInstances.getDefaultCompanyId();
-	}
-
-	@Override
-	public String[] getWebIds() {
-		return PortalInstances.getWebIds();
 	}
 
 	@Override
@@ -188,41 +166,6 @@ public class PortalInstancesLocalServiceImpl
 			ServiceContextThreadLocal.pushServiceContext(
 				currentThreadServiceContext);
 		}
-	}
-
-	@Override
-	public boolean isAutoLoginIgnoreHost(String host) {
-		return PortalInstances.isAutoLoginIgnoreHost(host);
-	}
-
-	@Override
-	public boolean isAutoLoginIgnorePath(String path) {
-		return PortalInstances.isAutoLoginIgnorePath(path);
-	}
-
-	@Override
-	public boolean isCompanyActive(long companyId) {
-		return PortalInstances.isCompanyActive(companyId);
-	}
-
-	@Override
-	public boolean isVirtualHostsIgnoreHost(String host) {
-		return PortalInstances.isVirtualHostsIgnoreHost(host);
-	}
-
-	@Override
-	public boolean isVirtualHostsIgnorePath(String path) {
-		return PortalInstances.isVirtualHostsIgnorePath(path);
-	}
-
-	@Override
-	public void reload() {
-		PortalInstances.reload();
-	}
-
-	@Override
-	public void removeCompany(long companyId) {
-		PortalInstances.removeCompany(companyId);
 	}
 
 	@Clusterable

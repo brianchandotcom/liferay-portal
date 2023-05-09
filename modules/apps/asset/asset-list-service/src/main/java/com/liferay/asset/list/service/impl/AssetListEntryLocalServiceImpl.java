@@ -111,11 +111,12 @@ public class AssetListEntryLocalServiceImpl
 					assetListEntryId, segmentsEntryId);
 
 		if (assetListEntrySegmentsEntryRel == null) {
-			_assetListEntrySegmentsEntryRelLocalService.
-				addAssetListEntrySegmentsEntryRel(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), assetListEntryId,
-					segmentsEntryId, StringPool.BLANK, serviceContext);
+			assetListEntrySegmentsEntryRel =
+				_assetListEntrySegmentsEntryRelLocalService.
+					addAssetListEntrySegmentsEntryRel(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(), assetListEntryId,
+						segmentsEntryId, StringPool.BLANK, serviceContext);
 		}
 
 		List<Long> selectedAssetEntryIds = new ArrayList<>(

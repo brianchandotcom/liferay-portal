@@ -5970,9 +5970,7 @@ definition {
 			}
 
 			task ("Open info panel sidebar at versions tag") {
-				LexiconTable.clickEllipsisItem(
-					item = "Info",
-					tableEntry = "DM Document Title Edit");
+				ContentDashboard.openInfoPanel(assetName = "DM Document Title Edit");
 
 				ContentDashboard.openVersionsTab();
 			}

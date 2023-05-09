@@ -2529,26 +2529,8 @@ public class ObjectEntryLocalServiceImpl
 			return new Expression<?>[0];
 		}
 
-		List<Expression<?>> selectExpressions = new ArrayList<>();
-
-		for (Column<DynamicObjectDefinitionLocalizationTable, ?> column :
-				dynamicObjectDefinitionLocalizationTable.getColumns()) {
-
-			if (column.equals(
-					dynamicObjectDefinitionLocalizationTable.
-						getForeignKeyColumn()) ||
-				column.equals(
-					dynamicObjectDefinitionLocalizationTable.
-						getPrimaryKeyColumn()) ||
-				column.equals(
-					dynamicObjectDefinitionLocalizationTable.
-						getLanguageIdColumn())) {
-
-				continue;
-			}
-
-			selectExpressions.add(column);
-		}
+		List<Expression<?>> selectExpressions = new ArrayList<>(
+			dynamicObjectDefinitionLocalizationTable.getObjectFieldColumns());
 
 		return selectExpressions.toArray(new Expression<?>[0]);
 	}

@@ -22,10 +22,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -141,6 +143,23 @@ public class DynamicObjectDefinitionLocalizationTable
 
 	public ObjectDefinition getObjectDefinition() {
 		return _objectDefinition;
+	}
+
+	public List<Column<DynamicObjectDefinitionLocalizationTable, ?>>
+		getObjectFieldColumns() {
+
+		return ListUtil.filter(
+			new ArrayList<>(getColumns()),
+			column -> {
+				if (column.equals(getForeignKeyColumn()) ||
+					column.equals(getLanguageIdColumn()) ||
+					column.equals(getPrimaryKeyColumn())) {
+
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	public List<ObjectField> getObjectFields() {

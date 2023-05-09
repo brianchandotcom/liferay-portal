@@ -18,6 +18,8 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
@@ -62,13 +64,7 @@ public class LiferayPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					ExtensionContainer extensionContainer =
-						project.getExtensions();
-
-					JavaPluginExtension javaPluginExtension =
-						extensionContainer.getByType(JavaPluginExtension.class);
-
-					javaPluginExtension.disableAutoTargetJvm();
+					_configurePluginJava(project);
 				}
 
 			});
@@ -88,6 +84,30 @@ public class LiferayPlugin implements Plugin<Project> {
 
 	protected Class<? extends Plugin<Project>> getThemePluginClass() {
 		return LiferayThemePlugin.class;
+	}
+
+	private void _configurePluginJava(Project project) {
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		JavaPluginExtension javaPluginExtension = extensionContainer.getByType(
+			JavaPluginExtension.class);
+
+		javaPluginExtension.disableAutoTargetJvm();
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration compileOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		compileOnlyConfiguration.setCanBeResolved(true);
+
+		Configuration runtimeOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.RUNTIME_ONLY_CONFIGURATION_NAME);
+
+		runtimeOnlyConfiguration.setCanBeResolved(true);
 	}
 
 	private boolean _isAnt(Project project) {

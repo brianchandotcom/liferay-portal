@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.grid;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -103,8 +104,11 @@ public class GridDDMFormFieldValueRenderer
 		return defaultLabel;
 	}
 
-	@Reference
-	protected GridDDMFormFieldValueAccessor gridDDMFormFieldValueAccessor;
+	@Reference(
+		target = "(ddm.form.field.type.name=" + DDMFormFieldTypeConstants.GRID + ")"
+	)
+	protected DDMFormFieldValueAccessor<JSONObject>
+		gridDDMFormFieldValueAccessor;
 
 	@Reference
 	private Html _html;

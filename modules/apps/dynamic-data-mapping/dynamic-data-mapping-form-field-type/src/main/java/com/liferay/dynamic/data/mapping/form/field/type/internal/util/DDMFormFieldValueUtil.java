@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -134,6 +135,14 @@ public class DDMFormFieldValueUtil {
 		Value value = ddmFormFieldValue.getValue();
 
 		return value.getString(locale);
+	}
+
+	public static boolean isManualDataSourceType(DDMFormField ddmFormField) {
+		if (Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static DDMFormFieldOptions _getDDMFormFieldOptions(

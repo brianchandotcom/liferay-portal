@@ -8,6 +8,7 @@ package com.liferay.gradle.plugins.maven.plugin.builder.task;
 import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.XMLUtil;
 import com.liferay.gradle.util.GUtil;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -337,10 +338,18 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		Set<String> forcedExclusions = getForcedExclusions();
 
-		ResolvedConfiguration resolvedConfiguration =
-			configuration.getResolvedConfiguration();
+		Configuration resolvableConfiguration = GradleUtil.addConfiguration(
+			project, "resolvable" + StringUtil.capitalize(configurationName));
 
-		for (Dependency dependency : configuration.getDependencies()) {
+		resolvableConfiguration.extendsFrom(configuration);
+		resolvableConfiguration.setVisible(false);
+
+		ResolvedConfiguration resolvedConfiguration =
+			resolvableConfiguration.getResolvedConfiguration();
+
+		for (Dependency dependency :
+				resolvableConfiguration.getAllDependencies()) {
+
 			Element dependencyElement = document.createElement("dependency");
 
 			dependenciesElement.appendChild(dependencyElement);

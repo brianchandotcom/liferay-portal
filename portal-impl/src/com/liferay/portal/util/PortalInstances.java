@@ -68,10 +68,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PortalInstances {
 
-	public static void addCompanyId(long companyId) {
-		_companyIds.addIfAbsent(companyId);
-	}
-
 	public static long getCompanyId(HttpServletRequest httpServletRequest) {
 		try {
 			return getCompanyId(httpServletRequest, false);
@@ -400,7 +396,7 @@ public class PortalInstances {
 						" and company id ", companyId));
 			}
 
-			addCompanyId(companyId);
+			_companyIds.addIfAbsent(companyId);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(currentThreadCompanyId);
@@ -450,17 +446,6 @@ public class PortalInstances {
 
 	public static boolean isVirtualHostsIgnorePath(String path) {
 		return _virtualHostsIgnorePaths.contains(path);
-	}
-
-	public static void reload() {
-		_companyIds.clear();
-		_webIds = null;
-
-		String[] webIds = getWebIds();
-
-		for (String webId : webIds) {
-			initCompany(webId);
-		}
 	}
 
 	public static void removeCompany(long companyId) {

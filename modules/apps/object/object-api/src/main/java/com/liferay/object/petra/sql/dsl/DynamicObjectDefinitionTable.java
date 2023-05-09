@@ -20,7 +20,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -32,24 +31,6 @@ import java.util.List;
  */
 public class DynamicObjectDefinitionTable
 	extends BaseTable<DynamicObjectDefinitionTable> {
-
-	/**
-	 * @see com.liferay.portal.dao.db.BaseDB#alterTableAddColumn(
-	 *      java.sql.Connection, String, String, String)
-	 */
-	public static String getAlterTableAddColumnSQL(
-		String tableName, String columnName, String type) {
-
-		String sql = StringBundler.concat(
-			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
-			DataType.getDBType(type), _getSQLColumnNull(type));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + sql);
-		}
-
-		return sql;
-	}
 
 	public DynamicObjectDefinitionTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
@@ -112,7 +93,9 @@ public class DynamicObjectDefinitionTable
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");
 			sb.append(DataType.getDBType(objectField.getDBType()));
-			sb.append(_getSQLColumnNull(objectField.getDBType()));
+			sb.append(
+				DynamicObjectDefinitionTableUtil.getSQLColumnNull(
+					objectField.getDBType()));
 		}
 
 		sb.append(")");
@@ -148,22 +131,6 @@ public class DynamicObjectDefinitionTable
 		String name, Class<C> javaClass, int sqlType, int flags) {
 
 		return super.createColumn(name, javaClass, sqlType, flags);
-	}
-
-	private static String _getSQLColumnNull(String type) {
-		if (type.equals("BigDecimal") || type.equals("Double") ||
-			type.equals("Integer") || type.equals("Long")) {
-
-			return " default 0";
-		}
-		else if (type.equals("Boolean")) {
-			return " default FALSE";
-		}
-		else if (type.equals("Date") || type.equals("DateTime")) {
-			return " null";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

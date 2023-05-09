@@ -29,7 +29,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectRelationshipTable;
-import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -815,7 +815,7 @@ public class ObjectRelationshipLocalServiceImpl
 
 		if (objectDefinition2.isApproved()) {
 			runSQL(
-				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
+				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), "Long"));
 
 			if (_objectDefinitionLocalService != null) {

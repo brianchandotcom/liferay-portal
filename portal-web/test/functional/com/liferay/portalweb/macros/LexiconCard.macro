@@ -57,7 +57,12 @@ definition {
 	}
 
 	macro viewCardLabel {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
 		AssertTextEquals(
+			index = ${index},
 			key_card = ${card},
 			locator1 = "Card#CARD_LABEL",
 			value1 = ${cardLabel});

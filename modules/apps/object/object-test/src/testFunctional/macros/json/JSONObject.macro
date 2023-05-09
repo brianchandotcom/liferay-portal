@@ -1,5 +1,54 @@
 definition {
 
+	macro addEmailNotificationTemplateViaAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/notification/v1.0/notification-templates \
+				-H 'Content-Type:application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"body": {
+						"en_US": "<p>${bodyContent}</p>\n"
+					},
+					"editorType": "richText",
+					"name": "${emailName}",
+					"name_i18n": {
+						"en_US": "${emailName}"
+					},
+					"recipientType": "email",
+					"recipients": [
+						{
+							"cc": "${cc}",
+							"bcc": "${bcc}",
+							"fromName": {
+								"en_US": "${fromName}"
+							},
+							"from": "${fromEmail}",
+							"to": {
+								"en_US": "${toEmail}"
+							}
+						}
+					],
+					"subject": {
+						"en_US": "${subject}"
+					},
+					"type": "email",
+					"typeLabel": "Email"
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	@summary = "This calls the JSON WS API to add an object"
 	macro addObject {
 		var portalURL = JSONCompany.getPortalURL();

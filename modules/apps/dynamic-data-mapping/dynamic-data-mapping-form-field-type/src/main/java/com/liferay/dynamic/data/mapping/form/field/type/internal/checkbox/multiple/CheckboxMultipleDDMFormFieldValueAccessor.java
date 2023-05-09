@@ -40,10 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
-	service = {
-		CheckboxMultipleDDMFormFieldValueAccessor.class,
-		DDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class CheckboxMultipleDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONArray> {

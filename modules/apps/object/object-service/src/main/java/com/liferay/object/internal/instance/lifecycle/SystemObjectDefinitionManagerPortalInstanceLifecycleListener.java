@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -183,9 +184,11 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			_bundleContext.registerService(
 				ItemSelectorView.class,
 				new SystemObjectEntryItemSelectorView(
-					_itemSelector, _itemSelectorViewDescriptorRenderer,
-					objectDefinition, _objectFieldLocalService,
-					_objectRelatedModelsProviderRegistry, _portal),
+					_dtoConverterRegistry, _itemSelector,
+					_itemSelectorViewDescriptorRenderer, objectDefinition,
+					_objectFieldLocalService,
+					_objectRelatedModelsProviderRegistry, _portal,
+					_systemObjectDefinitionManagerRegistry, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.selector.view.order", 500
 				).build());
@@ -257,6 +260,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

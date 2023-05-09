@@ -57,7 +57,8 @@ const MenuItem = ({children, iconKey, setActive, to}) => {
 
 				return isActive ? activeIcon : inactiveIcon;
 			}
-		} catch {}
+		}
+		catch {}
 	}, [iconKey, isActive]);
 
 	return (

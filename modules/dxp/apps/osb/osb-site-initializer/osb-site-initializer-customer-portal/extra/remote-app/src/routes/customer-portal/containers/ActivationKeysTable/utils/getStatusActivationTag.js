@@ -19,7 +19,8 @@ export function getStatusActivationTag(activationKey) {
 		now < new Date(activationKey.startDate)
 	) {
 		activationStatus = ACTIVATION_STATUS.notActivated;
-	} else if (now > new Date(activationKey.expirationDate)) {
+	}
+	else if (now > new Date(activationKey.expirationDate)) {
 		activationStatus = ACTIVATION_STATUS.expired;
 	}
 

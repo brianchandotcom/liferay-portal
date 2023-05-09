@@ -15,40 +15,28 @@
 package com.liferay.dynamic.data.mapping.taglib.internal.servlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.osgi.util.service.Snapshot;
 
 import javax.servlet.ServletContext;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static ItemSelector getItemSelector() {
-		return _itemSelector;
+		return _itemSelectorSnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContext;
+		return _servletContextSnapshot.get();
 	}
 
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private static ItemSelector _itemSelector;
-	private static ServletContext _servletContext;
+	private static final Snapshot<ItemSelector> _itemSelectorSnapshot =
+		new Snapshot<>(ServletContextUtil.class, ItemSelector.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.taglib)");
 
 }

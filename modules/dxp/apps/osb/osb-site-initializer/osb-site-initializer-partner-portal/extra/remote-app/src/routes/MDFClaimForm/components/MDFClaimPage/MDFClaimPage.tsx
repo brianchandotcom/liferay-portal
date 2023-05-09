@@ -41,7 +41,7 @@ const MDFClaimPage = ({
 		isSubmitting,
 		isValid,
 		setFieldValue,
-		status,
+		status: submitted,
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFClaim>();
@@ -229,7 +229,7 @@ const MDFClaimPage = ({
 					<div className="d-flex mr-auto">
 						<ClayButton
 							className="inline-item inline-item-after pl-0"
-							disabled={isSubmitting || status}
+							disabled={isSubmitting || submitted}
 							displayType={null}
 							onClick={() => onSaveAsDraft(values, formikHelpers)}
 						>
@@ -243,7 +243,7 @@ const MDFClaimPage = ({
 					<div>
 						<ClayButton
 							className="mr-4"
-							disabled={isSubmitting || status}
+							disabled={isSubmitting || submitted}
 							displayType="secondary"
 							onClick={() => onCancel()}
 						>
@@ -252,7 +252,7 @@ const MDFClaimPage = ({
 
 						<ClayButton
 							className="inline-item inline-item-after"
-							disabled={!isValid || isSubmitting || status}
+							disabled={!isValid || isSubmitting || submitted}
 							type="submit"
 						>
 							Submit

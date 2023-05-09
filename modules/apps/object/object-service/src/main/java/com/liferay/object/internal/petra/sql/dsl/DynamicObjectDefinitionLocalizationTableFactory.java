@@ -40,8 +40,7 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 		return new DynamicObjectDefinitionLocalizationTable(
 			objectDefinition,
 			_objectFieldPersistence.findByODI_L(
-				objectDefinition.getObjectDefinitionId(), true),
-			objectDefinition.getDBTableName());
+				objectDefinition.getObjectDefinitionId(), true));
 	}
 
 	@Reference

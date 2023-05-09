@@ -51,8 +51,7 @@ public class DynamicObjectDefinitionLocalizationTable
 	}
 
 	public DynamicObjectDefinitionLocalizationTable(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields,
-		String tableName) {
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
 
 		super(objectDefinition.getL10nDBTableName(), () -> null);
 

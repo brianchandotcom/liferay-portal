@@ -43,9 +43,9 @@ definition {
 			Type.sendKeys(
 				locator1 = "OneDrive#DOCUMENTS_CONTENT",
 				value1 = ${dmDocumentContent});
-
-			WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
 		}
+
+		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
 
 		Navigator.closeWindow();
 

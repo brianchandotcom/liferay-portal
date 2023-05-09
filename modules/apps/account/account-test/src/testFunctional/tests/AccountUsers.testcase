@@ -195,6 +195,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		AccountUsers.setUserPassword(
+			accountUser = "userea@liferay.com",
+			accountUserPassword = "test");
+
 		AccountUsers.openAccountUsersAdmin();
 
 		AccountUsers.editUser(

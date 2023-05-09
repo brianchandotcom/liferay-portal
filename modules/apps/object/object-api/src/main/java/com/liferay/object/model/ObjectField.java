@@ -58,6 +58,8 @@ public interface ObjectField extends ObjectFieldModel, PersistedModel {
 
 	public boolean compareBusinessType(String businessType);
 
+	public String getI18nObjectFieldName();
+
 	public ObjectDefinition getObjectDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

@@ -343,7 +343,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		return preparedStatement;
 	}
 
-	private static final int _SQL_PLACEHOLDER_LIMIT = 65534;
+	private static final int _SQL_PLACEHOLDER_LIMIT = 65533;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTClosureFactoryImpl.class);

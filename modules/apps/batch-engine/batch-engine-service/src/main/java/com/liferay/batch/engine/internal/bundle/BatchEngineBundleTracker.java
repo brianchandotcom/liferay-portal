@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -94,7 +95,7 @@ public class BatchEngineBundleTracker {
 		Bundle bundle, String batchPath) {
 
 		Map<String, URL> batchEngineURLs = new HashMap<>();
-		Map<String, BatchEngineUnit> batchEngineUnits = new HashMap<>();
+		Map<String, BatchEngineUnit> batchEngineUnits = new TreeMap<>();
 
 		Enumeration<URL> enumeration = bundle.findEntries(batchPath, "*", true);
 

@@ -169,6 +169,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 				var checkedNodes = permissionContentContainerNode.all(':checked');
 
 				originalSelectedValues = checkedNodes.val();
+
+				setPortletResource(href);
 			})
 			.catch((error) => {
 				permissionContentContainerNode.loadingmask.hide();
@@ -237,6 +239,25 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			},
 			':checkbox'
 		);
+	}
+
+	function setPortletResource(href) {
+		const url = new URL(href);
+
+		const cmdKey = '<portlet:namespace />cmd';
+		const portletResourceKey = '<portlet:namespace />portletResource';
+
+		const cmd = url.searchParams.get(cmdKey);
+		const portletResource = url.searchParams.get(portletResourceKey);
+
+		const currentURL = new URL(window.location.href);
+
+		currentURL.searchParams.set(cmdKey, cmd);
+		currentURL.searchParams.set(portletResourceKey, portletResource);
+
+		const path = currentURL.toString();
+
+		window.history.replaceState({path}, document.title, path);
 	}
 
 	A.on('domready', (event) => {

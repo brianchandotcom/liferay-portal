@@ -284,12 +284,8 @@ public class GetCollectionFieldMVCResourceCommand
 		defaultLayoutListRetrieverContext.setConfiguration(
 			LayoutObjectReferenceUtil.getConfiguration(
 				layoutObjectReferenceJSONObject));
-
-		Object infoItem = _getInfoItem(httpServletRequest);
-
-		if (infoItem != null) {
-			defaultLayoutListRetrieverContext.setContextObject(infoItem);
-		}
+		defaultLayoutListRetrieverContext.setContextObject(
+			_getInfoItem(httpServletRequest));
 
 		if (activePage < 1) {
 			activePage = 1;

@@ -2474,7 +2474,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBMessageNotificationTemplateHelper
 			mbMessageNotificationTemplateHelper =
 				new MBMessageNotificationTemplateHelper(
-					htmlFormat, serviceContext);
+					htmlFormat, mbMessageLocalService, serviceContext);
 
 		String messageBody = mbMessageNotificationTemplateHelper.getMessageBody(
 			message, StringPool.BLANK);
@@ -2509,7 +2509,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String messageParentMessageContent = StringPool.BLANK;
 		String messageSiblingMessagesContent = StringPool.BLANK;
-		String rootMessageBody = StringPool.BLANK;
+
+		String rootMessageBody =
+			mbMessageNotificationTemplateHelper.renderRootMessage(message);
 
 		SubscriptionSender subscriptionSender = _getSubscriptionSender(
 			userId, category, message, messageURL, entryTitle, htmlFormat,

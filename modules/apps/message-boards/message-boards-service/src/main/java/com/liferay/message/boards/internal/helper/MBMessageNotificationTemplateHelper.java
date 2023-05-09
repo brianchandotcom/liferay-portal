@@ -14,10 +14,14 @@
 
 package com.liferay.message.boards.internal.helper;
 
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
@@ -37,9 +41,11 @@ import javax.servlet.http.HttpServletRequest;
 public class MBMessageNotificationTemplateHelper {
 
 	public MBMessageNotificationTemplateHelper(
-		boolean htmlFormat, ServiceContext serviceContext) {
+		boolean htmlFormat, MBMessageLocalService mbMessageLocalService,
+		ServiceContext serviceContext) {
 
 		_htmlFormat = htmlFormat;
+		_mbMessageLocalService = mbMessageLocalService;
 		_serviceContext = serviceContext;
 	}
 
@@ -79,6 +85,28 @@ public class MBMessageNotificationTemplateHelper {
 		return message.getBody();
 	}
 
+	public String renderRootMessage(MBMessage message) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+			(message.getParentMessageId() ==
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+
+			return StringPool.BLANK;
+		}
+
+		MBMessage rootMessage = _mbMessageLocalService.getMessage(
+			message.getRootMessageId());
+
+		return StringBundler.concat(
+			_getMarkupElement(MarkupElement.START_ROOT),
+			_getMarkupElement(MarkupElement.START_USER_ROOT),
+			_getUserName(rootMessage, _getQuoteMark()),
+			_getMarkupElement(MarkupElement.END),
+			_getMarkupElement(MarkupElement.START_BODY_ROOT),
+			getMessageBody(rootMessage, _getQuoteMark()),
+			_getMarkupElement(MarkupElement.END),
+			_getMarkupElement(MarkupElement.END));
+	}
+
 	private String _getMarkupElement(MarkupElement element) {
 		if (!_htmlFormat) {
 			return StringPool.BLANK;
@@ -110,6 +138,24 @@ public class MBMessageNotificationTemplateHelper {
 
 		return sb.toString();
 	}
+
+	private String _getQuoteMark() {
+		if (_htmlFormat) {
+			return StringPool.BLANK;
+		}
+
+		return _QUOTE_MARK + StringPool.SPACE;
+	}
+
+	private String _getUserName(MBMessage message, String quoteMark) {
+		if (!_htmlFormat) {
+			return _getQuotedMessage(false, message.getUserName(), quoteMark);
+		}
+
+		return message.getUserName() + "<br />";
+	}
+
+	private static final String _QUOTE_MARK = StringPool.GREATER_THAN;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageNotificationTemplateHelper.class);
@@ -154,6 +200,7 @@ public class MBMessageNotificationTemplateHelper {
 			MarkupElement.START_USER_SIBLING,
 			"<div class=\"mb-sibling-message-user\">"
 		).build();
+	private final MBMessageLocalService _mbMessageLocalService;
 	private final ServiceContext _serviceContext;
 
 	private enum MarkupElement {

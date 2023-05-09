@@ -286,6 +286,8 @@ public class GetCollectionFieldMVCResourceCommand
 				layoutObjectReferenceJSONObject));
 		defaultLayoutListRetrieverContext.setContextObject(
 			_getInfoItem(httpServletRequest));
+		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
+			_getSegmentsEntryIds(segmentsExperienceId));
 
 		if (activePage < 1) {
 			activePage = 1;
@@ -299,8 +301,6 @@ public class GetCollectionFieldMVCResourceCommand
 				activePage, listCount, displayAllPages, displayAllItems,
 				numberOfItems, numberOfItemsPerPage, numberOfPages,
 				paginationType));
-		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds(segmentsExperienceId));
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 

@@ -53,6 +53,11 @@ function filterFields(fields, fieldType) {
 			if (fieldType === EDITABLE_TYPES['date-time']) {
 				return field.type === 'date';
 			}
+			else if (fieldType === EDITABLE_TYPES.link) {
+				return (
+					field.type !== EDITABLE_TYPES.image && field.type !== 'date'
+				);
+			}
 			else if (
 				fieldType === EDITABLE_TYPES.image ||
 				fieldType === EDITABLE_TYPES.backgroundImage

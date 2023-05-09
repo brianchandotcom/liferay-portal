@@ -18,7 +18,6 @@ import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Locale;
 
@@ -42,18 +40,18 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	property = {
-		"commerce.order.status.key=" + QuoteRequestedCommerceOrderStatusImpl.KEY,
-		"commerce.order.status.priority:Integer=" + QuoteRequestedCommerceOrderStatusImpl.PRIORITY
+		"commerce.order.status.key=" + QuoteProcessedCommerceOrderStatusImpl.KEY,
+		"commerce.order.status.priority:Integer=" + QuoteProcessedCommerceOrderStatusImpl.PRIORITY
 	},
 	service = CommerceOrderStatus.class
 )
-public class QuoteRequestedCommerceOrderStatusImpl
+public class QuoteProcessedCommerceOrderStatusImpl
 	implements CommerceOrderStatus {
 
 	public static final int KEY =
-		CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED;
+		CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED;
 
-	public static final int PRIORITY = 20;
+	public static final int PRIORITY = 50;
 
 	@Override
 	public CommerceOrder doTransition(CommerceOrder commerceOrder, long userId)
@@ -101,17 +99,12 @@ public class QuoteRequestedCommerceOrderStatusImpl
 	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		CommerceOrderStatus currentCommerceOrderStatus =
-			_commerceOrderStatusRegistry.getCommerceOrderStatus(
-				commerceOrder.getOrderStatus());
+		if ((commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED) ||
+			(commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_ON_HOLD)) {
 
-		if ((currentCommerceOrderStatus.getKey() ==
-				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS) ||
-			(currentCommerceOrderStatus.getKey() ==
-				CommerceOrderConstants.ORDER_STATUS_OPEN)) {
-
-			return _commerceOrderValidatorRegistry.isValid(
-				LocaleUtil.getSiteDefault(), commerceOrder);
+			return true;
 		}
 
 		return false;
@@ -152,9 +145,6 @@ public class QuoteRequestedCommerceOrderStatusImpl
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
-
-	@Reference
-	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

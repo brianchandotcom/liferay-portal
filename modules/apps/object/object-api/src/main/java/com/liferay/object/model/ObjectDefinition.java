@@ -61,6 +61,8 @@ public interface ObjectDefinition
 
 	public String getExtensionDBTableName();
 
+	public String getLocalizationDBTableName();
+
 	public String getOSGiJaxRsName();
 
 	public String getOSGiJaxRsName(String className);

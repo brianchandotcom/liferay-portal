@@ -533,6 +533,11 @@ public class ObjectDefinitionWrapper
 		return model.getLabelMap();
 	}
 
+	@Override
+	public String getLocalizationDBTableName() {
+		return model.getLocalizationDBTableName();
+	}
+
 	/**
 	 * Returns the modifiable of this object definition.
 	 *

@@ -361,6 +361,12 @@ public class ObjectFieldLocalServiceUtil {
 			listTypeDefinitionId, state);
 	}
 
+	public static List<ObjectField> getLocalizedObjectFields(
+		long objectDefinitionId) {
+
+		return getService().getLocalizedObjectFields(objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object field with the primary key.
 	 *

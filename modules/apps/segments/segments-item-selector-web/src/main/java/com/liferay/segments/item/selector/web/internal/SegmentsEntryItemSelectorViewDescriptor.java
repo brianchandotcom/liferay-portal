@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.item.selector.web.internal.display.context.SegmentsEntryBrowserDisplayContext;
+import com.liferay.segments.item.selector.web.internal.display.context.SegmentsEntryDisplayContext;
 import com.liferay.segments.model.SegmentsEntry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +35,10 @@ public class SegmentsEntryItemSelectorViewDescriptor
 
 	public SegmentsEntryItemSelectorViewDescriptor(
 		HttpServletRequest httpServletRequest,
-		SegmentsEntryBrowserDisplayContext segmentsEntryBrowserDisplayContext) {
+		SegmentsEntryDisplayContext segmentsEntryDisplayContext) {
 
 		_httpServletRequest = httpServletRequest;
-		_segmentsEntryBrowserDisplayContext =
-			segmentsEntryBrowserDisplayContext;
+		_segmentsEntryDisplayContext = segmentsEntryDisplayContext;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -75,8 +74,7 @@ public class SegmentsEntryItemSelectorViewDescriptor
 	public SearchContainer<SegmentsEntry> getSearchContainer()
 		throws PortalException {
 
-		return _segmentsEntryBrowserDisplayContext.
-			getSegmentEntrySearchContainer();
+		return _segmentsEntryDisplayContext.getSegmentEntrySearchContainer();
 	}
 
 	@Override
@@ -95,8 +93,7 @@ public class SegmentsEntryItemSelectorViewDescriptor
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final SegmentsEntryBrowserDisplayContext
-		_segmentsEntryBrowserDisplayContext;
+	private final SegmentsEntryDisplayContext _segmentsEntryDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.item.selector.SegmentsEntryItemSelectorCriterion;
-import com.liferay.segments.item.selector.web.internal.display.context.SegmentsEntryBrowserDisplayContext;
+import com.liferay.segments.item.selector.web.internal.display.context.SegmentsEntryDisplayContext;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.io.IOException;
@@ -81,8 +81,8 @@ public class SegmentsEntryItemSelectorView
 			(RenderRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		SegmentsEntryBrowserDisplayContext segmentsEntryBrowserDisplayContext =
-			new SegmentsEntryBrowserDisplayContext(
+		SegmentsEntryDisplayContext segmentsEntryDisplayContext =
+			new SegmentsEntryDisplayContext(
 				httpServletRequest, portletURL, renderRequest,
 				_segmentsEntryLocalService);
 
@@ -91,7 +91,7 @@ public class SegmentsEntryItemSelectorView
 			segmentsEntryItemSelectorCriterion, portletURL,
 			itemSelectedEventName, search,
 			new SegmentsEntryItemSelectorViewDescriptor(
-				httpServletRequest, segmentsEntryBrowserDisplayContext));
+				httpServletRequest, segmentsEntryDisplayContext));
 	}
 
 	private static final List<ItemSelectorReturnType>

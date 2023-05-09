@@ -37,9 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Stefan Tanasie
  */
-public class SegmentsEntryBrowserDisplayContext {
+public class SegmentsEntryDisplayContext {
 
-	public SegmentsEntryBrowserDisplayContext(
+	public SegmentsEntryDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		RenderRequest renderRequest,
 		SegmentsEntryLocalService segmentsEntryLocalService) {

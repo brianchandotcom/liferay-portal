@@ -7,11 +7,11 @@ definition {
 		}
 
 		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
+			var userEmailAddress = JSONUtil2.getDefaultUserEmail();
 		}
 
 		if (!(isSet(userPassword))) {
-			var userPassword = "test";
+			var userPassword = JSONUtil2.getDefaultUserPassword();
 		}
 
 		var data = "\"name\": \"${siteName}\"";

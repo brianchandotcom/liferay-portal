@@ -11,9 +11,11 @@ definition {
 			var parentFolderId = 0;
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/get-folder \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d repositoryId=${repositoryId} \
 				-d parentFolderId=${parentFolderId} \
 				-d name=${name}
@@ -41,10 +43,11 @@ definition {
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
 			site = ${site});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupIds=${groupId}
 		''';
 

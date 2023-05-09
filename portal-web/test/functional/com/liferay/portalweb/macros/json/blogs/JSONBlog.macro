@@ -235,17 +235,21 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(friendlyURL)) {
+			var userLoginInfo = JSONUtil2.formatJSONUser();
+
 			var curl = '''
 				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
-					-u test@liferay.com:test \
+					-u ${userLoginInfo} \
 					-d groupId=${groupId} \
 					-d urlTitle=${friendlyURL}
 			''';
 		}
 		else {
+			var userLoginInfo = JSONUtil2.formatJSONUser();
+
 			var curl = '''
 				${portalURL}/api/jsonws/blogs.blogsentry/get-entry \
-					-u test@liferay.com:test \
+					-u ${userLoginInfo} \
 					-d groupId=${groupId} \
 					-d urlTitle=${entryTitle}
 			''';

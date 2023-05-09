@@ -34,10 +34,11 @@ definition {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			addGroupPermissions = ${groupPermissions},
 			addGuestPermissions = ${guestPermissions});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlapp/add-folder \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d externalReferenceCode= \
 				-d repositoryId=${repositoryId} \
 				-d parentFolderId=${parentFolderId} \
@@ -61,10 +62,11 @@ definition {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},
 			name = ${folderName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfolder/delete-folder \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d folderId=${folderId}
 		''';
 	}
@@ -75,10 +77,11 @@ definition {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},
 			name = ${folderName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/dltrash/move-folder-to-trash \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d folderId=${folderId}
 		''';
 

@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetlist.assetlistentry/add-asset-list-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d title=${title} \
 				-d type=${type}
@@ -30,10 +31,11 @@ definition {
 			itemSubtype = ${itemSubtype},
 			itemType = ${itemType},
 			selectionType = "dynamic");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetlist.assetlistentry/add-dynamic-asset-list-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d userId=${userId} \
 				-d groupId=${groupId} \
 				-d title=${title} \
@@ -68,10 +70,11 @@ definition {
 		Variables.assertDefined(parameterList = "${assetListEntryId},${segmentsEntryId},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetlist.assetlistentry/update-asset-list-entry-type-settings \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d assetListEntryId=${assetListEntryId} \
 				-d segmentsEntryId=${segmentsEntryId} \
 				-d typeSettings=${typeSettings}

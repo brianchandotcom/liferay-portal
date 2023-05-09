@@ -2,10 +2,11 @@ definition {
 
 	macro _getRecordId {
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddl.ddlrecord/get-records \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d recordSetId=${recordSetId}
 		''';
 
@@ -23,10 +24,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var groupId = JSONDDLSetter.setGroupId(groupName = ${groupName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddl.ddlrecordset/get-record-sets \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupIds=${groupId}
 		''';
 

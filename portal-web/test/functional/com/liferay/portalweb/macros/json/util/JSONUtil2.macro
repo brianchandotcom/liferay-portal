@@ -140,4 +140,34 @@ definition {
 		}
 	}
 
+	@summary = "returns ${userEmail}:${password} to be used in JSON calls ONLY"
+	macro formatJSONUser {
+		var defaultUserEmail = JSONUtil2.getDefaultUserEmail();
+		var defaultUserPassword = JSONUtil2.getDefaultUserPassword();
+
+		return "${defaultUserEmail}:${defaultUserPassword}";
+	}
+
+	@summary = "This will grab the default user email to be used in JSON or other omniadmin actions ONLY"
+	macro getDefaultUserEmail {
+		var customDefaultUserEmail = PropsUtil.get("custom.default.user.email");
+
+		if (!(isSet(customDefaultUserEmail))) {
+			var customDefaultUserEmail = "test@liferay.com";
+		}
+
+		return ${customDefaultUserEmail};
+	}
+
+	@summary = "This will grab the default user password to be used in JSON or other omniadmin actions ONLY"
+	macro getDefaultUserPassword {
+		var customDefaultUserPassword = PropsUtil.get("custom.default.user.password");
+
+		if (!(isSet(customDefaultUserPassword))) {
+			var customDefaultUserPassword = "test";
+		}
+
+		return ${customDefaultUserPassword};
+	}
+
 }

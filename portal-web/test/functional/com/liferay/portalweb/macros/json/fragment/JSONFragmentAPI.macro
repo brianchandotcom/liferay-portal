@@ -13,9 +13,11 @@ definition {
 			var description = "";
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/add-fragment-collection \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${name} \
 				-d description=${description}
@@ -29,10 +31,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${collectionId},${name},${html},${configuration},${type},${status}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d fragmentCollectionId=${collectionId} \
 				-d fragmentEntryKey= \
@@ -59,10 +62,11 @@ definition {
 		Variables.assertDefined(parameterList = ${collectionId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/delete-fragment-collection \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d fragmentCollectionId=${collectionId}
 		''';
 
@@ -74,10 +78,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${collectionName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${collectionName} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \
@@ -97,10 +102,11 @@ definition {
 	@summary = "Get the collectionName by using collectionName"
 	macro _getCollectionName {
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${collectionName} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \
@@ -116,10 +122,11 @@ definition {
 	@summary = "Get the fragmentName from a fragmentCollection by using fragmentName "
 	macro _getFragmentName {
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmententry/get-fragment-entries \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d fragmentCollectionId=${fragmentCollectionId} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \

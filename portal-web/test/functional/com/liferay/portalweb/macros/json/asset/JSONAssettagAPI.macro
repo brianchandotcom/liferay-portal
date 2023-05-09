@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${tagName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/assettag/add-tag \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${tagName}
 		''';
@@ -20,10 +21,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${tagName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/assettag/get-tags \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupIds=[${groupId}] \
 				-d name='${tagName}' \
 				-d 'start=-1' \

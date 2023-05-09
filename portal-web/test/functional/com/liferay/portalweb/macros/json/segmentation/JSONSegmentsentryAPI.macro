@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/segments.segmentsentry/add-segments-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d segmentsEntryKey= \
 				-d nameMap=${nameMap} \
 				-d descriptionMap=${descriptionMap} \
@@ -27,10 +28,11 @@ definition {
 		Variables.assertDefined(parameterList = ${segmentsId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/segments.segmentsentry/delete-segments-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d segmentsEntryId=${segmentsId}
 		''';
 

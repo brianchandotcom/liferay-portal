@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = "${auto},${groupId},${siteNavigationMenuName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/add-site-navigation-menu \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${siteNavigationMenuName} \
 				-d type=0 \
@@ -23,10 +24,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${parentSiteNavigationMenuItemId},${siteNavigationMenuId},${type},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/add-site-navigation-menu-item \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d siteNavigationMenuId=${siteNavigationMenuId} \
 				-d parentSiteNavigationMenuItemId=${parentSiteNavigationMenuItemId} \
@@ -42,10 +44,11 @@ definition {
 		Variables.assertDefined(parameterList = ${siteNavigationMenuId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/delete-site-navigation-menu \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
 
@@ -57,10 +60,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenu/get-site-navigation-menus \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId}
 		''';
 
@@ -74,10 +78,11 @@ definition {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId},${siteNavigationMenuItemName}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/sitenavigation.sitenavigationmenuitem/get-site-navigation-menu-items \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d siteNavigationMenuId=${siteNavigationMenuId}
 		''';
 

@@ -27,9 +27,11 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.commerceshippingoptionaccountentryrel/add-commerce-shipping-option-account-entry-rel \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d accountEntryId=${accountEntryId} \
 				-d commerceChannelId=${commerceChannelId} \
 				-d commerceShippingMethodKey='${commerceShippingMethodKey}' \

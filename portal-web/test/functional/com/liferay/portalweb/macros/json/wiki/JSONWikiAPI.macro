@@ -9,10 +9,11 @@ definition {
 		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
 
 		var filePath = "${baseDir}${dependenciesDir}/${fileName}";
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikipage/add-page-attachment \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-F nodeId=${nodeId} \
 				-F fileName=${fileName} \
 				-F mimeType=${mimeType} \
@@ -95,9 +96,11 @@ definition {
 			var description = "";
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikinode/add-node \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d name=${name} \
 				-d description=${description} \
 				-d serviceContext=${serviceContext}
@@ -184,9 +187,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikinode/get-nodes/group-id/${groupId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		var nodeId = JSONCurlUtil.get(${curl}, "$.[?(@['name'] == '${name}')]['nodeId']");
@@ -208,9 +213,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikipage/get-page \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d nodeId=${nodeId} \
 				-d title=${title}
 		''';
@@ -234,9 +241,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikipage/get-page \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d nodeId=${nodeId} \
 				-d title=${title}
 		''';
@@ -259,9 +268,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${wikiPageId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		var wikiPage = JSONCurlUtil.get(${curl});
@@ -274,10 +285,11 @@ definition {
 		Variables.assertDefined(parameterList = "${title},${nodeId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/wiki.wikipage/move-page-to-trash \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d nodeId=${nodeId} \
 				-d title=${title}
 		''';

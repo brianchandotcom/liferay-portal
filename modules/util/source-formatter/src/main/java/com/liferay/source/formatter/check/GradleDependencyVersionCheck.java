@@ -76,7 +76,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			String dependencyName = _getDependencyName(line);
 
 			if (Objects.isNull(dependencyName) ||
-				line.matches(".*\\s+testCompile\\s+.*")) {
+				line.matches(".*\\s+testImplementation\\s+.*")) {
 
 				sb.append(line);
 				sb.append("\n");

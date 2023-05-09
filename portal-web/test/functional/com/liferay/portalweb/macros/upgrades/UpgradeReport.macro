@@ -8,6 +8,12 @@ definition {
 		return ${fileContentReport};
 	}
 
+	macro getUpgradeExecutionTime {
+		var upgradeRunTimeReport = RegexUtil.replace(${reportFileContent}, "Execution time: (.*[0-9])", 1);
+
+		return ${upgradeRunTimeReport};
+	}
+
 	macro getUpgradeReportFileContent {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

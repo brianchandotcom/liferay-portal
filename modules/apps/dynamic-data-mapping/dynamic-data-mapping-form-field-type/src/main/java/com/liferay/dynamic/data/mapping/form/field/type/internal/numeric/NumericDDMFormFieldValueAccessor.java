@@ -36,9 +36,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.NUMERIC,
-	service = {
-		DDMFormFieldValueAccessor.class, NumericDDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class NumericDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<BigDecimal> {

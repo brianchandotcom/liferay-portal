@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -76,6 +79,14 @@ public class MBMessageNotificationTemplateHelper {
 		return message.getBody();
 	}
 
+	private String _getMarkupElement(MarkupElement element) {
+		if (!_htmlFormat) {
+			return StringPool.BLANK;
+		}
+
+		return _markupElements.getOrDefault(element, StringPool.BLANK);
+	}
+
 	private String _getQuotedMessage(
 		boolean lastPosition, String messageBody, String quoteMark) {
 
@@ -104,6 +115,54 @@ public class MBMessageNotificationTemplateHelper {
 		MBMessageNotificationTemplateHelper.class);
 
 	private final boolean _htmlFormat;
+	private final Map<MarkupElement, String> _markupElements =
+		HashMapBuilder.put(
+			MarkupElement.END, "</div>"
+		).put(
+			MarkupElement.END_ELEMENT, "</ul>"
+		).put(
+			MarkupElement.END_MESSAGE, "</li>"
+		).put(
+			MarkupElement.START_BODY_ROOT,
+			"<div class=\"mb-root-message-body\">"
+		).put(
+			MarkupElement.START_BODY_SIBLING,
+			"<div class=\"mb-sibling-message-body\">"
+		).put(
+			MarkupElement.START_MESSAGE, "<ul><li class=\"mb-parent-message\">"
+		).put(
+			MarkupElement.START_MESSAGE_BODY,
+			"<div class=\"mb-parent-message-body\">"
+		).put(
+			MarkupElement.START_MESSAGE_SIBLING,
+			"<div class=\"mb-sibling-message\">"
+		).put(
+			MarkupElement.START_MESSAGE_THREAD,
+			"<div class=\"mb-parent-message-thread\">"
+		).put(
+			MarkupElement.START_ROOT, "<div class=\"mb-root-message\">"
+		).put(
+			MarkupElement.START_SIBLING,
+			"<div class=\"mb-sibling-message-thread\">"
+		).put(
+			MarkupElement.START_USER_MESSAGE,
+			"<div class=\"mb-parent-message-user\">"
+		).put(
+			MarkupElement.START_USER_ROOT,
+			"<div class=\"mb-root-message-user\">"
+		).put(
+			MarkupElement.START_USER_SIBLING,
+			"<div class=\"mb-sibling-message-user\">"
+		).build();
 	private final ServiceContext _serviceContext;
+
+	private enum MarkupElement {
+
+		END, END_ELEMENT, END_MESSAGE, START_BODY_ROOT, START_BODY_SIBLING,
+		START_MESSAGE, START_MESSAGE_BODY, START_MESSAGE_SIBLING,
+		START_MESSAGE_THREAD, START_ROOT, START_SIBLING, START_USER_MESSAGE,
+		START_USER_ROOT, START_USER_SIBLING,
+
+	}
 
 }

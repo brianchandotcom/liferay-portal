@@ -14,7 +14,6 @@
 
 package com.liferay.object.model.impl;
 
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -40,7 +39,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 
 	@Override
 	public String getI18nObjectFieldName() {
-		return getName() + ObjectFieldConstants.I18N_SUFFIX;
+		return getName() + "_i18n";
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -46,8 +47,10 @@ public class CheckboxDDMFormFieldValueRenderer
 		return _language.get(locale, "false");
 	}
 
-	@Reference
-	protected CheckboxDDMFormFieldValueAccessor
+	@Reference(
+		target = "(ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX + ")"
+	)
+	protected DDMFormFieldValueAccessor<Boolean>
 		checkboxDDMFormFieldValueAccessor;
 
 	@Reference

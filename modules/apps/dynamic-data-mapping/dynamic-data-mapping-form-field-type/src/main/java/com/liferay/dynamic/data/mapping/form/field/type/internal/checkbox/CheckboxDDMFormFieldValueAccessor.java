@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX,
-	service = {
-		CheckboxDDMFormFieldValueAccessor.class, DDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class CheckboxDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<Boolean> {

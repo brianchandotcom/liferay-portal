@@ -68,7 +68,6 @@ class CustomerPortalWebComponent extends HTMLElement {
 			importDate:
 				super.getAttribute('import-date') &&
 				new Date(super.getAttribute('import-date')),
-			liferayWebDAV: super.getAttribute('liferaywebdavurl'),
 			submitSupportTicketURL: super.getAttribute(
 				'submit-support-ticket-url'
 			),

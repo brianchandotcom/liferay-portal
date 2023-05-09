@@ -11,15 +11,23 @@
 
 import {PRODUCT_TYPES} from '../../../../../../../routes/customer-portal/utils/constants/productTypes';
 
+import {
+	AnalyticsIcon,
+	CommerceIcon,
+	DXPIcon,
+	EnterpriseIcon,
+	PortalIcon,
+} from '../../../../../../icons/navigation-menu';
+
 export const LOGO_PATH_TYPES = {
-	[PRODUCT_TYPES.analyticsCloud]: 'analytics_icon.svg',
-	[PRODUCT_TYPES.commerce]: 'commerce_icon.svg',
-	[PRODUCT_TYPES.dxp]: 'dxp_icon.svg',
-	[PRODUCT_TYPES.enterpriseSearch]: 'enterprise_icon.svg',
-	[PRODUCT_TYPES.dxpCloud]: 'dxp_icon.svg',
-	[PRODUCT_TYPES.liferayExperienceCloud]: 'dxp_icon.svg',
-	[PRODUCT_TYPES.portal]: 'portal_icon.svg',
-	[PRODUCT_TYPES.partnership]: 'portal_icon.svg',
-	[PRODUCT_TYPES.socialOffice]: 'portal_icon.svg',
-	[PRODUCT_TYPES.other]: 'portal_icon.svg',
+	[PRODUCT_TYPES.analyticsCloud]: AnalyticsIcon,
+	[PRODUCT_TYPES.commerce]: CommerceIcon,
+	[PRODUCT_TYPES.dxp]: DXPIcon,
+	[PRODUCT_TYPES.enterpriseSearch]: EnterpriseIcon,
+	[PRODUCT_TYPES.dxpCloud]: DXPIcon,
+	[PRODUCT_TYPES.liferayExperienceCloud]: DXPIcon,
+	[PRODUCT_TYPES.portal]: PortalIcon,
+	[PRODUCT_TYPES.partnership]: PortalIcon,
+	[PRODUCT_TYPES.socialOffice]: PortalIcon,
+	[PRODUCT_TYPES.other]: PortalIcon,
 };

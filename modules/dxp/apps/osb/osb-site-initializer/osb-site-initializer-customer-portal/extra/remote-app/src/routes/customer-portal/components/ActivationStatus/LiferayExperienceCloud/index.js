@@ -11,7 +11,8 @@
 import ClayAlert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
-import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
+
+import {DXPIcon} from '../../../../../common/icons';
 import {useGetAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/account-subscription-groups/queries/useGetAccountSubscriptionGroups';
 import {ALERT_UPDATE_LIFERAY_EXPERIENCE_CLOUD_STATUS} from '../../../containers/ActivationKeysTable/utils/constants/alertUpdateLiferayExperienceCloud';
 import {
@@ -33,7 +34,6 @@ const ActivationStatusLiferayExperienceCloud = ({
 	subscriptionGroups,
 	userAccount,
 }) => {
-	const {liferayWebDAV} = useAppPropertiesContext();
 	const [isVisibleSetupLxcModal, setIsVisibleSetupLxcModal] = useState(false);
 	const [hasFinishedUpdate, setHasFinishedUpdate] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -124,7 +124,7 @@ const ActivationStatusLiferayExperienceCloud = ({
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
-				iconPath={`${liferayWebDAV}/assets/navigation-menu/dxp_icon.svg`}
+				iconPath={DXPIcon}
 				project={project}
 				subscriptionGroupActivationStatus={lxcStatusActivation}
 			/>

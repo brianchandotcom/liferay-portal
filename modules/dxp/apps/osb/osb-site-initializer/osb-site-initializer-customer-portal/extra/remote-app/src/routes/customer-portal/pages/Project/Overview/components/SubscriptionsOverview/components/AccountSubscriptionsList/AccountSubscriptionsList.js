@@ -12,7 +12,7 @@
 import {useModal} from '@clayui/core';
 import {useEffect, useState} from 'react';
 import i18n from '../../../../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../../../../common/contexts/AppPropertiesContext';
+import {LOGO_PATH_TYPES} from '../../../../../../../../../common/services/liferay/graphql/account-subscription-groups/utils/constants/logoPathTypes';
 import AccountSubscriptionCard from './components/AccountSubscriptionCard/AccountSubscriptionCard';
 import AccountSubscriptionModal from './components/AccountSubscriptionModal/AccountSubscriptionModal';
 
@@ -28,8 +28,6 @@ const AccountSubscriptionsList = ({
 		currentAccountSubscription,
 		setCurrentAccountSubscription,
 	] = useState();
-
-	const {liferayWebDAV} = useAppPropertiesContext();
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -85,7 +83,9 @@ const AccountSubscriptionsList = ({
 				<AccountSubscriptionCard
 					{...accountSubscription}
 					key={index}
-					logoPath={`${liferayWebDAV}/${selectedAccountSubscriptionGroup?.logoPath}`}
+					logoPath={
+						LOGO_PATH_TYPES[selectedAccountSubscriptionGroup?.name]
+					}
 					onClick={() =>
 						setCurrentAccountSubscription({...accountSubscription})
 					}

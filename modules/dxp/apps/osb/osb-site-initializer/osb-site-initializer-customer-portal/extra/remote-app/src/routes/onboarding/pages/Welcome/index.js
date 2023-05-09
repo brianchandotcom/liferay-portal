@@ -12,7 +12,7 @@
 import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
 import Layout from '../../../../common/containers/setup-forms/Layout';
-import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
+import {IntroOnboarding} from '../../../../common/icons';
 import {useOnboarding} from '../../context';
 import {actionTypes} from '../../context/reducer';
 import {ONBOARDING_STEP_TYPES} from '../../utils/constants';
@@ -20,7 +20,6 @@ import WelcomeSkeleton from './Skeleton';
 
 const Welcome = () => {
 	const [, dispatch] = useOnboarding();
-	const {liferayWebDAV} = useAppPropertiesContext();
 
 	return (
 		<Layout
@@ -45,11 +44,10 @@ const Welcome = () => {
 				title: i18n.translate('let-s-set-up-your-project'),
 			}}
 		>
-			<img
+			<IntroOnboarding
 				className="mb-4 pb-1"
 				draggable={false}
 				height={237}
-				src={`${liferayWebDAV}/assets/intro_onboarding.svg`}
 				width={331}
 			/>
 

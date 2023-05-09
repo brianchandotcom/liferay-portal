@@ -41,7 +41,7 @@ const LiferayExperienceCloud = () => {
 	);
 
 	if (!project || !subscriptionGroups) {
-		return <> {i18n.translate('loading')}...</>;
+		return <span> {i18n.translate('loading')}...</span>;
 	}
 
 	return (

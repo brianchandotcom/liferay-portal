@@ -27,7 +27,7 @@ const ModalKeyDetails = ({
 	project,
 	sessionId,
 }) => {
-	const {liferayWebDAV, provisioningServerAPI} = useAppPropertiesContext();
+	const {provisioningServerAPI} = useAppPropertiesContext();
 
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
@@ -71,7 +71,6 @@ const ModalKeyDetails = ({
 
 				<TableKeyDetails
 					currentActivationKey={currentActivationKey}
-					liferayWebDAV={liferayWebDAV}
 					setValueToCopyToClipboard={setValueToCopyToClipboard}
 				/>
 

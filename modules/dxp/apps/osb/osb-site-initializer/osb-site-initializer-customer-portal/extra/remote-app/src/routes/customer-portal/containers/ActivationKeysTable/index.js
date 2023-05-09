@@ -37,6 +37,14 @@ import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey
 import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
+const messageNewKeyGeneratedAlert = i18n.translate(
+	'activation-key-was-generated-successfully'
+);
+
+const messageDeactivateKey = i18n.translate(
+	'activation-keys-were-deactivated-successfully'
+);
+
 const ActivationKeysTable = ({
 	initialFilter,
 	productName,
@@ -61,14 +69,6 @@ const ActivationKeysTable = ({
 
 	const [deactivatedKeyAlertStatus, setDeactivatedKeyAlertStatus] = useState(
 		state?.deactivateKeyAlert ? 'success' : ''
-	);
-
-	const messageNewKeyGeneratedAlert = i18n.translate(
-		'activation-key-was-generated-successfully'
-	);
-
-	const messageDeactivateKey = i18n.translate(
-		'activation-keys-were-deactivated-successfully'
 	);
 
 	const {

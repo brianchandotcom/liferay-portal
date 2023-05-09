@@ -11,13 +11,11 @@
 
 import {useCallback} from 'react';
 import i18n from '../../../../../../../common/I18n';
-import {useAppPropertiesContext} from '../../../../../../../common/contexts/AppPropertiesContext';
+import {VirtualCluster} from '../../../../../../../common/icons';
 import {hasCluster} from '../../hasCluster';
 import {hasVirtualCluster} from '../../index';
 
 const KeyTypeColumn = ({activationKey}) => {
-	const {liferayWebDAV} = useAppPropertiesContext();
-
 	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
 		activationKey?.licenseEntryType
 	);
@@ -41,10 +39,7 @@ const KeyTypeColumn = ({activationKey}) => {
 	return (
 		<div className="align-items-start d-flex">
 			{hasVirtualClusterForActivationKeys && (
-				<img
-					className="ml-n4 mr-1"
-					src={`${liferayWebDAV}/assets/virtual_cluster.svg`}
-				/>
+				<VirtualCluster className="ml-n4 mr-1" />
 			)}
 
 			<div>

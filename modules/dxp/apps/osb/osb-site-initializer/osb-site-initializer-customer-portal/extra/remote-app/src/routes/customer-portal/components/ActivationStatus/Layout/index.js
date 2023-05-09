@@ -17,7 +17,7 @@ import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
 const ActivationStatusLayout = ({
 	activationStatus,
 	activationStatusDate,
-	iconPath,
+	iconPath: IconSVG,
 	project,
 	subscriptionGroupActivationStatus,
 }) => {
@@ -33,7 +33,7 @@ const ActivationStatusLayout = ({
 				<ClayCard className="border border-light cp-activation-status-container m-0 rounded shadow-none">
 					<ClayCard.Body className="pl-4 pr-2 py-3">
 						<div className="align-items-center d-flex position-relative">
-							<img
+							<IconSVG
 								className={classNames(
 									'ml-2 mr-4 cp-img-activation-status',
 									{
@@ -48,7 +48,6 @@ const ActivationStatusLayout = ({
 								)}
 								draggable={false}
 								height={30.55}
-								src={iconPath}
 								width={30.55}
 							/>
 

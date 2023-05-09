@@ -8,6 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+
 import ClayAlert from '@clayui/alert';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
@@ -18,7 +19,6 @@ import TableKeyDetails from '../TableKeyDetails';
 const ModalKeyDetails = ({
 	activationKeys,
 	downloadActivationLicenseKey,
-	liferayWebDAV,
 	observer,
 	onClose,
 	provisioningServerAPI,
@@ -53,7 +53,6 @@ const ModalKeyDetails = ({
 
 				<TableKeyDetails
 					activationKeys={activationKeys}
-					liferayWebDAV={liferayWebDAV}
 					setValueToCopyToClipboard={setValueToCopyToClipboard}
 				/>
 

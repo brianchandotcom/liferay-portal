@@ -17,6 +17,7 @@ import React, {useEffect, useState} from 'react';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
+import {AnalyticsIcon} from '../../../../../common/icons/navigation-menu';
 import {
 	getAccountSubscriptionGroups,
 	getCommerceOrderItems,
@@ -42,7 +43,7 @@ const ActivationStatusAnalyticsCloud = ({
 	userAccount,
 }) => {
 	const [, dispatch] = useCustomerPortal();
-	const {client, liferayWebDAV} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -237,7 +238,7 @@ const ActivationStatusAnalyticsCloud = ({
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
-				iconPath={`${liferayWebDAV}/assets/navigation-menu/analytics_icon.svg`}
+				iconPath={AnalyticsIcon}
 				project={project}
 				subscriptionGroupActivationStatus={
 					subscriptionGroupActivationStatus

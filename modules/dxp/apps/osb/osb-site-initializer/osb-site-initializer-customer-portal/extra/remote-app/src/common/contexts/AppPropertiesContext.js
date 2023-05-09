@@ -17,7 +17,6 @@ export const AppPropertiesContext = createContext({
 	client: null,
 	gravatarAPI: '',
 	importDate: null,
-	liferayWebDAV: '',
 	oktaSessionAPI: '',
 	provisioningServerAPI: '',
 	submitSupportTicketURL: '',

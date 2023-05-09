@@ -10,13 +10,38 @@
  */
 
 import classNames from 'classnames';
-import {memo, useEffect} from 'react';
+import {memo, useEffect, useMemo} from 'react';
 import {Link, useMatch, useResolvedPath} from 'react-router-dom';
+
 import {Button} from '../../../../../../common/components';
-import {useAppPropertiesContext} from '../../../../../../common/contexts/AppPropertiesContext';
+import * as NavigationMenuIcons from '../../../../../../common/icons/navigation-menu';
+
+const icons = {
+	analytics: [
+		NavigationMenuIcons.AnalyticsIcon,
+		NavigationMenuIcons.AnalyticsIconGray,
+	],
+	commerce: [
+		NavigationMenuIcons.CommerceIcon,
+		NavigationMenuIcons.CommerceIconGray,
+	],
+	dxp: [NavigationMenuIcons.DXPIcon, NavigationMenuIcons.DXPIconGray],
+	enterprise: [
+		NavigationMenuIcons.EnterpriseIcon,
+		NavigationMenuIcons.EnterpriseIconGray,
+	],
+	lxc: [NavigationMenuIcons.LXCIcon, NavigationMenuIcons.LXCIconGray],
+	partnership: [
+		NavigationMenuIcons.PartnershipIcon,
+		NavigationMenuIcons.PartnershipIconGray,
+	],
+	portal: [
+		NavigationMenuIcons.PortalIcon,
+		NavigationMenuIcons.PortalIconGray,
+	],
+};
 
 const MenuItem = ({children, iconKey, setActive, to}) => {
-	const {liferayWebDAV} = useAppPropertiesContext();
 	const isActive = !!useMatch({path: useResolvedPath(to)?.pathname});
 
 	useEffect(() => {
@@ -24,6 +49,16 @@ const MenuItem = ({children, iconKey, setActive, to}) => {
 			setActive(isActive);
 		}
 	}, [isActive, setActive]);
+
+	const Icon = useMemo(() => {
+		try {
+			if (iconKey) {
+				const [activeIcon, inactiveIcon] = icons[iconKey];
+
+				return isActive ? activeIcon : inactiveIcon;
+			}
+		} catch {}
+	}, [iconKey, isActive]);
 
 	return (
 		<li>
@@ -36,14 +71,13 @@ const MenuItem = ({children, iconKey, setActive, to}) => {
 							'cp-menu-btn-active': isActive,
 						}
 					)}
-					isImagePrependIcon={!!iconKey}
-					prependIcon={
-						iconKey &&
-						`${liferayWebDAV}/assets/navigation-menu/${iconKey}_icon${
-							isActive ? '' : '_gray'
-						}.svg`
-					}
 				>
+					{Icon && (
+						<span className="mr-2">
+							<Icon height={16} width={16} />
+						</span>
+					)}
+
 					{children}
 				</Button>
 			</Link>

@@ -7,10 +7,11 @@ definition {
 		var attributes = JSONStagingSetter.setAttributes(unCheckedContent = ${unCheckedContent});
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(attributes = ${attributes});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/staging/enable-local-staging \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d branchingPublic=${branchingPublic} \
 				-d branchingPrivate=${branchingPrivate} \
@@ -27,10 +28,11 @@ definition {
 		var attributes = JSONStagingSetter.setAttributes();
 
 		var serviceContext = JSONServiceContextUtil.setServiceContext(attributes = ${attributes});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/staging/enable-remote-staging \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d branchingPublic=${branchingPublic} \
 				-d branchingPrivate=${branchingPrivate} \

@@ -13,9 +13,11 @@ definition {
 			for (var commerceMeasurementUnitsId : list ${commerceMeasurementUnitsIds}) {
 				echo("Deleting Commerce Measurement Units with id: ${commerceMeasurementUnitsId}");
 
+				var userLoginInfo = JSONUtil2.formatJSONUser();
+
 				var curl = '''
 					${baseURL}/api/jsonws/commerce.cpmeasurementunit/delete-cp-measurement-unit \
-						-u test@liferay.com:test \
+						-u ${userLoginInfo} \
 						-d cpMeasurementUnitId=${commerceMeasurementUnitsId}
 				''';
 
@@ -50,10 +52,11 @@ definition {
 		}
 
 		var companyId = JSONCompany.getCompanyId();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.cpmeasurementunit/get-cp-measurement-units \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d "start=-1" \
 				-d "end=-1" \

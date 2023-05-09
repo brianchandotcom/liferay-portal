@@ -13,9 +13,11 @@ definition {
 			for (var commerceAvailabilityEstimateId : list ${commerceAvailabilityEstimateIds}) {
 				echo("Deleting Commerce commerceAvailabilityEstimate with id: ${commerceAvailabilityEstimateId}");
 
+				var userLoginInfo = JSONUtil2.formatJSONUser();
+
 				var curl = '''
 					${baseURL}/api/jsonws/commerce.commerceavailabilityestimate/delete-commerce-availability-estimate \
-						-u test@liferay.com:test \
+						-u ${userLoginInfo} \
 						-d commerceAvailabilityEstimateId=${commerceAvailabilityEstimateId}
 				''';
 
@@ -50,10 +52,11 @@ definition {
 		}
 
 		var companyId = JSONCompany.getCompanyId();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.commerceavailabilityestimate/get-commerce-availability-estimates/ \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d "start=-1" \
 				-d "end=-1" \

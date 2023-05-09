@@ -10,10 +10,11 @@ definition {
 		}
 
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.info.item.provider.InfoItemFormProvider");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmtemplate/add-template \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId}
 				-d classNameId=${classNameId} \
 				-d classPK=${classPK} \
@@ -41,10 +42,11 @@ definition {
 		}
 
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.portlet.display.template.PortletDisplayTemplate");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/ddm.ddmtemplate/add-template \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId}
 				-d classNameId=${classNameId} \
 				-d classPK=0 \

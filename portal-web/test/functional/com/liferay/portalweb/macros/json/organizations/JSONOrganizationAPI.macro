@@ -40,10 +40,11 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-organization \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
 				-d type=${organizationType} \
@@ -61,10 +62,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-group-organizations/group-id/${groupId}/organization-ids/${organizationId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
@@ -74,10 +76,11 @@ definition {
 		Variables.assertDefined(parameterList = "${organizationId},${passwordPolicyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-password-policy-organizations \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d organizationIds=${organizationId} \
 				-d passwordPolicyId=${passwordPolicyId}
 		''';
@@ -89,10 +92,11 @@ definition {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-organization-users \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d organizationId=${organizationId} \
 				-d userIds=${userId}
 		''';
@@ -104,10 +108,11 @@ definition {
 		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/delete-organization \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d organizationId=${organizationId}
 		''';
 
@@ -120,10 +125,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/get-organizations-count \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d parentOrganizationId=${parentOrganizationId}
 		''';
@@ -141,10 +147,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/get-organizations \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d parentOrganizationId=${parentOrganizationId}
 		''';

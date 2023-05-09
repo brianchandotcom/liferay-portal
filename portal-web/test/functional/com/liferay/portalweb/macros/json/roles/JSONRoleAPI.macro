@@ -4,10 +4,11 @@ definition {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/role/add-role \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d className=com.liferay.account.model.AccountRole \
 				-d classPK=0 \
 				-d name=${name} \
@@ -24,10 +25,11 @@ definition {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/role/add-role \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
 				-d name=${name} \
@@ -44,10 +46,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d userId=${userId} \
 				-d groupId=${groupId} \
 				-d roleIds=[${roleId}]
@@ -60,10 +63,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${roleId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/add-role-groups \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d roleId=${roleId} \
 				-d groupIds=${groupId}
 		''';
@@ -75,10 +79,11 @@ definition {
 		Variables.assertDefined(parameterList = "${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-role-users \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d roleId=${roleId} \
 				-d userIds=${userId}
 		''';
@@ -90,10 +95,11 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d userId=${userId} \
 				-d groupId=${groupId} \
 				-d roleIds=[${roleId}]
@@ -106,10 +112,11 @@ definition {
 		Variables.assertDefined(parameterList = ${roleId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/role/delete-role \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d roleId=${roleId}
 		''';
 
@@ -121,10 +128,11 @@ definition {
 
 		var companyId = JSONCompany.getCompanyIdNoSelenium();
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/role/get-role \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d name=${name}
 		''';
@@ -140,10 +148,11 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/role/search \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d keywords=${roleName} \
 				-d types= \

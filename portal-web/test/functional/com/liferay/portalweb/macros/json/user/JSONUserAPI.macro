@@ -59,9 +59,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-group-users/group-id/${groupId}/user-ids/${userId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
@@ -77,9 +79,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
@@ -183,10 +187,11 @@ definition {
 		}
 
 		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = "Default Password Policy");
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d passwordPolicyId=${passwordPolicyId} \
 				-d name="Default Password Policy" \
 				-d description="Default Password Policy" \
@@ -330,9 +335,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \
 				-d <CURL_DATA[end=-1]CURL_DATA>
@@ -353,9 +360,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/unset-user-group-users/user-group-id/${userGroupId}/user-ids/${userId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
@@ -371,9 +380,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-password \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d userId=${userId} \
 				-d password1=${newPassword} \
 				-d password2=${newPassword} \
@@ -393,9 +404,11 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/update-status \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d userId=${userId} \
 				-d status=${status}
 		''';

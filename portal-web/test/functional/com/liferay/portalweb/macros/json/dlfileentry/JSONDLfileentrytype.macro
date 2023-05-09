@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = "${fileEntryTypeName},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupIds=[${groupId}]
 		''';
 
@@ -26,10 +27,11 @@ definition {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupIds=[${groupId}]
 		''';
 

@@ -6,10 +6,11 @@ definition {
 		}
 
 		var groupId = JSONLayoutSetter.setGroupId(groupName = ${siteName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/team/add-team \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${teamName} \
 				-d description=${teamDescription} \
@@ -32,10 +33,11 @@ definition {
 		var teamId = JSONTeam.getTeamId(
 			siteName = ${siteName},
 			teamName = ${teamName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/add-team-users \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d teamId=${teamId} \
 				-d userIds=[${userId}]
 		''';
@@ -49,10 +51,11 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 		var key_teamName = StringUtil.replace(${teamName}, " ", "%20");
 		var groupId = JSONLayoutSetter.setGroupId(groupName = ${siteName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/team/get-team \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d name=${key_teamName}
 		''';

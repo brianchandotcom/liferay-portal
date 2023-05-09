@@ -13,9 +13,11 @@ definition {
 			for (var commerceTaxCategoriesId : list ${commerceTaxCategoriesIds}) {
 				echo("Deleting Commerce Tax Categories with id: ${commerceTaxCategoriesId}");
 
+				var userLoginInfo = JSONUtil2.formatJSONUser();
+
 				var curl = '''
 					${baseURL}/api/jsonws/commerce.cptaxcategory/delete-cp-tax-category \
-						-u test@liferay.com:test \
+						-u ${userLoginInfo} \
 						-d cpTaxCategoryId=${commerceTaxCategoriesId}
 				''';
 
@@ -35,10 +37,11 @@ definition {
 		}
 
 		var companyId = JSONCompany.getCompanyId();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${baseURL}/api/jsonws/commerce.cptaxcategory/get-cp-tax-categories \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d "start=-1" \
 				-d "end=-1" \

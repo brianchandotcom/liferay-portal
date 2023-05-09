@@ -29,10 +29,11 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.clientextensionentry/add-client-extension-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d description= \
 				-d externalReferenceCode= \
 				-d nameMap='{\"en_US\":\"${nameModified}\"}' \
@@ -51,10 +52,11 @@ definition {
 		var iFrameURLModified = StringUtil.replace(${iFrameURL}, ":", "%3A");
 		var nameModified = StringUtil.replace(${name}, " ", "%20");
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.clientextensionentry/add-client-extension-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d externalReferenceCode='' \
 				-d description='' \
 				-d nameMap='{\"en_US\":\"${nameModified}\"}' \
@@ -71,10 +73,11 @@ definition {
 		Variables.assertDefined(parameterList = "${description},${nameMap},${properties},${type},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.clientextensionentry/add-client-extension-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d externalReferenceCode= \
 				-d description=${description} \
 				-d nameMap=${nameMap} \
@@ -92,10 +95,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/remoteapp.clientextensionentry/delete-client-extension-entry-by-external-reference-code \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d externalReferenceCode=${externalReferenceCode}
 		''';

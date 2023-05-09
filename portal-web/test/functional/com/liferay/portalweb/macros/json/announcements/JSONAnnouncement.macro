@@ -68,10 +68,11 @@ definition {
 			groupName = ${groupName},
 			siteURLKey = ${siteURLKey});
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/announcementsentry/delete-entry \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d entryId=${entryId} \
 		''';
 

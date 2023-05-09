@@ -95,9 +95,11 @@ definition {
 			var parentOrganizationId = 0;
 		}
 
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
 		var curl = '''
 			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		var organizationId = JSONCurlUtil.get(${curl}, "$.[?(@['name'] == '${organizationName}')]['organizationId']");
@@ -109,10 +111,11 @@ definition {
 		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		var organizationName = JSONCurlUtil.get(${curl}, "$['name']");

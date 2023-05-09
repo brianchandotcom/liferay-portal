@@ -5,10 +5,11 @@ definition {
 		Variables.assertDefined(parameterList = ${value});
 
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/classname/fetch-class-name \
-				-u test@liferay.com:test \
+				-u ${userLoginInfo} \
 				-d value=${value}
 		''';
 

@@ -9,10 +9,11 @@ definition {
 		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = ${userGroupName});
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/false \
-				-u test@liferay.com:test
+				-u ${userLoginInfo}
 		''';
 
 		var groupId = JSONCurlUtil.get(${curl}, "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");

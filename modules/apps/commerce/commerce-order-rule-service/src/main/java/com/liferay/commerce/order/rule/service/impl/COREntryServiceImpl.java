@@ -69,10 +69,14 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 
 	@Override
 	public COREntry deleteCOREntry(long corEntryId) throws PortalException {
-		_corEntryModelResourcePermission.check(
-			getPermissionChecker(), corEntryId, ActionKeys.DELETE);
 
-		return corEntryLocalService.deleteCOREntry(corEntryId);
+		COREntry corEntry = corEntryLocalService.getCOREntry(corEntryId);
+
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntry.getCOREntryId(),
+			ActionKeys.DELETE);
+
+		return corEntryLocalService.deleteCOREntry(corEntry.getCOREntryId());
 	}
 
 	@Override

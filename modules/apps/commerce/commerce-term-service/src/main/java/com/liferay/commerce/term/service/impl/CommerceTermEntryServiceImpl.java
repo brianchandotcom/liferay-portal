@@ -80,11 +80,15 @@ public class CommerceTermEntryServiceImpl
 	public CommerceTermEntry deleteCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException {
 
+		CommerceTermEntry commerceTermEntry = commerceTermEntryLocalService.
+			getCommerceTermEntry(commerceTermEntryId);
+
 		_commerceTermEntryModelResourcePermission.check(
-			getPermissionChecker(), commerceTermEntryId, ActionKeys.DELETE);
+			getPermissionChecker(), commerceTermEntry.getCommerceTermEntryId(),
+			ActionKeys.DELETE);
 
 		return commerceTermEntryLocalService.deleteCommerceTermEntry(
-			commerceTermEntryId);
+			commerceTermEntry.getCommerceTermEntryId());
 	}
 
 	@Override

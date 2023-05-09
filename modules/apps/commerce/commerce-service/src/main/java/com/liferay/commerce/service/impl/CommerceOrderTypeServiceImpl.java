@@ -77,11 +77,15 @@ public class CommerceOrderTypeServiceImpl
 	public CommerceOrderType deleteCommerceOrderType(long commerceOrderTypeId)
 		throws PortalException {
 
+		CommerceOrderType commerceOrderType = commerceOrderTypeLocalService.
+			getCommerceOrderType(commerceOrderTypeId);
+
 		_commerceOrderTypeModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderTypeId, ActionKeys.DELETE);
+			getPermissionChecker(), commerceOrderType.getCommerceOrderTypeId(),
+			ActionKeys.DELETE);
 
 		return commerceOrderTypeLocalService.deleteCommerceOrderType(
-			commerceOrderTypeId);
+			commerceOrderType.getCommerceOrderTypeId());
 	}
 
 	@Override

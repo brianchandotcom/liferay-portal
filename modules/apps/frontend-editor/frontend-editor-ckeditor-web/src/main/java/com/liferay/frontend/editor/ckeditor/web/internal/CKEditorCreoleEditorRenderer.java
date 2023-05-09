@@ -14,21 +14,18 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal;
 
-import com.liferay.portal.kernel.editor.Editor;
+import com.liferay.frontend.editor.EditorRenderer;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Raymond Augé
- * @author Roberto Díaz
+ * @author Joao Victor Alves
  */
 @Component(
 	property = "name=" + CKEditorCreoleEditor.EDITOR_NAME,
-	service = Editor.class
+	service = EditorRenderer.class
 )
-public class CKEditorCreoleEditor extends BaseCKEditor {
-
-	public static final String EDITOR_NAME = "ckeditor_creole";
+public class CKEditorCreoleEditorRenderer extends BaseCKEditorRenderer {
 
 	@Override
 	public String getJspPath() {
@@ -36,8 +33,8 @@ public class CKEditorCreoleEditor extends BaseCKEditor {
 	}
 
 	@Override
-	public String getName() {
-		return EDITOR_NAME;
+	public String getResourcesJspPath() {
+		return "/resources.jsp";
 	}
 
 }

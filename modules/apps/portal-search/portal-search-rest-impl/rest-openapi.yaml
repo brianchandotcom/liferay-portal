@@ -104,6 +104,8 @@ openapi: 3.0.1
 paths:
     "/search":
         post:
+            description:
+                "Search the company index for matching content. Using this endpoint requires a dev feature flag: set feature.flag.LPS-179669 to true."
             operationId: postSearch
             parameters:
                 - in: query

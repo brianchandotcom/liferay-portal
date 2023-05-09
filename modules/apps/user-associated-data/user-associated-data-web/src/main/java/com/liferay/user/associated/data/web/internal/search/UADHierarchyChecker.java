@@ -50,9 +50,7 @@ public class UADHierarchyChecker extends EmptyOnClickRowChecker {
 
 				uadDisplay.get(primaryKey);
 
-				Class<?> typeClass = uadDisplay.getTypeClass();
-
-				name += typeClass.getSimpleName();
+				name += uadDisplay.getTypeKey();
 
 				return super.getRowCheckBox(
 					httpServletRequest, checked, disabled, name, value,

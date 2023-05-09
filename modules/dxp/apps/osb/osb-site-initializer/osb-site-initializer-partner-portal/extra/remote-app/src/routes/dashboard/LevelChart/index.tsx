@@ -152,7 +152,7 @@ const LevelChart = () => {
 									user.accountBriefs[0].roleBriefs.find(
 										(role: any) =>
 											role.name ===
-											PartnerRoles.SALES_USERS
+											PartnerRoles.SALES_USER
 									)
 								) {
 									countHeadcount['partnerSalesUsers'] += 1;

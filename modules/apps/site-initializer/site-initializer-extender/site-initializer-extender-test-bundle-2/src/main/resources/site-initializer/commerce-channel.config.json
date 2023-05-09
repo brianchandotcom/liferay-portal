@@ -1,0 +1,13 @@
+{
+	"com.liferay.commerce.order": {
+		"checkoutRequestedDeliveryDateEnabled": "true",
+		"commerceSiteType": "B2X",
+		"guestCheckoutEnabled": "true",
+		"hideShippingPriceZero": "false",
+		"showPurchaseOrderNumber": "true"
+	},
+	"com.liferay.commerce.order.fields": {
+		"accountCartMaxAllowed": "5"
+	}
+}
+

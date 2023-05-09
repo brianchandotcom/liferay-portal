@@ -548,7 +548,7 @@ public class BundleSiteInitializerTest {
 		_assertCPOption();
 	}
 
-	private void _assertCommerceChannel() throws Exception {
+	private void _assertCommerceChannel1() throws Exception {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
 				_group.getGroupId());
@@ -558,6 +558,33 @@ public class BundleSiteInitializerTest {
 			"TESTVOC1", commerceChannel.getExternalReferenceCode());
 		Assert.assertEquals("Test Commerce Channel", commerceChannel.getName());
 		Assert.assertEquals("site", commerceChannel.getType());
+		Assert.assertEquals("USD", commerceChannel.getCommerceCurrencyCode());
+
+		_assertCommerceChannelConfiguration1(commerceChannel);
+		_assertCommerceNotificationTemplate(commerceChannel);
+		_assertDefaultCPDisplayLayout1(commerceChannel);
+	}
+
+	private void _assertCommerceChannel2() throws Exception {
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				_group.getGroupId());
+
+		Assert.assertNotNull(commerceChannel);
+		Assert.assertEquals(
+			"TESTVOC1", commerceChannel.getExternalReferenceCode());
+		Assert.assertEquals(
+			"Test Commerce Channel Update", commerceChannel.getName());
+		Assert.assertEquals("site", commerceChannel.getType());
+		Assert.assertEquals("EUR", commerceChannel.getCommerceCurrencyCode());
+
+		_assertCommerceChannelConfiguration2(commerceChannel);
+		_assertDefaultCPDisplayLayout2(commerceChannel);
+	}
+
+	private void _assertCommerceChannelConfiguration1(
+			CommerceChannel commerceChannel)
+		throws Exception {
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -590,9 +617,44 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"3", modifiableSettings.getValue("accountCartMaxAllowed", null));
+	}
 
-		_assertCommerceNotificationTemplate(commerceChannel);
-		_assertDefaultCPDisplayLayout(commerceChannel);
+	private void _assertCommerceChannelConfiguration2(
+			CommerceChannel commerceChannel)
+		throws Exception {
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		Assert.assertEquals(
+			"true",
+			modifiableSettings.getValue(
+				"checkoutRequestedDeliveryDateEnabled", null));
+		Assert.assertEquals(
+			"B2X", modifiableSettings.getValue("commerceSiteType", null));
+		Assert.assertEquals(
+			"true", modifiableSettings.getValue("guestCheckoutEnabled", null));
+		Assert.assertEquals(
+			"false",
+			modifiableSettings.getValue("hideShippingPriceZero", null));
+		Assert.assertEquals(
+			"true",
+			modifiableSettings.getValue("showPurchaseOrderNumber", null));
+
+		settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		modifiableSettings = settings.getModifiableSettings();
+
+		Assert.assertEquals(
+			"5", modifiableSettings.getValue("accountCartMaxAllowed", null));
 	}
 
 	private void _assertCommerceInventoryWarehouse() {
@@ -775,7 +837,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
-	private void _assertDefaultCPDisplayLayout(CommerceChannel commerceChannel)
+	private void _assertDefaultCPDisplayLayout1(CommerceChannel commerceChannel)
 		throws Exception {
 
 		Settings settings = _settingsFactory.getSettings(
@@ -793,6 +855,28 @@ public class BundleSiteInitializerTest {
 
 		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");
+
+		Assert.assertEquals(productLayoutUuid, publicLayout.getUuid());
+	}
+
+	private void _assertDefaultCPDisplayLayout2(CommerceChannel commerceChannel)
+		throws Exception {
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CPConstants.RESOURCE_NAME_CP_DISPLAY_LAYOUT));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		String productLayoutUuid = modifiableSettings.getValue(
+			"productLayoutUuid", null);
+
+		Assert.assertNotNull(productLayoutUuid);
+
+		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-public-child-layout");
 
 		Assert.assertEquals(productLayoutUuid, publicLayout.getUuid());
 	}
@@ -2705,7 +2789,7 @@ public class BundleSiteInitializerTest {
 		_assertAssetVocabularies();
 		_assertClientExtension();
 		_assertCommerceCatalogs();
-		_assertCommerceChannel();
+		_assertCommerceChannel1();
 		_assertCommerceInventoryWarehouse();
 		_assertCommerceSpecificationProducts();
 		_assertCPDefinition();
@@ -2743,6 +2827,7 @@ public class BundleSiteInitializerTest {
 		siteInitializer.initialize(_group.getGroupId());
 
 		_assertAccounts2();
+		_assertCommerceChannel2();
 		_assertExpandoColumns2();
 		_assertListTypeDefinitions2();
 		_assertObjectDefinitions2();

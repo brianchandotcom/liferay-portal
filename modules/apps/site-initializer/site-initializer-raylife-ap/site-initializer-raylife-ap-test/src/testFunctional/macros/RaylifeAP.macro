@@ -294,4 +294,12 @@ definition {
 		}
 	}
 
+	macro userAvatarFunctionality{
+		Click(locator1 = "RaylifeAP#USER_AVATAR");
+
+		Click(
+			locator1 = "RaylifeAP#USER_AVATAR_OPTION",
+			key_option= ${option});
+	}
+
 }

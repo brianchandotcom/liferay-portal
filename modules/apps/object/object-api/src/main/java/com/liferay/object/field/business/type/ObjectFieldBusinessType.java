@@ -100,7 +100,7 @@ public interface ObjectFieldBusinessType {
 		}
 
 		Map<String, String> localizedValues = (Map<String, String>)values.get(
-			objectField.getName() + ObjectFieldConstants.I18N_SUFFIX);
+			objectField.getI18nObjectFieldName());
 
 		if (localizedValues == null) {
 			return values.get(objectField.getName());

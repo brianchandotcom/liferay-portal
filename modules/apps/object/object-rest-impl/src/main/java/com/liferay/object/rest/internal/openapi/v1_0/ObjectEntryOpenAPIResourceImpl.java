@@ -281,8 +281,7 @@ public class ObjectEntryOpenAPIResourceImpl
 				dtoProperties.add(
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),
-						objectField.getName() +
-							ObjectFieldConstants.I18N_SUFFIX,
+						objectField.getI18nObjectFieldName(),
 						Map.class.getSimpleName()) {
 
 						{

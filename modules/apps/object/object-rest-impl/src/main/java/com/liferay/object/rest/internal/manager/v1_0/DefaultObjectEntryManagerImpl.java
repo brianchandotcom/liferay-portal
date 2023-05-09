@@ -1303,18 +1303,16 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			if (objectField.isLocalized()) {
-				String localizedObjectFieldName =
-					objectField.getName() + ObjectFieldConstants.I18N_SUFFIX;
-
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				value = properties.get(localizedObjectFieldName);
+				value = properties.get(objectField.getI18nObjectFieldName());
 
 				if (value == null) {
 					continue;
 				}
 
-				values.put(localizedObjectFieldName, (Serializable)value);
+				values.put(
+					objectField.getI18nObjectFieldName(), (Serializable)value);
 
 				continue;
 			}

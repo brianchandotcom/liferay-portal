@@ -138,6 +138,16 @@
 	<td>xpath=(//liferay-remote-app-raylife-ap//table/tbody//div/span[@class='cursor-pointer font-weight-bolder'])[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_AVATAR</td>
+	<td>//div[contains(@class, 'applications-menu-header')]//span[contains(@class,'inline-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_AVATAR_OPTION</td>
+	<td>//div[contains(@class, 'applications-menu-header')]//span[contains(@class,'inline')]//ancestor::div//a[contains(.,'${key_option}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

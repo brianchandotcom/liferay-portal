@@ -68,6 +68,15 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getL10nDBTableName() {
+		if (!isEnableLocalization()) {
+			return null;
+		}
+
+		return getDBTableName() + "_l10n";
+	}
+
+	@Override
 	public String getOSGiJaxRsName() {
 		return getOSGiJaxRsName(StringPool.BLANK);
 	}

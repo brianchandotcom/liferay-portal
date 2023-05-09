@@ -175,7 +175,9 @@ definition {
 			checkboxName = "Required Field",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		WaitForVisible(locator1 = "Icon#ASTERISK");
+		WaitForVisible(
+			key_fieldFieldLabel = "Boolean",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
 
 		WebContentStructures.saveCP();
 

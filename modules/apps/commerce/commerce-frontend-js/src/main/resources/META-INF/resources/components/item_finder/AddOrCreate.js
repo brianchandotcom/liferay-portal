@@ -17,11 +17,11 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
+import {getFDSInternalCellRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
-import {resolveRendererByType} from '../../utilities/dataRenderers';
 import {getValueFromItem} from '../../utilities/index';
 import Expose from './Expose';
 
@@ -30,9 +30,12 @@ function Item(props) {
 		<ClayTable.Row>
 			{props.fields.map((field, i) => {
 				const value = getValueFromItem(props.itemData, field.fieldName);
-				const DataRenderer = resolveRendererByType(
+
+				const cellRenderer = getFDSInternalCellRenderer(
 					field.contentRenderer
 				);
+
+				const CellRendererComponent = cellRenderer.component;
 
 				return (
 					<ClayTable.Cell
@@ -44,7 +47,7 @@ function Item(props) {
 								: field.fieldName
 						}
 					>
-						<DataRenderer
+						<CellRendererComponent
 							actions={[]}
 							itemData={props.itemData}
 							options={field}

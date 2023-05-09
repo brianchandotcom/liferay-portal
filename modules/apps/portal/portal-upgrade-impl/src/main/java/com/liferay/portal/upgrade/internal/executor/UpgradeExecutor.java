@@ -41,7 +41,6 @@ import java.util.Objects;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -142,33 +141,14 @@ public class UpgradeExecutor {
 		try {
 			UpgradeLogContext.setContext(bundleSymbolicName);
 
+			_executeUpgradeInfos(bundleSymbolicName, upgradeInfos);
+
 			Release release = _releaseLocalService.fetchRelease(
 				bundleSymbolicName);
 
-			ServiceRegistration<Release> oldServiceRegistration = null;
-
 			if (release != null) {
-				oldServiceRegistration = _releasePublisher.publishInProgress(
-					release);
-			}
-
-			_executeUpgradeInfos(bundleSymbolicName, upgradeInfos);
-
-			release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-			ServiceRegistration<Release> inProgressServiceRegistration = null;
-
-			if (release != null) {
-				inProgressServiceRegistration = _releasePublisher.publish(
+				_releasePublisher.publish(
 					release, _isInitialRelease(upgradeInfos));
-			}
-
-			if (inProgressServiceRegistration != null) {
-				inProgressServiceRegistration.unregister();
-			}
-
-			if (oldServiceRegistration != null) {
-				oldServiceRegistration.unregister();
 			}
 
 			return release;

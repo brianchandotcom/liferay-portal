@@ -170,8 +170,7 @@ public class ServiceConfigurationExtender
 				Release.class,
 				StringBundler.concat(
 					"(&(release.bundle.symbolic.name=",
-					bundle.getSymbolicName(), ")", versionRangeFilter,
-					"(|(!(release.state=*))(release.state=0)))"));
+					bundle.getSymbolicName(), ")", versionRangeFilter, ")"));
 
 			_component.add(serviceDependency);
 		}

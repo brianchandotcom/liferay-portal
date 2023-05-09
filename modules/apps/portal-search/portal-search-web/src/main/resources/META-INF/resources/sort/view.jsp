@@ -19,11 +19,13 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration" %><%@
@@ -47,7 +49,11 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 		<div class="alert alert-info text-center">
 			<liferay-ui:message key="this-widget-is-not-visible-to-users-yet" />
 
-			<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="complete-its-configuration-to-make-it-visible" /></aui:a>
+			<clay:link
+				href="javascript:void(0);"
+				label='<%= LanguageUtil.get(request, "complete-its-configuration-to-make-it-visible") %>'
+				onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+			/>
 		</div>
 	</c:when>
 	<c:otherwise>

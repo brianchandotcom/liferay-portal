@@ -16,7 +16,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -39,9 +39,10 @@ SuggestionsPortletDisplayContext suggestionsPortletDisplayContext = (Suggestions
 				SuggestionDisplayContext suggestionDisplayContext = suggestionsPortletDisplayContext.getSpellCheckSuggestion();
 				%>
 
-				<aui:a href="<%= suggestionDisplayContext.getURL() %>">
-					<%= suggestionDisplayContext.getSuggestedKeywordsFormatted() %>
-				</aui:a>
+				<clay:link
+					href="<%= suggestionDisplayContext.getURL() %>"
+					label="<%= suggestionDisplayContext.getSuggestedKeywordsFormatted() %>"
+				/>
 			</li>
 		</ul>
 	</c:if>
@@ -57,9 +58,10 @@ SuggestionsPortletDisplayContext suggestionsPortletDisplayContext = (Suggestions
 			%>
 
 				<li>
-					<aui:a href="<%= suggestionDisplayContext.getURL() %>">
-						<%= suggestionDisplayContext.getSuggestedKeywordsFormatted() %>
-					</aui:a>
+					<clay:link
+						href="<%= suggestionDisplayContext.getURL() %>"
+						label="<%= suggestionDisplayContext.getSuggestedKeywordsFormatted() %>"
+					/>
 				</li>
 
 			<%

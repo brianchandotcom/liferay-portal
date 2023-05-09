@@ -103,7 +103,7 @@ public class UADHierarchyDisplay {
 		).buildPortletURL();
 
 		String className = ParamUtil.getString(
-			httpServletRequest, "parentContainerClass");
+			httpServletRequest, "parentContainerTypeKey");
 
 		UADDisplay<Object> uadDisplay =
 			(UADDisplay<Object>)_uadRegistry.getUADDisplay(className);
@@ -146,9 +146,9 @@ public class UADHierarchyDisplay {
 					).setMVCRenderCommandName(
 						"/user_associated_data/view_uad_hierarchy"
 					).setParameter(
-						"parentContainerClass", parentContainerTypeKey
-					).setParameter(
 						"parentContainerId", parentContainerId
+					).setParameter(
+						"parentContainerTypeKey", parentContainerTypeKey
 					).buildString()));
 
 			parentContainerTypeKey =
@@ -279,7 +279,7 @@ public class UADHierarchyDisplay {
 		throws Exception {
 
 		String className = ParamUtil.getString(
-			actionRequest, "parentContainerClass");
+			actionRequest, "parentContainerTypeKey");
 
 		if (Validator.isNull(className)) {
 			return null;
@@ -326,7 +326,7 @@ public class UADHierarchyDisplay {
 				"mvcRenderCommandName",
 				"/user_associated_data/view_uad_hierarchy");
 			portletURL.setParameter(
-				"parentContainerClass", uadDisplay.getTypeKey());
+				"parentContainerTypeKey", uadDisplay.getTypeKey());
 			portletURL.setParameter("parentContainerId", parentContainerId);
 		}
 
@@ -389,9 +389,9 @@ public class UADHierarchyDisplay {
 		).setParameter(
 			"p_u_i_d", selectedUserId
 		).setParameter(
-			"parentContainerClass", typeKey
-		).setParameter(
 			"parentContainerId", uadDisplay.getPrimaryKey(unwrappedObject)
+		).setParameter(
+			"parentContainerTypeKey", typeKey
 		).setParameter(
 			"scope", ParamUtil.getString(liferayPortletRequest, "scope")
 		).buildString();

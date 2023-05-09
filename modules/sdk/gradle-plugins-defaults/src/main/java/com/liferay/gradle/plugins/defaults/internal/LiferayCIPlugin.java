@@ -300,7 +300,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					Configuration configuration =
 						configurationContainer.getByName(
 							testIntegrationSourceSet.
-								getCompileConfigurationName());
+								getImplementationConfigurationName());
 
 					// Dependencies
 

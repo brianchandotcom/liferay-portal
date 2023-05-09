@@ -160,10 +160,16 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 	@Override
 	public void deleteAccountEntry(long accountEntryId) throws PortalException {
-		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.DELETE);
 
-		accountEntryLocalService.deleteAccountEntry(accountEntryId);
+		AccountEntry accountEntry = accountEntryLocalService.
+			getAccountEntry(accountEntryId);
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntry.getAccountEntryId(),
+			ActionKeys.DELETE);
+
+		accountEntryLocalService.deleteAccountEntry(accountEntry.
+			getAccountEntryId());
 	}
 
 	@Override

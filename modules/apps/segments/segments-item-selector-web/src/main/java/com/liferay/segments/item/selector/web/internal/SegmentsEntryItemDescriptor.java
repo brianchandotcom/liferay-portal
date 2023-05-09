@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsEntry;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,11 +47,6 @@ public class SegmentsEntryItemDescriptor
 	@Override
 	public String getImageURL() {
 		return null;
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _segmentsEntry.getModifiedDate();
 	}
 
 	@Override

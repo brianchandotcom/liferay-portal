@@ -57,6 +57,7 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
@@ -111,7 +112,10 @@ public class IndexerScoreDistortionTest {
 		_groups = groupSearchFixture.getGroups();
 		_journalArticles = journalArticleSearchFixture.getJournalArticles();
 		_journalArticleSearchFixture = journalArticleSearchFixture;
+
 		_user = TestPropsValues.getUser();
+
+		PermissionCheckerUtil.setThreadValues(_user);
 	}
 
 	@After

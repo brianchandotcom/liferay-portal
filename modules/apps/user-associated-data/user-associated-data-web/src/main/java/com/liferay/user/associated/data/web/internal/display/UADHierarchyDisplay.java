@@ -78,8 +78,8 @@ public class UADHierarchyDisplay {
 
 		_uadDisplayMap = uadDisplayMap;
 
-		_typeClasses = TransformUtil.transform(
-			_uadDisplays, UADDisplay::getTypeClass, Class.class);
+		_typeKeys = TransformUtil.transform(
+			_uadDisplays, UADDisplay::getTypeKey, String.class);
 	}
 
 	public <T> void addPortletBreadcrumbEntries(
@@ -354,14 +354,14 @@ public class UADHierarchyDisplay {
 		return getColumnFieldNames();
 	}
 
-	public <T> Class<?> getTypeClass(T object) {
+	public <T> String getTypeKey(T object) {
 		UADDisplay<?> uadDisplay = _getUADDisplayByObject(unwrap(object));
 
-		return uadDisplay.getTypeClass();
+		return uadDisplay.getTypeKey();
 	}
 
-	public Class<?>[] getTypeClasses() {
-		return _typeClasses;
+	public String[] getTypeKeys() {
+		return _typeKeys;
 	}
 
 	public UADDisplay<?>[] getUADDisplays() {
@@ -632,7 +632,7 @@ public class UADHierarchyDisplay {
 
 	private final Class<?>[] _containerTypeClasses;
 	private final UADDisplay<?>[] _containerUADDisplays;
-	private final Class<?>[] _typeClasses;
+	private final String[] _typeKeys;
 	private final Map<Class<?>, UADDisplay<?>> _uadDisplayMap;
 	private final UADDisplay<?>[] _uadDisplays;
 	private final UADHierarchyDeclaration _uadHierarchyDeclaration;

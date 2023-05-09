@@ -59,8 +59,8 @@ public class ViewUADEntitiesDisplay {
 		return _searchContainer.getId(httpServletRequest, namespace);
 	}
 
-	public Class<?>[] getTypeClasses() {
-		return _typeClasses;
+	public String[] getTypeKeys() {
+		return _typeKeys;
 	}
 
 	public String getTypeName() {
@@ -120,8 +120,8 @@ public class ViewUADEntitiesDisplay {
 		_searchContainer = searchContainer;
 	}
 
-	public void setTypeClasses(Class<?>[] typeClasses) {
-		_typeClasses = typeClasses;
+	public void setTypeKeys(String[] typeKeys) {
+		_typeKeys = typeKeys;
 	}
 
 	public void setTypeName(String typeName) {
@@ -138,7 +138,7 @@ public class ViewUADEntitiesDisplay {
 	private ResultRowSplitter _resultRowSplitter;
 	private String _scope;
 	private SearchContainer<UADEntity<?>> _searchContainer;
-	private Class<?>[] _typeClasses;
+	private String[] _typeKeys;
 	private String _typeName;
 	private String _uadRegistryKey = StringPool.BLANK;
 

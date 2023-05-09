@@ -303,12 +303,12 @@ public class ReviewUADDataMVCRenderCommand implements MVCRenderCommand {
 				new UADHierarchyResultRowSplitter(
 					LocaleThreadLocal.getThemeDisplayLocale(),
 					uadHierarchyDisplay.getUADDisplays()));
-			viewUADEntitiesDisplay.setTypeClasses(
-				uadHierarchyDisplay.getTypeClasses());
+			viewUADEntitiesDisplay.setTypeKeys(
+				uadHierarchyDisplay.getTypeKeys());
 		}
 		else {
-			viewUADEntitiesDisplay.setTypeClasses(
-				new Class<?>[] {uadDisplay.getTypeClass()});
+			viewUADEntitiesDisplay.setTypeKeys(
+				new String[] {uadDisplay.getTypeKey()});
 			viewUADEntitiesDisplay.setTypeName(
 				uadDisplay.getTypeName(
 					LocaleThreadLocal.getThemeDisplayLocale()));

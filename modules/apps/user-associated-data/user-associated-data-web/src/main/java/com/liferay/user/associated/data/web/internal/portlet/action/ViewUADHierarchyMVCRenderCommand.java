@@ -139,8 +139,7 @@ public class ViewUADHierarchyMVCRenderCommand implements MVCRenderCommand {
 				ParamUtil.getLong(renderRequest, "parentContainerId"),
 				_selectedUserHelper.getSelectedUser(renderRequest),
 				uadHierarchyDisplay));
-		viewUADEntitiesDisplay.setTypeClasses(
-			uadHierarchyDisplay.getTypeClasses());
+		viewUADEntitiesDisplay.setTypeKeys(uadHierarchyDisplay.getTypeKeys());
 
 		return viewUADEntitiesDisplay;
 	}

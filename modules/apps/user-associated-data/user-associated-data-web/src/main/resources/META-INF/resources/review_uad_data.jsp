@@ -167,7 +167,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 												disabled="<%= count == 0 %>"
 												label="<%= StringUtil.appendParentheticalSuffix(uadDisplay.getTypeName(locale), (int)count) %>"
 												name="uadRegistryKey"
-												value="<%= uadDisplay.getTypeClass().getName() %>"
+												value="<%= uadDisplay.getTypeKey() %>"
 											/>
 
 										<%

@@ -57,11 +57,11 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 			<aui:input name="uadRegistryKey" type="hidden" value="<%= viewUADEntitiesDisplay.getUADRegistryKey() %>" />
 
 			<%
-			for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
+			for (String typeKey : viewUADEntitiesDisplay.getTypeKeys()) {
 			%>
 
-				<aui:input name='<%= "primaryKeys__" + typeClass.getSimpleName() %>' type="hidden" />
-				<aui:input name='<%= "uadRegistryKey__" + typeClass.getSimpleName() %>' type="hidden" value="<%= typeClass.getName() %>" />
+				<aui:input name='<%= "primaryKeys__" + typeKey %>' type="hidden" />
+				<aui:input name='<%= "uadRegistryKey__" + typeKey %>' type="hidden" value="<%= typeKey %>" />
 
 			<%
 			}
@@ -224,19 +224,19 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 				<c:otherwise>
 
 					<%
-					for (Class<?> typeClass : viewUADEntitiesDisplay.getTypeClasses()) {
-						String primaryKeysVar = "primaryKeys" + typeClass.getSimpleName();
+					for (String typeKey : viewUADEntitiesDisplay.getTypeKeys()) {
+						String primaryKeysVar = "primaryKeys" + typeKey;
 					%>
 
 						var <%= primaryKeysVar %> = form.querySelector(
-							'#<portlet:namespace />primaryKeys__<%= typeClass.getSimpleName() %>'
+							'#<portlet:namespace />primaryKeys__<%= typeKey %>'
 						);
 
 						if (<%= primaryKeysVar %>) {
 							var primaryKeys = Liferay.Util.getCheckedCheckboxes(
 								form,
 								'<portlet:namespace />allRowIds',
-								'<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>'
+								'<portlet:namespace />rowIds<%= typeKey %>'
 							);
 
 							<%= primaryKeysVar %>.setAttribute('value', primaryKeys);

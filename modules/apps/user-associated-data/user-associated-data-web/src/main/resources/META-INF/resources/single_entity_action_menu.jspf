@@ -65,12 +65,12 @@
 	else {
 		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/user_associated_data/anonymize_uad_entities");
 
-		Class<?> typeClass = uadEntity.getTypeClass();
+		String typeKey = uadEntity.getTypeKey();
 
-		autoAnonymizeURL.setParameter("primaryKey__" + typeClass.getSimpleName(), String.valueOf(uadEntity.getPrimaryKey()));
+		autoAnonymizeURL.setParameter("primaryKey__" + typeKey, String.valueOf(uadEntity.getPrimaryKey()));
 
 		deleteURL.setParameter(ActionRequest.ACTION_NAME, "/user_associated_data/delete_uad_entities");
-		deleteURL.setParameter("primaryKey__" + typeClass.getSimpleName(), String.valueOf(uadEntity.getPrimaryKey()));
+		deleteURL.setParameter("primaryKey__" + typeKey, String.valueOf(uadEntity.getPrimaryKey()));
 	}
 
 	String anonymizeSingleMessage = "are-you-sure-you-want-to-anonymize-this-entity";

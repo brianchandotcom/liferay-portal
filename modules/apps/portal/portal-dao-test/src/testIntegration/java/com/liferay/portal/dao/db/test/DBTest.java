@@ -336,7 +336,13 @@ public class DBTest {
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME_1,
 				" (id, notNilColumn, typeString) values (1, '1', ",
-				"'testTable1Value1'), (2, '2', 'testTable1Value2')"));
+				"'testTable1Value1')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn, typeString) values (2, '2', ",
+				"'testTable1Value2')"));
 
 		_db.runSQL(
 			StringBundler.concat(

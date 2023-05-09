@@ -22,21 +22,15 @@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.application.list.PanelApp" %><%@
-page import="com.liferay.application.list.PanelAppRegistry" %><%@
-page import="com.liferay.application.list.PanelCategory" %><%@
-page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
-page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
+<%@ page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.item.selector.ItemSelector" %><%@
@@ -60,21 +54,14 @@ page import="com.liferay.portal.kernel.model.Organization" %><%@
 page import="com.liferay.portal.kernel.model.Permission" %><%@
 page import="com.liferay.portal.kernel.model.PermissionDisplay" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
-page import="com.liferay.portal.kernel.model.PortletCategory" %><%@
-page import="com.liferay.portal.kernel.model.PortletCategoryConstants" %><%@
 page import="com.liferay.portal.kernel.model.ResourceConstants" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserGroupRole" %><%@
 page import="com.liferay.portal.kernel.model.role.RoleConstants" %><%@
-page import="com.liferay.portal.kernel.portlet.AdministratorControlPanelEntry" %><%@
-page import="com.liferay.portal.kernel.portlet.ControlPanelEntry" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry" %><%@
 page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil" %><%@
@@ -106,16 +93,14 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
-page import="com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry" %><%@
 page import="com.liferay.roles.admin.constants.RolesAdminPortletKeys" %><%@
 page import="com.liferay.roles.admin.constants.RolesAdminWebKeys" %><%@
 page import="com.liferay.roles.admin.role.type.contributor.RoleTypeContributor" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.EditRoleAssignmentsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.EditRolePermissionsFormDisplayContext" %><%@
+page import="com.liferay.roles.admin.web.internal.display.context.EditRolePermissionsNavigationDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.EditRolePermissionsResourceDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.EditRolePermissionsSummaryDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.display.context.RoleDisplayContext" %><%@
@@ -135,12 +120,9 @@ page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Collections" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Objects" %><%@
-page import="java.util.Set" %>
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

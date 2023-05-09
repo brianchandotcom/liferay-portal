@@ -1,0 +1,98 @@
+[
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "MPACCOUNT-001"
+			}
+		],
+		"alternateName": "jane.acme",
+		"birthDate": "1975-01-01T00:00:00.000+00:00",
+		"emailAddress": "j@acme.com",
+		"externalReferenceCode": "MP1",
+		"familyName": "Acme",
+		"givenName": "Jane",
+		"jobTitle": "Owner",
+		"name": "Jane Acme",
+		"password": "mp4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "MPACCOUNT-001"
+			}
+		],
+		"alternateName": "steven.acme",
+		"birthDate": "1979-01-01T00:00:00.000+00:00",
+		"emailAddress": "s@acme.com",
+		"externalReferenceCode": "MP2",
+		"familyName": "Acme",
+		"givenName": "Steven",
+		"jobTitle": "Co-owner",
+		"name": "Steven Acme",
+		"password": "mp4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "MPACCOUNT-001"
+			}
+		],
+		"alternateName": "john.developer",
+		"birthDate": "1999-12-18T00:00:00.000+00:00",
+		"emailAddress": "john.developer@mailinator.com",
+		"externalReferenceCode": "MP3",
+		"familyName": "developer",
+		"givenName": "John",
+		"jobTitle": "Acme developer",
+		"name": "Scott developer",
+		"password": "mp4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "MPACCOUNT-001"
+			}
+		],
+		"alternateName": "marie.developer",
+		"birthDate": "1983-04-01T00:00:00.000+00:00",
+		"emailAddress": "marie.developer@mailinator.com",
+		"externalReferenceCode": "MP4",
+		"familyName": "developer",
+		"givenName": "Marie",
+		"jobTitle": "Acme developer",
+		"name": "Marie developer",
+		"password": "mp4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "MPACCOUNT-004"
+			}
+		],
+		"alternateName": "ryan.administrator",
+		"birthDate": "1977-06-29T00:00:00.000+00:00",
+		"emailAddress": "ryan.administrator@mailinator.com",
+		"externalReferenceCode": "MP5",
+		"familyName": "administrator",
+		"givenName": "Ryan",
+		"jobTitle": "Acme Administrator",
+		"name": "Ryan Administrator",
+		"password": "mp4all"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "MPACCOUNT-002"
+			}
+		],
+		"alternateName": "clark.customer",
+		"birthDate": "1996-05-31T00:00:00.000+00:00",
+		"emailAddress": "clark.customer@mailinator.com",
+		"externalReferenceCode": "MP6",
+		"familyName": "Customer",
+		"givenName": "Clark",
+		"jobTitle": "Acme Customer",
+		"name": "Clark Customer",
+		"password": "mp4all"
+	}
+]

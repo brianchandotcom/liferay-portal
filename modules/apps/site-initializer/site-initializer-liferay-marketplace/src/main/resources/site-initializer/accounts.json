@@ -1,0 +1,22 @@
+[
+	{
+		"externalReferenceCode": "MPACCOUNT-001",
+		"name": "Acme Development",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "MPACCOUNT-002",
+		"name": "Chameleon",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "MPACCOUNT-003",
+		"name": "Jane Acme",
+		"type": "person"
+	},
+	{
+		"externalReferenceCode": "MPACCOUNT-004",
+		"name": "Ryan Administrator",
+		"type": "person"
+	}
+]

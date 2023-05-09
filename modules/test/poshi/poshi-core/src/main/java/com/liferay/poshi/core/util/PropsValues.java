@@ -188,6 +188,8 @@ public class PropsValues {
 	public static final boolean TEST_RUN_LOCALLY = GetterUtil.getBoolean(
 		PropsUtil.get("test.run.locally"));
 
+	public static final String TEST_RUN_TYPE = PropsUtil.get("test.run.type");
+
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
 		PropsUtil.get("test.skip.tear.down"));
 

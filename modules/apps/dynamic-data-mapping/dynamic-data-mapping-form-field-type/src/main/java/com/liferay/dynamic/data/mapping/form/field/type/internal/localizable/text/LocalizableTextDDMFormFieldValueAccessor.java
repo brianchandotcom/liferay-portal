@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.LOCALIZABLE_TEXT,
-	service = {
-		DDMFormFieldValueAccessor.class,
-		LocalizableTextDDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class LocalizableTextDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {

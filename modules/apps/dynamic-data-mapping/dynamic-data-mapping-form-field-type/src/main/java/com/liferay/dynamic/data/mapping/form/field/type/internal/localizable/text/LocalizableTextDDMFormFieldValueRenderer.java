@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.localizable.text;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -43,8 +44,10 @@ public class LocalizableTextDDMFormFieldValueRenderer
 		return jsonObject.toString();
 	}
 
-	@Reference
-	protected LocalizableTextDDMFormFieldValueAccessor
+	@Reference(
+		target = "(ddm.form.field.type.name=" + DDMFormFieldTypeConstants.LOCALIZABLE_TEXT + ")"
+	)
+	protected DDMFormFieldValueAccessor<JSONObject>
 		localizableTextDDMFormFieldValueAccessor;
 
 }

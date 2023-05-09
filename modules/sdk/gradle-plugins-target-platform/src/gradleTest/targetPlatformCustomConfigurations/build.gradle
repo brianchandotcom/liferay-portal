@@ -26,7 +26,7 @@ buildscript {
 
 apply plugin: "com.liferay.portal.tools.service.builder"
 apply plugin: "com.liferay.target.platform"
-apply plugin: "java"
+apply plugin: "java-library"
 
 task runGradleTest
 

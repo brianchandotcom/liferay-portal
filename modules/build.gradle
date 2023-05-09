@@ -563,7 +563,7 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("eclipse") {
 			tasks.eclipse.dependsOn {
-				Set<ProjectDependency> projectDependencies = configurations.runtime.allDependencies.withType(ProjectDependency)
+				Set<ProjectDependency> projectDependencies = configurations.runtimeOnly.allDependencies.withType(ProjectDependency)
 
 				projectDependencies.collect {
 					ProjectDependency projectDependency ->

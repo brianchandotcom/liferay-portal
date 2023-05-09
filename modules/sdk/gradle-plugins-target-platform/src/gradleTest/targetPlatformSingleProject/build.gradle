@@ -28,6 +28,6 @@ runGradleTest {
 
 		assert expectedException.message == "Configuration with name 'targetPlatform' not found."
 
-		assert configurations.compile.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
+		assert configurations.compileClasspath.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
 	}
 }

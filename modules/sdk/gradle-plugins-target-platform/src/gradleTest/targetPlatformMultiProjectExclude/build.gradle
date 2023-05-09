@@ -23,7 +23,7 @@ runGradleTest {
 		Exception expectedException = null
 
 		try {
-			subproject1.configurations.compile.resolvedConfiguration.resolvedArtifacts
+			subproject1.configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts
 		}
 		catch (ResolveException re) {
 			expectedException = re.cause
@@ -33,7 +33,7 @@ runGradleTest {
 
 		Project subproject2 = project.childProjects["subproject2"]
 
-		assert subproject2.configurations.compile.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
+		assert subproject2.configurations.compileClasspath.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
 	}
 }
 

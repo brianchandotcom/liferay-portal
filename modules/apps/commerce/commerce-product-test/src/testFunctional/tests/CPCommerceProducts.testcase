@@ -1985,6 +1985,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10603. Can view products with category imported from another instance via JSON add"
+	@priority = 3
+	test CanViewProductsWithCategoryImportedFromAnotherInstanceViaJSONAdd {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a 'Cat' category is created under Global site's Topic and export it") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Cat",
+				vocabularyName = "Topic");
+
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			LAR.exportPortlet(larFileName = "Category_Topic_Cat.portlet.lar");
+		}
+
+		task ("And the category related to Topic is also selected inside the 'ABS Sensor' product") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			AssetCategorization.removeCategories(categoryNameList = "Brake System");
+
+			Click(
+				key_fieldName = "Topic",
+				locator1 = "Button#SELECT_BUTTON");
+
+			AssetCategorization.selectCategories(categoryNameList = "Cat");
+
+			Button.clickPublish();
+		}
+
+		task ("When another Minium site is created in a virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the category created before is imported in the virtual instance") {
+			Category.openCategoriesAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "global");
+
+			LAR.importPortlet(larFileName = "Category_Topic_Cat.portlet.lar");
+		}
+
+		task ("And a product with the imported category is added to the virtual instance via JSON") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				baseURL = "http://www.able.com:8080",
+				catalogName = "Minium",
+				categoryName = "Cat",
+				externalReferenceCode = "MIN93015minium-initializer",
+				productName = "Imported ABS Sensor",
+				productType = "Simple",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Then the new product with imported category is shown in the virtual instance") {
+			CommerceProducts.openProductsAdmin(baseURL = "http://www.able.com:8080");
+
+			CommerceNavigator.searchEntry(entryName = "ABS");
+
+			CommerceNavigator.gotoEntry(entryName = "Imported ABS Sensor");
+
+			AssetCategorization.viewCategory(categoryName = "Cat");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6747. ConfigureGroupedProduct"
 	@ignore = "true"
 	@priority = 3

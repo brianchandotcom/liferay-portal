@@ -42,6 +42,7 @@ interface ContentRendererProps {
 
 interface Field {
 	contentRenderer?: React.FC<ContentRendererProps>;
+	headingTitle?: boolean;
 	label: string;
 	name: string;
 }
@@ -159,7 +160,10 @@ const OrderableTableRow = ({
 				);
 
 				return (
-					<ClayTable.Cell key={field.name}>
+					<ClayTable.Cell
+						headingTitle={field.headingTitle}
+						key={field.name}
+					>
 						{fuzzyMatch ? (
 							<span
 								dangerouslySetInnerHTML={{

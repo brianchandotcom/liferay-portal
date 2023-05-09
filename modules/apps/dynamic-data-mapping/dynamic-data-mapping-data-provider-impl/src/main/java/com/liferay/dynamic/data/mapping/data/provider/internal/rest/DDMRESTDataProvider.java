@@ -279,11 +279,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return url;
 	}
 
-	private Map<String, String> _getAdditionalParameters(
-		Map<String, String> pathInputParametersMap,
+	private Map<String, String> _getAllParameters(
+		DDMDataProviderRequest ddmDataProviderRequest,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings,
+		Map<String, String> pathInputParametersMap, String query,
 		Map<String, Object> requestInputParametersMap) {
 
-		Map<String, String> additionalParametersMap = new HashMap<>();
+		Map<String, String> allParametersMap = new HashMap<>();
 
 		for (Map.Entry<String, Object> entry :
 				requestInputParametersMap.entrySet()) {
@@ -294,10 +296,57 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				continue;
 			}
 
-			additionalParametersMap.put(key, String.valueOf(entry.getValue()));
+			allParametersMap.put(key, String.valueOf(entry.getValue()));
 		}
 
-		return additionalParametersMap;
+		if (ddmRESTDataProviderSettings.filterable()) {
+			String filterParameterValue = ddmDataProviderRequest.getParameter(
+				"filterParameterValue", String.class);
+
+			if (filterParameterValue != null) {
+				allParametersMap.put(
+					ddmRESTDataProviderSettings.filterParameterName(),
+					filterParameterValue);
+			}
+		}
+
+		if (ddmRESTDataProviderSettings.pagination()) {
+			String paginationEnd = ddmDataProviderRequest.getParameter(
+				"paginationEnd", String.class);
+
+			if (paginationEnd != null) {
+				allParametersMap.put(
+					ddmRESTDataProviderSettings.paginationEndParameterName(),
+					paginationEnd);
+			}
+
+			String paginationStart = ddmDataProviderRequest.getParameter(
+				"paginationStart", String.class);
+
+			if (paginationStart != null) {
+				allParametersMap.put(
+					ddmRESTDataProviderSettings.paginationStartParameterName(),
+					paginationStart);
+			}
+		}
+
+		for (String queryParameter :
+				StringUtil.split(query, StringPool.AMPERSAND)) {
+
+			String[] queryParameterPartsMap = StringUtil.split(
+				queryParameter, StringPool.EQUAL);
+
+			if (queryParameterPartsMap.length > 1) {
+				allParametersMap.put(
+					queryParameterPartsMap[0], queryParameterPartsMap[1]);
+			}
+			else {
+				allParametersMap.put(
+					queryParameterPartsMap[0], StringPool.BLANK);
+			}
+		}
+
+		return allParametersMap;
 	}
 
 	private DDMDataProviderResponse _getData(
@@ -312,20 +361,14 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, String> pathInputParametersMap = _getPathInputParametersMap(
 			requestInputParametersMap, ddmRESTDataProviderSettings.url());
 
-		Map<String, String> allParametersMap = HashMapBuilder.putAll(
-			_getAdditionalParameters(
-				pathInputParametersMap, requestInputParametersMap)
-		).putAll(
-			_getFilterAndPaginationParameters(
-				ddmDataProviderRequest, ddmRESTDataProviderSettings)
-		).build();
-
 		String url = _buildURL(
 			pathInputParametersMap, ddmRESTDataProviderSettings.url());
 
 		URI uri = new URI(url);
 
-		allParametersMap.putAll(_getQueryParameters(uri.getQuery()));
+		Map<String, String> allParametersMap = _getAllParameters(
+			ddmDataProviderRequest, ddmRESTDataProviderSettings,
+			pathInputParametersMap, uri.getQuery(), requestInputParametersMap);
 
 		String absoluteURL = _getAbsoluteURL(uri.getQuery(), url);
 
@@ -406,46 +449,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 
 		return ddmDataProviderInstance;
-	}
-
-	private Map<String, String> _getFilterAndPaginationParameters(
-		DDMDataProviderRequest ddmDataProviderRequest,
-		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
-
-		Map<String, String> filterAndPaginationParametersMap = new HashMap<>();
-
-		if (ddmRESTDataProviderSettings.filterable()) {
-			String filterParameterValue = ddmDataProviderRequest.getParameter(
-				"filterParameterValue", String.class);
-
-			if (filterParameterValue != null) {
-				filterAndPaginationParametersMap.put(
-					ddmRESTDataProviderSettings.filterParameterName(),
-					filterParameterValue);
-			}
-		}
-
-		if (ddmRESTDataProviderSettings.pagination()) {
-			String paginationEnd = ddmDataProviderRequest.getParameter(
-				"paginationEnd", String.class);
-
-			if (paginationEnd != null) {
-				filterAndPaginationParametersMap.put(
-					ddmRESTDataProviderSettings.paginationEndParameterName(),
-					paginationEnd);
-			}
-
-			String paginationStart = ddmDataProviderRequest.getParameter(
-				"paginationStart", String.class);
-
-			if (paginationStart != null) {
-				filterAndPaginationParametersMap.put(
-					ddmRESTDataProviderSettings.paginationStartParameterName(),
-					paginationStart);
-			}
-		}
-
-		return filterAndPaginationParametersMap;
 	}
 
 	private String _getHostName(String host) {
@@ -564,28 +567,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 
 		return proxySettingsMap;
-	}
-
-	private Map<String, String> _getQueryParameters(String query) {
-		Map<String, String> queryParametersMap = new HashMap<>();
-
-		for (String queryParameter :
-				StringUtil.split(query, StringPool.AMPERSAND)) {
-
-			String[] queryParameterPartsMap = StringUtil.split(
-				queryParameter, StringPool.EQUAL);
-
-			if (queryParameterPartsMap.length > 1) {
-				queryParametersMap.put(
-					queryParameterPartsMap[0], queryParameterPartsMap[1]);
-			}
-			else {
-				queryParametersMap.put(
-					queryParameterPartsMap[0], StringPool.BLANK);
-			}
-		}
-
-		return queryParametersMap;
 	}
 
 	private Map<String, Object> _getRequestInputParametersMap(

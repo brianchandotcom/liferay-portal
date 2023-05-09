@@ -14,6 +14,145 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-11393. Can update currency format for Indian Rupee"
+	@priority = 3
+	test CanUpdateCurrencyFormatForINR {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the format pattern for Indian Rupee currency is updated to '₹ ##,##,##0.00'") {
+			CommerceNavigator.goToCurrenciesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Indian Rupee");
+
+			Type(
+				key_fieldLabel = "Format Pattern",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "₹ ##,##,##0.00");
+
+			Button.clickSave();
+		}
+
+		task ("And a simple product with base price '1000000' is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				price = 1000000,
+				productName = "Simple Product",
+				productType = "Simple");
+		}
+
+		task ("And Minium Portal channel currency is updated to 'Indian Rupee'") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Select(
+				key_fieldLabel = "Currency",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Indian Rupee");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer user logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the Simple Product's price is changed to '₹ ##,##,##0.00' applied to the currency format in product card") {
+			var productPrice = selenium.getText("//p[@title='Simple Product']/..//span[@class='price-value']");
+
+			var match = StringUtil.matches(${productPrice}, "₹\s\d{1,2},\d\d,\d\d,\d\d0.00");
+
+			if (${match} == "true") {
+				echo("The product price ${productPrice} is applied to '₹ ##,##,##0.00' format");
+			}
+			else {
+				fail("The product price ${productPrice} is not applied to '₹ ##,##,##0.00' format");
+			}
+		}
+
+		task ("And the Simple Product's price is changed to '₹ ##,##,##0.00' applied to the currency format in product details") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/simple-product");
+
+			var productPrice = selenium.getText("CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
+
+			var match = StringUtil.matches(${productPrice}, "₹\s\d{1,2},\d\d,\d\d,\d\d0.00");
+
+			if (${match} == "true") {
+				echo("The product price ${productPrice} is applied to '₹ ##,##,##0.00' format");
+			}
+			else {
+				fail("The product price ${productPrice} is not applied to '₹ ##,##,##0.00' format");
+			}
+		}
+
+		task ("And the Simple Product's price is changed to '₹ ##,##,##0.00' applied to the currency format in mini-cart") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			var productPrice = selenium.getText("//p[@class='item-sku' and contains(.,'Simple Product')]/../../../..//span[@class='price-value']");
+
+			var match = StringUtil.matches(${productPrice}, "₹\s\d{1,2},\d\d,\d\d,\d\d0.00");
+
+			if (${match} == "true") {
+				echo("The product price ${productPrice} is applied to '₹ ##,##,##0.00' format");
+			}
+			else {
+				fail("The product price ${productPrice} is not applied to '₹ ##,##,##0.00' format");
+			}
+		}
+
+		task ("And the Simple Product's price is changed to '₹ ##,##,##0.00' applied to the currency format in order pages") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			CommerceCheckout.setStandardShippingOption();
+
+			var productPrice = selenium.getText("//td[contains(@class,'lfr-price-column')]");
+
+			var match = StringUtil.matches(${productPrice}, "₹\s\d{1,2},\d\d,\d\d,\d\d0.00");
+
+			if (${match} == "true") {
+				echo("The product price ${productPrice} is applied to '₹ ##,##,##0.00' format");
+			}
+			else {
+				fail("The product price ${productPrice} is not applied to '₹ ##,##,##0.00' format");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-5839. As a system admin i want to be able to create / update and delete a new currency"
 	@priority = 5
 	test CreateAndUpdateNewCurrency {

@@ -14,6 +14,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
@@ -60,12 +61,12 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					configureConfigurationJavadocFormatterForJavaPlugin(
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					configureConfigurationJavadocFormatterForJavaLibraryPlugin(
 						project, configuration);
 				}
 
@@ -91,7 +92,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		return formatJavadocTask;
 	}
 
-	protected void configureConfigurationJavadocFormatterForJavaPlugin(
+	protected void configureConfigurationJavadocFormatterForJavaLibraryPlugin(
 		Project project, Configuration configuration) {
 
 		Configuration compileConfiguration = GradleUtil.getConfiguration(

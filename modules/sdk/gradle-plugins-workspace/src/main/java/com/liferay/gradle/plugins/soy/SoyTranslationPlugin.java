@@ -19,6 +19,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -85,12 +86,12 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			});
 
 		pluginContainer.withType(
-			JavaPlugin.class,
-			new Action<JavaPlugin>() {
+			JavaLibraryPlugin.class,
+			new Action<JavaLibraryPlugin>() {
 
 				@Override
-				public void execute(JavaPlugin javaPlugin) {
-					_configureTaskReplaceSoyTranslationForJavaPlugin(
+				public void execute(JavaLibraryPlugin javaLibraryPlugin) {
+					_configureTaskReplaceSoyTranslationForJavaLibraryPlugin(
 						replaceSoyTranslationTask);
 				}
 
@@ -99,7 +100,7 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 		return replaceSoyTranslationTask;
 	}
 
-	private void _configureTaskReplaceSoyTranslationForJavaPlugin(
+	private void _configureTaskReplaceSoyTranslationForJavaLibraryPlugin(
 		final ReplaceSoyTranslationTask replaceSoyTranslationTask) {
 
 		replaceSoyTranslationTask.dependsOn(

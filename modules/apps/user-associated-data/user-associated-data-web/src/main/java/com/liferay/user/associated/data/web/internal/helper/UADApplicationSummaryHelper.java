@@ -45,11 +45,8 @@ public class UADApplicationSummaryHelper {
 		for (UADDisplay<?> uadDisplay :
 				_uadRegistry.getApplicationUADDisplays(applicationKey)) {
 
-			Class<?> typeClass = uadDisplay.getTypeClass();
-
-			String entityName = typeClass.getName();
-
-			uadAnonymizers.add(_uadRegistry.getUADAnonymizer(entityName));
+			uadAnonymizers.add(
+				_uadRegistry.getUADAnonymizer(uadDisplay.getTypeKey()));
 		}
 
 		return uadAnonymizers;
@@ -73,9 +70,7 @@ public class UADApplicationSummaryHelper {
 			return null;
 		}
 
-		Class<?> typeClass = uadDisplay.getTypeClass();
-
-		return typeClass.getName();
+		return uadDisplay.getTypeKey();
 	}
 
 	public int getTotalNonreviewableUADEntitiesCount(long userId) {

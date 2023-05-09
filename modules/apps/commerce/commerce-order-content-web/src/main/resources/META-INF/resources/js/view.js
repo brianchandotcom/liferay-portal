@@ -15,7 +15,9 @@
 import {delegate} from 'frontend-js-web';
 
 export default function ({namespace}) {
-	const requestQuote = document.getElementById(`${namespace}requestQuote`);
+	const requestQuote =
+		document.getElementById(`${namespace}requestQuote`) ||
+		document.getElementById(`requestQuote`);
 
 	let delegateHandler = null;
 

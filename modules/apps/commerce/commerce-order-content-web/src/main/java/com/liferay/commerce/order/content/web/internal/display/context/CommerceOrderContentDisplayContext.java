@@ -750,6 +750,8 @@ public class CommerceOrderContentDisplayContext {
 				continue;
 			}
 
+			String buttonCssClass = null;
+			String id = null;
 			String label;
 			String transitionName;
 
@@ -770,6 +772,19 @@ public class CommerceOrderContentDisplayContext {
 					label = "submit";
 					transitionName = "submit";
 				}
+			}
+			else if ((commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED) &&
+					 isRequestQuoteEnabled()) {
+
+				if (!isValidCommerceOrder()) {
+					continue;
+				}
+
+				buttonCssClass = "btn-primary request-quote";
+				id = "requestQuote";
+				label = "request-a-quote";
+				transitionName = String.valueOf(commerceOrderStatus.getKey());
 			}
 			else if (commerceOrderStatus.getKey() ==
 						CommerceOrderConstants.ORDER_STATUS_PROCESSING) {
@@ -793,7 +808,9 @@ public class CommerceOrderContentDisplayContext {
 				continue;
 			}
 
-			String buttonCssClass = "btn-primary";
+			if (Validator.isNull(buttonCssClass)) {
+				buttonCssClass = "btn-primary";
+			}
 
 			if (commerceOrderStatus.getPriority() ==
 					CommerceOrderConstants.ORDER_STATUS_ANY) {
@@ -807,9 +824,15 @@ public class CommerceOrderContentDisplayContext {
 				"transitionName", transitionName
 			).buildString();
 
+			if (commerceOrderStatus.getKey() ==
+					CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED) {
+
+				transitionOrderPortletURLString = null;
+			}
+
 			headerActionModels.add(
 				new HeaderActionModel(
-					buttonCssClass, null, transitionOrderPortletURLString, null,
+					buttonCssClass, null, transitionOrderPortletURLString, id,
 					label));
 		}
 

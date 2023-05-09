@@ -17,8 +17,6 @@ package com.liferay.object.rest.internal.resource.v1_0.test.util;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -99,9 +97,9 @@ public class UserAccountTestUtil {
 
 		return HTTPTestUtil.invoke(
 			_toBody(userAccount, values),
-			StringBundler.concat(
-				jaxRsApplicationDescriptor.getRESTContextPath(),
-				StringPool.SLASH, userAccountJSONObject.get("id")),
+			String.format(
+				"%s/%d", jaxRsApplicationDescriptor.getRESTContextPath(),
+				userAccountJSONObject.getLong("id")),
 			Http.Method.PUT);
 	}
 

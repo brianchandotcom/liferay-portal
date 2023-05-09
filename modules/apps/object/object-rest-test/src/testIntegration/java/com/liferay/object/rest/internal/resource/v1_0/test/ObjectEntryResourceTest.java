@@ -54,7 +54,6 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -3877,8 +3876,9 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.GET);
 
 		JSONArray keywordsJSONArray = jsonObject.getJSONArray("keywords");
@@ -3894,8 +3894,9 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.GET);
 
 		keywordsJSONArray = jsonObject.getJSONArray("keywords");
@@ -3922,8 +3923,9 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.GET);
 
 		Assert.assertEquals(
@@ -3965,10 +3967,10 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				jsonObject.getString("id"),
-				"?nestedFields=embeddedTaxonomyCategory"),
+			String.format(
+				"%s/%d?nestedFields=embeddedTaxonomyCategory",
+				_objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.GET);
 
 		Assert.assertEquals(
@@ -4027,8 +4029,8 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), "?nestedFields=",
+			String.format(
+				"%s?nestedFields=%s", _objectDefinition1.getRESTContextPath(),
 				_objectRelationship1.getName()),
 			Http.Method.GET);
 
@@ -4099,14 +4101,16 @@ public class ObjectEntryResourceTest {
 			JSONUtil.put(
 				"keywords", JSONUtil.putAll("tag1", "tag2", "tag3")
 			).toString(),
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.PATCH);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.GET);
 
 		JSONArray keywordsJSONArray = jsonObject.getJSONArray("keywords");
@@ -4140,8 +4144,9 @@ public class ObjectEntryResourceTest {
 					taxonomyCategory1.getId(), taxonomyCategory2.getId(),
 					taxonomyCategory3.getId())
 			).toString(),
-			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
-				jsonObject.getString("id"),
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
+				jsonObject.getLong("id")),
 			Http.Method.PATCH);
 
 		Assert.assertEquals(
@@ -4179,9 +4184,10 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			objectEntryJSONObject.toString(),
-			StringBundler.concat(
-				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
-				TestPropsValues.getGroupId(), "/by-external-reference-code/",
+			String.format(
+				"%s/scopes/%d/by-external-reference-code/%s",
+				_siteScopedObjectDefinition1.getRESTContextPath(),
+				TestPropsValues.getGroupId(),
 				_siteScopedObjectEntry1.getExternalReferenceCode()),
 			Http.Method.PATCH);
 
@@ -4290,13 +4296,13 @@ public class ObjectEntryResourceTest {
 			(JSONObject)nestedObjectEntriesJSONArray.get(1),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
 
-		String objectEntryId = jsonObject.getString("id");
+		long objectEntryId = jsonObject.getLong("id");
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=",
+			String.format(
+				"%s/%d?nestedFields=%s",
+				_objectDefinition1.getRESTContextPath(), objectEntryId,
 				_objectRelationship1.getName()),
 			Http.Method.GET);
 
@@ -4344,29 +4350,28 @@ public class ObjectEntryResourceTest {
 
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
+				String.format(
+					"r_%s_%s", _objectRelationship1.getName(),
 					StringUtil.replaceLast(
 						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 
-		String objectEntryId = jsonObject.getString("id");
+		long objectEntryId = jsonObject.getLong("id");
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=",
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.removeLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id"))),
+			String.format(
+				"%s/%d?nestedFields=r_%s_%s",
+				_objectDefinition2.getRESTContextPath(), objectEntryId,
+				_objectRelationship1.getName(),
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")),
 			Http.Method.GET);
 
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
+				String.format(
+					"r_%s_%s", _objectRelationship1.getName(),
 					StringUtil.removeLast(
 						_objectDefinition1.getPKObjectFieldName(), "Id"))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
@@ -4412,13 +4417,13 @@ public class ObjectEntryResourceTest {
 			(JSONObject)nestedObjectEntriesJSONArray.get(1),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_2);
 
-		String objectEntryId = jsonObject.getString("id");
+		long objectEntryId = jsonObject.getLong("id");
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=",
+			String.format(
+				"%s/%d?nestedFields=%s",
+				_objectDefinition1.getRESTContextPath(), objectEntryId,
 				_objectRelationship1.getName()),
 			Http.Method.GET);
 
@@ -4500,11 +4505,11 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
+			String.format(
+				"%s/by-external-reference-code/%s/%s/%s",
 				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				_objectEntry1.getExternalReferenceCode(), StringPool.SLASH,
-				_objectRelationship1.getName(), StringPool.SLASH,
+				_objectEntry1.getExternalReferenceCode(),
+				_objectRelationship1.getName(),
 				_objectEntry2.getExternalReferenceCode()),
 			Http.Method.PUT);
 
@@ -4516,11 +4521,11 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
+			String.format(
+				"%s/by-external-reference-code/%s/%s/%s",
 				_objectDefinition2.getRESTContextPath(),
-				"/by-external-reference-code/",
-				_objectEntry2.getExternalReferenceCode(), StringPool.SLASH,
-				_objectRelationship1.getName(), StringPool.SLASH,
+				_objectEntry2.getExternalReferenceCode(),
+				_objectRelationship1.getName(),
 				_objectEntry1.getExternalReferenceCode()),
 			Http.Method.PUT);
 
@@ -4532,12 +4537,11 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
+			String.format(
+				"%s/by-external-reference-code/%s/%s/%s",
 				_objectDefinition2.getRESTContextPath(),
-				"/by-external-reference-code/",
-				_objectEntry2.getExternalReferenceCode(), StringPool.SLASH,
-				_objectRelationship1.getName(), StringPool.SLASH,
-				RandomTestUtil.randomString()),
+				_objectEntry2.getExternalReferenceCode(),
+				_objectRelationship1.getName(), RandomTestUtil.randomString()),
 			Http.Method.PUT);
 
 		Assert.assertThat(
@@ -4575,8 +4579,8 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			newObjectEntryJSONObject.toString(),
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
 				_objectEntry1.getPrimaryKey()),
 			Http.Method.PUT);
 
@@ -4602,10 +4606,10 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), "?nestedFields=",
-				_objectRelationship1.getName()),
+			String.format(
+				"%s/%d?nestedFields=%s",
+				_objectDefinition1.getRESTContextPath(),
+				_objectEntry1.getPrimaryKey(), _objectRelationship1.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -4642,7 +4646,7 @@ public class ObjectEntryResourceTest {
 			objectEntryJSONObject.toString(),
 			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
 
-		String objectEntryId = jsonObject.getString("id");
+		long objectEntryId = jsonObject.getLong("id");
 
 		JSONObject newObjectEntryJSONObject = JSONUtil.put(
 			_objectRelationship1.getName(),
@@ -4655,8 +4659,8 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			newObjectEntryJSONObject.toString(),
-			StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
+			String.format(
+				"%s/%d", _objectDefinition2.getRESTContextPath(),
 				objectEntryId),
 			Http.Method.PUT);
 
@@ -4670,27 +4674,26 @@ public class ObjectEntryResourceTest {
 
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
+				String.format(
+					"r_%s_%s", _objectRelationship1.getName(),
 					StringUtil.replaceLast(
 						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=",
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
-					StringUtil.removeLast(
-						_objectDefinition1.getPKObjectFieldName(), "Id"))),
+			String.format(
+				"%s/%d?nestedFields=r_%s_%s",
+				_objectDefinition2.getRESTContextPath(), objectEntryId,
+				_objectRelationship1.getName(),
+				StringUtil.removeLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id")),
 			Http.Method.GET);
 
 		_assertObjectEntryField(
 			jsonObject.getJSONObject(
-				StringBundler.concat(
-					"r_", _objectRelationship1.getName(), "_",
+				String.format(
+					"r_%s_%s", _objectRelationship1.getName(),
 					StringUtil.removeLast(
 						_objectDefinition1.getPKObjectFieldName(), "Id"))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
@@ -4726,8 +4729,8 @@ public class ObjectEntryResourceTest {
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			newObjectEntryJSONObject.toString(),
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+			String.format(
+				"%s/%d", _objectDefinition1.getRESTContextPath(),
 				_objectEntry1.getPrimaryKey()),
 			Http.Method.PUT);
 
@@ -4753,10 +4756,10 @@ public class ObjectEntryResourceTest {
 
 		jsonObject = HTTPTestUtil.invoke(
 			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				_objectEntry1.getPrimaryKey(), "?nestedFields=",
-				_objectRelationship1.getName()),
+			String.format(
+				"%s/%d?nestedFields=%s",
+				_objectDefinition1.getRESTContextPath(),
+				_objectEntry1.getPrimaryKey(), _objectRelationship1.getName()),
 			Http.Method.GET);
 
 		nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
@@ -4977,10 +4980,11 @@ public class ObjectEntryResourceTest {
 
 			ObjectEntryResource objectEntryResource =
 				serviceTrackerMap.getService(
-					StringBundler.concat(
+					String.format(
+						"%s#%s",
 						com.liferay.object.rest.dto.v1_0.ObjectEntry.class.
 							getName(),
-						StringPool.POUND, objectDefinition.getOSGiJaxRsName()));
+						objectDefinition.getOSGiJaxRsName()));
 
 			objectEntryResource.setContextAcceptLanguage(
 				new AcceptLanguage() {
@@ -5083,8 +5087,8 @@ public class ObjectEntryResourceTest {
 			String[][] objectFieldNamesAndObjectFieldValues, Type type)
 		throws Exception {
 
-		String endpoint = StringBundler.concat(
-			objectDefinition.getRESTContextPath(), "?nestedFields=",
+		String endpoint = String.format(
+			"%s?nestedFields=%s", objectDefinition.getRESTContextPath(),
 			nestedFieldName);
 
 		if (nestedFieldDepth != null) {

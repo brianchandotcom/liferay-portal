@@ -31,6 +31,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		FrontendDataSetAdmin.deleteAllDatasetViews();
+
 		FrontendDataSetAdmin.deleteAllDatasetEntries();
 
 		if (${testPortalInstance} == "true") {

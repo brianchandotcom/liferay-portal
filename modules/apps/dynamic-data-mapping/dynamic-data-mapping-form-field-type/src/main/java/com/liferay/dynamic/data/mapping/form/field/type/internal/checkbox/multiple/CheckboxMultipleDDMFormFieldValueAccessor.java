@@ -16,10 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.checkbox.multi
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldValueUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -60,15 +57,17 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 	public JSONArray getValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		return _getOptionsValuesJSONArray(ddmFormFieldValue, locale);
+		return DDMFormFieldValueUtil.getOptionsValuesJSONArray(
+			ddmFormFieldValue, locale);
 	}
 
 	@Override
 	public JSONArray getValueForEvaluation(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-		JSONArray optionsValuesJSONArray = _getOptionsValuesJSONArray(
-			ddmFormFieldValue, locale);
+		JSONArray optionsValuesJSONArray =
+			DDMFormFieldValueUtil.getOptionsValuesJSONArray(
+				ddmFormFieldValue, locale);
 
 		if (ddmFormFieldValue.getDDMFormValues() == null) {
 			return optionsValuesJSONArray;
@@ -79,10 +78,11 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 				optionsValuesJSONArray.getString(i));
 
 			if (matcher.matches()) {
-				return createJSONArray(
+				return DDMFormFieldValueUtil.createJSONArray(
 					StringBundler.concat(
 						StringPool.OPEN_BRACKET,
-						getOptionsLabels(ddmFormFieldValue, locale),
+						DDMFormFieldValueUtil.getOptionsLabels(
+							ddmFormFieldValue, locale),
 						StringPool.CLOSE_BRACKET));
 			}
 		}
@@ -131,80 +131,8 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 		}
 	}
 
-	protected JSONArray createJSONArray(String json) {
-		try {
-			return jsonFactory.createJSONArray(json);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to parse JSON array", jsonException);
-			}
-
-			return jsonFactory.createJSONArray();
-		}
-	}
-
-	protected DDMFormFieldOptions getDDMFormFieldOptions(
-		DDMFormFieldValue ddmFormFieldValue) {
-
-		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
-
-		return ddmFormField.getDDMFormFieldOptions();
-	}
-
-	protected String getOptionsLabels(
-		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-
-		JSONArray optionsValuesJSONArray = _getOptionsValuesJSONArray(
-			ddmFormFieldValue, locale);
-
-		if (optionsValuesJSONArray.length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(
-			(optionsValuesJSONArray.length() * 2) - 1);
-
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			ddmFormFieldValue);
-
-		for (int i = 0; i < optionsValuesJSONArray.length(); i++) {
-			String optionValue = optionsValuesJSONArray.getString(i);
-
-			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
-				optionValue);
-
-			if (optionLabel != null) {
-				sb.append(optionLabel.getString(locale));
-			}
-			else {
-				sb.append(optionValue);
-			}
-
-			sb.append(StringPool.COMMA_AND_SPACE);
-		}
-
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
-	}
-
 	@Reference
 	protected JSONFactory jsonFactory;
-
-	private JSONArray _getOptionsValuesJSONArray(
-		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-
-		Value value = ddmFormFieldValue.getValue();
-
-		if (value == null) {
-			return createJSONArray("[]");
-		}
-
-		return createJSONArray(value.getString(locale));
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckboxMultipleDDMFormFieldValueAccessor.class);

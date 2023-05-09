@@ -13,7 +13,7 @@ tasks.eclipse {
 }
 
 copyGradleTestDependencies {
-	from configurations.compile
+	from configurations.compileClasspath
 	into jar.destinationDir
 }
 

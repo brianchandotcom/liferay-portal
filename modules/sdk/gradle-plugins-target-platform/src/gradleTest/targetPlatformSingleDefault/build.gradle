@@ -12,7 +12,7 @@ runGradleTest {
 		Exception expectedException = null
 
 		try {
-			configurations.compile.resolvedConfiguration.resolvedArtifacts.files
+			configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts.files
 		}
 		catch (Exception e) {
 			expectedException = e.cause

@@ -43,8 +43,8 @@ dependencies {
 task release(type: ReplaceRegexTask)
 
 deploy {
-	from configurations.runtime
-	rename new RenameDependencyClosure(project, configurations.runtime.name)
+	from configurations.runtimeOnly
+	rename new RenameDependencyClosure(project, configurations.runtimeOnly.name)
 }
 
 liferay {

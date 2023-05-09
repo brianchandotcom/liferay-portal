@@ -20,6 +20,6 @@ runGradleTest {
 	doLast {
 		Project subproject = project.childProjects["subproject"]
 
-		assert subproject.configurations.compile.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
+		assert subproject.configurations.compileClasspath.singleFile.name.equals("com.liferay.portal.kernel-4.35.2.jar")
 	}
 }

@@ -27,7 +27,7 @@ jarOverwrite {
 
 	from zipTree(
 		{
-			configurations.compile.find {
+			configurations.runtimeClasspath.find {
 				it.name.startsWith "gradle-resources-http-"
 			}
 		})

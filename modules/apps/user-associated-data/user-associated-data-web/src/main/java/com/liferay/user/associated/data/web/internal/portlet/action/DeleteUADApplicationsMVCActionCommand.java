@@ -57,11 +57,9 @@ public class DeleteUADApplicationsMVCActionCommand
 			for (UADDisplay<?> uadDisplay :
 					uadRegistry.getApplicationUADDisplays(applicationKey)) {
 
-				Class<?> typeClass = uadDisplay.getTypeClass();
-
 				UADAnonymizer<Object> uadAnonymizer =
 					(UADAnonymizer<Object>)uadRegistry.getUADAnonymizer(
-						typeClass.getName());
+						uadDisplay.getTypeKey());
 
 				UADDisplay<Object> objectUADDisplay =
 					(UADDisplay<Object>)uadDisplay;

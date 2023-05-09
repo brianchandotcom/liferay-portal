@@ -20,10 +20,7 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -63,12 +60,6 @@ public class ServletContextUtil {
 		return _servletContextUtil._getCommerceOrderValidatorRegistry();
 	}
 
-	public static CommerceProductPriceCalculation
-		getCommercePriceCalculation() {
-
-		return _servletContextUtil._getCommercePriceCalculation();
-	}
-
 	public static CommercePriceFormatter getCommercePriceFormatter() {
 		return _servletContextUtil._getCommercePriceFormatter();
 	}
@@ -81,14 +72,6 @@ public class ServletContextUtil {
 
 	public static ConfigurationProvider getConfigurationProvider() {
 		return _servletContextUtil._getConfigurationProvider();
-	}
-
-	public static CPDefinitionHelper getCPDefinitionHelper() {
-		return _servletContextUtil._getCPDefinitionHelper();
-	}
-
-	public static CPInstanceHelper getCPInstanceHelper() {
-		return _servletContextUtil._getCPInstanceHelper();
 	}
 
 	public static PanelAppRegistry getPanelAppRegistry() {
@@ -140,13 +123,6 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setCommercePriceCalculation(
-		CommerceProductPriceCalculation commerceProductPriceCalculation) {
-
-		_commerceProductPriceCalculation = commerceProductPriceCalculation;
-	}
-
-	@Reference(unbind = "-")
 	protected void setCommercePriceFormatter(
 		CommercePriceFormatter commercePriceFormatter) {
 
@@ -172,18 +148,6 @@ public class ServletContextUtil {
 		ConfigurationProvider configurationProvider) {
 
 		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPDefinitionHelper(
-		CPDefinitionHelper cpDefinitionHelper) {
-
-		_cpDefinitionHelper = cpDefinitionHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPInstanceHelper(CPInstanceHelper cpInstanceHelper) {
-		_cpInstanceHelper = cpInstanceHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -226,10 +190,6 @@ public class ServletContextUtil {
 		return _commerceOrderValidatorRegistry;
 	}
 
-	private CommerceProductPriceCalculation _getCommercePriceCalculation() {
-		return _commerceProductPriceCalculation;
-	}
-
 	private CommercePriceFormatter _getCommercePriceFormatter() {
 		return _commercePriceFormatter;
 	}
@@ -240,14 +200,6 @@ public class ServletContextUtil {
 
 	private ConfigurationProvider _getConfigurationProvider() {
 		return _configurationProvider;
-	}
-
-	private CPDefinitionHelper _getCPDefinitionHelper() {
-		return _cpDefinitionHelper;
-	}
-
-	private CPInstanceHelper _getCPInstanceHelper() {
-		return _cpInstanceHelper;
 	}
 
 	private PanelAppRegistry _getPanelAppRegistry() {
@@ -270,11 +222,8 @@ public class ServletContextUtil {
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 	private CommercePriceFormatter _commercePriceFormatter;
 	private CommercePriceListLocalService _commercePriceListLocalService;
-	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private CommerceWorkflowedModelHelper _commerceWorkflowedModelHelper;
 	private ConfigurationProvider _configurationProvider;
-	private CPDefinitionHelper _cpDefinitionHelper;
-	private CPInstanceHelper _cpInstanceHelper;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 	private ServletContext _servletContext;

@@ -683,6 +683,7 @@
 		<check name="JavaGetFeatureFlagCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that `FeatureFlagManagerUtil.isEnabled` should be used (instead of `PropsUtil.get` in `GetterUtil.getBoolean`)." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaHelperUtilCheck">
 			<category name="Naming Conventions" />

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.db.virtual.instance.migration.internal.util;
 
+import com.liferay.portal.tools.db.virtual.instance.migration.internal.Release;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -31,6 +33,68 @@ import java.util.Set;
  * @author Luis Ortiz
  */
 public class Database {
+
+	public static List<String> getInvalidStateServlets(Connection connection)
+		throws SQLException {
+
+		List<String> releaseEntries = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select servletContextName from Release_ where state_ != 0;");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				releaseEntries.add(resultSet.getString(1));
+			}
+		}
+
+		return releaseEntries;
+	}
+
+	public static List<Release> getReleaseEntries(Connection connection)
+		throws SQLException {
+
+		List<Release> releaseEntries = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select servletContextName, schemaVersion, verified from " +
+					"Release_");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				releaseEntries.add(
+					new Release(
+						resultSet.getString(1),
+						Version.parseVersion(resultSet.getString(2)),
+						resultSet.getBoolean(3)));
+			}
+		}
+
+		return releaseEntries;
+	}
+
+	public static Release getReleaseEntry(
+			Connection connection, String servletContextName)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select servletContextName, schemaVersion, verified from " +
+					"Release_ where servletContextName = ?")) {
+
+			preparedStatement.setString(1, servletContextName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return new Release(
+						resultSet.getString(1),
+						Version.parseVersion(resultSet.getString(2)),
+						resultSet.getBoolean(3));
+				}
+			}
+		}
+
+		return null;
+	}
 
 	public static List<String> getTables(Connection connection)
 		throws SQLException {
@@ -69,6 +133,24 @@ public class Database {
 
 			return null;
 		}
+	}
+
+	public static boolean hasWebId(Connection connection, String webId)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company where webId = ?")) {
+
+			preparedStatement.setString(1, webId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isDefaultPartition(Connection connection)

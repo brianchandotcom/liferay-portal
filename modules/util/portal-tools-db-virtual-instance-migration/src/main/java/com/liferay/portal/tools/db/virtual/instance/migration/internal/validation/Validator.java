@@ -14,12 +14,11 @@
 
 package com.liferay.portal.tools.db.virtual.instance.migration.internal.validation;
 
+import com.liferay.portal.tools.db.virtual.instance.migration.internal.Release;
 import com.liferay.portal.tools.db.virtual.instance.migration.internal.util.Database;
 import com.liferay.portal.tools.db.virtual.instance.migration.internal.util.Version;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
@@ -102,21 +101,12 @@ public class Validator {
 
 		String sourceWebId = Database.getWebId(sourceConnection);
 
-		try (PreparedStatement preparedStatement =
-				destinationConnection.prepareStatement(
-					"select companyId from Company where webId = ?")) {
+		if (Database.hasWebId(destinationConnection, sourceWebId)) {
+			ValidatorRecorder.registerWarning(
+				"webId " + sourceWebId +
+					" already exists in destination database");
 
-			preparedStatement.setString(1, sourceWebId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					ValidatorRecorder.registerWarning(
-						"webId " + sourceWebId +
-							" already exists in destination database");
-
-					return false;
-				}
-			}
+			return false;
 		}
 
 		return true;
@@ -128,101 +118,79 @@ public class Validator {
 
 		boolean valid = true;
 
-		try (PreparedStatement preparedStatement1 =
-				sourceConnection.prepareStatement(
-					"select servletContextName, schemaVersion, verified from " +
-						" Release_");
-			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+		List<Release> sourceReleaseEntries = Database.getReleaseEntries(
+			sourceConnection);
 
-			List<String> missingModules = new ArrayList<>();
-			List<String> missingServiceModules = new ArrayList<>();
-			List<String> lowerVersionModules = new ArrayList<>();
-			List<String> higherVersionModules = new ArrayList<>();
-			List<String> sourceUnverifiedModules = new ArrayList<>();
-			List<String> destinationUnverifiedModules = new ArrayList<>();
+		List<String> missingModules = new ArrayList<>();
+		List<String> missingServiceModules = new ArrayList<>();
+		List<String> lowerVersionModules = new ArrayList<>();
+		List<String> higherVersionModules = new ArrayList<>();
+		List<String> sourceUnverifiedModules = new ArrayList<>();
+		List<String> destinationUnverifiedModules = new ArrayList<>();
 
-			while (resultSet1.next()) {
-				String sourceServletContextName = resultSet1.getString(1);
-				Version sourceVersion = Version.parseVersion(
-					resultSet1.getString(2));
-				boolean sourceVerified = resultSet1.getBoolean(3);
+		for (Release sourceRelease : sourceReleaseEntries) {
+			String sourceServletContextName =
+				sourceRelease.getServletContextName();
 
-				try (PreparedStatement preparedStatement2 =
-						destinationConnection.prepareStatement(
-							"select servletContextName, schemaVersion, " +
-								"verified from Release_ where " +
-									"servletContextName = ?")) {
+			Release destinationRelease = Database.getReleaseEntry(
+				destinationConnection, sourceServletContextName);
 
-					preparedStatement2.setString(1, sourceServletContextName);
-
-					try (ResultSet resultSet2 =
-							preparedStatement2.executeQuery()) {
-
-						if (!resultSet2.next()) {
-							if (sourceServletContextName.endsWith(".service")) {
-								missingServiceModules.add(
-									sourceServletContextName);
-							}
-							else {
-								missingModules.add(sourceServletContextName);
-							}
-
-							continue;
-						}
-
-						Version destinationVersion = Version.parseVersion(
-							resultSet2.getString(2));
-						boolean destinationVerified = resultSet2.getBoolean(3);
-
-						if (sourceVersion.compareTo(destinationVersion) < 0) {
-							lowerVersionModules.add(sourceServletContextName);
-						}
-						else if (sourceVersion.compareTo(destinationVersion) >
-									0) {
-
-							higherVersionModules.add(sourceServletContextName);
-						}
-
-						if (sourceVerified && !destinationVerified) {
-							destinationUnverifiedModules.add(
-								sourceServletContextName);
-						}
-						else if (!sourceVerified && destinationVerified) {
-							sourceUnverifiedModules.add(
-								sourceServletContextName);
-						}
-					}
+			if (destinationRelease == null) {
+				if (sourceServletContextName.endsWith(".service")) {
+					missingServiceModules.add(sourceServletContextName);
 				}
+				else {
+					missingModules.add(sourceServletContextName);
+				}
+
+				continue;
 			}
 
-			ValidatorRecorder.registerErrors(
-				missingServiceModules,
-				" will not be available in the destination");
-			ValidatorRecorder.registerErrors(
-				lowerVersionModules,
-				" needs to be upgraded in source database before the " +
-					"migration");
-			ValidatorRecorder.registerErrors(
-				higherVersionModules,
-				" is in a lower version in destination database");
-			ValidatorRecorder.registerErrors(
-				sourceUnverifiedModules,
-				" needs to be verified in the source before the migration");
-			ValidatorRecorder.registerErrors(
-				destinationUnverifiedModules,
-				" needs to be verified in the destination before the " +
-					"migration");
-			ValidatorRecorder.registerWarnings(
-				missingModules, " will not be available in the destination");
+			Version sourceVersion = sourceRelease.getSchemaVersion();
+			Version destinationVersion = destinationRelease.getSchemaVersion();
 
-			if (!missingModules.isEmpty() || !missingServiceModules.isEmpty() ||
-				!lowerVersionModules.isEmpty() ||
-				!higherVersionModules.isEmpty() ||
-				!sourceUnverifiedModules.isEmpty() ||
-				!destinationUnverifiedModules.isEmpty()) {
-
-				valid = false;
+			if (sourceVersion.compareTo(destinationVersion) < 0) {
+				lowerVersionModules.add(sourceServletContextName);
 			}
+			else if (sourceVersion.compareTo(destinationVersion) > 0) {
+				higherVersionModules.add(sourceServletContextName);
+			}
+
+			if (sourceRelease.getVerified() &&
+				!destinationRelease.getVerified()) {
+
+				destinationUnverifiedModules.add(sourceServletContextName);
+			}
+			else if (!sourceRelease.getVerified() &&
+					 destinationRelease.getVerified()) {
+
+				sourceUnverifiedModules.add(sourceServletContextName);
+			}
+		}
+
+		ValidatorRecorder.registerErrors(
+			missingServiceModules, " will not be available in the destination");
+		ValidatorRecorder.registerErrors(
+			lowerVersionModules,
+			" needs to be upgraded in source database before the migration");
+		ValidatorRecorder.registerErrors(
+			higherVersionModules,
+			" is in a lower version in destination database");
+		ValidatorRecorder.registerErrors(
+			sourceUnverifiedModules,
+			" needs to be verified in the source before the migration");
+		ValidatorRecorder.registerErrors(
+			destinationUnverifiedModules,
+			" needs to be verified in the destination before the migration");
+		ValidatorRecorder.registerWarnings(
+			missingModules, " will not be available in the destination");
+
+		if (!missingModules.isEmpty() || !missingServiceModules.isEmpty() ||
+			!lowerVersionModules.isEmpty() || !higherVersionModules.isEmpty() ||
+			!sourceUnverifiedModules.isEmpty() ||
+			!destinationUnverifiedModules.isEmpty()) {
+
+			valid = false;
 		}
 
 		return valid;
@@ -231,13 +199,11 @@ public class Validator {
 	private static boolean _validateReleaseTableState(Connection connection)
 		throws SQLException {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select servletContextName from Release_ where state_ != 0;");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		List<String> releaseEntries = Database.getInvalidStateServlets(
+			connection);
 
-			if (resultSet.next()) {
-				return false;
-			}
+		if (!releaseEntries.isEmpty()) {
+			return false;
 		}
 
 		return true;

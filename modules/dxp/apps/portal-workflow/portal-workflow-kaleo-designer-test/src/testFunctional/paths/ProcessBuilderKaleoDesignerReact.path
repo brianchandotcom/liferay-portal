@@ -461,7 +461,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_TYPE_DROPDOWN_BY_POSITION</td>
-	<td>//div[contains(@class,'panel-group panel-group-flush') and contains(@role,'tablist')][${key_sectionOption}]//input[contains(@value,'Select')]</td>
+	<td>//div[contains(@class,'panel-group') and contains(@role,'tablist')][${key_sectionOption}]//input[contains(@class,'inset')]</td>
 	<td></td>
 </tr>
 <tr>

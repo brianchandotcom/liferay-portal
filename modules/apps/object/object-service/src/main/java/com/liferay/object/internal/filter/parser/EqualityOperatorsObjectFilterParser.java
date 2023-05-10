@@ -16,8 +16,8 @@ package com.liferay.object.internal.filter.parser;
 
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.model.ObjectFilter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Map;
@@ -53,7 +53,7 @@ public class EqualityOperatorsObjectFilterParser implements ObjectFilterParser {
 
 		return StringBundler.concat(
 			"( ", objectFilter.getFilterBy(), StringPool.SPACE, operator,
-			StringPool.SPACE, String.valueOf(map.get(operator)), " )");
+			StringPool.SPACE, map.get(operator), " )");
 	}
 
 }

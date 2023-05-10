@@ -16,7 +16,7 @@ package com.liferay.object.internal.filter.parser;
 
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.model.ObjectFilter;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Map;

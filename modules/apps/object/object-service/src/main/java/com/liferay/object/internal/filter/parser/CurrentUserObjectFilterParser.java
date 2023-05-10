@@ -16,7 +16,7 @@ package com.liferay.object.internal.filter.parser;
 
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.model.ObjectFilter;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Map;
@@ -38,8 +38,8 @@ public class CurrentUserObjectFilterParser implements ObjectFilterParser {
 			Map.class, objectFilter.getJSON());
 
 		return StringBundler.concat(
-			"(", objectFilter.getFilterBy(), " eq '",
-			String.valueOf(map.get("currentUserId")), "')");
+			"(", objectFilter.getFilterBy(), " eq '", map.get("currentUserId"),
+			"')");
 	}
 
 }

@@ -36,6 +36,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -230,7 +230,7 @@ public class PicklistObjectFieldBusinessType
 					StringBundler.concat(
 						"Default value \"", defaultValue,
 						"\" is not a list entry in list definition ",
-						String.valueOf(objectField.getListTypeDefinitionId())));
+						objectField.getListTypeDefinitionId()));
 			}
 
 			throw new ObjectFieldSettingValueException.InvalidValue(

@@ -18,6 +18,7 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -86,8 +86,8 @@ public class ExportListTypeDefinitionMVCResourceCommand
 			resourceRequest, resourceResponse,
 			StringBundler.concat(
 				"ListType_", listTypeDefinition.getName(), StringPool.UNDERLINE,
-				String.valueOf(listTypeDefinitionId), StringPool.UNDERLINE,
-				Time.getTimestamp(), ".json"),
+				listTypeDefinitionId, StringPool.UNDERLINE, Time.getTimestamp(),
+				".json"),
 			listTypeDefinitionJSON.getBytes(), ContentTypes.APPLICATION_JSON);
 	}
 

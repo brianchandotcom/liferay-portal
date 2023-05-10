@@ -14,8 +14,8 @@
 
 package com.liferay.object.internal.upgrade.v4_1_1;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Julián Vela

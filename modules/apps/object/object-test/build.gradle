@@ -1,4 +1,6 @@
 dependencies {
+	testCompile project(":core:petra:petra-string")
+
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "org.apache.commons", name: "commons-lang3", version: "3.11"

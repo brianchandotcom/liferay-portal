@@ -16,6 +16,7 @@ package com.liferay.object.internal.upgrade.v3_22_0;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntryTable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.sql.PreparedStatement;

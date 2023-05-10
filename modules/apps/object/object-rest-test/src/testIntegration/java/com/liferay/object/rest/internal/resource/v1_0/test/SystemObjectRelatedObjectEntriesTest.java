@@ -498,7 +498,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		return HTTPTestUtil.invoke(
 			null,
-			com.liferay.portal.kernel.util.StringBundler.concat(
+			StringBundler.concat(
 				_objectDefinition.getRESTContextPath(),
 				"/by-external-reference-code/", externalReferenceCode),
 			Http.Method.GET);

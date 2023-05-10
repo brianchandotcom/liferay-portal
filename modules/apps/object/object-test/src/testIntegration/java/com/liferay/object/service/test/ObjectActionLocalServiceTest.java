@@ -50,6 +50,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -82,7 +83,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -388,9 +388,8 @@ public class ObjectActionLocalServiceTest {
 					principalException.getMessage(),
 					CoreMatchers.containsString(
 						StringBundler.concat(
-							"User ", String.valueOf(_user.getUserId()),
-							" must have ", objectAction4.getName(),
-							" permission for")));
+							"User ", _user.getUserId(), " must have ",
+							objectAction4.getName(), " permission for")));
 			}
 
 			_addModelResourcePermissions(
@@ -434,9 +433,8 @@ public class ObjectActionLocalServiceTest {
 					principalException.getMessage(),
 					CoreMatchers.containsString(
 						StringBundler.concat(
-							"User ", String.valueOf(_user.getUserId()),
-							" must have ", objectAction5.getName(),
-							" permission for")));
+							"User ", _user.getUserId(), " must have ",
+							objectAction5.getName(), " permission for")));
 			}
 
 			_addModelResourcePermissions(

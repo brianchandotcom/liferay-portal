@@ -133,14 +133,7 @@ public class JournalContentPortletToolbarContributor
 			"refererPlid", themeDisplay.getPlid()
 		).buildPortletURL();
 
-		List<DDMStructure> ddmStructures =
-			_journalFolderService.getDDMStructures(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0,
-				_DEFAULT_MAX_DISPLAY_ITEMS,
-				new StructureCreateDateComparator());
+		List<DDMStructure> ddmStructures = null;
 
 		JournalContentPortletInstanceConfiguration
 			journalContentPortletInstanceConfiguration =
@@ -149,6 +142,12 @@ public class JournalContentPortletToolbarContributor
 
 		if (journalContentPortletInstanceConfiguration.
 				sortStructuresByByName()) {
+
+			ddmStructures = _journalFolderService.getDDMStructures(
+				_portal.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
 			Locale locale = themeDisplay.getLocale();
 
@@ -159,6 +158,18 @@ public class JournalContentPortletToolbarContributor
 
 					return name1.compareTo(name2);
 				});
+
+			ddmStructures = ddmStructures.subList(
+				0, _DEFAULT_MAX_DISPLAY_ITEMS);
+		}
+		else {
+			ddmStructures = _journalFolderService.getDDMStructures(
+				_portal.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0,
+				_DEFAULT_MAX_DISPLAY_ITEMS,
+				new StructureCreateDateComparator());
 		}
 
 		for (DDMStructure ddmStructure : ddmStructures) {

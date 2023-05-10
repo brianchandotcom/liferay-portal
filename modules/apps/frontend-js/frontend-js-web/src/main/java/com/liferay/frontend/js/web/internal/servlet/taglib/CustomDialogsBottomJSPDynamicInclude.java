@@ -16,6 +16,7 @@ package com.liferay.frontend.js.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.web.internal.configuration.CustomDialogsSettingsConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -71,9 +71,7 @@ public class CustomDialogsBottomJSPDynamicInclude implements DynamicInclude {
 				new JSFragment(
 					StringBundler.concat(
 						"Liferay.CustomDialogs = {enabled: ",
-						String.valueOf(
-							customDialogsSettingsConfiguration.enabled()),
-						"};")));
+						customDialogsSettingsConfiguration.enabled(), "};")));
 
 			scriptData.writeTo(httpServletResponse.getWriter());
 		}

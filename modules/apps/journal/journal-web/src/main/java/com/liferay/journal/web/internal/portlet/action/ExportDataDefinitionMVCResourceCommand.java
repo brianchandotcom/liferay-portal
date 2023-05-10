@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -83,10 +83,9 @@ public class ExportDataDefinitionMVCResourceCommand
 			resourceRequest, resourceResponse,
 			StringBundler.concat(
 				"Structure_",
-				String.valueOf(
-					nameMap.get(dataDefinition.getDefaultLanguageId())),
-				StringPool.UNDERLINE, String.valueOf(dataDefinitionId),
-				StringPool.UNDERLINE, Time.getTimestamp(), ".json"),
+				nameMap.get(dataDefinition.getDefaultLanguageId()),
+				StringPool.UNDERLINE, dataDefinitionId, StringPool.UNDERLINE,
+				Time.getTimestamp(), ".json"),
 			dataDefinitionString.getBytes(), ContentTypes.APPLICATION_JSON);
 	}
 

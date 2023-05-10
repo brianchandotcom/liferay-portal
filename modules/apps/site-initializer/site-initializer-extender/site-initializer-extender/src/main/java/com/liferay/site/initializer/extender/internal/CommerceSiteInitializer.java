@@ -190,7 +190,7 @@ public class CommerceSiteInitializer {
 
 			for (Map.Entry<String, Object> entry2 : map2.entrySet()) {
 				modifiableSettings.setValue(
-					entry2.getKey(), (String)entry2.getValue());
+					entry2.getKey(), String.valueOf(entry2.getValue()));
 			}
 
 			modifiableSettings.store();

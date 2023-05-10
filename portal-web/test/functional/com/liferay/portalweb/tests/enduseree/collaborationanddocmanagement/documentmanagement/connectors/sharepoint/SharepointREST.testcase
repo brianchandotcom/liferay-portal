@@ -725,42 +725,6 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 	}
 
-	@priority = 4
-	@refactorneeded
-	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
-		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.docx");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_3.docx",
-			dmDocumentTitle = "Document_3.docx");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Document_3.docx");
-
-		DMDocument.editCmd(dmDocumentTitleEdit = "Document_3");
-
-		Click(locator1 = "Button#PUBLISH");
-
-		Alert.viewRequestFailedToComplete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR",
-			value1 = "The source file does not have the same extension as the original file.");
-
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.docx");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.docx");
-	}
-
 	@description = "This test ensures that repositories can be added both on site admin and on a content page."
 	@priority = 4
 	@refactorneeded

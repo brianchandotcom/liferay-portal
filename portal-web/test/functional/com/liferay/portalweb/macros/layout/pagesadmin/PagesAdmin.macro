@@ -1132,6 +1132,30 @@ definition {
 			value1 = "");
 	}
 
+	@summary = "Use this to open the general Site Pages configuration screen directly without navigating through the UI"
+	macro openConfigureSitePages {
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
+			var siteURLKey = "guest";
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONLayoutSetter.setGroupId(
+			groupName = ${groupName},
+			site = ${site});
+
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout_set&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_groupId=${groupId}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&p_r_p_selPlid=0");
+	}
+
 	@summary = "Open the ellipsis menu of a page. Parent pages hierarchy is required to navigate to child pages."
 	macro openPageEllipsisMenu {
 		WaitForPageLoad();

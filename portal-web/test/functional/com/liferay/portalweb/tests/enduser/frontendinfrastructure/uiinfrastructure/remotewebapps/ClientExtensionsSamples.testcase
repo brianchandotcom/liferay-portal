@@ -164,4 +164,36 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Global JS"
+	@priority = 4
+	test LiferaySampleGlobalJSSmoke {
+		property workspaces.client.extension.names = "liferay-sample-global-js";
+
+		task ("Go to the Site Pages configuration screen in Page Admin") {
+			PagesAdmin.openConfigureSitePages();
+		}
+
+		task ("Add Liferay Sample Global JS as a JavaScript Client Extension for all pages") {
+			Navigator.gotoNavTab(navTab = "Design");
+
+			Navigator.gotoNavTab(navTab = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "Liferay Sample Global JS",
+				insertion = "In Page Head");
+
+			PortletEntry.save();
+		}
+
+		task ("Navigate to the Home page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openNoError(locator1 = "${baseURL}/web/guest/home");
+		}
+
+		task ("Assert an alert pops up that reads 'Sample Global JS deployed.'") {
+			AssertConfirm(value1 = "Sample Global JS deployed.");
+		}
+	}
+
 }

@@ -142,9 +142,13 @@ definition {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
 
-		if (IsElementNotPresent(locator1 = "ProductMenu#STAGING_SELECTED")) {
-			ProductMenuHelper.openProductMenu();
+		ProductMenuHelper.openProductMenu();
 
+		if (IsTextNotEqual(key_siteName = "", locator1 = "ProductMenu#SITE_NAME", value1 = ${site})) {
+			ApplicationsMenu.gotoSite(site = ${site});
+		}
+
+		if (IsElementNotPresent(locator1 = "ProductMenu#STAGING_SELECTED")) {
 			AssertClick(
 				locator1 = "ProductMenu#STAGING_LINK",
 				value1 = "Staging");

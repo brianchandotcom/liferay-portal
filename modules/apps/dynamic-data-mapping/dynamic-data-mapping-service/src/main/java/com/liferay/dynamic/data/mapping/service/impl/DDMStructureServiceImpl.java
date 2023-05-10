@@ -401,6 +401,33 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			getUserId(), structureId, version, serviceContext);
 	}
 
+	@Override
+	public List<DDMStructure> search(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status, int start, int end,
+			OrderByComparator<DDMStructure> orderByComparator)
+		throws PortalException {
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildStructureSearchContext(
+					companyId, groupIds, getUserId(), classNameId, classPK,
+					keywords, keywords, StringPool.BLANK, null, status, start,
+					end, orderByComparator);
+
+			return _ddmSearchHelper.doSearch(
+				searchContext, DDMStructure.class,
+				ddmStructureLocalService::fetchStructure);
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and

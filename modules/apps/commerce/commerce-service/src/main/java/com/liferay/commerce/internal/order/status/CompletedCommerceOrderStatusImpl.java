@@ -71,6 +71,13 @@ public class CompletedCommerceOrderStatusImpl implements CommerceOrderStatus {
 	}
 
 	@Override
+	public boolean isEnabled(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return !commerceOrder.isQuote();
+	}
+
+	@Override
 	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 

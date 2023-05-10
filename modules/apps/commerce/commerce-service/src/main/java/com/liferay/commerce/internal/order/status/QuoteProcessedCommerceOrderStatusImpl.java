@@ -14,19 +14,13 @@
 
 package com.liferay.commerce.internal.order.status;
 
-import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
-import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 
 import java.util.Locale;
 
@@ -82,17 +76,21 @@ public class QuoteProcessedCommerceOrderStatusImpl
 	}
 
 	@Override
-	public boolean isEnabled(CommerceOrder commerceOrder)
-		throws PortalException {
+	public boolean isComplete(CommerceOrder commerceOrder) {
+		if (commerceOrder.getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED) {
 
-		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
-			_getCommerceOrderFieldsConfiguration(commerceOrder);
-
-		if (commerceOrderFieldsConfiguration.requestQuoteEnabled()) {
 			return true;
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isEnabled(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return commerceOrder.isQuote();
 	}
 
 	@Override
@@ -110,33 +108,6 @@ public class QuoteProcessedCommerceOrderStatusImpl
 		return false;
 	}
 
-	private CommerceOrderFieldsConfiguration
-			_getCommerceOrderFieldsConfiguration(CommerceOrder commerceOrder)
-		throws PortalException {
-
-		if (_commerceOrderFieldsConfiguration != null) {
-			return _commerceOrderFieldsConfiguration;
-		}
-
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
-
-		_commerceOrderFieldsConfiguration =
-			_configurationProvider.getConfiguration(
-				CommerceOrderFieldsConfiguration.class,
-				new GroupServiceSettingsLocator(
-					commerceChannel.getGroupId(),
-					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
-
-		return _commerceOrderFieldsConfiguration;
-	}
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;
-
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
@@ -145,9 +116,6 @@ public class QuoteProcessedCommerceOrderStatusImpl
 
 	@Reference
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

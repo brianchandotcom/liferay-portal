@@ -16,7 +16,6 @@ package com.liferay.content.dashboard.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
-import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminConfigurationDisplayContext;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -49,8 +48,7 @@ public class EditContentDashboardConfigurationMVCRenderCommand
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			ContentDashboardWebKeys.
-				CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT,
+			ContentDashboardAdminConfigurationDisplayContext.class.getName(),
 			new ContentDashboardAdminConfigurationDisplayContext(
 				_assetVocabularyLocalService,
 				ContentDashboardUtil.getAssetVocabularyIds(renderRequest),

@@ -140,12 +140,15 @@ public class JournalContentPortletToolbarContributor
 				portletDisplay.getPortletInstanceConfiguration(
 					JournalContentPortletInstanceConfiguration.class);
 
+		long[] currentAndAncestorSiteGroupIds =
+			_portal.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId());
+
 		if (journalContentPortletInstanceConfiguration.
 				sortStructuresByByName()) {
 
 			ddmStructures = _journalFolderService.getDDMStructures(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
+				currentAndAncestorSiteGroupIds,
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
@@ -164,8 +167,7 @@ public class JournalContentPortletToolbarContributor
 		}
 		else {
 			ddmStructures = _journalFolderService.getDDMStructures(
-				_portal.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
+				currentAndAncestorSiteGroupIds,
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0,
 				_DEFAULT_MAX_DISPLAY_ITEMS,
@@ -203,8 +205,7 @@ public class JournalContentPortletToolbarContributor
 		}
 
 		int count = _journalFolderService.getDDMStructuresCount(
-			_portal.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getScopeGroupId()),
+			currentAndAncestorSiteGroupIds,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 

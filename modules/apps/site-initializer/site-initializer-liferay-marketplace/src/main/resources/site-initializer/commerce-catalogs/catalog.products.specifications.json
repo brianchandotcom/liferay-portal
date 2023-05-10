@@ -1,0 +1,149 @@
+[
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-TYPE",
+		"description": "",
+		"facetable": false,
+		"key": "type",
+		"title": "Type"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-TRIAL-LENGTH",
+		"description": "Length of the trial",
+		"facetable": false,
+		"key": "trial-length",
+		"title": "Trial Length"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-LICENSE-TERM",
+		"description": "Length of the trial",
+		"facetable": false,
+		"key": "license-term",
+		"title": "License Term"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-DEVELOPER-NAME",
+		"description": "Developer Name",
+		"facetable": false,
+		"key": "developer-name",
+		"title": "Developer Name"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-LICENSE-TYPE",
+		"description": "License Type",
+		"facetable": false,
+		"key": "license-type",
+		"title": "License Type"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-APP-API-REFERENCE-URL",
+		"description": "URL for the API Documentation",
+		"facetable": false,
+		"key": "app-api-reference-url",
+		"title": "App API Reference URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-LATEST-VERSION",
+		"description": "Latest version for the app or solution.",
+		"facetable": false,
+		"key": "latest-version",
+		"title": "Latest Version"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-APP-USAGE-TERMS-URL",
+		"description": "",
+		"facetable": false,
+		"key": "appusagetermsurl",
+		"title": "App Usage Terms URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-SOURCE-CODE-URL",
+		"description": "URL of source code",
+		"facetable": false,
+		"key": "source-code-url",
+		"title": "Source Code URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-PUBLISHER-NAME",
+		"description": "Name of the primary app publisher",
+		"facetable": false,
+		"key": "publisher-name",
+		"title": "Publisher Name"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-PAST-VERSIONS-WORK-WITH",
+		"description": "Past Versions this product has worked with",
+		"facetable": false,
+		"key": "past-versions-work-with",
+		"title": "Past Versions Work With"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-CURRENT-REQUIREMENTS",
+		"description": "Latest Liferay Version Supported",
+		"facetable": false,
+		"key": "current-requirements",
+		"title": "Current Requirements"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-LIFETIME-LICENSE",
+		"description": "Lifetime license offered?",
+		"facetable": false,
+		"key": "lifetime-license",
+		"title": "Lifetime License"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-PRODUCT-DOWNLOADS",
+		"description": "Total number of downloads for this product",
+		"facetable": false,
+		"key": "product-downloads",
+		"title": "Product Downloads"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-PRICE-MODEL",
+		"description": "Whether the app is Free, Paid or Bundled",
+		"facetable": true,
+		"key": "price-model",
+		"title": "Price Model"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-APP-DOCUMENTATION-URL",
+		"description": "",
+		"facetable": false,
+		"key": "appdocumentationurl",
+		"title": "App Documentation URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-APP-INSTALLATION-GUIDE-URL",
+		"description": "",
+		"facetable": false,
+		"key": "appinstallationguideurl",
+		"title": "App Installation Guide URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-PUBLISHER-WEB-SITE-URL",
+		"description": "",
+		"facetable": false,
+		"key": "publisherwebsiteurl",
+		"title": "Publisher Web site URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-SUPPORT-URL",
+		"description": "",
+		"facetable": false,
+		"key": "supporturl",
+		"title": "Support URL"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-PRODUCT-NOTES",
+		"description": "General notes about the app or solution.",
+		"facetable": false,
+		"key": "product-notes",
+		"title": "Product Notes"
+	},
+	{
+		"cpDefinitionExternalReferenceCode": "MKT-LICENCE-DURATION",
+		"description": "Perpetual or non-perpetual license",
+		"facetable": true,
+		"key": "licence-duration",
+		"title": "Licence Duration"
+	}
+]

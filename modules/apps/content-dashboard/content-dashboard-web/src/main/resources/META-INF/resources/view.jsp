@@ -105,7 +105,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 
 			<clay:management-toolbar
 				cssClass="content-dashboard-management-toolbar"
-				managementToolbarDisplayContext="<%= (ContentDashboardAdminManagementToolbarDisplayContext)request.getAttribute(ContentDashboardWebKeys.CONTENT_DASHBOARD_ADMIN_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT) %>"
+				managementToolbarDisplayContext="<%= (ContentDashboardAdminManagementToolbarDisplayContext)request.getAttribute(ContentDashboardAdminManagementToolbarDisplayContext.class.getName()) %>"
 				propsTransformer="js/ContentDashboardManagementToolbarPropsTransformer"
 			/>
 

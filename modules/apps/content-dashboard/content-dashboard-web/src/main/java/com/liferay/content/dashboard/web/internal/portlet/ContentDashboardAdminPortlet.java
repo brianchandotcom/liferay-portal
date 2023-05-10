@@ -176,8 +176,8 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					_portal.getLocale(renderRequest), _userLocalService);
 
 		renderRequest.setAttribute(
-			ContentDashboardWebKeys.
-				CONTENT_DASHBOARD_ADMIN_MANAGEMENT_TOOLBAR_DISPLAY_CONTEXT,
+			ContentDashboardAdminManagementToolbarDisplayContext.class.
+				getName(),
 			contentDashboardAdminManagementToolbarDisplayContext);
 
 		renderRequest.setAttribute(

@@ -105,5 +105,6 @@ const RoutineForm = () => {
 };
 
 export default withPagePermission(RoutineForm, {
+	createPath: 'project/:projectId/routines/create',
 	restImpl: testrayRoutineImpl,
 });

@@ -277,5 +277,6 @@ const SuiteForm = () => {
 };
 
 export default withPagePermission(SuiteForm, {
+	createPath: 'project/:projectId/suites/create',
 	restImpl: testraySuiteImpl,
 });

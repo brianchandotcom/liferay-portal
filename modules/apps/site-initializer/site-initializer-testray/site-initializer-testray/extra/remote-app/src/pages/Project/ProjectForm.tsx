@@ -102,5 +102,6 @@ const ProjectForm = () => {
 };
 
 export default withPagePermission(ProjectForm, {
+	createPath: '/project/create',
 	restImpl: testrayProjectImpl,
 });

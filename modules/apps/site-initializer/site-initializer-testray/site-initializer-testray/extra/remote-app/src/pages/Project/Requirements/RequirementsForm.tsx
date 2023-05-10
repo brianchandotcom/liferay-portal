@@ -204,5 +204,6 @@ const RequirementsForm = () => {
 };
 
 export default withPagePermission(RequirementsForm, {
+	createPath: '/project/:projectId/requirements/create',
 	restImpl: testrayRequirementsImpl,
 });

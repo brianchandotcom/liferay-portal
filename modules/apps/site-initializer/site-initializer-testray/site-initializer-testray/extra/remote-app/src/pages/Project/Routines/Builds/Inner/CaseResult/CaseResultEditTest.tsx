@@ -121,8 +121,7 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -193,5 +192,6 @@ const CaseResultEditTest = () => {
 };
 
 export default withPagePermission(CaseResultEditTest, {
+	createPath: '',
 	restImpl: testrayCaseResultImpl,
 });

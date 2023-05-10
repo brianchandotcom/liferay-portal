@@ -310,5 +310,7 @@ const TestflowForm = () => {
 };
 
 export default withPagePermission(TestflowForm, {
+	createPath:
+		'/project/:projectId/routines/:routinesId/build/:buildId/testflow/create',
 	restImpl: testrayTaskImpl,
 });

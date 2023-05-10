@@ -288,5 +288,6 @@ const BuildForm = () => {
 };
 
 export default withPagePermission(BuildForm, {
+	createPath: 'project/:projectId/routines/:routineId/create',
 	restImpl: testrayBuildImpl,
 });

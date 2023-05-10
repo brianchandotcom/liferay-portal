@@ -282,5 +282,6 @@ const CaseForm = () => {
 };
 
 export default withPagePermission(CaseForm, {
+	createPath: '/project/:projectId/cases/create',
 	restImpl: testrayCaseImpl,
 });

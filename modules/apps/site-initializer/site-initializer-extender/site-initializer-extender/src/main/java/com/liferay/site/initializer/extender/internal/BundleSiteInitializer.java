@@ -4419,7 +4419,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		else if (jsonObject.getInt("dataType") ==
 					ExpandoColumnConstants.NUMBER) {
 
-			return jsonObject.getInt("defaultValue");
+			return jsonObject.getDouble("defaultValue");
 		}
 		else if (jsonObject.getInt("dataType") ==
 					ExpandoColumnConstants.NUMBER_ARRAY) {

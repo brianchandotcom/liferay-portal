@@ -9,7 +9,9 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
 			value1 = ${searchTerm});
 
-		Click(locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_ICON");
+		Click(
+			ariaLabel = "Search",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
 	macro updateDueDateAtMyWorkflowTasks {

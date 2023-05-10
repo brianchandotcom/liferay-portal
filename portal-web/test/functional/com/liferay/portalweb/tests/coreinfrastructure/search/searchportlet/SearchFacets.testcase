@@ -20,6 +20,153 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-172127"
+	@priority = 3
+	test AggregateCustomObjectFieldsViaCustomFacet {
+		task ("Create a site scoped object and add the following fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				panelCategoryKey = "site_administration.content",
+				pluralLabelName = "Custom Objects",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Title",
+				fieldName = "title",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date",
+				fieldName = "date",
+				fieldType = "Date",
+				indexedAsKeyword = "false",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Site ID",
+				fieldName = "siteID",
+				fieldType = "Integer",
+				indexedAsKeyword = "false",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			JSONObject.updateObject(
+				configKey = "titleObjectFieldName",
+				configValue = "title",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Create three object entries") {
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "title/Apple Fruit,siteID/1,date/2023-04-01",
+				objectName = "CustomObject");
+
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "title/Banana Fruit,siteID/1,date/2023-04-01",
+				objectName = "CustomObject");
+
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "title/Coconut Fruit,siteID/2,date/2023-04-01",
+				objectName = "CustomObject");
+		}
+
+		task ("Add custom facet to the search page and perform a search") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Facet");
+
+			Search.openSearchPage(searchTerm = "fruit");
+		}
+
+		task ("Configure the Custom Facet widget to aggregate by the 'title' custom Object field") {
+			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.title.value_keyword");
+		}
+
+		task ("Assert 'title' facet terms are present and check one") {
+			Refresh();
+
+			Click.clickAtNotVisible(
+				checkboxName = "coconut fruit",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert only search results associated with the checked facet term are returned") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Coconut Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Apple Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Banana Fruit",
+				searchAssetType = "Custom Object");
+		}
+
+		task ("Configure the Custom Facet widget to aggregate by the 'siteID' custom Object field") {
+			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.siteID.value_integer");
+		}
+
+		task ("Assert 'siteID' facet terms are present and check '1'") {
+			Refresh();
+
+			Click.clickAtNotVisible(
+				checkboxName = 1,
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert only search results associated with the checked facet term are returned") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Banana Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Coconut Fruit",
+				searchAssetType = "Custom Object");
+		}
+
+		task ("Configure the Custom Facet widget to aggregate by the 'date' custom Object field") {
+			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.date.value_date");
+		}
+
+		task ("Assert 'date' facet terms are present and check one") {
+			Refresh();
+
+			Click.clickAtNotVisible(
+				checkboxName = 20230401,
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert only search results associated with the checked facet term are returned") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Banana Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Coconut Fruit",
+				searchAssetType = "Custom Object");
+		}
+	}
+
 	@description = "This is a use case for LPS-172127 - The Custom Facet widget supports aggregating on a Web Content Structure DDM field either using the single field or nested field notations."
 	@priority = 4
 	test AggregateDDMFieldsViaCustomFacet {

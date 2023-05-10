@@ -1,0 +1,435 @@
+@component-name = "liferay-sample-workspace"
+definition {
+
+	property custom.properties = "feature.flag.LPS-166479=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "true";
+	property testray.main.component.name = "Liferay Sample Workspace";
+
+	static var clientExtensionSamples = "";
+	static var companyWebId = "";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		var companyWebId = JSONCompany.getWebId();
+	}
+
+	tearDown {
+		if (isSet(clientExtensionSamples)) {
+			for (var clientExtension : list ${clientExtensionSamples}) {
+				AntCommand(
+					locator1 = "build-test-liferay-sample-workspace.xml",
+					value1 = "undeploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+			}
+
+			var clientExtensionSamples = "";
+		}
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Assert all deployed Client Extensions Samples have startup logs in the console and are present in the admin page with the correct table values"
+	@priority = 4
+	test AssertSamplesInConsoleAndAdminPage {
+		task ("Deploy multiple Client Extension samples into into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1";
+
+			for (var clientExtension : list ${clientExtensionSamples}) {
+				AntCommand(
+					locator1 = "build-test-liferay-sample-workspace.xml",
+					value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+			}
+		}
+
+		task ("Assert the Portal server console has startup verbiage for each deployed Client Extension sample ") {
+			for (var clientExtension : list "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1") {
+				AssertConsoleTextPresent(value1 = "STARTED ${clientExtension}");
+			}
+		}
+
+		task ("Assert each deployed Client Extension sample appears in the Client Extensions admin page with the correct table values") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Client Extensions");
+
+			for (var clientExtensionCombo : list "Liferay Sample Custom Element 1/Custom Element,Liferay Sample Custom Element 2/Custom Element,Liferay Sample Global CSS/CSS,Liferay Sample Global JS/JS,Counter App/IFrame,Liferay Sample Theme CSS 1/Theme CSS,Liferay Sample Theme Favicon/Theme Favicon,Liferay Sample Theme Spritemap 1/Theme SVG Spritemap") {
+				var clientExtensionName = StringUtil.extractFirst(${clientExtensionCombo}, "/");
+				var clientExtensionType = StringUtil.extractLast(${clientExtensionCombo}, "/");
+
+				AssertElementPresent(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+				AssertTextEquals(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_TYPE_SPECIFIC",
+					value1 = ${clientExtensionType});
+
+				AssertTextEquals(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_STATUS_SPECIFIC",
+					value1 = "Approved");
+
+				AssertTextEquals(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_CONFIGURED_FROM_SPECIFIC",
+					value1 = "Workspace");
+			}
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Custom Element 1"
+	@priority = 4
+	test LiferaySampleCustomElement1Smoke {
+		task ("Deploy Liferay Sample Custom Element 1 into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-custom-element-1";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Create a new widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Add the Liferay Sample Custom Element 1 widget to the page") {
+			Portlet.addPG(portletName = "Liferay Sample Custom Element 1");
+		}
+
+		task ("Assert the widget's increment button works") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_COUNTER",
+				value1 = 0);
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_INCREMENT_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_COUNTER",
+				value1 = 3);
+		}
+
+		task ("Assert the widget's increment button works") {
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			Click(locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_DECREMENT_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_1_COUNTER",
+				value1 = "-1");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Custom Element 2"
+	@priority = 4
+	test LiferaySampleCustomElement2Smoke {
+		task ("Deploy Liferay Sample Custom Element 2 into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-custom-element-2";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Given: The Liferay Sample Custom Element 2 is added to a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			Portlet.addPG(portletName = "Liferay Sample Custom Element 2");
+		}
+
+		task ("Then: Sample element greets the user by name") {
+			AssertTextEquals.assertPartialText(
+				key_portletName = "Liferay Sample Custom Element 2",
+				locator1 = "Portlet#SPECIFIC_PORTLET_SECTION",
+				value1 = "Hello Test");
+		}
+
+		task ("When: User logs out") {
+			User.logoutViaURL();
+		}
+
+		task ("And: User navigates to test page") {
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Then: Sample element says 'Hello World'") {
+			AssertTextEquals.assertPartialText(
+				key_portletName = "Liferay Sample Custom Element 2",
+				locator1 = "Portlet#BODY",
+				value1 = "Hello World");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Global CSS"
+	@priority = 4
+	test LiferaySampleGlobalCSSSmoke {
+		task ("Deploy Liferay Sample Global CSS into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-global-css";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Given: A new widget page is created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("When: User accesses the Basic Settings of the widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page");
+
+			Navigator.gotoNavTab(navTab = "Design");
+		}
+
+		task ("Then: User can add Liferay Sample Global CSS as a CSS Client Extension ") {
+			PagesAdmin.addCSSExtensions(extensionNameList = "Liferay Sample Global CSS");
+
+			AssertVisible(
+				key_tableEntry = "Liferay Sample Global CSS",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PortletEntry.save();
+		}
+
+		task ("And: User can view the changes on the widget page") {
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			var pseudoElementContent = Css.getPseudoElementCssValue(
+				attribute = "content",
+				element = "//a[contains(@class,'logo') and contains(@title,'Go to')]",
+				pseudo = ":after");
+
+			TestUtils.assertEquals(
+				actual = ${pseudoElementContent},
+				expected = "\"Liferay Sample Global CSS\"");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Global JS"
+	@priority = 4
+	test LiferaySampleGlobalJSSmoke {
+		task ("Deploy Liferay Sample Global JS into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-global-js";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Go to the Site Pages configuration screen in Page Admin") {
+			PagesAdmin.openConfigureSitePages();
+		}
+
+		task ("Add Liferay Sample Global JS as a JavaScript Client Extension for all pages") {
+			Navigator.gotoNavTab(navTab = "Design");
+
+			Navigator.gotoNavTab(navTab = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "Liferay Sample Global JS",
+				insertion = "In Page Head");
+
+			PortletEntry.save();
+		}
+
+		task ("Navigate to the Home page") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			Open.openNoError(locator1 = "${baseURL}/web/guest/home");
+		}
+
+		task ("Assert an alert pops up that reads 'Sample Global JS deployed.'") {
+			AssertConfirm(value1 = "Sample Global JS deployed.");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample IFrame 1 - Counter App"
+	@priority = 4
+	test LiferaySampleIFrame1Smoke {
+		task ("Deploy Liferay Sample IFrame 1 into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-iframe-1";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Given: A user is on a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+		}
+
+		task ("Then: User can add the Counter App widget to the page which was made available by deploying Liferay Sample IFrame 1") {
+			Portlet.addPG(portletName = "Counter App");
+		}
+
+		task ("And: The user can interact with the Counter App widget") {
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			Click(
+				key_row = 1,
+				locator1 = "ClientExtension#SAMPLE_IFRAME_1_COUNTER_INCREMENT_BUTTON");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_IFRAME_1_COUNTER_CART_TOTAL",
+				value1 = 1);
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Theme CSS 1"
+	@priority = 4
+	test LiferaySampleThemeCSS1Smoke {
+		task ("Deploy Liferay Sample Theme CSS 1 into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-theme-css-1";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Go to the Site Pages configuration screen in Page Admin") {
+			PagesAdmin.openConfigureSitePages();
+		}
+
+		task ("Add Liferay Sample Theme CSS 1 as a Theme CSS Client Extension for all pages") {
+			PagesAdmin.addThemeCSSExtension(extensionName = "Liferay Sample Theme CSS 1");
+
+			AssertTextEquals(
+				key_text = "Theme CSS",
+				locator1 = "TextInput#ANY",
+				value1 = "Liferay Sample Theme CSS 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Navigate to the home page and assert the header banner is using the image sourced from Liferay Sample Theme CSS 1") {
+			Navigator.openURL();
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			Css.assertCssCustomPropertyValue(
+				attribute = "background-image",
+				element = "//header[@id='banner']",
+				expected = "url(\"${portalURL}/o/liferay-sample-theme-css-1/img/header_bg.jpg\")");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Theme Favicon"
+	@priority = 4
+	test LiferaySampleThemeFaviconSmoke {
+		task ("Deploy Liferay Sample Theme Favicon into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-theme-favicon";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Go to the Site Pages configuration screen in Page Admin") {
+			PagesAdmin.openConfigureSitePages();
+		}
+
+		task ("Add Liferay Sample Theme Favicon as a Client Extension favicon for all pages") {
+			Navigator.gotoNavTab(navTab = "Design");
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Liferay Sample Theme Favicon");
+
+			AssertTextEquals(
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Liferay Sample Theme Favicon");
+		}
+
+		task ("Assert the sample favicon image is used in the configuration page") {
+			AssertElementPresent(locator1 = "ClientExtension#SAMPLE_THEME_FAVICON_CONFIGURATION_IMAGE");
+		}
+
+		task ("Save the configuration and navigate to the Home page") {
+			PortletEntry.save();
+
+			Navigator.openURL();
+		}
+
+		task ("Assert the page is using the client extension sample favicon") {
+			AssertElementPresent(
+				imageFileName = "liferay-sample-theme-favicon/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Theme Spritemap 1"
+	@priority = 4
+	test LiferaySampleThemeSpritemap1Smoke {
+		task ("Deploy Liferay Sample Theme Spritemap 1 into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-theme-spritemap-1";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionSamples}");
+		}
+
+		task ("Navigate to Page Admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		}
+
+		task ("Add Liferay Sample Theme Spritemap 1 as a Theme Spritemap Client Extension for all pages") {
+			ClientExtensionGeneral.changeSiteCurrentThemeSvgSpritemap(entryName = "Liferay Sample Theme Spritemap 1");
+		}
+
+		task ("Navigate to the Home page") {
+			Navigator.openURL();
+		}
+
+		task ("Assert the pencil icon on the page is using the source image from Liferay Sample Theme Spritemap 1 ") {
+			AssertElementPresent(locator1 = "ClientExtension#SAMPLE_THEME_SPRITEMAP_1_PAGE_PENCIL_ICON");
+		}
+	}
+
+}

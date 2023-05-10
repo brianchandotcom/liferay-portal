@@ -403,6 +403,23 @@ definition {
 		return ${importTaskId};
 	}
 
+	macro getIdOfSiteBlogPostingsExportBatch {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings/export-batch \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		var exportBatchId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${exportBatchId};
+	}
+
 	macro getIdOfUpdatedPostingBatchEngineImportTask {
 		if (!(isSet(importStrategy))) {
 			var importStrategy = "ON_ERROR_FAIL";

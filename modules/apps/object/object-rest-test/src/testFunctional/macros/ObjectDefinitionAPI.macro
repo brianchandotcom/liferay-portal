@@ -769,6 +769,20 @@ definition {
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = ${relationshipId});
 	}
 
+	macro getIdOfObjectDefinitionExportBatch {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/export-batch \
+				-H Content-Type: application/json \
+				-u test@liferay.com:test
+		''';
+
+		var exportBatchId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${exportBatchId};
+	}
+
 	macro getObjectDefinitionIdByName {
 		Variables.assertDefined(parameterList = ${name});
 

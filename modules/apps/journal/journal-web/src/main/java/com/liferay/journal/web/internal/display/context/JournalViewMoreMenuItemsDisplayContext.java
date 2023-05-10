@@ -127,7 +127,7 @@ public class JournalViewMoreMenuItemsDisplayContext {
 			return _ddmStructuresSearchContainer;
 		}
 
-		SearchContainer<DDMStructure> searchContainer = new SearchContainer(
+		SearchContainer<DDMStructure> searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, "no-results-were-found");
 
 		searchContainer.setOrderByCol(getOrderByCol());

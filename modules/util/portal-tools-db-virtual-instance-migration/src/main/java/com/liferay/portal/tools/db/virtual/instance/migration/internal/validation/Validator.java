@@ -29,41 +29,38 @@ import java.util.List;
  */
 public class Validator {
 
-	public static boolean validateDatabases(
+	public static ValidatorRecorder validateDatabases(
 			Connection sourceConnection, Connection destinationConnection)
 		throws SQLException {
 
-		boolean valid = true;
+		ValidatorRecorder recorder = new ValidatorRecorder();
 
 		if (!_validateReleaseTableState(sourceConnection)) {
-			ValidatorRecorder.registerError(
+			recorder.registerError(
 				"Source database Release_ table has records with an invalid " +
 					"state_");
-			valid = false;
 		}
 
 		if (!_validateReleaseTableState(destinationConnection)) {
-			ValidatorRecorder.registerError(
+			recorder.registerError(
 				"Destination database Release_ table has records with an " +
 					"invalid state_");
-			valid = false;
 		}
 
-		valid &= _validateReleaseTableModules(
-			sourceConnection, destinationConnection);
+		_validateReleaseTableModules(
+			sourceConnection, destinationConnection, recorder);
 
-		valid &= _checkTables(sourceConnection, destinationConnection);
+		_checkTables(sourceConnection, destinationConnection, recorder);
 
-		valid &= _checkWebIds(sourceConnection, destinationConnection);
+		_checkWebIds(sourceConnection, destinationConnection, recorder);
 
-		return valid;
+		return recorder;
 	}
 
-	private static boolean _checkTables(
-			Connection sourceConnection, Connection destinationConnection)
+	private static void _checkTables(
+			Connection sourceConnection, Connection destinationConnection,
+			ValidatorRecorder recorder)
 		throws SQLException {
-
-		boolean valid = true;
 
 		List<String> sourceTables = Database.getTables(sourceConnection);
 		List<String> destinationTables = Database.getTables(
@@ -76,47 +73,38 @@ public class Validator {
 				continue;
 			}
 
-			ValidatorRecorder.registerWarning(
+			recorder.registerWarning(
 				"Table " + tableName +
 					" is not present in destination database");
-			valid = false;
 		}
 
 		if (!destinationTables.isEmpty()) {
 			for (String tableName : destinationTables) {
-				ValidatorRecorder.registerWarning(
+				recorder.registerWarning(
 					"Table " + tableName +
 						" is not present in source database");
 			}
-
-			valid = false;
 		}
-
-		return valid;
 	}
 
-	private static boolean _checkWebIds(
-			Connection sourceConnection, Connection destinationConnection)
+	private static void _checkWebIds(
+			Connection sourceConnection, Connection destinationConnection,
+			ValidatorRecorder recorder)
 		throws SQLException {
 
 		String sourceWebId = Database.getWebId(sourceConnection);
 
 		if (Database.hasWebId(destinationConnection, sourceWebId)) {
-			ValidatorRecorder.registerWarning(
+			recorder.registerWarning(
 				"webId " + sourceWebId +
 					" already exists in destination database");
-
-			return false;
 		}
-
-		return true;
 	}
 
-	private static boolean _validateReleaseTableModules(
-			Connection sourceConnection, Connection destinationConnection)
+	private static void _validateReleaseTableModules(
+			Connection sourceConnection, Connection destinationConnection,
+			ValidatorRecorder recorder)
 		throws SQLException {
-
-		boolean valid = true;
 
 		List<Release> sourceReleaseEntries = Database.getReleaseEntries(
 			sourceConnection);
@@ -168,32 +156,22 @@ public class Validator {
 			}
 		}
 
-		ValidatorRecorder.registerErrors(
+		recorder.registerErrors(
 			missingServiceModules, " will not be available in the destination");
-		ValidatorRecorder.registerErrors(
+		recorder.registerErrors(
 			lowerVersionModules,
 			" needs to be upgraded in source database before the migration");
-		ValidatorRecorder.registerErrors(
+		recorder.registerErrors(
 			higherVersionModules,
 			" is in a lower version in destination database");
-		ValidatorRecorder.registerErrors(
+		recorder.registerErrors(
 			sourceUnverifiedModules,
 			" needs to be verified in the source before the migration");
-		ValidatorRecorder.registerErrors(
+		recorder.registerErrors(
 			destinationUnverifiedModules,
 			" needs to be verified in the destination before the migration");
-		ValidatorRecorder.registerWarnings(
+		recorder.registerWarnings(
 			missingModules, " will not be available in the destination");
-
-		if (!missingModules.isEmpty() || !missingServiceModules.isEmpty() ||
-			!lowerVersionModules.isEmpty() || !higherVersionModules.isEmpty() ||
-			!sourceUnverifiedModules.isEmpty() ||
-			!destinationUnverifiedModules.isEmpty()) {
-
-			valid = false;
-		}
-
-		return valid;
 	}
 
 	private static boolean _validateReleaseTableState(Connection connection)

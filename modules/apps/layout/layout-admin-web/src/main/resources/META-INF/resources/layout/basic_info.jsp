@@ -40,9 +40,11 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 		<c:if test="<%= !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
 			<aui:input ignoreRequestValue="<%= SessionErrors.isEmpty(liferayPortletRequest) %>" label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" value="<%= layoutsAdminDisplayContext.getNameMapAsXML() %>" />
 
-			<div class="form-group">
-				<aui:input helpMessage="hidden-from-navigation-menu-widget-help-message" inlineLabel="right" label="hidden-from-navigation-menu-widget" labelCssClass="simple-toggle-switch" name="hidden" type="toggle-switch" value="<%= selLayout.isHidden() %>" />
-			</div>
+			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "hiddenDescription" %>' label="hidden-from-menu-display" labelCssClass="font-weight-normal" name="hidden" type="checkbox" value="<%= selLayout.isHidden() %>" wrapperCssClass="mb-2" />
+
+			<p class="text-3 text-secondary" id="<portlet:namespace />hiddenDescription">
+				<liferay-ui:message key="hidden-from-navigation-menu-widget-help-message" />
+			</p>
 		</c:if>
 
 		<c:if test="<%= group.isLayoutSetPrototype() %>">

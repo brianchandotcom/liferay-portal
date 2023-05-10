@@ -147,7 +147,13 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 		%>
 
 		<aui:button cssClass="btn-lg" disabled="<%= !commerceCartContentTotalDisplayContext.isValidCommerceOrder() %>" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
+
+		<c:if test="<%= commerceCartContentTotalDisplayContext.isRequestQuoteEnabled() && commerceCartContentTotalDisplayContext.isValidCommerceOrder() %>">
+			<aui:button cssClass="btn-lg request-quote" id="requestQuote" value='<%= LanguageUtil.get(request, "request-a-quote") %>' />
+		</c:if>
 	</aui:button-row>
+
+	<%@ include file="/cart_total/request_quote.jspf" %>
 
 	<liferay-frontend:component
 		module="js/cart_total/view"

@@ -128,7 +128,9 @@ public class CommerceOrderModelResourcePermissionLogic
 				permissionChecker, commerceOrder);
 		}
 
-		if (actionId.equals(
+		if ((accountEntry.getAccountEntryId() !=
+				AccountConstants.ACCOUNT_ENTRY_ID_GUEST) &&
+			actionId.equals(
 				CommerceOrderActionKeys.
 					MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
 

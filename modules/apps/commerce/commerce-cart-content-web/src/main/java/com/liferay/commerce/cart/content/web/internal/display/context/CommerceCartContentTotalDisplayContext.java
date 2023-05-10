@@ -24,6 +24,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -47,6 +48,7 @@ public class CommerceCartContentTotalDisplayContext
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
+			ConfigurationProvider configurationProvider,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper,
 			ModelResourcePermission<CommerceOrder>
@@ -59,8 +61,8 @@ public class CommerceCartContentTotalDisplayContext
 			commerceChannelLocalService, commerceOrderItemService,
 			commerceOrderModelResourcePermission, commerceOrderPriceCalculation,
 			commerceOrderValidatorRegistry,
-			commerceProductPortletResourcePermission, cpDefinitionHelper,
-			cpInstanceHelper, httpServletRequest, portal);
+			commerceProductPortletResourcePermission, configurationProvider,
+			cpDefinitionHelper, cpInstanceHelper, httpServletRequest, portal);
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_portal = portal;

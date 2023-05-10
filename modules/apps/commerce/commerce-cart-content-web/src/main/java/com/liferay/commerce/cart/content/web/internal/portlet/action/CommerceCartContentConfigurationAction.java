@@ -26,6 +26,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -71,8 +72,8 @@ public class CommerceCartContentConfigurationAction
 						_commerceOrderPriceCalculation,
 						_commerceOrderValidatorRegistry,
 						_commerceProductPortletResourcePermission,
-						_cpDefinitionHelper, _cpInstanceHelper,
-						httpServletRequest, _portal);
+						_configurationProvider, _cpDefinitionHelper,
+						_cpInstanceHelper, httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -110,6 +111,9 @@ public class CommerceCartContentConfigurationAction
 		target = "(resource.name=" + CPConstants.RESOURCE_NAME_PRODUCT + ")"
 	)
 	private PortletResourcePermission _commerceProductPortletResourcePermission;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

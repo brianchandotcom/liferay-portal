@@ -13,10 +13,15 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayForm, {
+	ClayCheckbox,
+	ClayInput,
+	ClaySelectWithOption,
+} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
+import {DATA_RENDERERS} from '@liferay/frontend-data-set-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
@@ -27,7 +32,8 @@ import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 
-interface FDSFieldInterface {
+interface FDSField {
+	externalReferenceCode: string;
 	id: number;
 	label: string;
 	name: string;
@@ -36,7 +42,7 @@ interface FDSFieldInterface {
 	type: string;
 }
 
-interface FieldInterface {
+interface Field {
 	id: number | null;
 	name: string;
 	selected: boolean;
@@ -44,9 +50,9 @@ interface FieldInterface {
 	visible: boolean;
 }
 
-interface SaveFDSFieldsModalContentInterface {
+interface SaveFDSFieldsModalContentProps {
 	closeModal: Function;
-	fdsFields: Array<FDSFieldInterface>;
+	fdsFields: Array<FDSField>;
 	fdsView: FDSViewType;
 	namespace: string;
 	onSave: Function;
@@ -60,8 +66,8 @@ const SaveFDSFieldsModalContent = ({
 	namespace,
 	onSave,
 	saveFDSFieldsURL,
-}: SaveFDSFieldsModalContentInterface) => {
-	const [fields, setFields] = useState<Array<FieldInterface> | null>(null);
+}: SaveFDSFieldsModalContentProps) => {
+	const [fields, setFields] = useState<Array<Field> | null>(null);
 	const [query, setQuery] = useState('');
 
 	const onSearch = (query: string) => {
@@ -124,7 +130,7 @@ const SaveFDSFieldsModalContent = ({
 			return;
 		}
 
-		const createdFDSFields: Array<FDSFieldInterface> = await response.json();
+		const createdFDSFields: Array<FDSField> = await response.json();
 
 		closeModal();
 
@@ -306,15 +312,165 @@ const SaveFDSFieldsModalContent = ({
 	);
 };
 
+interface EditFDSFieldModalContentProps {
+	closeModal: Function;
+	fdsField: FDSField;
+	namespace: string;
+	onSave: Function;
+}
+
+const EditFDSFieldModalContent = ({
+	closeModal,
+	fdsField,
+	namespace,
+	onSave,
+}: EditFDSFieldModalContentProps) => {
+	const [selectedFDSFieldRenderer, setSelectedFDSFieldRenderer] = useState(
+		fdsField.renderer ?? 'default'
+	);
+	const [fdsFieldSortable, setFSDFieldSortable] = useState<boolean>(
+		fdsField.sortable ?? true
+	);
+
+	const fdsFieldLabelRef = useRef<HTMLInputElement>(null);
+
+	const editFDSField = async () => {
+		const body = {
+			label: fdsFieldLabelRef.current?.value,
+			renderer: selectedFDSFieldRenderer,
+			sortable: fdsFieldSortable,
+		};
+
+		const response = await fetch(
+			`${API_URL.FDS_FIELDS}/by-external-reference-code/${fdsField.externalReferenceCode}`,
+			{
+				body: JSON.stringify(body),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: 'PATCH',
+			}
+		);
+
+		if (!response.ok) {
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-failed-to-complete'
+				),
+				type: 'danger',
+			});
+		}
+
+		const editedFDSField = await response.json();
+
+		closeModal();
+
+		openToast({
+			message: Liferay.Language.get(
+				'your-request-completed-successfully'
+			),
+			type: 'success',
+		});
+
+		onSave({editedFDSField});
+	};
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Util.sub(
+					Liferay.Language.get('edit-x'),
+					fdsField.label
+				)}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<ClayForm.Group>
+					<label htmlFor={`${namespace}fdsFieldNameInput`}>
+						{Liferay.Language.get('name')}
+					</label>
+
+					<ClayInput
+						disabled
+						id={`${namespace}fdsFieldNameInput`}
+						type="text"
+						value={fdsField.name}
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor={`${namespace}fdsFieldLabelInput`}>
+						{Liferay.Language.get('label')}
+					</label>
+
+					<ClayInput
+						defaultValue={fdsField.label}
+						id={`${namespace}fdsFieldLabelInput`}
+						ref={fdsFieldLabelRef}
+						type="text"
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor={`${namespace}fdsFieldRenderer`}>
+						{Liferay.Language.get('render-mode')}
+					</label>
+
+					<ClaySelectWithOption
+						aria-label={Liferay.Language.get('render-mode')}
+						id={`${namespace}fdsFieldRenderer`}
+						onChange={(event) => {
+							setSelectedFDSFieldRenderer(event.target.value);
+						}}
+						options={Object.keys(DATA_RENDERERS).map(
+							(dataRendererId) => ({
+								label: DATA_RENDERERS[dataRendererId].label,
+								value: dataRendererId,
+							})
+						)}
+						value={selectedFDSFieldRenderer}
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<ClayCheckbox
+						checked={fdsFieldSortable}
+						label={Liferay.Language.get('sortable')}
+						onChange={({target: {checked}}) =>
+							setFSDFieldSortable(checked)
+						}
+					/>
+				</ClayForm.Group>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton onClick={() => editFDSField()}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+};
+
 const Fields = ({
 	fdsView,
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
 }: FDSViewSectionInterface) => {
-	const [fdsFields, setFDSFields] = useState<Array<FDSFieldInterface> | null>(
-		null
-	);
+	const [fdsFields, setFDSFields] = useState<Array<FDSField> | null>(null);
 
 	const fdsFieldsOrderRef = useRef('');
 
@@ -358,12 +514,12 @@ const Fields = ({
 
 			const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
 
-			const orderedFDSFields: Array<FDSFieldInterface> = [];
+			const orderedFDSFields: Array<FDSField> = [];
 
 			const orderedFDSFieldIds: Array<number> = [];
 
 			storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
-				storedFDSFields.forEach((storedFDSField: FDSFieldInterface) => {
+				storedFDSFields.forEach((storedFDSField: FDSField) => {
 					if (fdsFieldId === String(storedFDSField.id)) {
 						orderedFDSFields.push(storedFDSField);
 
@@ -372,7 +528,7 @@ const Fields = ({
 				});
 			});
 
-			storedFDSFields.forEach((storedFDSField: FDSFieldInterface) => {
+			storedFDSFields.forEach((storedFDSField: FDSField) => {
 				if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
 					orderedFDSFields.push(storedFDSField);
 				}
@@ -384,7 +540,7 @@ const Fields = ({
 		}
 		else {
 			fdsFieldsOrderRef.current = storedFDSFields
-				.map((storedFDSField: FDSFieldInterface) => storedFDSField.id)
+				.map((storedFDSField: FDSField) => storedFDSField.id)
 				.join(',');
 
 			setFDSFields(storedFDSFields);
@@ -459,10 +615,10 @@ const Fields = ({
 						createdFDSFields,
 						deletedFDSFieldsIds,
 					}: {
-						createdFDSFields: Array<FDSFieldInterface>;
+						createdFDSFields: Array<FDSField>;
 						deletedFDSFieldsIds: Array<number>;
 					}) => {
-						const newFDSFields: Array<FDSFieldInterface> = [];
+						const newFDSFields: Array<FDSField> = [];
 
 						fdsFields?.forEach((fdsField) => {
 							if (!deletedFDSFieldsIds.includes(fdsField.id)) {
@@ -481,10 +637,44 @@ const Fields = ({
 			),
 		});
 
+	const onEditFDSField = ({editedFDSField}: {editedFDSField: FDSField}) => {
+		setFDSFields(
+			fdsFields?.map((fdsField) => {
+				if (fdsField.id === editedFDSField.id) {
+					return editedFDSField;
+				}
+
+				return fdsField;
+			}) || null
+		);
+	};
+
 	return (
 		<ClayLayout.ContainerFluid>
 			{fdsFields ? (
 				<OrderableTable
+					actions={[
+						{
+							icon: 'pencil',
+							label: Liferay.Language.get('edit'),
+							onClick: ({item}: {item: FDSField}) => {
+								openModal({
+									contentComponent: ({
+										closeModal,
+									}: {
+										closeModal: Function;
+									}) => (
+										<EditFDSFieldModalContent
+											closeModal={closeModal}
+											fdsField={item}
+											namespace={namespace}
+											onSave={onEditFDSField}
+										/>
+									),
+								});
+							},
+						},
+					]}
 					fields={[
 						{
 							label: Liferay.Language.get('name'),
@@ -499,7 +689,7 @@ const Fields = ({
 							name: 'type',
 						},
 						{
-							label: Liferay.Language.get('renderer'),
+							label: Liferay.Language.get('render-mode'),
 							name: 'renderer',
 						},
 						{
@@ -518,7 +708,7 @@ const Fields = ({
 					onOrderChange={({
 						orderedItems,
 					}: {
-						orderedItems: Array<FDSFieldInterface>;
+						orderedItems: Array<FDSField>;
 					}) => {
 						fdsFieldsOrderRef.current = orderedItems
 							.map((item) => item.id)

@@ -299,9 +299,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test CheckinDocument {
-		property test.name.skip.portal.instance = "SharepointREST#CheckinDocument";
+	@refactordone
+	test CanCheckinDocument {
+		property test.name.skip.portal.instance = "SharepointREST#CanCheckinDocument";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
 
@@ -343,9 +343,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test DeleteDocumentInSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#DeleteDocumentInSubfolder";
+	@refactordone
+	test CanDeleteDocumentInSubfolder {
+		property test.name.skip.portal.instance = "SharepointREST#CanDeleteDocumentInSubfolder";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 
@@ -396,9 +396,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test DeleteSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#DeleteSubfolder";
+	@refactordone
+	test CanDeleteSubfolder {
+		property test.name.skip.portal.instance = "SharepointREST#CanDeleteSubfolder";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 
@@ -421,10 +421,10 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test EditDocumentFile {
+	@refactordone
+	test CanEditDocumentFile {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SharepointREST#EditDocumentFile";
+		property test.name.skip.portal.instance = "SharepointREST#CanEditDocumentFile";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 
@@ -470,9 +470,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test MoveCheckedoutDocumentToFolder {
-		property test.name.skip.portal.instance = "SharepointREST#MoveCheckedoutDocumentToFolder";
+	@refactordone
+	test CanMoveCheckedoutDocumentToFolder {
+		property test.name.skip.portal.instance = "SharepointREST#CanMoveCheckedoutDocumentToFolder";
 
 		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 
@@ -534,9 +534,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test MoveDocumentToHome {
-		property test.name.skip.portal.instance = "SharepointREST#MoveDocumentToHome";
+	@refactordone
+	test CanMoveDocumentToHome {
+		property test.name.skip.portal.instance = "SharepointREST#CanMoveDocumentToHome";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
 
@@ -562,9 +562,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test SearchDocumentViaHome {
-		property test.name.skip.portal.instance = "SharepointREST#SearchDocumentViaHome";
+	@refactordone
+	test CanSearchForDocumentFromHome {
+		property test.name.skip.portal.instance = "SharepointREST#CanSearchForDocumentFromHome";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 
@@ -643,9 +643,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test ViewEditedCheckedoutDocument {
-		property test.name.skip.portal.instance = "SharepointREST#ViewEditedCheckedoutDocument";
+	@refactordone
+	test CanViewEditedCheckedoutDocument {
+		property test.name.skip.portal.instance = "SharepointREST#CanViewEditedCheckedoutDocument";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.xls");
 
@@ -689,9 +689,9 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
-		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
+	@refactordone
+	test OriginalFileExtensionIsPreservedAfterInvalidChange {
+		property test.name.skip.portal.instance = "SharepointREST#OriginalFileExtensionIsPreservedAfterInvalidChange";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 
@@ -727,10 +727,10 @@ definition {
 
 	@description = "This test ensures that repositories can be added both on site admin and on a content page."
 	@priority = 4
-	@refactorneeded
-	test ViewRepository {
+	@refactordone
+	test CanEnterRepository {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SharepointREST#ViewRepository";
+		property test.name.skip.portal.instance = "SharepointREST#CanEnterRepository";
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 

@@ -19,37 +19,44 @@ import {useItems} from '../contexts/ItemsContext';
 import {useDragLayer} from '../contexts/KeyboardDndContext';
 import getFlatItems from '../utils/getFlatItems';
 
-function getMovementText(dragLayer, items) {
-	if (!dragLayer) {
+export function getMovementText(dragLayer, items) {
+	const {
+		eventKey,
+		menuItemTitle,
+		menuItemType,
+		order,
+		parentSiteNavigationMenuItemId,
+	} = dragLayer || {};
+
+	if (!menuItemTitle) {
 		return '';
 	}
 
-	if (dragLayer.eventKey === 'Enter') {
+	if (eventKey === 'Enter') {
 		return sub(
 			Liferay.Language.get(
 				'use-up-and-down-arrows-to-move-x-and-press-enter-to-place-it-in-desired-position'
 			),
-			`${dragLayer.menuItemTitle} (${dragLayer.menuItemType})`
+			`${menuItemTitle} (${menuItemType})`
 		);
 	}
 
 	const siblingsItems = items.filter(
 		(item) =>
 			item.parentSiteNavigationMenuItemId ===
-			dragLayer.parentSiteNavigationMenuItemId
+			parentSiteNavigationMenuItemId
 	);
 
 	if (!siblingsItems.length) {
 		const parent = items.find(
 			(item) =>
-				item.siteNavigationMenuItemId ===
-				dragLayer.parentSiteNavigationMenuItemId
+				item.siteNavigationMenuItemId === parentSiteNavigationMenuItemId
 		);
 
 		return sub(Liferay.Language.get('targeting-inside-of-x'), parent.title);
 	}
 
-	const sibling = siblingsItems[dragLayer.order - 1];
+	const sibling = siblingsItems[order - 1];
 
 	if (sibling) {
 		return sub(Liferay.Language.get('targeting-x-of-x'), [
@@ -60,7 +67,7 @@ function getMovementText(dragLayer, items) {
 
 	return sub(Liferay.Language.get('targeting-x-of-x'), [
 		Liferay.Language.get('top'),
-		siblingsItems[dragLayer.order]?.title,
+		siblingsItems[order]?.title,
 	]);
 }
 

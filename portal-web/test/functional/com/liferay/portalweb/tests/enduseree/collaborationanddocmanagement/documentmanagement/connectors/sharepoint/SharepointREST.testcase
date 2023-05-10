@@ -584,26 +584,19 @@ definition {
 	}
 
 	@priority = 4
-	@refactorneeded
-	test ViewDocumentAsGuest {
-		property test.name.skip.portal.instance = "SharepointREST#ViewDocumentAsGuest";
+	@refactordone
+	test CanViewDocumentAsGuest {
+		property test.name.skip.portal.instance = "SharepointREST#CanViewDocumentAsGuest";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		PagesAdmin.addPage(
-			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page");
-
-		PagesAdmin.configurePage(
-			columnName = "1 Column",
-			pageName = "Documents and Media Page",
-			sitePageType = "Widget Page");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

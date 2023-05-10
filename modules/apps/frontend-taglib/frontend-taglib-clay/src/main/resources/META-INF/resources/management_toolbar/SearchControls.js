@@ -116,22 +116,25 @@ const SearchControls = ({
 	);
 };
 
-const ShowMobileButton = ({disabled, setSearchMobile}) => {
-	return (
-		<ManagementToolbar.Item className="navbar-breakpoint-d-none">
-			<ClayButtonWithIcon
-				aria-haspopup="true"
-				aria-label={Liferay.Language.get('open-search')}
-				className="nav-link nav-link-monospaced"
-				disabled={disabled}
-				displayType="unstyled"
-				onClick={() => setSearchMobile(true)}
-				symbol="search"
-				title={Liferay.Language.get('open-search')}
-			/>
-		</ManagementToolbar.Item>
-	);
-};
+const ShowMobileButton = React.forwardRef(
+	({disabled, setSearchMobile}, ref) => {
+		return (
+			<ManagementToolbar.Item className="navbar-breakpoint-d-none">
+				<ClayButtonWithIcon
+					aria-haspopup="true"
+					aria-label={Liferay.Language.get('open-search')}
+					className="nav-link nav-link-monospaced"
+					disabled={disabled}
+					displayType="unstyled"
+					onClick={() => setSearchMobile(true)}
+					ref={ref}
+					symbol="search"
+					title={Liferay.Language.get('open-search')}
+				/>
+			</ManagementToolbar.Item>
+		);
+	}
+);
 
 SearchControls.ShowMobileButton = ShowMobileButton;
 

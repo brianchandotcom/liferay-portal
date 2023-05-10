@@ -19,7 +19,7 @@ import {LinkOrButton} from '@clayui/shared';
 import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import normalizeDropdownItems from '../normalize_dropdown_items';
 import ActionControls from './ActionControls';
@@ -98,6 +98,16 @@ function ManagementToolbar({
 		activeViewType?.label
 	);
 
+	const searchButtonRef = useRef();
+
+	useEffect(() => {
+		if (searchMobile) {
+			const searchButton = searchButtonRef.current;
+
+			return () => searchButton?.focus();
+		}
+	}, [searchMobile]);
+
 	return (
 		<FeatureFlagContext.Provider
 			value={{showDesignImprovements: showDesignImprovementsFF}}
@@ -168,6 +178,7 @@ function ManagementToolbar({
 					{!active && showSearch && (
 						<SearchControls.ShowMobileButton
 							disabled={disabled}
+							ref={searchButtonRef}
 							setSearchMobile={setSearchMobile}
 						/>
 					)}

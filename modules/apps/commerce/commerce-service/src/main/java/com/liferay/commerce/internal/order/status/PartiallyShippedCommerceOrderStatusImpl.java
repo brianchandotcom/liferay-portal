@@ -73,6 +73,13 @@ public class PartiallyShippedCommerceOrderStatusImpl
 		return PRIORITY;
 	}
 
+	@Override
+	public boolean isEnabled(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return !commerceOrder.isQuote();
+	}
+
 	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 

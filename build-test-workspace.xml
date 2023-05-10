@@ -76,7 +76,15 @@
 				<then>
 					<gradle-execute dir="${workspace.client.extension.dir}" task="clean" />
 
-					<gradle-execute dir="${workspace.client.extension.dir}" task="deployPoshi" />
+					<if>
+						<available file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
+						<then>
+							<gradle-execute dir="${workspace.client.extension.dir}" task="deployPoshi" />
+						</then>
+						<else>
+							<gradle-execute dir="${workspace.client.extension.dir}" task="deploy" />
+						</else>
+					</if>
 
 					<copy
 						file="${workspace.client.extension.dir}/dist/@{workspace.client.extension.name}.zip"

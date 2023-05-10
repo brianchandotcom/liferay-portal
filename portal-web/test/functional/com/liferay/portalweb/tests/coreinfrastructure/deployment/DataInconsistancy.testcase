@@ -46,4 +46,39 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-154778. Verify restarting with a missing resource permission for a widget page does not break the portal."
+	@priority = 3
+	test RestartWithMissingPagePermission {
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "DataInconsistancy#RestartWithMissingPagePermission";
+
+		task ("Given a widget page") {
+			User.firstLoginPG();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "WidgetPage");
+		}
+
+		task ("When the resource permission for the widget page is deleted from the database") {
+			var sQLStatement = "delete from lportal.ResourcePermission where primKeyId in (select plid from lportal.Layout where name like '%WidgetPage%') and name = 'com.liferay.portal.kernel.model.Layout';";
+
+			SQL.executeMySQLStatement(mysqlStatement = ${sQLStatement});
+		}
+
+		task ("And the portal is restarted") {
+			User.logoutPG();
+
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the user can still login without issue") {
+			User.firstLoginUI();
+
+			Smoke.viewWelcomeContentPage();
+		}
+	}
+
 }

@@ -104,24 +104,14 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		searchContainer.setOrderByComparator(_getOrderByComparator());
 		searchContainer.setOrderByType(getOrderByType());
 
-		List<DDMStructure> ddmStructures = null;
-
-		if (Validator.isNull(_getKeywords())) {
-			ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true),
-				_folderId, _restrictionType, _getOrderByComparator());
-		}
-		else {
-			ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
+		List<DDMStructure> ddmStructures =
+			JournalFolderServiceUtil.searchDDMStructures(
 				_themeDisplay.getCompanyId(),
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						_themeDisplay.getScopeGroupId(), true),
 				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());
-		}
 
 		Collections.sort(ddmStructures, _getOrderByComparator());
 

@@ -16,6 +16,8 @@ package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterEventListener;
 import com.liferay.portal.kernel.cluster.ClusterEventType;
@@ -24,15 +26,26 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Tina Tian
  */
+@Component(
+	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
+	enabled = false, service = ClusterEventListener.class
+)
 public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
 
 	@Override
 	public void processClusterEvent(ClusterEvent clusterEvent) {
-		if (!_log.isInfoEnabled()) {
+		if (!_clusterExecutorConfiguration.debugEnabled() ||
+			!_log.isInfoEnabled()) {
+
 			return;
 		}
 
@@ -57,7 +70,16 @@ public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
 		_log.info(sb.toString());
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_clusterExecutorConfiguration = ConfigurableUtil.createConfigurable(
+			ClusterExecutorConfiguration.class, properties);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DebuggingClusterEventListenerImpl.class);
+
+	private volatile ClusterExecutorConfiguration _clusterExecutorConfiguration;
 
 }

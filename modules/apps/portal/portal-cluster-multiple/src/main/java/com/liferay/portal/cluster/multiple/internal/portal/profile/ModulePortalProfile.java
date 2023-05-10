@@ -18,6 +18,7 @@ import com.liferay.portal.cluster.multiple.internal.ClusterExecutorImpl;
 import com.liferay.portal.cluster.multiple.internal.ClusterLinkImpl;
 import com.liferay.portal.cluster.multiple.internal.ClusterMasterExecutorImpl;
 import com.liferay.portal.cluster.multiple.internal.ClusterMasterTokenTransitionListenerTracker;
+import com.liferay.portal.cluster.multiple.internal.DebuggingClusterEventListenerImpl;
 import com.liferay.portal.cluster.multiple.internal.jgroups.JGroupsClusterChannelFactory;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterLink;
@@ -119,7 +120,8 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			ClusterExecutorImpl.class.getName(),
 			ClusterLinkImpl.class.getName(),
 			ClusterMasterExecutorImpl.class.getName(),
-			ClusterMasterTokenTransitionListenerTracker.class.getName());
+			ClusterMasterTokenTransitionListenerTracker.class.getName(),
+			DebuggingClusterEventListenerImpl.class.getName());
 	}
 
 	@Reference

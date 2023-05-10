@@ -65,6 +65,26 @@ public interface AuditEventService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AuditEvent> getAuditEvents(
+			long companyId, long groupId, long userId, String userName,
+			Date createDateGT, Date createDateLT, String eventType,
+			String className, String classPK, String clientHost,
+			String clientIP, String serverName, int serverPort,
+			String sessionID, boolean andSearch, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AuditEvent> getAuditEvents(
+			long companyId, long groupId, long userId, String userName,
+			Date createDateGT, Date createDateLT, String eventType,
+			String className, String classPK, String clientHost,
+			String clientIP, String serverName, int serverPort,
+			String sessionID, boolean andSearch, int start, int end,
+			OrderByComparator<AuditEvent> orderByComparator)
+		throws PortalException;
+
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AuditEvent> getAuditEvents(
 			long companyId, long userId, String userName, Date createDateGT,
 			Date createDateLT, String eventType, String className,
 			String classPK, String clientHost, String clientIP,
@@ -72,6 +92,7 @@ public interface AuditEventService extends BaseService {
 			boolean andSearch, int start, int end)
 		throws PortalException;
 
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long userId, String userName, Date createDateGT,
@@ -85,6 +106,16 @@ public interface AuditEventService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuditEventsCount(long companyId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAuditEventsCount(
+			long companyId, long groupId, long userId, String userName,
+			Date createDateGT, Date createDateLT, String eventType,
+			String className, String classPK, String clientHost,
+			String clientIP, String serverName, int serverPort,
+			String sessionID, boolean andSearch)
+		throws PortalException;
+
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuditEventsCount(
 			long companyId, long userId, String userName, Date createDateGT,

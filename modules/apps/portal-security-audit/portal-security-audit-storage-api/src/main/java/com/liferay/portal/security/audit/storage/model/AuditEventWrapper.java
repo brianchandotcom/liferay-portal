@@ -44,6 +44,7 @@ public class AuditEventWrapper
 
 		attributes.put("auditEventId", getAuditEventId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -73,6 +74,12 @@ public class AuditEventWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -250,6 +257,16 @@ public class AuditEventWrapper
 	}
 
 	/**
+	 * Returns the group ID of this audit event.
+	 *
+	 * @return the group ID of this audit event
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
+	}
+
+	/**
 	 * Returns the message of this audit event.
 	 *
 	 * @return the message of this audit event
@@ -422,6 +439,16 @@ public class AuditEventWrapper
 	@Override
 	public void setEventType(String eventType) {
 		model.setEventType(eventType);
+	}
+
+	/**
+	 * Sets the group ID of this audit event.
+	 *
+	 * @param groupId the group ID of this audit event
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**

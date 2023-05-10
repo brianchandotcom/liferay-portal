@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@id,'permissionNavigationSearch')]</td>
+	<td>//*[contains(@class,'menubar-vertical')]//input</td>
 	<td></td>
 </tr>
 <tr>

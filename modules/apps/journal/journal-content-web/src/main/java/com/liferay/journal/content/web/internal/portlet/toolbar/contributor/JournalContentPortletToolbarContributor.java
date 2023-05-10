@@ -17,15 +17,15 @@ package com.liferay.journal.content.web.internal.portlet.toolbar.contributor;
 import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
 import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
-import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.internal.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalFolderService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.UnicodeLanguage;
@@ -147,10 +147,10 @@ public class JournalContentPortletToolbarContributor
 		if (journalContentPortletInstanceConfiguration.
 				sortStructuresByByName()) {
 
-			ddmStructures = _journalFolderService.getDDMStructures(
-				currentAndAncestorSiteGroupIds,
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
+			ddmStructures = _ddmStructureService.getStructures(
+				themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
+				_portal.getClassNameId(JournalArticle.class), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new StructureCreateDateComparator());
 
 			Locale locale = themeDisplay.getLocale();
 
@@ -166,10 +166,9 @@ public class JournalContentPortletToolbarContributor
 				0, _DEFAULT_MAX_DISPLAY_ITEMS);
 		}
 		else {
-			ddmStructures = _journalFolderService.getDDMStructures(
-				currentAndAncestorSiteGroupIds,
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0,
+			ddmStructures = _ddmStructureService.getStructures(
+				themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
+				_portal.getClassNameId(JournalArticle.class), 0,
 				_DEFAULT_MAX_DISPLAY_ITEMS,
 				new StructureCreateDateComparator());
 		}
@@ -204,10 +203,9 @@ public class JournalContentPortletToolbarContributor
 			menuItems.add(urlMenuItem);
 		}
 
-		int count = _journalFolderService.getDDMStructuresCount(
-			currentAndAncestorSiteGroupIds,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
+		int count = _ddmStructureService.getStructuresCount(
+			themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
+			_portal.getClassNameId(JournalArticle.class));
 
 		if (count > _DEFAULT_MAX_DISPLAY_ITEMS) {
 			JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
@@ -321,13 +319,13 @@ public class JournalContentPortletToolbarContributor
 		JournalContentPortletToolbarContributor.class);
 
 	@Reference
+	private DDMStructureService _ddmStructureService;
+
+	@Reference
 	private Html _html;
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private JournalFolderService _journalFolderService;
 
 	@Reference
 	private Language _language;

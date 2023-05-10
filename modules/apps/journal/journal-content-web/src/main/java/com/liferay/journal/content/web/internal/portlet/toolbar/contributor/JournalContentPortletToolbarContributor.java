@@ -115,9 +115,7 @@ public class JournalContentPortletToolbarContributor
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		long plid = themeDisplay.getPlid();
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-		long scopeGroupId = themeDisplay.getScopeGroupId();
 
 		PortletURL portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
@@ -130,14 +128,15 @@ public class JournalContentPortletToolbarContributor
 		).setPortletResource(
 			portletDisplay.getId()
 		).setParameter(
-			"groupId", scopeGroupId
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
-			"refererPlid", plid
+			"refererPlid", themeDisplay.getPlid()
 		).buildPortletURL();
 
 		List<DDMStructure> ddmStructures =
 			_journalFolderService.getDDMStructures(
-				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+				_portal.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId()),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0,
 				_DEFAULT_MAX_DISPLAY_ITEMS,
@@ -186,13 +185,15 @@ public class JournalContentPortletToolbarContributor
 					themeDisplay.getLocale()));
 			urlMenuItem.setURL(
 				HttpComponentsUtil.addParameter(
-					portletURL.toString(), "refererPlid", plid));
+					portletURL.toString(), "refererPlid",
+					themeDisplay.getPlid()));
 
 			menuItems.add(urlMenuItem);
 		}
 
 		int count = _journalFolderService.getDDMStructuresCount(
-			_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+			_portal.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId()),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
@@ -213,8 +214,7 @@ public class JournalContentPortletToolbarContributor
 					_portal.getPortletNamespace(JournalPortletKeys.JOURNAL),
 					"ddmStructureId: itemValue.ddmstructureid}, '",
 					_getEditJournalArticleURL(
-						plid, portletDisplay, portletRequest, scopeGroupId,
-						themeDisplay),
+						portletDisplay, portletRequest, themeDisplay),
 					"'));}}, selectEventName: '",
 					portletResponse.getNamespace(),
 					"selectDDMStructure', title: '",
@@ -230,8 +230,7 @@ public class JournalContentPortletToolbarContributor
 	}
 
 	private String _getEditJournalArticleURL(
-			long plid, PortletDisplay portletDisplay,
-			PortletRequest portletRequest, long scopeGroupId,
+			PortletDisplay portletDisplay, PortletRequest portletRequest,
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -246,11 +245,11 @@ public class JournalContentPortletToolbarContributor
 		).setPortletResource(
 			portletDisplay.getId()
 		).setParameter(
-			"groupId", scopeGroupId
+			"groupId", themeDisplay.getScopeGroupId()
 		).setParameter(
-			"refererPlid", plid
+			"refererPlid", themeDisplay.getPlid()
 		).setGlobalParameter(
-			"refererPlid", plid
+			"refererPlid", themeDisplay.getPlid()
 		).buildString();
 	}
 

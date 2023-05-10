@@ -18,7 +18,6 @@ import com.liferay.oauth2.provider.rest.internal.scope.logic.ScopeLogic;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.oauth2.provider.scope.liferay.ScopeContext;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
@@ -68,10 +67,6 @@ public class OAuth2GraphQLRequestContextValidator
 
 		if (OAuth2ProviderScopeLiferayAccessControlContext.
 				isOAuth2AuthVerified()) {
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-158259")) {
-				throw new ForbiddenException();
-			}
 
 			ServiceReference<?> serviceReference = _getServiceReference(
 				graphQLRequestContext.getApplicationName());

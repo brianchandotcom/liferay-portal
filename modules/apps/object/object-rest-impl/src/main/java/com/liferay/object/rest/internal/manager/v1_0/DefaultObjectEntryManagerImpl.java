@@ -734,7 +734,7 @@ public class DefaultObjectEntryManagerImpl
 						relatedObjectDefinition.getCompanyId(),
 						objectRelationship.getType());
 
-			if (relatedObjectDefinition.isSystem()) {
+			if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 				SystemObjectDefinitionManager systemObjectDefinitionManager =
 					_systemObjectDefinitionManagerRegistry.
 						getSystemObjectDefinitionManager(

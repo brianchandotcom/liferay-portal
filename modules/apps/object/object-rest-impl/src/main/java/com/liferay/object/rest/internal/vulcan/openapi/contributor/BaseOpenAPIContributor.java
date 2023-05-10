@@ -49,7 +49,7 @@ public abstract class BaseOpenAPIContributor implements OpenAPIContributor {
 	}
 
 	protected String getSchemaName(ObjectDefinition objectDefinition) {
-		if (objectDefinition.isSystem()) {
+		if (objectDefinition.isUnmodifiableSystemObject()) {
 			return StringUtil.extractLast(
 				getExternalDTOClassName(objectDefinition), StringPool.PERIOD);
 		}

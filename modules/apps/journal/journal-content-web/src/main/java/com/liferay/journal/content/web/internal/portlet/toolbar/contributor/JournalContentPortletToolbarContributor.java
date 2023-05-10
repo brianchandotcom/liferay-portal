@@ -14,25 +14,32 @@
 
 package com.liferay.journal.content.web.internal.portlet.toolbar.contributor;
 
+import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
+import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.internal.configuration.JournalContentPortletInstanceConfiguration;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.UnicodeLanguage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -44,6 +51,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -93,7 +101,7 @@ public class JournalContentPortletToolbarContributor
 
 		try {
 			_addPortletTitleAddJournalArticleMenuItems(
-				menuItems, themeDisplay, portletRequest);
+				menuItems, themeDisplay, portletRequest, portletResponse);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to add folder menu item", exception);
@@ -104,7 +112,7 @@ public class JournalContentPortletToolbarContributor
 
 	private void _addPortletTitleAddJournalArticleMenuItems(
 			List<MenuItem> menuItems, ThemeDisplay themeDisplay,
-			PortletRequest portletRequest)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		long plid = themeDisplay.getPlid();
@@ -189,24 +197,79 @@ public class JournalContentPortletToolbarContributor
 			JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
 		if (count > _DEFAULT_MAX_DISPLAY_ITEMS) {
-			URLMenuItem urlMenuItem = new URLMenuItem();
+			JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
-			urlMenuItem.setUseDialog(false);
-			urlMenuItem.setLabel(
+			javaScriptMenuItem.setLabel(
 				_language.get(
-					_portal.getHttpServletRequest(portletRequest), "more"));
-			urlMenuItem.setSeparator(false);
-			urlMenuItem.setURL(
-				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						portletRequest, JournalPortletKeys.JOURNAL,
-						PortletRequest.RENDER_PHASE)
-				).setMVCPath(
-					"/view.jsp"
-				).buildString());
+					_portal.getHttpServletRequest(portletRequest),
+					"show-more"));
+			javaScriptMenuItem.setOnClick(
+				StringBundler.concat(
+					"Liferay.Util.openSelectionModal({id: '",
+					portletResponse.getNamespace(), "selectDDMStructure',",
+					"onSelect: function (selectedItem) {if (selectedItem) {",
+					"const itemValue = JSON.parse(selectedItem.value);",
+					"Liferay.Util.navigate(Liferay.Util.addParams({",
+					_portal.getPortletNamespace(JournalPortletKeys.JOURNAL),
+					"ddmStructureId: itemValue.ddmstructureid}, '",
+					_getEditJournalArticleURL(
+						plid, portletDisplay, portletRequest, scopeGroupId,
+						themeDisplay),
+					"'));}}, selectEventName: '",
+					portletResponse.getNamespace(),
+					"selectDDMStructure', title: '",
+					_unicodeLanguage.get(
+						_portal.getHttpServletRequest(portletRequest),
+						"select-structure"),
+					"', url: '",
+					_getSelectDDMStructureURL(portletRequest, portletResponse),
+					"'});"));
 
-			menuItems.add(urlMenuItem);
+			menuItems.add(javaScriptMenuItem);
 		}
+	}
+
+	private String _getEditJournalArticleURL(
+			long plid, PortletDisplay portletDisplay,
+			PortletRequest portletRequest, long scopeGroupId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest, JournalPortletKeys.JOURNAL,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_article.jsp"
+		).setRedirect(
+			_portal.getLayoutFullURL(themeDisplay)
+		).setPortletResource(
+			portletDisplay.getId()
+		).setParameter(
+			"groupId", scopeGroupId
+		).setParameter(
+			"refererPlid", plid
+		).setGlobalParameter(
+			"refererPlid", plid
+		).buildString();
+	}
+
+	private String _getSelectDDMStructureURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		DDMStructureItemSelectorCriterion ddmStructureItemSelectorCriterion =
+			new DDMStructureItemSelectorCriterion();
+
+		ddmStructureItemSelectorCriterion.setClassNameId(
+			_portal.getClassNameId(JournalArticle.class));
+		ddmStructureItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new DDMStructureItemSelectorReturnType());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(portletRequest),
+				portletResponse.getNamespace() + "selectDDMStructure",
+				ddmStructureItemSelectorCriterion));
 	}
 
 	private boolean _hasAddArticlePermission(ThemeDisplay themeDisplay) {
@@ -250,6 +313,9 @@ public class JournalContentPortletToolbarContributor
 	private Html _html;
 
 	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
 	private JournalFolderService _journalFolderService;
 
 	@Reference
@@ -262,5 +328,8 @@ public class JournalContentPortletToolbarContributor
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private UnicodeLanguage _unicodeLanguage;
 
 }

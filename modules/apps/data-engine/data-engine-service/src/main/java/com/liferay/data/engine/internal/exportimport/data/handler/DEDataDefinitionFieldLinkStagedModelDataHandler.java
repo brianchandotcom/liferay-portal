@@ -15,6 +15,7 @@
 package com.liferay.data.engine.internal.exportimport.data.handler;
 
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
+import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -201,6 +202,16 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 				deDataDefinitionFieldLink.getUuid(),
 				portletDataContext.getScopeGroupId());
 
+		if (existingDEDataDefinitionFieldLink == null) {
+			existingDEDataDefinitionFieldLink =
+				_deDataDefinitionFieldLinkLocalService.
+					fetchDEDataDefinitionFieldLinks(
+						deDataDefinitionFieldLink.getClassNameId(),
+						deDataDefinitionFieldLink.getClassPK(),
+						deDataDefinitionFieldLink.getDdmStructureId(),
+						deDataDefinitionFieldLink.getFieldName());
+		}
+
 		if ((existingDEDataDefinitionFieldLink == null) ||
 			!portletDataContext.isDataStrategyMirror()) {
 
@@ -239,6 +250,10 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private DEDataDefinitionFieldLinkLocalService
+		_deDataDefinitionFieldLinkLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.rest.internal.util;
+package com.liferay.object.entry.util;
 
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;

@@ -60,20 +60,21 @@ public class AuditEventManagerImpl implements AuditEventManager {
 
 	@Override
 	public List<AuditEvent> getAuditEvents(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch, int start, int end,
+		long companyId, long groupId, long userId, String userName,
+		Date createDateGT, Date createDateLT, String eventType,
+		String className, String classPK, String clientHost, String clientIP,
+		String serverName, int serverPort, String sessionID, boolean andSearch,
+		int start, int end,
 		OrderByComparator
 			<com.liferay.portal.security.audit.storage.model.AuditEvent>
 				orderByComparator) {
 
 		return _translate(
 			_auditEventLocalService.getAuditEvents(
-				companyId, userId, userName, createDateGT, createDateLT,
-				eventType, className, classPK, clientHost, clientIP, serverName,
-				serverPort, sessionID, andSearch, start, end,
-				orderByComparator));
+				companyId, groupId, userId, userName, createDateGT,
+				createDateLT, eventType, className, classPK, clientHost,
+				clientIP, serverName, serverPort, sessionID, andSearch, start,
+				end, orderByComparator));
 	}
 
 	@Override
@@ -83,15 +84,16 @@ public class AuditEventManagerImpl implements AuditEventManager {
 
 	@Override
 	public int getAuditEventsCount(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch) {
+		long companyId, long groupId, long userId, String userName,
+		Date createDateGT, Date createDateLT, String eventType,
+		String className, String classPK, String clientHost, String clientIP,
+		String serverName, int serverPort, String sessionID,
+		boolean andSearch) {
 
 		return _auditEventLocalService.getAuditEventsCount(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch);
+			companyId, groupId, userId, userName, createDateGT, createDateLT,
+			eventType, className, classPK, clientHost, clientIP, serverName,
+			serverPort, sessionID, andSearch);
 	}
 
 	private AuditEvent _createAuditEvent(

@@ -188,6 +188,34 @@ definition {
 		}
 	}
 
+	macro configureCrawlerUserAgents {
+		if (isSet(removeCrawlerUserAgent)) {
+			Click(
+				key_crawlerUserAgent = ${removeCrawlerUserAgent},
+				locator1 = "Redirect#CRAWLER_USER_AGENT_REMOVE");
+
+			SystemSettings.saveConfiguration();
+
+			AssertElementNotPresent(
+				key_crawlerUserAgent = ${removeCrawlerUserAgent},
+				locator1 = "Redirect#CRAWLER_USER_AGENT_REMOVE");
+		}
+
+		if (isSet(addCrawlerUserAgent)) {
+			Click(locator1 = "Redirect#CRAWLER_USER_AGENT_DUPLICATE_LAST");
+
+			Type(
+				locator1 = "Redirect#CRAWLER_USER_AGENT_INPUT_LAST",
+				value1 = ${addCrawlerUserAgent});
+
+			SystemSettings.saveConfiguration();
+
+			AssertElementPresent(
+				key_crawlerUserAgent = ${addCrawlerUserAgent},
+				locator1 = "Redirect#CRAWLER_USER_AGENT_REMOVE");
+		}
+	}
+
 	macro configureFriendlyURLRedirection {
 		var baseURL = ${baseURL};
 

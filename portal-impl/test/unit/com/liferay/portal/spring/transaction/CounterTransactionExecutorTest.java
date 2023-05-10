@@ -257,7 +257,7 @@ public class CounterTransactionExecutorTest {
 	}
 
 	@Test
-	public void testTransactionHandlerMethods() throws Throwable {
+	public void testTransactionExecutorMethods() throws Throwable {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
 			new RecordPlatformTransactionManager();
 
@@ -267,21 +267,18 @@ public class CounterTransactionExecutorTest {
 		TransactionAttributeAdapter transactionAttributeAdapter =
 			_newTransactionAttributeAdapter(t -> t == appException);
 
-		TransactionHandler transactionHandler =
-			(TransactionHandler)transactionExecutor;
-
-		assertTransactionExecutorThreadLocal(transactionHandler, false);
+		assertTransactionExecutorThreadLocal(transactionExecutor, false);
 
 		TransactionStatusAdapter transactionStatusAdapter =
-			transactionHandler.start(transactionAttributeAdapter);
+			transactionExecutor.start(transactionAttributeAdapter);
 
-		assertTransactionExecutorThreadLocal(transactionHandler, true);
+		assertTransactionExecutorThreadLocal(transactionExecutor, true);
 
 		recordPlatformTransactionManager.verify(
 			transactionAttributeAdapter, null, null);
 
 		try {
-			transactionHandler.rollback(
+			transactionExecutor.rollback(
 				appException, transactionAttributeAdapter,
 				transactionStatusAdapter);
 
@@ -291,7 +288,7 @@ public class CounterTransactionExecutorTest {
 			Assert.assertSame(appException, exception);
 		}
 
-		assertTransactionExecutorThreadLocal(transactionHandler, false);
+		assertTransactionExecutorThreadLocal(transactionExecutor, false);
 
 		recordPlatformTransactionManager.verify(
 			transactionAttributeAdapter, null,
@@ -299,15 +296,15 @@ public class CounterTransactionExecutorTest {
 
 		recordPlatformTransactionManager.setRollbackTransactionStatus(null);
 
-		transactionStatusAdapter = transactionHandler.start(
+		transactionStatusAdapter = transactionExecutor.start(
 			transactionAttributeAdapter);
 
-		assertTransactionExecutorThreadLocal(transactionHandler, true);
+		assertTransactionExecutorThreadLocal(transactionExecutor, true);
 
-		transactionHandler.commit(
+		transactionExecutor.commit(
 			transactionAttributeAdapter, transactionStatusAdapter);
 
-		assertTransactionExecutorThreadLocal(transactionHandler, false);
+		assertTransactionExecutorThreadLocal(transactionExecutor, false);
 
 		recordPlatformTransactionManager.verify(
 			transactionAttributeAdapter,
@@ -315,7 +312,7 @@ public class CounterTransactionExecutorTest {
 	}
 
 	protected void assertTransactionExecutorThreadLocal(
-		TransactionHandler transactionHandler, boolean inTransaction) {
+		TransactionExecutor transactionExecutor, boolean inTransaction) {
 
 		Assert.assertNull(
 			TransactionExecutorThreadLocal.getCurrentTransactionExecutor());

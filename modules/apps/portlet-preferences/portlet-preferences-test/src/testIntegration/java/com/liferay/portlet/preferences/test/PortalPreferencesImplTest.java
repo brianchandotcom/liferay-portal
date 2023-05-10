@@ -91,7 +91,7 @@ public class PortalPreferencesImplTest {
 			_aopInvocationHandler, "_transactionInterceptor");
 
 		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
-			_transactionInterceptor, "_transactionHandler");
+			_transactionInterceptor, "_transactionExecutor");
 
 		_platformTransactionManager = ReflectionTestUtil.getFieldValue(
 			_originalTransactionExecutor, "_platformTransactionManager");
@@ -402,7 +402,7 @@ public class PortalPreferencesImplTest {
 					2,
 					() -> {
 						ReflectionTestUtil.setFieldValue(
-							_transactionInterceptor, "_transactionHandler",
+							_transactionInterceptor, "_transactionExecutor",
 							new SynchronizedTransactionExecutor(_testOwnerId));
 
 						_aopInvocationHandler.setTarget(
@@ -469,7 +469,7 @@ public class PortalPreferencesImplTest {
 				@Override
 				public void run() {
 					ReflectionTestUtil.setFieldValue(
-						_transactionInterceptor, "_transactionHandler",
+						_transactionInterceptor, "_transactionExecutor",
 						_originalTransactionExecutor);
 
 					_aopInvocationHandler.setTarget(

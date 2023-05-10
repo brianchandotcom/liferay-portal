@@ -219,11 +219,11 @@ public class DefaultTransactionExecutorTest
 
 	@Override
 	protected void assertTransactionExecutorThreadLocal(
-		TransactionHandler transactionHandler, boolean inTransaction) {
+		TransactionExecutor transactionExecutor, boolean inTransaction) {
 
 		if (inTransaction) {
 			Assert.assertSame(
-				transactionHandler,
+				transactionExecutor,
 				TransactionExecutorThreadLocal.getCurrentTransactionExecutor());
 		}
 		else {

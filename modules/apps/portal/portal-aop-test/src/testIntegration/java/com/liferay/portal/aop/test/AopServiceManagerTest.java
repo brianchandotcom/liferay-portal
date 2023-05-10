@@ -16,6 +16,7 @@ package com.liferay.portal.aop.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -26,7 +27,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
-import com.liferay.portal.spring.transaction.TransactionHandler;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionStatusAdapter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -55,6 +56,8 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 import org.osgi.service.log.LogService;
+
+import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author Preston Crary
@@ -97,13 +100,13 @@ public class AopServiceManagerTest {
 			_bundleContext.registerService(
 				AopService.class, new TestServiceImpl(), properties);
 
-		TestTransactionHandler testTransactionHandler =
-			new TestTransactionHandler();
+		TestTransactionExecutor testTransactionExecutor =
+			new TestTransactionExecutor();
 
-		ServiceRegistration<TransactionHandler>
+		ServiceRegistration<TransactionExecutor>
 			transactionExecutorServiceRegistration =
 				_bundleContext.registerService(
-					TransactionHandler.class, testTransactionHandler,
+					TransactionExecutor.class, testTransactionExecutor,
 					properties);
 
 		ServiceReference<TestService> testServiceServiceReference =
@@ -120,11 +123,11 @@ public class AopServiceManagerTest {
 
 			Assert.assertTrue(ProxyUtil.isProxyClass(testService.getClass()));
 
-			Assert.assertFalse(testTransactionHandler._called);
+			Assert.assertFalse(testTransactionExecutor._called);
 
 			Assert.assertSame(testService, testService.getEnclosingAopProxy());
 
-			Assert.assertTrue(testTransactionHandler._called);
+			Assert.assertTrue(testTransactionExecutor._called);
 
 			properties.put("key", "value2");
 
@@ -334,12 +337,27 @@ public class AopServiceManagerTest {
 
 	}
 
-	private static class TestTransactionHandler implements TransactionHandler {
+	private static class TestTransactionExecutor
+		implements TransactionExecutor {
 
 		@Override
 		public void commit(
 			TransactionAttributeAdapter transactionAttributeAdapter,
 			TransactionStatusAdapter transactionStatusAdapter) {
+		}
+
+		@Override
+		public <T> T execute(
+				TransactionAttributeAdapter transactionAttributeAdapter,
+				UnsafeSupplier<T, Throwable> unsafeSupplier)
+			throws Throwable {
+
+			return null;
+		}
+
+		@Override
+		public PlatformTransactionManager getPlatformTransactionManager() {
+			return null;
 		}
 
 		@Override

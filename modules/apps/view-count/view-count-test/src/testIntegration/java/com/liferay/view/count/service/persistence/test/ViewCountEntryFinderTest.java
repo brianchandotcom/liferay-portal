@@ -101,7 +101,7 @@ public class ViewCountEntryFinderTest {
 
 		DefaultTransactionExecutor transactionExecutor =
 			ReflectionTestUtil.getFieldValue(
-				transactionInterceptor, "_transactionHandler");
+				transactionInterceptor, "_transactionExecutor");
 
 		List<Callable<Void>> callables = new ArrayList<>(_INCREMENTS_COUNT);
 

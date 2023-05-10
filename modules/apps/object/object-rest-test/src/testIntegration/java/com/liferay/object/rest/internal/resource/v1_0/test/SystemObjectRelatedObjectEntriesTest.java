@@ -15,14 +15,17 @@
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.UserAccountTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -102,6 +106,18 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_userSystemObjectDefinition =
 			_objectDefinitionLocalService.fetchSystemObjectDefinition(
 				_userSystemObjectDefinitionManager.getName());
+
+		_userSystemObjectField = ObjectFieldTestUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, _userSystemObjectDefinition,
+			_SYSTEM_OBJECT_FIELD_NAME);
+
+		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE
+			).build());
 	}
 
 	@After
@@ -110,7 +126,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 			ObjectRelationshipLocalServiceUtil.
 				deleteObjectRelationshipMappingTableValues(
 					objectRelationship.getObjectRelationshipId(),
-					_objectEntry.getPrimaryKey(), _user.getUserId());
+					_objectEntry.getPrimaryKey(),
+					_userAccountJSONObject.getLong("id"));
 
 			ObjectRelationshipLocalServiceUtil.deleteObjectRelationship(
 				objectRelationship);
@@ -129,13 +146,13 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
-			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_testGetSystemObjectRelatedObjectEntries(
 			null, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -143,7 +160,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			1, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -151,20 +168,20 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			2, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()}
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
 		_testGetSystemObjectRelatedObjectEntries(
 			5, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -172,11 +189,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			6, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -184,14 +201,14 @@ public class SystemObjectRelatedObjectEntriesTest {
 		// Many to many with custom object definition (other side)
 
 		objectRelationship = _addObjectRelationship(
-			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
-			_objectEntry.getPrimaryKey(),
+			_userSystemObjectDefinition, _objectDefinition,
+			_userAccountJSONObject.getLong("id"), _objectEntry.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_testGetSystemObjectRelatedObjectEntries(
 			null, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -199,7 +216,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			1, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -207,20 +224,20 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			2, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()}
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
 
 		_testGetSystemObjectRelatedObjectEntries(
 			5, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -228,11 +245,11 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			6, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.MANY_TO_MANY);
@@ -244,7 +261,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
-			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
@@ -270,14 +287,14 @@ public class SystemObjectRelatedObjectEntriesTest {
 		throws Exception {
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
-			_objectEntry.getPrimaryKey(),
+			_userSystemObjectDefinition, _objectDefinition,
+			_userAccountJSONObject.getLong("id"), _objectEntry.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_testGetSystemObjectRelatedObjectEntries(
 			null, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
@@ -285,7 +302,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			1, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
@@ -293,9 +310,9 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testGetSystemObjectRelatedObjectEntries(
 			2, objectRelationship.getName(),
 			new String[][] {
-				{"externalReferenceCode", _user.getExternalReferenceCode()},
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE},
 				{_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE},
-				{"externalReferenceCode", _user.getExternalReferenceCode()}
+				{_SYSTEM_OBJECT_FIELD_NAME, _SYSTEM_OBJECT_FIELD_VALUE}
 			},
 			Type.ONE_TO_MANY);
 	}
@@ -426,7 +443,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
-			_objectEntry.getPrimaryKey(), _user.getUserId(),
+			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
@@ -620,7 +637,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 	private String _getLocation(String name) {
 		return String.format(
-			"%s/%d?nestedFields=%s", _getLocation(), _user.getUserId(), name);
+			"%s/%d?nestedFields=%s", _getLocation(),
+			_userAccountJSONObject.getLong("id"), name);
 	}
 
 	private JSONObject _getObjectEntryByExternalReferenceCodeJSONObject(
@@ -678,8 +696,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		String endpoint = String.format(
 			"%s/%d?nestedFields=%s",
-			jaxRsApplicationDescriptor.getRESTContextPath(), _user.getUserId(),
-			nestedFieldName);
+			jaxRsApplicationDescriptor.getRESTContextPath(),
+			_userAccountJSONObject.getLong("id"), nestedFieldName);
 
 		if (nestedFieldDepth != null) {
 			endpoint += "&nestedFieldsDepth=" + nestedFieldDepth;
@@ -826,6 +844,12 @@ public class SystemObjectRelatedObjectEntriesTest {
 	private static final String _OBJECT_FIELD_VALUE =
 		RandomTestUtil.randomString();
 
+	private static final String _SYSTEM_OBJECT_FIELD_NAME =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _SYSTEM_OBJECT_FIELD_VALUE =
+		RandomTestUtil.randomString();
+
 	private ObjectDefinition _objectDefinition;
 
 	@Inject
@@ -844,8 +868,12 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_systemObjectDefinitionManagerRegistry;
 
 	private User _user;
+	private JSONObject _userAccountJSONObject;
 	private ObjectDefinition _userSystemObjectDefinition;
 	private SystemObjectDefinitionManager _userSystemObjectDefinitionManager;
+
+	@DeleteAfterTestRun
+	private ObjectField _userSystemObjectField;
 
 	private enum Type {
 

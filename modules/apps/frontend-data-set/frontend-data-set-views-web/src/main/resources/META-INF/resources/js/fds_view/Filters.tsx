@@ -359,6 +359,29 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			),
 		});
 
+	const handleDelete = async ({item}: {item: Filter}) => {
+		const response = await fetch(
+			`${
+				item.type === 'date-time'
+					? API_URL.FDS_DATE_FILTERS
+					: API_URL.FDS_DYNAMIC_FILTERS
+			}/${item.id}`,
+			{
+				method: 'DELETE',
+			}
+		);
+
+		if (!response.ok) {
+			alertFailed();
+
+			return null;
+		}
+
+		alertSuccess();
+
+		setFilters(filters.filter((filter: Filter) => filter.id !== item.id));
+	};
+
 	useEffect(() => {
 		const getFilters = async () => {
 			const response = await fetch(
@@ -417,6 +440,13 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 	return (
 		<ClayLayout.ContainerFluid>
 			<OrderableTable
+				actions={[
+					{
+						icon: 'trash',
+						label: Liferay.Language.get('delete'),
+						onClick: handleDelete,
+					},
+				]}
 				disableSave={!newFiltersOrder.length}
 				fields={[
 					{

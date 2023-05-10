@@ -326,9 +326,9 @@ public class LayoutAction implements Action {
 
 					AuditMessage auditMessage = new AuditMessage(
 						ActionKeys.VIEW, realUser.getCompanyId(),
-						realUser.getUserId(), realUser.getFullName(),
-						Layout.class.getName(),
-						String.valueOf(layout.getPlid()), null,
+						layout.getGroupId(), realUser.getUserId(),
+						realUser.getFullName(), Layout.class.getName(),
+						String.valueOf(layout.getPlid()), null, null,
 						additionalInfoJSONObject);
 
 					AuditRouterUtil.route(auditMessage);

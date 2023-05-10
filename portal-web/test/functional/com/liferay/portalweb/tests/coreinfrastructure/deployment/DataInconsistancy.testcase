@@ -1,0 +1,49 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Deployment";
+
+	@description = "This is a use case for LPS-142128. Verify restarting with a missing resource permission for a child widget page does not break the portal."
+	@priority = 3
+	test RestartWithMissingChildPagePermission {
+		property database.types = "mysql";
+		property test.name.skip.portal.instance = "DataInconsistancy#RestartWithMissingChildPagePermission";
+
+		task ("Given a widget page with a child page") {
+			User.firstLoginPG();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "ParentPage");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "ChildPage",
+				parentLayoutName = "ParentPage");
+		}
+
+		task ("When the resource permission for the child page is deleted from the database") {
+			var sQLStatement = "delete from lportal.ResourcePermission where primKeyId in (select plid from lportal.Layout where name like '%ChildPage%') and name = 'com.liferay.portal.kernel.model.Layout';";
+
+			SQL.executeMySQLStatement(mysqlStatement = ${sQLStatement});
+		}
+
+		task ("And the portal is restarted") {
+			User.logoutPG();
+
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the user can still login without issue") {
+			User.firstLoginUI();
+
+			Smoke.viewWelcomeContentPage();
+		}
+	}
+
+}

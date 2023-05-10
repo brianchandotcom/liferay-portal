@@ -33,6 +33,17 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	/>
 </liferay-frontend:fieldset>
 
+<liferay-frontend:fieldset
+	collapsed="<%= false %>"
+	collapsible="<%= true %>"
+	label="css-client-extensions"
+>
+	<react:component
+		module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
+		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
+	/>
+</liferay-frontend:fieldset>
+
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-166479") %>'>
 	<liferay-frontend:fieldset
 		collapsed="<%= false %>"
@@ -45,17 +56,6 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		/>
 	</liferay-frontend:fieldset>
 </c:if>
-
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="css-client-extensions"
->
-	<react:component
-		module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
-		props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-	/>
-</liferay-frontend:fieldset>
 
 <liferay-frontend:fieldset
 	collapsed="<%= false %>"

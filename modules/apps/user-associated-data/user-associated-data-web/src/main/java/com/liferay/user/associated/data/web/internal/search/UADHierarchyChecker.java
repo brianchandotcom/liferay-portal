@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import javax.portlet.PortletResponse;
@@ -50,7 +51,7 @@ public class UADHierarchyChecker extends EmptyOnClickRowChecker {
 
 				uadDisplay.get(primaryKey);
 
-				name += uadDisplay.getTypeKey();
+				name += AUIUtil.normalizeId(uadDisplay.getTypeKey());
 
 				return super.getRowCheckBox(
 					httpServletRequest, checked, disabled, name, value,

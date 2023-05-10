@@ -65,7 +65,7 @@
 	else {
 		autoAnonymizeURL.setParameter(ActionRequest.ACTION_NAME, "/user_associated_data/anonymize_uad_entities");
 
-		String typeKey = uadEntity.getTypeKey();
+		String typeKey = AUIUtil.normalizeId(uadEntity.getTypeKey());
 
 		autoAnonymizeURL.setParameter("primaryKey__" + typeKey, String.valueOf(uadEntity.getPrimaryKey()));
 

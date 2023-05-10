@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -172,6 +173,8 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	protected String[] getPrimaryKeys(
 		ActionRequest actionRequest, String entityType) {
+
+		entityType = AUIUtil.normalizeId(entityType);
 
 		String primaryKey = ParamUtil.getString(
 			actionRequest, "primaryKey__" + entityType);

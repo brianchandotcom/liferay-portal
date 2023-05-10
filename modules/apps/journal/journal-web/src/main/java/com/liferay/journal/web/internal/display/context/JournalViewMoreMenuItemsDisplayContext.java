@@ -116,7 +116,9 @@ public class JournalViewMoreMenuItemsDisplayContext {
 				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());
 
-		Collections.sort(ddmStructures, _getOrderByComparator());
+		if (Objects.equals(getOrderByCol(), "name")) {
+			Collections.sort(ddmStructures, _getOrderByComparator());
+		}
 
 		searchContainer.setResultsAndTotal(
 			() -> ddmStructures,

@@ -22,9 +22,15 @@ import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.junit.ParallelParameterized;
 import com.liferay.poshi.runner.logger.ParallelPrintStream;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +44,7 @@ import java.util.logging.Logger;
 
 import org.dom4j.Element;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -162,13 +169,57 @@ public class ParallelPoshiRunner extends PoshiRunner {
 		PrintStream originalSystemOutPrintStream =
 			systemOutParallelPrintStream.getOriginalPrintStream();
 
-		Thread thread = Thread.currentThread();
-
 		originalSystemOutPrintStream.println(
 			"Writing log for " + getTestNamespacedClassCommandName() + " to " +
-				thread.getName() + ".log");
+				ParallelPrintStream.getLogFile());
 
 		super.setUp();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Throwable {
+		try {
+			super.tearDown();
+		}
+		catch (Throwable throwable) {
+			throw throwable;
+		}
+		finally {
+			String testName = getTestNamespacedClassCommandName();
+
+			testName = testName.replace("#", "_");
+
+			File file = new File("test-results/" + testName + "/output.log");
+
+			File logFile = ParallelPrintStream.getLogFile();
+
+			if (!file.exists()) {
+				Files.copy(logFile.toPath(), file.toPath());
+			}
+			else {
+				FileWriter fileWriter = new FileWriter(file, true);
+
+				try (BufferedReader bufferedReader = new BufferedReader(
+						new FileReader(logFile))) {
+
+					String line = bufferedReader.readLine();
+
+					while (line != null) {
+						fileWriter.write("\n");
+						fileWriter.write(line);
+						fileWriter.flush();
+
+						line = bufferedReader.readLine();
+					}
+				}
+				catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+			}
+
+			ParallelPrintStream.resetPrintStream();
+		}
 	}
 
 	public static class CustomConsoleHandler extends ConsoleHandler {

@@ -14,7 +14,7 @@
 
 package com.liferay.poshi.runner.logger;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -28,8 +28,38 @@ import java.util.Map;
  */
 public class ParallelPrintStream extends PrintStream {
 
+	public static File getLogFile() {
+		Thread currentThread = Thread.currentThread();
+
+		return _logFiles.get(currentThread.getName());
+	}
+
 	public static PrintStream getPrintStream(String name) {
 		return _printStreams.get(name);
+	}
+
+	public static void resetPrintStream() {
+		Thread thread = Thread.currentThread();
+
+		PrintStream printStream = _printStreams.get(thread.getName());
+
+		printStream.close();
+
+		_printStreams.remove(thread.getName());
+
+		File logFile = _logFiles.get(thread.getName());
+
+		logFile.delete();
+
+		_logFiles.remove(thread.getName());
+
+		try {
+			_addPrintStream();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to reset log file: " + logFile, ioException);
+		}
 	}
 
 	public ParallelPrintStream(PrintStream printStream) {
@@ -266,6 +296,22 @@ public class ParallelPrintStream extends PrintStream {
 		printStream.write(i);
 	}
 
+	private static PrintStream _addPrintStream() throws IOException {
+		Thread currentThread = Thread.currentThread();
+
+		String currentThreadName = currentThread.getName();
+
+		File file = new File("test-results/" + currentThreadName + ".log");
+
+		_logFiles.put(currentThreadName, file.getCanonicalFile());
+
+		PrintStream printStream = new PrintStream(file.getCanonicalPath());
+
+		_printStreams.put(currentThreadName, printStream);
+
+		return printStream;
+	}
+
 	private PrintStream _getPrintStream() {
 		Thread currentThread = Thread.currentThread();
 
@@ -282,19 +328,15 @@ public class ParallelPrintStream extends PrintStream {
 				return _originalPrintStream;
 			}
 
-			String fileName = "test-results/" + currentThreadName + ".log";
-
-			PrintStream printStream = new PrintStream(fileName);
-
-			_printStreams.put(currentThreadName, printStream);
-
-			return printStream;
+			return _addPrintStream();
 		}
-		catch (FileNotFoundException fileNotFoundException) {
+		catch (IOException ioException) {
 			return _originalPrintStream;
 		}
 	}
 
+	private static final Map<String, File> _logFiles =
+		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, PrintStream> _printStreams =
 		Collections.synchronizedMap(new HashMap<>());
 

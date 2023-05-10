@@ -10,7 +10,7 @@ import HelloWorld from './routes/hello-world/pages/HelloWorld';
 
 import './common/styles/index.scss';
 
-const App = ({oAuth2Client, route}) => {
+const App = ({oAuth2ClientSpringBoot, route}) => {
 	if (route === 'hello-bar') {
 		return <HelloBar />;
 	}
@@ -25,7 +25,7 @@ const App = ({oAuth2Client, route}) => {
 
 			{Liferay.ThemeDisplay.isSignedIn() && (
 				<div>
-					<DadJoke oAuth2Client={oAuth2Client} />
+					<DadJoke oAuth2Client={oAuth2ClientSpringBoot} />
 				</div>
 			)}
 		</div>
@@ -37,8 +37,8 @@ class WebComponent extends HTMLElement {
 		super();
 
 		try {
-			this.oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-				'liferay-sample-oauth-application-user-agent'
+			this.oAuth2ClientSpringBoot = Liferay.OAuth2Client.FromUserAgentApplication(
+				'liferay-sample-etc-spring-boot-oauth-application-user-agent'
 			);
 		}
 		catch (error) {
@@ -49,7 +49,7 @@ class WebComponent extends HTMLElement {
 	connectedCallback() {
 		createRoot(this).render(
 			<App
-				oAuth2Client={this.oAuth2Client}
+				oAuth2Client={this.oAuth2ClientSpringBoot}
 				route={this.getAttribute('route')}
 			/>,
 			this

@@ -90,9 +90,9 @@ public class ElasticsearchIndexSearcherTest {
 				searchRequest, searchContext, query);
 
 		searchSearchRequest.setSize(0);
-		searchSearchRequest.setStart(0);
 		searchSearchRequest.setSorts(searchContext.getSorts());
 		searchSearchRequest.setSorts(searchRequest.getSorts());
+		searchSearchRequest.setStart(0);
 		searchSearchRequest.setStats(searchContext.getStats());
 
 		Assert.assertTrue(searchSearchRequest.isBasicFacetSelection());

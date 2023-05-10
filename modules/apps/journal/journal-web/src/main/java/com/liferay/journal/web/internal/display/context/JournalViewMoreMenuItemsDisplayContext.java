@@ -104,18 +104,26 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		searchContainer.setOrderByComparator(_getOrderByComparator());
 		searchContainer.setOrderByType(getOrderByType());
 
+		long[] currentAndAncestorSiteAndDepotGroupIds =
+			SiteConnectedGroupGroupProviderUtil.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					_themeDisplay.getScopeGroupId(), true);
+
 		List<DDMStructure> ddmStructures =
 			JournalFolderServiceUtil.searchDDMStructures(
 				_themeDisplay.getCompanyId(),
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true),
+				currentAndAncestorSiteAndDepotGroupIds,
 				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());
 
 		Collections.sort(ddmStructures, _getOrderByComparator());
 
-		searchContainer.setResultsAndTotal(ddmStructures);
+		searchContainer.setResultsAndTotal(
+			() -> ddmStructures,
+			JournalFolderServiceUtil.searchDDMStructuresCount(
+				_themeDisplay.getCompanyId(),
+				currentAndAncestorSiteAndDepotGroupIds, _folderId,
+				_restrictionType, _getKeywords()));
 
 		_ddmStructuresSearchContainer = searchContainer;
 

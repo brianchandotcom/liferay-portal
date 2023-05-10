@@ -1,9 +1,9 @@
 [
     {
-		"key": "test-commerce-specification-key-2",
+		"key": "test-commerce-specification-key-1",
 		"priority": 1,
 		"title": {
-			"en_US": "Test Commerce Specification 2"
+			"en_US": "Test Commerce Specification 1"
 		}
 	}
 ]

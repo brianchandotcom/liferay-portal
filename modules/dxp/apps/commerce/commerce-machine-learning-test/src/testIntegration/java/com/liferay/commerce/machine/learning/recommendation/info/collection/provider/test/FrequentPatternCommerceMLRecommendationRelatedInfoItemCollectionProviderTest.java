@@ -20,10 +20,10 @@ import com.liferay.commerce.machine.learning.recommendation.FrequentPatternComme
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;

@@ -471,7 +471,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_TYPE_OPTIONS_BY_POSITION</td>
-	<td>//div[@class='dropdown-menu show']//ul[@class='list-unstyled']//input[@type='checkbox' and @value ='${key_checkboxValue}']</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//ul[@class='list-unstyled']//span[contains(text(), '${key_checkboxValue}')]</td>
 	<td></td>
 </tr>
 <tr>

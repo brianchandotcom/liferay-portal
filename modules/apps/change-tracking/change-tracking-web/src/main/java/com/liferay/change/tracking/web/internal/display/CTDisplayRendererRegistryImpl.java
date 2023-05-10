@@ -19,6 +19,7 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
@@ -59,8 +60,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Trong Tran
  */
 @Component(service = CTDisplayRendererRegistry.class)
-public class CTDisplayRendererRegistry {
+public class CTDisplayRendererRegistryImpl
+	implements CTDisplayRendererRegistry {
 
+	@Override
 	public <T extends BaseModel<T>> T fetchCTModel(
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		long modelClassNameId, long modelClassPK) {
@@ -83,6 +86,7 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
+	@Override
 	public <T extends BaseModel<T>> T fetchCTModel(
 		long modelClassNameId, long modelClassPK) {
 
@@ -92,6 +96,7 @@ public class CTDisplayRendererRegistry {
 			modelClassPK);
 	}
 
+	@Override
 	public <T extends BaseModel<T>> Map<Serializable, T> fetchCTModelMap(
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		long modelClassNameId, Set<Long> primaryKeys) {
@@ -115,6 +120,7 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String[] getAvailableLanguageIds(
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode, T model,
 		long modelClassNameId) {
@@ -137,6 +143,7 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
+	@Override
 	public long getCtCollectionId(CTCollection ctCollection, CTEntry ctEntry)
 		throws PortalException {
 
@@ -158,6 +165,7 @@ public class CTDisplayRendererRegistry {
 		return ctCollection.getCtCollectionId();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends BaseModel<?>> CTDisplayRenderer<T> getCTDisplayRenderer(
 		long modelClassNameId) {
@@ -173,11 +181,13 @@ public class CTDisplayRendererRegistry {
 		return ctDisplayRenderer;
 	}
 
+	@Override
 	public CTService<?> getCTService(CTModel<?> ctModel) {
 		return _ctServiceServiceTrackerMap.getService(
 			_classNameLocalService.getClassNameId(ctModel.getModelClass()));
 	}
 
+	@Override
 	public CTSQLModeThreadLocal.CTSQLMode getCTSQLMode(
 		long ctCollectionId, CTEntry ctEntry) {
 
@@ -202,6 +212,7 @@ public class CTDisplayRendererRegistry {
 		return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String getDefaultLanguageId(
 		T model, long modelClassNameId) {
 
@@ -216,11 +227,13 @@ public class CTDisplayRendererRegistry {
 		return ctDisplayRenderer.getDefaultLanguageId(model);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends BaseModel<?>> CTDisplayRenderer<T> getDefaultRenderer() {
 		return (CTDisplayRenderer<T>)_defaultCTDisplayRenderer;
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String getEditURL(
 		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
 
@@ -237,6 +250,7 @@ public class CTDisplayRendererRegistry {
 			httpServletRequest, model, ctEntry.getModelClassNameId());
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String getEditURL(
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctsqlMode,
 		HttpServletRequest httpServletRequest, T model, long modelClassNameId) {
@@ -266,6 +280,7 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
+	@Override
 	public String getEntryDescription(
 		HttpServletRequest httpServletRequest, CTEntry ctEntry) {
 
@@ -295,6 +310,7 @@ public class CTDisplayRendererRegistry {
 			false);
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String getTitle(
 		long ctCollectionId, CTEntry ctEntry, Locale locale) {
 
@@ -316,6 +332,7 @@ public class CTDisplayRendererRegistry {
 			ctEntry.getModelClassNameId());
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String getTitle(
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		Locale locale, T model, long modelClassNameId) {
@@ -359,6 +376,7 @@ public class CTDisplayRendererRegistry {
 			model.getPrimaryKeyObj());
 	}
 
+	@Override
 	public <T extends BaseModel<T>> String getTypeName(
 		Locale locale, long modelClassNameId) {
 
@@ -391,6 +409,7 @@ public class CTDisplayRendererRegistry {
 		return name;
 	}
 
+	@Override
 	public <T extends BaseModel<T>> boolean isHideable(
 		T model, long modelClassNameId) {
 
@@ -443,7 +462,7 @@ public class CTDisplayRendererRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CTDisplayRendererRegistry.class);
+		CTDisplayRendererRegistryImpl.class);
 
 	@Reference
 	private BasePersistenceRegistry _basePersistenceRegistry;

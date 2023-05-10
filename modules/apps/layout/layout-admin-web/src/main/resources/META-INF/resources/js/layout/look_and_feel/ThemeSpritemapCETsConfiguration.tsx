@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {openSelectionModal} from 'frontend-js-web';
@@ -46,6 +47,17 @@ export default function ThemeSpritemapCETsConfiguration({
 
 	return (
 		<>
+			<ClayAlert displayType="info" title={Liferay.Language.get('info')}>
+				{Liferay.Language.get(
+					'to-add-or-edit-the-existing-spritemap-simply-copy-paste-and-make-changes-as-needed-to-your-registered-extension'
+				)}
+			</ClayAlert>
+
+			<p className="text-secondary">
+				{Liferay.Language.get(
+					'use-this-client-extension-to-fully-replace-the-default-spritemap-contained-in-the-theme'
+				)}
+			</p>
 			<ClayInput
 				name={`${portletNamespace}themeSpritemapCETExternalReferenceCode`}
 				type="hidden"

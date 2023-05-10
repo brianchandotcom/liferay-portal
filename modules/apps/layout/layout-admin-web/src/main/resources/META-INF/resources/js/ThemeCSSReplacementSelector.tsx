@@ -46,6 +46,12 @@ export default function ThemeCSSReplacementSelector({
 
 	return (
 		<>
+			<p className="text-secondary">
+				{Liferay.Language.get(
+					'use-this-client-extension-to-fully-replace-the-default-css-contained-in-the-theme'
+				)}
+			</p>
+
 			<ClayInput
 				name={`${portletNamespace}themeCSSCETExternalReferenceCode`}
 				type="hidden"

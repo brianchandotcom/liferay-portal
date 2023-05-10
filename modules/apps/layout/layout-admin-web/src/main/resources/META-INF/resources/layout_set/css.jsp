@@ -22,7 +22,16 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 %>
 
-<liferay-util:include page="/look_and_feel_theme_css.jsp" servletContext="<%= application %>" />
+<liferay-frontend:fieldset
+	collapsed="<%= false %>"
+	collapsible="<%= true %>"
+	label="theme-css-client-extension"
+>
+	<react:component
+		module="js/ThemeCSSReplacementSelector"
+		props="<%= layoutsAdminDisplayContext.getThemeCSSReplacementSelectorProps() %>"
+	/>
+</liferay-frontend:fieldset>
 
 <c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-166479") %>'>
 	<liferay-frontend:fieldset
@@ -30,21 +39,10 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		collapsible="<%= true %>"
 		label="theme-spritemap-client-extension"
 	>
-		<clay:alert
-			displayType="info"
-			message='<%= LanguageUtil.get(request, "to-add-or-edit-the-existing-spritemap-simply-copy-paste-and-make-changes-as-needed-to-your-registered-extension") %>'
+		<react:component
+			module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
+			props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
 		/>
-
-		<p class="text-secondary">
-			<liferay-ui:message key="use-this-client-extension-to-fully-replace-the-default-spritemap-contained-in-the-theme" />
-		</p>
-
-		<div>
-			<react:component
-				module="js/layout/look_and_feel/ThemeSpritemapCETsConfiguration"
-				props="<%= layoutLookAndFeelDisplayContext.getThemeSpritemapCETConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
-			/>
-		</div>
 	</liferay-frontend:fieldset>
 </c:if>
 

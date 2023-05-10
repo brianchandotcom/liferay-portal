@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:knowledge-base:knowledge-base-api")
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":core:petra:petra-function")

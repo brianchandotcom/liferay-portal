@@ -20,16 +20,19 @@ import com.liferay.dynamic.data.mapping.exception.FormInstanceNotPublishedExcept
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper.AddFormInstanceRecordMVCCommandHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
@@ -53,6 +56,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -118,6 +125,9 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_createDDMFormFieldOptionsFromDataProvider(
+			actionRequest, ddmForm, themeDisplay.getLocale());
 
 		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
 			_ddmFormEvaluator.evaluate(
@@ -200,6 +210,32 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		return ddmStructure.getDDMForm();
+	}
+
+	private void _createDDMFormFieldOptionsFromDataProvider(
+		ActionRequest actionRequest, DDMForm ddmForm, Locale locale) {
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(
+			_portal.getHttpServletRequest(actionRequest));
+		ddmFormFieldRenderingContext.setLocale(locale);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			if (Objects.equals(ddmFormField.getType(), "select") &&
+				Objects.equals(
+					ddmFormField.getDataSourceType(), "data-provider")) {
+
+				ddmFormField.setProperty(
+					"options",
+					_ddmFormFieldOptionsFactory.create(
+						ddmFormField, ddmFormFieldRenderingContext));
+			}
+		}
 	}
 
 	private String _getTimeZoneId(ThemeDisplay themeDisplay) {
@@ -292,6 +328,9 @@ public class AddFormInstanceRecordMVCActionCommand
 
 	@Reference
 	private DDMFormEvaluator _ddmFormEvaluator;
+
+	@Reference
+	private DDMFormFieldOptionsFactory _ddmFormFieldOptionsFactory;
 
 	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;

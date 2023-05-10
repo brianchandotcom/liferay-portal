@@ -71,8 +71,9 @@ definition {
 		for (var type : list ${typeList}) {
 			task ("Create a data report using analytics cloud API with invalid type") {
 				var curl = '''
-				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
-			''';
+					${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
+				''';
+
 				var apiResponse = JSONCurlUtil.get(${curl}, "$");
 			}
 
@@ -252,14 +253,14 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${totalValue},
-				expected = "2");
+				expected = 2);
 		}
 
 		task ("Get the id of the blog in the first position of the response") {
 			var blogId = ACApi.searchApiResponse(
 				apiDataResponse = ${apiResponse},
 				jsonQuery = "id",
-				resultPosition = 0);			
+				resultPosition = 0);
 		}
 
 		task ("Create a data report using analytics API for the specific blog chosen") {
@@ -346,7 +347,7 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${oldTotalValue},
-				expected = "2");
+				expected = 2);
 		}
 
 		task ("Get the id of the first individual") {

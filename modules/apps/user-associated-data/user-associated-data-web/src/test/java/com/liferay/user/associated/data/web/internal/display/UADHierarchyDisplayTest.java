@@ -18,8 +18,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.display.UADHierarchyDeclaration;
+import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +55,9 @@ public class UADHierarchyDisplayTest {
 			new DummyUADHierarchyDeclaration(
 				dummyEntryUADDisplay, dummyContainerUADDisplay);
 
-		_uadHierarchyDisplay = new UADHierarchyDisplay(uadHierarchyDeclaration);
+		_uadHierarchyDisplay = new UADHierarchyDisplay(
+			uadHierarchyDeclaration,
+			new DummyUADRegistry(dummyEntryUADDisplay));
 
 		_folderA = _dummyContainerService.create("dummyContainerA", _USER_ID);
 
@@ -117,8 +123,9 @@ public class UADHierarchyDisplayTest {
 	@Test
 	public void testFieldValueCount() throws Exception {
 		List<Object> items = _uadHierarchyDisplay.search(
-			DummyContainer.class, DummyService.DEFAULT_CONTAINER_ID, _USER_ID,
-			null, "", null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			DummyContainer.class.getName(), DummyService.DEFAULT_CONTAINER_ID,
+			_USER_ID, null, "", null, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 
 		for (Object item : items) {
 			Map<String, Object> fieldValues =
@@ -143,8 +150,9 @@ public class UADHierarchyDisplayTest {
 				_dummyContainerService.getEntities()) {
 
 			List<Object> items = _uadHierarchyDisplay.search(
-				DummyContainer.class, dummyContainer.getId(), _USER_ID, null,
-				"", "name", "asc", QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				DummyContainer.class.getName(), dummyContainer.getId(),
+				_USER_ID, null, "", "name", "asc", QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 			Assert.assertEquals(
 				items.toString(),
@@ -165,5 +173,30 @@ public class UADHierarchyDisplayTest {
 	private UADHierarchyDisplay _uadHierarchyDisplay;
 	private final Map<Long, Integer> _userFolderAndItemCountMap =
 		new HashMap<>();
+
+	private class DummyUADRegistry extends UADRegistry {
+
+		public DummyUADRegistry(UADDisplay<?> uadDisplay) {
+			_uadDisplay = uadDisplay;
+		}
+
+		@Override
+		public UADDisplay<?> getUADDisplay(String key) {
+			return _uadDisplay;
+		}
+
+		@Override
+		public UADDisplay<?> getUADDisplayByObjectInstance(Object object) {
+			return _uadDisplay;
+		}
+
+		@Override
+		public Collection<UADDisplay<?>> getUADDisplays() {
+			return Collections.singletonList(_uadDisplay);
+		}
+
+		private final UADDisplay<?> _uadDisplay;
+
+	}
 
 }

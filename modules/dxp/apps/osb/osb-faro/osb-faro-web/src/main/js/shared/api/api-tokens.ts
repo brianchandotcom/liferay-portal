@@ -1,10 +1,13 @@
 import sendRequest from 'shared/util/request';
 import {RESTParams} from 'shared/types';
 
-export function generate({groupId}: RESTParams) {
+export function generate({
+	expiresIn,
+	groupId
+}: RESTParams & {expiresIn: string}) {
 	return sendRequest({
 		method: 'POST',
-		path: `main/${groupId}/oauth2/tokens/new`
+		path: `main/${groupId}/oauth2/tokens/new?expiresIn=${expiresIn}`
 	});
 }
 

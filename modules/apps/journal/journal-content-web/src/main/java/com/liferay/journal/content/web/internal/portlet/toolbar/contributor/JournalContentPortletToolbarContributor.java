@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -128,7 +131,8 @@ public class JournalContentPortletToolbarContributor
 			_journalFolderService.getDDMStructures(
 				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0, 10,
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0,
+				_DEFAULT_MAX_DISPLAY_ITEMS,
 				new StructureCreateDateComparator());
 
 		JournalContentPortletInstanceConfiguration
@@ -184,7 +188,7 @@ public class JournalContentPortletToolbarContributor
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
-		if (count > 10) {
+		if (count > _DEFAULT_MAX_DISPLAY_ITEMS) {
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
 			urlMenuItem.setUseDialog(false);
@@ -235,6 +239,9 @@ public class JournalContentPortletToolbarContributor
 
 		return hasAddArticlePermission;
 	}
+
+	private static final int _DEFAULT_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.MENU_MAX_DISPLAY_ITEMS));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletToolbarContributor.class);

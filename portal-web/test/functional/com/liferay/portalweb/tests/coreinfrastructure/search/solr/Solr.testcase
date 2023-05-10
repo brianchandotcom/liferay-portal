@@ -50,9 +50,13 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Search Insights");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
+		Search.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -109,26 +113,17 @@ definition {
 	test SolrSmokeTest {
 		property test.name.skip.portal.instance = "Solr#SolrSmokeTest";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Orange",
 			threadSubject = "Apple");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Orange",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple");
+			dmDocumentTitle = "Apple",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -184,24 +179,17 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Orange",
 			threadSubject = "Apple");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Orange",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple");
+			dmDocumentTitle = "Apple",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -241,26 +229,19 @@ definition {
 		property solr.ssl.authentication.enabled = "true";
 		property test.name.skip.portal.instance = "Solr#SolrWithSSLAuthenticationSmokeTest";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Orange",
 			threadSubject = "Apple");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Orange",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple");
+			dmDocumentTitle = "Apple",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -35,7 +35,7 @@ import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceOrderNoteService;
+import com.liferay.commerce.service.CommerceOrderNoteLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -662,7 +662,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceOrderNote.class.getName(), actionRequest);
 
-			_commerceOrderNoteService.addCommerceOrderNote(
+			_commerceOrderNoteLocalService.addCommerceOrderNote(
 				commerceOrderId, content, restricted, serviceContext);
 		}
 	}
@@ -756,7 +756,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
-	private CommerceOrderNoteService _commerceOrderNoteService;
+	private CommerceOrderNoteLocalService _commerceOrderNoteLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

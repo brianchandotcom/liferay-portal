@@ -10,10 +10,11 @@
  */
 
 import {fireEvent, render, screen} from '@testing-library/react';
-import SearchBar from './';
+import {vi} from 'vitest';
+import SearchBar from '.';
 
 describe('Home: SearchBar', () => {
-	const functionMock = jest.fn();
+	const functionMock = vi.fn();
 
 	it('updates input while typing value', () => {
 		const searchProjectName = 'Test Account 01';

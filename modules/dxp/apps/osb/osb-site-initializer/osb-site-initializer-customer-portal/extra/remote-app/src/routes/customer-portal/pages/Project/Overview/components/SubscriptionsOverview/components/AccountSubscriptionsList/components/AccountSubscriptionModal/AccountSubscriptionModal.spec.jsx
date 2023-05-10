@@ -12,13 +12,15 @@
 import {MockedProvider} from '@apollo/client/testing';
 import '@testing-library/jest-dom';
 import {act, render, screen} from '@testing-library/react';
+import {vi} from 'vitest';
 import AccountSubscriptionModal from '.';
 import {GET_ORDER_ITEMS} from '../../../../../../../../../../../common/services/liferay/graphql/order-items/queries/useGetOrderItems';
 
 describe('Account Subscription Modal', () => {
-	const functionMock = jest.fn();
+	const functionMock = vi.fn();
+
 	const observerMock = {
-		dispatch: jest.fn(),
+		dispatch: vi.fn(),
 		mutation: [true, true],
 	};
 

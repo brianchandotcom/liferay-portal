@@ -11,12 +11,12 @@
 
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+import {vi} from 'vitest';
 import SwitchButton from '.';
 
 describe('SwitchButton', () => {
 	it('changes SlaCard when clicking the button', async () => {
-		const functionMock = jest.fn();
+		const functionMock = vi.fn();
 		const user = userEvent.setup();
 
 		render(<SwitchButton handleClick={functionMock} />);

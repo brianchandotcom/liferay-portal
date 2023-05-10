@@ -10,6 +10,7 @@
  */
 
 import {render, screen} from '@testing-library/react';
+import {vi} from 'vitest';
 import ProjectList from '.';
 
 describe('Project List', () => {
@@ -22,15 +23,16 @@ describe('Project List', () => {
 		totalCount: 6,
 	};
 
-	window.IntersectionObserver = jest.fn(() => ({
-		observer: jest.fn(),
-		unobserver: jest.fn(),
+	window.IntersectionObserver = vi.fn(() => ({
+		observer: vi.fn(),
+		unobserver: vi.fn(),
 	}));
 
 	it('displays "results not found" message if there is no project to show', () => {
 		render(<ProjectList />);
 
 		const showNotFoundMessage = screen.getByText(/no results found/i);
+
 		expect(showNotFoundMessage).toBeInTheDocument();
 	});
 

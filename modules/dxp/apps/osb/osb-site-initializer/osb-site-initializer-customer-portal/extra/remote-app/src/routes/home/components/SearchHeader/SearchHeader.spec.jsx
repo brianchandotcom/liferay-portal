@@ -9,10 +9,11 @@
  * distribution rights of the Software.
  */
 import {render, screen} from '@testing-library/react';
+import {vi} from 'vitest';
 import SearchHeader from '.';
 
 describe('Home: SearchHeader', () => {
-	const functionMock = jest.fn();
+	const functionMock = vi.fn();
 
 	it('displays one project when there is just one result found', () => {
 		render(<SearchHeader count={1} onSearchSubmit={functionMock} />);

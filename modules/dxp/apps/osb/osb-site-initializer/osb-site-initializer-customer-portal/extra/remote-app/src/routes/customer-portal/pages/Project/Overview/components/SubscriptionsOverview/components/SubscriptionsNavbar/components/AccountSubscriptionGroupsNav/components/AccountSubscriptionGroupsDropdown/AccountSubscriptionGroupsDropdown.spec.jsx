@@ -11,19 +11,20 @@
 
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {vi} from 'vitest';
 import AccountSubscriptionGroupsDropdown from '.';
 
-describe('Account Subscription Dropdown', () => {
-	const functionMock = jest.fn();
+const accountSubscriptionGroups = [
+	{
+		name: 'account test',
+	},
+	{
+		name: 'account test 2',
+	},
+];
 
-	const accountSubscriptionGroups = [
-		{
-			name: 'account test',
-		},
-		{
-			name: 'account test 2',
-		},
-	];
+describe('Account Subscription Dropdown', () => {
+	const functionMock = vi.fn();
 
 	it('Change Subscription With the user click in Dropdown', async () => {
 		const user = userEvent.setup();
@@ -39,7 +40,9 @@ describe('Account Subscription Dropdown', () => {
 		const accountSubscriptionGroupsDropdown = screen.getByTestId(
 			'subscriptionDropDown'
 		);
+
 		expect(accountSubscriptionGroupsDropdown).toBeInTheDocument();
+
 		await user.click(accountSubscriptionGroupsDropdown);
 
 		const accountSubscriptionGroupsFirstItem = screen.getByRole(
@@ -48,13 +51,16 @@ describe('Account Subscription Dropdown', () => {
 				name: 'account test',
 			}
 		);
+
 		expect(accountSubscriptionGroupsFirstItem).toBeInTheDocument();
+
 		await user.click(accountSubscriptionGroupsDropdown);
 
 		const accountSubscriptionGroupsSecondItem = screen.getByRole(
 			'menuitem',
 			{name: 'account test 2'}
 		);
+
 		expect(accountSubscriptionGroupsSecondItem).toBeInTheDocument();
 	});
 });

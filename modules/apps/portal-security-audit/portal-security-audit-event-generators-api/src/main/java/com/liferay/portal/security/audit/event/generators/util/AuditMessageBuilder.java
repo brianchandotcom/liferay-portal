@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +37,14 @@ public class AuditMessageBuilder {
 
 	public static AuditMessage buildAuditMessage(
 		String eventType, String className, long classPK,
+		List<Attribute> attributes) {
+
+		return buildAuditMessage(
+			CompanyConstants.SYSTEM, eventType, className, classPK, attributes);
+	}
+
+	public static AuditMessage buildAuditMessage(
+		long groupId, String eventType, String className, long classPK,
 		List<Attribute> attributes) {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
@@ -71,8 +80,8 @@ public class AuditMessageBuilder {
 		}
 
 		return new AuditMessage(
-			eventType, companyId, realUserId, realUserName, className,
-			String.valueOf(classPK), null, additionalInfoJSONObject);
+			eventType, companyId, groupId, realUserId, realUserName, className,
+			String.valueOf(classPK), null, null, additionalInfoJSONObject);
 	}
 
 	private static JSONArray _getAttributesJSONArray(

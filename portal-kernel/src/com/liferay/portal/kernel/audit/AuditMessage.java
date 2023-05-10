@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -54,6 +55,7 @@ public class AuditMessage implements Serializable {
 		}
 
 		_companyId = jsonObject.getLong(_COMPANY_ID);
+		_groupId = jsonObject.getLong(_GROUP_ID);
 		_eventType = jsonObject.getString(_EVENT_TYPE);
 		_message = jsonObject.getString(_MESSAGE);
 
@@ -81,8 +83,8 @@ public class AuditMessage implements Serializable {
 		String eventType, long companyId, long userId, String userName) {
 
 		this(
-			eventType, companyId, userId, userName, null, null, null, null,
-			null);
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			null, null, null, null,null);
 	}
 
 	public AuditMessage(
@@ -90,8 +92,8 @@ public class AuditMessage implements Serializable {
 		String className, String classPK) {
 
 		this(
-			eventType, companyId, userId, userName, className, classPK, null,
-			null, null);
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, null,null, null);
 	}
 
 	public AuditMessage(
@@ -99,8 +101,8 @@ public class AuditMessage implements Serializable {
 		String className, String classPK, String message) {
 
 		this(
-			eventType, companyId, userId, userName, className, classPK, message,
-			null, null);
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, message,null, null);
 	}
 
 	public AuditMessage(
@@ -108,8 +110,19 @@ public class AuditMessage implements Serializable {
 		String className, String classPK, String message, Date timestamp,
 		JSONObject additionalInfoJSONObject) {
 
+		this(
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, message, timestamp, additionalInfoJSONObject);
+	}
+
+	public AuditMessage(
+		String eventType, long companyId, long groupId, long userId, String userName,
+		String className, String classPK, String message, Date timestamp,
+		JSONObject additionalInfoJSONObject) {
+
 		_eventType = eventType;
 		_companyId = companyId;
+		_groupId = groupId;
 		_userId = userId;
 		_userName = userName;
 		_className = className;
@@ -151,8 +164,8 @@ public class AuditMessage implements Serializable {
 		JSONObject additionalInfoJSONObject) {
 
 		this(
-			eventType, companyId, userId, userName, className, classPK, message,
-			null, additionalInfoJSONObject);
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, message,null, additionalInfoJSONObject);
 	}
 
 	public JSONObject getAdditionalInfo() {
@@ -181,6 +194,10 @@ public class AuditMessage implements Serializable {
 
 	public String getEventType() {
 		return _eventType;
+	}
+
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	public String getMessage() {
@@ -249,6 +266,10 @@ public class AuditMessage implements Serializable {
 
 	public void setEventType(String eventType) {
 		_eventType = eventType;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	public void setMessage(String message) {
@@ -343,6 +364,8 @@ public class AuditMessage implements Serializable {
 
 	private static final String _EVENT_TYPE = "eventType";
 
+	private static final String _GROUP_ID = "groupId";
+
 	private static final String _MESSAGE = "message";
 
 	private static final String _SERVER_NAME = "serverName";
@@ -370,6 +393,7 @@ public class AuditMessage implements Serializable {
 	private String _clientIP;
 	private long _companyId = -1;
 	private String _eventType;
+	private long _groupId = -1;
 	private String _message;
 	private String _serverName;
 	private int _serverPort;

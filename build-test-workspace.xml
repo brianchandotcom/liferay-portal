@@ -79,10 +79,10 @@
 					<if>
 						<available file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
 						<then>
-							<gradle-execute dir="${workspace.client.extension.dir}" task="deployPoshi" />
+							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deployPoshi" />
 						</then>
 						<else>
-							<gradle-execute dir="${workspace.client.extension.dir}" task="deploy" />
+							<gradle-execute dir="${project.dir}/workspaces/${workspace.name}" task=":client-extensions:@{workspace.client.extension.name}:deploy" />
 						</else>
 					</if>
 
@@ -120,14 +120,136 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-spring-boot-client-extension">
+		<attribute default="" name="spring.boot.startup.message" />
+		<attribute name="workspace.client.extension.name" />
+
+		<text name="application.properties" />
+
+		<sequential>
+			<local name="workspace.name" />
+
+			<propertyregex
+				input="@{workspace.client.extension.name}"
+				property="workspace.name"
+				regexp="(liferay-[^-]+)-.*"
+				replace="\1-workspace"
+			/>
+
+			<var name="workspace.client.extension.dir" unset="true" />
+
+			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
+
+			<delete file="${workspace.client.extension.dir}/application.properties" />
+
+			<echo file="${workspace.client.extension.dir}/application.properties">
+				@{application.properties}
+			</echo>
+
+			<parallel>
+				<daemons>
+					<gradle-execute dir="${workspace.client.extension.dir}" task="bootRun" />
+				</daemons>
+
+				<sequential>
+					<property name="spring.boot.startup.log" value="${project.dir}/spring-boot-startup-log" />
+
+					<delete file="${spring.boot.startup.log}" />
+
+					<record action="start" name="${spring.boot.startup.log}" />
+
+					<if>
+						<not>
+							<equals arg1="@{spring.boot.startup.message}" arg2="" />
+						</not>
+						<then>
+							<waitfor checkevery="1" checkeveryunit="second" maxwait="30" maxwaitunit="second" timeoutproperty="spring.boot.startup.timeout">
+								<resourcecontains
+									resource="${spring.boot.startup.log}"
+									substring="@{spring.boot.startup.message}"
+								/>
+							</waitfor>
+						</then>
+						<else>
+							<beanshell>
+								<![CDATA[
+									import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+									List propertiesFiles = new ArrayList();
+
+									propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "application.properties"));
+									propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "src/main/resources/application.properties"));
+									propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "src/main/resources/application-default.properties"));
+
+									Properties applicationProperties = JenkinsResultsParserUtil.getProperties(propertiesFiles.toArray(new File[0]));
+
+									project.setProperty("server.port", JenkinsResultsParserUtil.getProperty(applicationProperties, "server.port"));
+								]]>
+							</beanshell>
+
+							<if>
+								<isset property="server.port" />
+								<then>
+									<waitfor maxwait="120" maxwaitunit="second">
+										<socket port="${server.port}" server="localhost" />
+									</waitfor>
+								</then>
+							</if>
+						</else>
+					</if>
+
+					<record action="stop" name="${spring.boot.startup.log}" />
+
+					<delete file="${spring.boot.startup.log}" />
+				</sequential>
+			</parallel>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-workspace">
 		<sequential>
 			<deploy-workspace-client-extensions />
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-spring-boot-client-extension">
+		<attribute name="spring.boot.application.name" />
+
+		<sequential>
+			<if>
+				<not>
+					<equals arg1="@{spring.boot.application.name}" arg2="" />
+				</not>
+				<then>
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+							Process jpsProcess = JenkinsResultsParserUtil.executeBashCommands(new String[] {"jps | grep @{spring.boot.application.name}"});
+
+							String processOutput = JenkinsResultsParserUtil.readInputStream(jpsProcess.getInputStream());
+
+							for (String line : processOutput.split("\\n")) {
+								if (!line.matches("(\\d+) @{spring.boot.application.name}")) {
+									continue;
+								}
+
+								String processId = line.replaceAll("(\\d+) @{spring.boot.application.name}", "$1");
+
+								Process process = JenkinsResultsParserUtil.executeBashCommands(new String[] {"kill -9 " + processId});
+
+								System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
+							}
+						]]>
+					</beanshell>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-workspace">
 		<sequential>
+			<undeploy-workspace-client-extensions />
 		</sequential>
 	</macrodef>
 
@@ -166,6 +288,18 @@
 					</if>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="undeploy-workspace-client-extensions">
+		<sequential>
+			<propertycopy from="workspaces.client.extension.names[${workspace.name}]" name="workspaces.client.extension.names" override="true" />
+
+			<for list="${workspaces.client.extension.names}" param="workspace.client.extension.name">
+				<sequential>
+					<undeploy-workspace-client-extension workspace.client.extension.name="@{workspace.client.extension.name}" />
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 
@@ -213,12 +347,24 @@
 		<deploy-workspace-client-extension virtual.instance.id="${virtual.instance.id}" workspace.client.extension.name="${workspace.client.extension.name}" />
 	</target>
 
+	<target name="start-spring-boot-client-extension">
+		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
+
+		<start-spring-boot-client-extension workspace.client.extension.name="${workspace.client.extension.name}" />
+	</target>
+
 	<target name="start-workspace">
 		<fail message="Please set the property ${workspace.name}." unless="workspace.name" />
 
 		<stop-workspace />
 
 		<start-workspace />
+	</target>
+
+	<target name="stop-spring-boot-client-extension">
+		<fail message="Please set the property ${spring.boot.application.name}." unless="spring.boot.application.name" />
+
+		<stop-spring-boot-client-extension spring.boot.application.name="${spring.boot.application.name}" />
 	</target>
 
 	<target name="stop-workspace">

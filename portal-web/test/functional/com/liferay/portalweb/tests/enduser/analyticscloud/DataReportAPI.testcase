@@ -62,6 +62,7 @@ definition {
 	test RequestShowErrorMessageWhenUseInvalidType {
 		var typeList = "accounts,acqa";
 		var message = "The \"type\" query parameter must be either blogs, documents-and-media, forms, individuals, pages, segments, or web-contents.";
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		task ("Get the token value") {
 			var token = ACApi.getTokenValue();
@@ -69,9 +70,10 @@ definition {
 
 		for (var type : list ${typeList}) {
 			task ("Create a data report using analytics cloud API with invalid type") {
-				ACApi.createDataReport(
-					token = ${token},
-					type = ${type});
+				var curl = '''
+				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
+			''';
+				var apiResponse = JSONCurlUtil.get(${curl}, "$");
 			}
 
 			task ("Check if the API response is correct for the error case") {

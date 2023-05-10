@@ -144,7 +144,7 @@ const Table: React.FC<TableProps> = ({
 
 						{columns.map((column, index) => (
 							<ClayTable.Cell headingTitle key={index}>
-								<div className="d-flex justify-content-between">
+								<span className="d-flex justify-content-between">
 									<span
 										className={classNames({
 											'cursor-pointer': column.sorteable,
@@ -167,7 +167,7 @@ const Table: React.FC<TableProps> = ({
 											symbol={getSortSymbol(column.key)}
 										/>
 									)}
-								</div>
+								</span>
 							</ClayTable.Cell>
 						))}
 					</ClayTable.Row>

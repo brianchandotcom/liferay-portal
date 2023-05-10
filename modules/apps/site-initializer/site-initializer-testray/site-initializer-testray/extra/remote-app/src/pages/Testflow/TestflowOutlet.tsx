@@ -96,8 +96,9 @@ const TestflowOutlet = () => {
 
 	const {data: testrayTaskUser, revalidate: revalidateTaskUser} = useFetch<
 		APIResponse<TestrayTaskUser>
-	>(`${testrayTaskImpl.getNestedObject('taskToTasksUsers', taskId)}`, {
+	>(testrayTaskUsersImpl.resource, {
 		params: {
+			filter: SearchBuilder.eq('taskId', taskId),
 			nestedFields: 'task,user',
 		},
 		transformData: (response) =>

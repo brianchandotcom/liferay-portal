@@ -16,7 +16,6 @@ package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -148,13 +147,24 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_themeDisplay.getLocale(), getClass());
 
-		return LanguageUtil.format(
-			resourceBundle, "x-group-x",
-			new String[] {
-				assetVocabularyTitle,
-				ContentDashboardGroupUtil.getGroupName(
-					group, resourceBundle.getLocale())
-			});
+		try {
+			return LanguageUtil.format(
+				resourceBundle, "x-group-x",
+				new String[] {
+					assetVocabularyTitle,
+					group.getDescriptiveName(resourceBundle.getLocale())
+				});
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return LanguageUtil.format(
+				resourceBundle, "x-group-x",
+				new String[] {
+					assetVocabularyTitle,
+					group.getName(resourceBundle.getLocale())
+				});
+		}
 	}
 
 	private List<AssetVocabulary> _getAvailableAssetVocabularies() {

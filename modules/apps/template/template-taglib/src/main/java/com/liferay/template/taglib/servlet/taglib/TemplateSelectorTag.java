@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.taglib.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.template.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.template.taglib.internal.util.PortletDisplayTemplateUtil;
 
 import java.util.Collections;
 import java.util.List;

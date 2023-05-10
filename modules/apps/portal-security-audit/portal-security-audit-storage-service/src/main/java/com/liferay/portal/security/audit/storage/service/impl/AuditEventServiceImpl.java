@@ -17,6 +17,7 @@ package com.liferay.portal.security.audit.storage.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -81,13 +82,12 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			companyId, start, end, orderByComparator);
 	}
 
-	@Override
 	public List<AuditEvent> getAuditEvents(
-			long companyId, long userId, String userName, Date createDateGT,
-			Date createDateLT, String eventType, String className,
-			String classPK, String clientHost, String clientIP,
-			String serverName, int serverPort, String sessionID,
-			boolean andSearch, int start, int end)
+			long companyId, long groupId, long userId, String userName,
+			Date createDateGT, Date createDateLT, String eventType,
+			String className, String classPK, String clientHost,
+			String clientIP, String serverName, int serverPort,
+			String sessionID, boolean andSearch, int start, int end)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -101,18 +101,17 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		}
 
 		return auditEventLocalService.getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end);
+			companyId, groupId, userId, userName, createDateGT, createDateLT,
+			eventType, className, classPK, clientHost, clientIP, serverName,
+			serverPort, sessionID, andSearch, start, end);
 	}
 
-	@Override
 	public List<AuditEvent> getAuditEvents(
-			long companyId, long userId, String userName, Date createDateGT,
-			Date createDateLT, String eventType, String className,
-			String classPK, String clientHost, String clientIP,
-			String serverName, int serverPort, String sessionID,
-			boolean andSearch, int start, int end,
+			long companyId, long groupId, long userId, String userName,
+			Date createDateGT, Date createDateLT, String eventType,
+			String className, String classPK, String clientHost,
+			String clientIP, String serverName, int serverPort,
+			String sessionID, boolean andSearch, int start, int end,
 			OrderByComparator<AuditEvent> orderByComparator)
 		throws PortalException {
 
@@ -127,9 +126,43 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		}
 
 		return auditEventLocalService.getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end, orderByComparator);
+			companyId, groupId, userId, userName, createDateGT, createDateLT,
+			eventType, className, classPK, clientHost, clientIP, serverName,
+			serverPort, sessionID, andSearch, start, end, orderByComparator);
+	}
+
+	@Deprecated
+	@Override
+	public List<AuditEvent> getAuditEvents(
+			long companyId, long userId, String userName, Date createDateGT,
+			Date createDateLT, String eventType, String className,
+			String classPK, String clientHost, String clientIP,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch, int start, int end)
+		throws PortalException {
+
+		return getAuditEvents(
+			companyId, CompanyConstants.SYSTEM, userId, userName, createDateGT,
+			createDateLT, eventType, className, classPK, clientHost, clientIP,
+			serverName, serverPort, sessionID, andSearch, start, end);
+	}
+
+	@Deprecated
+	@Override
+	public List<AuditEvent> getAuditEvents(
+			long companyId, long userId, String userName, Date createDateGT,
+			Date createDateLT, String eventType, String className,
+			String classPK, String clientHost, String clientIP,
+			String serverName, int serverPort, String sessionID,
+			boolean andSearch, int start, int end,
+			OrderByComparator<AuditEvent> orderByComparator)
+		throws PortalException {
+
+		return getAuditEvents(
+			companyId, CompanyConstants.SYSTEM, userId, userName, createDateGT,
+			createDateLT, eventType, className, classPK, clientHost, clientIP,
+			serverName, serverPort, sessionID, andSearch, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -137,6 +170,21 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		return auditEventLocalService.getAuditEventsCount(companyId);
 	}
 
+	public int getAuditEventsCount(
+			long companyId, long groupId, long userId, String userName,
+			Date createDateGT, Date createDateLT, String eventType,
+			String className, String classPK, String clientHost,
+			String clientIP, String serverName, int serverPort,
+			String sessionID, boolean andSearch)
+		throws PortalException {
+
+		return auditEventLocalService.getAuditEventsCount(
+			companyId, groupId, userId, userName, createDateGT, createDateLT,
+			eventType, className, classPK, clientHost, clientIP, serverName,
+			serverPort, sessionID, andSearch);
+	}
+
+	@Deprecated
 	@Override
 	public int getAuditEventsCount(
 			long companyId, long userId, String userName, Date createDateGT,
@@ -146,10 +194,10 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			boolean andSearch)
 		throws PortalException {
 
-		return auditEventLocalService.getAuditEventsCount(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch);
+		return getAuditEventsCount(
+			companyId, CompanyConstants.SYSTEM, userId, userName, createDateGT,
+			createDateLT, eventType, className, classPK, clientHost, clientIP,
+			serverName, serverPort, sessionID, andSearch);
 	}
 
 	@Reference

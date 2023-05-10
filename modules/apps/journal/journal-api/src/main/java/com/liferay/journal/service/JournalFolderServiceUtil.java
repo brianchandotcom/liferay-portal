@@ -289,6 +289,15 @@ public class JournalFolderServiceUtil {
 			end, orderByComparator);
 	}
 
+	public static int searchDDMStructuresCount(
+			long companyId, long[] groupIds, long folderId, int restrictionType,
+			String keywords)
+		throws PortalException {
+
+		return getService().searchDDMStructuresCount(
+			companyId, groupIds, folderId, restrictionType, keywords);
+	}
+
 	public static void subscribe(long groupId, long folderId)
 		throws PortalException {
 

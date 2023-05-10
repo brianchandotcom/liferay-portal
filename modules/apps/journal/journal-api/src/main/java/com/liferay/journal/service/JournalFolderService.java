@@ -198,6 +198,12 @@ public interface JournalFolderService extends BaseService {
 			OrderByComparator<DDMStructure> orderByComparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchDDMStructuresCount(
+			long companyId, long[] groupIds, long folderId, int restrictionType,
+			String keywords)
+		throws PortalException;
+
 	public void subscribe(long groupId, long folderId) throws PortalException;
 
 	public void unsubscribe(long groupId, long folderId) throws PortalException;

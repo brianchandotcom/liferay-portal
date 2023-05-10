@@ -230,6 +230,13 @@ public interface DDMStructureService extends BaseService {
 			long structureId, String version, ServiceContext serviceContext)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> search(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status, int start, int end,
+			OrderByComparator<DDMStructure> orderByComparator)
+		throws PortalException;
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and
@@ -340,6 +347,12 @@ public interface DDMStructureService extends BaseService {
 		String description, String storageType, int type, int status,
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status)
+		throws PortalException;
 
 	/**
 	 * Returns the number of structures matching the groups and class name IDs,

@@ -287,6 +287,17 @@ public class DDMStructureServiceUtil {
 		getService().revertStructure(structureId, version, serviceContext);
 	}
 
+	public static List<DDMStructure> search(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status, int start, int end,
+			OrderByComparator<DDMStructure> orderByComparator)
+		throws PortalException {
+
+		return getService().search(
+			companyId, groupIds, classNameId, classPK, keywords, status, start,
+			end, orderByComparator);
+	}
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and
@@ -408,6 +419,15 @@ public class DDMStructureServiceUtil {
 		return getService().search(
 			companyId, groupIds, classNameId, name, description, storageType,
 			type, status, andOperator, start, end, orderByComparator);
+	}
+
+	public static int searchCount(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status)
+		throws PortalException {
+
+		return getService().searchCount(
+			companyId, groupIds, classNameId, classPK, keywords, status);
 	}
 
 	/**

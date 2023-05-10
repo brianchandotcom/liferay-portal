@@ -312,6 +312,19 @@ public class DDMStructureServiceWrapper
 			structureId, version, serviceContext);
 	}
 
+	@Override
+	public java.util.List<DDMStructure> search(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructure>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureService.search(
+			companyId, groupIds, classNameId, classPK, keywords, status, start,
+			end, orderByComparator);
+	}
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and
@@ -439,6 +452,16 @@ public class DDMStructureServiceWrapper
 		return _ddmStructureService.search(
 			companyId, groupIds, classNameId, name, description, storageType,
 			type, status, andOperator, start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmStructureService.searchCount(
+			companyId, groupIds, classNameId, classPK, keywords, status);
 	}
 
 	/**

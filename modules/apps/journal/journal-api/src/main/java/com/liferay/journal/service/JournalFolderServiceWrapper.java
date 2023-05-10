@@ -329,6 +329,16 @@ public class JournalFolderServiceWrapper
 	}
 
 	@Override
+	public int searchDDMStructuresCount(
+			long companyId, long[] groupIds, long folderId, int restrictionType,
+			String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _journalFolderService.searchDDMStructuresCount(
+			companyId, groupIds, folderId, restrictionType, keywords);
+	}
+
+	@Override
 	public void subscribe(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

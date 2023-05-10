@@ -228,4 +228,36 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Theme CSS 1"
+	@priority = 4
+	test LiferaySampleThemeCSS1Smoke {
+		property workspaces.client.extension.names = "liferay-sample-theme-css-1";
+
+		task ("Go to the Site Pages configuration screen in Page Admin") {
+			PagesAdmin.openConfigureSitePages();
+		}
+
+		task ("Add Liferay Sample Theme CSS 1 as a Theme CSS Client Extension for all pages") {
+			PagesAdmin.addThemeCSSExtension(extensionName = "Liferay Sample Theme CSS 1");
+
+			AssertTextEquals(
+				key_text = "Theme CSS",
+				locator1 = "TextInput#ANY",
+				value1 = "Liferay Sample Theme CSS 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Navigate to the home page and assert the header banner is using the image sourced from Liferay Sample Theme CSS 1") {
+			Navigator.openURL();
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			Css.assertCssCustomPropertyValue(
+				attribute = "background-image",
+				element = "//header[@id='banner']",
+				expected = "url(\"${portalURL}/o/liferay-sample-theme-css-1/img/header_bg.jpg\")");
+		}
+	}
+
 }

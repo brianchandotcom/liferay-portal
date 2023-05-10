@@ -36,6 +36,17 @@ public class AuditMessageFactoryImpl implements AuditMessageFactory {
 
 	@Override
 	public AuditMessage getAuditMessage(
+		String eventType, long companyId, long groupId, long userId,
+		String userName, String className, String classPK, String message,
+		Date timestamp, JSONObject additionalInfoJSONObject) {
+
+		return new AuditMessage(
+			eventType, companyId, groupId, userId, userName, className, classPK,
+			message, timestamp, additionalInfoJSONObject);
+	}
+
+	@Override
+	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName) {
 
 		return new AuditMessage(eventType, companyId, userId, userName);

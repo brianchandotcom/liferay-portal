@@ -15,10 +15,10 @@
 package com.liferay.portal.tools.wsdd.builder.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -160,8 +160,7 @@ public class Java2WsddTask {
 
 		File deployFile = new File(
 			StringBundler.concat(
-				String.valueOf(tempDir), "/", packagePathWithSlashes,
-				"/deploy.wsdd"));
+				tempDir, "/", packagePathWithSlashes, "/deploy.wsdd"));
 
 		String deployContent = new String(
 			Files.readAllBytes(deployFile.toPath()));
@@ -176,8 +175,7 @@ public class Java2WsddTask {
 
 		File undeployFile = new File(
 			StringBundler.concat(
-				String.valueOf(tempDir), "/", packagePathWithSlashes,
-				"/undeploy.wsdd"));
+				tempDir, "/", packagePathWithSlashes, "/undeploy.wsdd"));
 
 		String undeployContent = new String(
 			Files.readAllBytes(undeployFile.toPath()));

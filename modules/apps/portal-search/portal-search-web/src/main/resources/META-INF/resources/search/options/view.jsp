@@ -14,12 +14,17 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <liferay-theme:defineObjects />
 
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+
 <div class="alert alert-info text-center">
-	<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="search-options-help" /></aui:a>
+	<clay:link
+		href="javascript:void(0);"
+		label='<%= LanguageUtil.get(request, "search-options-help") %>'
+		onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+	/>
 </div>

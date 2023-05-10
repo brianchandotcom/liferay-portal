@@ -54,7 +54,11 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		<div class="alert alert-info c-mb-0 text-center">
 			<liferay-ui:message key="this-search-bar-is-not-visible-to-users-yet" />
 
-			<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="set-up-its-destination-to-make-it-visible" /></aui:a>
+			<clay:link
+				href="javascript:void(0);"
+				label='<%= LanguageUtil.get(request, "set-up-its-destination-to-make-it-visible") %>'
+				onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+			/>
 		</div>
 	</c:when>
 	<c:otherwise>

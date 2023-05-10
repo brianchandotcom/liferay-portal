@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -134,14 +136,14 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Activate
-	protected synchronized void activate() {
+	protected synchronized void activate(BundleContext bundleContext) {
 		if (!_clusterExecutorImpl.isEnabled()) {
 			return;
 		}
 
-		_clusterEventListener = new ClusterMasterTokenClusterEventListener();
-
-		_clusterExecutorImpl.addClusterEventListener(_clusterEventListener);
+		_serviceRegistration = bundleContext.registerService(
+			ClusterEventListener.class,
+			new ClusterMasterTokenClusterEventListener(), null);
 
 		ClusterNode localClusterNode =
 			_clusterExecutorImpl.getLocalClusterNode();
@@ -155,12 +157,12 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 	@Deactivate
 	protected void deactivate() {
-		if (_clusterEventListener != null) {
-			_clusterExecutorImpl.removeClusterEventListener(
-				_clusterEventListener);
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
 		}
 
-		_clusterEventListener = null;
 		_enabled = false;
 		_localClusterNodeId = null;
 	}
@@ -245,8 +247,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 	private static volatile boolean _master;
 
-	private ClusterEventListener _clusterEventListener;
-
 	@Reference
 	private ClusterExecutorImpl _clusterExecutorImpl;
 
@@ -254,6 +254,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		_clusterMasterTokenTransitionListeners = new HashSet<>();
 	private boolean _enabled;
 	private volatile String _localClusterNodeId;
+	private ServiceRegistration<ClusterEventListener> _serviceRegistration;
 
 	private class ClusterMasterTokenClusterEventListener
 		implements ClusterEventListener {

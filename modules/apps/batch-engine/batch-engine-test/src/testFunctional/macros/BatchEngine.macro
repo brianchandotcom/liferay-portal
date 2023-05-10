@@ -16,7 +16,7 @@ definition {
 		return ${archivedFilePath};
 	}
 
-	macro assertExportedJsontContainsCorrectConfigurationObject {
+	macro assertExportedJsontContainsCorrectObject {
 		Variables.assertDefined(parameterList = "${jsonObject},${expectedValue}");
 
 		var fileContent = TestCase.getTempFileContent(fileName = "export.batch-engine-data.json");

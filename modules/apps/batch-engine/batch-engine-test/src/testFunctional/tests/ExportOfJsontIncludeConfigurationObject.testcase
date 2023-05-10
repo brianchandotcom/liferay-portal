@@ -35,7 +35,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with callbackURL parameter") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "",
 				jsonObject = "$.configuration..callbackURL");
 		}
@@ -60,7 +60,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with className 'com.liferay.object.rest.dto.v1_0.ObjectEntry' parameter") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				jsonObject = "$.configuration.className");
 		}
@@ -81,7 +81,7 @@ definition {
 		task ("Then the jsont format file contains configuration node with companyId parameter") {
 			var companyId = JSONCompany.getCompanyId();
 
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = ${companyId},
 				jsonObject = "$.configuration.companyId");
 		}
@@ -100,7 +100,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with parameters.createStrategy parameter with 'INSERT' value") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "INSERT",
 				jsonObject = "$.configuration.parameters.createStrategy");
 		}
@@ -119,7 +119,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with parameters.importStrategy parameter with 'false' value") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "ON_ERROR_FAIL",
 				jsonObject = "$.configuration.parameters.importStrategy");
 		}
@@ -142,7 +142,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with taskItemDelegateName parameter with 'C_Stock' value") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "C_Stock",
 				jsonObject = "$.configuration..taskItemDelegateName");
 		}
@@ -161,7 +161,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with parameters.updateStrategy parameter with 'UPDATE' value") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "UPDATE",
 				jsonObject = "$.configuration.parameters.updateStrategy");
 		}
@@ -182,7 +182,7 @@ definition {
 		task ("Then the jsont format file contains configuration node with userId {userId} parameter") {
 			var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = ${userId},
 				jsonObject = "$.configuration.userId");
 		}
@@ -199,7 +199,7 @@ definition {
 		}
 
 		task ("Then the jsont format file contains configuration node with version parameter with value {current version of Catalog}") {
-			BatchEngine.assertExportedJsontContainsCorrectConfigurationObject(
+			BatchEngine.assertExportedJsontContainsCorrectObject(
 				expectedValue = "v1.0",
 				jsonObject = "$.configuration.version");
 		}

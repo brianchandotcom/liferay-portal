@@ -1,0 +1,81 @@
+@component-name = "portal-batch-engine"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Batch Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Stock object definition created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "stock",
+				en_US_plural_label = "stocks",
+				name = "Stock",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given Stock entries created") {
+			CustomObjectAPI.createObjectEntryWithFields(
+				en_US_plural_label = "stocks",
+				fieldName = "name",
+				fieldValue = "Stock Entry");
+		}
+
+		task ("When in Import/Export: Export File exporting Entity Type C_Stock (v1_0 - Liferay Object REST) in Export File Format: JSONT") {
+			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "C_Stock (v1_0 - Liferay Object REST)");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		BatchPlanner.batchPlannerTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test CanExportCreateBatchActionForEntitiesWithJSONT {
+		property portal.acceptance = "true";
+
+		task ("Then the downloaded file contains $.actions node with createBatch") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedJsontContainsCorrectObject(
+				expectedValue = "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				jsonObject = "$.actions.createBatch.href");
+		}
+	}
+
+	@priority = 3
+	test CanExportDeleteBatchActionForEntitiesWithJSONT {
+		task ("Then the downloaded file contains $.actions node with deleteBatch") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedJsontContainsCorrectObject(
+				expectedValue = "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				jsonObject = "$.actions.deleteBatch.href");
+		}
+	}
+
+	@priority = 3
+	test CanExportUpdateBatchActionForEntitiesWithJSONT {
+		task ("Then the downloaded file contains $.actions node with updateBatch") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedJsontContainsCorrectObject(
+				expectedValue = "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				jsonObject = "$.actions.updateBatch.href");
+		}
+	}
+
+}

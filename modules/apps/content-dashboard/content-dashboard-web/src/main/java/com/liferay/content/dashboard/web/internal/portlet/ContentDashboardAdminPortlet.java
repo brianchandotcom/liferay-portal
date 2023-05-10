@@ -161,7 +161,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					resourceBundle, searchContainer);
 
 		renderRequest.setAttribute(
-			ContentDashboardWebKeys.CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT,
+			ContentDashboardAdminDisplayContext.class.getName(),
 			contentDashboardAdminDisplayContext);
 
 		ContentDashboardAdminManagementToolbarDisplayContext

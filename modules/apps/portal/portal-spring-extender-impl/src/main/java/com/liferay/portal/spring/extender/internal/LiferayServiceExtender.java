@@ -32,7 +32,6 @@ import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionHandler;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 
 import java.util.ArrayList;
@@ -193,11 +192,7 @@ public class LiferayServiceExtender
 
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
-					new String[] {
-						TransactionExecutor.class.getName(),
-						TransactionHandler.class.getName()
-					},
-					defaultTransactionExecutor,
+					TransactionExecutor.class, defaultTransactionExecutor,
 					MapUtil.singletonDictionary(
 						"origin.bundle.symbolic.name",
 						_extendeeBundle.getSymbolicName())));

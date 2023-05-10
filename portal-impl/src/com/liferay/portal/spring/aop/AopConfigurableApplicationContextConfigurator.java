@@ -29,7 +29,7 @@ import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.CounterTransactionExecutor;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionHandler;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 
@@ -328,7 +328,7 @@ public class AopConfigurableApplicationContextConfigurator
 		@Override
 		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
 			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-				bean, _transactionHandler);
+				bean, _transactionExecutor);
 
 			_aopInvocationHandlers.add(aopInvocationHandler);
 
@@ -336,16 +336,16 @@ public class AopConfigurableApplicationContextConfigurator
 		}
 
 		private ServiceBeanAutoProxyCreator(
-			ClassLoader classLoader, TransactionHandler transactionHandler) {
+			ClassLoader classLoader, TransactionExecutor transactionExecutor) {
 
 			super(new ServiceBeanMatcher(false), classLoader);
 
-			_transactionHandler = transactionHandler;
+			_transactionExecutor = transactionExecutor;
 		}
 
 		private final List<AopInvocationHandler> _aopInvocationHandlers =
 			new ArrayList<>();
-		private final TransactionHandler _transactionHandler;
+		private final TransactionExecutor _transactionExecutor;
 
 	}
 

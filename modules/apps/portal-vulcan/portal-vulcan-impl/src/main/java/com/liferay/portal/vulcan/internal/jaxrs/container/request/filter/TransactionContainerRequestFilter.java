@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
-import com.liferay.portal.spring.transaction.TransactionHandler;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionStatusAdapter;
 
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class TransactionContainerRequestFilter
 
 			containerRequestContext.setProperty(
 				_TRANSACTION_STATUS_ADAPTER,
-				_transactionHandler.start(_transactionAttributeAdapter));
+				_transactionExecutor.start(_transactionAttributeAdapter));
 		}
 	}
 
@@ -92,12 +92,12 @@ public class TransactionContainerRequestFilter
 			containerResponseContext.getStatus());
 
 		if (family == Response.Status.Family.SUCCESSFUL) {
-			_transactionHandler.commit(
+			_transactionExecutor.commit(
 				_transactionAttributeAdapter, transactionStatusAdapter);
 		}
 		else {
 			try {
-				_transactionHandler.rollback(
+				_transactionExecutor.rollback(
 					new Exception(
 						StringBundler.concat(
 							"Rollback due to ", family, ": ",
@@ -124,8 +124,9 @@ public class TransactionContainerRequestFilter
 			TransactionAttributeBuilder.build(
 				TransactionContainerRequestFilter.class.getAnnotation(
 					Transactional.class)));
-	private static final TransactionHandler _transactionHandler =
-		(TransactionHandler)PortalBeanLocatorUtil.locate("transactionExecutor");
+	private static final TransactionExecutor _transactionExecutor =
+		(TransactionExecutor)PortalBeanLocatorUtil.locate(
+			"transactionExecutor");
 	private static final Set<String> _transactionRequiredMethodNames =
 		new HashSet<>(Arrays.asList("DELETE", "PATCH", "POST", "PUT"));
 

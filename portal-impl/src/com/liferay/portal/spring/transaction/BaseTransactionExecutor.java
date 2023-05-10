@@ -19,8 +19,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 /**
  * @author Preston Crary
  */
-public abstract class BaseTransactionExecutor
-	implements TransactionExecutor, TransactionHandler {
+public abstract class BaseTransactionExecutor implements TransactionExecutor {
 
 	@Override
 	public <T> T execute(

@@ -24,11 +24,24 @@ import org.springframework.transaction.PlatformTransactionManager;
  */
 public interface TransactionExecutor {
 
+	public void commit(
+		TransactionAttributeAdapter transactionAttributeAdapter,
+		TransactionStatusAdapter transactionStatusAdapter);
+
 	public <T> T execute(
 			TransactionAttributeAdapter transactionAttributeAdapter,
 			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable;
 
 	public PlatformTransactionManager getPlatformTransactionManager();
+
+	public void rollback(
+			Throwable throwable,
+			TransactionAttributeAdapter transactionAttributeAdapter,
+			TransactionStatusAdapter transactionStatusAdapter)
+		throws Throwable;
+
+	public TransactionStatusAdapter start(
+		TransactionAttributeAdapter transactionAttributeAdapter);
 
 }

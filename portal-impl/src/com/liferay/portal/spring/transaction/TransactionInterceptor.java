@@ -30,8 +30,8 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  */
 public class TransactionInterceptor extends ChainableMethodAdvice {
 
-	public TransactionInterceptor(TransactionHandler transactionHandler) {
-		_transactionHandler = transactionHandler;
+	public TransactionInterceptor(TransactionExecutor transactionExecutor) {
+		_transactionExecutor = transactionExecutor;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 			aopMethodInvocation.getAdviceMethodContext();
 
 		TransactionStatusAdapter transactionStatusAdapter =
-			_transactionHandler.start(transactionAttributeAdapter);
+			_transactionExecutor.start(transactionAttributeAdapter);
 
 		Object returnValue = null;
 
@@ -69,17 +69,17 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 			returnValue = aopMethodInvocation.proceed(arguments);
 		}
 		catch (Throwable throwable) {
-			_transactionHandler.rollback(
+			_transactionExecutor.rollback(
 				throwable, transactionAttributeAdapter,
 				transactionStatusAdapter);
 		}
 
-		_transactionHandler.commit(
+		_transactionExecutor.commit(
 			transactionAttributeAdapter, transactionStatusAdapter);
 
 		return returnValue;
 	}
 
-	private final TransactionHandler _transactionHandler;
+	private final TransactionExecutor _transactionExecutor;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
-import com.liferay.portal.spring.transaction.TransactionHandler;
+import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.transaction.TransactionsUtil;
 
@@ -57,13 +57,13 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	protected AopInvocationHandler(
 		Object target, ChainableMethodAdvice[] chainableMethodAdvices,
-		TransactionHandler transactionHandler) {
+		TransactionExecutor transactionExecutor) {
 
 		_target = target;
 		_chainableMethodAdvices = chainableMethodAdvices;
 
 		_transactionInterceptor = new TransactionInterceptor(
-			transactionHandler);
+			transactionExecutor);
 	}
 
 	protected synchronized void reset() {

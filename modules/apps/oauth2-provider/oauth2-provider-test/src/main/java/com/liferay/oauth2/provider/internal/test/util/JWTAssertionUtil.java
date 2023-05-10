@@ -14,9 +14,9 @@
 
 package com.liferay.oauth2.provider.internal.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.net.URI;
 

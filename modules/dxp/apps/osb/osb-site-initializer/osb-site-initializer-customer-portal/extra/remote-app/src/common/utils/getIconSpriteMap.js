@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import IconSVG from '@clayui/css/lib/images/icons/icons.svg';
 import {Liferay} from '../services/liferay';
 
 export default function getIconSpriteMap() {
@@ -18,5 +19,5 @@ export default function getIconSpriteMap() {
 		return `${pathThemeImages}/clay/icons.svg`;
 	}
 
-	return require('@clayui/css/lib/images/icons/icons.svg').default;
+	return IconSVG;
 }

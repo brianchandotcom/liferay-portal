@@ -9,13 +9,13 @@ liferay-marketplace-oauth-application-user-agent:
         - Liferay.Headless.Admin.User.read
         - Liferay.Headless.Commerce.Admin.Order.everything
     type: oAuthApplicationUserAgent
-liferay-marketplace-object-action-trial-add:
-    name: Liferay Marketplace Object Action Trial Add
-    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-oauth-application-user-agent
-    resourcePath: /marketplace/trial
-    type: objectAction
 liferay-marketplace-object-action-test:
     name: Liferay Marketplace Object Action Test
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-oauth-application-user-agent
     resourcePath: /marketplace/test
+    type: objectAction
+liferay-marketplace-object-action-trial-add:
+    name: Liferay Marketplace Object Action Trial Add
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-oauth-application-user-agent
+    resourcePath: /marketplace/trial
     type: objectAction

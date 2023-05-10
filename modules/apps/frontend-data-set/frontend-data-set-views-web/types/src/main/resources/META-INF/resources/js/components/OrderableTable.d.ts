@@ -12,21 +12,26 @@
  * details.
  */
 
-/// <reference types="react" />
-
+import React from 'react';
 import '../../css/OrderableTable.scss';
 interface Action {
 	icon: string;
 	label: string;
 	onClick: Function;
 }
+interface ContentRendererProps {
+	item: any;
+}
+interface Field {
+	contentRenderer?: React.FC<ContentRendererProps>;
+	headingTitle?: boolean;
+	label: string;
+	name: string;
+}
 interface OrderableTableProps {
 	actions?: Array<Action>;
 	disableSave?: boolean;
-	fields: Array<{
-		label: string;
-		name: string;
-	}>;
+	fields: Array<Field>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;

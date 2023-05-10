@@ -21,7 +21,7 @@ definition {
 
 		var fileContent = TestCase.getTempFileContent(fileName = "export.batch-engine-data.json");
 
-		var actualValue = JSONUtil.getWithJSONPath(${fileContent}, "$.configuration.${jsonObject}");
+		var actualValue = JSONUtil.getWithJSONPath(${fileContent}, ${jsonObject});
 
 		TestUtils.assertEquals(
 			actual = ${actualValue},

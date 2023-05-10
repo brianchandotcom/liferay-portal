@@ -223,23 +223,24 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 				</c:when>
 				<c:otherwise>
 
+					let primaryKeysInput;
+
 					<%
 					for (String typeKey : viewUADEntitiesDisplay.getTypeKeys()) {
-						String primaryKeysVar = "primaryKeys" + typeKey;
 					%>
 
-						var <%= primaryKeysVar %> = form.querySelector(
+						primaryKeysInput = form.querySelector(
 							'#<portlet:namespace />primaryKeys__<%= typeKey %>'
 						);
 
-						if (<%= primaryKeysVar %>) {
+						if (primaryKeysInput) {
 							var primaryKeys = Liferay.Util.getCheckedCheckboxes(
 								form,
 								'<portlet:namespace />allRowIds',
 								'<portlet:namespace />rowIds<%= typeKey %>'
 							);
 
-							<%= primaryKeysVar %>.setAttribute('value', primaryKeys);
+							primaryKeysInput.setAttribute('value', primaryKeys);
 
 							var primaryKeyArray = primaryKeys.split(',');
 

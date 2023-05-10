@@ -24,6 +24,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		ExecUtil.executeCommand("docker start osbasahbackend");
+
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();

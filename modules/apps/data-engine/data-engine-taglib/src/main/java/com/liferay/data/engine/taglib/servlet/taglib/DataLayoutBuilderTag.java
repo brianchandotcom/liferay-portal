@@ -182,11 +182,12 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 	private JSONObject _getContentTypeConfigJSONObject(String contentType) {
 		DataDefinitionContentType dataDefinitionContentType =
-			_serviceTrackerMap.getService(contentType);
+			_dataDefinitionContentTypeServiceTrackerMap.getService(contentType);
 
 		if (dataDefinitionContentType == null) {
-			dataDefinitionContentType = _serviceTrackerMap.getService(
-				"default");
+			dataDefinitionContentType =
+				_dataDefinitionContentTypeServiceTrackerMap.getService(
+					"default");
 		}
 
 		return JSONUtil.put(
@@ -492,6 +493,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutBuilderTag.class);
 
+	private static final ServiceTrackerMap<String, DataDefinitionContentType>
+		_dataDefinitionContentTypeServiceTrackerMap;
 	private static final ServiceTrackerMap<String, DataLayoutBuilderDefinition>
 		_dataLayoutBuilderDefinitionserviceTrackerMap;
 	private static final Snapshot<DDMFormBuilderSettingsRetrieverHelper>
@@ -516,8 +519,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			"(ddm.form.layout.deserializer.type=json)");
 	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
 		new Snapshot<>(DataLayoutBuilderTag.class, NPMResolver.class);
-	private static final ServiceTrackerMap<String, DataDefinitionContentType>
-		_serviceTrackerMap;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(DataLayoutBuilderTag.class);
@@ -528,8 +529,9 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DataLayoutBuilderDefinition.class,
 				"content.type");
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DataDefinitionContentType.class, "content.type");
+		_dataDefinitionContentTypeServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DataDefinitionContentType.class, "content.type");
 	}
 
 	private class DataLayoutDDMFormAdapter {

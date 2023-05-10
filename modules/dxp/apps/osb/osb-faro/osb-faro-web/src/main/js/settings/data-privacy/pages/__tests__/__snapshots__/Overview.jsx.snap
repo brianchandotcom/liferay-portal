@@ -127,45 +127,6 @@ exports[`Data Privacy Overview should render 1`] = `
                     </button>
                   </div>
                 </div>
-                <hr
-                  aria-hidden="true"
-                  data-aria-hidden="true"
-                />
-                <div
-                  aria-hidden="true"
-                  class="row mt-3 justify-content-between"
-                  data-aria-hidden="true"
-                >
-                  <div
-                    class="col-lg-8"
-                  >
-                    <h4>
-                      Suppressed Users
-                    </h4>
-                    <p
-                      class="text-secondary"
-                    >
-                      Suppressed data subjects will be excluded in further identity resolution activity. Deleted data subjects will automatically be suppressed by their user ID and their identity will not be resolveable.
-                    </p>
-                  </div>
-                  <div
-                    class="col-lg-auto"
-                  >
-                    <a
-                      class="button-root mb-2 btn btn-block btn-secondary"
-                      href="/workspace/23/settings/data-privacy/suppressed-users"
-                    >
-                      Manage
-                    </a>
-                    <button
-                      class="button-root btn btn-block btn-secondary"
-                      data-testid="export-suppressed-user-button"
-                      type="button"
-                    >
-                      Export List
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

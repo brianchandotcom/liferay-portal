@@ -41,16 +41,6 @@ describe('AccessTokenList', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render with a button to generate a token if there are no tokens', () => {
-		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
-
-		const {getByTestId} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
-
-		expect(getByTestId('generate-token-button')).toBeTruthy();
-	});
-
 	it('should show the generated token in a list and the "Generate Token" button should no longer be visible', () => {
 		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
 
@@ -82,8 +72,7 @@ describe('AccessTokenList', () => {
 
 		expect(open).toBeCalled();
 	});
-
-	it('should display the "Generate Token" button in the token row if the token is expired', () => {
+	it('should display the "Generate Token" card if the token is expired', () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -97,10 +86,7 @@ describe('AccessTokenList', () => {
 		jest.runAllTimers();
 
 		expect(
-			getByText(
-				container.querySelector('.row-inline-actions'),
-				'Generate Token'
-			)
+			getByText(container.querySelector('.card-body'), 'Generate Token')
 		).toBeTruthy();
 	});
 });

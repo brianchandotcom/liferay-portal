@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.db.partition.DBPartitionUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
@@ -667,7 +667,7 @@ public class ShardedEhcachePortalCacheTest {
 			cacheName,
 			ReflectionTestUtil.getFieldValue(
 				ShardedEhcachePortalCache.class, "_SHARDED_SEPARATOR"),
-			String.valueOf(companyId));
+			companyId);
 	}
 
 	private static final int _MAX_ENTRIES_LOCAL_HEAP_DEFAULT = 100;

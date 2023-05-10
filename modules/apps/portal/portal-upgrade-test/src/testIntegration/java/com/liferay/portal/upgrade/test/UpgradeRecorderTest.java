@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -207,11 +207,9 @@ public class UpgradeRecorderTest {
 			if (type.equals("major")) {
 				majorRelease.setSchemaVersion(
 					StringBundler.concat(
-						String.valueOf(majorSchemaVersion.getMajor() + 1),
-						StringPool.PERIOD,
-						String.valueOf(majorSchemaVersion.getMinor()),
-						StringPool.PERIOD,
-						String.valueOf(majorSchemaVersion.getMicro())));
+						majorSchemaVersion.getMajor() + 1, StringPool.PERIOD,
+						majorSchemaVersion.getMinor(), StringPool.PERIOD,
+						majorSchemaVersion.getMicro()));
 
 				majorRelease = _releaseLocalService.updateRelease(majorRelease);
 			}
@@ -219,11 +217,9 @@ public class UpgradeRecorderTest {
 			if (type.equals("major") || type.equals("minor")) {
 				minorRelease.setSchemaVersion(
 					StringBundler.concat(
-						String.valueOf(minorSchemaVersion.getMajor()),
-						StringPool.PERIOD,
-						String.valueOf(minorSchemaVersion.getMinor() + 1),
-						StringPool.PERIOD,
-						String.valueOf(minorSchemaVersion.getMicro())));
+						minorSchemaVersion.getMajor(), StringPool.PERIOD,
+						minorSchemaVersion.getMinor() + 1, StringPool.PERIOD,
+						minorSchemaVersion.getMicro()));
 
 				minorRelease = _releaseLocalService.updateRelease(minorRelease);
 			}
@@ -233,11 +229,9 @@ public class UpgradeRecorderTest {
 
 				microRelease.setSchemaVersion(
 					StringBundler.concat(
-						String.valueOf(microSchemaVersion.getMajor()),
-						StringPool.PERIOD,
-						String.valueOf(microSchemaVersion.getMinor()),
-						StringPool.PERIOD,
-						String.valueOf(microSchemaVersion.getMicro() + 1)));
+						microSchemaVersion.getMajor(), StringPool.PERIOD,
+						microSchemaVersion.getMinor(), StringPool.PERIOD,
+						microSchemaVersion.getMicro() + 1));
 
 				microRelease = _releaseLocalService.updateRelease(microRelease);
 			}

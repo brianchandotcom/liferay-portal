@@ -22,6 +22,7 @@ export default async function submitForm(
 	siteURL: string
 ) {
 	formikHelpers.setSubmitting(true);
+	formikHelpers.setStatus(true);
 
 	try {
 		await createDealRegistrationProxyAPI(values);
@@ -37,8 +38,11 @@ export default async function submitForm(
 		});
 	}
 	catch (error: unknown) {
+		formikHelpers.setSubmitting(false);
+		formikHelpers.setStatus(false);
+
 		Liferay.Util.openToast({
-			message: 'Deal can not be registered. Duplicated data.',
+			message: 'Deal can not be registered.',
 			title: 'Error',
 			type: 'danger',
 		});

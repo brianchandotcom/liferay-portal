@@ -39,6 +39,7 @@ export default async function submitForm(
 	changeStatus?: boolean
 ) {
 	formikHelpers.setSubmitting(true);
+	formikHelpers.setStatus(true);
 
 	const updatedStatus = updateStatus(
 		values.mdfRequestStatus,
@@ -52,115 +53,137 @@ export default async function submitForm(
 
 	let dtoMDFRequest: mdfRequestDTO | undefined = undefined;
 
-	if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
-		dtoMDFRequest = await createMDFRequestProxyAPI(values);
-	}
-	else if (values.id) {
-		dtoMDFRequest = await updateMDFRequest(
-			ResourceName.MDF_REQUEST_DXP,
-			values,
-			values.id
-		);
-	}
-	else {
-		dtoMDFRequest = await createMDFRequest(
-			ResourceName.MDF_REQUEST_DXP,
-			values
-		);
-	}
+	try {
+		if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
+			dtoMDFRequest = await createMDFRequestProxyAPI(values);
+		}
+		else if (values.id) {
+			dtoMDFRequest = await updateMDFRequest(
+				ResourceName.MDF_REQUEST_DXP,
+				values,
+				values.id
+			);
+		}
+		else {
+			dtoMDFRequest = await createMDFRequest(
+				ResourceName.MDF_REQUEST_DXP,
+				values
+			);
+		}
 
-	if (values?.activities?.length && dtoMDFRequest?.id) {
-		const dtoMDFRequestActivities = await Promise.all(
-			values?.activities?.map(async (activity) => {
-				if (activity.id && activity.removed) {
-					if (activity.externalReferenceCode) {
-						await deleteMDFRequestActivitiesSF(
-							ResourceName.ACTIVITY_SALESFORCE,
-							activity.externalReferenceCode as string
-						);
-					}
+		if (values?.activities?.length && dtoMDFRequest?.id) {
+			const dtoMDFRequestActivities = await Promise.all(
+				values?.activities?.map(async (activity) => {
+					if (activity.id && activity.removed) {
+						if (activity.externalReferenceCode) {
+							await deleteMDFRequestActivitiesSF(
+								ResourceName.ACTIVITY_SALESFORCE,
+								activity.externalReferenceCode as string
+							);
+						}
 
-					await deleteMDFRequestActivities(
-						ResourceName.ACTIVITY_DXP,
-						activity.id as number
-					);
-
-					return null;
-				}
-				if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
-					return createMDFRequestActivitiesProxyAPI(
-						activity,
-						values.company,
-						dtoMDFRequest?.id,
-						dtoMDFRequest?.externalReferenceCode
-					);
-				}
-				else {
-					if (activity.id) {
-						await updateMDFRequestActivities(
+						await deleteMDFRequestActivities(
 							ResourceName.ACTIVITY_DXP,
+							activity.id as number
+						);
+
+						return null;
+					}
+					if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
+						return createMDFRequestActivitiesProxyAPI(
 							activity,
 							values.company,
 							dtoMDFRequest?.id,
-							dtoMDFRequest?.externalReferenceCode,
-							activity.externalReferenceCode
+							dtoMDFRequest?.externalReferenceCode
 						);
 					}
 					else {
-						return await createMDFRequestActivitiesSF(
-							ResourceName.ACTIVITY_DXP,
-							activity,
-							values.company,
-							dtoMDFRequest?.id,
-							dtoMDFRequest?.externalReferenceCode,
-							activity.externalReferenceCode
-						);
-					}
-				}
-			})
-		);
-
-		if (dtoMDFRequestActivities?.length) {
-			values.activities.map((activity, index) => {
-				const dtoActivity = dtoMDFRequestActivities[index];
-
-				if (activity.budgets?.length && dtoActivity?.id) {
-					activity.budgets?.map(async (budget) => {
-						if (budget?.id) {
-							await updateMDFRequestActivityBudget(
-								dtoActivity.id as number,
-								budget,
-								values.company
+						if (activity.id) {
+							await updateMDFRequestActivities(
+								ResourceName.ACTIVITY_DXP,
+								activity,
+								values.company,
+								dtoMDFRequest?.id,
+								dtoMDFRequest?.externalReferenceCode,
+								activity.externalReferenceCode
 							);
-							if (budget.removed) {
-								await deleteMDFRequestActivityBudgets(
-									ResourceName.BUDGET,
-									budget.id as number
-								);
-							}
 						}
 						else {
-							await createMDFRequestActivityBudget(
-								dtoActivity.id as number,
-								budget,
-								values.company
+							return await createMDFRequestActivitiesSF(
+								ResourceName.ACTIVITY_DXP,
+								activity,
+								values.company,
+								dtoMDFRequest?.id,
+								dtoMDFRequest?.externalReferenceCode,
+								activity.externalReferenceCode
 							);
 						}
-					});
-				}
-			});
+					}
+				})
+			);
+
+			if (dtoMDFRequestActivities?.length) {
+				values.activities.map((activity, index) => {
+					const dtoActivity = dtoMDFRequestActivities[index];
+
+					if (activity.budgets?.length && dtoActivity?.id) {
+						activity.budgets?.map(async (budget) => {
+							if (budget?.id) {
+								await updateMDFRequestActivityBudget(
+									dtoActivity.id as number,
+									budget,
+									values.company
+								);
+								if (budget.removed) {
+									await deleteMDFRequestActivityBudgets(
+										ResourceName.BUDGET,
+										budget.id as number
+									);
+								}
+							}
+							else {
+								await createMDFRequestActivityBudget(
+									dtoActivity.id as number,
+									budget,
+									values.company
+								);
+							}
+						});
+					}
+				});
+			}
 		}
-	}
 
-	if (values.id) {
+		if (values.id) {
+			Liferay.Util.navigate(
+				`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
+			);
+
+			Liferay.Util.openToast({
+				message: 'MDF Request was successfully edited.',
+				type: 'success',
+			});
+
+			return;
+		}
+
+		Liferay.Util.openToast({
+			message: 'MDF Request was successfully submitted.',
+			type: 'success',
+		});
+
 		Liferay.Util.navigate(
-			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}?edit-success=true`
+			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
 		);
-
-		return;
 	}
+	catch (error: unknown) {
+		formikHelpers.setStatus(false);
+		formikHelpers.setSubmitting(false);
 
-	Liferay.Util.navigate(
-		`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}/?new-success=true`
-	);
+		Liferay.Util.openToast({
+			message: 'MDF Request could not be submitted.',
+			title: 'Error',
+			type: 'danger',
+		});
+	}
 }

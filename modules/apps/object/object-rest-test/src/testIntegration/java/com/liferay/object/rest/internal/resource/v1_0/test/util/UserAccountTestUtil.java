@@ -45,7 +45,7 @@ public class UserAccountTestUtil {
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		return HTTPTestUtil.invoke(
-			_toBody(values, userAccount),
+			_toBody(userAccount, values),
 			jaxRsApplicationDescriptor.getRESTContextPath(), Http.Method.POST);
 	}
 
@@ -88,9 +88,8 @@ public class UserAccountTestUtil {
 	}
 
 	public static JSONObject updateUserAccountJSONObject(
-			JSONObject userAccountJSONObject,
 			SystemObjectDefinitionManager systemObjectDefinitionManager,
-			Map<String, Serializable> values)
+			JSONObject userAccountJSONObject, Map<String, Serializable> values)
 		throws Exception {
 
 		UserAccount userAccount = randomUserAccount();
@@ -99,7 +98,7 @@ public class UserAccountTestUtil {
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		return HTTPTestUtil.invoke(
-			_toBody(values, userAccount),
+			_toBody(userAccount, values),
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
 				StringPool.SLASH, userAccountJSONObject.get("id")),
@@ -107,7 +106,7 @@ public class UserAccountTestUtil {
 	}
 
 	private static String _toBody(
-			Map<String, Serializable> values, UserAccount userAccount)
+			UserAccount userAccount, Map<String, Serializable> values)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

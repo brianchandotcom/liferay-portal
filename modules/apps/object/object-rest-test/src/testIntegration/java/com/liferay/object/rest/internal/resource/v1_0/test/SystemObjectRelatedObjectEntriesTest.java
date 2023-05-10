@@ -391,7 +391,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			).build());
 
 		UserAccountTestUtil.updateUserAccountJSONObject(
-			jsonObject, _userSystemObjectDefinitionManager,
+			_userSystemObjectDefinitionManager, jsonObject,
 			HashMapBuilder.<String, Serializable>put(
 				objectRelationship.getName(),
 				JSONFactoryUtil.createJSONObject(
@@ -591,7 +591,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			).build());
 
 		jsonObject = UserAccountTestUtil.updateUserAccountJSONObject(
-			jsonObject, _userSystemObjectDefinitionManager,
+			_userSystemObjectDefinitionManager, jsonObject,
 			HashMapBuilder.<String, Serializable>put(
 				objectRelationship.getName(),
 				_createObjectEntriesJSONArray(

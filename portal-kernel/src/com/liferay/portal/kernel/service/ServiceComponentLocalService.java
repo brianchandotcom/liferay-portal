@@ -284,6 +284,4 @@ public interface ServiceComponentLocalService
 			String sequencesSQL, String indexesSQL)
 		throws Exception;
 
-	public void verifyDB();
-
 }

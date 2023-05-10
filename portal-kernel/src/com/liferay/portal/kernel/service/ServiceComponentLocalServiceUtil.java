@@ -331,10 +331,6 @@ public class ServiceComponentLocalServiceUtil {
 			tablesSQL, sequencesSQL, indexesSQL);
 	}
 
-	public static void verifyDB() {
-		getService().verifyDB();
-	}
-
 	public static ServiceComponentLocalService getService() {
 		return _service;
 	}

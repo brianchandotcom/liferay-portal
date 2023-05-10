@@ -378,11 +378,6 @@ public class ServiceComponentLocalServiceWrapper
 	}
 
 	@Override
-	public void verifyDB() {
-		_serviceComponentLocalService.verifyDB();
-	}
-
-	@Override
 	public ServiceComponentLocalService getWrappedService() {
 		return _serviceComponentLocalService;
 	}

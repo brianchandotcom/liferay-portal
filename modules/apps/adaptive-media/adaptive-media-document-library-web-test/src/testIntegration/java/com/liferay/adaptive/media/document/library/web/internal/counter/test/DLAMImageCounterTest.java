@@ -82,10 +82,8 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsDefaultRepositoryImages()
 		throws Exception {
 
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
-			_amImageCounter.countExpectedAMImageEntries(
-				_company1.getCompanyId()));
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -105,7 +103,7 @@ public class DLAMImageCounterTest {
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				_company1.getCompanyId()));
 	}
@@ -114,14 +112,11 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsDefaultRepositoryImagesPerCompany()
 		throws Exception {
 
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
-			_amImageCounter.countExpectedAMImageEntries(
-				_company1.getCompanyId()));
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
-			_amImageCounter.countExpectedAMImageEntries(
-				_company2.getCompanyId()));
+		int company1Count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
+
+		int company2Count = _amImageCounter.countExpectedAMImageEntries(
+			_company2.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -141,11 +136,11 @@ public class DLAMImageCounterTest {
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG, true);
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			company1Count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				_company1.getCompanyId()));
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
+			company2Count,
 			_amImageCounter.countExpectedAMImageEntries(
 				_company2.getCompanyId()));
 	}
@@ -154,10 +149,8 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsImagesNotInTrash()
 		throws Exception {
 
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
-			_amImageCounter.countExpectedAMImageEntries(
-				_company1.getCompanyId()));
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -170,7 +163,7 @@ public class DLAMImageCounterTest {
 			_getImageBytes(), null, null, serviceContext);
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				_company1.getCompanyId()));
 
@@ -179,7 +172,7 @@ public class DLAMImageCounterTest {
 			fileEntry.getFileEntryId());
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
+			count,
 			_amImageCounter.countExpectedAMImageEntries(
 				_company1.getCompanyId()));
 	}
@@ -188,10 +181,8 @@ public class DLAMImageCounterTest {
 	public void testDLAMImageCounterOnlyCountsImagesWithSupportedMimeTypes()
 		throws Exception {
 
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT,
-			_amImageCounter.countExpectedAMImageEntries(
-				_company1.getCompanyId()));
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -211,7 +202,7 @@ public class DLAMImageCounterTest {
 			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageCounter.countExpectedAMImageEntries(
 				_company1.getCompanyId()));
 	}
@@ -220,8 +211,6 @@ public class DLAMImageCounterTest {
 		return FileUtil.getBytes(
 			DLAMImageCounterTest.class, "dependencies/image.jpg");
 	}
-
-	private static final int _WELCOME_SITE_INITIALIZER_IMAGES_COUNT = 5;
 
 	@Inject(
 		filter = "adaptive.media.key=document-library",

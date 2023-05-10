@@ -35,10 +35,6 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	/>
 </c:if>
 
-<clay:navigation-bar
-	navigationItems="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new JournalViewMoreMenuItemsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, journalViewMoreMenuItemsDisplayContext) %>"
 />

@@ -18,8 +18,6 @@ import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -144,16 +142,6 @@ public class JournalViewMoreMenuItemsDisplayContext {
 			_renderResponse.getNamespace() + "selectAddMenuItem");
 
 		return _eventName;
-	}
-
-	public List<NavigationItem> getNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "all-menu-items"));
-			}
-		).build();
 	}
 
 	public String getOrderByCol() {

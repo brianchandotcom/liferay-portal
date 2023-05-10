@@ -1811,7 +1811,7 @@ definition {
 	}
 
 	macro viewPropertyValue {
-		AssertTextEquals(
+		AssertElementPresent(
 			key_propertyName = ${propertyName},
 			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY",

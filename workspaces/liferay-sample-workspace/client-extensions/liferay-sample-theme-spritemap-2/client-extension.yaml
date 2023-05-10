@@ -1,5 +1,5 @@
 assemble:
-    - from: build
+    - from: dist
       into: static
 liferay-sample-theme-spritemap-2:
     name: Liferay Sample Theme Spritemap 2

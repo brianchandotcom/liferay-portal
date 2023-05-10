@@ -783,6 +783,12 @@ public class CommerceOrderContentDisplayContext {
 				label = "accept-order";
 				transitionName = String.valueOf(commerceOrderStatus.getKey());
 			}
+			else if (commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED) {
+
+				label = "process-quote";
+				transitionName = String.valueOf(commerceOrderStatus.getKey());
+			}
 			else {
 				continue;
 			}
@@ -1113,6 +1119,12 @@ public class CommerceOrderContentDisplayContext {
 			showCommerceOrderCreateTime();
 	}
 
+	public boolean isShowProcessQuote() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return _hasOrderStatusQuoteRequested(commerceOrder.getOrderStatus());
+	}
+
 	public boolean isShowPurchaseOrderNumber() throws PortalException {
 		try {
 			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
@@ -1226,6 +1238,16 @@ public class CommerceOrderContentDisplayContext {
 
 	private boolean _hasOrderStatusInProgress(int orderStatus) {
 		if (CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS == orderStatus) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasOrderStatusQuoteRequested(int orderStatus) {
+		if (CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED ==
+				orderStatus) {
+
 			return true;
 		}
 

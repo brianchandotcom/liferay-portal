@@ -213,7 +213,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
 				objectRelationship, false);
 
-			// Many to one
+			// Many to 1
 
 			objectRelationship =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -226,7 +226,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
 				objectRelationship, true);
 
-			// One to many
+			// 1 to many
 
 			objectRelationship =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -256,7 +256,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testPostSystemObjectEntryWithNestedCustomObjectEntries(
 			objectRelationship);
 
-		// One to many
+		// 1 to many
 
 		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
@@ -352,7 +352,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testPutSystemObjectEntryWithNestedCustomObjectEntries(
 			objectRelationship);
 
-		// One to many
+		// 1 to many
 
 		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),

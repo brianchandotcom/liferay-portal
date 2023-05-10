@@ -15,6 +15,7 @@
 package com.liferay.journal.content.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -127,7 +128,8 @@ public class JournalContentPortletToolbarContributor
 			_journalFolderService.getDDMStructures(
 				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, 0, 10,
+				new StructureCreateDateComparator());
 
 		JournalContentPortletInstanceConfiguration
 			journalContentPortletInstanceConfiguration =
@@ -173,6 +175,31 @@ public class JournalContentPortletToolbarContributor
 			urlMenuItem.setURL(
 				HttpComponentsUtil.addParameter(
 					portletURL.toString(), "refererPlid", plid));
+
+			menuItems.add(urlMenuItem);
+		}
+
+		int count = _journalFolderService.getDDMStructuresCount(
+			_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
+
+		if (count > 10) {
+			URLMenuItem urlMenuItem = new URLMenuItem();
+
+			urlMenuItem.setUseDialog(false);
+			urlMenuItem.setLabel(
+				_language.get(
+					_portal.getHttpServletRequest(portletRequest), "more"));
+			urlMenuItem.setSeparator(false);
+			urlMenuItem.setURL(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, JournalPortletKeys.JOURNAL,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/view.jsp"
+				).buildString());
 
 			menuItems.add(urlMenuItem);
 		}

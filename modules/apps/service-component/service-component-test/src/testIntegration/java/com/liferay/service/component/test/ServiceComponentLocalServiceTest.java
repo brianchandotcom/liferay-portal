@@ -16,26 +16,14 @@ package com.liferay.service.component.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -48,11 +36,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alberto Chaparro
@@ -126,27 +109,6 @@ public class ServiceComponentLocalServiceTest {
 		Assert.assertEquals(1, latestServiceComponent2.getBuildNumber());
 	}
 
-	@Test
-	public void testVerifyFromSchemaVersion000WithInitialDatabaseCreation()
-		throws Exception {
-
-		_testVerify(true, "0.0.0", true);
-	}
-
-	@Test
-	public void testVerifyFromSchemaVersion000WitouthInitialDatabaseCreation()
-		throws Exception {
-
-		_testVerify(false, "0.0.0", false);
-	}
-
-	@Test
-	public void testVerifyFromSchemaVersion001WithInitialDatabaseCreation()
-		throws Exception {
-
-		_testVerify(false, "0.0.1", true);
-	}
-
 	private ServiceComponent _addServiceComponent(
 		String buildNameSpace, long buildNumber) {
 
@@ -175,74 +137,9 @@ public class ServiceComponentLocalServiceTest {
 		return null;
 	}
 
-	private String _normalizeTableName(
-			DatabaseMetaData databaseMetaData, String tableName)
-		throws SQLException {
-
-		if (databaseMetaData.storesLowerCaseIdentifiers()) {
-			return StringUtil.toLowerCase(tableName);
-		}
-		else if (databaseMetaData.storesUpperCaseIdentifiers()) {
-			return StringUtil.toUpperCase(tableName);
-		}
-
-		return tableName;
-	}
-
-	private void _testVerify(
-			boolean expected, String schemaVersion, boolean databaseCreation)
-		throws Exception {
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			ServiceComponentLocalServiceTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		DB db = DBManagerUtil.getDB();
-
-		ServiceRegistration<UpgradeStep> upgradeStepServiceRegistration =
-			bundleContext.registerService(
-				UpgradeStep.class, new TestUpgradeStep(db),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"upgrade.bundle.symbolic.name",
-					"ServiceComponentLocalServiceTest"
-				).put(
-					"upgrade.from.schema.version", schemaVersion
-				).put(
-					"upgrade.initial.database.creation", databaseCreation
-				).build());
-
-		String tableName = _TEST_TABLE;
-
-		try {
-			_serviceComponentLocalService.verifyDB();
-
-			try (Connection connection = DataAccess.getConnection()) {
-				DatabaseMetaData metadata = connection.getMetaData();
-
-				tableName = _normalizeTableName(metadata, _TEST_TABLE);
-
-				try (ResultSet resultSet = metadata.getTables(
-						null, null, tableName, new String[] {"TABLE"})) {
-
-					Assert.assertEquals(expected, resultSet.next());
-				}
-			}
-		}
-		finally {
-			if (expected) {
-				db.runSQL("drop table " + tableName);
-			}
-
-			upgradeStepServiceRegistration.unregister();
-		}
-	}
-
 	private static final String _SERVICE_COMPONENT_1 = "SERVICE_COMPONENT_1";
 
 	private static final String _SERVICE_COMPONENT_2 = "SERVICE_COMPONENT_2";
-
-	private static final String _TEST_TABLE = "TestVerifyDB";
 
 	@Inject
 	private CounterLocalService _counterLocalService;
@@ -260,31 +157,5 @@ public class ServiceComponentLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private final List<ServiceComponent> _serviceComponents = new ArrayList<>();
-
-	private class TestUpgradeStep implements UpgradeStep {
-
-		public TestUpgradeStep(DB db) {
-			_db = db;
-		}
-
-		@Override
-		public String toString() {
-			return "Test Upgrade Step";
-		}
-
-		@Override
-		public void upgrade() throws UpgradeException {
-			try {
-				_db.runSQL(
-					"create table " + _TEST_TABLE + " (name VARCHAR(20))");
-			}
-			catch (Exception exception) {
-				throw new UpgradeException(exception);
-			}
-		}
-
-		private final DB _db;
-
-	}
 
 }

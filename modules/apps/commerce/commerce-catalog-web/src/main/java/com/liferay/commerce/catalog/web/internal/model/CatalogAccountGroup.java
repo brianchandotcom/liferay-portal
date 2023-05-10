@@ -17,9 +17,9 @@ package com.liferay.commerce.catalog.web.internal.model;
 /**
  * @author Gianmarco Brunialti Masera
  */
-public class AccountGroup {
+public class CatalogAccountGroup {
 
-	public AccountGroup(String name) {
+	public CatalogAccountGroup(String name) {
 		_name = name;
 	}
 

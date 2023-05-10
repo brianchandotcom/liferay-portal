@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
@@ -87,7 +87,7 @@ public class CPDefinitionsDisplayContext
 
 	public CPDefinitionsDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		CommerceAccountGroupRelService commerceAccountGroupRelService,
+		AccountGroupRelLocalService accountGroupRelLocalService,
 		CommerceCatalogService commerceCatalogService,
 		CommerceChannelRelService commerceChannelRelService,
 		ConfigurationProvider configurationProvider,
@@ -96,7 +96,7 @@ public class CPDefinitionsDisplayContext
 
 		super(actionHelper, httpServletRequest);
 
-		_commerceAccountGroupRelService = commerceAccountGroupRelService;
+		_accountGroupRelLocalService = accountGroupRelLocalService;
 		_commerceCatalogService = commerceCatalogService;
 		_commerceChannelRelService = commerceChannelRelService;
 		_configurationProvider = configurationProvider;
@@ -126,10 +126,10 @@ public class CPDefinitionsDisplayContext
 			"checkedCommerceAccountGroupIds",
 			StringUtil.merge(
 				TransformUtil.transformToLongArray(
-					_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+					_accountGroupRelLocalService.getAccountGroupRels(
 						CPDefinition.class.getName(), getCPDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					CommerceAccountGroupRel::getCommerceAccountGroupId))
+					AccountGroupRel::getAccountGroupId))
 		).buildString();
 	}
 
@@ -237,7 +237,7 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return cpDefinition.getDefaultImageThumbnailSrc(
-			CommerceAccountConstants.ACCOUNT_ID_ADMIN);
+			AccountConstants.ACCOUNT_ENTRY_ID_ADMIN);
 	}
 
 	public CProduct getCProduct() throws PortalException {
@@ -518,8 +518,7 @@ public class CPDefinitionsDisplayContext
 		return cProductVersionConfiguration.enabled();
 	}
 
-	private final CommerceAccountGroupRelService
-		_commerceAccountGroupRelService;
+	private final AccountGroupRelLocalService _accountGroupRelLocalService;
 	private final CommerceCatalogService _commerceCatalogService;
 	private final CommerceChannelRelService _commerceChannelRelService;
 	private final ConfigurationProvider _configurationProvider;

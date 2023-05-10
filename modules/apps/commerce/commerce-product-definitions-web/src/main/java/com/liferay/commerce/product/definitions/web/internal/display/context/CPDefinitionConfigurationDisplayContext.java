@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
@@ -62,7 +62,7 @@ public class CPDefinitionConfigurationDisplayContext
 
 	public CPDefinitionConfigurationDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-		CommerceAccountGroupRelService commerceAccountGroupRelService,
+		AccountGroupRelLocalService accountGroupRelLocalService,
 		CommerceAvailabilityEstimateService commerceAvailabilityEstimateService,
 		CommerceCatalogService commerceCatalogService,
 		CommerceChannelRelService commerceChannelRelService,
@@ -78,7 +78,7 @@ public class CPDefinitionConfigurationDisplayContext
 		ItemSelector itemSelector) {
 
 		super(
-			actionHelper, httpServletRequest, commerceAccountGroupRelService,
+			actionHelper, httpServletRequest, accountGroupRelLocalService,
 			commerceCatalogService, commerceChannelRelService,
 			configurationProvider, cpDefinitionService, cpFriendlyURL,
 			itemSelector);

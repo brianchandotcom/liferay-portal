@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionConfigurationDisplayContext;
@@ -110,7 +110,7 @@ public class CPDefinitionConfigurationScreenNavigationEntry
 			cpDefinitionConfigurationDisplayContext =
 				new CPDefinitionConfigurationDisplayContext(
 					_actionHelper, httpServletRequest,
-					_commerceAccountGroupRelService,
+					_accountGroupRelLocalService,
 					_commerceAvailabilityEstimateService,
 					_commerceCatalogService, _commerceChannelRelService,
 					_commerceCurrencyLocalService,
@@ -134,10 +134,10 @@ public class CPDefinitionConfigurationScreenNavigationEntry
 		CPDefinitionConfigurationScreenNavigationEntry.class);
 
 	@Reference
-	private ActionHelper _actionHelper;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+	private ActionHelper _actionHelper;
 
 	@Reference
 	private CommerceAvailabilityEstimateService

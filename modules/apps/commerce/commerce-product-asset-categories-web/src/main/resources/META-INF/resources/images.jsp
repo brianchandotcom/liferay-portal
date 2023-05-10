@@ -51,7 +51,7 @@ CategoryCPAttachmentFileEntriesManagementToolbarDisplayContext categoryCPAttachm
 				thumbnailSrc = cpAttachmentFileEntry.getCDNURL();
 			}
 			else {
-				thumbnailSrc = CommerceMediaResolverUtil.getThumbnailURL(CommerceAccountConstants.ACCOUNT_ID_GUEST, cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+				thumbnailSrc = CommerceMediaResolverUtil.getThumbnailURL(AccountConstants.ACCOUNT_ENTRY_ID_GUEST, cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 			}
 			%>
 

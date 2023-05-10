@@ -28,9 +28,9 @@ taglib uri="http://liferay.com/tld/item-selector" prefix="liferay-item-selector"
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.kernel.exception.NoSuchCategoryException" %><%@
+<%@ page import="com.liferay.account.constants.AccountConstants" %><%@
+page import="com.liferay.asset.kernel.exception.NoSuchCategoryException" %><%@
 page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
-page import="com.liferay.commerce.account.constants.CommerceAccountConstants" %><%@
 page import="com.liferay.commerce.media.CommerceMediaResolverUtil" %><%@
 page import="com.liferay.commerce.product.asset.categories.web.internal.constants.CommerceProductAssetCategoriesFDSNames" %><%@
 page import="com.liferay.commerce.product.asset.categories.web.internal.display.context.CategoryCPAttachmentFileEntriesDisplayContext" %><%@

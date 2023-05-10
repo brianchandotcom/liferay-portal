@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.account.constants.CommerceAccountConstants" %><%@
+<%@ page import="com.liferay.account.constants.AccountConstants" %><%@
 page import="com.liferay.commerce.product.item.selector.web.internal.display.context.CPDefinitionItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.commerce.product.item.selector.web.internal.display.context.CPDefinitionItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.commerce.product.item.selector.web.internal.display.context.CPInstanceItemSelectorViewDisplayContext" %><%@

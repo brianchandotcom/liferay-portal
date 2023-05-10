@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.internal.permission;
 
-import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
+import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -134,21 +134,18 @@ public class CommerceProductViewPermissionImpl
 			return true;
 		}
 
-		List<CommerceAccountGroupRel> commerceAccountGroupRels =
-			_commerceAccountGroupRelService.getCommerceAccountGroupRels(
+		List<AccountGroupRel> accountGroupRels =
+			_accountGroupRelLocalService.getAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		long[] commerceAccountGroupIds =
+		long[] accountGroupIds =
 			_commerceAccountHelper.getCommerceAccountGroupIds(
 				commerceAccountId);
 
-		for (CommerceAccountGroupRel commerceAccountGroupRel :
-				commerceAccountGroupRels) {
-
+		for (AccountGroupRel accountGroupRel : accountGroupRels) {
 			if (ArrayUtil.contains(
-					commerceAccountGroupIds,
-					commerceAccountGroupRel.getCommerceAccountGroupId())) {
+					accountGroupIds, accountGroupRel.getAccountGroupId())) {
 
 				return true;
 			}
@@ -181,7 +178,7 @@ public class CommerceProductViewPermissionImpl
 	}
 
 	@Reference
-	private CommerceAccountGroupRelService _commerceAccountGroupRelService;
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

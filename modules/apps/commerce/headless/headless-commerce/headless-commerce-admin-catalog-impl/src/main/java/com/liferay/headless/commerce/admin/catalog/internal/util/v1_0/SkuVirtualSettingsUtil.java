@@ -75,24 +75,24 @@ public class SkuVirtualSettingsUtil {
 			return null;
 		}
 
-		String attachmentUrl = _validateUrl(skuVirtualSettings.getUrl());
+		String attachmentURL = _validateURL(skuVirtualSettings.getUrl());
 
 		long attachmentFileEntryId = FileEntryUtil.getFileEntryId(
-			skuVirtualSettings.getAttachment(), attachmentUrl,
+			skuVirtualSettings.getAttachment(), attachmentURL,
 			uniqueFileNameProvider, serviceContext);
 
-		String sampleAttachmentUrl = null;
+		String sampleAttachmentURL = null;
 		long sampleFileEntryId = 0;
 
 		boolean useSample = GetterUtil.getBoolean(
 			skuVirtualSettings.getUseSample());
 
 		if (useSample) {
-			sampleAttachmentUrl = _validateUrl(
+			sampleAttachmentURL = _validateURL(
 				skuVirtualSettings.getSampleUrl());
 
 			sampleFileEntryId = FileEntryUtil.getFileEntryId(
-				skuVirtualSettings.getSampleAttachment(), sampleAttachmentUrl,
+				skuVirtualSettings.getSampleAttachment(), sampleAttachmentURL,
 				uniqueFileNameProvider, serviceContext);
 		}
 
@@ -111,7 +111,7 @@ public class SkuVirtualSettingsUtil {
 
 		return cpDefinitionVirtualSettingService.addCPDefinitionVirtualSetting(
 			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-			attachmentFileEntryId, attachmentUrl,
+			attachmentFileEntryId, attachmentURL,
 			_getActivationStatus(
 				GetterUtil.getInteger(
 					skuVirtualSettings.getActivationStatus(),
@@ -119,7 +119,7 @@ public class SkuVirtualSettingsUtil {
 			TimeUnit.DAYS.toMillis(
 				GetterUtil.getLong(skuVirtualSettings.getDuration())),
 			GetterUtil.getInteger(skuVirtualSettings.getMaxUsages()), useSample,
-			sampleFileEntryId, sampleAttachmentUrl, termsOfUseRequired,
+			sampleFileEntryId, sampleAttachmentURL, termsOfUseRequired,
 			termsOfUseContentMap, termsOfUseJournalArticleId, true,
 			serviceContext);
 	}
@@ -153,15 +153,15 @@ public class SkuVirtualSettingsUtil {
 		}
 
 		long attachmentFileEntryId = 0;
-		String attachmentUrl = _validateUrl(skuVirtualSettings.getUrl());
+		String attachmentURL = _validateURL(skuVirtualSettings.getUrl());
 
-		if (Validator.isNull(attachmentUrl)) {
+		if (Validator.isNull(attachmentURL)) {
 			if (Validator.isNull(skuVirtualSettings.getAttachment())) {
-				attachmentUrl = cpDefinitionVirtualSetting.getUrl();
+				attachmentURL = cpDefinitionVirtualSetting.getUrl();
 			}
 			else {
 				attachmentFileEntryId = FileEntryUtil.getFileEntryId(
-					skuVirtualSettings.getAttachment(), attachmentUrl,
+					skuVirtualSettings.getAttachment(), attachmentURL,
 					uniqueFileNameProvider, serviceContext);
 			}
 
@@ -177,7 +177,7 @@ public class SkuVirtualSettingsUtil {
 			duration = TimeUnit.DAYS.toMillis(duration);
 		}
 
-		String sampleAttachmentUrl = null;
+		String sampleAttachmentURL = null;
 		long sampleFileEntryId = 0;
 
 		boolean useSample = GetterUtil.getBoolean(
@@ -185,20 +185,20 @@ public class SkuVirtualSettingsUtil {
 			cpDefinitionVirtualSetting.isUseSample());
 
 		if (useSample) {
-			sampleAttachmentUrl = _validateUrl(
+			sampleAttachmentURL = _validateURL(
 				skuVirtualSettings.getSampleUrl());
 
-			if (Validator.isNull(sampleAttachmentUrl)) {
+			if (Validator.isNull(sampleAttachmentURL)) {
 				if (Validator.isNull(
 						skuVirtualSettings.getSampleAttachment())) {
 
-					sampleAttachmentUrl =
+					sampleAttachmentURL =
 						cpDefinitionVirtualSetting.getSampleUrl();
 				}
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(
 						skuVirtualSettings.getSampleAttachment(),
-						sampleAttachmentUrl, uniqueFileNameProvider,
+						sampleAttachmentURL, uniqueFileNameProvider,
 						serviceContext);
 				}
 
@@ -242,7 +242,7 @@ public class SkuVirtualSettingsUtil {
 		return cpDefinitionVirtualSettingService.
 			updateCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
-				attachmentFileEntryId, attachmentUrl,
+				attachmentFileEntryId, attachmentURL,
 				_getActivationStatus(
 					GetterUtil.getInteger(
 						skuVirtualSettings.getActivationStatus(),
@@ -252,12 +252,12 @@ public class SkuVirtualSettingsUtil {
 				GetterUtil.getInteger(
 					skuVirtualSettings.getMaxUsages(),
 					cpDefinitionVirtualSetting.getMaxUsages()),
-				useSample, sampleFileEntryId, sampleAttachmentUrl,
+				useSample, sampleFileEntryId, sampleAttachmentURL,
 				termsOfUseRequired, termsOfUseContentMap,
 				termsOfUseJournalArticleId, true, serviceContext);
 	}
 
-	private static String _validateUrl(String value) throws Exception {
+	private static String _validateURL(String value) throws Exception {
 		if (Validator.isNotNull(value)) {
 			URL url = new URL(value);
 

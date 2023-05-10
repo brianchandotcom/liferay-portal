@@ -73,25 +73,25 @@ public class ProductVirtualSettingsUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String attachmentUrl = _validateUrl(productVirtualSettings.getUrl());
+		String attachmentURL = _validateURL(productVirtualSettings.getUrl());
 
 		long attachmentFileEntryId = FileEntryUtil.getFileEntryId(
-			productVirtualSettings.getAttachment(), attachmentUrl,
+			productVirtualSettings.getAttachment(), attachmentURL,
 			uniqueFileNameProvider, serviceContext);
 
-		String sampleAttachmentUrl = null;
+		String sampleAttachmentURL = null;
 		long sampleFileEntryId = 0;
 
 		boolean useSample = GetterUtil.getBoolean(
 			productVirtualSettings.getUseSample());
 
 		if (useSample) {
-			sampleAttachmentUrl = _validateUrl(
+			sampleAttachmentURL = _validateURL(
 				productVirtualSettings.getSampleUrl());
 
 			sampleFileEntryId = FileEntryUtil.getFileEntryId(
 				productVirtualSettings.getSampleAttachment(),
-				sampleAttachmentUrl, uniqueFileNameProvider, serviceContext);
+				sampleAttachmentURL, uniqueFileNameProvider, serviceContext);
 		}
 
 		Map<Locale, String> termsOfUseContentMap = null;
@@ -109,7 +109,7 @@ public class ProductVirtualSettingsUtil {
 
 		return cpDefinitionVirtualSettingService.addCPDefinitionVirtualSetting(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
-			attachmentFileEntryId, attachmentUrl,
+			attachmentFileEntryId, attachmentURL,
 			_getActivationStatus(
 				GetterUtil.getInteger(
 					productVirtualSettings.getActivationStatus(),
@@ -117,7 +117,7 @@ public class ProductVirtualSettingsUtil {
 			TimeUnit.DAYS.toMillis(
 				GetterUtil.getLong(productVirtualSettings.getDuration())),
 			GetterUtil.getInteger(productVirtualSettings.getMaxUsages()),
-			useSample, sampleFileEntryId, sampleAttachmentUrl,
+			useSample, sampleFileEntryId, sampleAttachmentURL,
 			termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleId, serviceContext);
 	}
@@ -141,15 +141,15 @@ public class ProductVirtualSettingsUtil {
 		throws Exception {
 
 		long attachmentFileEntryId = 0;
-		String attachmentUrl = _validateUrl(productVirtualSettings.getUrl());
+		String attachmentURL = _validateURL(productVirtualSettings.getUrl());
 
-		if (Validator.isNull(attachmentUrl)) {
+		if (Validator.isNull(attachmentURL)) {
 			if (Validator.isNull(productVirtualSettings.getAttachment())) {
-				attachmentUrl = cpDefinitionVirtualSetting.getUrl();
+				attachmentURL = cpDefinitionVirtualSetting.getUrl();
 			}
 			else {
 				attachmentFileEntryId = FileEntryUtil.getFileEntryId(
-					productVirtualSettings.getAttachment(), attachmentUrl,
+					productVirtualSettings.getAttachment(), attachmentURL,
 					uniqueFileNameProvider, serviceContext);
 			}
 
@@ -165,7 +165,7 @@ public class ProductVirtualSettingsUtil {
 			duration = TimeUnit.DAYS.toMillis(duration);
 		}
 
-		String sampleAttachmentUrl = null;
+		String sampleAttachmentURL = null;
 		long sampleFileEntryId = 0;
 
 		boolean useSample = GetterUtil.getBoolean(
@@ -173,20 +173,20 @@ public class ProductVirtualSettingsUtil {
 			cpDefinitionVirtualSetting.isUseSample());
 
 		if (useSample) {
-			sampleAttachmentUrl = _validateUrl(
+			sampleAttachmentURL = _validateURL(
 				productVirtualSettings.getSampleUrl());
 
-			if (Validator.isNull(sampleAttachmentUrl)) {
+			if (Validator.isNull(sampleAttachmentURL)) {
 				if (Validator.isNull(
 						productVirtualSettings.getSampleAttachment())) {
 
-					sampleAttachmentUrl =
+					sampleAttachmentURL =
 						cpDefinitionVirtualSetting.getSampleUrl();
 				}
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(
 						productVirtualSettings.getSampleAttachment(),
-						sampleAttachmentUrl, uniqueFileNameProvider,
+						sampleAttachmentURL, uniqueFileNameProvider,
 						serviceContext);
 				}
 
@@ -230,7 +230,7 @@ public class ProductVirtualSettingsUtil {
 		return cpDefinitionVirtualSettingService.
 			updateCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId(),
-				attachmentFileEntryId, attachmentUrl,
+				attachmentFileEntryId, attachmentURL,
 				_getActivationStatus(
 					GetterUtil.getInteger(
 						productVirtualSettings.getActivationStatus(),
@@ -240,12 +240,12 @@ public class ProductVirtualSettingsUtil {
 				GetterUtil.getInteger(
 					productVirtualSettings.getMaxUsages(),
 					cpDefinitionVirtualSetting.getMaxUsages()),
-				useSample, sampleFileEntryId, sampleAttachmentUrl,
+				useSample, sampleFileEntryId, sampleAttachmentURL,
 				termsOfUseRequired, termsOfUseContentMap,
 				termsOfUseJournalArticleId, serviceContext);
 	}
 
-	private static String _validateUrl(String value) throws Exception {
+	private static String _validateURL(String value) throws Exception {
 		if (Validator.isNotNull(value)) {
 			URL url = new URL(value);
 

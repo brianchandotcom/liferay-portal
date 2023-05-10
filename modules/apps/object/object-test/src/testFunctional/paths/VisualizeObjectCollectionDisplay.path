@@ -77,7 +77,7 @@
 	</tr>
 	<tr>
 		<td>EXPAND_BUTTON</td>
-		<td>//button[@aria-label='Expand Collection Display']</td>
+		<td>//div[contains(@data-qa-id,'Collection Display')]//button[contains(@class,'component-expander')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -208,6 +208,10 @@ public class JournalContentPortletToolbarContributor
 			_portal.getClassNameId(JournalArticle.class));
 
 		if (count > _DEFAULT_MAX_DISPLAY_ITEMS) {
+			MenuItem menuItem = menuItems.get(menuItems.size() - 1);
+
+			menuItem.setSeparator(true);
+
 			JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
 
 			javaScriptMenuItem.setLabel(

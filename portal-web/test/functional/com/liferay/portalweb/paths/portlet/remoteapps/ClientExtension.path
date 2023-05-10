@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAMPLE_THEME_SPRITEMAP_1_PAGE_PENCIL_ICON</td>
+	<td>//li[@class='control-menu-nav-item']//*[contains(@href,'/o/liferay-sample-theme-spritemap-1/spritemap.svg#pencil')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_THEME_SPRITEMAP_CLIENT_EXTENSION</td>
 	<td>//dl[contains(@class, "list-group")]//dd[@data-qa-id="row"][contains(@data-value,'${key_text}')]//div[@data-qa-id="rowItemContent"]</td>
 	<td></td>

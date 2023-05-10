@@ -296,4 +296,26 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Theme Spritemap 1"
+	@priority = 4
+	test LiferaySampleThemeSpritemap1Smoke {
+		property workspaces.client.extension.names = "liferay-sample-theme-spritemap-1";
+
+		task ("Navigate to Page Admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+		}
+
+		task ("Add Liferay Sample Theme Spritemap 1 as a Theme Spritemap Client Extension for all pages") {
+			ClientExtensionGeneral.changeSiteCurrentThemeSvgSpritemap(entryName = "Liferay Sample Theme Spritemap 1");
+		}
+
+		task ("Navigate to the Home page") {
+			Navigator.openURL();
+		}
+
+		task ("Assert the pencil icon on the page is using the source image from Liferay Sample Theme Spritemap 1 ") {
+			AssertElementPresent(locator1 = "ClientExtension#SAMPLE_THEME_SPRITEMAP_1_PAGE_PENCIL_ICON");
+		}
+	}
+
 }

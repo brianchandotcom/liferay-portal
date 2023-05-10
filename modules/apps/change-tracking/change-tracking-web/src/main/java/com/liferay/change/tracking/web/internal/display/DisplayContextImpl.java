@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.display;
 
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

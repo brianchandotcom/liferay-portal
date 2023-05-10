@@ -19,6 +19,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -57,16 +58,17 @@ public class ContentDashboardDropdownItemsProvider {
 
 		Locale locale = _portal.getLocale(_liferayPortletRequest);
 
-		DropdownItemList dropdownItemList = DropdownItemList.of(
-			(DropdownItem[])TransformUtil.transformToArray(
-				contentDashboardItem.getContentDashboardItemActions(
-					httpServletRequest, ContentDashboardItemAction.Type.VIEW,
-					ContentDashboardItemAction.Type.EDIT),
-				contentDashboardItemAction -> _toDropdownItem(
-					contentDashboardItemAction, locale),
-				DropdownItem.class));
-
-		dropdownItemList.addAll(
+		return DropdownItemListBuilder.addAll(
+			DropdownItemList.of(
+				(DropdownItem[])TransformUtil.transformToArray(
+					contentDashboardItem.getContentDashboardItemActions(
+						httpServletRequest,
+						ContentDashboardItemAction.Type.VIEW,
+						ContentDashboardItemAction.Type.EDIT),
+					contentDashboardItemAction -> _toDropdownItem(
+						contentDashboardItemAction, locale),
+					DropdownItem.class))
+		).addAll(
 			DropdownItemList.of(
 				() -> {
 					ResourceURL resourceURL =
@@ -105,17 +107,15 @@ public class ContentDashboardDropdownItemsProvider {
 					).setQuickAction(
 						true
 					).build();
-				}));
-
-		dropdownItemList.addAll(
+				})
+		).addAll(
 			TransformUtil.transform(
 				contentDashboardItem.getContentDashboardItemActions(
 					httpServletRequest,
 					ContentDashboardItemAction.Type.VIEW_IN_PANEL),
 				contentDashboardItemAction -> _toViewInPanelDropdownItem(
-					contentDashboardItem, contentDashboardItemAction, locale)));
-
-		return dropdownItemList;
+					contentDashboardItem, contentDashboardItemAction, locale))
+		).build();
 	}
 
 	private DropdownItem _toDropdownItem(

@@ -107,12 +107,6 @@ public class DLAMImageCounterTest {
 
 		Company company2 = CompanyTestUtil.addCompany();
 
-		User user2 = UserTestUtil.getAdminUser(company2.getCompanyId());
-
-		Group group2 = GroupTestUtil.addGroup(
-			company2.getCompanyId(), user2.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
 		try {
 			int company1Count = _amImageCounter.countExpectedAMImageEntries(
 				_company1.getCompanyId());

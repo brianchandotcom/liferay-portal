@@ -1,0 +1,3 @@
+liferay-partner-cron:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http

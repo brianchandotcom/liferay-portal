@@ -358,19 +358,18 @@ definition {
 			siteName = "Site Name",
 			userScreenName = "usersn");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Site Name");
+		var documentId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name");
 
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_1");
-
-		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Site Member");
-
-		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
+		var response = DocumentAPI.putDMPermissionsWithDocumentID(
+			actionIds = '''DOWNLOAD","ADD_DISCUSSION''',
+			documentId = ${documentId},
+			roleName = "Guest");
+		var response = DocumentAPI.putDMPermissionsWithDocumentID(
+			actionIds = '''DOWNLOAD","ADD_DISCUSSION''',
+			documentId = ${documentId},
+			roleName = "Site Member");
 
 		User.logoutPG();
 
@@ -1160,26 +1159,18 @@ definition {
 			siteName = "Site Name",
 			userScreenName = "usersn");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Site Name");
+		var documentId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "Document_1",
+			groupName = "Site Name");
 
-		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_1");
-
-		takeScreenshot();
-
-		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
-
-		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
-			roleTitle = "Guest");
-
-		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
-			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
-			roleTitle = "Site Member");
+		var response = DocumentAPI.putDMPermissionsWithDocumentID(
+			actionIds = "ADD_DISCUSSION",
+			documentId = ${documentId},
+			roleName = "Guest");
+		var response = DocumentAPI.putDMPermissionsWithDocumentID(
+			actionIds = '''VIEW","ADD_DISCUSSION''',
+			documentId = ${documentId},
+			roleName = "Site Member");
 
 		User.logoutPG();
 
@@ -1199,7 +1190,7 @@ definition {
 			dmDocumentTitle = "Document_1",
 			siteURLKey = "site-name");
 
-		DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_1");
+		DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_1.doc");
 	}
 
 	@priority = 4

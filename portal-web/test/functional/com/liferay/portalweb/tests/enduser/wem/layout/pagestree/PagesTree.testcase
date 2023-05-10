@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Pages Tree";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -34,7 +26,7 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add different types of pages via page tree") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
+			ApplicationsMenu.gotoSite(site = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -83,7 +75,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page creator navigates to the Page Tree") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
+			ApplicationsMenu.gotoSite(site = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 		}
@@ -153,12 +145,12 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a child page via page tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -189,21 +181,21 @@ definition {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Web Content Title ${n}");
 			}
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection via page tree") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
+			ApplicationsMenu.gotoSite(site = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -292,7 +284,7 @@ definition {
 		property timeout.explicit.wait = "10";
 
 		task ("Add a collection page based on manual collection via page tree") {
-			ProductMenu.gotoSite(site = "Test Site Name");
+			ProductMenu.gotoSite(site = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -334,7 +326,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a widget page via page tree") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
+			ApplicationsMenu.gotoSite(site = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -355,10 +347,10 @@ definition {
 	test ConfigurePage {
 		task ("Assert Test Page Name is shown in Pages admin") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
+			ApplicationsMenu.gotoSite(site = ${randomSiteName});
 
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -398,16 +390,16 @@ definition {
 
 		task ("Add a public and private pages") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Public Page");
 
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("Navigate to public page via page tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -431,7 +423,7 @@ definition {
 
 			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}",
 					type = ${pageType});
 
@@ -439,12 +431,12 @@ definition {
 			}
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2");
 		}
 
 		task ("Navigate to pages in page tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -461,57 +453,57 @@ definition {
 
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Parent Page 1",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Parent Page 1");
 		}
 
 		task ("Add a child widget page under content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Child Page 1",
 				parentPageName = "Test Parent Page 1");
 		}
 
 		task ("Add a private content page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Parent Page 2",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Parent Page 2",
 				privateLayout = "true");
 		}
 
 		task ("Add a child widget page under content page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Child Page 2",
 				parentPageName = "Test Parent Page 2");
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add two content pages as parent page items to the navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				privateLayout = "false",
 				siteNavigationMenuItemName = "Test Parent Page 1",
 				siteNavigationMenuName = "Navigation Menu Name",
 				type = "layout");
 
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				privateLayout = "true",
 				siteNavigationMenuItemName = "Test Parent Page 2",
 				siteNavigationMenuName = "Navigation Menu Name",
@@ -520,7 +512,7 @@ definition {
 
 		task ("Add a child widget page item under each parent page item") {
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentSiteNavigationMenuItem = "Test Parent Page 1",
 				privateLayout = "false",
 				siteNavigationMenuItemName = "Test Child Page 1",
@@ -528,7 +520,7 @@ definition {
 				type = "layout");
 
 			JSONSitenavigation.addSiteNavigationMenuItem(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentSiteNavigationMenuItem = "Test Parent Page 2",
 				privateLayout = "true",
 				siteNavigationMenuItemName = "Test Child Page 2",
@@ -537,7 +529,7 @@ definition {
 		}
 
 		task ("Select the navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -559,7 +551,7 @@ definition {
 		task ("Add two public widget pages") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Parent Page ${n}");
 			}
 		}
@@ -567,27 +559,27 @@ definition {
 		task ("Add a child content page under each widget page") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Child Page ${n}",
 					parentPageName = "Test Parent Page ${n}",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Child Page ${n}");
 			}
 		}
 
 		task ("Add a navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Add two widget pages as parent page items to the navigation menu") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Test Parent Page ${n}",
 					siteNavigationMenuName = "Navigation Menu Name",
@@ -598,7 +590,7 @@ definition {
 		task ("Add a child content page item under each parent page item") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					parentSiteNavigationMenuItem = "Test Parent Page ${n}",
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Test Child Page ${n}",
@@ -608,7 +600,7 @@ definition {
 		}
 
 		task ("Select the navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -629,7 +621,7 @@ definition {
 	test PreviewDraftContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -637,7 +629,7 @@ definition {
 		task ("Add a Button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -671,13 +663,13 @@ definition {
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
 
 		task ("Access to the Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 		}
@@ -699,7 +691,7 @@ definition {
 		task ("Add a Button fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -707,7 +699,7 @@ definition {
 		}
 
 		task ("Discard the draft in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.discardDraft(pageName = "Test Page Name");
 		}
@@ -733,7 +725,7 @@ definition {
 		task ("Add a Heading fragment to page then pubilsh") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -768,21 +760,21 @@ definition {
 	test ReorganizePages {
 		task ("Access to Page Tree panel in Test Site Name") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Portlet Page",
 				type = "portlet");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page",
 				type = "content");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Embedded Page",
 				type = "embedded");
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 		}
@@ -830,7 +822,7 @@ definition {
 
 			for (var pageType : list "portlet,content,embedded,full_page_application,panel") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}",
 					type = ${pageType});
 
@@ -839,13 +831,13 @@ definition {
 
 			for (var i : list "6,7,8,9,10,11") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
 
 		task ("Access to the Page Tree ") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 		}
@@ -871,7 +863,7 @@ definition {
 
 			for (var pageType : list "portlet,content") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}",
 					type = ${pageType});
 
@@ -880,7 +872,7 @@ definition {
 		}
 
 		task ("Access to the Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 		}
@@ -908,7 +900,7 @@ definition {
 		task ("Add two public pages") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Public Page ${n}");
 			}
 		}
@@ -916,21 +908,21 @@ definition {
 		task ("Add two private pages") {
 			for (var n : list "1,2") {
 				JSONLayout.addPrivateLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Private Page ${n}");
 			}
 		}
 
 		task ("Add the first navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name 1");
 		}
 
 		task ("Add two public pages to the first navigation menu") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "false",
 					siteNavigationMenuItemName = "Test Public Page ${n}",
 					siteNavigationMenuName = "Navigation Menu Name 1",
@@ -940,14 +932,14 @@ definition {
 
 		task ("Add the second navigation menu") {
 			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				siteNavigationMenuName = "Navigation Menu Name 2");
 		}
 
 		task ("Add two private pages to the second navigation menu") {
 			for (var n : list "1,2") {
 				JSONSitenavigation.addSiteNavigationMenuItem(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					privateLayout = "true",
 					siteNavigationMenuItemName = "Test Private Page ${n}",
 					siteNavigationMenuName = "Navigation Menu Name 2",
@@ -956,7 +948,7 @@ definition {
 		}
 
 		task ("Select the first navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -970,7 +962,7 @@ definition {
 		}
 
 		task ("Select the second navigation menu in page type selctor of Page Tree") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -990,18 +982,18 @@ definition {
 		task ("Given adding some content pages") {
 			for (var i : list "1,2,3") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "P${i}",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "P${i}");
 			}
 		}
 
 		task ("When user goes to the fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Then view behaviors after deleting a page with and without sibling from page tree") {
@@ -1049,41 +1041,41 @@ definition {
 
 			task ("Scenario 2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "P1",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "P1");
 
 				for (var i : list "1,2,3") {
 					JSONLayout.addPublicLayout(
-						groupName = "Test Site Name",
+						groupName = ${randomSiteName},
 						layoutName = "P1.${i}",
 						parentLayoutName = "P1",
 						type = "content");
 
 					JSONLayout.publishLayout(
-						groupName = "Test Site Name",
+						groupName = ${randomSiteName},
 						layoutName = "P1.${i}");
 				}
 
 				for (var i : list "1,2") {
 					JSONLayout.addPublicLayout(
-						groupName = "Test Site Name",
+						groupName = ${randomSiteName},
 						layoutName = "P1.1.${i}",
 						parentLayoutName = "P1.1",
 						type = "content");
 
 					JSONLayout.publishLayout(
-						groupName = "Test Site Name",
+						groupName = ${randomSiteName},
 						layoutName = "P1.1.${i}");
 				}
 
 				ContentPagesNavigator.openViewContentPage(
 					pageName = "P1.1.2",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				PagesFinder.gotoPageEllipsisItem(
 					item = "Delete",
@@ -1098,13 +1090,13 @@ definition {
 					value1 = "P1.1.1");
 
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "P1.1.2",
 					parentLayoutName = "P1",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "P1.1.2");
 
 				PagesFinder.gotoPageEllipsisItem(
@@ -1169,7 +1161,7 @@ definition {
 	test ViewEllipsisOptionsInPageTreeAndNoPermissionEllipsisInConfigurationView {
 		task ("Given a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -1177,7 +1169,7 @@ definition {
 		task ("When user goes to the page tree") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 		}

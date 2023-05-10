@@ -1,84 +1,74 @@
 @component-name = "portal-wcm"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Pages Tree";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+	static var randomRoleKey = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
-		else {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			JSONUser.tearDownNonAdminUsers();
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
 
-			Role.tearDownCP();
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(
+				roleKey = ${randomRoleKey},
+				roleTitle = ${randomRoleKey});
 		}
 	}
 
 	@description = "This is a test for LPS-129406. The user that has all permissions for Web Content in Content & Data role can not add a page via Page Tree Panel."
 	@priority = 4
 	test CannotAddPageWithAllWebContentPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = "Guest",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add a new regular role") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
-		}
-
 		task ("Define the permissions of regular role") {
 			Permissions.definePermissionsViaJSONAPI(
 				resourceNameActionList = "com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:90,VIEW_CONTROL_PANEL:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW:com.liferay.journal,ADD_ARTICLE,ADD_FEED,ADD_FOLDER,ADD_STRUCTURE,ADD_TEMPLATE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW:com.liferay.journal.model.JournalFolder,ACCESS,ADD_SUBFOLDER,ADD_ARTICLE,DELETE,PERMISSIONS,SUBSCRIBE,UPDATE,VIEW:com.liferay.journal.model.JournalArticle,ADD_DISCUSSION,DELETE,DELETE_DISCUSSION,EXPIRE,PERMISSIONS,SUBSCRIBE,UPDATE,UPDATE_DISCUSSION,VIEW:com.liferay.journal.model.JournalFeed,DELETE,PERMISSIONS,UPDATE,VIEW:com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle,DELETE,PERMISSIONS,UPDATE,VIEW:com.liferay.dynamic.data.mapping.model.DDMTemplate-com.liferay.journal.model.JournalArticle,DELETE,PERMISSIONS,UPDATE,VIEW",
-				roleTitle = "Regular Role Name",
+				roleTitle = ${randomRoleKey},
 				roleType = "regular");
 		}
 
 		task ("Assign the regular role to new user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View the new user cannot add a page via Page Tree panel") {
@@ -113,50 +103,23 @@ definition {
 	@description = "This is a test for LPS-106110. Pages are not shown when users are not allowed to view certain pages."
 	@priority = 4
 	test CannotViewChildPageWhenRemovingSiblingPagePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add a new regular role") {
-			JSONRole.addRegularRole(
-				roleKey = "Regular Role Name",
-				roleTitle = "Regular Role Name");
-		}
-
 		task ("Define the permissions of regular role") {
 			Permissions.definePermissionsViaJSONAPI(
 				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.layout.seo,VIEW:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION",
-				roleTitle = "Regular Role Name",
+				roleTitle = ${randomRoleKey},
 				roleType = "regular");
 		}
 
 		task ("Assign the regular role to new user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
@@ -164,14 +127,14 @@ definition {
 		task ("Add two children pages for Test Page Name 1") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Child Page ${i}",
 					parentLayoutName = "Test Page Name 1");
 			}
 		}
 
 		task ("Remove view permission from Test Child Page 1 on Site Member and Guest") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.expandPageTree(depth = 2);
 
@@ -189,13 +152,11 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View page via Page Tree panel") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 

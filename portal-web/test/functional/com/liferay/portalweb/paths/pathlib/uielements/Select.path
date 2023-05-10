@@ -276,6 +276,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_AGENT</td>
+	<td>//select[contains(@name,'userAgent_${key_index}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_DEFAULT</td>
 	<td>//select[contains(@id,'workflowDefinition-1')]</td>
 	<td></td>

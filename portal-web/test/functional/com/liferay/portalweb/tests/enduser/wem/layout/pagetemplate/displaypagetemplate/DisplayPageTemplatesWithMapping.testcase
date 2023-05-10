@@ -101,7 +101,7 @@ definition {
 
 			PortletEntry.save();
 
-			var userPortrait = selenium.getAttribute("//img[contains(@id,'logo-selector') and contains(@src,'image')]@src");
+			var userPortrait = selenium.getAttribute("//img[contains(@class,'logo-selector') and contains(@src,'image')]@src");
 
 			var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 		}
@@ -256,7 +256,7 @@ definition {
 				key_imageName = "image",
 				locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
 
-			var userPortrait = selenium.getAttribute("//img[contains(@id,'logo-selector') and contains(@src,'image')]@src");
+			var userPortrait = selenium.getAttribute("//img[contains(@class,'logo-selector') and contains(@src,'image')]@src");
 
 			var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 		}
@@ -304,7 +304,7 @@ definition {
 
 			PortletEntry.save();
 
-			var userPortrait = selenium.getAttribute("//img[contains(@id,'logo-selector') and contains(@src,'image')]@src");
+			var userPortrait = selenium.getAttribute("//img[contains(@class,'logo-selector') and contains(@src,'image')]@src");
 
 			var userPortrait = StringUtil.extractLast(${userPortrait}, "image/");
 		}

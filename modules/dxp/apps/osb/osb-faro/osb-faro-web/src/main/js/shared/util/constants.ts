@@ -251,6 +251,20 @@ export const TIME_RANGE_LABELS = {
 	[RangeKeyTimeRanges.Yesterday]: Liferay.Language.get('yesterday')
 };
 
+export enum ExpirationPeriod {
+	In30Days = '2592000',
+	In6Months = '15778800',
+	In1Year = '31557600',
+	Indefinite = '3155760000'
+}
+
+export const EXPIRATION_DATE_LABELS = {
+	[ExpirationPeriod.In30Days]: Liferay.Language.get('30-days'),
+	[ExpirationPeriod.In6Months]: Liferay.Language.get('6-months'),
+	[ExpirationPeriod.In1Year]: Liferay.Language.get('1-year'),
+	[ExpirationPeriod.Indefinite]: Liferay.Language.get('indefinite')
+};
+
 /**
  * Conjunctions
  */

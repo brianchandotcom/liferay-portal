@@ -209,6 +209,18 @@ definition {
 		return ${response};
 	}
 
+	macro assertDMPermissions {
+		var response = DocumentAPI.getDMPermissionsWithDocumentID(documentId = ${documentId});
+
+		var actualDMPermissions = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.roleName == '${roleName}')].actionIds");
+
+		echo("####actualDMPermissions: '${actualDMPermissions}'");
+
+		TestUtils.assertEquals(
+			actual = ${actualDMPermissions},
+			expected = ${expectedDMPermissions});
+	}
+
 	macro assertExternalReferenceCodeWithCorrectValue {
 		if (!(isSet(expectedExternalReferenceCodeValue))) {
 			var expectedExternalReferenceCodeValue = DocumentAPI.getUuidOfCreatedDocument(responseToParse = ${responseToParse});
@@ -247,6 +259,30 @@ definition {
 		DocumentAPI._deleteDocumentsByErcInAssetLibrary(
 			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode});
+	}
+
+	macro getDMPermissionsWithDocumentID {
+		Variables.assertDefined(parameterList = ${documentId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/documents/${documentId}/permissions \
+				-H 'Content-Type: application/json' \
+				-u '${userEmailAddress}:${userPassword}'
+		''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
 	}
 
 	macro getDocumentsByDifferentParameters {
@@ -374,6 +410,31 @@ definition {
 		''';
 
 		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro putDMPermissionsWithDocumentID {
+		var portalURL = JSONCompany.getPortalURL();
+		var body = '''
+			[
+  				{
+    				"actionIds": [
+   					   "${actionIds}"
+   					 ],
+   					 "roleName": "${roleName}"
+ 				 }
+			]
+					''';
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/documents/${documentId}/permissions \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d ${body}
+		''';
+
+		var response = JSONCurlUtil.put(${curl});
 
 		return ${response};
 	}

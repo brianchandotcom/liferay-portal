@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentDashboardAdminSharingDisplayContext contentDashboardAdminConfigurationDisplayContext = (ContentDashboardAdminSharingDisplayContext)request.getAttribute(ContentDashboardWebKeys.CONTENT_DASHBOARD_ADMIN_SHARING_DISPLAY_CONTEXT);
+ContentDashboardAdminSharingDisplayContext contentDashboardAdminConfigurationDisplayContext = (ContentDashboardAdminSharingDisplayContext)request.getAttribute(ContentDashboardAdminSharingDisplayContext.class.getName());
 %>
 
 <c:if test="<%= contentDashboardAdminConfigurationDisplayContext.isSharingButtonVisible() %>">

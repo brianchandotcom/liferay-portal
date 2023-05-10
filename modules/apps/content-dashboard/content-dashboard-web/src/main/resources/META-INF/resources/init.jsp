@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.content.dashboard.item.ContentDashboardItemVersion" %><%@
 page import="com.liferay.content.dashboard.item.action.ContentDashboardItemAction" %><%@
 page import="com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype" %><%@
-page import="com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminConfigurationDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext" %><%@

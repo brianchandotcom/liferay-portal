@@ -263,13 +263,9 @@ const OrderableTable = ({
 		setItems(
 			query
 				? initialItems.filter((item) =>
-						fields.some((field) => {
-							if (field.contentRenderer) {
-								return false;
-							}
-
-							return String(item[field.name]).match(regexp);
-						})
+						fields.some((field) =>
+							String(item[field.name]).match(regexp)
+						)
 				  ) || []
 				: initialItems
 		);

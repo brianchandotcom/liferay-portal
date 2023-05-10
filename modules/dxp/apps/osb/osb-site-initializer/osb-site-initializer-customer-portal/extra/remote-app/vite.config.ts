@@ -43,7 +43,7 @@ export default defineConfig({
 		environment: 'jsdom',
 		exclude: ['node_modules', 'build'],
 		globals: true,
-		include: ['**/(*.)?{test,spec}.{ts,tsx}'],
+		include: ['**/(*.)?{test,spec}.{ts,tsx,js,jsx}'],
 		setupFiles: ['./src/setupTests.ts'],
 	},
 } as UserConfigExport);

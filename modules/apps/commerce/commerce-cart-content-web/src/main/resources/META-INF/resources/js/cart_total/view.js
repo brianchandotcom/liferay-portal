@@ -12,8 +12,33 @@
  * details.
  */
 
+import {delegate} from 'frontend-js-web';
+
 export default function ({namespace}) {
+	const requestQuote = document.getElementById(`${namespace}requestQuote`);
+
+	let delegateHandler = null;
+
+	if (requestQuote) {
+		delegateHandler = delegate(
+			requestQuote,
+			'click',
+			'.request-quote',
+			(event) => {
+				window[`${namespace}requestQuote`](event);
+			}
+		);
+	}
+
 	Liferay.after('current-order-updated', () => {
 		Liferay.Portlet.refresh(`#p_p_id${namespace}`);
 	});
+
+	return {
+		dispose() {
+			if (delegateHandler) {
+				delegateHandler.dispose();
+			}
+		},
+	};
 }

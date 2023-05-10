@@ -14,11 +14,11 @@
 
 package com.liferay.redirect.internal.configuration;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
 import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.provider.RedirectProvider;
@@ -89,9 +89,9 @@ public class RedirectPatternConfigurationProviderImpl
 					redirectPatternEntries) {
 
 				patternStringsArray[i] = StringBundler.concat(
-					String.valueOf(redirectPatternEntry.getPattern()),
-					StringPool.SPACE, redirectPatternEntry.getDestinationURL(),
-					StringPool.SPACE, redirectPatternEntry.getUserAgent());
+					redirectPatternEntry.getPattern(), StringPool.SPACE,
+					redirectPatternEntry.getDestinationURL(), StringPool.SPACE,
+					redirectPatternEntry.getUserAgent());
 
 				i++;
 			}

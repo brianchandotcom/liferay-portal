@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RuntimePageUtil {
 
-	public static LayoutTemplate getLayoutTemplate(String velocityTemplateId) {
-		return _runtimePage.getLayoutTemplate(velocityTemplateId);
+	public static LayoutTemplate getLayoutTemplate(String templateId) {
+		return _runtimePage.getLayoutTemplate(templateId);
 	}
 
 	public static StringBundler getProcessedTemplate(

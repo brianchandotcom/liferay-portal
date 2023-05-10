@@ -131,7 +131,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 
 	@Test
 	public void testGetdOrderItemWithURL() throws Exception {
-		String url = "http://www.example.com/myfiles/download";
+		String url = "https://liferay.com/myfiles/download";
 
 		OrderItem postOrderItem = _addCommerceOrderItem(_getOrderItem(0, url));
 
@@ -210,7 +210,8 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 
 	@Override
 	protected OrderItem randomOrderItem() throws Exception {
-		return _getOrderItem(0, RandomTestUtil.randomString());
+		return _getOrderItem(
+			0, "https://liferay.com/" + RandomTestUtil.randomString());
 	}
 
 	@Override
@@ -393,8 +394,8 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 		_cpDefinitionVirtualSettingLocalService.addCPDefinitionVirtualSetting(
 			cpDefinition.getModelClassName(), cpDefinition.getCPDefinitionId(),
 			fileEntryId, url, CommerceOrderConstants.ORDER_STATUS_PENDING, 0,
-			RandomTestUtil.randomInt(), true, 0, "sampleUrl", false, null, 0,
-			_serviceContext);
+			RandomTestUtil.randomInt(), true, 0, "https://liferay.com", false,
+			null, 0, _serviceContext);
 
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 

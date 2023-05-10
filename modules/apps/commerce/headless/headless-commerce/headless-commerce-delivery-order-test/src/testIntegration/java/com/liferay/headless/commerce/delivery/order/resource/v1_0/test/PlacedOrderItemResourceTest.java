@@ -163,7 +163,8 @@ public class PlacedOrderItemResourceTest
 	@Override
 	protected PlacedOrderItem randomPlacedOrderItem() throws Exception {
 		return _toPlacedOrderItem(
-			_addCPDefinition(0, RandomTestUtil.randomString()));
+			_addCPDefinition(
+				0, "https://liferay.com/" + RandomTestUtil.randomString()));
 	}
 
 	@Override
@@ -211,8 +212,8 @@ public class PlacedOrderItemResourceTest
 					cpDefinition.getModelClassName(),
 					cpDefinition.getCPDefinitionId(), fileEntryId, url,
 					CommerceOrderConstants.ORDER_STATUS_PENDING, 0,
-					RandomTestUtil.randomInt(), true, 0, "sampleUrl", false,
-					null, 0, _serviceContext);
+					RandomTestUtil.randomInt(), true, 0, "https://liferay.com",
+					false, null, 0, _serviceContext);
 
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(cpDefinition);
 
@@ -302,7 +303,7 @@ public class PlacedOrderItemResourceTest
 	}
 
 	private void _testGetPlacedOrderItemWithURL() throws Exception {
-		String url = "http://www.example.com/myfiles/download";
+		String url = "https://liferay.com/myfiles/download";
 
 		PlacedOrderItem postPlacedOrderItem = _addPlacedOrderItem(
 			_toPlacedOrderItem(_addCPDefinition(0, url)));

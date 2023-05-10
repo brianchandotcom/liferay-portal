@@ -20,14 +20,13 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,23 +40,17 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Gabriel Albuquerque
  * @author Leonardo Barros
  */
-@Component(service = {})
 public class DataLayoutTaglibUtil {
 
 	public static Set<Locale> getAvailableLocales(
 		Long dataDefinitionId, Long dataLayoutId,
 		HttpServletRequest httpServletRequest) {
 
-		return _dataLayoutTaglibUtil._getAvailableLocales(
+		return _getAvailableLocales(
 			dataDefinitionId, dataLayoutId, httpServletRequest);
 	}
 
@@ -65,8 +58,7 @@ public class DataLayoutTaglibUtil {
 			long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return _dataLayoutTaglibUtil._getDataDefinition(
-			dataDefinitionId, httpServletRequest);
+		return _getDataDefinition(dataDefinitionId, httpServletRequest);
 	}
 
 	public static DataLayout getDataLayout(
@@ -93,8 +85,7 @@ public class DataLayoutTaglibUtil {
 			Long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return _dataLayoutTaglibUtil._getDefaultDataLayoutId(
-			dataDefinitionId, httpServletRequest);
+		return _getDefaultDataLayoutId(dataDefinitionId, httpServletRequest);
 	}
 
 	public static JSONArray getFieldTypesJSONArray(
@@ -102,21 +93,11 @@ public class DataLayoutTaglibUtil {
 			boolean searchableFieldsDisabled)
 		throws Exception {
 
-		return _dataLayoutTaglibUtil._getFieldTypesJSONArray(
+		return _getFieldTypesJSONArray(
 			httpServletRequest, scopes, searchableFieldsDisabled);
 	}
 
-	@Activate
-	protected void activate() {
-		_dataLayoutTaglibUtil = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dataLayoutTaglibUtil = null;
-	}
-
-	private Set<Locale> _getAvailableLocales(
+	private static Set<Locale> _getAvailableLocales(
 		Long dataDefinitionId, Long dataLayoutId,
 		HttpServletRequest httpServletRequest) {
 
@@ -158,24 +139,27 @@ public class DataLayoutTaglibUtil {
 		return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
 	}
 
-	private DataDefinition _getDataDefinition(
+	private static DataDefinition _getDataDefinition(
 			Long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		DataDefinitionResource.Factory dataDefinitionResourceFactory =
+			_dataDefinitionResourceFactorySnapshot.get();
+
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			_dataDefinitionResourceFactory.create();
+			dataDefinitionResourceFactory.create();
 
 		DataDefinitionResource dataDefinitionResource =
 			dataDefinitionResourceBuilder.httpServletRequest(
 				httpServletRequest
 			).user(
-				_portal.getUser(httpServletRequest)
+				PortalUtil.getUser(httpServletRequest)
 			).build();
 
 		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
 	}
 
-	private Long _getDefaultDataLayoutId(
+	private static Long _getDefaultDataLayoutId(
 			Long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -195,25 +179,28 @@ public class DataLayoutTaglibUtil {
 		return dataLayout.getId();
 	}
 
-	private JSONArray _getFieldTypesJSONArray(
+	private static JSONArray _getFieldTypesJSONArray(
 			HttpServletRequest httpServletRequest, Set<String> scopes,
 			boolean searchableFieldsDisabled)
 		throws Exception {
 
-		JSONArray fieldTypesJSONArray = _jsonFactory.createJSONArray();
+		JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		DataDefinitionResource.Factory dataDefinitionResourceFactory =
+			_dataDefinitionResourceFactorySnapshot.get();
 
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			_dataDefinitionResourceFactory.create();
+			dataDefinitionResourceFactory.create();
 
 		DataDefinitionResource dataDefinitionResource =
 			dataDefinitionResourceBuilder.httpServletRequest(
 				httpServletRequest
 			).user(
-				_portal.getUser(httpServletRequest)
+				PortalUtil.getUser(httpServletRequest)
 			).build();
 
 		try {
-			JSONArray jsonArray = _jsonFactory.createJSONArray(
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				dataDefinitionResource.
 					getDataDefinitionDataDefinitionFieldFieldTypes());
 
@@ -247,7 +234,7 @@ public class DataLayoutTaglibUtil {
 		}
 	}
 
-	private void _setFieldIndexTypeNone(JSONObject jsonObject) {
+	private static void _setFieldIndexTypeNone(JSONObject jsonObject) {
 		for (JSONObject pageJSONObject :
 				(Iterable<JSONObject>)jsonObject.getJSONArray("pages")) {
 
@@ -279,18 +266,11 @@ public class DataLayoutTaglibUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutTaglibUtil.class);
 
+	private static final Snapshot<DataDefinitionResource.Factory>
+		_dataDefinitionResourceFactorySnapshot = new Snapshot<>(
+			DataLayoutTaglibUtil.class, DataDefinitionResource.Factory.class);
 	private static final Snapshot<DataLayoutResource.Factory>
 		_dataLayoutResourceFactorySnapshot = new Snapshot<>(
 			DataLayoutTaglibUtil.class, DataLayoutResource.Factory.class);
-	private static DataLayoutTaglibUtil _dataLayoutTaglibUtil;
-
-	@Reference
-	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Portal _portal;
 
 }

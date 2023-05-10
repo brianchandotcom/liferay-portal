@@ -109,19 +109,35 @@ public class JournalViewMoreMenuItemsDisplayContext {
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_themeDisplay.getScopeGroupId(), true);
 
-		List<DDMStructure> ddmStructures =
-			JournalFolderServiceUtil.searchDDMStructures(
-				_themeDisplay.getCompanyId(),
-				currentAndAncestorSiteAndDepotGroupIds,
-				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, _getOrderByComparator());
-
-		if (Objects.equals(getOrderByCol(), "name")) {
-			Collections.sort(ddmStructures, _getOrderByComparator());
-		}
-
 		searchContainer.setResultsAndTotal(
-			() -> ddmStructures,
+			() -> {
+				if (Objects.equals(getOrderByCol(), "name")) {
+					List<DDMStructure> ddmStructures =
+						JournalFolderServiceUtil.searchDDMStructures(
+							_themeDisplay.getCompanyId(),
+							currentAndAncestorSiteAndDepotGroupIds, _folderId,
+							_restrictionType, _getKeywords(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS, _getOrderByComparator());
+
+					Collections.sort(ddmStructures, _getOrderByComparator());
+
+					int end = searchContainer.getEnd();
+
+					if (ddmStructures.size() < searchContainer.getEnd()) {
+						end = ddmStructures.size();
+					}
+
+					return ddmStructures.subList(
+						searchContainer.getStart(), end);
+				}
+
+				return JournalFolderServiceUtil.searchDDMStructures(
+					_themeDisplay.getCompanyId(),
+					currentAndAncestorSiteAndDepotGroupIds, _folderId,
+					_restrictionType, _getKeywords(),
+					searchContainer.getStart(), searchContainer.getEnd(),
+					_getOrderByComparator());
+			},
 			JournalFolderServiceUtil.searchDDMStructuresCount(
 				_themeDisplay.getCompanyId(),
 				currentAndAncestorSiteAndDepotGroupIds, _folderId,

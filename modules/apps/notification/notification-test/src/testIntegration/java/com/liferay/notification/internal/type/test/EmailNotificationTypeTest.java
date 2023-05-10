@@ -35,13 +35,18 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.mail.MailMessage;
+import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import javax.mail.internet.InternetAddress;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -58,7 +63,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Test
 	public void testSendNotification() throws Exception {
@@ -128,6 +134,13 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertEquals(
 			user2.getEmailAddress(),
 			notificationRecipientSettingsMap.get("to"));
+
+		MailMessage mailMessage = MailServiceTestUtil.getLastMailMessage();
+		InternetAddress toAddress = new InternetAddress(
+			user2.getEmailAddress());
+
+		Assert.assertEquals(
+			toAddress.toString(), mailMessage.getFirstHeaderValue("To"));
 
 		assertTermValues(
 			getTermValues(),

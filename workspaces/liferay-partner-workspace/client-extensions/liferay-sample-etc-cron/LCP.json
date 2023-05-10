@@ -6,7 +6,7 @@
       "deploy": false
     }
   },
-  "id": "liferaypartneretccron",
+  "id": "liferaypartnercron",
   "kind": "CronJob",
   "memory": 1024,
   "scale": 1,

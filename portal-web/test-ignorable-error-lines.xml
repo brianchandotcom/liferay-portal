@@ -272,10 +272,6 @@
 			<contains>DB2 SQL Error: SQLCODE=-204, SQLSTATE=42704, SQLERRMC=ROOT.LAYOUT</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-145695 - temporarily ignore until fixed">
-			<contains>java.lang.NoClassDefFoundError: com.liferay.portal.kernel.upgrade.UpgradeProcess</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-145925 - temporarily ignore until fixed">
 			<contains>com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException: Unable to load external repository class com.liferay.portal.repository.liferayrepository.LiferayRepository because its plugin is not deployed</contains>
 			<matches></matches>
@@ -311,10 +307,6 @@
 		<ignore-error description="LPS-170903 - temporarily ignore until fixed">
 			<contains>SAX Feature unsupported</contains>
 			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-173071 - temporarily ignore until fixed">
-			<contains></contains>
-			<matches>.*Exception executing batch.*update Group_.*</matches>
 		</ignore-error>
 		<ignore-error description="LPS-180463">
 			<contains></contains>

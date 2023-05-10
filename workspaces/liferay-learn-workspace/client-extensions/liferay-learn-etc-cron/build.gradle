@@ -1,6 +1,7 @@
 buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.9"
 	}
 
 	repositories {
@@ -15,6 +16,7 @@ buildscript {
 apply plugin: "application"
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "java"
+apply plugin: "org.springframework.boot"
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.data.engine.rest.client", version: "latest.release"
@@ -27,10 +29,11 @@ dependencies {
 	compile group: "commons-io", name: "commons-io", version: "2.11.0"
 	compile group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compile group: "org.json", name: "json", version: "20220320"
+	compile group: "org.springframework.boot", name: "spring-boot", version: "2.7.9"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.9"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.9"
 	compile group: "org.yaml", name: "snakeyaml", version: "1.21"
 }
-
-mainClassName = "com.liferay.learn.Main"
 
 repositories {
 	mavenLocal()

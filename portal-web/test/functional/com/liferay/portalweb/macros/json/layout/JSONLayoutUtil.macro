@@ -193,6 +193,9 @@ definition {
 		else if (${widgetName} == "Search Bar") {
 			var portletId = "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet";
 		}
+		else if (${widgetName} == "Search Insights") {
+			var portletId = "com_liferay_portal_search_web_search_insights_portlet_SearchInsightsPortlet";
+		}
 		else if (${widgetName} == "Search Options") {
 			var portletId = "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet";
 		}

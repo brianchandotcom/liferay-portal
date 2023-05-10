@@ -17,8 +17,8 @@ package com.liferay.fragment.renderer.react.internal.util;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
@@ -44,15 +44,15 @@ public class FragmentEntryFragmentRendererReactUtil {
 				"'frontend-js-react-web$react'"
 			},
 			new String[] {
-				com.liferay.petra.string.StringBundler.concat(
+				StringBundler.concat(
 					StringPool.APOSTROPHE,
 					ModuleNameUtil.getModuleResolvedId(
 						jsPackage, getModuleName(fragmentEntryLink)),
 					StringPool.APOSTROPHE),
-				com.liferay.petra.string.StringBundler.concat(
+				StringBundler.concat(
 					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,
 					StringPool.APOSTROPHE),
-				com.liferay.petra.string.StringBundler.concat(
+				StringBundler.concat(
 					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,
 					StringPool.APOSTROPHE)
 			});
@@ -62,9 +62,8 @@ public class FragmentEntryFragmentRendererReactUtil {
 		Date modifiedDate = fragmentEntryLink.getModifiedDate();
 
 		return StringBundler.concat(
-			"fragmentEntryLink/",
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-			StringPool.DASH, String.valueOf(modifiedDate.getTime()));
+			"fragmentEntryLink/", fragmentEntryLink.getFragmentEntryLinkId(),
+			StringPool.DASH, modifiedDate.getTime());
 	}
 
 	private static final String _DEPENDENCY_PORTAL_REACT =

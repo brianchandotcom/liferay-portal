@@ -887,18 +887,19 @@ public class BundleSiteInitializerTest {
 				(int[])expandoBridge.getAttributeDefault(
 					"Test Expando Column 4")));
 
-		unicodeProperties = expandoBridge.getAttributeProperties(
-			"Test Expando Column 4");
-
-		Assert.assertTrue(unicodeProperties.isEmpty());
-
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				new String[] {"value1", "value2"},
 				(String[])expandoBridge.getAttributeDefault(
 					"Test Expando Column 5")));
+
 		unicodeProperties = expandoBridge.getAttributeProperties(
 			"Test Expando Column 4");
+
+		Assert.assertTrue(unicodeProperties.isEmpty());
+
+		unicodeProperties = expandoBridge.getAttributeProperties(
+			"Test Expando Column 5");
 
 		Assert.assertTrue(unicodeProperties.isEmpty());
 	}

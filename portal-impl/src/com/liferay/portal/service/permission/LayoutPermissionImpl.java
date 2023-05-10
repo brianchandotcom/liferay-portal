@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -64,8 +63,7 @@ import java.util.Objects;
 @OSGiBeanProperties(
 	property = "model.class.name=com.liferay.portal.kernel.model.Layout"
 )
-public class LayoutPermissionImpl
-	implements BaseModelPermissionChecker, LayoutPermission {
+public class LayoutPermissionImpl implements LayoutPermission {
 
 	@Override
 	public void check(
@@ -117,15 +115,6 @@ public class LayoutPermissionImpl
 		check(
 			permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
 			actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		check(permissionChecker, primaryKey, actionId);
 	}
 
 	@Override

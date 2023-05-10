@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -41,8 +40,7 @@ import java.util.Objects;
 @OSGiBeanProperties(
 	property = "model.class.name=com.liferay.portal.kernel.model.Group"
 )
-public class GroupPermissionImpl
-	implements BaseModelPermissionChecker, GroupPermission {
+public class GroupPermissionImpl implements GroupPermission {
 
 	@Override
 	public void check(
@@ -76,15 +74,6 @@ public class GroupPermissionImpl
 				permissionChecker, Group.class.getName(), Long.valueOf(0),
 				actionId);
 		}
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		check(permissionChecker, primaryKey, actionId);
 	}
 
 	@Override

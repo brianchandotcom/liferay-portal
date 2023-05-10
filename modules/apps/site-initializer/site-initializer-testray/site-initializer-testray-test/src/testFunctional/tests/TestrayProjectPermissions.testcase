@@ -27,10 +27,6 @@ definition {
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 		}
-
-		task ("Go to Testray Site") {
-			ApplicationsMenu.gotoSite(site = ${testSiteName});
-		}
 	}
 
 	tearDown {
@@ -97,7 +93,7 @@ definition {
 		}
 
 		task ("And when click kebab in project") {
-			TestrayBuild.goToBuild(buildName = ${projectName});
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}
@@ -157,7 +153,7 @@ definition {
 		}
 
 		task ("And when click kebab in project") {
-			TestrayBuild.goToBuild(buildName = ${projectName});
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}
@@ -217,7 +213,7 @@ definition {
 		}
 
 		task ("And when click kebab in project") {
-			TestrayBuild.goToBuild(buildName = ${projectName});
+			Testray.goToProjectPage(projectName = ${projectName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}

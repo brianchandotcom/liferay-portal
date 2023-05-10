@@ -63,7 +63,7 @@ export function useSetDragLayer() {
 					`[data-item-id="${siblingItem.siteNavigationMenuItemId}"]`
 				);
 
-				const siblingElementRect = siblingElement.getBoundingClientRect();
+				const siblingElementRect = siblingElement.firstChild.getBoundingClientRect();
 
 				setDragLayer({
 					...nextDragLayer,
@@ -111,7 +111,7 @@ export function useSetDragLayer() {
 				nextChildNode = nextChildNode.nextElementSibling;
 			}
 
-			const parentElementRect = parentElement.getBoundingClientRect();
+			const parentElementRect = parentElement.firstChild.getBoundingClientRect();
 
 			// If we reach this point without nextChildNode, we have reached
 			// the end of the tree.

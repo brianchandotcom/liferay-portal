@@ -76,15 +76,15 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 			label: 'Date Submitted',
 		},
 		{
-			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME,
+			columnKey: DealRegistrationColumnKey.PROSPECT_NAME,
 			label: getDoubleParagraph('Primary Prospect', 'Name'),
 		},
 		{
-			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL,
+			columnKey: DealRegistrationColumnKey.PROSPECT_EMAIL,
 			label: getDoubleParagraph('Primary Prospect', 'Email'),
 		},
 		{
-			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE,
+			columnKey: DealRegistrationColumnKey.PROSPECT_PHONE,
 			label: getDoubleParagraph('Primary Prospect', 'Phone'),
 		},
 		{

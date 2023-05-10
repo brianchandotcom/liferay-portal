@@ -29,14 +29,19 @@ export default function useGetListItemsFromDealRegistration(
 		filtersTerm,
 		sort
 	);
+	
 	const listItems = useMemo(
 		() =>
 			swrResponse.data?.items.map((item) => ({
 				[DealRegistrationColumnKey.ACCOUNT_NAME]:
 					item.prospectAccountName,
 				...getDealDates(item.dateCreated),
+
+				[DealRegistrationColumnKey.ADDITIONAL_CONTACTS]:
+					item.additionalContacts,
+
 				[DealRegistrationColumnKey.STATUS]: item.leadStatus,
-				[DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME]: `${
+				[DealRegistrationColumnKey.PROSPECT_NAME]: `${
 					item.primaryProspectFirstName
 						? item.primaryProspectFirstName
 						: ''
@@ -45,9 +50,9 @@ export default function useGetListItemsFromDealRegistration(
 						? ' ' + item.primaryProspectLastName
 						: ''
 				}`,
-				[DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL]:
+				[DealRegistrationColumnKey.PROSPECT_EMAIL]:
 					item.primaryProspectEmailAddress,
-				[DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE]:
+				[DealRegistrationColumnKey.PROSPECT_PHONE]:
 					item.primaryProspectPhone,
 				[DealRegistrationColumnKey.PROSPECT_ADDRESS]:
 					item.prospectAddress,
@@ -56,8 +61,29 @@ export default function useGetListItemsFromDealRegistration(
 					item.prospectIndustry,
 				[DealRegistrationColumnKey.PROSPECT_POSTAL_CODE]:
 					item.prospectPostalCode,
+				
+				[DealRegistrationColumnKey.PROPECT_BUSINES_UNIT]:
+					item.primaryProspectBusinessUnit,
+				[DealRegistrationColumnKey.PROSPECT_DEPARTMENT]:
+					item.primaryProspectDepartment,
+				[DealRegistrationColumnKey.PROSPECT_JOB_ROLE]:
+					item.primaryProspectJobRole,
+
+				[DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME]:
+					item.prospectAccountName,
+				
+					
 				[DealRegistrationColumnKey.STATUS_DETAIL]:
 					item.leadStatusDetail,
+				[DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME]:
+					item.partnerAccountName,
+				[DealRegistrationColumnKey.CURRENCY_KEY]:
+					item.currency.key,
+				[DealRegistrationColumnKey.CURRENCY_NAME]:
+					item.currency.name,
+				[DealRegistrationColumnKey.COUTRY_CODE]:
+					item.prospectCountryCode,
+							
 			})),
 		[swrResponse.data?.items]
 	);

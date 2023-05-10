@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.media.internal;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
@@ -208,7 +208,7 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 			}
 			else if (className.equals(CPDefinition.class.getName())) {
 				if (commerceAccountId ==
-						CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
+						AccountConstants.ACCOUNT_ENTRY_ID_ADMIN) {
 
 					CPDefinition cpDefinition =
 						_cpDefinitionLocalService.getCPDefinition(

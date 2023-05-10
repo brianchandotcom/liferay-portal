@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.media.internal.servlet;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -207,9 +207,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				_cpDefinitionLocalService.getCPDefinition(
 					cpAttachmentFileEntry.getClassPK());
 
-			if (commerceAccountId ==
-					CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
-
+			if (commerceAccountId == AccountConstants.ACCOUNT_ENTRY_ID_ADMIN) {
 				_commerceCatalogModelResourcePermission.check(
 					PermissionThreadLocal.getPermissionChecker(),
 					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);
@@ -480,9 +478,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				return;
 			}
 
-			if (commerceAccountId ==
-					CommerceAccountConstants.ACCOUNT_ID_ADMIN) {
-
+			if (commerceAccountId == AccountConstants.ACCOUNT_ENTRY_ID_ADMIN) {
 				_commerceCatalogModelResourcePermission.check(
 					PermissionThreadLocal.getPermissionChecker(),
 					cpDefinition.getCommerceCatalog(), ActionKeys.VIEW);

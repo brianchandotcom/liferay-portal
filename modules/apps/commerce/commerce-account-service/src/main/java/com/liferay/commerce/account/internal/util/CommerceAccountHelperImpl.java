@@ -410,6 +410,40 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 	}
 
 	@Override
+	public Integer toAccountEntryStatus(Boolean commerceAccountActive) {
+		if (commerceAccountActive == null) {
+			return WorkflowConstants.STATUS_ANY;
+		}
+
+		if (commerceAccountActive) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return WorkflowConstants.STATUS_INACTIVE;
+	}
+
+	@Override
+	public String toAccountEntryType(int commerceAccountType) {
+		if (commerceAccountType ==
+				CommerceAccountConstants.ACCOUNT_TYPE_BUSINESS) {
+
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+		}
+		else if (commerceAccountType ==
+					CommerceAccountConstants.ACCOUNT_TYPE_GUEST) {
+
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST;
+		}
+		else if (commerceAccountType ==
+					CommerceAccountConstants.ACCOUNT_TYPE_PERSONAL) {
+
+			return AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON;
+		}
+
+		return null;
+	}
+
+	@Override
 	public String[] toAccountEntryTypes(int commerceSiteType) {
 		if (commerceSiteType == CommerceAccountConstants.SITE_TYPE_B2B) {
 			return new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS};

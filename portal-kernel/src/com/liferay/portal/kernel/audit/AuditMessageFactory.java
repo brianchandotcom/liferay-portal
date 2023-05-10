@@ -27,6 +27,11 @@ public interface AuditMessageFactory {
 	public AuditMessage getAuditMessage(String message) throws JSONException;
 
 	public AuditMessage getAuditMessage(
+		String eventType, long companyId, long groupId, long userId,
+		String userName, String className, String classPK, String message,
+		Date timestamp, JSONObject additionalInfoJSONObject);
+
+	public AuditMessage getAuditMessage(
 		String eventType, long companyId, long userId, String userName);
 
 	public AuditMessage getAuditMessage(

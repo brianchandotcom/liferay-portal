@@ -4,4 +4,68 @@
 	<property name="workspace.name" value="liferay-sample-workspace" />
 
 	<import file="build-test-workspace.xml" />
+
+	<target name="start-liferay-sample-etc-cron">
+		<fail message="Please set the property ${oauth2.headless.server.client.secret}." unless="oauth2.headless.server.client.secret" />
+
+		<condition else="localhost" property="virtual.instance.id" value="${virtual.instance.id}">
+			<isset property="virtual.instance.id" />
+		</condition>
+
+		<condition else="There are 0 message board threads in the Guest site" property="spring.boot.startup.message" value="${spring.boot.startup.message}">
+			<isset property="spring.boot.startup.message" />
+		</condition>
+
+		<if>
+			<isset property="oauth2.headless.server.client.secret" />
+			<then>
+				<start-spring-boot-client-extension spring.boot.startup.message="${spring.boot.startup.message}" workspace.client.extension.name="liferay-sample-etc-cron">
+					com.liferay.lxc.dxp.domains=${virtual.instance.id}:8080
+					com.liferay.lxc.dxp.mainDomain=${virtual.instance.id}:8080
+					liferay-sample-etc-cron.oauth2.headless.server.client.secret=${oauth2.headless.server.client.secret}
+				</start-spring-boot-client-extension>
+			</then>
+			<else>
+				<start-spring-boot-client-extension spring.boot.startup.message="${spring.boot.startup.message}" workspace.client.extension.name="liferay-sample-etc-cron">
+					com.liferay.lxc.dxp.domains=${virtual.instance.id}:8080
+					com.liferay.lxc.dxp.mainDomain=${virtual.instance.id}:8080
+				</start-spring-boot-client-extension>
+			</else>
+		</if>
+	</target>
+
+	<target name="start-liferay-sample-etc-spring-boot">
+		<condition else="localhost" property="virtual.instance.id" value="${virtual.instance.id}">
+			<isset property="virtual.instance.id" />
+		</condition>
+
+		<start-spring-boot-client-extension workspace.client.extension.name="liferay-sample-etc-spring-boot">
+			com.liferay.lxc.dxp.domains=${virtual.instance.id}:8080
+			com.liferay.lxc.dxp.mainDomain=${virtual.instance.id}:8080
+		</start-spring-boot-client-extension>
+	</target>
+
+	<target name="start-workspace">
+		<deploy-workspace-client-extensions />
+
+		<antcall target="start-liferay-sample-etc-cron" />
+
+		<antcall target="start-liferay-sample-etc-spring-boot" />
+	</target>
+
+	<target name="stop-liferay-sample-etc-cron">
+		<stop-spring-boot-client-extension spring.boot.application.name="SampleSpringBootApplication" />
+	</target>
+
+	<target name="stop-liferay-sample-etc-spring-boot">
+		<stop-spring-boot-client-extension spring.boot.application.name="SampleSpringBootApplication" />
+	</target>
+
+	<target name="stop-workspace">
+		<antcall target="stop-liferay-sample-etc-cron" />
+
+		<antcall target="stop-liferay-sample-etc-spring-boot" />
+
+		<undeploy-workspace-client-extensions />
+	</target>
 </project>

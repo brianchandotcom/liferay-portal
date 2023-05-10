@@ -16,6 +16,8 @@ package com.liferay.portal.tools.db.virtual.instance.migration.internal;
 
 import com.liferay.portal.tools.db.virtual.instance.migration.internal.util.Version;
 
+import java.util.Objects;
+
 /**
  * @author Luis Ortiz
  */
@@ -29,6 +31,28 @@ public class Release {
 		_verified = verified;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Release)) {
+			return false;
+		}
+
+		Release release = (Release)object;
+
+		if (_servletContextName.equals(release._servletContextName) &&
+			_schemaVersion.equals(release._schemaVersion) &&
+			(_verified == release._verified)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public Version getSchemaVersion() {
 		return _schemaVersion;
 	}
@@ -39,6 +63,11 @@ public class Release {
 
 	public boolean getVerified() {
 		return _verified;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_schemaVersion, _servletContextName, _verified);
 	}
 
 	private final Version _schemaVersion;

@@ -30,7 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RuntimePage {
 
-	public LayoutTemplate getLayoutTemplate(String velocityTemplateId);
+	public LayoutTemplate getLayoutTemplate(String templateId);
 
 	public StringBundler getProcessedTemplate(
 			HttpServletRequest httpServletRequest,

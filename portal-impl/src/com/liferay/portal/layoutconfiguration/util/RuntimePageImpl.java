@@ -16,12 +16,10 @@ package com.liferay.portal.layoutconfiguration.util;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutTemplate;
-import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,44 +53,14 @@ import org.apache.commons.lang.time.StopWatch;
 public class RuntimePageImpl implements RuntimePage {
 
 	@Override
-	public LayoutTemplate getLayoutTemplate(String velocityTemplateId) {
-		String separator = LayoutTemplateConstants.CUSTOM_SEPARATOR;
-		boolean standard = false;
-
-		if (velocityTemplateId.contains(
-				LayoutTemplateConstants.STANDARD_SEPARATOR)) {
-
-			separator = LayoutTemplateConstants.STANDARD_SEPARATOR;
-			standard = true;
-		}
-
-		String layoutTemplateId = null;
-
-		String themeId = null;
-
-		int pos = velocityTemplateId.indexOf(separator);
-
-		if (pos != -1) {
-			layoutTemplateId = velocityTemplateId.substring(
-				pos + separator.length());
-
-			themeId = velocityTemplateId.substring(0, pos);
-		}
-
-		pos = layoutTemplateId.indexOf(
-			LayoutTemplateConstants.INSTANCE_SEPARATOR);
-
-		if (pos != -1) {
-			layoutTemplateId = layoutTemplateId.substring(
-				pos + LayoutTemplateConstants.INSTANCE_SEPARATOR.length() + 1);
-
-			pos = layoutTemplateId.indexOf(StringPool.UNDERLINE);
-
-			layoutTemplateId = layoutTemplateId.substring(pos + 1);
-		}
+	public LayoutTemplate getLayoutTemplate(String templateId) {
+		LayoutTemplateLocator layoutTemplateLocator = new LayoutTemplateLocator(
+			templateId);
 
 		return LayoutTemplateLocalServiceUtil.getLayoutTemplate(
-			layoutTemplateId, standard, themeId);
+			layoutTemplateLocator.getLayoutTemplateId(),
+			layoutTemplateLocator.isStandard(),
+			layoutTemplateLocator.getThemeId());
 	}
 
 	@Override
@@ -105,7 +72,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		return doDispatch(
 			httpServletRequest, httpServletResponse, portletId, templateId,
-			content, TemplateConstants.LANG_TYPE_VM);
+			content, null);
 	}
 
 	@Override
@@ -117,7 +84,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		StringBundler sb = doDispatch(
 			httpServletRequest, httpServletResponse, portletId, templateId,
-			content, TemplateConstants.LANG_TYPE_VM);
+			content, null);
 
 		sb.writeTo(httpServletResponse.getWriter());
 	}
@@ -142,9 +109,23 @@ public class RuntimePageImpl implements RuntimePage {
 			String templateId, String content, String langType)
 		throws Exception {
 
+		LayoutTemplateLocator layoutTemplateLocator = new LayoutTemplateLocator(
+			templateId);
+
+		if (langType == null) {
+			langType = LayoutTemplateLocalServiceUtil.getLangType(
+				layoutTemplateLocator.getLayoutTemplateId(),
+				layoutTemplateLocator.isStandard(),
+				layoutTemplateLocator.getThemeId());
+		}
+
 		ClassLoader pluginClassLoader = null;
 
-		LayoutTemplate layoutTemplate = getLayoutTemplate(templateId);
+		LayoutTemplate layoutTemplate =
+			LayoutTemplateLocalServiceUtil.getLayoutTemplate(
+				layoutTemplateLocator.getLayoutTemplateId(),
+				layoutTemplateLocator.isStandard(),
+				layoutTemplateLocator.getThemeId());
 
 		if (layoutTemplate != null) {
 			String pluginServletContextName = GetterUtil.getString(

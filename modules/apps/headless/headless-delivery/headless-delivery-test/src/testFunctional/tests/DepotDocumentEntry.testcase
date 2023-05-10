@@ -21,6 +21,84 @@ definition {
 		}
 	}
 
+	@priority = 5
+	test CanAddDownloadAndViewPermissions {
+		task ("Given a document in a depot") {
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var documentId = DocumentAPI.getIdOfCreatedDocument(
+				depotName = "Test Depot Name",
+				filePath = ${filePath});
+
+			var response = DocumentAPI.getDMPermissionsWithDocumentID(documentId = ${documentId});
+
+			echo("####Before updating permissions to Guest role: '${response}'");
+		}
+
+		task ("When a put request is made to add view and download permissions to Guest role") {
+			var response = DocumentAPI.putDMPermissionsWithDocumentID(
+				actionIds = '''DOWNLOAD","VIEW''',
+				documentId = ${documentId},
+				roleName = "Guest");
+
+			echo("####After updating permissions for Guest role: '${response}'");
+		}
+
+		task ("Then view and download permissions are returned to Guest role") {
+			DocumentAPI.assertDMPermissions(
+				actual = ${actualDMPermissions},
+				documentId = ${documentId},
+				expectedDMPermissions = '''["DOWNLOAD","VIEW"]''',
+				roleName = "Guest");
+
+			HeadlessSite.addSite(siteName = "Site Name");
+
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Site Name",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.openSitePage(
+				pageName = "Documents and Media Page",
+				siteName = "Site Name");
+
+			DMDocument.enableActionsMenuOnPortlet();
+
+			DMDocument.setRootFolder(
+				depotName = "Test Depot Name",
+				selectRootFolder = "Home");
+
+			User.logoutPG();
+
+			Navigator.openSitePage(
+				pageName = "Documents and Media Page",
+				siteName = "Site Name");
+
+			DMDocument.viewPG(dmDocumentTitle = "Document_1.jpg");
+
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			DMDocument.downloadViaURL(
+				dmDocumentTitle = "document_1-jpg",
+				siteURLKey = "asset-library-${depotId}");
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
+	}
+
 	@priority = 3
 	test CannotGetRatedEntryByOtherUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

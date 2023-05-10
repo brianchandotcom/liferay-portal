@@ -17,6 +17,122 @@ definition {
 		}
 	}
 
+	@priority = 5
+	test CanAddDownloadWithoutViewPermission {
+		task ("Given a document in a site") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var response = DocumentAPI.addDocumentWithFileInSite(
+				filePath = ${filePath},
+				siteId = ${siteId});
+
+			var documentId = JSONPathUtil.getIdValue(response = ${response});
+
+			var response = DocumentAPI.getDMPermissionsWithDocumentID(documentId = ${documentId});
+
+			echo("####Before adding the download permission to Guest role: '${response}'");
+		}
+
+		task ("When a put request is made to add download and add_disscussion permissions without view permission to Guest role") {
+			var response = DocumentAPI.putDMPermissionsWithDocumentID(
+				actionIds = '''DOWNLOAD","ADD_DISCUSSION''',
+				documentId = ${documentId},
+				roleName = "Guest");
+
+			echo("####After updating permissions for Guest role: '${response}'");
+		}
+
+		task ("Then download permission is returned and view permission is not returned to Guest role") {
+			DocumentAPI.assertDMPermissions(
+				actual = ${actualDMPermissions},
+				documentId = ${documentId},
+				expectedDMPermissions = '''["DOWNLOAD","ADD_DISCUSSION"]''',
+				roleName = "Guest");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			User.logoutPG();
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			AssertElementNotPresent(
+				key_dmDocumentTitle = "Document_1.jpg",
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
+			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
+	}
+
+	@priority = 5
+	test CanAddViewWithoutDownloadPermission {
+		task ("Given a document in a site") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var response = DocumentAPI.addDocumentWithFileInSite(
+				filePath = ${filePath},
+				siteId = ${siteId});
+
+			var documentId = JSONPathUtil.getIdValue(response = ${response});
+
+			var response = DocumentAPI.getDMPermissionsWithDocumentID(documentId = ${documentId});
+
+			echo("####Before adding the view permission to Guest role: '${response}'");
+		}
+
+		task ("When a put request is made to add view permission without download permission to Guest role") {
+			var response = DocumentAPI.putDMPermissionsWithDocumentID(
+				actionIds = "VIEW",
+				documentId = ${documentId},
+				roleName = "Guest");
+
+			echo("####After updating permissions for Guest role: '${response}'");
+		}
+
+		task ("Then only view permission is returned to Guest role") {
+			DocumentAPI.assertDMPermissions(
+				actual = ${actualDMPermissions},
+				documentId = ${documentId},
+				expectedDMPermissions = '''["VIEW"]''',
+				roleName = "Guest");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Documents and Media Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Documents and Media Page",
+				widgetName = "Documents and Media");
+
+			User.logoutPG();
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+
+			DMDocument.viewPG(dmDocumentTitle = "Document_1.jpg");
+
+			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");
+
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
+	}
+
 	@priority = 3
 	test CannotGetRatedEntryByOtherUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -82,6 +198,45 @@ definition {
 			TestUtils.assertNotEquals(
 				actual = ${response},
 				expected = "Document_2.jpg");
+		}
+	}
+
+	@priority = 3
+	test CanNotRemoveDownloadPermissionWithInvalidDocumentID {
+		task ("Given a document in a site") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var response = DocumentAPI.addDocumentWithFileInSite(
+				filePath = ${filePath},
+				siteId = ${siteId});
+		}
+
+		task ("When a put request is made to remove download permission to Owner role with an invalid DocumentID") {
+			var response = DocumentAPI.putDMPermissionsWithDocumentID(
+				actionIds = '''UPDATE_DISCUSSION","DELETE","OVERRIDE_CHECKOUT","PERMISSIONS","DELETE_DISCUSSION","UPDATE","VIEW","ADD_DISCUSSION''',
+				documentId = 40000,
+				roleName = "Owner");
+		}
+
+		task ("Then DOWNLOAD permission can not be removed to Guest role") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "NOT_FOUND");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "No FileEntry exists with the key {fileEntryId=40000}");
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
 		}
 	}
 

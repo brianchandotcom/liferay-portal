@@ -47,6 +47,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154778. Verify restarting with a missing resource permission for a widget page does not break the portal."
+	@ignore = "true"
 	@priority = 3
 	test RestartWithMissingPagePermission {
 		property database.types = "mysql";

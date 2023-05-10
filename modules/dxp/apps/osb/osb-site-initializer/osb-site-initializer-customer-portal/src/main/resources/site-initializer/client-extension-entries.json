@@ -2,12 +2,10 @@
 	{
 		"clientExtensionEntryKey": "CUSTOMER-PORTAL",
 		"cssURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/main.css$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/index.css$]"
 		],
 		"elementURLs": [
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/2.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/main.js$]",
-			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/runtime-main.js$]"
+			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/osb-site-initializer-customer-portal/index.js$]"
 		],
 		"externalReferenceCode": "CP001",
 		"htmlElementName": "liferay-remote-app-customer-portal",
@@ -19,6 +17,7 @@
 			"okta-session-api": "https://login-dev.liferay.com/api/v1/sessions",
 			"provisioning-server-api": "https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0"
 		},
+		"useESM": true,
 		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
 	}
 ]

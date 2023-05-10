@@ -278,7 +278,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return url;
 	}
 
-	private Map<String, String> _getAllParameters(
+	private Map<String, String> _getAllParametersMap(
 		DDMDataProviderRequest ddmDataProviderRequest,
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings,
 		Map<String, String> pathInputParametersMap, String query,
@@ -365,7 +365,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		URI uri = new URI(url);
 
-		Map<String, String> allParametersMap = _getAllParameters(
+		Map<String, String> allParametersMap = _getAllParametersMap(
 			ddmDataProviderRequest, ddmRESTDataProviderSettings,
 			pathInputParametersMap, uri.getQuery(), requestInputParametersMap);
 

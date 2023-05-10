@@ -209,9 +209,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.openHeading();
 
-		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay(
-			fragmentName = "Heading",
-			label = "Expand Collection Display");
+		VisualizeObjectCollectionDisplay.addFieldInsideCollectionDisplay();
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Text");
 

@@ -55,6 +55,8 @@ definition {
 		Button.clickSave();
 
 		SelectFrame(value1 = "relative=top");
+
+		IFrame.closeFrame();
 	}
 
 	macro search {

@@ -661,10 +661,6 @@ public class DLAdminDisplayContext {
 
 			SearchContext searchContext = _getSearchContext(dlSearchContainer);
 
-			if (ArrayUtil.isNotEmpty(assetTagIds)) {
-				searchContext.setAssetTagNames(assetTagIds);
-			}
-
 			long userId = 0;
 
 			if (navigation.equals("mine") && _themeDisplay.isSignedIn()) {

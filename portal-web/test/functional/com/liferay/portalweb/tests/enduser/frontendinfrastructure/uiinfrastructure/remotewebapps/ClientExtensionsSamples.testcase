@@ -260,4 +260,40 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Theme Favicon"
+	@priority = 4
+	test LiferaySampleThemeFaviconSmoke {
+		property workspaces.client.extension.names = "liferay-sample-theme-favicon";
+
+		task ("Go to the Site Pages configuration screen in Page Admin") {
+			PagesAdmin.openConfigureSitePages();
+		}
+
+		task ("Add Liferay Sample Theme Favicon as a Client Extension favicon for all pages") {
+			Navigator.gotoNavTab(navTab = "Design");
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Liferay Sample Theme Favicon");
+
+			AssertTextEquals(
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Liferay Sample Theme Favicon");
+		}
+
+		task ("Assert the sample favicon image is used in the configuration page") {
+			AssertElementPresent(locator1 = "ClientExtension#SAMPLE_THEME_FAVICON_CONFIGURATION_IMAGE");
+		}
+
+		task ("Save the configuration and navigate to the Home page") {
+			PortletEntry.save();
+
+			Navigator.openURL();
+		}
+
+		task ("Assert the page is using the client extension sample favicon") {
+			AssertElementPresent(
+				imageFileName = "liferay-sample-theme-favicon/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
 }

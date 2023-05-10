@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAMPLE_THEME_FAVICON_CONFIGURATION_IMAGE</td>
+	<td>//div[contains(@class,'lfr-tooltip-scope')][./input[contains(@name,'favicon')]]//img[@alt='Liferay Sample Theme Favicon']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_THEME_SPRITEMAP_CLIENT_EXTENSION</td>
 	<td>//dl[contains(@class, "list-group")]//dd[@data-qa-id="row"][contains(@data-value,'${key_text}')]//div[@data-qa-id="rowItemContent"]</td>
 	<td></td>

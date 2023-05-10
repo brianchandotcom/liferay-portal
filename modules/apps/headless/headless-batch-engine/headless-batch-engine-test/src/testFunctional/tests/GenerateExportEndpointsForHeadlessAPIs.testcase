@@ -1,0 +1,123 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+	}
+
+	tearDown {
+		BlogPostingAPI.deleteAllBlogPostings();
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		JSONDepot.deleteDepot(
+			depotName = "Test Depot Name",
+			noSelenium = "true");
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanGetExportTaskDataFromExportBatchContainingAssetLibraryIdParameter {
+		task ("Given Asset Library created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+
+		task ("And Given postAssetLibraryKeywordsPageExportBatch with valid assetLibraryId") {
+			var response = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
+				depotName = "Test Depot Name",
+				exportBatch = "true",
+				name = "Liferay");
+		}
+
+		task ("When getExportTask with the id from postAssetLibraryKeywordsPageExportBatch response") {
+			var exportTaskId = JSONPathUtil.getIdValue(response = ${response});
+
+			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
+		}
+
+		task ("Then processedItemsCount is 0 with executeStatus is "COMPLETED"") {
+			ExportTask.assertProcessedItemsCountWithCompletedStatus(
+				expectedCount = 0,
+				response = ${response});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanGetExportTaskDataFromExportBatchContainingAssetSiteIdParameter {
+		task ("Given three blog postings created") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "UPSERT",
+				numberOfBlogPostings = 3);
+		}
+
+		task ("And Given postSiteBlogPostingsPageExportBatch with valid siteId") {
+			var exportTaskId = BlogPostingAPI.getIdOfSiteBlogPostingsExportBatch();
+		}
+
+		task ("When getExportTask with the id from postSiteBlogPostingsPageExportBatch response") {
+			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
+		}
+
+		task ("Then processedItemsCount is 3 with executeStatus is "COMPLETED"") {
+			ExportTask.assertProcessedItemsCountWithCompletedStatus(
+				expectedCount = 3,
+				response = ${response});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanGetExportTaskDataFromExportBatchContainingNoParameters {
+		task ("Given Student object definition with name created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given postObjectDefinitionsPageExportBatch") {
+			var exportTaskId = ObjectDefinitionAPI.getIdOfObjectDefinitionExportBatch();
+		}
+
+		task ("When getExportTask with the id from postObjectDefinitionsPageExportBatch response") {
+			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
+		}
+
+		task ("Then processedItemsCount is 7 with executeStatus "COMPLETED"") {
+			ExportTask.assertProcessedItemsCountWithCompletedStatus(
+				expectedCount = 7,
+				response = ${response});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanGetExportTaskDataFromExportBatchForCommerceEndpoints {
+		task ("Given postAccountGroupsPageExportBatch") {
+			var exportTaskId = CommerceJSONAccountGroupsAPI.getIdOfAccountGroupsExportBatch();
+		}
+
+		task ("When getExportTask with the id from postAccountGroupsPageExportBatch response") {
+			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
+		}
+
+		task ("Then processedItemsCount is 0 with executeStatus "COMPLETED"") {
+			ExportTask.assertProcessedItemsCountWithCompletedStatus(
+				expectedCount = 0,
+				response = ${response});
+		}
+	}
+
+}

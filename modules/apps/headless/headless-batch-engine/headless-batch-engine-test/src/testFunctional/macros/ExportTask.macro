@@ -1,0 +1,31 @@
+definition {
+
+	macro assertProcessedItemsCountWithCompletedStatus {
+		Variables.assertDefined(parameterList = "${expectedCount},${response}");
+
+		var actualCount = JSONUtil.getWithJSONPath(${response}, "$..[?(@['executeStatus'] == 'COMPLETED')]['processedItemsCount']");
+
+		TestUtils.assertEquals(
+			actual = ${actualCount},
+			expected = ${expectedCount});
+	}
+
+	macro getExportTaskById {
+		Variables.assertDefined(parameterList = ${exportTaskId});
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-batch-engine/v1.0/export-task/${exportTaskId} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get(${curl});
+
+		return ${curl};
+	}
+
+}

@@ -7,6 +7,10 @@ definition {
 			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 			var api = "asset-libraries/${assetLibraryId}/keywords";
+
+			if (isSet(exportBatch)) {
+				var api = StringUtil.add(${api}, "/export-batch", "");
+			}
 		}
 		else if (isSet(keywordId)) {
 			var api = "keywords/${keywordId}";
@@ -152,7 +156,9 @@ definition {
 	macro createAssetLibraryWithKeyWords {
 		Variables.assertDefined(parameterList = "${depotName},${name}");
 
-		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(depotName = ${depotName});
+		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
+			depotName = ${depotName},
+			exportBatch = ${exportBatch});
 		var body = '''-d {"name": "${name}"}''';
 
 		var curl = StringUtil.add(${curl}, ${body}, " ");

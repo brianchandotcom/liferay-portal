@@ -170,49 +170,15 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 						childPrimaryKeysArray, i, batchChildPrimaryKeys, 0,
 						batchSize);
 
-					DSLQuery dslQuery = _getDSLQuery(
-						ctCollectionId, batchChildPrimaryKeys,
-						entry.getValue());
+					List<Long> newParents = _collectParents(
+						childClassNameId, batchChildPrimaryKeys, ctCollectionId,
+						entry, edgeMap, nodes, parentClassNameId,
+						parentTableReferenceInfo);
 
-					try (Connection connection = _getConnection(
-							parentTableReferenceInfo);
-						PreparedStatement preparedStatement =
-							_getPreparedStatement(connection, dslQuery);
-						ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						List<Long> newParents = null;
-
-						while (resultSet.next()) {
-							Node parentNode = new Node(
-								parentClassNameId, resultSet.getLong(1));
-							Node childNode = new Node(
-								childClassNameId, resultSet.getLong(2));
-
-							if (nodes.add(parentNode)) {
-								if (newParents == null) {
-									newParents = new ArrayList<>();
-								}
-
-								newParents.add(parentNode.getPrimaryKey());
-							}
-
-							Collection<Edge> edges = edgeMap.computeIfAbsent(
-								parentNode, key -> new LinkedList<>());
-
-							edges.add(new Edge(parentNode, childNode));
-						}
-
-						if (newParents != null) {
-							queue.add(
-								new AbstractMap.SimpleImmutableEntry<>(
-									parentClassNameId, newParents));
-						}
-					}
-					catch (SQLException sqlException) {
-						throw new ORMException(
-							"Unable to execute query: " + dslQuery,
-							sqlException);
+					if (newParents != null) {
+						queue.add(
+							new AbstractMap.SimpleImmutableEntry<>(
+								parentClassNameId, newParents));
 					}
 
 					i += batchSize;
@@ -221,6 +187,51 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		}
 
 		return GraphUtil.getNodeMap(nodes, edgeMap);
+	}
+
+	private List<Long> _collectParents(
+		long childClassNameId, Long[] childPrimaryKeys, long ctCollectionId,
+		Map.Entry<Table<?>, List<TableJoinHolder>> entry,
+		Map<Node, Collection<Edge>> edgeMap, Set<Node> nodes,
+		long parentClassNameId,
+		TableReferenceInfo<?> parentTableReferenceInfo) {
+
+		List<Long> newParents = null;
+
+		DSLQuery dslQuery = _getDSLQuery(
+			ctCollectionId, childPrimaryKeys, entry.getValue());
+
+		try (Connection connection = _getConnection(parentTableReferenceInfo);
+			PreparedStatement preparedStatement = _getPreparedStatement(
+				connection, dslQuery);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				Node parentNode = new Node(
+					parentClassNameId, resultSet.getLong(1));
+				Node childNode = new Node(
+					childClassNameId, resultSet.getLong(2));
+
+				if (nodes.add(parentNode)) {
+					if (newParents == null) {
+						newParents = new ArrayList<>();
+					}
+
+					newParents.add(parentNode.getPrimaryKey());
+				}
+
+				Collection<Edge> edges = edgeMap.computeIfAbsent(
+					parentNode, key -> new LinkedList<>());
+
+				edges.add(new Edge(parentNode, childNode));
+			}
+		}
+		catch (SQLException sqlException) {
+			throw new ORMException(
+				"Unable to execute query: " + dslQuery, sqlException);
+		}
+
+		return newParents;
 	}
 
 	private Predicate _getChildPKColumnPredicate(

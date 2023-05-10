@@ -43,6 +43,8 @@ public interface AuditEvent {
 
 	public String getEventType();
 
+	public long getGroupId();
+
 	public String getMessage();
 
 	public long getPrimaryKey();

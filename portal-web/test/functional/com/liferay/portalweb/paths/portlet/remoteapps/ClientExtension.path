@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_CONFIGURED_FROM_SPECIFIC</td>
+	<td>xpath=(//div[contains(@class,'dnd-tr')][.//div[contains(@class,'table-list-title') and contains(.,'${key_tableEntryName}')]]//div[contains(@class,'dnd-td')])[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_NAME</td>
 	<td>//table//tbody//td//*[contains(@class,'table-list-title')]//*[text() = '${key_tableEntryName}']</td>
 	<td></td>
@@ -86,8 +91,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_TYPE_SPECIFIC</td>
+	<td>xpath=(//div[contains(@class,'dnd-tr')][.//div[contains(@class,'table-list-title') and contains(.,'${key_tableEntryName}')]]//div[contains(@class,'dnd-td')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_STATUS_REMOTE_TABLE</td>
 	<td>//div[contains(@class,'dnd-td')]//*[contains(@class,'workflow-status') and contains(.,'${key_tableEntryStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_STATUS_SPECIFIC</td>
+	<td>xpath=(//div[contains(@class,'dnd-tr')][.//div[contains(@class,'table-list-title') and contains(.,'${key_tableEntryName}')]]//div[contains(@class,'dnd-td')])[3]</td>
 	<td></td>
 </tr>
 <tr>

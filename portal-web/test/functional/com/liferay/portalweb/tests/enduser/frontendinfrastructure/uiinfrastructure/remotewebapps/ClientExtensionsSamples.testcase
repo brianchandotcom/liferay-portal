@@ -21,6 +21,49 @@ definition {
 		}
 	}
 
+	@description = "Assert all deployed Client Extensions Samples have startup logs in the console and are present in the admin page with the correct table values"
+	@priority = 4
+	test AssertSamplesInConsoleAndAdminPage {
+		property workspaces.client.extension.names = "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1";
+
+		task ("Assert the Portal server console has startup verbiage for each deployed Client Extension sample ") {
+			for (var clientExtension : list "liferay-sample-custom-element-1,liferay-sample-custom-element-2,liferay-sample-global-css,liferay-sample-global-js,liferay-sample-iframe-1,liferay-sample-theme-css-1,liferay-sample-theme-favicon,liferay-sample-theme-spritemap-1") {
+				AssertConsoleTextPresent(value1 = "STARTED ${clientExtension}");
+			}
+		}
+
+		task ("Assert each deployed Client Extension sample appears in the Client Extensions admin page with the correct table values") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Custom Apps",
+				panel = "Applications",
+				portlet = "Client Extensions");
+
+			for (var clientExtensionCombo : list "Liferay Sample Custom Element 1/Custom Element,Liferay Sample Custom Element 2/Custom Element,Liferay Sample Global CSS/CSS,Liferay Sample Global JS/JS,Counter App/IFrame,Liferay Sample Theme CSS 1/Theme CSS,Liferay Sample Theme Favicon/Theme Favicon,Liferay Sample Theme Spritemap 1/Theme SVG Spritemap") {
+				var clientExtensionName = StringUtil.extractFirst(${clientExtensionCombo}, "/");
+				var clientExtensionType = StringUtil.extractLast(${clientExtensionCombo}, "/");
+
+				AssertElementPresent(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+
+				AssertTextEquals(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_TYPE_SPECIFIC",
+					value1 = ${clientExtensionType});
+
+				AssertTextEquals(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_STATUS_SPECIFIC",
+					value1 = "Approved");
+
+				AssertTextEquals(
+					key_tableEntryName = ${clientExtensionName},
+					locator1 = "ClientExtension#TABLE_ENTRY_CONFIGURED_FROM_SPECIFIC",
+					value1 = "Workspace");
+			}
+		}
+	}
+
 	@description = "Smoke test Liferay Sample Custom Element 1"
 	@priority = 4
 	test LiferaySampleCustomElement1Smoke {

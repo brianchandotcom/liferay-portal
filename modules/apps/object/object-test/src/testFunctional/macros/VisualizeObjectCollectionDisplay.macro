@@ -8,12 +8,9 @@ definition {
 	}
 
 	macro addFieldInsideCollectionDisplay {
-		Click(
-			key_label = ${label},
-			locator1 = "VisualizeObjectCollectionDisplay#EXPAND_BUTTON");
+		Click(locator1 = "VisualizeObjectCollectionDisplay#EXPAND_BUTTON");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
-			key_fragmentName = ${fragmentName},
 			locator1 = "VisualizeObjectCollectionDisplay#SELECT_HEADING",
 			locator2 = "VisualizeObjectCollectionDisplay#SELECT_COLLECTION_ITEM");
 	}

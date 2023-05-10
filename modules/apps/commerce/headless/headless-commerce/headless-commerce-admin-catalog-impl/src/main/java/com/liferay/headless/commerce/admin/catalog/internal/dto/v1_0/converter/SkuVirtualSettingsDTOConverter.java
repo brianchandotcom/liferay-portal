@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "dto.class.name=com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettings",
-	service = {DTOConverter.class, SkuVirtualSettingsDTOConverter.class}
+	service = DTOConverter.class
 )
 public class SkuVirtualSettingsDTOConverter
 	implements DTOConverter<CPInstance, SkuVirtualSettings> {

@@ -19,8 +19,8 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettings;
-import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuVirtualSettingsDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuVirtualSettingsResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -78,7 +78,10 @@ public class SkuVirtualSettingsResourceImpl
 	@Reference
 	private CPInstanceService _cpInstanceService;
 
-	@Reference
-	private SkuVirtualSettingsDTOConverter _skuVirtualSettingsDTOConverter;
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuVirtualSettingsDTOConverter)"
+	)
+	private DTOConverter<CPInstance, SkuVirtualSettings>
+		_skuVirtualSettingsDTOConverter;
 
 }

@@ -289,7 +289,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByComparisonOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -337,7 +337,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -382,7 +382,7 @@ public class ObjectEntryResourceTest {
 					_objectEntry2.getObjectEntryId() - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -427,7 +427,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
 			_objectDefinition2);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -663,7 +663,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByComparisonOperatorsObjectEntriesByRelatesObjectEntriesFieldsThroughMultipleRelationships()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -724,7 +724,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_VALUE_3 - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -775,7 +775,7 @@ public class ObjectEntryResourceTest {
 					_objectEntry3.getObjectEntryId() - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -826,7 +826,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_VALUE_1 - 1)),
 			_objectDefinition3);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -1101,7 +1101,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByGroupingOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -1116,7 +1116,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1129,7 +1129,7 @@ public class ObjectEntryResourceTest {
 					_objectEntry2.getObjectEntryId() - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -1141,7 +1141,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 - 1)),
 			_objectDefinition2);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -1215,7 +1215,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByGroupingOperatorsObjectEntriesByRelatesObjectEntriesFieldsThroughMultipleRelationships()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -1239,7 +1239,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_VALUE_3 - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1254,7 +1254,7 @@ public class ObjectEntryResourceTest {
 					_objectEntry3.getObjectEntryId() - 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -1268,7 +1268,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_VALUE_1 - 1)),
 			_objectDefinition3);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -1361,7 +1361,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByLambdaOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1,
@@ -1421,7 +1421,7 @@ public class ObjectEntryResourceTest {
 					_LIST_TYPE_ENTRY_KEY)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1453,7 +1453,7 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(), _TAG_1.substring(0, 2))),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -1491,7 +1491,7 @@ public class ObjectEntryResourceTest {
 					_LIST_TYPE_ENTRY_KEY)),
 			_objectDefinition2);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -1703,7 +1703,7 @@ public class ObjectEntryResourceTest {
 			).build(),
 			_TAG_1);
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -1758,7 +1758,7 @@ public class ObjectEntryResourceTest {
 					_LIST_TYPE_ENTRY_KEY, RandomTestUtil.randomString())),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -1797,7 +1797,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString())),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -1842,7 +1842,7 @@ public class ObjectEntryResourceTest {
 					_LIST_TYPE_ENTRY_KEY, RandomTestUtil.randomString())),
 			_objectDefinition3);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -2069,7 +2069,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByListOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -2083,7 +2083,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomInt())),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2094,7 +2094,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomInt())),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2105,7 +2105,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomInt())),
 			_objectDefinition2);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2171,7 +2171,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByLogicalOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -2202,7 +2202,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2 + 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2231,7 +2231,7 @@ public class ObjectEntryResourceTest {
 					_objectEntry2.getObjectEntryId() + 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2259,7 +2259,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1 + 1)),
 			_objectDefinition2);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2423,7 +2423,7 @@ public class ObjectEntryResourceTest {
 			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2458,7 +2458,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_VALUE_3 + 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -2495,7 +2495,7 @@ public class ObjectEntryResourceTest {
 					_objectEntry3.getObjectEntryId() + 1)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -2530,7 +2530,7 @@ public class ObjectEntryResourceTest {
 					_OBJECT_FIELD_VALUE_1 + 1)),
 			_objectDefinition3);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3,
@@ -2731,7 +2731,7 @@ public class ObjectEntryResourceTest {
 	public void testFilterByStringOperatorsObjectEntriesByRelatesObjectEntriesFields()
 		throws Exception {
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		String objectFieldValue1 = String.valueOf(_OBJECT_FIELD_VALUE_1);
 
@@ -2759,7 +2759,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_2, objectFieldValue2.substring(0, 2)),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		String objectEntry2ExternalReferenceCode =
 			_objectEntry2.getExternalReferenceCode();
@@ -2779,7 +2779,7 @@ public class ObjectEntryResourceTest {
 				objectEntry2ExternalReferenceCode.substring(0, 2)),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2,
@@ -2794,7 +2794,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_1, objectFieldValue1.substring(0, 2)),
 			_objectDefinition2);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		String objectEntry1ExternalReferenceCode =
 			_objectEntry1.getExternalReferenceCode();
@@ -2908,7 +2908,7 @@ public class ObjectEntryResourceTest {
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, objectFieldValue3);
 
-		// 1 to many relationship, custom object field
+		// One to many relationship, custom object field
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -2938,7 +2938,7 @@ public class ObjectEntryResourceTest {
 					objectFieldValue3.substring(0, 2))),
 			_objectDefinition1);
 
-		// 1 to many relationship, system object field
+		// One to many relationship, system object field
 
 		String objectEntry3ExternalReferenceCode =
 			_objectEntry3.getExternalReferenceCode();
@@ -2963,7 +2963,7 @@ public class ObjectEntryResourceTest {
 					objectEntry3ExternalReferenceCode.substring(0, 2))),
 			_objectDefinition1);
 
-		// 1 to many relationship (other side), custom object field
+		// One to many relationship (other side), custom object field
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_3, objectFieldValue3,
@@ -2983,7 +2983,7 @@ public class ObjectEntryResourceTest {
 					objectFieldValue1.substring(0, 2))),
 			_objectDefinition3);
 
-		// 1 to many relationship (other side), system object field
+		// One to many relationship (other side), system object field
 
 		String objectEntry1ExternalReferenceCode =
 			_objectEntry1.getExternalReferenceCode();
@@ -3118,7 +3118,7 @@ public class ObjectEntryResourceTest {
 	public void testGetNestedFieldDetailsInRelationshipsWithCustomObjectDefinition()
 		throws Exception {
 
-		// 1 to many with custom object definition
+		// One to many with custom object definition
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -3303,7 +3303,7 @@ public class ObjectEntryResourceTest {
 	public void testGetNestedFieldDetailsInRelationshipsWithSystemObjectDefinition()
 		throws Exception {
 
-		// 1 to many with system object definition
+		// One to many with system object definition
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _userSystemObjectDefinition,

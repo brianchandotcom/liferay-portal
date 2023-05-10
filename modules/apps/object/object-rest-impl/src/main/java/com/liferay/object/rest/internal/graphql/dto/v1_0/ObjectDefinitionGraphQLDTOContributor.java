@@ -26,6 +26,7 @@ import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -182,12 +183,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	@Override
 	public boolean deleteDTO(long id) throws Exception {
-		if (!(_objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)_objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(_objectEntryManager);
 
 		defaultObjectEntryManager.deleteObjectEntry(_objectDefinition, id);
 
@@ -209,12 +206,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 			DTOConverterContext dtoConverterContext, long id)
 		throws Exception {
 
-		if (!(_objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)_objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(_objectEntryManager);
 
 		return _toMap(
 			defaultObjectEntryManager.getObjectEntry(
@@ -271,12 +264,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 			return null;
 		}
 
-		if (!(_objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)_objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(_objectEntryManager);
 
 		ObjectEntry objectEntry = defaultObjectEntryManager.getObjectEntry(
 			dtoConverterContext, _objectDefinition, id);
@@ -355,12 +344,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 			long id)
 		throws Exception {
 
-		if (!(_objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)_objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(_objectEntryManager);
 
 		return _toMap(
 			defaultObjectEntryManager.updateObjectEntry(

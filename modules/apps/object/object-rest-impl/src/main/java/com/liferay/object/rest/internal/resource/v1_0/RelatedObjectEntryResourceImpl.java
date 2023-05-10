@@ -21,7 +21,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -116,16 +116,10 @@ public class RelatedObjectEntryResourceImpl
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			systemObjectDefinition, objectRelationship);
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				systemObjectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					systemObjectDefinition.getStorageType()));
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			return defaultObjectEntryManager.getRelatedSystemObjectEntries(
@@ -267,19 +261,13 @@ public class RelatedObjectEntryResourceImpl
 			ObjectDefinition systemObjectDefinition)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				systemObjectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					systemObjectDefinition.getStorageType()));
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			systemObjectDefinition, objectRelationship);
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
 
 		return defaultObjectEntryManager.getObjectEntry(
 			_getDefaultDTOConverterContext(

@@ -23,7 +23,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -108,16 +108,10 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 		try {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
-			ObjectEntryManager objectEntryManager =
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					objectDefinition.getStorageType());
-
-			if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-				throw new UnsupportedOperationException();
-			}
-
 			DefaultObjectEntryManager defaultObjectEntryManager =
-				(DefaultObjectEntryManager)objectEntryManager;
+				DefaultObjectEntryManagerProvider.provide(
+					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getStorageType()));
 
 			defaultObjectEntryManager.updateObjectEntry(
 				new DefaultDTOConverterContext(

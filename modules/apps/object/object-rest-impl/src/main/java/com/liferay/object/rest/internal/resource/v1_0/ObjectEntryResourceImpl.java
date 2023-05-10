@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -152,16 +153,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Override
 	public void deleteObjectEntry(Long objectEntryId) throws Exception {
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.deleteObjectEntry(
 			_objectDefinition, objectEntryId);
@@ -223,16 +218,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Override
 	public ObjectEntry getObjectEntry(Long objectEntryId) throws Exception {
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getObjectEntry(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
@@ -320,21 +309,15 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				String relatedExternalReferenceCode)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
 
 		long primaryKey1 = _getPrimaryKey(
 			currentExternalReferenceCode,
@@ -357,16 +340,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				String externalReferenceCode, String objectActionName)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.executeObjectAction(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
@@ -378,16 +355,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.updateObjectEntry(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
@@ -399,16 +370,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, String objectActionName)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.executeObjectAction(
 			_getDTOConverterContext(objectEntryId), objectActionName,
@@ -437,16 +402,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				String objectActionName)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
-
-		if (!(objectEntryManager instanceof DefaultObjectEntryManager)) {
-			throw new UnsupportedOperationException();
-		}
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
-			(DefaultObjectEntryManager)objectEntryManager;
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.executeObjectAction(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),

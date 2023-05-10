@@ -136,6 +136,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("requestQuote")) {
 				_requestQuote(actionRequest);
 			}
+			else if (cmd.equals("processQuote")) {
+				_processQuote(actionRequest);
+			}
 			else if (cmd.equals("selectBillingAddress")) {
 				_selectBillingAddress(actionRequest);
 			}
@@ -516,6 +519,16 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return portletURL.toString();
+	}
+
+	private void _processQuote(ActionRequest actionRequest) throws Exception {
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		_commerceOrderEngine.transitionCommerceOrder(
+			_commerceOrderService.getCommerceOrder(commerceOrderId),
+			CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED,
+			_portal.getUserId(actionRequest));
 	}
 
 	private void _reorderCommerceOrder(ActionRequest actionRequest)

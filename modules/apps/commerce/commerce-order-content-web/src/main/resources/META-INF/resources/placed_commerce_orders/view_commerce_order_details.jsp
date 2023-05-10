@@ -297,6 +297,10 @@ if (backURL != null) {
 		<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 	</aui:form>
 
+	<c:if test="<%= commerceOrderContentDisplayContext.isShowProcessQuote() %>">
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "processQuote();" %>' value="process-quote" />
+	</c:if>
+
 	<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "reorderCommerceOrder();" %>' value="reorder" />
 
 	<c:if test="<%= commerceOrderContentDisplayContext.isShowRetryPayment() %>">
@@ -435,6 +439,13 @@ if (backURL != null) {
 	function <portlet:namespace />reorderCommerceOrder() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
 			'reorder';
+
+		submitForm(document.<portlet:namespace />fm);
+	}
+
+	function <portlet:namespace />processQuote() {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
+			'processQuote';
 
 		submitForm(document.<portlet:namespace />fm);
 	}

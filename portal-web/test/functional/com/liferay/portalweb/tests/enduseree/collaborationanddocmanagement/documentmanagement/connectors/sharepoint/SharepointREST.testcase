@@ -82,11 +82,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -317,9 +313,10 @@ definition {
 			dmDocumentTitle = "Document_3.txt",
 			dmRepositoryName = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_3.txt");
 
@@ -329,9 +326,10 @@ definition {
 
 		DMDocument.checkinCP(dmRepositoryName = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		var key_dmDocumentTitle = "Document_3.txt";
 
@@ -361,9 +359,10 @@ definition {
 			dmDocumentFile = "Document_2.doc",
 			dmDocumentTitle = "Document_2.doc");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
 
@@ -371,9 +370,10 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_2.doc");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
 
@@ -381,9 +381,10 @@ definition {
 			dmDocumentTitle = "Document_2.doc",
 			recycleBinDisabled = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
 
@@ -409,9 +410,10 @@ definition {
 			dmFolderName = "DM Folder Name",
 			recycleBinDisabled = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
 
@@ -436,23 +438,19 @@ definition {
 			dmDocumentSize = "38 KB",
 			dmDocumentTitle = "Document_3.doc");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.jpg",
 			dmDocumentTitle = "Document_3.doc");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
 
@@ -486,9 +484,10 @@ definition {
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.txt");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
@@ -498,9 +497,10 @@ definition {
 			dmDocumentTitle = "Document_1.txt",
 			dmRepositoryName = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
 
@@ -508,9 +508,10 @@ definition {
 
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -608,9 +609,10 @@ definition {
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.doc");
 
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMNavigator.gotoRepository(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
@@ -662,9 +664,10 @@ definition {
 			dmDocumentTitle = "Document_1.xls",
 			dmRepositoryName = "true");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -678,9 +681,10 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1_Edit.xls");
 
@@ -716,9 +720,10 @@ definition {
 			locator1 = "Message#ERROR",
 			value1 = "The source file does not have the same extension as the original file.");
 
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.docx");
 

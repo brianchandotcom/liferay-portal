@@ -94,6 +94,9 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								if (value != null) {
 									valueDate.setTime((Date)value);
 								}
+								else {
+									valueDate.setTime(new Date());
+								}
 
 								String fieldParam = "ExpandoAttribute--" + name + "--";
 

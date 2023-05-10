@@ -37,6 +37,8 @@ public class AuditEventTable extends BaseTable<AuditEventTable> {
 		"auditEventId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<AuditEventTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> userName = createColumn(

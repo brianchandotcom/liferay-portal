@@ -62,12 +62,14 @@ public class AuditEventCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{auditEventId=");
 		sb.append(auditEventId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -105,6 +107,7 @@ public class AuditEventCacheModel
 
 		auditEventImpl.setAuditEventId(auditEventId);
 		auditEventImpl.setCompanyId(companyId);
+		auditEventImpl.setGroupId(groupId);
 		auditEventImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -199,6 +202,8 @@ public class AuditEventCacheModel
 
 		companyId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -220,6 +225,8 @@ public class AuditEventCacheModel
 		objectOutput.writeLong(auditEventId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(userId);
 
@@ -300,6 +307,7 @@ public class AuditEventCacheModel
 
 	public long auditEventId;
 	public long companyId;
+	public long groupId;
 	public long userId;
 	public String userName;
 	public long createDate;

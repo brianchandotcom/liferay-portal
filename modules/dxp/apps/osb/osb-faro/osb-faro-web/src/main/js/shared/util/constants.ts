@@ -34,6 +34,10 @@ export const ENABLE_GLOBAL_FILTER = false;
 
 export const ENABLE_SALESFORCE = false;
 
+// LRAC-13620 Hide Suppressed Users line from Data Control & Privacy screen
+
+export const ENABLE_SUPPRESSED_USERS = false;
+
 /**
  * Languages
  */

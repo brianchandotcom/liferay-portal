@@ -58,12 +58,20 @@ definition {
 	}
 
 	@description = "LPS-183938. Confirm the default values for 'Pagination Items' and 'Default Value' fields"
-	@ignore = "true"
 	@priority = 4
 	test CanAssertDefaultValues {
+		task ("Then the default values for Pagination items will be 4, 8, 20, 40, 60, separated by commas") {
+			AssertElementPresent(
+				key_fieldName = "List of Items per Page",
+				key_fieldValue = "4, 8, 20, 40, 60",
+				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
+		}
 
-		// TODO LPS-183938 CanAssertDefaultValues pending implementation
-
+		task ("And The default value for the Default Value field is 20") {
+			AssertElementPresent(
+				key_keyName = 20,
+				locator1 = "Picklist#DISABLE_PICKLIST_KEY");
+		}
 	}
 
 	@description = "LPS-183950. Confirm that pagination creation can be cancelled when clicking on cancel button"

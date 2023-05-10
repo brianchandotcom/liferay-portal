@@ -60,7 +60,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 					%>'
 					href="javascript:void(0);"
 				>
-					<%= ddmStructure.getUnambiguousName(journalViewMoreMenuItemsDisplayContext.getDDMStructures(), themeDisplay.getScopeGroupId(), locale) %>
+					<%= ddmStructure.getName(locale) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 

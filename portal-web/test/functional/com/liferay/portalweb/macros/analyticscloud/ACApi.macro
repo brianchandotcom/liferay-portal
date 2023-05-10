@@ -171,10 +171,10 @@ definition {
 
 	macro searchApiResponse {
 		if (!(isSet(resultPosition))) {
-			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.${jsonQuery}");
+			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$..${jsonQuery}");
 		}
 		else {
-			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.results[${resultPosition}]${jsonQuery}");
+			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$.results[${resultPosition}].${jsonQuery}");
 		}
 
 		return ${searchedValue};

@@ -16,7 +16,6 @@
 		<field name="fileEntryId" type="long" />
 		<field name="url" type="String">
 			<hint name="max-length">255</hint>
-			<validator name="url" />
 		</field>
 		<field name="activationStatus" type="int" />
 		<field name="duration" type="long" />
@@ -27,7 +26,6 @@
 		<field name="sampleFileEntryId" type="long" />
 		<field name="sampleUrl" type="String">
 			<hint name="max-length">255</hint>
-			<validator name="url" />
 		</field>
 		<field name="termsOfUseRequired" type="boolean" />
 		<field localized="true" name="termsOfUseContent" type="String" />

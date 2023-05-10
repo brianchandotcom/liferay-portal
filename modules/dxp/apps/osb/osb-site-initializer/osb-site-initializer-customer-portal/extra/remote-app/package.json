@@ -42,25 +42,32 @@
 		"graphql-anywhere": "^4.2.7",
 		"md5": "^2.3.0",
 		"qs": "^6.10.3",
-		"react": "^17.0.2",
+		"react": "^18.2.0",
 		"react-apollo-network-status": "^5.1.0",
-		"react-dom": "^17.0.2",
+		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.2.1",
-		"react-scripts": "^4.0.3",
-		"recharts": "2.4.2",
-		"yarn": "^1.22.18"
+		"recharts": "2.4.2"
 	},
 	"devDependencies": {
 		"@testing-library/jest-dom": "^5.16.4",
 		"@testing-library/react": "^12.1.5",
-		"@testing-library/user-event": "^14.2.0"
+		"@testing-library/user-event": "^14.2.0",
+		"@types/node": "^18.6.3",
+		"@types/react": "^18.0.15",
+		"@types/react-dom": "^18.0.6",
+		"@vitejs/plugin-react-swc": "^3.3.1",
+		"c8": "^7.13.0",
+		"typescript": "^4.7.4",
+		"vite": "^4.3.3",
+		"vitest": "^0.30.1"
 	},
 	"name": "@liferay/osb-site-initializer-customer-portal-remote-app",
 	"private": true,
 	"scripts": {
-		"build": "react-scripts build",
-		"start": "react-scripts start",
-		"test": "react-scripts test"
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"preview": "vite preview",
+		"test": "vitest"
 	},
 	"version": "1.0.0"
 }

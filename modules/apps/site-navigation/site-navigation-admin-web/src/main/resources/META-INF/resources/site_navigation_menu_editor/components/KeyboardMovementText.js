@@ -74,25 +74,23 @@ export default function KeyboardMovementText() {
 	);
 
 	useEffect(() => {
-		setInternalText(getMovementText(dragLayer, items));
+		const addMessageHandler = setTimeout(() => {
+			setInternalText(getMovementText(dragLayer, items));
+		}, 100);
 
-		const handler = setTimeout(() => {
-			setInternalText(null);
-		}, 500);
+		const removeMessageHandler = setTimeout(() => {
+			setInternalText(getMovementText(dragLayer, items));
+		}, 1000);
 
 		return () => {
-			clearTimeout(handler);
+			clearTimeout(addMessageHandler);
+			clearTimeout(removeMessageHandler);
 		};
 	}, [dragLayer]); //eslint-disable-line
 
-	return internalText ? (
-		<span
-			aria-live="assertive"
-			aria-relevant="additions"
-			className="sr-only"
-			role="log"
-		>
+	return (
+		<span aria-live="assertive" className="sr-only">
 			{internalText}
 		</span>
-	) : null;
+	);
 }

@@ -60,7 +60,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150970. Verify Terms Of Use not reappear after dismissed once with non root context."
-	@priority = 4
+	@priority = 5
 	test TermsOfUseNotShownAfterDimissedWithNonRootContext {
 		property custom.properties = "enterprise.product.notification.enabled=true";
 		property portal.acceptance = "true";

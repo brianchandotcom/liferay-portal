@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -67,33 +66,6 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public List<DDMStructure> getDDMStructures() throws PortalException {
-		if (ListUtil.isNotEmpty(_ddmStructures)) {
-			return _ddmStructures;
-		}
-
-		if (Validator.isNull(_getKeywords())) {
-			_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true),
-				_folderId, _restrictionType, _getOrderByComparator());
-		}
-		else {
-			_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
-				_themeDisplay.getCompanyId(),
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId(), true),
-				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, _getOrderByComparator());
-		}
-
-		Collections.sort(_ddmStructures, _getOrderByComparator());
-
-		return _ddmStructures;
 	}
 
 	public String getDDMStructureScopeName(
@@ -133,7 +105,29 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(_getOrderByComparator());
 		searchContainer.setOrderByType(getOrderByType());
-		searchContainer.setResultsAndTotal(getDDMStructures());
+
+		List<DDMStructure> ddmStructures = null;
+
+		if (Validator.isNull(_getKeywords())) {
+			ddmStructures = JournalFolderServiceUtil.getDDMStructures(
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId(), true),
+				_folderId, _restrictionType, _getOrderByComparator());
+		}
+		else {
+			ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
+				_themeDisplay.getCompanyId(),
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						_themeDisplay.getScopeGroupId(), true),
+				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, _getOrderByComparator());
+		}
+
+		Collections.sort(ddmStructures, _getOrderByComparator());
+
+		searchContainer.setResultsAndTotal(ddmStructures);
 
 		_ddmStructuresSearchContainer = searchContainer;
 
@@ -238,7 +232,6 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		return orderByComparator;
 	}
 
-	private List<DDMStructure> _ddmStructures;
 	private SearchContainer<DDMStructure> _ddmStructuresSearchContainer;
 	private String _eventName;
 	private final long _folderId;

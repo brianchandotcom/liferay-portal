@@ -15,6 +15,8 @@
 package com.liferay.journal.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.base.JournalFolderServiceBaseImpl;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -419,10 +422,33 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			OrderByComparator<DDMStructure> orderByComparator)
 		throws PortalException {
 
-		return _filterStructures(
-			journalFolderLocalService.searchDDMStructures(
-				companyId, groupIds, folderId, restrictionType, keywords, start,
-				end, orderByComparator));
+		if (restrictionType ==
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+			return _ddmStructureService.search(
+				companyId, groupIds,
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				folderId, keywords, WorkflowConstants.STATUS_ANY, start, end,
+				orderByComparator);
+		}
+
+		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
+			folderId);
+
+		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return _ddmStructureService.search(
+				companyId, groupIds,
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				folderId, keywords, WorkflowConstants.STATUS_ANY, start, end,
+				orderByComparator);
+		}
+
+		return _ddmStructureService.search(
+			companyId, groupIds,
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			keywords, WorkflowConstants.STATUS_ANY, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -501,11 +527,17 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		return ddmStructures;
 	}
 
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
 	)
 	private ModelResourcePermission<DDMStructure>
 		_ddmStructureModelResourcePermission;
+
+	@Reference
+	private DDMStructureService _ddmStructureService;
 
 	@Reference
 	private JournalArticleFinder _journalArticleFinder;

@@ -82,7 +82,10 @@ public class CPOptionCategoriesImporter {
 		double priority = jsonObject.getDouble("priority", defaultPriority);
 
 		if (cpOptionCategory != null) {
-			return cpOptionCategory;
+			return _cpOptionCategoryLocalService.updateCPOptionCategory(
+				cpOptionCategory.getCPOptionCategoryId(),
+				_toMap(key, jsonObject, "title"),
+				_toMap(null, jsonObject, "description"), priority, key);
 		}
 
 		return _cpOptionCategoryLocalService.addCPOptionCategory(

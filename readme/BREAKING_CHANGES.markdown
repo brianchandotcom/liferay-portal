@@ -1334,3 +1334,26 @@ Use Log4j2 strict XML format.
 ### Why was this change made?
 
 Portal has been using Log4j2. After this change, all log4j config files will use log4j2 config format.
+
+---------------------------------------
+
+## Remove verifyDB function from Server Administration
+
+- **Date:** 2023-May-10
+- **JIRA Ticket:** [LPS-184192](https://issues.liferay.com/browse/LPS-184192)
+
+### What changed?
+
+The verifyDB() method was removed from ServiceComponentLocalService. The "Verify database tables of all plugins." function was removed from "Server Administration" -> "Verification Actions"
+
+### Who is affected?
+
+This affects anyone calling the `ServiceComponentLocalService.verifyDB()` method from their code and using the UI function.
+
+### How should I update my code?
+
+Remove usage of `ServiceComponentLocalService.verifyDB()`
+
+### Why was this change made?
+
+Upgrade framework manages all modules' tables and Release record creation. This verifyDB function does not do anything.

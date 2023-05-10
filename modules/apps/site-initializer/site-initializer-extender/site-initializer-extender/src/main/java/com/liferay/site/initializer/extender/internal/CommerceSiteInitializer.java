@@ -127,7 +127,7 @@ public class CommerceSiteInitializer {
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			servletContext);
 
-		_addCommerceSpecificationsGroup(serviceContext, servletContext);
+		_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 	}
 
 	public void addPortletSettings(
@@ -313,26 +313,6 @@ public class CommerceSiteInitializer {
 			productSpecificationResource.postProductIdProductSpecification(
 				cpDefinition.getCPDefinitionId(), productSpecification);
 		}
-	}
-
-	private void _addCommerceSpecificationsGroup(
-			ServiceContext serviceContext, ServletContext servletContext)
-		throws Exception {
-
-		String resourcePath =
-			"/site-initializer/commerce-specification-groups.json";
-
-		String json = SiteInitializerUtil.read(resourcePath, servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		_cpOptionCategoriesImporter.importCPOptionCategories(
-			jsonArray, serviceContext.getScopeGroupId(),
-			serviceContext.getUserId());
 	}
 
 	private void _addCPDefinitions(
@@ -775,6 +755,26 @@ public class CommerceSiteInitializer {
 				commercePriceEntry.getCommercePriceEntryId(), price,
 				BigDecimal.ZERO, serviceContext);
 		}
+	}
+
+	private void _addOrUpdateCPOptionCategories(
+			ServiceContext serviceContext, ServletContext servletContext)
+		throws Exception {
+
+		String resourcePath =
+			"/site-initializer/commerce-option-categories.json";
+
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		_cpOptionCategoriesImporter.importCPOptionCategories(
+			jsonArray, serviceContext.getScopeGroupId(),
+			serviceContext.getUserId());
 	}
 
 	private void _updateCPInstanceProperties(

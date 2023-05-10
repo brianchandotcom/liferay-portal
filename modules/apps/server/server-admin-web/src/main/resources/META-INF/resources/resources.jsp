@@ -193,17 +193,6 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				<li class="list-group-item list-group-item-flex">
 					<div class="autofit-col autofit-col-expand">
 						<p class="list-group-title text-truncate">
-							<liferay-ui:message key="verify-database-tables-of-all-plugins" />
-						</p>
-					</div>
-
-					<div class="autofit-col">
-						<aui:button cssClass="save-server-button" data-cmd="verifyPluginTables" value="execute" />
-					</div>
-				</li>
-				<li class="list-group-item list-group-item-flex">
-					<div class="autofit-col autofit-col-expand">
-						<p class="list-group-title text-truncate">
 							<liferay-ui:message key="verify-membership-policies" />
 						</p>
 					</div>

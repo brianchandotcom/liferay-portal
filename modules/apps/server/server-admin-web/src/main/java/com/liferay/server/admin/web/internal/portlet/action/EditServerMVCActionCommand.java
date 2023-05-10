@@ -81,7 +81,6 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -239,9 +238,6 @@ public class EditServerMVCActionCommand
 		}
 		else if (cmd.equals("verifyMembershipPolicies")) {
 			_verifyMembershipPolicies();
-		}
-		else if (cmd.equals("verifyPluginTables")) {
-			_verifyPluginTables();
 		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);
@@ -863,10 +859,6 @@ public class EditServerMVCActionCommand
 		userGroupMembershipPolicy.verifyPolicy();
 	}
 
-	private void _verifyPluginTables() throws Exception {
-		_serviceComponentLocalService.verifyDB();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
 
@@ -934,9 +926,6 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private ServerScripting _serverScripting;
-
-	@Reference
-	private ServiceComponentLocalService _serviceComponentLocalService;
 
 	@Reference
 	private SingleVMPool _singleVMPool;

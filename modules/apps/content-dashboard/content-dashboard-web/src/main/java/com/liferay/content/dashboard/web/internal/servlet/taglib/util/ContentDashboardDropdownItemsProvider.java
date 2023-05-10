@@ -25,13 +25,12 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,24 +70,8 @@ public class ContentDashboardDropdownItemsProvider {
 		).addAll(
 			DropdownItemList.of(
 				() -> {
-					ResourceURL resourceURL =
-						_liferayPortletResponse.createResourceURL();
-
-					resourceURL.setParameter(
-						"backURL",
-						_portal.getCurrentURL(_liferayPortletRequest));
-
 					InfoItemReference infoItemReference =
 						contentDashboardItem.getInfoItemReference();
-
-					resourceURL.setParameter(
-						"className", infoItemReference.getClassName());
-					resourceURL.setParameter(
-						"classPK",
-						String.valueOf(infoItemReference.getClassPK()));
-
-					resourceURL.setResourceID(
-						"/content_dashboard/get_content_dashboard_item_info");
 
 					return DropdownItemBuilder.setData(
 						HashMapBuilder.<String, Object>put(
@@ -98,7 +81,19 @@ public class ContentDashboardDropdownItemsProvider {
 						).put(
 							"classPK", infoItemReference.getClassPK()
 						).put(
-							"fetchURL", String.valueOf(resourceURL)
+							"fetchURL",
+							ResourceURLBuilder.createResourceURL(
+								_liferayPortletResponse
+							).setBackURL(
+								_portal.getCurrentURL(_liferayPortletRequest)
+							).setParameter(
+								"className", infoItemReference.getClassName()
+							).setParameter(
+								"classPK", infoItemReference.getClassPK()
+							).setResourceID(
+								"/content_dashboard" +
+									"/get_content_dashboard_item_info"
+							).buildString()
 						).build()
 					).setIcon(
 						"info-circle-open"

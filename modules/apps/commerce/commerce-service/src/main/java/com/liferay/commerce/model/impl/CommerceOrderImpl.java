@@ -221,6 +221,19 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public boolean isQuote() {
+		if ((getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_QUOTE_PROCESSED) ||
+			(getOrderStatus() ==
+				CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isSubscription() {
 		if (getOrderStatus() ==
 				CommerceOrderConstants.ORDER_STATUS_SUBSCRIPTION) {

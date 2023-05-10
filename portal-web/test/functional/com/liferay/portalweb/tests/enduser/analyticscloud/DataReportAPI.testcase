@@ -128,8 +128,6 @@ definition {
 				filterValue = ${rangeValue},
 				token = ${token},
 				type = ${type});
-
-			echo(${apiResponse});
 		}
 
 		task ("Assert the two created blogs are present in the response") {
@@ -261,7 +259,7 @@ definition {
 			var blogId = ACApi.searchApiResponse(
 				apiDataResponse = ${apiResponse},
 				jsonQuery = "id",
-				resultPosition = 0);
+				resultPosition = 0);			
 		}
 
 		task ("Create a data report using analytics API for the specific blog chosen") {
@@ -292,9 +290,8 @@ definition {
 	@priority = 3
 	test RequestToAccessDataForSpecificIndividual {
 		var type = "individuals";
-		var userNameList = "analytics,cloud";
+		var usernameList = "analytics,cloud";
 		var emailList = "analytics@liferay.com,cloud@liferay.com";
-		var nameList = "analytics analytics,cloud cloud";
 
 		task ("Copy the token value for the API and copy the token for the AC and DXP connection") {
 			var token = ACApi.getTokenValue();
@@ -337,7 +334,7 @@ definition {
 		}
 
 		task ("Create a data report using analytics cloud API with the type individuals") {
-			var apiResponse = ACApi.createDataReport(
+			ACApi.createDataReport(
 				token = ${token},
 				type = ${type});
 		}
@@ -349,18 +346,18 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${oldTotalValue},
-				expected = 2);
+				expected = "2");
 		}
 
 		task ("Get the id of the first individual") {
 			var individualId = ACApi.searchApiResponse(
 				apiDataResponse = ${apiResponse},
-				jsonQuery = ".id",
+				jsonQuery = "id",
 				resultPosition = 0);
 		}
 
 		task ("Create a new report for the specific individual") {
-			var apiIndividualResponse = ACApi.createIndividualOrAssetDataReport(
+			ACApi.createIndividualOrAssetDataReport(
 				id = ${individualId},
 				token = ${token},
 				type = ${type});
@@ -368,8 +365,8 @@ definition {
 
 		task ("Assert that there is only one result in the response (the individual that is being searched)") {
 			var currentTotalValue = ACApi.searchApiResponse(
-				apiDataResponse = ${apiIndividualResponse},
-				jsonQuery = ".total");
+				apiDataResponse = ${apiIndividualOrAssetResponse},
+				jsonQuery = "total");
 
 			TestUtils.assertEquals(
 				actual = ${currentTotalValue},
@@ -378,7 +375,7 @@ definition {
 
 		task ("Assert that the id of the individual is present in the response") {
 			ACApi.assertApiResponse(
-				apiDataResponse = ${apiIndividualResponse},
+				apiDataResponse = ${apiIndividualOrAssetResponse},
 				expectedList = ${individualId});
 		}
 	}

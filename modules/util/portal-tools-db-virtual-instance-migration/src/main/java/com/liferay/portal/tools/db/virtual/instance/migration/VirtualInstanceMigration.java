@@ -119,10 +119,13 @@ public class VirtualInstanceMigration {
 					_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
 				}
 
-				if (!Validator.validateDatabases(
-						_sourceConnection, _destinationConnection)) {
+				ValidatorRecorder recorder = Validator.validateDatabases(
+					_sourceConnection, _destinationConnection);
 
-					ValidatorRecorder.printMessages();
+				if (recorder.hasRegisteredErrors() ||
+					recorder.hasRegisteredWarnings()) {
+
+					recorder.printMessages();
 					_exitWithCode(ErrorCodes.VALIDATION_ERROR);
 				}
 

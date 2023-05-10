@@ -22,37 +22,52 @@ import java.util.List;
  */
 public class ValidatorRecorder {
 
-	public static void printMessages() {
+	public boolean hasRegisteredErrors() {
+		return !_errors.isEmpty();
+	}
+
+	public boolean hasRegisteredWarnings() {
+		return !_warnings.isEmpty();
+	}
+
+	public void printErrors() {
 		for (String error : _errors) {
 			System.out.println("ERROR: " + error);
 		}
+	}
 
+	public void printMessages() {
+		printErrors();
+		printWarnings();
+	}
+
+	public void printWarnings() {
 		for (String warning : _warnings) {
 			System.out.println("WARNING: " + warning);
 		}
 	}
 
-	public static void registerError(String message) {
+	public void registerError(String message) {
 		_errors.add(message);
 	}
 
-	public static void registerErrors(List<String> modules, String message) {
+	public void registerErrors(List<String> modules, String message) {
 		for (String module : modules) {
 			_errors.add("Module " + module + message);
 		}
 	}
 
-	public static void registerWarning(String message) {
+	public void registerWarning(String message) {
 		_warnings.add(message);
 	}
 
-	public static void registerWarnings(List<String> modules, String message) {
+	public void registerWarnings(List<String> modules, String message) {
 		for (String module : modules) {
 			_warnings.add("Module " + module + message);
 		}
 	}
 
-	private static final ArrayList<String> _errors = new ArrayList<>();
-	private static final ArrayList<String> _warnings = new ArrayList<>();
+	private final ArrayList<String> _errors = new ArrayList<>();
+	private final ArrayList<String> _warnings = new ArrayList<>();
 
 }

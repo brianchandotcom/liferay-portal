@@ -452,6 +452,38 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
+	public int searchDDMStructuresCount(
+			long companyId, long[] groupIds, long folderId, int restrictionType,
+			String keywords)
+		throws PortalException {
+
+		if (restrictionType ==
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+			return _ddmStructureService.searchCount(
+				companyId, groupIds,
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				folderId, keywords, WorkflowConstants.STATUS_ANY);
+		}
+
+		folderId = journalFolderLocalService.getOverridedDDMStructuresFolderId(
+			folderId);
+
+		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return _ddmStructureService.searchCount(
+				companyId, groupIds,
+				_classNameLocalService.getClassNameId(JournalFolder.class),
+				folderId, keywords, WorkflowConstants.STATUS_ANY);
+		}
+
+		return _ddmStructureService.searchCount(
+			companyId, groupIds,
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			keywords, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
 	public void subscribe(long groupId, long folderId) throws PortalException {
 		ModelResourcePermissionUtil.check(
 			_journalFolderModelResourcePermission, getPermissionChecker(),

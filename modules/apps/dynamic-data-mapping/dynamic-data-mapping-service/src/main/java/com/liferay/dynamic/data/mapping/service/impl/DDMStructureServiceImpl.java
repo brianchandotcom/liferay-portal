@@ -599,6 +599,31 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		return Collections.emptyList();
 	}
 
+	@Override
+	public int searchCount(
+			long companyId, long[] groupIds, long classNameId, long classPK,
+			String keywords, int status)
+		throws PortalException {
+
+		try {
+			SearchContext searchContext =
+				_ddmSearchHelper.buildStructureSearchContext(
+					companyId, groupIds, getUserId(), classNameId, classPK,
+					keywords, keywords, StringPool.BLANK, null, status,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			return _ddmSearchHelper.doSearchCount(
+				searchContext, DDMStructure.class);
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(principalException);
+			}
+		}
+
+		return 0;
+	}
+
 	/**
 	 * Returns the number of structures matching the groups and class name IDs,
 	 * and matching the keywords in the structure names and descriptions.

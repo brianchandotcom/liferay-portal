@@ -53,7 +53,7 @@ public class ValidatorRecorder {
 
 	public void registerErrors(List<String> modules, String message) {
 		for (String module : modules) {
-			_errors.add("Module " + module + message);
+			_errors.add("Module " + module + " " + message);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class ValidatorRecorder {
 
 	public void registerWarnings(List<String> modules, String message) {
 		for (String module : modules) {
-			_warnings.add("Module " + module + message);
+			_warnings.add("Module " + module + " " + message);
 		}
 	}
 

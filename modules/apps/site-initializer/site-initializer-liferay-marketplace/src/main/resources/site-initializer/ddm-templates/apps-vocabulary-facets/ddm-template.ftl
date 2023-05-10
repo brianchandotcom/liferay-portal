@@ -1,24 +1,24 @@
 <style>
-.app-vocab-facet {
-	border-radius: 10px;
-}
+	.app-vocab-facet {
+		border-radius: 10px;
+	}
 
-.app-vocab-facet .panel a {
-	padding: 1rem;
-}
+	.app-vocab-facet .panel a {
+		padding: 1rem;
+	}
 
-.app-vocab-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
-.app-vocab-facet .collapse-icon .collapse-icon-open .lexicon-icon {
-	margin-top: 0.3rem;
-}
+	.app-vocab-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
+	.app-vocab-facet .collapse-icon .collapse-icon-open .lexicon-icon {
+		margin-top: 0.3rem;
+	}
 
-.app-vocab-facet .panel-body {
-	padding: 0.5rem 1rem 1rem;
-}
+	.app-vocab-facet .panel-body {
+		padding: 0.5rem 1rem 1rem;
+	}
 
-.app-vocab-facet .list-unstyled {
-	margin-bottom: 0;
-}
+	.app-vocab-facet .list-unstyled {
+		margin-bottom: 0;
+	}
 </style>
 
 <#assign

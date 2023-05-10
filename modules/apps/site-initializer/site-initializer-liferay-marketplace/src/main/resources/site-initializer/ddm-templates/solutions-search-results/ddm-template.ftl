@@ -1,38 +1,38 @@
 <style type="text/css">
-.adt-solutions-search-results .cards-container {
-	display: grid;
-	grid-column-gap: 1rem;
-	grid-row-gap: 1.5rem;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.adt-solutions-search-results .app-solutions-results-card:hover {
-	color: var(--black);
-}
-
-.adt-solutions-search-results .card-image-title-container .image-container {
-	height: 3rem;
-	min-width: 3rem;
-}
-
-@media screen and (max-width: 599px) {
-
 	.adt-solutions-search-results .cards-container {
-		grid-template-columns: 288px;
-		grid-row-gap: 1rem;
-		justify-content: center;
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-row-gap: 1.5rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
-	.adt-solutions-search-results .solutions-search-results-card {
-		height: 281px;
+	.adt-solutions-search-results .app-solutions-results-card:hover {
+		color: var(--black);
 	}
-}
 
-@media screen and (min-width:600px) and (max-width: 899px) {
-	.adt-solutions-search-results .cards-container {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	.adt-solutions-search-results .card-image-title-container .image-container {
+		height: 3rem;
+		min-width: 3rem;
 	}
-}
+
+	@media screen and (max-width: 599px) {
+
+		.adt-solutions-search-results .cards-container {
+			grid-template-columns: 288px;
+			grid-row-gap: 1rem;
+			justify-content: center;
+		}
+
+		.adt-solutions-search-results .solutions-search-results-card {
+			height: 281px;
+		}
+	}
+
+	@media screen and (min-width:600px) and (max-width: 899px) {
+		.adt-solutions-search-results .cards-container {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
 </style>
 
 <#if serviceLocator??>

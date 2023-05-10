@@ -239,24 +239,26 @@ public class DDMDataDefinitionConverterImpl
 			long fieldSetDDMStructureId = GetterUtil.getLong(
 				ddmFormField.getProperty("ddmStructureId"));
 
+			if (fieldSetDDMStructureId == 0) {
+				continue;
+			}
+
 			DEDataDefinitionFieldLink deDataDefinitionFieldLink =
 				_deDataDefinitionFieldLinkLocalService.
 					fetchDEDataDefinitionFieldLinks(
 						classNameId, dataDefinitionId, fieldSetDDMStructureId,
 						ddmFormField.getName());
 
-			if (fieldSetDDMStructureId != 0) {
-				if (deDataDefinitionFieldLink == null) {
-					_deDataDefinitionFieldLinkLocalService.
-						addDEDataDefinitionFieldLink(
-							groupId, classNameId, dataDefinitionId,
-							fieldSetDDMStructureId, ddmFormField.getName());
-				}
-
-				_addDataDefinitionFieldLinks(
-					classNameId, dataDefinitionId,
-					ddmFormField.getNestedDDMFormFields(), groupId);
+			if (deDataDefinitionFieldLink == null) {
+				_deDataDefinitionFieldLinkLocalService.
+					addDEDataDefinitionFieldLink(
+						groupId, classNameId, dataDefinitionId,
+						fieldSetDDMStructureId, ddmFormField.getName());
 			}
+
+			_addDataDefinitionFieldLinks(
+				classNameId, dataDefinitionId,
+				ddmFormField.getNestedDDMFormFields(), groupId);
 		}
 	}
 

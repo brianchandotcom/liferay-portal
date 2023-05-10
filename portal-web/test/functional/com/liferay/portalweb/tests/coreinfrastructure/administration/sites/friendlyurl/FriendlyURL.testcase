@@ -30,7 +30,8 @@ definition {
 	@description = "If virtual.hosts.strict.access=true is set, do not redirect to a default instance if there is no associated company"
 	@priority = 4
 	test DoNotRedirectToDefaultInstanceWithNoCompany {
-		property custom.properties = "virtual.hosts.strict.access=true";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}virtual.hosts.strict.access=true";
+		property test.name.skip.portal.instance = "FriendlyURL#DoNotRedirectToDefaultInstanceWithNoCompany";
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -54,13 +55,18 @@ definition {
 	@description = "If virtual.hosts.strict.access=true is not set, redirect to a default instance even if there is no associated company"
 	@priority = 3
 	test RedirectToDefaultInstanceWithNoCompany {
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "FriendlyURL#RedirectToDefaultInstanceWithNoCompany";
+
+		Navigator.gotoPage(
+			baseURL = "http://www.able.com:8080",
+			pageName = "Home");
 
 		AssertTextNotPresent(
 			locator1 = "//body",
 			value1 = "Unknown Virtual Hostname: www.able.com");
 
-		AssertLocation(value1 = "http://www.able.com:8080/web/guest");
+		AssertLocation(value1 = "http://www.able.com:8080/web/guest/home");
 
 		Smoke.viewWelcomeContentPage();
 	}
@@ -68,6 +74,9 @@ definition {
 	@description = "This is a use case for LPS-163426. Verify redirection to localized friendly URL's when using a virtual host."
 	@priority = 4
 	test RedirectToLocalizedFriendlyURLWithVirtualHost {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "FriendlyURL#RedirectToLocalizedFriendlyURLWithVirtualHost";
+
 		task ("Given two pages on a site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

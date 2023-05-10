@@ -66,6 +66,7 @@ String clientIP = ParamUtil.getString(request, "clientIP");
 String eventType = ParamUtil.getString(request, "eventType");
 String serverName = ParamUtil.getString(request, "serverName");
 int serverPort = ParamUtil.getInteger(request, "serverPort");
+long groupId = ParamUtil.getLong(request, "groupId");
 long userId = ParamUtil.getLong(request, "userId");
 String userName = ParamUtil.getString(request, "userName");
 

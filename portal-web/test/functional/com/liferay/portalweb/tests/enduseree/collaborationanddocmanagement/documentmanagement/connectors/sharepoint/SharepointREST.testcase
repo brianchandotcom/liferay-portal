@@ -126,6 +126,128 @@ definition {
 		}
 	}
 
+	@priority = 4
+	@refactordone
+	test CanCheckinDocument {
+		property test.name.skip.portal.instance = "SharepointREST#CanCheckinDocument";
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.txt",
+			dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_3.txt",
+			dmRepositoryName = "true");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_3.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMDocument.checkinCP(dmRepositoryName = "true");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		var key_dmDocumentTitle = "Document_3.txt";
+
+		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
+
+		DMDocument.viewCheckedinCP(
+			dmDocumentVersionNumber = "2.0",
+			dmRepositoryName = "true");
+	}
+
+	@priority = 4
+	@refactordone
+	test CanDeleteDocumentInSubfolder {
+		property test.name.skip.portal.instance = "SharepointREST#CanDeleteDocumentInSubfolder";
+
+		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
+
+		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "Document_2.doc");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.doc");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_2.doc");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.deleteCP(
+			dmDocumentTitle = "Document_2.doc",
+			recycleBinDisabled = "true");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.doc");
+
+		DMDocument.viewDefault();
+
+		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
+	}
+
+	@priority = 4
+	@refactordone
+	test CanDeleteSubfolder {
+		property test.name.skip.portal.instance = "SharepointREST#CanDeleteSubfolder";
+
+		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		DMFolder.deleteCP(
+			dmFolderName = "DM Folder Name",
+			recycleBinDisabled = "true");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
+
+		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
+	}
+
 	@description = "This is a test for LPS-182965. It checks that a file can be downloaded from Sharepoint."
 	@priority = 4
 	test CanDownloadFile {
@@ -140,6 +262,202 @@ definition {
 			dmDocumentTitle = "DownloadPermissionsDONOTDELETE");
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "DownloadPermissionsDONOTDELETE.jpg");
+	}
+
+	@priority = 4
+	@refactordone
+	test CanEditDocumentFile {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SharepointREST#CanEditDocumentFile";
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_3.doc",
+			dmDocumentTitle = "Document_3.doc");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "38 KB",
+			dmDocumentTitle = "Document_3.doc");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentTitle = "Document_3.doc");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "30 KB",
+			dmDocumentTitle = "Document_3.doc");
+
+		DMDocument.cannotViewDocumentMetadataCP(
+			metadataData = "image/jpeg",
+			metadataLabel = "Content Type");
+
+		DMDocument.cannotViewDocumentMetadataCP(
+			metadataData = "ISO-8859-1",
+			metadataLabel = "Content Encoding");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
+	}
+
+	@description = "This test ensures that repositories can be added both on site admin and on a content page."
+	@priority = 4
+	@refactordone
+	test CanEnterRepository {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SharepointREST#CanEnterRepository";
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		PageEditor.addWidget(portletName = "Documents and Media");
+
+		PageEditor.publish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoAddRepositoryCP();
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Collaboration Test Application 2");
+
+		DMRepository.addSharepoint(
+			dmRepositoryLibraryPath = "Documentos compartidos",
+			dmRepositoryName = "Sharepoint (CollabQA)",
+			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
+			permissionDefinitionKey = "ACCESS",
+			roleTitle = "Guest");
+
+		PortletEntry.save();
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application 2");
+
+		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application 2");
+	}
+
+	@priority = 4
+	@refactordone
+	test CanMoveCheckedoutDocumentToFolder {
+		property test.name.skip.portal.instance = "SharepointREST#CanMoveCheckedoutDocumentToFolder";
+
+		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMFolder.addCP(dmFolderName = "Sharepoint Subfolder");
+
+		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.checkoutCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmRepositoryName = "true");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "Collaboration Test Application",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		DMDocument.moveToSubFolderCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmFolderName = "Collaboration Test Application",
+			dmSubFolderName = "Sharepoint Subfolder");
+
+		DMDocument.viewMovedToFolderCP(
+			dmDocumentTitle = "Document_1.txt",
+			dmFolderName = "Sharepoint Subfolder");
+
+		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
+
+		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
+	}
+
+	@priority = 4
+	@refactordone
+	test CanMoveDocumentToHome {
+		property test.name.skip.portal.instance = "SharepointREST#CanMoveDocumentToHome";
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.odt",
+			dmDocumentTitle = "Document_1.odt");
+
+		DMDocument.moveToFolderCP(
+			dmDocumentTitle = "Document_1.odt",
+			dmFolderName = "Home");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.odt");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
@@ -296,269 +614,6 @@ definition {
 		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
 
 		DMFolder.viewEntryPresent(dmFolderName = "Collaboration Test Application");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanCheckinDocument {
-		property test.name.skip.portal.instance = "SharepointREST#CanCheckinDocument";
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_3.txt",
-			dmDocumentTitle = "Document_3.txt");
-
-		DMDocument.checkoutCP(
-			dmDocumentTitle = "Document_3.txt",
-			dmRepositoryName = "true");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_3.txt");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
-
-		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
-
-		DMDocument.checkinCP(dmRepositoryName = "true");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		var key_dmDocumentTitle = "Document_3.txt";
-
-		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
-
-		DMDocument.viewCheckedinCP(
-			dmDocumentVersionNumber = "2.0",
-			dmRepositoryName = "true");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanDeleteDocumentInSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#CanDeleteDocumentInSubfolder";
-
-		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
-
-		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_2.doc",
-			dmDocumentTitle = "Document_2.doc");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2.doc");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_2.doc");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
-
-		DMDocument.deleteCP(
-			dmDocumentTitle = "Document_2.doc",
-			recycleBinDisabled = "true");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
-
-		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.doc");
-
-		DMDocument.viewDefault();
-
-		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanDeleteSubfolder {
-		property test.name.skip.portal.instance = "SharepointREST#CanDeleteSubfolder";
-
-		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-		DMFolder.addCP(dmFolderName = "DM Folder Name");
-
-		DMFolder.deleteCP(
-			dmFolderName = "DM Folder Name",
-			recycleBinDisabled = "true");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
-
-		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanEditDocumentFile {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SharepointREST#CanEditDocumentFile";
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_3.doc",
-			dmDocumentTitle = "Document_3.doc");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "38 KB",
-			dmDocumentTitle = "Document_3.doc");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.editCP(
-			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentTitle = "Document_3.doc");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.doc");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "30 KB",
-			dmDocumentTitle = "Document_3.doc");
-
-		DMDocument.cannotViewDocumentMetadataCP(
-			metadataData = "image/jpeg",
-			metadataLabel = "Content Type");
-
-		DMDocument.cannotViewDocumentMetadataCP(
-			metadataData = "ISO-8859-1",
-			metadataLabel = "Content Encoding");
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanMoveCheckedoutDocumentToFolder {
-		property test.name.skip.portal.instance = "SharepointREST#CanMoveCheckedoutDocumentToFolder";
-
-		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-		DMFolder.addCP(dmFolderName = "Sharepoint Subfolder");
-
-		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.txt");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Document_1.txt");
-
-		DMDocument.checkoutCP(
-			dmDocumentTitle = "Document_1.txt",
-			dmRepositoryName = "true");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
-
-		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
-
-		DMNavigator.openToFolderInAdmin(
-			dmFolderName = "Collaboration Test Application",
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
-		DMDocument.moveToSubFolderCP(
-			dmDocumentTitle = "Document_1.txt",
-			dmFolderName = "Collaboration Test Application",
-			dmSubFolderName = "Sharepoint Subfolder");
-
-		DMDocument.viewMovedToFolderCP(
-			dmDocumentTitle = "Document_1.txt",
-			dmFolderName = "Sharepoint Subfolder");
-
-		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_1.txt");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
-
-		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
-
-		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanMoveDocumentToHome {
-		property test.name.skip.portal.instance = "SharepointREST#CanMoveDocumentToHome";
-
-		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.odt",
-			dmDocumentTitle = "Document_1.odt");
-
-		DMDocument.moveToFolderCP(
-			dmDocumentTitle = "Document_1.odt",
-			dmFolderName = "Home");
-
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
-
-		DMDocument.viewCP(dmDocumentTitle = "Document_1.odt");
-
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
-
-		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
 	@priority = 4
@@ -723,61 +778,6 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
-	}
-
-	@description = "This test ensures that repositories can be added both on site admin and on a content page."
-	@priority = 4
-	@refactordone
-	test CanEnterRepository {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SharepointREST#CanEnterRepository";
-
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
-
-		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Test Content Page Name",
-			type = "content");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Guest");
-
-		PageEditor.addWidget(portletName = "Documents and Media");
-
-		PageEditor.publish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMNavigator.gotoAddRepositoryCP();
-
-		Type(
-			key_fieldLabel = "Name",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Collaboration Test Application 2");
-
-		DMRepository.addSharepoint(
-			dmRepositoryLibraryPath = "Documentos compartidos",
-			dmRepositoryName = "Sharepoint (CollabQA)",
-			dmRepositorySiteAbsoluteURL = "https://liferaycolab.sharepoint.com",
-			permissionDefinitionKey = "ACCESS",
-			roleTitle = "Guest");
-
-		PortletEntry.save();
-
-		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
-
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application 2");
-
-		DMRepository.viewBreadcrumb(dmRepositoryName = "Collaboration Test Application 2");
 	}
 
 }

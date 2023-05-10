@@ -35,7 +35,7 @@
 						'content-type': 'application/json',
 						'x-csrf-token': Liferay.authToken,
 					},
-					method: 'PUT',
+					method: 'PATCH',
 				});
 
 				if (response.ok) {
@@ -64,7 +64,7 @@
 						'content-type': 'application/json',
 						'x-csrf-token': Liferay.authToken,
 					},
-					method: 'PUT',
+					method: 'PATCH',
 				});
 
 				if (response.ok) {
@@ -134,7 +134,7 @@
 				});
 			};
 
-			const callModal = (status) => {
+			const callMDFClaimModal = (status) => {
 				if (status !== 'approved') {
 					return Liferay.Util.openModal({
 						bodyHTML: `<div class="form-group">
@@ -192,25 +192,25 @@
 		<ul aria-labelledby="dropdownMDFClaimStatus" class="dropdown-menu" x-placement="bottom-start">
 				[#if mdfClaimStatusKey == 'pendingMarketingReview']
 					[#if hasRequestMoreInfoAction]
-						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('moreInfoRequested')">
 							Request More Info
 						</li>
 					[/#if]
 
 					[#if hasRejectAction]
-						<li class="dropdown-item" onclick="callModal('rejected')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('rejected')">
 							Rejected
 						</li>
 					[/#if]
 
 					[#if hasApproveAction]
-						<li class="dropdown-item" onclick="callModal('approved')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
 							Approved
 						</li>
 					[/#if]
 
 					[#if hasFinanceReviewAction]
-						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('inFinanceReview')">
 							In Finance Review
 						</li>
 					[/#if]
@@ -218,7 +218,7 @@
 
 				[#if mdfClaimStatusKey == 'approved']
 					[#if hasFinanceReviewAction]
-						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('inFinanceReview')">
 							In Finance Review
 						</li>
 					[/#if]
@@ -226,7 +226,7 @@
 
 				[#if mdfClaimStatusKey == 'inFinanceReview']
 					[#if hasApproveAction]
-						<li class="dropdown-item" onclick="callModal('approved')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
 							Approved
 						</li>
 					[/#if]
@@ -238,19 +238,19 @@
 					[/#if]
 
 					[#if hasRequestMoreInfoAction]
-						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('moreInfoRequested')">
 							Request More Info
 						</li>
 					[/#if]
 
 					[#if hasRejectAction]
-						<li class="dropdown-item" onclick="callModal('rejected')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('rejected')">
 							Rejected
 						</li>
 					[/#if]
 
 					[#if hasDirectorReviewAction]
-						<li class="dropdown-item" onclick="callModal('inDirectorReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('inDirectorReview')">
 							Rejected
 						</li>
 					[/#if]
@@ -258,13 +258,13 @@
 
 				[#if mdfClaimStatusKey == 'moreInfoRequested']
 					[#if hasMarketingReviewAction]
-						<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('pendingMarketingReview')">
 							Pending Marketing Review
 						</li>
 					[/#if]
 
 					[#if hasApproveAction]
-						<li class="dropdown-item" onclick="callModal('approved')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
 							Approved
 						</li>
 					[/#if]
@@ -276,13 +276,13 @@
 					[/#if]
 
 					[#if hasFinanceReviewAction]
-						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('inFinanceReview')">
 							In Finance Review
 						</li>
 					[/#if]
 
 					[#if hasRejectAction]
-						<li class="dropdown-item" onclick="callModal('rejected')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('rejected')">
 							Rejected
 						</li>
 					[/#if]
@@ -290,7 +290,7 @@
 
 				[#if mdfClaimStatusKey == 'rejected']
 					[#if hasMarketingReviewAction]
-						<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('pendingMarketingReview')">
 							Pending Marketing Review
 						</li>
 					[/#if]
@@ -298,7 +298,7 @@
 
 				[#if mdfClaimStatusKey == 'draft']
 					[#if hasMarketingReviewAction]
-						<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('pendingMarketingReview')">
 							Pending Marketing Review
 						</li>
 					[/#if]
@@ -306,25 +306,25 @@
 
 				[#if mdfClaimStatusKey == 'inDirectorReview']
 					[#if hasApproveAction]
-						<li class="dropdown-item" onclick="callModal('approved')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
 							Approved
 						</li>
 					[/#if]
 
 					[#if hasFinanceReviewAction]
-						<li class="dropdown-item" onclick="callModal('inFinanceReview')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('inFinanceReview')">
 							In Finance Review
 						</li>
 					[/#if]
 
 					[#if hasRejectAction]
-						<li class="dropdown-item" onclick="callModal('rejected')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('rejected')">
 							Rejected
 						</li>
 					[/#if]
 
 					[#if hasRequestMoreInfoAction]
-						<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('moreInfoRequested')">
 							Request More Info
 						</li>
 					[/#if]
@@ -332,7 +332,7 @@
 
 				[#if mdfClaimStatusKey == 'canceled']
 					[#if hasApproveAction]
-						<li class="dropdown-item" onclick="callModal('approved')">
+						<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
 							Approved
 						</li>
 					[/#if]

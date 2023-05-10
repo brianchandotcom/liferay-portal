@@ -45,7 +45,7 @@
 							'content-type': 'application/json',
 							'x-csrf-token': Liferay.authToken,
 						},
-						method: 'PUT',
+						method: 'PATCH',
 					}
 				);
 
@@ -65,7 +65,7 @@
 				});
 			};
 
-			const callModal = (status) => {
+			const callMDFRequestModal = (status) => {
 				const listDisplayModal = ["moreInfoRequested", "marketingDirectorReview", "rejected"]
 
 				if(listDisplayModal.includes(status)){
@@ -122,25 +122,25 @@
 	<ul aria-labelledby="dropdownMDFRequestStatus" class="dropdown-menu" x-placement="bottom-start">
 			[#if mdfRequestStatusKey == 'pendingMarketingReview']
 				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callModal('marketingDirectorReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
 						Marketing Director Review
 					</li>
 				[/#if]
 
 				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
 						Request More Info
 					</li>
 				[/#if]
 
 				[#if hasRejectAction]
-					<li class="dropdown-item" onclick="callModal('rejected')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('rejected')">
 						Rejected
 					</li>
 				[/#if]
 
 				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callModal('approved')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
 						Approved
 					</li>
 				[/#if]
@@ -148,25 +148,25 @@
 
 			[#if mdfRequestStatusKey == 'marketingDirectorReview']
 				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
 						Pending Marketing Review
 					</li>
 				[/#if]
 
 				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callModal('approved')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
 						Approved
 					</li>
 				[/#if]
 
 				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
 						Request More Info
 					</li>
 				[/#if]
 
 				[#if hasRejectAction]
-					<li class="dropdown-item" onclick="callModal('rejected')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('rejected')">
 						Rejected
 					</li>
 				[/#if]
@@ -174,7 +174,7 @@
 
 			[#if mdfRequestStatusKey == 'moreInfoRequested']
 				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callModal('marketingDirectorReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
 						Marketing Director Review
 					</li>
 				[/#if]
@@ -182,13 +182,13 @@
 
 			[#if mdfRequestStatusKey == 'expired']
 				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callModal('marketingDirectorReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
 						Marketing Director Review
 					</li>
 				[/#if]
 
 				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
 						Request More Info
 					</li>
 				[/#if]
@@ -196,19 +196,19 @@
 
 			[#if mdfRequestStatusKey == 'rejected']
 				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
 						Pending Marketing Review
 					</li>
 				[/#if]
 
 				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callModal('marketingDirectorReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
 						Marketing Director Review
 					</li>
 				[/#if]
 
 				[#if hasRequestMoreInfoAction]
-					<li class="dropdown-item" onclick="callModal('moreInfoRequested')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('moreInfoRequested')">
 						Request More Info
 					</li>
 				[/#if]
@@ -216,7 +216,7 @@
 
 			[#if mdfRequestStatusKey == 'canceled']
 				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callModal('approved')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('approved')">
 						Approved
 					</li>
 				[/#if]
@@ -224,13 +224,13 @@
 
 			[#if mdfRequestStatusKey == 'draft']
 				[#if hasMarketingReviewAction]
-					<li class="dropdown-item" onclick="callModal('pendingMarketingReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('pendingMarketingReview')">
 						Pending Marketing Review
 					</li>
 				[/#if]
 
 				[#if hasMarketingDirectorReviewAction]
-					<li class="dropdown-item" onclick="callModal('marketingDirectorReview')">
+					<li class="dropdown-item" onclick="callMDFRequestModal('marketingDirectorReview')">
 						Marketing Director Review
 					</li>
 				[/#if]

@@ -275,12 +275,12 @@ export function DefineAppProfilePage({
 					}
 
 					if (appLogo) {
-						submitBase64EncodedFile(
-							product.externalReferenceCode,
-							appLogo.file,
-							createImage,
-							appLogo.fileName
-						);
+						submitBase64EncodedFile({
+							appERC: product.externalReferenceCode,
+							file: appLogo.file,
+							requestFunction: createImage,
+							title: appLogo.fileName,
+						});
 					}
 
 					onClickContinue();

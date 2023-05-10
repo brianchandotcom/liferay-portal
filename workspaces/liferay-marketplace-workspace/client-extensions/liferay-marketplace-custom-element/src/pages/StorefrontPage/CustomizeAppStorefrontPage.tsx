@@ -138,13 +138,14 @@ export function CustomizeAppStorefrontPage({
 				}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
-					appStorefrontImages?.forEach((image) => {
-						submitBase64EncodedFile(
+					appStorefrontImages?.forEach((image, index) => {
+						submitBase64EncodedFile({
 							appERC,
-							image.file,
-							createImage,
-							image.fileName
-						);
+							file: image.file,
+							index,
+							requestFunction: createImage,
+							title: image.fileName,
+						});
 					});
 
 					onClickContinue();

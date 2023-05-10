@@ -247,12 +247,12 @@ export function ProvideAppBuildPage({
 					submitAppBuildType();
 
 					buildZIPFiles.forEach((buildZIPFile) => {
-						submitBase64EncodedFile(
+						submitBase64EncodedFile({
 							appERC,
-							buildZIPFile.file,
-							createAttachment,
-							buildZIPFile.fileName
-						);
+							file: buildZIPFile.file,
+							requestFunction: createAttachment,
+							title: buildZIPFile.fileName,
+						});
 					});
 
 					onClickContinue();

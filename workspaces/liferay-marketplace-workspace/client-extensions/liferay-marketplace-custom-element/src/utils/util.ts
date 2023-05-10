@@ -10,6 +10,14 @@ import {
 import accountPlaceholder from '../assets/images/account_placeholder.png';
 import appPlaceholder from '../assets/images/app_placeholder.png';
 
+type FileRequest = {
+	appERC: string;
+	file: File | string;
+	index?: number;
+	requestFunction: Function;
+	title: string;
+};
+
 export function createSkuName(
 	appProductId: number,
 	appVersion: string,
@@ -132,15 +140,17 @@ export async function saveSpecification(
 	);
 }
 
-export async function submitFile(
-	appERC: string,
-	fileBase64: string,
-	requestFunction: Function,
-	title: string
-) {
+export async function submitFile({
+	appERC,
+	file: fileBase64,
+	index,
+	requestFunction,
+	title,
+}: FileRequest) {
 	const response = await requestFunction({
 		body: {
 			attachment: fileBase64,
+			priority: index,
 			title: {en_US: title},
 		},
 		externalReferenceCode: appERC,
@@ -149,12 +159,13 @@ export async function submitFile(
 	response.json();
 }
 
-export function submitBase64EncodedFile(
-	appERC: string,
-	file: File,
-	requestFunction: Function,
-	title: string
-) {
+export function submitBase64EncodedFile({
+	appERC,
+	file,
+	index,
+	requestFunction,
+	title,
+}: FileRequest) {
 	const reader = new FileReader();
 
 	reader.addEventListener(
@@ -176,11 +187,17 @@ export function submitBase64EncodedFile(
 			}
 
 			if (result) {
-				submitFile(appERC, result, requestFunction, title);
+				submitFile({
+					appERC,
+					file: result,
+					index,
+					requestFunction,
+					title,
+				});
 			}
 		},
 		false
 	);
 
-	reader.readAsDataURL(file);
+	reader.readAsDataURL(file as File);
 }

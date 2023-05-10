@@ -872,10 +872,13 @@ definition {
 			navTab = "Documents and Media",
 			videoShortcutTitle = "Test YouTube Video");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Test Page",
-			siteURLKey = "site-name");
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",

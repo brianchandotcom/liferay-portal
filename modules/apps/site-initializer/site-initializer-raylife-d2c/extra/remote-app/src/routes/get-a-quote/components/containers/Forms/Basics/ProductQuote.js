@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback, useContext, useEffect} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
@@ -78,47 +79,61 @@ export function FormBasicProductQuote({form}) {
 				</div>
 
 				<fieldset
-					className="d-flex flex-column mb-4 spacer-3"
+					className="d-flex flex-column mb-4 spacer-3 w-100"
 					id="productQuote"
 				>
-					<Controller
-						control={control}
-						defaultValue={form?.basics?.productId}
-						name="basics.productId"
-						render={({field}) =>
-							productQuotes.map((quote) => (
-								<Radio
-									{...field}
-									description={quote.description}
-									key={quote.id}
-									label={quote.title}
-									renderActions={
-										quote.template.allowed && (
-											<MoreInfoButton
-												callback={() =>
-													updateState(quote.id)
-												}
-												event={TIP_EVENT}
-												selected={isSelected(quote.id)}
-												value={{
-													inputName: field.name,
-													templateName:
-														quote.template.name,
-													value: quote.id,
-												}}
-											/>
-										)
-									}
-									selected={
-										quote.id === form?.basics?.productId
-									}
-									sideLabel={quote.period}
-									value={quote.id}
-								/>
-							))
-						}
-						rules={{required: true}}
-					/>
+					{!productQuotes.length && (
+						<div className="align-items-center d-flex justify-content-center mt-5">
+							<ClayLoadingIndicator
+								displayType="primary"
+								shape="squares"
+								size="sm"
+							/>
+						</div>
+					)}
+
+					{!!productQuotes.length && (
+						<Controller
+							control={control}
+							defaultValue={form?.basics?.productId}
+							name="basics.productId"
+							render={({field}) =>
+								productQuotes.map((quote) => (
+									<Radio
+										{...field}
+										description={quote.description}
+										key={quote.id}
+										label={quote.title}
+										renderActions={
+											quote.template.allowed && (
+												<MoreInfoButton
+													callback={() =>
+														updateState(quote.id)
+													}
+													event={TIP_EVENT}
+													selected={isSelected(
+														quote.id
+													)}
+													value={{
+														inputName: field.name,
+														templateName:
+															quote.template.name,
+														value: quote.id,
+													}}
+												/>
+											)
+										}
+										selected={
+											quote.id === form?.basics?.productId
+										}
+										sideLabel={quote.period}
+										value={quote.id}
+									/>
+								))
+							}
+							rules={{required: true}}
+						/>
+					)}
 				</fieldset>
 			</div>
 		</div>

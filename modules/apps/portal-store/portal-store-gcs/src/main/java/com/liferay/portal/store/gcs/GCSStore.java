@@ -262,9 +262,7 @@ public class GCSStore implements Store {
 	private String _getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
-		return StoreArea.getPath(
-			String.valueOf(companyId), String.valueOf(repositoryId),
-			String.valueOf(fileName));
+		return StoreArea.getPath(companyId, repositoryId, fileName);
 	}
 
 	private String[] _getFilePaths(
@@ -299,8 +297,7 @@ public class GCSStore implements Store {
 		String versionLabel) {
 
 		return StoreArea.getPath(
-			String.valueOf(companyId), String.valueOf(repositoryId), fileName,
-			versionLabel);
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	private String _getHeadVersionLabel(
@@ -333,8 +330,7 @@ public class GCSStore implements Store {
 	}
 
 	private String _getPrefix(long companyId, long repositoryId) {
-		String path = StoreArea.getPath(
-			String.valueOf(companyId), String.valueOf(repositoryId));
+		String path = StoreArea.getPath(companyId, repositoryId);
 
 		return path + StringPool.SLASH;
 	}
@@ -348,8 +344,7 @@ public class GCSStore implements Store {
 	}
 
 	private String _getRepositoryKey(long companyId, long repositoryId) {
-		return StoreArea.getPath(
-			String.valueOf(companyId), String.valueOf(repositoryId));
+		return StoreArea.getPath(companyId, repositoryId);
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {

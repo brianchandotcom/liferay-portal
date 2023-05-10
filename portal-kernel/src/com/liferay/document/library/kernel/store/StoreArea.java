@@ -17,6 +17,8 @@ package com.liferay.document.library.kernel.store;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -26,11 +28,26 @@ public enum StoreArea {
 
 	DELETED("_deleted"), LIVE(StringPool.BLANK);
 
-	public static String getPath(String... path) {
+	public static String getPath(
+		long companyId, long repositoryId, String... path) {
+
 		StoreArea storeArea = _storeAreaThreadLocal.get();
 
-		return storeArea._namespace + StringPool.SLASH +
-			StringUtil.merge(path, StringPool.SLASH);
+		StringBundler sb = new StringBundler(
+			5 + (ArrayUtil.getLength(path) * 2));
+
+		sb.append(storeArea._namespace);
+		sb.append(StringPool.SLASH);
+		sb.append(String.valueOf(companyId));
+		sb.append(StringPool.SLASH);
+		sb.append(String.valueOf(repositoryId));
+
+		if (ArrayUtil.isNotEmpty(path)) {
+			sb.append(StringPool.SLASH);
+			sb.append(StringUtil.merge(path, StringPool.SLASH));
+		}
+
+		return sb.toString();
 	}
 
 	public static <T extends Throwable> void withStoreArea(

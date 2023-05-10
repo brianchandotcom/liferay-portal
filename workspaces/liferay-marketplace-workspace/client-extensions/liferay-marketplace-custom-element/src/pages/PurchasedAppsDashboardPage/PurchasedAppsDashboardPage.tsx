@@ -93,7 +93,7 @@ const appMessages = {
 		description1:
 			'Purchase and install new apps and they will show up here.',
 		description2: 'Click on “Add Apps” to start.',
-		title: 'No apps yet',
+		title: 'No Apps Yet',
 	},
 	title: 'My Apps',
 };
@@ -103,7 +103,7 @@ const memberMessages = {
 	emptyStateMessage: {
 		description1: 'Create new members and they will show up here.',
 		description2: 'Click on “New Member” to start.',
-		title: 'No members yet',
+		title: 'No Members Yet',
 	},
 	title: 'Members',
 };
@@ -111,9 +111,10 @@ const memberMessages = {
 const solutionMessages = {
 	description: 'Manage solution trial and purchases from the Marketplace',
 	emptyStateMessage: {
-		description1: 'Solution empty message 1',
-		description2: 'Solution empty message 2',
-		title: 'Solutions Empty message title',
+		description1:
+			'Purchase and install new solutions and they will show up here.',
+		description2: 'Click on “New Solutions” to start.',
+		title: 'No Solutions Yet',
 	},
 	title: 'My Solutions',
 };
@@ -177,7 +178,7 @@ export function PurchasedAppsDashboardPage() {
 			);
 
 			setCommerceAccount(commerceAccountResponse);
-			
+
 			const filteredAppOrders = placedOrders.items.filter(
 				({orderTypeExternalReferenceCode}) =>
 					orderTypeExternalReferenceCode === 'CLOUDAPP' ||

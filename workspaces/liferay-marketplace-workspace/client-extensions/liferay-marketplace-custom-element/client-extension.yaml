@@ -29,6 +29,20 @@ liferay-marketplace-custom-element-get-app:
     urls:
         - "*.js"
     useESM: true
+liferay-marketplace-custom-element-next-steps:
+    cssURLs:
+        - "**/*.css"
+    friendlyURLMapping: liferay-marketplace-custom-element-next-steps
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Next Steps
+    portletCategoryName: category.client-extensions
+    properties:
+        route: next-steps
+    type: customElement
+    urls:
+        - "*.js"
+    useESM: true
 liferay-marketplace-custom-element-published-apps:
     cssURLs:
         - "**/*.css"

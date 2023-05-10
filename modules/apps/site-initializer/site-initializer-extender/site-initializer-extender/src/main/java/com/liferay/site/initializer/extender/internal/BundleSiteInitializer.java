@@ -190,6 +190,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.Serializable;
 
@@ -287,6 +289,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
 		TaxonomyCategoryResource.Factory taxonomyCategoryResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
+		TemplateEntryLocalService templateEntryLocalService,
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
 		UserGroupLocalService userGroupLocalService,
@@ -365,6 +368,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_styleBookEntryZipProcessor = styleBookEntryZipProcessor;
 		_taxonomyCategoryResourceFactory = taxonomyCategoryResourceFactory;
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
+		_templateEntryLocalService = templateEntryLocalService;
 		_themeLocalService = themeLocalService;
 		_userAccountResourceFactory = userAccountResourceFactory;
 		_userGroupLocalService = userGroupLocalService;
@@ -1663,6 +1667,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 			}
+
+			if (!Objects.equals(
+					jsonObject.getString("className"),
+					TemplateEntry.class.getName())) {
+
+				return;
+			}
+
+			_templateEntryLocalService.addTemplateEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				ddmTemplate.getTemplateId(),
+				jsonObject.getString("infoItemClassName"),
+				jsonObject.getString("infoItemKey"), serviceContext);
 		}
 	}
 
@@ -4909,6 +4926,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_taxonomyCategoryResourceFactory;
 	private final TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
+	private final TemplateEntryLocalService _templateEntryLocalService;
 	private final ThemeLocalService _themeLocalService;
 	private final UserAccountResource.Factory _userAccountResourceFactory;
 	private final UserGroupLocalService _userGroupLocalService;

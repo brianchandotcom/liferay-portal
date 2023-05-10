@@ -84,6 +84,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.File;
 
@@ -162,9 +163,10 @@ public class SiteInitializerExtender
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
-				_taxonomyVocabularyResourceFactory, _themeLocalService,
-				_userAccountResourceFactory, _userGroupLocalService,
-				_userLocalService, _workflowDefinitionLinkLocalService,
+				_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
+				_themeLocalService, _userAccountResourceFactory,
+				_userGroupLocalService, _userLocalService,
+				_workflowDefinitionLinkLocalService,
 				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
@@ -281,9 +283,10 @@ public class SiteInitializerExtender
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
-				_taxonomyVocabularyResourceFactory, _themeLocalService,
-				_userAccountResourceFactory, _userGroupLocalService,
-				_userLocalService, _workflowDefinitionLinkLocalService,
+				_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
+				_themeLocalService, _userAccountResourceFactory,
+				_userGroupLocalService, _userLocalService,
+				_workflowDefinitionLinkLocalService,
 				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
@@ -490,6 +493,9 @@ public class SiteInitializerExtender
 	@Reference
 	private TaxonomyVocabularyResource.Factory
 		_taxonomyVocabularyResourceFactory;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

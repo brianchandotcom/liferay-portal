@@ -145,7 +145,6 @@ definition {
 		var type = "individuals";
 		var userNameList = "ac,bq";
 		var emailList = "ac@liferay.com,bq@liferay.com";
-		var nameList = "ac ac,bq bq";
 
 		task ("Copy the token value for the API and copy the token for the AC and DXP connection") {
 			var token = ACApi.getTokenValue();
@@ -188,7 +187,7 @@ definition {
 		}
 
 		task ("Create a data report using analytics cloud API with the type individuals") {
-			var apiResponse = ACApi.createDataReport(
+			ACApi.createDataReport(
 				token = ${token},
 				type = ${type});
 		}

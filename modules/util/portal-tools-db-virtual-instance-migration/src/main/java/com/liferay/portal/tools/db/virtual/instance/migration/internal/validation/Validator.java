@@ -157,21 +157,21 @@ public class Validator {
 		}
 
 		recorder.registerErrors(
-			missingServiceModules, " will not be available in the destination");
+			missingServiceModules, "will not be available in the destination");
 		recorder.registerErrors(
 			lowerVersionModules,
-			" needs to be upgraded in source database before the migration");
+			"needs to be upgraded in source database before the migration");
 		recorder.registerErrors(
 			higherVersionModules,
-			" is in a lower version in destination database");
+			"is in a lower version in destination database");
 		recorder.registerErrors(
 			sourceUnverifiedModules,
-			" needs to be verified in the source before the migration");
+			"needs to be verified in the source before the migration");
 		recorder.registerErrors(
 			destinationUnverifiedModules,
-			" needs to be verified in the destination before the migration");
+			"needs to be verified in the destination before the migration");
 		recorder.registerWarnings(
-			missingModules, " will not be available in the destination");
+			missingModules, "will not be available in the destination");
 	}
 
 	private static boolean _validateReleaseTableState(Connection connection)

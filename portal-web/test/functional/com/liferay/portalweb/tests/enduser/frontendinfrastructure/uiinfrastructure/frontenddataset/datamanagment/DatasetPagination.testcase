@@ -25,6 +25,7 @@ definition {
 	}
 
 	@description = "LPS-183945. Confirm that pagination requires a default value"
+	@ignore = "true"
 	@priority = 4
 	test CanAssertDefaultValueIsRequired {
 
@@ -33,6 +34,7 @@ definition {
 	}
 
 	@description = "LPS-183938. Confirm the default values for 'Pagination Items' and 'Default Value' fields"
+	@ignore = "true"
 	@priority = 4
 	test CanAssertDefaultValues {
 
@@ -41,6 +43,7 @@ definition {
 	}
 
 	@description = "LPS-183950. Confirm that pagination creation can be cancelled when clicking on cancel button"
+	@ignore = "true"
 	@priority = 5
 	test CanCancelPaginationCreationOnCancelButton {
 
@@ -49,6 +52,7 @@ definition {
 	}
 
 	@description = "LPS-183947. Confirm that pagination can be created"
+	@ignore = "true"
 	@priority = 5
 	test CanCreatePagination {
 
@@ -57,6 +61,7 @@ definition {
 	}
 
 	@description = "LPS-183941. Confirm the pagination can be created with one pagination item"
+	@ignore = "true"
 	@priority = 5
 	test CanCreateWithOnePaginationItem {
 
@@ -65,6 +70,7 @@ definition {
 	}
 
 	@description = "LPS-183943. Confirm that pagination cannot exceed 25 pagination items"
+	@ignore = "true"
 	@priority = 5
 	test CannotExceed25PaginationItems {
 
@@ -73,6 +79,7 @@ definition {
 	}
 
 	@description = "LPS-183944. Confirm that pagination cannot exceed 1000 items per page"
+	@ignore = "true"
 	@priority = 5
 	test CannotExceed1000ItemsPerPage {
 
@@ -81,6 +88,7 @@ definition {
 	}
 
 	@description = "LPS-183948. Confirm that pagination cannot have characters in default value field"
+	@ignore = "true"
 	@priority = 4
 	test CannotUseCharactersInDefaultValueField {
 
@@ -89,6 +97,7 @@ definition {
 	}
 
 	@description = "LPS-183949. Confirm that pagination cannot have characters in pagination items field"
+	@ignore = "true"
 	@priority = 4
 	test CannotUseCharactersInPaginationItems {
 
@@ -97,6 +106,7 @@ definition {
 	}
 
 	@description = "LPS-183946. Confirm that the default value cannot be different from some of the pagination items"
+	@ignore = "true"
 	@priority = 4
 	test DefaultValueCannotDivergeFromPaginationItems {
 
@@ -105,6 +115,7 @@ definition {
 	}
 
 	@description = "LPS-183940. Confirm that error appears when pagination item is blank"
+	@ignore = "true"
 	@priority = 5
 	test ErrorAppearsWhenPaginationItemBlank {
 

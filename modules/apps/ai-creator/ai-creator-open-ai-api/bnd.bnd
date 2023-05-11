@@ -1,6 +1,0 @@
-Bundle-Name: Liferay AICreator Open AI API
-Bundle-SymbolicName: com.liferay.ai.creator.open.ai.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.ai.creator.open.ai.configuration,\
-	com.liferay.ai.creator.open.ai.configuration.manager

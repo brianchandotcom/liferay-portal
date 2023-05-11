@@ -103,7 +103,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-178779. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-178779. Confirm the error message that appears when the user tries to create a dataset entry with more than 280 characters in the name field"
 	@priority = 3
 	test CannotExceed280Characters {
 		task ("When the user goes to add Datasets") {
@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("When a user types a name that is more than 280 characters") {
-			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fermentum, est sed varius porttitor, odio tortor commodo ligula, quis auctor nulla massa ut eros. Vestibulum in eros maximus quam gravida dapibus. Proin vitae mi diam. Duis iaculis, nisi quis pharetra varius, arcu eros bibendum turpis, nec posuere nibh arcu id orci.");
+			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Nam fermentum est sed varius porttitor odio tortor commodo ligula quis auctor nulla massa ut eros. Vestibulum in eros maximus quam gravida dapibus. Proin vitae mi diam. Duis iaculis nisi quis pharetra varius arcu eros bibendum turpis nec posuere nibh arcu id orci.");
 		}
 
 		task ("And choose the provider named Channel") {

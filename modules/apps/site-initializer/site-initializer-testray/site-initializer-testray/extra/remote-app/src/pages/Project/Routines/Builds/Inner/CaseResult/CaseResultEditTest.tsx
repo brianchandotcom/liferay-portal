@@ -121,8 +121,7 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -166,6 +165,7 @@ const CaseResultEditTest = () => {
 					},
 				]}
 				register={register}
+				required={true}
 			/>
 
 			<Form.Input

@@ -378,6 +378,18 @@ public class ObjectEntryInfoItemFormProvider
 					).namespace(
 						ObjectField.class.getSimpleName()
 					).name(
+						objectField.getObjectFieldId() + "#previewURL"
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.localize(
+							ObjectEntryInfoItemFields.class, "preview-url")
+					).build()
+				).infoFieldSetEntry(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
 						objectField.getObjectFieldId() + "#size"
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.localize(

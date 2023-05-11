@@ -215,6 +215,22 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					InfoField.builder(
 					).infoFieldType(
+						URLInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						objectField.getObjectFieldId() + "#previewURL"
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.localize(
+							ObjectEntryInfoItemFields.class, "preview-url")
+					).build(),
+					_dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK)));
+			infoFieldValues.add(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
 						TextInfoFieldType.INSTANCE
 					).namespace(
 						ObjectField.class.getSimpleName()

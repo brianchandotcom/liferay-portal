@@ -6,12 +6,10 @@ import React, {useState} from 'react';
 import Select from 'shared/components/Select';
 import {EXPIRATION_DATE_LABELS, ExpirationPeriod} from 'shared/util/constants';
 
-interface IGenerateTokenCard {
+interface IGenerateTokenCardProps {
 	groupId: string;
-	handleError: () => void;
-	handleSuccess: (message: string) => void;
-	loading: boolean;
-	setLoading?: (value: boolean) => void;
+	onError: () => void;
+	onSuccess: (message: string) => void;
 	token: string;
 }
 
@@ -34,21 +32,20 @@ const expirationDates = [
 	}
 ];
 
-const GenerateTokenCard: React.FC<IGenerateTokenCard> = ({
+const GenerateTokenCard: React.FC<IGenerateTokenCardProps> = ({
 	groupId,
-	handleError,
-	handleSuccess,
-	loading,
-	setLoading,
+	onError,
+	onSuccess,
 	token
 }) => {
+	const [loading, setLoading] = useState(false);
 	const [expiresIn, setExpiresIn] = useState(expirationDates[0].key);
 
 	return (
 		<Card>
 			<Card.Body>
 				<h4>{Liferay.Language.get('create-new-access-token')}</h4>
-				<div className='col-md-5 pl-0 mt-2'>
+				<div className='col-md-5 mt-2 pl-0'>
 					<Form.Group>
 						<label htmlFor='picker' id='picker-label'>
 							{Liferay.Language.get('expiration-date')}
@@ -68,39 +65,41 @@ const GenerateTokenCard: React.FC<IGenerateTokenCard> = ({
 					</Form.Group>
 				</div>
 
-				{
-					<Button
-						className='col-md-3'
-						data-testid='generate-token-button'
-						display='primary'
-						loading={loading}
-						onClick={() => {
-							setLoading(true);
+				<Button
+					className='col-md-3'
+					data-testid='generate-token-button'
+					display='primary'
+					loading={loading}
+					onClick={() => {
+						setLoading(true);
 
-							if (token) {
-								API.apiTokens.revoke({
-									groupId,
-									token
-								});
-							}
+						if (token) {
+							API.apiTokens.revoke({
+								groupId,
+								token
+							});
+						}
 
-							API.apiTokens
-								.generate({expiresIn, groupId})
-								.then(() => {
-									analytics.track('Created API Token');
+						API.apiTokens
+							.generate({expiresIn, groupId})
+							.then(() => {
+								analytics.track('Created API Token');
 
-									handleSuccess(
-										Liferay.Language.get(
-											'new-token-was-generated'
-										)
-									);
-								})
-								.catch(handleError);
-						}}
-					>
-						{Liferay.Language.get('generate-token')}
-					</Button>
-				}
+								setLoading(false);
+								onSuccess(
+									Liferay.Language.get(
+										'new-token-was-generated'
+									)
+								);
+							})
+							.catch(() => {
+								setLoading(false);
+								onError();
+							});
+					}}
+				>
+					{Liferay.Language.get('generate-token')}
+				</Button>
 			</Card.Body>
 		</Card>
 	);

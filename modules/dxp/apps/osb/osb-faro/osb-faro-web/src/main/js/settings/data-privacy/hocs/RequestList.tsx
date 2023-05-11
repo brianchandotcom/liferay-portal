@@ -21,6 +21,7 @@ import {
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination
 } from 'shared/util/pagination';
+import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
 import {FilterByType, FilterInputType} from 'shared/types';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {
@@ -53,8 +54,6 @@ import {withHistory} from 'shared/hoc';
 const {
 	pagination: {cur: defaultPage}
 } = Constants;
-
-const DATE_FORMAT = 'MMM DD, YYYY';
 
 export const REQUEST_TYPE_LABEL_MAP = {
 	[GDPRRequestTypes.Access]: Liferay.Language.get('access'),
@@ -345,7 +344,11 @@ const RequestList: React.FC<IRequestListProps> = ({
 					{
 						accessor: CREATE_DATE,
 						dataFormatter: (date: string) =>
-							formatDateToTimeZone(date, DATE_FORMAT, timeZoneId),
+							formatDateToTimeZone(
+								date,
+								CUSTOM_DATE_FORMAT,
+								timeZoneId
+							),
 						label: Liferay.Language.get('requested-date')
 					},
 					{

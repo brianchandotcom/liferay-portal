@@ -80,7 +80,17 @@ public class LiferayDocumentTypeFactory
 	public void createLiferayDocumentTypeMappings(
 		CreateIndexRequest createIndexRequest, String mappings) {
 
-		createIndexRequest.mapping("_doc", mappings, XContentType.JSON);
+		JSONObject mappingsJSONObject = createJSONObject(mappings);
+
+		if (mappingsJSONObject.has(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE)) {
+
+			mappingsJSONObject = mappingsJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE);
+		}
+
+		createIndexRequest.mapping(
+			"_doc", mappingsJSONObject.toString(), XContentType.JSON);
 	}
 
 	public void createOptionalDefaultTypeMappings(String indexName) {

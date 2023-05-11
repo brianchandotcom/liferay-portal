@@ -931,9 +931,11 @@ export default function ChangeTrackingIndicator({
 			>
 				<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
 
-				<ClayList.ItemText subtext>
-					{entry.description}
-				</ClayList.ItemText>
+				{!!entry.description && (
+					<ClayList.ItemText subtext>
+						{entry.description}
+					</ClayList.ItemText>
+				)}
 			</ClayList.ItemField>
 		);
 
@@ -949,9 +951,11 @@ export default function ChangeTrackingIndicator({
 					<a onClick={() => navigate(entry.checkoutURL, true)}>
 						<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
 
-						<ClayList.ItemText subtext>
-							{entry.description}
-						</ClayList.ItemText>
+						{!!entry.description && (
+							<ClayList.ItemText subtext>
+								{entry.description}
+							</ClayList.ItemText>
+						)}
 					</a>
 				</ClayList.ItemField>
 			);
@@ -969,9 +973,11 @@ export default function ChangeTrackingIndicator({
 					>
 						<ClayList.ItemTitle>{entry.name}</ClayList.ItemTitle>
 
-						<ClayList.ItemText subtext>
-							{entry.description}
-						</ClayList.ItemText>
+						{!!entry.description && (
+							<ClayList.ItemText subtext>
+								{entry.description}
+							</ClayList.ItemText>
+						)}
 					</ClayButton>
 				</ClayList.ItemField>
 			);

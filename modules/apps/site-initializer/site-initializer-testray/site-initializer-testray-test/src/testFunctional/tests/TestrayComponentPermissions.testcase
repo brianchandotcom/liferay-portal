@@ -33,7 +33,7 @@ definition {
 				projectName = ${projectName},
 				teamName = ${teamName});
 
-            JSONTestray.addComponent(
+			JSONTestray.addComponent(
 				componentName = ${componentName},
 				projectName = ${projectName},
 				teamName = ${teamName});

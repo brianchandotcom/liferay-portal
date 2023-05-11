@@ -12,7 +12,7 @@
  * details.
  */
 
-// / <reference types="react" />
+/// <reference types="react" />
 
 interface ISearchInterface {
 	onSearch: Function;

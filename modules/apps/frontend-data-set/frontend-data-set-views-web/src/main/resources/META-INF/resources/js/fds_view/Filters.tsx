@@ -148,9 +148,9 @@ function AddFDSFilterModalContent({
 				...body,
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID]:
 					fdsView.id,
-				include: formValues[includeModeFormElementId],
+				include: formValues[includeModeFormElementId] === 'true',
 				listTypeDefinitionId: formValues[sourceOptionFormElementId],
-				multiple: formValues[multipleFormElementId],
+				multiple: formValues[multipleFormElementId] === 'true',
 				preselectedListTypeEntries:
 					formValues[preselectedValuesFormElementId],
 			};

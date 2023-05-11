@@ -313,7 +313,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "list-type-definition-id"), "listTypeDefinitionId", false),
+						_language.get(locale, "list-type-definition-id"),
+						"listTypeDefinitionId", false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
@@ -321,8 +322,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "preselected-list-type-entries"), "preselectedListTypeEntries", false)));
-
+						_language.get(locale, "preselected-list-type-entries"),
+						"preselectedListTypeEntries", false)));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsDynamicFilterObjectDefinition.getObjectDefinitionId());

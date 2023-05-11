@@ -18,7 +18,7 @@
 EditRolePermissionsNavigationDisplayContext editRolePermissionsNavigationDisplayContext = new EditRolePermissionsNavigationDisplayContext(request, renderResponse, role, roleDisplayContext.isAccountRoleGroupScope());
 %>
 
-<div>
+<div data-qa-id="editRolePermissionsNavigation">
 	<react:component
 		module="js/EditRolePermissionsNavigation.es"
 		props="<%= editRolePermissionsNavigationDisplayContext.getData() %>"

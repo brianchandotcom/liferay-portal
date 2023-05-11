@@ -5,7 +5,7 @@ import DatePicker from './date-picker';
 import getCN from 'classnames';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {FORMAT} from 'shared/util/date';
+import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {RangeSelectors} from 'shared/types';
@@ -64,8 +64,8 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 }) => {
 	const [active, setActive] = useState(false);
 	const [customDateRange, setCustomDateRange] = useState<MomentDateRange>({
-		end: rangeEnd ? moment(rangeEnd, FORMAT) : null,
-		start: rangeStart ? moment(rangeStart, FORMAT) : null
+		end: rangeEnd ? moment(rangeEnd, DEFAULT_DATE_FORMAT) : null,
+		start: rangeStart ? moment(rangeStart, DEFAULT_DATE_FORMAT) : null
 	});
 	const [seeMore, setSeeMore] = useState(false);
 	const [showDatePicker, setShowDatePicker] = useState(false);
@@ -80,9 +80,9 @@ const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 			};
 
 			onChange({
-				rangeEnd: customDateRange.end.format(FORMAT),
+				rangeEnd: customDateRange.end.format(DEFAULT_DATE_FORMAT),
 				rangeKey: dateRangeItem.value,
-				rangeStart: customDateRange.start.format(FORMAT)
+				rangeStart: customDateRange.start.format(DEFAULT_DATE_FORMAT)
 			});
 
 			setActive(false);

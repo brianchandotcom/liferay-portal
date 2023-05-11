@@ -3,7 +3,9 @@ import momentTimezone from 'moment-timezone';
 import {flow, get, head, last, rangeRight} from 'lodash/fp';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 
-export const FORMAT = 'YYYY-MM-DD';
+export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
+
+export const CUSTOM_DATE_FORMAT = 'MMM DD, YYYY';
 
 export const DATE_MASK = [
 	/\d/,

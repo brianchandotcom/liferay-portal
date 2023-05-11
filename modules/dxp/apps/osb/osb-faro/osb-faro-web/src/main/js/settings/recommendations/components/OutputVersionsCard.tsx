@@ -11,6 +11,7 @@ import {
 	getSortFromOrderIOMap,
 	ID
 } from 'shared/util/pagination';
+import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
 import {getFormattedTitle} from 'shared/components/NoResultsDisplay';
 import {getMapResultToProps} from 'shared/hoc/mappers/metrics';
 import {graphql} from '@apollo/react-hoc';
@@ -35,8 +36,6 @@ import {
 	withPaginationBar,
 	withStatefulPagination
 } from 'shared/hoc';
-
-const DATE_FORMAT = 'MMM DD, YYYY';
 
 const getContextItemCount = (contextItemKey: string) => (
 	context: {key: string; value: any}[]
@@ -143,14 +142,14 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 							className: 'table-cell-expand',
 							dataFormatter: val =>
 								applyTimeZone(val, timeZoneId).calendar(null, {
-									lastDay: DATE_FORMAT,
-									lastWeek: DATE_FORMAT,
-									nextDay: DATE_FORMAT,
-									nextWeek: DATE_FORMAT,
+									lastDay: CUSTOM_DATE_FORMAT,
+									lastWeek: CUSTOM_DATE_FORMAT,
+									nextDay: CUSTOM_DATE_FORMAT,
+									nextWeek: CUSTOM_DATE_FORMAT,
 									sameDay: `[${Liferay.Language.get(
 										'today'
 									)}]`,
-									sameElse: DATE_FORMAT
+									sameElse: CUSTOM_DATE_FORMAT
 								}),
 							label: Liferay.Language.get('training-date'),
 							sortable: false,

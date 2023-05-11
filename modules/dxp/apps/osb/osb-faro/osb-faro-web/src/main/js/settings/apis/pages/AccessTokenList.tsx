@@ -3,6 +3,7 @@ import Alerts, {AlertTypes} from 'shared/components/Alert';
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import CopyButton from 'shared/components/CopyButton';
 import GenerateTokenCard from '../components/GenerateTokenCard';
 import moment from 'moment';
@@ -17,6 +18,7 @@ import {ApisPath} from 'shared/util/url-constants';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
+import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
 import {ExpirationPeriod} from 'shared/util/constants';
 import {formatDateToTimeZone, getDateNow} from 'shared/util/date';
 import {RootState} from 'shared/store';
@@ -31,7 +33,12 @@ import {
 export const isExpired = (expirationDate: string) =>
 	moment.utc(expirationDate).isSameOrBefore(getDateNow());
 
-const DATE_FORMAT = 'MMM DD, YYYY';
+const getTimestamp = (date: Date) =>
+	Math.floor(new Date(date).getTime() / 1000);
+
+const isIndefinite = ({createDate, expirationDate}) =>
+	getTimestamp(expirationDate) - getTimestamp(createDate) ===
+	Number(ExpirationPeriod.Indefinite);
 
 const connector = connect(
 	(store: RootState, {groupId}: {groupId: string}) => ({
@@ -58,10 +65,7 @@ const TokenList: React.FC<
 	const [loading, setLoading] = useState(false);
 	const [onCloseAlert, setOnCloseAlert] = useState(false);
 
-	const tokenExpired =
-		isExpired(tokens[0]?.expirationDate) && !!tokens.length;
-
-	const displayAddExpirationDateCard = tokenExpired || !tokens.length;
+	const tokenExpired = !!tokens.length && isExpired(tokens[0].expirationDate);
 
 	const handleError = () => {
 		setLoading(false);
@@ -74,12 +78,12 @@ const TokenList: React.FC<
 	};
 
 	const handleSuccess = message => {
+		setLoading(false);
+
 		addAlert({
 			alertType: Alert.Types.Success,
 			message
 		});
-
-		setLoading(false);
 
 		refetch();
 	};
@@ -97,19 +101,18 @@ const TokenList: React.FC<
 				</Alerts>
 			)}
 
-			{displayAddExpirationDateCard && (
+			{(tokenExpired || !tokens.length) && (
 				<GenerateTokenCard
 					groupId={groupId}
-					handleError={handleError}
-					handleSuccess={handleSuccess}
-					loading={loading}
-					setLoading={setLoading}
+					onError={handleError}
+					onSuccess={handleSuccess}
 					token={tokens[0]?.token}
 				/>
 			)}
+
 			<Card>
 				<Card.Body>
-					<div className='d-flex flex-column justify-content-between align-items-start'>
+					<div className='align-items-start d-flex flex-column justify-content-between'>
 						<h4 className='mb-4'>
 							{Liferay.Language.get('token-information')}
 						</h4>
@@ -137,7 +140,7 @@ const TokenList: React.FC<
 								dataFormatter: (val: string) =>
 									formatDateToTimeZone(
 										val,
-										DATE_FORMAT,
+										CUSTOM_DATE_FORMAT,
 										timeZoneId
 									),
 								label: Liferay.Language.get('last-seen'),
@@ -148,7 +151,7 @@ const TokenList: React.FC<
 								dataFormatter: (val: string) =>
 									formatDateToTimeZone(
 										val,
-										DATE_FORMAT,
+										CUSTOM_DATE_FORMAT,
 										timeZoneId
 									),
 								label: Liferay.Language.get('date-created'),
@@ -157,22 +160,7 @@ const TokenList: React.FC<
 							{
 								accessor: 'expirationDate',
 								cellRenderer: ({data}) => {
-									const isIndefinite =
-										Math.floor(
-											new Date(
-												data.expirationDate
-											).getTime() / 1000
-										) -
-										Math.floor(
-											new Date(
-												data.createDate
-											).getTime() / 1000
-										);
-
-									if (
-										isIndefinite ===
-										Number(ExpirationPeriod.Indefinite)
-									) {
+									if (isIndefinite(data)) {
 										return (
 											<td>
 												{Liferay.Language.get(
@@ -181,6 +169,7 @@ const TokenList: React.FC<
 											</td>
 										);
 									}
+
 									return (
 										<td>
 											{formatDateToTimeZone(
@@ -191,77 +180,77 @@ const TokenList: React.FC<
 										</td>
 									);
 								},
-
 								label: Liferay.Language.get('expiration'),
 								sortable: false
 							}
 						]}
 						items={tokens}
 						renderInlineRowActions={({data: {token}}) => {
-							if (!tokenExpired) {
-								return (
-									<>
-										<CopyButton text={token} />
+							if (tokenExpired) return null;
 
-										<ClayButton
-											className='button-root'
-											onClick={() => {
-												open(
-													modalTypes.CONFIRMATION_MODAL,
-													{
-														message: (
-															<div className='text-secondary'>
-																<div>
-																	<strong>
-																		{Liferay.Language.get(
-																			'are-you-sure-you-want-to-revoke-this-token'
-																		)}
-																	</strong>
-																</div>
+							return (
+								<>
+									<CopyButton text={token} />
 
-																{Liferay.Language.get(
-																	'you-will-need-to-generate-a-new-token-to-continue-using-this-api'
-																)}
+									<ClayButton
+										className='button-root'
+										onClick={() => {
+											open(
+												modalTypes.CONFIRMATION_MODAL,
+												{
+													message: (
+														<div className='text-secondary'>
+															<div>
+																<strong>
+																	{Liferay.Language.get(
+																		'are-you-sure-you-want-to-revoke-this-token'
+																	)}
+																</strong>
 															</div>
-														),
-														modalVariant:
-															'modal-warning',
-														onClose: close,
-														onSubmit: () => {
-															setLoading(true);
 
-															API.apiTokens
-																.revoke({
-																	groupId,
-																	token
-																})
-																.then(() =>
-																	handleSuccess(
-																		Liferay.Language.get(
-																			'token-successfully-revoked'
-																		)
+															{Liferay.Language.get(
+																'you-will-need-to-generate-a-new-token-to-continue-using-this-api'
+															)}
+														</div>
+													),
+													modalVariant:
+														'modal-warning',
+													onClose: close,
+													onSubmit: () => {
+														setLoading(true);
+
+														API.apiTokens
+															.revoke({
+																groupId,
+																token
+															})
+															.then(() =>
+																handleSuccess(
+																	Liferay.Language.get(
+																		'token-successfully-revoked'
 																	)
 																)
-																.catch(
-																	handleError
-																);
-														},
-														submitButtonDisplay:
-															'warning',
-														title: Liferay.Language.get(
-															'revoke-token'
-														),
-														titleIcon:
-															'warning-full'
-													}
-												);
-											}}
-										>
-											{Liferay.Language.get('revoke')}
-										</ClayButton>
-									</>
-								);
-							}
+															)
+															.catch(handleError);
+													},
+													submitButtonDisplay:
+														'warning',
+													title: Liferay.Language.get(
+														'revoke-token'
+													),
+													titleIcon: 'warning-full'
+												}
+											);
+										}}
+									>
+										{Liferay.Language.get('revoke')}
+
+										{loading && (
+											<ClayLoadingIndicator className='ml-2' />
+										)}
+									</ClayButton>
+								</>
+							);
 						}}
 						rowIdentifier='token'
 					/>

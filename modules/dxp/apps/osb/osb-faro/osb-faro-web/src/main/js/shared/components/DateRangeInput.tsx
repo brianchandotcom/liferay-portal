@@ -7,7 +7,7 @@ import Input from './Input';
 import moment from 'moment';
 import Overlay from './Overlay';
 import React, {useState} from 'react';
-import {FORMAT} from 'shared/util/date';
+import {DEFAULT_DATE_FORMAT} from 'shared/util/date';
 import {isNil, noop} from 'lodash';
 import {sub} from 'shared/util/lang';
 
@@ -43,7 +43,7 @@ interface IDateInputProps {
 const DateInput: React.FC<IDateInputProps> = ({
 	className,
 	displayFormat,
-	format = FORMAT,
+	format = DEFAULT_DATE_FORMAT,
 	onBlur = noop,
 	onChange = noop,
 	overlayAlignment = 'bottomLeft',

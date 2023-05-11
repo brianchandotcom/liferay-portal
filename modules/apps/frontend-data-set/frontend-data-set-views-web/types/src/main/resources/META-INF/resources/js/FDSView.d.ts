@@ -12,8 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
 import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';
 interface IFDSViewSectionInterface {

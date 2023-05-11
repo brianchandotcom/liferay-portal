@@ -151,7 +151,7 @@ function AddFDSFilterModalContent({
 				include: formValues[includeModeFormElementId],
 				listTypeDefinitionId: formValues[sourceOptionFormElementId],
 				multiple: formValues[multipleFormElementId],
-				preSelectedListTypeEntries:
+				preselectedListTypeEntries:
 					formValues[preselectedValuesFormElementId],
 			};
 		}
@@ -206,8 +206,9 @@ function AddFDSFilterModalContent({
 		);
 
 	const isValidSingleMode =
-		formValues[multipleFormElementId] === 'false' &&
-		!(multiSelectValues.length > 1);
+		formValues[multipleFormElementId] === 'true' ||
+		(formValues[multipleFormElementId] === 'false' &&
+			!(multiSelectValues.length > 1));
 
 	return (
 		<div className="fds-view-fields-modal">
@@ -239,8 +240,7 @@ function AddFDSFilterModalContent({
 									(item) =>
 										item.name ===
 										formValues[selectedFieldFormElementId]
-								)?.label ||
-								Liferay.Language.get('name-of-filter')
+								)?.label || Liferay.Language.get('name')
 							}
 						/>
 					</ClayForm.Group>
@@ -254,7 +254,15 @@ function AddFDSFilterModalContent({
 							aria-label={Liferay.Language.get('filter-by')}
 							name={selectedFieldFormElementId}
 							options={[
-								{},
+								{
+									disabled: true,
+									label: Liferay.Language.get('select'),
+									selected:
+										formValues[
+											selectedFieldFormElementId
+										] === '',
+									value: '',
+								},
 								...fields.map((item) => ({
 									label: item.label,
 									value: item.name,
@@ -328,7 +336,17 @@ function AddFDSFilterModalContent({
 									)}
 									name={sourceOptionFormElementId}
 									options={[
-										{},
+										{
+											disabled: true,
+											label: Liferay.Language.get(
+												'select'
+											),
+											selected:
+												formValues[
+													selectedFieldFormElementId
+												] === '',
+											value: '',
+										},
 										...picklists.map((item) => ({
 											label: item.name,
 											value: item.id,
@@ -449,7 +467,7 @@ function AddFDSFilterModalContent({
 													<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
 													{Liferay.Language.get(
-														'only-one-value-allowed-in-single-selection-mode'
+														'only-one-value-is-allowed-in-single-selection-mode'
 													)}
 												</ClayForm.FeedbackItem>
 											</ClayForm.FeedbackGroup>

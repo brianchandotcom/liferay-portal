@@ -1,3 +1,6 @@
+import com.liferay.gradle.util.OSDetector
+import com.liferay.gradle.util.StringUtil
+
 afterEvaluate {
 	Task configJSModulesTask = tasks.findByName("configJSModules")
 
@@ -35,6 +38,9 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:ip-geocoder:ip-geocoder-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-spi")
@@ -54,7 +60,28 @@ generateJSPJava {
 	enabled = false
 }
 
+task yarnInstallTask (name: "yarnInstall", type: Exec){
+	if (OSDetector.windows) {
+		executable "cmd.exe"
+
+		args "/c"
+		args new File(node.nodeDir, "node.exe")
+		args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+	}
+	else {
+		executable new File(node.nodeDir, "bin/node")
+
+		args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+	}
+
+	args "install"
+	dependsOn downloadNode
+	workingDir projectDir
+}
+
 packageRunWebpack {
+	dependsOn yarnInstallTask
+
 	if (project.hasProperty("faroEnvironmentName")) {
 		environment "FARO_ENVIRONMENT_NAME", faroEnvironmentName
 	}

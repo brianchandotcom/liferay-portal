@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.AbstractMap;
@@ -165,13 +164,31 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			return null;
 		}
 
+		try {
+			DDMFieldAttribute ddmFieldAttribute =
+				_ddmFieldAttributePersistence.findByS_AN_First(
+					storageId, "availableLanguageIds", null);
+
+			List<String> availableLanguageIds = StringUtil.split(
+				ddmFieldAttribute.getAttributeValue());
+
+			if (!availableLanguageIds.contains(languageId)) {
+				ddmFieldAttribute =
+					_ddmFieldAttributePersistence.findByS_AN_First(
+						storageId, "defaultLanguageId", null);
+
+				languageId = ddmFieldAttribute.getAttributeValue();
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
 		return _getDDMFormValues(
-			ListUtil.concat(
-				_ddmFieldAttributePersistence.findByS_L(storageId, languageId),
-				_ddmFieldAttributePersistence.findByS_AN(
-					storageId, "defaultLanguageId"),
-				_ddmFieldAttributePersistence.findByS_AN(
-					storageId, "availableLanguageIds")),
+			_ddmFieldAttributePersistence.findByS_L(
+				storageId, new String[] {languageId, StringPool.BLANK}),
 			ddmFields, ddmForm);
 	}
 

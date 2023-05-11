@@ -1,6 +1,4 @@
 dependencies {
-	testCompile project(":core:petra:petra-string")
-
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 

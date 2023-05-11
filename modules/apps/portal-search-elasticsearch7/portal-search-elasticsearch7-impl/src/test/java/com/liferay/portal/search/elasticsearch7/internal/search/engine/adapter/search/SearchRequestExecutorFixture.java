@@ -160,8 +160,7 @@ public class SearchRequestExecutorFixture {
 			_createFacetTranslator(
 				facetProcessor, legacyElasticsearchQueryTranslator));
 		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler,
-			"_filterToQueryBuilderTranslator",
+			commonSearchSourceBuilderAssembler, "_filterTranslator",
 			elasticsearchFilterTranslatorFixture.
 				getElasticsearchFilterTranslator());
 		ReflectionTestUtil.setFieldValue(

@@ -83,6 +83,12 @@
 		boolean showSiteNameDefault = GetterUtil.getBoolean(selTheme.getSetting("show-site-name-default"), showSiteNameSupported);
 		%>
 
-		<aui:input disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' inlineLabel="right" label="show-site-name" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--showSiteName--" type="toggle-switch" value='<%= GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault) %>' />
+		<aui:input aria-describedby='<%= showSiteNameSupported ? StringPool.BLANK : liferayPortletResponse.getNamespace() + "showSiteNameDescription" %>' disabled="<%= !showSiteNameSupported %>" label="show-site-name" labelCssClass="font-weight-normal" name="TypeSettingsProperties--showSiteName--" type="checkbox" value='<%= GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault) %>' wrapperCssClass="mb-2" />
+
+		<c:if test="<%= !showSiteNameSupported %>">
+			<p class="mb-0 text-3 text-secondary" id="<portlet:namespace />showSiteNameDescription">
+				<liferay-ui:message key="the-theme-selected-for-the-site-does-not-support-displaying-the-title" />
+			</p>
+		</c:if>
 	</liferay-frontend:fieldset>
 </c:if>

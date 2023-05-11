@@ -29,9 +29,9 @@ definition {
 			menuItem = "Configure",
 			pageName = ${pageName});
 
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "customizable",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		Check(
+			checkboxName = "Customizable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 		if (isSet(columnIdList)) {
 			for (var columnId : list ${columnIdList}) {

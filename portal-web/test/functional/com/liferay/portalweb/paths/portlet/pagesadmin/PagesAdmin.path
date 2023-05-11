@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_DESCRIPTION</td>
-	<td>//p[contains(@class,'text')]</td>
+	<td>//div[contains(@class,'type')]/p[contains(@class,'text')]</td>
 	<td></td>
 </tr>
 <tr>

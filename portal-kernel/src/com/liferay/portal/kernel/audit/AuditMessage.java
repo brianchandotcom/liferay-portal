@@ -80,45 +80,9 @@ public class AuditMessage implements Serializable {
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long userId, String userName) {
-
-		this(
-			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
-			null, null, null, null,null);
-	}
-
-	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK) {
-
-		this(
-			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
-			className, classPK, null,null, null);
-	}
-
-	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message) {
-
-		this(
-			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
-			className, classPK, message,null, null);
-	}
-
-	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message, Date timestamp,
-		JSONObject additionalInfoJSONObject) {
-
-		this(
-			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
-			className, classPK, message, timestamp, additionalInfoJSONObject);
-	}
-
-	public AuditMessage(
-		String eventType, long companyId, long groupId, long userId, String userName,
-		String className, String classPK, String message, Date timestamp,
-		JSONObject additionalInfoJSONObject) {
+		String eventType, long companyId, long groupId, long userId,
+		String userName, String className, String classPK, String message,
+		Date timestamp, JSONObject additionalInfoJSONObject) {
 
 		_eventType = eventType;
 		_companyId = companyId;
@@ -159,13 +123,49 @@ public class AuditMessage implements Serializable {
 	}
 
 	public AuditMessage(
+		String eventType, long companyId, long userId, String userName) {
+
+		this(
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			null, null, null, null, null);
+	}
+
+	public AuditMessage(
+		String eventType, long companyId, long userId, String userName,
+		String className, String classPK) {
+
+		this(
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, null, null, null);
+	}
+
+	public AuditMessage(
+		String eventType, long companyId, long userId, String userName,
+		String className, String classPK, String message) {
+
+		this(
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, message, null, null);
+	}
+
+	public AuditMessage(
+		String eventType, long companyId, long userId, String userName,
+		String className, String classPK, String message, Date timestamp,
+		JSONObject additionalInfoJSONObject) {
+
+		this(
+			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
+			className, classPK, message, timestamp, additionalInfoJSONObject);
+	}
+
+	public AuditMessage(
 		String eventType, long companyId, long userId, String userName,
 		String className, String classPK, String message,
 		JSONObject additionalInfoJSONObject) {
 
 		this(
 			eventType, companyId, CompanyConstants.SYSTEM, userId, userName,
-			className, classPK, message,null, additionalInfoJSONObject);
+			className, classPK, message, null, additionalInfoJSONObject);
 	}
 
 	public JSONObject getAdditionalInfo() {

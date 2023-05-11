@@ -360,16 +360,15 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		});
 
 	const handleDelete = async ({item}: {item: Filter}) => {
-		const response = await fetch(
-			`${
-				item.type === 'date-time'
-					? API_URL.FDS_DATE_FILTERS
-					: API_URL.FDS_DYNAMIC_FILTERS
-			}/${item.id}`,
-			{
-				method: 'DELETE',
-			}
-		);
+		const url = `${
+			item.type === 'date-time'
+				? API_URL.FDS_DATE_FILTERS
+				: API_URL.FDS_DYNAMIC_FILTERS
+		}/${item.id}`;
+
+		const response = await fetch(url, {
+			method: 'DELETE',
+		});
 
 		if (!response.ok) {
 			alertFailed();

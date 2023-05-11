@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Service
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.service
-Bundle-Version: 7.0.70
+Bundle-Version: 7.1.0
 Export-Package: com.liferay.dynamic.data.mapping.service.http
 Import-Package:\
 	!com.fasterxml.jackson.*,\

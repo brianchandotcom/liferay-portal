@@ -38,9 +38,22 @@ definition {
 	macro gotoSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		Click(
-			key_site = ${site},
-			locator1 = "ApplicationsMenu#SITE_LINK");
+		if (IsElementPresent(locator1 = "ApplicationsMenu#VIEW_ALL_LINK")) {
+			Click(locator1 = "ApplicationsMenu#VIEW_ALL_LINK");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.gotoNavItem(navItem = "All Sites");
+
+			SiteSelector.selectSite(site = ${site});
+
+			SelectFrameTop();
+		}
+		else {
+			Click(
+				key_site = ${site},
+				locator1 = "ApplicationsMenu#SITE_LINK");
+		}
 	}
 
 	@summary = "Navigate to Applications Menu > Sites > Sites Modal > ${site}"

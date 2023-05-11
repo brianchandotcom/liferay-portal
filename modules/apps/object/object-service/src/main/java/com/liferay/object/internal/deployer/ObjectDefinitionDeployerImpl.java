@@ -44,6 +44,7 @@ import com.liferay.object.internal.security.permission.resource.ObjectEntryPortl
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.internal.uad.anonymizer.ObjectEntryUADAnonymizer;
 import com.liferay.object.internal.uad.display.ObjectEntryUADDisplay;
+import com.liferay.object.internal.uad.exporter.ObjectEntryUADExporter;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
@@ -90,6 +91,7 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.user.associated.data.exporter.UADExporter;
 
 import java.util.Collections;
 import java.util.List;
@@ -334,6 +336,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_groupLocalService, objectDefinition,
 					_objectEntryLocalService, _objectScopeProviderRegistry,
 					_portal),
+				null),
+			_bundleContext.registerService(
+				UADExporter.class,
+				new ObjectEntryUADExporter(
+					objectDefinition, _objectEntryLocalService),
 				null),
 			_bundleContext.registerService(
 				WorkflowHandler.class,

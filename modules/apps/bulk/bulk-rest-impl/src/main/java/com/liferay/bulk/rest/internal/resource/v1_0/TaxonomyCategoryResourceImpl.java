@@ -14,13 +14,14 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkSelection;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
-import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -87,8 +88,7 @@ public class TaxonomyCategoryResourceImpl
 	@Reference
 	private DocumentBulkSelectionFactory _documentBulkSelectionFactory;
 
-	@Reference
-	private EditCategoriesBulkSelectionAction
-		_editCategoriesBulkSelectionAction;
+	@Reference(target = "(bulk.selection.action.key=edit.categories)")
+	private BulkSelectionAction<AssetEntry> _editCategoriesBulkSelectionAction;
 
 }

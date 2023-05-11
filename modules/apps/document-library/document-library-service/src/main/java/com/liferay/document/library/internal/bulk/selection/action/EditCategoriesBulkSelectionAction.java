@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
-import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,13 +42,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	service = {
-		BulkSelectionAction.class, EditCategoriesBulkSelectionAction.class,
-		EditCategoriesBulkSelectionActionImpl.class
-	}
+	property = "bulk.selection.action.key=edit.categories",
+	service = BulkSelectionAction.class
 )
-public class EditCategoriesBulkSelectionActionImpl
-	implements EditCategoriesBulkSelectionAction {
+public class EditCategoriesBulkSelectionAction
+	implements BulkSelectionAction<AssetEntry> {
 
 	@Override
 	public void execute(
@@ -111,7 +108,7 @@ public class EditCategoriesBulkSelectionActionImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditCategoriesBulkSelectionActionImpl.class);
+		EditCategoriesBulkSelectionAction.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

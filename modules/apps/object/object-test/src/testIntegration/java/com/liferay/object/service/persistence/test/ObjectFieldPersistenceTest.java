@@ -164,6 +164,11 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setName(RandomTestUtil.randomString());
 
+		newObjectField.setReadOnly(RandomTestUtil.randomString());
+
+		newObjectField.setReadOnlyConditionExpression(
+			RandomTestUtil.randomString());
+
 		newObjectField.setRelationshipType(RandomTestUtil.randomString());
 
 		newObjectField.setRequired(RandomTestUtil.randomBoolean());
@@ -231,6 +236,11 @@ public class ObjectFieldPersistenceTest {
 			existingObjectField.isLocalized(), newObjectField.isLocalized());
 		Assert.assertEquals(
 			existingObjectField.getName(), newObjectField.getName());
+		Assert.assertEquals(
+			existingObjectField.getReadOnly(), newObjectField.getReadOnly());
+		Assert.assertEquals(
+			existingObjectField.getReadOnlyConditionExpression(),
+			newObjectField.getReadOnlyConditionExpression());
 		Assert.assertEquals(
 			existingObjectField.getRelationshipType(),
 			newObjectField.getRelationshipType());
@@ -378,7 +388,8 @@ public class ObjectFieldPersistenceTest {
 			"objectDefinitionId", true, "businessType", true, "dbColumnName",
 			true, "dbTableName", true, "dbType", true, "indexed", true,
 			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
-			"localized", true, "name", true, "relationshipType", true,
+			"localized", true, "name", true, "readOnly", true,
+			"readOnlyConditionExpression", true, "relationshipType", true,
 			"required", true, "state", true, "system", true);
 	}
 
@@ -714,6 +725,11 @@ public class ObjectFieldPersistenceTest {
 		objectField.setLocalized(RandomTestUtil.randomBoolean());
 
 		objectField.setName(RandomTestUtil.randomString());
+
+		objectField.setReadOnly(RandomTestUtil.randomString());
+
+		objectField.setReadOnlyConditionExpression(
+			RandomTestUtil.randomString());
 
 		objectField.setRelationshipType(RandomTestUtil.randomString());
 

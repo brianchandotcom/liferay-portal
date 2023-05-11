@@ -504,6 +504,37 @@ public interface ObjectFieldModel
 	public void setName(String name);
 
 	/**
+	 * Returns the read only of this object field.
+	 *
+	 * @return the read only of this object field
+	 */
+	@AutoEscape
+	public String getReadOnly();
+
+	/**
+	 * Sets the read only of this object field.
+	 *
+	 * @param readOnly the read only of this object field
+	 */
+	public void setReadOnly(String readOnly);
+
+	/**
+	 * Returns the read only condition expression of this object field.
+	 *
+	 * @return the read only condition expression of this object field
+	 */
+	@AutoEscape
+	public String getReadOnlyConditionExpression();
+
+	/**
+	 * Sets the read only condition expression of this object field.
+	 *
+	 * @param readOnlyConditionExpression the read only condition expression of this object field
+	 */
+	public void setReadOnlyConditionExpression(
+		String readOnlyConditionExpression);
+
+	/**
 	 * Returns the relationship type of this object field.
 	 *
 	 * @return the relationship type of this object field

@@ -64,6 +64,9 @@ public class ObjectFieldWrapper
 		attributes.put("label", getLabel());
 		attributes.put("localized", isLocalized());
 		attributes.put("name", getName());
+		attributes.put("readOnly", getReadOnly());
+		attributes.put(
+			"readOnlyConditionExpression", getReadOnlyConditionExpression());
 		attributes.put("relationshipType", getRelationshipType());
 		attributes.put("required", isRequired());
 		attributes.put("state", isState());
@@ -200,6 +203,19 @@ public class ObjectFieldWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String readOnly = (String)attributes.get("readOnly");
+
+		if (readOnly != null) {
+			setReadOnly(readOnly);
+		}
+
+		String readOnlyConditionExpression = (String)attributes.get(
+			"readOnlyConditionExpression");
+
+		if (readOnlyConditionExpression != null) {
+			setReadOnlyConditionExpression(readOnlyConditionExpression);
 		}
 
 		String relationshipType = (String)attributes.get("relationshipType");
@@ -518,6 +534,26 @@ public class ObjectFieldWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the read only of this object field.
+	 *
+	 * @return the read only of this object field
+	 */
+	@Override
+	public String getReadOnly() {
+		return model.getReadOnly();
+	}
+
+	/**
+	 * Returns the read only condition expression of this object field.
+	 *
+	 * @return the read only condition expression of this object field
+	 */
+	@Override
+	public String getReadOnlyConditionExpression() {
+		return model.getReadOnlyConditionExpression();
 	}
 
 	/**
@@ -936,6 +972,28 @@ public class ObjectFieldWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the read only of this object field.
+	 *
+	 * @param readOnly the read only of this object field
+	 */
+	@Override
+	public void setReadOnly(String readOnly) {
+		model.setReadOnly(readOnly);
+	}
+
+	/**
+	 * Sets the read only condition expression of this object field.
+	 *
+	 * @param readOnlyConditionExpression the read only condition expression of this object field
+	 */
+	@Override
+	public void setReadOnlyConditionExpression(
+		String readOnlyConditionExpression) {
+
+		model.setReadOnlyConditionExpression(readOnlyConditionExpression);
 	}
 
 	/**

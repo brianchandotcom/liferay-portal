@@ -111,6 +111,8 @@
 		<field localized="true" name="label" type="String" />
 		<field name="localized" type="boolean" />
 		<field name="name" type="String" />
+		<field name="readOnly" type="String" />
+		<field name="readOnlyConditionExpression" type="String" />
 		<field name="relationshipType" type="String" />
 		<field name="required" type="boolean" />
 		<field name="state" type="boolean" />

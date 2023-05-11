@@ -84,6 +84,12 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 		"localized", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, String> readOnly = createColumn(
+		"readOnly", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectFieldTable, String> readOnlyConditionExpression =
+		createColumn(
+			"readOnlyConditionExpression", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> relationshipType =
 		createColumn(
 			"relationshipType", String.class, Types.VARCHAR,

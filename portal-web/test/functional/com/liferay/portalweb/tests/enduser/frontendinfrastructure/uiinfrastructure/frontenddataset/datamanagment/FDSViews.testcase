@@ -443,8 +443,7 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-183521 | LPS-180895  Confirm that the view was really deleted"
-	@ignore = "true"
+	@description = "LPS-180895  Confirm that the view was really deleted"
 	@priority = 5
 	test CanUpdateNumberOfViews {
 		task ("When Add a new view") {

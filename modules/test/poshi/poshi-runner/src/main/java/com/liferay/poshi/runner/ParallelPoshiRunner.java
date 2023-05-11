@@ -14,11 +14,7 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.core.PoshiContext;
-import com.liferay.poshi.core.PoshiGetterUtil;
-import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.util.FileUtil;
-import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.runner.junit.ParallelParameterized;
 import com.liferay.poshi.runner.logger.ParallelPrintStream;
 
@@ -32,8 +28,6 @@ import java.io.PrintStream;
 
 import java.nio.file.Files;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,8 +35,6 @@ import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
-
-import org.dom4j.Element;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -93,50 +85,7 @@ public class ParallelPoshiRunner extends PoshiRunner {
 
 	@ParallelParameterized.Parameters(name = "{0}")
 	public static List<String> getList() throws Exception {
-		List<String> namespacedClassCommandNames = new ArrayList<>();
-
-		List<String> testNames = Arrays.asList(
-			PropsValues.TEST_NAME.split("\\s*,\\s*"));
-
-		PoshiContext.readFiles(false);
-
-		PoshiValidation.validate();
-
-		for (String testName : testNames) {
-			PoshiValidation.validate(testName);
-
-			String namespace =
-				PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
-					testName);
-
-			if (testName.contains("#")) {
-				String classCommandName =
-					PoshiGetterUtil.
-						getClassCommandNameFromNamespacedClassCommandName(
-							testName);
-
-				namespacedClassCommandNames.add(
-					namespace + "." + classCommandName);
-			}
-			else {
-				String className =
-					PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
-						testName);
-
-				Element rootElement = PoshiContext.getTestCaseRootElement(
-					className, namespace);
-
-				List<Element> commandElements = rootElement.elements("command");
-
-				for (Element commandElement : commandElements) {
-					namespacedClassCommandNames.add(
-						namespace + "." + className + "#" +
-							commandElement.attributeValue("name"));
-				}
-			}
-		}
-
-		return namespacedClassCommandNames;
+		return PoshiRunner.getList();
 	}
 
 	@BeforeClass

@@ -60,6 +60,10 @@ export default function useGetListItemsFromPartnerOpportunities(
 				...(item.amount
 					? getOpportunityAmount(item.amount)
 					: {[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - '}),
+
+				[PartnerOpportunitiesColumnKey.CLOSE_DATE]: item.closeDate
+					? item.closeDate
+					: '- ',
 				[PartnerOpportunitiesColumnKey.PARTNER_REP_NAME]: `${
 					item.primaryContactFirstName
 						? item.primaryContactFirstName
@@ -77,6 +81,12 @@ export default function useGetListItemsFromPartnerOpportunities(
 					: ' - ',
 				[PartnerOpportunitiesColumnKey.STAGE]: item.stage
 					? item.stage
+					: '- ',
+				[PartnerOpportunitiesColumnKey.TYPE]: item.type
+					? item.type
+					: '- ',
+				[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency.name
+					? item.currency.name
 					: '- ',
 			})),
 		[swrResponse.data?.items]

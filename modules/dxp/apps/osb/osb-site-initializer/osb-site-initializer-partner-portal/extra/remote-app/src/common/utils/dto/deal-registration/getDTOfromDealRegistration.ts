@@ -24,7 +24,7 @@ export function getDTOFromDealRegistration(
 		additionalContactFirstName:
 			dealRegistration.additionalContact?.firstName,
 		additionalContactLastName: dealRegistration.additionalContact?.lastName,
-		additionalContacts: `${dealRegistration.additionalContact?.firstName} ${dealRegistration.additionalContact?.lastName}, ${dealRegistration.additionalContact?.emailAddress}`,
+		additionalContacts: `${dealRegistration.additionalContact?.firstName} ${dealRegistration.additionalContact?.lastName} ${dealRegistration.additionalContact?.emailAddress}`,
 		additionalInformationAboutTheOpportunity:
 			dealRegistration.additionalInformationAboutTheOpportunity,
 		currency: dealRegistration.currency,

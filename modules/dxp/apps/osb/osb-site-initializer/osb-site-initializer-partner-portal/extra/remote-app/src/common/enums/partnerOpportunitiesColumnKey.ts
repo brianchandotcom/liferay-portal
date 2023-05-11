@@ -12,6 +12,7 @@
 export enum PartnerOpportunitiesColumnKey {
 	ACCOUNT_NAME = 'ACCOUNT-NAME',
 	CLOSE_DATE = 'CLOSE-DATE',
+	CURRENCY = 'CURRENCY',
 	DEAL_AMOUNT = 'DEAL-AMOUNT',
 	END_DATE = 'END-DATE',
 	LIFERAY_REP = 'LIFERAY-REP',
@@ -21,4 +22,5 @@ export enum PartnerOpportunitiesColumnKey {
 	PARTNER_REP_NAME = 'PARTNER-REP-NAME',
 	STAGE = 'STAGE',
 	START_DATE = 'START-DATE',
+	TYPE = 'TYPE',
 }

@@ -4,7 +4,7 @@
 		"en_US": "Opportunity SF"
 	},
 	"name": "OpportunitySF",
-	"objectFields": [				
+	"objectFields": [
 		{
 			"DBType": "String",
 			"businessType": "Text",

@@ -24,7 +24,7 @@ const ModalFormatedInformation = ({
 		<h2 className="text-paragraph">{label}</h2>
 
 		{information && (
-			<p className="align-items-center bg-neutral-1 m-0 p-3 rounded text-paragraph-lg">
+			<p className="align-items-center bg-neutral-1 m-0 p-2 rounded text-paragraph-lg">
 				{information}
 			</p>
 		)}

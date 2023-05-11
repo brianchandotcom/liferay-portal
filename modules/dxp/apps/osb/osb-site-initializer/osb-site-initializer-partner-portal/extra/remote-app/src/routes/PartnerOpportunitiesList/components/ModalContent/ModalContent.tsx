@@ -34,11 +34,50 @@ export default function ModalContent({content, onClose}: IProps) {
 				/>
 			</div>
 
-			<div className="d-flex">
+			<div className="d-md-flex">
 				<div className="col">
+					{content?.[
+						PartnerOpportunitiesColumnKey.PARTNER_ACCOUNT_NAME
+					] && (
+						<ModalFormatedInformation
+							className="col mb-2"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey
+										.PARTNER_ACCOUNT_NAME
+								]
+							}
+							label="Partner Account Name"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.CURRENCY] && (
+						<ModalFormatedInformation
+							className="col mb-2"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.CURRENCY
+								]
+							}
+							label="Currency"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.PARTNER_NAME] && (
+						<ModalFormatedInformation
+							className="col mb-2"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.PARTNER_NAME
+								]
+							}
+							label="Partner Name"
+						/>
+					)}
+
 					{content?.[PartnerOpportunitiesColumnKey.ACCOUNT_NAME] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.ACCOUNT_NAME
@@ -48,21 +87,9 @@ export default function ModalContent({content, onClose}: IProps) {
 						/>
 					)}
 
-					{content?.[PartnerOpportunitiesColumnKey.DEAL_AMOUNT] && (
-						<ModalFormatedInformation
-							className="col mb-3"
-							information={
-								content?.[
-									PartnerOpportunitiesColumnKey.DEAL_AMOUNT
-								]
-							}
-							label="Deal Amount"
-						/>
-					)}
-
 					{content?.[PartnerOpportunitiesColumnKey.START_DATE] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.START_DATE
@@ -74,7 +101,7 @@ export default function ModalContent({content, onClose}: IProps) {
 
 					{content?.[PartnerOpportunitiesColumnKey.END_DATE] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.END_DATE
@@ -86,13 +113,25 @@ export default function ModalContent({content, onClose}: IProps) {
 
 					{content?.[PartnerOpportunitiesColumnKey.CLOSE_DATE] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.CLOSE_DATE
 								]
 							}
 							label="Close Date"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.DEAL_AMOUNT] && (
+						<ModalFormatedInformation
+							className="col mb-2"
+							information={
+								content?.[
+									PartnerOpportunitiesColumnKey.DEAL_AMOUNT
+								]
+							}
+							label="Deal Amount"
 						/>
 					)}
 				</div>
@@ -102,7 +141,7 @@ export default function ModalContent({content, onClose}: IProps) {
 						PartnerOpportunitiesColumnKey.PARTNER_REP_NAME
 					] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey
@@ -117,7 +156,7 @@ export default function ModalContent({content, onClose}: IProps) {
 						PartnerOpportunitiesColumnKey.PARTNER_REP_EMAIL
 					] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey
@@ -130,7 +169,7 @@ export default function ModalContent({content, onClose}: IProps) {
 
 					{content?.[PartnerOpportunitiesColumnKey.LIFERAY_REP] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[
 									PartnerOpportunitiesColumnKey.LIFERAY_REP
@@ -142,11 +181,21 @@ export default function ModalContent({content, onClose}: IProps) {
 
 					{content?.[PartnerOpportunitiesColumnKey.STAGE] && (
 						<ModalFormatedInformation
-							className="col mb-3"
+							className="col mb-2"
 							information={
 								content?.[PartnerOpportunitiesColumnKey.STAGE]
 							}
 							label="Stage"
+						/>
+					)}
+
+					{content?.[PartnerOpportunitiesColumnKey.TYPE] && (
+						<ModalFormatedInformation
+							className="col mb-2"
+							information={
+								content?.[PartnerOpportunitiesColumnKey.TYPE]
+							}
+							label="Type"
 						/>
 					)}
 				</div>

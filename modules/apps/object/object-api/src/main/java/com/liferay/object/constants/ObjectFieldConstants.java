@@ -77,4 +77,10 @@ public class ObjectFieldConstants {
 
 	public static final String DB_TYPE_STRING = "String";
 
+	public static final String READ_ONLY_CONDITIONAL = "conditional";
+
+	public static final String READ_ONLY_FALSE = "false";
+
+	public static final String READ_ONLY_TRUE = "true";
+
 }

@@ -140,6 +140,17 @@ public class ObjectFieldUtil {
 		return listTypeDefinition.getListTypeDefinitionId();
 	}
 
+	public static void readOnlyFeatureFlag(
+		String readOnly, String readOnlyConditionExpression) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122") &&
+			(Validator.isNotNull(readOnly) ||
+			 Validator.isNotNull(readOnlyConditionExpression))) {
+
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	public static com.liferay.object.model.ObjectField toObjectField(
 		boolean enableLocalization,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
@@ -163,6 +174,10 @@ public class ObjectFieldUtil {
 
 			throw new UnsupportedOperationException();
 		}
+
+		readOnlyFeatureFlag(
+			objectField.getReadOnlyAsString(),
+			objectField.getReadOnlyConditionExpression());
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);

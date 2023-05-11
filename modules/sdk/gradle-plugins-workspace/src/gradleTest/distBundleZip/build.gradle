@@ -116,6 +116,10 @@ runGradleTest {
 			String setEnvTomcatEntryName = zipEntryRootName + "tomcat-9.0.10/bin/setEnv1.sh"
 
 			assert zipFile.getEntry(setEnvTomcatEntryName) != null : setEnvTomcatEntryName
+
+			String unversionedTomcatDir = zipEntryRootName + "tomcat"
+
+			assert zipFile.getEntry(unversionedTomcatDir) == null : unversionedTomcatDir
 		}
 	}
 }

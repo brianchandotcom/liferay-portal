@@ -39,6 +39,10 @@ runGradleTest {
 
 		assert generatedEmptyShFile.exists();
 
+		File bundleUnversionedTomcatDir = new File(initBundle.destinationDir, "tomcat");
+
+		assert !bundleUnversionedTomcatDir.exists();
+
 		// Bundle
 
 		String bundleFileName = downloadBundle.src.toString();

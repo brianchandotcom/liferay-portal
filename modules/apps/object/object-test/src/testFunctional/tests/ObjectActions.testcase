@@ -3570,127 +3570,56 @@ definition {
 			actionLabel = "Update Action Label");
 	}
 
-	@description = "LPS-173537 - Verify adding a Commerce Product entry triggers an action to update the Commerce Product Group entry."
+	@description = "Verify creating a Commerce Product entry triggers an action to update the Commerce Product entry"
 	@priority = 5
-	test CanUpdateCommerceProductGroupEntryAfterCreatingCommerceProductEntry {
+	test CanUpdateCommerceProductEntryAfterCreatingCommerceProductEntry {
 		property portal.acceptance = "true";
 
-		task ("Given a Commerce Product Group object") {
+		task ("Given an action to update a Commerce Product entry after creating a Commerce Product entry") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectSystemObject(label = "Commerce Product Group");
-		}
+			ObjectPortlet.selectSystemObject(label = "Commerce Product");
 
-		task ("And given an action to update a Commerce Product Group entry after creating a Commerce Product Group entry") {
 			ObjectAdmin.goToActionsTab();
 
 			ObjectAdmin.addObjectActionViaUI(
 				actionLabel = "Custom Action",
-				actionName = "CustomAction",
 				active = "true",
-				fieldName = "Title",
+				fieldName = "Name",
 				inputMethod = "true",
-				inputValue = "Product Group Updated",
-				objectLabel = "Commerce Product Group",
+				inputValue = "Shoes",
 				thenAction = "Update an Object Entry",
 				whenAction = "On After Add");
 		}
 
-		task ("When the user creates a Commerce Product Group entry") {
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Product Groups");
+		task ("When the user adds a new Commerce Product entry") {
+			CommerceProducts.openProductsAdmin();
 
 			Click(locator1 = "Button#PLUS");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+			DropdownMenuItem.click(menuItem = "Simple");
+
+			WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			Type(
-				key_fieldLabel = "Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = "Product Group");
+				locator1 = "CommerceEntry#NAME_FIELD",
+				value1 = "Bottle");
+
+			CommerceEntry.selectAutoCompleteField(
+				entryName = "Master",
+				label = "Catalog");
 
 			Button.clickSubmitButton();
+
+			CommerceProducts.openProductsAdmin();
 		}
 
-		task ("Then the action is triggered and the Commerce Product Group entry is updated") {
-			CommerceNavigator.gotoPortlet(
-				category = "Pricing",
-				portlet = "Product Groups");
-
+		task ("Then the action is triggered and the created Commerce Product entry is updated") {
 			AssertElementPresent(
-				key_entryName = "Product Group Updated",
-				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
-		}
-	}
-
-	@description = "LPS-173537 - Verify updating a Commerce Order entry triggers an action to update an order"
-	@priority = 5
-	test CanUpdateOrderAfterUpdatingCommerceOrderEntry {
-		property portal.acceptance = "true";
-
-		task ("Given a minium site and an order entry") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name Test",
-				accountEntryType = "Business");
-
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-			ApplicationsMenu.gotoSite(site = "Minium");
-
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			CommerceCheckout.gotoCheckoutViaMiniCart();
-
-			CommerceCheckout.initializersCheckout(
-				newAddressAddress = "Test Address",
-				newAddressCity = "Test City",
-				newAddressCountry = "United States",
-				newAddressName = "Address Name",
-				newAddressZipCode = "Test Zip Code",
-				productName = "U-Joint",
-				productQuantity = 1,
-				productUnitPrice = 24,
-				shippingMethod = "Standard");
-		}
-
-		task ("And given an action to update a Commerce Order entry after updating an order entry") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Commerce Order");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.addObjectActionViaUI(
-				actionLabel = "CustomAction",
-				active = "true",
-				fieldName = "Order Status",
-				inputMethod = "true",
-				inputValue = 20,
-				thenAction = "Update an Object Entry",
-				whenAction = "On Order Status Update");
-		}
-
-		task ("When the Order is updated") {
-			CommerceNavigator.gotoPortlet(
-				category = "Order Management",
-				portlet = "Orders");
-
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
-
-			Click(
-				key_text = "Accept Order",
-				locator1 = "Link#ANY");
-		}
-
-		task ("Then the action is triggered and the Commerce Order entry is updated") {
-			CommerceOrders.openOrdersAdmin();
-
-			AssertElementPresent(
-				key_value = "On Hold",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+				key_entry = "Shoes",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
 		}
 	}
 

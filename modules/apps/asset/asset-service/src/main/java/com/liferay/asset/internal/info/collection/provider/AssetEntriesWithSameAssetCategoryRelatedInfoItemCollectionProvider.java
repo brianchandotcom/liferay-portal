@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.search.AssetSearcherFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -76,7 +78,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.io.Serializable;
 
@@ -496,10 +497,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		assetEntryQuery.setAllCategoryIds(allCategoryIds);
 		assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
 
-		AssetSearcher assetSearcher =
-			(AssetSearcher)AssetSearcher.getInstance();
-
-		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+			assetEntryQuery);
 
 		BooleanQuery booleanQuery = assetSearcher.getFullQuery(searchContext);
 
@@ -658,6 +657,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetSearcherFactory _assetSearcherFactory;
 
 	@Reference
 	private ItemSelector _itemSelector;

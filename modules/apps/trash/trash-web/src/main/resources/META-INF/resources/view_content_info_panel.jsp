@@ -59,17 +59,19 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 		</clay:content-row>
 	</div>
 
-	<clay:navigation-bar
-		navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
-	/>
+	<div class="sheet-row">
+		<clay:tabs
+			tabsItems="<%= trashDisplayContext.getTabsItems() %>"
+		>
+			<div class="sidebar-body">
+				<dl class="sidebar-dl sidebar-section">
+					<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
-	<div class="sidebar-body">
-		<dl class="sidebar-dl sidebar-section">
-			<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
-
-			<dd class="sidebar-dd">
-				<%= trashHandler.getTrashModelsCount(classPK) %>
-			</dd>
-		</dl>
+					<dd class="sidebar-dd">
+						<%= trashHandler.getTrashModelsCount(classPK) %>
+					</dd>
+				</dl>
+			</div>
+		</clay:tabs>
 	</div>
 </c:if>

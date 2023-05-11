@@ -28,6 +28,7 @@ import java.util.List;
 import org.dom4j.DocumentException;
 
 /**
+ * @author Carlos Correa
  * @author Igor Beslic
  */
 public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
@@ -55,21 +56,23 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 		List<String> ercEnabledEntityNames = getErcEnabledEntityNames(
 			getServiceXmlDocument(absolutePath));
 
-		if (!ercEnabledEntityNames.contains(getEntityName(className))) {
+		String entityName = getEntityName(className);
+
+		if (!ercEnabledEntityNames.contains(entityName)) {
 			return javaTerm.getContent();
 		}
 
-		return _formatServiceImpl(javaTerm);
+		return _formatServiceImpl(entityName, javaTerm);
 	}
 
-	private String _formatServiceImpl(JavaTerm javaTerm) {
+	private String _formatServiceImpl(String entityName, JavaTerm javaTerm) {
 		String javaTermName = javaTerm.getName();
 
 		JavaSignature javaSignature = javaTerm.getSignature();
 
 		String entityReturnType = javaSignature.getReturnType();
 
-		if (!isApplicableCheck(entityReturnType, javaTermName)) {
+		if (!isApplicableCheck(entityName, entityReturnType, javaTermName)) {
 			return javaTerm.getContent();
 		}
 

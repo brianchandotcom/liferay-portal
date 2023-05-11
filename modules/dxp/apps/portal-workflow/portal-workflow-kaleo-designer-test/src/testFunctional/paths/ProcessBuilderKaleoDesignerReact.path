@@ -415,11 +415,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TIMERS_BUTTON_CHOOSE_SCRIPT_LANGUAGE</td>
-	<td>//div[@class='form-group']//select[@id='type']//option[contains(text(),'${key_selectType}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEFAULT_TOGGLE_SWITCH_STATUS</td>
 	<td>//span[@class='toggle-switch-label' and contains(., '${key_defaultStatus}')]</td>
 	<td></td>

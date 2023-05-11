@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
-	public void onBeforeUpdate(Layout originalLayout, Layout layout)
+	public void onAfterUpdate(Layout originalLayout, Layout layout)
 		throws ModelListenerException {
 
 		try {

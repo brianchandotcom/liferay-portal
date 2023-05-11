@@ -17,6 +17,7 @@ package com.liferay.object.internal.deployer;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
@@ -41,6 +42,7 @@ import com.liferay.object.internal.search.spi.model.result.contributor.ObjectEnt
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
+import com.liferay.object.internal.uad.anonymizer.ObjectEntryUADAnonymizer;
 import com.liferay.object.internal.uad.display.ObjectEntryUADDisplay;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
@@ -86,6 +88,7 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterC
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchRegistrarHelper;
+import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.Collections;
@@ -106,6 +109,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService,
 		AssetCategoryLocalService assetCategoryLocalService,
+		AssetEntryLocalService assetEntryLocalService,
 		AssetTagLocalService assetTagLocalService,
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		BundleContext bundleContext,
@@ -139,6 +143,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
 		_assetCategoryLocalService = assetCategoryLocalService;
+		_assetEntryLocalService = assetEntryLocalService;
 		_assetTagLocalService = assetTagLocalService;
 		_assetVocabularyLocalService = assetVocabularyLocalService;
 		_bundleContext = bundleContext;
@@ -318,6 +323,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(
+				UADAnonymizer.class,
+				new ObjectEntryUADAnonymizer(
+					_assetEntryLocalService, objectDefinition,
+					_objectEntryLocalService),
+				null),
+			_bundleContext.registerService(
 				UADDisplay.class,
 				new ObjectEntryUADDisplay(
 					_groupLocalService, objectDefinition,
@@ -412,6 +423,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
 	private final AssetCategoryLocalService _assetCategoryLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
 	private final AssetTagLocalService _assetTagLocalService;
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final BundleContext _bundleContext;

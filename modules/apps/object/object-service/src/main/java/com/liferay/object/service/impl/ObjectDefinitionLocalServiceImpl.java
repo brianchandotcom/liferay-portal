@@ -17,6 +17,7 @@ package com.liferay.object.service.impl;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -644,19 +645,20 @@ public class ObjectDefinitionLocalServiceImpl
 			new ObjectDefinitionDeployerImpl(
 				_accountEntryLocalService,
 				_accountEntryOrganizationRelLocalService,
-				_assetCategoryLocalService, _assetTagLocalService,
-				_assetVocabularyLocalService, _bundleContext,
-				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
-				_listTypeEntryLocalService, _listTypeLocalService,
-				_modelSearchRegistrarHelper, _objectActionLocalService, this,
-				_objectEntryLocalService, _objectEntryManagerRegistry,
-				_objectEntryService, _objectFieldLocalService,
-				_objectLayoutLocalService, _objectLayoutTabLocalService,
-				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				_objectViewLocalService, _organizationLocalService,
-				_persistedModelLocalServiceRegistry, _ploEntryLocalService,
-				_portal, _portletLocalService, _resourceActions,
-				_userLocalService, _resourcePermissionLocalService,
+				_assetCategoryLocalService, _assetEntryLocalService,
+				_assetTagLocalService, _assetVocabularyLocalService,
+				_bundleContext, _dynamicQueryBatchIndexingActionableFactory,
+				_groupLocalService, _listTypeEntryLocalService,
+				_listTypeLocalService, _modelSearchRegistrarHelper,
+				_objectActionLocalService, this, _objectEntryLocalService,
+				_objectEntryManagerRegistry, _objectEntryService,
+				_objectFieldLocalService, _objectLayoutLocalService,
+				_objectLayoutTabLocalService, _objectRelationshipLocalService,
+				_objectScopeProviderRegistry, _objectViewLocalService,
+				_organizationLocalService, _persistedModelLocalServiceRegistry,
+				_ploEntryLocalService, _portal, _portletLocalService,
+				_resourceActions, _userLocalService,
+				_resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService));
 
@@ -1761,6 +1763,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

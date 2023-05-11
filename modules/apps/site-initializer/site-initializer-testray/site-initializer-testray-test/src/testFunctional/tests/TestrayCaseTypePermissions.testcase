@@ -43,9 +43,9 @@ definition {
 
 			Testray.tearDownCP();
 
-		    ClientExtensionGeneral.goToRemoteAppsPortlet();
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
-		    ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 		}
 
 		if (${testPortalInstance} == "true") {

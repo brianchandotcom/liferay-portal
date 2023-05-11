@@ -616,8 +616,8 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 			"_legacyQueryToQueryBuilderTranslator",
 			legacyElasticsearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler,
-			"_queryToQueryBuilderTranslator", elasticsearchQueryTranslator);
+			commonSearchSourceBuilderAssembler, "_queryTranslator",
+			elasticsearchQueryTranslator);
 
 		return commonSearchSourceBuilderAssembler;
 	}

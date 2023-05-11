@@ -2087,8 +2087,7 @@ public class ContactsEngineClientImpl
 		}
 
 		filterBuilder.addFilter(
-			"segmentType", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			segmentType);
+			"type", FilterConstants.COMPARISON_OPERATOR_EQUALS, segmentType);
 		filterBuilder.addFilter(
 			"state", FilterConstants.COMPARISON_OPERATOR_EQUALS, state);
 		filterBuilder.addFilter(

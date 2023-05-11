@@ -3,9 +3,85 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragment": {
+						"key": "public-sites-navigation",
+						"siteKey": "Guest"
+					},
+					"fragmentConfig": {
+						"darkNav": false,
+						"searchBlueprintId": 0,
+						"showLanguageMenu": true,
+						"siteNavigationMenuId": 10023816,
+						"accountMenuId": 0,
+						"showCta": false,
+						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
+						"showSearch": true,
+						"showAccountMenu": true,
+						"showSiteName": true
+					},
+					"fragmentFields": [
+						{
+							"id": "searchSeeAllResultsButton",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value": "/search"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "siteName",
+							"value": {
+								"fragmentLink": {},
+								"text": {
+									"value_i18n": {
+										"en_US": "Marketplace"
+									}
+								}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem4",
+							"value": {
+								"fragmentLink": {}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem3",
+							"value": {
+								"fragmentLink": {}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem2",
+							"value": {
+								"fragmentLink": {}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem1",
+							"value": {
+								"fragmentLink": {}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"pageElements": [
+					{
+						"definition": {},
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			},
+			{
+				"definition": {
 					"fragmentSettings": {
-						"unallowedFragments": [
-						]
+						"unallowedFragments": []
 					}
 				},
 				"type": "DropZone"
@@ -17,10 +93,10 @@
 		"colorSchemeName": "01",
 		"themeName": "Classic",
 		"themeSettings": {
-			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false"
+			"lfr-theme:regular:show-footer": "false"
 		}
 	},
 	"version": 1.1

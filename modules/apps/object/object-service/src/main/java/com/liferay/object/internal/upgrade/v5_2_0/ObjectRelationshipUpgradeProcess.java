@@ -16,15 +16,12 @@ package com.liferay.object.internal.upgrade.v5_2_0;
 
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.io.IOException;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -36,34 +33,17 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		processConcurrently(
 			StringBundler.concat(
-				"select ObjectRelationship.dbTableName, ",
-				"ObjectRelationship.objectDefinitionId1, ",
-				"ObjectRelationship.objectDefinitionId2 from ",
-				"ObjectRelationship where ObjectRelationship.type_ = ",
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "and ",
-				"ObjectRelationship.reverse = 0)"),
-			resultSet -> {
-				String dbTableName = resultSet.getString(1);
-				long objectDefinitionId1 = resultSet.getLong(2);
-				long objectDefinitionId2 = resultSet.getLong(3);
-				String pkObjectFieldDBColumnName1 =
-					_getPKObjectFieldDBColumnName(objectDefinitionId1);
-				String pkObjectFieldDBColumnName2 =
-					_getPKObjectFieldDBColumnName(objectDefinitionId2);
-
-				return new Object[] {
-					dbTableName, pkObjectFieldDBColumnName1,
-					pkObjectFieldDBColumnName2
-				};
+				"select ObjectDefinition.pkObjectFieldDBColumnName, ",
+				"ObjectRelationship.dbTableName from ObjectDefinition inner ",
+				"join ObjectRelationship on ObjectRelationship.type_ = '",
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, "' where ",
+				"ObjectDefinition.objectDefinitionId = ",
+				"ObjectRelationship.objectDefinitionId1"),
+			resultSet -> new Object[] {
+				resultSet.getString(1), resultSet.getString(2)
 			},
-			values -> {
-				String dbTableName = String.valueOf(values[0]);
-				String pkObjectFieldDBColumnName1 = String.valueOf(values[1]);
-				String pkObjectFieldDBColumnName2 = String.valueOf(values[2]);
-
-				_createIndex(dbTableName, pkObjectFieldDBColumnName1);
-				_createIndex(dbTableName, pkObjectFieldDBColumnName2);
-			},
+			values -> _createIndex(
+				String.valueOf(values[0]), String.valueOf(values[1])),
 			null);
 	}
 
@@ -76,24 +56,6 @@ public class ObjectRelationshipUpgradeProcess extends UpgradeProcess {
 				false, dbTableName, pkObjectFieldDBColumnName);
 
 		runSQL(indexMetadata.getCreateSQL(null));
-	}
-
-	private String _getPKObjectFieldDBColumnName(long objectDefinitionId) {
-		String selectPKObjectFieldDBColumnName = SQLTransformer.transform(
-			StringBundler.concat(
-				"select ObjectDefinition.pkObjectFieldDBColumnName from ",
-				"ObjectDefinition where ObjectDefinition.objectDefinitionId = ",
-				" "));
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				selectPKObjectFieldDBColumnName + objectDefinitionId);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			return resultSet.getString(1);
-		}
-		catch (SQLException sqlException) {
-			throw new RuntimeException(sqlException);
-		}
 	}
 
 }

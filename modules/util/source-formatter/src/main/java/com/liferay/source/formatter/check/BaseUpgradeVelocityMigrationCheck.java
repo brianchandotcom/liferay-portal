@@ -31,7 +31,7 @@ public abstract class BaseUpgradeVelocityMigrationCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (fileName.endsWith(VELOCITY_EXTENSION)) {
+		if (fileName.endsWith(EXTENSION_VELOCITY)) {
 			FileUtil.write(
 				_getFreeMarkerMigratedFile(fileName),
 				migrateContent(
@@ -43,9 +43,9 @@ public abstract class BaseUpgradeVelocityMigrationCheck extends BaseFileCheck {
 
 	protected abstract String migrateContent(String content);
 
-	protected static final String FREEMARKER_EXTENSION = ".ftl";
+	protected static final String EXTENSION_FREEMARKER = ".ftl";
 
-	protected static final String VELOCITY_EXTENSION = ".vm";
+	protected static final String EXTENSION_VELOCITY = ".vm";
 
 	private String _getFreeMarkerMigratedContent(
 			String content, String velocityFileName)
@@ -68,7 +68,7 @@ public abstract class BaseUpgradeVelocityMigrationCheck extends BaseFileCheck {
 			StringBundler.concat(
 				fileName.substring(0, slashIndex), File.separator, "migrated",
 				File.separator, fileName.substring(slashIndex + 1, periodIndex),
-				FREEMARKER_EXTENSION));
+				EXTENSION_FREEMARKER));
 	}
 
 }

@@ -250,6 +250,8 @@
 		<column localized="true" name="label" type="String" />
 		<column name="localized" type="boolean" />
 		<column name="name" type="String" />
+		<column name="readOnly" type="String" />
+		<column name="readOnlyConditionExpression" type="String" />
 		<column name="relationshipType" type="String" />
 		<column name="required" type="boolean" />
 		<column name="state" type="boolean" />
@@ -867,6 +869,8 @@
 		<exception>ObjectFieldListTypeDefinitionId</exception>
 		<exception>ObjectFieldLocalized</exception>
 		<exception>ObjectFieldName</exception>
+		<exception>ObjectFieldReadOnly</exception>
+		<exception>ObjectFieldReadOnlyConditionExpression</exception>
 		<exception>ObjectFieldRelationshipType</exception>
 		<exception>ObjectFieldSettingName</exception>
 		<exception>ObjectFieldSettingValue</exception>

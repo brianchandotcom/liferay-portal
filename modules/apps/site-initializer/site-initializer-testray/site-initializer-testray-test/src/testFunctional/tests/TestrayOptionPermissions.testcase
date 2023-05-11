@@ -114,4 +114,75 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178263 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create/edit/delete the Option"
+	@priority = 4
+	test LeadRoleCanCreateEditAndDelete {
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "test");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user created the option") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+            TestrayManage.createNewOption(
+				category = ${categoryName},
+				option = "Option 2");
+		}
+
+		task ("Then can see the option in the table") {
+            Testray.changePaginationInModal(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.clickOnPageNumberModal(pageNumber = 2);
+
+			AssertElementPresent(
+				key_projectName = "Option 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user edited the option") {
+            Testray.checkSuccessAlertAppearsAndDisappears();
+
+            TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Options");
+
+            Testray.changePaginationInModal(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.clickOnPageNumberModal(pageNumber = 2);
+
+            TestrayManage.editOptionTitle(
+				category = ${categoryName},
+				option = "Option 2",
+				optionNewName = "Option Edited");
+		}
+
+		task ("Then can see the option edited in the table") {
+			AssertElementPresent(
+				key_projectName = "Option Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("When the user delete the option") {
+			TestrayManage.deleteOption(nameOptions = "Option Edited");
+
+            Testray.checkSuccessAlertAppearsAndDisappears();
+		}
+
+        task ("Then can not see the option in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Option Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

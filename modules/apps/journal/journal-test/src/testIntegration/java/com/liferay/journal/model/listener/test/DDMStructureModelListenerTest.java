@@ -89,7 +89,7 @@ public class DDMStructureModelListenerTest {
 	public void testUpdateDataDefinition() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle();
 
-		_updateDataDefinition();
+		_updateDataDefinition("dependencies/updated_data_definition.json");
 
 		JournalArticle updatedJournalArticle =
 			_journalArticleLocalService.getJournalArticle(
@@ -98,6 +98,19 @@ public class DDMStructureModelListenerTest {
 		_assertDDMFormFieldValuesMap(
 			_expectedUpdatedFieldValuesMap,
 			updatedJournalArticle.getDDMFormValues());
+	}
+
+	@Test
+	public void testUpdateDataDefinitionStructureKeyChanged() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle();
+
+		_updateDataDefinition("dependencies/data_definition.json");
+
+		journalArticle = _journalArticleLocalService.getJournalArticle(
+			journalArticle.getId());
+
+		_assertDDMFormFieldValuesMap(
+			_expectedFieldValuesMap, journalArticle.getDDMFormValues());
 	}
 
 	@Test
@@ -127,7 +140,8 @@ public class DDMStructureModelListenerTest {
 			Exception exception1 = null;
 
 			try {
-				_updateDataDefinition();
+				_updateDataDefinition(
+					"dependencies/updated_data_definition.json");
 			}
 			catch (Exception exception2) {
 				exception1 = exception2;
@@ -214,7 +228,7 @@ public class DDMStructureModelListenerTest {
 		}
 	}
 
-	private void _updateDataDefinition() throws Exception {
+	private void _updateDataDefinition(String resourceName) throws Exception {
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 			_dataDefinitionResourceFactory.create();
 
@@ -226,9 +240,7 @@ public class DDMStructureModelListenerTest {
 		Class<?> clazz = getClass();
 
 		DataDefinition updatedDataDefinition = DataDefinition.toDTO(
-			StringUtil.read(
-				clazz.getResourceAsStream(
-					"dependencies/updated_data_definition.json")));
+			StringUtil.read(clazz.getResourceAsStream(resourceName)));
 
 		updatedDataDefinition.setDataDefinitionKey(
 			_dataDefinition.getDataDefinitionKey());

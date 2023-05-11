@@ -451,4 +451,108 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13507 | Test Summary: Check if you can access data for a specific Forms"
+	@priority = 4
+	test RequestToAccessDataForSpecificForm {
+		var formsTitleList = "Form AC Title 1,Form AC Title 2";
+		var formPageName = "Forms page";
+		var type = "forms";
+		var range = "rangeKey";
+		var rangeValue = 0;
+
+		task ("Copy the token value for the API") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP and create a site and two forms and then connect Analytics Cloud to DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			task ("Create the first form") {
+				ACUtils.addSiteAndPage();
+
+				ACUtils.createFormAndAddToPage(formAcTitle = "Form AC Title 1");
+			}
+
+			task ("Create the second form") {
+				ACUtils.addPage(layoutName = "${formPageName}");
+
+				ACUtils.createFormAndAddToPage(
+					formAcTitle = "Form AC Title 2",
+					layoutName = "${formPageName}");
+			}
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the first form") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Form",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Visit the second form") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Form",
+				pageName = "${formPageName}",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Create a data report using analytics cloud API with the type forms") {
+			ACApi.createDataReport(
+				filter = ${range},
+				filterValue = ${rangeValue},
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert the total items of the response is 2 (because we have just 2 forms)") {
+			var totalValue = ACApi.searchApiResponse(
+				apiDataResponse = ${apiResponse},
+				jsonQuery = "total");
+
+			TestUtils.assertEquals(
+				actual = ${totalValue},
+				expected = 2);
+		}
+
+		task ("Get the id of the form in the first position of the response") {
+			var formId = ACApi.searchApiResponse(
+				apiDataResponse = ${apiResponse},
+				jsonQuery = "id",
+				resultPosition = 0);
+		}
+
+		task ("Create a data report using analytics API for the specific form chosen") {
+			ACApi.createIndividualOrAssetDataReport(
+				id = ${formId},
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert that there's only one result in the response") {
+			var searchedValue = ACApi.searchApiResponse(
+				apiDataResponse = ${apiIndividualOrAssetResponse},
+				jsonQuery = "total");
+
+			TestUtils.assertEquals(
+				actual = ${searchedValue},
+				expected = "");
+		}
+
+		task ("Assert that the result matches with the form id") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiIndividualOrAssetResponse},
+				expectedList = ${formId});
+		}
+	}
+
 }

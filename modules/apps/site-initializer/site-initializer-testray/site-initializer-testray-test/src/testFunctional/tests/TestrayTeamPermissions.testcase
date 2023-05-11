@@ -23,7 +23,7 @@ definition {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-		task ("Create a Project and routine via API") {
+		task ("Create a Project and team via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -35,8 +35,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -53,14 +51,18 @@ definition {
 			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 		}
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the product version but can view"
+	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the team"
 	@priority = 3
-	test AnalystRoleCanNotCreateEditAndDelete {
+	test AnalystRoleCanNotCreateEditAndDeleteTeam {
+		property test.name.skip.portal.instance = "TestrayTeamPermissions#AnalystRoleCanNotCreateEditAndDeleteTeam";
+
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -108,9 +110,11 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create/edit/delete the product version"
+	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the team"
 	@priority = 3
-	test LeadRoleCanCreateEditAndDelete {
+	test LeadRoleCanNotCreateEditAndDeleteTeam {
+		property test.name.skip.portal.instance = "TestrayTeamPermissions#LeadRoleCanNotCreateEditAndDeleteTeam";
+
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -158,9 +162,11 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the product version but can view"
-	@priority = 3
-	test UserRoleCanNotCreateEditAndDelete {
+	@description = "Story ID: LPS-178273 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the team"
+	@priority = 2
+	test UserRoleCanNotCreateEditAndDeleteTeam {
+		property test.name.skip.portal.instance = "TestrayTeamPermissions#UserRoleCanNotCreateEditAndDeleteTeam";
+
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

@@ -38,8 +38,8 @@ definition {
 
 		task ("Delete all objects, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
+				object = "factorcategories",
+				objectName = "Category 1");
 
 			Testray.tearDownCP();
 

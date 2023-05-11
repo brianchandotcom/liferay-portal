@@ -195,6 +195,11 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectFieldSetting"
                     type: array
+                readOnly:
+                    enum: [true, false, conditional]
+                    type: string
+                readOnlyConditionExpression:
+                    type: string
                 relationshipType:
                     enum: [oneToMany, oneToOne]
                     readOnly: true

@@ -177,7 +177,7 @@
 		</finder>
 		<finder name="S_L" return-type="Collection">
 			<finder-column name="storageId" />
-			<finder-column name="languageId" />
+			<finder-column arrayable-operator="OR" name="languageId" />
 		</finder>
 		<finder name="AN_SAV" return-type="Collection">
 			<finder-column name="attributeName" />

@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>NUMBER_OF_VIEWS</td>
-	<td>//div[contains(@class,'dnd-table')]//div[normalize-space(text())='Views']/../../../..//span[contains(@class,'badge') and contains(.,'${numberOfViews}')]</td>
+	<td>//div[contains(@class,'dnd-table')]//div[normalize-space(text())='Views']/../../../..//span[contains(@class,'badge') and (text()='${numberOfViews}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,6 +67,10 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/p/${productName}");
 	}
 
+	macro goToHealthCheckAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_health_status_web_internal_portlet_CommerceHealthCheckPortlet");
+	}
+
 	macro gotoMiniCart {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
 

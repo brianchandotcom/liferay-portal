@@ -33,16 +33,16 @@ import org.osgi.service.component.annotations.Modified;
 public class DDMFormWebConfigurationActivator {
 
 	public DDMFormWebConfiguration getDDMFormWebConfiguration() {
-		return _formWebConfiguration;
+		return _ddmFormWebConfiguration;
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_formWebConfiguration = ConfigurableUtil.createConfigurable(
+		_ddmFormWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMFormWebConfiguration.class, properties);
 	}
 
-	private volatile DDMFormWebConfiguration _formWebConfiguration;
+	private volatile DDMFormWebConfiguration _ddmFormWebConfiguration;
 
 }

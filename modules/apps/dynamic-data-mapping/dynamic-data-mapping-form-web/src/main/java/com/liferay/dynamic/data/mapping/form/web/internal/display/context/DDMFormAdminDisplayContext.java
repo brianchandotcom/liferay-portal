@@ -1444,7 +1444,7 @@ public class DDMFormAdminDisplayContext {
 
 	protected String getDisplayStyle(
 		PortletRequest portletRequest,
-		DDMFormWebConfiguration formWebConfiguration, String[] displayViews) {
+		DDMFormWebConfiguration ddmFormWebConfiguration, String[] displayViews) {
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
@@ -1455,7 +1455,7 @@ public class DDMFormAdminDisplayContext {
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = portalPreferences.getValue(
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, "display-style",
-				formWebConfiguration.defaultDisplayView());
+				ddmFormWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(

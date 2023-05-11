@@ -283,6 +283,21 @@
 	<td>//div[@class='rounded step-tracker']/div[@class='step completed']/span[text()='${key_stepLabel}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ORDER_STATUS_BY_SECOND_PARAMETER</td>
+	<td>//div[@class='table-list-title']/../../../*[contains(.,'${key_parameter}')]//span[contains(@class,'workflow')]//strong[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_EDIT_SUMMARY_BUTTON</td>
+	<td>//a[contains(@id,'order-summary-modal') and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_EDIT_SUMMARY_FIELDS</td>
+	<td>//div[contains(@class,'form-group-item')]//label[contains(.,'${key_label}')]/..//input[contains(@value,'${key_value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

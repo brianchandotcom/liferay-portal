@@ -1444,7 +1444,8 @@ public class DDMFormAdminDisplayContext {
 
 	protected String getDisplayStyle(
 		PortletRequest portletRequest,
-		DDMFormWebConfiguration ddmFormWebConfiguration, String[] displayViews) {
+		DDMFormWebConfiguration ddmFormWebConfiguration,
+		String[] displayViews) {
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);

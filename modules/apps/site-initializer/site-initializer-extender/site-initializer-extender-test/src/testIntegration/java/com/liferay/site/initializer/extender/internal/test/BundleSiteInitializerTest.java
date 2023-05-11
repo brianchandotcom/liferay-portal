@@ -589,12 +589,13 @@ public class BundleSiteInitializerTest {
 	private void _assertCommerceChannelConfiguration1(
 			CommerceChannel commerceChannel)
 		throws Exception {
+
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
 				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
-			ModifiableSettings modifiableSettings =
+		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
 		Assert.assertEquals(

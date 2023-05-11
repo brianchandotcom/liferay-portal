@@ -64,4 +64,54 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178259 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the component but can view"
+	@priority = 3
+	test AnalystRoleCanNotCreateEditAndDelete {
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the component page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			RightClick.rightClick(
+				key_projectName = ${projectName},
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
+		}
+
+		task ("Then can see the component in the table") {
+			AssertElementPresent(
+				key_projectName = ${componentName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And can not see add button") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("When right click in component") {
+			RightClick.rightClick(
+				key_projectName = ${componentName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then can not see the 'Edit, Delete' options in right click") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

@@ -1,0 +1,92 @@
+@component-name = "portal-security"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Security Policy";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PortalSettings.tearDownAuthenticationCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-182349. TC-3. Verify the prespecified Content Security Policy settings could be configured at Instance level using Web ID."
+	@priority = 4
+	test VerifyCSPCouldConfiguredByWebId {
+		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPCouldConfiguredByWebId";
+
+		task ("Add the OSGI configuration file") {
+			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
+		}
+
+		task ("When: The Instance Administrator opens the Content Security Policy settings at Instance level.") {
+			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
+		}
+
+		task ("Then: The preconfigured value is present at Instance Settings.") {
+			AssertTextPresent(
+				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
+				value1 = "img-src domain.liferay.com");
+		}
+
+		task ("And: The header is added to any Portal requests.") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			var curl = '''${baseURL} -X HEAD -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Content-Security-Policy: img-src domain.liferay.com");
+		}
+	}
+
+	@description = "This is a use case for LPS-182349. TC-1, TC-2 and TC-4. Verify the prespecified Content Security Policy settings is present at Instance level and present in the Request headers."
+	@priority = 4
+	test VerifyCSPCouldConfiguredToBlockImageSource {
+		property test.name.skip.portal.instance = "ContentSecurityPolicy#VerifyCSPCouldConfiguredToBlockImageSource";
+
+		task ("Add the OSGI configuration file") {
+			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
+		}
+
+		task ("When: The Instance Administrator opens the Content Security Policy settings at Instance level.") {
+			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings();
+		}
+
+		task ("Then: The preconfigured value is present at Instance Settings.") {
+			AssertTextPresent(
+				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
+				value1 = "img-src domain.example.com");
+		}
+
+		task ("And: The header is added to any Portal requests.") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			var curl = '''${baseURL} -X HEAD -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Content-Security-Policy: img-src domain.example.com");
+		}
+	}
+
+}

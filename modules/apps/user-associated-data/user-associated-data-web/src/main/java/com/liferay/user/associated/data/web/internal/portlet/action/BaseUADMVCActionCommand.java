@@ -225,6 +225,8 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	private String _getUADRegistryKey(
 		ActionRequest actionRequest, String entityType) {
 
+		entityType = AUIUtil.normalizeId(entityType);
+
 		return ParamUtil.getString(
 			actionRequest, "uadRegistryKey__" + entityType);
 	}

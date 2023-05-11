@@ -11,7 +11,7 @@ import {TableDataCell} from 'shared/components/table/cell-components';
 
 export default timeZoneId => [
 	{
-		accessor: 'name.raw',
+		accessor: 'name',
 		cellRenderer: ({data: {id, name, pageURL}}) => (
 			<ExperimentListTitle id={id} title={name} touchpoint={pageURL} />
 		),

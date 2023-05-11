@@ -80,7 +80,7 @@ public class DDMFormUploadValidatorTest {
 				DDMFormWebConfiguration.class, new HashMapDictionary<>());
 
 		ReflectionTestUtil.setFieldValue(
-			ddmFormWebConfigurationActivator, "_formWebConfiguration",
+			ddmFormWebConfigurationActivator, "_ddmFormWebConfiguration",
 			ddmFormWebConfiguration);
 
 		ReflectionTestUtil.setFieldValue(

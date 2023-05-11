@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>OPEN_GRAPH_LABEL</td>
-	<td>//div[contains(@class,'form-group')]/label[normalize-space(text())='${key_fieldLabel}']</td>
+	<td>//div[contains(@class,'form-group')]//*[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

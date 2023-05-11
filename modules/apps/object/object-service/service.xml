@@ -886,9 +886,9 @@
 		<exception>ObjectViewFilterColumn</exception>
 		<exception>ObjectViewSortColumn</exception>
 		<exception>ObjectViewSortColumnObjectFieldName</exception>
-		<exception>RequiredEncryptedObjectFieldProperty</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>RequiredObjectRelationship</exception>
+		<exception>RequiredProperty</exception>
 	</exceptions>
 </service-builder>

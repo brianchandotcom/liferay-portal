@@ -106,9 +106,12 @@ public class PasswordPolicyLocalServiceImpl
 		passwordPolicy.setRequireUnlock(lockoutDuration == 0);
 		passwordPolicy.setResetFailureCount(resetFailureCount);
 		passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
-		passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 
 		passwordPolicy = passwordPolicyPersistence.update(passwordPolicy);
+
+		// Expando
+
+		passwordPolicy.setExpandoBridgeAttributes(serviceContext);
 
 		// Resources
 

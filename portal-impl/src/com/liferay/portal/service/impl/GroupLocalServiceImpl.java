@@ -490,13 +490,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setInheritContent(inheritContent);
 		group.setActive(active);
 
+		group = groupPersistence.update(group);
+
+		// Expando
+
 		if ((serviceContext != null) && (classNameId == groupClassNameId) &&
 			!user.isGuestUser()) {
 
 			group.setExpandoBridgeAttributes(serviceContext);
 		}
-
-		group = groupPersistence.update(group);
 
 		// Layout sets
 

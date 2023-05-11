@@ -144,9 +144,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setLastPostDate(date);
 		dlFolder.setHidden(hidden);
 		dlFolder.setRestrictionType(DLFolderConstants.RESTRICTION_TYPE_INHERIT);
-		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 		dlFolder = dlFolderPersistence.update(dlFolder);
+
+		// Expando
+
+		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 		// Resources
 

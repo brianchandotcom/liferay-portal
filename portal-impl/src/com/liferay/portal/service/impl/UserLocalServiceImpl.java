@@ -1197,9 +1197,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setJobTitle(jobTitle);
 		user.setType(type);
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
-		user.setExpandoBridgeAttributes(serviceContext);
 
 		user = userPersistence.update(user, serviceContext);
+
+		// Expando
+
+		user.setExpandoBridgeAttributes(serviceContext);
 
 		// Contact
 
@@ -4545,7 +4548,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setMiddleName(middleName);
 			user.setLastName(lastName);
 			user.setJobTitle(jobTitle);
-			user.setExpandoBridgeAttributes(serviceContext);
 
 			Date birthday = getBirthday(
 				birthdayMonth, birthdayDay, birthdayYear);
@@ -4574,6 +4576,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		user = userPersistence.update(user, serviceContext);
+
+		// Expando
+
+		user.setExpandoBridgeAttributes(serviceContext);
 
 		// Workflow
 

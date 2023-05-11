@@ -2109,10 +2109,12 @@ public class DLFileEntryLocalServiceImpl
 			oldExpandoBridge = latestFileVersion.getExpandoBridge();
 		}
 
+		dlFileVersion = _dlFileVersionPersistence.update(dlFileVersion);
+
+		// Expando
+
 		ExpandoBridgeUtil.setExpandoBridgeAttributes(
 			oldExpandoBridge, dlFileVersion.getExpandoBridge(), serviceContext);
-
-		dlFileVersion = _dlFileVersionPersistence.update(dlFileVersion);
 
 		if ((fileEntryTypeId > 0) && (ddmFormValuesMap != null)) {
 			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(

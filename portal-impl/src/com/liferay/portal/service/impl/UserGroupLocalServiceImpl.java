@@ -271,9 +271,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setDescription(description);
 		userGroup.setAddedByLDAPImport(
 			UserGroupImportTransactionThreadLocal.isOriginatesFromImport());
-		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroup = userGroupPersistence.update(userGroup);
+
+		// Expando
+
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		// Group
 

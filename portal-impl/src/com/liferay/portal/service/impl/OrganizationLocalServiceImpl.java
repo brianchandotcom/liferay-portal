@@ -295,9 +295,12 @@ public class OrganizationLocalServiceImpl
 		organization.setCountryId(countryId);
 		organization.setStatusListTypeId(statusListTypeId);
 		organization.setComments(comments);
-		organization.setExpandoBridgeAttributes(serviceContext);
 
 		organization = organizationPersistence.update(organization);
+
+		// Expando
+
+		organization.setExpandoBridgeAttributes(serviceContext);
 
 		// Group
 

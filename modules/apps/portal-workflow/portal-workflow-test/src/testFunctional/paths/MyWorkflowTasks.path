@@ -125,11 +125,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MY_WORKFLOW_TASKS_SEARCH_ICON</td>
-	<td>//span[@class = 'input-group-inset-item input-group-inset-item-after']//button[contains(@class, 'btn btn-monospaced btn-unstyled')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR</td>
 	<td>//span[contains(@class, 'text-truncate') and contains(., '${key_resultBarMessage}')]</td>
 	<td></td>

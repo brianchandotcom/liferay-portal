@@ -206,6 +206,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1664,8 +1665,9 @@ public class ObjectEntryLocalServiceImpl
 	private void _executeInsertIntoLocalizationTable(
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
-		String insertIntoStatement, Locale locale, long objectEntryId,
-		List<ObjectField> objectFields, Map<String, Serializable> values) {
+		String insertIntoStatement,
+		Map<String, Map<String, String>> i18nObjectFieldValues, Locale locale,
+		long objectEntryId, List<ObjectField> objectFields) {
 
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
@@ -1683,42 +1685,24 @@ public class ObjectEntryLocalServiceImpl
 			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
 			_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
 
-			int emptyColumnsCount = 0;
-
 			for (ObjectField objectField : objectFields) {
 				Column<?, ?> column =
 					dynamicObjectDefinitionLocalizationTable.getColumn(
 						objectField.getDBColumnName());
 
-				Map<String, String> localizedValues =
-					(Map<String, String>)values.get(
+				Map<String, String> languageIdValues =
+					i18nObjectFieldValues.get(
 						objectField.getI18nObjectFieldName());
 
-				if (localizedValues == null) {
-					_setColumn(
-						preparedStatement, index++, column.getSQLType(),
-						StringPool.BLANK);
+				String value = StringPool.BLANK;
 
-					emptyColumnsCount++;
-
-					continue;
-				}
-
-				String localizedValue = localizedValues.get(languageId);
-
-				if (localizedValue == null) {
-					localizedValue = StringPool.BLANK;
-
-					emptyColumnsCount++;
+				if (languageIdValues != null) {
+					value = Objects.toString(
+						languageIdValues.get(languageId), StringPool.BLANK);
 				}
 
 				_setColumn(
-					preparedStatement, index++, column.getSQLType(),
-					localizedValue);
-			}
-
-			if (emptyColumnsCount == objectFields.size()) {
-				return;
+					preparedStatement, index++, column.getSQLType(), value);
 			}
 
 			preparedStatement.executeUpdate();
@@ -2944,15 +2928,40 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		Set<Locale> locales = _language.getCompanyAvailableLocales(
-			objectDefinition.getCompanyId());
+		Map<String, Map<String, String>> i18nObjectFieldValues =
+			new HashMap<>();
+		Set<Locale> locales = new HashSet<>();
+
+		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
+			if (!StringUtil.endsWith(entry.getKey(), "_i18n")) {
+				continue;
+			}
+
+			Map<String, String> languageIdValues =
+				(Map<String, String>)entry.getValue();
+
+			i18nObjectFieldValues.put(entry.getKey(), languageIdValues);
+
+			for (String languageId : languageIdValues.keySet()) {
+				locales.add(LocaleUtil.fromLanguageId(languageId));
+			}
+		}
+
+		if (i18nObjectFieldValues.isEmpty()) {
+			return;
+		}
+
+		locales = SetUtil.intersect(
+			locales,
+			_language.getCompanyAvailableLocales(
+				objectDefinition.getCompanyId()));
 
 		for (Locale locale : locales) {
 			_executeInsertIntoLocalizationTable(
 				dynamicObjectDefinitionLocalizationTable,
-				insertIntoLocalizationTableStatement, locale, objectEntryId,
-				dynamicObjectDefinitionLocalizationTable.getObjectFields(),
-				values);
+				insertIntoLocalizationTableStatement, i18nObjectFieldValues,
+				locale, objectEntryId,
+				dynamicObjectDefinitionLocalizationTable.getObjectFields());
 		}
 	}
 

@@ -174,15 +174,20 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		rangeSelectors
 	]);
 
-	if (
-		rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours &&
-		chartPayload.date
-	) {
-		newRangeSelectors = {
-			rangeEnd: `${chartPayload.date}T${endHour}`,
-			rangeKey: 0,
-			rangeStart: `${chartPayload.date}T${startHour}`
-		};
+	if (chartPayload.date) {
+		if (rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours) {
+			newRangeSelectors = getSafeRangeSelectors({
+				rangeEnd: `${chartPayload.date}T${endHour}`,
+				rangeKey: RangeKeyTimeRanges.Last24Hours,
+				rangeStart: `${chartPayload.date}T${startHour}`
+			});
+		} else {
+			newRangeSelectors = getSafeRangeSelectors({
+				rangeEnd: `${chartPayload.date}T23:59:00`,
+				rangeKey: rangeSelectors.rangeKey,
+				rangeStart: `${chartPayload.date}T00:00:00`
+			});
+		}
 	}
 
 	const sessionsResponse = useQuery<UserSessionData, UserSessionVariables>(

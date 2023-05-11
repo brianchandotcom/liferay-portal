@@ -619,6 +619,11 @@
 	<td>//label[@for='type']/..//select[@id='type']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROPERTIES_SCRIPT_TYPE_INDEX</td>
+	<td>xpath=(//label[@for='type']/..//select[@id='type'])[${key_index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

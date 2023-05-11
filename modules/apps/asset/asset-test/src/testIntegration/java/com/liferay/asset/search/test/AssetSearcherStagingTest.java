@@ -15,6 +15,7 @@
 package com.liferay.asset.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.search.AssetSearcherFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -47,7 +49,6 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -203,12 +204,14 @@ public class AssetSearcherStagingTest {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		AssetSearcher assetSearcher = new AssetSearcher();
-
-		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+			assetEntryQuery);
 
 		return assetSearcher.search(searchContext);
 	}
+
+	@Inject
+	private static AssetSearcherFactory _assetSearcherFactory;
 
 	@Inject
 	private static DDMStructureLocalService _ddmStructureLocalService;

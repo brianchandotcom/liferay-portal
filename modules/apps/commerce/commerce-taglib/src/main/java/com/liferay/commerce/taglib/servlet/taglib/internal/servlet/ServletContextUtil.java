@@ -22,210 +22,96 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import javax.servlet.ServletContext;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Luca Pellizzon
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static CommerceWorkflowedModelHelper getCommerceOrderHelper() {
-		return _servletContextUtil._getCommerceOrderHelper();
+		return _commerceWorkflowedModelHelperSnapshot.get();
 	}
 
 	public static ModelResourcePermission<CommerceOrder>
 		getCommerceOrderModelResourcePermission() {
 
-		return _servletContextUtil._getCommerceOrderModelResourcePermission();
+		return _commerceOrderModelResourcePermissionSnapshot.get();
 	}
 
 	public static CommerceOrderStatusRegistry getCommerceOrderStatusRegistry() {
-		return _servletContextUtil._getCommerceOrderStatusRegistry();
+		return _commerceOrderStatusRegistrySnapshot.get();
 	}
 
 	public static CommerceOrderValidatorRegistry
 		getCommerceOrderValidatorRegistry() {
 
-		return _servletContextUtil._getCommerceOrderValidatorRegistry();
+		return _commerceOrderValidatorRegistrySnapshot.get();
 	}
 
 	public static CommercePriceFormatter getCommercePriceFormatter() {
-		return _servletContextUtil._getCommercePriceFormatter();
+		return _commercePriceFormatterSnapshot.get();
 	}
 
 	public static CommercePriceListLocalService
 		getCommercePriceListLocalService() {
 
-		return _servletContextUtil._getCommercePriceListLocalService();
+		return _commercePriceListLocalServiceSnapshot.get();
 	}
 
 	public static ConfigurationProvider getConfigurationProvider() {
-		return _servletContextUtil._getConfigurationProvider();
+		return _configurationProviderSnapshot.get();
 	}
 
 	public static PanelAppRegistry getPanelAppRegistry() {
-		return _servletContextUtil._getPanelAppRegistry();
+		return _panelAppRegistrySnapshot.get();
 	}
 
 	public static PanelCategoryRegistry getPanelCategoryRegistry() {
-		return _servletContextUtil._getPanelCategoryRegistry();
+		return _panelCategoryRegistrySnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContextUtil._getServletContext();
+		return _servletContextSnapshot.get();
 	}
 
-	@Activate
-	protected void activate() {
-		_servletContextUtil = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_servletContextUtil = null;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)",
-		unbind = "-"
-	)
-	protected void setCommerceOrderModelResourcePermission(
-		ModelResourcePermission<CommerceOrder>
-			commerceOrderModelResourcePermission) {
-
-		_commerceOrderModelResourcePermission =
-			commerceOrderModelResourcePermission;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceOrderStatusRegistry(
-		CommerceOrderStatusRegistry commerceOrderStatusRegistry) {
-
-		_commerceOrderStatusRegistry = commerceOrderStatusRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceOrderValidatorRegistry(
-		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry) {
-
-		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommercePriceFormatter(
-		CommercePriceFormatter commercePriceFormatter) {
-
-		_commercePriceFormatter = commercePriceFormatter;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommercePriceListLocalService(
-		CommercePriceListLocalService commercePriceListLocalService) {
-
-		_commercePriceListLocalService = commercePriceListLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceWorkflowedModelHelper(
-		CommerceWorkflowedModelHelper commerceWorkflowedModelHelper) {
-
-		_commerceWorkflowedModelHelper = commerceWorkflowedModelHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private CommerceWorkflowedModelHelper _getCommerceOrderHelper() {
-		return _commerceWorkflowedModelHelper;
-	}
-
-	private ModelResourcePermission<CommerceOrder>
-		_getCommerceOrderModelResourcePermission() {
-
-		return _commerceOrderModelResourcePermission;
-	}
-
-	private CommerceOrderStatusRegistry _getCommerceOrderStatusRegistry() {
-		return _commerceOrderStatusRegistry;
-	}
-
-	private CommerceOrderValidatorRegistry
-		_getCommerceOrderValidatorRegistry() {
-
-		return _commerceOrderValidatorRegistry;
-	}
-
-	private CommercePriceFormatter _getCommercePriceFormatter() {
-		return _commercePriceFormatter;
-	}
-
-	private CommercePriceListLocalService _getCommercePriceListLocalService() {
-		return _commercePriceListLocalService;
-	}
-
-	private ConfigurationProvider _getConfigurationProvider() {
-		return _configurationProvider;
-	}
-
-	private PanelAppRegistry _getPanelAppRegistry() {
-		return _panelAppRegistry;
-	}
-
-	private PanelCategoryRegistry _getPanelCategoryRegistry() {
-		return _panelCategoryRegistry;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _servletContextUtil;
-
-	private ModelResourcePermission<CommerceOrder>
-		_commerceOrderModelResourcePermission;
-	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
-	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
-	private CommercePriceFormatter _commercePriceFormatter;
-	private CommercePriceListLocalService _commercePriceListLocalService;
-	private CommerceWorkflowedModelHelper _commerceWorkflowedModelHelper;
-	private ConfigurationProvider _configurationProvider;
-	private PanelAppRegistry _panelAppRegistry;
-	private PanelCategoryRegistry _panelCategoryRegistry;
-	private ServletContext _servletContext;
+	private static final Snapshot<ModelResourcePermission<CommerceOrder>>
+		_commerceOrderModelResourcePermissionSnapshot = new Snapshot<>(
+			ServletContextUtil.class,
+			Snapshot.cast(ModelResourcePermission.class),
+			"(model.class.name=com.liferay.commerce.model.CommerceOrder)");
+	private static final Snapshot<CommerceOrderStatusRegistry>
+		_commerceOrderStatusRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceOrderStatusRegistry.class);
+	private static final Snapshot<CommerceOrderValidatorRegistry>
+		_commerceOrderValidatorRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceOrderValidatorRegistry.class);
+	private static final Snapshot<CommercePriceFormatter>
+		_commercePriceFormatterSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommercePriceFormatter.class);
+	private static final Snapshot<CommercePriceListLocalService>
+		_commercePriceListLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommercePriceListLocalService.class);
+	private static final Snapshot<CommerceWorkflowedModelHelper>
+		_commerceWorkflowedModelHelperSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceWorkflowedModelHelper.class);
+	private static final Snapshot<ConfigurationProvider>
+		_configurationProviderSnapshot = new Snapshot<>(
+			ServletContextUtil.class, ConfigurationProvider.class);
+	private static final Snapshot<PanelAppRegistry> _panelAppRegistrySnapshot =
+		new Snapshot<>(ServletContextUtil.class, PanelAppRegistry.class);
+	private static final Snapshot<PanelCategoryRegistry>
+		_panelCategoryRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, PanelCategoryRegistry.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.commerce.taglib)");
 
 }

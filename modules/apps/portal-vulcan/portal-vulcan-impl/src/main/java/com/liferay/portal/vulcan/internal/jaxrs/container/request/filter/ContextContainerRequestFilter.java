@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -38,6 +39,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import java.net.URI;
+
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,7 +50,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
@@ -137,6 +144,123 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 					"Conflict with " + method.getName()
 				).build());
 		}
+	}
+
+	private UriInfo _getVulcanUriInfo(
+		HttpServletRequest httpServletRequest, Message message) {
+
+		UriInfo uriInfo = new UriInfoImpl(message);
+
+		return new UriInfo() {
+
+			@Override
+			public URI getAbsolutePath() {
+				return uriInfo.getAbsolutePath();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return uriInfo.getAbsolutePathBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return uriInfo.getBaseUri();
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+
+				uriBuilder.host(_portal.getForwardedHost(httpServletRequest));
+
+				if (_portal.isSecure(httpServletRequest)) {
+					uriBuilder.scheme(Http.HTTPS);
+				}
+
+				return uriBuilder;
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return uriInfo.getMatchedResources();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return uriInfo.getMatchedURIs();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return uriInfo.getMatchedURIs(decode);
+			}
+
+			@Override
+			public String getPath() {
+				return uriInfo.getPath();
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return uriInfo.getPath(decode);
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return uriInfo.getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return uriInfo.getPathParameters(decode);
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return uriInfo.getPathSegments();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return uriInfo.getPathSegments(decode);
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return uriInfo.getQueryParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return uriInfo.getQueryParameters(decode);
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return uriInfo.getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return uriInfo.getRequestUriBuilder();
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return uriInfo.relativize(uri);
+			}
+
+			@Override
+			public URI resolve(URI uri) {
+				return uriInfo.resolve(uri);
+			}
+
+		};
 	}
 
 	private void _handleMessage(
@@ -253,7 +377,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
 
-				field.set(instance, new UriInfoImpl(message));
+				field.set(
+					instance, _getVulcanUriInfo(httpServletRequest, message));
 			}
 			else if (fieldClass.isAssignableFrom(User.class)) {
 				field.setAccessible(true);

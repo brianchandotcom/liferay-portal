@@ -13,7 +13,7 @@ definition {
 
 	@priority = 5
 	test CanAutoUpgradeLargePartitionedDatabase7413 {
-		property custom.properties = "upgrade.database.auto.run=true";
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}upgrade.report.enabled=true";
 		property custom.startup.timeout = "300";
 		property data.archive.type = "data-archive-portal-partition-large";
 		property minimum.slave.ram = "24";
@@ -22,6 +22,10 @@ definition {
 		property portal.version = "7.4.13.u72";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
+
+		task ("Print the upgrade execution time") {
+			UpgradeReport.printUpgradeExecutionTime(upgradeType = "auto");
+		}
 
 		User.firstLoginUI(
 			password = 1234,
@@ -40,17 +44,19 @@ definition {
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
+		task ("Print the upgrade execution time") {
+			UpgradeReport.printUpgradeExecutionTime(upgradeType = "auto");
+		}
+
 		User.firstLoginUI(
 			password = 1234,
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		task ("Print the upgrade report") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+			var reportFileContent = UpgradeReport.getAutoUpgradeReportFileContent();
 
-			var fileContent = FileUtil.read("${liferayHome}/reports/upgrade_report.info");
-
-			echo(${fileContent});
+			echo(${reportFileContent});
 		}
 	}
 
@@ -63,6 +69,11 @@ definition {
 		property portal.upstream = "false";
 		property portal.version = "7.4.13.u72";
 		property test.assert.warning.exceptions = "false";
+		property upgrade.reports.enabled = "true";
+
+		task ("Print the upgrade execution time") {
+			UpgradeReport.printUpgradeExecutionTime(upgradeType = "client");
+		}
 
 		User.firstLoginUI(
 			password = 1234,
@@ -80,17 +91,19 @@ definition {
 		property test.assert.warning.exceptions = "false";
 		property upgrade.reports.enabled = "true";
 
+		task ("Print the upgrade execution time") {
+			UpgradeReport.printUpgradeExecutionTime(upgradeType = "client");
+		}
+
 		User.firstLoginUI(
 			password = 1234,
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		task ("Print the upgrade report") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+			var reportFileContent = UpgradeReport.getUpgradeReportFileContent();
 
-			var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
-
-			echo(${fileContent});
+			echo(${reportFileContent});
 		}
 	}
 

@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactor
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -246,11 +245,20 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			return label;
 		}
 
-		String value = _language.format(
-			locale, "x-group-x",
-			new String[] {
-				label, ContentDashboardGroupUtil.getGroupName(group, locale)
-			});
+		String value = null;
+
+		try {
+			value = _language.format(
+				locale, "x-group-x",
+				new String[] {label, group.getDescriptiveName(locale)});
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			value = _language.format(
+				locale, "x-group-x",
+				new String[] {label, group.getName(locale)});
+		}
 
 		if (value != null) {
 			return value;

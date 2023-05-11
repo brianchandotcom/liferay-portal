@@ -27,6 +27,8 @@ definition {
 			ClickNoError(
 				key_titleFieldName = ${selectEntry},
 				locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+
+			Refresh();
 		}
 
 		WaitForSPARefresh();

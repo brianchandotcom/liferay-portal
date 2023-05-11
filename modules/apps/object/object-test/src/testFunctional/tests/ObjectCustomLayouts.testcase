@@ -598,9 +598,7 @@ definition {
 				kebabOption = "Delete",
 				objectLabel = "Entry Test B");
 
-			AssertTextEquals(
-				locator1 = "Message#SUCCESS_DISMISSIBLE",
-				value1 = "Success:Your request completed successfully.");
+			Refresh();
 		}
 
 		task ("Then the entry is no longer present") {

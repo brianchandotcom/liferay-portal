@@ -15,7 +15,11 @@ definition {
 
 		User.firstLoginPG();
 
-		var companyWebId = JSONCompany.getWebId();
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			var companyWebId = JSONCompany.getWebId();
+		}
 	}
 
 	tearDown {
@@ -188,6 +192,93 @@ definition {
 				key_portletName = "Liferay Sample Custom Element 2",
 				locator1 = "Portlet#BODY",
 				value1 = "Hello World");
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Etc Cron"
+	@priority = 4
+	test LiferaySampleEtcCronSmoke {
+		task ("Deploy Liferay Sample Etc Cron into the current virtual instance") {
+			var clientExtensionName = "liferay-sample-etc-cron";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionName}");
+		}
+
+		task ("Get the Sample Etc Cron Client Secret") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			OAuth2.openOAuth2Admin();
+
+			while (IsElementNotPresent(key_rowEntry = "Liferay Sample Etc Cron Oauth Application Headless Server", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
+				OAuth2.openOAuth2Admin();
+			}
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Liferay Sample Etc Cron Oauth Application Headless Server");
+
+			OAuth2.assertPortletHeader(header = "Liferay Sample Etc Cron Oauth Application Headless Server");
+
+			var clientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+		}
+
+		task ("Assert the Message Board Thread Count of 0") {
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret} -Dvirtual.instance.id=${companyWebId}");
+
+			var projectDir = PropsUtil.get("project.dir");
+
+			var springBootLogFile = "${projectDir}/workspaces/liferay-sample-workspace/client-extensions/liferay-sample-etc-cron/logs/spring.log";
+
+			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
+
+			echo("${springBootLogFileContent}");
+
+			if (!(contains(${springBootLogFileContent}, "There are 0 message board threads in the Guest site"))) {
+				fail("Could not find 'There are 0 message board threads in the Guest site'");
+			}
+		}
+
+		task ("Add a new Message Board Thread") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
+
+		task ("Assert the Message Board Thread Count of 1") {
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret} -Dvirtual.instance.id=${companyWebId}");
+
+			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
+
+			echo("${springBootLogFileContent}");
+
+			if (!(contains(${springBootLogFileContent}, "There are 1 message board threads in the Guest site"))) {
+				fail("Could not find 'There are 1 message board threads in the Guest site'");
+			}
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Etc Spring Boot"
+	@priority = 4
+	test LiferaySampleEtcSpringBootSmoke {
+		task ("Deploy Liferay Sample Etc Spring Boot into the current virtual instance") {
+			var clientExtensionName = "liferay-sample-etc-spring-boot";
+
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionName}");
+		}
+
+		task ("Start up the Spring Boot Application") {
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "start-liferay-sample-etc-spring-boot -Dvirtual.instance.id=${companyWebId}");
 		}
 	}
 

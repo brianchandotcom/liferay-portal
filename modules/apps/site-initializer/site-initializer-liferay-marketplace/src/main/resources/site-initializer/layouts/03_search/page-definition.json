@@ -1,0 +1,280 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {}
+								},
+								{"id": "tablet", "rowViewportDefinition": {}}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "tablet"
+										}
+									],
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_suggestions_portlet_SuggestionsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {}
+								},
+								{"id": "tablet", "rowViewportDefinition": {}}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_site_facet_portlet_SiteFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_user_facet_portlet_UserFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {},
+											"id": "tablet"
+										}
+									],
+									"size": 8
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"portletSetupPortletDecoratorId": "barebone"
+												},
+												"widgetInstanceId": "gu4mJE9t2ajD",
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

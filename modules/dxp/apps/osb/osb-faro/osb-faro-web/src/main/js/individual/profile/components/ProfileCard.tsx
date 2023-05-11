@@ -20,14 +20,14 @@ import UserSessionQuery, {
 import useSelectedPoint from 'shared/hooks/useSelectedPoint';
 import VerticalTimeline from 'shared/components/VerticalTimeline';
 import {compose, withPaginationBar} from 'shared/hoc';
-import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {
-	FORMAT,
+	DEFAULT_DATE_FORMAT,
 	formatUTCDate,
 	getDateRangeLabel,
 	getDateRangeLabelFromDate,
 	getEndDate
 } from 'shared/util/date';
+import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatSessions, getActivityLabel} from 'shared/util/activities';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {Individual} from 'shared/util/records';
@@ -142,9 +142,12 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		if (hasSelectedDate) {
 			const formattedRangeEnd = formatUTCDate(
 				getEndDate(intervalInitDate, interval),
-				FORMAT
+				DEFAULT_DATE_FORMAT
 			);
-			const formattedRangeStart = formatUTCDate(intervalInitDate, FORMAT);
+			const formattedRangeStart = formatUTCDate(
+				intervalInitDate,
+				DEFAULT_DATE_FORMAT
+			);
 
 			if (rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours) {
 				return getSafeRangeSelectors({

@@ -16,6 +16,7 @@ import {
 } from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {CREATE_DATE, createOrderIOMap} from 'shared/util/pagination';
+import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	GDPRRequestStatuses,
@@ -26,8 +27,6 @@ import {graphql} from '@apollo/react-hoc';
 import {sub} from 'shared/util/lang';
 import {useMutation} from '@apollo/react-hooks';
 import {User} from 'shared/util/records';
-
-const DATE_FORMAT = 'MMM DD, YYYY';
 
 const withData = () =>
 	graphql(
@@ -123,13 +122,13 @@ const SuppressedListWithData = withBaseResults(withData, {
 		{
 			accessor: 'dataControlTaskCreateDate',
 			dataFormatter: val =>
-				formatDateToTimeZone(val, DATE_FORMAT, timeZoneId),
+				formatDateToTimeZone(val, CUSTOM_DATE_FORMAT, timeZoneId),
 			label: Liferay.Language.get('requested-date')
 		},
 		{
 			accessor: 'createDate',
 			dataFormatter: val =>
-				formatDateToTimeZone(val, DATE_FORMAT, timeZoneId),
+				formatDateToTimeZone(val, CUSTOM_DATE_FORMAT, timeZoneId),
 			label: Liferay.Language.get('suppression-date')
 		}
 	],

@@ -87,6 +87,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			});
 		actionableDynamicQuery.setGroupId(originalDDMStructure.getGroupId());
 
+		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod;
+
 		if (!Objects.equals(
 				originalDDMStructure.getStructureKey(),
 				ddmStructure.getStructureKey())) {
@@ -94,26 +96,26 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			Indexer<JournalArticle> indexer =
 				_indexerRegistry.nullSafeGetIndexer(JournalArticle.class);
 
-			actionableDynamicQuery.setPerformActionMethod(
-				(JournalArticle journalArticle) -> {
-					try {
-						indexer.reindex(journalArticle);
-					}
-					catch (Exception exception) {
-						throw new PortalException(exception);
-					}
-				});
+			performActionMethod = (JournalArticle journalArticle) -> {
+				try {
+					indexer.reindex(journalArticle);
+				}
+				catch (Exception exception) {
+					throw new PortalException(exception);
+				}
+			};
 		}
 		else {
-			actionableDynamicQuery.setPerformActionMethod(
-				(JournalArticle journalArticle) ->
-					_ddmFieldLocalService.updateDDMFormValues(
-						ddmStructure.getStructureId(), journalArticle.getId(),
-						_fieldsToDDMFormValuesConverter.convert(
-							ddmStructure,
-							_journalConverter.getDDMFields(
-								ddmStructure, journalArticle.getContent()))));
+			performActionMethod = (JournalArticle journalArticle) ->
+				_ddmFieldLocalService.updateDDMFormValues(
+					ddmStructure.getStructureId(), journalArticle.getId(),
+					_fieldsToDDMFormValuesConverter.convert(
+						ddmStructure,
+						_journalConverter.getDDMFields(
+							ddmStructure, journalArticle.getContent())));
 		}
+
+		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
 		try {
 			actionableDynamicQuery.performActions();

@@ -173,8 +173,8 @@ public class SearchRequestExecutorFixture {
 			elasticsearchPipelineAggregationVisitorFixture.
 				getElasticsearchPipelineAggregationVisitor());
 		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler,
-			"_queryToQueryBuilderTranslator", elasticsearchQueryTranslator);
+			commonSearchSourceBuilderAssembler, "_queryTranslator",
+			elasticsearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_statsTranslator",
 			statsTranslator);
@@ -406,7 +406,7 @@ public class SearchRequestExecutorFixture {
 			searchSearchRequestAssembler, "_highlighterTranslator",
 			new DefaultHighlighterTranslator());
 		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_queryToQueryBuilderTranslator",
+			searchSearchRequestAssembler, "_queryTranslator",
 			elasticsearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_sortFieldTranslator",

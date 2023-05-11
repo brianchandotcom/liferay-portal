@@ -63,11 +63,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "search.engine.impl=Elasticsearch",
-	service = {QueryToQueryBuilderTranslator.class, QueryTranslator.class}
+	service = QueryTranslator.class
 )
 public class ElasticsearchQueryTranslator
-	implements QueryToQueryBuilderTranslator, QueryTranslator<QueryBuilder>,
-			   QueryVisitor<QueryBuilder> {
+	implements QueryTranslator<QueryBuilder>, QueryVisitor<QueryBuilder> {
 
 	@Override
 	public QueryBuilder translate(Query query) {

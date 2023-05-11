@@ -363,6 +363,9 @@ public class ObjectDefinitionResourceImpl
 				aggregationServiceBuilderObjectField.getLabelMap(),
 				aggregationServiceBuilderObjectField.isLocalized(),
 				aggregationServiceBuilderObjectField.getName(),
+				aggregationServiceBuilderObjectField.getReadOnly(),
+				aggregationServiceBuilderObjectField.
+					getReadOnlyConditionExpression(),
 				aggregationServiceBuilderObjectField.isRequired(),
 				aggregationServiceBuilderObjectField.isState(),
 				aggregationServiceBuilderObjectField.getObjectFieldSettings());
@@ -529,7 +532,9 @@ public class ObjectDefinitionResourceImpl
 					objectField.getIndexedLanguageId(),
 					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
 					GetterUtil.getBoolean(objectField.getLocalized()),
-					objectField.getName(), objectField.getRequired(),
+					objectField.getName(), objectField.getReadOnlyAsString(),
+					objectField.getReadOnlyConditionExpression(),
+					objectField.getRequired(),
 					GetterUtil.getBoolean(objectField.getState()),
 					objectField.getSystem(),
 					ObjectFieldSettingUtil.toObjectFieldSettings(

@@ -982,6 +982,8 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
+						objectField.getReadOnly(),
+						objectField.getReadOnlyConditionExpression(),
 						objectField.isRequired(), objectField.isState());
 				}
 				else {
@@ -994,8 +996,9 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.isLocalized(),
-						objectField.getName(), objectField.isRequired(),
-						objectField.isState(),
+						objectField.getName(), objectField.getReadOnly(),
+						objectField.getReadOnlyConditionExpression(),
+						objectField.isRequired(), objectField.isState(),
 						objectField.getObjectFieldSettings());
 				}
 			}

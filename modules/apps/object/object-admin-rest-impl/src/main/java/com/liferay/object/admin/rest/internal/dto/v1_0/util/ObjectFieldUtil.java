@@ -212,6 +212,10 @@ public class ObjectFieldUtil {
 			ObjectFieldSettingUtil.toObjectFieldSettings(
 				listTypeDefinitionId, objectField,
 				objectFieldSettingLocalService, objectFilterLocalService));
+		serviceBuilderObjectField.setReadOnly(
+			objectField.getReadOnlyAsString());
+		serviceBuilderObjectField.setReadOnlyConditionExpression(
+			objectField.getReadOnlyConditionExpression());
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));
 

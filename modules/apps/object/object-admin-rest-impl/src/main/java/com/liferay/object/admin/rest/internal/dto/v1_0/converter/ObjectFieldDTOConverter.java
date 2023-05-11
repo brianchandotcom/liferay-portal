@@ -88,6 +88,10 @@ public class ObjectFieldDTOConverter
 					objectFieldSetting -> _toObjectFieldSetting(
 						objectFieldSetting),
 					ObjectFieldSetting.class);
+				readOnly = ObjectField.ReadOnly.create(
+					objectField.getReadOnly());
+				readOnlyConditionExpression =
+					objectField.getReadOnlyConditionExpression();
 				relationshipType = ObjectField.RelationshipType.create(
 					objectField.getRelationshipType());
 				required = objectField.isRequired();

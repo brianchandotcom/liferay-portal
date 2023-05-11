@@ -22,9 +22,9 @@ import com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection;
 import com.liferay.bulk.rest.internal.selection.v1_0.DocumentBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
 import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
-import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
@@ -162,7 +162,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	@Reference
 	private DocumentBulkSelectionFactory _documentBulkSelectionFactory;
 
-	@Reference
-	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;
+	@Reference(target = "(bulk.selection.action.key=edit.tags)")
+	private BulkSelectionAction<AssetEntry> _editTagsBulkSelectionAction;
 
 }

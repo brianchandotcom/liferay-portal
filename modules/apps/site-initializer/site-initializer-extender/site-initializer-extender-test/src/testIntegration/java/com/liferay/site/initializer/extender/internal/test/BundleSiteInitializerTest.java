@@ -593,10 +593,20 @@ public class BundleSiteInitializerTest {
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+				CommerceAccountConstants.SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
+
+		Assert.assertEquals(
+			"2", modifiableSettings.getValue("commerceSiteType", null));
+
+		settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		modifiableSettings = settings.getModifiableSettings();
 
 		Assert.assertEquals(
 			"true",
@@ -619,16 +629,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"3", modifiableSettings.getValue("accountCartMaxAllowed", null));
-
-		settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				commerceChannel.getGroupId(),
-				CommerceAccountConstants.SERVICE_NAME));
-
-		modifiableSettings = settings.getModifiableSettings();
-
-		Assert.assertEquals(
-			"2", modifiableSettings.getValue("commerceSiteType", null));
 	}
 
 	private void _assertCommerceChannelConfiguration2(
@@ -638,10 +638,20 @@ public class BundleSiteInitializerTest {
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
-				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+				CommerceAccountConstants.SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
+
+		Assert.assertEquals(
+			"1", modifiableSettings.getValue("commerceSiteType", null));
+
+		settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		modifiableSettings = settings.getModifiableSettings();
 
 		Assert.assertEquals(
 			"true",
@@ -665,16 +675,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"5", modifiableSettings.getValue("accountCartMaxAllowed", null));
-
-		settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				commerceChannel.getGroupId(),
-				CommerceAccountConstants.SERVICE_NAME));
-
-		modifiableSettings = settings.getModifiableSettings();
-
-		Assert.assertEquals(
-			"1", modifiableSettings.getValue("commerceSiteType", null));
 	}
 
 	private void _assertCommerceInventoryWarehouse() {

@@ -481,18 +481,17 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-183521 and LPS-183512 | LPS-181350. Confirm that special characters are confirmed in the display name on the page "
-	@ignore = "true"
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-181350 Confirm that special characters are confirmed in the display name on the page "
 	@priority = 4
 	test CanUseSpecialCharactersInNameField {
 		task ("When Clicking add button, and Filling the Name field with, and Clicking Save button") {
 			FrontendDataSetAdmin.createDataSetView(
 				description = "Test Description",
-				key_name = "View ~!@#$%^&*(){}[],.<>/? name");
+				key_name = "View ~!@#$%^&*(){}[].<>/? name");
 		}
 
 		task ("And Confirm the view name in View page as expected") {
-			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View ~!@#$%^&*(){}[],.<>/? name");
+			FrontendDataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View ~!@#$%^&*(){}[].<>/? name");
 		}
 
 		task ("And Then Confirm the description is 'Test Description'") {

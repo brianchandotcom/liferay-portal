@@ -78,6 +78,11 @@
 	<td>//div[contains(@class,"justify-content-center autofit-col autofit-col-expand") and contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEWS_FIELD_TABS</td>
+	<td>//li[@class='nav-item']//button[contains(@class,'nav-link')]//*[contains(@class, 'navbar') and (text()='${navTab}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

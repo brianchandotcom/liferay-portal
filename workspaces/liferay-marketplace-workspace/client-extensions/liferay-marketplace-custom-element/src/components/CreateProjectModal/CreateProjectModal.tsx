@@ -10,7 +10,8 @@ import {
 	getProductSKU,
 	getProducts,
 	patchOrderByERC,
-	postOrder,
+	postCartByChannelId,
+	postCheckoutCart,
 } from '../../utils/api';
 import {getCustomFieldValue} from '../../utils/customFieldUtil';
 import {ProjectDetails} from './ProjectDetails';
@@ -81,33 +82,50 @@ export function CreateProjectModal({
 				({name}) => name['en_US'] === 'Project - 60 days'
 			);
 
-			const newOrder: Order = {
-				account: {
-					id: selectedAccount.id,
-					type: selectedAccount.type,
-				},
-				accountId: selectedAccount.id,
-				channel: {
-					currencyCode: currentChannel.currencyCode,
-					id: currentChannel.id,
-					type: currentChannel.type,
-				},
-				channelId: currentChannel.id,
-				currencyCode: currentChannel.currencyCode,
-				orderItems: [
+			const cart: Partial<Cart> = {
+				accountId: selectedAccount?.id as number,
+				cartItems: [
 					{
-						skuId: projectSKU.id,
-						unitPriceWithTaxAmount: 0,
+						price: {
+							currency: currentChannel.currencyCode,
+							discount: 0,
+							finalPrice: 0,
+							price: 0,
+						},
+						productId: projectProduct.id,
+						quantity: 1,
+						settings: {
+							maxQuantity: 1,
+						},
+						skuId: projectSKU.id as number,
 					},
 				],
+				currencyCode: currentChannel.currencyCode,
 				orderTypeExternalReferenceCode:
 					projectOrderType?.externalReferenceCode,
 				orderTypeId: projectOrderType?.id as number,
-				orderStatus: 1,
-				marketplaceOrderType: projectOrderType?.externalReferenceCode,
 			};
 
-			const orderResponse = await postOrder(newOrder);
+			let newCart: Partial<Cart> = {};
+
+			let cartResponse;
+
+			newCart = {
+				...cart,
+			};
+
+			cartResponse = await postCartByChannelId({
+				cartBody: newCart,
+				channelId: currentChannel.id,
+			});
+
+			const cartCheckoutResponse = await postCheckoutCart({
+				cartId: cartResponse.id,
+			});
+
+			const newOrderValues = {
+				orderStatus: 1,
+			};
 
 			const orderCustomFields = {
 				customFields: {
@@ -117,7 +135,12 @@ export function CreateProjectModal({
 			};
 
 			await patchOrderByERC(
-				orderResponse.externalReferenceCode as string,
+				cartCheckoutResponse.orderUUID,
+				newOrderValues
+			);
+
+			await patchOrderByERC(
+				cartCheckoutResponse.orderUUID,
 				orderCustomFields
 			);
 

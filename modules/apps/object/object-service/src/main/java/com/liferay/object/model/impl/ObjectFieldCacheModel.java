@@ -272,7 +272,9 @@ public class ObjectFieldCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
@@ -303,7 +305,7 @@ public class ObjectFieldCacheModel
 		localized = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		readOnly = objectInput.readUTF();
-		readOnlyConditionExpression = objectInput.readUTF();
+		readOnlyConditionExpression = (String)objectInput.readObject();
 		relationshipType = objectInput.readUTF();
 
 		required = objectInput.readBoolean();
@@ -414,10 +416,10 @@ public class ObjectFieldCacheModel
 		}
 
 		if (readOnlyConditionExpression == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(readOnlyConditionExpression);
+			objectOutput.writeObject(readOnlyConditionExpression);
 		}
 
 		if (relationshipType == null) {

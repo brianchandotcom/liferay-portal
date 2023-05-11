@@ -100,7 +100,7 @@ create table ObjectField (
 	localized BOOLEAN,
 	name VARCHAR(75) null,
 	readOnly VARCHAR(75) null,
-	readOnlyConditionExpression VARCHAR(75) null,
+	readOnlyConditionExpression TEXT null,
 	relationshipType VARCHAR(75) null,
 	required BOOLEAN,
 	state_ BOOLEAN,

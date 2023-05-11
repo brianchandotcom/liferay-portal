@@ -389,8 +389,8 @@ public class ObjectFieldPersistenceTest {
 			true, "dbTableName", true, "dbType", true, "indexed", true,
 			"indexedAsKeyword", true, "indexedLanguageId", true, "label", true,
 			"localized", true, "name", true, "readOnly", true,
-			"readOnlyConditionExpression", true, "relationshipType", true,
-			"required", true, "state", true, "system", true);
+			"relationshipType", true, "required", true, "state", true, "system",
+			true);
 	}
 
 	@Test

@@ -17,6 +17,7 @@ package com.liferay.object.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -86,9 +87,9 @@ public class ObjectFieldTable extends BaseTable<ObjectFieldTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> readOnly = createColumn(
 		"readOnly", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ObjectFieldTable, String> readOnlyConditionExpression =
+	public final Column<ObjectFieldTable, Clob> readOnlyConditionExpression =
 		createColumn(
-			"readOnlyConditionExpression", String.class, Types.VARCHAR,
+			"readOnlyConditionExpression", Clob.class, Types.CLOB,
 			Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldTable, String> relationshipType =
 		createColumn(

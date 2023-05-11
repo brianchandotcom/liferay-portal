@@ -19,7 +19,6 @@ import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionAction;
-import com.liferay.bulk.selection.test.util.TestBusyBulkSelectionAction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -89,7 +88,7 @@ public class BulkSelectionRunnerTest {
 	@Inject(filter = "component.name=*.TestBulkSelectionFactory")
 	private BulkSelectionFactory<Integer> _testBulkSelectionFactory;
 
-	@Inject
-	private TestBusyBulkSelectionAction _testBusyBulkSelectionAction;
+	@Inject(filter = "component.name=*.TestBusyBulkSelectionAction")
+	private BulkSelectionAction<Integer> _testBusyBulkSelectionAction;
 
 }

@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	service = {BulkSelectionAction.class, TestBusyBulkSelectionAction.class}
-)
+@Component(service = BulkSelectionAction.class)
 public class TestBusyBulkSelectionAction
 	implements BulkSelectionAction<Integer> {
 

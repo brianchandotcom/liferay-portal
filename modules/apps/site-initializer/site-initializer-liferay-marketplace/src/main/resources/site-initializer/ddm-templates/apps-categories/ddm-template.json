@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry",
+	"ddmTemplateKey": "APPS-CATEGORIES",
+	"name": "Apps Categories",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

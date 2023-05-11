@@ -24,8 +24,7 @@ definition {
 		}
 	}
 
-	@description = "User can enable local staging on site which is based on Masterclass site template. Blocked by LPS-172531."
-	@ignore = "true"
+	@description = "User can enable local staging on site which is based on Masterclass site template."
 	@priority = 4
 	test CanEnableLocalStagingOnMasterclassSiteTemplate {
 		task ("Given: Add a new site based on Masterclass site template") {
@@ -96,8 +95,7 @@ definition {
 		}
 	}
 
-	@description = "User can enable local staging on site which is based on Raylife site template. Blocked by LPS-172534 and LPS-172537."
-	@ignore = "true"
+	@description = "User can enable local staging on site which is based on Raylife site template."
 	@priority = 4
 	test CanEnableLocalStagingOnRaylifeSiteTemplate {
 		task ("Given: Add a new site based on Raylife site template") {

@@ -171,6 +171,10 @@
 		<finder name="StorageId" return-type="Collection">
 			<finder-column name="storageId" />
 		</finder>
+		<finder name="S_AN" return-type="Collection">
+			<finder-column name="storageId" />
+			<finder-column name="attributeName" />
+		</finder>
 		<finder name="S_L" return-type="Collection">
 			<finder-column name="storageId" />
 			<finder-column name="languageId" />

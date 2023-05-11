@@ -140,3 +140,5 @@ interface IFrontendDataSetProps {
 	style?: 'default' | 'fluid' | 'stacked';
 	views: TViews[];
 }
+
+export const DataRenderers: {[key: string]: string};

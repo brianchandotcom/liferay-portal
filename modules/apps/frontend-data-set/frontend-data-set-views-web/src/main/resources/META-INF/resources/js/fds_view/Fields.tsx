@@ -21,7 +21,7 @@ import ClayForm, {
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import {DATA_RENDERERS} from '@liferay/frontend-data-set-web';
+import {DataRenderers} from '@liferay/frontend-data-set-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
@@ -31,6 +31,20 @@ import {FDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
+
+const DATA_RENDERER_LABELS: {[key: string]: string} = {
+	actionLink: Liferay.Language.get('action-link'),
+	boolean: Liferay.Language.get('boolean'),
+	date: Liferay.Language.get('date'),
+	dateTime: Liferay.Language.get('date-and-time'),
+	default: Liferay.Language.get('default'),
+	image: Liferay.Language.get('image'),
+	label: Liferay.Language.get('label'),
+	link: Liferay.Language.get('link'),
+	list: Liferay.Language.get('list'),
+	quantitySelector: Liferay.Language.get('quantity-selector'),
+	status: Liferay.Language.get('status'),
+};
 
 interface FDSField {
 	externalReferenceCode: string;
@@ -423,9 +437,9 @@ const EditFDSFieldModalContent = ({
 						onChange={(event) => {
 							setSelectedFDSFieldRenderer(event.target.value);
 						}}
-						options={Object.keys(DATA_RENDERERS).map(
+						options={Object.keys(DataRenderers).map(
 							(dataRendererId) => ({
-								label: DATA_RENDERERS[dataRendererId].label,
+								label: DATA_RENDERER_LABELS[dataRendererId],
 								value: dataRendererId,
 							})
 						)}

@@ -133,6 +133,14 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<DDMFieldAttribute> getDDMFieldAttributes(
+		long storageId, String attributeName) {
+
+		return _ddmFieldAttributePersistence.findByS_AN(
+			storageId, attributeName);
+	}
+
+	@Override
 	public DDMFormValues getDDMFormValues(DDMForm ddmForm, long storageId) {
 		List<DDMField> ddmFields = ddmFieldPersistence.findByStorageId(
 			storageId);

@@ -96,9 +96,13 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String methodName = javaTermName + StringPool.OPEN_PARENTHESIS;
 
-		javaTermContent = StringUtil.replaceFirst(
-			javaTermContent, methodName,
-			methodName + "String externalReferenceCode, ");
+		int x = indexOf(javaTermContent, methodName);
+
+		if (x != -1) {
+			javaTermContent = StringUtil.insert(
+				javaTermContent, "String externalReferenceCode, ",
+				methodName.length() + x);
+		}
 
 		return StringUtil.replaceLast(
 			javaTermContent, methodName,

@@ -125,6 +125,20 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		return SourceUtil.readXML(FileUtil.read(file));
 	}
 
+	protected int indexOf(String string, String substring) {
+		int x = string.lastIndexOf(_COMMENT_END);
+
+		if (x != -1) {
+			int index = x + _COMMENT_END.length();
+
+			String stringWithoutComments = string.substring(index);
+
+			return index + stringWithoutComments.indexOf(substring);
+		}
+
+		return string.indexOf(substring);
+	}
+
 	protected boolean isApplicableCheck(
 		String entityName, String entityReturnType, String javaTermName) {
 
@@ -138,5 +152,7 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 
 		return false;
 	}
+
+	private static final String _COMMENT_END = "*/";
 
 }

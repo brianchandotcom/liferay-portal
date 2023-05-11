@@ -64,10 +64,7 @@ public class LiferayDocumentTypeFactory
 		PutMappingRequest putMappingRequest = new PutMappingRequest(indexName);
 
 		putMappingRequest.source(
-			_mergeDynamicTemplates(
-				source, indexName,
-				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE),
-			XContentType.JSON);
+			_mergeDynamicTemplates(source, indexName), XContentType.JSON);
 
 		try {
 			ActionResponse actionResponse = _indicesClient.putMapping(
@@ -181,15 +178,23 @@ public class LiferayDocumentTypeFactory
 		return jsonArray3;
 	}
 
-	private String _mergeDynamicTemplates(
-		String source, String indexName, String typeName) {
-
+	private String _mergeDynamicTemplates(String source, String indexName) {
 		JSONObject sourceJSONObject = createJSONObject(source);
 
 		JSONObject sourceTypeJSONObject = sourceJSONObject;
 
-		if (sourceJSONObject.has(typeName)) {
-			sourceTypeJSONObject = sourceJSONObject.getJSONObject(typeName);
+		if (sourceJSONObject.has(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE)) {
+
+			sourceTypeJSONObject = sourceJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+		}
+		else if (sourceJSONObject.has(
+					LiferayTypeMappingsConstants.
+						LIFERAY_LEGACY_DOCUMENT_TYPE)) {
+
+			sourceTypeJSONObject = sourceJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE);
 		}
 
 		JSONArray sourceTypeTemplatesJSONArray =
@@ -200,12 +205,23 @@ public class LiferayDocumentTypeFactory
 		}
 
 		JSONObject mappingsJSONObject = createJSONObject(
-			getMappings(indexName, typeName));
+			getMappings(
+				indexName, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE));
 
 		JSONObject mappingsTypeJSONObject = mappingsJSONObject;
 
-		if (mappingsJSONObject.has(typeName)) {
-			mappingsTypeJSONObject = mappingsJSONObject.getJSONObject(typeName);
+		if (mappingsJSONObject.has(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE)) {
+
+			mappingsTypeJSONObject = mappingsJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+		}
+		else if (mappingsJSONObject.has(
+					LiferayTypeMappingsConstants.
+						LIFERAY_LEGACY_DOCUMENT_TYPE)) {
+
+			mappingsTypeJSONObject = mappingsJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE);
 		}
 
 		JSONArray typeTemplatesJSONArray = mappingsTypeJSONObject.getJSONArray(
@@ -214,6 +230,20 @@ public class LiferayDocumentTypeFactory
 		sourceTypeJSONObject.put(
 			"dynamic_templates",
 			_merge(typeTemplatesJSONArray, sourceTypeTemplatesJSONArray));
+
+		if (sourceJSONObject.has(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE)) {
+
+			sourceJSONObject = sourceJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+		}
+		else if (sourceJSONObject.has(
+					LiferayTypeMappingsConstants.
+						LIFERAY_LEGACY_DOCUMENT_TYPE)) {
+
+			sourceJSONObject = sourceJSONObject.getJSONObject(
+				LiferayTypeMappingsConstants.LIFERAY_LEGACY_DOCUMENT_TYPE);
+		}
 
 		return sourceJSONObject.toString();
 	}

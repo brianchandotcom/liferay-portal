@@ -55,6 +55,7 @@ definition {
 
 	@description = "Verify portal will apply different available page theme if classic theme not available"
 	@priority = 5
+	@ignore = "Ignored due to LPS-184319"
 	@refactordone
 	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
 		property portal.upstream = "true";

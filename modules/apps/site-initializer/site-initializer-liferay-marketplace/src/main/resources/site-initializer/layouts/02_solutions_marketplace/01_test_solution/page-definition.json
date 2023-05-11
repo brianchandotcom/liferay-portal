@@ -167,7 +167,7 @@
 															"widgetInstance": {
 																"widgetConfig": {
 																	"displayStyle": "ddmTemplate_BREADCRUMB-HORIZONTAL-FTL",
-																	"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"showCurrentGroup": "true",
 																	"showGuestGroup": "false",
 																	"showLayout": "true",

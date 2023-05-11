@@ -326,7 +326,7 @@
 										"widgetConfig": {
 											"destination": "",
 											"displayStyle": "default",
-											"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
+											"displayStyleGroupId": "[$GROUP_ID$]",
 											"federatedSearchKey": "",
 											"invisible": "false",
 											"keywordsParameterName": "q",
@@ -484,7 +484,7 @@
 															"cpContentListRendererKey": "list-default",
 															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
 															"displayStyle": "ddmTemplate_SOLUTIONS_SEARCH_RESULTS",
-															"displayStyleGroupId": "[$SCOPE_GROUP_ID$]",
+															"displayStyleGroupId": "[$GROUP_ID$]",
 															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 															"lfrAppShowShareWithFriendsLink": "false",
 															"lfrFacebookApiKey": "",

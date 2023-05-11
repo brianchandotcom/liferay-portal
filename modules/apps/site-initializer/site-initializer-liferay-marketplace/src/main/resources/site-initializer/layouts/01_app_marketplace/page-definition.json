@@ -3,6 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -468,7 +471,7 @@
 																"widgetConfig": {
 																	"destination": "",
 																	"displayStyle": "default",
-																	"displayStyleGroupId": "3192483",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"federatedSearchKey": "",
 																	"invisible": "false",
 																	"keywordsParameterName": "q",
@@ -523,6 +526,9 @@
 					},
 					{
 						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -541,6 +547,10 @@
 						"pageElements": [
 							{
 								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"paddingTop": "2"
+									},
 									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
@@ -605,7 +615,7 @@
 															"id": "tablet"
 														}
 													],
-													"size": 6
+													"size": 3
 												},
 												"pageElements": [
 													{
@@ -674,7 +684,7 @@
 															"id": "tablet"
 														}
 													],
-													"size": 6
+													"size": 9
 												},
 												"pageElements": [
 													{
@@ -683,8 +693,8 @@
 																"widgetConfig": {
 																	"cpContentListRendererKey": "list-default",
 																	"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-																	"displayStyle": "ddmTemplate_APPS_SEARCH_RESULTS",
-																	"displayStyleGroupId": "3192483",
+																	"displayStyle": "ddmTemplate_SOLUTIONS-SEARCH-RESULTS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 																	"lfrAppShowShareWithFriendsLink": "false",
 																	"lfrFacebookApiKey": "",

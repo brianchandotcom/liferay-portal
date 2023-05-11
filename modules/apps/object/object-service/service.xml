@@ -889,5 +889,6 @@
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>
 		<exception>RequiredObjectRelationship</exception>
+		<exception>RequiredProperty</exception>
 	</exceptions>
 </service-builder>

@@ -45,6 +45,7 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
+import com.liferay.object.exception.RequiredPropertyException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -106,6 +107,8 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.encryptor.Encryptor;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -147,6 +150,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -154,6 +158,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -169,6 +174,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -178,6 +184,8 @@ import java.io.StringReader;
 import java.math.BigDecimal;
 
 import java.nio.charset.StandardCharsets;
+
+import java.security.Key;
 
 import java.sql.Blob;
 import java.sql.Clob;
@@ -196,6 +204,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.io.IOUtils;
 
@@ -1906,6 +1916,32 @@ public class ObjectEntryLocalServiceImpl
 		throw new IllegalArgumentException("Invalid function " + function);
 	}
 
+	private Key _getKey() throws PortalException {
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+
+			throw new RequiredPropertyException(
+				StringBundler.concat(
+					"The property ",
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
+					" is required for encrypted object fields"));
+		}
+
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
+
+			throw new RequiredPropertyException(
+				StringBundler.concat(
+					"The property ",
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
+					" is required for encrypted object fields"));
+		}
+
+		return new SecretKeySpec(
+			Base64.decode(PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY),
+			PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+	}
+
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean related, boolean reverse, FromStep fromStep)
@@ -2628,6 +2664,23 @@ public class ObjectEntryLocalServiceImpl
 
 			if (columnName.endsWith(StringPool.UNDERLINE)) {
 				columnName = columnName.substring(0, columnName.length() - 1);
+
+				ObjectField objectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinitionId, columnName);
+
+				if ((objectField != null) &&
+					objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+					try {
+						objects[i] = _encryptor.decrypt(
+							_getKey(), (String)objects[i]);
+					}
+					catch (EncryptorException encryptorException) {
+						throw new RuntimeException(encryptorException);
+					}
+				}
 			}
 
 			_putValue(javaTypeClass, columnName, objects[i], values);
@@ -2943,9 +2996,15 @@ public class ObjectEntryLocalServiceImpl
 
 		Object value = values.get(objectField.getName());
 
-		if (StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			_setColumn(
+				preparedStatement, index, column.getSQLType(),
+				_encryptor.encrypt(_getKey(), (String)value));
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
 			String valueString = String.valueOf(value);
 
@@ -3654,9 +3713,11 @@ public class ObjectEntryLocalServiceImpl
 				}
 			}
 		}
-		else if (StringUtil.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_STRING)) {
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) ||
+				 StringUtil.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			_validateTextMaxLength(
 				280, GetterUtil.getString(entry.getValue()),
@@ -3732,6 +3793,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;

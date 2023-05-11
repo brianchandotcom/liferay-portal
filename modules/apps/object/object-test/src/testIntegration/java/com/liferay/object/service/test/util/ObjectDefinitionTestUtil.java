@@ -69,6 +69,19 @@ public class ObjectDefinitionTestUtil {
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
 	}
 
+	public static ObjectDefinition addObjectDefinitionWithStorageType(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			String storageType, List<ObjectField> objectFields)
+		throws Exception {
+
+		return objectDefinitionLocalService.addCustomObjectDefinition(
+			TestPropsValues.getUserId(), false, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"A" + RandomTestUtil.randomString(), null, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectDefinitionConstants.SCOPE_COMPANY, storageType, objectFields);
+	}
+
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(
 			long userId, String className, String dbTableName,
 			Map<Locale, String> labelMap, String name,

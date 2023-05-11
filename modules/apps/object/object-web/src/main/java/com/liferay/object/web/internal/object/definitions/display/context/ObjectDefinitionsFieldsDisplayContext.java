@@ -145,7 +145,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 			ListUtil.filter(
 				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessTypes(),
 				objectFieldBusinessType ->
-					objectFieldBusinessType.isVisible() &&
+					objectFieldBusinessType.isVisible(getObjectDefinition()) &&
 					(!StringUtil.equals(
 						objectFieldBusinessType.getName(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) ||

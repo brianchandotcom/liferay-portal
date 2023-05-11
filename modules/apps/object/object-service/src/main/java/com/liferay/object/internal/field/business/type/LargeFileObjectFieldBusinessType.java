@@ -16,6 +16,7 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -60,7 +61,7 @@ public class LargeFileObjectFieldBusinessType
 	}
 
 	@Override
-	public boolean isVisible() {
+	public boolean isVisible(ObjectDefinition objectDefinition) {
 		return false;
 	}
 

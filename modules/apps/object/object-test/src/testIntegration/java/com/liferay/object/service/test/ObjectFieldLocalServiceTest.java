@@ -35,9 +35,11 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
+import com.liferay.object.exception.RequiredEncryptedObjectFieldPropertyException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
@@ -68,23 +70,30 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
+
+import java.security.Key;
+import java.security.SecureRandom;
 
 import java.sql.Connection;
 
@@ -95,6 +104,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.crypto.KeyGenerator;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -521,6 +532,70 @@ public class ObjectFieldLocalServiceTest {
 					).state(
 						true
 					).build())));
+
+		// Encrypted Object Field
+
+		_testEncryptedObjectField(
+			PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM", "AES");
+
+		_testEncryptedObjectField(
+			PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY);
+
+		KeyGenerator keyGenerator = KeyGenerator.getInstance(
+			PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+
+		keyGenerator.init(128, new SecureRandom());
+
+		Key key = keyGenerator.generateKey();
+
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY",
+			Base64.encode(key.getEncoded()));
+
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"ENCRYPTED_OBJECT_FIELD_RESTRICTED", true);
+
+		_assertFailure(
+			ObjectFieldBusinessTypeException.class,
+			"Encrypted object field is not available",
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					new EncryptedObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build())));
+
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"ENCRYPTED_OBJECT_FIELD_RESTRICTED", false);
+
+		_assertFailure(
+			ObjectFieldBusinessTypeException.class,
+			"Encrypted business type object field can only be created in " +
+				"object definitions with default storage type",
+			() -> ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
+				_objectDefinitionLocalService,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Arrays.asList(
+					new EncryptedObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build())));
+
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM", "");
+
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY", "");
 	}
 
 	@Test
@@ -535,6 +610,9 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldBusinessTypes) {
 
 			if (Objects.equals(
+					objectFieldBusinessType.getName(),
+					ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED) ||
+				Objects.equals(
 					objectFieldBusinessType.getName(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST) ||
 				Objects.equals(
@@ -1605,6 +1683,23 @@ public class ObjectFieldLocalServiceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _testEncryptedObjectField(String propKey) {
+		_assertFailure(
+			RequiredEncryptedObjectFieldPropertyException.class,
+			"The property " + propKey +
+				" is required for encrypted object fields",
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					new EncryptedObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build())));
 	}
 
 	private void _testUpdateCustomObjectField(ObjectField expectedObjectField)

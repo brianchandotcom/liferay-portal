@@ -789,6 +789,16 @@ public class PropsValues {
 	public static final String EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
+	public static final String ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM =
+		PropsUtil.get(PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+
+	public static final String ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY =
+		PropsUtil.get(PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY);
+
+	public static boolean ENCRYPTED_OBJECT_FIELD_RESTRICTED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.ENCRYPTED_OBJECT_FIELD_RESTRICTED));
+
 	public static final boolean ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.ENTERPRISE_PRODUCT_NOTIFICATION_ENABLED));

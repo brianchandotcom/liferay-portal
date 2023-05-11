@@ -30,6 +30,7 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
 import com.liferay.object.exception.RequiredObjectFieldException;
+import com.liferay.object.exception.RequiredPropertyException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -74,9 +75,11 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -583,6 +586,8 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField newObjectField = (ObjectField)oldObjectField.clone();
 
+		_validateEncryptedObjectField(
+			businessType, newObjectField.getObjectDefinitionId());
 		_validateExternalReferenceCode(
 			externalReferenceCode, newObjectField.getObjectFieldId(),
 			newObjectField.getCompanyId(),
@@ -716,6 +721,7 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		_validateEncryptedObjectField(businessType, objectDefinitionId);
 		_validateExternalReferenceCode(
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
@@ -1007,6 +1013,51 @@ public class ObjectFieldLocalServiceImpl
 			}
 
 			throw new ObjectFieldDBTypeException("Invalid DB type " + dbType);
+		}
+	}
+
+	private void _validateEncryptedObjectField(
+			String businessType, long objectDefinitionId)
+		throws PortalException {
+
+		if (!Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			return;
+		}
+
+		if (PropsValues.ENCRYPTED_OBJECT_FIELD_RESTRICTED) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encrypted object field is not available");
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (!objectDefinition.isDefaultStorageType()) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encrypted business type object field can only be created in " +
+					"object definitions with default storage type");
+		}
+
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
+
+			throw new RequiredPropertyException(
+				StringBundler.concat(
+					"The property ",
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
+					" is required for encrypted object fields"));
+		}
+
+		if (Validator.isNull(
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
+
+			throw new RequiredPropertyException(
+				StringBundler.concat(
+					"The property ",
+					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
+					" is required for encrypted object fields"));
 		}
 	}
 

@@ -1,0 +1,23 @@
+[
+	{
+		"addNewPages": "Yes",
+		"menuItems": [
+			{
+				"friendlyURL": "/home",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/customer-dashboard",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/publisher-dashboard",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "Primary Navigation"
+	}
+]

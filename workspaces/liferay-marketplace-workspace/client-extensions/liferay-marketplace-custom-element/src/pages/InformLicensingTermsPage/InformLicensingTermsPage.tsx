@@ -5,6 +5,11 @@ import taskCheckedIcon from '../../assets/icons/task_checked_icon.svg';
 import {Header} from '../../components/Header/Header';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
+import {
+	createProductSpecification,
+	createSpecification,
+	updateProductSpecification,
+} from '../../utils/api';
 
 import './InformLicensingTermsPage.scss';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
@@ -32,6 +37,7 @@ export function InformLicensingTermsPage({
 }: InformLicensingTermsPageProps) {
 	const [
 		{
+			appId,
 			appLicense,
 			appLicensePrice,
 			appNotes,
@@ -66,26 +72,32 @@ export function InformLicensingTermsPage({
 						icon={scheduleIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'perpetual'},
+								payload: {
+									id: appLicense.id,
+									value: 'Perpetual',
+								},
 								type: TYPES.UPDATE_APP_LICENSE,
 							});
 						}}
-						selected={appLicense === 'perpetual'}
+						selected={appLicense.value === 'Perpetual'}
 						title="Perpetual License"
 						tooltip="More Info"
 					/>
 
 					<RadioCard
 						description="License must be renewed annually."
-						disabled={priceModel === 'free'}
+						disabled={priceModel.value === 'Free'}
 						icon={pendingActionsIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'non-perpetual'},
+								payload: {
+									id: appLicense.id,
+									value: 'non-perpetual',
+								},
 								type: TYPES.UPDATE_APP_LICENSE,
 							});
 						}}
-						selected={appLicense === 'non-perpetual'}
+						selected={appLicense.value === 'non-perpetual'}
 						title="Non-perpetual license"
 						tooltip="More Info"
 					/>
@@ -101,7 +113,7 @@ export function InformLicensingTermsPage({
 				<div className="informing-licensing-terms-page-day-trial-container">
 					<RadioCard
 						description="Offer a 30-day free trial for this app"
-						disabled={priceModel === 'free'}
+						disabled={priceModel.value === 'Free'}
 						icon={taskCheckedIcon}
 						onChange={() => {
 							dispatch({
@@ -135,16 +147,56 @@ export function InformLicensingTermsPage({
 				onClickContinue={() => {
 					const submitLicenseTermsPage = async () => {
 						const versionSkuJSON = await getSKUById(skuVersionId);
+						if (appLicense.id) {
+							updateProductSpecification({
+								body: {
+									specificationKey: 'license-type',
+									value:
+										appLicense.value === 'Perpetual'
+											? {en_US: 'Perpetual'}
+											: {en_US: 'Subscription'},
+								},
+								id: appLicense.id,
+							});
+						}
+						else {
+							const dataSpecification = await createSpecification(
+								{
+									body: {
+										key: 'license-type',
+										title: {en_US: 'License Type'},
+									},
+								}
+							);
+
+							const {id} = await createProductSpecification({
+								appId,
+								body: {
+									productId: appProductId,
+									specificationId: dataSpecification.id,
+									specificationKey: dataSpecification.key,
+									value:
+										appLicense.value === 'Perpetual'
+											? {en_US: 'Perpetual'}
+											: {en_US: 'Subscription'},
+								},
+							});
+
+							dispatch({
+								payload: {id, value: appLicense.value},
+								type: TYPES.UPDATE_APP_LICENSE,
+							});
+						}
 
 						if (
-							priceModel === 'free' ||
-							appLicense === 'perpetual'
+							priceModel.value === 'Free' ||
+							appLicense.value === 'Perpetual'
 						) {
 							const skuBody = {
 								...versionSkuJSON,
 								neverExpire: true,
 								price:
-									appLicense === 'perpetual'
+									appLicense.value === 'Perpetual'
 										? appLicensePrice
 										: 0,
 								published: true,
@@ -153,7 +205,7 @@ export function InformLicensingTermsPage({
 
 							await patchSKUById(skuVersionId, skuBody);
 						}
-						else if (appLicense === 'non-perpetual') {
+						else if (appLicense.value === 'non-perpetual') {
 							const skuBody = {
 								...versionSkuJSON,
 								neverExpire: false,

@@ -23,7 +23,7 @@ export interface InitialStateProps {
 	appERC: string;
 	appId: string;
 	appInstallationGuideURL: Specification;
-	appLicense: string;
+	appLicense: Specification;
 	appLicensePrice: string;
 	appLogo: UploadedFile;
 	appName: string;
@@ -40,7 +40,7 @@ export interface InitialStateProps {
 	dayTrial: string;
 	optionId: number;
 	optionValuesId: {noOptionId: number; yesOptionId: number};
-	priceModel: string;
+	priceModel: Specification;
 	productOptionId: number;
 	publisherWebsiteURL: Specification;
 	skuTrialId: number;
@@ -50,10 +50,10 @@ export interface InitialStateProps {
 
 const initialState = {
 	appBuild: 'upload',
-	appLicense: 'perpetual',
+	appLicense: {value: 'Perpetual'},
 	appType: {value: 'cloud'},
 	dayTrial: 'no',
-	priceModel: 'paid',
+	priceModel: {value: 'Paid'},
 } as InitialStateProps;
 
 interface AppContextProps extends Array<InitialStateProps | Function> {

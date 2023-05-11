@@ -44,6 +44,7 @@ export function ReviewAndSubmitAppPage({
 			appProductId,
 			appStorefrontImages,
 			buildZIPFiles,
+			dayTrial,
 			priceModel,
 		},
 		dispatch,
@@ -99,25 +100,28 @@ export function ReviewAndSubmitAppPage({
 				appProductId,
 			});
 
-			dispatch({
-				payload: {
-					value: skuResponse.items[0]?.price === 0 ? 'Free' : 'Paid',
-				},
-				type: TYPES.UPDATE_APP_PRICE_MODEL,
-			});
-
 			const pricing = {
 				icon: brightnessEmptyIcon,
 				section: 'Pricing',
-				title: priceModel,
+				title: priceModel.value,
 			};
 
-			dispatch({
-				payload: {
-					value: skuResponse.items[0]?.price,
-				},
-				type: TYPES.UPDATE_APP_LICENSE_PRICE,
-			});
+			if (dayTrial === 'yes' && priceModel.value === 'Paid') {
+				dispatch({
+					payload: {
+						value: skuResponse.items[1].price,
+					},
+					type: TYPES.UPDATE_APP_LICENSE_PRICE,
+				});
+			}
+			else {
+				dispatch({
+					payload: {
+						value: skuResponse.items[0].price,
+					},
+					type: TYPES.UPDATE_APP_LICENSE_PRICE,
+				});
+			}
 
 			const productSubscriptionConfigurationResponse =
 				await getProductSubscriptionConfiguration({
@@ -304,7 +308,7 @@ export function ReviewAndSubmitAppPage({
 						{reviewAndSubmitAppPageItems.map((item, index) => {
 							const cardTitle = () => {
 								if (item.section === 'Pricing') {
-									return priceModel;
+									return priceModel.value;
 								}
 								else if (item.section === 'Licensing') {
 									return item.title;
@@ -316,7 +320,7 @@ export function ReviewAndSubmitAppPage({
 
 							const cardDescription = () => {
 								if (item.section === 'Pricing') {
-									if (priceModel === 'free') {
+									if (priceModel.value === 'Free') {
 										return 'The app is offered in the Marketplace with no charge.';
 									}
 									else {

@@ -153,7 +153,8 @@ export function CardSection({
 					icon={icon}
 					title={cardTitle as string}
 				>
-					{sectionName === 'Licensing' && priceModel !== 'free' ? (
+					{sectionName === 'Licensing' &&
+					priceModel.value !== 'Free' ? (
 						<LicensePriceChildren
 							currency={priceData.currency}
 							quantity={priceData.quantity}

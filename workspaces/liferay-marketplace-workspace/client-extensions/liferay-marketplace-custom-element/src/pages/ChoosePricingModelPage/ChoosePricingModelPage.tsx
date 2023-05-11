@@ -3,6 +3,11 @@ import creditCardIcon from '../../assets/icons/credit_card_icon.svg';
 import {Header} from '../../components/Header/Header';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
+import {
+	createProductSpecification,
+	createSpecification,
+	updateProductSpecification,
+} from '../../utils/api';
 
 import './ChoosePricingModelPage.scss';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
@@ -18,7 +23,8 @@ export function ChoosePricingModelPage({
 	onClickBack,
 	onClickContinue,
 }: ChoosePricingModelPageProps) {
-	const [{priceModel}, dispatch] = useAppContext();
+	const [{appId, appLicense, appProductId, priceModel}, dispatch] =
+		useAppContext();
 
 	return (
 		<div className="choose-pricing-model-page-container">
@@ -39,11 +45,11 @@ export function ChoosePricingModelPage({
 						icon={brightnessEmptyIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'free'},
+								payload: {id: priceModel.id, value: 'Free'},
 								type: TYPES.UPDATE_APP_PRICE_MODEL,
 							});
 						}}
-						selected={priceModel === 'free'}
+						selected={priceModel.value === 'Free'}
 						title="FREE"
 						tooltip="More Info"
 					/>
@@ -53,11 +59,11 @@ export function ChoosePricingModelPage({
 						icon={creditCardIcon}
 						onChange={() => {
 							dispatch({
-								payload: {value: 'paid'},
+								payload: {id: priceModel.id, value: 'Paid'},
 								type: TYPES.UPDATE_APP_PRICE_MODEL,
 							});
 						}}
-						selected={priceModel === 'paid'}
+						selected={priceModel.value === 'Paid'}
 						title="Paid"
 						tooltip="More Info"
 					/>
@@ -66,7 +72,72 @@ export function ChoosePricingModelPage({
 
 			<NewAppPageFooterButtons
 				onClickBack={() => onClickBack()}
-				onClickContinue={() => onClickContinue()}
+				onClickContinue={() => {
+					const submitPriceModel = async () => {
+						if (priceModel.id) {
+							updateProductSpecification({
+								body: {
+									specificationKey: 'price-model',
+									value:
+										priceModel.value === 'Free'
+											? {en_US: 'Free'}
+											: {en_US: 'Paid'},
+								},
+								id: priceModel.id,
+							});
+
+							if (priceModel.value === 'Free') {
+								dispatch({
+									payload: {
+										id: appLicense?.id,
+										value: 'Perpetual',
+									},
+									type: TYPES.UPDATE_APP_LICENSE,
+								});
+
+								dispatch({
+									payload: {value: 'no'},
+									type: TYPES.UPDATE_APP_TRIAL_INFO,
+								});
+
+								dispatch({
+									payload: {value: 0},
+									type: TYPES.UPDATE_APP_LICENSE_PRICE,
+								});
+							}
+						}
+						else {
+							const dataSpecification = await createSpecification(
+								{
+									body: {
+										key: 'price-model',
+										title: {en_US: 'Price Model'},
+									},
+								}
+							);
+
+							const {id} = await createProductSpecification({
+								appId,
+								body: {
+									productId: appProductId,
+									specificationId: dataSpecification.id,
+									specificationKey: dataSpecification.key,
+									value:
+										priceModel.value === 'Free'
+											? {en_US: 'Free'}
+											: {en_US: 'Paid'},
+								},
+							});
+
+							dispatch({
+								payload: {id, value: priceModel.value},
+								type: TYPES.UPDATE_APP_PRICE_MODEL,
+							});
+						}
+					};
+					submitPriceModel();
+					onClickContinue();
+				}}
 			/>
 		</div>
 	);

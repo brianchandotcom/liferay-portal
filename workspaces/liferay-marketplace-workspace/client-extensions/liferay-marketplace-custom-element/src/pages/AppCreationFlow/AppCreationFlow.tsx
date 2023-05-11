@@ -227,7 +227,7 @@ export function AppCreationFlow() {
 							setCurrentFlow('pricing');
 						}}
 						onClickContinue={() => {
-							if (priceModel !== 'free') {
+							if (priceModel.value !== 'Free') {
 								setAppFlowListState({
 									checkedItems: [
 										'create',
@@ -301,7 +301,7 @@ export function AppCreationFlow() {
 				{currentFlow === 'support' && (
 					<ProvideAppSupportAndHelpPage
 						onClickBack={() => {
-							if (priceModel !== 'free') {
+							if (priceModel.value !== 'Free') {
 								setAppFlowListState({
 									checkedItems: [
 										'create',

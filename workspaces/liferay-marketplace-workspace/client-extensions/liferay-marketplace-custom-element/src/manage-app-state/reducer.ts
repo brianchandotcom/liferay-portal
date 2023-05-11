@@ -55,9 +55,15 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return {...state, appInstallationGuideURL: {id, value}};
 		}
 		case TYPES.UPDATE_APP_LICENSE: {
-			const appLicense = action.payload.value;
+			const {id, value} = action.payload;
 
-			return {...state, appLicense};
+			return {
+				...state,
+				appLicense: {
+					id,
+					value,
+				},
+			};
 		}
 		case TYPES.UPDATE_APP_LICENSE_PRICE: {
 			const appLicensePrice = action.payload.value;
@@ -104,9 +110,15 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 		case TYPES.UPDATE_APP_PRICE_MODEL: {
-			const priceModel = action.payload.value;
+			const {id, value} = action.payload;
 
-			return {...state, priceModel};
+			return {
+				...state,
+				priceModel: {
+					id,
+					value,
+				},
+			};
 		}
 		case TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL: {
 			const {id, value} = action.payload;

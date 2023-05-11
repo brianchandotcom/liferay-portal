@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.security.content.security.policy.internal.constants.ContentSecurityPolicyConstants;
@@ -66,6 +67,12 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
+		if (_isExcludedURIPath(httpServletRequest)) {
+			filterChain.doFilter(httpServletRequest, httpServletResponse);
+
+			return;
+		}
+
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			_getContentSecurityPolicyConfiguration(httpServletRequest);
 
@@ -100,6 +107,32 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
+	}
+
+	private boolean _isExcludedURIPath(HttpServletRequest httpServletRequest) {
+		String requestURI = httpServletRequest.getRequestURI();
+
+		if (Validator.isNull(requestURI)) {
+			return false;
+		}
+
+		requestURI = StringUtil.toLowerCase(requestURI);
+
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
+			_getContentSecurityPolicyConfiguration(httpServletRequest);
+
+		String[] excludedURIPaths =
+			contentSecurityPolicyConfiguration.excludedURIPaths();
+
+		for (String s : excludedURIPaths) {
+			if (Validator.isNotNull(s) &&
+				requestURI.startsWith(StringUtil.toLowerCase(s))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

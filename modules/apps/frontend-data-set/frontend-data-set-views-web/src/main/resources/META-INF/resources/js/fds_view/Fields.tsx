@@ -390,6 +390,10 @@ const EditFDSFieldModalContent = ({
 		onSave({editedFDSField});
 	};
 
+	const fdsFieldNameInputId = `${namespace}fdsFieldNameInput`;
+	const fdsFieldLabelInputId = `${namespace}fdsFieldLabelInput`;
+	const fdsFieldRendererSelectId = `${namespace}fdsFieldRendererSelectId`;
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -401,39 +405,39 @@ const EditFDSFieldModalContent = ({
 
 			<ClayModal.Body>
 				<ClayForm.Group>
-					<label htmlFor={`${namespace}fdsFieldNameInput`}>
+					<label htmlFor={fdsFieldNameInputId}>
 						{Liferay.Language.get('name')}
 					</label>
 
 					<ClayInput
 						disabled
-						id={`${namespace}fdsFieldNameInput`}
+						id={fdsFieldNameInputId}
 						type="text"
 						value={fdsField.name}
 					/>
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor={`${namespace}fdsFieldLabelInput`}>
+					<label htmlFor={fdsFieldLabelInputId}>
 						{Liferay.Language.get('label')}
 					</label>
 
 					<ClayInput
 						defaultValue={fdsField.label}
-						id={`${namespace}fdsFieldLabelInput`}
+						id={fdsFieldLabelInputId}
 						ref={fdsFieldLabelRef}
 						type="text"
 					/>
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor={`${namespace}fdsFieldRenderer`}>
+					<label htmlFor={fdsFieldRendererSelectId}>
 						{Liferay.Language.get('cell-renderer')}
 					</label>
 
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('cell-renderer')}
-						id={`${namespace}fdsFieldRenderer`}
+						id={fdsFieldRendererSelectId}
 						onChange={(event) => {
 							setSelectedFDSFieldRenderer(event.target.value);
 						}}

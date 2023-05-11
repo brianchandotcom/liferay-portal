@@ -164,8 +164,7 @@ public class SearchRequestExecutorFixture {
 			elasticsearchFilterTranslatorFixture.
 				getElasticsearchFilterTranslator());
 		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler,
-			"_legacyQueryToQueryBuilderTranslator",
+			commonSearchSourceBuilderAssembler, "_legacyQueryTranslator",
 			legacyElasticsearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler,

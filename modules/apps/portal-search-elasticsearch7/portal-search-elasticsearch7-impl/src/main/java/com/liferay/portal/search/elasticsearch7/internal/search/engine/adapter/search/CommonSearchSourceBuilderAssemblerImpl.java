@@ -23,7 +23,6 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.legacy.query.QueryToQueryBuilderTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
@@ -533,8 +532,8 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			return null;
 		}
 
-		QueryBuilder queryBuilder =
-			_legacyQueryToQueryBuilderTranslator.translate(query, null);
+		QueryBuilder queryBuilder = _legacyQueryTranslator.translate(
+			query, null);
 
 		if ((query.getPreBooleanFilter() == null) ||
 			(query instanceof com.liferay.portal.kernel.search.BooleanQuery)) {
@@ -577,8 +576,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private FilterTranslator<QueryBuilder> _filterTranslator;
 
-	@Reference
-	private QueryToQueryBuilderTranslator _legacyQueryToQueryBuilderTranslator;
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private com.liferay.portal.kernel.search.query.QueryTranslator<QueryBuilder>
+		_legacyQueryTranslator;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>

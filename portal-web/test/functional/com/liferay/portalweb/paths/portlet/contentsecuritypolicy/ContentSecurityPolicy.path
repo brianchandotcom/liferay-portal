@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>ContentSecurityPolicy</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ContentSecurityPolicy</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>CONTENT_SECURITY_POLICY_TEXT</td>
+	<td>//div[contains(@data-field-name,'policy')]//div//textarea</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

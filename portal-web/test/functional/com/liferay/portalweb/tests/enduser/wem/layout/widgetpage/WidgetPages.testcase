@@ -3,32 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			SiteTemplates.tearDownCP();
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			JSONUser.tearDownNonAdminUsers();
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -40,7 +28,7 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a page based in global search template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Page Name",
@@ -50,7 +38,7 @@ definition {
 		task ("View portlets are shown in search template page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var portletName : list "Search Bar,Suggestions,Site Facet,Type Facet,Tag Facet,Category Facet,Folder Facet,User Facet,Modified Facet,Search Results,Search Options") {
 				Portlet.viewDefaultTitle(portletName = ${portletName});
@@ -62,7 +50,7 @@ definition {
 	@priority = 3
 	test AddPageWithEscapeCharacter {
 		task ("Add a page with escape characters name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(pageName = "Test's Page Name");
 		}
@@ -76,21 +64,21 @@ definition {
 	test AddPageWithMultipleChildPages {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add three children pages") {
 			for (var i : list "1,2,3") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Child Page ${i}",
 					parentLayoutName = "Test Page Name");
 			}
 		}
 
 		task ("View parent page is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
 		}
@@ -111,19 +99,19 @@ definition {
 
 		task ("Add a private widget page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("Add a child page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Child Page",
 				parentLayoutName = "Test Private Page");
 		}
 
 		task ("View child page is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(
 				depth = 2,
@@ -139,14 +127,14 @@ definition {
 
 		task ("Add a private widget page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("Add a Blogs portlet to private page") {
 			Navigator.gotoPrivateSitePage(
 				pageName = "Test Private Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.addPG(portletName = "Blogs");
 		}
@@ -161,105 +149,20 @@ definition {
 	test AddWidgetToPublicPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a Blogs portlet to public page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.addPG(portletName = "Blogs");
 		}
 
 		task ("View Blogs portlet is shown") {
 			Portlet.viewPG(portletName = "Blogs");
-		}
-	}
-
-	@description = "Cannot reset changes as user without permissions."
-	@priority = 3
-	test CannotResetChangesAsUserWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Site and Page Templates";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add a site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-		}
-
-		task ("Add a site based on template") {
-			HeadlessSite.addSite(
-				siteName = "Site Name",
-				templateName = "Site Template Name",
-				templateType = "Site Template");
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = "Site Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
-		}
-
-		task ("View Home page is shown") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			Page.viewDefaultSiteTemplatePagesPG(
-				pageName = "Home",
-				siteName = "Site Name");
-		}
-
-		task ("Sign in as Test Test") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-		}
-
-		task ("Add a Blogs widget to home page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			PageEditor.addWidget(portletName = "Blogs");
-		}
-
-		task ("Publish the page") {
-			PageEditor.publish();
-		}
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
-		}
-
-		task ("View info icon is not shown") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Home",
-				siteName = "Site Name");
-
-			SiteTemplates.viewNoInfoMessage();
-		}
-
-		task ("Delete new site by Test Test") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 
@@ -271,14 +174,14 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("View the default page layout template") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			WidgetPages.viewPageLayout(
 				pageColumnNumberList = "1,2",
@@ -288,13 +191,13 @@ definition {
 		task ("Change the layout template then view the layout is applied to page") {
 			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns,1-3-2 Columns,2-1-2 Columns,2-2 Columns,3-2-3 Columns") {
 				JSONLayout.updateLayoutTemplateOfPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					layoutTemplate = ${layoutTemplate});
 
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
 
@@ -310,14 +213,14 @@ definition {
 
 		task ("Add a Full Page Application page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "full_page_application");
 		}
 
 		task ("Configure the page with all available portlets then view the portlet is shown") {
 			for (var portletName : list "Blogs,Wiki,Media Gallery,Message Boards,RSS Publisher,Documents and Media,Form,Application Authorization Request") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+				PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 				PagesAdmin.configurePage(
 					pageName = "Test Page Name",
@@ -326,7 +229,7 @@ definition {
 
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				Portlet.viewPG(portletName = ${portletName});
 
@@ -344,13 +247,13 @@ definition {
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
 
 		task ("Edit the name of the first page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -365,7 +268,7 @@ definition {
 
 		task ("Change the layout template of the second page") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2",
 				layoutTemplate = "1 Column");
 		}
@@ -394,12 +297,12 @@ definition {
 
 		task ("Given a page designer accesses to the Add menu on a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Click(locator1 = "ControlMenu#ADD");
 		}
@@ -409,7 +312,7 @@ definition {
 		}
 
 		task ("Then the Add menu persists the tab selection in the same browser session") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -426,12 +329,12 @@ definition {
 	test PersistDefaultAddMenuTabSelectionInTheNewBrowserSession {
 		task ("Given a page designer selects the Content tab on the Add menu") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Click(locator1 = "ControlMenu#ADD");
 
@@ -441,7 +344,7 @@ definition {
 		task ("When the page designer accesses to the Add menu in a new browser session") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(locator1 = "${baseURL}/web/test-site-name/test-page-name");
+			Open.openInTheNewTab(locator1 = "${baseURL}/web/${siteURLKey}/test-page-name");
 
 			Click(locator1 = "ControlMenu#ADD");
 		}
@@ -456,12 +359,12 @@ definition {
 	test ViewLanguageIdInConfigurationPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("View default locale is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",

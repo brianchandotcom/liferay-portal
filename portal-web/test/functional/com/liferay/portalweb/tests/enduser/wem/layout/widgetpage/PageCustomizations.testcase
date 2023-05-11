@@ -1,53 +1,55 @@
 @component-name = "portal-wcm"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Personalization and Customization";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-
-			Role.tearDownCP();
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			JSONUser.tearDownNonAdminUsers();
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 	}
 
 	@description = "The user with site member permissions can add and remove a portlet from customizable view."
 	@priority = 4
 	test AddAndRemoveWidgetAsSiteMember {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = 1,
@@ -57,7 +59,7 @@ definition {
 		task ("View Page without my customizations") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 		}
@@ -65,39 +67,26 @@ definition {
 		task ("Add an Asset Publisher and Language Selector widget to page") {
 			for (var widgetName : list "Asset Publisher,Language Selector") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a Web Content Display widget to page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.addPG(portletName = "Web Content Display");
 		}
@@ -120,53 +109,40 @@ definition {
 	@description = "A new user can add a widget portlet with customize permission."
 	@priority = 4
 	test AddWidgetAsUserWithCustomizePermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		var roleKey = StringUtil.randomString(8);
 
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = 1,
 				pageName = "Test Page Name");
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Add a new regular role") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+			JSONRole.addRegularRole(roleTitle = ${roleKey});
 		}
 
 		task ("Define the permissions of new role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "CUSTOMIZE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Regular Role Name");
+				roleTitle = ${roleKey});
 		}
 
 		task ("Assign the regular role to new user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a Navigation Menu widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Menu Display");
 		}
@@ -174,7 +150,7 @@ definition {
 		task ("View Navigation Menu widget is shown") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewSpecificPG(portletName = "Menu Display");
 		}
@@ -183,10 +159,8 @@ definition {
 	@description = "The configurations applied to a customizable page should not affect all users."
 	@priority = 4
 	test PortletConfigurationChangesWithinCustomizableColumnShouldNotAffectAllUsers {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = 1,
@@ -195,7 +169,7 @@ definition {
 
 		task ("Add a Wiki widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Wiki");
 		}
@@ -203,7 +177,7 @@ definition {
 		task ("View customize is enabled to page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.viewCustomizablePagePG();
 		}
@@ -214,33 +188,20 @@ definition {
 			Portlet.viewSpecificPG(portletName = "Wiki");
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Enable allow users to add wiki to any website") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.configureSharingPG(
 				checkAnyWebSiteToggle = "true",
@@ -254,7 +215,7 @@ definition {
 		task ("View allow user to add wiki to any website is disabled to Test Test") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewConfigureSharingPG(
 				checkedAnyWebSiteToggle = "false",
@@ -265,8 +226,9 @@ definition {
 	@description = "User with site member and customize permission will only see portlets in customizable view."
 	@priority = 4
 	test SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.name.skip.portal.instance = "PageCustomizations#SiteMemberWithCustomizablePagePermissionsWillOnlySeeWidgetsInCustomizableView";
+
+		var roleKey = StringUtil.randomString(8);
 
 		task ("Clean up permissions in server administration") {
 			ApplicationsMenu.gotoPortlet(
@@ -278,7 +240,7 @@ definition {
 		}
 
 		task ("Enable customizable to page then select the first column") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = 1,
@@ -288,7 +250,7 @@ definition {
 		task ("View Page without my customizations") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 		}
@@ -296,56 +258,43 @@ definition {
 		task ("Add a Message Boards and Language Selector widgets to page") {
 			for (var widgetName : list "Message Boards,Language Selector") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Add a new regular role") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
+			JSONRole.addRegularRole(roleTitle = ${roleKey});
 		}
 
-		task ("Define the permissions of regular role") {
+		task ("Define the permissions of new role") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "CUSTOMIZE",
 				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Regular Role Name");
+				roleTitle = ${roleKey});
 		}
 
 		task ("Assign the regular role to new user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View portlets are shown in page without customization") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 
@@ -369,25 +318,19 @@ definition {
 		}
 
 		task ("Define new permissions of regular role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_TO_PAGE",
-				resourceName = "com_liferay_message_boards_web_portlet_MBPortlet",
-				roleTitle = "Regular Role Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_TO_PAGE",
-				resourceName = "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet",
-				roleTitle = "Regular Role Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_message_boards_web_portlet_MBPortlet,ADD_TO_PAGE:com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet,ADD_TO_PAGE",
+				roleTitle = ${roleKey});
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View portlets are shown in page without my customizations") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.configureCustomization(menuItem = "View Page without my customizations");
 

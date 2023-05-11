@@ -4,30 +4,43 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
 
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 	}
 
@@ -36,42 +49,25 @@ definition {
 	test GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation {
 		property test.name.skip.portal.instance = "PagesAdminWithPermissions#GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation";
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Assign the user to site") {
-			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
-		}
+		var roleKey = StringUtil.randomString(8);
 
 		task ("Add a regular role") {
 			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name",
-				roleTitle = "Roles Regrole Name");
+				roleKey = ${roleKey},
+				roleTitle = ${roleKey});
 		}
 
 		task ("Define the permissions of regular role") {
 			Permissions.definePermissionsViaJSONAPI(
 				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW:com.liferay.portal.kernel.model.Group,ADD_COMMUNITY,ADD_LAYOUT,ADD_LAYOUT_BRANCH,ADD_LAYOUT_SET_BRANCH,ASSIGN_MEMBERS,ASSIGN_USER_ROLES,CONFIGURE_PORTLETS,DELETE,EXPORT_IMPORT_LAYOUTS,EXPORT_IMPORT_PORTLET_INFO,MANAGE_ANNOUNCEMENTS,MANAGE_ARCHIVED_SETUPS,MANAGE_LAYOUTS,MANAGE_STAGING,MANAGE_SUBGROUPS,MANAGE_TEAMS,PERMISSIONS,PREVIEW_IN_DEVICE,PUBLISH_PORTLET_INFO,PUBLISH_STAGING,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,VIEW_STAGING:com.liferay.portal.kernel.model.Layout,ADD_DISCUSSION,ADD_LAYOUT,CONFIGURE_PORTLETS,CUSTOMIZE,DELETE,DELETE_DISCUSSION,PERMISSIONS,UPDATE,UPDATE_DISCUSSION,UPDATE_LAYOUT_CONTENT,VIEW",
-				roleTitle = "Roles Regrole Name",
+				roleTitle = ${roleKey},
 				roleType = "regular");
 		}
 
 		task ("Assign regular role to the user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Grant permissions for only Owner in search global template") {
@@ -95,11 +91,11 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View global search template is not shown when page creation") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -122,17 +118,17 @@ definition {
 			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
 				addOrRemoveViewPermission = "Add",
 				permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "roles-regrole-name");
+				roleTitle = ${roleKey});
 
 			IFrame.closeFrame();
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View global search template is shown when page creation") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -145,69 +141,31 @@ definition {
 	@description = "This is a test for LPS-152446. When a user without edit permissions clicks a content page in page administration, the page is opened in view mode."
 	@priority = 4
 	test NavigateToViewModeWhenClickOnContentPageItemAsUserWithoutEditPermission {
+		var roleKey = StringUtil.randomString(8);
+
 		task ("Given a marketer without edit permission has a content page") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-
-			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONRole.addSiteRole(
-				roleKey = "Marketer",
-				roleTitle = "Marketer");
+				roleKey = ${roleKey},
+				roleTitle = ${roleKey});
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seo",
-				roleTitle = "Marketer",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION:com.liferay.portal.kernel.model.Layout,VIEW:com.liferay.layout.seo,VIEW",
+				roleTitle = ${roleKey},
 				roleType = "site");
 
 			JSONRole.assignSiteRoleToUser(
-				groupName = "Test Site Name",
-				roleTitle = "Marketer",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -217,11 +175,9 @@ definition {
 		}
 
 		task ("When the marketer clicks on the content page item in Pages admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -237,77 +193,37 @@ definition {
 				text = "Heading Example");
 
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
-
-			JSONRole.deleteRole(roleTitle = "Marketer");
 		}
 	}
 
 	@description = "This is a test for LPS-152446. When a user without edit permissions searches for a content page in pages administration, and then clicks on it in the results, the page is opened in view mode."
 	@priority = 4
 	test NavigateToViewModeWhenClickOnContentPageTitleFromSearchResultsAsUserWithoutEditPermission {
+		var roleKey = StringUtil.randomString(8);
+
 		task ("Given a marketer without edit permission has a content page") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-
-			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONRole.addSiteRole(
-				roleKey = "Marketer",
-				roleTitle = "Marketer");
+				roleKey = ${roleKey},
+				roleTitle = ${roleKey});
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seo",
-				roleTitle = "Marketer",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION:com.liferay.portal.kernel.model.Layout,VIEW:com.liferay.layout.seo,VIEW",
+				roleTitle = ${roleKey},
 				roleType = "site");
 
 			JSONRole.assignSiteRoleToUser(
-				groupName = "Test Site Name",
-				roleTitle = "Marketer",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -317,11 +233,9 @@ definition {
 		}
 
 		task ("When the marketer clicks on the content page title in search results of Pages admin") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Test Page Name");
 
@@ -339,8 +253,6 @@ definition {
 				text = "Heading Example");
 
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
-
-			JSONRole.deleteRole(roleTitle = "Marketer");
 		}
 	}
 
@@ -352,12 +264,12 @@ definition {
 
 		task ("Add widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Uncheck view permission for guest then verify checkbox in unchecked") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Permissions",

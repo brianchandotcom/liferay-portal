@@ -3,23 +3,19 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Page Administration";
 	property testray.main.component.name = "Page Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+		task ("Sign in") {
+			User.firstLoginPG();
 		}
-		else {
-			ClientExtensionGeneral.tearDown();
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -27,33 +23,31 @@ definition {
 	@priority = 3
 	test JSCanBeCreated {
 		task ("Given a site administrator accesses to the Remote Apps admin") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
-
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Text Color",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "application/javascript",
 				sourceFileName = "TextColor.js");
 
 			var url = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Text Color",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("When the site administrator creates a JS remote app") {
+			var entryName = StringUtil.randomString(8);
+
 			ClientExtensionGeneral.addType(type = "Add JS");
 
 			ClientExtensionGeneral.addApp(
-				entryName = "Text Color",
+				entryName = ${entryName},
 				entryURL = ${url});
 		}
 
 		task ("Then the site administrator sees the created JS remote app") {
-			ClientExtensionGeneral.viewTableEntryName(entryName = "Text Color");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			ClientExtensionGeneral.viewTableEntryName(entryName = ${entryName});
 		}
 	}
 
@@ -61,33 +55,31 @@ definition {
 	@priority = 3
 	test ThemeCSSCanBeCreated {
 		task ("Given a site administrator accesses to the Remote Apps admin") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
-
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Font Family",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "text/css",
 				sourceFileName = "font_family.css");
 
 			var url = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Font Family",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("When the site administrator create a Theme CSS remote app") {
+			var entryName = StringUtil.randomString(8);
+
 			ClientExtensionGeneral.addType(type = "Add Theme CSS");
 
 			ClientExtensionGeneral.addApp(
-				entryName = "Font Family",
+				entryName = ${entryName},
 				mainURL = ${url});
 		}
 
 		task ("Then the site administrator sees the created Theme CSS remote app") {
-			ClientExtensionGeneral.viewTableEntryName(entryName = "Font Family");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			ClientExtensionGeneral.viewTableEntryName(entryName = ${entryName});
 		}
 	}
 

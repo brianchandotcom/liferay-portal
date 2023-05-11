@@ -4,88 +4,75 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+	static var randomRoleKey = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a new user") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
-		task ("Assign the new user to site") {
-			JSONGroup.assignUserToGroup(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a new site role") {
-			JSONRole.addSiteRole(roleTitle = "Page Author");
+			JSONRole.addSiteRole(
+				roleKey = ${randomRoleKey},
+				roleTitle = ${randomRoleKey});
 		}
 
 		task ("Define the permissions of new site role") {
-			for (var resourceAction : list "UPDATE,UPDATE_LAYOUT_CONTENT,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceAction},
-					resourceName = "com.liferay.portal.kernel.model.Layout",
-					roleTitle = "Page Author",
-					roleType = "site");
-			}
-
-			for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceAction},
-					resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-					roleTitle = "Page Author",
-					roleType = "site");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seo",
-				roleTitle = "Page Author",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Page Author",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE,UPDATE_LAYOUT_CONTENT,VIEW:com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL,VIEW:com.liferay.layout.seo,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION",
+				roleTitle = ${randomRoleKey},
 				roleType = "site");
 		}
 
 		task ("Assign site role to new user") {
 			JSONGroup.assignGroupRoleToUser(
-				groupName = "Test Site Name",
-				roleTitle = "Page Author",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a content page with Heading fragment") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -95,7 +82,7 @@ definition {
 		}
 
 		task ("Enable Single Approver for Content Page") {
-			Workflow.openWorkflowAdmin(siteURLKey = "test-site-name");
+			Workflow.openWorkflowAdmin(siteURLKey = StringUtil.toLowerCase(${randomSiteName}));
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
@@ -103,13 +90,13 @@ definition {
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Edit inline text of Heading fragment then submit for application") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.gotoPageEditor();
 
@@ -122,29 +109,12 @@ definition {
 		}
 
 		task ("View pending status is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,
 				pageName = "Test Page Name",
 				status = "Pending");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
-
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONRole.deleteRole(roleTitle = "Page Author");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -156,7 +126,7 @@ definition {
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -181,7 +151,7 @@ definition {
 		}
 
 		task ("View pending status is not shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			AssertElementNotPresent(
 				index = 2,
@@ -194,7 +164,7 @@ definition {
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -223,11 +193,11 @@ definition {
 		}
 
 		task ("View page author can edit page at view mode after rejected") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -238,7 +208,7 @@ definition {
 		}
 
 		task ("View pending status is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,
@@ -262,7 +232,7 @@ definition {
 		}
 
 		task ("View page author can preview the modification") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,
@@ -293,7 +263,7 @@ definition {
 		task ("View reviewer can preview the modification") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,
@@ -327,9 +297,9 @@ definition {
 		}
 
 		task ("View peding status is not shown as page author") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			AssertElementNotPresent(
 				index = 2,
@@ -348,7 +318,7 @@ definition {
 		task ("View page author can edit after approve") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 
@@ -376,7 +346,7 @@ definition {
 		task ("View reviewer can preview modification of content page") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,
@@ -398,7 +368,7 @@ definition {
 		task ("View reviewer can edit after submit") {
 			AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
 
@@ -411,7 +381,7 @@ definition {
 				id = "text",
 				text = "Modified text");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,
@@ -437,7 +407,7 @@ definition {
 		task ("View the Heading fragment still displays original text for public") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -448,7 +418,7 @@ definition {
 		task ("View page author can not edit again after submit") {
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageStatus(
 				index = 2,

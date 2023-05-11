@@ -3,21 +3,16 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
+		task ("Sign in") {
 			User.firstLoginPG();
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
 		}
 	}
 
@@ -26,11 +21,11 @@ definition {
 	test EditFriendlyURLOfPageSetInStagingSite {
 		task ("Given a page admin has a page set with child pages") {
 			HeadlessSite.addSite(
-				siteName = "Site Name",
+				siteName = ${randomSiteName},
 				templateName = "Welcome",
 				templateType = "Site Initializer");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Page Set",
@@ -38,7 +33,7 @@ definition {
 
 			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Site Name",
+					groupName = ${randomSiteName},
 					layoutName = ${pageName},
 					parentLayoutName = "Test Page Set",
 					type = "content");
@@ -46,7 +41,7 @@ definition {
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -56,7 +51,7 @@ definition {
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -66,7 +61,7 @@ definition {
 		}
 
 		task ("When the page admin navigates to the Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Then the page admin could edit the friendly URL of page set") {
@@ -76,15 +71,15 @@ definition {
 
 			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/presentation");
 
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
-			Staging.activateStagingCP(siteName = "Site Name");
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 
 		task ("When the page admin navigates to the page set via new friendly URL in live site") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
+			Navigator.openSpecificURL(url = "${portalURL}/web/${siteURLKey}/presentation");
 		}
 
 		task ("Then the page admin is redirected to the first child page") {

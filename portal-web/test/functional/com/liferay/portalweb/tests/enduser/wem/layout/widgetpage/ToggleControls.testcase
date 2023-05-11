@@ -3,40 +3,26 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
-		task ("Add two sites") {
-			for (var i : list "1,2") {
-				HeadlessSite.addSite(siteName = "Test Site Name ${i}");
-			}
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
-		task ("Add a widget page in each site") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name ${i}",
-					layoutName = "Test Page Name");
-			}
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			for (var i : list "1,2") {
-				JSONGroup.deleteGroupByName(groupName = "Test Site Name ${i}");
-			}
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
 		}
 	}
 
@@ -48,7 +34,7 @@ definition {
 		task ("View toggle controls is at view status") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name 1");
+				siteName = ${randomSiteName});
 
 			WidgetPages.viewToggleControls(status = "view");
 		}
@@ -94,13 +80,23 @@ definition {
 		}
 
 		task ("View Toggle Controls affects all widget pages in virtual instance scoped") {
+			var siteName = StringUtil.randomString(8);
+
+			HeadlessSite.addSite(siteName = ${siteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${siteName},
+				layoutName = "Test Page Name");
+
 			WidgetPages.switchToggleControls(status = "view");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name 2");
+				siteName = ${siteName});
 
 			WidgetPages.viewToggleControls(status = "hidden");
+
+			WidgetPages.switchToggleControls(status = "hidden");
 		}
 	}
 
@@ -112,7 +108,7 @@ definition {
 		task ("View toggle controls is at view status") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name 1");
+				siteName = ${randomSiteName});
 
 			WidgetPages.viewToggleControls(status = "view");
 		}
@@ -162,7 +158,7 @@ definition {
 		task ("Can hide future invisible portlets on widget page when Toggle Controls is closed") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name 1");
+				siteName = ${randomSiteName});
 
 			WidgetPages.switchToggleControls(status = "view");
 
@@ -195,6 +191,8 @@ definition {
 			AssertNotVisible(
 				key_portletName = "Asset Publisher",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
+
+			WidgetPages.switchToggleControls(status = "hidden");
 		}
 	}
 
@@ -203,19 +201,19 @@ definition {
 	test ViewNotAffectPortletsOnContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 1",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name 1",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page Name");
 		}
 
 		task ("Switch Toggle Controls to hidden") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name 1");
+				siteName = ${randomSiteName});
 
 			WidgetPages.switchToggleControls(status = "view");
 
@@ -233,7 +231,7 @@ definition {
 		task ("View not affect portlets on content page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name 1");
+				siteName = ${randomSiteName});
 
 			AssertElementNotPresent(
 				key_status = "hidden",
@@ -250,6 +248,12 @@ definition {
 			AssertVisible(
 				key_portletName = "Menu Display",
 				locator1 = "Portlet#SPECIFIC_BORDERLESS_BAR");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			WidgetPages.switchToggleControls(status = "hidden");
 		}
 	}
 
@@ -259,21 +263,16 @@ definition {
 		property test.name.skip.portal.instance = "ToggleControls#ViewOnlyAffectCurrentInstance";
 
 		task ("Add a virtual instance") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "www.able.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 		}
 
 		task ("Switch Toggle Controls to hidden in current instance") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name 2");
+				siteName = ${randomSiteName});
 
 			WidgetPages.switchToggleControls(status = "view");
 
@@ -283,7 +282,7 @@ definition {
 		task ("View Toggle Controls doesn't affect widget pages in other virtual instance scope") {
 			User.firstLoginPG(
 				password = "test",
-				userEmailAddress = "test@www.able.com",
+				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
 			ProductMenu.gotoPortlet(
@@ -296,7 +295,7 @@ definition {
 				pageName = "Test Site Page",
 				url = "http://www.able.com:8080");
 
-			WidgetPages.switchToggleControls(status = "view");
+			WidgetPages.viewToggleControls(status = "view");
 		}
 	}
 

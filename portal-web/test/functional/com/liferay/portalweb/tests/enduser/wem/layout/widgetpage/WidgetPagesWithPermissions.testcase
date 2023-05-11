@@ -1,36 +1,109 @@
 @component-name = "portal-wcm"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	@description = "Cannot reset changes as user without permissions."
+	@priority = 3
+	test CannotResetChangesAsUserWithoutPermissions {
+		property testray.component.names = "Site and Page Templates";
 
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Add a site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 		}
-		else {
+
+		task ("Add a site based on template") {
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Site Template Name",
+				templateType = "Site Template");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = ${siteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("View Home page is shown") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = ${siteName});
+
+			Page.viewDefaultSiteTemplatePagesPG(
+				pageName = "Home",
+				siteName = ${siteName});
+		}
+
+		task ("Sign in as Test Test") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+		}
 
-			JSONUser.tearDownNonAdminUsers();
+		task ("Add a Blogs widget to home page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = ${siteName});
 
-			Role.tearDownCP();
+			PageEditor.addWidget(portletName = "Blogs");
+		}
 
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Publish the page") {
+			PageEditor.publish();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("View info icon is not shown") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = ${siteName});
+
+			SiteTemplates.viewNoInfoMessage();
 		}
 	}
 
@@ -44,20 +117,20 @@ definition {
 
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("Add a public page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a Blogs and Message Boards widgets to public page") {
 			for (var widgetName : list "Blogs,Message Boards") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -66,7 +139,7 @@ definition {
 		task ("Add a blogs entry") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Blogs.addEntryWithPermissions(
 				entryContent = "Blogs Entry Content",
@@ -85,14 +158,14 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 			var blogEntryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 
-			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+			var blogEntryURL = "${portalURL}/web/${siteURLKey}/test-page-name/-/blogs/${blogEntryId}";
 			var messageId = JSONMBMessage.getMessageIdByName(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				threadSubject = "MB Thread Message Subject");
 
-			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+			var messageBoardsThreadURL = "${portalURL}/web/${siteURLKey}/test-page-name/-/message_boards/message/${messageId}";
 		}
 
 		task ("Log out") {
@@ -102,7 +175,7 @@ definition {
 		task ("View login page when reaching private page") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Test Private Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			User.viewLoginPG();
 
@@ -135,39 +208,25 @@ definition {
 	@description = "The user without permissions cannot view private content and page."
 	@priority = 5
 	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Message Boards,Training";
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("Add a public page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a Blogs and Message Boards widget to public page") {
 			for (var widgetName : list "Blogs,Message Boards") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -176,7 +235,7 @@ definition {
 		task ("Add a blogs entry") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Blogs.addEntryWithPermissions(
 				entryContent = "Blogs Entry Content",
@@ -195,24 +254,24 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 			var blogEntryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 
-			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+			var blogEntryURL = "${portalURL}/web/${siteURLKey}/test-page-name/-/blogs/${blogEntryId}";
 			var messageId = JSONMBMessage.getMessageIdByName(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				threadSubject = "MB Thread Message Subject");
 
-			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+			var messageBoardsThreadURL = "${portalURL}/web/${siteURLKey}/test-page-name/-/message_boards/message/${messageId}";
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View private page is not shown for new user") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertTextEquals(
 				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
@@ -243,10 +302,14 @@ definition {
 	@description = "User admin can choose when a private widget page will be visible to assigned role."
 	@priority = 5
 	test CannotViewPrivatePageAsUserWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Permissions,Roles,Training";
+
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+		var roleKey = StringUtil.randomString(8);
 
 		task ("Add a site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -255,48 +318,35 @@ definition {
 		task ("Add a private site based on new site template") {
 			HeadlessSite.addSite(
 				membershipType = "Private",
-				siteName = "Site Name",
+				siteName = ${siteName},
 				templateName = "Site Template Name",
 				templateType = "Site Template");
 		}
 
 		task ("Add a private widget page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Site Name",
+				groupName = ${siteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a new regular role") {
-			JSONRole.addRegularRole(roleTitle = "Regular Role Name");
-		}
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+			JSONRole.addRegularRole(roleTitle = ${roleKey});
 		}
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${siteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign the regular role to new user") {
 			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Remove View permission of private widget page on Site Member") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -310,19 +360,17 @@ definition {
 		task ("Grant View permission of private widget page on Regular Role") {
 			Role.definePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "Regular Role Name");
+				roleTitle = ${roleKey});
 		}
 
 		task ("Sign in as new user") {
-			User.logoutPG();
-
-			User.signInPG(userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View private page is shown") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Test Page Name",
-				siteName = "Site Name");
+				siteName = ${siteName});
 
 			Page.viewCurrentPage(pageName = "Test Page Name");
 
@@ -336,7 +384,7 @@ definition {
 		}
 
 		task ("Remove View permission of private widget page on Regular Role") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PermissionsInline.gotoSitePageCP(
 				pageName = "Test Page Name",
@@ -344,19 +392,17 @@ definition {
 
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "Regular Role Name");
+				roleTitle = ${roleKey});
 		}
 
 		task ("Sign in as new user") {
-			User.logoutPG();
-
-			User.signInPG(userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View private page is not shown") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Test Page Name",
-				siteName = "Site Name");
+				siteName = ${siteName});
 
 			AssertTextPresent(value1 = "The requested resource could not be found");
 		}
@@ -364,7 +410,7 @@ definition {
 		task ("Delete new site and site template") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
+			JSONGroup.deleteGroupByName(groupName = ${siteName});
 
 			SiteTemplates.tearDownCP();
 		}
@@ -373,31 +419,14 @@ definition {
 	@description = "This is a use case for LPS-121346. The Home page is shown when access to a non existing page."
 	@priority = 3
 	test ViewNotFoundWhenAccessToNonExistingPage {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Assign the power role to new user") {
 			JSONRole.assignRoleToUser(
 				roleTitle = "Power User",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Sign in as new user") {
-			User.firstLoginPG(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Access a non existing page") {
@@ -422,45 +451,31 @@ definition {
 	@description = "The site member could view private content and page."
 	@priority = 3
 	test ViewPrivateContentAndPageAsSiteMember {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Message Boards";
 
-		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
 		task ("Assign the new user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page");
 		}
 
 		task ("Add a public page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a Blogs and Message Boards widget to public page") {
 			for (var widgetName : list "Blogs,Message Boards") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -469,7 +484,7 @@ definition {
 		task ("Add a blogs entry") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Blogs.addEntryWithPermissions(
 				entryContent = "Blogs Entry Content",
@@ -488,24 +503,24 @@ definition {
 			var portalURL = PropsUtil.get("portal.url");
 			var blogEntryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 
-			var blogEntryURL = "${portalURL}/web/test-site-name/test-page-name/-/blogs/${blogEntryId}";
+			var blogEntryURL = "${portalURL}/web/${siteURLKey}/test-page-name/-/blogs/${blogEntryId}";
 			var messageId = JSONMBMessage.getMessageIdByName(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				threadSubject = "MB Thread Message Subject");
 
-			var messageBoardsThreadURL = "${portalURL}/web/test-site-name/test-page-name/-/message_boards/message/${messageId}";
+			var messageBoardsThreadURL = "${portalURL}/web/${siteURLKey}/test-page-name/-/message_boards/message/${messageId}";
 		}
 
 		task ("Sign in as new user") {
-			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("View private page is shown for site member") {
 			Navigator.gotoPrivateSitePage(
 				pageName = "Test Private Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 

@@ -3,29 +3,34 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomEntryName1 = StringUtil.randomString(8);
+	static var randomEntryName2 = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Upload two CSS extension files to Documents and Media") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Font Family",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "text/css",
 				sourceFileName = "font_family.css");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Background Color",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "text/css",
 				sourceFileName = "background_color.css");
 		}
@@ -33,35 +38,22 @@ definition {
 		task ("Get the latest version URL of two documents") {
 			var firstURL = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Font Family",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 			var secondURL = JSONDocument.getLatestVersionURL(
 				dmDocumentTitle = "Background Color",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 		}
 
 		task ("Add two remote apps for CSS extension") {
 			JSONClientExtension.addRemoteAppEntry(
-				name = "FontFamily",
+				name = ${randomEntryName1},
 				type = "globalCSS",
 				url = ${firstURL});
 
 			JSONClientExtension.addRemoteAppEntry(
-				name = "BackgroundColor",
+				name = ${randomEntryName2},
 				type = "globalCSS",
 				url = ${secondURL});
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ClientExtensionGeneral.tearDown();
 		}
 	}
 
@@ -72,12 +64,12 @@ definition {
 
 		task ("Given a site designer has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("When the site designer accesses to Basic Settings of widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -89,17 +81,17 @@ definition {
 		}
 
 		task ("Then the site designer could add a CSS Extension to widget page") {
-			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			AssertVisible(
-				key_tableEntry = "FontFamily",
+				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			PortletEntry.save();
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertCssValue(
 				locator1 = "//body",
@@ -109,10 +101,10 @@ definition {
 
 		task ("Given a site designer has a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -136,10 +128,10 @@ definition {
 		}
 
 		task ("Then the site designer could add a CSS Extension to widget page") {
-			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			AssertVisible(
-				key_tableEntry = "FontFamily",
+				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			PortletEntry.save();
@@ -155,7 +147,7 @@ definition {
 		}
 
 		task ("When the site designer accesses to Basic Settings of Pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 
@@ -171,22 +163,22 @@ definition {
 		}
 
 		task ("Then the site designer could add a CSS Extension to Pages") {
-			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName2});
 
 			AssertVisible(
-				key_tableEntry = "BackgroundColor",
+				key_tableEntry = ${randomEntryName2},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			PortletEntry.save();
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertCssValue(
 				locator1 = "//body",
@@ -195,7 +187,7 @@ definition {
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertCssValue(
 				locator1 = "//body",
@@ -216,17 +208,17 @@ definition {
 
 		task ("Given a site designer has a content page template with a CSS extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Content Page Template",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -242,7 +234,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			PortletEntry.save();
 
@@ -254,7 +246,7 @@ definition {
 		}
 
 		task ("When the site designer adds a content page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -276,10 +268,10 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName2});
 
 			AssertVisible(
-				key_tableEntry = "BackgroundColor",
+				key_tableEntry = ${randomEntryName2},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			PortletEntry.save();
@@ -306,7 +298,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			for (var extensionName : list "BackgroundColor,FontFamily") {
+			for (var extensionName : list "${randomEntryName2},${randomEntryName1}") {
 				Click(
 					key_tableEntry = ${extensionName},
 					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -339,13 +331,13 @@ definition {
 	test ClearCSSExtensionSelection {
 		task ("Given a site designer has a content page with a CSS extension") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -355,10 +347,10 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			AssertVisible(
-				key_tableEntry = "FontFamily",
+				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
 			PortletEntry.save();
@@ -380,7 +372,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			Click(
-				key_tableEntry = "FontFamily",
+				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Delete");
@@ -408,10 +400,10 @@ definition {
 	test ViewInheritedCSSExtensionFromMasterPageOrPages {
 		task ("Given a site designer has a master page with a CSS extension") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				masterPageTemplateEntryName = "Master Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
 
@@ -423,7 +415,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName2});
 
 			PortletEntry.save();
 
@@ -435,7 +427,7 @@ definition {
 		}
 
 		task ("When the site designer adds a content page based on master page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				masterLayoutName = "Master Page Template",
@@ -458,16 +450,16 @@ definition {
 
 			LexiconTable.viewTableEntryInfo(
 				index = 3,
-				tableEntry = "BackgroundColor",
+				tableEntry = ${randomEntryName2},
 				tableEntryInfo = "From Master");
 
 			AssertElementNotPresent(
-				key_tableEntry = "BackgroundColor",
+				key_tableEntry = ${randomEntryName2},
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}
 
 		task ("Given a site designer has the Pages with a CSS extension") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 
@@ -479,19 +471,19 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "BackgroundColor");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName2});
 
 			PortletEntry.save();
 		}
 
 		task ("When the site designer adds a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2");
 		}
 
 		task ("Then the site designer could see the inherited CSS extension") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -501,11 +493,11 @@ definition {
 
 			LexiconTable.viewTableEntryInfo(
 				index = 3,
-				tableEntry = "BackgroundColor",
+				tableEntry = ${randomEntryName2},
 				tableEntryInfo = "From Pages");
 
 			AssertElementNotPresent(
-				key_tableEntry = "BackgroundColor",
+				key_tableEntry = ${randomEntryName2},
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 		}
 	}
@@ -517,17 +509,17 @@ definition {
 
 		task ("Given a site designer has a content page template with a CSS extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Content Page Template",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -543,7 +535,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+			PagesAdmin.addCSSExtensions(extensionNameList = ${randomEntryName1});
 
 			PortletEntry.save();
 
@@ -555,7 +547,7 @@ definition {
 		}
 
 		task ("When the site designer adds a content page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -578,7 +570,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertVisible(
-				key_tableEntry = "FontFamily",
+				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 	}
@@ -588,13 +580,13 @@ definition {
 	test ViewOrderOfCSSExtensionLoading {
 		task ("Given a site designer has a content page with two CSS extensions") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -604,16 +596,16 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily,BackgroundColor");
+			PagesAdmin.addCSSExtensions(extensionNameList = "${randomEntryName1},${randomEntryName2}");
 
 			AssertVisible(
 				index = 1,
-				key_tableEntry = "FontFamily",
+				key_tableEntry = ${randomEntryName1},
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			AssertVisible(
 				index = 2,
-				key_tableEntry = "BackgroundColor",
+				key_tableEntry = ${randomEntryName2},
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			PortletEntry.save();

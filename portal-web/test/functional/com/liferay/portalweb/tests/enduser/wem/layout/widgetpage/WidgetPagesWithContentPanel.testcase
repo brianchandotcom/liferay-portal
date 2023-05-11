@@ -3,28 +3,18 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -36,21 +26,21 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 1");
 		}
 
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add the web content to page via Content tab of Add panel") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			WidgetPages.addRecentContent(assetTitle = "Web Content Title");
 		}
@@ -68,14 +58,14 @@ definition {
 	test AddWebContentViaContentPanel {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a web content via content panel") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			WidgetPages.addNewContent(assetType = "Basic Web Content");
 
@@ -97,18 +87,18 @@ definition {
 		task ("Given a page deisgner displays a web content with long title") {
 			HeadlessWebcontent.addBasicWebContent(
 				content = "Lighthouse promises life coaching to help people realise their dreams. But an 18-month investigation by the BBC finds it takes over people'\''s lives, separates people from their loved ones and harasses its critics.",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Inside the life coaching cult that takes over lives");
 		}
 
 		task ("When the page designer navigates to the Content panel on the widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Click(locator1 = "ControlMenu#ADD");
 
@@ -133,17 +123,17 @@ definition {
 	test ViewWidgetAfterAddWebContentViaContentPanel {
 		task ("Add an IFrame and a Web Content Display to a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
 			JSONLayout.addWidgetToPublicLayout(
 				column = 2,
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "IFrame");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Web Content Display");
 		}
@@ -151,7 +141,7 @@ definition {
 		task ("Add a Home page as source URL in IFrame") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var baseURL = PropsUtil.get("portal.url");
 

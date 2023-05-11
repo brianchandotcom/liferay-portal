@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -35,7 +27,7 @@ definition {
 		var pageName = '''<script>alert(123);</script>''';
 
 		task ("Add a widget page with XSS page name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(pageName = ${pageName});
 		}
@@ -43,7 +35,7 @@ definition {
 		task ("Navigate to the widget page") {
 			Navigator.gotoSitePage(
 				pageName = ${pageName},
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("View the alert not shown") {
@@ -51,7 +43,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("View the alert not shown") {

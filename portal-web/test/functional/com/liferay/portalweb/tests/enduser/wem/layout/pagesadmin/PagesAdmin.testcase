@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -35,13 +27,13 @@ definition {
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -131,14 +123,14 @@ definition {
 	test AddCollectionItemsInCollectionPageBasedOnManualCollection {
 		task ("Add a manual collection with Web Content Article item type") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemSubtype = "All Subtypes",
 				itemType = "Web Content Article",
 				title = "Manual Collection");
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -176,7 +168,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a manual collection when adding a collection page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection Name",
@@ -211,13 +203,13 @@ definition {
 	test AddDraftContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
 
 		task ("View Draft label is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageStatus(
 				pageName = "Test Page Name",
@@ -232,40 +224,40 @@ definition {
 
 		task ("Add a parent page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add the first level of child page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 1",
 				parentLayoutName = "Test Page Name");
 		}
 
 		task ("Add the second level of child page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 2",
 				parentLayoutName = "Child Page Name 1");
 		}
 
 		task ("Add the third level of child page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 3",
 				parentLayoutName = "Child Page Name 2");
 		}
 
 		task ("Add the fourth level of child page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 4",
 				parentLayoutName = "Child Page Name 3");
 		}
 
 		task ("View the children pages are shown in pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			var n = 2;
 
@@ -317,13 +309,13 @@ definition {
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
 
 		task ("Delete the first widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.deletePage(pageName = "Test Page Name 1");
 		}
@@ -338,20 +330,20 @@ definition {
 	test DeletePageWithChildPage {
 		task ("Add a page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a child page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Test Page",
 				parentLayoutName = "Test Page Name",
 				type = "content");
 		}
 
 		task ("View alert message when delete a page with child") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.deletePage(
 				hasChildren = "true",
@@ -366,7 +358,7 @@ definition {
 	test DeletePageWithScopedContent {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -374,7 +366,7 @@ definition {
 		task ("Add a Web Content Display widget to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(portletName = "Web Content Display");
 		}
@@ -388,7 +380,7 @@ definition {
 		}
 
 		task ("View alert message when delete a page with scoped content") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.deletePage(
 				hasScopeGroup = "true",
@@ -403,14 +395,14 @@ definition {
 	test DeletePageWithScopedContentAndChildPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
 
 		task ("Add a child content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Test Page",
 				parentLayoutName = "Test Page Name",
 				type = "content");
@@ -419,7 +411,7 @@ definition {
 		task ("Add a Web Content Display widget to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addWidget(portletName = "Web Content Display");
 		}
@@ -433,7 +425,7 @@ definition {
 		}
 
 		task ("View alert message when delete a page with scoped content and child page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.deletePage(
 				hasChidren = "true",
@@ -450,27 +442,27 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a collection page based on recent content collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Recent Content",
@@ -537,30 +529,30 @@ definition {
 		task ("Add two content pages then publish") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 		}
 
 		task ("Add a child page then publish") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 1",
 				parentLayoutName = "Test Page Name 1",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 1");
 		}
 
 		task ("Select the first page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.expandPageTree(depth = 2);
 
@@ -586,7 +578,7 @@ definition {
 		}
 
 		task ("View parent page by clicking on page name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name 1",
@@ -601,19 +593,19 @@ definition {
 	test MoveChildPageToParentLevel {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a child page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name",
 				parentLayoutName = "Test Page Name");
 		}
 
 		task ("View child page is shown under parent page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(
 				depth = 2,
@@ -638,37 +630,37 @@ definition {
 	test MoveMultipleDifferentLevelsPagesToTheSameLevel {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 1");
 		}
 
 		task ("Add a child page of Test Page Name 1") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 1",
 				parentLayoutName = "Test Page Name 1");
 		}
 
 		task ("Add a child page of Child Page Name 1") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Child Page Name 1",
 				parentLayoutName = "Child Page Name 1");
 		}
 
 		task ("Add a content page in the same level with Test Page Name 1") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2");
 		}
 
 		task ("Move Test Page Name 2 and Child Child Page Name 1 to the same level with Child Page Name 1") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			for (var name : list "Test,Child") {
 				Click(
@@ -700,22 +692,22 @@ definition {
 		task ("Add two widget pages and one content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 3",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 3");
 		}
 
 		task ("View pages order in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPagesOrder(
 				depth = 1,
@@ -745,22 +737,22 @@ definition {
 		task ("Add two widget pages and 1 content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 3",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 3");
 		}
 
 		task ("Move Test Page Name 1 and 2 to child level of Test Page Name 3") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Click(
 				key_itemName = "Test Page Name 3",
@@ -792,18 +784,18 @@ definition {
 		task ("Add two content pages then publish") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 		}
 
 		task ("View pages order in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPagesOrder(
 				depth = 1,
@@ -829,30 +821,30 @@ definition {
 		task ("Add two content pages then publish") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}",
 					type = "content");
 
 				JSONLayout.publishLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${n}");
 			}
 		}
 
 		task ("Add a child page then publish") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 1",
 				parentLayoutName = "Test Page Name 1",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name 1");
 		}
 
 		task ("View child page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageItemPresent(
 				depth = 2,
@@ -885,13 +877,13 @@ definition {
 
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -901,7 +893,7 @@ definition {
 		}
 
 		task ("When the page creator clicks on the content page item in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -925,13 +917,13 @@ definition {
 
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -941,7 +933,7 @@ definition {
 		}
 
 		task ("When the page creator clicks on the content page title in search results of Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Test Page Name");
 
@@ -965,22 +957,22 @@ definition {
 	test NavigateToPageItemViaRelativePathFromSearchResults {
 		task ("Given a page creator has a page hierary") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Home");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Product Details",
 				parentLayoutName = "Home");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Release Information",
 				parentLayoutName = "Product Details");
 		}
 
 		task ("When the page creator searchs pages in Page admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Release");
 		}
@@ -1002,7 +994,7 @@ definition {
 	@priority = 3
 	test PreviewDraftCollectionPage {
 		task ("Add a collection page based on Highest Rated Assets collection provider") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Highest Rated Assets",
@@ -1011,7 +1003,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Preview the draft collection page in a new tab") {
@@ -1038,14 +1030,14 @@ definition {
 
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Public Page Name",
 				type = "content");
 		}
 
 		task ("Add a private content page") {
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Private Page Name",
 				type = "content");
 		}
@@ -1053,7 +1045,7 @@ definition {
 		task ("Add a Button fragment to public page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Public Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1064,7 +1056,7 @@ definition {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Private Page Name",
 				privateLayout = "true",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1072,7 +1064,7 @@ definition {
 		}
 
 		task ("Navigate to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Preview the draft public content page") {
@@ -1119,17 +1111,17 @@ definition {
 
 		task ("Given a page creator has a page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Set");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Set",
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateStatus = "Approved",
 				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 				item = "Edit",
@@ -1139,7 +1131,7 @@ definition {
 		}
 
 		task ("When the page creator creates a page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -1206,7 +1198,7 @@ definition {
 		task ("Then the page creator could create page based on selected template") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewPG(
 				portletBody = "This application is not visible to users yet.",
@@ -1219,20 +1211,20 @@ definition {
 	test SavePageChangesAfterChangingSiteDefaultLanguage {
 		task ("Given a page designer has a page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("When the page designer changes the site default language to the Spanish") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "Spanish (Spain)");
 		}
 
 		task ("Then the page designer could save page changes") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -1256,15 +1248,15 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add two pages to root and add one child page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(pageName = "Page One");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(pageName = "Page Two");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addChildPage(
 				childPageName = "Page Three",
@@ -1272,7 +1264,7 @@ definition {
 		}
 
 		task ("Navigate to pages administration") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Search for page one and assert only that page appears") {
@@ -1344,12 +1336,12 @@ definition {
 
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Widget Page Name");
 		}
 
 		task ("When the page creator searches it in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Widget");
 		}
@@ -1361,7 +1353,7 @@ definition {
 		}
 
 		task ("Given a page creator has a Full Page Application type page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Full Page Application Page Name",
@@ -1370,7 +1362,7 @@ definition {
 		}
 
 		task ("When the page creator searches it in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Full");
 		}
@@ -1382,7 +1374,7 @@ definition {
 		}
 
 		task ("Given a page creator has a Link to URL type page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Link to URL Page Name",
@@ -1391,7 +1383,7 @@ definition {
 		}
 
 		task ("When the page creator searches it in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Link");
 		}
@@ -1404,13 +1396,13 @@ definition {
 
 		task ("Given a page creator has a Panel type page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Panel Page Name",
 				type = "panel");
 		}
 
 		task ("When the page creator searches it in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Panel");
 		}
@@ -1422,7 +1414,7 @@ definition {
 		}
 
 		task ("Given a page creator has an embedded type page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Embedded Page Name",
@@ -1431,7 +1423,7 @@ definition {
 		}
 
 		task ("When the page creator searches it in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Search.searchCP(searchTerm = "Embedded");
 		}
@@ -1450,17 +1442,17 @@ definition {
 
 		task ("Given a page creator has page templates") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Set");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Set",
 				layoutPageTemplateEntryName = "Widget Page Template Name",
 				layoutPageTemplateStatus = "Approved",
 				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 				item = "Edit",
@@ -1469,13 +1461,13 @@ definition {
 			Portlet.addPG(portletName = "Web Content Display");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Set",
 				layoutPageTemplateEntryName = "Content Page Template Name",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template Name");
 
@@ -1487,7 +1479,7 @@ definition {
 		}
 
 		task ("When the page creator opens the preview page template modal") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -1534,12 +1526,12 @@ definition {
 	test ViewBreadcrumbUnavailableToLinkToAPageOfThisSite {
 		task ("Given a page creator has a site with a page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("When the page creator adds a page based on the Link to a Page of This Site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -1574,29 +1566,29 @@ definition {
 	test ViewChildPage {
 		task ("Add a content page then publish") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add a child page then publish") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name",
 				parentLayoutName = "Test Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Child Page Name");
 		}
 
 		task ("View the plus icon is shown after check the page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.expandPageTree(depth = 2);
 
@@ -1624,34 +1616,34 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
 		task ("Add a document") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1692,7 +1684,7 @@ definition {
 		}
 
 		task ("View header table are shown in collection items via Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -1729,13 +1721,13 @@ definition {
 			for (var n : list "5,4,3,2,1") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Web Content Title ${n}");
 			}
 		}
 
 		task ("Add a collection page based on highest rated assets collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Highest Rated Assets",
@@ -1799,12 +1791,12 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Web Content DPT",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				subType = "Basic Web Content");
 		}
 
 		task ("Add a Display Page Content fragment to DPT then publish") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
@@ -1819,14 +1811,14 @@ definition {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${i}",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Web Content Title ${i}");
 			}
 		}
 
 		task ("Select Web Content DPT as Specific Display Page Template") {
 			for (var i : list "1,2,3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title ${i}");
 
@@ -1840,14 +1832,14 @@ definition {
 
 		task ("Add a manual collection with Web Content Article item type and Basic Web Content item subtype") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Manual Collection");
 		}
 
 		task ("Select all web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
@@ -1856,7 +1848,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -1928,23 +1920,23 @@ definition {
 	test ViewDropdownMenuIconsInPagesAdmin {
 		task ("Given a Page designer has a widget page with a custom portlet") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Widget Page Name");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Widget Page Name",
 				widgetName = "Web Content Display");
 
 			Navigator.gotoSitePage(
 				pageName = "Widget Page Name",
-				siteName = "Test Site name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewSpecificPG(portletName = "Web Content Display");
 		}
 
 		task ("When the Page designer opens the dropdown menu of widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Widget Page Name");
 		}
@@ -1980,17 +1972,17 @@ definition {
 
 		task ("Given a Page designer has a published content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Content Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Content Page Name");
 		}
 
 		task ("When the Page designer opens the dropdown menu of content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Content Page Name");
 		}
@@ -2005,12 +1997,12 @@ definition {
 	test ViewLinkToURLTypePageWhichSelectingNewTabInAdvancedTab {
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Widget Page Name");
 		}
 
 		task ("When adding a Link to URL type page and selecting New Tab in advanced tab") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Link to URL Page Name",
@@ -2020,7 +2012,7 @@ definition {
 		}
 
 		task ("Then viewing the linked URL page opens in new tab") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			AssertClick.assertPartialTextClickAt(
 				key_pageName = "Test Link to URL Page Name",
@@ -2033,7 +2025,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -2048,7 +2040,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -2067,12 +2059,12 @@ definition {
 	test ViewLinkToURLTypePageWhichSettingTargetInAdvancedTab {
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Widget Page Name");
 		}
 
 		task ("When adding a Link to URL type page and setting Target in advanced tab") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Link to URL Page Name",
@@ -2082,7 +2074,7 @@ definition {
 		}
 
 		task ("Then viewing the linked URL page opens in new tab") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			AssertClick.assertPartialTextClickAt(
 				key_pageName = "Test Link to URL Page Name",
@@ -2095,7 +2087,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -2110,7 +2102,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -2129,12 +2121,12 @@ definition {
 	test ViewLinkToURLTypePageWithDefaultSetting {
 		task ("Given a page creator has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Widget Page Name");
 		}
 
 		task ("When adding a Link to URL type page with default setting") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.addPage(
 				pageName = "Test Link to URL Page Name",
@@ -2143,7 +2135,7 @@ definition {
 		}
 
 		task ("Then viewing the linked URL page opens in current page") {
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			AssertClick.assertPartialTextClickAt(
 				key_pageName = "Test Link to URL Page Name",
@@ -2152,7 +2144,7 @@ definition {
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -2163,7 +2155,7 @@ definition {
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -2181,13 +2173,13 @@ definition {
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
 
 		task ("Select first page in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.selectPageItem(pageName = "Test Page Name 1");
 		}
@@ -2197,7 +2189,7 @@ definition {
 		}
 
 		task ("Select all pages via management bar") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ManagementBar.clickSelectAllCheckbox();
 		}

@@ -3,30 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -35,19 +25,19 @@ definition {
 	test BulkConvertWidgetPageToContentPageByIcon {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add an Asset Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -67,7 +57,7 @@ definition {
 		task ("View Asset Publisher is rendered at edit mode after conversion") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.viewElementInsideModule(
 				elementName = "Asset Publisher",
@@ -82,13 +72,13 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add an Asset Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}
@@ -96,13 +86,13 @@ definition {
 		task ("Get plids of the widget page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var plid1 = Page.getPlidFromHtmlSource();
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -128,7 +118,7 @@ definition {
 		task ("Get plids of the converted content page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var plid2 = Page.getPlidFromHtmlSource();
 		}
@@ -155,7 +145,7 @@ definition {
 		task ("Add 10 widget pages") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
@@ -165,7 +155,7 @@ definition {
 
 			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns") {
 				JSONLayout.updateLayoutTemplateOfPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}",
 					layoutTemplate = ${layoutTemplate});
 
@@ -176,7 +166,7 @@ definition {
 		task ("Add an Asset Publisher to each widget page") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}",
 					widgetName = "Asset Publisher");
 			}
@@ -188,7 +178,7 @@ definition {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name ${i}",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				var plidBeforeConversion = Page.getPlidFromHtmlSource();
 
@@ -206,7 +196,7 @@ definition {
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -219,6 +209,8 @@ definition {
 			ServerAdministration.openServerAdmin();
 
 			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
+
+			var script = StringUtil.replace(${script}, "groupName", "\"${randomSiteName}\"");
 
 			ServerAdministration.executeScript(
 				language = "Groovy",
@@ -251,7 +243,7 @@ definition {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				ContentPagesNavigator.openViewContentPage(
 					pageName = "Test Page Name ${i}",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				var plidAfterConversion = Page.getPlidFromHtmlSource();
 
@@ -284,7 +276,7 @@ definition {
 		}
 
 		task ("View current page type after conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -296,7 +288,7 @@ definition {
 		task ("View page editor is available for converted page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 		}
@@ -304,7 +296,7 @@ definition {
 		task ("View Asset Publisher widget is shown") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.viewFragment(fragmentName = "Asset Publisher");
 		}
@@ -321,7 +313,7 @@ definition {
 		task ("View Heading fragment is shown at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				contributed = "false",
@@ -338,7 +330,7 @@ definition {
 		task ("Add 10 widget pages") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Widget Page Name ${i}");
 			}
 		}
@@ -348,7 +340,7 @@ definition {
 
 			for (var layoutTemplate : list "1 Column,2 Columns (50/50),2 Columns (30/70),2 Columns (70/30),3 Columns,1-2 Columns (30/70),1-2 Columns (70/30),1-2-1 Columns (50/50),1-2-1 Columns (70/30),1-3-1 Columns") {
 				JSONLayout.updateLayoutTemplateOfPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Widget Page Name ${i}",
 					layoutTemplate = ${layoutTemplate});
 
@@ -359,7 +351,7 @@ definition {
 		task ("Add an Asset Publisher to each widget page") {
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Widget Page Name ${i}",
 					widgetName = "Asset Publisher");
 			}
@@ -368,13 +360,13 @@ definition {
 		task ("Add 4 content pages with Heading fragment") {
 			for (var i : list "1,2,3,4") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Content Page Name ${i}",
 					type = "content");
 
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Content Page Name ${i}",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -385,7 +377,7 @@ definition {
 		}
 
 		task ("View current page type before conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -399,6 +391,8 @@ definition {
 
 			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
+			var script = StringUtil.replace(${script}, "groupName", "\"${randomSiteName}\"");
+
 			ServerAdministration.executeScript(
 				language = "Groovy",
 				script = ${script});
@@ -407,7 +401,7 @@ definition {
 		}
 
 		task ("View current page type after conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PagesAdmin.viewPageType(
@@ -426,7 +420,7 @@ definition {
 		task ("Add three widget pages") {
 			for (var i : list "1,2,3") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}");
 			}
 		}
@@ -436,7 +430,7 @@ definition {
 
 			for (var widgetName : list "Asset Publisher,Nested Applications") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name ${i}",
 					widgetName = ${widgetName});
 
@@ -445,7 +439,7 @@ definition {
 		}
 
 		task ("Enable customization in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = 1,
@@ -457,6 +451,8 @@ definition {
 
 			var script = TestCase.getFileContent(fileName = "convertWidgetPages.groovy");
 
+			var script = StringUtil.replace(${script}, "groupName", "\"${randomSiteName}\"");
+
 			ServerAdministration.executeScript(
 				language = "Groovy",
 				script = ${script});
@@ -465,7 +461,7 @@ definition {
 		}
 
 		task ("View current page type after conversion") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			for (var i : list "1,2,3") {
 				PagesAdmin.viewPageType(
@@ -482,14 +478,14 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add an Asset Publisher, Wiki and Documents and Media widget to page") {
 			for (var widgetName : list "Asset Publisher,Wiki,Documents and Media") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -502,7 +498,7 @@ definition {
 
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				Portlet.gotoPortletOptions(
 					portletName = ${portletName},
@@ -515,7 +511,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -535,7 +531,7 @@ definition {
 		task ("View decorator is applied for each portlet") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var resourceName : list "Asset Publisher-Borderless,Wiki-Barebone,Documents and Media-Decorate") {
 				var portletName = StringUtil.extractFirst(${resourceName}, "-");
@@ -555,19 +551,19 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Change layout to 1 column") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				layoutTemplate = "1 Column");
 		}
 
 		task ("Enable customization in Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnId = 1,
@@ -577,7 +573,7 @@ definition {
 		task ("View page is customizable") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.viewCustomizablePagePG();
 		}
@@ -587,7 +583,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -611,7 +607,7 @@ definition {
 		task ("View content page is editable after conversion") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 
@@ -638,12 +634,12 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Define the custom layout for widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
@@ -655,7 +651,7 @@ definition {
 			for (var widgetName : list "Profile,Asset Publisher") {
 				JSONLayout.addWidgetToPublicLayout(
 					column = 1,
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -664,7 +660,7 @@ definition {
 		task ("Drop the Profile widget to second page column") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.dragAndDropPortletToColumnPG(
 				columnNumberFrom = 1,
@@ -685,7 +681,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -717,7 +713,7 @@ definition {
 		task ("View widgets are shown at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var i = 1;
 
@@ -749,12 +745,12 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Define the custom layout for widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
@@ -763,7 +759,7 @@ definition {
 		}
 
 		task ("Enable customization to page then check both columns") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PageCustomizations.enableSectionCustomizableCP(
 				columnIdList = "1,2",
@@ -773,7 +769,7 @@ definition {
 		task ("View page is customizable") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageCustomizations.viewCustomizablePagePG();
 		}
@@ -804,7 +800,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -836,7 +832,7 @@ definition {
 		task ("View widgets are not shown at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var i = 1;
 
@@ -868,12 +864,12 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Define the custom layout for widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
@@ -884,7 +880,7 @@ definition {
 		task ("Add a Nested Applications widget to first page column") {
 			JSONLayout.addWidgetToPublicLayout(
 				column = 1,
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Nested Applications");
 		}
@@ -893,7 +889,7 @@ definition {
 			for (var widgetName : list "Profile,Asset Publisher") {
 				JSONLayout.addWidgetToPublicLayout(
 					column = 2,
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -902,7 +898,7 @@ definition {
 		task ("Select manual selection for Asset Publisher widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(portletName = "Asset Publisher");
 
@@ -935,7 +931,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -973,7 +969,7 @@ definition {
 		task ("View widgets are shown at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var i = 1;
 
@@ -998,13 +994,13 @@ definition {
 	test ConvertWidgetPageWithWebContentsToContentPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Change layout to 1 column") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				layoutTemplate = "1 Column");
 		}
@@ -1012,7 +1008,7 @@ definition {
 		task ("Add an Asset Publisher and a Web Content Display to page") {
 			for (var widgetName : list "Asset Publisher,Web Content Display") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -1022,7 +1018,7 @@ definition {
 			for (var n : list "1,2") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${n}",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Web Content Title ${n}");
 			}
 		}
@@ -1030,7 +1026,7 @@ definition {
 		task ("View the web contents are shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var n : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
@@ -1050,7 +1046,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1072,7 +1068,7 @@ definition {
 		}
 
 		task ("View the widget page is converted to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -1082,7 +1078,7 @@ definition {
 		task ("View the web contents are shown in Asset Publisher and Web Content Display") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var n : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
@@ -1104,14 +1100,14 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add an Asset Publisher and Documents and Media widget to page") {
 			for (var widgetName : list "Asset Publisher,Documents and Media") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -1120,7 +1116,7 @@ definition {
 		task ("Select decoret as application decorator") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.gotoPortletOptions(
 				portletName = "Documents and Media",
@@ -1132,7 +1128,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1146,7 +1142,7 @@ definition {
 		task ("View decorator is shown") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewApplicationDecorator(
 				decorator = "Borderless",
@@ -1184,13 +1180,13 @@ definition {
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Assign the user to site role") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				roleTitle = "Roles Siterole Name",
 				userEmailAddress = "userea@liferay.com");
 		}
@@ -1202,7 +1198,7 @@ definition {
 		task ("View user has no permission to edit a portlet") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var widgetName : list "Asset Publisher,Documents and Media") {
 				Click(
@@ -1226,7 +1222,7 @@ definition {
 			for (var widgetName : list "Asset Publisher,Documents and Media") {
 				Navigator.gotoSitePage(
 					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				Portlet.configureCustomTitlePG(portletTitleName = ${widgetName});
 			}
@@ -1246,19 +1242,19 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Add an Asset Publisher widget to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				widgetName = "Asset Publisher");
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1290,7 +1286,7 @@ definition {
 		task ("View page is not converted") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementNotPresent(locator1 = "Button#EDIT_PENCIL");
 
@@ -1298,7 +1294,7 @@ definition {
 		}
 
 		task ("Add a Web Content Display to conversion draft page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit Conversion Draft",
@@ -1318,7 +1314,7 @@ definition {
 		}
 
 		task ("Edit conversion page via Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit Conversion Draft",
@@ -1341,13 +1337,13 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("Change layout to 1 column") {
 			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				layoutTemplate = "1 Column");
 		}
@@ -1356,7 +1352,7 @@ definition {
 			for (var widgetName : list "Nested Applications,Asset Publisher") {
 				JSONLayout.addWidgetToPublicLayout(
 					column = 1,
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Test Page Name",
 					widgetName = ${widgetName});
 			}
@@ -1365,7 +1361,7 @@ definition {
 		task ("View default layout in Nested widget") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			NestedPortlets.viewConfigurationDefaultLayoutTemplate(
 				defaultColumnName = "2 Columns (50/50)",
@@ -1386,7 +1382,7 @@ definition {
 		}
 
 		task ("Convert widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -1416,7 +1412,7 @@ definition {
 		task ("View content page is editable after conversion") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 

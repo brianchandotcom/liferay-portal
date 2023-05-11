@@ -3,35 +3,27 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Activate local live staging") {
 			JSONStaging.enableLocalStaging(
 				branchingPrivate = "false",
 				branchingPublic = "false",
-				groupName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 		}
 	}
 
@@ -41,32 +33,32 @@ definition {
 		task ("Add 2 widget pages and 1 content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name (Staging)",
+					groupName = "${randomSiteName} (Staging)",
 					layoutName = "Test Page Name ${n}",
 					site = "false");
 			}
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name 3",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 3",
-				siteName = "Test Site Name Staging");
+				siteName = "${randomSiteName} Staging");
 
 			PageEditor.publish();
 		}
 
 		task ("Publish to Live site") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("View pages order in Staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			PagesAdmin.viewPagesOrder(
 				depth = 1,
@@ -90,7 +82,7 @@ definition {
 		}
 
 		task ("View pages order in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPagesOrder(
 				depth = 1,
@@ -121,14 +113,14 @@ definition {
 	test NavigateToPageEditorWhenClickOnContentPageItemInStagingSite {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
+				siteName = "${randomSiteName} Staging");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -136,13 +128,13 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("When the page creator clicks on the content page item in Pages admin of staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -164,14 +156,14 @@ definition {
 	test NavigateToViewModeWhenClickOnContentPageItemInLiveSite {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
+				siteName = "${randomSiteName} Staging");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -179,13 +171,13 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("When the page creator clicks on the content page item in Pages admin of live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -207,70 +199,51 @@ definition {
 	@description = "This is a test for LPS-152446. When a user without edit permissions clicks a content page in page administration of live site, the page is opened in view mode."
 	@priority = 3
 	test NavigateToViewModeWhenClickOnContentPageItemInLiveSiteAsUserWithoutEditPermission {
+		var userEmailAddress = StringUtil.randomString(8);
+		var userFirstName = StringUtil.randomString(8);
+		var userLastName = StringUtil.randomString(8);
+		var userScreenName = StringUtil.randomString(8);
+		var roleKey = StringUtil.randomString(8);
+
 		task ("Given a marketer without edit permission has a content page") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			JSONRole.addSiteRole(
-				roleKey = "Marketer",
-				roleTitle = "Marketer");
+				roleKey = ${roleKey},
+				roleTitle = ${roleKey});
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seo",
-				roleTitle = "Marketer",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION:com.liferay.portal.kernel.model.Layout,VIEW:com.liferay.layout.seo,VIEW",
+				roleTitle = ${roleKey},
 				roleType = "site");
 
 			JSONRole.assignSiteRoleToUser(
-				groupName = "Test Site Name",
-				roleTitle = "Marketer",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
+				siteName = "${randomSiteName} Staging");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -278,17 +251,15 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("When the marketer clicks on the content page item in Pages admin of live site") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -304,80 +275,57 @@ definition {
 				text = "Heading Example");
 
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
-
-			JSONRole.deleteRole(roleTitle = "Marketer");
 		}
 	}
 
 	@description = "This is a test for LPS-152446. When a user without edit permissions clicks a content page in page administration of staging site, the page is opened in view mode."
 	@priority = 3
 	test NavigateToViewModeWhenClickOnContentPageItemInStagingSiteAsUserWithoutEditPermission {
+		var userEmailAddress = StringUtil.randomString(8);
+		var userFirstName = StringUtil.randomString(8);
+		var userLastName = StringUtil.randomString(8);
+		var userScreenName = StringUtil.randomString(8);
+		var roleKey = StringUtil.randomString(8);
+
 		task ("Given a marketer without edit permission has a content page") {
 			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "Userfn",
-				userLastName = "Userln",
-				userScreenName = "usersn");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			JSONUser.addUserToSite(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			JSONRole.addSiteRole(
-				roleKey = "Marketer",
-				roleTitle = "Marketer");
+				roleKey = ${roleKey},
+				roleTitle = ${roleKey});
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.portal.kernel.model.Group",
-					roleTitle = "Marketer",
-					roleType = "site");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.depot.model.DepotEntry",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Marketer",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seo",
-				roleTitle = "Marketer",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet,ACCESS_IN_CONTROL_PANEL:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION,VIEW_STAGING:com.liferay.depot.model.DepotEntry,VIEW_SITE_ADMINISTRATION:com.liferay.portal.kernel.model.Layout,VIEW:com.liferay.layout.seo,VIEW",
+				roleTitle = ${roleKey},
 				roleType = "site");
 
 			JSONRole.assignSiteRoleToUser(
-				groupName = "Test Site Name",
-				roleTitle = "Marketer",
-				userEmailAddress = "userea@liferay.com");
+				groupName = ${randomSiteName},
+				roleTitle = ${roleKey},
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
+				siteName = "${randomSiteName} Staging");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -385,17 +333,15 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("When the marketer clicks on the content page item in Pages admin of staging site") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -411,8 +357,6 @@ definition {
 				text = "Heading Example");
 
 			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
-
-			JSONRole.deleteRole(roleTitle = "Marketer");
 		}
 	}
 
@@ -422,7 +366,7 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				site = "false",
 				title = "Web Content Title");
 		}
@@ -430,7 +374,7 @@ definition {
 		task ("Add a blogs entry") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				site = "false",
 				title = "Blogs Entry Title");
 		}
@@ -438,7 +382,7 @@ definition {
 		task ("Add a document") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name-staging",
+				groupName = "${randomSiteName}-staging",
 				mimeType = "image/jpeg",
 				site = "false",
 				sourceFileName = "Document_1.jpg");
@@ -446,14 +390,14 @@ definition {
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				itemType = "All Types",
 				site = "false",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -498,7 +442,7 @@ definition {
 		}
 
 		task ("View header table are shown in collection items via Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -533,13 +477,13 @@ definition {
 	test ViewLinkToURLTypePageWhichSelectingNewTabInAdvancedTab {
 		task ("Given a page creator has a widget page in staging") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false");
 		}
 
 		task ("When adding a Link to URL type page and selecting New Tab in advanced tab") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			PagesAdmin.addPage(
 				pageName = "Test Link to URL Page Name",
@@ -551,7 +495,7 @@ definition {
 		task ("Then viewing the linked URL page opens in new tab in staging site and live site") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertClick.assertPartialTextClickAt(
 				key_pageName = "Test Link to URL Page Name",
@@ -564,7 +508,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			ProductMenu.gotoStagingSite(site = "Test Site Name");
+			ProductMenu.gotoStagingSite(site = ${randomSiteName});
 
 			PagesFinder.goToPagesFinder();
 
@@ -579,7 +523,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -593,11 +537,11 @@ definition {
 
 			ProductMenuHelper.closeProductMenu();
 
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			Navigator.gotoLiveView();
 
@@ -612,7 +556,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			Navigator.openSiteURL(siteName = "Test Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			Navigator.gotoLiveView();
 
@@ -629,7 +573,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -647,7 +591,7 @@ definition {
 	@priority = 4
 	test ViewNoPrivatePageInStaging {
 		task ("Go to Publishing > Staging, enable page versioning, assert no public and private page inside to select") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
@@ -660,20 +604,20 @@ definition {
 
 		task ("Add 2 content pages") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name 1",
 				site = "false",
 				type = "content");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name 2",
 				site = "false",
 				type = "content");
 		}
 
 		task ("Publish to live from Publishing > Staging, assert no Pages > Public Pages displayed, only Pages displayed") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			LexiconEntry.gotoAdd();
 

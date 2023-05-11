@@ -22,4 +22,10 @@ public class ContentSecurityPolicyConstants {
 	public static final String CONTENT_SECURITY_POLICY_HEADER =
 		"Content-Security-Policy";
 
+	public static final String CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX =
+		"nonce-";
+
+	public static final String CONTENT_SECURITY_POLICY_NONCE_TOKEN =
+		"[nonceToken]";
+
 }

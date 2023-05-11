@@ -620,6 +620,11 @@
 		<td>//div[contains(@class,'card-body')]//button[contains(text(), '${key_optionDefaulValue}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_ICON_OBJECT_ADMIN</td>
+		<td>//div[(@class='table-list-title')]//*[(@class='lexicon-icon lexicon-icon-view')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

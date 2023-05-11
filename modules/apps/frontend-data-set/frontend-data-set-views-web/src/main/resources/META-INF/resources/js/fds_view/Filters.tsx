@@ -310,6 +310,15 @@ function AddFDSFilterModalContent({
 							<ClayForm.Group>
 								<label htmlFor={sourceOptionFormElementId}>
 									{Liferay.Language.get('source-options')}
+
+									<span
+										className="label-icon lfr-portal-tooltip ml-2"
+										title={Liferay.Language.get(
+											'choose-a-picklist-to-associate-with-this-filter'
+										)}
+									>
+										<ClayIcon symbol="question-circle-full" />
+									</span>
 								</label>
 
 								<ClaySelectWithOption
@@ -335,6 +344,15 @@ function AddFDSFilterModalContent({
 									<ClayForm.Group>
 										<label htmlFor={multipleFormElementId}>
 											{Liferay.Language.get('selection')}
+
+											<span
+												className="label-icon lfr-portal-tooltip ml-2"
+												title={Liferay.Language.get(
+													'determines-how-many-preselected-values-for-the-filter-can-be-added'
+												)}
+											>
+												<ClayIcon symbol="question-circle-full" />
+											</span>
 										</label>
 
 										<ClayRadioGroup
@@ -373,6 +391,15 @@ function AddFDSFilterModalContent({
 											{Liferay.Language.get(
 												'preselected-values'
 											)}
+
+											<span
+												className="label-icon lfr-portal-tooltip ml-2"
+												title={Liferay.Language.get(
+													'choose-values-to-preselect-for-your-filters-source-option'
+												)}
+											>
+												<ClayIcon symbol="question-circle-full" />
+											</span>
 										</label>
 
 										<ClayMultiSelect
@@ -434,6 +461,15 @@ function AddFDSFilterModalContent({
 											{Liferay.Language.get(
 												'filter-mode'
 											)}
+
+											<span
+												className="label-icon lfr-portal-tooltip ml-2"
+												title={Liferay.Language.get(
+													'include-returns-only-the-selected-values.-exclude-returns-all-except-the-selected-ones'
+												)}
+											>
+												<ClayIcon symbol="question-circle-full" />
+											</span>
 										</label>
 
 										<ClayRadioGroup

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
@@ -33,6 +34,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
+ * @author Carlos Correa
  * @author Igor Beslic
  */
 public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
@@ -103,10 +105,12 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 	}
 
 	protected boolean isApplicableCheck(
-		String entityReturnType, String javaTermName) {
+		String entityName, String entityReturnType, String javaTermName) {
 
 		if (javaTermName.equals("add") ||
-			javaTermName.equals("add" + entityReturnType)) {
+			javaTermName.equals("add" + entityReturnType) ||
+			(javaTermName.startsWith("add") &&
+			 StringUtil.equals(entityName, entityReturnType))) {
 
 			return true;
 		}

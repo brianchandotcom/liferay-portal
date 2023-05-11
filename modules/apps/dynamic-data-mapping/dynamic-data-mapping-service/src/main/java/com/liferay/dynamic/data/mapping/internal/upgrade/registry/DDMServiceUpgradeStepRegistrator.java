@@ -72,6 +72,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -520,6 +521,13 @@ public class DDMServiceUpgradeStepRegistrator
 			"5.2.2", "5.3.0",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_0.
 				DDMTemplateUpgradeProcess(_classNameLocalService));
+
+		registry.register(
+			"5.3.0", "5.3.1",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_1.
+				DDMStructureUpgradeProcess(
+					_jsonDDMFormDeserializer, _jsonDDMFormSerializer,
+					_language));
 	}
 
 	@Activate
@@ -593,6 +601,9 @@ public class DDMServiceUpgradeStepRegistrator
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

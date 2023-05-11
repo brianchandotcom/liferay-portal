@@ -286,20 +286,20 @@ public class SkuVirtualSettings implements Serializable {
 	protected String sampleSrc;
 
 	@Schema(description = "URL of the sample file")
-	public String getSampleUrl() {
-		return sampleUrl;
+	public String getSampleURL() {
+		return sampleURL;
 	}
 
-	public void setSampleUrl(String sampleUrl) {
-		this.sampleUrl = sampleUrl;
+	public void setSampleURL(String sampleURL) {
+		this.sampleURL = sampleURL;
 	}
 
 	@JsonIgnore
-	public void setSampleUrl(
-		UnsafeSupplier<String, Exception> sampleUrlUnsafeSupplier) {
+	public void setSampleURL(
+		UnsafeSupplier<String, Exception> sampleURLUnsafeSupplier) {
 
 		try {
-			sampleUrl = sampleUrlUnsafeSupplier.get();
+			sampleURL = sampleURLUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -311,7 +311,7 @@ public class SkuVirtualSettings implements Serializable {
 
 	@GraphQLField(description = "URL of the sample file")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String sampleUrl;
+	protected String sampleURL;
 
 	@Schema(description = "URL to download the file")
 	public String getSrc() {
@@ -603,16 +603,16 @@ public class SkuVirtualSettings implements Serializable {
 			sb.append("\"");
 		}
 
-		if (sampleUrl != null) {
+		if (sampleURL != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sampleUrl\": ");
+			sb.append("\"sampleURL\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(sampleUrl));
+			sb.append(_escape(sampleURL));
 
 			sb.append("\"");
 		}

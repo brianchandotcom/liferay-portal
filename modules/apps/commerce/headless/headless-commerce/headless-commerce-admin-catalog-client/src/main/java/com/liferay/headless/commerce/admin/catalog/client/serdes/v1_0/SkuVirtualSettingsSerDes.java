@@ -148,16 +148,16 @@ public class SkuVirtualSettingsSerDes {
 			sb.append("\"");
 		}
 
-		if (skuVirtualSettings.getSampleUrl() != null) {
+		if (skuVirtualSettings.getSampleURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sampleUrl\": ");
+			sb.append("\"sampleURL\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(skuVirtualSettings.getSampleUrl()));
+			sb.append(_escape(skuVirtualSettings.getSampleURL()));
 
 			sb.append("\"");
 		}
@@ -319,12 +319,12 @@ public class SkuVirtualSettingsSerDes {
 				"sampleSrc", String.valueOf(skuVirtualSettings.getSampleSrc()));
 		}
 
-		if (skuVirtualSettings.getSampleUrl() == null) {
-			map.put("sampleUrl", null);
+		if (skuVirtualSettings.getSampleURL() == null) {
+			map.put("sampleURL", null);
 		}
 		else {
 			map.put(
-				"sampleUrl", String.valueOf(skuVirtualSettings.getSampleUrl()));
+				"sampleURL", String.valueOf(skuVirtualSettings.getSampleURL()));
 		}
 
 		if (skuVirtualSettings.getSrc() == null) {
@@ -448,9 +448,9 @@ public class SkuVirtualSettingsSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "sampleUrl")) {
+			else if (Objects.equals(jsonParserFieldName, "sampleURL")) {
 				if (jsonParserFieldValue != null) {
-					skuVirtualSettings.setSampleUrl(
+					skuVirtualSettings.setSampleURL(
 						(String)jsonParserFieldValue);
 				}
 			}

@@ -1572,7 +1572,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeProductVirtualSettings(externalReferenceCode: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, sampleAttachment, sampleSrc, sampleUrl, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productByExternalReferenceCodeProductVirtualSettings(externalReferenceCode: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, sampleAttachment, sampleSrc, sampleURL, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ProductVirtualSettings
@@ -1593,7 +1593,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdProductVirtualSettings(id: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, sampleAttachment, sampleSrc, sampleUrl, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdProductVirtualSettings(id: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, sampleAttachment, sampleSrc, sampleURL, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ProductVirtualSettings productIdProductVirtualSettings(
@@ -1797,7 +1797,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuByExternalReferenceCodeSkuVirtualSettings(externalReferenceCode: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, override, sampleAttachment, sampleSrc, sampleUrl, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuByExternalReferenceCodeSkuVirtualSettings(externalReferenceCode: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, override, sampleAttachment, sampleSrc, sampleURL, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SkuVirtualSettings skuByExternalReferenceCodeSkuVirtualSettings(
@@ -1816,7 +1816,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuIdSkuVirtualSettings(id: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, override, sampleAttachment, sampleSrc, sampleUrl, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {skuIdSkuVirtualSettings(id: ___){activationStatus, activationStatusInfo, attachment, duration, maxUsages, override, sampleAttachment, sampleSrc, sampleURL, src, termsOfUseContent, termsOfUseJournalArticleId, termsOfUseRequired, url, useSample}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public SkuVirtualSettings skuIdSkuVirtualSettings(

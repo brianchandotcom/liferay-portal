@@ -17,13 +17,11 @@ package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.BaseKaleoTaskAssignmentSelector;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
 import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.KaleoScriptingEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -36,32 +34,26 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "scripting.language=groovy",
-	service = KaleoTaskAssignmentSelector.class
+	service = ScriptingAssigneeSelector.class
 )
 public class GroovyScriptingKaleoTaskAssignmentSelector
-	extends BaseKaleoTaskAssignmentSelector {
+	implements ScriptingAssigneeSelector {
 
 	@Override
-	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
-			KaleoTaskAssignment kaleoTaskAssignment,
-			ExecutionContext executionContext)
+	public Map<String, ?> getAssignees(
+			ExecutionContext executionContext,
+			KaleoTaskAssignment kaleoTaskAssignment)
 		throws PortalException {
 
-		String assigneeScript = kaleoTaskAssignment.getAssigneeScript();
-
-		String assigneeScriptingLanguage =
-			kaleoTaskAssignment.getAssigneeScriptLanguage();
-
-		Map<String, Object> results = _kaleoScriptingEvaluator.execute(
-			executionContext, _outputNames, assigneeScriptingLanguage,
-			assigneeScript);
-
-		return getKaleoTaskAssignments(results);
+		return _kaleoScriptingEvaluator.execute(
+			executionContext, _outputNames,
+			kaleoTaskAssignment.getAssigneeScriptLanguage(),
+			kaleoTaskAssignment.getAssigneeScript());
 	}
 
 	private static final Set<String> _outputNames = new HashSet<>(
 		Arrays.asList(
-			ROLES_ASSIGNMENT, USER_ASSIGNMENT, USERS_ASSIGNMENT,
+			"roles", "user", "users",
 			WorkflowContextUtil.WORKFLOW_CONTEXT_NAME));
 
 	@Reference

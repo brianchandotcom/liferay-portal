@@ -12,40 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment;
+package com.liferay.portal.workflow.kaleo.runtime.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
-import com.liferay.portal.workflow.kaleo.runtime.scripting.internal.util.RulesEngineExecutor;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
- * @author Michael C. Han
+ * @author Jiaxu Wei
  */
-@Component(
-	enabled = false, property = "scripting.language=drl",
-	service = ScriptingAssigneeSelector.class
-)
-public class DRLScriptingKaleoTaskAssignmentSelector
-	implements ScriptingAssigneeSelector {
+public interface ScriptingAssigneeSelector {
 
-	@Override
 	public Map<String, ?> getAssignees(
 			ExecutionContext executionContext,
 			KaleoTaskAssignment kaleoTaskAssignment)
-		throws PortalException {
-
-		return _rulesEngineExecutor.executeAndMergeWorkflowContexts(
-			executionContext, kaleoTaskAssignment.getAssigneeScript());
-	}
-
-	@Reference
-	private RulesEngineExecutor _rulesEngineExecutor;
+		throws PortalException;
 
 }

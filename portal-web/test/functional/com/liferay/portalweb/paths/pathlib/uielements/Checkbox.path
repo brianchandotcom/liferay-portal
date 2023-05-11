@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SHIPMENT_ITEMS_CHECKBOX_WITH_ORDER_ID</td>
+	<td>//div[contains(text(), '${key_productSku}')]/../div[contains(text(), '${key_orderId}')]/preceding-sibling::div[@class='dnd-td item-selector']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//input[contains(@id,'BlogsEntry')]</td>
 	<td></td>

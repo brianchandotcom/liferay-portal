@@ -6,6 +6,6 @@
 		"showPurchaseOrderNumber": true
 	},
 	"com.liferay.commerce.order.fields": {
-		"accountCartMaxAllowed": 9
+		"accountCartMaxAllowed": 1
 	}
 }

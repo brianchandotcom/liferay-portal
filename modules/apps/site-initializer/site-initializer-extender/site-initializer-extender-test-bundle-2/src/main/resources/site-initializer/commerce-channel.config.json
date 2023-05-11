@@ -1,7 +1,9 @@
 {
+	"com.liferay.commerce.account": {
+		"commerceSiteType": "1"
+	},
 	"com.liferay.commerce.order": {
 		"checkoutRequestedDeliveryDateEnabled": true,
-		"commerceSiteType": "B2X",
 		"guestCheckoutEnabled": true,
 		"hideShippingPriceZero": false,
 		"showPurchaseOrderNumber": true

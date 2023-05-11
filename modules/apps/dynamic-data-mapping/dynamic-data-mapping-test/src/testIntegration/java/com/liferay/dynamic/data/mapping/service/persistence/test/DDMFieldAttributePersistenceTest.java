@@ -187,12 +187,30 @@ public class DDMFieldAttributePersistenceTest {
 	}
 
 	@Test
+	public void testCountByS_AN() throws Exception {
+		_persistence.countByS_AN(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByS_AN(0L, "null");
+
+		_persistence.countByS_AN(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByS_L() throws Exception {
 		_persistence.countByS_L(RandomTestUtil.nextLong(), "");
 
 		_persistence.countByS_L(0L, "null");
 
 		_persistence.countByS_L(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByS_LArrayable() throws Exception {
+		_persistence.countByS_L(
+			RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
 	}
 
 	@Test

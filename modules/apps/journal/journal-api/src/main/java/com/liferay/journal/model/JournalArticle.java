@@ -131,6 +131,9 @@ public interface JournalArticle
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
 
+	public com.liferay.portal.kernel.xml.Document getDocumentByLocale(
+		String languageId);
+
 	public JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

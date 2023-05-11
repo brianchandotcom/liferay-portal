@@ -298,6 +298,197 @@ public class DDMFieldAttributeUtil {
 	}
 
 	/**
+	 * Returns all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @return the matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName) {
+
+		return getPersistence().findByS_AN(storageId, attributeName);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName, int start, int end) {
+
+		return getPersistence().findByS_AN(
+			storageId, attributeName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName, int start, int end,
+		OrderByComparator<DDMFieldAttribute> orderByComparator) {
+
+		return getPersistence().findByS_AN(
+			storageId, attributeName, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName, int start, int end,
+		OrderByComparator<DDMFieldAttribute> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByS_AN(
+			storageId, attributeName, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field attribute
+	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
+	 */
+	public static DDMFieldAttribute findByS_AN_First(
+			long storageId, String attributeName,
+			OrderByComparator<DDMFieldAttribute> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFieldAttributeException {
+
+		return getPersistence().findByS_AN_First(
+			storageId, attributeName, orderByComparator);
+	}
+
+	/**
+	 * Returns the first ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
+	 */
+	public static DDMFieldAttribute fetchByS_AN_First(
+		long storageId, String attributeName,
+		OrderByComparator<DDMFieldAttribute> orderByComparator) {
+
+		return getPersistence().fetchByS_AN_First(
+			storageId, attributeName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field attribute
+	 * @throws NoSuchFieldAttributeException if a matching ddm field attribute could not be found
+	 */
+	public static DDMFieldAttribute findByS_AN_Last(
+			long storageId, String attributeName,
+			OrderByComparator<DDMFieldAttribute> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFieldAttributeException {
+
+		return getPersistence().findByS_AN_Last(
+			storageId, attributeName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
+	 */
+	public static DDMFieldAttribute fetchByS_AN_Last(
+		long storageId, String attributeName,
+		OrderByComparator<DDMFieldAttribute> orderByComparator) {
+
+		return getPersistence().fetchByS_AN_Last(
+			storageId, attributeName, orderByComparator);
+	}
+
+	/**
+	 * Returns the ddm field attributes before and after the current ddm field attribute in the ordered set where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param fieldAttributeId the primary key of the current ddm field attribute
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ddm field attribute
+	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
+	 */
+	public static DDMFieldAttribute[] findByS_AN_PrevAndNext(
+			long fieldAttributeId, long storageId, String attributeName,
+			OrderByComparator<DDMFieldAttribute> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.
+			NoSuchFieldAttributeException {
+
+		return getPersistence().findByS_AN_PrevAndNext(
+			fieldAttributeId, storageId, attributeName, orderByComparator);
+	}
+
+	/**
+	 * Removes all the ddm field attributes where storageId = &#63; and attributeName = &#63; from the database.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 */
+	public static void removeByS_AN(long storageId, String attributeName) {
+		getPersistence().removeByS_AN(storageId, attributeName);
+	}
+
+	/**
+	 * Returns the number of ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @return the number of matching ddm field attributes
+	 */
+	public static int countByS_AN(long storageId, String attributeName) {
+		return getPersistence().countByS_AN(storageId, attributeName);
+	}
+
+	/**
 	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
 	 *
 	 * @param storageId the storage ID
@@ -467,6 +658,89 @@ public class DDMFieldAttributeUtil {
 	}
 
 	/**
+	 * Returns all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @return the matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds) {
+
+		return getPersistence().findByS_L(storageId, languageIds);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds, int start, int end) {
+
+		return getPersistence().findByS_L(storageId, languageIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds, int start, int end,
+		OrderByComparator<DDMFieldAttribute> orderByComparator) {
+
+		return getPersistence().findByS_L(
+			storageId, languageIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public static List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds, int start, int end,
+		OrderByComparator<DDMFieldAttribute> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByS_L(
+			storageId, languageIds, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
 	 * Removes all the ddm field attributes where storageId = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param storageId the storage ID
@@ -485,6 +759,17 @@ public class DDMFieldAttributeUtil {
 	 */
 	public static int countByS_L(long storageId, String languageId) {
 		return getPersistence().countByS_L(storageId, languageId);
+	}
+
+	/**
+	 * Returns the number of ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @return the number of matching ddm field attributes
+	 */
+	public static int countByS_L(long storageId, String[] languageIds) {
+		return getPersistence().countByS_L(storageId, languageIds);
 	}
 
 	/**

@@ -532,6 +532,13 @@ public class JournalArticleWrapper
 		return model.getDocument();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.xml.Document getDocumentByLocale(
+		String languageId) {
+
+		return model.getDocumentByLocale(languageId);
+	}
+
 	/**
 	 * Returns the expiration date of this journal article.
 	 *

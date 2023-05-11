@@ -258,6 +258,15 @@ public class DDMFieldLocalServiceWrapper
 		return _ddmFieldLocalService.getDDMField(fieldId);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.dynamic.data.mapping.model.DDMFieldAttribute>
+			getDDMFieldAttributes(long storageId, String attributeName) {
+
+		return _ddmFieldLocalService.getDDMFieldAttributes(
+			storageId, attributeName);
+	}
+
 	/**
 	 * Returns a range of all the ddm fields.
 	 *
@@ -291,6 +300,16 @@ public class DDMFieldLocalServiceWrapper
 			long storageId) {
 
 		return _ddmFieldLocalService.getDDMFormValues(ddmForm, storageId);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
+		getDDMFormValues(
+			com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+			long storageId, String languageId) {
+
+		return _ddmFieldLocalService.getDDMFormValues(
+			ddmForm, storageId, languageId);
 	}
 
 	@Override

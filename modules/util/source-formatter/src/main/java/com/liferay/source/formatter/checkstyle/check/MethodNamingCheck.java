@@ -206,9 +206,23 @@ public class MethodNamingCheck extends BaseCheck {
 
 		String returnTypeName = getTypeName(detailAST, true);
 
-		if (returnTypeName.contains("[]") ||
-			methodName.matches(".*" + returnTypeName + "[0-9]*") ||
-			methodName.matches("_?get" + returnTypeName + ".*")) {
+		if ((returnTypeName.contains(StringPool.LESS_THAN) &&
+			 returnTypeName.contains(StringPool.GREATER_THAN)) ||
+			returnTypeName.contains("[]")) {
+
+			return;
+		}
+
+		String innerClassName = returnTypeName;
+
+		int x = returnTypeName.indexOf(".");
+
+		if (x != -1) {
+			innerClassName = returnTypeName.substring(x + 1);
+		}
+
+		if (methodName.matches(".*" + innerClassName + "[0-9]*") ||
+			methodName.matches("_?get" + innerClassName + ".*")) {
 
 			return;
 		}
@@ -217,8 +231,10 @@ public class MethodNamingCheck extends BaseCheck {
 			_ENFORCE_TYPE_NAMES_KEY);
 
 		for (String enforceTypeName : enforceTypeNames) {
-			if (returnTypeName.matches(enforceTypeName)) {
-				log(detailAST, _MSG_INCORRECT_ENDING_METHOD, returnTypeName);
+			if (innerClassName.matches(enforceTypeName)) {
+				log(
+					detailAST, _MSG_INCORRECT_ENDING_METHOD, returnTypeName,
+					innerClassName);
 
 				return;
 			}

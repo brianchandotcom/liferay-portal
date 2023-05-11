@@ -534,7 +534,7 @@
 			<property name="category" value="Naming Conventions" />
 			<property name="checkSearchMethodNames" value="false" />
 			<property name="description" value="Checks that method names follow naming conventions." />
-			<message key="method.incorrect.ending" value="Name of method returning type ''{0}'' should end with ''{0}''" />
+			<message key="method.incorrect.ending" value="Name of method returning type ''{0}'' should end with ''{1}''" />
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
 			<message key="search.method.incorrect" value="Incorrect name of method ''{0}''. Name should equal ''search'' or start with ''searchBy''." />
 			<property name="enforceTypeNames" value="" />

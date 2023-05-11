@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.roles.item.selector.regular.role.RegularRoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.site.role.SiteRoleItemSelectorCriterion;
-import com.liferay.site.configuration.MenuAccessConfigurationProvider;
+import com.liferay.site.configuration.MenuAccessConfigurationManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,14 +58,14 @@ public class MenuAccessConfigurationDisplayContext {
 		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, ItemSelector itemSelector,
-		MenuAccessConfigurationProvider menuAccessConfigurationProvider,
+		MenuAccessConfigurationManager menuAccessConfigurationManager,
 		Portal portal, RoleLocalService roleLocalService) {
 
 		_configurationProvider = configurationProvider;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 		_itemSelector = itemSelector;
-		_menuAccessConfigurationProvider = menuAccessConfigurationProvider;
+		_menuAccessConfigurationManager = menuAccessConfigurationManager;
 		_portal = portal;
 		_roleLocalService = roleLocalService;
 
@@ -95,7 +95,7 @@ public class MenuAccessConfigurationDisplayContext {
 		itemSelectorCriteria.add(regularRoleItemSelectorCriterion);
 
 		String[] roleIds =
-			_menuAccessConfigurationProvider.getRoleIdsCanAccessControlMenu(
+			_menuAccessConfigurationManager.getRoleIdsCanAccessControlMenu(
 				_themeDisplay.getScopeGroupId());
 
 		long[] checkedRoleIds = new long[roleIds.length];
@@ -150,7 +150,7 @@ public class MenuAccessConfigurationDisplayContext {
 		List<Role> roles = new ArrayList<>();
 
 		String[] roleIdsCanAccessControlMenu =
-			_menuAccessConfigurationProvider.getRoleIdsCanAccessControlMenu(
+			_menuAccessConfigurationManager.getRoleIdsCanAccessControlMenu(
 				_themeDisplay.getScopeGroupId());
 
 		for (String roleId : roleIdsCanAccessControlMenu) {
@@ -187,7 +187,7 @@ public class MenuAccessConfigurationDisplayContext {
 	}
 
 	public boolean isShowControlMenuByRole() throws Exception {
-		return _menuAccessConfigurationProvider.isShowControlMenuByRole(
+		return _menuAccessConfigurationManager.isShowControlMenuByRole(
 			_themeDisplay.getScopeGroupId());
 	}
 
@@ -211,8 +211,8 @@ public class MenuAccessConfigurationDisplayContext {
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final MenuAccessConfigurationProvider
-		_menuAccessConfigurationProvider;
+	private final MenuAccessConfigurationManager
+		_menuAccessConfigurationManager;
 	private final Portal _portal;
 	private final RoleLocalService _roleLocalService;
 	private final ThemeDisplay _themeDisplay;

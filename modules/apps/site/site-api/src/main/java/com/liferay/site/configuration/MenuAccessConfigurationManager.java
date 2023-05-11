@@ -22,11 +22,11 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Mikel Lorza
  */
 @ProviderType
-public interface MenuAccessConfigurationProvider {
+public interface MenuAccessConfigurationManager {
 
-	public void addRoleToMenuAccess(Role role) throws Exception;
+	public void addRoleCanAccessControlMenu(Role role) throws Exception;
 
-	public void deleteRoleFromMenuAccess(Role role) throws Exception;
+	public void deleteRoleCanAccessControlMenu(Role role) throws Exception;
 
 	public String[] getRoleIdsCanAccessControlMenu(long groupId)
 		throws Exception;

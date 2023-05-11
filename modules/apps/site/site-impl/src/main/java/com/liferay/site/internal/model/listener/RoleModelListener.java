@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.site.configuration.MenuAccessConfigurationProvider;
+import com.liferay.site.configuration.MenuAccessConfigurationManager;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,8 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 
 			try {
-				_menuAccessConfigurationProvider.addRoleToMenuAccess(role);
+				_menuAccessConfigurationManager.addRoleCanAccessControlMenu(
+					role);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -61,7 +62,8 @@ public class RoleModelListener extends BaseModelListener<Role> {
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 
 			try {
-				_menuAccessConfigurationProvider.deleteRoleFromMenuAccess(role);
+				_menuAccessConfigurationManager.deleteRoleCanAccessControlMenu(
+					role);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -73,6 +75,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 		RoleModelListener.class);
 
 	@Reference
-	private MenuAccessConfigurationProvider _menuAccessConfigurationProvider;
+	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
 
 }

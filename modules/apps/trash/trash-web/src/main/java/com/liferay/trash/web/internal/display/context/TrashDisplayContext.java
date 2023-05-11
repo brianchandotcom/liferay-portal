@@ -15,8 +15,6 @@
 package com.liferay.trash.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.petra.string.StringPool;
@@ -317,16 +315,6 @@ public class TrashDisplayContext {
 		_entrySearch = entrySearch;
 
 		return _entrySearch;
-	}
-
-	public List<NavigationItem> getInfoPanelNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "details"));
-			}
-		).build();
 	}
 
 	public String getKeywords() {

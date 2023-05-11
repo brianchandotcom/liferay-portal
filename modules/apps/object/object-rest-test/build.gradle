@@ -15,5 +15,6 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

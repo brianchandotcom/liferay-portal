@@ -205,7 +205,6 @@ definition {
 	@description = "Verify that the user can add Multiple Actions to the same node"
 	@priority = 4
 	test CanAddMultipleActions {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddMultipleActions";
 
 		Workflow.openWorkflowListView();
@@ -219,7 +218,8 @@ definition {
 			name = "Liferay Action",
 			newAction = "true",
 			newSection = "New Action",
-			sectionOptionList = "1,2,3");
+			sectionOptionList = "1,2,3",
+			type = "Groovy");
 
 		ProcessBuilderKaleoDesignerReact.viewMultipleActionPresent(
 			actionsTemplateValue = "Action Template",

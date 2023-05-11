@@ -344,45 +344,6 @@ public class AuditEventLocalServiceWrapper
 			serverPort, sessionID, andSearch, start, end, orderByComparator);
 	}
 
-	@Deprecated
-	@Override
-	public java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-			getAuditEvents(
-				long companyId, long userId, String userName,
-				java.util.Date createDateGT, java.util.Date createDateLT,
-				String eventType, String className, String classPK,
-				String clientHost, String clientIP, String serverName,
-				int serverPort, String sessionID, boolean andSearch, int start,
-				int end) {
-
-		return _auditEventLocalService.getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end);
-	}
-
-	@Deprecated
-	@Override
-	public java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-			getAuditEvents(
-				long companyId, long userId, String userName,
-				java.util.Date createDateGT, java.util.Date createDateLT,
-				String eventType, String className, String classPK,
-				String clientHost, String clientIP, String serverName,
-				int serverPort, String sessionID, boolean andSearch, int start,
-				int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.security.audit.storage.model.AuditEvent>
-						orderByComparator) {
-
-		return _auditEventLocalService.getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns the number of audit events.
 	 *
@@ -410,21 +371,6 @@ public class AuditEventLocalServiceWrapper
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
 			eventType, className, classPK, clientHost, clientIP, serverName,
 			serverPort, sessionID, andSearch);
-	}
-
-	@Deprecated
-	@Override
-	public int getAuditEventsCount(
-		long companyId, long userId, String userName,
-		java.util.Date createDateGT, java.util.Date createDateLT,
-		String eventType, String className, String classPK, String clientHost,
-		String clientIP, String serverName, int serverPort, String sessionID,
-		boolean andSearch) {
-
-		return _auditEventLocalService.getAuditEventsCount(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch);
 	}
 
 	@Override

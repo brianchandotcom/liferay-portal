@@ -96,47 +96,6 @@ public class AuditEventServiceWrapper
 			serverPort, sessionID, andSearch, start, end, orderByComparator);
 	}
 
-	@Deprecated
-	@Override
-	public java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					long companyId, long userId, String userName,
-					java.util.Date createDateGT, java.util.Date createDateLT,
-					String eventType, String className, String classPK,
-					String clientHost, String clientIP, String serverName,
-					int serverPort, String sessionID, boolean andSearch,
-					int start, int end)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _auditEventService.getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end);
-	}
-
-	@Deprecated
-	@Override
-	public java.util.List
-		<com.liferay.portal.security.audit.storage.model.AuditEvent>
-				getAuditEvents(
-					long companyId, long userId, String userName,
-					java.util.Date createDateGT, java.util.Date createDateLT,
-					String eventType, String className, String classPK,
-					String clientHost, String clientIP, String serverName,
-					int serverPort, String sessionID, boolean andSearch,
-					int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.portal.security.audit.storage.model.
-							AuditEvent> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _auditEventService.getAuditEvents(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch, start, end, orderByComparator);
-	}
-
 	@Override
 	public int getAuditEventsCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -157,22 +116,6 @@ public class AuditEventServiceWrapper
 			companyId, groupId, userId, userName, createDateGT, createDateLT,
 			eventType, className, classPK, clientHost, clientIP, serverName,
 			serverPort, sessionID, andSearch);
-	}
-
-	@Deprecated
-	@Override
-	public int getAuditEventsCount(
-			long companyId, long userId, String userName,
-			java.util.Date createDateGT, java.util.Date createDateLT,
-			String eventType, String className, String classPK,
-			String clientHost, String clientIP, String serverName,
-			int serverPort, String sessionID, boolean andSearch)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _auditEventService.getAuditEventsCount(
-			companyId, userId, userName, createDateGT, createDateLT, eventType,
-			className, classPK, clientHost, clientIP, serverName, serverPort,
-			sessionID, andSearch);
 	}
 
 	/**

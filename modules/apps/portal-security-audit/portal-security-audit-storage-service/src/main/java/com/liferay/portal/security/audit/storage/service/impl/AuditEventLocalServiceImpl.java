@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -123,37 +122,6 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		return dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	@Deprecated
-	@Override
-	public List<AuditEvent> getAuditEvents(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch, int start, int end) {
-
-		return getAuditEvents(
-			companyId, CompanyConstants.SYSTEM, userId, userName, createDateGT,
-			createDateLT, eventType, className, classPK, clientHost, clientIP,
-			serverName, serverPort, sessionID, andSearch, start, end,
-			new AuditEventCreateDateComparator());
-	}
-
-	@Deprecated
-	@Override
-	public List<AuditEvent> getAuditEvents(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch, int start, int end,
-		OrderByComparator<AuditEvent> orderByComparator) {
-
-		return getAuditEvents(
-			companyId, CompanyConstants.SYSTEM, userId, userName, createDateGT,
-			createDateLT, eventType, className, classPK, clientHost, clientIP,
-			serverName, serverPort, sessionID, andSearch, start, end,
-			new AuditEventCreateDateComparator());
-	}
-
 	@Override
 	public int getAuditEventsCount(long companyId) {
 		return auditEventPersistence.countByCompanyId(companyId);
@@ -173,20 +141,6 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 			serverPort, sessionID, andSearch);
 
 		return (int)dynamicQueryCount(dynamicQuery);
-	}
-
-	@Deprecated
-	@Override
-	public int getAuditEventsCount(
-		long companyId, long userId, String userName, Date createDateGT,
-		Date createDateLT, String eventType, String className, String classPK,
-		String clientHost, String clientIP, String serverName, int serverPort,
-		String sessionID, boolean andSearch) {
-
-		return getAuditEventsCount(
-			companyId, CompanyConstants.SYSTEM, userId, userName, createDateGT,
-			createDateLT, eventType, className, classPK, clientHost, clientIP,
-			serverName, serverPort, sessionID, andSearch);
 	}
 
 	private DynamicQuery _buildDynamicQuery(

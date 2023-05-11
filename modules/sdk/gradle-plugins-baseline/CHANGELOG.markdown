@@ -1,5 +1,27 @@
 # Liferay Gradle Plugins Baseline Change Log
 
+## 6.0.8 - 2023-02-14
+
+### Commits
+- [LPS-77441] Remove lowest major version (0908f61346)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 6.0.7 - 2022-05-14
+
+### Commits
+- [LPS-152789] perp next (7a7cb3950f)
+- [LPS-152789] perp next (22b35ac090)
+- [LPS-150378] SF, inline (6f2c7ecebf)
+
+### Dependencies
+- [LPS-152789] Update the com.liferay.ant.bnd dependency to version 3.2.9.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 6.0.6 - 2021-10-19
 
 ### Commits
@@ -558,6 +580,7 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 - [LPS-66762] Edit Gradle Baseline plugin README (04de22ed5e)
 
 [LPS-0]: https://issues.liferay.com/browse/LPS-0
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-66709]: https://issues.liferay.com/browse/LPS-66709
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762
@@ -633,4 +656,9 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 [LPS-132729]: https://issues.liferay.com/browse/LPS-132729
 [LPS-133987]: https://issues.liferay.com/browse/LPS-133987
 [LPS-140947]: https://issues.liferay.com/browse/LPS-140947
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150378]: https://issues.liferay.com/browse/LPS-150378
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-152789]: https://issues.liferay.com/browse/LPS-152789
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRQA-39761]: https://issues.liferay.com/browse/LRQA-39761

@@ -1,5 +1,22 @@
 # Liferay Gradle Plugins Maven Plugin Builder Change Log
 
+## 2.0.0 - 2022-07-15
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 1.2.9 - 2022-07-15
+
+### Commits
+- [LPS-51081] Apply (52ec5f96e8)
+- [LPS-51081] Rename package (9d145e2f47)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (d4477c5996)
+- [LPS-130505] SF, no need to call methods (54557cd107)
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.2.8 - 2020-11-02
 
 ### Commits
@@ -444,3 +461,6 @@ version 2.4.
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-114098]: https://issues.liferay.com/browse/LPS-114098
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

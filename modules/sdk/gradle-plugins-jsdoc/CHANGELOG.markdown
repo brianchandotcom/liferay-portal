@@ -1,5 +1,44 @@
 # Liferay Gradle Plugins JSDoc Change Log
 
+## 2.0.71 - 2022-07-15
+
+### Commits
+- [LPS-51081] Apply (52ec5f96e8)
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.plugins.node dependency to version
+8.0.0.
+
+## 2.0.70 - 2022-05-19
+
+### Dependencies
+- [LPS-148304] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.19.
+
+## 2.0.69 - 2022-05-17
+
+### Dependencies
+- [LPS-148304] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.18.
+
+## 2.0.68 - 2022-05-14
+
+### Dependencies
+- [LPS-148304] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.17.
+
+## 2.0.67 - 2022-03-22
+
+### Dependencies
+- [LPS-149634] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.16.
+
+## 2.0.66 - 2022-02-04
+
+### Dependencies
+- [LPS-146791] Update the com.liferay.gradle.plugins.node dependency to version
+7.2.15.
+
 ## 2.0.65 - 2022-01-03
 
 ### Dependencies
@@ -508,6 +547,7 @@ the same application.
 4.0.1.
 
 [LPS-0]: https://issues.liferay.com/browse/LPS-0
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-71117]: https://issues.liferay.com/browse/LPS-71117
 [LPS-74904]: https://issues.liferay.com/browse/LPS-74904
@@ -567,6 +607,9 @@ the same application.
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-144575]: https://issues.liferay.com/browse/LPS-144575
 [LPS-144756]: https://issues.liferay.com/browse/LPS-144756
+[LPS-146791]: https://issues.liferay.com/browse/LPS-146791
+[LPS-148304]: https://issues.liferay.com/browse/LPS-148304
+[LPS-149634]: https://issues.liferay.com/browse/LPS-149634
 [LRDOCS-4111]: https://issues.liferay.com/browse/LRDOCS-4111
 [LRDOCS-6412]: https://issues.liferay.com/browse/LRDOCS-6412
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072

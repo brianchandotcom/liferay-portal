@@ -1,5 +1,35 @@
 # Liferay Gradle Plugins Theme Builder Change Log
 
+## 2.0.23 - 2023-02-14
+
+### Dependencies
+- [LPS-173738] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.7.
+
+## 2.0.20 - 2022-11-03
+
+### Commits
+- [LPS-167074] Update parameter (height, width) (f4d0b67608)
+- [LPS-167074] Apply usage for gradle (3142d42ab7)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-148304] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.5.
+
+## 2.0.19 - 2022-03-28
+
+### Dependencies
+- [LPS-149478] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.4.
+
+## 2.0.18 - 2022-03-22
+
+### Dependencies
+- [LPS-149634] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 5.0.3.
+
 ## 2.0.16 - 2021-05-25
 
 ### Dependencies
@@ -281,4 +311,10 @@ aren't mixed in with source files (fb7f330f69)
 [LPS-112922]: https://issues.liferay.com/browse/LPS-112922
 [LPS-122393]: https://issues.liferay.com/browse/LPS-122393
 [LPS-132730]: https://issues.liferay.com/browse/LPS-132730
+[LPS-148304]: https://issues.liferay.com/browse/LPS-148304
+[LPS-149478]: https://issues.liferay.com/browse/LPS-149478
+[LPS-149634]: https://issues.liferay.com/browse/LPS-149634
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-167074]: https://issues.liferay.com/browse/LPS-167074
+[LPS-173738]: https://issues.liferay.com/browse/LPS-173738
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

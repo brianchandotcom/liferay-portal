@@ -1,5 +1,29 @@
 # Liferay Gradle Plugins Lang Builder Change Log
 
+## 3.0.32 - 2023-03-28
+
+### Dependencies
+- [LPS-178134] Update the com.liferay.lang.builder dependency to version 1.0.49.
+
+## 3.0.31 - 2022-11-24
+
+### Commits
+- [LPS-168821] Simplify (acf28c9f77)
+
+### Dependencies
+- [LPS-168821] Update the com.liferay.lang.builder dependency to version 1.0.48.
+
+## 3.0.30 - 2022-09-27
+
+### Commits
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-158690] Update the com.liferay.lang.builder dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+
 ## 3.0.29 - 2021-12-08
 
 ### Dependencies
@@ -597,4 +621,9 @@ version 2.4.
 [LPS-138487]: https://issues.liferay.com/browse/LPS-138487
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-143566]: https://issues.liferay.com/browse/LPS-143566
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-158690]: https://issues.liferay.com/browse/LPS-158690
+[LPS-168821]: https://issues.liferay.com/browse/LPS-168821
+[LPS-178134]: https://issues.liferay.com/browse/LPS-178134
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

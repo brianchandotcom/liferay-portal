@@ -1,5 +1,19 @@
 # Liferay Gradle Plugins Patcher Change Log
 
+## 1.0.21 - 2022-09-05
+
+### Commits
+- [LPS-159094] Configure delete (copy overwrites existing files) (ad1c05be35)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.20 - 2021-04-07
 
 ### Commits
@@ -269,6 +283,7 @@ version 2.4.
 [LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-107313]: https://issues.liferay.com/browse/LPS-107313
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
@@ -278,4 +293,8 @@ version 2.4.
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-130119]: https://issues.liferay.com/browse/LPS-130119
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-159094]: https://issues.liferay.com/browse/LPS-159094
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRQA-19302]: https://issues.liferay.com/browse/LRQA-19302

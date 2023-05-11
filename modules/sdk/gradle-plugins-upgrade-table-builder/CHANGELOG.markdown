@@ -1,5 +1,24 @@
 # Liferay Gradle Plugins Upgrade Table Builder Change Log
 
+## 3.0.3 - 2022-03-12
+
+### Commits
+- [LPS-134196] Revert "LPS-134196 BuildUpgradeTableTask is not longer needed"
+(b355486f7e)
+- [LPS-134196] BuildUpgradeTableTask is not longer needed (d002f568a8)
+- [LPS-133200] Use com.liferay.petra.string.StringBundler (3bc40139d1)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (0cdafd184b)
+- [LPS-130505] SF, no need to call methods (b9055a7fc9)
+
+### Dependencies
+- [LPS-147885] Update the com.liferay.portal.tools.upgrade.table.builder
+dependency to version 1.0.11.
+- [LPS-134196] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-134196] Update the com.liferay.portal.tools.upgrade.table.builder
+dependency to version 1.0.10.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 3.0.2 - 2020-11-02
 
 ### Commits
@@ -268,3 +287,9 @@ version 2.4.
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-133200]: https://issues.liferay.com/browse/LPS-133200
+[LPS-134196]: https://issues.liferay.com/browse/LPS-134196
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-147885]: https://issues.liferay.com/browse/LPS-147885
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

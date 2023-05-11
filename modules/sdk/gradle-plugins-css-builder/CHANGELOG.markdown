@@ -1,5 +1,45 @@
 # Liferay Gradle Plugins CSS Builder Change Log
 
+## 5.0.7 - 2023-02-14
+
+### Dependencies
+- [LPS-173738] Update the com.liferay.css.builder dependency to version 3.1.2.
+
+## 5.0.6 - 2023-02-14
+
+### Commits
+- [LPS-170036] Remove info-bar-* CSS classes (9de9805f28)
+- [LPS-150857] Update README.markdown (77ff7e244f)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 5.0.4 - 2022-03-28
+
+### Commits
+- [LPS-139140] Replace .separator with <hr /> (7c697f245b)
+
+### Dependencies
+- [LPS-149478] Update the com.liferay.css.builder dependency to version 3.1.0.
+
+## 5.0.3 - 2022-03-22
+
+### Commits
+- [LPS-139140] Revert "LPS-139140 Replace .separator with <hr />" (ca7d24681e)
+- [LPS-139140] Replace .separator with <hr /> (0d4130e19a)
+- [LPS-142100] [LPS-141250] revert (eee87baefd)
+- [LPS-141139] Remove content text from CSS styles as this is not recommended
+because this content is not accessible for screen readers tools. Check
+LPS-133314 for more reference. (1e4504ca48)
+- [LPS-105380] Remove final from variables (5a4e0b26b4)
+- [LPS-105380] Revert "LPS-105380 Remove final from variables" (cdda76fc8e)
+- [LPS-105380] Remove final from variables (ffe6186e71)
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 5.0.2 - 2021-05-25
 
 ### Commits
@@ -598,6 +638,7 @@ version 2.4.
 [LPS-103169]: https://issues.liferay.com/browse/LPS-103169
 [LPS-104028]: https://issues.liferay.com/browse/LPS-104028
 [LPS-104132]: https://issues.liferay.com/browse/LPS-104132
+[LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-107226]: https://issues.liferay.com/browse/LPS-107226
 [LPS-108328]: https://issues.liferay.com/browse/LPS-108328
@@ -613,5 +654,15 @@ version 2.4.
 [LPS-122393]: https://issues.liferay.com/browse/LPS-122393
 [LPS-130505]: https://issues.liferay.com/browse/LPS-130505
 [LPS-132730]: https://issues.liferay.com/browse/LPS-132730
+[LPS-139140]: https://issues.liferay.com/browse/LPS-139140
+[LPS-141139]: https://issues.liferay.com/browse/LPS-141139
+[LPS-141250]: https://issues.liferay.com/browse/LPS-141250
+[LPS-142100]: https://issues.liferay.com/browse/LPS-142100
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-149478]: https://issues.liferay.com/browse/LPS-149478
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-170036]: https://issues.liferay.com/browse/LPS-170036
+[LPS-173738]: https://issues.liferay.com/browse/LPS-173738
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-3956]: https://issues.liferay.com/browse/LRDOCS-3956
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319

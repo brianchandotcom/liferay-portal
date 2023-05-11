@@ -1,5 +1,12 @@
 # Liferay Ant BND Change Log
 
+## 3.2.9 - 2022-05-14
+
+### Commits
+- [LPS-152789] perp next (22b35ac090)
+- [LPS-152789] Add spring context when using the portal api jar (7c9a3481de)
+- [LPS-150378] SF, inline (18019b6fcd)
+
 ## 3.2.8 - 2021-10-19
 
 ### Commits
@@ -908,5 +915,7 @@ when baseline.jar.report.level=persist (78c3140369)
 [LPS-133987]: https://issues.liferay.com/browse/LPS-133987
 [LPS-137126]: https://issues.liferay.com/browse/LPS-137126
 [LPS-140947]: https://issues.liferay.com/browse/LPS-140947
+[LPS-150378]: https://issues.liferay.com/browse/LPS-150378
+[LPS-152789]: https://issues.liferay.com/browse/LPS-152789
 [LRQA-25824]: https://issues.liferay.com/browse/LRQA-25824
 [LRQA-28693]: https://issues.liferay.com/browse/LRQA-28693

@@ -1,5 +1,21 @@
 # Liferay Ant Mirrors Get Change Log
 
+## 1.2.11 - 2022-11-24
+
+### Commits
+- [LPS-168681] Rename (b111e49165)
+- [LPS-168681] CloudFlare rejects Java HTTP client, use different UA
+(e69a4b7579)
+- [LPS-157036] - update mysql-connector-java to 8.0.29 in build-test.xml
+(aff8849909)
+- [LPS-130139] Configure task updateFileVersions (198687010f)
+- [LPS-120755] Download MySQL Connector/J 8.0.21 (0259294556)
+- [LPS-105380] Move variable inside if statement (4ba0e61ee5)
+
+### Dependencies
+- [LPS-137126] Update the ant dependency to version 1.10.11.
+- [LPS-129842] Update the ant dependency to version 1.10.9.
+
 ## 1.2.10 - 2020-07-26
 
 ### Commits
@@ -141,6 +157,12 @@ verification (95fbf498b6)
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-115364]: https://issues.liferay.com/browse/LPS-115364
 [LPS-117490]: https://issues.liferay.com/browse/LPS-117490
+[LPS-120755]: https://issues.liferay.com/browse/LPS-120755
+[LPS-129842]: https://issues.liferay.com/browse/LPS-129842
+[LPS-130139]: https://issues.liferay.com/browse/LPS-130139
+[LPS-137126]: https://issues.liferay.com/browse/LPS-137126
+[LPS-157036]: https://issues.liferay.com/browse/LPS-157036
+[LPS-168681]: https://issues.liferay.com/browse/LPS-168681
 [LRCI-901]: https://issues.liferay.com/browse/LRCI-901
 [LRCI-941]: https://issues.liferay.com/browse/LRCI-941
 [LRCI-1523]: https://issues.liferay.com/browse/LRCI-1523

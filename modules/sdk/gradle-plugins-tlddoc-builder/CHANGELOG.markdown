@@ -1,5 +1,23 @@
 # Liferay Gradle Plugins TLDDoc Builder Change Log
 
+## 2.0.0 - 2022-07-15
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 1.3.9 - 2022-07-15
+
+### Commits
+- [LPS-51081] Apply (52ec5f96e8)
+- [LPS-51081] Rename package (9d145e2f47)
+- [LPS-150378] SF, inline (15a4ebdc1f)
+- [LPS-130505] Revert "LPS-130505 SF, no need to call methods" (0cdafd184b)
+- [LPS-130505] SF, no need to call methods (b9055a7fc9)
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.3.8 - 2021-03-16
 
 ### Commits
@@ -244,6 +262,7 @@ component of the same application.
 - [LRDOCS-2147] Add task group (ec70931034)
 - [LPS-62942] Explicitly list exported packages for correctness (f095a51e25)
 
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-62883]: https://issues.liferay.com/browse/LPS-62883
 [LPS-62942]: https://issues.liferay.com/browse/LPS-62942
@@ -286,6 +305,10 @@ component of the same application.
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115019]: https://issues.liferay.com/browse/LPS-115019
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-130505]: https://issues.liferay.com/browse/LPS-130505
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150378]: https://issues.liferay.com/browse/LPS-150378
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-2147]: https://issues.liferay.com/browse/LRDOCS-2147
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

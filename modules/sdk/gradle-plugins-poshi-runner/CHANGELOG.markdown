@@ -1,5 +1,256 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 3.0.68 - 2023-05-03
+
+### Commits
+- [POSHI-528] Update default poshi runner version (320ac9d759)
+
+## 3.0.67 - 2023-04-17
+
+### Commits
+- [POSHI-517] Update default poshi runner version (cc594af042)
+
+## 3.0.66 - 2023-04-11
+
+### Commits
+- [POSHI-503] Update default poshi runner version (3be29eab08)
+
+## 3.0.65 - 2023-03-24
+
+### Commits
+- [POSHI-508] Resolve runPoshi task in afterEvaluate so gradle properties
+resolve (0a350fd399)
+- [POSHI-508] Update readme (cdef1b17da)
+- [POSHI-508] Add parallel poshi test running capability to poshi gradle plugin
+(37c3e93089)
+
+## 3.0.64 - 2023-02-16
+
+### Commits
+- [POSHI-486] Update default poshi runner version (bd913681b2)
+
+## 3.0.63 - 2023-02-09
+
+### Commits
+- [POSHI-474] Wordsmith (128bc6783c)
+- [POSHI-471] Update default poshi runner version (203848981e)
+- [POSHI-474] Logger (00d17a217c)
+- [POSHI-474] Add chromedriver 109 version; dynamically get new versions
+(9d86d191d6)
+- [POSHI-474] Extend StringUtil and copy 'read' method (f2f5506f2c)
+
+## 3.0.62 - 2023-01-27
+
+### Commits
+- [POSHI-261] Don't run this automatically (d47a10df6a)
+
+## 3.0.61 - 2023-01-27
+
+### Commits
+- [POSHI-469] Typo (db35c07fb0)
+- [POSHI-469] Ensure command line system properties are used in webdriver
+configuration (d6413690f1)
+
+## 3.0.60 - 2023-01-25
+
+### Commits
+- [POSHI-310] Add support for microsoft edgedriver binaries (c6a1b4b9b5)
+- [POSHI-261] Add task to stop lingering webdriver binary processes (2b4e2f27fe)
+
+## 3.0.59 - 2022-12-19
+
+### Commits
+- [POSHI-459] Update default poshi runner version (42ab77120b)
+
+## 3.0.58 - 2022-12-05
+
+### Commits
+- [POSHI-448] Update default poshi runner version (86ae6b5a5c)
+- [POSHI-443] Update chromedriver versions (c7a74adf83)
+
+## 3.0.57 - 2022-11-28
+
+### Commits
+- [POSHI-444] Update default poshi runner version (0bd50ba1ba)
+
+## 3.0.55 - 2022-11-18
+
+### Commits
+- [POSHI-429] Update default poshi runner version (d584c6c0b5)
+- [POSHI-438] Restrict resources to com.liferay.poshi.runner.resources:1.0.14
+temporarily (c19ad01862)
+
+## 3.0.54 - 2022-11-14
+
+### Commits
+- [POSHI-438] Update chromedriver versions (2659861da1)
+
+## 3.0.53 - 2022-11-11
+
+### Commits
+- [POSHI-432] Load environment variables from .env file (d7e35d46c1)
+
+## 3.0.52 - 2022-10-31
+
+### Commits
+- [POSHI-426] Pass in command line System properties to Poshi JVM (d07f452f53)
+
+## 3.0.51 - 2022-10-20
+
+### Commits
+- [POSHI-418] Use com.liferay.poshi.runner:1.0.381 by default (9e316841db)
+
+## 3.0.50 - 2022-10-05
+
+### Commits
+- [POSHI-380] Print out chrome binary path (a6960af825)
+- [POSHI-380] Make Chrome binary path more resilient on windows (eda778abc2)
+
+## 3.0.49 - 2022-09-28
+
+### Commits
+- [POSHI-413] Add new chromedriver versions (a51be71953)
+- [POSHI-413] Unrelated wordsmith (1d1476b060)
+- [POSHI-413] Group System.out and System.err outputs by testcase for Poshi
+JUnit XML reports (2ee73243de)
+
+## 3.0.48 - 2022-09-19
+
+### Commits
+- [POSHI-402] Update default poshi runner version (3d4ea83da4)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+
+## 3.0.47 - 2022-08-24
+
+### Commits
+- [POSHI-392] Update default poshi runner version (4379bbe062)
+
+## 3.0.46 - 2022-08-17
+
+### Commits
+- [POSHI-387] Update default poshi runner version (565fe18ec8)
+
+## 3.0.45 - 2022-08-12
+
+### Commits
+- [POSHI-382] Update default poshi runner version (41b24456ec)
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 3.0.44 - 2022-07-12
+
+### Commits
+- [LRCI-3060] Add variable to poshi gradle plugins to store multiple properties
+files (bbd87fc71a)
+
+## 3.0.43 - 2022-06-30
+
+### Commits
+- [POSHI-362] Add new chromedriver versions (7fb8ce0170)
+
+## 3.0.42 - 2022-06-28
+
+### Commits
+- [POSHI-373] Update default poshi runner version (7910a445ae)
+
+## 3.0.41 - 2022-06-05
+
+### Commits
+- [POSHI-359] Update default poshi runner version (c77fe59248)
+
+## 3.0.40 - 2022-05-24
+
+### Commits
+- [POSHI-353] Source formatting (74036974bb)
+- [POSHI-353] Download webdriver binary after properties have resolved
+(83eb8b2366)
+- [LPS-153959] SF, move whitespace (a4ed2792e2)
+
+## 3.0.39 - 2022-05-17
+
+### Commits
+- [POSHI-344] Rework browser driver binary download to account for firefox
+(b78459603c)
+- [POSHI-344] Simplify (6e3f386135)
+- [POSHI-344] Make chromedriver usages more generic in poshi gradle plugin
+(ef5298cce1)
+- [POSHI-344] Fix logic and simplify (08e4f64afe)
+
+## 3.0.38 - 2022-05-11
+
+### Commits
+- [POSHI-346] Update default poshi runner version (12117ff246)
+
+## 3.0.37 - 2022-04-20
+
+### Commits
+- [POSHI-335] Update to version 1.0.346 (384cd7298e)
+
+## 3.0.36 - 2022-04-03
+
+### Commits
+- [POSHI-324] Fix regex (361189f2c1)
+- [POSHI-323] Add poshi runner resources gradle plugin documentation
+(477b96b84b)
+- [POSHI-323] Fix and add example (cad983eb22)
+- [POSHI-324] Add chromedriver 100 version to poshi gradle plugin (94434257cc)
+
+## 3.0.35 - 2022-03-29
+
+### Commits
+- [LPS-77359] Ignore exit value (09fcb951c5)
+
+## 3.0.34 - 2022-03-28
+
+### Commits
+- [POSHI-321] Update Poshi Runner to version 1.0.344 (b0d93bef6a)
+
+## 3.0.33 - 2022-03-22
+
+### Commits
+- [POSHI-311] Update to use Poshi Runner version 1.0.342 (119dbd8621)
+
+## 3.0.32 - 2022-03-03
+
+### Commits
+- [POSHI-264] Use most recent chromedriver versions (599435ee98)
+
+## 3.0.31 - 2022-03-01
+
+### Commits
+- [POSHI-258] Update poshi runner gradle plugin to use
+com.liferay.poshi.runner:1.0.337 (a5adc0766c)
+
+## 3.0.29 - 2022-02-25
+
+### Commits
+- [POSHI-251] Default browser in poshi source is chrome (234644cd0d)
+
+## 3.0.28 - 2022-02-22
+
+### Commits
+- [POSHI-254] Update Poshi Runner version to 1.0.336 (ccba95f81b)
+
+## 3.0.27 - 2022-02-22
+
+### Commits
+- [POSHI-251] Use com.liferay.gradle.plugins.poshi.runner:3.0.27 (cf3a2de470)
+- [POSHI-251] Inline (a00e4f35f0)
+- [POSHI-251] Fix for windows (18b04edb46)
+
+## 3.0.26 - 2022-02-15
+
+### Commits
+- [POSHI-251] Source formatting (8ea1f6f2b3)
+- [POSHI-251] Lazily download file (03265701e6)
+- [POSHI-251] Clean up new task exception handling (ab0610be34)
+- [POSHI-251] Load either or both poshi.properties & poshi-ext.properties
+(96580b19c0)
+- [POSHI-251] Add downloadChromeDriver task to poshi runner gradle plugin
+(aa28b43a01)
+- [POSHI-251] Remove external webdriver binaries plugin dependency (21b7b7f083)
+
 ## 3.0.25 - 2022-01-12
 
 ### Commits
@@ -629,6 +880,8 @@ up-to-date check (59fd9e696c)
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-119415]: https://issues.liferay.com/browse/LPS-119415
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-153959]: https://issues.liferay.com/browse/LPS-153959
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -639,6 +892,7 @@ up-to-date check (59fd9e696c)
 [LRCI-902]: https://issues.liferay.com/browse/LRCI-902
 [LRCI-1003]: https://issues.liferay.com/browse/LRCI-1003
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
+[LRCI-3060]: https://issues.liferay.com/browse/LRCI-3060
 [LRQA-16011]: https://issues.liferay.com/browse/LRQA-16011
 [LRQA-17405]: https://issues.liferay.com/browse/LRQA-17405
 [POSHI-51]: https://issues.liferay.com/browse/POSHI-51
@@ -672,3 +926,43 @@ up-to-date check (59fd9e696c)
 [POSHI-221]: https://issues.liferay.com/browse/POSHI-221
 [POSHI-224]: https://issues.liferay.com/browse/POSHI-224
 [POSHI-232]: https://issues.liferay.com/browse/POSHI-232
+[POSHI-251]: https://issues.liferay.com/browse/POSHI-251
+[POSHI-254]: https://issues.liferay.com/browse/POSHI-254
+[POSHI-258]: https://issues.liferay.com/browse/POSHI-258
+[POSHI-261]: https://issues.liferay.com/browse/POSHI-261
+[POSHI-264]: https://issues.liferay.com/browse/POSHI-264
+[POSHI-310]: https://issues.liferay.com/browse/POSHI-310
+[POSHI-311]: https://issues.liferay.com/browse/POSHI-311
+[POSHI-321]: https://issues.liferay.com/browse/POSHI-321
+[POSHI-323]: https://issues.liferay.com/browse/POSHI-323
+[POSHI-324]: https://issues.liferay.com/browse/POSHI-324
+[POSHI-335]: https://issues.liferay.com/browse/POSHI-335
+[POSHI-344]: https://issues.liferay.com/browse/POSHI-344
+[POSHI-346]: https://issues.liferay.com/browse/POSHI-346
+[POSHI-353]: https://issues.liferay.com/browse/POSHI-353
+[POSHI-359]: https://issues.liferay.com/browse/POSHI-359
+[POSHI-362]: https://issues.liferay.com/browse/POSHI-362
+[POSHI-373]: https://issues.liferay.com/browse/POSHI-373
+[POSHI-380]: https://issues.liferay.com/browse/POSHI-380
+[POSHI-382]: https://issues.liferay.com/browse/POSHI-382
+[POSHI-387]: https://issues.liferay.com/browse/POSHI-387
+[POSHI-392]: https://issues.liferay.com/browse/POSHI-392
+[POSHI-402]: https://issues.liferay.com/browse/POSHI-402
+[POSHI-413]: https://issues.liferay.com/browse/POSHI-413
+[POSHI-418]: https://issues.liferay.com/browse/POSHI-418
+[POSHI-426]: https://issues.liferay.com/browse/POSHI-426
+[POSHI-429]: https://issues.liferay.com/browse/POSHI-429
+[POSHI-432]: https://issues.liferay.com/browse/POSHI-432
+[POSHI-438]: https://issues.liferay.com/browse/POSHI-438
+[POSHI-443]: https://issues.liferay.com/browse/POSHI-443
+[POSHI-444]: https://issues.liferay.com/browse/POSHI-444
+[POSHI-448]: https://issues.liferay.com/browse/POSHI-448
+[POSHI-459]: https://issues.liferay.com/browse/POSHI-459
+[POSHI-469]: https://issues.liferay.com/browse/POSHI-469
+[POSHI-471]: https://issues.liferay.com/browse/POSHI-471
+[POSHI-474]: https://issues.liferay.com/browse/POSHI-474
+[POSHI-486]: https://issues.liferay.com/browse/POSHI-486
+[POSHI-503]: https://issues.liferay.com/browse/POSHI-503
+[POSHI-508]: https://issues.liferay.com/browse/POSHI-508
+[POSHI-517]: https://issues.liferay.com/browse/POSHI-517
+[POSHI-528]: https://issues.liferay.com/browse/POSHI-528

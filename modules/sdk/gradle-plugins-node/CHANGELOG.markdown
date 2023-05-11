@@ -1,5 +1,56 @@
 # Liferay Gradle Plugins Node Change Log
 
+## 8.0.0 - 2022-07-15
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 7.2.20 - 2022-07-15
+
+### Commits
+- [LPS-51081] Apply (52ec5f96e8)
+- [LPS-51081] Rename package (9d145e2f47)
+
+## 7.2.19 - 2022-05-19
+
+### Commits
+- [LPS-148304] Optional annotation (see
+https://github.com/gradle/gradle/issues/2016) (898ff2e76c)
+
+## 7.2.18 - 2022-05-17
+
+### Commits
+- [LPS-148304] Source formatting (4fb7c59d38)
+- [LPS-148304] Update ExecuteNodeTask.java (788701e0d4)
+- [LPS-148304] Update ExecutePackageManagerTask.java (6129b00477)
+
+## 7.2.17 - 2022-05-14
+
+### Commits
+- [LPS-148304] Use Yarn's internal cache check (b3d7b0c0f9)
+- [LPS-148304] Update annotation (tasks that extends this class will need to add
+inputs as needed, as an example see PackageRunBuildTask) (c379274f8a)
+- [LPS-148304] Add missing import (5d291710a4)
+- [LPS-148304] Edit annotation (d133edc943)
+- [LPS-148304] Add annotation (0ecfc483d0)
+- [LPS-148304] Add annotations to ExecuteNodeTask (536af04b92)
+- [LPS-148304] Add annotations to ExecutePackageManagerTask (e8ce449310)
+- [LPS-148304] Add annotations to ExecuteNodeScriptTask (16fd256457)
+- [LPS-150378] SF, inline (15a4ebdc1f)
+
+## 7.2.16 - 2022-03-22
+
+### Commits
+- [LPS-149634] as used (f59385be2b)
+- [LPS-149634] node osx arm builds are only available for node 16+ so download
+fails for node < 15 (38a2445b3d)
+
+## 7.2.15 - 2022-02-04
+
+### Commits
+- [LPS-146791] sort (e3c717f8ef)
+- [LPS-146791] - Add --ignore-engines flag to yarnInstall task (06db76a25e)
+
 ## 7.2.14 - 2022-01-03
 
 ### Commits
@@ -1350,6 +1401,10 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-143280]: https://issues.liferay.com/browse/LPS-143280
 [LPS-144575]: https://issues.liferay.com/browse/LPS-144575
 [LPS-144756]: https://issues.liferay.com/browse/LPS-144756
+[LPS-146791]: https://issues.liferay.com/browse/LPS-146791
+[LPS-148304]: https://issues.liferay.com/browse/LPS-148304
+[LPS-149634]: https://issues.liferay.com/browse/LPS-149634
+[LPS-150378]: https://issues.liferay.com/browse/LPS-150378
 [LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670
 [LRDOCS-3663]: https://issues.liferay.com/browse/LRDOCS-3663
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

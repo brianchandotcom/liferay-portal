@@ -1,5 +1,11 @@
 # Liferay Gradle Utilities Change Log
 
+## 1.0.47 - 2022-07-15
+
+### Commits
+- [LPS-51081] Apply (52ec5f96e8)
+- [LPS-51081] Rename package (9d145e2f47)
+
 ## 1.0.46 - 2021-12-29
 
 ### Commits

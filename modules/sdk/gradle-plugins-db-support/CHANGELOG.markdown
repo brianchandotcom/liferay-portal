@@ -1,5 +1,27 @@
 # Liferay Gradle Plugins DB Support Change Log
 
+## 1.1.0 - 2022-07-15
+
+### Dependencies
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+
+## 1.0.10 - 2022-07-15
+
+### Commits
+- [LPS-51081] Apply (52ec5f96e8)
+- [LPS-51081] Rename package (9d145e2f47)
+
+## 1.0.9 - 2022-05-19
+
+### Commits
+- [LPS-144892] - upgrade "com.h2database" to version 2.1.212 (81a957014b)
+- [LPS-105380] Partial revert (aafd3818ae)
+- [LPS-105380] Auto SF, XMLDTDVersionCheck (a7cb83d66b)
+
+### Dependencies
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
 ## 1.0.8 - 2020-11-02
 
 ### Commits
@@ -96,6 +118,7 @@ in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
 - [LPS-70060] Test plugins with Gradle 3.3 (09bed59a42)
 - [LPS-67688] minor README edits (448366ef14)
 
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
 [LPS-62970]: https://issues.liferay.com/browse/LPS-62970
 [LPS-66709]: https://issues.liferay.com/browse/LPS-66709
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -123,3 +146,6 @@ in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
 [LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-144892]: https://issues.liferay.com/browse/LPS-144892
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

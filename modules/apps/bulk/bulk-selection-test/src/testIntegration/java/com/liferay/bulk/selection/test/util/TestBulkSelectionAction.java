@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Alejandro Tardín
  */
-@Component(service = {BulkSelectionAction.class, TestBulkSelectionAction.class})
+@Component(service = BulkSelectionAction.class)
 public class TestBulkSelectionAction implements BulkSelectionAction<Integer> {
 
 	public static Integer getLastResult() {

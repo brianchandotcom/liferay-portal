@@ -171,11 +171,13 @@
 											"rowViewports": [
 												{
 													"id": "landscapeMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
@@ -192,11 +194,13 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
@@ -221,7 +225,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Solutions Marketplace"
@@ -242,12 +247,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation."
@@ -270,11 +277,13 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
@@ -302,7 +311,8 @@
 									"fragmentConfig": {
 										"height": "py-3"
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"paddingBottom": "7"
 									},
@@ -373,11 +383,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -393,11 +405,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -420,7 +434,8 @@
 											{
 												"definition": {
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}
 												},
@@ -429,7 +444,8 @@
 											{
 												"definition": {
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
 												},
@@ -448,11 +464,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],

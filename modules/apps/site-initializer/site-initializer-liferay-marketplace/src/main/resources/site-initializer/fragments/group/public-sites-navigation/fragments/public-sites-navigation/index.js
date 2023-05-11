@@ -122,7 +122,8 @@ function updateSearch() {
 		seeAllResultsLink.href = '/search?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
 		performSearch(searchSuggestionsInputValue);
-	} else {
+	}
+	else {
 		suggestions.classList.remove(
 			'loading-search',
 			'performing-search',
@@ -232,7 +233,8 @@ function performSearch(query) {
 						suggestions.classList.remove('loading-search');
 					}
 				}
-			} else {
+			}
+			else {
 				suggestions.classList.remove('search-results-found');
 				suggestions.classList.remove('loading-search');
 			}

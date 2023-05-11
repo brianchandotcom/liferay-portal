@@ -8,16 +8,16 @@
 						"siteKey": "Guest"
 					},
 					"fragmentConfig": {
-						"darkNav": false,
-						"searchBlueprintId": 0,
-						"showLanguageMenu": true,
-						"siteNavigationMenuId": 10023816,
 						"accountMenuId": 0,
-						"showCta": false,
+						"darkNav": false,
 						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
-						"showSearch": true,
+						"searchBlueprintId": 0,
 						"showAccountMenu": true,
-						"showSiteName": true
+						"showCta": false,
+						"showLanguageMenu": true,
+						"showSearch": true,
+						"showSiteName": true,
+						"siteNavigationMenuId": 10023816
 					},
 					"fragmentFields": [
 						{
@@ -35,7 +35,8 @@
 						{
 							"id": "siteName",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Marketplace"
@@ -46,25 +47,29 @@
 						{
 							"id": "suggestionsPopularItem4",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem3",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem2",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem1",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						}
 					],
@@ -72,7 +77,8 @@
 				},
 				"pageElements": [
 					{
-						"definition": {},
+						"definition": {
+						},
 						"type": "FragmentDropZone"
 					}
 				],
@@ -81,7 +87,8 @@
 			{
 				"definition": {
 					"fragmentSettings": {
-						"unallowedFragments": []
+						"unallowedFragments": [
+						]
 					}
 				},
 				"type": "DropZone"
@@ -93,10 +100,10 @@
 		"colorSchemeName": "01",
 		"themeName": "Classic",
 		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-footer": "false"
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
 	"version": 1.1

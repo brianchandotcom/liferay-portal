@@ -1,9 +1,9 @@
 {
 	"configurationPath": "configuration.json",
-	"jsPath": "index.js",
-	"htmlPath": "index.html",
 	"cssPath": "index.css",
+	"htmlPath": "index.html",
 	"icon": "code",
+	"jsPath": "index.js",
 	"name": "Public Sites Navigation",
 	"type": "component"
 }

@@ -29,13 +29,19 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
-								{"id": "tablet", "rowViewportDefinition": {}}
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
 							"verticalAlignment": "top"
 						},
@@ -44,15 +50,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -99,13 +108,19 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
-								{"id": "tablet", "rowViewportDefinition": {}}
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
 							"verticalAlignment": "top"
 						},
@@ -114,15 +129,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -220,15 +238,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],

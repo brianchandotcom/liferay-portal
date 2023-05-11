@@ -249,6 +249,34 @@ public class ObjectFieldSerDes {
 			sb.append("]");
 		}
 
+		if (objectField.getReadOnly() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"readOnly\": ");
+
+			sb.append("\"");
+
+			sb.append(objectField.getReadOnly());
+
+			sb.append("\"");
+		}
+
+		if (objectField.getReadOnlyConditionExpression() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"readOnlyConditionExpression\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectField.getReadOnlyConditionExpression()));
+
+			sb.append("\"");
+		}
+
 		if (objectField.getRelationshipType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -446,6 +474,22 @@ public class ObjectFieldSerDes {
 				String.valueOf(objectField.getObjectFieldSettings()));
 		}
 
+		if (objectField.getReadOnly() == null) {
+			map.put("readOnly", null);
+		}
+		else {
+			map.put("readOnly", String.valueOf(objectField.getReadOnly()));
+		}
+
+		if (objectField.getReadOnlyConditionExpression() == null) {
+			map.put("readOnlyConditionExpression", null);
+		}
+		else {
+			map.put(
+				"readOnlyConditionExpression",
+				String.valueOf(objectField.getReadOnlyConditionExpression()));
+		}
+
 		if (objectField.getRelationshipType() == null) {
 			map.put("relationshipType", null);
 		}
@@ -613,6 +657,21 @@ public class ObjectFieldSerDes {
 
 					objectField.setObjectFieldSettings(
 						objectFieldSettingsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "readOnly")) {
+				if (jsonParserFieldValue != null) {
+					objectField.setReadOnly(
+						ObjectField.ReadOnly.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "readOnlyConditionExpression")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setReadOnlyConditionExpression(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relationshipType")) {

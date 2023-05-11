@@ -788,6 +788,66 @@ definition {
 			value1 = 12345);
 	}
 
+	@description = "This is a use case for LPS-178088. Verify the error message displays the missing reference information with the implicated Site's name."
+	@priority = 4
+	test VerifyErrorMessageWithMissingReferenceInformation {
+		property test.name.skip.portal.instance = "RemoteStaging#VerifyErrorMessageWithMissingReferenceInformation";
+
+		task ("Given: Add site-name SiteB in 8080 remote-site in 9080 add structureA with image field in site-name") {
+			HeadlessSite.addSite(siteName = "SiteB");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title1",
+				groupName = "SiteB",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "StructureA");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
+
+			Button.clickSave();
+		}
+
+		task ("And: Create a Web Content based on StructureA and select the image uploaded previously in the SiteB") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "StructureA");
+
+			WebContent.addWithStructureCP(
+				imageFileName = "DM Document Title1",
+				navTab = "Documents and Media",
+				otherSiteName = "SiteB",
+				structureName = "StructureA",
+				webContentImage = "Document Title",
+				webContentTitle = "WebContentA");
+
+			PortletEntry.publish();
+		}
+
+		task ("When: Publish to live") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			ProductMenu.gotoStagingSite(site = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("Then: Publish failed assert error message displays the missing reference information with the implicated Site's name.") {
+			Staging.publishToLive(
+				failureExpected = "true",
+				remoteStaging = "true",
+				validateErrorMessage = "The publish process did not start due to validation errors. There are missing references that could not be found in the Live Environment. Please publish again to Live ensuring the following elements are published from their own environment: Document In Environment SiteB: DM Document Title1 (Referenced by a Web Content Article: WebContentA)");
+		}
+	}
+
 	@description = "This is a use case for LPS-74038. Expected error message will appear on the UI when the live instance is not running on remote staging and the link to it is not visible."
 	@priority = 5
 	test ViewInfoMessageAfterShutDownRemoteSite {

@@ -107,7 +107,7 @@ public class UpgradeVelocityLiferayTaglibReferenceMigrationCheck
 		String indent = SourceUtil.getIndent(newLine);
 
 		newLine = StringUtil.replace(
-			newLine, VELOCITY_EXTENSION, FREEMARKER_EXTENSION);
+			newLine, EXTENSION_VELOCITY, EXTENSION_FREEMARKER);
 		newLine = StringUtil.replaceFirst(
 			newLine, StringPool.CLOSE_PARENTHESIS,
 			StringBundler.concat(

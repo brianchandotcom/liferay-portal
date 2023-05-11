@@ -36,7 +36,7 @@ public class UpgradeVelocityFileImportMigrationCheck
 
 				newLine = VelocityMigrationUtil.removeFirstParenthesis(newLine);
 				newLine = StringUtil.replace(
-					newLine, VELOCITY_EXTENSION, FREEMARKER_EXTENSION);
+					newLine, EXTENSION_VELOCITY, EXTENSION_FREEMARKER);
 				newLine = StringUtil.replaceLast(
 					newLine, CharPool.CLOSE_PARENTHESIS,
 					CharPool.SPACE +

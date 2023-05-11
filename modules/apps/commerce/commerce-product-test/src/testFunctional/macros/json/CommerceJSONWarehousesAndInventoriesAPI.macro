@@ -1,5 +1,36 @@
 definition {
 
+	macro _addWarehouse {
+		Variables.assertDefined(parameterList = "${latitude},${longitude},${warehouseName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"externalReferenceCode": "${externalReferenceCode}",
+					"latitude": ${latitude},
+					"longitude": ${longitude},
+					"name": {
+						"en_US": "${warehouseName}"
+					}
+				}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
+	}
+
 	macro _addWarehouseItem {
 		Variables.assertDefined(parameterList = "${warehouseItemSku},${warehouseItemQuantity},${warehouseName}");
 

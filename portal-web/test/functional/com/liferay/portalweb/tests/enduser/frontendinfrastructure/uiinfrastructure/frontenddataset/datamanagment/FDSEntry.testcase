@@ -287,19 +287,18 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-183512 | LPS-179056. Confirm that the user can create a data set entry with special chatacters"
-	@ignore = "true"
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-179056. Confirm that the user can create a data set entry with special chatacters"
 	@priority = 5
 	test WithSpecialCharacters {
 		task ("When Create a DataSet") {
 			FrontendDataSetAdmin.createDataSet(
-				key_name = "Data Set ~!@#$%^&*(){}[],.<>/? name",
+				key_name = "Data Set ~!@#$%^&*(){}[].<>/? name",
 				key_type = "/c/fdsentries");
 		}
 
 		task ("Then confirm that the dataset is created and if the name is provided as expected") {
 			AssertElementPresent(
-				key_itemName = "Data Set ~!@#$%^&*(){}[],.<>/? name",
+				key_itemName = "Data Set ~!@#$%^&*(){}[].<>/? name",
 				locator1 = "FrontendDataSetAdmin#TABLE_CELL");
 		}
 

@@ -36,7 +36,8 @@ definition {
 			var response = TaxonomyVocabularyAPI.createAssetLibraryWithKeyWords(
 				depotName = "Test Depot Name",
 				exportBatch = "true",
-				name = "Liferay");
+				name = "Liferay",
+				noSelenium = "true");
 		}
 
 		task ("When getExportTask with the id from postAssetLibraryKeywordsPageExportBatch response") {
@@ -105,8 +106,8 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 3
 	test CanGetExportTaskDataFromExportBatchForCommerceEndpoints {
-		task ("Given postAccountGroupsPageExportBatch") {
-			var exportTaskId = CommerceJSONAccountGroupsAPI.getIdOfAccountGroupsExportBatch();
+		task ("Given postAccountsPageExportBatch") {
+			var exportTaskId = CommerceJSONAccountsAPI.getIdOfAccountsExportBatch();
 		}
 
 		task ("When getExportTask with the id from postAccountGroupsPageExportBatch response") {

@@ -4,7 +4,9 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
-			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(
+				depotName = ${depotName},
+				noSelenium = ${noSelenium});
 
 			var api = "asset-libraries/${assetLibraryId}/keywords";
 
@@ -158,7 +160,8 @@ definition {
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
 			depotName = ${depotName},
-			exportBatch = ${exportBatch});
+			exportBatch = ${exportBatch},
+			noSelenium = ${noSelenium});
 		var body = '''-d {"name": "${name}"}''';
 
 		var curl = StringUtil.add(${curl}, ${body}, " ");

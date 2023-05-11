@@ -5,7 +5,7 @@ import org.osgi.framework.ServiceReference
 import org.osgi.framework.BundleContext
 
 companyId = com.liferay.portal.kernel.util.PortalUtil.getCompanyId(actionRequest)
-group = com.liferay.portal.kernel.service.GroupLocalServiceUtil.getGroup(companyId, "Test Site Name");
+group = com.liferay.portal.kernel.service.GroupLocalServiceUtil.getGroup(companyId, groupName);
 groupId = group.getGroupId();
 
 BundleContext bundleContext = SystemBundleUtil.getBundleContext()

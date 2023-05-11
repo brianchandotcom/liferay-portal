@@ -9,7 +9,7 @@ definition {
 	property testray.main.component.name = "Site Initializer Testray";
 
 	var categoryName = "Category 1";
-    var optionsName = "Option 1";
+	var optionsName = "Option 1";
 	var testSiteName = "Testray 2";
 
 	setUp {
@@ -26,7 +26,7 @@ definition {
 		task ("Create a category via API and option via UI") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 
-            ApplicationsMenu.gotoSite(site = ${testSiteName});
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
 			TestrayLayout.clickManageOnSidebar();
 
@@ -80,7 +80,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
-            Testray.changePaginationInModal(
+			Testray.changePaginationInModal(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -130,13 +130,13 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
-            TestrayManage.createNewOption(
+			TestrayManage.createNewOption(
 				category = ${categoryName},
 				option = "Option 2");
 		}
 
 		task ("Then can see the option in the table") {
-            Testray.changePaginationInModal(
+			Testray.changePaginationInModal(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -148,19 +148,19 @@ definition {
 		}
 
 		task ("When the user edited the option") {
-            Testray.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 
-            TestrayLayout.clickManageOnSidebar();
+			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
-            Testray.changePaginationInModal(
+			Testray.changePaginationInModal(
 				numberItems = 20,
 				valuePagination = 150);
 
 			Testray.clickOnPageNumberModal(pageNumber = 2);
 
-            TestrayManage.editOptionTitle(
+			TestrayManage.editOptionTitle(
 				category = ${categoryName},
 				option = "Option 2",
 				optionNewName = "Option Edited");
@@ -175,10 +175,10 @@ definition {
 		task ("When the user delete the option") {
 			TestrayManage.deleteOption(nameOptions = "Option Edited");
 
-            Testray.checkSuccessAlertAppearsAndDisappears();
+			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
-        task ("Then can not see the option in the table") {
+		task ("Then can not see the option in the table") {
 			AssertElementNotPresent(
 				key_projectName = "Option Edited",
 				locator1 = "Testray#ITEM_NAME");
@@ -201,7 +201,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Options");
 
-            Testray.changePaginationInModal(
+			Testray.changePaginationInModal(
 				numberItems = 20,
 				valuePagination = 150);
 

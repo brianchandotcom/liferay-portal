@@ -4379,14 +4379,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return jsonObject.getBoolean("defaultValue");
 		}
 		else if (jsonObject.getInt("dataType") == ExpandoColumnConstants.DATE) {
-			if (Validator.isNotNull(jsonObject.getString("defaultValue"))) {
-				DateFormat dateFormat = DateUtil.getISOFormat(
-					jsonObject.getString("defaultValue"));
-
-				return dateFormat.parse(jsonObject.getString("defaultValue"));
+			if (Validator.isNull(jsonObject.getString("defaultValue"))) {
+				return null;
 			}
 
-			return null;
+			DateFormat dateFormat = DateUtil.getISOFormat(
+				jsonObject.getString("defaultValue"));
+
+			return dateFormat.parse(jsonObject.getString("defaultValue"));
 		}
 		else if (jsonObject.getInt("dataType") ==
 					ExpandoColumnConstants.DOUBLE) {

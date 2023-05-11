@@ -21,13 +21,13 @@
 
 			<property name="workspace.client.extension.dir" value="${project.dir}/workspaces/${workspace.name}/client-extensions/@{workspace.client.extension.name}" />
 
+			<delete file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
+
 			<if>
 				<not>
 					<equals arg1="@{virtual.instance.id}" arg2="" />
 				</not>
 				<then>
-					<delete file="${workspace.client.extension.dir}/client-extension.poshi.yaml" />
-
 					<beanshell>
 						<![CDATA[
 							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -121,10 +121,11 @@
 	</macrodef>
 
 	<macrodef name="start-spring-boot-client-extension">
-		<attribute default="" name="spring.boot.startup.message" />
+		<attribute name="spring.boot.application.name" />
+		<attribute default="" name="virtual.instance.id" />
 		<attribute name="workspace.client.extension.name" />
 
-		<text name="application.properties" />
+		<text default="" name="application.properties" />
 
 		<sequential>
 			<local name="workspace.name" />
@@ -144,7 +145,25 @@
 
 			<echo file="${workspace.client.extension.dir}/application.properties">
 				@{application.properties}
+
+				logging.file.path=${workspace.client.extension.dir}/logs
 			</echo>
+
+			<if>
+				<not>
+					<equals arg1="@{virtual.instance.id}" arg2="" />
+				</not>
+				<then>
+					<echo append="true" file="${workspace.client.extension.dir}/application.properties">
+						com.liferay.lxc.dxp.domains=@{virtual.instance.id}:8080
+						com.liferay.lxc.dxp.mainDomain=@{virtual.instance.id}:8080
+					</echo>
+				</then>
+			</if>
+
+			<print-file file.name="${workspace.client.extension.dir}/application.properties" />
+
+			<delete file="${workspace.client.extension.dir}/logs/spring.log" />
 
 			<parallel>
 				<daemons>
@@ -152,55 +171,44 @@
 				</daemons>
 
 				<sequential>
-					<property name="spring.boot.startup.log" value="${project.dir}/spring-boot-startup-log" />
+					<beanshell>
+						<![CDATA[
+							import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-					<delete file="${spring.boot.startup.log}" />
+							List propertiesFiles = new ArrayList();
 
-					<record action="start" name="${spring.boot.startup.log}" />
+							propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "application.properties"));
+							propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "src/main/resources/application.properties"));
+							propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "src/main/resources/application-default.properties"));
+
+							Properties applicationProperties = JenkinsResultsParserUtil.getProperties(propertiesFiles.toArray(new File[0]));
+
+							project.setProperty("server.port", JenkinsResultsParserUtil.getProperty(applicationProperties, "server.port"));
+						]]>
+					</beanshell>
 
 					<if>
-						<not>
-							<equals arg1="@{spring.boot.startup.message}" arg2="" />
-						</not>
+						<isset property="server.port" />
 						<then>
-							<waitfor checkevery="1" checkeveryunit="second" maxwait="30" maxwaitunit="second" timeoutproperty="spring.boot.startup.timeout">
-								<resourcecontains
-									resource="${spring.boot.startup.log}"
-									substring="@{spring.boot.startup.message}"
-								/>
+							<waitfor maxwait="120" maxwaitunit="second">
+								<socket port="${server.port}" server="localhost" />
 							</waitfor>
 						</then>
-						<else>
-							<beanshell>
-								<![CDATA[
-									import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-
-									List propertiesFiles = new ArrayList();
-
-									propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "application.properties"));
-									propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "src/main/resources/application.properties"));
-									propertiesFiles.add(new File(project.getProperty("workspace.client.extension.dir"), "src/main/resources/application-default.properties"));
-
-									Properties applicationProperties = JenkinsResultsParserUtil.getProperties(propertiesFiles.toArray(new File[0]));
-
-									project.setProperty("server.port", JenkinsResultsParserUtil.getProperty(applicationProperties, "server.port"));
-								]]>
-							</beanshell>
-
-							<if>
-								<isset property="server.port" />
-								<then>
-									<waitfor maxwait="120" maxwaitunit="second">
-										<socket port="${server.port}" server="localhost" />
-									</waitfor>
-								</then>
-							</if>
-						</else>
 					</if>
 
-					<record action="stop" name="${spring.boot.startup.log}" />
+					<waitfor checkevery="1" checkeveryunit="second" maxwait="60" maxwaitunit="second" timeoutproperty="spring.boot.startup.timeout">
+						<resourcecontains
+							resource="${workspace.client.extension.dir}/logs/spring.log"
+							substring="Started @{spring.boot.application.name} in"
+						/>
+					</waitfor>
 
-					<delete file="${spring.boot.startup.log}" />
+					<if>
+						<isset property="spring.boot.startup.timeout" />
+						<then>
+							<fail message="Failed to startup '@{spring.boot.application.name}'" />
+						</then>
+					</if>
 				</sequential>
 			</parallel>
 		</sequential>
@@ -348,9 +356,13 @@
 	</target>
 
 	<target name="start-spring-boot-client-extension">
+		<fail message="Please set the property ${spring.boot.application.name}." unless="spring.boot.application.name" />
 		<fail message="Please set the property ${workspace.client.extension.name}." unless="workspace.client.extension.name" />
 
-		<start-spring-boot-client-extension workspace.client.extension.name="${workspace.client.extension.name}" />
+		<start-spring-boot-client-extension
+			spring.boot.application.name="${spring.boot.application.name}"
+			workspace.client.extension.name="${workspace.client.extension.name}"
+		/>
 	</target>
 
 	<target name="start-workspace">

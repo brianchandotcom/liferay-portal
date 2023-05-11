@@ -27,7 +27,6 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryRegistry;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -321,7 +320,14 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					return StringPool.BLANK;
 				}
 
-				return ContentDashboardGroupUtil.getGroupName(group, locale);
+				try {
+					return group.getDescriptiveName(locale);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+
+					return group.getName(locale);
+				}
 			}
 		).put(
 			"isPublic",

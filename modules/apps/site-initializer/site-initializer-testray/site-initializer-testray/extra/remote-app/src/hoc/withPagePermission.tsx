@@ -20,7 +20,7 @@ import {useFetch} from '~/hooks/useFetch';
 import {ObjectActionsItems} from '~/services/rest';
 
 type PageProperties = {
-	createPath: string;
+	createPath?: string;
 	redirectTo?: string;
 	restImpl: Rest;
 };
@@ -32,11 +32,15 @@ type CheckPermissionProps = {
 
 const CheckPermission: React.FC<CheckPermissionProps> = ({
 	children,
-	properties: {createPath, restImpl, redirectTo = `/404?type=permission`},
+	properties: {
+		createPath = '',
+		restImpl,
+		redirectTo = `/404?type=permission`,
+	},
 }) => {
 	const outletContext = useOutletContext<{actions: ObjectActionsItems}>();
 
-	const isCreatingPermition = useMatch(createPath);
+	const isCreatePathMatching = useMatch(createPath);
 
 	const restImplMemoized = useMemo(() => restImpl, [restImpl]);
 
@@ -52,7 +56,7 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 	const {data: createPermission, loading} = useFetch(restImplMemoized.uri, {
 		swrConfig: {
 			fetcher: restImplMemoized.getPagePermission.bind(restImplMemoized),
-			shouldFetch: !!isCreatingPermition,
+			shouldFetch: !!isCreatePathMatching,
 		},
 	});
 
@@ -61,8 +65,8 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 	}
 
 	if (
-		(outletContext === undefined && !createPermission) ||
-		(!createPermission && !hasPermissionsAssociated)
+		(isCreatePathMatching && !createPermission) ||
+		(outletContext && !hasPermissionsAssociated)
 	) {
 		return <Navigate to={redirectTo} />;
 	}

@@ -268,13 +268,13 @@ exports[`CustomEventList should render 1`] = `
       class="container-fluid"
     >
       <div
-        class="dropdown"
+        class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
           aria-controls="clay-dropdown-menu-1"
           aria-expanded="false"
           aria-haspopup="true"
-          class="dropdown-toggle btn btn-sm btn-secondary"
+          class="dropdown-toggle button-root btn btn-sm btn-secondary"
           type="button"
         >
           1 Item
@@ -664,13 +664,13 @@ exports[`CustomEventList should render alert notification 1`] = `
       class="container-fluid"
     >
       <div
-        class="dropdown"
+        class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
           aria-controls="clay-dropdown-menu-3"
           aria-expanded="false"
           aria-haspopup="true"
-          class="dropdown-toggle btn btn-sm btn-secondary"
+          class="dropdown-toggle button-root btn btn-sm btn-secondary"
           type="button"
         >
           1 Item

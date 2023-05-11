@@ -386,8 +386,9 @@ exports[`Sidebar should render 1`] = `
         <li
           class="sidebar-item-root"
         >
-          <a
+          <button
             class="link btn btn-unstyled"
+            type="button"
           >
             <span
               class="link-content-wrapper"
@@ -408,7 +409,7 @@ exports[`Sidebar should render 1`] = `
                 class="item-label"
               />
             </span>
-          </a>
+          </button>
         </li>
       </ul>
     </div>

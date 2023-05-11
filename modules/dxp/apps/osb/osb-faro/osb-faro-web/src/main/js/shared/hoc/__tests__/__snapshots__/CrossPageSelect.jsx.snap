@@ -192,13 +192,13 @@ exports[`CrossPageSelect should render the selected list when the user presses t
       class="container-fluid"
     >
       <div
-        class="dropdown"
+        class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
           aria-controls="clay-dropdown-menu-2"
           aria-expanded="false"
           aria-haspopup="true"
-          class="dropdown-toggle btn btn-sm btn-secondary"
+          class="dropdown-toggle button-root btn btn-sm btn-secondary"
           type="button"
         >
           2 Items
@@ -550,13 +550,13 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
       class="container-fluid"
     >
       <div
-        class="dropdown"
+        class="dropdown dropdown-root pagination-items-per-page"
       >
         <button
           aria-controls="clay-dropdown-menu-1"
           aria-expanded="false"
           aria-haspopup="true"
-          class="dropdown-toggle btn btn-sm btn-secondary"
+          class="dropdown-toggle button-root btn btn-sm btn-secondary"
           type="button"
         >
           2 Items

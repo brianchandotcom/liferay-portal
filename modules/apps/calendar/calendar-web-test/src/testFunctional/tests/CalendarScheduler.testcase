@@ -111,7 +111,6 @@ definition {
 	@description = "This is a use case for LPS-59251."
 	@priority = 3
 	test ViewDisplayedSiteCalendarEventsAsGuest {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CalendarScheduler#ViewDisplayedSiteCalendarEventsAsGuest";
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -121,8 +120,8 @@ definition {
 		CalendarEvent.editTitle(eventTitle = "Liferay Calendar Event Title");
 
 		CalendarEvent.setTimes(
-			endDateTime = "04:00 AM",
-			startDateTime = "03:00 AM");
+			endDateTime = " 4:00 AM",
+			startDateTime = " 3:00 AM");
 
 		CalendarEvent.selectCalendar(calendarName = ${siteName});
 
@@ -135,8 +134,8 @@ definition {
 		CalendarEvent.editTitle(eventTitle = "Test Test Calendar Event Title");
 
 		CalendarEvent.setTimes(
-			endDateTime = "09:00 PM",
-			startDateTime = "08:00 PM");
+			endDateTime = " 9:00 PM",
+			startDateTime = " 8:00 PM");
 
 		CalendarEvent.selectCalendar(calendarName = "Test Test");
 
@@ -158,31 +157,29 @@ definition {
 
 		CalendarEvent.viewSiteCalendarEventWithDefaultPermissions(
 			calendarName = ${siteName},
-			endDateTime = "04:00 AM",
+			endDateTime = "4:00 AM",
 			eventTitle = "Liferay Calendar Event Title",
 			siteName = ${siteName},
-			startDateTime = "03:00 AM");
+			startDateTime = "3:00 AM");
 
 		CalendarEvent.viewSiteCalendarEventNotPresent(
-			endDateTime = "09:00 PM",
+			endDateTime = " 9:00 PM",
 			siteName = "Test Test",
-			startDateTime = "08:00 PM");
+			startDateTime = " 8:00 PM");
 
-		Navigator.gotoSpecificURLPage(
+		Navigator.gotoSitePage(
 			pageName = "My Profile",
-			url = "localhost:8080/web/test");
-
-		CalendarEvent.viewSiteCalendarEventWithDefaultPermissions(
-			calendarName = "Test Test",
-			endDateTime = "09:00 PM",
-			eventTitle = "Test Test Calendar Event Title",
-			siteName = "Test Test",
-			startDateTime = "08:00 PM");
+			siteName = "Test");
 
 		CalendarEvent.viewSiteCalendarEventNotPresent(
-			endDateTime = "04:00 AM",
+			endDateTime = " 9:00 PM",
 			siteName = ${siteName},
-			startDateTime = "03:00 AM");
+			startDateTime = " 8:00 PM");
+
+		CalendarEvent.viewSiteCalendarEventNotPresent(
+			endDateTime = " 4:00 PM",
+			siteName = ${siteName},
+			startDateTime = " 3:00 PM");
 	}
 
 }

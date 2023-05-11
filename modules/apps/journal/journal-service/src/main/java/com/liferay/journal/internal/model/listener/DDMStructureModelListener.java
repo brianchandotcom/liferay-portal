@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
@@ -84,14 +86,34 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 						originalDDMStructure.getStructureId()));
 			});
 		actionableDynamicQuery.setGroupId(originalDDMStructure.getGroupId());
-		actionableDynamicQuery.setPerformActionMethod(
-			(JournalArticle journalArticle) ->
-				_ddmFieldLocalService.updateDDMFormValues(
-					ddmStructure.getStructureId(), journalArticle.getId(),
-					_fieldsToDDMFormValuesConverter.convert(
-						ddmStructure,
-						_journalConverter.getDDMFields(
-							ddmStructure, journalArticle.getContent()))));
+
+		if (!Objects.equals(
+				originalDDMStructure.getStructureKey(),
+				ddmStructure.getStructureKey())) {
+
+			Indexer<JournalArticle> indexer =
+				_indexerRegistry.nullSafeGetIndexer(JournalArticle.class);
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(JournalArticle journalArticle) -> {
+					try {
+						indexer.reindex(journalArticle);
+					}
+					catch (Exception exception) {
+						throw new PortalException(exception);
+					}
+				});
+		}
+		else {
+			actionableDynamicQuery.setPerformActionMethod(
+				(JournalArticle journalArticle) ->
+					_ddmFieldLocalService.updateDDMFormValues(
+						ddmStructure.getStructureId(), journalArticle.getId(),
+						_fieldsToDDMFormValuesConverter.convert(
+							ddmStructure,
+							_journalConverter.getDDMFields(
+								ddmStructure, journalArticle.getContent()))));
+		}
 
 		try {
 			actionableDynamicQuery.performActions();
@@ -106,6 +128,9 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -141,7 +141,7 @@ public class JournalTransformer {
 			_logTokens.debug(tokensString);
 		}
 
-		Document document = article.getDocument();
+		Document document = article.getDocumentByLocale(languageId);
 
 		document = document.clone();
 

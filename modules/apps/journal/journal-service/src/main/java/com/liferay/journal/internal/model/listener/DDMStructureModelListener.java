@@ -61,9 +61,12 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 		if ((ddmStructure.getClassNameId() != _portal.getClassNameId(
 				JournalArticle.class)) ||
-			Objects.equals(
-				originalDDMStructure.getDefinition(),
-				ddmStructure.getDefinition())) {
+			(Objects.equals(
+				originalDDMStructure.getStructureKey(),
+				ddmStructure.getStructureKey()) &&
+			 Objects.equals(
+				 originalDDMStructure.getDefinition(),
+				 ddmStructure.getDefinition()))) {
 
 			return;
 		}

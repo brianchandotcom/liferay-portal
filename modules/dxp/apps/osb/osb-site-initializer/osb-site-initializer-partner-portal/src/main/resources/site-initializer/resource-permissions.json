@@ -1651,5 +1651,13 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Technical User (PTU)",
 		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"ADD_DISCUSSION"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"roleName": "User",
+		"scope": "1"
 	}
 ]

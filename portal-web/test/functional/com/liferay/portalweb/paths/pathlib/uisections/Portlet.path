@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_ICON</td>
-	<td>//div[@id='main-content']//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//*[contains(@class,'portlet-layout')]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,7 +157,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_ELLIPSIS_ICON</td>
-	<td>//div[@id='main-content']//header[contains(.,'${key_portletName}')]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//*[contains(@class,'portlet-layout')]//header[contains(.,'${key_portletName}')]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,7 +190,7 @@
 
 <tr>
 	<td>PORTLET_SECTION</td>
-	<td>//div[@id='main-content']//section[contains(@id,'portlet')]</td>
+	<td>//*[contains(@class,'portlet-layout')]//section[contains(@id,'portlet')]</td>
 	<td></td>
 </tr>
 <tr>

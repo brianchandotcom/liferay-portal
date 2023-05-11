@@ -6,7 +6,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Frontend Dataset";
-	property testray.main.component.name = "User Interface";
+	property testray.main.component.name = "Frontend Dataset";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -84,11 +84,8 @@ definition {
 	}
 
 	@description = "LPS-175206: Display no matched result in new FDS View modal"
-	@ignore = "test fix"
 	@priority = 4
 	test CanReturnNoMatchedResults {
-		property test.name.skip.portal.instance = "FrontendDataSetAdminSearch#CanReturnNoMatchedResults";
-
 		task ("When go to add Datasets") {
 			LexiconEntry.gotoAdd();
 		}

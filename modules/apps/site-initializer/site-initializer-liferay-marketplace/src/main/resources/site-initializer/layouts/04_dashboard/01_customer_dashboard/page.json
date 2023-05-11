@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/customer-dashboard",
+	"hidden": false,
+	"name": "Customer Dashboard",
+	"name_i18n": {
+		"en_US": "Customer Dashboard"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

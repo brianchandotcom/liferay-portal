@@ -144,8 +144,7 @@
 											"fragmentConfig": {
 												"height": "py-3"
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentStyle": {
 												"paddingBottom": "7"
 											},
@@ -191,8 +190,7 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "tablet",
@@ -215,8 +213,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -240,8 +237,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -266,8 +262,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "App Marketplace"
@@ -288,14 +283,12 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {
-															},
+															"fragmentConfig": {},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation."
@@ -324,13 +317,11 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -349,8 +340,7 @@
 											"fragmentConfig": {
 												"height": "py-3"
 											},
-											"fragmentFields": [
-											],
+											"fragmentFields": [],
 											"fragmentStyle": {
 												"paddingBottom": "7"
 											},
@@ -396,8 +386,7 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "tablet",
@@ -420,8 +409,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -445,8 +433,7 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -498,13 +485,11 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -573,13 +558,11 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												}
 											],
 											"verticalAlignment": "top"
@@ -595,13 +578,11 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -624,8 +605,7 @@
 													{
 														"definition": {
 															"widgetInstance": {
-																"widgetConfig": {
-																},
+																"widgetConfig": {},
 																"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 															}
 														},
@@ -634,8 +614,7 @@
 													{
 														"definition": {
 															"widgetInstance": {
-																"widgetConfig": {
-																},
+																"widgetConfig": {},
 																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
 															}
 														},
@@ -644,8 +623,7 @@
 													{
 														"definition": {
 															"widgetInstance": {
-																"widgetConfig": {
-																},
+																"widgetConfig": {},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
 														},
@@ -664,13 +642,11 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -724,7 +700,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "marketplace-master"
+			"key": "public"
 		}
 	},
 	"version": 1.1

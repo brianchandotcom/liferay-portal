@@ -273,7 +273,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "marketplace-master"
+			"key": "public"
 		}
 	},
 	"version": 1.1

@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/dashboard",
+	"hidden": false,
+	"name": "Dashboard",
+	"name_i18n": {
+		"en_US": "Dashboard"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

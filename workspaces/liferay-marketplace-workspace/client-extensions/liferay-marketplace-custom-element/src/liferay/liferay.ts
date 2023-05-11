@@ -3,12 +3,16 @@ interface ILiferay {
 	Service: Function;
 	ThemeDisplay: {
 		getCanonicalURL: () => string;
+		getCompanyGroupId: () => string;
 		getCompanyId: () => string;
 		getLanguageId: () => string;
+		getPathContext: () => string;
 		getPathThemeImages: () => string;
 		getPortalURL: () => string;
+		getUserId: () => string;
 		isSignedIn: () => boolean;
 	};
+	authToken: string;
 	detach: Function;
 	on: Function;
 }
@@ -23,10 +27,13 @@ export const Liferay = window.Liferay || {
 	Service: {},
 	ThemeDisplay: {
 		getCanonicalURL: () => window.location.href,
+		getCompanyGroupId: () => '',
 		getCompanyId: () => '',
-		getPathThemeImages: () => '',
 		getLanguageId: () => '',
+		getPathContext: () => '',
+		getPathThemeImages: () => '',
 		getPortalURL: () => '',
+		getUserId: () => '',
 		isSignedIn: () => {
 			return false;
 		},

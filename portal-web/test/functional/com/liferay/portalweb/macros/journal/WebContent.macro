@@ -533,15 +533,34 @@ definition {
 						navTab = ${navTab});
 				}
 				else if (isSet(imageFileName)) {
-					ItemSelector.selectDMImage(
-						dmFolderName = ${dmFolderName},
-						imageFileName = ${webContentImage},
-						navTab = ${navTab});
-				}
-				else {
-					ItemSelector.uploadFile(
-						navTab = ${navTab},
-						uploadFileName = ${webContentImage});
+					if (isSet(otherSiteName)) {
+						SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+						AssertClick(
+							key_breadcrumbName = "Sites and Libraries",
+							locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+							value1 = "Sites and Libraries");
+
+						AssertClick(
+							key_siteName = ${otherSiteName},
+							locator1 = "ItemSelector#SITE_SELECTOR",
+							value1 = ${otherSiteName});
+
+						SelectFrame(value1 = "relative=top");
+
+						ItemSelector.selectDMImage(
+							dmFolderName = ${dmFolderName},
+							imageFileName = ${webContentImage},
+							navTab = ${navTab});
+
+						SelectFrame(value1 = "relative=top");
+					}
+					else {
+						ItemSelector.selectDMImage(
+							dmFolderName = ${dmFolderName},
+							imageFileName = ${webContentImage},
+							navTab = ${navTab});
+					}
 				}
 			}
 			else if (${navTab} == "Web Content Images") {

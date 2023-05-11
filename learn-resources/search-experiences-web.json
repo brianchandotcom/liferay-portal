@@ -2,61 +2,61 @@
 	"advanced-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#advanced-configuration"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html#advanced-configuration"
 		}
 	},
 	"aggregation-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#aggregation-configuration"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html#aggregation-configuration"
 		}
 	},
 	"element-source": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/creating-and-managing-elements/creating-elements.html"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/creating-and-managing-elements/creating-elements.html"
 		}
 	},
 	"highlight-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#highlight-configuration"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html#highlight-configuration"
 		}
 	},
 	"index-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html"
 		}
 	},
 	"parameter-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#parameter-configuration"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html#parameter-configuration"
 		}
 	},
 	"query-clause-contributors-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/creating-and-managing-search-blueprints.html#advanced-configuring-query-clause-contributors"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/creating-and-managing-search-blueprints.html#advanced-configuring-query-clause-contributors"
 		}
 	},
 	"query-elements": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-elements-reference.html"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-elements-reference.html"
 		}
 	},
 	"search-blueprint-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html"
 		}
 	},
 	"search-blueprint-on-search-page": {
 		"en_US": {
 			"message": "Learn how to use blueprints on a search page.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/using-a-search-blueprint-on-a-search-page.html"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/using-a-search-blueprint-on-a-search-page.html"
 		}
 	},
 	"semantic-search": {
@@ -67,7 +67,7 @@
 	"sort-configuration": {
 		"en_US": {
 			"message": "Learn more.",
-			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#sort-configuration"
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints/search-blueprints-configuration-reference.html#sort-configuration"
 		}
 	}
 }

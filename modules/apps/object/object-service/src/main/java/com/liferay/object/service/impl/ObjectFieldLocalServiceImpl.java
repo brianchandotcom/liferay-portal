@@ -29,8 +29,8 @@ import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
-import com.liferay.object.exception.RequiredEncryptedObjectFieldPropertyException;
 import com.liferay.object.exception.RequiredObjectFieldException;
+import com.liferay.object.exception.RequiredPropertyException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -1043,7 +1043,7 @@ public class ObjectFieldLocalServiceImpl
 		if (Validator.isNull(
 				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
 
-			throw new RequiredEncryptedObjectFieldPropertyException(
+			throw new RequiredPropertyException(
 				StringBundler.concat(
 					"The property ",
 					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
@@ -1053,7 +1053,7 @@ public class ObjectFieldLocalServiceImpl
 		if (Validator.isNull(
 				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
 
-			throw new RequiredEncryptedObjectFieldPropertyException(
+			throw new RequiredPropertyException(
 				StringBundler.concat(
 					"The property ",
 					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,

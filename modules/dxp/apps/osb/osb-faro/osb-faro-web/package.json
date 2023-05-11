@@ -182,5 +182,5 @@
 		"webpack:dev": "webpack --config webpack.dev.js",
 		"test:dev": "cross-env TZ=Etc/GMT jest --coverage=false"
 	},
-	"version": "1.0.13"
+	"version": "1.0.0"
 }

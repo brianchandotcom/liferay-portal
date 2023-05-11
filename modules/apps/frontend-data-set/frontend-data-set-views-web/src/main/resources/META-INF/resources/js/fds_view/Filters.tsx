@@ -360,25 +360,51 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		});
 
 	const handleDelete = async ({item}: {item: Filter}) => {
-		const url = `${
-			item.type === 'date-time'
-				? API_URL.FDS_DATE_FILTERS
-				: API_URL.FDS_DYNAMIC_FILTERS
-		}/${item.id}`;
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this-filter'
+			),
+			buttons: [
+				{
+					autoFocus: true,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					displayType: 'warning',
+					label: Liferay.Language.get('delete'),
+					onClick: ({processClose}: {processClose: Function}) => {
+						processClose();
 
-		const response = await fetch(url, {
-			method: 'DELETE',
+						const url = `${
+							item.type === 'date-time'
+								? API_URL.FDS_DATE_FILTERS
+								: API_URL.FDS_DYNAMIC_FILTERS
+						}/${item.id}`;
+
+						fetch(url, {
+							method: 'DELETE',
+						})
+							.then(() => {
+								alertSuccess();
+
+								setFilters(
+									filters.filter(
+										(filter: Filter) =>
+											filter.id !== item.id
+									)
+								);
+							})
+							.catch(() => {
+								alertFailed();
+							});
+					},
+				},
+			],
+			status: 'warning',
+			title: Liferay.Language.get('delete-filter'),
 		});
-
-		if (!response.ok) {
-			alertFailed();
-
-			return null;
-		}
-
-		alertSuccess();
-
-		setFilters(filters.filter((filter: Filter) => filter.id !== item.id));
 	};
 
 	useEffect(() => {

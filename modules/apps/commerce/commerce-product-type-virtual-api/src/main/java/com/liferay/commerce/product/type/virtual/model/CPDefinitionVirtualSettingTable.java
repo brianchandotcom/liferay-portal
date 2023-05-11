@@ -84,9 +84,9 @@ public class CPDefinitionVirtualSettingTable
 	public final Column<CPDefinitionVirtualSettingTable, Long>
 		sampleFileEntryId = createColumn(
 			"sampleFileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionVirtualSettingTable, String> sampleUrl =
+	public final Column<CPDefinitionVirtualSettingTable, String> sampleURL =
 		createColumn(
-			"sampleUrl", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"sampleURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionVirtualSettingTable, Boolean>
 		termsOfUseRequired = createColumn(
 			"termsOfUseRequired", Boolean.class, Types.BOOLEAN,

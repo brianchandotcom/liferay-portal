@@ -56,7 +56,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					HttpPrincipal httpPrincipal, String className, long classPK,
 					long fileEntryId, String url, int activationStatus,
 					long duration, int maxUsages, boolean useSample,
-					long sampleFileEntryId, String sampleUrl,
+					long sampleFileEntryId, String sampleURL,
 					boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
@@ -75,7 +75,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				sampleFileEntryId, sampleURL, termsOfUseRequired,
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				override, serviceContext);
 
@@ -114,7 +114,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					HttpPrincipal httpPrincipal, String className, long classPK,
 					long fileEntryId, String url, int activationStatus,
 					long duration, int maxUsages, boolean useSample,
-					long sampleFileEntryId, String sampleUrl,
+					long sampleFileEntryId, String sampleURL,
 					boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
@@ -132,7 +132,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				sampleFileEntryId, sampleURL, termsOfUseRequired,
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				serviceContext);
 
@@ -260,7 +260,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					long cpDefinitionVirtualSettingId, long fileEntryId,
 					String url, int activationStatus, long duration,
 					int maxUsages, boolean useSample, long sampleFileEntryId,
-					String sampleUrl, boolean termsOfUseRequired,
+					String sampleURL, boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
 					long termsOfUseJournalArticleResourcePrimKey,
@@ -278,7 +278,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionVirtualSettingId, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				sampleFileEntryId, sampleURL, termsOfUseRequired,
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				override, serviceContext);
 
@@ -318,7 +318,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 					long cpDefinitionVirtualSettingId, long fileEntryId,
 					String url, int activationStatus, long duration,
 					int maxUsages, boolean useSample, long sampleFileEntryId,
-					String sampleUrl, boolean termsOfUseRequired,
+					String sampleURL, boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
 					long termsOfUseJournalArticleResourcePrimKey,
@@ -335,7 +335,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionVirtualSettingId, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				sampleFileEntryId, sampleURL, termsOfUseRequired,
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				serviceContext);
 

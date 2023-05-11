@@ -90,7 +90,7 @@ public class CPDefinitionVirtualSettingModelImpl
 		{"fileEntryId", Types.BIGINT}, {"url", Types.VARCHAR},
 		{"activationStatus", Types.INTEGER}, {"duration", Types.BIGINT},
 		{"maxUsages", Types.INTEGER}, {"useSample", Types.BOOLEAN},
-		{"sampleFileEntryId", Types.BIGINT}, {"sampleUrl", Types.VARCHAR},
+		{"sampleFileEntryId", Types.BIGINT}, {"sampleURL", Types.VARCHAR},
 		{"termsOfUseRequired", Types.BOOLEAN},
 		{"termsOfUseContent", Types.VARCHAR},
 		{"termsOfUseArticleResourcePK", Types.BIGINT},
@@ -119,7 +119,7 @@ public class CPDefinitionVirtualSettingModelImpl
 		TABLE_COLUMNS_MAP.put("maxUsages", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("useSample", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sampleFileEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("sampleUrl", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sampleURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("termsOfUseRequired", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("termsOfUseContent", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("termsOfUseArticleResourcePK", Types.BIGINT);
@@ -128,7 +128,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionVirtualSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(255) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(255) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
+		"create table CPDefinitionVirtualSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(255) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleURL VARCHAR(255) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionVirtualSetting";
@@ -336,7 +336,7 @@ public class CPDefinitionVirtualSettingModelImpl
 				"sampleFileEntryId",
 				CPDefinitionVirtualSetting::getSampleFileEntryId);
 			attributeGetterFunctions.put(
-				"sampleUrl", CPDefinitionVirtualSetting::getSampleUrl);
+				"sampleURL", CPDefinitionVirtualSetting::getSampleURL);
 			attributeGetterFunctions.put(
 				"termsOfUseRequired",
 				CPDefinitionVirtualSetting::getTermsOfUseRequired);
@@ -445,9 +445,9 @@ public class CPDefinitionVirtualSettingModelImpl
 				(BiConsumer<CPDefinitionVirtualSetting, Long>)
 					CPDefinitionVirtualSetting::setSampleFileEntryId);
 			attributeSetterBiConsumers.put(
-				"sampleUrl",
+				"sampleURL",
 				(BiConsumer<CPDefinitionVirtualSetting, String>)
-					CPDefinitionVirtualSetting::setSampleUrl);
+					CPDefinitionVirtualSetting::setSampleURL);
 			attributeSetterBiConsumers.put(
 				"termsOfUseRequired",
 				(BiConsumer<CPDefinitionVirtualSetting, Boolean>)
@@ -860,22 +860,22 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@JSON
 	@Override
-	public String getSampleUrl() {
-		if (_sampleUrl == null) {
+	public String getSampleURL() {
+		if (_sampleURL == null) {
 			return "";
 		}
 		else {
-			return _sampleUrl;
+			return _sampleURL;
 		}
 	}
 
 	@Override
-	public void setSampleUrl(String sampleUrl) {
+	public void setSampleURL(String sampleURL) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_sampleUrl = sampleUrl;
+		_sampleURL = sampleURL;
 	}
 
 	@JSON
@@ -1228,7 +1228,7 @@ public class CPDefinitionVirtualSettingModelImpl
 		cpDefinitionVirtualSettingImpl.setUseSample(isUseSample());
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(
 			getSampleFileEntryId());
-		cpDefinitionVirtualSettingImpl.setSampleUrl(getSampleUrl());
+		cpDefinitionVirtualSettingImpl.setSampleURL(getSampleURL());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(
 			isTermsOfUseRequired());
 		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(
@@ -1285,8 +1285,8 @@ public class CPDefinitionVirtualSettingModelImpl
 			this.<Boolean>getColumnOriginalValue("useSample"));
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(
 			this.<Long>getColumnOriginalValue("sampleFileEntryId"));
-		cpDefinitionVirtualSettingImpl.setSampleUrl(
-			this.<String>getColumnOriginalValue("sampleUrl"));
+		cpDefinitionVirtualSettingImpl.setSampleURL(
+			this.<String>getColumnOriginalValue("sampleURL"));
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(
 			this.<Boolean>getColumnOriginalValue("termsOfUseRequired"));
 		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(
@@ -1454,12 +1454,12 @@ public class CPDefinitionVirtualSettingModelImpl
 		cpDefinitionVirtualSettingCacheModel.sampleFileEntryId =
 			getSampleFileEntryId();
 
-		cpDefinitionVirtualSettingCacheModel.sampleUrl = getSampleUrl();
+		cpDefinitionVirtualSettingCacheModel.sampleURL = getSampleURL();
 
-		String sampleUrl = cpDefinitionVirtualSettingCacheModel.sampleUrl;
+		String sampleURL = cpDefinitionVirtualSettingCacheModel.sampleURL;
 
-		if ((sampleUrl != null) && (sampleUrl.length() == 0)) {
-			cpDefinitionVirtualSettingCacheModel.sampleUrl = null;
+		if ((sampleURL != null) && (sampleURL.length() == 0)) {
+			cpDefinitionVirtualSettingCacheModel.sampleURL = null;
 		}
 
 		cpDefinitionVirtualSettingCacheModel.termsOfUseRequired =
@@ -1574,7 +1574,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	private int _maxUsages;
 	private boolean _useSample;
 	private long _sampleFileEntryId;
-	private String _sampleUrl;
+	private String _sampleURL;
 	private boolean _termsOfUseRequired;
 	private String _termsOfUseContent;
 	private String _termsOfUseContentCurrentLanguageId;
@@ -1631,7 +1631,7 @@ public class CPDefinitionVirtualSettingModelImpl
 		_columnOriginalValues.put("maxUsages", _maxUsages);
 		_columnOriginalValues.put("useSample", _useSample);
 		_columnOriginalValues.put("sampleFileEntryId", _sampleFileEntryId);
-		_columnOriginalValues.put("sampleUrl", _sampleUrl);
+		_columnOriginalValues.put("sampleURL", _sampleURL);
 		_columnOriginalValues.put("termsOfUseRequired", _termsOfUseRequired);
 		_columnOriginalValues.put("termsOfUseContent", _termsOfUseContent);
 		_columnOriginalValues.put(
@@ -1701,7 +1701,7 @@ public class CPDefinitionVirtualSettingModelImpl
 
 		columnBitmasks.put("sampleFileEntryId", 131072L);
 
-		columnBitmasks.put("sampleUrl", 262144L);
+		columnBitmasks.put("sampleURL", 262144L);
 
 		columnBitmasks.put("termsOfUseRequired", 524288L);
 

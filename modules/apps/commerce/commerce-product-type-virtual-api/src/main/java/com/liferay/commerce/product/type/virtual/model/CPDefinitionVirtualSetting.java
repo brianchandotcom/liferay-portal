@@ -74,7 +74,7 @@ public interface CPDefinitionVirtualSetting
 			getTermsOfUseJournalArticle()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public boolean isUseSampleUrl();
+	public boolean isUseSampleURL();
 
 	public boolean isUseTermsOfUseJournal();
 

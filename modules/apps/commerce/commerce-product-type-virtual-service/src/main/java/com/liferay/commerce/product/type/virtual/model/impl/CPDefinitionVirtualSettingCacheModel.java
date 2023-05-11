@@ -119,8 +119,8 @@ public class CPDefinitionVirtualSettingCacheModel
 		sb.append(useSample);
 		sb.append(", sampleFileEntryId=");
 		sb.append(sampleFileEntryId);
-		sb.append(", sampleUrl=");
-		sb.append(sampleUrl);
+		sb.append(", sampleURL=");
+		sb.append(sampleURL);
 		sb.append(", termsOfUseRequired=");
 		sb.append(termsOfUseRequired);
 		sb.append(", termsOfUseContent=");
@@ -195,11 +195,11 @@ public class CPDefinitionVirtualSettingCacheModel
 		cpDefinitionVirtualSettingImpl.setUseSample(useSample);
 		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(sampleFileEntryId);
 
-		if (sampleUrl == null) {
-			cpDefinitionVirtualSettingImpl.setSampleUrl("");
+		if (sampleURL == null) {
+			cpDefinitionVirtualSettingImpl.setSampleURL("");
 		}
 		else {
-			cpDefinitionVirtualSettingImpl.setSampleUrl(sampleUrl);
+			cpDefinitionVirtualSettingImpl.setSampleURL(sampleURL);
 		}
 
 		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(
@@ -263,7 +263,7 @@ public class CPDefinitionVirtualSettingCacheModel
 		useSample = objectInput.readBoolean();
 
 		sampleFileEntryId = objectInput.readLong();
-		sampleUrl = objectInput.readUTF();
+		sampleURL = objectInput.readUTF();
 
 		termsOfUseRequired = objectInput.readBoolean();
 		termsOfUseContent = objectInput.readUTF();
@@ -326,11 +326,11 @@ public class CPDefinitionVirtualSettingCacheModel
 
 		objectOutput.writeLong(sampleFileEntryId);
 
-		if (sampleUrl == null) {
+		if (sampleURL == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(sampleUrl);
+			objectOutput.writeUTF(sampleURL);
 		}
 
 		objectOutput.writeBoolean(termsOfUseRequired);
@@ -366,7 +366,7 @@ public class CPDefinitionVirtualSettingCacheModel
 	public int maxUsages;
 	public boolean useSample;
 	public long sampleFileEntryId;
-	public String sampleUrl;
+	public String sampleURL;
 	public boolean termsOfUseRequired;
 	public String termsOfUseContent;
 	public long termsOfUseJournalArticleResourcePrimKey;

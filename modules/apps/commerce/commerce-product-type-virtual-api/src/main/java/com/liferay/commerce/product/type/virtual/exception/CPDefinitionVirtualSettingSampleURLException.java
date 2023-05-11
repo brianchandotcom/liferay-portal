@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class CPDefinitionVirtualSettingSampleUrlException
+public class CPDefinitionVirtualSettingSampleURLException
 	extends PortalException {
 
-	public CPDefinitionVirtualSettingSampleUrlException() {
+	public CPDefinitionVirtualSettingSampleURLException() {
 	}
 
-	public CPDefinitionVirtualSettingSampleUrlException(String msg) {
+	public CPDefinitionVirtualSettingSampleURLException(String msg) {
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingSampleUrlException(
+	public CPDefinitionVirtualSettingSampleURLException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public CPDefinitionVirtualSettingSampleUrlException(Throwable throwable) {
+	public CPDefinitionVirtualSettingSampleURLException(Throwable throwable) {
 		super(throwable);
 	}
 

@@ -33,11 +33,6 @@ import org.dom4j.DocumentException;
 public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 	@Override
-	public boolean isModuleSourceCheck() {
-		return true;
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
@@ -65,11 +60,6 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 		return _formatServiceImpl(javaTerm);
 	}
 
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_METHOD};
-	}
-
 	private String _formatServiceImpl(JavaTerm javaTerm) {
 		String javaTermName = javaTerm.getName();
 
@@ -77,9 +67,7 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String entityReturnType = javaSignature.getReturnType();
 
-		if (!javaTermName.equals("add") &&
-			!javaTermName.equals("add" + entityReturnType)) {
-
+		if (!isApplicableCheck(entityReturnType, javaTermName)) {
 			return javaTerm.getContent();
 		}
 

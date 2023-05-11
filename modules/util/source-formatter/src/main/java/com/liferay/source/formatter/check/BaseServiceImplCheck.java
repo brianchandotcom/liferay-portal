@@ -37,6 +37,16 @@ import org.dom4j.Element;
  */
 public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 
+	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_METHOD};
+	}
+
 	protected String getEntityName(String className) {
 		if (className.indexOf("LocalServiceImpl") > 0) {
 			return className.substring(
@@ -90,6 +100,18 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		}
 
 		return SourceUtil.readXML(FileUtil.read(file));
+	}
+
+	protected boolean isApplicableCheck(
+		String entityReturnType, String javaTermName) {
+
+		if (javaTermName.equals("add") ||
+			javaTermName.equals("add" + entityReturnType)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

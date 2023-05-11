@@ -617,4 +617,102 @@ definition {
 				expectedList = ${webContentTitleList});
 		}
 	}
+
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13509 | Test Summary: Check if you can access data for a specific Web Content"
+	@priority = 4
+	test RequestToAccessDataForSpecificWebContent {
+		var webContentTitleList = "WC AC Title 1,WC AC Title 2";
+		var type = "web-contents";
+		var range = "rangeKey";
+		var rangeValue = 0;
+
+		task ("Copy the token value for the API") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP and create a site and two web contents and then connect Analytics Cloud to DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
+			task ("Create the first web content") {
+				ACUtils.createWCAndAddToPage(
+					portletIndex = 1,
+					webContentTitle = "WC AC Title 1");
+			}
+
+			task ("Create the second web content") {
+				ACUtils.createWCAndAddToPage(
+					portletIndex = 2,
+					webContentTitle = "WC AC Title 2");
+			}
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the two web contents") {
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "${webContentTitleList}",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Create a data report using analytics cloud API with the type web content") {
+			ACApi.createDataReport(
+				filter = ${range},
+				filterValue = ${rangeValue},
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert the total items of the response is 2 (because we have just 2 web content)") {
+			var totalValue = ACApi.searchApiResponse(
+				apiDataResponse = ${apiResponse},
+				jsonQuery = "total");
+
+			TestUtils.assertEquals(
+				actual = ${totalValue},
+				expected = 2);
+		}
+
+		task ("Get the id of the web content in the first position of the response") {
+			var webContentId = ACApi.searchApiResponse(
+				apiDataResponse = ${apiResponse},
+				jsonQuery = "id",
+				resultPosition = 0);
+		}
+
+		task ("Create a data report using analytics API for the specific web content chosen") {
+			ACApi.createIndividualOrAssetDataReport(
+				id = ${webContentId},
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert that there's only one result in the response") {
+			var searchedValue = ACApi.searchApiResponse(
+				apiDataResponse = ${apiIndividualOrAssetResponse},
+				jsonQuery = "total");
+
+			TestUtils.assertEquals(
+				actual = ${searchedValue},
+				expected = "");
+		}
+
+		task ("Assert the two created web contents are present in the response") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = ${webContentTitleList});
+		}
+	}
+
 }

@@ -92,7 +92,8 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminConfigurationDisplayContext"),
 			"getAvailableVocabularyJSONArray", new Class<?>[0]);
 
 		Assert.assertTrue(keyValuePairsJSONArray.length() > 0);
@@ -133,7 +134,8 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminConfigurationDisplayContext"),
 			"getAvailableVocabularyJSONArray", new Class<?>[0]);
 
 		Assert.assertTrue(keyValuePairsJSONArray.length() > 0);
@@ -164,7 +166,8 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminConfigurationDisplayContext"),
 			"getAvailableVocabularyJSONArray", new Class<?>[0]);
 
 		Assert.assertTrue(keyValuePairsJSONArray.length() > 0);
@@ -194,7 +197,8 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminConfigurationDisplayContext"),
 			"getCurrentVocabularyJSONArray", new Class<?>[0]);
 
 		Assert.assertEquals(2, keyValuePairsJSONArray.length());
@@ -241,7 +245,8 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminConfigurationDisplayContext"),
 			"getCurrentVocabularyJSONArray", new Class<?>[0]);
 
 		Assert.assertEquals(2, keyValuePairsJSONArray.length());
@@ -273,7 +278,8 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 
 		JSONArray keyValuePairsJSONArray = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminConfigurationDisplayContext"),
 			"getCurrentVocabularyJSONArray", new Class<?>[0]);
 
 		Assert.assertEquals(1, keyValuePairsJSONArray.length());

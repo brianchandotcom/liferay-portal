@@ -274,7 +274,8 @@ public class ContentDashboardAdminPortletTest {
 
 		String onClickConfiguration = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminDisplayContext"),
 			"getOnClickConfiguration", new Class<?>[0]);
 
 		Assert.assertTrue(
@@ -1585,7 +1586,8 @@ public class ContentDashboardAdminPortletTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminDisplayContext"),
 			"getAuditGraphTitle", new Class<?>[0]);
 	}
 
@@ -1601,7 +1603,8 @@ public class ContentDashboardAdminPortletTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminDisplayContext"),
 			"getData", new Class<?>[0]);
 	}
 
@@ -1695,7 +1698,8 @@ public class ContentDashboardAdminPortletTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminDisplayContext"),
 			"getSearchContainer", new Class<?>[0]);
 	}
 
@@ -1727,7 +1731,8 @@ public class ContentDashboardAdminPortletTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminDisplayContext"),
 			"isSwapConfigurationEnabled", new Class<?>[0]);
 	}
 

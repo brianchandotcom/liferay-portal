@@ -609,7 +609,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 
 		return ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
-				"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT"),
+				"com.liferay.content.dashboard.web.internal.display.context." +
+					"ContentDashboardAdminDisplayContext"),
 			"getData", new Class<?>[0]);
 	}
 

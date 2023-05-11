@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.AbstractMap;
@@ -140,100 +141,30 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			return null;
 		}
 
-		Map<Long, DDMFieldInfo> ddmFieldInfoMap = new LinkedHashMap<>();
+		return _getDDMFormValues(
+			_ddmFieldAttributePersistence.findByStorageId(storageId), ddmFields,
+			ddmForm);
+	}
 
-		for (DDMField ddmField : ddmFields) {
-			if (ddmField.getParentFieldId() == 0) {
-				ddmFieldInfoMap.put(
-					ddmField.getFieldId(),
-					new DDMFieldInfo(
-						ddmField.getFieldName(), ddmField.getInstanceId(),
-						ddmField.isLocalizable(), null));
-			}
-			else {
-				DDMFieldInfo parentDDMFieldInfo = ddmFieldInfoMap.get(
-					ddmField.getParentFieldId());
+	@Override
+	public DDMFormValues getDDMFormValues(
+		DDMForm ddmForm, long storageId, String languageId) {
 
-				DDMFieldInfo ddmFieldInfo = new DDMFieldInfo(
-					ddmField.getFieldName(), ddmField.getInstanceId(),
-					ddmField.isLocalizable(), parentDDMFieldInfo._instanceId);
+		List<DDMField> ddmFields = ddmFieldPersistence.findByStorageId(
+			storageId);
 
-				parentDDMFieldInfo._childDDMFieldInfos.add(ddmFieldInfo);
-
-				ddmFieldInfoMap.put(ddmField.getFieldId(), ddmFieldInfo);
-			}
+		if (ddmFields.isEmpty()) {
+			return null;
 		}
 
-		for (DDMFieldAttribute ddmFieldAttribute :
-				_ddmFieldAttributePersistence.findByStorageId(storageId)) {
-
-			DDMFieldInfo ddmFieldInfo = ddmFieldInfoMap.get(
-				ddmFieldAttribute.getFieldId());
-
-			List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
-				ddmFieldInfo._ddmFieldAttributeInfos.computeIfAbsent(
-					ddmFieldAttribute.getLanguageId(),
-					languageId -> new ArrayList<>());
-
-			ddmFieldAttributeInfos.add(
-				new DDMFieldAttributeInfo(
-					ddmFieldAttribute.getAttributeName(),
-					ddmFieldAttribute.getAttributeValue(), ddmFieldInfo,
-					ddmFieldAttribute.getLanguageId()));
-		}
-
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		DDMField rootDDMField = null;
-
-		for (DDMField ddmField : ddmFields) {
-			if (com.liferay.portal.kernel.util.StringUtil.equals(
-					ddmField.getFieldName(), StringPool.BLANK)) {
-
-				rootDDMField = ddmField;
-
-				break;
-			}
-		}
-
-		if (rootDDMField == null) {
-			rootDDMField = ddmFields.get(0);
-		}
-
-		DDMFieldInfo rootDDMFieldInfo = ddmFieldInfoMap.remove(
-			rootDDMField.getFieldId());
-
-		for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
-				rootDDMFieldInfo._ddmFieldAttributeInfos.get(
-					StringPool.BLANK)) {
-
-			String attributeName = ddmFieldAttributeInfo._attributeName;
-
-			if (Objects.equals(attributeName, "availableLanguageIds")) {
-				for (String availableLanguageId :
-						StringUtil.split(
-							ddmFieldAttributeInfo._attributeValue)) {
-
-					ddmFormValues.addAvailableLocale(
-						LocaleUtil.fromLanguageId(availableLanguageId));
-				}
-			}
-			else if (Objects.equals(attributeName, "defaultLanguageId")) {
-				ddmFormValues.setDefaultLocale(
-					LocaleUtil.fromLanguageId(
-						ddmFieldAttributeInfo._attributeValue));
-			}
-		}
-
-		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfoMap.values()) {
-			if (ddmFieldInfo._parentInstanceId == null) {
-				ddmFormValues.addDDMFormFieldValue(
-					_getDDMFormFieldValue(
-						ddmFieldInfo, ddmFormValues.getDefaultLocale()));
-			}
-		}
-
-		return ddmFormValues;
+		return _getDDMFormValues(
+			ListUtil.concat(
+				_ddmFieldAttributePersistence.findByS_L(storageId, languageId),
+				_ddmFieldAttributePersistence.findByS_AN(
+					storageId, "defaultLanguageId"),
+				_ddmFieldAttributePersistence.findByS_AN(
+					storageId, "availableLanguageIds")),
+			ddmFields, ddmForm);
 	}
 
 	@Override
@@ -766,6 +697,104 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		return new DDMFormUpdateContext(
 			ddmFieldAttributeEntries, ddmFieldEntries,
 			newDDMFieldAttributesCount, newDDMFieldsCount);
+	}
+
+	private DDMFormValues _getDDMFormValues(
+		List<DDMFieldAttribute> ddmFieldAttributes, List<DDMField> ddmFields,
+		DDMForm ddmForm) {
+
+		Map<Long, DDMFieldInfo> ddmFieldInfoMap = new LinkedHashMap<>();
+
+		for (DDMField ddmField : ddmFields) {
+			if (ddmField.getParentFieldId() == 0) {
+				ddmFieldInfoMap.put(
+					ddmField.getFieldId(),
+					new DDMFieldInfo(
+						ddmField.getFieldName(), ddmField.getInstanceId(),
+						ddmField.isLocalizable(), null));
+			}
+			else {
+				DDMFieldInfo parentDDMFieldInfo = ddmFieldInfoMap.get(
+					ddmField.getParentFieldId());
+
+				DDMFieldInfo ddmFieldInfo = new DDMFieldInfo(
+					ddmField.getFieldName(), ddmField.getInstanceId(),
+					ddmField.isLocalizable(), parentDDMFieldInfo._instanceId);
+
+				parentDDMFieldInfo._childDDMFieldInfos.add(ddmFieldInfo);
+
+				ddmFieldInfoMap.put(ddmField.getFieldId(), ddmFieldInfo);
+			}
+		}
+
+		for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
+			DDMFieldInfo ddmFieldInfo = ddmFieldInfoMap.get(
+				ddmFieldAttribute.getFieldId());
+
+			List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
+				ddmFieldInfo._ddmFieldAttributeInfos.computeIfAbsent(
+					ddmFieldAttribute.getLanguageId(),
+					languageId -> new ArrayList<>());
+
+			ddmFieldAttributeInfos.add(
+				new DDMFieldAttributeInfo(
+					ddmFieldAttribute.getAttributeName(),
+					ddmFieldAttribute.getAttributeValue(), ddmFieldInfo,
+					ddmFieldAttribute.getLanguageId()));
+		}
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		DDMField rootDDMField = null;
+
+		for (DDMField ddmField : ddmFields) {
+			if (com.liferay.portal.kernel.util.StringUtil.equals(
+					ddmField.getFieldName(), StringPool.BLANK)) {
+
+				rootDDMField = ddmField;
+
+				break;
+			}
+		}
+
+		if (rootDDMField == null) {
+			rootDDMField = ddmFields.get(0);
+		}
+
+		DDMFieldInfo rootDDMFieldInfo = ddmFieldInfoMap.remove(
+			rootDDMField.getFieldId());
+
+		for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
+				rootDDMFieldInfo._ddmFieldAttributeInfos.get(
+					StringPool.BLANK)) {
+
+			String attributeName = ddmFieldAttributeInfo._attributeName;
+
+			if (Objects.equals(attributeName, "availableLanguageIds")) {
+				for (String availableLanguageId :
+						StringUtil.split(
+							ddmFieldAttributeInfo._attributeValue)) {
+
+					ddmFormValues.addAvailableLocale(
+						LocaleUtil.fromLanguageId(availableLanguageId));
+				}
+			}
+			else if (Objects.equals(attributeName, "defaultLanguageId")) {
+				ddmFormValues.setDefaultLocale(
+					LocaleUtil.fromLanguageId(
+						ddmFieldAttributeInfo._attributeValue));
+			}
+		}
+
+		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfoMap.values()) {
+			if (ddmFieldInfo._parentInstanceId == null) {
+				ddmFormValues.addDDMFormFieldValue(
+					_getDDMFormFieldValue(
+						ddmFieldInfo, ddmFormValues.getDefaultLocale()));
+			}
+		}
+
+		return ddmFormValues;
 	}
 
 	private String _getValueString(

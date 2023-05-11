@@ -8,7 +8,7 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Testray";
 
-    var projectName = "Project 1";
+	var projectName = "Project 1";
 	var teamName = "Team 1";
 	var testSiteName = "Testray 2";
 

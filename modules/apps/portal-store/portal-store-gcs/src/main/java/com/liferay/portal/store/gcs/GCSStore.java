@@ -153,7 +153,8 @@ public class GCSStore implements Store {
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		String prefix = _getPrefix(companyId, repositoryId);
+		String prefix =
+			StoreArea.getPath(companyId, repositoryId) + StringPool.SLASH;
 
 		return TransformUtil.transform(
 			_getFilePaths(companyId, repositoryId, dirName),
@@ -327,12 +328,6 @@ public class GCSStore implements Store {
 		fileNamesList.sort(new VersionNumberComparator());
 
 		return fileNamesList.get(fileNamesList.size() - 1);
-	}
-
-	private String _getPrefix(long companyId, long repositoryId) {
-		String path = StoreArea.getPath(companyId, repositoryId);
-
-		return path + StringPool.SLASH;
 	}
 
 	private ReadChannel _getReadChannel(Blob blob) {

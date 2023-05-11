@@ -428,11 +428,11 @@ const EditFDSFieldModalContent = ({
 
 				<ClayForm.Group>
 					<label htmlFor={`${namespace}fdsFieldRenderer`}>
-						{Liferay.Language.get('render-mode')}
+						{Liferay.Language.get('cell-renderer')}
 					</label>
 
 					<ClaySelectWithOption
-						aria-label={Liferay.Language.get('render-mode')}
+						aria-label={Liferay.Language.get('cell-renderer')}
 						id={`${namespace}fdsFieldRenderer`}
 						onChange={(event) => {
 							setSelectedFDSFieldRenderer(event.target.value);
@@ -703,7 +703,7 @@ const Fields = ({
 							name: 'type',
 						},
 						{
-							label: Liferay.Language.get('render-mode'),
+							label: Liferay.Language.get('cell-renderer'),
 							name: 'renderer',
 						},
 						{

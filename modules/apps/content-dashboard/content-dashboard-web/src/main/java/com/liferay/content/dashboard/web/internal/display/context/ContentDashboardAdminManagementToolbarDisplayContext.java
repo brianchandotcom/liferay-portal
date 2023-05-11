@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.item.filter.ContentDashboardItemFilter;
 import com.liferay.content.dashboard.item.filter.provider.ContentDashboardItemFilterProvider;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.item.filter.ContentDashboardItemFilterProviderRegistry;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
@@ -896,7 +895,14 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			return StringPool.BLANK;
 		}
 
-		return ContentDashboardGroupUtil.getGroupName(group, _locale);
+		try {
+			return group.getDescriptiveName(_locale);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return group.getName(_locale);
+		}
 	}
 
 	private List<Integer> _getStatuses() {

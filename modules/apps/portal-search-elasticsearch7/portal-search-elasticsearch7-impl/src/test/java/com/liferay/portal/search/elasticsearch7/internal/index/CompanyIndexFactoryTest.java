@@ -439,6 +439,35 @@ public class CompanyIndexFactoryTest {
 	}
 
 	@Test
+	public void testOverrideLegacyTypeMappings() throws Exception {
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
+		).thenReturn(
+			_loadAdditionalAnalyzers()
+		);
+
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.overrideTypeMappings()
+		).thenReturn(
+			_loadOverrideLegacyTypeMappings()
+		);
+
+		createIndices();
+
+		String field1 = "title";
+
+		_indexOneDocument(field1);
+
+		assertAnalyzer(field1, "kuromoji_liferay_custom");
+
+		String field2 = "description";
+
+		_indexOneDocument(field2);
+
+		_assertNoAnalyzer(field2);
+	}
+
+	@Test
 	public void testOverrideTypeMappings() throws Exception {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()
@@ -702,6 +731,12 @@ public class CompanyIndexFactoryTest {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private String _loadOverrideLegacyTypeMappings() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(),
+			"CompanyIndexFactoryTest-overrideLegacyTypeMappings.json");
 	}
 
 	private String _loadOverrideTypeMappings() throws Exception {

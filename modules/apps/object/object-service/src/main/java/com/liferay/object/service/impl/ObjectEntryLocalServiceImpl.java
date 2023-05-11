@@ -3001,15 +3001,20 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			Map<String, String> localizedValues =
+			Map<String, String> languageIdValues =
 				(Map<String, String>)values.get(
 					objectField.getI18nObjectFieldName());
 
-			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
-				Map<String, Serializable> localizedValue =
+			Map<String, Serializable> newI18nObjectFieldValues =
+				new HashMap<>();
+
+			for (Map.Entry<String, String> entry :
+					languageIdValues.entrySet()) {
+
+				Map<String, Serializable> i18nObjectFieldValues =
 					HashMapBuilder.<String, Serializable>put(
 						objectField.getI18nObjectFieldName(),
-						(Serializable)HashMapBuilder.put(
+						HashMapBuilder.put(
 							entry.getKey(), entry.getValue()
 						).build()
 					).build();
@@ -3017,15 +3022,18 @@ public class ObjectEntryLocalServiceImpl
 				if (objectEntryPersistedLanguageIds.contains(entry.getKey())) {
 					_updateLocalizationTable(
 						dynamicObjectDefinitionLocalizationTable,
-						entry.getKey(), objectEntryId, localizedValue);
-				}
-				else {
-					_insertIntoLocalizationTable(
-						objectDefinition, objectEntryId, localizedValue);
+						entry.getKey(), objectEntryId, i18nObjectFieldValues);
 
-					objectEntryPersistedLanguageIds.add(entry.getKey());
+					continue;
 				}
+
+				newI18nObjectFieldValues.putAll(i18nObjectFieldValues);
+
+				objectEntryPersistedLanguageIds.add(entry.getKey());
 			}
+
+			_insertIntoLocalizationTable(
+				objectDefinition, objectEntryId, newI18nObjectFieldValues);
 		}
 	}
 

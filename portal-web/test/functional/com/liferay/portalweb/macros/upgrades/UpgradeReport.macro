@@ -22,4 +22,17 @@ definition {
 		return ${fileContentReport};
 	}
 
+	macro printUpgradeExecutionTime {
+		if (${upgradeType} == "auto") {
+			var reportFileContent = UpgradeReport.getAutoUpgradeReportFileContent();
+		}
+		else if (${upgradeType} == "client") {
+			var reportFileContent = UpgradeReport.getUpgradeReportFileContent();
+		}
+
+		var upgradeRunTimeReport = UpgradeReport.getUpgradeExecutionTime(reportFileContent = ${reportFileContent});
+
+		echo("Upgrade execution time is ${upgradeRunTimeReport} seconds");
+	}
+
 }

@@ -17,102 +17,46 @@ package com.liferay.commerce.product.taglib.servlet.taglib.internal.servlet;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.osgi.util.service.Snapshot;
 
 import javax.servlet.ServletContext;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static CPContentHelper getCPContentHelper() {
-		return _servletContextUtil._getCPContentHelper();
+		return _cpContentHelperSnapshot.get();
 	}
 
 	public static CPContentListEntryRendererRegistry
 		getCPContentListEntryRendererRegistry() {
 
-		return _servletContextUtil._getCPContentListEntryRendererRegistry();
+		return _cpContentListEntryRendererRegistrySnapshot.get();
 	}
 
 	public static CPContentListRendererRegistry
 		getCPContentListRendererRegistry() {
 
-		return _servletContextUtil._getCPContentListRendererRegistry();
+		return _cpContentListRendererRegistrySnapshot.get();
 	}
 
 	public static ServletContext getServletContext() {
-		return _servletContextUtil._getServletContext();
+		return _servletContextSnapshot.get();
 	}
 
-	@Activate
-	protected void activate() {
-		_servletContextUtil = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_servletContextUtil = null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPContentHelper(CPContentHelper cpContentHelper) {
-		_cpContentHelper = cpContentHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPContentListEntryRendererRegistry(
-		CPContentListEntryRendererRegistry cpContentListEntryRendererRegistry) {
-
-		_cpContentListEntryRendererRegistry =
-			cpContentListEntryRendererRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCPContentListRendererRegistry(
-		CPContentListRendererRegistry cpContentListRendererRegistry) {
-
-		_cpContentListRendererRegistry = cpContentListRendererRegistry;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private CPContentHelper _getCPContentHelper() {
-		return _cpContentHelper;
-	}
-
-	private CPContentListEntryRendererRegistry
-		_getCPContentListEntryRendererRegistry() {
-
-		return _cpContentListEntryRendererRegistry;
-	}
-
-	private CPContentListRendererRegistry _getCPContentListRendererRegistry() {
-		return _cpContentListRendererRegistry;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _servletContextUtil;
-
-	private CPContentHelper _cpContentHelper;
-	private CPContentListEntryRendererRegistry
-		_cpContentListEntryRendererRegistry;
-	private CPContentListRendererRegistry _cpContentListRendererRegistry;
-	private ServletContext _servletContext;
+	private static final Snapshot<CPContentHelper> _cpContentHelperSnapshot =
+		new Snapshot<>(ServletContextUtil.class, CPContentHelper.class);
+	private static final Snapshot<CPContentListEntryRendererRegistry>
+		_cpContentListEntryRendererRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, CPContentListEntryRendererRegistry.class);
+	private static final Snapshot<CPContentListRendererRegistry>
+		_cpContentListRendererRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, CPContentListRendererRegistry.class);
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.commerce.product.taglib)");
 
 }

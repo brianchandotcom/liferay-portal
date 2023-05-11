@@ -15,6 +15,7 @@
 package com.liferay.journal.model.impl;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -42,6 +43,7 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -204,13 +207,15 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			JournalArticleLocalServiceUtil.getArticleLocalizationLanguageIds(
 				getId()));
 
-		DDMFormValues ddmFormValues = getDDMFormValues();
+		List<DDMFieldAttribute> ddmFieldAttributes =
+			DDMFieldLocalServiceUtil.getDDMFieldAttributes(
+				getId(), "availableLanguageIds");
 
-		if (ddmFormValues != null) {
-			for (Locale availableLocale : ddmFormValues.getAvailableLocales()) {
-				availableLanguageIds.add(
-					LocaleUtil.toLanguageId(availableLocale));
-			}
+		if (ListUtil.isNotEmpty(ddmFieldAttributes)) {
+			DDMFieldAttribute ddmFieldAttribute = ddmFieldAttributes.get(0);
+
+			availableLanguageIds.addAll(
+				StringUtil.split(ddmFieldAttribute.getAttributeValue()));
 		}
 
 		return availableLanguageIds.toArray(new String[0]);

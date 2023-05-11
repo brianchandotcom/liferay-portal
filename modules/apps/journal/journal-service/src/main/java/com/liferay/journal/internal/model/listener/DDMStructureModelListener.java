@@ -89,9 +89,9 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 
 		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod;
 
-		if (!Objects.equals(
-				originalDDMStructure.getStructureKey(),
-				ddmStructure.getStructureKey())) {
+		if (Objects.equals(
+				originalDDMStructure.getDefinition(),
+				ddmStructure.getDefinition())) {
 
 			Indexer<JournalArticle> indexer =
 				_indexerRegistry.nullSafeGetIndexer(JournalArticle.class);

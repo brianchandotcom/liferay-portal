@@ -20,9 +20,9 @@ definition {
 						"en_US": "<p>${bodyContent}</p>\n"
 					},
 					"editorType": "richText",
-					"name": "${emailName}",
+					"name": "${templateName}",
 					"name_i18n": {
-						"en_US": "${emailName}"
+						"en_US": "${templateName}"
 					},
 					"recipientType": "email",
 					"recipients": [
@@ -32,9 +32,9 @@ definition {
 							"fromName": {
 								"en_US": "${fromName}"
 							},
-							"from": "${fromEmail}",
+							"from": "${fromAddress}",
 							"to": {
-								"en_US": "${toEmail}"
+								"en_US": "${toAddress}"
 							}
 						}
 					],

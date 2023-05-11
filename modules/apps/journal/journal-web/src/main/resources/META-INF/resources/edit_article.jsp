@@ -288,10 +288,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 					module="js/DataEngineLayoutRendererLanguageProxy.es"
 					servletContext="<%= application %>"
 				/>
-
-				<liferay-frontend:component
-					module="js/ai_creator/openAICreatorModal"
-				/>
 			</div>
 		</clay:container-fluid>
 	</div>

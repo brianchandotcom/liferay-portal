@@ -1637,7 +1637,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				jsonObject.getString("ddmTemplateKey"));
 
 			if (ddmTemplate == null) {
-				_ddmTemplateLocalService.addTemplate(
+				ddmTemplate = _ddmTemplateLocalService.addTemplate(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					_portal.getClassNameId(
@@ -1672,7 +1672,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("className"),
 					TemplateEntry.class.getName())) {
 
-				return;
+				continue;
 			}
 
 			_templateEntryLocalService.addTemplateEntry(

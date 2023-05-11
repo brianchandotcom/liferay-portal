@@ -16,6 +16,7 @@ package com.liferay.site.initializer.extender.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -187,6 +188,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.template.model.TemplateEntry;
 
 import java.io.File;
 import java.io.IOException;
@@ -863,11 +865,36 @@ public class BundleSiteInitializerTest {
 	private void _assertDDMTemplate() {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
+			_portal.getClassNameId(TemplateEntry.class.getName()),
+			"TEST INFORMATION DDM TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test Information DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
+
+		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
 			"TEST DDM TEMPLATE KEY");
 
 		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+
+		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(AssetEntry.class.getName()),
+			"TEST WIDGET DDM TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test Widget DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
 	}
 
 	private void _assertDefaultCPDisplayLayout1(CommerceChannel commerceChannel)

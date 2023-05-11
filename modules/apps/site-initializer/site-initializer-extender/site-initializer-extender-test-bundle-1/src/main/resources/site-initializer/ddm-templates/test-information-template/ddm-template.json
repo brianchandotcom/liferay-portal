@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "TEST INFORMATION DDM TEMPLATE KEY",
+	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
+	"name": "Test Information DDM Template Name",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

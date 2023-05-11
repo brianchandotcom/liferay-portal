@@ -23,8 +23,6 @@ dependencies {
 	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":apps:portal-security:portal-security-service-access-policy-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationCompile project(":apps:client-extension:client-extension-api")
-	testIntegrationCompile project(":apps:client-extension:client-extension-type-api")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle-1")
 	testIntegrationCompile project(":apps:site-initializer:site-initializer-extender:site-initializer-extender-test-bundle-2")
@@ -33,6 +31,7 @@ dependencies {
 	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
 	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":apps:style-book:style-book-api")
+	testIntegrationCompile project(":apps:template:template-api")
 	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

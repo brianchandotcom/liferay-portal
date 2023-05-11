@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
+import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.filter.FilterToQueryBuilderTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.QueryToQueryBuilderTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
@@ -406,7 +406,7 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		}
 		else if (baseSearchRequest.getPostFilter() != null) {
 			searchSourceBuilder.postFilter(
-				_filterToQueryBuilderTranslator.translate(
+				_filterTranslator.translate(
 					baseSearchRequest.getPostFilter(), null));
 		}
 	}
@@ -552,8 +552,7 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
 		boolQueryBuilder.filter(
-			_filterToQueryBuilderTranslator.translate(
-				query.getPreBooleanFilter(), null));
+			_filterTranslator.translate(query.getPreBooleanFilter(), null));
 		boolQueryBuilder.must(queryBuilder);
 
 		return boolQueryBuilder;
@@ -576,8 +575,8 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	@Reference
 	private FacetTranslator _facetTranslator;
 
-	@Reference
-	private FilterToQueryBuilderTranslator _filterToQueryBuilderTranslator;
+	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	private FilterTranslator<QueryBuilder> _filterTranslator;
 
 	@Reference
 	private com.liferay.portal.search.elasticsearch7.internal.legacy.query.

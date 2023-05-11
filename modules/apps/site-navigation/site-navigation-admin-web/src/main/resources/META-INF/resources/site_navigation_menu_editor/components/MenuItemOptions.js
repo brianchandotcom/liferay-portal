@@ -116,52 +116,32 @@ export default function MenuItemOptions({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-134527'] ? (
-				<ClayDropDownWithItems
-					items={items}
-					menuElementAttrs={{
-						containerProps: {
-							className: 'menu-item-dropdown',
-						},
-					}}
-					trigger={
-						<ClayButtonWithIcon
-							aria-label={sub(
-								Liferay.Language.get('view-x-options'),
-								label
-							)}
-							borderless
-							className="menu-item-options-button"
-							displayType="secondary"
-							size="sm"
-							symbol="ellipsis-v"
-							tabIndex={isTarget ? '0' : '-1'}
-							title={sub(
-								Liferay.Language.get('view-x-options'),
-								label
-							)}
-						/>
-					}
-				/>
-			) : (
-				<ClayButtonWithIcon
-					aria-label={sub(Liferay.Language.get('delete-x'), label)}
-					className="delete-item-button"
-					displayType="unstyled"
-					onClick={() =>
-						numberOfChildren > 0
-							? setDeletionModalVisible(true)
-							: deleteMenuItem()
-					}
-					symbol="times-circle"
-					tabIndex={
-						isTarget && Liferay.FeatureFlags['LPS-134527']
-							? '0'
-							: '-1'
-					}
-					title={sub(Liferay.Language.get('delete-x'), label)}
-				/>
-			)}
+			<ClayDropDownWithItems
+				items={items}
+				menuElementAttrs={{
+					containerProps: {
+						className: 'menu-item-dropdown',
+					},
+				}}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={sub(
+							Liferay.Language.get('view-x-options'),
+							label
+						)}
+						borderless
+						className="menu-item-options-button"
+						displayType="secondary"
+						size="sm"
+						symbol="ellipsis-v"
+						tabIndex={isTarget ? '0' : '-1'}
+						title={sub(
+							Liferay.Language.get('view-x-options'),
+							label
+						)}
+					/>
+				}
+			/>
 
 			{deletionModalVisible && (
 				<DeletionModal

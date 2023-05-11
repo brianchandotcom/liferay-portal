@@ -17,7 +17,6 @@
 			box-shadow: 0 0 0 2px $primary-l1;
 		}
 
-		.delete-item-button,
 		.menu-item-options-button,
 		.site_navigation_menu_editor_MenuItem-add-button {
 			opacity: 1;
@@ -48,14 +47,6 @@
 			top: 0;
 			transform: translate(50%, -50%);
 		}
-
-		&:focus {
-			opacity: 1;
-		}
-	}
-
-	.delete-item-button {
-		opacity: 0;
 
 		&:focus {
 			opacity: 1;

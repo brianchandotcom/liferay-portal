@@ -18,8 +18,10 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,7 +33,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.math.BigDecimal;
 
+import java.util.Calendar;
 import java.util.Currency;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -78,8 +82,13 @@ public class CommercePriceEntryTestUtil {
 			CommercePriceListLocalServiceUtil.getCommercePriceList(
 				commercePriceListId);
 
+		CPInstance cpInstance = CPInstanceLocalServiceUtil.getCPInstance(skuId);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
-			externalReferenceCode, skuId, commercePriceListId,
+			externalReferenceCode, cpDefinition.getCProductId(),
+			cpInstance.getCPInstanceUuid(), commercePriceListId,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
@@ -111,10 +120,21 @@ public class CommercePriceEntryTestUtil {
 			CommercePriceListLocalServiceUtil.getCommercePriceList(
 				commercePriceListId);
 
-		return CommercePriceEntryLocalServiceUtil.upsertCommercePriceEntry(
-			commercePriceEntryId, skuId, commercePriceListId,
-			externalReferenceCode, BigDecimal.valueOf(price),
-			BigDecimal.valueOf(promoPrice), skuExternalReferenceCode,
+		CPInstance cpInstance = CPInstanceLocalServiceUtil.getCPInstance(skuId);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		Calendar now = new GregorianCalendar();
+
+		return CommercePriceEntryLocalServiceUtil.addOrUpdateCommercePriceEntry(
+			externalReferenceCode, commercePriceEntryId,
+			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceListId, true, null, null, null, null,
+			now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH),
+			now.get(Calendar.YEAR), now.get(Calendar.HOUR),
+			now.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
+			skuExternalReferenceCode,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}

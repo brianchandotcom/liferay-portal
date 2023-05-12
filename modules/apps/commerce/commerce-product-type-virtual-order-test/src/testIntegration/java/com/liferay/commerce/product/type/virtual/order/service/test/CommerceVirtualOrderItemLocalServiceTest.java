@@ -138,7 +138,8 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 		for (CPInstance cpInstance : cpDefinition.getCPInstances()) {
 			_commercePriceEntryLocalService.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				null, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
 				BigDecimal.ZERO,
 				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
@@ -231,7 +232,8 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 				cpInstance, subscriptionLength, "daily");
 
 			_commercePriceEntryLocalService.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				null, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
 				BigDecimal.ZERO,
 				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));

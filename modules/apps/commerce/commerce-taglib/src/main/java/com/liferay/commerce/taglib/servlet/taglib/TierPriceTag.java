@@ -61,8 +61,8 @@ public class TierPriceTag extends IncludeTag {
 			if (commercePriceList != null) {
 				CommercePriceEntry commercePriceEntry =
 					CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
-						_cpInstanceId,
-						commercePriceList.getCommercePriceListId());
+						commercePriceList.getCommercePriceListId(),
+						_cpInstance.getCPInstanceUuid());
 
 				if ((commercePriceEntry != null) &&
 					commercePriceEntry.isHasTierPrice()) {
@@ -140,6 +140,7 @@ public class TierPriceTag extends IncludeTag {
 		_commerceCurrencyId = 0;
 		_commercePriceListLocalService = null;
 		_commerceTierPriceEntries = null;
+		_cpInstance = null;
 		_cpInstanceId = 0;
 		_taglibQuantityInputId = null;
 	}
@@ -181,11 +182,10 @@ public class TierPriceTag extends IncludeTag {
 			return null;
 		}
 
-		CPInstance cpInstance = CPInstanceLocalServiceUtil.getCPInstance(
-			cpInstanceId);
+		_cpInstance = CPInstanceLocalServiceUtil.getCPInstance(cpInstanceId);
 
 		return _commercePriceListLocalService.getCommercePriceList(
-			cpInstance.getGroupId(), accountEntry.getAccountEntryId(),
+			_cpInstance.getGroupId(), accountEntry.getAccountEntryId(),
 			commerceContext.getCommerceAccountGroupIds());
 	}
 
@@ -196,6 +196,7 @@ public class TierPriceTag extends IncludeTag {
 	private long _commerceCurrencyId;
 	private CommercePriceListLocalService _commercePriceListLocalService;
 	private List<CommerceTierPriceEntry> _commerceTierPriceEntries;
+	private CPInstance _cpInstance;
 	private long _cpInstanceId;
 	private String _taglibQuantityInputId;
 

@@ -495,8 +495,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				commercePriceList.getCommercePriceListId());
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
 
 		Assert.assertThat(
 			commercePriceEntry.getCommercePriceEntryId(),
@@ -516,7 +516,7 @@ public class CommercePriceEntryLocalServiceTest {
 			"The result should be null"
 		);
 
-		long cpInstanceId = RandomTestUtil.randomInt();
+		String cpInstanceUuid = RandomTestUtil.randomString();
 
 		List<CommerceCatalog> commerceCatalogs =
 			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
@@ -532,7 +532,7 @@ public class CommercePriceEntryLocalServiceTest {
 
 		Assert.assertNull(
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstanceId, commercePriceList.getCommercePriceListId()));
+				commercePriceList.getCommercePriceListId(), cpInstanceUuid));
 	}
 
 	@Test
@@ -578,8 +578,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				childCommercePriceList.getCommercePriceListId(), true);
+				childCommercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid(), true);
 
 		Assert.assertThat(
 			commercePriceEntry.getCommercePriceEntryId(),
@@ -637,8 +637,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				childCommercePriceList.getCommercePriceListId(), true);
+				childCommercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid(), true);
 
 		Assert.assertThat(
 			childCommercePriceEntry.getCommercePriceEntryId(),
@@ -688,8 +688,8 @@ public class CommercePriceEntryLocalServiceTest {
 
 		CommercePriceEntry fetchedCommercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				childCommercePriceList.getCommercePriceListId(), false);
+				childCommercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid(), false);
 
 		Assert.assertNull(fetchedCommercePriceEntry);
 	}

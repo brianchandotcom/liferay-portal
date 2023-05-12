@@ -80,14 +80,14 @@ public class CommercePriceEntryTestUtil {
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, discountDiscovery, discountLevel1,
+			commercePriceListId, discountDiscovery, discountLevel1,
 			discountLevel2, discountLevel3, discountLevel4,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 			calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
 			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			neverExpire, serviceContext);
+			neverExpire, price, false, null, serviceContext);
 	}
 
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(

@@ -771,7 +771,8 @@ public class CommerceSiteInitializer {
 
 		if (commercePriceEntry == null) {
 			_commercePriceEntryLocalService.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				null, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price,
 				BigDecimal.ZERO, serviceContext);
 		}

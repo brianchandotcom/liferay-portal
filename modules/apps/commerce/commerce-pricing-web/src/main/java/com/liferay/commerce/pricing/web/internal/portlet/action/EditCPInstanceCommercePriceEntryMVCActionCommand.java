@@ -79,8 +79,9 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 
 		for (long addCommercePriceListId : addCommercePriceListIds) {
 			_commercePriceEntryService.addCommercePriceEntry(
-				cpInstanceId, addCommercePriceListId, cpInstance.getPrice(),
-				cpInstance.getPromoPrice(), serviceContext);
+				null, cpInstanceId, addCommercePriceListId,
+				cpInstance.getPrice(), cpInstance.getPromoPrice(),
+				serviceContext);
 		}
 	}
 

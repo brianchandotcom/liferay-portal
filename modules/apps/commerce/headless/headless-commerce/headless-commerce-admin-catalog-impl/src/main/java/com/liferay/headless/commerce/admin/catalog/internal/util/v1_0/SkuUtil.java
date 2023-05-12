@@ -419,7 +419,8 @@ public class SkuUtil {
 			CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 			commercePriceEntryLocalService.addCommercePriceEntry(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+				null, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, null,
 				serviceContext);
 		}

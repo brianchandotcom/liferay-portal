@@ -105,9 +105,13 @@ definition {
 	}
 
 	macro deleteAllDatasetEntries {
-		JSONFrontendDatasetEntries._deleteFDSEntry();
-
 		FrontendDataSetAdmin.goToDatasetAdminPage();
+
+		if (IsElementPresent(key_itemName = "", locator1 = "FrontendDataSetAdmin#TABLE_CELL")) {
+			JSONFrontendDatasetEntries._deleteFDSEntry();
+
+			Refresh();
+		}
 
 		AssertElementPresent(
 			locator1 = "Message#EMPTY_STATE_INFO",

@@ -37,7 +37,7 @@ definition {
 		}
 
 		task ("When goes to Fields Tab.") {
-			FrontendDataSetAdmin.gotoTab(tabName = "Fields");
+			FrontendDataSetAdmin.goToTab(tabName = "Fields");
 		}
 	}
 

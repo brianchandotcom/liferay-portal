@@ -296,7 +296,7 @@ public class LayoutExportController implements ExportController {
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
 
-		if (!group.isStaged() && Validator.isNotNull(layoutSetPrototypeUuid) &&
+		if (Validator.isNotNull(layoutSetPrototypeUuid) &&
 			layoutSetPrototypeSettings) {
 
 			LayoutSetPrototype layoutSetPrototype =

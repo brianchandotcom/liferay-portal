@@ -204,6 +204,106 @@ definition {
 	}
 
 	@priority = 5
+	test ViewObjectLayoutAfterUpgrade7413U33 {
+		property data.archive.type = "data-archive-object";
+		property database.types = "mariadb,mysql,postgresql,sqlserver";
+		property portal.version = "7.4.13.u33";
+		property test.name.skip.portal.instance = "ObjectUpgrade#ViewObjectLayoutAfterUpgrade7413U33";
+
+		task ("View Object Layout after Upgrade") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object1");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			ObjectAdmin.goToLayoutTabOnLayouts();
+
+			for (var tabName : list "Field Tab,Account Tab,Custom Object2 Tab") {
+				AssertElementPresent(
+					key_fieldTabName = ${tabName},
+					locator1 = "ObjectAdmin#FIELD_TAB_NAME");
+			}
+
+			ObjectAdmin.assertBlockIsPresent(fieldBlockName = "Block 1");
+
+			for (var fieldName : list "Custom Field Text,OTM - System Object,MTM - Custom Object") {
+				AssertElementPresent(
+					key_fieldName = ${fieldName},
+					locator1 = "ObjectAdmin#LAYOUT_FIELD_NAME");
+			}
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Custom Objects1",
+				site = "Liferay DXP");
+
+			ObjectPortlet.viewEntryDetails(entry = "Notification Test");
+
+			for (var tabName : list "Field Tab,Account Tab,Custom Object2 Tab") {
+				AssertElementPresent(
+					key_tabName = ${tabName},
+					locator1 = "ObjectAdmin#OBJECT_ANY_TAB");
+			}
+		}
+
+		task ("Edit Object Layout After Upgrade") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object1");
+
+			ObjectAdmin.goToLayoutsTab();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "View",
+				objectLabel = "Custom Layout");
+
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			Type(
+				locator1 = "ObjectAdmin#LAYOUT_BASIC_INFO_NAME_FIELD",
+				value1 = "Custom Layout Edit After Upgrade");
+
+			PortletEntry.save();
+
+			AssertElementPresent(
+				key_name = "Custom Layout Edit After Upgrade",
+				locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+		}
+
+		task ("Delete Object Layout After Upgrade") {
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "Delete",
+				objectLabel = "Custom Layout Edit After Upgrade");
+
+			AssertElementNotPresent(
+				key_name = "Custom Layout Edit After Upgrade",
+				locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Custom Objects1",
+				site = "Liferay DXP");
+
+			ObjectPortlet.viewEntryDetails(entry = "Notification Test");
+
+			for (var tabName : list "Field Tab,Account Tab,Custom Object2 Tab") {
+				AssertElementNotPresent(
+					key_tabName = ${tabName},
+					locator1 = "ObjectAdmin#OBJECT_ANY_TAB");
+			}
+		}
+	}
+
+	@priority = 5
 	test ViewObjectRelationshipAfterUpgrade7413U33 {
 		property data.archive.type = "data-archive-object";
 		property database.types = "mariadb,mysql,postgresql,sqlserver";

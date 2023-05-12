@@ -38,7 +38,8 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile."
+	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile. Blocked by LPS-173860."
+	@ignore = "true"
 	@priority = 4
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";

@@ -1043,7 +1043,7 @@ definition {
 
 		task ("And given a user notification template with the applicable fields filled with the Author and Current User terms") {
 			UserNotificationAPI.postNotificationTemplate(
-				en_US = "[%CURRENT_USER_EMAIL_ADDRESS%] [%CURRENT_USER_FIRST_NAME%] [%CUSTOMOBJECT180339_AUTHOR_LAST_NAME%] [%CUSTOMOBJECT180339_CUSTOMFIELD%]",
+				en_US = "[%CURRENT_USER_EMAIL_ADDRESS%] [%CURRENT_USER_FIRST_NAME%] [%CURRENT_USER_LAST_NAME%] [%CUSTOMOBJECT180339_CUSTOMFIELD%]",
 				externalReferenceCode = "test",
 				name = "User Notification Template",
 				recipientType = "user",

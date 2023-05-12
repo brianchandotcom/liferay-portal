@@ -38,6 +38,7 @@ export interface InitialStateProps {
 	buildZIPFiles: UploadedFile[];
 	catalogId: number;
 	dayTrial: string;
+	gravatarAPI: string;
 	optionId: number;
 	optionValuesId: {noOptionId: number; yesOptionId: number};
 	priceModel: Specification;
@@ -66,13 +67,17 @@ interface AppContextProps extends Array<InitialStateProps | Function> {
 const AppContext = createContext({} as AppContextProps);
 
 interface AppContextProviderProps {
+	gravatarAPI: string;
 	children: ReactNode;
 }
 
-export function AppContextProvider({children}: AppContextProviderProps) {
+export function AppContextProvider({
+	gravatarAPI,
+	children,
+}: AppContextProviderProps) {
 	const [state, dispatch] = useReducer<
 		React.Reducer<InitialStateProps, TAction>
-	>(appReducer, {...initialState});
+	>(appReducer, {...initialState, gravatarAPI});
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

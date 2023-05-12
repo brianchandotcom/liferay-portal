@@ -4,12 +4,14 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {AppContextProvider} from './manage-app-state/AppManageState';
 
+const GRAVATAR_API = `https://www.gravatar.com/avatar`;
+
 class WebComponent extends HTMLElement {
 	connectedCallback() {
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(
 			<React.StrictMode>
-				<AppContextProvider>
+				<AppContextProvider gravatarAPI={GRAVATAR_API}>
 					<App route={this.getAttribute('route') || '/'} />
 				</AppContextProvider>
 			</React.StrictMode>,

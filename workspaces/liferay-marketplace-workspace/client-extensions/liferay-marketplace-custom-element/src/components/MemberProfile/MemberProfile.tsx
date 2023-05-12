@@ -7,6 +7,8 @@ import catalogIcon from '../../assets/icons/catalog_icon.svg';
 import shieldCheckIcon from '../../assets/icons/shield_check_icon.svg';
 import userIcon from '../../assets/icons/user_icon.svg';
 import {DetailedCard} from '../DetailedCard/DetailedCard';
+import {Avatar} from '../Avatar/Avatar';
+import {useAppContext} from '../../manage-app-state/AppManageState';
 
 interface MemberProfileProps {
 	member: MemberProps;
@@ -14,6 +16,8 @@ interface MemberProfileProps {
 }
 
 export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
+	const [{gravatarAPI}, _] = useAppContext();
+
 	return (
 		<div className="member-profile-view-container">
 			<a
@@ -30,7 +34,11 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 			</a>
 
 			<div className="d-inline-block member-profile-image">
-				<img alt="Member Image" src={member.image}></img>
+				<Avatar
+					emailAddress={member.email}
+					gravatarAPI={gravatarAPI}
+					userName={member.name}
+				/>
 			</div>
 
 			<div className="d-inline-block member-profile-heading-container">

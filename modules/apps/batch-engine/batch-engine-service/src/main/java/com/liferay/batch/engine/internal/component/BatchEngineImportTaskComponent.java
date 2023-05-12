@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateA
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.felix.scr.ext.annotation.DSExt;
 
@@ -66,6 +67,7 @@ public class BatchEngineImportTaskComponent {
 
 		byte[] content = (byte[])properties.get("content");
 		String contentType = (String)properties.get("contentType");
+		AtomicBoolean disposed = (AtomicBoolean)properties.get("disposed");
 
 		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
@@ -102,6 +104,8 @@ public class BatchEngineImportTaskComponent {
 					}
 				}
 				finally {
+					disposed.set(true);
+
 					componentInstance.dispose();
 				}
 			});

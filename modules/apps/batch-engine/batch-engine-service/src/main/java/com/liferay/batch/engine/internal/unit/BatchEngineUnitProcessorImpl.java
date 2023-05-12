@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
@@ -39,13 +40,18 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.osgi.service.component.ComponentFactory;
+import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.promise.Deferred;
+import org.osgi.util.promise.Promise;
 
 /**
  * @author Matija Petanjek
@@ -123,7 +129,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			contentType = _file.getExtension(batchEngineUnit.getDataFileName());
 		}
 
-		if ((batchEngineUnitConfiguration == null) || (content == null) ||
+		if (!batchEngineUnit.isValid() ||
+			(batchEngineUnitConfiguration == null) || (content == null) ||
 			Validator.isNull(contentType)) {
 
 			throw new IllegalStateException(
@@ -135,6 +142,10 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Map<String, Serializable> parameters =
 			batchEngineUnitConfiguration.getParameters();
 
+		if (parameters == null) {
+			parameters = Collections.emptyMap();
+		}
+
 		String featureFlag = (String)parameters.get("featureFlag");
 
 		if (Validator.isNotNull(featureFlag) &&
@@ -143,7 +154,29 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			return;
 		}
 
-		_componentFactory.newInstance(
+		AtomicBoolean disposed = new AtomicBoolean();
+
+		Deferred<ComponentInstance<?>> deferred = new Deferred<>();
+
+		Promise<ComponentInstance<?>> promise = deferred.getPromise();
+
+		promise.delay(
+			TimeUnit.SECOND.toMillis(30)
+		).thenAccept(
+			componentInstance -> {
+				if (!disposed.get()) {
+					_log.error(
+						StringBundler.concat(
+							"Could not process batch file ",
+							batchEngineUnit.getFileName(), " ",
+							batchEngineUnit.getDataFileName()));
+
+					componentInstance.dispose();
+				}
+			}
+		);
+
+		ComponentInstance<?> componentInstance = _componentFactory.newInstance(
 			HashMapDictionaryBuilder.<String, Object>put(
 				"_vulcanBatchEngineTaskItemDelegate.target",
 				StringBundler.concat(
@@ -157,7 +190,11 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				"content", content
 			).put(
 				"contentType", contentType
+			).put(
+				"disposed", disposed
 			).build());
+
+		deferred.resolve(componentInstance);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(

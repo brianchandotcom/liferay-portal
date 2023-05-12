@@ -125,6 +125,31 @@ public class TaxonomyCategoryBrief implements Cloneable, Serializable {
 
 	protected Map<String, String> taxonomyCategoryName_i18n;
 
+	public TaxonomyCategoryReference getTaxonomyCategoryReference() {
+		return taxonomyCategoryReference;
+	}
+
+	public void setTaxonomyCategoryReference(
+		TaxonomyCategoryReference taxonomyCategoryReference) {
+
+		this.taxonomyCategoryReference = taxonomyCategoryReference;
+	}
+
+	public void setTaxonomyCategoryReference(
+		UnsafeSupplier<TaxonomyCategoryReference, Exception>
+			taxonomyCategoryReferenceUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryReference =
+				taxonomyCategoryReferenceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TaxonomyCategoryReference taxonomyCategoryReference;
+
 	@Override
 	public TaxonomyCategoryBrief clone() throws CloneNotSupportedException {
 		return (TaxonomyCategoryBrief)super.clone();

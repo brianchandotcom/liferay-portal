@@ -188,6 +188,39 @@ public class TaxonomyCategoryBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> taxonomyCategoryName_i18n;
 
+	@Schema(description = "A unique reference to a taxonomy category.")
+	@Valid
+	public TaxonomyCategoryReference getTaxonomyCategoryReference() {
+		return taxonomyCategoryReference;
+	}
+
+	public void setTaxonomyCategoryReference(
+		TaxonomyCategoryReference taxonomyCategoryReference) {
+
+		this.taxonomyCategoryReference = taxonomyCategoryReference;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryReference(
+		UnsafeSupplier<TaxonomyCategoryReference, Exception>
+			taxonomyCategoryReferenceUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryReference =
+				taxonomyCategoryReferenceUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "A unique reference to a taxonomy category.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected TaxonomyCategoryReference taxonomyCategoryReference;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -270,6 +303,16 @@ public class TaxonomyCategoryBrief implements Serializable {
 			sb.append("\"taxonomyCategoryName_i18n\": ");
 
 			sb.append(_toJSON(taxonomyCategoryName_i18n));
+		}
+
+		if (taxonomyCategoryReference != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryReference\": ");
+
+			sb.append(String.valueOf(taxonomyCategoryReference));
 		}
 
 		sb.append("}");

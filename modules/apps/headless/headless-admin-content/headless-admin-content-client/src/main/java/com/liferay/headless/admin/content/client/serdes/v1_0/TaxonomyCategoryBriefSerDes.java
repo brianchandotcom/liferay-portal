@@ -111,6 +111,16 @@ public class TaxonomyCategoryBriefSerDes {
 				_toJSON(taxonomyCategoryBrief.getTaxonomyCategoryName_i18n()));
 		}
 
+		if (taxonomyCategoryBrief.getTaxonomyCategoryReference() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryReference\": ");
+
+			sb.append(taxonomyCategoryBrief.getTaxonomyCategoryReference());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -171,6 +181,16 @@ public class TaxonomyCategoryBriefSerDes {
 					taxonomyCategoryBrief.getTaxonomyCategoryName_i18n()));
 		}
 
+		if (taxonomyCategoryBrief.getTaxonomyCategoryReference() == null) {
+			map.put("taxonomyCategoryReference", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryReference",
+				String.valueOf(
+					taxonomyCategoryBrief.getTaxonomyCategoryReference()));
+		}
+
 		return map;
 	}
 
@@ -222,6 +242,15 @@ public class TaxonomyCategoryBriefSerDes {
 				if (jsonParserFieldValue != null) {
 					taxonomyCategoryBrief.setTaxonomyCategoryName_i18n(
 						(Map)TaxonomyCategoryBriefSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryReference")) {
+
+				if (jsonParserFieldValue != null) {
+					taxonomyCategoryBrief.setTaxonomyCategoryReference(
+						TaxonomyCategoryReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

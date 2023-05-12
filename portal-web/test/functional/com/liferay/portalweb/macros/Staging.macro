@@ -363,9 +363,7 @@ definition {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
 		}
 		else if (isSet(scheduleProcess)) {
-			AssertClick(
-				locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
-				value1 = "Add Event");
+			ClickNoError(locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON");
 		}
 		else {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
@@ -406,6 +404,10 @@ definition {
 
 		if (${contentDeletion} == "true") {
 			ContentConfiguration.contentDeletion();
+		}
+
+		if (${deleteApplicationData} == "true") {
+			Click(locator1 = "StagingPublishToLive#DELETE_APPLICATION_DATA_BEFORE_IMPORTING_CHECKBOX");
 		}
 
 		if (${pageDeletion} == "true") {

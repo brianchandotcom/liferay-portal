@@ -2317,6 +2317,76 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-178085. TC-1: Verify that a confirmation pop-up shows up after checking Delete Application Data Before Importing checkbox when publishing staging site."
+	@priority = 5
+	test ViewDeletingApplicationDataPopUpInPublishProgress {
+		property name.skip.portal.instance = "StagingUsecase#ViewDeletingApplicationDataPopUpInPublishProgress";
+
+		task ("Given: Go to Advanced Publication Process screen") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("When: Check the Delete Application Data Before Importing checkbox and click publish") {
+			Staging.configurePublishToLive(deleteApplicationData = "true");
+
+			Staging.clickPublishToLiveButton();
+		}
+
+		task ("Then: Verify that clicking Cancel in the confirmation dialog will return to the publishing screen, clicking OK will publish successfully") {
+			Confirm.dismissAlert();
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Delete Application Data Before Importing",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Staging.clickPublishToLiveButton();
+
+			AssertConfirm(value1 = "Deleting application data before importing cannot be undone. Some applications in other pages might be referencing this data. Are you sure you want to continue deleting application data?");
+
+			Staging.viewProcessResult();
+		}
+	}
+
+	@description = "This is a use case for LPS-178085. TC-4: Verify that a confirmation pop-up shows up after checking Delete Application Data Before Importing checkbox when set schedule for publish progress."
+	@priority = 5
+	test ViewDeletingApplicationDataPopUpWhenSetPublishSchedule {
+		property name.skip.portal.instance = "StagingUsecase#ViewDeletingApplicationDataPopUpWhenSetPublishSchedule";
+
+		task ("Given: Go to Advanced Publication Process screen") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("When: Check the Delete Application Data Before Importing checkbox and set Schedule date") {
+			Staging.configurePublishToLive(deleteApplicationData = "true");
+
+			Staging.configureScheduleTime();
+
+			Staging.clickPublishToLiveButton(scheduleProcess = "true");
+		}
+
+		task ("Then: Verify that clicking Cancel in the confirmation dialog will return to the publishing screen, clicking OK will add event successfully") {
+			Confirm.dismissAlert();
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Delete Application Data Before Importing",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Staging.clickPublishToLiveButton(scheduleProcess = "true");
+
+			AssertConfirm(value1 = "Deleting application data before importing cannot be undone. Some applications in other pages might be referencing this data. Are you sure you want to continue deleting application data?");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@priority = 4
 	test ViewPublishDMWithModifiedTitle {
 		property test.name.skip.portal.instance = "StagingUsecase#ViewPublishDMWithModifiedTitle";

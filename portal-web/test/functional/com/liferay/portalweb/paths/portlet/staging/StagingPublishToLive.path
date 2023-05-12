@@ -173,6 +173,11 @@
 <!--DELETIONS-->
 
 <tr>
+	<td>DELETE_APPLICATION_DATA_BEFORE_IMPORTING_CHECKBOX</td>
+	<td>//input[contains(@name,'DELETE_PORTLET_DATA')]//following-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -435,7 +435,7 @@ function appendXMLNotifications(buffer, notifications, nodeName, exporting) {
 
 			let currentRecipients = recipients;
 
-			if (Array.isArray(recipients) && recipients.length === 1) {
+			if (Array.isArray(recipients[0]) && recipients.length === 1) {
 				currentRecipients = recipients[0];
 			}
 

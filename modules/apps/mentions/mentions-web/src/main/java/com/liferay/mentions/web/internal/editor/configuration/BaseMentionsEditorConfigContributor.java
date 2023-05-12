@@ -74,7 +74,7 @@ public class BaseMentionsEditorConfigContributor
 							portletURL.setAnchor(false);
 
 							return StringBundler.concat(
-								portletURL.toString(), "&",
+								portletURL, "&",
 								PortalUtil.getPortletNamespace(
 									MentionsPortletKeys.MENTIONS));
 						}

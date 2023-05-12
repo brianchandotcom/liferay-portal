@@ -574,7 +574,7 @@ public class LPKGBundleTrackerCustomizer
 						_log.info(
 							StringBundler.concat(
 								"Skipping installation of ", symbolicName,
-								" with version ", version.toString(), " in ",
+								" with version ", version, " in ",
 								bundle.getSymbolicName(),
 								" because an identical bundle exists"));
 					}

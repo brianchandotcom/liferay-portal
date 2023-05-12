@@ -92,7 +92,7 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 								"/wiki/autocomplete_page_title");
 
 							return StringBundler.concat(
-								autoCompletePageTitleURL.toString(), "&",
+								autoCompletePageTitleURL, "&",
 								_portal.getPortletNamespace(
 									portletDisplay.getId()));
 						}

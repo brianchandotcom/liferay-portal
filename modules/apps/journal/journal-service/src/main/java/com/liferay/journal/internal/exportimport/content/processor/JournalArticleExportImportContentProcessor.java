@@ -407,7 +407,7 @@ public class JournalArticleExportImportContentProcessor
 					_log.debug(
 						StringBundler.concat(
 							"Replacing ", json, " with ",
-							newArticleJSONObject.toString()));
+							newArticleJSONObject));
 				}
 
 				field.setValue(locale, newArticleJSONObject.toString());

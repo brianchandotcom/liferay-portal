@@ -21,13 +21,28 @@ definition {
 			var externalReferenceCode = "";
 		}
 
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/${api} \
-				-u test@liferay.com:test \
-				-H Content-Type: multipart/form-data \
-				-F document={"externalReferenceCode": "${externalReferenceCode}"} \
-				-F file=@${filePath}
-		''';
+		if (!(isSet(fileName))) {
+			var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/${api} \
+					-u test@liferay.com:test \
+					-H Content-Type: multipart/form-data \
+					-F document={"externalReferenceCode": "${externalReferenceCode}"} \
+					-F file=@${filePath}
+			''';
+		}
+		else {
+			if (!(isSet(title))) {
+				var title = ${fileName};
+			}
+
+			var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/${api} \
+					-u test@liferay.com:test \
+					-H Content-Type: multipart/form-data \
+					-F document={"title": "${title}", "fileName": "${fileName}", "externalReferenceCode": "${externalReferenceCode}"} \
+					-F file=@${filePath}
+			''';
+		}
 
 		var curl = JSONCurlUtil.post(${curl});
 
@@ -132,7 +147,7 @@ definition {
 			var api = "asset-libraries/${assetLibraryId}/documents/by-external-reference-code/${externalReferenceCode}";
 		}
 		else {
-			var api = "asset-libraries/${siteId}/documents/by-external-reference-code/${externalReferenceCode}";
+			var api = "sites/${siteId}/documents/by-external-reference-code/${externalReferenceCode}";
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -182,7 +197,9 @@ definition {
 		var response = DocumentAPI._addDocument(
 			depotName = ${depotName},
 			externalReferenceCode = ${externalReferenceCode},
-			filePath = ${filePath});
+			fileName = ${fileName},
+			filePath = ${filePath},
+			title = ${dmDocumentTitle});
 
 		return ${response};
 	}
@@ -193,7 +210,9 @@ definition {
 		var response = DocumentAPI._addDocument(
 			documentFolderId = ${documentFolderId},
 			externalReferenceCode = ${externalReferenceCode},
-			filePath = ${filePath});
+			filePath = ${filePath},
+			ileName = ${fileName},
+			title = ${dmDocumentTitle});
 
 		return ${response};
 	}
@@ -203,8 +222,10 @@ definition {
 
 		var response = DocumentAPI._addDocument(
 			externalReferenceCode = ${externalReferenceCode},
+			fileName = ${fileName},
 			filePath = ${filePath},
-			siteId = ${siteId});
+			siteId = ${siteId},
+			title = ${dmDocumentTitle});
 
 		return ${response};
 	}
@@ -306,7 +327,9 @@ definition {
 	macro getIdOfCreatedDocument {
 		var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
 			depotName = ${depotName},
+			dmDocumentTitle = ${dmDocumentTitle},
 			externalReferenceCode = ${externalReferenceCode},
+			fileName = ${fileName},
 			filePath = ${filePath});
 
 		var documentId = JSONPathUtil.getIdValue(response = ${response});

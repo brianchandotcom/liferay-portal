@@ -85,7 +85,7 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 		throws Exception {
 
 		Layout layout = _layoutLocalService.fetchLayout(
-			ParamUtil.getLong(httpServletRequest, "plid"));
+			ParamUtil.getLong(httpServletRequest, "p_l_id"));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

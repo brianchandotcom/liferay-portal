@@ -107,7 +107,7 @@ exports[`Data Privacy Overview should render 1`] = `
                     <p
                       class="text-secondary"
                     >
-                      Data subjects and your organization can request access, deletion and suppression of their data in Analytics Cloud. Some requests may take up to 7 days to complete. We will notify the requestor by email once the download is ready.
+                      Data subjects and your organization can request access and deletion of their data in Analytics Cloud. Some requests may take up to 7 days to complete. We will notify the requestor by email once the download is ready.
                     </p>
                   </div>
                   <div

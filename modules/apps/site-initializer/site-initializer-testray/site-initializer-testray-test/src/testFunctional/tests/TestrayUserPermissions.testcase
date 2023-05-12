@@ -188,4 +188,59 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178274 | Test Summary: Verify that a new user with full admin permissions can create(with adm roles disabled)/edit and delete users"
+	@priority = 5
+	test NewUserWithAdmRoleCanCreateEditAndDeleteUser {
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "administrator@testray.com",
+				userLoginFullName = "Administrator User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the administrator add a user") {
+			TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			Click(locator1 = "Button#PLUS");
+
+			TestrayManageUser.addUser(
+				listRoles = "Testray User",
+				rePassword = "test",
+				userEmailAddressEdit = "user@liferay.com",
+				userFirstNameEdit = "firstname",
+				userLastNameEdit = "Updateln",
+				userPassword = "test",
+				userScreenNameEdit = "testscreen");
+		}
+
+		task ("Then can see the user created in the list") {
+			AssertElementPresent(
+				key_projectName = "firstname Updateln",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And can see the roles disabled") {
+            Testray.goToProjectPage(projectName = "user@liferay.com");
+
+			AssertElementPresent(
+                key_checkboxName = "Administrator",
+                locator1 = "Checkbox#DISABLED_EXPORT_TRANSLATION");
+		}
+
+		task ("When delete the user") {
+			Button.click(button = "Delete User");
+		}
+
+		task ("Then can not see the user in the list") {
+			Refresh();
+
+			AssertElementNotPresent(
+				key_projectName = "firstname Updateln",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -17,6 +17,7 @@ package com.liferay.osb.faro.service.impl;
 import com.liferay.osb.faro.model.FaroNotification;
 import com.liferay.osb.faro.service.base.FaroNotificationLocalServiceBaseImpl;
 import com.liferay.osb.faro.util.FaroPermissionChecker;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 
@@ -27,9 +28,15 @@ import java.time.ZonedDateTime;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Geyson Silva
  */
+@Component(
+	property = "model.class.name=com.liferay.osb.faro.model.FaroNotification",
+	service = AopService.class
+)
 public class FaroNotificationLocalServiceImpl
 	extends FaroNotificationLocalServiceBaseImpl {
 

@@ -16,15 +16,22 @@ package com.liferay.osb.faro.contacts.service.impl;
 
 import com.liferay.osb.faro.contacts.model.ContactsCardTemplate;
 import com.liferay.osb.faro.contacts.service.base.ContactsCardTemplateLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Matthew Kong
  */
+@Component(
+	property = "model.class.name=com.liferay.osb.faro.contacts.model.ContactsCardTemplate",
+	service = AopService.class
+)
 public class ContactsCardTemplateLocalServiceImpl
 	extends ContactsCardTemplateLocalServiceBaseImpl {
 

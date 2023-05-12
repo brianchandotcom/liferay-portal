@@ -79,7 +79,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -479,7 +479,7 @@ public class DataSourceController extends BaseFaroController {
 
 			if (providerType.equals(CSVProvider.TYPE)) {
 				Repository repository =
-					_portletFileRepositoryUtil.getPortletRepository(
+					_portletFileRepository.getPortletRepository(
 						groupId, ContactsConstants.SERVICE_NAME);
 
 				DLFileEntry dlFileEntry =
@@ -1599,7 +1599,7 @@ public class DataSourceController extends BaseFaroController {
 	private Portal _portal;
 
 	@Reference
-	private PortletFileRepositoryUtil _portletFileRepositoryUtil;
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private TokenManager _tokenManager;

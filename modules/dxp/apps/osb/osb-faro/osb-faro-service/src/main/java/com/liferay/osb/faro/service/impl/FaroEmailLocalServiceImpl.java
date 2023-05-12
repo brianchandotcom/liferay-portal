@@ -15,15 +15,19 @@
 package com.liferay.osb.faro.service.impl;
 
 import com.liferay.osb.faro.service.base.FaroEmailLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Matthew Kong
  */
+@Component(service = AopService.class)
 public class FaroEmailLocalServiceImpl extends FaroEmailLocalServiceBaseImpl {
 
 	@Override

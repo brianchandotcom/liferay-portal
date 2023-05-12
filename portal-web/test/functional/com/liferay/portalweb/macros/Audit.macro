@@ -1,5 +1,15 @@
 definition {
 
+	macro exportAuditEvents {
+		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
+
+		ClickNoError(
+			key_menuItem = "Export Audit Events",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 	@description = "Go to System settings"
 	macro gotoSystemSettings {
 		Variables.assertDefined(parameterList = ${portlet});

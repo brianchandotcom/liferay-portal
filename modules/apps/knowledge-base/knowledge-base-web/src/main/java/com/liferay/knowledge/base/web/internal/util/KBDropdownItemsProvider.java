@@ -119,9 +119,7 @@ public class KBDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() ->
-							_hasExpirationPermission(kbArticle) &&
-							!kbArticle.isExpired(),
+						() -> _hasExpirationPermission(kbArticle),
 						_getExpireArticleActionConsumer(kbArticle)
 					).add(
 						() ->

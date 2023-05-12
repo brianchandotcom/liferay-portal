@@ -10,7 +10,7 @@ import HelloWorld from './routes/hello-world/pages/HelloWorld';
 
 import './common/styles/index.scss';
 
-const App = ({oAuth2ClientSpringBoot, route}) => {
+const App = ({route}) => {
 	if (route === 'hello-bar') {
 		return <HelloBar />;
 	}
@@ -25,7 +25,7 @@ const App = ({oAuth2ClientSpringBoot, route}) => {
 
 			{Liferay.ThemeDisplay.isSignedIn() && (
 				<div>
-					<DadJoke oAuth2Client={oAuth2ClientSpringBoot} />
+					<DadJoke />
 				</div>
 			)}
 		</div>
@@ -33,25 +33,9 @@ const App = ({oAuth2ClientSpringBoot, route}) => {
 };
 
 class WebComponent extends HTMLElement {
-	constructor() {
-		super();
-
-		try {
-			this.oAuth2ClientSpringBoot = Liferay.OAuth2Client.FromUserAgentApplication(
-				'liferay-sample-etc-spring-boot-oauth-application-user-agent'
-			);
-		}
-		catch (error) {
-			console.log("Unable to get user agent application");
-		}
-	}
-
 	connectedCallback() {
 		createRoot(this).render(
-			<App
-				oAuth2Client={this.oAuth2ClientSpringBoot}
-				route={this.getAttribute('route')}
-			/>,
+			<App route={this.getAttribute('route')} />,
 			this
 		);
 
@@ -60,9 +44,8 @@ class WebComponent extends HTMLElement {
 				.then((response) => response.json())
 				.then((response) => {
 					if (response.givenName) {
-						const nameElements = document.getElementsByClassName(
-							'hello-world-name'
-						);
+						const nameElements =
+							document.getElementsByClassName('hello-world-name');
 
 						if (nameElements.length) {
 							nameElements[0].innerHTML = response.givenName;

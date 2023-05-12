@@ -52,6 +52,11 @@ public class AuditStorageServiceUpgradeStepRegistrator
 				new Class<?>[] {AuditEventTable.class}));
 
 		registry.register("2.0.0", "2.0.1", new DummyUpgradeStep());
+
+		registry.register(
+			"2.0.1", "2.1.0",
+			UpgradeProcessFactory.addColumns(
+				"Audit_AuditEvent", "groupId LONG"));
 	}
 
 	@Reference

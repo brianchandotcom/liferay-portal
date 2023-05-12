@@ -324,6 +324,12 @@ definition {
 		return ${response};
 	}
 
+	macro getFileNameOfDocument {
+		var documentFileName = JSONUtil.getWithJSONPath(${responseToParse}, "$.['fileName']");
+
+		return ${documentFileName};
+	}
+
 	macro getIdOfCreatedDocument {
 		var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
 			depotName = ${depotName},
@@ -455,6 +461,22 @@ definition {
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 				-d ${body}
+		''';
+
+		var response = JSONCurlUtil.put(${curl});
+
+		return ${response};
+	}
+
+	macro updateDocumentByDocumentId {
+		Variables.assertDefined(parameterList = ${documentId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/documents/${documentId} \
+				-u test@liferay.com:test \
+				-F document={"title": "${title}", "fileName": "${fileName}"}
 		''';
 
 		var response = JSONCurlUtil.put(${curl});

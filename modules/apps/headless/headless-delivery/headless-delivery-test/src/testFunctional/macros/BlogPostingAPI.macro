@@ -415,9 +415,9 @@ definition {
 				-H Content-Type: application/json
 		''';
 
-		var exportBatchId = JSONCurlUtil.post(${curl}, "$.id");
+		var blogPostingsExportBatchId = JSONCurlUtil.post(${curl}, "$.id");
 
-		return ${exportBatchId};
+		return ${blogPostingsExportBatchId};
 	}
 
 	macro getIdOfUpdatedPostingBatchEngineImportTask {

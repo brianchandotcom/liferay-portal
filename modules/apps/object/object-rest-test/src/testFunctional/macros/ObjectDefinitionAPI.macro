@@ -778,9 +778,9 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		var exportBatchId = JSONCurlUtil.post(${curl}, "$.id");
+		var objectDefinitionsExportBatchId = JSONCurlUtil.post(${curl}, "$.id");
 
-		return ${exportBatchId};
+		return ${objectDefinitionsExportBatchId};
 	}
 
 	macro getObjectDefinitionIdByName {

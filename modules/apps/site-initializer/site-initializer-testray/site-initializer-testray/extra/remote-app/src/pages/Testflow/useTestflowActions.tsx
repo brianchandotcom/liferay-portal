@@ -70,6 +70,32 @@ const useTestflowActions = () => {
 			name: i18n.translate('delete'),
 			permission: 'DELETE',
 		},
+		{
+			action: (task, mutate) => {
+				const fn =
+					task.subtaskScoreCompleted === task.subtaskScore
+						? () => testrayTaskImpl.complete(task)
+						: () => testrayTaskImpl.abandon(task);
+
+				return fn().then(() =>
+					updateItemFromList(
+						mutate,
+						0,
+						{},
+						{
+							revalidate: true,
+						}
+					)
+				);
+			},
+			hidden: ({dueStatus}) => dueStatus.key !== TaskStatuses.IN_ANALYSIS,
+			icon: 'align-justify',
+			name: (task) =>
+				task.subtaskScoreCompleted === task.subtaskScore
+					? i18n.translate('complete')
+					: i18n.translate('abandon'),
+			permission: 'UPDATE',
+		},
 	] as Action<TestrayTask>[]);
 
 	return {

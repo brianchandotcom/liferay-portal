@@ -110,11 +110,7 @@ const TestflowOutlet = () => {
 	const subTaskFilter = searchBuilder
 		.eq('taskId', taskId)
 		.and()
-		.in('dueStatus', [
-			SubTaskStatuses.IN_ANALYSIS,
-			SubTaskStatuses.MERGED,
-			SubTaskStatuses.OPEN,
-		])
+		.in('dueStatus', [SubTaskStatuses.IN_ANALYSIS, SubTaskStatuses.OPEN])
 		.build();
 
 	const {data: testraySubtasks, revalidate: revalidateSubtask} = useFetch<

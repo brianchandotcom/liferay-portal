@@ -25,20 +25,8 @@ request.setAttribute("view.jsp-eventName", eventName);
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= segmentsDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= segmentsDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= segmentsDisplayContext.getCreationMenu() %>"
-	disabled="<%= segmentsDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= segmentsDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= segmentsDisplayContext.getTotalItems() %>"
+	managementToolbarDisplayContext="<%= new SegmentsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse, segmentsDisplayContext.getSearchContainer()) %>"
 	propsTransformer="js/SegmentsManagementToolbarPropsTransformer"
-	searchActionURL="<%= segmentsDisplayContext.getSearchActionURL() %>"
-	searchContainerId="segmentsEntries"
-	searchFormName="searchFm"
-	selectable="<%= true %>"
-	showCreationMenu="<%= segmentsDisplayContext.isShowCreationMenu() %>"
-	sortingOrder="<%= segmentsDisplayContext.getOrderByType() %>"
-	sortingURL="<%= segmentsDisplayContext.getSortingURL() %>"
 />
 
 <c:if test="<%= !segmentsDisplayContext.isSegmentationEnabled(themeDisplay.getCompanyId()) %>">

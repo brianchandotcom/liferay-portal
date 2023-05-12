@@ -174,16 +174,18 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet&p_p_lifecycle=0&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_mvcPath=%2Ffds_views.jsp&_com_liferay_frontend_data_set_views_web_internal_portlet_FDSViewsPortlet_fdsEntryId=${datasetEntryId}");
 	}
 
-	macro goToFieldTabs {
-		Click(
-			key_name = ${dataSetViewName},
-			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+	macro goToTab {
+		if (isSet(dataSetViewName)) {
+			Click(
+				key_name = ${dataSetViewName},
+				locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
-		Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+			Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
+		}
 
 		Click(
-			locator1 = "FrontendDataSetAdmin#VIEWS_FIELD_TABS",
-			navTab = ${navTab});
+			locator1 = "FrontendDataSetAdmin#VIEW_ANY_TAB",
+			key_tabName = ${tabName});
 	}
 
 	macro goToSpecificViewPage {
@@ -194,12 +196,6 @@ definition {
 			locator1 = "FrontendDataSetAdmin#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
 
 		MenuItem.click(menuItem = "View");
-	}
-
-	macro gotoTab {
-		Click(
-			key_tabName = ${tabName},
-			locator1 = "FrontendDataSetAdmin#VIEW_ANY_TAB");
 	}
 
 	macro goToViews {

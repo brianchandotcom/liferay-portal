@@ -11,7 +11,6 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-
 		User.firstLoginPG();
 	}
 
@@ -31,7 +30,7 @@ definition {
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
-		
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.jpg",

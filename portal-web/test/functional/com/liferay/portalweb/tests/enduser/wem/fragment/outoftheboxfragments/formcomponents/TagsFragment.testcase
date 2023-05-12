@@ -3,49 +3,52 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Fragments";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
-		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
 	@description = "This is a test for LPS-169877. 10 instances of Tags fragment can be added into the same form container"
 	@priority = 3
 	test CanAdd10TagsFragmentsToPage {
+		var tagName1 = StringUtil.randomString(8);
+
+		var tagName1 = StringUtil.toLowerCase(${tagName1});
+		var tagName2 = StringUtil.randomString(8);
+
+		var tagName2 = StringUtil.toLowerCase(${tagName2});
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
 		task ("Given an object with scope to a site") {
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				JSONAssettag.addTag(
 					groupName = "Global",
-					tagName = "global tag ${i}");
+					tagName = ${tagName});
 			}
 
 			JSONAssettag.addTag(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				tagName = "local tag");
 
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "MyObject",
-				objectName = "MyObject",
-				pluralLabelName = "MyObject",
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
 				scope = "site");
 
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -54,25 +57,17 @@ definition {
 				fieldName = "name",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "MyObject");
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
-
-			Button.clickSave();
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "MyObject");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -97,13 +92,13 @@ definition {
 
 		task ("When go to edit the content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then can add tags as input") {
@@ -111,7 +106,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.viewInputStyle(
 				label = "Name",
@@ -129,30 +124,31 @@ definition {
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1",
+				tagNameList = ${tagName1},
 				tagRow = 1);
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 2",
+				tagNameList = ${tagName2},
 				tagRow = 4);
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 2,local tag",
+				tagNameList = "${tagName2},local tag",
 				tagRow = 6);
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2,local tag",
+				tagNameList = "${tagName1},${tagName2},local tag",
 				tagRow = 7);
 
 			Button.clickSubmitButton();
@@ -161,13 +157,13 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
 
 			// Need to rewrite when LPS-182835 get fixed
 
-			for (var tagName : list "global tag 1,global tag 2,local tag") {
+			for (var tagName : list "${tagName1},${tagName2},local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});
 			}
 		}
@@ -176,21 +172,32 @@ definition {
 	@description = "This is a test for LPS-169877. The tags fragment can be used in a master page"
 	@priority = 3
 	test CanUseTagsInMasterPage {
+		var tagName1 = StringUtil.randomString(8);
+
+		var tagName1 = StringUtil.toLowerCase(${tagName1});
+		var tagName2 = StringUtil.randomString(8);
+
+		var tagName2 = StringUtil.toLowerCase(${tagName2});
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
 		task ("Given a master page with the tags fragment") {
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				JSONAssettag.addTag(
 					groupName = "Global",
-					tagName = "global tag ${i}");
+					tagName = ${tagName});
 			}
 
 			JSONAssettag.addTag(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				tagName = "local tag");
 
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "MyObject",
-				objectName = "MyObject",
-				pluralLabelName = "MyObject",
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
 				scope = "site");
 
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -199,25 +206,17 @@ definition {
 				fieldName = "name",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "MyObject");
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
-
-			Button.clickSave();
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "MyObject");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -238,10 +237,10 @@ definition {
 			Button.clickSave();
 
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				masterPageTemplateEntryName = "Master Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Master Page Template");
 
@@ -251,7 +250,7 @@ definition {
 				fragmentName = "Form Container",
 				scope = "Master");
 
-			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.viewInputStyle(
 				label = "Name",
@@ -267,7 +266,7 @@ definition {
 		}
 
 		task ("When we create a page with the created master page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				masterLayoutName = "Master Page Template",
@@ -279,15 +278,16 @@ definition {
 		task ("Then it is possible to send tags as entries") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2,local tag");
+				tagNameList = "${tagName1},${tagName2},local tag");
 
 			Button.clickSubmitButton();
 
@@ -295,11 +295,11 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
 
-			for (var tagName : list "global tag 1,global tag 2,local tag") {
+			for (var tagName : list "${tagName1},${tagName2},local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});
 			}
 		}
@@ -308,21 +308,32 @@ definition {
 	@description = "This is a test for LPS-169877. The tag field can be used in a page template"
 	@priority = 5
 	test CanUseTagsInPageTemplate {
+		var tagName1 = StringUtil.randomString(8);
+
+		var tagName1 = StringUtil.toLowerCase(${tagName1});
+		var tagName2 = StringUtil.randomString(8);
+
+		var tagName2 = StringUtil.toLowerCase(${tagName2});
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
 		task ("Given a page template with the tags fragment") {
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				JSONAssettag.addTag(
 					groupName = "Global",
-					tagName = "global tag ${i}");
+					tagName = ${tagName});
 			}
 
 			JSONAssettag.addTag(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				tagName = "local tag");
 
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "MyObject",
-				objectName = "MyObject",
-				pluralLabelName = "MyObject",
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
 				scope = "site");
 
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -331,25 +342,17 @@ definition {
 				fieldName = "name",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "MyObject");
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
-
-			Button.clickSave();
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "MyObject");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -370,17 +373,17 @@ definition {
 			Button.clickSave();
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateStatus = "Draft",
 				layoutPageTemplateType = "Content Page Template");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -390,7 +393,7 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.viewInputStyle(
 				label = "Name",
@@ -406,7 +409,7 @@ definition {
 		}
 
 		task ("When we create a page with the created template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -419,15 +422,16 @@ definition {
 		task ("Then it is possible to send tags as entries") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2,local tag");
+				tagNameList = "${tagName1},${tagName2},local tag");
 
 			Button.clickSubmitButton();
 
@@ -435,11 +439,11 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
 
-			for (var tagName : list "global tag 1,global tag 2,local tag") {
+			for (var tagName : list "${tagName1},${tagName2},local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});
 			}
 		}
@@ -448,21 +452,32 @@ definition {
 	@description = "This is a test for LPS-169877. Both site and global tags are shown when the object scope is set to the site"
 	@priority = 5
 	test ViewAllTagsShownInObjectSiteScoped {
+		var tagName1 = StringUtil.randomString(8);
+
+		var tagName1 = StringUtil.toLowerCase(${tagName1});
+		var tagName2 = StringUtil.randomString(8);
+
+		var tagName2 = StringUtil.toLowerCase(${tagName2});
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
 		task ("Given an object with scope to a site") {
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				JSONAssettag.addTag(
 					groupName = "Global",
-					tagName = "global tag ${i}");
+					tagName = ${tagName});
 			}
 
 			JSONAssettag.addTag(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				tagName = "local tag");
 
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "MyObject",
-				objectName = "MyObject",
-				pluralLabelName = "MyObject",
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
 				scope = "site");
 
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -471,25 +486,17 @@ definition {
 				fieldName = "name",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "MyObject");
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
-
-			Button.clickSave();
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "MyObject");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -510,13 +517,13 @@ definition {
 			Button.clickSave();
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
@@ -529,7 +536,7 @@ definition {
 
 			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped form container.");
 
-			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.viewInputStyle(
 				label = "Name",
@@ -549,23 +556,24 @@ definition {
 		task ("When we add tags as input") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2,local tag");
+				tagNameList = "${tagName1},${tagName2},local tag");
 		}
 
 		task ("Then both site and global tags are shown") {
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				AssertTextEquals(
-					key_tagName = "global tag ${i}",
+					key_tagName = ${tagName},
 					locator1 = "AssetCategorization#TAG",
-					value1 = "global tag ${i}");
+					value1 = ${tagName});
 			}
 
 			AssertTextEquals(
@@ -579,15 +587,15 @@ definition {
 				skipSelectFrame = "true",
 				tagNameList = "local tag");
 
-			for (var i : list "1,2") {
-				AssetCategorization.removeTag(tagName = "global tag ${i}");
+			for (var tagName : list "${tagName1},${tagName2}") {
+				AssetCategorization.removeTag(tagName = ${tagName});
 			}
 
 			AssetCategorization.removeTag(tagName = "local tag");
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2,local tag");
+				tagNameList = "${tagName1},${tagName2},local tag");
 
 			Button.clickSubmitButton();
 
@@ -595,21 +603,22 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
 
-			for (var tagName : list "global tag 1,global tag 2,local tag") {
+			for (var tagName : list "${tagName1},${tagName2},local tag") {
 				AssetCategorization.viewTag(tagName = ${tagName});
 			}
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name No Tag");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name No Tag");
 
 			Button.clickSubmitButton();
 
@@ -617,7 +626,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntry(entry = "Test Name No Tag");
 		}
@@ -626,21 +635,32 @@ definition {
 	@description = "This is a test for LPS-169877. Only global tags are shown when the object scope is set to an instance"
 	@priority = 5
 	test ViewOnlyGlobalTagsShownInObjectInstanceScope {
+		var tagName1 = StringUtil.randomString(8);
+
+		var tagName1 = StringUtil.toLowerCase(${tagName1});
+		var tagName2 = StringUtil.randomString(8);
+
+		var tagName2 = StringUtil.toLowerCase(${tagName2});
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
 		task ("Given an object with scope to an instance") {
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				JSONAssettag.addTag(
 					groupName = "Global",
-					tagName = "global tag ${i}");
+					tagName = ${tagName});
 			}
 
 			JSONAssettag.addTag(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				tagName = "local tag");
 
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "MyObject",
-				objectName = "MyObject",
-				pluralLabelName = "MyObject");
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "control_panel.object",
+				pluralLabelName = "${labelName}s");
 
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
@@ -648,25 +668,17 @@ definition {
 				fieldName = "name",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "MyObject");
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-			Button.clickSave();
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "MyObject");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
 			ObjectAdmin.goToLayoutsTab();
 
@@ -687,13 +699,13 @@ definition {
 			Button.clickSave();
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
@@ -706,7 +718,7 @@ definition {
 
 			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped form container.");
 
-			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.viewInputStyle(
 				label = "Name",
@@ -726,11 +738,12 @@ definition {
 		task ("When we add tags as input") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
 
 			Click(
 				key_fieldLabel = "Tags",
@@ -751,28 +764,28 @@ definition {
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2");
+				tagNameList = "${tagName1},${tagName2}");
 
-			for (var i : list "1,2") {
+			for (var tagName : list "${tagName1},${tagName2}") {
 				AssertTextEquals(
-					key_tagName = "global tag ${i}",
+					key_tagName = ${tagName},
 					locator1 = "AssetCategorization#TAG",
-					value1 = "global tag ${i}");
+					value1 = ${tagName});
 			}
 
-			AssetCategorization.removeTag(tagName = "global tag 1");
+			AssetCategorization.removeTag(tagName = ${tagName1});
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1");
+				tagNameList = ${tagName1});
 
-			for (var i : list "1,2") {
-				AssetCategorization.removeTag(tagName = "global tag ${i}");
+			for (var tagName : list "${tagName1},${tagName2}") {
+				AssetCategorization.removeTag(tagName = ${tagName});
 			}
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "global tag 1,global tag 2");
+				tagNameList = "${tagName1},${tagName2}");
 
 			Button.clickSubmitButton();
 
@@ -781,21 +794,22 @@ definition {
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntryDetails(entry = "Test Name");
 
-			for (var i : list "1,2") {
-				AssetCategorization.viewTag(tagName = "global tag ${i}");
+			for (var tagName : list "${tagName1},${tagName2}") {
+				AssetCategorization.viewTag(tagName = ${tagName});
 			}
 
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
-			FormViewBuilder.editText(
-				fieldName = "Name",
-				fieldValue = "Test Name No Tag");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name No Tag");
 
 			Button.clickSubmitButton();
 
@@ -804,7 +818,7 @@ definition {
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
-				portlet = "MyObject");
+				portlet = "${labelName}s");
 
 			ObjectPortlet.viewEntry(entry = "Test Name No Tag");
 		}
@@ -813,11 +827,22 @@ definition {
 	@description = "This is a test for LPS-169877. A warning message is shown if the object does not have categorization enabled and we try to use tags"
 	@priority = 4
 	test ViewWarningMessageWithCategorizationDisabled {
+		var tagName1 = StringUtil.randomString(8);
+
+		var tagName1 = StringUtil.toLowerCase(${tagName1});
+		var tagName2 = StringUtil.randomString(8);
+
+		var tagName2 = StringUtil.toLowerCase(${tagName2});
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
 		task ("Given an object with categorization disabled") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = "MyObject",
-				objectName = "MyObject",
-				pluralLabelName = "MyObject",
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
 				scope = "site");
 
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -826,15 +851,13 @@ definition {
 				fieldName = "name",
 				fieldType = "String",
 				isRequired = "false",
-				objectName = "MyObject");
+				objectName = ${objectName});
 
-			ObjectAdmin.publishObjectViaAPI(objectName = "MyObject");
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectPortlet.selectCustomObject(label = "MyObject");
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Site Administration > Categorization");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
 			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#ENABLE_CATEGORIZATION_BUTTON");
 
@@ -843,19 +866,19 @@ definition {
 
 		task ("When we try to use tags fragment") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.mapFormContainerToObject(contentType = "MyObject");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",

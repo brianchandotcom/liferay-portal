@@ -46,6 +46,14 @@ definition {
 		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
+	macro changePaginationItems {
+		Type(
+			locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS",
+			value1 = ${paginationItems});
+	}
+
+	}
+
 	macro createDataSet {
 		if (isSet(key_name)) {
 			var key_datasetNameList = ${key_name};

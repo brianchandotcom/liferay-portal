@@ -104,6 +104,13 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 				methodName.length() + x);
 		}
 
+		String lastMethodNameContent = StringUtil.extractLast(
+			javaTermContent, methodName);
+
+		if (lastMethodNameContent.contains("externalReferenceCode,")) {
+			return javaTermContent;
+		}
+
 		return StringUtil.replaceLast(
 			javaTermContent, methodName,
 			methodName + "\n\t\texternalReferenceCode, ");

@@ -73,12 +73,12 @@ public class ConfigurationImpl
 				(List<Configuration>)field1.get(
 					_classLoaderAggregateProperties));
 
-			MapConfiguration newConfiguration = new MapConfiguration(
+			MapConfiguration newMapConfiguration = new MapConfiguration(
 				_castPropertiesToMap(properties));
 
-			newConfiguration.setTrimmingDisabled(true);
+			newMapConfiguration.setTrimmingDisabled(true);
 
-			configurations.add(0, newConfiguration);
+			configurations.add(0, newMapConfiguration);
 
 			field1.set(_classLoaderAggregateProperties, configurations);
 
@@ -90,7 +90,7 @@ public class ConfigurationImpl
 			configurations = new LinkedList<>(
 				(List<Configuration>)field1.get(compositeConfiguration));
 
-			configurations.add(0, newConfiguration);
+			configurations.add(0, newMapConfiguration);
 
 			field1.set(compositeConfiguration, configurations);
 

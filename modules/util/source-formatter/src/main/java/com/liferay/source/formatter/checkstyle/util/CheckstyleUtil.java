@@ -74,11 +74,11 @@ public class CheckstyleUtil {
 			new PropertiesExpander(System.getProperties()),
 			ConfigurationLoader.IgnoredModulesOptions.EXECUTE);
 
-		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
-			configuration, "TreeWalker");
+		DefaultConfiguration treeWalkerDefaultConfiguration =
+			_getChildDefaultConfiguration(configuration, "TreeWalker");
 
 		Configuration[] checkConfigurations =
-			treeWalkerConfiguration.getChildren();
+			treeWalkerDefaultConfiguration.getChildren();
 
 		if (checkConfigurations == null) {
 			return configuration;
@@ -112,7 +112,7 @@ public class CheckstyleUtil {
 				 !filterCheckCategoryNames.contains(checkCategory) &&
 				 !filterCheckNames.contains(checkSimpleName))) {
 
-				treeWalkerConfiguration.removeChild(checkConfiguration);
+				treeWalkerDefaultConfiguration.removeChild(checkConfiguration);
 
 				continue;
 			}
@@ -157,9 +157,9 @@ public class CheckstyleUtil {
 				}
 			}
 
-			treeWalkerConfiguration.removeChild(checkConfiguration);
+			treeWalkerDefaultConfiguration.removeChild(checkConfiguration);
 
-			treeWalkerConfiguration.addChild(defaultConfiguration);
+			treeWalkerDefaultConfiguration.addChild(defaultConfiguration);
 		}
 
 		if (sourceFormatterArgs.isShowDebugInformation()) {
@@ -249,7 +249,7 @@ public class CheckstyleUtil {
 		return attributesJSONObject;
 	}
 
-	private static DefaultConfiguration _getChildConfiguration(
+	private static DefaultConfiguration _getChildDefaultConfiguration(
 		Configuration configuration, String name) {
 
 		if (!(configuration instanceof DefaultConfiguration)) {

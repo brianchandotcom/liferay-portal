@@ -50,57 +50,6 @@ public class DataLayoutTaglibUtil {
 		Long dataDefinitionId, Long dataLayoutId,
 		HttpServletRequest httpServletRequest) {
 
-		return _getAvailableLocales(
-			dataDefinitionId, dataLayoutId, httpServletRequest);
-	}
-
-	public static DataDefinition getDataDefinition(
-			long dataDefinitionId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		return _getDataDefinition(dataDefinitionId, httpServletRequest);
-	}
-
-	public static DataLayout getDataLayout(
-			Long dataLayoutId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		DataLayoutResource.Factory dataLayoutResourceFactory =
-			_dataLayoutResourceFactorySnapshot.get();
-
-		DataLayoutResource.Builder dataLayoutResourceBuilder =
-			dataLayoutResourceFactory.create();
-
-		DataLayoutResource dataLayoutResource =
-			dataLayoutResourceBuilder.httpServletRequest(
-				httpServletRequest
-			).user(
-				PortalUtil.getUser(httpServletRequest)
-			).build();
-
-		return dataLayoutResource.getDataLayout(dataLayoutId);
-	}
-
-	public static Long getDefaultDataLayoutId(
-			Long dataDefinitionId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		return _getDefaultDataLayoutId(dataDefinitionId, httpServletRequest);
-	}
-
-	public static JSONArray getFieldTypesJSONArray(
-			HttpServletRequest httpServletRequest, Set<String> scopes,
-			boolean searchableFieldsDisabled)
-		throws Exception {
-
-		return _getFieldTypesJSONArray(
-			httpServletRequest, scopes, searchableFieldsDisabled);
-	}
-
-	private static Set<Locale> _getAvailableLocales(
-		Long dataDefinitionId, Long dataLayoutId,
-		HttpServletRequest httpServletRequest) {
-
 		if (Validator.isNull(dataDefinitionId) &&
 			Validator.isNull(dataLayoutId)) {
 
@@ -139,27 +88,34 @@ public class DataLayoutTaglibUtil {
 		return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
 	}
 
-	private static DataDefinition _getDataDefinition(
-			Long dataDefinitionId, HttpServletRequest httpServletRequest)
+	public static DataDefinition getDataDefinition(
+			long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		DataDefinitionResource.Factory dataDefinitionResourceFactory =
-			_dataDefinitionResourceFactorySnapshot.get();
+		return _getDataDefinition(dataDefinitionId, httpServletRequest);
+	}
 
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			dataDefinitionResourceFactory.create();
+	public static DataLayout getDataLayout(
+			Long dataLayoutId, HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourceBuilder.httpServletRequest(
+		DataLayoutResource.Factory dataLayoutResourceFactory =
+			_dataLayoutResourceFactorySnapshot.get();
+
+		DataLayoutResource.Builder dataLayoutResourceBuilder =
+			dataLayoutResourceFactory.create();
+
+		DataLayoutResource dataLayoutResource =
+			dataLayoutResourceBuilder.httpServletRequest(
 				httpServletRequest
 			).user(
 				PortalUtil.getUser(httpServletRequest)
 			).build();
 
-		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
+		return dataLayoutResource.getDataLayout(dataLayoutId);
 	}
 
-	private static Long _getDefaultDataLayoutId(
+	public static Long getDefaultDataLayoutId(
 			Long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -179,7 +135,7 @@ public class DataLayoutTaglibUtil {
 		return dataLayout.getId();
 	}
 
-	private static JSONArray _getFieldTypesJSONArray(
+	public static JSONArray getFieldTypesJSONArray(
 			HttpServletRequest httpServletRequest, Set<String> scopes,
 			boolean searchableFieldsDisabled)
 		throws Exception {
@@ -232,6 +188,26 @@ public class DataLayoutTaglibUtil {
 
 			return fieldTypesJSONArray;
 		}
+	}
+
+	private static DataDefinition _getDataDefinition(
+			Long dataDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		DataDefinitionResource.Factory dataDefinitionResourceFactory =
+			_dataDefinitionResourceFactorySnapshot.get();
+
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.httpServletRequest(
+				httpServletRequest
+			).user(
+				PortalUtil.getUser(httpServletRequest)
+			).build();
+
+		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
 	}
 
 	private static void _setFieldIndexTypeNone(JSONObject jsonObject) {

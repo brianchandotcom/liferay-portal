@@ -1122,7 +1122,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65726"
-	@ignore = "true"
 	@priority = 5
 	test AddListRecordWithLinkToPageField {
 		ProductMenu.gotoPortlet(

@@ -247,6 +247,27 @@ definition {
 		}
 	}
 
+	macro createQuoteRequest {
+		if (isSet(requestAQuoteInMiniCart)) {
+			Button.click(button = "Request a Quote");
+		}
+
+		if (isSet(requestAQuoteInOpenOrdersPage)) {
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		if (isSet(quoteRequestValue)) {
+			Type(
+				key_value = "requestQuote",
+				locator1 = "CommerceFrontStore#TEXTAREA_FIELD",
+				value1 = ${quoteRequestValue});
+		}
+
+		Button.click(button = "Submit");
+	}
+
 	macro createShipment {
 		if (!(isSet(moveItemQuantitiesInShipment))) {
 			var moveItemQuantitiesInShipment = "true";

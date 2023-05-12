@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.test.constants;
+package com.liferay.fragment.entry.processor.portlet.constants;
 
 /**
  * @author Jürgen Kappler

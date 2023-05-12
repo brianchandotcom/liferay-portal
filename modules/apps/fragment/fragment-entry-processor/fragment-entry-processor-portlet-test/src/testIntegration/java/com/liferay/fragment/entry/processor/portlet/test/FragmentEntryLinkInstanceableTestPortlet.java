@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.test;
+package com.liferay.fragment.entry.processor.portlet.test;
 
-import com.liferay.fragment.entry.processor.editable.test.constants.FragmentEntryLinkPortletKeys;
+import com.liferay.fragment.entry.processor.portlet.constants.FragmentEntryLinkPortletKeys;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

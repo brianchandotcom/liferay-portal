@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.entry.processor.editable.test.constants.FragmentEntryLinkPortletKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -56,16 +55,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -83,11 +79,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -99,10 +93,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import java.io.InputStream;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.Portlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -168,68 +159,6 @@ public class FragmentEntryProcessorEditableTest {
 			_originalThemeDisplayDefaultLocale);
 
 		ServiceContextThreadLocal.popServiceContext();
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testCanAddOneNoninstanceableWidget() throws Exception {
-		_addFragmentEntry(
-			"fragment_entry_with_noninstanceable_widget_tag.html");
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testCannotAddMoreThanOneNoninstanceableWidget()
-		throws Exception {
-
-		_addFragmentEntry(
-			"fragment_entry_with_duplicate_noninstanceable_widget_tag.html");
-	}
-
-	@Test
-	public void testFragmentEntryLinkPortletPreferences() throws Exception {
-		FragmentEntry fragmentEntry = _addFragmentEntry(
-			"fragment_entry_with_instanceable_widget_tag.html");
-
-		ServiceContext serviceContext = new MockServiceContext(
-			_layout, _getThemeDisplay());
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-				fragmentEntry.getType(), serviceContext);
-
-		List<PortletPreferences> portletPreferencesList =
-			_portletPreferencesLocalService.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid());
-
-		List<PortletPreferences> filteredPortletPreferencesList =
-			ListUtil.filter(
-				portletPreferencesList,
-				portletPreferences -> {
-					String portletId = portletPreferences.getPortletId();
-
-					return portletId.startsWith(
-						FragmentEntryLinkPortletKeys.
-							FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET);
-				});
-
-		Assert.assertEquals(
-			filteredPortletPreferencesList.toString(), 1,
-			filteredPortletPreferencesList.size());
-
-		PortletPreferences portletPreferences = portletPreferencesList.get(0);
-
-		String instanceId = PortletIdCodec.decodeInstanceId(
-			portletPreferences.getPortletId());
-
-		Assert.assertEquals(
-			fragmentEntryLink.getNamespace() + "widget", instanceId);
 	}
 
 	@Test
@@ -888,11 +817,6 @@ public class FragmentEntryProcessorEditableTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(
-		filter = "javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_INSTANCEABLE_TEST_PORTLET
-	)
-	private final Portlet _instanceablePortlet = null;
-
 	private Layout _layout;
 
 	@Inject
@@ -905,19 +829,11 @@ public class FragmentEntryProcessorEditableTest {
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
 
-	@Inject(
-		filter = "javax.portlet.name=" + FragmentEntryLinkPortletKeys.FRAGMENT_ENTRY_LINK_NONINSTANCEABLE_TEST_PORTLET
-	)
-	private final Portlet _noninstanceablePortlet = null;
-
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;
 
 	@Inject
 	private Portal _portal;
-
-	@Inject
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	private String _processedHTML;
 

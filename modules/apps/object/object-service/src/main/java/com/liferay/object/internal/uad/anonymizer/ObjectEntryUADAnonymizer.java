@@ -18,15 +18,14 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.uad.constants.ObjectUADConstants;
+import com.liferay.object.internal.uad.util.ObjectEntryUADUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
-import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 /**
  * @author Carolina Barbosa
@@ -95,16 +94,9 @@ public class ObjectEntryUADAnonymizer
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_objectEntryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"objectDefinitionId",
-					_objectDefinition.getObjectDefinitionId())));
-
-		return actionableDynamicQuery;
+		return ObjectEntryUADUtil.addActionableDynamicQueryCriteria(
+			_objectEntryLocalService.getActionableDynamicQuery(),
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Override
@@ -114,21 +106,8 @@ public class ObjectEntryUADAnonymizer
 
 	@Override
 	protected ActionableDynamicQuery getActionableDynamicQuery(long userId) {
-		ActionableDynamicQuery actionableDynamicQuery =
-			doGetActionableDynamicQuery();
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			actionableDynamicQuery.getAddCriteriaMethod();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				UADDynamicQueryUtil.addDynamicQueryCriteria(
-					dynamicQuery, doGetUserIdFieldNames(), userId);
-			});
-
-		return actionableDynamicQuery;
+		return ObjectEntryUADUtil.addActionableDynamicQueryCriteria(
+			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

@@ -15,6 +15,7 @@
 package com.liferay.object.internal.uad.display;
 
 import com.liferay.object.internal.uad.constants.ObjectUADConstants;
+import com.liferay.object.internal.uad.util.ObjectEntryUADUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -127,14 +128,9 @@ public class ObjectEntryUADDisplay extends BaseModelUADDisplay<ObjectEntry> {
 
 	@Override
 	protected DynamicQuery doGetDynamicQuery() {
-		DynamicQuery dynamicQuery = _objectEntryLocalService.dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"objectDefinitionId",
-				_objectDefinition.getObjectDefinitionId()));
-
-		return dynamicQuery;
+		return ObjectEntryUADUtil.addDynamicQueryCriteria(
+			_objectEntryLocalService.dynamicQuery(),
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Override

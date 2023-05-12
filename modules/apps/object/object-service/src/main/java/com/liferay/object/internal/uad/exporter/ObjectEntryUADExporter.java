@@ -15,14 +15,13 @@
 package com.liferay.object.internal.uad.exporter;
 
 import com.liferay.object.internal.uad.constants.ObjectUADConstants;
+import com.liferay.object.internal.uad.util.ObjectEntryUADUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
-import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.Serializable;
 
@@ -55,16 +54,9 @@ public class ObjectEntryUADExporter
 
 	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_objectEntryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.eq(
-					"objectDefinitionId",
-					_objectDefinition.getObjectDefinitionId())));
-
-		return actionableDynamicQuery;
+		return ObjectEntryUADUtil.addActionableDynamicQueryCriteria(
+			_objectEntryLocalService.getActionableDynamicQuery(),
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Override
@@ -74,21 +66,8 @@ public class ObjectEntryUADExporter
 
 	@Override
 	protected ActionableDynamicQuery getActionableDynamicQuery(long userId) {
-		ActionableDynamicQuery actionableDynamicQuery =
-			doGetActionableDynamicQuery();
-
-		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			actionableDynamicQuery.getAddCriteriaMethod();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				addCriteriaMethod.addCriteria(dynamicQuery);
-
-				UADDynamicQueryUtil.addDynamicQueryCriteria(
-					dynamicQuery, doGetUserIdFieldNames(), userId);
-			});
-
-		return actionableDynamicQuery;
+		return ObjectEntryUADUtil.addActionableDynamicQueryCriteria(
+			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 
 	@Override

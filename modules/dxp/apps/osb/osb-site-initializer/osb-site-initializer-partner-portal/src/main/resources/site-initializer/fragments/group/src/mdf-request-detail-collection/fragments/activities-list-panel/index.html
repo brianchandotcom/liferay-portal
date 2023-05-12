@@ -131,7 +131,7 @@
 						<h4 class="mb-1">${activity.name} (${activity.id})</h4>
 						[#if mdf_status != "draft"]
 							[@claim_status activity_claims=activity.actToMDFClmActs /]
-							
+
 							[@request_status activity_status=activity.activityStatus end_date=(activity.endDate?date)! /]
 						[#else]
 							[@clay.alert displayType="info" message="Pending MDF Request submission." title="Info" /]

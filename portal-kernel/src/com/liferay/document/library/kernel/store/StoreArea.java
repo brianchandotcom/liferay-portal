@@ -66,6 +66,11 @@ public enum StoreArea {
 		}
 	}
 
+	public String getPath(long companyId) {
+		return StringBundler.concat(
+			_namespace, StringPool.SLASH, String.valueOf(companyId));
+	}
+
 	private StoreArea(String namespace) {
 		_namespace = namespace;
 	}

@@ -175,8 +175,7 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		}
 
 		return Response.ok(
-			StringBundler.concat(
-				headerSB.toString(), System.lineSeparator(), lineSB.toString())
+			StringBundler.concat(headerSB, System.lineSeparator(), lineSB)
 		).header(
 			"content-disposition",
 			StringBundler.concat(

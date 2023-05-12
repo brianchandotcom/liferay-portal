@@ -58,8 +58,8 @@ public class TalendProcess {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{mainMethodArguments=", _mainMethodArguments.toString(),
-			", processConfig=", _processConfig.toString(), "}");
+			"{mainMethodArguments=", _mainMethodArguments, ", processConfig=",
+			_processConfig, "}");
 	}
 
 	public static class Builder {

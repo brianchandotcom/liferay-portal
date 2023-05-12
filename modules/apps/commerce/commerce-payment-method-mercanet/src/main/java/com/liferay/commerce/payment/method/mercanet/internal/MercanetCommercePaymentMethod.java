@@ -183,7 +183,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 
 		URL automaticURL = new URL(
 			StringBundler.concat(
-				baseURL.toString(), "?groupId=", parameters.get("groupId")[0],
+				baseURL, "?groupId=", parameters.get("groupId")[0],
 				"&type=automatic&uuid=", parameters.get("uuid")[0]));
 
 		paymentRequest.setAutomaticResponseUrl(automaticURL);

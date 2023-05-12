@@ -37,6 +37,7 @@ page import="com.liferay.osb.faro.web.internal.constants.FaroWebKeys" %><%@
 page import="com.liferay.osb.faro.web.internal.constants.UserConstants" %><%@
 page import="com.liferay.osb.faro.web.internal.util.JSONUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <liferay-frontend:defineObjects />
@@ -44,10 +45,14 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <aui:script position="inline">
+	<%
+	User currentUser = themeDisplay.getUser();
+	%>
+
 	window.faroConstants = <%=
 	JSONUtil.writeValueAsString(
 		HashMapBuilder.<String, Object>put(
-		"activityActions", ActivityConstants.getActions()).
+		"activityActions", ActivityConstants.getActions())
 		.put("applications", FaroConstants.getApplications())
 		.put("cerebroAssetsURL", (String)request.getAttribute(FaroWebKeys.CEREBRO_ASSETS_URL))
 		.put("cerebroTouchpointsURL", (String)request.getAttribute(FaroWebKeys.CEREBRO_TOUCHPOINTS_URL))
@@ -76,11 +81,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 		.put("subscriptionStatuses", FaroSubscriptionConstants.getStatuses())
 		.put("timeIntervals", TimeConstants.getIntervals())
 		.put("timeSpans", TimeConstants.getTimeSpans())
-		.put("userName", () -> {
-			User currentUser = themeDisplay.getUser();
-
-			return currentUser.getFullName();
-		})
+		.put("userName", currentUser.getFullName())
 		.put("userRoleNames", UserConstants.getRoleNames())
-		.put("userStatuses", UserConstants.getStatuses()).build();) %>;
+		.put("userStatuses", UserConstants.getStatuses()).build()) %>;
 </aui:script>

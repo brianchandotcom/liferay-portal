@@ -403,6 +403,84 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13495 | Test Summary: Check that you can access data from all existing segments"
+	@priority = 4
+	test RequestToAccessDataForAllSegments {
+		var segmentsTitleList = "managers,Annual Revenue > $500K,Dynamic Segment Test";
+		var type = "segments";
+
+		task ("Copy the token value for the API") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP and create a site and then connect Analytics Cloud to DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
+			task ("Create a web content") {
+				ACUtils.createWCAndAddToPage(
+					portletIndex = 1,
+					webContentTitle = "WC AC Title 1");
+			}
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the site page and view the web content") {
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "WC AC Title 1",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		task ("Create a dynamic segment") {
+			ACNavigation.goToSegments();
+
+			ACSegments.createDynamicSegment();
+
+			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+
+			ACSegments.goToSidebarAttributes(criterion = "Events");
+
+			ACSegments.addSegmentField(segmentField = "Viewed Web Content");
+
+			ACSegments.editWebBehaviorCriterion(
+				indexField = 1,
+				occurenceNumber = 1,
+				searchTerm = "WC AC Title 1");
+
+			ACSegments.saveSegment();
+		}
+
+		task ("Create a data report using analytics cloud API with the type segments") {
+			ACApi.createDataReport(
+				token = ${token},
+				type = ${type});
+		}
+
+		task ("Assert the three created segments are present in the response (one segment created by the user + two segments of the demo data)") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = ${segmentsTitleList});
+		}
+	}
+
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13508 | Test Summary: Check that you can access data from all existing Web Content"
 	@priority = 4
 	test RequestToAccessDataForAllWebContent {
@@ -1053,81 +1131,4 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13495 | Test Summary: Check that you can access data from all existing segments"
-    @priority = 4
-    test RequestToAccessDataForAllSegments {
-        var segmentsTitleList = "managers,Annual Revenue > $500K,Dynamic Segment Test";
-        var type = "segments";
-        
-        task ("Copy the token value for the API") {
-            var token = ACApi.getTokenValue();
-        }
-
-        task ("Take the token from Analytics Cloud") {
-            ACSettings.takeTokenFromAnalyticsCloud();
-        }
-
-        task ("Go to DXP and create a site and then connect Analytics Cloud to DXP") {
-            TestCase.setUpPortalInstance();
-
-            ACUtils.launchDXP();
-
-            ACUtils.addSiteAndPage();
-
-            task ("Create a web content") {
-                ACUtils.createWCAndAddToPage(
-                    portletIndex = 1,
-                    webContentTitle = "WC AC Title 1");
-            }
-
-            ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-        }
-
-        task ("Visit the site page and view the web content") {
-            ACUtils.navigateToSitePage(
-                actionType = "View WC",
-                documentTitleList = "WC AC Title 1",
-                pageName = "AC Page",
-                siteName = "Site Name");
-
-            ACUtils.closeAllSessionsAndWait();
-        }
-
-        task ("Switch to new property in AC") {
-            ACUtils.launchAC();
-
-            ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-        }
-
-        task ("Create a dynamic segment") {
-            ACNavigation.goToSegments();
-
-            ACSegments.createDynamicSegment();
-
-            ACUtils.setItemName(itemName = "Dynamic Segment Test");
-
-            ACSegments.goToSidebarAttributes(criterion = "Events");
-
-            ACSegments.addSegmentField(segmentField = "Viewed Web Content");
-
-            ACSegments.editWebBehaviorCriterion(
-                indexField = 1,
-                occurenceNumber = 1,
-                searchTerm = "WC AC Title 1");
-
-            ACSegments.saveSegment();
-        }
-
-        task ("Create a data report using analytics cloud API with the type segments") {
-            ACApi.createDataReport(
-                token = ${token},
-                type = ${type});
-        }
-
-        task ("Assert the three created segments are present in the response (one segment created by the user + two segments of the demo data)") {
-            ACApi.assertApiResponse(
-                apiDataResponse = ${apiResponse},
-                expectedList = ${segmentsTitleList});
-        }
-    }
 }

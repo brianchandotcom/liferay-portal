@@ -18,6 +18,7 @@ import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {useObjectPermission} from '~/hooks/data/useObjectPermission';
 
 import useRuns from '../../hooks/useRuns';
 import i18n from '../../i18n';
@@ -43,6 +44,11 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 	const {compareRuns, setRunA, setRunB} = useRuns();
 	const disableButtonA = !(compareRuns?.runId || compareRuns?.runA);
 	const disableButtonB = !(compareRuns?.runId || compareRuns?.runB);
+	const caseResultPermission = useObjectPermission('/caseresults');
+	const disbleButtonAutofillRuns = caseResultPermission.canCreate;
+	const buildsPermission = useObjectPermission('/builds');
+	const disbleButtonAutofillBuilds = buildsPermission.canCreate;
+
 	const validateCompareButtons = !(compareRuns?.runA && compareRuns?.runB);
 	const navigate = useNavigate();
 
@@ -174,7 +180,10 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 							</ClayButton>
 
 							<ClayButton
-								disabled={validateCompareButtons}
+								disabled={
+									validateCompareButtons ||
+									!disbleButtonAutofillRuns
+								}
 								displayType="primary"
 								onClick={() => onAutoFill('Run')}
 							>
@@ -182,7 +191,10 @@ const CompareRunsPopover: React.FC<CompareRunsPopoverProps> = ({
 							</ClayButton>
 
 							<ClayButton
-								disabled={validateCompareButtons}
+								disabled={
+									validateCompareButtons ||
+									!disbleButtonAutofillBuilds
+								}
 								displayType="primary"
 								onClick={() => onAutoFill('Build')}
 							>

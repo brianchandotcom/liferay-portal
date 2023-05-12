@@ -111,8 +111,6 @@ public class SegmentsEntrySegmentsFieldCustomizer
 				return null;
 			}
 
-			portletURL.setParameter("eventName", "selectEntity");
-
 			long segmentsEntryId = ParamUtil.getLong(
 				portletRequest, "segmentsEntryId");
 
@@ -125,7 +123,6 @@ public class SegmentsEntrySegmentsFieldCustomizer
 			portletURL.setParameter(
 				"excludedSources",
 				StringUtil.toLowerCase(SegmentsEntryConstants.SOURCE_REFERRED));
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return new Field.SelectEntity(
 				"selectEntity",

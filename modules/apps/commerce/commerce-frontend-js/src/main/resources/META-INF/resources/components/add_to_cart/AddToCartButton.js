@@ -26,6 +26,7 @@ import {addToCart} from './data';
 
 import './add_to_cart.scss';
 import ServiceProvider from '../../ServiceProvider/index';
+import {getRandomId} from '../../utilities/index';
 import {MEDIUM_MODAL_SIZE} from '../../utilities/modals/constants';
 import Modal from '../modal/Modal';
 
@@ -49,6 +50,7 @@ function AddToCartButton({
 	const [isTriggeringCartUpdate, setIsTriggeringCartUpdate] = useState(false);
 	const isMounted = useIsMounted();
 	const [event, setEvent] = useState(null);
+	const randomNamespace = getRandomId();
 
 	const handleClickAddToCart = useCallback(
 		(event, orderTypeId) => {
@@ -160,7 +162,7 @@ function AddToCartButton({
 					if (showOrderTypeModal && !order.items.length) {
 						setEvent(event);
 						Liferay.fire(OPEN_MODAL, {
-							id: `${settings.namespace}add-order-modal`,
+							id: `${randomNamespace}add-order-modal`,
 							size: MEDIUM_MODAL_SIZE,
 						});
 
@@ -173,7 +175,7 @@ function AddToCartButton({
 		>
 			{showOrderTypeModal ? (
 				<Modal
-					id={`${settings.namespace}add-order-modal`}
+					id={`${randomNamespace}add-order-modal`}
 					url={showOrderTypeModalURL}
 				/>
 			) : null}

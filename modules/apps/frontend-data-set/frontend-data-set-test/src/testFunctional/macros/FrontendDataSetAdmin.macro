@@ -46,12 +46,16 @@ definition {
 		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
+	macro changePaginationDefaultItems {
+		Type(
+			locator1 = "FrontendDataSetAdmin#PAGINATION_DEFAULT_ITEMS",
+			value1 = ${defaultPagination});
+	}
+
 	macro changePaginationItems {
 		Type(
 			locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS",
 			value1 = ${paginationItems});
-	}
-
 	}
 
 	macro createDataSet {

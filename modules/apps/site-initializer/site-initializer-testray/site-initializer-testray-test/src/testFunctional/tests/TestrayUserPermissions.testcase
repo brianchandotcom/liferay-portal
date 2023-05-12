@@ -44,4 +44,52 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the user but can view"
+	@priority = 4
+	test AnalystRoleCanNotCreateEditAndDeleteUser {
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to manage users") {
+            TestrayLayout.clickManageOnSidebar();
+
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+		}
+
+		task ("Then can see the users in the table") {
+			AssertElementPresent(
+				key_projectName = "Test Test",
+				locator1 = "Testray#ITEM_NAME");
+
+			AssertElementPresent(
+				key_projectName = "Analyst User",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And can not see the add user button") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("And when go to the users informations") {
+			Testray.goToProjectPage(projectName = "analyst@testray.com");
+		}
+
+		task ("Then can not see the Delete user button") {
+			AssertElementNotPresent(
+				key_text = "Delete User",
+			    locator1 = "Button#ANY");
+		}
+
+		task ("And can see the roles disabled") {
+			AssertElementPresent(
+                key_checkboxName = "Testray Administrator",
+                locator1 = "Checkbox#DISABLED_EXPORT_TRANSLATION");
+		}
+	}
+
 }

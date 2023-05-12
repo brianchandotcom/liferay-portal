@@ -14,6 +14,8 @@
 
 package com.liferay.product.navigation.taglib.display.context;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -242,9 +244,14 @@ public class ProductNavigationControlMenuTagDisplayContext {
 
 		iconTag.setLinkCssClass("control-menu-icon " + linkCssClass);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		iconTag.setMessage(
 			productNavigationControlMenuEntry.getLabel(
-				_httpServletRequest.getLocale()));
+				themeDisplay.getLocale()));
+
 		iconTag.setMethod("get");
 		iconTag.setUrl(
 			productNavigationControlMenuEntry.getURL(_httpServletRequest));

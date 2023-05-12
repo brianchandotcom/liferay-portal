@@ -32,7 +32,8 @@ function clone_repository {
 }
 
 function copy_images {
-	rsync --exclude=\"*\" --include=\"images/*\" --include=\"*/\" --prune-empty-dirs --recursive ~/liferay-learn/docs /public_html/images
+	# Do not sort. The exclude option must follow the include options.
+	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ~/liferay-learn/docs /public_html/images
 }
 
 function generate_zip_files {

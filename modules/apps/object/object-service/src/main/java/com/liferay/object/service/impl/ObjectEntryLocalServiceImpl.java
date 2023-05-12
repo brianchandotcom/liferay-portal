@@ -45,7 +45,6 @@ import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
-import com.liferay.object.exception.RequiredEncryptedObjectFieldPropertyException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -108,7 +107,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
-import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -158,7 +156,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -1917,26 +1914,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Key _getKey() throws PortalException {
-		if (Validator.isNull(
-				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
-
-			throw new RequiredEncryptedObjectFieldPropertyException(
-				StringBundler.concat(
-					"The property ",
-					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
-					" is required for encrypted object fields"));
-		}
-
-		if (Validator.isNull(
-				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
-
-			throw new RequiredEncryptedObjectFieldPropertyException(
-				StringBundler.concat(
-					"The property ",
-					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
-					" is required for encrypted object fields"));
-		}
-
 		return new SecretKeySpec(
 			Base64.decode(PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY),
 			PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
@@ -2677,8 +2654,8 @@ public class ObjectEntryLocalServiceImpl
 						objects[i] = _encryptor.decrypt(
 							_getKey(), (String)objects[i]);
 					}
-					catch (EncryptorException encryptorException) {
-						throw new RuntimeException(encryptorException);
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
 					}
 				}
 			}

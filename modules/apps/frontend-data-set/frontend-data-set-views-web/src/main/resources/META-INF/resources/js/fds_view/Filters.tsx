@@ -25,7 +25,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
-import {isBefore} from 'date-fns';
+import {getYear, isBefore} from 'date-fns';
 import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -198,12 +198,12 @@ function AddFDSFilterModalContent({
 	}
 
 	const isValidDateRange =
-		formValues[fromFormElementId] &&
-		formValues[toFormElementId] &&
-		isBefore(
-			new Date(formValues[fromFormElementId]),
-			new Date(formValues[toFormElementId])
-		);
+		!formValues[fromFormElementId] || !formValues[toFormElementId]
+			? true
+			: isBefore(
+					new Date(formValues[fromFormElementId]),
+					new Date(formValues[toFormElementId])
+			  );
 
 	const isValidSingleMode =
 		formValues[multipleFormElementId] === 'true' ||
@@ -257,10 +257,7 @@ function AddFDSFilterModalContent({
 								{
 									disabled: true,
 									label: Liferay.Language.get('select'),
-									selected:
-										formValues[
-											selectedFieldFormElementId
-										] === '',
+									selected: true,
 									value: '',
 								},
 								...fields.map((item) => ({
@@ -286,6 +283,10 @@ function AddFDSFilterModalContent({
 								<ClayDatePicker
 									inputName={fromFormElementId}
 									placeholder="YYYY-MM-DD"
+									years={{
+										end: getYear(new Date()) + 5,
+										start: getYear(new Date()) - 5,
+									}}
 								/>
 
 								{!isValidDateRange && (
@@ -309,6 +310,10 @@ function AddFDSFilterModalContent({
 								<ClayDatePicker
 									inputName={toFormElementId}
 									placeholder="YYYY-MM-DD"
+									years={{
+										end: getYear(new Date()) + 5,
+										start: getYear(new Date()) - 5,
+									}}
 								/>
 							</div>
 						</ClayForm.Group>
@@ -341,10 +346,7 @@ function AddFDSFilterModalContent({
 											label: Liferay.Language.get(
 												'select'
 											),
-											selected:
-												formValues[
-													selectedFieldFormElementId
-												] === '',
+											selected: true,
 											value: '',
 										},
 										...picklists.map((item) => ({

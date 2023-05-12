@@ -76,6 +76,10 @@ export async function getFields(fdsView: FDSViewType) {
 			return;
 		}
 
+		if (propertyValue.$ref) {
+			return;
+		}
+
 		fieldsArray.push({
 			format: properties[propertyKey].format || type,
 			label: propertyKey,

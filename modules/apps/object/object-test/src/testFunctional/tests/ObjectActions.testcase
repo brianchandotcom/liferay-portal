@@ -3677,6 +3677,74 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify updating a Commerce Order entry triggers an action to update an order"
+	@priority = 5
+	test CanUpdateOrderAfterUpdatingCommerceOrderEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a minium site and an order entry") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("And given an action to update a Commerce Order entry after updating an order entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "CustomAction",
+				active = "true",
+				fieldName = "Order Status",
+				inputMethod = "true",
+				inputValue = 20,
+				thenAction = "Update an Object Entry",
+				whenAction = "On Order Status Update");
+		}
+
+		task ("When the Order is updated") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Then the action is triggered and the Commerce Order entry is updated") {
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_value = "On Hold",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	@description = "LPS-156346 - Verify that the expression works with Groovy Script."
 	@priority = 5
 	test CanUseExpressionWithGroovyScript {

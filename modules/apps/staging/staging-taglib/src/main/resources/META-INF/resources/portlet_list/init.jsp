@@ -53,6 +53,12 @@ if (exportImportConfiguration != null) {
 	settingsMap = exportImportConfiguration.getSettingsMap();
 
 	parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
+
+	defaultRange = MapUtil.getString(parameterMap, "range");
+
+	if (Validator.isNull(defaultRange)) {
+		defaultRange = ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE;
+	}
 }
 
 String range = ParamUtil.getString(portletRequest, ExportImportDateUtil.RANGE, null);

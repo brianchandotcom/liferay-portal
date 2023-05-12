@@ -5195,6 +5195,25 @@ components:
                         The localized category's names.
                     readOnly: true
                     type: object
+                taxonomyCategoryReference:
+                    # @review
+                    description:
+                        A unique reference to a taxonomy category.
+                    properties:
+                        externalReferenceCode:
+                            # @review
+                            description:
+                                The taxonomy category's external reference code.
+                            type: string
+                        siteKey:
+                            # @review
+                            description:
+                                The key of the site or asset library where the taxonomy category is located. It can be
+                                left out if the taxonomy category is in the same site as the page.
+                            type: string
+                    required:
+                        - externalReferenceCode
+                    type: object
             type: object
         URLFormSubmissionResult:
             # @review

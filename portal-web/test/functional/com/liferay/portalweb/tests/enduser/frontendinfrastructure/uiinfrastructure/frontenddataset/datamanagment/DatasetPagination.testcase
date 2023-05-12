@@ -20,7 +20,7 @@ definition {
 		task ("The user goes to add a new Dataset") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "/c/fdsentries");
+				key_type = "/c/fdsviews");
 		}
 
 		task ("Add a new view") {
@@ -196,12 +196,27 @@ definition {
 	}
 
 	@description = "LPS-183944. Confirm that pagination cannot exceed 1000 items per page"
-	@ignore = "true"
 	@priority = 5
 	test CannotExceed1000ItemsPerPage {
+		task ("The user fills the pagination items field") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 100, 1000, 1001");
+		}
 
-		// TODO LPS-183944 CannotExceed1000ItemsPerPage pending implementation
+		task ("Fills the default value field") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 1001);
 
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Assert Save button is disabled") {
+			PRMMDFRequest.viewDisabledButton(buttonName = "Save");
+		}
+
+		task ("Then an error message appears") {
+			AssertElementPresent(
+				key_errorMessage = "This field contains an invalid number. Only positive numbers between 1 and 1000 are allowed.",
+				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+		}
 	}
 
 	@description = "LPS-183948. Confirm that pagination cannot have characters in default value field"

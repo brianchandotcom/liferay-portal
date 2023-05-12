@@ -99,7 +99,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class FragmentEntryProcessorFreemarkerTest {
+public class FreemarkerFragmentEntryProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -311,7 +311,7 @@ public class FragmentEntryProcessorFreemarkerTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
-				FragmentEntryProcessorFreemarkerTest.class,
+				FreemarkerFragmentEntryProcessorTest.class,
 				"dependencies/image.jpg"),
 			null, null, new ServiceContext());
 

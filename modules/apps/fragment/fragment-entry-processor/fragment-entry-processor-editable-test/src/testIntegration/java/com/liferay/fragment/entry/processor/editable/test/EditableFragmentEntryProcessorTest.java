@@ -120,7 +120,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class FragmentEntryProcessorEditableTest {
+public class EditableFragmentEntryProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -515,7 +515,7 @@ public class FragmentEntryProcessorEditableTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		byte[] bytes = FileUtil.getBytes(
-			FragmentEntryProcessorEditableTest.class,
+			EditableFragmentEntryProcessorTest.class,
 			"/com/liferay/fragment/entry/processor/editable/test/dependencies" +
 				"/image.jpg");
 

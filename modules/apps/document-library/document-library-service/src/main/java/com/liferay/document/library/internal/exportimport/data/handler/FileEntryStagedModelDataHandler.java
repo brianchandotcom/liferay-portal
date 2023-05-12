@@ -539,6 +539,8 @@ public class FileEntryStagedModelDataHandler
 							if (_log.isDebugEnabled()) {
 								_log.debug(exception);
 							}
+
+							updateFileEntry = true;
 						}
 					}
 

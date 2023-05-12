@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.change.tracking.internal.search;
+package com.liferay.journal.internal.change.tracking.spi.listener;
 
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.spi.listener.CTEventListener;

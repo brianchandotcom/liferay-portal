@@ -38,6 +38,7 @@ interface IAction {
 
 interface IContentRendererProps {
 	item: any;
+	query: string;
 }
 
 interface IContentRenderer {
@@ -151,7 +152,7 @@ const OrderableTableRow = ({
 
 					return (
 						<ClayTable.Cell key={field.name}>
-							<Component item={item} />
+							<Component item={item} query={query} />
 						</ClayTable.Cell>
 					);
 				}

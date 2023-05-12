@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortletToolbarContributor.class
 )
-public class DefaultDLPortletToolbarContributor
-	extends BasePortletToolbarContributor {
+public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

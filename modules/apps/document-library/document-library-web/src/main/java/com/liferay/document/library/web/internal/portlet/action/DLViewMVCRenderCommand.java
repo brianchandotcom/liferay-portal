@@ -75,7 +75,7 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
-				_defaultDLPortletToolbarContributor);
+				_dlPortletToolbarContributor);
 			renderRequest.setAttribute(
 				DLWebKeys.
 					DOCUMENT_LIBRARY_VIEW_FILE_ENTRY_METADATA_SETS_DISPLAY_CONTEXT,
@@ -185,11 +185,6 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 	@Reference
 	private DDMStructureService _ddmStructureService;
 
-	@Reference(
-		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
-	)
-	private PortletToolbarContributor _defaultDLPortletToolbarContributor;
-
 	@Reference
 	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
 
@@ -198,6 +193,11 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
+	)
+	private PortletToolbarContributor _dlPortletToolbarContributor;
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;

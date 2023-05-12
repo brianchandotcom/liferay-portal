@@ -64,20 +64,20 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_defaultDLPortletToolbarContributor);
+			_dlPortletToolbarContributor);
 		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, _dlTrashHelper);
 
 		return "/document_library/view.jsp";
 	}
 
+	@Reference
+	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
+
 	@Reference(
 		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
 	)
-	private PortletToolbarContributor _defaultDLPortletToolbarContributor;
-
-	@Reference
-	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
+	private PortletToolbarContributor _dlPortletToolbarContributor;
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;

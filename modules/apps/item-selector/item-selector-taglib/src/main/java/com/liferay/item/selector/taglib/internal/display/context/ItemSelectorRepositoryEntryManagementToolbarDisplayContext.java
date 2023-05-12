@@ -96,8 +96,8 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		PortletToolbarContributor defaultDLPortletToolbarContributor =
-			_defaultDLPortletToolbarContributorSnapshot.get();
+		PortletToolbarContributor dlPortletToolbarContributor =
+			_dlPortletToolbarContributorSnapshot.get();
 
 		Folder folder = _getFolder();
 
@@ -106,9 +106,8 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 		}
 
-		List<Menu> menus =
-			defaultDLPortletToolbarContributor.getPortletTitleMenus(
-				_liferayPortletRequest, _liferayPortletResponse);
+		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
+			_liferayPortletRequest, _liferayPortletResponse);
 
 		if (menus.isEmpty()) {
 			return null;
@@ -450,7 +449,7 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 		ItemSelectorRepositoryEntryManagementToolbarDisplayContext.class);
 
 	private static final Snapshot<PortletToolbarContributor>
-		_defaultDLPortletToolbarContributorSnapshot = new Snapshot<>(
+		_dlPortletToolbarContributorSnapshot = new Snapshot<>(
 			ItemSelectorRepositoryEntryManagementToolbarDisplayContext.class,
 			PortletToolbarContributor.class,
 			"(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")");

@@ -15,9 +15,7 @@
 package com.liferay.data.engine.taglib.internal.servlet.taglib.util;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
-import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,16 +23,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -45,48 +38,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Leonardo Barros
  */
 public class DataLayoutTaglibUtil {
-
-	public static Set<Locale> getAvailableLocales(
-		Long dataDefinitionId, Long dataLayoutId,
-		HttpServletRequest httpServletRequest) {
-
-		if (Validator.isNull(dataDefinitionId) &&
-			Validator.isNull(dataLayoutId)) {
-
-			return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
-		}
-
-		try {
-			Set<Locale> availableLocales = new HashSet<>();
-
-			DataDefinition dataDefinition = null;
-
-			if (Validator.isNotNull(dataDefinitionId)) {
-				dataDefinition = getDataDefinition(
-					dataDefinitionId, httpServletRequest);
-			}
-			else {
-				DataLayout dataLayout = getDataLayout(
-					dataLayoutId, httpServletRequest);
-
-				dataDefinition = getDataDefinition(
-					dataLayout.getDataDefinitionId(), httpServletRequest);
-			}
-
-			for (String languageId : dataDefinition.getAvailableLanguageIds()) {
-				availableLocales.add(LocaleUtil.fromLanguageId(languageId));
-			}
-
-			return availableLocales;
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
-	}
 
 	public static DataDefinition getDataDefinition(
 			long dataDefinitionId, HttpServletRequest httpServletRequest)
@@ -106,46 +57,6 @@ public class DataLayoutTaglibUtil {
 			).build();
 
 		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
-	}
-
-	public static DataLayout getDataLayout(
-			Long dataLayoutId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		DataLayoutResource.Factory dataLayoutResourceFactory =
-			_dataLayoutResourceFactorySnapshot.get();
-
-		DataLayoutResource.Builder dataLayoutResourceBuilder =
-			dataLayoutResourceFactory.create();
-
-		DataLayoutResource dataLayoutResource =
-			dataLayoutResourceBuilder.httpServletRequest(
-				httpServletRequest
-			).user(
-				PortalUtil.getUser(httpServletRequest)
-			).build();
-
-		return dataLayoutResource.getDataLayout(dataLayoutId);
-	}
-
-	public static Long getDefaultDataLayoutId(
-			Long dataDefinitionId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		DataDefinition dataDefinition = getDataDefinition(
-			dataDefinitionId, httpServletRequest);
-
-		if (dataDefinition == null) {
-			return 0L;
-		}
-
-		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
-
-		if (dataLayout == null) {
-			return 0L;
-		}
-
-		return dataLayout.getId();
 	}
 
 	public static JSONArray getFieldTypesJSONArray(
@@ -238,8 +149,5 @@ public class DataLayoutTaglibUtil {
 	private static final Snapshot<DataDefinitionResource.Factory>
 		_dataDefinitionResourceFactorySnapshot = new Snapshot<>(
 			DataLayoutTaglibUtil.class, DataDefinitionResource.Factory.class);
-	private static final Snapshot<DataLayoutResource.Factory>
-		_dataLayoutResourceFactorySnapshot = new Snapshot<>(
-			DataLayoutTaglibUtil.class, DataLayoutResource.Factory.class);
 
 }

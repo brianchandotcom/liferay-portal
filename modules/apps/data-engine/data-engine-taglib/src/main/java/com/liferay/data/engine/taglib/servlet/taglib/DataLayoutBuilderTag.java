@@ -19,6 +19,7 @@ import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.util.DataDefinitionDDMFormUtil;
+import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.taglib.internal.servlet.taglib.util.DataLayoutTaglibUtil;
 import com.liferay.data.engine.taglib.servlet.taglib.base.BaseDataLayoutBuilderTag;
 import com.liferay.data.engine.taglib.servlet.taglib.definition.DataLayoutBuilderDefinition;
@@ -70,14 +71,18 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -117,7 +122,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				Validator.isNull(getDataLayoutId())) {
 
 				setDataLayoutId(
-					DataLayoutTaglibUtil.getDefaultDataLayoutId(
+					_getDefaultDataLayoutId(
 						getDataDefinitionId(), httpServletRequest));
 			}
 
@@ -145,7 +150,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		super.setAttributes(httpServletRequest);
 
-		Set<Locale> availableLocales = DataLayoutTaglibUtil.getAvailableLocales(
+		Set<Locale> availableLocales = _getAvailableLocales(
 			getDataDefinitionId(), getDataLayoutId(), httpServletRequest);
 
 		setNamespacedAttribute(
@@ -180,6 +185,48 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			_getModuleServletContext());
 	}
 
+	private Set<Locale> _getAvailableLocales(
+		Long dataDefinitionId, Long dataLayoutId,
+		HttpServletRequest httpServletRequest) {
+
+		if (Validator.isNull(dataDefinitionId) &&
+			Validator.isNull(dataLayoutId)) {
+
+			return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
+		}
+
+		try {
+			Set<Locale> availableLocales = new HashSet<>();
+
+			DataDefinition dataDefinition = null;
+
+			if (Validator.isNotNull(dataDefinitionId)) {
+				dataDefinition = DataLayoutTaglibUtil.getDataDefinition(
+					dataDefinitionId, httpServletRequest);
+			}
+			else {
+				DataLayout dataLayout = _getDataLayout(
+					dataLayoutId, httpServletRequest);
+
+				dataDefinition = DataLayoutTaglibUtil.getDataDefinition(
+					dataLayout.getDataDefinitionId(), httpServletRequest);
+			}
+
+			for (String languageId : dataDefinition.getAvailableLanguageIds()) {
+				availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+			}
+
+			return availableLocales;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return SetUtil.fromArray(LocaleThreadLocal.getSiteDefaultLocale());
+	}
+
 	private JSONObject _getContentTypeConfigJSONObject(String contentType) {
 		DataDefinitionContentType dataDefinitionContentType =
 			_dataDefinitionContentTypeServiceTrackerMap.getService(contentType);
@@ -197,6 +244,26 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			"allowReferencedDataDefinitionDeletion",
 			dataDefinitionContentType.allowReferencedDataDefinitionDeletion()
 		);
+	}
+
+	private DataLayout _getDataLayout(
+			Long dataLayoutId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		DataLayoutResource.Factory dataLayoutResourceFactory =
+			_dataLayoutResourceFactorySnapshot.get();
+
+		DataLayoutResource.Builder dataLayoutResourceBuilder =
+			dataLayoutResourceFactory.create();
+
+		DataLayoutResource dataLayoutResource =
+			dataLayoutResourceBuilder.httpServletRequest(
+				httpServletRequest
+			).user(
+				PortalUtil.getUser(httpServletRequest)
+			).build();
+
+		return dataLayoutResource.getDataLayout(dataLayoutId);
 	}
 
 	private DataLayoutBuilderDefinition _getDataLayoutBuilderDefinition(
@@ -292,8 +359,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			DataLayout dataLayout = null;
 
 			if (Validator.isNotNull(dataLayoutId)) {
-				dataLayout = DataLayoutTaglibUtil.getDataLayout(
-					dataLayoutId, httpServletRequest);
+				dataLayout = _getDataLayout(dataLayoutId, httpServletRequest);
 			}
 			else {
 				DataDefinition dataDefinition =
@@ -335,6 +401,26 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		return ddmFormBuilderSettingsRetrieverHelper.
 			getDDMDataProviderInstancesURL();
+	}
+
+	private Long _getDefaultDataLayoutId(
+			Long dataDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		DataDefinition dataDefinition = DataLayoutTaglibUtil.getDataDefinition(
+			dataDefinitionId, httpServletRequest);
+
+		if (dataDefinition == null) {
+			return 0L;
+		}
+
+		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
+
+		if (dataLayout == null) {
+			return 0L;
+		}
+
+		return dataLayout.getId();
 	}
 
 	private String _getDefaultLanguageId() {
@@ -497,6 +583,9 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		_dataDefinitionContentTypeServiceTrackerMap;
 	private static final ServiceTrackerMap<String, DataLayoutBuilderDefinition>
 		_dataLayoutBuilderDefinitionserviceTrackerMap;
+	private static final Snapshot<DataLayoutResource.Factory>
+		_dataLayoutResourceFactorySnapshot = new Snapshot<>(
+			DataLayoutBuilderTag.class, DataLayoutResource.Factory.class);
 	private static final Snapshot<DDMFormBuilderSettingsRetrieverHelper>
 		_ddmFormBuilderSettingsRetrieverHelperSnapshot = new Snapshot<>(
 			DataLayoutBuilderTag.class,

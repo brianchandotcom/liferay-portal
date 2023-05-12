@@ -184,6 +184,147 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-174421 TC-1. Verify that the user is able to export the filtered audit data as a CSV format file."
+	@priority = 5
+	test CanExportCSVFilteredAuditDataFile {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property test.name.skip.portal.instance = "Audit#CanExportCSVFilteredAuditDataFile";
+
+		task ("Given Login portal with wrong password login with correct password search LOGIN_FAILURE in Audit") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "test@liferay.com");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test1");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+
+			Navigator.openURL();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_FAILURE",
+				userName = "Test Test");
+
+			AssertTextEquals(
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "Test Test",
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+				value1 = "LOGIN_FAILURE");
+
+			AssertElementNotPresent(
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "Test Test",
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION_2");
+		}
+
+		task ("When Export audit events") {
+			Audit.exportAuditEvents();
+		}
+
+		task ("Then Assert that confoirmation pop-up csv file downloaled correct list right event") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Warning: This CSV file contains user supplied inputs. Opening a CSV file in a spreadsheet program may be dangerous.");
+
+			DownloadTempFile();
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "auditEvents.csv");
+
+			var fileContent = TestCase.getTempFileContent(fileName = "auditEvents.csv");
+
+			echo(${fileContent});
+
+			DMDocument.assertDownloadedFileContent(
+				downloadedContent = '''LOGIN_FAILURE''',
+				fileName = "auditEvents.csv");
+		}
+	}
+
+	@description = "This is a use case for LPS-174421 TC-2. Verify that the user is able to export the filtered audit data as a CSV format file on virtual instance."
+	@priority = 5
+	test CanExportCSVFilteredAuditDataFileOnVirtualInstance {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property test.name.skip.portal.instance = "Audit#CanExportCSVFilteredAuditDataFileOnVirtualInstance";
+
+		task ("Given Add virtual instance login with wrong password login with correct password search LOGIN_FAILURE in Audit") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			UserBar.signOut();
+
+			User.firstLoginUI(
+				password = "test1",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "Audit");
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_FAILURE",
+				userName = "Test Test");
+
+			AssertTextEquals(
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "Test Test",
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+				value1 = "LOGIN_FAILURE");
+
+			AssertElementNotPresent(
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "Test Test",
+				locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION_2",
+				value1 = "LOGIN_FAILURE");
+		}
+
+		task ("When Export audit events") {
+			Audit.exportAuditEvents();
+		}
+
+		task ("Then Assert that confoirmation pop-up csv file downloaled correct list right event") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Warning: This CSV file contains user supplied inputs. Opening a CSV file in a spreadsheet program may be dangerous.");
+
+			DownloadTempFile();
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "auditEvents.csv");
+
+			var fileContent = TestCase.getTempFileContent(fileName = "auditEvents.csv");
+
+			echo(${fileContent});
+
+			DMDocument.assertDownloadedFileContent(
+				downloadedContent = '''LOGIN_FAILURE''',
+				fileName = "auditEvents.csv");
+		}
+	}
+
 	@description = "This is a use case for LPS-150300. Verify that Console outputs the correct clientIP when reading of the X-Forwarded-For http header."
 	@priority = 5
 	test VerifyCorrectClientIP {

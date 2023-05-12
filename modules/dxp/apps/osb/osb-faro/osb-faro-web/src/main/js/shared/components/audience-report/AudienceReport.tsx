@@ -25,12 +25,14 @@ interface IAudienceReportWithDataProps<TRawData>
 	extends Partial<IAudienceReportBaseCardProps> {
 	mapper: (data: TRawData) => TData;
 	data: TRawData;
+	name: Name;
 }
 
 function AudienceReportWithData<TRawData>({
 	data,
 	knownIndividualsTitle,
 	mapper,
+	name,
 	segmentsTitle = Liferay.Language.get('viewer-segments'),
 	uniqueVisitorsTitle = Liferay.Language.get('visitors')
 }: IAudienceReportWithDataProps<TRawData>) {
@@ -51,7 +53,7 @@ function AudienceReportWithData<TRawData>({
 					<div className='col-sm-6 text-center'>
 						<AudienceReportTitle
 							content={
-								Name.Page
+								name === Name.Page
 									? Liferay.Language.get(
 											'only-known-individuals-that-interacted-with-the-current-page-are-accounted-for-in-this-chart'
 									  )
@@ -70,7 +72,7 @@ function AudienceReportWithData<TRawData>({
 			<div className='col-sm-6 pl-5'>
 				<AudienceReportTitle
 					content={
-						Name.Page
+						name === Name.Page
 							? Liferay.Language.get(
 									'only-segmented-known-individuals-that-interacted-with-the-current-page-are-accounted-for-in-this-chart'
 							  )
@@ -95,6 +97,7 @@ interface IAudienceReportProps<TRawData>
 	rangeSelectors: RangeSelectors;
 	Query: typeof gql;
 	mapper: (data: TRawData) => TData;
+	name: Name;
 }
 
 function AudienceReport<TRawData>({

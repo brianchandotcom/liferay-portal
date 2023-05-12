@@ -25,6 +25,7 @@ function AudienceReportBaseCard({
 						{...props}
 						filters={filters}
 						mapper={result => result?.[name]?.[metricName]}
+						name={name}
 						Query={AudienceReportQuery({
 							metricName,
 							name

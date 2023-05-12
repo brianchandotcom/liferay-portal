@@ -1188,10 +1188,6 @@ definition {
 			fieldName = "LinkToPage",
 			pagePrivacy = "Public");
 
-		DDLRecord.viewSelectedLinkToPage(
-			ddlRecordFieldData = "Test Page",
-			fieldName = "LinkToPage");
-
 		PortletEntry.publish();
 
 		Navigator.openURL();

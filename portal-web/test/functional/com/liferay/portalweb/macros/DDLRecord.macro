@@ -888,18 +888,6 @@ definition {
 			value1 = "${fieldFieldLabel} ${ddlRecordFieldData}");
 	}
 
-	macro viewSelectedLinkToPage {
-		DDLRecord.gotoLinkToPageSelect(fieldName = ${fieldName});
-
-		var key_pageName = ${ddlRecordFieldData};
-
-		AssertChecked(locator1 = "DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO");
-
-		AssertClick(
-			locator1 = "Button#CANCEL",
-			value1 = "Cancel");
-	}
-
 	macro viewStatusViaDDLDisplayTable {
 		var key_fieldFieldLabel = ${fieldFieldLabel};
 		var key_workflowStatus = ${workflowStatus};

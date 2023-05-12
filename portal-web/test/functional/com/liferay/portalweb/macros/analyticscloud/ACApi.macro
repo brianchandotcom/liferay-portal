@@ -13,6 +13,19 @@ definition {
 		}
 	}
 
+	macro assertApiResponseNotContain {
+		for (var expected : list ${expectedList}) {
+			if (!(contains(${apiDataResponse}, ${expected}))) {
+				echo("${expected} - Not found - PASSED");
+			}
+			else {
+				echo("${expected} - Found in response - FAILED");
+
+				fail(${apiDataResponse});
+			}
+		}
+	}
+
 	macro assertGenericJSONPathResponse {
 		var actual = JSONUtil.getWithJSONPath(${apiResponse}, "$..${apiPath}");
 

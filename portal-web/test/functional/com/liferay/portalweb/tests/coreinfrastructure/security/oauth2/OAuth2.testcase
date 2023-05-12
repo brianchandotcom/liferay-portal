@@ -6,6 +6,8 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "OAuth 2";
 
+	var oauth2URL = PropsUtil.get("oauth2.url");
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -24,26 +26,27 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen."
-	@ignore = "true"
 	@priority = 4
 	test ApplicationCanBeAuthorizedWithoutUserSession {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithoutUserSession";
 
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
+
 		task ("Add and edit 2 external applications") {
-			OAuth2.openSSLPage();
+			var oauth2URL = PropsUtil.get("oauth2.url");
 
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					baseURL = "https://localhost:8443",
-					callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
+					baseURL = "http://localhost:8080",
+					callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
-					clientSecret = "defaultsecret${count}",
-					websiteURL = "https://localhost:8443");
+					clientSecret = "defaultsecret${count}");
 			}
 		}
 
@@ -88,26 +91,25 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-126597. User can authorize external application multiple times with remember device option. After the first authorization flow login is not needed."
-	@ignore = "true"
 	@priority = 5
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
-		property oauth2.local.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property portal.acceptance = "true";
-		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithRememberDeviceEnabled";
 
-		task ("Add and edit an external application with remember device enabled") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application with remember device enabled") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				checkboxCheckList = "Remember Device",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Authorize my application with remember device option checked") {
@@ -130,25 +132,24 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-145191 TC-1:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Client Secret JWT without the client sending client info in JWT."
-	@ignore = "true"
 	@priority = 4
 	test ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				clientAuthenticationMethod = "Client Secret JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Authorize application") {
@@ -244,25 +245,24 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-145191 TC-2:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Private Key JWT without the client sending client info in JWT."
-	@ignore = "true"
 	@priority = 4
 	test ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				clientAuthenticationMethod = "Private Key JWT",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Check the content of JSON Web Key Set doesn't disappear") {
@@ -438,29 +438,28 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129397 TC-1: User can revoke authorization via kebab menu on	the OAuth 2 administration page."
-	@ignore = "true"
 	@priority = 5
 	test AuthorizationCanBeRevokedViaKebabMenu {
-		property oauth2.local.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property portal.acceptance = "true";
-		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenu";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				clientId = "default",
 				clientProfile = "Web Application",
-				clientSecret = "defaultsecret",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "defaultsecret");
 		}
 
 		task ("Verify that the created application is in the first row and the Revoke button is not present") {
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = 0,
@@ -480,7 +479,7 @@ definition {
 		}
 
 		task ("Verify that the created application is in the first row in OAuth 2 admin page then revoke the application") {
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = 1,
@@ -495,29 +494,28 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page."
-	@ignore = "true"
 	@priority = 3
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "default",
 				clientProfile = "Web Application",
-				clientSecret = "defaultsecret",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "defaultsecret");
 		}
 
 		task ("Verify that the application has 0 authorizations at OAuth 2 admin and the Revoke button is not present") {
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = 0,
@@ -538,7 +536,7 @@ definition {
 		}
 
 		task ("Verify that the application has 1 authorization at OAuth 2 admin then Revoke it's authorization") {
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = 1,
@@ -884,25 +882,24 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105156. Authorized application should be automatically removed from the User's connect table when it is expired."
-	@ignore = "true"
 	@priority = 4
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
-		property oauth2.local.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=\"30\"${line.separator}refresh.token.expires.in=\"60\":oauth2.expired.authorizations.afterlife.duration=\"30\"${line.separator}oauth2.expired.authorizations.check.interval=\"30\"";
-		property portal.ssl.enabled = "true";
+
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
 		task ("Add a new OAuth 2 application") {
-			OAuth2.openSSLPage();
-
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.addApplication(
 				applicationName = "Test Expired Application",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				clientId = "abc123",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Edit scopes") {
@@ -910,8 +907,8 @@ definition {
 
 			OAuth2.editScopes(
 				applicationName = "Test Expired Application",
-				resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-				resourcePanels = "Portal Services");
+				resourceCheckList = "Liferay.Headless.Admin.User.everything.read",
+				resourcePanels = "Liferay.Headless.Admin.User");
 
 			Refresh();
 		}
@@ -927,16 +924,16 @@ definition {
 		}
 
 		task ("Get authorization code") {
-			var authorizationCode = OAuth2.getAuthorizationCode(portalURL = "https://localhost:8443");
+			var authorizationCode = OAuth2.getAuthorizationCode(portalURL = "http://localhost:8080");
 		}
 
 		task ("Verify OAuth 2 access is valid") {
-			OAuth2.viewValidOAuth2LaunchRequest(clientSecret = "abc123");
+			OAuth2.viewValidOAuth2LaunchRequest(
+				clientId = "abc123",
+				clientSecret = "abc123");
 		}
 
 		task ("Verify authorization is granted via user") {
-			OAuth2.openSSLPage();
-
 			OAuth2.viewGrantedAuthViaUser(applicationName = "Test Expired Application");
 
 			OAuth2.viewUserConnectedLastAccess();
@@ -979,6 +976,10 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAddedAndEdited";
+
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
 		task ("Add a new OAuth 2 application") {
 			var baseURL = JSONCompany.getPortalURL();
@@ -1078,32 +1079,30 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-47381. User can authorize external applications."
-	@ignore = "true"
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
-		property oauth2.local.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property portal.acceptance = "true";
-		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorized";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Authorize the new external application") {
 			OAuth2.authorizeMyApplication(
 				clientId = "abc123",
-				clientSecret = "abc123",
-				portalURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Launch request") {
@@ -1112,26 +1111,25 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-126596. User can authorize trusted external applications."
-	@ignore = "true"
 	@priority = 3
 	test ExternalApplicationCanBeTrustedAndAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeTrustedAndAuthorized";
 
-		task ("Add and edit an external trusted application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external trusted application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				checkboxCheckList = "Trusted Application",
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Authorize the new external application") {
@@ -1155,6 +1153,10 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "OAuth2#GrantedAuthorizationsCanBeRevoked";
+
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
 		task ("Add a new external application") {
 			var portalURL = JSONCompany.getPortalURL();
@@ -1818,23 +1820,23 @@ definition {
 	@priority = 4
 	test RefreshTokenTimeCanBeSetExpiredAndRenewed {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
-		property oauth2.local.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=\"8\"";
-		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RefreshTokenTimeCanBeSetExpiredAndRenewed";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "Third-party Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				clientId = "abc123",
 				clientProfile = "Web Application",
-				clientSecret = "abc123",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "abc123");
 		}
 
 		task ("Authorize application") {
@@ -1857,24 +1859,23 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129395. Remember device option should be visible in OAuth 2 admin page if it was set in the application settings."
-	@ignore = "true"
 	@priority = 5
 	test RememberDeviceExternalPropertyShouldBeVisible {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceExternalPropertyShouldBeVisible";
 
-		task ("Add a new external application with remember device checked") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+		task ("Add a new external application with remember device checked") {
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.addApplication(
 				applicationName = "Remember Device Application",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				checkboxCheckList = "Remember Device",
-				clientProfile = "Web Application",
-				websiteURL = "https://localhost:8443");
+				clientProfile = "Web Application");
 		}
 
 		task ("Verify application was added and has the 'Remember Device' external option") {
@@ -1887,26 +1888,25 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked."
-	@ignore = "true"
 	@priority = 4
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceShouldWorkWithMultipleAuthorizations";
+
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
 		task ("Add and edit 2 external applications") {
 			for (var count : list "1,2") {
-				OAuth2.openSSLPage();
-
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					baseURL = "https://localhost:8443",
-					callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
+					baseURL = "http://localhost:8080",
+					callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
-					clientSecret = "defaultsecret${count}",
-					websiteURL = "https://localhost:8443");
+					clientSecret = "defaultsecret${count}");
 			}
 		}
 
@@ -1949,29 +1949,28 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered."
-	@ignore = "true"
 	@priority = 3
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RevokeAuthorizationViaKebabMenuWithRememberDevice";
 
-		task ("Add and edit an external application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
+		task ("Add and edit an external application") {
 			OAuth2.addAndEditExternalApplication(
 				applicationName = "My Application",
-				baseURL = "https://localhost:8443",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=default''',
+				baseURL = "http://localhost:8080",
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				checkboxCheckList = "Remember Device",
 				clientId = "default",
 				clientProfile = "Web Application",
-				clientSecret = "defaultsecret",
-				websiteURL = "https://localhost:8443");
+				clientSecret = "defaultsecret");
 		}
 
 		task ("Verify My Application has 0 authorizations at OAuth 2 admin") {
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = 0,
@@ -1992,7 +1991,7 @@ definition {
 		}
 
 		task ("Verify My Application has 1 authorization at OAuth 2 admin") {
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.viewApplicationInAuthorizationsTable(
 				entryIndex = 1,
@@ -2169,7 +2168,7 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE {
-		property oauth2.local.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE";
 
@@ -2199,24 +2198,23 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129395. External applications have trusted label in OAuth 2 admin page when they are created with the trusted device option."
-	@ignore = "true"
 	@priority = 5
 	test TrustedExternalPropertyShouldBeVisible {
-		property oauth2.local.enabled = "true";
-		property portal.ssl.enabled = "true";
+		property oauth2.application.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#TrustedExternalPropertyShouldBeVisible";
 
-		task ("Add a trusted OAuth 2 application") {
-			OAuth2.openSSLPage();
+		task ("Add the OSGI configuration file") {
+			OAuth2.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~allow~headless~admin~user.config");
+		}
 
-			OAuth2.openOAuth2Admin(baseURL = "https://localhost:8443");
+		task ("Add a trusted OAuth 2 application") {
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:8080");
 
 			OAuth2.addApplication(
 				applicationName = "Trusted Application",
-				callbackUri = '''https://localhost:8443/oauth2-tester/?url=https://localhost:8443&client_id=abc123''',
+				callbackUri = '''${oauth2URL}/grant-type-authorization-code''',
 				checkboxCheckList = "Trusted Application",
-				clientProfile = "Web Application",
-				websiteURL = "https://localhost:8443");
+				clientProfile = "Web Application");
 		}
 
 		task ("Verify application was added") {

@@ -14,6 +14,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
@@ -39,6 +41,8 @@ import com.liferay.headless.delivery.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.SitePageNavigationMenuSettings;
 import com.liferay.headless.delivery.dto.v1_0.StyleBook;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
@@ -79,6 +83,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -127,6 +132,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -476,10 +482,67 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private ServiceContext _createServiceContext(
 		long groupId, SitePage sitePage) {
 
-		Long[] assetCategoryIds = {};
+		List<Long> assetCategoryIds = new ArrayList<>();
 
-		if (sitePage.getTaxonomyCategoryIds() != null) {
-			assetCategoryIds = sitePage.getTaxonomyCategoryIds();
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			sitePage.getTaxonomyCategoryBriefs();
+
+		if (taxonomyCategoryBriefs != null) {
+			for (TaxonomyCategoryBrief taxonomyCategoryBrief :
+					taxonomyCategoryBriefs) {
+
+				TaxonomyCategoryReference taxonomyCategoryReference =
+					taxonomyCategoryBrief.getTaxonomyCategoryReference();
+
+				if (taxonomyCategoryReference == null) {
+					continue;
+				}
+
+				long assetCategoryGroupId = groupId;
+
+				String siteKey = taxonomyCategoryReference.getSiteKey();
+
+				if (siteKey != null) {
+					Group group = _groupLocalService.fetchGroup(
+						contextCompany.getCompanyId(), siteKey);
+
+					if (group == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Could not find group for company ID ",
+									contextCompany.getCompanyId(),
+									" and site key ", siteKey));
+						}
+
+						continue;
+					}
+
+					assetCategoryGroupId = group.getGroupId();
+				}
+
+				String externalReferenceCode =
+					taxonomyCategoryReference.getExternalReferenceCode();
+
+				AssetCategory assetCategory =
+					_assetCategoryLocalService.
+						fetchAssetCategoryByExternalReferenceCode(
+							externalReferenceCode, assetCategoryGroupId);
+
+				if (assetCategory == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Could not find category for external ",
+								"reference code ", externalReferenceCode,
+								" and group ID ", assetCategoryGroupId));
+					}
+
+					continue;
+				}
+
+				assetCategoryIds.add(assetCategory.getCategoryId());
+			}
 		}
 
 		String[] assetTagNames = new String[0];
@@ -489,7 +552,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return ServiceContextRequestUtil.createServiceContext(
-			assetCategoryIds, assetTagNames,
+			assetCategoryIds.toArray(new Long[0]), assetTagNames,
 			_getExpandoBridgeAttributes(sitePage), groupId,
 			contextHttpServletRequest, null);
 	}
@@ -1123,6 +1186,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private static final EntityModel _entityModel = new SitePageEntityModel();
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private CETManager _cetManager;
 
 	@Reference
@@ -1143,6 +1209,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

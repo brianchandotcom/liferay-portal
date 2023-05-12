@@ -335,8 +335,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		catch (ParseException | URISyntaxException exception) {
 			throw new OpenIdConnectServiceException.AuthenticationException(
 				StringBundler.concat(
-					"Unable to process response from ", requestURL.toString(),
-					": ", exception.getMessage()),
+					"Unable to process response from ", requestURL, ": ",
+					exception.getMessage()),
 				exception);
 		}
 	}

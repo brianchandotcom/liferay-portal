@@ -189,9 +189,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 			return new File(
 				StringBundler.concat(
-					repositoryDir, StringPool.SLASH, sb.toString(),
-					StringPool.SLASH, fileNameFragment, ext, StringPool.SLASH,
-					fileNameFragment, StringPool.UNDERLINE, version, ext));
+					repositoryDir, StringPool.SLASH, sb, StringPool.SLASH,
+					fileNameFragment, ext, StringPool.SLASH, fileNameFragment,
+					StringPool.UNDERLINE, version, ext));
 		}
 
 		File fileNameDir = getDirNameDir(companyId, repositoryId, fileName);

@@ -56,7 +56,7 @@ public class InvalidFormatExceptionMapper
 			invalidFormatException.getLocalizedMessage(),
 			Response.Status.BAD_REQUEST,
 			StringBundler.concat(
-				"Unable to map JSON path \"", sb.toString(), "\" with value \"",
+				"Unable to map JSON path \"", sb, "\" with value \"",
 				invalidFormatException.getValue(), "\" to class \"",
 				clazz.getSimpleName(), "\""),
 			InvalidFormatException.class.getName());

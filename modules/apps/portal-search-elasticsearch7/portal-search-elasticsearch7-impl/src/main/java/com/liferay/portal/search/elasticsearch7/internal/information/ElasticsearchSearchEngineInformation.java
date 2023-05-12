@@ -343,7 +343,7 @@ public class ElasticsearchSearchEngineInformation
 				_log.warn("Unable to get node information", exception);
 			}
 
-			return StringBundler.concat("(Error: ", exception.toString(), ")");
+			return StringBundler.concat("(Error: ", exception, ")");
 		}
 	}
 

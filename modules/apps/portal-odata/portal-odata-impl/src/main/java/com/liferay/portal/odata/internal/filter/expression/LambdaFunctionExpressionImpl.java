@@ -59,7 +59,7 @@ public class LambdaFunctionExpressionImpl implements LambdaFunctionExpression {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			_type, "(", _variableName, " -> ", _expression.toString(), ")");
+			_type, "(", _variableName, " -> ", _expression, ")");
 	}
 
 	private final Expression _expression;

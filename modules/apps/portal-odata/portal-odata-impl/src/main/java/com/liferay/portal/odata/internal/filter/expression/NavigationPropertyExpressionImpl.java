@@ -52,7 +52,7 @@ public class NavigationPropertyExpressionImpl
 	@Override
 	public String toString() {
 		if (_type == Type.COUNT) {
-			return StringBundler.concat(_name, "/", _type.toString());
+			return StringBundler.concat(_name, "/", _type);
 		}
 
 		return _name;

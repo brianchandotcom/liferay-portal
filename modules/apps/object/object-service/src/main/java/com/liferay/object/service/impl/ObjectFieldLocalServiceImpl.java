@@ -29,7 +29,6 @@ import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
-import com.liferay.object.exception.RequiredEncryptedObjectFieldPropertyException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -72,10 +71,10 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -91,6 +90,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -1028,7 +1029,8 @@ public class ObjectFieldLocalServiceImpl
 
 		if (PropsValues.ENCRYPTED_OBJECT_FIELD_RESTRICTED) {
 			throw new ObjectFieldBusinessTypeException(
-				"Encrypted object field is not available");
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED +
+					" business type is not available");
 		}
 
 		ObjectDefinition objectDefinition =
@@ -1036,28 +1038,19 @@ public class ObjectFieldLocalServiceImpl
 
 		if (!objectDefinition.isDefaultStorageType()) {
 			throw new ObjectFieldBusinessTypeException(
-				"Encrypted business type object field can only be created in " +
-					"object definitions with default storage type");
+				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED +
+					" business type object field can only be created in " +
+						"object definitions with default storage type");
 		}
 
-		if (Validator.isNull(
-				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM)) {
-
-			throw new RequiredEncryptedObjectFieldPropertyException(
-				StringBundler.concat(
-					"The property ",
-					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM,
-					" is required for encrypted object fields"));
+		try {
+			new SecretKeySpec(
+				Base64.decode(
+					PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY),
+				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
 		}
-
-		if (Validator.isNull(
-				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY)) {
-
-			throw new RequiredEncryptedObjectFieldPropertyException(
-				StringBundler.concat(
-					"The property ",
-					PropsKeys.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY,
-					" is required for encrypted object fields"));
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

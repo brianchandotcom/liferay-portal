@@ -60,23 +60,10 @@ generateJSPJava {
 	enabled = false
 }
 
-task yarnInstallTask (name: "yarnInstall", type: Exec){
-	if (OSDetector.windows) {
-		executable "cmd.exe"
+task yarnInstallTask (name: "yarnInstall", type: Exec)
 
-		args "/c"
-		args new File(node.nodeDir, "node.exe")
-		args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-	}
-	else {
-		executable new File(node.nodeDir, "bin/node")
-
-		args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-	}
-
-	args "install"
-	dependsOn downloadNode
-	workingDir projectDir
+packageRunFormat {
+	dependsOn yarnInstallTask
 }
 
 packageRunWebpack {
@@ -97,4 +84,23 @@ packageRunWebpack {
 
 processResources {
 	dependsOn packageRunWebpack
+}
+
+yarnInstallTask {
+	if (OSDetector.windows) {
+		executable "cmd.exe"
+
+		args "/c"
+		args new File(node.nodeDir, "node.exe")
+		args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+	}
+	else {
+		executable new File(node.nodeDir, "bin/node")
+
+		args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+	}
+
+	args "install"
+	dependsOn downloadNode
+	workingDir projectDir
 }

@@ -45,6 +45,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -90,6 +91,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.item.selector.SegmentsEntryItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
@@ -969,17 +971,27 @@ public class EditAssetListDisplayContext {
 		return _portletResponse.getNamespace() + "_selectSite";
 	}
 
-	public String getSelectSegmentsEntryURL() throws Exception {
+	public String getSelectSegmentsEntryURL() {
 		if (_selectSegmentsEntryURL != null) {
 			return _selectSegmentsEntryURL;
 		}
 
+		SegmentsEntryItemSelectorCriterion segmentsEntryItemSelectorCriterion =
+			new SegmentsEntryItemSelectorCriterion();
+
+		segmentsEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.singletonList(new UUIDItemSelectorReturnType()));
+
+		PortletURL portletURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			"selectEntity", segmentsEntryItemSelectorCriterion);
+
+		if (portletURL == null) {
+			return null;
+		}
+
 		_selectSegmentsEntryURL = PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, SegmentsEntry.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"eventName", _portletResponse.getNamespace() + "selectEntity"
+			portletURL
 		).setParameter(
 			"groupId",
 			() -> {
@@ -1002,8 +1014,6 @@ public class EditAssetListDisplayContext {
 		).setParameter(
 			"selectedSegmentsEntryIds",
 			StringUtil.merge(getSelectedSegmentsEntryIds())
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).buildString();
 
 		return _selectSegmentsEntryURL;

@@ -103,10 +103,12 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	function <portlet:namespace />openSelectSegmentsEntryDialog() {
 		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />selectEntity',
-			onSelect: function (selectedItem) {
+			onSelect: function (event) {
+				const valueJSON = JSON.parse(event.value);
+
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
-						segmentsEntryId: selectedItem.entityid,
+						segmentsEntryId: valueJSON.segmentEntryId,
 					},
 					url: '<%= addAssetListEntryVariationURL %>',
 				});

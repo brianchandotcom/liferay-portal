@@ -793,4 +793,95 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13504 | Test Summary: Check if you can access data for a specific Documents and Media"
+	@priority = 3
+	test RequestToAccessDataForSpecificDocumentsAndMedia {
+		var documentsMediaTitleList = "DM AC Title 1,DM AC Title 2";
+        var type = "documents-and-media";
+        var range = "rangeKey";
+        var rangeValue = 0;
+
+        task ("Copy the token value for the API") {
+			var token = ACApi.getTokenValue();
+        }
+
+        task ("Take the token from Analytics Cloud") {
+            ACSettings.takeTokenFromAnalyticsCloud();
+        }
+
+        task ("Go to DXP and create a site and two documents and media, then connect Analytics Cloud to DXP") {
+        	TestCase.setUpPortalInstance();
+
+            ACUtils.launchDXP();
+
+            ACUtils.addSiteAndPage();
+
+            for (var n : list "1,2") {
+				ACUtils.createDMAndAddToPage(
+					dmDocumentFile = "Document_${n}.jpg",
+                    dmDocumentTitle = "DM AC Title ${n}");
+            }
+
+            ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+        }
+
+        task ("View the documents and media page") {
+            ACUtils.navigateToSitePage(
+                actionType = "View DM",
+                documentTitleList = ${documentsMediaTitleList},
+                pageName = "AC Page",
+                siteName = "Site Name");
+               
+            ACUtils.closeAllSessionsAndWait();
+        }
+
+        task ("Create a data report using analytics cloud API with the type documents and media") {
+            ACApi.createDataReport(
+            	filter = ${range},
+            	filterValue = ${rangeValue},
+            	token = ${token},
+            	type = ${type});
+        }
+
+        task ("Assert the total items of the response is 2 (because we have just 2 documents and media)") {
+            var totalValue = ACApi.searchApiResponse(
+                apiDataResponse = ${apiResponse},
+                jsonQuery = "total");
+
+            TestUtils.assertEquals(
+                actual = ${totalValue},
+            	expected = 2); 
+        }
+
+        task ("Get the id of the document and media in the first position of the response") {
+            var documentAndMediaId = ACApi.searchApiResponse(
+                apiDataResponse = ${apiResponse},
+                jsonQuery = "id",
+                resultPosition = 0);
+        }
+
+        task ("Create a data report using analytics API for the specific document and media chosen") {
+            ACApi.createIndividualOrAssetDataReport(
+				id = ${documentAndMediaId},
+                token = ${token},
+                type = ${type});
+        }
+
+        task ("Assert that there's only one result in the response") {
+            var searchedValue = ACApi.searchApiResponse(
+				apiDataResponse = ${apiIndividualOrAssetResponse},
+            	jsonQuery = "total");
+
+            TestUtils.assertEquals(
+				actual = ${searchedValue},
+                expected = "");
+        }
+
+        task ("Assert that the result matches with the document and media id") {
+            ACApi.assertApiResponse(
+				apiDataResponse = ${apiIndividualOrAssetResponse},
+                expectedList = ${documentAndMediaId});
+        }
+    }
+
 }

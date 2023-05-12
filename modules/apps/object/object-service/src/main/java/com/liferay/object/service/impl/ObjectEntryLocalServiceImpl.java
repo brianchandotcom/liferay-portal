@@ -501,9 +501,17 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(
 					true);
 
+				String deletionType = objectRelationship.getDeletionType();
+
+				if (ObjectEntryThreadLocal.isDisassociateRelatedModels()) {
+					deletionType =
+						ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE;
+				}
+
 				objectRelatedModelsProvider.deleteRelatedModel(
 					PrincipalThreadLocal.getUserId(), groupId,
-					objectRelationship.getObjectRelationshipId(), primaryKey);
+					objectRelationship.getObjectRelationshipId(), primaryKey,
+					deletionType);
 			}
 			catch (PrincipalException principalException) {
 				throw new ObjectRelationshipDeletionTypeException(

@@ -21,8 +21,18 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
  */
 public class ObjectEntryThreadLocal {
 
+	public static boolean isDisassociateRelatedModels() {
+		return _disassociateRelatedModelsThreadLocal.get();
+	}
+
 	public static boolean isSkipObjectEntryResourcePermission() {
 		return _skipObjectEntryResourcePermissionThreadLocal.get();
+	}
+
+	public static void setDisassociateRelatedModels(
+		boolean disassociateRelatedModels) {
+
+		_disassociateRelatedModelsThreadLocal.set(disassociateRelatedModels);
 	}
 
 	public static void setSkipObjectEntryResourcePermission(
@@ -32,6 +42,11 @@ public class ObjectEntryThreadLocal {
 			skipObjectEntryResourcePermission);
 	}
 
+	private static final ThreadLocal<Boolean>
+		_disassociateRelatedModelsThreadLocal = new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class +
+				"._disassociateRelatedModelsThreadLocal",
+			() -> false);
 	private static final ThreadLocal<Boolean>
 		_skipObjectEntryResourcePermissionThreadLocal =
 			new CentralizedThreadLocal<>(

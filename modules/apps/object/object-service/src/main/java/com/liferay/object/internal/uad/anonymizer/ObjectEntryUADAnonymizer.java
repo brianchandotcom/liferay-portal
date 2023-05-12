@@ -16,6 +16,7 @@ package com.liferay.object.internal.uad.anonymizer;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.internal.uad.constants.ObjectUADConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -72,7 +73,14 @@ public class ObjectEntryUADAnonymizer
 
 	@Override
 	public void delete(ObjectEntry objectEntry) throws PortalException {
-		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+		try {
+			ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+
+			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+		}
+		finally {
+			ObjectEntryThreadLocal.setDisassociateRelatedModels(false);
+		}
 	}
 
 	@Override

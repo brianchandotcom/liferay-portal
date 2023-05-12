@@ -59,7 +59,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 	@Override
 	public void deleteRelatedModel(
 			long userId, long groupId, long objectRelationshipId,
-			long primaryKey)
+			long primaryKey, String deletionType)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -75,7 +75,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 		}
 
 		if (Objects.equals(
-				objectRelationship.getDeletionType(),
+				deletionType,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
 
 			for (ObjectEntry objectEntry : relatedModels) {
@@ -84,7 +84,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			}
 		}
 		else if (Objects.equals(
-					objectRelationship.getDeletionType(),
+					deletionType,
 					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE)) {
 
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -100,7 +100,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			}
 		}
 		else if (Objects.equals(
-					objectRelationship.getDeletionType(),
+					deletionType,
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
 
 			throw new RequiredObjectRelationshipException(

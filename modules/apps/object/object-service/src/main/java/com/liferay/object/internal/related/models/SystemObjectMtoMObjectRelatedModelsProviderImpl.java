@@ -75,7 +75,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 	@Override
 	public void deleteRelatedModel(
 			long userId, long groupId, long objectRelationshipId,
-			long primaryKey)
+			long primaryKey, String deletionType)
 		throws PortalException {
 
 		List<T> relatedModels = getRelatedModels(
@@ -91,7 +91,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		if (Objects.equals(
-				objectRelationship.getDeletionType(),
+				deletionType,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT) &&
 			!objectRelationship.isReverse()) {
 
@@ -107,7 +107,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 				objectRelationshipId, primaryKey);
 
 		if (Objects.equals(
-				objectRelationship.getDeletionType(),
+				deletionType,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE) &&
 			!objectRelationship.isReverse()) {
 

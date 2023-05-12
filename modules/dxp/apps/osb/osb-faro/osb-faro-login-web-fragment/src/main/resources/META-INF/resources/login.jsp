@@ -14,6 +14,10 @@
  */
 --%>
 
+<%@ page import="javax.portlet.WindowState" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+
 <%@ include file="/init.jsp" %>
 
 <c:choose>
@@ -183,7 +187,7 @@
 
 					<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 
-					<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
+					<c:if test="<%= company.isAutoLogin() %>">
 						<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
 					</c:if>
 				</aui:fieldset>
@@ -197,23 +201,23 @@
 		</div>
 
 		<aui:script sandbox="<%= true %>">
-			var form = AUI.$(document.<portlet:namespace /><%= formName %>);
+			var form = document.querySelector('[name=<portlet:namespace /><%= formName %>]')
 
-			form.on('submit', (event) => {
+			form.addEventListener('submit', (event) => {
 				<c:if test="<%= Validator.isNotNull(redirect) %>">
-					var redirect = form.fm('redirect');
+					var redirect = form.querySelector('[name=<portlet:namespace />redirect');
 
 					if (redirect) {
-						var redirectVal = redirect.val();
-
-						redirect.val(redirectVal + window.location.hash);
+						redirect.value = redirect.value + window.location.hash;
 					}
 				</c:if>
 
 				submitForm(form);
 			});
+			
+			var password = form.querySelector('[name=<portlet:namespace />password');
 
-			form.fm('password').on('keypress', (event) => {
+			password.addEventListener('keypress', (event) => {
 				Liferay.Util.showCapsLock(
 					event,
 					'<portlet:namespace />passwordCapsLockSpan'

@@ -835,6 +835,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		dtoConverterContext.setAttribute(
 			"embeddedPageDefinition", embeddedPageDefinition);
+		dtoConverterContext.setAttribute("groupId", layout.getGroupId());
 
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			dtoConverterContext.setAttribute(

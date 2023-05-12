@@ -580,37 +580,40 @@ const Fields = ({
 				{
 					displayType: 'warning',
 					label: Liferay.Language.get('delete'),
-					onClick: ({processClose}: {processClose: Function}) => {
+					onClick: async ({
+						processClose,
+					}: {
+						processClose: Function;
+					}) => {
 						processClose();
 
 						const url = `${API_URL.FDS_FIELDS}/${item.id}`;
 
-						fetch(url, {
-							method: 'DELETE',
-						})
-							.then(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'your-request-completed-successfully'
-									),
-									type: 'success',
-								});
+						const response = await fetch(url, {method: 'DELETE'});
 
-								setFDSFields(
-									fdsFields?.filter(
-										(fdsField: FDSField) =>
-											fdsField.id !== item.id
-									) || []
-								);
-							})
-							.catch(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'your-request-failed-to-complete'
-									),
-									type: 'danger',
-								});
+						if (!response.ok) {
+							openToast({
+								message: Liferay.Language.get(
+									'your-request-failed-to-complete'
+								),
+								type: 'danger',
 							});
+
+							return;
+						}
+
+						openToast({
+							message: Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+							type: 'success',
+						});
+
+						setFDSFields(
+							fdsFields?.filter(
+								(fdsField: FDSField) => fdsField.id !== item.id
+							) || []
+						);
 					},
 				},
 			],

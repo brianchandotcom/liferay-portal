@@ -517,6 +517,150 @@ definition {
 		}
 	}
 
+	@description = "LPS-182287 - A user can configure Custom Filter widgets with DDM fields"
+	@priority = 4
+	test FilterByDDMFields {
+		task ("Add a Web Content Structure with text field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "Test Structure");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			Button.clickSave();
+		}
+
+		task ("Create two Web Contents with the Web Content Structure created") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+
+			WebContent.addWithStructureCP(
+				structureName = "Test Structure",
+				webContentText = "Apple",
+				webContentTitle = "Fruit 1");
+
+			PortletEntry.publish();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+
+			WebContent.addWithStructureCP(
+				structureName = "Test Structure",
+				webContentText = "Banana",
+				webContentTitle = "Fruit 2");
+
+			PortletEntry.publish();
+		}
+
+		task ("Create a regular Web Content Article") {
+			JSONWebcontent.addWebContent(
+				content = "Coconut",
+				groupName = "Guest",
+				title = "Fruit 3");
+		}
+
+		task ("Add Custom filter widget in the Search Page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Filter");
+		}
+
+		task ("Go to the Search page and execute a search for the web content articles") {
+			Search.openSearchPage(searchTerm = "Fruit");
+		}
+
+		task ("Configure the parent nested query Custom Filter widget") {
+			SearchPortlets.configureCustomFilter(
+				filterField = "ddmFieldArray",
+				filterQueryType = "Nested",
+				occur = "Filter",
+				queryName = "parent_query");
+
+			task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
+				var port = Elasticsearch.getServerPort();
+				var portalHostname = PropsUtil.get("portal.hostname");
+
+				var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+
+				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[0]._source.ddmFieldArray[0].ddmFieldName");
+			}
+		}
+
+		task ("Add a second Custom Filter widget and configure it as a child query matching the DDM field name") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Filter");
+
+			Refresh();
+
+			SearchPortlets.configureCustomFilter(
+				filterField = "ddmFieldArray.ddmFieldName",
+				filterQueryType = "Term",
+				filterValue = ${ddmFieldName},
+				occur = "Filter",
+				parentQueryName = "parent_query",
+				portletIndex = 2);
+
+			Refresh();
+		}
+
+		task ("Assert the custom web content structure articles still appear in the search results and the regular web content article does not") {
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "Fruit 1/Web Content Article,Fruit 2/Web Content Article",
+				searchTerm = "Fruit");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Fruit 3",
+				searchAssetType = "Web Content Article");
+		}
+
+		task ("Add a third Custom Filter widget and configure it as a child query matching the DDM field value") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Filter");
+
+			Refresh();
+
+			SearchPortlets.configureCustomFilter(
+				filterField = "ddmFieldArray.ddmFieldValueKeyword_en_US",
+				filterQueryType = "Term",
+				occur = "Filter",
+				parentQueryName = "parent_query",
+				portletIndex = 3);
+
+			Refresh();
+		}
+
+		task ("Assert the custom web content structure articles still appear in the search results") {
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "Fruit 1/Web Content Article,Fruit 2/Web Content Article",
+				searchTerm = "Fruit");
+		}
+
+		task ("Use the third Custom Filter widget to filter by the DDM field value of the first web content structure article") {
+			SearchPortlets.configureCustomFilter(
+				filterValue = "Apple",
+				portletIndex = 3);
+
+			Refresh();
+		}
+
+		task ("Assert the first web content structure article appears in the search results and the second one does not") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Fruit 1",
+				searchAssetType = "Web Content Article");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Fruit 2",
+				searchAssetType = "Web Content Article");
+		}
+	}
+
 	@priority = 3
 	test IsLocalizedInSearchAdmin {
 		property test.name.skip.portal.instance = "Search#IsLocalizedInSearchAdmin";

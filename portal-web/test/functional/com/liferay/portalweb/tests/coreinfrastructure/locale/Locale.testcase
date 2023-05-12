@@ -1145,7 +1145,7 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
-	@priority = "3"
+	@priority = 3
 	test WarningGeneratedWhenUsingNonStandardTimezone {
 		property skip.start.app.server = "true";
 		property test.name.skip.portal.instance = "Locale#WarningGeneratedWhenUsingNonStandardTimezone";

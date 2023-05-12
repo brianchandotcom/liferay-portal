@@ -513,7 +513,7 @@
 
 <tr>
 	<td>RECURRING_EVENT_DIALOG_BOX_HEADER</td>
-	<td>//h3[@class='modal-title' and contains(.,'Recurring Event')]</td>
+	<td>//div[@class='modal-title' and contains(.,'Recurring Event')]</td>
 	<td></td>
 </tr>
 <tr>

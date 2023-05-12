@@ -1654,19 +1654,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 
-				if (!Objects.equals(
+				if (Objects.equals(
 						jsonObject.getString("className"),
 						TemplateEntry.class.getName())) {
 
-					continue;
+					_templateEntryLocalService.addTemplateEntry(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(),
+						ddmTemplate.getTemplateId(),
+						jsonObject.getString("infoItemClassName"),
+						jsonObject.getString("infoItemKey"), serviceContext);
 				}
-
-				_templateEntryLocalService.addTemplateEntry(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(),
-					ddmTemplate.getTemplateId(),
-					jsonObject.getString("infoItemClassName"),
-					jsonObject.getString("infoItemKey"), serviceContext);
 			}
 			else {
 				_ddmTemplateLocalService.updateTemplate(

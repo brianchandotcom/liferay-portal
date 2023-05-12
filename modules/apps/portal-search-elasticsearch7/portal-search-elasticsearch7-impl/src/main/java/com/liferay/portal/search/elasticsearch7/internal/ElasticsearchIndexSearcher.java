@@ -239,7 +239,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequest.isBasicFacetSelection());
 
 		searchSearchRequest.putAllFacets(searchContext.getFacets());
-
 		searchSearchRequest.setFetchSource(searchRequest.getFetchSource());
 		searchSearchRequest.setFetchSourceExcludes(
 			searchRequest.getFetchSourceExcludes());
@@ -250,7 +249,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequest.getGroupByRequests());
 		searchSearchRequest.setHighlightEnabled(
 			queryConfig.isHighlightEnabled());
-
 		searchSearchRequest.setHighlightFieldNames(
 			queryConfig.getHighlightFieldNames());
 		searchSearchRequest.setHighlightFragmentSize(
@@ -645,7 +643,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 				searchSearchRequest.setSearchAfter(
 					lastSearchHit.getSortValues());
-
 				searchSearchRequest.setStart(0);
 			}
 			else {

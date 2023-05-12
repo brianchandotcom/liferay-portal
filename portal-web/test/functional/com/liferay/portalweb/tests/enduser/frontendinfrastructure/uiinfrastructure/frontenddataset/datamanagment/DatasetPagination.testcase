@@ -172,12 +172,27 @@ definition {
 	}
 
 	@description = "LPS-183943. Confirm that pagination cannot exceed 25 pagination items"
-	@ignore = "true"
 	@priority = 5
 	test CannotExceed25PaginationItems {
+		task ("The user writes 26 items in the pagination items field //Pagination Items: 1,2,3,…,26") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26");
+		}
 
-		// TODO LPS-183943 CannotExceed25PaginationItems pending implementation
+		task ("Fills the default value field") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
 
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Assert Save button is disabled") {
+			PRMMDFRequest.viewDisabledButton(buttonName = "Save");
+		}
+
+		task ("Then an error message appears") {
+			AssertElementPresent(
+				key_errorMessage = "This field contains more than 25 elements.",
+				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+		}
 	}
 
 	@description = "LPS-183944. Confirm that pagination cannot exceed 1000 items per page"

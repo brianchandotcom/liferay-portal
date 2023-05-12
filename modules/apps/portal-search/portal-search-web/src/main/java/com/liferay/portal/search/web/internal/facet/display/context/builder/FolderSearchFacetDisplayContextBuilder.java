@@ -35,7 +35,6 @@ import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayConte
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 
@@ -126,17 +125,19 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		_selectedFolderIds = TransformUtil.transformToList(
-			Objects.requireNonNull(parameterValues),
-			value -> {
-				long folderId = GetterUtil.getLong(value);
+		if (parameterValues != null) {
+			_selectedFolderIds = TransformUtil.transformToList(
+				parameterValues,
+				value -> {
+					long folderId = GetterUtil.getLong(value);
 
-				if (folderId <= 0) {
-					return null;
-				}
+					if (folderId <= 0) {
+						return null;
+					}
 
-				return folderId;
-			});
+					return folderId;
+				});
+		}
 	}
 
 	protected long getDisplayStyleGroupId() {

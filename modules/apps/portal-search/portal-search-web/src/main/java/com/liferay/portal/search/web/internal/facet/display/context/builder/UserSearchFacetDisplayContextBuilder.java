@@ -30,6 +30,7 @@ import com.liferay.portal.search.web.internal.user.facet.configuration.UserFacet
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -125,8 +126,10 @@ public class UserSearchFacetDisplayContextBuilder {
 		_paramValues = Collections.singletonList(paramValue);
 	}
 
-	public void setParamValues(List<String> paramValues) {
-		_paramValues = paramValues;
+	public void setParamValues(String... paramValues) {
+		if (paramValues != null) {
+			_paramValues = Arrays.asList(paramValues);
+		}
 	}
 
 	protected BucketDisplayContext buildBucketDisplayContext(

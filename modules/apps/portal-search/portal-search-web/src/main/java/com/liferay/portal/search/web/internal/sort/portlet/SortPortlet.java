@@ -29,8 +29,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 
 import java.io.IOException;
 
-import java.util.Optional;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -107,16 +105,13 @@ public class SortPortlet extends MVCPortlet {
 
 		String parameterName = sortPortletPreferences.getParameterName();
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchResponse.getParameterValues(
-				parameterName, renderRequest);
-
 		return _createSortDisplayContextBuilder(
 			renderRequest, sortPortletPreferences
 		).parameterName(
 			parameterName
 		).parameterValues(
-			parameterValuesOptional.orElse(null)
+			portletSharedSearchResponse.getParameterValues(
+				parameterName, renderRequest)
 		).renderNothing(
 			_isRenderNothing(portletSharedSearchResponse)
 		).build();

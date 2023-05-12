@@ -39,6 +39,7 @@ import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayConte
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -241,8 +242,10 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		_parameterValues = Collections.singletonList(parameterValue);
 	}
 
-	public void setParameterValues(List<String> paramValues) {
-		_parameterValues = paramValues;
+	public void setParameterValues(String... paramValues) {
+		if (paramValues != null) {
+			_parameterValues = Arrays.asList(paramValues);
+		}
 	}
 
 	public void setTypeNames(Map<String, String> typeNames) {

@@ -140,7 +140,9 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		_selectedTags = Arrays.asList(parameterValues);
+		if (parameterValues != null) {
+			_selectedTags = Arrays.asList(parameterValues);
+		}
 	}
 
 	protected BucketDisplayContext buildBucketDisplayContext(

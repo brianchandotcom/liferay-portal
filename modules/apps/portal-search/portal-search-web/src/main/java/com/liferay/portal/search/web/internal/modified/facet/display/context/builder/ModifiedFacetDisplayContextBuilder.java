@@ -46,7 +46,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.portlet.RenderRequest;
@@ -144,8 +143,9 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		_selectedRanges = Arrays.asList(
-			Objects.requireNonNull(parameterValues));
+		if (parameterValues != null) {
+			_selectedRanges = Arrays.asList(parameterValues);
+		}
 	}
 
 	public void setTimeZone(TimeZone timeZone) {

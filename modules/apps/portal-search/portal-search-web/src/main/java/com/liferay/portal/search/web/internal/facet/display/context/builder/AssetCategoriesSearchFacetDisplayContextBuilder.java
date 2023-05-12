@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.RenderRequest;
@@ -154,17 +153,19 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	public void setParameterValues(String... parameterValues) {
-		_selectedCategoryIds = TransformUtil.transformToList(
-			Objects.requireNonNull(parameterValues),
-			parameterValue -> {
-				long categoryId = GetterUtil.getLong(parameterValue);
+		if (parameterValues != null) {
+			_selectedCategoryIds = TransformUtil.transformToList(
+				parameterValues,
+				parameterValue -> {
+					long categoryId = GetterUtil.getLong(parameterValue);
 
-				if (categoryId <= 0) {
-					return null;
-				}
+					if (categoryId <= 0) {
+						return null;
+					}
 
-				return categoryId;
-			});
+					return categoryId;
+				});
+		}
 	}
 
 	public void setPortal(Portal portal) {

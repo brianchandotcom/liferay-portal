@@ -219,17 +219,10 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(_renderRequest);
 
-		Optional<String[]> parameterValuesOptional =
+		return ArrayUtil.contains(
 			portletSharedSearchResponse.getParameterValues(
-				cpOption.getKey(), _renderRequest);
-
-		if (parameterValuesOptional.isPresent()) {
-			String[] parameterValues = parameterValuesOptional.get();
-
-			return ArrayUtil.contains(parameterValues, fieldValue);
-		}
-
-		return false;
+				cpOption.getKey(), _renderRequest),
+			fieldValue);
 	}
 
 	private CPOptionsSearchFacetDisplayContext

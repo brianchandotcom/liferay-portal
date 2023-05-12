@@ -555,6 +555,118 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13510 | Test Summary: Check if it is possible to filter the API response data only for the channelID that was chosen"
+	@priority = 4
+	test RequestToAccessDataForSpecificChannelID {
+		var blogsTitleList = "Blog AC Title 1,Blog AC Title 2";
+		var type = "blogs";
+		var range = "rangeKey";
+		var rangeValue = 0;
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		task ("Copy the token value for the API") {
+			var token = ACApi.getTokenValue();
+		}
+
+		task ("Take the token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Go to DXP and create a site and two blogs and then connect Analytics Cloud to DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
+			for (var blogTitle : list ${blogsTitleList}) {
+				ACUtils.createBlogsAndAddToPage(entryTitle = ${blogTitle});
+			}
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the first blog") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blog AC Title 1",
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Get the channelId from the first property") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var channelId1 = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Disconnect and Connect AC with DXP again using different property") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Visit the two blogs") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = ${blogsTitleList},
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Get the channelId from the second property") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			var channelId2 = ACSettings.getPropertyId(propertyName = ${assignedPropertyName});
+		}
+
+		task ("Create a data report using analytics cloud API with the type blogs and filtering only by the first property") {
+			var curl = '''
+				${analyticsCloudURL}/api/reports/${type}\?${range}=${rangeValue}\&channelId=${channelId1} -H "Authorization: Bearer ${token}"
+			''';
+
+			var apiResponse = JSONCurlUtil.get(${curl});
+		}
+
+		task ("Check that the first Blog appears in the API response") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = "Blog AC Title 1");
+		}
+
+		task ("Check that the second Blog does not appear in the API response") {
+			ACApi.assertApiResponseNotContain(
+				apiDataResponse = ${apiResponse},
+				expectedList = "Blog AC Title 2");
+		}
+
+		task ("Create a data report using analytics cloud API with the type blogs and filtering only by the second property") {
+			var curl = '''
+				${analyticsCloudURL}/api/reports/${type}\?${range}=${rangeValue}\&channelId=${channelId2} -H "Authorization: Bearer ${token}"
+			''';
+
+			var apiResponse = JSONCurlUtil.get(${curl});
+		}
+
+		task ("Check that both WC appear in the API response") {
+			ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = ${blogsTitleList});
+		}
+	}
+
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13504 | Test Summary: Check if you can access data for a specific Documents and Media"
 	@priority = 3
 	test RequestToAccessDataForSpecificDocumentsAndMedia {

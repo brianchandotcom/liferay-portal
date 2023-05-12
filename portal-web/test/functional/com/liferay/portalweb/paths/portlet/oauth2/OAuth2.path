@@ -176,22 +176,47 @@
 
 <tr>
 	<td>OAUTH2_TESTER_PORTAL_URL</td>
-	<td>//input[contains(@id,'liferayUrl')]</td>
+	<td>//input[contains(@placeholder,'Liferay Authorize URL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_CLIENT_ID</td>
-	<td>//input[contains(@id,'clientId')]</td>
+	<td>//input[contains(@placeholder,'Client ID')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_CLIENT_ID_2</td>
+	<td>//h2[contains(.,'Get Token')]/following-sibling::input[contains(@placeholder,'Client ID')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_CLIENT_SECRET</td>
-	<td>//input[contains(@id,'clientSecret')]</td>
+	<td>//input[contains(@placeholder,'Client Secret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_TOKEN_URL</td>
+	<td>//input[contains(@placeholder,'Liferay Token URL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_CODE_CHALLENGE</td>
 	<td>//input[contains(@id,'codeChallenge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_BTN_AUTHORIZE</td>
+	<td>//button[contains(.,'Authorize')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_BTN_GET_TOKEN</td>
+	<td>//button[contains(.,'Get Token')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_BTN_GET_USER</td>
+	<td>//button[contains(.,'Get User')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -201,12 +226,12 @@
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_REQUEST_URL</td>
-	<td>//input[contains(@id,'url')]</td>
+	<td>//input[contains(@placeholder,'Liferay Get User URL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OAUTH2_TESTER_REQUEST_RESULTS</td>
-	<td>//div[contains(@id,'result')]</td>
+	<td>//pre</td>
 	<td></td>
 </tr>
 <tr>

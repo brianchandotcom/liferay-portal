@@ -96,6 +96,24 @@
 	<td>//div[contains(@class,'modal')]//*[contains(@class, 'input-group-item')]//*[@placeholder="Search"]</td>
 	<td></td>
 </tr>
+
+<!-- DATA SET PAGINATION -->
+
+<tr>
+	<td>VIEW_ERROR_MESSAGE</td>
+	<td>//div[contains(@class,'has-error')]//div[contains(@class,'form-feedback-item') and contains(.,'${key_errorMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_LIST_OF_ITEMS</td>
+	<td>//div[contains(@class,'form-group')]//textarea[contains(@id,'ViewListOfItemsPerPage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGINATION_DEFAULT_ITEMS</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'ViewDefaultItemsPerPage')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

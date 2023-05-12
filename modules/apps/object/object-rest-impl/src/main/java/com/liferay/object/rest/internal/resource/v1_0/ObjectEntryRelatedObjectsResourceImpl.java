@@ -21,7 +21,6 @@ import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
-import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
@@ -64,11 +63,13 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			Long relatedObjectEntryId)
 		throws Exception {
 
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_objectDefinition.getStorageType());
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
 
-		_checkCurrentObjectEntry(objectEntryManager, currentObjectEntryId);
+		_checkCurrentObjectEntry(
+			defaultObjectEntryManager, currentObjectEntryId);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipService.getObjectRelationship(
@@ -85,7 +86,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		}
 		else {
 			_checkRelatedObjectEntry(
-				objectEntryManager, objectRelationshipName,
+				defaultObjectEntryManager, objectRelationshipName,
 				relatedObjectEntryId);
 		}
 
@@ -178,11 +179,9 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	private void _checkCurrentObjectEntry(
-			ObjectEntryManager objectEntryManager, long relatedObjectEntryId)
+			DefaultObjectEntryManager defaultObjectEntryManager,
+			long relatedObjectEntryId)
 		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(objectEntryManager);
 
 		defaultObjectEntryManager.getObjectEntry(
 			_getDTOConverterContext(relatedObjectEntryId), _objectDefinition,
@@ -190,12 +189,9 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	private void _checkRelatedObjectEntry(
-			ObjectEntryManager objectEntryManager,
+			DefaultObjectEntryManager defaultObjectEntryManager,
 			String objectRelationshipName, long relatedObjectEntryId)
 		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(objectEntryManager);
 
 		defaultObjectEntryManager.getObjectEntry(
 			_getDTOConverterContext(relatedObjectEntryId),

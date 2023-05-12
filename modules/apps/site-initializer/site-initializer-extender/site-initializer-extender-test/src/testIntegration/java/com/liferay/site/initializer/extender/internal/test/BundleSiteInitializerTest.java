@@ -876,6 +876,17 @@ public class BundleSiteInitializerTest {
 
 		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
+			_portal.getClassNameId(TemplateEntry.class.getName()),
+			"TEST INFORMATION DDM TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test Information DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
+
+		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
 			_portal.getClassNameId(AssetEntry.class.getName()),
 			"TEST WIDGET DDM TEMPLATE KEY");
 
@@ -888,17 +899,6 @@ public class BundleSiteInitializerTest {
 
 	private void _assertDDMTemplate2() {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			_group.getGroupId(),
-			_portal.getClassNameId(TemplateEntry.class.getName()),
-			"TEST INFORMATION DDM TEMPLATE KEY");
-
-		Assert.assertNotNull(ddmTemplate);
-		Assert.assertEquals(
-			"Test Information DDM Template Name",
-			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
-
-		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
 			"TEST DDM TEMPLATE KEY");
@@ -919,6 +919,17 @@ public class BundleSiteInitializerTest {
 			"Test DDM Template Name 2",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+
+		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(TemplateEntry.class.getName()),
+			"TEST INFORMATION DDM TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test Information DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
 
 		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),

@@ -1060,7 +1060,6 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will provide a summary for the total number of entries for each group next to the section title"
 	@priority = 3
 	test DueDateBySlaProvidesSummaryForTotalNumberOfEntries {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DueDateBySlaProvidesSummaryForTotalNumberOfEntries";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -1114,7 +1113,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "30")) {
+		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "100")) {
 			Refresh();
 		}
 

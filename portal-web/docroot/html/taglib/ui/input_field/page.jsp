@@ -629,11 +629,11 @@ if (hints != null) {
 
 			var feedback = {
 				success: {
-					message: "<%= LanguageUtil.get(resourceBundle, "characters-under-limit") %>",
+					message: "<%= LanguageUtil.get(resourceBundle, "the-characters-are-under-the-limit") %>",
 					indicator: "<%= UnicodeFormatter.toString(successIndicator) %>"
 				},
 				info: {
-					message: "<%= LanguageUtil.get(resourceBundle, "character-limit-has-been-reached-you-cannot-continue-typing") %>",
+					message: "<%= LanguageUtil.get(resourceBundle, "the-character-limit-has-been-reached-you-cannot-continue-typing") %>",
 					indicator: "<%= UnicodeFormatter.toString(infoIndicator) %>"
 				},
 			}

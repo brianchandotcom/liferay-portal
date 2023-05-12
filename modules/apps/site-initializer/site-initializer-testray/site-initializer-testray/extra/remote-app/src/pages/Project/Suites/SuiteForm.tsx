@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
@@ -127,6 +127,12 @@ const SuiteForm = () => {
 
 		return searchBuilder.build();
 	}, [caseParametersWatch, cases]);
+
+	useEffect(() => {
+		if (context.testraySuite) {
+			setValue('smartSuite', !!context.testraySuite.caseParameters);
+		}
+	}, [context.testraySuite, setValue]);
 
 	const caseFilter = getCaseFilter;
 

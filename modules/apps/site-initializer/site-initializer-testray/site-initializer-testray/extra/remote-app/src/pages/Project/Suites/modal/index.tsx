@@ -13,13 +13,16 @@
  */
 
 import React, {useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
+import {TestraySuite} from '~/services/rest';
 
 import Form from '../../../../components/Form';
 import Modal from '../../../../components/Modal';
 import {FormModalOptions} from '../../../../hooks/useFormModal';
 import i18n from '../../../../i18n';
+import {getCaseParameters} from '../useSuiteCaseFilter';
 import SelectCase from './SelectCase';
-import SelectCaseParameters from './SelectCaseParameters';
+import SelectCaseParameters, {State} from './SelectCaseParameters';
 
 type SuiteSelectCasesModalProps = {
 	modal: FormModalOptions;
@@ -32,7 +35,11 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 	selectedCaseIds,
 	type,
 }) => {
-	const [state, setState] = useState<any>({});
+	const {testraySuite}: {testraySuite: TestraySuite} = useOutletContext();
+
+	const caseParameters = getCaseParameters(testraySuite);
+
+	const [state, setState] = useState<State>(caseParameters || {});
 
 	return (
 		<Modal
@@ -51,7 +58,11 @@ const SuiteFormSelectModal: React.FC<SuiteSelectCasesModalProps> = ({
 			visible={visible}
 		>
 			{type === 'select-case-parameters' && (
-				<SelectCaseParameters setState={setState} state={state} />
+				<SelectCaseParameters
+					selectedCaseIds={selectedCaseIds}
+					setState={setState}
+					state={state}
+				/>
 			)}
 
 			{type === 'select-cases' && (

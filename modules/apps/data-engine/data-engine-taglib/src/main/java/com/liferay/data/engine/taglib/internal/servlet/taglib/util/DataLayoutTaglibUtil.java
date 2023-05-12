@@ -62,14 +62,14 @@ public class DataLayoutTaglibUtil {
 			DataDefinition dataDefinition = null;
 
 			if (Validator.isNotNull(dataDefinitionId)) {
-				dataDefinition = _getDataDefinition(
+				dataDefinition = getDataDefinition(
 					dataDefinitionId, httpServletRequest);
 			}
 			else {
 				DataLayout dataLayout = getDataLayout(
 					dataLayoutId, httpServletRequest);
 
-				dataDefinition = _getDataDefinition(
+				dataDefinition = getDataDefinition(
 					dataLayout.getDataDefinitionId(), httpServletRequest);
 			}
 
@@ -92,7 +92,20 @@ public class DataLayoutTaglibUtil {
 			long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return _getDataDefinition(dataDefinitionId, httpServletRequest);
+		DataDefinitionResource.Factory dataDefinitionResourceFactory =
+			_dataDefinitionResourceFactorySnapshot.get();
+
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			dataDefinitionResourceFactory.create();
+
+		DataDefinitionResource dataDefinitionResource =
+			dataDefinitionResourceBuilder.httpServletRequest(
+				httpServletRequest
+			).user(
+				PortalUtil.getUser(httpServletRequest)
+			).build();
+
+		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
 	}
 
 	public static DataLayout getDataLayout(
@@ -188,26 +201,6 @@ public class DataLayoutTaglibUtil {
 
 			return fieldTypesJSONArray;
 		}
-	}
-
-	private static DataDefinition _getDataDefinition(
-			Long dataDefinitionId, HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		DataDefinitionResource.Factory dataDefinitionResourceFactory =
-			_dataDefinitionResourceFactorySnapshot.get();
-
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			dataDefinitionResourceFactory.create();
-
-		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourceBuilder.httpServletRequest(
-				httpServletRequest
-			).user(
-				PortalUtil.getUser(httpServletRequest)
-			).build();
-
-		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
 	}
 
 	private static void _setFieldIndexTypeNone(JSONObject jsonObject) {

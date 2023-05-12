@@ -381,12 +381,19 @@ public class UserSearchFixture {
 
 		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 
+		User user = TestPropsValues.getUser();
+
 		PermissionThreadLocal.setPermissionChecker(
 			new DummyPermissionChecker() {
 
 				@Override
 				public long getCompanyId() {
 					return _companyId;
+				}
+
+				@Override
+				public User getUser() {
+					return user;
 				}
 
 				@Override

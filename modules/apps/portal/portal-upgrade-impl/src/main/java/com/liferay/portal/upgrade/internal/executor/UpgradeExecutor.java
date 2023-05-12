@@ -153,6 +153,16 @@ public class UpgradeExecutor {
 
 			return release;
 		}
+		catch (Exception exception) {
+			Release release = _releaseLocalService.fetchRelease(
+				bundleSymbolicName);
+
+			if (release != null) {
+				_releasePublisher.unpublish(release);
+			}
+
+			return ReflectionUtil.throwException(exception);
+		}
 		finally {
 			UpgradeLogContext.clearContext();
 		}

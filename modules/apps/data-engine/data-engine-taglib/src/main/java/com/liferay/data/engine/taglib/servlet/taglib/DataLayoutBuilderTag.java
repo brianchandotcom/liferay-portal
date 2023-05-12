@@ -59,7 +59,6 @@ import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -664,7 +663,40 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				ddmForm.getDDMFormFieldsMap(true), ddmFormTemplateContext,
 				defaultLocale);
 
-			ddmFormTemplateContext.put("rules", _getDataRulesJSONArray());
+			ddmFormTemplateContext.put(
+				"rules",
+				JSONUtil.toJSONArray(
+					_dataLayout.getDataRules(),
+					dataRule -> JSONUtil.put(
+						"actions",
+						JSONUtil.toJSONArray(
+							(Map<String, Object>[])dataRule.getActions(),
+							action -> {
+								JSONObject jsonObject =
+									JSONFactoryUtil.createJSONObject();
+
+								action.forEach(jsonObject::put);
+
+								return jsonObject;
+							})
+					).put(
+						"conditions",
+						JSONUtil.toJSONArray(
+							(Map<String, Object>[])dataRule.getConditions(),
+							condition -> {
+								JSONObject jsonObject =
+									JSONFactoryUtil.createJSONObject();
+
+								condition.forEach(jsonObject::put);
+
+								return jsonObject;
+							})
+					).put(
+						"logicalOperator", dataRule.getLogicalOperator()
+					).put(
+						"name",
+						LocalizedValueUtil.toJSONObject(dataRule.getName())
+					)));
 
 			return JSONFactoryUtil.createJSONObject(
 				JSONFactoryUtil.looseSerializeDeep(ddmFormTemplateContext));
@@ -857,40 +889,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 			return ddmFormLayoutDeserializerDeserializeResponse.
 				getDDMFormLayout();
-		}
-
-		private JSONArray _getDataRulesJSONArray() throws Exception {
-			return JSONUtil.toJSONArray(
-				_dataLayout.getDataRules(),
-				dataRule -> JSONUtil.put(
-					"actions",
-					JSONUtil.toJSONArray(
-						(Map<String, Object>[])dataRule.getActions(),
-						action -> {
-							JSONObject jsonObject =
-								JSONFactoryUtil.createJSONObject();
-
-							action.forEach(jsonObject::put);
-
-							return jsonObject;
-						})
-				).put(
-					"conditions",
-					JSONUtil.toJSONArray(
-						(Map<String, Object>[])dataRule.getConditions(),
-						condition -> {
-							JSONObject jsonObject =
-								JSONFactoryUtil.createJSONObject();
-
-							condition.forEach(jsonObject::put);
-
-							return jsonObject;
-						})
-				).put(
-					"logicalOperator", dataRule.getLogicalOperator()
-				).put(
-					"name", LocalizedValueUtil.toJSONObject(dataRule.getName())
-				));
 		}
 
 		private DDMForm _getDDMForm() throws Exception {

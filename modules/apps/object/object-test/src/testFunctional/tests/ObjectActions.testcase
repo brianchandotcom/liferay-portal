@@ -3623,6 +3623,60 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify adding a Commerce Product entry triggers an action to update the Commerce Product Group entry."
+	@priority = 5
+	test CanUpdateCommerceProductGroupEntryAfterCreatingCommerceProductEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a Commerce Product Group object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product Group");
+		}
+
+		task ("And given an action to update a Commerce Product Group entry after creating a Commerce Product Group entry") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
+				active = "true",
+				fieldName = "Title",
+				inputMethod = "true",
+				inputValue = "Product Group Updated",
+				objectLabel = "Commerce Product Group",
+				thenAction = "Update an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("When the user creates a Commerce Product Group entry") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Product Groups");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			Type(
+				key_fieldLabel = "Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Product Group");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the action is triggered and the Commerce Product Group entry is updated") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Product Groups");
+
+			AssertElementPresent(
+				key_entryName = "Product Group Updated",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+	}
+
 	@description = "LPS-156346 - Verify that the expression works with Groovy Script."
 	@priority = 5
 	test CanUseExpressionWithGroovyScript {

@@ -862,7 +862,31 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(ddmStructure.hasField("aField"));
 	}
 
-	private void _assertDDMTemplate() {
+	private void _assertDDMTemplate1() {
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(DDMStructure.class.getName()),
+			"TEST DDM TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+
+		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(AssetEntry.class.getName()),
+			"TEST WIDGET DDM TEMPLATE KEY");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test Widget DDM Template Name",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
+	}
+
+	private void _assertDDMTemplate2() {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(TemplateEntry.class.getName()),
@@ -881,7 +905,18 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals(
-			"Test DDM Template Name",
+			"Test DDM Template Name 1 Update",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
+
+		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(DDMStructure.class.getName()),
+			"TEST DDM TEMPLATE KEY 2");
+
+		Assert.assertNotNull(ddmTemplate);
+		Assert.assertEquals(
+			"Test DDM Template Name 2",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 
@@ -2882,7 +2917,7 @@ public class BundleSiteInitializerTest {
 		_assertCPInstanceProperties();
 		_assertCPOptionCategory();
 		_assertDDMStructure();
-		_assertDDMTemplate();
+		_assertDDMTemplate1();
 		_assertDLFileEntry();
 		_assertExpandoColumns1();
 		_assertFragmentEntries();
@@ -2915,6 +2950,7 @@ public class BundleSiteInitializerTest {
 
 		_assertAccounts2();
 		_assertCommerceChannel2();
+		_assertDDMTemplate2();
 		_assertExpandoColumns2();
 		_assertListTypeDefinitions2();
 		_assertObjectDefinitions2();

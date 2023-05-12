@@ -14,7 +14,7 @@ definition {
 			ACUtils.launchAC();
 		}
 
-		task ("Navigation to custom events tab") {
+		task ("Navigate to settings > Api") {
 			ACNavigation.goToSettings();
 
 			ACSettings.goToApis();
@@ -793,6 +793,7 @@ definition {
 		}
 	}
 
+
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13504 | Test Summary: Check if you can access data for a specific Documents and Media"
 	@priority = 3
 	test RequestToAccessDataForSpecificDocumentsAndMedia {
@@ -884,4 +885,61 @@ definition {
         }
     }
 
+	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13504 | Test Summary: Check that you can access data from all existing Documents and Media"
+    @priority = 4
+    test RequestToAccessDataForAllDocumentsAndMedia {
+        var documentsMediaTitleList = "DM AC Title 1,DM AC Title 2";
+        var type = "documents-and-media";
+        var range = "rangeKey";
+        var rangeValue = 0;
+
+        task ("Copy the token value for the API") {
+            var token = ACApi.getTokenValue();
+        }
+
+        task ("Take the token from Analytics Cloud") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+        }
+
+        task ("Go to DXP and create a site and two documents and media, then connect Analytics Cloud to DXP") {
+            TestCase.setUpPortalInstance();
+
+            ACUtils.launchDXP();
+
+        	ACUtils.addSiteAndPage();
+
+            for (var n : list "1,2") {
+				ACUtils.createDMAndAddToPage(
+					dmDocumentFile = "Document_${n}.jpg",
+                	dmDocumentTitle = "DM AC Title ${n}");
+            }
+
+            ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+        }
+
+        task ("View the documents and media page") {
+            ACUtils.navigateToSitePage(
+				actionType = "View DM",
+                documentTitleList = ${documentsMediaTitleList},
+                pageName = "AC Page",
+            	siteName = "Site Name");
+               
+            ACUtils.closeAllSessionsAndWait();
+        }
+
+        task ("Create a data report using analytics cloud API with the type documents and media") {
+			ACApi.createDataReport(
+				filter = ${range},
+                filterValue = ${rangeValue},
+                token = ${token},
+                type = ${type});
+        }
+
+               
+        task ("Assert the two created documents and media are present in the response") {
+            ACApi.assertApiResponse(
+				apiDataResponse = ${apiResponse},
+				expectedList = ${documentsMediaTitleList});
+        }
+    }
 }

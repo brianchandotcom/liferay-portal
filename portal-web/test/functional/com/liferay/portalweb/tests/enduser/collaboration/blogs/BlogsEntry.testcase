@@ -372,7 +372,7 @@ definition {
 
 		PortletEntry.publish();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/blogs-page/-/blogs/custom-url-here");
 
@@ -1795,7 +1795,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test ShouldHaveUniqueURLForDuplicate {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -1897,7 +1897,7 @@ definition {
 	@description = "This is a test for LPS-136769. It checks that a friendly URL can be added with escape characters."
 	@priority = 3
 	test URLWithEscapeCharactersWillBeNormalized {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

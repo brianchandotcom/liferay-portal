@@ -77,7 +77,7 @@ definition {
 		}
 
 		task ("Assert appears on metric") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
 			ACAssets.viewAssetAppearsOnMetric(

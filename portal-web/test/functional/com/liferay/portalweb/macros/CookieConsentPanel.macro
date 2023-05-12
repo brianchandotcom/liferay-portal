@@ -193,7 +193,7 @@ definition {
 		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE_IN_VIRTUAL_HOST");
 
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		Navigator.gotoSitePage(

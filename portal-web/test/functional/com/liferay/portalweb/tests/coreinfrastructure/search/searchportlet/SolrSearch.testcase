@@ -284,7 +284,7 @@ definition {
 
 		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		AssertLocation(value1 = "${portalURL}/web/guest/search-page?keywordparameter=Potato&scopeparameter=everything&type=com.liferay.blogs.model.BlogsEntry");
 

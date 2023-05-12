@@ -83,7 +83,7 @@ definition {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertEditedEmailTemplate";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
@@ -294,7 +294,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertUserIsBlockedAfterReachAllowedFailedAttempts";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
@@ -615,7 +615,7 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#EndUserPermissionCheck";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add user with password") {
 			JSONUser.addUser(
@@ -655,7 +655,7 @@ definition {
 		}
 
 		task ("Assert user doesn't have permissions to configure Instance Settings") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 
@@ -672,7 +672,7 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterResetPasswordAsEndUser";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add user") {
 			JSONUser.addUser(
@@ -732,7 +732,7 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginSuccessfulAfterRetryTimeout";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP and set failed attempts maximum number and retry time out") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
@@ -785,7 +785,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierEnabled";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();
@@ -891,7 +891,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabled";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -941,7 +941,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabledByCompanyId";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Deploy MFA configuration with CompanyId set") {
 			MultiFactorAuthentication.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.scoped~CompanyId.config");
@@ -999,7 +999,7 @@ definition {
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithOTPEnabledByCompanyWebId";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Deploy the OSGI configuration file with CompanyWebId") {
 			OSGiConfig.copyOSGiConfigFile(
@@ -1056,7 +1056,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithTOTPEnabledAsEndUser";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -1165,7 +1165,7 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#RemoveTOTPVerificationOfCurrentUserNotAffectOtherEndUser";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add user and set password") {
 			JSONUser.addUser(
@@ -1437,7 +1437,7 @@ definition {
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#ViewResourceActionsOfOTPVerificationFailure";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Enable OTP") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings();

@@ -65,7 +65,7 @@ definition {
 	@priority = 4
 	test MaliciousURLScriptsDoNotExecute {
 		task ("Visit malicious urls and request error message") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			var maliciousUrl1 = '''
 					${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
@@ -160,7 +160,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Go to Account Settings and save p_p_auth param from the URL") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
@@ -260,7 +260,7 @@ definition {
 	@priority = 3
 	test NoXSSVulnerabilityInJSONWS {
 		task ("Access JSONWS successfully") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E");
 
@@ -296,7 +296,7 @@ definition {
 	@priority = 4
 	test NoXSSVulnerabilityInLiferayPortletList {
 		task ("Add public page") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -369,7 +369,7 @@ definition {
 		property test.name.skip.portal.instance = "XSS#NoXSSVulnerabilityInMatomo";
 
 		task ("Edit matomo CP") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Site.openSiteSettingsAdmin(siteURLKey = "guest");
 

@@ -170,7 +170,7 @@ definition {
 		property minimum.slave.ram = "24";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishScheduledEntry";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",

@@ -56,7 +56,7 @@ definition {
 		}
 
 		task ("View Inactive Request Message") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/site-name");
 
@@ -267,7 +267,7 @@ definition {
 	test EditSiteFriendlyURL {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -314,7 +314,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Sites#EditSiteFriendlyURLInvalid";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site and a public page in it") {
 			HeadlessSite.addSite(siteName = "Site Name");

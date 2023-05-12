@@ -294,7 +294,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#AuthCodeShouldWorkWithClusteredPortals";
 
 		task ("Add an OAuth 2 application") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -575,7 +575,7 @@ definition {
 			WaitForSPARefresh();
 
 			var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 		}
 
 		task ("Go to scopes and add com.liferay.oauth2.provider.sample.jar file") {
@@ -645,7 +645,7 @@ definition {
 		}
 
 		task ("Add SAP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -742,7 +742,7 @@ definition {
 		}
 
 		task ("Verify resource and global scopes are present in OAuth 2 administration entry scopes") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -801,7 +801,7 @@ definition {
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 
@@ -981,7 +981,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAddedAndEdited";
 
 		task ("Add a new OAuth 2 application") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -1157,7 +1157,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#GrantedAuthorizationsCanBeRevoked";
 
 		task ("Add a new external application") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -1539,7 +1539,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#OAuth2SAPEntriesCanBeAddedAndEdited";
 
 		task ("Add SAP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -1701,7 +1701,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#PanelsShouldBeExpandableOnGlobalScopes";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 
@@ -1760,7 +1760,7 @@ definition {
 		property test.name.skip.portal.instance = "OAuth2#PanelsShouldBeExpandableOnResourceScopes";
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 
@@ -2015,7 +2015,7 @@ definition {
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Add OAuth 2 Application") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			OAuth2.openOAuth2Admin();
 
@@ -2082,7 +2082,7 @@ definition {
 		FileInstall.deployFileOnServer(jarFile = "com.liferay.oauth2.provider.scope.sample.qa.jar");
 
 		task ("Delete OSGi JAX-RS Default configuration") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_factory_instances");
 

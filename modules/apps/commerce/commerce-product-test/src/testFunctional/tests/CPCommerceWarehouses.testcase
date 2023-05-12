@@ -1362,7 +1362,7 @@ definition {
 
 		// TODO Review
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

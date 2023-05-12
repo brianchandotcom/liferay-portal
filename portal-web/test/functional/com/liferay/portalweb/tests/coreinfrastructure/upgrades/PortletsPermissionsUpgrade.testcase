@@ -10,7 +10,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
 

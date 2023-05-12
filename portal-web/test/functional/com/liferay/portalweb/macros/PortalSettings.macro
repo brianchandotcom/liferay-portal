@@ -683,7 +683,7 @@ definition {
 
 	macro openToConfigInInstanceSettings {
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (isSet(portletId)) {

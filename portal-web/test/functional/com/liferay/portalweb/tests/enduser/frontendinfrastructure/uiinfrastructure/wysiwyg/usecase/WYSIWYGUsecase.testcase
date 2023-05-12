@@ -129,7 +129,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		ItemSelector.addImageFromURL(
 			imageSourceURL = "${portalURL}/webdav/guest/document_library/Document_1.jpg",

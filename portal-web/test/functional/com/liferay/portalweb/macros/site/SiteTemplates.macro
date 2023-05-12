@@ -65,7 +65,7 @@ definition {
 
 	macro addCP {
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = ${baseURL});

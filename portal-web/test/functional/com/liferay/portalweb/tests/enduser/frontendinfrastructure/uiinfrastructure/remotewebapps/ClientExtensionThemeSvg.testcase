@@ -42,7 +42,7 @@ definition {
 		property custom.properties = "feature.flag.LPS-166479=true";
 		property portal.acceptance = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given Upload new SVG to document library") {
 			ProductMenu.gotoPortlet(

@@ -1202,7 +1202,7 @@ definition {
 		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsDataProvider#DataProviderCanRetrieveDataForGuestUser";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 

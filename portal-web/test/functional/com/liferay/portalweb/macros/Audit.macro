@@ -8,7 +8,7 @@ definition {
 		var portletId = "";
 
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (${portlet} == "Logging Message Audit") {
@@ -24,7 +24,7 @@ definition {
 
 	macro openAuditAdmin {
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_audit_web_portlet_AuditPortlet");

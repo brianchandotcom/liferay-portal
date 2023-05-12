@@ -1032,7 +1032,7 @@ definition {
 	test CanViewCanonicalURL {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURL";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
@@ -1077,7 +1077,7 @@ definition {
 	test CanViewCanonicalURLForDuplicatedQuestions {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLForDuplicatedQuestions";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 
@@ -1143,7 +1143,7 @@ definition {
 	test CanViewCanonicalURLWithSpecialCharacters {
 		property test.name.skip.portal.instance = "QuestionsEntry#CanViewCanonicalURLWithSpecialCharacters";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Questions.openToConfigInSystemSettings(portlet = "Questions");
 

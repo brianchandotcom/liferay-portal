@@ -1,7 +1,7 @@
 definition {
 
 	macro addAndEditExternalApplication {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		if (isSet(baseURL)) {
 			var portalURL = ${baseURL};
@@ -442,7 +442,7 @@ definition {
 
 	macro getAccessToken {
 		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 		}
 
 		if (${grantFlow} == "clientCredentials") {
@@ -469,7 +469,7 @@ definition {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 
 		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 		}
 
 		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
@@ -492,7 +492,7 @@ definition {
 	}
 
 	macro getDeleteOutput {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var articleId = JSONWebcontentSetter.setArticleId(
 			groupName = "Guest",
 			title = "WC Title");
@@ -711,7 +711,7 @@ definition {
 	macro postClientCredentialTokenViaCurl {
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		var curl = '''
 			${portalURL}/o/oauth2/token \
@@ -725,7 +725,7 @@ definition {
 
 	@description = "Request the liferay access token for OAuth2 application with the JWT via curl."
 	macro requestAccessTokenWithJWTViaCurl {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var jwt = FileUtil.read("${jwtFileBaseDir}/${jwtFileName}");
 
 		var curl = '''

@@ -1066,7 +1066,7 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Page.viewTranslationsPG(
 			defaultLanguageLocalizationMessage = "Display the page in English (United States).",

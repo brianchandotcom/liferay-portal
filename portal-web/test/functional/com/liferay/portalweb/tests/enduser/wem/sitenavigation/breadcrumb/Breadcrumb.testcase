@@ -469,7 +469,7 @@ definition {
 	test ViewBreadcrumbWhenNavigateToPageViaIPAddress {
 		property test.name.skip.portal.instance = "Breadcrumb#ViewBreadcrumbWhenNavigateToPageViaIPAddress";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a Breadcrumb widget to page") {
 			JSONLayout.addWidgetToPublicLayout(

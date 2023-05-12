@@ -41,7 +41,7 @@ definition {
 	test CanAccessOldFriendlyURLAfterRevert {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -895,7 +895,7 @@ definition {
 	test CanDownloadThroughURLWithFileName {
 		property portal.acceptance = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -922,7 +922,7 @@ definition {
 	test CanDownloadThroughURLWithTitle {
 		property portal.acceptance = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -949,7 +949,7 @@ definition {
 	test CanDownloadThroughURLWithUpdatedFileName {
 		property portal.acceptance = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -982,7 +982,7 @@ definition {
 	test CanDownloadThroughURLWithUpdatedTitle {
 		property portal.acceptance = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -1945,7 +1945,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CannotViewExpiredDocumentAsGuest";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -2027,7 +2027,7 @@ definition {
 	test CanPreviewImageThroughURL {
 		property portal.acceptance = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");

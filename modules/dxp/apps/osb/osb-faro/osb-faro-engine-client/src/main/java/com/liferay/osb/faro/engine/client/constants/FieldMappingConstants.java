@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -141,7 +142,8 @@ public class FieldMappingConstants {
 			new FieldMappingMap("lastName", "familyName", TYPE_TEXT),
 			new FieldMappingMap("middleName", "additionalName", TYPE_TEXT),
 			new FieldMappingMap("phones", "telephone", TYPE_TEXT));
-	private static Map<String, String> _liferayFieldNames;
+	private static final Map<String, String> _liferayFieldNames =
+		new HashMap<>();
 	private static final Map<String, String> _ownerTypes = HashMapBuilder.put(
 		OWNER_TYPE_ACCOUNT, OWNER_TYPE_ACCOUNT
 	).put(

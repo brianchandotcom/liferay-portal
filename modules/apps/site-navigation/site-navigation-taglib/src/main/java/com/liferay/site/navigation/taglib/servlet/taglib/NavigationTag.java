@@ -200,10 +200,10 @@ public class NavigationTag extends IncludeTag {
 	}
 
 	protected String getDisplayStyle() {
-		PortletDisplayTemplate portletDisplayTemplate =
-			ServletContextUtil.getPortletDisplayTemplate();
-
 		if (Validator.isNotNull(_ddmTemplateKey)) {
+			PortletDisplayTemplate portletDisplayTemplate =
+				ServletContextUtil.getPortletDisplayTemplate();
+
 			return portletDisplayTemplate.getDisplayStyle(_ddmTemplateKey);
 		}
 

@@ -41,6 +41,7 @@ interface AutoCompleteProps<
 	value?: string;
 }
 declare type EmptyStateItem = {
+	externalReferenceCode: string;
 	id: string;
 	label: string;
 };

@@ -211,6 +211,84 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11277. As a Sales Agent, I can create a Quote Request in the Open Order's Details Page by entering a personal message."
+	@priority = 5
+	test CanCreateQuoteRequestAsSalesAgent {
+		property custom.properties = "feature.flag.COMMERCE-11028=true";
+		property portal.acceptance = "true";
+
+		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And a Commerce Account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And that Commerce Account is linked to the Test Organization") {
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Test Organization");
+		}
+
+		task ("And the Sales Agent clicks the 'Request a Quote' button in the Mini Cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Request a Quote");
+		}
+
+		task ("When the Sales Agent clicks again the 'Request a Quote' button in the Open Order's Details Page") {
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		task ("Then the a modal named Request a Quote is shown") {
+			AssertElementPresent(
+				key_title = "Request a Quote",
+				locator1 = "CommerceFrontStore#MODAL_TITLE");
+		}
+
+		task ("When the Sales Agent submits the request after writing a message in the note area") {
+			CommerceOrders.createQuoteRequest(quoteRequestValue = "I kindly request a quote for this product.");
+		}
+
+		task ("Then the quote request is placed with the status 'Quote Requested' in the Placed Order's Details Page") {
+			AssertElementPresent(
+				key_status = "Quote Requested",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+		}
+
+		task ("And the quote request cannot be edited") {
+			Click.javaScriptClick(locator1 = "CommerceFrontStore#ORDER_PAGES_NOTES_BUTTON");
+
+			AssertTextNotPresent(
+				locator1 = "CommerceAccelerators#PORTLET_CONTENT",
+				value1 = "Edit");
+		}
+	}
+
 	@description = "COMMERCE-9882 | As a Sales Agent, if he has the permission, I want to be able to see all the accounts and the orders that are present in the organization to which the same Sales Agent belongs"
 	@priority = 5
 	test CanEditAccountDetailsAsSalesAgent {

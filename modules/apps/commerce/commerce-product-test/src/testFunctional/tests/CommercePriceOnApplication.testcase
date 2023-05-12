@@ -86,4 +86,69 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11277. As a buyer user, I can create a Quote Request in the Open Order's Details Page by entering a personal message."
+	@priority = 5
+	test CanCreateQuoteRequest {
+		property portal.acceptance = "true";
+
+		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer user clicks the 'Request a Quote' button in the Mini Cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Request a Quote");
+		}
+
+		task ("When the buyer clicks again the 'Request a Quote' button in the Open Order Details Page") {
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		task ("Then the a modal named Request a Quote is shown") {
+			AssertElementPresent(
+				key_title = "Request a Quote",
+				locator1 = "CommerceFrontStore#MODAL_TITLE");
+		}
+
+		task ("When the buyer submits the request after writing a message in the note area") {
+			CommerceOrders.createQuoteRequest(quoteRequestValue = "I kindly request a quote for this product.");
+		}
+
+		task ("Then the quote request is placed with the status 'Quote Requested' in the Placed Order's Details Page") {
+			AssertElementPresent(
+				key_status = "Quote Requested",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+		}
+
+		task ("Then the quote request cannot be edited") {
+			Click.javaScriptClick(locator1 = "CommerceFrontStore#ORDER_PAGES_NOTES_BUTTON");
+
+			AssertTextNotPresent(
+				locator1 = "CommerceAccelerators#PORTLET_CONTENT",
+				value1 = "Edit");
+		}
+	}
+
 }

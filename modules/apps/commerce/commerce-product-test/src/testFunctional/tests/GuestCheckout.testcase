@@ -612,6 +612,77 @@ definition {
 			expected = "buyer@liferay.com");
 	}
 
+	@description = "COMMERCE-11277. As a Guest User, I can create a Quote Request in the Cart Summary by entering a personal message."
+	@priority = 5
+	test CanGuestUserCreateQuoteRequestOnSpeedwell {
+		property custom.properties = "feature.flag.COMMERCE-11028=true";
+		property portal.acceptance = "true";
+
+		task ("Given a Speedwell site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
+		}
+
+		task ("And 'Allow Request a Quote on a Fully Priced Cart' and 'Guest Checkout' are enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Speedwell Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Guest Checkout",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the Guest User clicks the 'Request a Quote' button in the Mini Cart") {
+			User.logoutPG();
+
+			Navigator.openSiteURL(siteName = "Speedwell");
+
+			CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Request a Quote");
+		}
+
+		task ("When the Guest clicks again the 'Request a Quote' button in the Cart Summary") {
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		task ("Then the a modal named Request a Quote is shown") {
+			AssertElementPresent(
+				key_title = "Request a Quote",
+				locator1 = "CommerceFrontStore#MODAL_TITLE");
+		}
+
+		task ("When the Guest submits the request after writing a message in the note area") {
+			CommerceOrders.createQuoteRequest(quoteRequestValue = "I kindly request a quote for this product.");
+		}
+
+		task ("Then the quote request is placed with the status 'Quote Requested' in the Orders Page") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Quote Requested",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+	}
+
 	@priority = 5
 	test GuestAccountIsNotCombinedWithExistingUserAccount {
 		property portal.acceptance = "true";

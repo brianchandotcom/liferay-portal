@@ -48,7 +48,7 @@
 				OSBFaro_FaroProjectEmailDomain ON
 					OSBFaro_FaroProjectEmailDomain.groupId = OSBFaro_FaroProject.groupId
 			WHERE
-				LOWER(OSBFaro_FaroProjectEmailDomain.emailAddressDomain) = ?
+				LOWER(OSBFaro_FaroProjectEmailDomain.emailDomain) = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.osb.faro.service.persistence.FaroUserFinder.countByChannelG_EA_EA_FN_LN">

@@ -982,39 +982,25 @@ public class EditAssetListDisplayContext {
 		segmentsEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-			"selectEntity", segmentsEntryItemSelectorCriterion);
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (portletURL == null) {
-			return null;
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (!stagingGroupHelper.isStagedPortlet(
+				_themeDisplay.getScopeGroupId(),
+				SegmentsPortletKeys.SEGMENTS)) {
+
+			group = stagingGroupHelper.getStagedPortletGroup(
+				_themeDisplay.getScopeGroup(), SegmentsPortletKeys.SEGMENTS);
 		}
 
-		_selectSegmentsEntryURL = PortletURLBuilder.create(
-			portletURL
-		).setParameter(
-			"groupId",
-			() -> {
-				StagingGroupHelper stagingGroupHelper =
-					StagingGroupHelperUtil.getStagingGroupHelper();
+		segmentsEntryItemSelectorCriterion.setGroupId(group.getGroupId());
 
-				Group group = _themeDisplay.getScopeGroup();
-
-				if (!stagingGroupHelper.isStagedPortlet(
-						_themeDisplay.getScopeGroupId(),
-						SegmentsPortletKeys.SEGMENTS)) {
-
-					group = stagingGroupHelper.getStagedPortletGroup(
-						_themeDisplay.getScopeGroup(),
-						SegmentsPortletKeys.SEGMENTS);
-				}
-
-				return group.getGroupId();
-			}
-		).setParameter(
-			"selectedSegmentsEntryIds",
-			StringUtil.merge(getSelectedSegmentsEntryIds())
-		).buildString();
+		_selectSegmentsEntryURL = String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				"selectEntity", segmentsEntryItemSelectorCriterion));
 
 		return _selectSegmentsEntryURL;
 	}

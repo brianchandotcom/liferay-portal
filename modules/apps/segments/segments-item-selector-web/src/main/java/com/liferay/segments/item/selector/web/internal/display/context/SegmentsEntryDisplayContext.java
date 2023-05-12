@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.item.selector.SegmentsEntryItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -42,11 +43,14 @@ public class SegmentsEntryDisplayContext {
 	public SegmentsEntryDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		RenderRequest renderRequest,
+		SegmentsEntryItemSelectorCriterion segmentsEntryItemSelectorCriterion,
 		SegmentsEntryLocalService segmentsEntryLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
+		_segmentsEntryItemSelectorCriterion =
+			segmentsEntryItemSelectorCriterion;
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -64,18 +68,20 @@ public class SegmentsEntryDisplayContext {
 			new SearchContainer<>(
 				_renderRequest, _portletURL, null, "there-are-no-segments");
 
-		segmentEntrySearchContainer.setId("selectSegmentsEntry");
 		segmentEntrySearchContainer.setOrderByCol(_getOrderByCol());
 		segmentEntrySearchContainer.setOrderByType(_getOrderByType());
 
 		segmentEntrySearchContainer.setResultsAndTotal(
 			_segmentsEntryLocalService.searchSegmentsEntries(
-				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-				_getKeywords(), true,
+				_themeDisplay.getCompanyId(), _getGroupId(), _getKeywords(),
+				true,
 				LinkedHashMapBuilder.<String, Object>put(
-					"excludedSegmentsEntryIds", _getExcludedSegmentsEntryIds()
+					"excludedSegmentsEntryIds",
+					_segmentsEntryItemSelectorCriterion.
+						getExcludedSegmentsEntryIds()
 				).put(
-					"excludedSources", _getExcludedSources()
+					"excludedSources",
+					_segmentsEntryItemSelectorCriterion.getExcludedSources()
 				).build(),
 				segmentEntrySearchContainer.getStart(),
 				segmentEntrySearchContainer.getEnd(), _getSort()));
@@ -85,26 +91,20 @@ public class SegmentsEntryDisplayContext {
 		return _segmentEntrySearchContainer;
 	}
 
-	private long[] _getExcludedSegmentsEntryIds() {
-		if (_excludedSegmentsEntryIds != null) {
-			return _excludedSegmentsEntryIds;
+	private long _getGroupId() {
+		if (_groupId > 0) {
+			return _groupId;
 		}
 
-		_excludedSegmentsEntryIds = ParamUtil.getLongValues(
-			_httpServletRequest, "excludedSegmentsEntryIds");
+		long groupId = _segmentsEntryItemSelectorCriterion.getGroupId();
 
-		return _excludedSegmentsEntryIds;
-	}
-
-	private String[] _getExcludedSources() {
-		if (_excludedSources != null) {
-			return _excludedSources;
+		if (groupId == 0) {
+			groupId = _themeDisplay.getScopeGroupId();
 		}
 
-		_excludedSources = ParamUtil.getStringValues(
-			_httpServletRequest, "excludedSources");
+		_groupId = groupId;
 
-		return _excludedSources;
+		return _groupId;
 	}
 
 	private String _getKeywords() {
@@ -163,8 +163,7 @@ public class SegmentsEntryDisplayContext {
 		return sort;
 	}
 
-	private long[] _excludedSegmentsEntryIds;
-	private String[] _excludedSources;
+	private long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
@@ -172,6 +171,8 @@ public class SegmentsEntryDisplayContext {
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private SearchContainer<SegmentsEntry> _segmentEntrySearchContainer;
+	private final SegmentsEntryItemSelectorCriterion
+		_segmentsEntryItemSelectorCriterion;
 	private final SegmentsEntryLocalService _segmentsEntryLocalService;
 	private final ThemeDisplay _themeDisplay;
 

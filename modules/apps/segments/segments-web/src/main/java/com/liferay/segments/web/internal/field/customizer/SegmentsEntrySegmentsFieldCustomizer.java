@@ -19,9 +19,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,7 +37,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,35 +100,28 @@ public class SegmentsEntrySegmentsFieldCustomizer
 					Collections.singletonList(
 						new UUIDItemSelectorReturnType()));
 
-			PortletURL portletURL = _itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(portletRequest),
-				"selectEntity", segmentsEntryItemSelectorCriterion);
-
-			if (portletURL == null) {
-				return null;
-			}
-
 			long segmentsEntryId = ParamUtil.getLong(
 				portletRequest, "segmentsEntryId");
 
-			if (segmentsEntryId > 0) {
-				portletURL.setParameter(
-					"excludedSegmentsEntryIds",
-					String.valueOf(segmentsEntryId));
-			}
+			segmentsEntryItemSelectorCriterion.setExcludedSegmentsEntryIds(
+				new long[] {segmentsEntryId});
 
-			portletURL.setParameter(
-				"excludedSources",
-				StringUtil.toLowerCase(SegmentsEntryConstants.SOURCE_REFERRED));
+			segmentsEntryItemSelectorCriterion.setExcludedSources(
+				new String[] {
+					StringUtil.toLowerCase(
+						SegmentsEntryConstants.SOURCE_REFERRED)
+				});
 
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					SegmentsEntry.class.getName()),
-				PortletURLBuilder.create(
-					portletURL
-				).buildString(),
+				String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							portletRequest),
+						"selectEntity", segmentsEntryItemSelectorCriterion)),
 				false);
 		}
 		catch (Exception exception) {

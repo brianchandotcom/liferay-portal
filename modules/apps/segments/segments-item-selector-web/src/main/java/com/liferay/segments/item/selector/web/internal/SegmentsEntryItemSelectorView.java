@@ -84,7 +84,7 @@ public class SegmentsEntryItemSelectorView
 		SegmentsEntryDisplayContext segmentsEntryDisplayContext =
 			new SegmentsEntryDisplayContext(
 				httpServletRequest, portletURL, renderRequest,
-				_segmentsEntryLocalService);
+				segmentsEntryItemSelectorCriterion, _segmentsEntryLocalService);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			httpServletRequest, servletResponse,

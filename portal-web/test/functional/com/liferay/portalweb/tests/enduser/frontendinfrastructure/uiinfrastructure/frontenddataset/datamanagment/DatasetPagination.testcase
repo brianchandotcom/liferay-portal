@@ -31,7 +31,7 @@ definition {
 				key_name = "View Test");
 		}
 
-		task ("When goes to Fields Tab") {
+		task ("When goes to Pagination Tab") {
 			FrontendDataSetAdmin.goToTab(
 				dataSetViewName = "View Test",
 				tabName = "Pagination");
@@ -83,9 +83,8 @@ definition {
 	test CanAssertDefaultValues {
 		task ("Then the default values for Pagination items will be 4, 8, 20, 40, 60, separated by commas") {
 			AssertElementPresent(
-				key_fieldName = "List of Items per Page",
 				key_fieldValue = "4, 8, 20, 40, 60",
-				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
+				locator1 = "FrontendDataSetAdmin#PAGINATION_TEXT_BOX");
 		}
 
 		task ("And The default value for the Default Value field is 20") {
@@ -227,12 +226,33 @@ definition {
 	}
 
 	@description = "LPS-183940. Confirm that error appears when pagination item is blank"
-	@ignore = "true"
 	@priority = 5
 	test ErrorAppearsWhenPaginationItemBlank {
+		task ("The user leaves the field Pagination Items empty") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = "");
 
-		// TODO LPS-183940 ErrorAppearsWhenPaginationItemBlank pending implementation
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+		}
 
+		task ("Assert Save button is disabled") {
+			PRMMDFRequest.viewDisabledButton(buttonName = "Save");
+		}
+
+		task ("Then an error message appears") {
+			AssertElementPresent(
+				key_errorMessage = "This field is required.",
+				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+		}
+
+		task ("The field will be populated with the default values for Pagination items 4, 8, 20, 40, 60, separated by commas") {
+			Refresh();
+
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+
+			AssertElementPresent(
+				key_fieldValue = "4, 8, 20, 40, 60",
+				locator1 = "FrontendDataSetAdmin#PAGINATION_TEXT_BOX");
+		}
 	}
 
 }

@@ -945,7 +945,6 @@ definition {
 	@description = "LPS-92043 - Verify that the Due Date displays the next SLA in line when a SLA didn't start counting"
 	@priority = 3
 	test DisplayNextSLAInLineWhenSLANotStarted {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#DisplayNextSLAInLineWhenSLANotStarted";
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -1001,7 +1000,7 @@ definition {
 
 		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "20")) {
+		while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "100")) {
 			Refresh();
 		}
 

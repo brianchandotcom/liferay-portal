@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORTS_TABLE_RESOURCE_ACTION_2</td>
+	<td>xpath=(//tr[@data-qa-id='row']/td[5]//a[contains(text(),'${key_resourceAction}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPORTS_TABLE_ENTRIES</td>
 	<td>//tr[contains(.,'${key_id}') and contains(.,'${key_userName}') and contains(.,'${key_resourceID}') and contains(.,'${key_resourceName}') and contains(.,'${key_resourceAction}') and contains(.,'${key_clientIP}') and contains(.,'${key_createDate}')][${key_position}]</td>
 	<td></td>

@@ -159,6 +159,8 @@ export function Attachments({setValues, values}: IProps) {
 
 								setValues({
 									...values,
+									objectDefinitionExternalReferenceCode:
+										emptyStateItem.externalReferenceCode,
 									objectDefinitionId: Number(
 										emptyStateItem.id
 									),
@@ -178,6 +180,8 @@ export function Attachments({setValues, values}: IProps) {
 
 								setValues({
 									...values,
+									objectDefinitionExternalReferenceCode:
+										item.externalReferenceCode,
 									objectDefinitionId: item.id,
 								});
 							}}

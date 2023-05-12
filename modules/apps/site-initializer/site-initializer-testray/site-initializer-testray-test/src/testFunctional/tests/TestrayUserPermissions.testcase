@@ -23,8 +23,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -39,6 +37,8 @@ definition {
 			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 		}
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -47,6 +47,8 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the user but can view"
 	@priority = 4
 	test AnalystRoleCanNotCreateEditAndDeleteUser {
+		property test.name.skip.portal.instance = "TestrayUserPermissions#AnalystRoleCanNotCreateEditAndDeleteUser";
+
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -95,6 +97,8 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the user but can view"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDeleteUser {
+		property test.name.skip.portal.instance = "TestrayUserPermissions#LeadRoleCanNotCreateEditAndDeleteUser";
+
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -143,6 +147,8 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that a new user with full admin permissions can create(with adm roles disabled)/edit and delete users"
 	@priority = 5
 	test NewUserWithAdmRoleCanCreateEditAndDeleteUser {
+		property test.name.skip.portal.instance = "TestrayUserPermissions#NewUserWithAdmRoleCanCreateEditAndDeleteUser";
+
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "administrator@testray.com",
@@ -198,6 +204,8 @@ definition {
 	@description = "Story ID: LPS-178274 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the user but can view"
 	@priority = 4
 	test UserRoleCanNotCreateEditAndDeleteUser {
+		property test.name.skip.portal.instance = "TestrayUserPermissions#UserRoleCanNotCreateEditAndDeleteUser";
+
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

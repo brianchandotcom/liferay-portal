@@ -33,7 +33,7 @@ definition {
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "test");
+				userLoginFullName = "test test");
 		}
 
 		task ("Delete all objects, Testray Site and Client Extensions") {
@@ -59,7 +59,7 @@ definition {
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
-				userLoginFullName = "test");
+				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
@@ -103,7 +103,7 @@ definition {
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
-				userLoginFullName = "test");
+				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
@@ -147,7 +147,7 @@ definition {
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",
-				userLoginFullName = "test");
+				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}

@@ -34,6 +34,21 @@ export async function getCatalogId() {
 	return catalogs[0].id;
 }
 
+export function getInitials(userName: string) {
+	const names = userName.trim().split(' ');
+	const lastNameIndex = names.length - 1;
+
+	const initials = names.reduce((initials, currentName, index) => {
+		if (!index || index === lastNameIndex) {
+			initials = `${initials}${currentName.charAt(0).toUpperCase()}`;
+		}
+
+		return initials;
+	});
+
+	return initials;
+}
+
 export async function userAccountChecker(verifiedAccounts: string[]) {
 	const response = await getUserAccountsById();
 

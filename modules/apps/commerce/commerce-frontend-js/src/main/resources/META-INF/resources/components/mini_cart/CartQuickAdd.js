@@ -9,7 +9,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {addToCart} from '../add_to_cart/data';
 import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
@@ -18,6 +18,22 @@ import {getCorrectedQuantity} from './util/index';
 
 const CHANNEL_RESOURCE_ENDPOINT =
 	'/o/headless-commerce-delivery-catalog/v1.0/channels';
+
+const getSearchSKUsURL = (page, search, accountId, channelId) => {
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products`,
+		themeDisplay.getPortalURL()
+	);
+
+	url.searchParams.append('accountId', accountId);
+	url.searchParams.append('nestedFields', 'skus');
+	url.searchParams.append('page', page);
+	url.searchParams.append('pageSize', '100');
+	url.searchParams.append('search', search);
+	url.searchParams.append('skus.accountId', accountId);
+
+	return url.toString();
+};
 
 export default function CartQuickAdd() {
 	const {cartState, setCartState} = useContext(MiniCartContext);
@@ -30,13 +46,12 @@ export default function CartQuickAdd() {
 	const paginatorTotalCountRef = useRef(0);
 	const requestAbortControllerRef = useRef(new AbortController());
 
-	const [formattedProducts, setFormattedProducts] = useState([]);
-
-	const [productsQuery, setProductsQuery] = useState('');
-	const [productsWithOptions, setProductsWithOptions] = useState([]);
+	const [availableSKUs, setAvailableSKUs] = useState([]);
+	const [formattedSKUs, setFormattedSKUs] = useState([]);
 	const [quantityError, setQuantityError] = useState(false);
 	const [quickAddToCartError, setQuickAddToCartError] = useState(false);
-	const [selectedProducts, setSelectedProducts] = useState([]);
+	const [searchInputValue, setSearchInputValue] = useState('');
+	const [selectedSKUs, setSelectedSKUs] = useState([]);
 
 	const {
 		accountId,
@@ -45,6 +60,35 @@ export default function CartQuickAdd() {
 		id: cartId,
 	} = cartState;
 	const channelId = channel.id;
+
+	useEffect(() => {
+		const productsApiURL = new URL(
+			`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products?accountId=${accountId}&nestedFields=skus&pageSize=-1&skus.accountId=${accountId}`,
+			themeDisplay.getPortalURL()
+		);
+
+		fetch(productsApiURL.toString())
+			.then((response) => response.json())
+			.then((responseSKUs) => {
+				const flattenedSKUs = [];
+
+				responseSKUs.items.forEach((responseSKU) => {
+					responseSKU.skus.forEach((sku) => {
+						flattenedSKUs.push({
+							...sku,
+							chipLabel: sku.sku,
+							label: responseSKU.name,
+							productConfiguration:
+								responseSKU.productConfiguration,
+							urls: responseSKU.urls,
+							value: sku.sku,
+						});
+					});
+				});
+
+				setAvailableSKUs(flattenedSKUs);
+			});
+	}, [accountId, channelId]);
 
 	const ProductAutocompleteList = ({onItemClick, sourceItems}) => {
 		return (
@@ -59,8 +103,8 @@ export default function CartQuickAdd() {
 								? paginatorCurrentPageRef.current + 1
 								: paginatorCurrentPageRef.current;
 
-						searchProducts(
-							productsQuery,
+						searchSKUs(
+							searchInputValue,
 							paginatorCurrentPageRef.current,
 							true
 						);
@@ -73,35 +117,25 @@ export default function CartQuickAdd() {
 			>
 				<ClayDropDown.ItemList>
 					{sourceItems
-						.filter((product) => {
-							const purchasableProduct = product.sku
-								? product.purchasable
-								: product.skus[0].purchasable;
-
-							if (
-								!selectedProducts.includes(product) &&
-								purchasableProduct
-							) {
-								return true;
-							}
-						})
-						.map((product) => {
-							const {id, label, value} = product;
+						.filter(
+							(sku) =>
+								!selectedSKUs.includes(sku) && sku.purchasable
+						)
+						.map((sku) => {
+							const {id, label, value} = sku;
 
 							return (
 								<ClayDropDown.Item
 									key={id}
-									onClick={() => onItemClick(product)}
+									onClick={() => onItemClick(sku)}
 								>
 									<div className="autofit-row autofit-row-center">
 										<div className="autofit-col mr-3 w-25">
 											{value}
 										</div>
 
-										<span className="ml-2 text-truncate-inline">
-											<span className="text-truncate">
-												{label}
-											</span>
+										<span className="ml-2 text-truncate">
+											{label}
 										</span>
 									</div>
 								</ClayDropDown.Item>
@@ -112,87 +146,59 @@ export default function CartQuickAdd() {
 		);
 	};
 
-	const getSearchProductsURL = (page, search) => {
-		const url = new URL(
-			`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products`,
-			themeDisplay.getPortalURL()
-		);
-
-		url.searchParams.append('accountId', accountId);
-		url.searchParams.append('nestedFields', 'skus');
-		url.searchParams.append('page', page);
-		url.searchParams.append('pageSize', '100');
-		url.searchParams.append('search', search);
-		url.searchParams.append('skus.accountId', accountId);
-
-		return url.toString();
-	};
-
 	const handleAddToCartClick = () => {
-		const readyProducts = selectedProducts.map((product) => {
-			if (product.sku) {
-				const parentProduct = productsWithOptions.find((item) =>
-					item.skus.find((childSku) => childSku.sku === product.sku)
-				);
+		const readySKUs = selectedSKUs.map((selectedSKU) => {
+			const {
+				id,
+				productConfiguration,
+				replacementSkuId,
+				sku,
+				urls,
+			} = selectedSKU;
 
-				const {name, productConfiguration, urls} = parentProduct;
-
-				const adjustedQuantity = getCorrectedQuantity(
-					product,
-					product.sku,
-					cartItems,
-					parentProduct
-				);
-
-				return {
-					...product,
-					name,
-					price: product.price,
-					productURLs: urls,
-					quantity: adjustedQuantity,
-					settings: productConfiguration,
-					sku: product.sku,
-					skuId: product.id,
-					skuOptions: product.DDMOptions,
-				};
-			}
-			else {
-				const {productConfiguration, skus, urls} = product;
-
-				const adjustedQuantity = getCorrectedQuantity(
-					product,
-					skus[0].sku,
-					cartItems,
-					false
+			if (replacementSkuId) {
+				const replacementSKU = availableSKUs.find(
+					(availableSKU) => availableSKU.id === replacementSkuId
 				);
 
 				return {
-					...product,
-					price: skus[0].price,
+					...replacementSKU,
 					productURLs: urls,
-					quantity: adjustedQuantity,
+					quantity: getCorrectedQuantity(
+						replacementSKU,
+						replacementSKU.sku,
+						cartItems
+					),
+					replacementSkuId: id,
 					settings: productConfiguration,
-					sku: skus[0].sku,
-					skuId: skus[0].id,
+					skuId: replacementSKU.id,
+					urls: replacementSKU.urls,
 				};
 			}
+
+			return {
+				...selectedSKU,
+				productURLs: urls,
+				quantity: getCorrectedQuantity(selectedSKU, sku, cartItems),
+				settings: productConfiguration,
+				skuId: id,
+				urls,
+			};
 		});
 
-		const productWithoutQuantity = readyProducts.find(
-			(product) => product.quantity === 0
+		const unavailableSKU = readySKUs.find(
+			(readySKU) => readySKU.quantity === 0
 		);
 
-		if (!productWithoutQuantity) {
+		if (!unavailableSKU) {
 			setCartState((cartState) => ({
 				...cartState,
-				cartItems: cartItems.concat(readyProducts),
+				cartItems: cartItems.concat(readySKUs),
 			}));
 
-			addToCart(readyProducts, cartId, channel, accountId);
+			addToCart(readySKUs, cartId, channel, accountId);
 
-			setProductsWithOptions([]);
-
-			setSelectedProducts([]);
+			setSelectedSKUs([]);
 		}
 		else {
 			setQuickAddToCartError(true);
@@ -203,81 +209,71 @@ export default function CartQuickAdd() {
 
 	const handleProductQueryInput = (productQueryString) => {
 		clearTimeout(keypressTimoutRef.current);
+
 		requestAbortControllerRef.current.abort();
 
 		paginatorCurrentPageRef.current = 1;
 
-		setProductsQuery(productQueryString);
+		setSearchInputValue(productQueryString);
 
 		keypressTimoutRef.current = setTimeout(() => {
-			searchProducts(productQueryString, 1, false);
+			searchSKUs(productQueryString, 1, false);
 		}, 500);
 	};
 
-	const searchProducts = (queryString, page, appendData) => {
+	const searchSKUs = (queryString, page, appendData) => {
 		requestAbortControllerRef.current = new AbortController();
-		const signal = requestAbortControllerRef.current.signal;
+
+		const {signal} = requestAbortControllerRef.current;
 
 		if (!queryString.length) {
 			paginatorIsLoadingRef.current = false;
 
-			setFormattedProducts([]);
+			setFormattedSKUs([]);
 
 			return;
 		}
 
 		paginatorIsLoadingRef.current = true;
 
-		fetch(getSearchProductsURL(page, queryString), {
+		const searchSKUsURL = getSearchSKUsURL(
+			page,
+			queryString,
+			accountId,
+			channelId
+		);
+
+		fetch(searchSKUsURL, {
 			signal,
 		})
 			.then((response) => response.json())
-			.then((availableProducts) => {
+			.then((availableSKUs) => {
 				paginatorItemLengthRef.current =
-					availableProducts.page * availableProducts.pageSize;
-				paginatorLastPageRef.current = availableProducts.lastPage;
-				paginatorTotalCountRef.current = availableProducts.totalCount;
+					availableSKUs.page * availableSKUs.pageSize;
+				paginatorLastPageRef.current = availableSKUs.lastPage;
+				paginatorTotalCountRef.current = availableSKUs.totalCount;
 
-				let responseProducts = [];
+				const responseSKUs = [];
 
-				availableProducts.items.forEach((product) => {
-					const {name, skus} = product;
-
-					if (product.skus.length > 1) {
-						product.skus.forEach((sku) =>
-							responseProducts.push({
-								...sku,
-								chipLabel: sku.sku,
-								label: name,
-								value: sku.sku,
-							})
-						);
-					}
-					else if (product.skus.length === 1) {
-						responseProducts.push({
-							...product,
-							chipLabel: skus[0].sku,
-							label: name,
-							value: skus[0].sku,
+				availableSKUs.items.forEach((availableSKU) => {
+					availableSKU.skus.forEach((sku) => {
+						responseSKUs.push({
+							...sku,
+							chipLabel: sku.sku,
+							label: availableSKU.name,
+							productConfiguration:
+								availableSKU.productConfiguration,
+							urls: availableSKU.urls,
+							value: sku.sku,
 						});
-					}
+					});
 				});
 
+				setFormattedSKUs(responseSKUs);
+
 				if (appendData) {
-					responseProducts = formattedProducts.concat(
-						responseProducts
-					);
+					setFormattedSKUs(formattedSKUs.concat(responseSKUs));
 				}
-
-				setFormattedProducts(responseProducts);
-
-				setProductsWithOptions(
-					productsWithOptions.concat(
-						availableProducts.items.filter(
-							(product) => product.skus.length > 1
-						)
-					)
-				);
 
 				paginatorIsLoadingRef.current = false;
 			});
@@ -292,8 +288,8 @@ export default function CartQuickAdd() {
 					<ClayMultiSelect
 						allowsCustomLabel={false}
 						className="p3"
-						inputName="searchProducts"
-						items={selectedProducts}
+						inputName="searchSKUs"
+						items={selectedSKUs}
 						loadingState={4}
 						locator={{
 							label: 'chipLabel',
@@ -301,12 +297,12 @@ export default function CartQuickAdd() {
 						}}
 						menuRenderer={ProductAutocompleteList}
 						onChange={handleProductQueryInput}
-						onItemsChange={(newItems) => {
+						onItemsChange={(newSKUs) => {
 							setQuickAddToCartError(false);
 
 							setQuantityError(false);
 
-							newItems = newItems.filter((item) => {
+							newSKUs = newSKUs.filter((item) => {
 								if (item.id) {
 									return item;
 								}
@@ -315,7 +311,7 @@ export default function CartQuickAdd() {
 								}
 							});
 
-							setSelectedProducts(newItems);
+							setSelectedSKUs(newSKUs);
 						}}
 						onPaste={(event) => {
 							const pastedText = event.clipboardData.getData(
@@ -325,13 +321,13 @@ export default function CartQuickAdd() {
 							event.preventDefault();
 
 							handleProductQueryInput(
-								productsQuery.concat(pastedText)
+								searchInputValue.concat(pastedText)
 							);
 						}}
 						placeholder={Liferay.Language.get('search-products')}
 						size="sm"
-						sourceItems={formattedProducts}
-						value={productsQuery}
+						sourceItems={formattedSKUs}
+						value={searchInputValue}
 					/>
 
 					{quickAddToCartError && (
@@ -353,9 +349,7 @@ export default function CartQuickAdd() {
 
 				<ClayInput.GroupItem shrink>
 					<ClayButtonWithIcon
-						disabled={
-							!selectedProducts.length || quickAddToCartError
-						}
+						disabled={!selectedSKUs.length || quickAddToCartError}
 						onClick={handleAddToCartClick}
 						symbol="shopping-cart"
 					/>

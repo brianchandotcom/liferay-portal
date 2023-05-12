@@ -22,13 +22,11 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		maxOrderQuantity,
 		minOrderQuantity,
 		multipleOrderQuantity,
-	} = parentProduct
-		? parentProduct.productConfiguration
-		: product.productConfiguration;
+	} = product.productConfiguration;
 
 	let quantity;
 
-	if (parentProduct || !allowedOrderQuantities.length) {
+	if (!allowedOrderQuantities.length) {
 		quantity = minOrderQuantity;
 	}
 
@@ -155,6 +153,10 @@ export function getCorrectedQuantity(product, sku, cartItems, parentProduct) {
 		while (quantity < minOrderQuantity) {
 			quantity += multipleOrderQuantity;
 		}
+	}
+
+	if (minOrderQuantity > maxOrderQuantity) {
+		quantity = 0;
 	}
 
 	if (multipleOrderQuantity > 1 && quantity % multipleOrderQuantity !== 0) {

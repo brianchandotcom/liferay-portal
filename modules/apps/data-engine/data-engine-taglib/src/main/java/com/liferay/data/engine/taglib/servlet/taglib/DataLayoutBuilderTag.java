@@ -60,7 +60,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -309,25 +308,55 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		);
 
 		if (dataLayoutBuilderDefinition.allowRules()) {
-			try {
-				dataLayoutConfigJSONObject.put(
-					"ruleSettings",
-					JSONUtil.put(
-						"dataProviderInstanceParameterSettingsURL",
-						_getDDMDataProviderInstanceParameterSettingsURL()
-					).put(
-						"dataProviderInstancesURL",
-						_getDDMDataProviderInstancesURL()
-					).put(
-						"functionsMetadata",
-						_getFunctionsMetadataJSONObject(locale)
-					).put(
-						"functionsURL", _getFunctionsURL()
-					));
-			}
-			catch (JSONException jsonException) {
-				_log.error(jsonException);
-			}
+			dataLayoutConfigJSONObject.put(
+				"ruleSettings",
+				JSONUtil.put(
+					"dataProviderInstanceParameterSettingsURL",
+					() -> {
+						DDMFormBuilderSettingsRetrieverHelper
+							ddmFormBuilderSettingsRetrieverHelper =
+								_ddmFormBuilderSettingsRetrieverHelperSnapshot.
+									get();
+
+						return ddmFormBuilderSettingsRetrieverHelper.
+							getDDMDataProviderInstanceParameterSettingsURL();
+					}
+				).put(
+					"dataProviderInstancesURL",
+					() -> {
+						DDMFormBuilderSettingsRetrieverHelper
+							ddmFormBuilderSettingsRetrieverHelper =
+								_ddmFormBuilderSettingsRetrieverHelperSnapshot.
+									get();
+
+						return ddmFormBuilderSettingsRetrieverHelper.
+							getDDMDataProviderInstancesURL();
+					}
+				).put(
+					"functionsMetadata",
+					() -> {
+						DDMFormBuilderSettingsRetrieverHelper
+							ddmFormBuilderSettingsRetrieverHelper =
+								_ddmFormBuilderSettingsRetrieverHelperSnapshot.
+									get();
+
+						return JSONFactoryUtil.createJSONObject(
+							ddmFormBuilderSettingsRetrieverHelper.
+								getSerializedDDMExpressionFunctionsMetadata(
+									locale));
+					}
+				).put(
+					"functionsURL",
+					() -> {
+						DDMFormBuilderSettingsRetrieverHelper
+							ddmFormBuilderSettingsRetrieverHelper =
+								_ddmFormBuilderSettingsRetrieverHelperSnapshot.
+									get();
+
+						return ddmFormBuilderSettingsRetrieverHelper.
+							getDDMFunctionsURL();
+					}
+				));
 		}
 
 		dataLayoutConfigJSONObject.put(
@@ -385,24 +414,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 	}
 
-	private String _getDDMDataProviderInstanceParameterSettingsURL() {
-		DDMFormBuilderSettingsRetrieverHelper
-			ddmFormBuilderSettingsRetrieverHelper =
-				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
-
-		return ddmFormBuilderSettingsRetrieverHelper.
-			getDDMDataProviderInstanceParameterSettingsURL();
-	}
-
-	private String _getDDMDataProviderInstancesURL() {
-		DDMFormBuilderSettingsRetrieverHelper
-			ddmFormBuilderSettingsRetrieverHelper =
-				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
-
-		return ddmFormBuilderSettingsRetrieverHelper.
-			getDDMDataProviderInstancesURL();
-	}
-
 	private Long _getDefaultDataLayoutId(
 			Long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -441,26 +452,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 
 		return ddmStructure.getDefaultLanguageId();
-	}
-
-	private JSONObject _getFunctionsMetadataJSONObject(Locale locale)
-		throws JSONException {
-
-		DDMFormBuilderSettingsRetrieverHelper
-			ddmFormBuilderSettingsRetrieverHelper =
-				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
-
-		return JSONFactoryUtil.createJSONObject(
-			ddmFormBuilderSettingsRetrieverHelper.
-				getSerializedDDMExpressionFunctionsMetadata(locale));
-	}
-
-	private String _getFunctionsURL() {
-		DDMFormBuilderSettingsRetrieverHelper
-			ddmFormBuilderSettingsRetrieverHelper =
-				_ddmFormBuilderSettingsRetrieverHelperSnapshot.get();
-
-		return ddmFormBuilderSettingsRetrieverHelper.getDDMFunctionsURL();
 	}
 
 	private String _getModule() {

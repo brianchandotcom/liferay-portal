@@ -24,7 +24,7 @@
 		"description": "This is the description for Test Commerce Product.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "TESTPROD1",
+		"externalReferenceCode": "TESTCOMMERCEPRODUCT1",
 		"height": 2,
 		"images": [
 			"test_commerce_product.png"

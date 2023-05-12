@@ -9,7 +9,7 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/company/main-test.js$]",
 			"[$DOCUMENT_URL:/site-initializer/documents/company/runtime-main-test.js$]"
 		],
-		"externalReferenceCode": "CEXT1",
+		"externalReferenceCode": "TESTCLIENTEXTENSION1",
 		"htmlElementName": "liferay-test-remote-app",
 		"name_i18n": {
 			"en_US": "Test Remote App"

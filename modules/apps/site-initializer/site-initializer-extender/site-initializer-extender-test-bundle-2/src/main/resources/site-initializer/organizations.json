@@ -1,20 +1,20 @@
 [
 	{
-		"externalReferenceCode": "TEST1",
+		"externalReferenceCode": "TESTORGANIZATION1",
 		"name": "Test Organization 1"
 	},
 	{
 		"childOrganizations": [
 			{
-				"externalReferenceCode": "TEST3",
+				"externalReferenceCode": "TESTORGANIZATION3",
 				"name": "Test Organization 3"
 			}
 		],
-		"externalReferenceCode": "TEST2",
+		"externalReferenceCode": "TESTORGANIZATION2",
 		"name": "Test Organization 2 Update"
 	},
 	{
-		"externalReferenceCode": "TEST4",
+		"externalReferenceCode": "TESTORGANIZATION4",
 		"name": "Test Organization 4"
 	}
 ]

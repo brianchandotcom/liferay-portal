@@ -1,16 +1,16 @@
 [
 	{
-		"externalReferenceCode": "TESTACC1",
+		"externalReferenceCode": "TESTACCOUNT1",
 		"name": "Test Account 1",
 		"type": "business"
 	},
 	{
-		"externalReferenceCode": "TESTACC2",
+		"externalReferenceCode": "TESTACCOUNT2",
 		"name": "Test Account 2",
 		"type": "guest"
 	},
 	{
-		"externalReferenceCode": "TESTACC3",
+		"externalReferenceCode": "TESTACCOUNT3",
 		"name": "Test Account 3",
 		"type": "person"
 	}

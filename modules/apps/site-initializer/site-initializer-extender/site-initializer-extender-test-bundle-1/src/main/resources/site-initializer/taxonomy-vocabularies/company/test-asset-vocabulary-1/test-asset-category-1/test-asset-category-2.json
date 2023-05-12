@@ -1,6 +1,6 @@
 {
 	"description": "This is the description for Test Asset Category 2.",
-	"externalReferenceCode": "TESTCAT2",
+	"externalReferenceCode": "TESTASSETCATEGORY2",
 	"name": "Test Asset Category 2",
 	"viewableBy": "Anyone"
 }

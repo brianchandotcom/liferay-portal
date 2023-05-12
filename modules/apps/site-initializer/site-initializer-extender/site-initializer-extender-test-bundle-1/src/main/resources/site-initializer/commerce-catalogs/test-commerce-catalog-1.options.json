@@ -1,7 +1,7 @@
 [
 	{
 		"ddmFormFieldTypeName": "text",
-		"externalReferenceCode": "TESTOPT1",
+		"externalReferenceCode": "TESTCOMMERCEOPTION1",
 		"key": "test-option-1",
 		"name": "Test Option 1",
 		"required": false

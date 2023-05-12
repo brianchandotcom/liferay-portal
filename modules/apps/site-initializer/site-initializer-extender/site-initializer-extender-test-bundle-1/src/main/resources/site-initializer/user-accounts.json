@@ -2,7 +2,7 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC1"
+				"externalReferenceCode": "TESTACCOUNT1"
 			}
 		],
 		"alternateName": "testAlternateName1",
@@ -20,7 +20,7 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC2"
+				"externalReferenceCode": "TESTACCOUNT2"
 			}
 		],
 		"alternateName": "testAlternateName2",

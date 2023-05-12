@@ -2,7 +2,7 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC1"
+				"externalReferenceCode": "TESTACCOUNT1"
 			}
 		],
 		"alternateName": "testAlternateName1",
@@ -20,10 +20,10 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC2"
+				"externalReferenceCode": "TESTACCOUNT2"
 			},
 			{
-				"externalReferenceCode": "TESTACC4"
+				"externalReferenceCode": "TESTACCOUNT4"
 			}
 		],
 		"alternateName": "testAlternateName2Update",
@@ -44,15 +44,15 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACC1"
+				"externalReferenceCode": "TESTACCOUNT1"
 			},
 			{
-				"externalReferenceCode": "TESTACC2"
+				"externalReferenceCode": "TESTACCOUNT2"
 			}
 		],
 		"alternateName": "testAlternateName3",
 		"emailAddress": "test.user3@liferay.com",
-		"externalReferenceCode": "USER-3",
+		"externalReferenceCode": "TESTUSER3",
 		"familyName": "User3",
 		"givenName": "Test",
 		"name": "Test User 3"

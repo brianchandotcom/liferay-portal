@@ -12,12 +12,13 @@
  * details.
  */
 
-interface Date {
+export interface Date {
 	formattedDate?: string;
 	locale?: string;
 	name?: string;
 	predefinedValue?: string;
 	rawDate?: string;
+	value?: string;
 	years?: {
 		end: number;
 		start: number;
@@ -44,11 +45,9 @@ export declare function generateDateConfigurations({
 	firstDayOfWeek: any;
 	isDateTime: boolean;
 	momentFormat: any;
-	months: any;
 	placeholder: any;
 	serverFormat: string;
 	use12Hours: boolean;
-	weekdaysShort: any;
 };
 export declare function generateDate({
 	isDateTime,

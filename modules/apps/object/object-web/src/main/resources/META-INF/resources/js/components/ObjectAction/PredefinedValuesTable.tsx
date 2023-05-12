@@ -15,19 +15,14 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-
-// @ts-ignore
-
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	Card,
+	DatePicker,
 	ExpressionBuilder,
 	getLocalizableLabel,
 	onActionDropdownItemClick,
 	openToast,
-
-	// @ts-ignore
-
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 
@@ -63,118 +58,152 @@ export default function PredefinedValuesTable({
 			});
 		}
 
-		return predefinedValues.map(({inputAsValue, label, name, value}) => {
-			return {
-				inputAsValue: (
-					<div className="lfr-object-web__predefined-values-table-input-method">
-						<ClayCheckbox
-							checked={inputAsValue}
-							disabled={false}
-							label={Liferay.Language.get('input-as-a-value')}
-							onChange={({target: {checked}}) => {
-								const newPredefinedValues = predefinedValues.map(
-									(field) => {
-										return field.name === name
-											? {
-													...field,
-													inputAsValue: checked,
-											  }
-											: field;
-									}
-								);
-								setValues({
-									parameters: {
-										...values.parameters,
-										predefinedValues: newPredefinedValues,
-									},
-								});
-							}}
-						/>
+		return predefinedValues.map(
+			({businessType, inputAsValue, label, name, value}) => {
+				const isDateTime = businessType === 'DateTime';
+				const renderDatePicker =
+					(businessType === 'Date' && inputAsValue) || isDateTime;
 
-						<ClayTooltipProvider>
-							<div
-								data-tooltip-align="top"
-								title={Liferay.Language.get(
-									'by-checking-this-option,-expressions-will-not-be-used-for-filling-the-predefined-value-field'
-								)}
-							>
-								<ClayIcon
-									className="lfr-object-web__predefined-values-table-tooltip-icon"
-									symbol="question-circle-full"
-								/>
-							</div>
-						</ClayTooltipProvider>
-					</div>
-				),
-
-				label: (
-					<div className="lfr-object-web__predefined-values-table-field">
-						{getLocalizableLabel(creationLanguageId, label, name)}
-
-						{objectFieldsMap.get(name)?.required === true && (
-							<span className="lfr-object-web__predefined-values-table-reference-mark">
-								<ClayIcon symbol="asterisk" />
-							</span>
-						)}
-					</div>
-				),
-
-				name,
-
-				newValue: (
-					<div className="lfr-object-web__predefined-values-table-new-value">
-						<ExpressionBuilder
-							buttonDisabled={inputAsValue}
-							error={predefinedErrors.get(name)}
-							hideFeedback
-							onChange={({target: {value}}) => {
-								setValues({
-									parameters: {
-										...values.parameters,
-										predefinedValues: updatePredefinedValues(
-											name,
-											value
-										),
-									},
-								});
-							}}
-							onOpenModal={() => {
-								const parentWindow = Liferay.Util.getOpener();
-
-								parentWindow.Liferay.fire(
-									'openExpressionBuilderModal',
-									{
-										onSave: (value: string) => {
-											setValues({
-												parameters: {
-													...values.parameters,
-													predefinedValues: updatePredefinedValues(
-														name,
-														value
-													),
-												},
-											});
+				return {
+					inputAsValue: (
+						<div className="lfr-object-web__predefined-values-table-input-method">
+							<ClayCheckbox
+								checked={inputAsValue}
+								disabled={isDateTime}
+								label={Liferay.Language.get('input-as-a-value')}
+								onChange={({target: {checked}}) => {
+									const newPredefinedValues = predefinedValues.map(
+										(field) => {
+											return field.name === name
+												? {
+														...field,
+														inputAsValue: checked,
+												  }
+												: field;
+										}
+									);
+									setValues({
+										parameters: {
+											...values.parameters,
+											predefinedValues: newPredefinedValues,
 										},
-										required: objectFieldsMap.get(name)
-											?.required,
-										source: value,
-										validateExpressionURL,
+									});
+								}}
+							/>
+
+							<ClayTooltipProvider>
+								<div
+									data-tooltip-align="top"
+									title={Liferay.Language.get(
+										'by-checking-this-option,-expressions-will-not-be-used-for-filling-the-predefined-value-field'
+									)}
+								>
+									<ClayIcon
+										className="lfr-object-web__predefined-values-table-tooltip-icon"
+										symbol="question-circle-full"
+									/>
+								</div>
+							</ClayTooltipProvider>
+						</div>
+					),
+
+					label: (
+						<div className="lfr-object-web__predefined-values-table-field">
+							{getLocalizableLabel(
+								creationLanguageId,
+								label,
+								name
+							)}
+
+							{objectFieldsMap.get(name)?.required === true && (
+								<span className="lfr-object-web__predefined-values-table-reference-mark">
+									<ClayIcon symbol="asterisk" />
+								</span>
+							)}
+						</div>
+					),
+
+					name,
+
+					newValue: (
+						<div className="lfr-object-web__predefined-values-table-new-value">
+							{renderDatePicker ? (
+								<DatePicker
+									error={predefinedErrors.get(name)}
+									hideFeedback
+									name={name}
+									onChange={(value: string) => {
+										setValues({
+											parameters: {
+												...values.parameters,
+												predefinedValues: updatePredefinedValues(
+													name,
+													value
+												),
+											},
+										});
+									}}
+									type={businessType}
+									value={value}
+								/>
+							) : (
+								<ExpressionBuilder
+									buttonDisabled={inputAsValue}
+									error={predefinedErrors.get(name)}
+									hideFeedback
+									onChange={({target: {value}}) => {
+										setValues({
+											parameters: {
+												...values.parameters,
+												predefinedValues: updatePredefinedValues(
+													name,
+													value
+												),
+											},
+										});
+									}}
+									onOpenModal={() => {
+										const parentWindow = Liferay.Util.getOpener();
+
+										parentWindow.Liferay.fire(
+											'openExpressionBuilderModal',
+											{
+												onSave: (value: string) => {
+													setValues({
+														parameters: {
+															...values.parameters,
+															predefinedValues: updatePredefinedValues(
+																name,
+																value
+															),
+														},
+													});
+												},
+												required: objectFieldsMap.get(
+													name
+												)?.required,
+												source: value,
+												validateExpressionURL,
+											}
+										);
+									}}
+									placeholder={
+										inputAsValue
+											? Liferay.Language.get(
+													'input-a-value'
+											  )
+											: Liferay.Language.get(
+													'input-a-value-or-create-an-expression'
+											  )
 									}
-								);
-							}}
-							placeholder={
-								inputAsValue
-									? Liferay.Language.get('input-a-value')
-									: Liferay.Language.get(
-											'input-a-value-or-create-an-expression'
-									  )
-							}
-							value={value}
-						/>
-					</div>
-				),
-			};
-		});
+									value={value}
+								/>
+							)}
+						</div>
+					),
+				};
+			}
+		);
 	}, [
 		creationLanguageId,
 		errors,
@@ -249,12 +278,14 @@ export default function PredefinedValuesTable({
 					const newPredefinedValues = items.map(
 						({businessType, label, name}) => {
 							const value = predefinedValuesMap.get(name);
+							const inputAsValue =
+								businessType === 'DateTime' ? true : false;
 
 							return value
 								? value
 								: {
 										businessType,
-										inputAsValue: false,
+										inputAsValue,
 										label,
 										name,
 										value: '',

@@ -139,10 +139,13 @@ export function ActionContainer({
 						field.required &&
 						values.objectActionExecutorKey === 'add-object-entry'
 					) {
+						const inputAsValue =
+							field.businessType === 'DateTime' ? true : false;
+
 						(parameters.predefinedValues as PredefinedValue[]).push(
 							{
 								businessType: field.businessType,
-								inputAsValue: false,
+								inputAsValue,
 								label: field.label,
 								name: field.name,
 								value: '',

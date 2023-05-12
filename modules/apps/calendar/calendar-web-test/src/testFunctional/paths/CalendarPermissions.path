@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>PERMISSIONS_TITLE</td>
-	<td>//h3[contains(.,'Permissions')]</td>
+	<td>//div[@class='modal-title' and contains(text(), 'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

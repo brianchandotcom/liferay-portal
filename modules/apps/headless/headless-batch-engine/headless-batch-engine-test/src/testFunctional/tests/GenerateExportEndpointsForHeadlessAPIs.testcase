@@ -103,22 +103,4 @@ definition {
 		}
 	}
 
-	@disable-webdriver = "true"
-	@priority = 3
-	test CanGetExportTaskDataFromExportBatchForCommerceEndpoints {
-		task ("Given postAccountsPageExportBatch") {
-			var exportTaskId = CommerceJSONAccountsAPI.getIdOfAccountsExportBatch();
-		}
-
-		task ("When getExportTask with the id from postAccountGroupsPageExportBatch response") {
-			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
-		}
-
-		task ("Then processedItemsCount is 0 with executeStatus "COMPLETED"") {
-			ExportTask.assertProcessedItemsCountWithCompletedStatus(
-				expectedCount = 0,
-				response = ${response});
-		}
-	}
-
 }

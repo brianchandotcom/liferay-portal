@@ -895,6 +895,97 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "Verify that changes made across multiple Publications are shown in the history"
+	@priority = 3
+	test ViewChangesAcrossMultiplePublications {
+		property custom.properties = "feature.flag.LPS-161033=true";
+
+		task ("Add new site and a new page in it with Documents and Media widget") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Page Name",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Add Document and Media ") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1",
+				groupName = "Site Name",
+				mimeType = "application/msword",
+				sourceFileName = "Document_1.doc");
+		}
+
+		task ("Add and select a new Publication 1") {
+			JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name 1");
+		}
+
+		task ("Delete Documents and Media widget") {
+			Navigator.gotoSitePage(
+				pageName = "Page Name",
+				siteName = "Site Name");
+
+			Portlet.deletePG(portletName = "Documents and Media");
+		}
+
+		task ("Assert that the timeline of Publication 1 is present") {
+			Navigator.gotoSitePage(
+				pageName = "Page Name",
+				siteName = "Site Name");
+
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 1");
+		}
+
+		task ("Add and select a new Publication 2") {
+			JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name 2");
+		}
+
+		task ("Add new content page with a Documents and Media widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Page Name 2",
+				siteName = "Site Name");
+
+			PageEditor.addWidget(portletName = "Documents and Media");
+
+			PageEditor.publish();
+
+			Navigator.gotoSitePage(
+				pageName = "Page Name 2",
+				siteName = "Site Name");
+		}
+
+		task ("Assert that the timeline of Publication 2 is present") {
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 2");
+		}
+
+		task ("Publish Publication 2 and assert that the timeline for Publication 2 is shown in Production") {
+			JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+			Navigator.gotoSitePage(
+				pageName = "Page Name 2",
+				siteName = "Site Name");
+
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 2");
+		}
+	}
+
 	@priority = 5
 	test ViewPageFriendlyURLAfterRevertingPublication {
 		JSONGroup.addGroup(groupName = "Site Name");

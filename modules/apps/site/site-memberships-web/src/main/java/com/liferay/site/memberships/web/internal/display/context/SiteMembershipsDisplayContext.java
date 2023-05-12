@@ -79,16 +79,6 @@ public class SiteMembershipsDisplayContext {
 		return group.getGroupId();
 	}
 
-	public List<NavigationItem> getInfoPanelNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "details"));
-			}
-		).build();
-	}
-
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse

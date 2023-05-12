@@ -442,7 +442,7 @@
 </tr>
 <tr>
 	<td>DETAIL_SLA_STATUS</td>
-	<td>//div[contains(@class,'modal-header')]/div[contains(@class,'modal-title')]/../..//div[contains(@class,'modal-body')]/h4[contains(.,'Due Date by SLA')]/..//div[contains(@class,'sla-result')]//*[contains(@class,'lexicon-icon-${key_status}')]</td>
+	<td>//h4[contains(.,'Due Date by SLA')]/..//div[contains(@class,'sla-result')]//*[contains(@class,'lexicon-icon-${key_status}')] | //div[contains(@class,'workflow-metrics')]//*[contains(@class,'lexicon-icon-${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

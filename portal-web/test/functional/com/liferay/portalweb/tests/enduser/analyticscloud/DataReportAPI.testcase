@@ -24,6 +24,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		ACUtils.tearDownDXP();
+
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();
@@ -36,6 +38,11 @@ definition {
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 	}
 

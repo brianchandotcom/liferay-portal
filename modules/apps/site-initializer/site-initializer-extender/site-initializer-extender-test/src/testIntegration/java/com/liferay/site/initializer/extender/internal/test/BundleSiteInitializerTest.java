@@ -866,11 +866,11 @@ public class BundleSiteInitializerTest {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
-			"TEST DDM TEMPLATE KEY");
+			"TEST DDM TEMPLATE KEY 1");
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals(
-			"Test DDM Template Name",
+			"Test DDM Template Name 1",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 
@@ -901,7 +901,7 @@ public class BundleSiteInitializerTest {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class.getName()),
-			"TEST DDM TEMPLATE KEY");
+			"TEST DDM TEMPLATE KEY 1");
 
 		Assert.assertNotNull(ddmTemplate);
 		Assert.assertEquals(
@@ -1152,7 +1152,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(journalArticle1);
 		Assert.assertEquals(
-			"TEST DDM TEMPLATE KEY", journalArticle1.getDDMTemplateKey());
+			"TEST DDM TEMPLATE KEY 1", journalArticle1.getDDMTemplateKey());
 		Assert.assertEquals(
 			"Test Journal Article 1", journalArticle1.getTitle());
 
@@ -1162,7 +1162,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(journalArticle2);
 		Assert.assertEquals(
-			"TEST DDM TEMPLATE KEY", journalArticle2.getDDMTemplateKey());
+			"TEST DDM TEMPLATE KEY 1", journalArticle2.getDDMTemplateKey());
 		Assert.assertEquals(
 			"Test Journal Article 2", journalArticle2.getTitle());
 

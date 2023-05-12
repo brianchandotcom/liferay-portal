@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
@@ -87,10 +88,9 @@ public class EditableDocumentFragmentEntryProcessor
 			String id = EditableFragmentEntryProcessorUtil.getElementId(
 				element);
 
-			Class<?> clazz = getClass();
-
 			JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
-				clazz.getName());
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 			if ((editableValuesJSONObject == null) ||
 				!editableValuesJSONObject.has(id)) {

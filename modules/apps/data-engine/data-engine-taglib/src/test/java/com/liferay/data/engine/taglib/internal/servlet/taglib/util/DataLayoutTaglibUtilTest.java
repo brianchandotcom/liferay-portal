@@ -71,7 +71,7 @@ public class DataLayoutTaglibUtilTest {
 			Mockito.mock(User.class)
 		);
 
-		_setUpDataDefinitionResource(bundleContext);
+		_setUpDataDefinitionResourceFactory(bundleContext);
 	}
 
 	@AfterClass
@@ -124,7 +124,7 @@ public class DataLayoutTaglibUtilTest {
 		return StringUtil.read(inputStream);
 	}
 
-	private static void _setUpDataDefinitionResource(
+	private static void _setUpDataDefinitionResourceFactory(
 			BundleContext bundleContext)
 		throws Exception {
 

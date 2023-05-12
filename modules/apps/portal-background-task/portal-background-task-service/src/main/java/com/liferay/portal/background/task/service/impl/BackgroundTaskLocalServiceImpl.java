@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
+import com.liferay.portal.background.task.internal.BackgroundTaskInExecutionUtil;
 import com.liferay.portal.background.task.internal.lock.helper.BackgroundTaskLockHelper;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.base.BackgroundTaskLocalServiceBaseImpl;
@@ -247,8 +248,10 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTaskPersistence.findByCompleted(false);
 
 		for (BackgroundTask backgroundTask : backgroundTasks) {
-			if (backgroundTask.getStatus() ==
-					BackgroundTaskConstants.STATUS_IN_PROGRESS) {
+			if ((backgroundTask.getStatus() ==
+					BackgroundTaskConstants.STATUS_IN_PROGRESS) &&
+				!BackgroundTaskInExecutionUtil.isInExecution(
+					backgroundTask.getBackgroundTaskId())) {
 
 				backgroundTask.setCompleted(true);
 				backgroundTask.setStatus(BackgroundTaskConstants.STATUS_FAILED);

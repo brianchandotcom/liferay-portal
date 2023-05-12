@@ -46,6 +46,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>LAYOUT_FIELD_NAME</td>
+		<td>//div[contains(@class,'layout-tab')]//*[contains(text(),'${key_fieldName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ADD_FIELD_ON_BLOCK</td>
 		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
 		<td></td>

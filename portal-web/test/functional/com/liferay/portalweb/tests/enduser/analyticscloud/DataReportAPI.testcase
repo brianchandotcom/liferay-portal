@@ -406,7 +406,7 @@ definition {
 	@description = "Feature ID: LRAC-12919 | Automation ID: LRAC-13495 | Test Summary: Check that you can access data from all existing segments"
 	@priority = 4
 	test RequestToAccessDataForAllSegments {
-		var segmentsTitleList = "managers,Annual Revenue > $500K,Dynamic Segment Test";
+		var segmentsTitleList = "Dynamic Segment Test 1,Dynamic Segment Test 2";
 		var type = "segments";
 
 		task ("Copy the token value for the API") {
@@ -424,19 +424,11 @@ definition {
 
 			ACUtils.addSiteAndPage();
 
-			task ("Create a web content") {
-				ACUtils.createWCAndAddToPage(
-					portletIndex = 1,
-					webContentTitle = "WC AC Title 1");
-			}
-
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Visit the site page and view the web content") {
+		task ("Visit the site page") {
 			ACUtils.navigateToSitePage(
-				actionType = "View WC",
-				documentTitleList = "WC AC Title 1",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -449,23 +441,22 @@ definition {
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("Create a dynamic segment") {
-			ACNavigation.goToSegments();
+		task ("Create two dynamic segments") {
+			for (var n : list "1,2") {
+				ACNavigation.goToSegments();
 
-			ACSegments.createDynamicSegment();
+				ACSegments.createDynamicSegment();
 
-			ACUtils.setItemName(itemName = "Dynamic Segment Test");
+				ACUtils.setItemName(itemName = "Dynamic Segment Test ${n}");
 
-			ACSegments.goToSidebarAttributes(criterion = "Events");
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-			ACSegments.addSegmentField(segmentField = "Viewed Web Content");
+				ACSegments.addSegmentField(segmentField = "email");
 
-			ACSegments.editWebBehaviorCriterion(
-				indexField = 1,
-				occurenceNumber = 1,
-				searchTerm = "WC AC Title 1");
+				ACSegments.editTextCriterion(textInput = "test@liferay.com");
 
-			ACSegments.saveSegment();
+				ACSegments.saveSegment();
+			}
 		}
 
 		task ("Create a data report using analytics cloud API with the type segments") {

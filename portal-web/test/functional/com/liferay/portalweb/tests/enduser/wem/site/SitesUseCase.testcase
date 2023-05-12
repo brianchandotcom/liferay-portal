@@ -648,7 +648,7 @@ definition {
 				configurationName = "Email Verification Notification",
 				configurationScope = "Virtual Instance Scope");
 
-			Type.typeCKEditor(
+			Type.typeEditor(
 				locator1 = "CKEditor#BODY_FIELD",
 				value1 = "[$EMAIL_VERIFICATION_URL$]");
 

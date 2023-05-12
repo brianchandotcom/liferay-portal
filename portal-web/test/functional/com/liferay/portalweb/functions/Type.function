@@ -132,40 +132,6 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeCKEditor {
-		WaitForSPARefresh();
-
-		selenium.waitForVisible();
-
-		selenium.waitForEditable();
-
-		selenium.mouseOver();
-
-		selenium.typeCKEditor();
-
-		selenium.assertJavaScriptErrors();
-
-		selenium.assertLiferayErrors();
-	}
-
-	function typeCKEditorWaitForCKEditor {
-		WaitForSPARefresh();
-
-		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
-
-		selenium.pause(1000);
-
-		selenium.waitForEditable();
-
-		Type.typeCKEditor();
-
-		selenium.pause(1000);
-
-		selenium.assertJavaScriptErrors();
-
-		selenium.assertLiferayErrors();
-	}
-
 	function typeClickAt {
 		WaitForSPARefresh();
 
@@ -204,6 +170,24 @@ definition {
 		selenium.mouseOver();
 
 		selenium.typeEditor();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+	function typeEditorWaitForEditor {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
+
+		selenium.pause(1000);
+
+		selenium.waitForEditable();
+
+		Type.typeEditor();
+
+		selenium.pause(1000);
 
 		selenium.assertJavaScriptErrors();
 

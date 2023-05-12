@@ -460,7 +460,7 @@ definition {
 		}
 
 		if (isSet(notificationsBody)) {
-			Type.typeCKEditor(
+			Type.typeEditor(
 				locator1 = "CKEditor#BODY_FIELD",
 				value1 = ${notificationsBody});
 		}

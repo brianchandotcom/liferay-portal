@@ -35,7 +35,7 @@ definition {
 		}
 
 		if (isSet(notificationsBody)) {
-			Type.typeCKEditor(
+			Type.typeEditor(
 				bodyFieldId = ${fieldName},
 				locator1 = "CKEditor#BODY_FIELD_ID",
 				value1 = ${notificationsBody});

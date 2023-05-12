@@ -366,7 +366,7 @@ definition {
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = ${emptyPageMessage});
 
-		Type.typeCKEditorWaitForCKEditor(
+		Type.typeEditorWaitForEditor(
 			locator1 = "CKEditor#BODY_FIELD",
 			value1 = ${wikiPageContent});
 
@@ -810,7 +810,7 @@ definition {
 			locator1 = "Link#WIKI_EDIT",
 			value1 = "Edit");
 
-		Type.typeCKEditorWaitForCKEditor(
+		Type.typeEditorWaitForEditor(
 			locator1 = "CKEditor#BODY_FIELD",
 			value1 = ${wikiPageContentEdit});
 

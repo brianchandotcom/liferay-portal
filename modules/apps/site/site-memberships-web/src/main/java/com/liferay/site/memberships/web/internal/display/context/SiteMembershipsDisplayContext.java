@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -91,22 +90,6 @@ public class SiteMembershipsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public String getRedirect() {
-		if (_redirect != null) {
-			return _redirect;
-		}
-
-		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		if (Validator.isNull(_redirect)) {
-			PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-			_redirect = portletURL.toString();
-		}
-
-		return _redirect;
-	}
-
 	public User getSelUser() throws PortalException {
 		if (_selUser != null) {
 			return _selUser;
@@ -135,16 +118,6 @@ public class SiteMembershipsDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "details"));
 			}
 		).build();
-	}
-
-	public long getUserGroupId() {
-		if (_userGroupId != null) {
-			return _userGroupId;
-		}
-
-		_userGroupId = ParamUtil.getLong(_httpServletRequest, "userGroupId");
-
-		return _userGroupId;
 	}
 
 	public long getUserId() throws PortalException {
@@ -188,9 +161,7 @@ public class SiteMembershipsDisplayContext {
 	private Group _group;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private String _redirect;
 	private User _selUser;
 	private String _tabs1;
-	private Long _userGroupId;
 
 }

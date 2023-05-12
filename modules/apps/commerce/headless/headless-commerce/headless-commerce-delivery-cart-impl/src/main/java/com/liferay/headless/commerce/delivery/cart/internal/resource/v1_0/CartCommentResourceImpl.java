@@ -144,7 +144,7 @@ public class CartCommentResourceImpl
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.NoteDTOConverter)"
+		target = "(component.name=com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.NoteDTOConverter)"
 	)
 	private DTOConverter<CommerceOrderNote, CartComment> _noteDTOConverter;
 

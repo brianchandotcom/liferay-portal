@@ -79,7 +79,7 @@ public class AddressResourceImpl
 	}
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.AddressDTOConverter)"
+		target = "(component.name=com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.AddressDTOConverter)"
 	)
 	private DTOConverter<CommerceAddress, Address> _addressDTOConverter;
 

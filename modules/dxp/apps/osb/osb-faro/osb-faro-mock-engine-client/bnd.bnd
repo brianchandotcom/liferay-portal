@@ -1,4 +1,4 @@
 Bundle-Name: Liferay OSB Faro Mock Engine Client
 Bundle-SymbolicName: com.liferay.osb.faro.mock.engine.client
-Bundle-Version: 1.0.6
+Bundle-Version: 1.0.0
 -dsannotations-options: inherit

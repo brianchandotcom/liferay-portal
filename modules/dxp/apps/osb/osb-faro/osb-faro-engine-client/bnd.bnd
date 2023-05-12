@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OSB Faro Engine Client
 Bundle-SymbolicName: com.liferay.osb.faro.engine.client
-Bundle-Version: 4.0.0
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.osb.faro.engine.client,\
 	com.liferay.osb.faro.engine.client.constants,\
@@ -133,6 +133,7 @@ Import-Package:\
 	!org.apache.logging.log4j.*,\
 	!org.apache.naming.*,\
 	!org.apache.tomcat.*,\
+	!org.apache.tools.ant.*,\
 	!org.apache.velocity.*,\
 	\
 	!org.aspectj.*,\
@@ -163,13 +164,16 @@ Import-Package:\
 	\
 	!org.slf4j.*,\
 	\
+	!org.springframework.core.metrics.*,\
 	!org.springframework.instrument.*,\
 	!org.springframework.messaging.rsocket.*,\
+	!org.springframework.oxm.*,\
 	!org.springframework.plugin.*,\
 	!org.springframework.security.web.server.util.matcher.*,\
 	!org.springframework.security.web.util.matcher.*,\
 	!org.springframework.test.web.reactive.*,\
 	!org.springframework.web.reactive.*,\
+	!org.springframework.web.servlet.*,\
 	!org.springframework.ws.*,\
 	!org.springframework.xml.transform.*,\
 	\

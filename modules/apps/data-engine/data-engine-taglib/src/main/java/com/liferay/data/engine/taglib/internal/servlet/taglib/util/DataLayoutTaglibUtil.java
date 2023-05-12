@@ -43,18 +43,8 @@ public class DataLayoutTaglibUtil {
 			long dataDefinitionId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		DataDefinitionResource.Factory dataDefinitionResourceFactory =
-			_dataDefinitionResourceFactorySnapshot.get();
-
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			dataDefinitionResourceFactory.create();
-
 		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourceBuilder.httpServletRequest(
-				httpServletRequest
-			).user(
-				PortalUtil.getUser(httpServletRequest)
-			).build();
+			_getDataDefinitionResource(httpServletRequest);
 
 		return dataDefinitionResource.getDataDefinition(dataDefinitionId);
 	}
@@ -66,18 +56,8 @@ public class DataLayoutTaglibUtil {
 
 		JSONArray fieldTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		DataDefinitionResource.Factory dataDefinitionResourceFactory =
-			_dataDefinitionResourceFactorySnapshot.get();
-
-		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
-			dataDefinitionResourceFactory.create();
-
 		DataDefinitionResource dataDefinitionResource =
-			dataDefinitionResourceBuilder.httpServletRequest(
-				httpServletRequest
-			).user(
-				PortalUtil.getUser(httpServletRequest)
-			).build();
+			_getDataDefinitionResource(httpServletRequest);
 
 		try {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
@@ -112,6 +92,23 @@ public class DataLayoutTaglibUtil {
 
 			return fieldTypesJSONArray;
 		}
+	}
+
+	private static DataDefinitionResource _getDataDefinitionResource(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		DataDefinitionResource.Factory dataDefinitionResourceFactory =
+			_dataDefinitionResourceFactorySnapshot.get();
+
+		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
+			dataDefinitionResourceFactory.create();
+
+		return dataDefinitionResourceBuilder.httpServletRequest(
+			httpServletRequest
+		).user(
+			PortalUtil.getUser(httpServletRequest)
+		).build();
 	}
 
 	private static void _setFieldIndexTypeNone(JSONObject jsonObject) {

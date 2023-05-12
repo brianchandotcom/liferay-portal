@@ -55,9 +55,11 @@ renderResponse.setTitle((auditEvent == null) ? "audit-event" : auditEvent.getEve
 				<%= dateFormatDateTime.format(auditEvent.getCreateDate()) %>
 			</aui:field-wrapper>
 
-			<aui:field-wrapper label="group-id">
-				<%= auditEvent.getGroupId() %>
-			</aui:field-wrapper>
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-177194") %>'>
+				<aui:field-wrapper label="group-id">
+					<%= auditEvent.getGroupId() %>
+				</aui:field-wrapper>
+			</c:if>
 
 			<aui:field-wrapper label="resource-id">
 				<%= auditEvent.getClassPK() %>

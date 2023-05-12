@@ -18,6 +18,7 @@ import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationRecipient;
+import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.dto.v1_0.util.NotificationUtil;
@@ -47,6 +48,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -176,16 +180,44 @@ public class NotificationTemplateResourceImpl
 				_notificationTemplateService.getNotificationTemplate(
 					notificationTemplateId);
 
-		NotificationRecipient notificationRecipient =
-			notificationTemplate.getNotificationRecipient();
+		Date createDate = new Date();
 
-		notificationContext.setNotificationRecipient(notificationRecipient);
-		notificationContext.setNotificationRecipientSettings(
-			notificationRecipient.getNotificationRecipientSettings());
+		notificationTemplate.setCreateDate(createDate);
 
+		notificationTemplate.setExternalReferenceCode(null);
 		notificationTemplate.setName(
 			StringUtil.appendParentheticalSuffix(
 				notificationTemplate.getName(), "copy"));
+		notificationTemplate.setUserId(contextUser.getUserId());
+		notificationTemplate.setUserName(contextUser.getFullName());
+		notificationTemplate.setUuid(null);
+
+		NotificationRecipient notificationRecipient =
+			notificationTemplate.getNotificationRecipient();
+
+		notificationRecipient.setUuid(null);
+		notificationRecipient.setUserId(contextUser.getUserId());
+		notificationRecipient.setUserName(contextUser.getFullName());
+		notificationRecipient.setCreateDate(createDate);
+
+		notificationContext.setNotificationRecipient(notificationRecipient);
+
+		List<NotificationRecipientSetting> notificationRecipientSettings =
+			new ArrayList<>();
+
+		for (NotificationRecipientSetting notificationRecipientSetting :
+				notificationRecipient.getNotificationRecipientSettings()) {
+
+			notificationRecipientSetting.setCreateDate(createDate);
+			notificationRecipientSetting.setUserId(contextUser.getUserId());
+			notificationRecipientSetting.setUserName(contextUser.getFullName());
+			notificationRecipientSetting.setUuid(null);
+
+			notificationRecipientSettings.add(notificationRecipientSetting);
+		}
+
+		notificationContext.setNotificationRecipientSettings(
+			notificationRecipientSettings);
 
 		notificationContext.setNotificationTemplate(notificationTemplate);
 		notificationContext.setType(notificationTemplate.getType());

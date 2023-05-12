@@ -21,9 +21,14 @@ interface IAction {
 }
 interface IContentRendererProps {
 	item: any;
+	query: string;
+}
+interface IContentRenderer {
+	component: React.FC<IContentRendererProps>;
+	textMatch?: Function;
 }
 interface IField {
-	contentRenderer?: React.FC<IContentRendererProps>;
+	contentRenderer?: IContentRenderer;
 	headingTitle?: boolean;
 	label: string;
 	name: string;

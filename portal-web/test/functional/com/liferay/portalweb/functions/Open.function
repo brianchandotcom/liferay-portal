@@ -55,7 +55,7 @@ definition {
 window.open("${locator1}","_self");
 		''';
 
-		selenium.runScript(${javascript});
+		selenium.executeJavaScript(${javascript});
 	}
 
 }

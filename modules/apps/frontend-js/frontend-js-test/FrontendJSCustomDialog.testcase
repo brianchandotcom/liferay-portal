@@ -43,7 +43,7 @@ definition {
 	@priority = 3
 	test CanRenderOpenAlertModal {
 		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {
-			RunScript(locator1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
+			ExecuteJavaScript(value1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
 		}
 
 		task ("Then: text 'Test Alert Modal' is present in the modal") {

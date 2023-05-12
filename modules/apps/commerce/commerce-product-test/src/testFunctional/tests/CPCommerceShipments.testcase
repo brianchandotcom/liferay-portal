@@ -2928,7 +2928,7 @@ definition {
 				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE");
 		}
 
-		RunScript(locator1 = "document.querySelectorAll('div.quantity-selector input')[0].value=0");
+		ExecuteJavaScript(value1 = "document.querySelectorAll('div.quantity-selector input')[0].value=0");
 
 		Button.clickSave();
 
@@ -2937,7 +2937,7 @@ definition {
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 			value1 = 0);
 
-		RunScript(locator1 = "document.querySelectorAll('div.quantity-selector input')[1].value=1");
+		ExecuteJavaScript(value1 = "document.querySelectorAll('div.quantity-selector input')[1].value=1");
 
 		Button.clickSave();
 

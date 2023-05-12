@@ -1,10 +1,10 @@
-@default = "runScript"
+@default = "executeJavaScript"
 definition {
 
-	function runScript {
+	function executeJavaScript {
 		WaitForSPARefresh();
 
-		selenium.runScript();
+		selenium.executeJavaScript();
 
 		selenium.assertJavaScriptErrors();
 

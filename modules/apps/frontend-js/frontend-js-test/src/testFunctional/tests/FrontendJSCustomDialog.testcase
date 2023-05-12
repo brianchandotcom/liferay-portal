@@ -42,7 +42,7 @@ definition {
 	@priority = 3
 	test CanRenderOpenAlertModal {
 		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {
-			RunScript(locator1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
+			ExecuteJavaScript(value1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
 		}
 
 		task ("Then: text 'Test Alert Modal' is present in the modal") {
@@ -55,7 +55,7 @@ definition {
 	@description = "LPS-165262"
 	@priority = 3
 	test CanRenderOpenConfirmModal {
-		RunScript(locator1 = "Liferay.Util.openConfirmModal({message: 'Test Confirm Modal', onConfirm: ()=>{}})");
+		ExecuteJavaScript(value1 = "Liferay.Util.openConfirmModal({message: 'Test Confirm Modal', onConfirm: ()=>{}})");
 	}
 
 }

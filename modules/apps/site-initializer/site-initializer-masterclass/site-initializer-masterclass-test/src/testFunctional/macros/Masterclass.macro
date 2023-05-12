@@ -43,7 +43,7 @@ definition {
 	}
 
 	macro goBackUsingBrowserHistory {
-		RunScript(locator1 = "window.history.go(-1)");
+		ExecuteJavaScript(value1 = "window.history.go(-1)");
 	}
 
 	macro goToLink {

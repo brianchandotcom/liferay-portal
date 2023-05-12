@@ -1009,7 +1009,7 @@ definition {
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
-		RunScript(locator1 = "window.history.go(-1)");
+		Masterclass.goBackUsingBrowserHistory();
 
 		AssertTextPresent(
 			key_publicationName = "Production",
@@ -1020,7 +1020,7 @@ definition {
 			key_changeTitle = "Conflicting Changes",
 			locator1 = "PublicationsChanges#CHANGE_TITLE");
 
-		RunScript(locator1 = "window.history.go(-1)");
+		Masterclass.goBackUsingBrowserHistory();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

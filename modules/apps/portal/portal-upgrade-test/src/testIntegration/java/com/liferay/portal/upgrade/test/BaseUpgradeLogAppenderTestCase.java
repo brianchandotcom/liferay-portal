@@ -490,10 +490,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				"Portal initial schema version: 1.0.0\n",
 				"Portal final build number: ", ReleaseInfo.getBuildNumber(),
 				StringPool.NEW_LINE, "Portal final schema version: ",
-				latestSchemaVersion.toString(), StringPool.NEW_LINE,
+				latestSchemaVersion, StringPool.NEW_LINE,
 				"Portal expected build number: ", ReleaseInfo.getBuildNumber(),
 				StringPool.NEW_LINE, "Portal expected schema version: ",
-				latestSchemaVersion.toString(), StringPool.NEW_LINE));
+				latestSchemaVersion, StringPool.NEW_LINE));
 	}
 
 	protected static void setUpClass(boolean upgradeClient) throws Exception {

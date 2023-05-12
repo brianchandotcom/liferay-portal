@@ -516,8 +516,7 @@ public class UpgradeReport {
 
 	private String _getReportLine(String key, Object value) {
 		return StringBundler.concat(
-			_getReportHeader(key), StringPool.COLON, StringPool.SPACE,
-			value.toString());
+			_getReportHeader(key), StringPool.COLON, StringPool.SPACE, value);
 	}
 
 	private String _getRootDir(String dlStoreConfigurationPid) {

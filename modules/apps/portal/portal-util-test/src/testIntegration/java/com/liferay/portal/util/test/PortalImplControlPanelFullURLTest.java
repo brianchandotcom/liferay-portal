@@ -136,8 +136,7 @@ public class PortalImplControlPanelFullURLTest {
 	private String _getQueryString(String portletId) {
 		return StringBundler.concat(
 			"?p_p_id=", portletId, "&p_p_lifecycle=0&p_p_state=",
-			WindowState.MAXIMIZED.toString(), "&p_p_mode=",
-			PortletMode.VIEW.toString());
+			WindowState.MAXIMIZED, "&p_p_mode=", PortletMode.VIEW);
 	}
 
 	@Inject

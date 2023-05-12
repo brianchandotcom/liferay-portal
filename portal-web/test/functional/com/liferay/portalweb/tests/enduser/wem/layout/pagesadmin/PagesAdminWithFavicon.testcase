@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -35,7 +27,7 @@ definition {
 
 		task ("Given a site designer has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Widget Page Name");
 		}
 
@@ -52,7 +44,7 @@ definition {
 		}
 
 		task ("When the site designer changes favicon of widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -85,10 +77,10 @@ definition {
 
 		task ("Given a site designer has a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -134,7 +126,7 @@ definition {
 		}
 
 		task ("When the site designer changes favicon of pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 
@@ -159,13 +151,13 @@ definition {
 
 		task ("Then the site designer could view the new favicon on new page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(
 				imageFileName = "Document_3.jpg",

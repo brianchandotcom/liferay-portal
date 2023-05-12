@@ -3,32 +3,27 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
-		task ("Enable staging") {
-			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Activate local live staging") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = ${randomSiteName});
 		}
 	}
 
@@ -37,7 +32,7 @@ definition {
 	test ViewContentPageInLiveAfterConvertingWidgetPageWithPublish {
 		task ("Add a widget page in staging site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false");
 		}
@@ -45,14 +40,14 @@ definition {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				site = "false",
 				title = "Web Content Title");
 		}
 
 		task ("Add an Asset Publisher to widget page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				widgetName = "Asset Publisher");
@@ -61,7 +56,7 @@ definition {
 		task ("View the web content is shown in Asset Publisher") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewTitle(portletName = "Asset Publisher");
 
@@ -77,7 +72,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -85,7 +80,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -103,7 +98,7 @@ definition {
 		task ("Publish to Live") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
+				siteName = "${randomSiteName} Staging");
 
 			Staging.gotoPublishToLive();
 
@@ -113,7 +108,7 @@ definition {
 		task ("View the Asset Publisher is shown in Live site") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewTitle(portletName = "Asset Publisher");
 
@@ -123,7 +118,7 @@ definition {
 		}
 
 		task ("View the page type is Content Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -136,7 +131,7 @@ definition {
 	test ViewWidgetPageInLiveAfterConvertingWidgetPageWithoutPublish {
 		task ("Add a widget page in staging site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false");
 		}
@@ -144,14 +139,14 @@ definition {
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				site = "false",
 				title = "Web Content Title");
 		}
 
 		task ("Add an Asset Publisher to widget page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				widgetName = "Asset Publisher");
@@ -160,7 +155,7 @@ definition {
 		task ("View the web content is shown in Asset Publisher") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewTitle(portletName = "Asset Publisher");
 
@@ -176,7 +171,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -184,7 +179,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page without publish") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -192,7 +187,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -206,7 +201,7 @@ definition {
 		task ("Publish to Live") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Staging.gotoPublishToLive();
 
@@ -216,7 +211,7 @@ definition {
 		task ("View the Asset Publisher is shown in Live site") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.viewTitle(portletName = "Asset Publisher");
 
@@ -226,7 +221,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",

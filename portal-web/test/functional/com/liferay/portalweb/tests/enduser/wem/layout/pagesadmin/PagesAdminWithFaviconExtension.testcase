@@ -3,42 +3,34 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Page Administration";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomEntryName1 = StringUtil.randomString(8);
+	static var randomEntryName2 = StringUtil.randomString(8);
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add two remote apps for favicon extension") {
 			JSONClientExtension.addRemoteAppEntry(
-				name = "Google Favicon",
+				name = ${randomEntryName1},
 				type = "themeFavicon",
 				url = "https://www.google.com/favicon.ico");
 
 			JSONClientExtension.addRemoteAppEntry(
-				name = "NBA Favicon",
+				name = ${randomEntryName2},
 				type = "themeFavicon",
 				url = "https://www.nba.com/favicon.ico");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ClientExtensionGeneral.tearDown();
 		}
 	}
 
@@ -49,7 +41,7 @@ definition {
 
 		task ("Given a site designer has a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Widget Page Name");
 		}
 
@@ -66,7 +58,7 @@ definition {
 		}
 
 		task ("When the site designer add a favicon extension to widget page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
@@ -78,11 +70,11 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "Google Favicon");
+				value1 = ${randomEntryName1});
 
 			PortletEntry.save();
 		}
@@ -99,10 +91,10 @@ definition {
 
 		task ("Given a site designer has a content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -128,11 +120,11 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "Google Favicon");
+				value1 = ${randomEntryName1});
 
 			PortletEntry.save();
 		}
@@ -148,7 +140,7 @@ definition {
 		}
 
 		task ("When the site designer changes favicon of pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			WaitForPageLoad();
 
@@ -162,24 +154,24 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName2});
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "NBA Favicon");
+				value1 = ${randomEntryName2});
 
 			PortletEntry.save();
 		}
 
 		task ("Then the site designer could view the new favicon on new page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Content Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(
 				imageFileName = "https://www.nba.com/favicon.ico",
@@ -200,13 +192,13 @@ definition {
 	test ClearFaviconExtensionSelection {
 		task ("Given a site designer has a content page with a favicon extension") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
@@ -216,7 +208,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
 		}
@@ -238,7 +230,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "Google Favicon");
+				value1 = ${randomEntryName1});
 
 			Click(
 				ariaLabel = "Clear Favicon",
@@ -265,10 +257,10 @@ definition {
 	test OverwriteInheritedFavionExtensionFromMasterPageTemplate {
 		task ("Given a site designer has a content page with inherited favicon extension from master page template") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				masterPageTemplateEntryName = "Master Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
@@ -284,7 +276,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
 
@@ -294,7 +286,7 @@ definition {
 
 			MastersPageTemplates.publishMaster();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				masterLayoutName = "Master Page Template",
@@ -316,11 +308,11 @@ definition {
 		}
 
 		task ("Then the site designer could apply a new favicon extension") {
-			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName2});
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "NBA Favicon");
+				value1 = ${randomEntryName2});
 
 			PortletEntry.save();
 
@@ -339,10 +331,10 @@ definition {
 	test OverwriteInheritedFavionExtensionFromPageTemplate {
 		task ("Given a site designer has a content page with inherited favicon extension from content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -360,7 +352,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
 
@@ -370,7 +362,7 @@ definition {
 
 			PageEditor.publish();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -389,11 +381,11 @@ definition {
 		task ("Then the site designer could apply a new favicon extension") {
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName2});
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "NBA Favicon");
+				value1 = ${randomEntryName2});
 
 			PortletEntry.save();
 
@@ -412,10 +404,10 @@ definition {
 	test ViewInheritedFavionExtensionFromPageTemplate {
 		task ("Given a site designer has a content page template with a favicon extension") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -433,7 +425,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Design");
 
-			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+			PagesAdmin.selectFaviconExtension(extensionName = ${randomEntryName1});
 
 			PortletEntry.save();
 
@@ -445,7 +437,7 @@ definition {
 		}
 
 		task ("When the site designer creates a content page based on content page template") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
@@ -468,7 +460,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PagesAdmin#FAVICON_NAME",
-				value1 = "Google Favicon");
+				value1 = ${randomEntryName1});
 		}
 	}
 

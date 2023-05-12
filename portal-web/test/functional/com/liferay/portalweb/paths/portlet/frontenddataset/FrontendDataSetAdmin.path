@@ -79,8 +79,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEWS_ANY_TAB</td>
-	<td>//*[contains(@class='nav-item')]//*[contains(@class, 'navbar') and (text()='${key_tabName}')]</td>
+	<td>VIEW_ANY_TAB</td>
+	<td>//*[contains(@class,'nav-link')]//span[contains(text(),'${key_tabName}')]</td>
 	<td></td>
 </tr>
 

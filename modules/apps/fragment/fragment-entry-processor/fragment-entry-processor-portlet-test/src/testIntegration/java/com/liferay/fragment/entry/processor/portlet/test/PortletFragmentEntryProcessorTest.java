@@ -96,8 +96,9 @@ public class PortletFragmentEntryProcessorTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		ServiceContextThreadLocal.pushServiceContext(
-			new MockServiceContext(_layout, _getThemeDisplay()));
+		_serviceContext = new MockServiceContext(_layout, _getThemeDisplay());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -124,9 +125,6 @@ public class PortletFragmentEntryProcessorTest {
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_instanceable_widget_tag.html");
 
-		ServiceContext serviceContext = new MockServiceContext(
-			_layout, _getThemeDisplay());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
@@ -136,7 +134,7 @@ public class PortletFragmentEntryProcessorTest {
 				_layout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-				fragmentEntry.getType(), serviceContext);
+				fragmentEntry.getType(), _serviceContext);
 
 		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferences(
@@ -286,6 +284,8 @@ public class PortletFragmentEntryProcessorTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private ThemeLocalService _themeLocalService;

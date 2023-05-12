@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -284,11 +286,6 @@ public class EntityCacheImpl
 		portalCacheManager.registerPortalCacheManagerListener(this);
 	}
 
-	@Reference(unbind = "-")
-	protected void setFinderCacheImpl(FinderCacheImpl finderCacheImpl) {
-		_finderCacheImpl = finderCacheImpl;
-	}
-
 	private boolean _isLocalCacheEnabled() {
 		if (_localCache == null) {
 			return false;
@@ -304,7 +301,8 @@ public class EntityCacheImpl
 				CompanyThreadLocal.setWithSafeCloseable(
 					CompanyThreadLocal.getCompanyId())) {
 
-			FinderCacheImpl finderCacheImpl = _finderCacheImpl;
+			FinderCacheImpl finderCacheImpl =
+				(FinderCacheImpl)_finderCacheSnapshot.get();
 
 			if (finderCacheImpl == null) {
 				return;
@@ -415,7 +413,8 @@ public class EntityCacheImpl
 	private static final String _GROUP_KEY_PREFIX =
 		EntityCache.class.getName() + StringPool.PERIOD;
 
-	private static volatile FinderCacheImpl _finderCacheImpl;
+	private static final Snapshot<FinderCache> _finderCacheSnapshot =
+		new Snapshot<>(EntityCacheImpl.class, FinderCache.class);
 
 	private boolean _dbPartitionEnabled;
 	private ThreadLocal<LRUMap<Serializable, Serializable>> _localCache;

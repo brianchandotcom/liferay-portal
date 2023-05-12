@@ -39,9 +39,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.ToLongFunction;
 
 /**
@@ -140,6 +142,42 @@ public class ListUtil {
 		}
 
 		return false;
+	}
+
+	public static <T, R> List<T> filter(
+		List<? extends T> inputList,
+		BiFunction<Integer, Integer, List<T>> listFunction,
+		Supplier<Integer> countSupplier, Predicate<T> predicate, int start,
+		int end) {
+
+		List<T> outputList = filter(inputList, predicate);
+
+		int delta = end - start;
+
+		int count = countSupplier.get();
+
+		int pageCount = (count / delta) + (((count % delta) == 0) ? 0 : 1);
+
+		int pageIndex = (int)Math.ceil((double)start / delta);
+
+		int pageSize = end - start;
+
+		while ((outputList.size() < pageSize) && (pageIndex < pageCount)) {
+			pageIndex++;
+
+			start += delta;
+			end += delta;
+
+			List<T> nextList = listFunction.apply(start, end);
+
+			List<T> remainigFilteredList = filter(nextList, predicate);
+
+			int difference = pageSize - outputList.size();
+
+			outputList.addAll(subList(remainigFilteredList, 0, difference));
+		}
+
+		return outputList;
 	}
 
 	public static <T> List<T> filter(

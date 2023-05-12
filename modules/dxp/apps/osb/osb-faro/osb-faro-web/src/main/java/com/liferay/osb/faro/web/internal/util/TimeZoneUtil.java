@@ -18,7 +18,6 @@ import com.liferay.osb.faro.web.internal.model.display.contacts.TimeZoneDisplay;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 
 import java.time.Instant;
@@ -27,11 +26,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.zone.ZoneRulesException;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * @author Geyson Silva
@@ -69,46 +66,32 @@ public class TimeZoneUtil {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(TimeZoneUtil.class);
+	private static int _compareTimeZoneId(
+		String timeZoneId1, String timeZoneId2) {
 
-	private static final Map<String, String> _timeZoneIdCountryMap;
+		Instant instant = Instant.now();
 
-	private static class TimeZoneIdComparator implements Comparator<Object> {
+		ZonedDateTime zonedDateTime1 = instant.atZone(ZoneId.of(timeZoneId1));
+		ZonedDateTime zonedDateTime2 = instant.atZone(ZoneId.of(timeZoneId2));
 
-		public TimeZoneIdComparator(Map<String, String> map) {
-			_map = map;
+		ZoneOffset zoneOffset1 = zonedDateTime1.getOffset();
+		ZoneOffset zoneOffset2 = zonedDateTime2.getOffset();
+
+		int value = zoneOffset2.compareTo(zoneOffset1);
+
+		if (value == 0) {
+			return timeZoneId1.compareTo(timeZoneId2);
 		}
 
-		@Override
-		public int compare(Object object1, Object object2) {
-			Instant instant = Instant.now();
-
-			String timeZoneId1 = _map.get(object1);
-			String timeZoneId2 = _map.get(object2);
-
-			ZonedDateTime zonedDateTime1 = instant.atZone(
-				ZoneId.of(timeZoneId1));
-			ZonedDateTime zonedDateTime2 = instant.atZone(
-				ZoneId.of(timeZoneId2));
-
-			ZoneOffset zoneOffset1 = zonedDateTime1.getOffset();
-			ZoneOffset zoneOffset2 = zonedDateTime2.getOffset();
-
-			int value = zoneOffset2.compareTo(zoneOffset1);
-
-			if (value == 0) {
-				return timeZoneId1.compareTo(timeZoneId2);
-			}
-
-			return value;
-		}
-
-		private final Map<String, String> _map;
-
+		return value;
 	}
 
-	static {
-		Map<String, String> timeZones = HashMapBuilder.<String, String>put(
+	private static final Log _log = LogFactoryUtil.getLog(TimeZoneUtil.class);
+
+	private static final Map<String, String> _timeZoneIdCountryMap =
+		TreeMapBuilder.<String, String>create(
+			TimeZoneUtil::_compareTimeZoneId
+		).put(
 			"Africa/Abidjan", "Côte d’Ivoire"
 		).put(
 			"Africa/Accra", "Ghana"
@@ -797,14 +780,5 @@ public class TimeZoneUtil {
 		).put(
 			"UTC", "UTC"
 		).build();
-
-		TreeMap<String, String> build = TreeMapBuilder.<String, String>create(
-			new TimeZoneIdComparator(timeZones)
-		).putAll(
-			timeZones
-		).build();
-
-		_timeZoneIdCountryMap = build;
-	}
 
 }

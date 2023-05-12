@@ -36,8 +36,8 @@ definition {
 
 		OAuth2.editScopes(
 			applicationName = ${applicationName},
-			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services");
+			resourceCheckList = "Liferay.Headless.Admin.User.everything.read",
+			resourcePanels = "Liferay.Headless.Admin.User");
 	}
 
 	macro addApplication {
@@ -188,11 +188,13 @@ definition {
 	}
 
 	macro authorizeMyApplication {
+		var oauth2URL = PropsUtil.get("oauth2.url");
+
 		if (${newTab} == "true") {
-			Open.openInTheNewTab(locator1 = "https://localhost:8443/oauth2-tester/");
+			Open.openInTheNewTab(locator1 = "${oauth2URL}/grant-type-authorization-code");
 		}
 		else {
-			Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/");
+			Navigator.openSpecificURL(url = "${oauth2URL}/grant-type-authorization-code");
 		}
 
 		if (isSet(portalURL)) {
@@ -203,14 +205,14 @@ definition {
 		else {
 			Type(
 				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
-				value1 = "https://localhost:8443");
+				value1 = "http://localhost:8080/o/oauth2/authorize");
 		}
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
 			value1 = ${clientId});
 
-		Button.click(button = "Authorize My Application");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 
 		if (IsElementPresent(locator1 = "Button#SIGN_IN")) {
 			Type(
@@ -234,16 +236,24 @@ definition {
 			WaitForElementPresent(locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET");
 		}
 		else {
-			Button.click(button = "Authorize");
+			Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 		}
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID_2",
+			value1 = ${clientId});
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = ${clientSecret});
 
-		SelectFrameTop();
+		//SelectFrameTop();
 
-		Button.click(button = "Obtain OAuth2 Access");
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
+			value1 = "http://localhost:8080/o/oauth2/token");
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_TOKEN");
 	}
 
 	macro authorizePKCEApplication {
@@ -270,7 +280,7 @@ definition {
 
 		Button.click(button = "Authorize My Application (PKCE)");
 
-		Button.click(button = "Authorize");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_EXCHANGE_CODE",
@@ -474,7 +484,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/o/oauth2/authorize?client_id=${generatedClientId}&response_type=code");
 
-		Button.click(button = "Authorize");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_AUTHORIZE");
 
 		WaitForSPARefresh();
 
@@ -669,8 +679,13 @@ definition {
 				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
 				value1 = ${requestURL});
 		}
+		else {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
+				value1 = "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts");
+		}
 
-		Button.click(button = "Launch Request");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
@@ -680,17 +695,17 @@ definition {
 	macro launchRequestNotAuthorized {
 		Pause(locator1 = 8000);
 
-		Button.click(button = "Launch Request");
-
-		AssertConfirm.assertConfirmationNoError(value1 = "403 - Unauthorized!");
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "");
+			value1 = "[]");
 	}
 
 	macro obtainOAuth2AccessNotAuthorized {
-		AssertConfirm.assertConfirmationNoError(value1 = "There's a problem with your authorization access");
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "[]");
 	}
 
 	macro openOAuth2Admin {
@@ -979,6 +994,8 @@ definition {
 	}
 
 	macro viewGrantedAuthViaUser {
+		Navigator.openURL();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Connected Applications");
 
 		if (${noAuthorizations} == "true") {
@@ -1188,14 +1205,30 @@ definition {
 
 	macro viewValidOAuth2LaunchRequest {
 		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID_2",
+			value1 = ${clientId});
+
+		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = ${clientSecret});
 
-		Button.click(button = "Obtain OAuth2 Access");
+		SelectFrameTop();
 
-		AssertElementPresent(
-			key_text = "Launch Request",
-			locator1 = "Button#ANY");
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_TOKEN_URL",
+			value1 = "http://localhost:8080/o/oauth2/token");
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_TOKEN");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL",
+			value1 = "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts");
+
+		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "@liferay.com");
 	}
 
 }

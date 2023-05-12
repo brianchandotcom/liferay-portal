@@ -182,7 +182,7 @@ public class UserNotificationResourceImpl
 	private ModelResourcePermission<User> _userModelResourcePermission;
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.user.notification.internal.dto.v1_0.UserNotificationDTOConverter)"
+		target = "(component.name=com.liferay.headless.user.notification.internal.dto.v1_0.converter.UserNotificationDTOConverter)"
 	)
 	private DTOConverter<UserNotificationEvent, UserNotification>
 		_userNotificationDTOConverter;

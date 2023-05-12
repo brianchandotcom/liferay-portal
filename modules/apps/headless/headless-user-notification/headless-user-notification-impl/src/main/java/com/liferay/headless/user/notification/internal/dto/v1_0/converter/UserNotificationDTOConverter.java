@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.user.notification.internal.dto.v1_0;
+package com.liferay.headless.user.notification.internal.dto.v1_0.converter;
 
 import com.liferay.headless.user.notification.dto.v1_0.UserNotification;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

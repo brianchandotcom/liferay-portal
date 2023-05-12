@@ -12,32 +12,32 @@
 <tbody>
 <tr>
 	<td>PERMISSIONS_NAVITEM</td>
-	<td>//div[contains(@class,'lfr-permission-navigation')]//li[contains(@class,'permission-navigation-section')]//a[contains(.,'${key_navItem}')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(@role,'menuitem') and contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVIGATION</td>
-	<td>//a[contains(.,'${key_permissionNavHeader}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//li[contains(@class,'permission-navigation-item')]/a[contains(.,'${key_permissionNavItem}')]</td>
+	<td>//*[contains(.,'${key_permissionNavHeader}') and contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_permissionNavItem}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_COLLAPSED</td>
-	<td>//div[contains(@class,'lfr-permission-navigation')]//*[contains(@class,'permission-navigation-section')]/a[contains(.,'${key_navItem}') and contains(@class,'collapsed')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_SUBITEM</td>
-	<td>//a[contains(.,'${key_navItem}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//*[contains(@class,'permission-navigation')]/a[contains(.,'${key_subItem}')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'button')]/following-sibling::*//button[contains(.,'${key_subItem}') and contains(@role,'menuitem')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_NAVITEM_SUBITEM_COLLAPSED</td>
-	<td>//a[contains(.,'${key_navItem}') and contains(@class,'permission-navigation-item-header')]/following-sibling::*//*[contains(@class,'permission-navigation')]/a[contains(.,'${key_subItem}') and contains(@class,'collapsed')]</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//button[contains(.,'${key_navItem}') and contains(@role,'button')]/following-sibling::*//button[contains(.,'${key_subItem}') and contains(@class,'collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//*[contains(@class,'menubar-vertical')]//input</td>
+	<td>//*[contains(@data-qa-id,'editRolePermissionsNavigation')]//input</td>
 	<td></td>
 </tr>
 <tr>

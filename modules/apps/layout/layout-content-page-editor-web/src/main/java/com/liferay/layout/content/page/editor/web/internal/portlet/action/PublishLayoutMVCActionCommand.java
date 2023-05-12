@@ -161,7 +161,7 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-			_layoutLocalService.updateLayout(draftLayout);
+			draftLayout = _layoutLocalService.updateLayout(draftLayout);
 
 			LayoutSet layoutSet = layout.getLayoutSet();
 
@@ -192,7 +192,7 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 			layout.setLayoutPrototypeUuid(null);
 			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-			_layoutLocalService.updateLayout(layout);
+			layout = _layoutLocalService.updateLayout(layout);
 
 			_updateLayoutRevision(layout, serviceContext);
 		}

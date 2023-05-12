@@ -120,7 +120,6 @@
 	[#assign activities = restClient.get("/c/mdfrequests/${mdf_request_id}/mdfReqToActs?nestedFields=actToBgts,actToMDFClmActs,r_mdfClmToMDFClmActs_c_mdfClaimId&nestedFieldsDepth=3").items /]
 
 	[#assign mdf_status = restClient.get("/c/mdfrequests/${mdf_request_id}").mdfRequestStatus.key /]
-	[#if mdf_status != "draft"]
 		[#list activities as activity]
 			<div class="border-brand-primary-lighten-4 panel" role="tablist">
 				<button aria-controls="mdfRequestActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfRequestActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
@@ -130,11 +129,14 @@
 						[/#if]
 
 						<h4 class="mb-1">${activity.name} (${activity.id})</h4>
-
-						[@claim_status activity_claims=activity.actToMDFClmActs /]
-
-						[@request_status activity_status=activity.activityStatus end_date=(activity.endDate?date)! /]
-					</div>
+						[#if mdf_status != "draft"]
+							[@claim_status activity_claims=activity.actToMDFClmActs /]
+							
+							[@request_status activity_status=activity.activityStatus end_date=(activity.endDate?date)! /]
+						[#else]
+							[@clay.alert displayType="info" message="Pending MDF Request submission." title="Info" /]
+						[/#if]
+						</div>
 				</button>
 
 				<div class="collapse panel-collapse" id="mdfRequestActivitiesPanel-${activity.id}" role="tabpanel">
@@ -148,9 +150,6 @@
 				</div>
 			</div>
 		[/#list]
-	[#else]
-		[@clay.alert displayType="info" message="Pending MDF Request submission." title="Info" /]
-	[/#if]
 [#else]
 	<div class="alert alert-info">
 		<p>To use this fragment either place it on a Display Page Template to see which attributes are available from <em>request.getAttribute("INFO_ITEM")</em>.</p>

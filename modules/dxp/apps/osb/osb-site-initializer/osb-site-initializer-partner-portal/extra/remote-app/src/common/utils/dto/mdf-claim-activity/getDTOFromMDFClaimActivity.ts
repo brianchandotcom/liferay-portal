@@ -24,7 +24,7 @@ export default function getDTOFromMDFClaimActivity(
 		listOfQualifiedLeads: listOfQualifiedLeadsDocumentId,
 		metrics: mdfClaimActivity.metrics,
 		name: mdfClaimActivity.name,
-		r_accTomdfClmActs_accountEntryId: companyId,
+		r_accToMDFClmActs_accountEntryId: companyId,
 		r_actToMDFClmActs_c_activityId:
 			mdfClaimActivity.r_actToMDFClmActs_c_activityId,
 		r_mdfClmToMDFClmActs_c_mdfClaimId: mdfClaimId,

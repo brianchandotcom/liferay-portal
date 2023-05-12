@@ -32,9 +32,9 @@ definition {
 		}
 
 		task ("When goes to Fields Tab") {
-			FrontendDataSetAdmin.goToFieldTabs(
+			FrontendDataSetAdmin.goToTab(
 				dataSetViewName = "View Test",
-				navTab = "Pagination");
+				tabName = "Pagination");
 		}
 	}
 

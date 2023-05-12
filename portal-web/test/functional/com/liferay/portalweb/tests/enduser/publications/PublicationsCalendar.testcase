@@ -167,14 +167,14 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Publication Calendar Event Title Edit",
-			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Publication Calendar Event Title Edit");
 
 		PublicationsChangeDetails.viewConflictingChangeDetails(
 			columnName = "Title",
 			columnValueInPublication = "Publication Calendar Event Title Edit",
-			deletionModificationConflict = "true",
+			modificationConflict = "true",
 			publicationName = "Publication Name");
 
 		IFrame.closeFrame();

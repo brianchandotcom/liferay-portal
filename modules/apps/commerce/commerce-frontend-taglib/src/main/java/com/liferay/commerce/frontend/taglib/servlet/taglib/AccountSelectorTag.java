@@ -84,8 +84,7 @@ public class AccountSelectorTag extends IncludeTag {
 			_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			_addCommerceOrderURL = _getAddCommerceOrderURL(
-				_themeDisplay, httpServletRequest);
+			_addCommerceOrderURL = _getAddCommerceOrderURL(httpServletRequest);
 
 			_accountEntry = commerceContext.getAccountEntry();
 			_commerceOrder = commerceContext.getCommerceOrder();

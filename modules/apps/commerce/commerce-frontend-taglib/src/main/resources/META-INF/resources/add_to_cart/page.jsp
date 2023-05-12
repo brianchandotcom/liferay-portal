@@ -73,7 +73,7 @@ if (alignment.equals("full-width")) {
 			alignment: '<%= alignment %>',
 			iconOnly: <%= iconOnly %>,
 			inline: <%= inline %>,
-			namespace: '<%= addToCartId %>',
+			namespace: '<%= namespace %>',
 			size: '<%= size %>',
 		},
 		showOrderTypeModal: <%= showOrderTypeModal %>,

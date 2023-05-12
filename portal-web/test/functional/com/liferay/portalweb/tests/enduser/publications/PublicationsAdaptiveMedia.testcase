@@ -52,4 +52,47 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
+	@priority = 3
+	test CanEditImageResolutionWithinPublications {
+		AdaptiveMedia.openToAddImageResolution();
+
+		AdaptiveMedia.addImageResolution(
+			imageName = "Test Resolution",
+			maxHeight = 100,
+			maxWidth = 100);
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.editImageResolution(
+			imageName = "Test Resolution",
+			imageNameEdit = "Test Resolution Edit",
+			maxHeightEdit = 200,
+			maxWidthEdit = 200);
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Test Resolution Edit");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/5");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		AdaptiveMedia.openAdaptiveMediaAdmin();
+
+		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Test Resolution Edit");
+
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/6");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+	}
+
 }

@@ -37,7 +37,7 @@ describe('GenerateTokenCard', () => {
 			'option[value="31557600"]'
 		);
 		const optionIndefinite = selectElement.querySelector(
-			'option[value="2592000"]'
+			'option[value="3155760000"]'
 		);
 		expect(option30days).toBeInTheDocument();
 		expect(option60Months).toBeInTheDocument();

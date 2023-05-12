@@ -686,7 +686,7 @@ definition {
 		property test.name.skip.portal.instance = "GDPR#CanAnonymizeWithPasswordLengthChange";
 
 		task ("Given publish the document entry as the new admin user") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -743,7 +743,7 @@ definition {
 		property test.name.skip.portal.instance = "GDPR#CanAnonymizeWithPasswordMinimumUpperCaseChange";
 
 		task ("Given publish the document entry as the new admin user") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

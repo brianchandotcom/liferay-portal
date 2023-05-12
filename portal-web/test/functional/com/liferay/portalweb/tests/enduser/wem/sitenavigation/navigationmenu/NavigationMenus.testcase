@@ -1126,7 +1126,7 @@ definition {
 				pageName = "Test Page Name 3",
 				siteName = "Test Site Name");
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page-name-2");
 		}

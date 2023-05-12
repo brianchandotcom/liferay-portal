@@ -33,7 +33,7 @@ definition {
 		}
 
 		task ("When the admin user signs out via URL") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/c/portal/logout");
 		}
@@ -253,7 +253,7 @@ definition {
 		}
 
 		task ("When the page admin navigates to the page set via new friendly URL") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
 		}
@@ -292,7 +292,7 @@ definition {
 		}
 
 		task ("When the page admin navigates to the page set via new friendly URL") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
 		}
@@ -317,7 +317,7 @@ definition {
 		}
 
 		task ("When the page admin navigates to the page set via friendly URL") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-set");
 		}

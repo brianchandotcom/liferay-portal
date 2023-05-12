@@ -286,7 +286,7 @@ definition {
 			aggregationField = "title_sortable",
 			customParameterName = "title");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?title=test1%22()%26%25%3Cacx%3E%3CScRiPt%20%3Ealert(%27XSS%27)%3C%2FScRiPt%3E");
 
@@ -497,7 +497,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
@@ -717,7 +717,7 @@ definition {
 	@description = "This is a use case for LPS-135288."
 	@priority = 4
 	test AssertSearchTagURLNoXSS {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?tag=test%22%3E%3Csvg/onload=alert(document.domain)%3E");
 

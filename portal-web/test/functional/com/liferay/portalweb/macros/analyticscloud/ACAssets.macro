@@ -82,7 +82,7 @@ definition {
 			locator1 = "ACAssets#APPEARS_ON_PAGE_NAME",
 			value1 = ${pageName});
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACAssets#APPEARS_ON_CANONICAL_URL",

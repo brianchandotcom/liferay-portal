@@ -145,7 +145,7 @@ definition {
 		}
 
 		task ("Then navigates to the href") {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			var baseURL = "${portalURL}/web/guest";
 			var myURL = Navigator.getCurrentURL();

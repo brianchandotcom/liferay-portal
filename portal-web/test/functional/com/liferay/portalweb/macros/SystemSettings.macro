@@ -1,7 +1,7 @@
 definition {
 
 	macro assertPortalBuildNumber {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		var buildNumberCurl = '''
 			${portalURL}/api/jsonws/portal/get-build-number -H 'Authorization: Bearer ${accessToken}'
@@ -15,7 +15,7 @@ definition {
 	}
 
 	macro assertPortalVersion {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		var portalVersionCurl = '''
 			${portalURL}/api/jsonws/portal/get-version -H 'Authorization: Bearer ${accessToken}'
@@ -264,7 +264,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		if (${portlet} == "Applications Menu") {

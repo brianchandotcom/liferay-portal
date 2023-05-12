@@ -1032,7 +1032,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var key_friendlyURL = "";
@@ -1188,7 +1188,7 @@ definition {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 		}
 
 		var plid = JSONLayout.getPlid(

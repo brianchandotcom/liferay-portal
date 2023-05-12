@@ -406,7 +406,7 @@ definition {
 		property custom.properties = "locale.prepend.friendly.url.style=3";
 		property test.name.skip.portal.instance = "Locale#PrependFriendlyURLStyle";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
@@ -932,7 +932,7 @@ definition {
 
 		User.firstLoginPG();
 
-		var baseURL = JSONCompany.getPortalURL();
+		var baseURL = PropsUtil.get("portal.url");
 
 		task ("Assert time zone id America/Phoenix always displays in English") {
 			Navigator.openSpecificURL(url = "${baseURL}/ja/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");

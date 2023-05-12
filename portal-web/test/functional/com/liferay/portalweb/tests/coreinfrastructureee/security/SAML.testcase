@@ -40,7 +40,7 @@ definition {
 		task ("Add Category log levels") {
 			Navigator.openURL();
 
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServerAdministration.openServerAdmin();
 
@@ -345,7 +345,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#AssertEmptyMappingCannotBeUsedForUserMatching";
 
 		task ("Configure samlsp as SP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -382,7 +382,7 @@ definition {
 		}
 
 		task ("Configure samlsp as service provider") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -413,7 +413,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole";
 
 		task ("Disable IdP role to be configured") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.saml.runtime.configuration.SamlConfiguration");
 
@@ -591,7 +591,7 @@ definition {
 		}
 
 		task ("Configure samlsp as SP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -784,7 +784,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",
@@ -968,7 +968,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",
@@ -1017,7 +1017,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",
@@ -1157,7 +1157,7 @@ definition {
 		}
 
 		task ("Disable auth and request signature required on IdP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -1181,7 +1181,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",
@@ -1201,7 +1201,7 @@ definition {
 		}
 
 		task ("Configure IdP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -1238,7 +1238,7 @@ definition {
 		}
 
 		task ("Disable auth and request signature required on IdP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -1589,7 +1589,7 @@ definition {
 		task ("Add ApacheDS server as LDAP server and test connection") {
 			Navigator.openURL();
 
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
 
@@ -1643,7 +1643,7 @@ definition {
 		}
 
 		task ("View CP ldapuseremail@liferay.com information") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			User.openUsersAdmin();
 
@@ -2859,7 +2859,7 @@ definition {
 
 			User.firstLoginUI();
 
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			User.openUsersAdmin();
 
@@ -3031,7 +3031,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLIDP";
 
 		task ("Given: Add SAP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -3085,7 +3085,7 @@ definition {
 		property test.name.skip.portal.instance = "SAML#ImportJSONFileToConfigureSAMLSP";
 
 		task ("Given: Add SAP") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			ServiceAccessPolicy.openServiceAccessPolicyAdmin();
 
@@ -3224,7 +3224,7 @@ definition {
 		task ("Convert signing certificate") {
 			Navigator.openURL();
 
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			SAML.goToSAMLAdmin();
 
@@ -4038,7 +4038,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",
@@ -4086,7 +4086,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",
@@ -4466,7 +4466,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = PropsUtil.get("portal.url");
 
 			SAML.executeIdPInitiatedSSO(
 				idpInitiatedSsourl = "${portalURL}/c/portal/saml/sso?entityId=samlsp&RelayState=http://www.able.com:9080",

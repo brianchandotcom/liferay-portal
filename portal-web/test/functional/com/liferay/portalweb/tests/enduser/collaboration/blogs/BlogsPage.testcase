@@ -447,7 +447,7 @@ definition {
 	@priority = 5
 	@refactorneeded
 	test CanUpdateFriendlyURL {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		BlogsNavigator.openToAddEntry(
 			layoutName = "Blogs Page",

@@ -2885,7 +2885,7 @@ definition {
 	@priority = 4
 	@uitest
 	test SegmentAvailableInAnyLocale {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Navigate to Segment Admin using not default language") {
 			Navigator.openSpecificURL(url = "${portalURL}/es/group/test-site-name/~/control_panel/manage/-/segments/entries");

@@ -18,7 +18,7 @@ definition {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
@@ -59,7 +59,7 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 

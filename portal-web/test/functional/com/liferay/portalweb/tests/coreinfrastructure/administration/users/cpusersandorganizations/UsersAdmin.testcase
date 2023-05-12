@@ -1113,7 +1113,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -1834,7 +1834,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given that a user forgot password and send email to set new password") {
 			PortalSettings.gotoConfiguration(
@@ -1959,7 +1959,7 @@ definition {
 	test LogoutUserViaURL {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2240,7 +2240,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -2551,7 +2551,7 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -2667,7 +2667,7 @@ definition {
 	test ViewLoginForDeactivatedUserViaDeactivateButton {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

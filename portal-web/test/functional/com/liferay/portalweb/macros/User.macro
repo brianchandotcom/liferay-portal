@@ -1811,7 +1811,7 @@ definition {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userScreenName}");
 		}
@@ -1857,7 +1857,7 @@ definition {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
@@ -2006,7 +2006,7 @@ definition {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userScreenName}");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userScreenName}");
 		}
@@ -2037,7 +2037,7 @@ definition {
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}

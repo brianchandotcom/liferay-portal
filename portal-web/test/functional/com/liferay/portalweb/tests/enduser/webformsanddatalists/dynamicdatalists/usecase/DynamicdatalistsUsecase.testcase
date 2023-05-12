@@ -799,7 +799,7 @@ definition {
 	@description = "This is a use case for LPS-68216."
 	@priority = 4
 	test AddSelectFieldWithTranslationAndViewInSpreadsheetView {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openURL();
 

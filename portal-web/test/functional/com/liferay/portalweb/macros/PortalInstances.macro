@@ -129,7 +129,7 @@ definition {
 				urlAppend = "group/control_panel/manage?p_p_id=com_liferay_on_demand_admin_web_internal_portlet_OnDemandAdminPortlet");
 		}
 		else {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_on_demand_admin_web_internal_portlet_OnDemandAdminPortlet");
 		}
@@ -185,7 +185,7 @@ definition {
 	macro tearDownCustomPortal {
 		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		var portalURL = StringUtil.replace(${portalURL}, "http://", "");
 

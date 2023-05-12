@@ -1318,7 +1318,7 @@ definition {
 		}
 
 		task ("View page source of the web content article's friendly URL page") {
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			Navigator.openSpecificURL(url = "view-source:${baseURL}/web/test-site-name/w/webcontent-title");
 		}

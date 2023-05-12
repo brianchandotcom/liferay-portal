@@ -28,7 +28,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Search#AssertPaginationURLforHTTPS";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -477,7 +477,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Federated Search Page");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/federated-search-page");
 
@@ -708,7 +708,7 @@ definition {
 				title = "WC Title ${count}");
 		}
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-result-widget-page");
 
@@ -812,7 +812,7 @@ definition {
 
 		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		AssertLocation(value1 = "${portalURL}/web/guest/search-page?keywordparameter=Potato&scopeparameter=everything&type=com.liferay.blogs.model.BlogsEntry");
 

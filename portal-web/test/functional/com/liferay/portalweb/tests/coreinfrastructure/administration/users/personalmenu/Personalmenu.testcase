@@ -34,7 +34,7 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.name.skip.portal.instance = "Personalmenu#CanViewNotFoundWhenGuestAccessManageURL";
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Given: Logout the user via personal menu") {
 			UserBar.signOut();
@@ -378,7 +378,7 @@ definition {
 	@description = "This is a use case for LPS-76106."
 	@priority = 5
 	test ViewMyAccountUserViaURL {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

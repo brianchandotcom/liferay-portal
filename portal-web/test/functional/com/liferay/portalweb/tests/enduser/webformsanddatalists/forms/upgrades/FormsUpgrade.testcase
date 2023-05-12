@@ -10,7 +10,7 @@ definition {
 	setUp {
 		SignIn.signIn();
 
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 
 		SearchAdministration.executeReindex();
 	}

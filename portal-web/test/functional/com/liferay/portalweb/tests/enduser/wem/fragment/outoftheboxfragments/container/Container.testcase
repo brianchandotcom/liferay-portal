@@ -733,7 +733,7 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			var baseURL = JSONCompany.getPortalURL();
+			var baseURL = PropsUtil.get("portal.url");
 
 			AssertVisible(
 				key_append = "/img",

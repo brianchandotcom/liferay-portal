@@ -55,7 +55,7 @@ definition {
 	@description = "This test ensures that a Japanese file can be downloaded by file name."
 	@priority = 5
 	test CanDownloadJapaneseFileByFileName {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -79,7 +79,7 @@ definition {
 	@description = "This test ensures that a Japanese file can be downloaded by title."
 	@priority = 5
 	test CanDownloadJapaneseFileByTitle {
-		var portalURL = JSONCompany.getPortalURL();
+		var portalURL = PropsUtil.get("portal.url");
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");

@@ -84,13 +84,13 @@ definition {
 		task ("Then the default values for Pagination items will be 4, 8, 20, 40, 60, separated by commas") {
 			AssertElementPresent(
 				key_fieldValue = "4, 8, 20, 40, 60",
-				locator1 = "FrontendDataSetAdmin#PAGINATION_TEXT_BOX");
+				locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS");
 		}
 
 		task ("And The default value for the Default Value field is 20") {
 			AssertElementPresent(
-				key_keyName = 20,
-				locator1 = "Picklist#DISABLE_PICKLIST_KEY");
+				key_defaultValue = 20,
+				locator1 = "FrontendDataSetAdmin#PAGINATION_DEFAULT_ITEMS");
 		}
 	}
 
@@ -150,12 +150,25 @@ definition {
 	}
 
 	@description = "LPS-183941. Confirm the pagination can be created with one pagination item"
-	@ignore = "true"
 	@priority = 5
 	test CanCreateWithOnePaginationItem {
+		task ("Only one item is written in the pagination items") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = 10);
+		}
 
-		// TODO LPS-183941 CanCreateWithOnePaginationItem pending implementation
+		task ("The same item is placed in the default value field") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
 
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Saves") {
+			Button.clickSave();
+		}
+
+		task ("Then a success alert appears.") {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	@description = "LPS-183943. Confirm that pagination cannot exceed 25 pagination items"
@@ -251,7 +264,7 @@ definition {
 
 			AssertElementPresent(
 				key_fieldValue = "4, 8, 20, 40, 60",
-				locator1 = "FrontendDataSetAdmin#PAGINATION_TEXT_BOX");
+				locator1 = "FrontendDataSetAdmin#PAGINATION_LIST_OF_ITEMS");
 		}
 	}
 

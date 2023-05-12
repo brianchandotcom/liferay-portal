@@ -26,25 +26,27 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<h4><liferay-ui:message key="organizations" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<div class="sheet-row">
+			<clay:tabs
+				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
+			>
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="num-of-organizations" /></h5>
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-organizations" /></h5>
+					<p>
+						<%=
+						OrganizationLocalServiceUtil.searchCount(
+							company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, StringPool.BLANK, StringPool.BLANK, null, null,
+							LinkedHashMapBuilder.<String, Object>put(
+								"groupOrganization", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
+							).put(
+								"organizationsGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
+							).build())
+						%>
 
-			<p>
-				<%=
-				OrganizationLocalServiceUtil.searchCount(
-					company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, StringPool.BLANK, StringPool.BLANK, null, null,
-					LinkedHashMapBuilder.<String, Object>put(
-						"groupOrganization", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
-					).put(
-						"organizationsGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
-					).build())
-				%>
-
-			</p>
+					</p>
+				</div>
+			</clay:tabs>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(organizations) && (organizations.size() == 1) %>">
@@ -77,54 +79,56 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			</c:if>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
+		<div class="sheet-row">
+			<clay:tabs
+				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
+			>
+				<div class="sidebar-body">
+					<h5><liferay-ui:message key="num-of-users" /></h5>
 
-		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-users" /></h5>
+					<p>
+						<%= UserLocalServiceUtil.getOrganizationUsersCount(organization.getOrganizationId(), WorkflowConstants.STATUS_APPROVED) %>
+					</p>
 
-			<p>
-				<%= UserLocalServiceUtil.getOrganizationUsersCount(organization.getOrganizationId(), WorkflowConstants.STATUS_APPROVED) %>
-			</p>
+					<%
+					Address address = organization.getAddress();
 
-			<%
-			Address address = organization.getAddress();
+					String city = address.getCity();
+					%>
 
-			String city = address.getCity();
-			%>
+					<c:if test="<%= Validator.isNotNull(city) %>">
+						<h5><liferay-ui:message key="city" /></h5>
 
-			<c:if test="<%= Validator.isNotNull(city) %>">
-				<h5><liferay-ui:message key="city" /></h5>
+						<p>
+							<%= HtmlUtil.escape(city) %>
+						</p>
+					</c:if>
 
-				<p>
-					<%= HtmlUtil.escape(city) %>
-				</p>
-			</c:if>
+					<%
+					String region = UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization);
+					%>
 
-			<%
-			String region = UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization);
-			%>
+					<c:if test="<%= Validator.isNotNull(region) %>">
+						<h5><liferay-ui:message key="region" /></h5>
 
-			<c:if test="<%= Validator.isNotNull(region) %>">
-				<h5><liferay-ui:message key="region" /></h5>
+						<p>
+							<%= region %>
+						</p>
+					</c:if>
 
-				<p>
-					<%= region %>
-				</p>
-			</c:if>
+					<%
+					String country = UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization);
+					%>
 
-			<%
-			String country = UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization);
-			%>
+					<c:if test="<%= Validator.isNotNull(country) %>">
+						<h5><liferay-ui:message key="country" /></h5>
 
-			<c:if test="<%= Validator.isNotNull(country) %>">
-				<h5><liferay-ui:message key="country" /></h5>
-
-				<p>
-					<%= country %>
-				</p>
-			</c:if>
+						<p>
+							<%= country %>
+						</p>
+					</c:if>
+				</div>
+			</clay:tabs>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(organizations) && (organizations.size() > 1) %>">
@@ -132,12 +136,14 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<h4><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<clay:navigation-bar
-			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
-		/>
-
-		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h5>
+		<div class="sheet-row">
+			<clay:tabs
+				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
+			>
+				<div class="sidebar-body">
+					<h5><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h5>
+				</div>
+			</clay:tabs>
 		</div>
 	</c:when>
 </c:choose>

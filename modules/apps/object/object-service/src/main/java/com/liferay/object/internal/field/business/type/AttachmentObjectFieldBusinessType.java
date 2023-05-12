@@ -128,8 +128,9 @@ public class AttachmentObjectFieldBusinessType
 	public Object getValue(ObjectField objectField, Map<String, Object> values)
 		throws PortalException {
 
-		long fileEntryId = GetterUtil.getLong(
-			values.get(objectField.getName()));
+		Object value = values.get(objectField.getName());
+
+		long fileEntryId = GetterUtil.getLong(value);
 
 		if (fileEntryId > 0) {
 			return fileEntryId;
@@ -138,7 +139,13 @@ public class AttachmentObjectFieldBusinessType
 		JSONObject jsonObject = jsonFactory.createJSONObject(
 			MapUtil.getString(values, objectField.getName()));
 
-		return GetterUtil.getLong(jsonObject.get("id"));
+		fileEntryId = GetterUtil.getLong(jsonObject.get("id"));
+
+		if (fileEntryId > 0) {
+			return fileEntryId;
+		}
+
+		return value;
 	}
 
 	@Override

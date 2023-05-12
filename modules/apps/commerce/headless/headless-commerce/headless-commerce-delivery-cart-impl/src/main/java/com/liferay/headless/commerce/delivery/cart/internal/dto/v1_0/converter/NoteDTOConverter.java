@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0;
+package com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;

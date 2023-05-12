@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.constants;
+package com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.constants;
 
 /**
  * @author Renan Vasconcelos

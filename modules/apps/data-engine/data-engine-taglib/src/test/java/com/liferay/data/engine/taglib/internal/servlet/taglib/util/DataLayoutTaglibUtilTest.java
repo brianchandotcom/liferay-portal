@@ -18,11 +18,9 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -45,6 +43,7 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Marcela Cunha
@@ -72,11 +71,15 @@ public class DataLayoutTaglibUtilTest {
 			Mockito.mock(User.class)
 		);
 
-		_setUpDataDefinitionResource();
+		_setUpDataDefinitionResource(bundleContext);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
+		if (_dataDefinitionResourceFactoryServiceRegistration != null) {
+			_dataDefinitionResourceFactoryServiceRegistration.unregister();
+		}
+
 		_frameworkUtilMockedStatic.close();
 		_portalUtilMockedStatic.close();
 	}
@@ -121,7 +124,10 @@ public class DataLayoutTaglibUtilTest {
 		return StringUtil.read(inputStream);
 	}
 
-	private static void _setUpDataDefinitionResource() throws Exception {
+	private static void _setUpDataDefinitionResource(
+			BundleContext bundleContext)
+		throws Exception {
+
 		DataDefinitionResource dataDefinitionResource = Mockito.mock(
 			DataDefinitionResource.class);
 
@@ -163,23 +169,14 @@ public class DataLayoutTaglibUtilTest {
 			dataDefinitionResourceBuilder
 		);
 
-		Snapshot<DataDefinitionResource.Factory>
-			dataDefinitionResourceFactorySnapshot = Mockito.mock(
-				(Class<Snapshot<DataDefinitionResource.Factory>>)
-					(Class<?>)Snapshot.class);
-
-		Mockito.when(
-			dataDefinitionResourceFactorySnapshot.get()
-		).thenReturn(
-			dataDefinitionResourceFactory
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			DataLayoutTaglibUtil.class,
-			"_dataDefinitionResourceFactorySnapshot",
-			dataDefinitionResourceFactorySnapshot);
+		_dataDefinitionResourceFactoryServiceRegistration =
+			bundleContext.registerService(
+				DataDefinitionResource.Factory.class,
+				dataDefinitionResourceFactory, null);
 	}
 
+	private static ServiceRegistration<DataDefinitionResource.Factory>
+		_dataDefinitionResourceFactoryServiceRegistration;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(

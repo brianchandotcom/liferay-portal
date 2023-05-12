@@ -95,7 +95,7 @@ public class PlacedOrderItemShipmentResourceImpl
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderItemShipmentDTOConverter)"
+		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemShipmentDTOConverter)"
 	)
 	private DTOConverter<CommerceShipment, PlacedOrderItemShipment>
 		_placedOrderItemShipmentDTOConverter;

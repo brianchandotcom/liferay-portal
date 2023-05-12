@@ -230,7 +230,7 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 	private Encryptor _encryptor;
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderDTOConverter)"
+		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderDTOConverter)"
 	)
 	private DTOConverter<CommerceOrder, PlacedOrder> _placedOrderDTOConverter;
 

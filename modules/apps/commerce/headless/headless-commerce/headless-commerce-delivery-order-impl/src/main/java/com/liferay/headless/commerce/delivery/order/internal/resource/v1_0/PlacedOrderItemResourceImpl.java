@@ -21,7 +21,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
-import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderItemDTOConverterContext;
+import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -157,7 +157,7 @@ public class PlacedOrderItemResourceImpl
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.PlacedOrderItemDTOConverter)"
+		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemDTOConverter)"
 	)
 	private DTOConverter<CommerceOrderItem, PlacedOrderItem>
 		_placedOrderItemDTOConverter;

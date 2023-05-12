@@ -444,7 +444,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetCategory2);
 		Assert.assertEquals(
-			"TESTASSETCATEGORY2", testAssetCategory2.getExternalReferenceCode());
+			"TESTASSETCATEGORY2",
+			testAssetCategory2.getExternalReferenceCode());
 
 		AssetCategory testAssetCategory3 =
 			_assetCategoryLocalService.
@@ -462,7 +463,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetCategory4);
 		Assert.assertEquals(
-			"TESTASSETCATEGORY4", testAssetCategory4.getExternalReferenceCode());
+			"TESTASSETCATEGORY4",
+			testAssetCategory4.getExternalReferenceCode());
 	}
 
 	private void _assertAssetListEntries() {
@@ -500,7 +502,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetVocabulary1);
 		Assert.assertEquals(
-			"TESTASSETVOCABULARY1", testAssetVocabulary1.getExternalReferenceCode());
+			"TESTASSETVOCABULARY1",
+			testAssetVocabulary1.getExternalReferenceCode());
 
 		AssetVocabulary testAssetVocabulary2 =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
@@ -508,7 +511,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(testAssetVocabulary2);
 		Assert.assertEquals(
-			"TESTASSETVOCABULARY2", testAssetVocabulary2.getExternalReferenceCode());
+			"TESTASSETVOCABULARY2",
+			testAssetVocabulary2.getExternalReferenceCode());
 
 		_assertAssetCategories();
 	}

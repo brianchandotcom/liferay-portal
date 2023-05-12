@@ -41,6 +41,17 @@ describe('AccessTokenList', () => {
 		expect(container).toMatchSnapshot();
 	});
 
+	it('should display the card with the options to create a new token if there is no token', () => {
+		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
+
+		const {container, queryByTestId} = render(<DefaultComponent />);
+
+		jest.runAllTimers();
+
+		expect(queryByTestId('generate-token-button')).toBeTruthy();
+		expect(container.querySelector('.table-root')).toBeNull();
+	});
+
 	it('should show the generated token in a list and the "Generate Token" button should no longer be visible', () => {
 		API.apiTokens.search.mockReturnValueOnce(Promise.resolve([]));
 
@@ -72,7 +83,7 @@ describe('AccessTokenList', () => {
 
 		expect(open).toBeCalled();
 	});
-	it('should display the "Generate Token" card if the token is expired', () => {
+	it('should display the "Generate Token" card  above the table if the token is expired', () => {
 		API.apiTokens.search.mockReturnValueOnce(
 			Promise.resolve([
 				data.mockApiToken({
@@ -88,5 +99,25 @@ describe('AccessTokenList', () => {
 		expect(
 			getByText(container.querySelector('.card-body'), 'Generate Token')
 		).toBeTruthy();
+		expect(container.querySelector('.table-root')).toMatchSnapshot();
+	});
+
+	it('should render indefinite on expiration date column when generated token is indefinite', () => {
+		API.apiTokens.search.mockReturnValueOnce(
+			Promise.resolve([
+				data.mockApiToken({
+					createDate: '2023-05-11T19:35:28.338Z',
+					expirationDate: '2123-05-12T19:35:28.000Z'
+				})
+			])
+		);
+
+		const {container} = render(<DefaultComponent />);
+
+		jest.runAllTimers();
+
+		expect(
+			getByText(container.querySelector('td:nth-child(4)'), 'Indefinite')
+		).toMatchSnapshot();
 	});
 });

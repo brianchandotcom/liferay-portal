@@ -39,12 +39,10 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 	},
 }) => {
 	const outletContext = useOutletContext<{actions: ObjectActionsItems}>();
-
 	const isCreatePathMatching = useMatch(createPath);
-
 	const restImplMemoized = useMemo(() => restImpl, [restImpl]);
 
-	const hasPermissionsAssociated = useMemo(
+	const updatePermission = useMemo(
 		() =>
 			!!(
 				outletContext?.actions?.update ??
@@ -53,7 +51,9 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 		[outletContext?.actions?.replace, outletContext?.actions?.update]
 	);
 
-	const {data: createPermission, loading} = useFetch(restImplMemoized.uri, {
+	const {data: createPermission, loading} = useFetch<
+		ReturnType<typeof restImplMemoized.getPagePermission>
+	>(restImplMemoized.uri, {
 		swrConfig: {
 			fetcher: restImplMemoized.getPagePermission.bind(restImplMemoized),
 			shouldFetch: !!isCreatePathMatching,
@@ -64,14 +64,11 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 		return <Loading />;
 	}
 
-	if (
-		(isCreatePathMatching && !createPermission) ||
-		(outletContext && !hasPermissionsAssociated)
-	) {
-		return <Navigate to={redirectTo} />;
+	if (createPermission || updatePermission) {
+		return children;
 	}
 
-	return children;
+	return <Navigate to={redirectTo} />;
 };
 
 export function withPagePermission<T extends object>(

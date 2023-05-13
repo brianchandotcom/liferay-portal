@@ -578,6 +578,11 @@
 			<message key="parentheses.missing.1" value="Missing parentheses between the ''{0}'' operator and the ''{1}'' operator" />
 			<message key="parentheses.missing.2" value="Missing parentheses around the {0} hand side argument of the ''{1}'' operator" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ModifiedMethodCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks for incorrect `modified` method with `@Modified` annotation." />
+			<message key="modified.method.incorrect" value="Remove method ''modified'' as it only calls ''deactivate'' and then ''activate''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MVCCommandNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming for values of `mvc.command.name`." />

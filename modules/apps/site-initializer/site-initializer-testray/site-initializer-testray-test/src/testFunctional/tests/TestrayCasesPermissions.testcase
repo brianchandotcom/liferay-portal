@@ -233,4 +233,68 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the case but can view"
+	@priority = 2
+	test UserRoleCanNotCreateEditAndDeleteCase {
+		property test.name.skip.portal.instance = "TestrayCasesPermissions#UserRoleCanNotCreateEditAndDeleteCase";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the Cases page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+		}
+
+		task ("Then can see the case in the table") {
+			AssertElementPresent(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And when right click in case") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+
+			RightClick.rightClick(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then can not see the Edit and Delete options in right click") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+
+		task ("And when click kebab in Case") {
+			Testray.goToProjectPage(projectName = ${caseName});
+
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
+
+		task ("Then can not see the Edit and Delete options in the kebab") {
+			AssertElementNotPresent(
+				key_kebabOption = "Edit",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+
+			AssertElementNotPresent(
+				key_kebabOption = "Delete",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		}
+	}
+
 }

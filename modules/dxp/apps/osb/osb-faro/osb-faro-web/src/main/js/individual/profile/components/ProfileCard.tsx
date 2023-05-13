@@ -1,6 +1,4 @@
-import ActivitiesChart, {
-	ChartPayload
-} from 'contacts/components/ActivitiesChart';
+import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import DropdownRangeKey from 'shared/hoc/DropdownRangeKey';
@@ -11,7 +9,7 @@ import EventMetricQuery, {
 import IntervalSelector from 'shared/components/IntervalSelector';
 import moment from 'moment';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import SearchInput from 'shared/components/SearchInput';
 import Toolbar from 'shared/components/toolbar';
 import URLConstants from 'shared/util/url-constants';
@@ -73,13 +71,6 @@ interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	timeZoneId: string;
 }
 
-const INITIAL_CHART_PAYLOAD = {
-	date: '',
-	intervalInitDate: 0,
-	totalEvents: 0,
-	totalSessions: 0
-};
-
 const ProfileCard: React.FC<IProfileCardProps> = ({
 	channelId,
 	entity: {id: entityId},
@@ -89,10 +80,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	rangeSelectors,
 	timeZoneId
 }) => {
-	const [chartPayload, setChartPayload] = useState<ChartPayload>(
-		INITIAL_CHART_PAYLOAD
-	);
-
 	const {
 		delta,
 		onDeltaChange,
@@ -143,59 +130,50 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		total: eventMetric.totalEventsMetric?.value
 	}));
 
-	const getDateRange = ({
-		rangeEnd,
-		rangeKey,
-		rangeStart
-	}: RangeSelectors): SafeRangeSelectors => {
+	const getDateRange = (
+		{rangeEnd, rangeKey, rangeStart}: RangeSelectors,
+		interval: Interval
+	): SafeRangeSelectors => {
 		const {intervalInitDate} = activityHistory[selectedPoint] || {};
 		const endDate = getEndDate(intervalInitDate, interval);
 
 		const hasSelectedDate = !isNil(endDate) && !isNil(intervalInitDate);
 
-		return getSafeRangeSelectors(
-			hasSelectedDate
-				? {
-						rangeEnd: formatUTCDate(
-							getEndDate(intervalInitDate, interval),
-							FORMAT
-						),
-						rangeKey,
-						rangeStart: formatUTCDate(intervalInitDate, FORMAT)
-				  }
-				: {rangeEnd, rangeKey, rangeStart}
-		);
-	};
+		if (hasSelectedDate) {
+			const formattedRangeEnd = formatUTCDate(
+				getEndDate(intervalInitDate, interval),
+				FORMAT
+			);
+			const formattedRangeStart = formatUTCDate(intervalInitDate, FORMAT);
 
-	const startHour = formatTimestamp(chartPayload.intervalInitDate);
-	const endHour = formatTimestamp(chartPayload.intervalInitDate + 59 * 60000);
+			if (rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours) {
+				return getSafeRangeSelectors({
+					rangeEnd: `${formattedRangeEnd}T${formatTimestamp(
+						intervalInitDate + 59 * 60000
+					)}`,
+					rangeKey,
+					rangeStart: `${formattedRangeStart}T${formatTimestamp(
+						intervalInitDate
+					)}`
+				});
+			}
 
-	let newRangeSelectors = useMemo(() => getDateRange(rangeSelectors), [
-		rangeSelectors
-	]);
-
-	if (chartPayload.date) {
-		if (rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours) {
-			newRangeSelectors = getSafeRangeSelectors({
-				rangeEnd: `${chartPayload.date}T${endHour}`,
-				rangeKey: RangeKeyTimeRanges.Last24Hours,
-				rangeStart: `${chartPayload.date}T${startHour}`
-			});
-		} else {
-			newRangeSelectors = getSafeRangeSelectors({
-				rangeEnd: `${chartPayload.date}T23:59:00`,
-				rangeKey: rangeSelectors.rangeKey,
-				rangeStart: `${chartPayload.date}T00:00:00`
+			return getSafeRangeSelectors({
+				rangeEnd: formattedRangeEnd,
+				rangeKey,
+				rangeStart: formattedRangeStart
 			});
 		}
-	}
+
+		return getSafeRangeSelectors({rangeEnd, rangeKey, rangeStart});
+	};
 
 	const sessionsResponse = useQuery<UserSessionData, UserSessionVariables>(
 		UserSessionQuery,
 		{
 			fetchPolicy: fetchPolicyDefinition(rangeSelectors),
 			variables: {
-				...newRangeSelectors,
+				...getDateRange(rangeSelectors, interval),
 				channelId,
 				entityId,
 				entityType: SessionEntityTypes.Individual,
@@ -214,16 +192,9 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		})
 	);
 
-	const handleChangeSelection = ({
-		index,
-		payload
-	}: {
-		index: number | null;
-		payload: ChartPayload;
-	}) => {
+	const handleChangeSelection = (index: number | null) => {
 		resetPage();
 		onPointSelect(index);
-		setChartPayload(payload);
 	};
 
 	const handleQuery = (query: string) => {
@@ -270,10 +241,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						onChange={(interval: Interval) => {
 							onChangeInterval(interval);
 
-							handleChangeSelection({
-								index: null,
-								payload: INITIAL_CHART_PAYLOAD
-							});
+							handleChangeSelection(null);
 						}}
 					/>
 
@@ -282,10 +250,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 						onChange={(rangeSelectors: RangeSelectors) => {
 							onRangeSelectorsChange(rangeSelectors);
 
-							handleChangeSelection({
-								index: null,
-								payload: INITIAL_CHART_PAYLOAD
-							});
+							handleChangeSelection(null);
 						}}
 						rangeSelectors={rangeSelectors}
 					/>
@@ -321,12 +286,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 								<ClayButton
 									className='button-root'
 									displayType='unstyled'
-									onClick={() =>
-										handleChangeSelection({
-											index: null,
-											payload: INITIAL_CHART_PAYLOAD
-										})
-									}
+									onClick={() => handleChangeSelection(null)}
 									size='sm'
 								>
 									{Liferay.Language.get(

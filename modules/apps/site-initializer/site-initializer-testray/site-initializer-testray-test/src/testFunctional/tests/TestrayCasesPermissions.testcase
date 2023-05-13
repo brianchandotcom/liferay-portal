@@ -81,4 +81,80 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create/edit/delete the case"
+	@priority = 4
+	test AnalystRoleCanCreateEditAndDeleteCase {
+		property test.name.skip.portal.instance = "TestrayCasesPermissions#AnalystRoleCanCreateEditAndDeleteCase";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to the Cases page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Cases");
+		}
+
+		task ("When the user created a case") {
+			TestrayCases.typeCasesField(
+				caseName = "Case 2",
+				caseTypeId = ${caseType},
+				componentId = ${componentName},
+				description = "description case",
+				duration = 60,
+				priority = 3,
+				steps = "Auto Test Steps");
+		}
+
+		task ("Then the user can see the case in the table") {
+			AssertElementPresent(
+				key_projectName = "Case 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And when the user edit a case") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Case 2");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayCases.editCases(
+				caseName = "Case Edited",
+				caseTypeId = "Case Type 1",
+				componentId = "Component 1",
+				description = "Case Description",
+				duration = 30,
+				priority = 3,
+				steps = "http://test.edit.com");
+		}
+
+		task ("Then the user can see the case in the table") {
+			AssertElementPresent(
+				key_projectName = "Case Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("And when the user delete a case") {
+			TestrayContextMenu.clickContextMenuProjects(name = "Case Edited");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+		}
+
+		task ("Then the case is no longer present in the table") {
+			AssertElementNotPresent(
+				key_projectName = "Case Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -270,6 +270,18 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 				<available file="${app.server.parent.dir}" type="dir" />
 			</not>
 			<then>
+				<move
+					file="${liferay.home.parent.dir}/bundles"
+					tofile="${app.server.parent.dir}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}" type="dir" />
+			</not>
+			<then>
 				<fail message="Backup restored to ${liferay.home.parent.dir} but app.server.parent.dir was not found. Please check that app.server.parent.dir matches the bundle location." />
 			</then>
 		</if>

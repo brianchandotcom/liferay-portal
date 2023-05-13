@@ -92,7 +92,9 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 	</target>
 
 	<target name="database-reset">
-		<antcall target="start-docker-database-${database.type}" />
+		<antcall inheritAll="false" target="start-docker-database-${database.type}">
+			<param name="skip.property.cleanup" value="true" />
+		</antcall>
 	</target>
 
 	<target name="fetch-pull-request">
@@ -224,6 +226,8 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</else>
 		</if>
 
+		<antcall target="database-reset" />
+
 		<property name="cluster.enabled" value="true" />
 
 		<antcall target="prepare-portal-ext-properties" />
@@ -270,11 +274,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</then>
 		</if>
 
-		<antcall inheritAll="false" target="clean-up-database-properties" />
-
-		<antcall inheritAll="false" target="start-docker-database-${database.type}">
-			<param name="skip.property.cleanup" value="true" />
-		</antcall>
+		<antcall target="database-reset" />
 	</target>
 
 	<target name="setup-release-bundle">
@@ -336,11 +336,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</then>
 		</if>
 
-		<antcall inheritAll="false" target="clean-up-database-properties" />
-
-		<antcall inheritAll="false" target="start-docker-database-${database.type}">
-			<param name="skip.property.cleanup" value="true" />
-		</antcall>
+		<antcall target="database-reset" />
 	</target>
 
 	<target name="start-docker-database-db2">

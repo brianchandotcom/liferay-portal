@@ -161,7 +161,7 @@ definition {
 	@priority = 4
 	test LeadRoleCanCreateEditAndDeleteCase {
 		property test.name.skip.portal.instance = "TestrayCasesPermissions#LeadRoleCanCreateEditAndDeleteCase";
-		
+
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",

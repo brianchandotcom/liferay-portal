@@ -581,6 +581,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ModifiedMethodCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks for incorrect `modified` method with `@Modified` annotation." />
+			<property name="enabled" value="false" />
 			<message key="modified.method.incorrect" value="Remove method ''modified'' as it only calls ''deactivate'' and then ''activate''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MVCCommandNameCheck">

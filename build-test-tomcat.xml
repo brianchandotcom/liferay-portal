@@ -7,6 +7,7 @@
 		<lstopwatch action="start" name="run.selenium.tomcat" />
 
 		<app-server-properties-update>
+			app.server.parent.dir=${app.server.parent.dir}
 			app.server.type=tomcat
 		</app-server-properties-update>
 

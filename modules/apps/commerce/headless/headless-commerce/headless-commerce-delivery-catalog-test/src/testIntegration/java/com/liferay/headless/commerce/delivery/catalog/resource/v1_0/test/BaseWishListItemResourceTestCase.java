@@ -336,22 +336,24 @@ public abstract class BaseWishListItemResourceTestCase {
 	}
 
 	@Test
-	public void testGetWishListItemsPage() throws Exception {
-		Long wishListId = testGetWishListItemsPage_getWishListId();
+	public void testGetWishlistWishListWishListItemsPage() throws Exception {
+		Long wishListId =
+			testGetWishlistWishListWishListItemsPage_getWishListId();
 		Long irrelevantWishListId =
-			testGetWishListItemsPage_getIrrelevantWishListId();
+			testGetWishlistWishListWishListItemsPage_getIrrelevantWishListId();
 
-		Page<WishListItem> page = wishListItemResource.getWishListItemsPage(
-			wishListId, null, Pagination.of(1, 10));
+		Page<WishListItem> page =
+			wishListItemResource.getWishlistWishListWishListItemsPage(
+				wishListId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(0, page.getTotalCount());
 
 		if (irrelevantWishListId != null) {
 			WishListItem irrelevantWishListItem =
-				testGetWishListItemsPage_addWishListItem(
+				testGetWishlistWishListWishListItemsPage_addWishListItem(
 					irrelevantWishListId, randomIrrelevantWishListItem());
 
-			page = wishListItemResource.getWishListItemsPage(
+			page = wishListItemResource.getWishlistWishListWishListItemsPage(
 				irrelevantWishListId, null, Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -361,17 +363,19 @@ public abstract class BaseWishListItemResourceTestCase {
 				(List<WishListItem>)page.getItems());
 			assertValid(
 				page,
-				testGetWishListItemsPage_getExpectedActions(
+				testGetWishlistWishListWishListItemsPage_getExpectedActions(
 					irrelevantWishListId));
 		}
 
-		WishListItem wishListItem1 = testGetWishListItemsPage_addWishListItem(
-			wishListId, randomWishListItem());
+		WishListItem wishListItem1 =
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				wishListId, randomWishListItem());
 
-		WishListItem wishListItem2 = testGetWishListItemsPage_addWishListItem(
-			wishListId, randomWishListItem());
+		WishListItem wishListItem2 =
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				wishListId, randomWishListItem());
 
-		page = wishListItemResource.getWishListItemsPage(
+		page = wishListItemResource.getWishlistWishListWishListItemsPage(
 			wishListId, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -380,7 +384,9 @@ public abstract class BaseWishListItemResourceTestCase {
 			Arrays.asList(wishListItem1, wishListItem2),
 			(List<WishListItem>)page.getItems());
 		assertValid(
-			page, testGetWishListItemsPage_getExpectedActions(wishListId));
+			page,
+			testGetWishlistWishListWishListItemsPage_getExpectedActions(
+				wishListId));
 
 		wishListItemResource.deleteWishListItem(wishListItem1.getId());
 
@@ -388,7 +394,8 @@ public abstract class BaseWishListItemResourceTestCase {
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetWishListItemsPage_getExpectedActions(Long wishListId)
+			testGetWishlistWishListWishListItemsPage_getExpectedActions(
+				Long wishListId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -397,20 +404,27 @@ public abstract class BaseWishListItemResourceTestCase {
 	}
 
 	@Test
-	public void testGetWishListItemsPageWithPagination() throws Exception {
-		Long wishListId = testGetWishListItemsPage_getWishListId();
+	public void testGetWishlistWishListWishListItemsPageWithPagination()
+		throws Exception {
 
-		WishListItem wishListItem1 = testGetWishListItemsPage_addWishListItem(
-			wishListId, randomWishListItem());
+		Long wishListId =
+			testGetWishlistWishListWishListItemsPage_getWishListId();
 
-		WishListItem wishListItem2 = testGetWishListItemsPage_addWishListItem(
-			wishListId, randomWishListItem());
+		WishListItem wishListItem1 =
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				wishListId, randomWishListItem());
 
-		WishListItem wishListItem3 = testGetWishListItemsPage_addWishListItem(
-			wishListId, randomWishListItem());
+		WishListItem wishListItem2 =
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				wishListId, randomWishListItem());
 
-		Page<WishListItem> page1 = wishListItemResource.getWishListItemsPage(
-			wishListId, null, Pagination.of(1, 2));
+		WishListItem wishListItem3 =
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				wishListId, randomWishListItem());
+
+		Page<WishListItem> page1 =
+			wishListItemResource.getWishlistWishListWishListItemsPage(
+				wishListId, null, Pagination.of(1, 2));
 
 		List<WishListItem> wishListItems1 =
 			(List<WishListItem>)page1.getItems();
@@ -418,8 +432,9 @@ public abstract class BaseWishListItemResourceTestCase {
 		Assert.assertEquals(
 			wishListItems1.toString(), 2, wishListItems1.size());
 
-		Page<WishListItem> page2 = wishListItemResource.getWishListItemsPage(
-			wishListId, null, Pagination.of(2, 2));
+		Page<WishListItem> page2 =
+			wishListItemResource.getWishlistWishListWishListItemsPage(
+				wishListId, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -429,92 +444,51 @@ public abstract class BaseWishListItemResourceTestCase {
 		Assert.assertEquals(
 			wishListItems2.toString(), 1, wishListItems2.size());
 
-		Page<WishListItem> page3 = wishListItemResource.getWishListItemsPage(
-			wishListId, null, Pagination.of(1, 3));
+		Page<WishListItem> page3 =
+			wishListItemResource.getWishlistWishListWishListItemsPage(
+				wishListId, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(wishListItem1, wishListItem2, wishListItem3),
 			(List<WishListItem>)page3.getItems());
 	}
 
-	protected WishListItem testGetWishListItemsPage_addWishListItem(
-			Long wishListId, WishListItem wishListItem)
+	protected WishListItem
+			testGetWishlistWishListWishListItemsPage_addWishListItem(
+				Long wishListId, WishListItem wishListItem)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWishListItemsPage_getWishListId() throws Exception {
+	protected Long testGetWishlistWishListWishListItemsPage_getWishListId()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWishListItemsPage_getIrrelevantWishListId()
+	protected Long
+			testGetWishlistWishListWishListItemsPage_getIrrelevantWishListId()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testGraphQLGetWishListItemsPage() throws Exception {
-		Long wishListId = testGetWishListItemsPage_getWishListId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"wishListItems",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-
-					put("wishListId", wishListId);
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		JSONObject wishListItemsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/wishListItems");
-
-		Assert.assertEquals(0, wishListItemsJSONObject.get("totalCount"));
-
-		WishListItem wishListItem1 =
-			testGraphQLGetWishListItemsPage_addWishListItem();
-		WishListItem wishListItem2 =
-			testGraphQLGetWishListItemsPage_addWishListItem();
-
-		wishListItemsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/wishListItems");
-
-		Assert.assertEquals(2, wishListItemsJSONObject.getLong("totalCount"));
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(wishListItem1, wishListItem2),
-			Arrays.asList(
-				WishListItemSerDes.toDTOs(
-					wishListItemsJSONObject.getString("items"))));
-	}
-
-	protected WishListItem testGraphQLGetWishListItemsPage_addWishListItem()
-		throws Exception {
-
-		return testGraphQLWishListItem_addWishListItem();
-	}
-
-	@Test
-	public void testPostChannelWishListItem() throws Exception {
+	public void testPostWishlistWishListWishListItem() throws Exception {
 		WishListItem randomWishListItem = randomWishListItem();
 
 		WishListItem postWishListItem =
-			testPostChannelWishListItem_addWishListItem(randomWishListItem);
+			testPostWishlistWishListWishListItem_addWishListItem(
+				randomWishListItem);
 
 		assertEquals(randomWishListItem, postWishListItem);
 		assertValid(postWishListItem);
 	}
 
-	protected WishListItem testPostChannelWishListItem_addWishListItem(
+	protected WishListItem testPostWishlistWishListWishListItem_addWishListItem(
 			WishListItem wishListItem)
 		throws Exception {
 

@@ -41,12 +41,13 @@ public interface ProductOptionResource {
 		return new Builder();
 	}
 
-	public Page<ProductOption> getChannelProductOptionsPage(
+	public Page<ProductOption> getChannelProductProductOptionsPage(
 			Long channelId, Long productId, Pagination pagination)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getChannelProductOptionsPageHttpResponse(
-			Long channelId, Long productId, Pagination pagination)
+	public HttpInvoker.HttpResponse
+			getChannelProductProductOptionsPageHttpResponse(
+				Long channelId, Long productId, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -154,12 +155,12 @@ public interface ProductOptionResource {
 	public static class ProductOptionResourceImpl
 		implements ProductOptionResource {
 
-		public Page<ProductOption> getChannelProductOptionsPage(
+		public Page<ProductOption> getChannelProductProductOptionsPage(
 				Long channelId, Long productId, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getChannelProductOptionsPageHttpResponse(
+				getChannelProductProductOptionsPageHttpResponse(
 					channelId, productId, pagination);
 
 			String content = httpResponse.getContent();
@@ -222,7 +223,7 @@ public interface ProductOptionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getChannelProductOptionsPageHttpResponse(
+				getChannelProductProductOptionsPageHttpResponse(
 					Long channelId, Long productId, Pagination pagination)
 			throws Exception {
 

@@ -62,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -294,7 +295,7 @@ public abstract class BaseWishListResourceImpl
 	@javax.ws.rs.Path("/wishlists/{wishListId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public WishList patchChannelWishList(
+	public WishList patchWishList(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("wishListId")
@@ -332,7 +333,7 @@ public abstract class BaseWishListResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("PARTIAL_UPDATE");
 	}
 
 	@Override
@@ -392,8 +393,41 @@ public abstract class BaseWishListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeConsumer<WishList, Exception> wishListUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			wishListUnsafeConsumer = wishList -> patchWishList(
+				wishList.getId() != null ? wishList.getId() :
+					_parseLong((String)parameters.get("wishListId")),
+				wishList);
+		}
+
+		if (wishListUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for WishList");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wishLists, wishListUnsafeConsumer);
+		}
+		else {
+			for (WishList wishList : wishLists) {
+				wishListUnsafeConsumer.accept(wishList);
+			}
+		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

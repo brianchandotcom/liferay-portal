@@ -72,7 +72,7 @@ public interface WishListResource {
 
 	public WishList getWishList(Long wishListId) throws Exception;
 
-	public WishList patchChannelWishList(Long wishListId, WishList wishList)
+	public WishList patchWishList(Long wishListId, WishList wishList)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

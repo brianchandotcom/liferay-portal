@@ -14,7 +14,9 @@
 
 package com.liferay.partner;
 
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
+import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.partner.dto.Activity;
+import com.liferay.partner.service.ActivityService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,9 +24,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,25 +34,21 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		OAuth2AccessToken oAuth2AccessToken = LiferayOAuth2Util.getOAuth2AccessToken(
-				_authorizedClientServiceOAuth2AuthorizedClientManager,
-				_liferayOAuthApplicationExternalReferenceCodes);
-
 		if (_log.isInfoEnabled()) {
-			_log.info("Issued: " + oAuth2AccessToken.getIssuedAt());
-			_log.info("Expires At: " + oAuth2AccessToken.getExpiresAt());
-			_log.info("Scopes: " + oAuth2AccessToken.getScopes());
-			_log.info("Token: " + oAuth2AccessToken.getTokenValue());
+			Page<Activity> activitiesPage = _activityService.getEntriesPage(
+				null, null, null, null);
+
+			_log.info("Activities: " + activitiesPage);
 		}
 	}
 
 	private static final Log _log = LogFactory.getLog(
-			PartnerCommandLineRunner.class);
+		PartnerCommandLineRunner.class);
 
 	@Autowired
-	private AuthorizedClientServiceOAuth2AuthorizedClientManager _authorizedClientServiceOAuth2AuthorizedClientManager;
+	private ActivityService _activityService;
 
 	@Value("${liferay.oauth.application.external.reference.codes}")
 	private String _liferayOAuthApplicationExternalReferenceCodes;
+
 }

@@ -80,6 +80,34 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 		return Page.of(mono.block(), _toDTOFunction);
 	}
 
+	public void putEntryBatch(String callbackURL, Object object)
+		throws Exception {
+
+		WebClient.RequestBodyUriSpec requestBodyUriSpec = _webClient.put();
+
+		WebClient.RequestBodySpec requestBodySpec = requestBodyUriSpec.uri(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain,
+			uriBuilder -> {
+				if (callbackURL != null) {
+					uriBuilder.queryParam(
+						"callbackURL", String.valueOf(callbackURL));
+				}
+
+				return uriBuilder.path(
+					_entityURLPath
+				).build();
+			});
+
+		WebClient.RequestHeadersSpec<?> requestHeadersSpec =
+			requestBodySpec.bodyValue(object.toString());
+
+		WebClient.ResponseSpec responseSpec = requestHeadersSpec.retrieve();
+
+		Mono<Void> mono = responseSpec.bodyToMono(Void.class);
+
+		mono.block();
+	}
+
 	private final String _entityURLPath;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")

@@ -47,6 +47,7 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 			_webClient.get();
 
 		requestHeadersSpec.uri(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain,
 			uriBuilder -> {
 				if (pagination != null) {
 					uriBuilder.queryParam(

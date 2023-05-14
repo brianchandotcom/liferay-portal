@@ -14,7 +14,7 @@
 
 package com.liferay.partner.dto;
 
-import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeDefinition;
+import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 
 /**
  * @author Jair Medeiros
@@ -25,14 +25,14 @@ public class Activity extends BaseDTO {
 		return "/o/c/tests";
 	}
 
-	public ListTypeDefinition getActivityStatus() {
+	public ListTypeEntry getActivityStatus() {
 		return _activityStatus;
 	}
 
-	public void setActivityStatus(ListTypeDefinition activityStatus) {
+	public void setActivityStatus(ListTypeEntry activityStatus) {
 		_activityStatus = activityStatus;
 	}
 
-	private ListTypeDefinition _activityStatus;
+	private ListTypeEntry _activityStatus;
 
 }

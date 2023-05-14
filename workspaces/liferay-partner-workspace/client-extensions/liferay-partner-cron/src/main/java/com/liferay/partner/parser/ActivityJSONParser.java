@@ -14,7 +14,7 @@
 
 package com.liferay.partner.parser;
 
-import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeDefinitionSerDes;
+import com.liferay.headless.admin.list.type.client.serdes.v1_0.ListTypeEntrySerDes;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
 import com.liferay.partner.dto.Activity;
 
@@ -48,7 +48,7 @@ public class ActivityJSONParser extends BaseJSONParser<Activity> {
 		else if (Objects.equals(jsonParserFieldName, "activityStatus")) {
 			if (jsonParserFieldValue != null) {
 				activity.setActivityStatus(
-					ListTypeDefinitionSerDes.toDTO(jsonParserFieldName));
+					ListTypeEntrySerDes.toDTO(jsonParserFieldName));
 			}
 		}
 	}

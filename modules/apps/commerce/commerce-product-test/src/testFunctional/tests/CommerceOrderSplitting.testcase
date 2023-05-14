@@ -12,6 +12,20 @@ definition {
 
 	tearDown {
 		CommerceConfiguration.commerceTearDown();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Commerce Order");
+
+		ObjectAdmin.goToActionsTab();
+
+		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
+			Click(
+				key_value = "",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Delete");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-11438. CanChangesOnlyPropagateFromTheSupplierOrder"

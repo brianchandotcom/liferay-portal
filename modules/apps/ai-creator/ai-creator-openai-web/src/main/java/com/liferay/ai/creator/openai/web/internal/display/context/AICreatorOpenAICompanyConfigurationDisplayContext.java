@@ -38,13 +38,13 @@ public class AICreatorOpenAICompanyConfigurationDisplayContext {
 	}
 
 	public String getApiKey() throws ConfigurationException {
-		return _aiCreatorOpenAIConfigurationManager.getAICreatorCompanyApiKey(
-			_themeDisplay.getCompanyId());
+		return _aiCreatorOpenAIConfigurationManager.
+			getAICreatorOpenAICompanyApiKey(_themeDisplay.getCompanyId());
 	}
 
 	public boolean isEnabled() throws ConfigurationException {
-		return _aiCreatorOpenAIConfigurationManager.isAICreatorCompanyEnabled(
-			_themeDisplay.getCompanyId());
+		return _aiCreatorOpenAIConfigurationManager.
+			isAICreatorOpenAICompanyEnabled(_themeDisplay.getCompanyId());
 	}
 
 	private final AICreatorOpenAIConfigurationManager

@@ -230,14 +230,14 @@ const TestflowForm = () => {
 		}
 	}, [caseTypes.length, caseTypesWatch.length]);
 
-	const handIsAllChecked = () => {
-		if (!isCheckedAll) {
-			caseTypes.map((caseType, index) => {
-				setValue(`caseTypes.${index}`, caseType.id);
-			});
+	const onSelectAll = () => {
+		if (isCheckedAll) {
+			setValue('caseTypes', []);
 		}
 		else {
-			setValue('caseTypes', []);
+			caseTypes.forEach((caseType, index) => {
+				setValue(`caseTypes.${index}`, caseType.id);
+			});
 		}
 	};
 
@@ -261,10 +261,10 @@ const TestflowForm = () => {
 				<div className="col-4 my-3">
 					<Form.Checkbox
 						checked={isCheckedAll}
-						label="Select All"
+						label={i18n.translate('select-all')}
 						onChange={() => {
 							setCheckedAll((isCheckedAll) => !isCheckedAll);
-							handIsAllChecked();
+							onSelectAll();
 						}}
 					/>
 				</div>

@@ -319,6 +319,7 @@ export default {
 	'search-filters': 'Search Filters',
 	'search-in': 'Search in...',
 	'search-x': 'Search {0}',
+	'select-all': 'Select All',
 	'select-build': 'Select Build',
 	'select-case-parameters': 'Select Case Parameters',
 	'select-cases': 'Select Cases',

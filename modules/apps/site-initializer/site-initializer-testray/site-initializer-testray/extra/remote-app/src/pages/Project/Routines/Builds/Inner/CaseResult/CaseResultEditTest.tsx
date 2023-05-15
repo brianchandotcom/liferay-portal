@@ -166,7 +166,7 @@ const CaseResultEditTest = () => {
 					},
 				]}
 				register={register}
-				required={true}
+				required
 			/>
 
 			<Form.Input

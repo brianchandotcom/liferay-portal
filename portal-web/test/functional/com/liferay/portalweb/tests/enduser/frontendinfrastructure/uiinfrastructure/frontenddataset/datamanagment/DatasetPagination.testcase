@@ -152,12 +152,19 @@ definition {
 	}
 
 	@description = "LPS-183948. Confirm that pagination cannot have characters in default value field"
-	@ignore = "true"
 	@priority = 4
 	test CannotUseCharactersInDefaultValueField {
+		task ("The user fills in the default value field some characters") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = "a");
 
-		// TODO LPS-183948 CannotUseCharactersInDefaultValueField pending implementation
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+		}
 
+		task ("Then the user is not allowed to type characters in the Default value field") {
+			AssertElementPresent(
+				key_errorMessage = "This field is required.",
+				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+		}
 	}
 
 	@description = "LPS-183949. Confirm that pagination cannot have characters in pagination items field"

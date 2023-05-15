@@ -33,7 +33,7 @@ public class DynamicObjectDefinitionTableUtil {
 
 		String sql = StringBundler.concat(
 			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
-			DataType.getDBType(type), getSQLColumnNull(type));
+			DataType.getDataType(type), getSQLColumnNull(type));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);

@@ -36,7 +36,7 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
@@ -268,7 +268,8 @@ public class WriteArtifactPublishCommandsTask extends DefaultTask {
 		}
 
 		commands.add(
-			_getGradleCommand(BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, arguments));
+			_getGradleCommand(
+				PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME, arguments));
 
 		// Commit "prep next"
 

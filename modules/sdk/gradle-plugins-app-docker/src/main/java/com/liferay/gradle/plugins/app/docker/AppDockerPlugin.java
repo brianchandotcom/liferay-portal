@@ -39,6 +39,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.bundling.War;
@@ -207,7 +208,7 @@ public class AppDockerPlugin implements Plugin<Project> {
 			Collections.singleton(buildAppDockerImageTask));
 		dockerPushImage.setDescription(
 			"Pushes the Docker image of the app to the registry.");
-		dockerPushImage.setGroup(BasePlugin.UPLOAD_GROUP);
+		dockerPushImage.setGroup(PublishingPlugin.PUBLISH_TASK_GROUP);
 
 		DslObject dslObject = new DslObject(dockerPushImage);
 

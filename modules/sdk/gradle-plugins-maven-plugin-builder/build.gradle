@@ -34,3 +34,7 @@ gradleTest {
 pluginBundle {
 	tags = ["java", "maven", "mojo"]
 }
+
+updateFileVersions {
+	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.maven\.plugin\.builder", version: "(\d.+)"/, "../../../portal-web/build-test.gradle")
+}

@@ -17,23 +17,33 @@ const AVATAR_SIZE_IN_PX = 40;
 export function Avatar({
 	emailAddress,
 	gravatarAPI,
+	initialImage,
 	userName,
 }: {
 	emailAddress: string;
 	gravatarAPI: string;
+	initialImage?: string;
 	userName: string;
 }) {
-	const emailAddressMD5 = md5(emailAddress);
-	const uiAvatarURL = `https://ui-avatars.com/api/${getInitials(
-		userName
-	)}/128/0B5FFF/FFFFFF/2/0.33/true/true/true`;
+	let emailAddressMD5;
+	let uiAvatarURL = '';
+
+	if (!initialImage) {
+		emailAddressMD5 = md5(emailAddress);
+		uiAvatarURL = `https://ui-avatars.com/api/${getInitials(
+			userName
+		)}/128/0B5FFF/FFFFFF/2/0.33/true/true/true`;
+	}
 
 	return (
 		<img
 			height={AVATAR_SIZE_IN_PX}
-			src={`${gravatarAPI}/${emailAddressMD5}?d=${encodeURIComponent(
-				uiAvatarURL
-			)}`}
+			src={
+				initialImage ??
+				`${gravatarAPI}/${emailAddressMD5}?d=${encodeURIComponent(
+					uiAvatarURL
+				)}`
+			}
 			width={AVATAR_SIZE_IN_PX}
 		/>
 	);

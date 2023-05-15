@@ -37,6 +37,7 @@ export function MemberProfile({member, setSelectedMember}: MemberProfileProps) {
 				<Avatar
 					emailAddress={member.email}
 					gravatarAPI={gravatarAPI}
+					initialImage={member.image}
 					userName={member.name}
 				/>
 			</div>

@@ -25,6 +25,7 @@ export function DashboardMemberTableRow({
 					<Avatar
 						emailAddress={email}
 						gravatarAPI={gravatarAPI}
+						initialImage={image}
 						userName={name}
 					/>
 

@@ -1166,6 +1166,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
+					File homeDir = workspaceExtension.getHomeDir();
+
 					WorkResult workResult = project.copy(
 						copySpec -> {
 							copySpec.from(
@@ -1175,15 +1177,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 								new File(
 									workspaceExtension.getConfigsDir(),
 									workspaceExtension.getEnvironment()));
-							copySpec.into(workspaceExtension.getHomeDir());
+							copySpec.into(homeDir);
 
 							_configureCopySpecExpandTomcatVersion(
 								copySpec, workspaceExtension);
 						});
 
 					if (workResult.getDidWork()) {
-						_deleteUnversionedTomcatDir(
-							workspaceExtension.getHomeDir(), project);
+						project.delete(new File(homeDir, "tomcat"));
 					}
 				}
 
@@ -1904,8 +1905,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					}
 
 					if (copy.getDidWork()) {
-						_deleteUnversionedTomcatDir(
-							copy.getDestinationDir(), project);
+						project.delete(new File(destinationDir, "tomcat"));
 					}
 				}
 
@@ -2053,16 +2053,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		File file = new File(dir, ".touch");
 
 		file.createNewFile();
-	}
-
-	private void _deleteUnversionedTomcatDir(
-		File destinationDir, Project project) {
-
-		File unversionedTomcatDir = new File(destinationDir, "tomcat");
-
-		if (unversionedTomcatDir.exists()) {
-			project.delete(unversionedTomcatDir);
-		}
 	}
 
 	private String _getDockerContainerId(Project project) {

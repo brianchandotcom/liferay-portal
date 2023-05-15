@@ -23,6 +23,8 @@ runGradleTest {
 		File tempDir = new File(temporaryDir, war.archiveFileName.get())
 
 		copy {
+			duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
 			from zipTree(war.archiveFile)
 			into tempDir
 		}
@@ -45,4 +47,8 @@ runGradleTest {
 
 		assert !excludedFile.exists()
 	}
+}
+
+war {
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

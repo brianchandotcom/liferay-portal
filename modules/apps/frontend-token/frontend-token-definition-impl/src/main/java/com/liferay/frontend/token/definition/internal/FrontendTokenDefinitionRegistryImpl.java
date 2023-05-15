@@ -57,20 +57,20 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	@Override
 	public FrontendTokenDefinition getFrontendTokenDefinition(String themeId) {
-		return themeIdFrontendTokenDefinitionImpls.get(themeId);
+		return _themeIdFrontendTokenDefinitionImpls.get(themeId);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		bundleTracker = new BundleTracker<>(
+		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, _bundleTrackerCustomizer);
 
-		bundleTracker.open();
+		_bundleTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		bundleTracker.close();
+		_bundleTracker.close();
 	}
 
 	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(
@@ -163,16 +163,11 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 	}
 
-	protected BundleTracker<FrontendTokenDefinitionImpl> bundleTracker;
-
 	@Reference
 	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected Portal portal;
-
-	protected Map<String, FrontendTokenDefinitionImpl>
-		themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
 
 	private String _getFrontendTokenDefinitionJSON(Bundle bundle) {
 		URL url = bundle.getEntry("WEB-INF/frontend-token-definition.json");
@@ -197,6 +192,8 @@ public class FrontendTokenDefinitionRegistryImpl
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");
 
+	private BundleTracker<FrontendTokenDefinitionImpl> _bundleTracker;
+
 	private final BundleTrackerCustomizer<FrontendTokenDefinitionImpl>
 		_bundleTrackerCustomizer =
 			new BundleTrackerCustomizer<FrontendTokenDefinitionImpl>() {
@@ -211,7 +208,7 @@ public class FrontendTokenDefinitionRegistryImpl
 					if ((frontendTokenDefinitionImpl != null) &&
 						(frontendTokenDefinitionImpl.getThemeId() != null)) {
 
-						themeIdFrontendTokenDefinitionImpls.put(
+						_themeIdFrontendTokenDefinitionImpls.put(
 							frontendTokenDefinitionImpl.getThemeId(),
 							frontendTokenDefinitionImpl);
 
@@ -232,10 +229,13 @@ public class FrontendTokenDefinitionRegistryImpl
 					Bundle bundle, BundleEvent bundleEvent,
 					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
 
-					themeIdFrontendTokenDefinitionImpls.remove(
+					_themeIdFrontendTokenDefinitionImpls.remove(
 						frontendTokenDefinitionImpl.getThemeId());
 				}
 
 			};
+
+	private final Map<String, FrontendTokenDefinitionImpl>
+		_themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
 
 }

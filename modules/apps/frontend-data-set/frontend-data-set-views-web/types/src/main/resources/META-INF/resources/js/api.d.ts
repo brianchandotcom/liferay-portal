@@ -13,7 +13,7 @@
  */
 
 import {FDSViewType} from './FDSViews';
-interface Field {
+interface IField {
 	format: string;
 	label: string;
 	name: string;
@@ -21,5 +21,5 @@ interface Field {
 }
 export declare function getFields(
 	fdsView: FDSViewType
-): Promise<Field[] | undefined>;
+): Promise<IField[] | undefined>;
 export {};

@@ -14,9 +14,9 @@
 
 /// <reference types="react" />
 
-interface SearchInterface {
+interface ISearchInterface {
 	onSearch: Function;
 	query: string;
 }
-declare const Search: ({onSearch, query}: SearchInterface) => JSX.Element;
+declare const Search: ({onSearch, query}: ISearchInterface) => JSX.Element;
 export default Search;

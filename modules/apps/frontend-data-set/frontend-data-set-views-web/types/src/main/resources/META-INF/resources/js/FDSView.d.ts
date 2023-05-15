@@ -16,13 +16,13 @@
 
 import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';
-interface FDSViewSectionInterface {
+interface IFDSViewSectionInterface {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
 }
-interface FDSViewInterface {
+interface IFDSViewInterface {
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -33,6 +33,6 @@ declare const FDSView: ({
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
-}: FDSViewInterface) => JSX.Element;
-export {FDSViewSectionInterface};
+}: IFDSViewInterface) => JSX.Element;
+export {IFDSViewSectionInterface as FDSViewSectionInterface};
 export default FDSView;

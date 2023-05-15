@@ -27,7 +27,7 @@ declare type FDSViewType = {
 	label: string;
 	listOfItemsPerPage: string;
 };
-interface FDSViewsInterface {
+interface IFDSViewsInterface {
 	fdsEntryId: string;
 	fdsEntryLabel: string;
 	fdsViewURL: string;
@@ -38,6 +38,6 @@ declare const FDSViews: ({
 	fdsEntryLabel,
 	fdsViewURL,
 	namespace,
-}: FDSViewsInterface) => JSX.Element;
+}: IFDSViewsInterface) => JSX.Element;
 export {FDSViewType};
 export default FDSViews;

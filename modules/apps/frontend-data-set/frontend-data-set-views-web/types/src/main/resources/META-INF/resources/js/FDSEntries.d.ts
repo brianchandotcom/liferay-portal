@@ -31,7 +31,7 @@ declare type FDSEntryType = {
 	restEndpoint: string;
 	restSchema: string;
 };
-interface FDSEntriesInterface {
+interface IFDSEntriesInterface {
 	fdsViewsURL: string;
 	namespace: string;
 	restApplications: Array<string>;
@@ -40,6 +40,6 @@ declare const FDSEntries: ({
 	fdsViewsURL,
 	namespace,
 	restApplications,
-}: FDSEntriesInterface) => JSX.Element;
+}: IFDSEntriesInterface) => JSX.Element;
 export {FDSEntryType};
 export default FDSEntries;

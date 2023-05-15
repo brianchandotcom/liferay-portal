@@ -14,24 +14,24 @@
 
 import React from 'react';
 import '../../css/OrderableTable.scss';
-interface Action {
+interface IAction {
 	icon: string;
 	label: string;
 	onClick: Function;
 }
-interface ContentRendererProps {
+interface IContentRendererProps {
 	item: any;
 }
-interface Field {
-	contentRenderer?: React.FC<ContentRendererProps>;
+interface IField {
+	contentRenderer?: React.FC<IContentRendererProps>;
 	headingTitle?: boolean;
 	label: string;
 	name: string;
 }
-interface OrderableTableProps {
-	actions?: Array<Action>;
+interface IOrderableTableProps {
+	actions?: Array<IAction>;
 	disableSave?: boolean;
-	fields: Array<Field>;
+	fields: Array<IField>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;
@@ -55,5 +55,5 @@ declare const OrderableTable: ({
 	onOrderChange,
 	onSaveButtonClick,
 	title,
-}: OrderableTableProps) => JSX.Element;
+}: IOrderableTableProps) => JSX.Element;
 export default OrderableTable;

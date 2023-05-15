@@ -990,7 +990,7 @@ definition {
 		}
 
 		task ("Navigate to staging site via Product Menu") {
-			ProductMenu.gotoStagingSite();
+			ProductMenu.gotoStagingSite(site = ${randomSiteName});
 		}
 
 		task ("Add a Heading fragment to page in the staging site") {

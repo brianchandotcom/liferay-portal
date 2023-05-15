@@ -19,7 +19,7 @@ buildPluginDescriptor {
 
 configurations {
 	mavenCompile {
-		extendsFrom compile
+		extendsFrom api
 	}
 
 	mavenDistribution

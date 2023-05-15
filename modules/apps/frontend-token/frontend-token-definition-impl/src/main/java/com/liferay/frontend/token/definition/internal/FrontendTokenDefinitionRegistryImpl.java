@@ -78,11 +78,6 @@ public class FrontendTokenDefinitionRegistryImpl
 	@Deactivate
 	protected void deactivate() {
 		bundleTracker.close();
-
-		synchronized (this) {
-			bundleFrontendTokenDefinitionImpls.clear();
-			themeIdFrontendTokenDefinitionImpls.clear();
-		}
 	}
 
 	protected FrontendTokenDefinitionImpl getFrontendTokenDefinitionImpl(

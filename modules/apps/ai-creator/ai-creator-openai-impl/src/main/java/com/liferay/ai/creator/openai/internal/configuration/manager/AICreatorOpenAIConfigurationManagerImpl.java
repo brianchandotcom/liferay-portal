@@ -72,9 +72,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 				_configurationProvider.getCompanyConfiguration(
 					AICreatorOpenAICompanyConfiguration.class, companyId);
 
-		if (aiCreatorOpenAICompanyConfiguration.
-				enableOpenAIToCreateContentInYourSites()) {
-
+		if (aiCreatorOpenAICompanyConfiguration.enableOpenAIToCreateContent()) {
 			return true;
 		}
 
@@ -93,9 +91,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 			_configurationProvider.getGroupConfiguration(
 				AICreatorOpenAIGroupConfiguration.class, groupId);
 
-		if (aiCreatorOpenAIGroupConfiguration.
-				enableOpenAIToCreateContentInYourSites()) {
-
+		if (aiCreatorOpenAIGroupConfiguration.enableOpenAIToCreateContent()) {
 			return true;
 		}
 

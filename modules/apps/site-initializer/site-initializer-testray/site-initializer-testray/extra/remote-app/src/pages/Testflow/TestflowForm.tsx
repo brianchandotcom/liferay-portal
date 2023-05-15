@@ -80,6 +80,8 @@ const TestflowForm = () => {
 
 	const {setHeading} = useHeader({timeout: 210});
 
+	const [isCheckedAll, setCheckedAll] = useState<boolean>(false);
+
 	const {
 		data: {
 			testrayTaskCaseTypes = [],
@@ -222,6 +224,23 @@ const TestflowForm = () => {
 		setValue('userIds', userIds);
 	}, [setValue, userIds]);
 
+	useEffect(() => {
+		if (caseTypesWatch.length && caseTypesWatch.length < caseTypes.length) {
+			setCheckedAll(false);
+		}
+	}, [caseTypes.length, caseTypesWatch.length]);
+
+	const handIsAllChecked = () => {
+		if (!isCheckedAll) {
+			caseTypes.map((caseType, index) => {
+				setValue(`caseTypes.${index}`, caseType.id);
+			});
+		}
+		else {
+			setValue('caseTypes', []);
+		}
+	};
+
 	return (
 		<Container>
 			<ClayInput.GroupItem shrink>
@@ -238,6 +257,17 @@ const TestflowForm = () => {
 				<label className="mb-2 required">
 					{i18n.translate('case-type')}
 				</label>
+
+				<div className="col-4 my-3">
+					<Form.Checkbox
+						checked={isCheckedAll}
+						label="Select All"
+						onChange={() => {
+							setCheckedAll((isCheckedAll) => !isCheckedAll);
+							handIsAllChecked();
+						}}
+					/>
+				</div>
 
 				<div className="d-flex flex-wrap">
 					{caseTypes.map((caseType, index: number) => (

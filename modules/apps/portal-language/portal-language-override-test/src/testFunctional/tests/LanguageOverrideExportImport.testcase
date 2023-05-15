@@ -1,4 +1,4 @@
-@component-name = "portal-frontend-infrastructure"
+@component-name = "portal-platform-experience-and-design-system"
 definition {
 
 	property portal.release = "true";

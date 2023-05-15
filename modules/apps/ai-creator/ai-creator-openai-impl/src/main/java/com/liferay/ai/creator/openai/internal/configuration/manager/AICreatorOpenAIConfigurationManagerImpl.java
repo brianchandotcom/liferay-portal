@@ -33,7 +33,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	implements AICreatorOpenAIConfigurationManager {
 
 	@Override
-	public String getAICreatorCompanyApiKey(long companyId)
+	public String getAICreatorOpenAICompanyApiKey(long companyId)
 		throws ConfigurationException {
 
 		AICreatorOpenAICompanyConfiguration
@@ -45,7 +45,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public String getAICreatorGroupApiKey(long companyId, long groupId)
+	public String getAICreatorOpenAIGroupApiKey(long companyId, long groupId)
 		throws ConfigurationException {
 
 		AICreatorOpenAIGroupConfiguration aiCreatorOpenAIGroupConfiguration =
@@ -65,7 +65,7 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean isAICreatorCompanyEnabled(long companyId)
+	public boolean isAICreatorOpenAICompanyEnabled(long companyId)
 		throws ConfigurationException {
 
 		AICreatorOpenAICompanyConfiguration
@@ -81,10 +81,10 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
-	public boolean isAICreatorGroupEnabled(long companyId, long groupId)
+	public boolean isAICreatorOpenAIGroupEnabled(long companyId, long groupId)
 		throws ConfigurationException {
 
-		if (!isAICreatorCompanyEnabled(companyId)) {
+		if (!isAICreatorOpenAICompanyEnabled(companyId)) {
 			return false;
 		}
 

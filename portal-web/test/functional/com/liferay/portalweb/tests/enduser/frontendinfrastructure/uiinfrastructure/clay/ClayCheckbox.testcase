@@ -130,7 +130,7 @@ definition {
 			}
 		}
 
-		task ("And when treeview has atleast 1 child checkbox state is unchecked") {
+		task ("And treeview has atleast 1 child checkbox state is unchecked") {
 			if (IsChecked(key_label = "Categorization", locator1 = "ClaySamplePortlet#CHECKBOX_NESTED")) {
 				Click(
 					key_label = "Categorization",

@@ -1080,14 +1080,14 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _createLocalizedTable(ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isEnableLocalization()) {
-			return;
-		}
-
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable =
 				_dynamicObjectDefinitionLocalizationTableFactory.create(
 					objectDefinition);
+
+		if (dynamicObjectDefinitionLocalizedTable == null) {
+			return;
+		}
 
 		runSQL(dynamicObjectDefinitionLocalizedTable.getCreateTableSQL());
 	}

@@ -61,7 +61,7 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
-import com.liferay.object.petra.sql.dsl.DataType;
+import com.liferay.object.petra.sql.dsl.DBType;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
@@ -106,7 +106,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
@@ -2474,7 +2473,7 @@ public class ObjectEntryLocalServiceImpl
 
 				result = _getValue(
 					entryValues,
-					DataType.getSQLType(_getDBType(alias, objectDefinitionId)));
+					DBType.getSQLType(_getDBType(alias, objectDefinitionId)));
 			}
 			else if (selectExpression instanceof Column) {
 				Column<?, ?> column = (Column<?, ?>)selectExpression;
@@ -2708,9 +2707,9 @@ public class ObjectEntryLocalServiceImpl
 				selectExpressions.add(
 					DSLQueryFactoryUtil.scalarSubDSLQuery(
 						joinStep.where(predicate),
-						DataType.getJavaClass(objectField.getDBType()),
+						DBType.getJavaClass(objectField.getDBType()),
 						objectField.getName(),
-						DataType.getSQLType(objectField.getDBType())));
+						DBType.getSQLType(objectField.getDBType())));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
@@ -2857,7 +2856,7 @@ public class ObjectEntryLocalServiceImpl
 
 				columnName = alias.getName();
 
-				javaTypeClass = DataType.getJavaClass(
+				javaTypeClass = DBType.getJavaClass(
 					_getDBType(alias, objectDefinitionId));
 			}
 			else if (selectExpression instanceof Column) {
@@ -3257,7 +3256,9 @@ public class ObjectEntryLocalServiceImpl
 			else {
 				DB db = DBManagerUtil.getDB();
 
-				if (db.getDBType() == DBType.POSTGRESQL) {
+				if (db.getDBType() ==
+						com.liferay.portal.kernel.dao.db.DBType.POSTGRESQL) {
+
 					values.put(name, (String)object);
 				}
 				else {
@@ -3409,7 +3410,9 @@ public class ObjectEntryLocalServiceImpl
 		else if (sqlType == Types.CLOB) {
 			DB db = DBManagerUtil.getDB();
 
-			if (db.getDBType() == DBType.POSTGRESQL) {
+			if (db.getDBType() ==
+					com.liferay.portal.kernel.dao.db.DBType.POSTGRESQL) {
+
 				preparedStatement.setString(index, String.valueOf(value));
 			}
 			else {

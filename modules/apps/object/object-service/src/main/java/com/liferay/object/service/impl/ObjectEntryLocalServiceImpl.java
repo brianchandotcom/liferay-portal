@@ -1915,8 +1915,8 @@ public class ObjectEntryLocalServiceImpl
 
 	private Key _getKey() throws PortalException {
 		return new SecretKeySpec(
-			Base64.decode(PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY),
-			PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+			Base64.decode(PropsValues.OBJECT_ENCRYPTION_KEY),
+			PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
 	}
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(

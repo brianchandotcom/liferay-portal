@@ -52,7 +52,6 @@ import com.liferay.redirect.service.persistence.impl.constants.RedirectPersisten
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1501,30 +1500,14 @@ public class RedirectNotFoundEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "url"}, false);
 
-		_setRedirectNotFoundEntryUtilPersistence(this);
+		RedirectNotFoundEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setRedirectNotFoundEntryUtilPersistence(null);
+		RedirectNotFoundEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(RedirectNotFoundEntryImpl.class.getName());
-	}
-
-	private void _setRedirectNotFoundEntryUtilPersistence(
-		RedirectNotFoundEntryPersistence redirectNotFoundEntryPersistence) {
-
-		try {
-			Field field = RedirectNotFoundEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, redirectNotFoundEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

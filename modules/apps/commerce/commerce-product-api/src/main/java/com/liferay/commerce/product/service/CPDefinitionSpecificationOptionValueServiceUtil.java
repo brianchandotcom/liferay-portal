@@ -141,6 +141,12 @@ public class CPDefinitionSpecificationOptionValueServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CPDefinitionSpecificationOptionValueService service) {
+
+		_service = service;
+	}
+
 	private static volatile CPDefinitionSpecificationOptionValueService
 		_service;
 

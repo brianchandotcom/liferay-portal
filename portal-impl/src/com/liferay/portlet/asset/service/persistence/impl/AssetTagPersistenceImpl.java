@@ -57,7 +57,6 @@ import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5520,30 +5519,15 @@ public class AssetTagPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, false);
 
-		_setAssetTagUtilPersistence(this);
+		AssetTagUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setAssetTagUtilPersistence(null);
+		AssetTagUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(AssetTagImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("AssetEntries_AssetTags");
-	}
-
-	private void _setAssetTagUtilPersistence(
-		AssetTagPersistence assetTagPersistence) {
-
-		try {
-			Field field = AssetTagUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, assetTagPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@BeanReference(type = AssetEntryPersistence.class)

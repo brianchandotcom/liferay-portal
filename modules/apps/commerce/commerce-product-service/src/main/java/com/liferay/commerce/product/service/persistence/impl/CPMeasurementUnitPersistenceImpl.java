@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4753,30 +4752,14 @@ public class CPMeasurementUnitPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCPMeasurementUnitUtilPersistence(this);
+		CPMeasurementUnitUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPMeasurementUnitUtilPersistence(null);
+		CPMeasurementUnitUtil.setPersistence(null);
 
 		entityCache.removeCache(CPMeasurementUnitImpl.class.getName());
-	}
-
-	private void _setCPMeasurementUnitUtilPersistence(
-		CPMeasurementUnitPersistence cpMeasurementUnitPersistence) {
-
-		try {
-			Field field = CPMeasurementUnitUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpMeasurementUnitPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

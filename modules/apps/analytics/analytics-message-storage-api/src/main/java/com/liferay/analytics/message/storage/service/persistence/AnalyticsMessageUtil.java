@@ -450,6 +450,10 @@ public class AnalyticsMessageUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(AnalyticsMessagePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile AnalyticsMessagePersistence _persistence;
 
 }

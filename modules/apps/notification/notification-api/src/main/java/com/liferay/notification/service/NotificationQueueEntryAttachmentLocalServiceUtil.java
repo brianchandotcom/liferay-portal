@@ -348,6 +348,12 @@ public class NotificationQueueEntryAttachmentLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		NotificationQueueEntryAttachmentLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile NotificationQueueEntryAttachmentLocalService
 		_service;
 

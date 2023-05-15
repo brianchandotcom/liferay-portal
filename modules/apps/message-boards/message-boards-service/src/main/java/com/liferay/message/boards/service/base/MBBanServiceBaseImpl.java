@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class MBBanServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		MBBanServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class MBBanServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		mbBanService = (MBBanService)aopProxy;
 
-		_setServiceUtilService(mbBanService);
+		MBBanServiceUtil.setService(mbBanService);
 	}
 
 	/**
@@ -115,19 +113,6 @@ public abstract class MBBanServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(MBBanService mbBanService) {
-		try {
-			Field field = MBBanServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, mbBanService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

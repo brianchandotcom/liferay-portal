@@ -451,6 +451,12 @@ public class DLOpenerFileEntryReferenceLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		DLOpenerFileEntryReferenceLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile DLOpenerFileEntryReferenceLocalService _service;
 
 }

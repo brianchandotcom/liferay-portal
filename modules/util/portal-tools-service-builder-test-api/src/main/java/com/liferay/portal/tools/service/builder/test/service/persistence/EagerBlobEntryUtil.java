@@ -505,6 +505,10 @@ public class EagerBlobEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(EagerBlobEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile EagerBlobEntryPersistence _persistence;
 
 }

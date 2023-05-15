@@ -1513,6 +1513,10 @@ public class TemplateEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(TemplateEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile TemplateEntryPersistence _persistence;
 
 }

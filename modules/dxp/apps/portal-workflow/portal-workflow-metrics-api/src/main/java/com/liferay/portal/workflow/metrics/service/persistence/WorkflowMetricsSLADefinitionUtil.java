@@ -1900,6 +1900,12 @@ public class WorkflowMetricsSLADefinitionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		WorkflowMetricsSLADefinitionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile WorkflowMetricsSLADefinitionPersistence
 		_persistence;
 

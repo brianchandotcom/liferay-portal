@@ -375,6 +375,10 @@ public class OAuthClientEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuthClientEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile OAuthClientEntryLocalService _service;
 
 }

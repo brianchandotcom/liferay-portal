@@ -88,6 +88,10 @@ public class PLOEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PLOEntryService service) {
+		_service = service;
+	}
+
 	private static volatile PLOEntryService _service;
 
 }

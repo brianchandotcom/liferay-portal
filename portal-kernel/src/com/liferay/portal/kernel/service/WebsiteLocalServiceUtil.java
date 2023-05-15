@@ -359,6 +359,10 @@ public class WebsiteLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(WebsiteLocalService service) {
+		_service = service;
+	}
+
 	private static volatile WebsiteLocalService _service;
 
 }

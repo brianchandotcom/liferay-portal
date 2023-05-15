@@ -533,6 +533,12 @@ public class RegionLocalizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		RegionLocalizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile RegionLocalizationPersistence _persistence;
 
 }

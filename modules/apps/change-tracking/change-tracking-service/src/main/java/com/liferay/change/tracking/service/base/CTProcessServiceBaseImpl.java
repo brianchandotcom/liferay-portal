@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class CTProcessServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CTProcessServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class CTProcessServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ctProcessService = (CTProcessService)aopProxy;
 
-		_setServiceUtilService(ctProcessService);
+		CTProcessServiceUtil.setService(ctProcessService);
 	}
 
 	/**
@@ -115,20 +113,6 @@ public abstract class CTProcessServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(CTProcessService ctProcessService) {
-		try {
-			Field field = CTProcessServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ctProcessService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

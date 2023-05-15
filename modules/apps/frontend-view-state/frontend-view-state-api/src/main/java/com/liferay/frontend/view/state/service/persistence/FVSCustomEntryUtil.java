@@ -629,6 +629,10 @@ public class FVSCustomEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(FVSCustomEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile FVSCustomEntryPersistence _persistence;
 
 }

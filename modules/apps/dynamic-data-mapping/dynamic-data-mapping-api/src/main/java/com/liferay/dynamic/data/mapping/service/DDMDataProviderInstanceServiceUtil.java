@@ -159,6 +159,10 @@ public class DDMDataProviderInstanceServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMDataProviderInstanceService service) {
+		_service = service;
+	}
+
 	private static volatile DDMDataProviderInstanceService _service;
 
 }

@@ -64,6 +64,10 @@ public class ERAssetCategoryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ERAssetCategoryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ERAssetCategoryLocalService _service;
 
 }

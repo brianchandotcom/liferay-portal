@@ -764,6 +764,10 @@ public class ERCGroupEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ERCGroupEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ERCGroupEntryPersistence _persistence;
 
 }

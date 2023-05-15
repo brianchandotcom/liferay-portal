@@ -645,6 +645,10 @@ public class BackgroundTaskLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(BackgroundTaskLocalService service) {
+		_service = service;
+	}
+
 	private static volatile BackgroundTaskLocalService _service;
 
 }

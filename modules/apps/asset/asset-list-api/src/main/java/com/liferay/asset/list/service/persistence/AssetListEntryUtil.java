@@ -3851,6 +3851,10 @@ public class AssetListEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(AssetListEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile AssetListEntryPersistence _persistence;
 
 }

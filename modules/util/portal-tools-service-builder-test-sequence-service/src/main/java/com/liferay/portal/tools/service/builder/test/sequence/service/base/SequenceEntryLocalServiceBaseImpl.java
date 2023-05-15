@@ -47,8 +47,6 @@ import com.liferay.portal.tools.service.builder.test.sequence.service.persistenc
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -420,7 +418,7 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		SequenceEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -435,7 +433,7 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sequenceEntryLocalService = (SequenceEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(sequenceEntryLocalService);
+		SequenceEntryLocalServiceUtil.setService(sequenceEntryLocalService);
 	}
 
 	/**
@@ -477,22 +475,6 @@ public abstract class SequenceEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SequenceEntryLocalService sequenceEntryLocalService) {
-
-		try {
-			Field field = SequenceEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sequenceEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

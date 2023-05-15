@@ -686,6 +686,10 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(KaleoTaskInstanceTokenLocalService service) {
+		_service = service;
+	}
+
 	private static volatile KaleoTaskInstanceTokenLocalService _service;
 
 }

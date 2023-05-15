@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -412,7 +410,7 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		MFATimeBasedOTPEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -428,7 +426,8 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 		mfaTimeBasedOTPEntryLocalService =
 			(MFATimeBasedOTPEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(mfaTimeBasedOTPEntryLocalService);
+		MFATimeBasedOTPEntryLocalServiceUtil.setService(
+			mfaTimeBasedOTPEntryLocalService);
 	}
 
 	/**
@@ -471,23 +470,6 @@ public abstract class MFATimeBasedOTPEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		MFATimeBasedOTPEntryLocalService mfaTimeBasedOTPEntryLocalService) {
-
-		try {
-			Field field =
-				MFATimeBasedOTPEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, mfaTimeBasedOTPEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

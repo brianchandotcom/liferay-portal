@@ -48,7 +48,6 @@ import com.liferay.saml.persistence.service.persistence.impl.constants.SamlPersi
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2301,30 +2300,14 @@ public class SamlSpSessionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sessionIndex"}, false);
 
-		_setSamlSpSessionUtilPersistence(this);
+		SamlSpSessionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSamlSpSessionUtilPersistence(null);
+		SamlSpSessionUtil.setPersistence(null);
 
 		entityCache.removeCache(SamlSpSessionImpl.class.getName());
-	}
-
-	private void _setSamlSpSessionUtilPersistence(
-		SamlSpSessionPersistence samlSpSessionPersistence) {
-
-		try {
-			Field field = SamlSpSessionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, samlSpSessionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

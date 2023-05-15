@@ -108,6 +108,12 @@ public class CommercePriceListOrderTypeRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommercePriceListOrderTypeRelService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommercePriceListOrderTypeRelService _service;
 
 }

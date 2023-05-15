@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommerceNotificationTemplateServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommerceNotificationTemplateServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class CommerceNotificationTemplateServiceBaseImpl
 		commerceNotificationTemplateService =
 			(CommerceNotificationTemplateService)aopProxy;
 
-		_setServiceUtilService(commerceNotificationTemplateService);
+		CommerceNotificationTemplateServiceUtil.setService(
+			commerceNotificationTemplateService);
 	}
 
 	/**
@@ -119,24 +118,6 @@ public abstract class CommerceNotificationTemplateServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommerceNotificationTemplateService
-			commerceNotificationTemplateService) {
-
-		try {
-			Field field =
-				CommerceNotificationTemplateServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceNotificationTemplateService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

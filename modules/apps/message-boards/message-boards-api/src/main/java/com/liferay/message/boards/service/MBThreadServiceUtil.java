@@ -225,6 +225,10 @@ public class MBThreadServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBThreadService service) {
+		_service = service;
+	}
+
 	private static volatile MBThreadService _service;
 
 }

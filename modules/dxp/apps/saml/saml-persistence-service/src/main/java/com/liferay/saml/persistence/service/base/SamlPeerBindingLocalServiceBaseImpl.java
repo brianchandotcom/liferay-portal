@@ -47,8 +47,6 @@ import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersisten
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -393,7 +391,7 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		SamlPeerBindingLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -408,7 +406,7 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		samlPeerBindingLocalService = (SamlPeerBindingLocalService)aopProxy;
 
-		_setLocalServiceUtilService(samlPeerBindingLocalService);
+		SamlPeerBindingLocalServiceUtil.setService(samlPeerBindingLocalService);
 	}
 
 	/**
@@ -450,23 +448,6 @@ public abstract class SamlPeerBindingLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SamlPeerBindingLocalService samlPeerBindingLocalService) {
-
-		try {
-			Field field =
-				SamlPeerBindingLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, samlPeerBindingLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

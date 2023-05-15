@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -455,14 +453,14 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.UserTrackerPath",
 			userTrackerPathLocalService);
 
-		_setLocalServiceUtilService(userTrackerPathLocalService);
+		UserTrackerPathLocalServiceUtil.setService(userTrackerPathLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.UserTrackerPath");
 
-		_setLocalServiceUtilService(null);
+		UserTrackerPathLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -504,23 +502,6 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		UserTrackerPathLocalService userTrackerPathLocalService) {
-
-		try {
-			Field field =
-				UserTrackerPathLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, userTrackerPathLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

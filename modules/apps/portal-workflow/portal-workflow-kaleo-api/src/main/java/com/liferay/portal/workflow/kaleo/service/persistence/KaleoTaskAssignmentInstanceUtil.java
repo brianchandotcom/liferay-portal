@@ -1832,6 +1832,12 @@ public class KaleoTaskAssignmentInstanceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		KaleoTaskAssignmentInstancePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoTaskAssignmentInstancePersistence _persistence;
 
 }

@@ -43,7 +43,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.DataLim
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -626,29 +625,13 @@ public class DataLimitEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_setDataLimitEntryUtilPersistence(this);
+		DataLimitEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setDataLimitEntryUtilPersistence(null);
+		DataLimitEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(DataLimitEntryImpl.class.getName());
-	}
-
-	private void _setDataLimitEntryUtilPersistence(
-		DataLimitEntryPersistence dataLimitEntryPersistence) {
-
-		try {
-			Field field = DataLimitEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dataLimitEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

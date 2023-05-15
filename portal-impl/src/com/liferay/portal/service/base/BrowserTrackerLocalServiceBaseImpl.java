@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -451,14 +449,14 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.BrowserTracker",
 			browserTrackerLocalService);
 
-		_setLocalServiceUtilService(browserTrackerLocalService);
+		BrowserTrackerLocalServiceUtil.setService(browserTrackerLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.BrowserTracker");
 
-		_setLocalServiceUtilService(null);
+		BrowserTrackerLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -500,22 +498,6 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		BrowserTrackerLocalService browserTrackerLocalService) {
-
-		try {
-			Field field = BrowserTrackerLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, browserTrackerLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -113,6 +113,10 @@ public class CPSpecificationOptionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPSpecificationOptionService service) {
+		_service = service;
+	}
+
 	private static volatile CPSpecificationOptionService _service;
 
 }

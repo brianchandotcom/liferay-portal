@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -163,11 +161,11 @@ public abstract class OrganizationServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(organizationService);
+		OrganizationServiceUtil.setService(organizationService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		OrganizationServiceUtil.setService(null);
 	}
 
 	/**
@@ -209,22 +207,6 @@ public abstract class OrganizationServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		OrganizationService organizationService) {
-
-		try {
-			Field field = OrganizationServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, organizationService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

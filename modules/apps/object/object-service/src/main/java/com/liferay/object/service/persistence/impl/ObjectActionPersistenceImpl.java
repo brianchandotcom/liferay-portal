@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4044,30 +4043,14 @@ public class ObjectActionPersistenceImpl
 			},
 			false);
 
-		_setObjectActionUtilPersistence(this);
+		ObjectActionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectActionUtilPersistence(null);
+		ObjectActionUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectActionImpl.class.getName());
-	}
-
-	private void _setObjectActionUtilPersistence(
-		ObjectActionPersistence objectActionPersistence) {
-
-		try {
-			Field field = ObjectActionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectActionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

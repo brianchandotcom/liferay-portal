@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -1776,30 +1775,14 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"companyId", "modifiedDate"}, false);
 
-		_setAnalyticsDeleteMessageUtilPersistence(this);
+		AnalyticsDeleteMessageUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAnalyticsDeleteMessageUtilPersistence(null);
+		AnalyticsDeleteMessageUtil.setPersistence(null);
 
 		entityCache.removeCache(AnalyticsDeleteMessageImpl.class.getName());
-	}
-
-	private void _setAnalyticsDeleteMessageUtilPersistence(
-		AnalyticsDeleteMessagePersistence analyticsDeleteMessagePersistence) {
-
-		try {
-			Field field = AnalyticsDeleteMessageUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, analyticsDeleteMessagePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

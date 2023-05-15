@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class CPMeasurementUnitServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CPMeasurementUnitServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class CPMeasurementUnitServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpMeasurementUnitService = (CPMeasurementUnitService)aopProxy;
 
-		_setServiceUtilService(cpMeasurementUnitService);
+		CPMeasurementUnitServiceUtil.setService(cpMeasurementUnitService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class CPMeasurementUnitServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CPMeasurementUnitService cpMeasurementUnitService) {
-
-		try {
-			Field field = CPMeasurementUnitServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpMeasurementUnitService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

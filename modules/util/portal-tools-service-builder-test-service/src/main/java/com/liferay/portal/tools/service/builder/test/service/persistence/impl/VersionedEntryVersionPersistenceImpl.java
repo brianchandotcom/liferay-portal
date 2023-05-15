@@ -41,7 +41,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.Version
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -2505,29 +2504,13 @@ public class VersionedEntryVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "version"}, false);
 
-		_setVersionedEntryVersionUtilPersistence(this);
+		VersionedEntryVersionUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setVersionedEntryVersionUtilPersistence(null);
+		VersionedEntryVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(VersionedEntryVersionImpl.class.getName());
-	}
-
-	private void _setVersionedEntryVersionUtilPersistence(
-		VersionedEntryVersionPersistence versionedEntryVersionPersistence) {
-
-		try {
-			Field field = VersionedEntryVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, versionedEntryVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

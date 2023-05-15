@@ -413,6 +413,10 @@ public class LayoutLocalizationLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutLocalizationLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutLocalizationLocalService _service;
 
 }

@@ -2278,6 +2278,10 @@ public class ObjectFieldUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectFieldPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectFieldPersistence _persistence;
 
 }

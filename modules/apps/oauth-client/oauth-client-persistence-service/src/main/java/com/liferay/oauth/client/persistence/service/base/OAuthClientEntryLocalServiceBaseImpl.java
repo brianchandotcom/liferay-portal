@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -400,7 +398,7 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		OAuthClientEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -415,7 +413,8 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		oAuthClientEntryLocalService = (OAuthClientEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(oAuthClientEntryLocalService);
+		OAuthClientEntryLocalServiceUtil.setService(
+			oAuthClientEntryLocalService);
 	}
 
 	/**
@@ -457,23 +456,6 @@ public abstract class OAuthClientEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		OAuthClientEntryLocalService oAuthClientEntryLocalService) {
-
-		try {
-			Field field =
-				OAuthClientEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, oAuthClientEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

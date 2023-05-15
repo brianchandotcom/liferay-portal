@@ -47,8 +47,6 @@ import com.liferay.revert.schema.version.service.persistence.RSVEntryPersistence
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -381,7 +379,7 @@ public abstract class RSVEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		RSVEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -396,7 +394,7 @@ public abstract class RSVEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		rsvEntryLocalService = (RSVEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(rsvEntryLocalService);
+		RSVEntryLocalServiceUtil.setService(rsvEntryLocalService);
 	}
 
 	/**
@@ -438,22 +436,6 @@ public abstract class RSVEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		RSVEntryLocalService rsvEntryLocalService) {
-
-		try {
-			Field field = RSVEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, rsvEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

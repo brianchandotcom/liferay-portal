@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2981,30 +2980,14 @@ public class ObjectViewSortColumnPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectViewId", "objectFieldName"}, false);
 
-		_setObjectViewSortColumnUtilPersistence(this);
+		ObjectViewSortColumnUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectViewSortColumnUtilPersistence(null);
+		ObjectViewSortColumnUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectViewSortColumnImpl.class.getName());
-	}
-
-	private void _setObjectViewSortColumnUtilPersistence(
-		ObjectViewSortColumnPersistence objectViewSortColumnPersistence) {
-
-		try {
-			Field field = ObjectViewSortColumnUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectViewSortColumnPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

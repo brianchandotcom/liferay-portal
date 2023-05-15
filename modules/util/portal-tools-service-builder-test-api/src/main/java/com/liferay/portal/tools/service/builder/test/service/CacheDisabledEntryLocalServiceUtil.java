@@ -309,6 +309,10 @@ public class CacheDisabledEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CacheDisabledEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CacheDisabledEntryLocalService _service;
 
 }

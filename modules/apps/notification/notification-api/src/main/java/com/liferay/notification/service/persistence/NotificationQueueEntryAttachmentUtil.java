@@ -501,6 +501,12 @@ public class NotificationQueueEntryAttachmentUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NotificationQueueEntryAttachmentPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NotificationQueueEntryAttachmentPersistence
 		_persistence;
 

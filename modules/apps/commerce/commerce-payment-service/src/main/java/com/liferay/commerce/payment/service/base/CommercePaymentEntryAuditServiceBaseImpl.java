@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommercePaymentEntryAuditServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommercePaymentEntryAuditServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class CommercePaymentEntryAuditServiceBaseImpl
 		commercePaymentEntryAuditService =
 			(CommercePaymentEntryAuditService)aopProxy;
 
-		_setServiceUtilService(commercePaymentEntryAuditService);
+		CommercePaymentEntryAuditServiceUtil.setService(
+			commercePaymentEntryAuditService);
 	}
 
 	/**
@@ -119,23 +118,6 @@ public abstract class CommercePaymentEntryAuditServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommercePaymentEntryAuditService commercePaymentEntryAuditService) {
-
-		try {
-			Field field =
-				CommercePaymentEntryAuditServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePaymentEntryAuditService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

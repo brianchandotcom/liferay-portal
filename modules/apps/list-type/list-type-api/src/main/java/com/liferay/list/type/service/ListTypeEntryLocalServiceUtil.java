@@ -410,6 +410,10 @@ public class ListTypeEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ListTypeEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ListTypeEntryLocalService _service;
 
 }

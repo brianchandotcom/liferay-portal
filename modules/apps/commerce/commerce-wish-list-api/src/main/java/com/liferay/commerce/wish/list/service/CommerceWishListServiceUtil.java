@@ -127,6 +127,10 @@ public class CommerceWishListServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceWishListService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceWishListService _service;
 
 }

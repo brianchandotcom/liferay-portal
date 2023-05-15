@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -22928,29 +22927,14 @@ public class MBMessagePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false);
 
-		_setMBMessageUtilPersistence(this);
+		MBMessageUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMBMessageUtilPersistence(null);
+		MBMessageUtil.setPersistence(null);
 
 		entityCache.removeCache(MBMessageImpl.class.getName());
-	}
-
-	private void _setMBMessageUtilPersistence(
-		MBMessagePersistence mbMessagePersistence) {
-
-		try {
-			Field field = MBMessageUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mbMessagePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

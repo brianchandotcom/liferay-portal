@@ -2125,6 +2125,10 @@ public class DLFileShortcutUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DLFileShortcutPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DLFileShortcutPersistence _persistence;
 
 }

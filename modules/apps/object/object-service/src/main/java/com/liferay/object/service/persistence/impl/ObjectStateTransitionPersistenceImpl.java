@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3452,30 +3451,14 @@ public class ObjectStateTransitionPersistenceImpl
 			"countByTargetObjectStateId", new String[] {Long.class.getName()},
 			new String[] {"targetObjectStateId"}, false);
 
-		_setObjectStateTransitionUtilPersistence(this);
+		ObjectStateTransitionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectStateTransitionUtilPersistence(null);
+		ObjectStateTransitionUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectStateTransitionImpl.class.getName());
-	}
-
-	private void _setObjectStateTransitionUtilPersistence(
-		ObjectStateTransitionPersistence objectStateTransitionPersistence) {
-
-		try {
-			Field field = ObjectStateTransitionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectStateTransitionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

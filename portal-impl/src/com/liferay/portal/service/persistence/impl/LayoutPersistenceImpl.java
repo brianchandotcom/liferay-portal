@@ -54,7 +54,6 @@ import com.liferay.portal.model.impl.LayoutModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -20730,28 +20729,13 @@ public class LayoutPersistenceImpl
 			},
 			false);
 
-		_setLayoutUtilPersistence(this);
+		LayoutUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setLayoutUtilPersistence(null);
+		LayoutUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(LayoutImpl.class.getName());
-	}
-
-	private void _setLayoutUtilPersistence(
-		LayoutPersistence layoutPersistence) {
-
-		try {
-			Field field = LayoutUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_LAYOUT =

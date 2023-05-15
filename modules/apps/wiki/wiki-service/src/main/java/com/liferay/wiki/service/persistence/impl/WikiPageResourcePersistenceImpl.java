@@ -49,7 +49,6 @@ import com.liferay.wiki.service.persistence.impl.constants.WikiPersistenceConsta
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2636,30 +2635,14 @@ public class WikiPageResourcePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"nodeId", "title"}, false);
 
-		_setWikiPageResourceUtilPersistence(this);
+		WikiPageResourceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setWikiPageResourceUtilPersistence(null);
+		WikiPageResourceUtil.setPersistence(null);
 
 		entityCache.removeCache(WikiPageResourceImpl.class.getName());
-	}
-
-	private void _setWikiPageResourceUtilPersistence(
-		WikiPageResourcePersistence wikiPageResourcePersistence) {
-
-		try {
-			Field field = WikiPageResourceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, wikiPageResourcePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

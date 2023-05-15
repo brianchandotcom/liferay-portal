@@ -137,6 +137,12 @@ public class CommerceChannelAccountEntryRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceChannelAccountEntryRelService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceChannelAccountEntryRelService _service;
 
 }

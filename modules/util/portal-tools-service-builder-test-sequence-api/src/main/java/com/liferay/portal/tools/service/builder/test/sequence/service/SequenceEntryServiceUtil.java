@@ -47,6 +47,10 @@ public class SequenceEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SequenceEntryService service) {
+		_service = service;
+	}
+
 	private static volatile SequenceEntryService _service;
 
 }

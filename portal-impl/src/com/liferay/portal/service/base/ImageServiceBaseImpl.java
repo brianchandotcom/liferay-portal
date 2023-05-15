@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.ImageServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -136,11 +134,11 @@ public abstract class ImageServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(imageService);
+		ImageServiceUtil.setService(imageService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		ImageServiceUtil.setService(null);
 	}
 
 	/**
@@ -182,19 +180,6 @@ public abstract class ImageServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(ImageService imageService) {
-		try {
-			Field field = ImageServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, imageService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

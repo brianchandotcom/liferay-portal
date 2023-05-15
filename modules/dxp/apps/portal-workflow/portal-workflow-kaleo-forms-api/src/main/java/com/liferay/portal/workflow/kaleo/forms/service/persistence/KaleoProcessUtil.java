@@ -999,6 +999,10 @@ public class KaleoProcessUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KaleoProcessPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoProcessPersistence _persistence;
 
 }

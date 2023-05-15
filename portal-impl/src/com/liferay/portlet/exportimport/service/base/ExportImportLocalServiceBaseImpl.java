@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -98,11 +96,11 @@ public abstract class ExportImportLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(exportImportLocalService);
+		ExportImportLocalServiceUtil.setService(exportImportLocalService);
 	}
 
 	public void destroy() {
-		_setLocalServiceUtilService(null);
+		ExportImportLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -136,22 +134,6 @@ public abstract class ExportImportLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ExportImportLocalService exportImportLocalService) {
-
-		try {
-			Field field = ExportImportLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, exportImportLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

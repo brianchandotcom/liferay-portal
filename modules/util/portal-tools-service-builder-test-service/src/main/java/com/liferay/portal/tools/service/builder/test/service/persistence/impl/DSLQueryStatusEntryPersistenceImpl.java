@@ -39,8 +39,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.DSLQuer
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -583,29 +581,13 @@ public class DSLQueryStatusEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_setDSLQueryStatusEntryUtilPersistence(this);
+		DSLQueryStatusEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setDSLQueryStatusEntryUtilPersistence(null);
+		DSLQueryStatusEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(DSLQueryStatusEntryImpl.class.getName());
-	}
-
-	private void _setDSLQueryStatusEntryUtilPersistence(
-		DSLQueryStatusEntryPersistence dslQueryStatusEntryPersistence) {
-
-		try {
-			Field field = DSLQueryStatusEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dslQueryStatusEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

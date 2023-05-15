@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -8012,29 +8011,14 @@ public class COREntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCOREntryUtilPersistence(this);
+		COREntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCOREntryUtilPersistence(null);
+		COREntryUtil.setPersistence(null);
 
 		entityCache.removeCache(COREntryImpl.class.getName());
-	}
-
-	private void _setCOREntryUtilPersistence(
-		COREntryPersistence corEntryPersistence) {
-
-		try {
-			Field field = COREntryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, corEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

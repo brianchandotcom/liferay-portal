@@ -115,6 +115,10 @@ public class DepotEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DepotEntryService service) {
+		_service = service;
+	}
+
 	private static volatile DepotEntryService _service;
 
 }

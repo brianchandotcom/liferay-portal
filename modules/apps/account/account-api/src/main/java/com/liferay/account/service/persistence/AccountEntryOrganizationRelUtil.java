@@ -727,6 +727,12 @@ public class AccountEntryOrganizationRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AccountEntryOrganizationRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AccountEntryOrganizationRelPersistence _persistence;
 
 }

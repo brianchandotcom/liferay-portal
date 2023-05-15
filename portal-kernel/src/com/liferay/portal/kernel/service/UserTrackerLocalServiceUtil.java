@@ -312,6 +312,10 @@ public class UserTrackerLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(UserTrackerLocalService service) {
+		_service = service;
+	}
+
 	private static volatile UserTrackerLocalService _service;
 
 }

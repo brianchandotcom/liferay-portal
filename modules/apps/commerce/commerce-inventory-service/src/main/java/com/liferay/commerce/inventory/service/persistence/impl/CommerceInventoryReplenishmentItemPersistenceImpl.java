@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -5305,33 +5304,15 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCommerceInventoryReplenishmentItemUtilPersistence(this);
+		CommerceInventoryReplenishmentItemUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceInventoryReplenishmentItemUtilPersistence(null);
+		CommerceInventoryReplenishmentItemUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceInventoryReplenishmentItemImpl.class.getName());
-	}
-
-	private void _setCommerceInventoryReplenishmentItemUtilPersistence(
-		CommerceInventoryReplenishmentItemPersistence
-			commerceInventoryReplenishmentItemPersistence) {
-
-		try {
-			Field field =
-				CommerceInventoryReplenishmentItemUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceInventoryReplenishmentItemPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

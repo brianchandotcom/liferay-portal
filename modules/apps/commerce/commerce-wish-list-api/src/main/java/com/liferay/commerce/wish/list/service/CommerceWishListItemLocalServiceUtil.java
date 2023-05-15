@@ -394,6 +394,10 @@ public class CommerceWishListItemLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceWishListItemLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceWishListItemLocalService _service;
 
 }

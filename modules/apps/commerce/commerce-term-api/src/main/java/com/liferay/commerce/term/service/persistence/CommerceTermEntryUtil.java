@@ -2381,6 +2381,12 @@ public class CommerceTermEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceTermEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceTermEntryPersistence _persistence;
 
 }

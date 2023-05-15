@@ -475,6 +475,10 @@ public class AssetDisplayPageEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AssetDisplayPageEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AssetDisplayPageEntryLocalService _service;
 
 }

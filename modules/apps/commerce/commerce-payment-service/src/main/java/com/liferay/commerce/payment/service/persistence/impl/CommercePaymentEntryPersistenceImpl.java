@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2601,30 +2600,14 @@ public class CommercePaymentEntryPersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK"}, false);
 
-		_setCommercePaymentEntryUtilPersistence(this);
+		CommercePaymentEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommercePaymentEntryUtilPersistence(null);
+		CommercePaymentEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(CommercePaymentEntryImpl.class.getName());
-	}
-
-	private void _setCommercePaymentEntryUtilPersistence(
-		CommercePaymentEntryPersistence commercePaymentEntryPersistence) {
-
-		try {
-			Field field = CommercePaymentEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePaymentEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

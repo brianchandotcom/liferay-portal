@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -163,11 +161,11 @@ public abstract class UserGroupRoleServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(userGroupRoleService);
+		UserGroupRoleServiceUtil.setService(userGroupRoleService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		UserGroupRoleServiceUtil.setService(null);
 	}
 
 	/**
@@ -209,22 +207,6 @@ public abstract class UserGroupRoleServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		UserGroupRoleService userGroupRoleService) {
-
-		try {
-			Field field = UserGroupRoleServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, userGroupRoleService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

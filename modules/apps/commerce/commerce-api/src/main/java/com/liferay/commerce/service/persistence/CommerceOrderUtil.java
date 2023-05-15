@@ -3259,6 +3259,10 @@ public class CommerceOrderUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CommerceOrderPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceOrderPersistence _persistence;
 
 }

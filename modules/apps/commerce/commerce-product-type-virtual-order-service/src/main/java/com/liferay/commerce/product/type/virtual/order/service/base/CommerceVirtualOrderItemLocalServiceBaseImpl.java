@@ -54,8 +54,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -562,7 +560,7 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceVirtualOrderItemLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -578,7 +576,8 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 		commerceVirtualOrderItemLocalService =
 			(CommerceVirtualOrderItemLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceVirtualOrderItemLocalService);
+		CommerceVirtualOrderItemLocalServiceUtil.setService(
+			commerceVirtualOrderItemLocalService);
 	}
 
 	/**
@@ -621,24 +620,6 @@ public abstract class CommerceVirtualOrderItemLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceVirtualOrderItemLocalService
-			commerceVirtualOrderItemLocalService) {
-
-		try {
-			Field field =
-				CommerceVirtualOrderItemLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceVirtualOrderItemLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

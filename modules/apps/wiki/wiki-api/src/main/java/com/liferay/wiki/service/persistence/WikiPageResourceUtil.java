@@ -750,6 +750,10 @@ public class WikiPageResourceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(WikiPageResourcePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile WikiPageResourcePersistence _persistence;
 
 }

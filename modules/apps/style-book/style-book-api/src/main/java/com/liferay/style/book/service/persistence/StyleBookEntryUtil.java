@@ -2734,6 +2734,10 @@ public class StyleBookEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(StyleBookEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile StyleBookEntryPersistence _persistence;
 
 }

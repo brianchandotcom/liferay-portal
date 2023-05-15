@@ -503,6 +503,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutPageTemplateEntryService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutPageTemplateEntryService _service;
 
 }

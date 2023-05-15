@@ -401,6 +401,10 @@ public class ObjectValidationRuleLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectValidationRuleLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectValidationRuleLocalService _service;
 
 }

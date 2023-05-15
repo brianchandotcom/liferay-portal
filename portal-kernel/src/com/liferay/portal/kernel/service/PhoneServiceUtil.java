@@ -84,6 +84,10 @@ public class PhoneServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PhoneService service) {
+		_service = service;
+	}
+
 	private static volatile PhoneService _service;
 
 }

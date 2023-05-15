@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -3554,33 +3553,15 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "classPK", "sent"}, false);
 
-		_setCommerceNotificationQueueEntryUtilPersistence(this);
+		CommerceNotificationQueueEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceNotificationQueueEntryUtilPersistence(null);
+		CommerceNotificationQueueEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceNotificationQueueEntryImpl.class.getName());
-	}
-
-	private void _setCommerceNotificationQueueEntryUtilPersistence(
-		CommerceNotificationQueueEntryPersistence
-			commerceNotificationQueueEntryPersistence) {
-
-		try {
-			Field field =
-				CommerceNotificationQueueEntryUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceNotificationQueueEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

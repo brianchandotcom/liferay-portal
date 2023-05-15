@@ -486,6 +486,12 @@ public class CPInstanceOptionValueRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CPInstanceOptionValueRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CPInstanceOptionValueRelLocalService _service;
 
 }

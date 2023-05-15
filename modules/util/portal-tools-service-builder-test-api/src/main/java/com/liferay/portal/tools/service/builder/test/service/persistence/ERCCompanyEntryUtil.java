@@ -702,6 +702,10 @@ public class ERCCompanyEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ERCCompanyEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ERCCompanyEntryPersistence _persistence;
 
 }

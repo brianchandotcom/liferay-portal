@@ -696,6 +696,12 @@ public class AnnouncementsDeliveryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AnnouncementsDeliveryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AnnouncementsDeliveryPersistence _persistence;
 
 }

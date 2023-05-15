@@ -1257,6 +1257,10 @@ public class CalendarUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CalendarPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CalendarPersistence _persistence;
 
 }

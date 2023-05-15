@@ -49,7 +49,6 @@ import com.liferay.site.service.persistence.impl.constants.SitePersistenceConsta
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3581,30 +3580,14 @@ public class SiteFriendlyURLPersistenceImpl
 			},
 			new String[] {"companyId", "friendlyURL", "languageId"}, false);
 
-		_setSiteFriendlyURLUtilPersistence(this);
+		SiteFriendlyURLUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSiteFriendlyURLUtilPersistence(null);
+		SiteFriendlyURLUtil.setPersistence(null);
 
 		entityCache.removeCache(SiteFriendlyURLImpl.class.getName());
-	}
-
-	private void _setSiteFriendlyURLUtilPersistence(
-		SiteFriendlyURLPersistence siteFriendlyURLPersistence) {
-
-		try {
-			Field field = SiteFriendlyURLUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, siteFriendlyURLPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

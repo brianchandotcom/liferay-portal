@@ -59,6 +59,10 @@ public class ThemeServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ThemeService service) {
+		_service = service;
+	}
+
 	private static volatile ThemeService _service;
 
 }

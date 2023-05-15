@@ -639,6 +639,12 @@ public class FaroProjectEmailDomainUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		FaroProjectEmailDomainPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile FaroProjectEmailDomainPersistence _persistence;
 
 }

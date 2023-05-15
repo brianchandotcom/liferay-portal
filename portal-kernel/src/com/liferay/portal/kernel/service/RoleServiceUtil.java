@@ -326,6 +326,10 @@ public class RoleServiceUtil {
 		return _service;
 	}
 
+	public static void setService(RoleService service) {
+		_service = service;
+	}
+
 	private static volatile RoleService _service;
 
 }

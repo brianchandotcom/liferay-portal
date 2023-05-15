@@ -484,6 +484,10 @@ public class CommerceOrderNoteLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceOrderNoteLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceOrderNoteLocalService _service;
 
 }

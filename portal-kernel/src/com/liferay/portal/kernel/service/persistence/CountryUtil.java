@@ -1793,6 +1793,10 @@ public class CountryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CountryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CountryPersistence _persistence;
 
 }

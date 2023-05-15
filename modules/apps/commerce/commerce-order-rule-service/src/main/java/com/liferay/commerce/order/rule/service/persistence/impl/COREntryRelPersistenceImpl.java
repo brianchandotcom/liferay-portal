@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1987,30 +1986,14 @@ public class COREntryRelPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "COREntryId"}, false);
 
-		_setCOREntryRelUtilPersistence(this);
+		COREntryRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCOREntryRelUtilPersistence(null);
+		COREntryRelUtil.setPersistence(null);
 
 		entityCache.removeCache(COREntryRelImpl.class.getName());
-	}
-
-	private void _setCOREntryRelUtilPersistence(
-		COREntryRelPersistence corEntryRelPersistence) {
-
-		try {
-			Field field = COREntryRelUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, corEntryRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

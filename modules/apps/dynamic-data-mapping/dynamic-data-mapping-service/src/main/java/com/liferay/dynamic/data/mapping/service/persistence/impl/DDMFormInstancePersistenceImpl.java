@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3782,30 +3781,14 @@ public class DDMFormInstancePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_setDDMFormInstanceUtilPersistence(this);
+		DDMFormInstanceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMFormInstanceUtilPersistence(null);
+		DDMFormInstanceUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMFormInstanceImpl.class.getName());
-	}
-
-	private void _setDDMFormInstanceUtilPersistence(
-		DDMFormInstancePersistence ddmFormInstancePersistence) {
-
-		try {
-			Field field = DDMFormInstanceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFormInstancePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

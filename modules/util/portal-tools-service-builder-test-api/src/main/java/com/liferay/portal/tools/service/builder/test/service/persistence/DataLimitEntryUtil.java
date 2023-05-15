@@ -273,6 +273,10 @@ public class DataLimitEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DataLimitEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DataLimitEntryPersistence _persistence;
 
 }

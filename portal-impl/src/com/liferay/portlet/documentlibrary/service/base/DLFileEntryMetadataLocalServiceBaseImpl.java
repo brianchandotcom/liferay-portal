@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -528,14 +526,15 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 			"com.liferay.document.library.kernel.model.DLFileEntryMetadata",
 			dlFileEntryMetadataLocalService);
 
-		_setLocalServiceUtilService(dlFileEntryMetadataLocalService);
+		DLFileEntryMetadataLocalServiceUtil.setService(
+			dlFileEntryMetadataLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.document.library.kernel.model.DLFileEntryMetadata");
 
-		_setLocalServiceUtilService(null);
+		DLFileEntryMetadataLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -593,23 +592,6 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
-
-		try {
-			Field field =
-				DLFileEntryMetadataLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dlFileEntryMetadataLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

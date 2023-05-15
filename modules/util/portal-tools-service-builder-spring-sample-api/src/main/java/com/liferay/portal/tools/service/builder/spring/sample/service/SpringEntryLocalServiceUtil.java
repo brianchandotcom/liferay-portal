@@ -323,6 +323,10 @@ public class SpringEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SpringEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SpringEntryLocalService _service;
 
 }

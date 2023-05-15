@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class BatchPlannerPlanServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		BatchPlannerPlanServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class BatchPlannerPlanServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		batchPlannerPlanService = (BatchPlannerPlanService)aopProxy;
 
-		_setServiceUtilService(batchPlannerPlanService);
+		BatchPlannerPlanServiceUtil.setService(batchPlannerPlanService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class BatchPlannerPlanServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		BatchPlannerPlanService batchPlannerPlanService) {
-
-		try {
-			Field field = BatchPlannerPlanServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, batchPlannerPlanService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -822,29 +821,13 @@ public class BrowserTrackerPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_setBrowserTrackerUtilPersistence(this);
+		BrowserTrackerUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setBrowserTrackerUtilPersistence(null);
+		BrowserTrackerUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(BrowserTrackerImpl.class.getName());
-	}
-
-	private void _setBrowserTrackerUtilPersistence(
-		BrowserTrackerPersistence browserTrackerPersistence) {
-
-		try {
-			Field field = BrowserTrackerUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, browserTrackerPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_BROWSERTRACKER =

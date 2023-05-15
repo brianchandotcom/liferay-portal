@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -555,7 +553,7 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPDefinitionInventoryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -572,7 +570,8 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 		cpDefinitionInventoryLocalService =
 			(CPDefinitionInventoryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpDefinitionInventoryLocalService);
+		CPDefinitionInventoryLocalServiceUtil.setService(
+			cpDefinitionInventoryLocalService);
 	}
 
 	/**
@@ -630,23 +629,6 @@ public abstract class CPDefinitionInventoryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPDefinitionInventoryLocalService cpDefinitionInventoryLocalService) {
-
-		try {
-			Field field =
-				CPDefinitionInventoryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionInventoryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

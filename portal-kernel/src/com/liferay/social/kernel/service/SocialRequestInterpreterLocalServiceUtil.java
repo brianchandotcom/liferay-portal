@@ -114,6 +114,12 @@ public class SocialRequestInterpreterLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		SocialRequestInterpreterLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile SocialRequestInterpreterLocalService _service;
 
 }

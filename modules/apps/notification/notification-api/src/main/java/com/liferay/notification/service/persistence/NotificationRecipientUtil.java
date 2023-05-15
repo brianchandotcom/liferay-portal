@@ -706,6 +706,12 @@ public class NotificationRecipientUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NotificationRecipientPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NotificationRecipientPersistence _persistence;
 
 }

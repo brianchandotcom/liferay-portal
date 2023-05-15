@@ -371,6 +371,10 @@ public class CSDiagramEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CSDiagramEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CSDiagramEntryLocalService _service;
 
 }

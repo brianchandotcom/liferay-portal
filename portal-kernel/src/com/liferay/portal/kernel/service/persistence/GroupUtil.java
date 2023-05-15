@@ -5540,6 +5540,10 @@ public class GroupUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(GroupPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile GroupPersistence _persistence;
 
 }

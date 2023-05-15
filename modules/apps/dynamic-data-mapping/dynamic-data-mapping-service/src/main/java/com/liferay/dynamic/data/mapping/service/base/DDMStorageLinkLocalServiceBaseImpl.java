@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -423,7 +421,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DDMStorageLinkLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -438,7 +436,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmStorageLinkLocalService = (DDMStorageLinkLocalService)aopProxy;
 
-		_setLocalServiceUtilService(ddmStorageLinkLocalService);
+		DDMStorageLinkLocalServiceUtil.setService(ddmStorageLinkLocalService);
 	}
 
 	/**
@@ -495,22 +493,6 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		try {
-			Field field = DDMStorageLinkLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmStorageLinkLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

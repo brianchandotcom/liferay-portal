@@ -63,8 +63,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -742,7 +740,7 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceTermEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -757,7 +755,8 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceTermEntryLocalService = (CommerceTermEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceTermEntryLocalService);
+		CommerceTermEntryLocalServiceUtil.setService(
+			commerceTermEntryLocalService);
 	}
 
 	/**
@@ -800,23 +799,6 @@ public abstract class CommerceTermEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceTermEntryLocalService commerceTermEntryLocalService) {
-
-		try {
-			Field field =
-				CommerceTermEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceTermEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

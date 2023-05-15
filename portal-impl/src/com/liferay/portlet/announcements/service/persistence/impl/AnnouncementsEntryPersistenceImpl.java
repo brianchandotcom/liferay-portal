@@ -56,7 +56,6 @@ import com.liferay.portlet.announcements.model.impl.AnnouncementsEntryModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -8661,29 +8660,13 @@ public class AnnouncementsEntryPersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "alert"},
 			false);
 
-		_setAnnouncementsEntryUtilPersistence(this);
+		AnnouncementsEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setAnnouncementsEntryUtilPersistence(null);
+		AnnouncementsEntryUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(AnnouncementsEntryImpl.class.getName());
-	}
-
-	private void _setAnnouncementsEntryUtilPersistence(
-		AnnouncementsEntryPersistence announcementsEntryPersistence) {
-
-		try {
-			Field field = AnnouncementsEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, announcementsEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY =

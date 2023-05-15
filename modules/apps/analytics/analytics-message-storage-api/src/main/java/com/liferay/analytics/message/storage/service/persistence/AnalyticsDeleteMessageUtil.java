@@ -657,6 +657,12 @@ public class AnalyticsDeleteMessageUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AnalyticsDeleteMessagePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AnalyticsDeleteMessagePersistence _persistence;
 
 }

@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommerceInventoryBookedQuantityServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommerceInventoryBookedQuantityServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class CommerceInventoryBookedQuantityServiceBaseImpl
 		commerceInventoryBookedQuantityService =
 			(CommerceInventoryBookedQuantityService)aopProxy;
 
-		_setServiceUtilService(commerceInventoryBookedQuantityService);
+		CommerceInventoryBookedQuantityServiceUtil.setService(
+			commerceInventoryBookedQuantityService);
 	}
 
 	/**
@@ -119,24 +118,6 @@ public abstract class CommerceInventoryBookedQuantityServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommerceInventoryBookedQuantityService
-			commerceInventoryBookedQuantityService) {
-
-		try {
-			Field field =
-				CommerceInventoryBookedQuantityServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceInventoryBookedQuantityService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

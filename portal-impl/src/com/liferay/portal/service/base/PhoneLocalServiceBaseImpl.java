@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -562,14 +560,14 @@ public abstract class PhoneLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.Phone", phoneLocalService);
 
-		_setLocalServiceUtilService(phoneLocalService);
+		PhoneLocalServiceUtil.setService(phoneLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.Phone");
 
-		_setLocalServiceUtilService(null);
+		PhoneLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -625,22 +623,6 @@ public abstract class PhoneLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		PhoneLocalService phoneLocalService) {
-
-		try {
-			Field field = PhoneLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, phoneLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

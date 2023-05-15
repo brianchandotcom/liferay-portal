@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4049,30 +4048,14 @@ public class MBSuspiciousActivityPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "threadId"}, false);
 
-		_setMBSuspiciousActivityUtilPersistence(this);
+		MBSuspiciousActivityUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMBSuspiciousActivityUtilPersistence(null);
+		MBSuspiciousActivityUtil.setPersistence(null);
 
 		entityCache.removeCache(MBSuspiciousActivityImpl.class.getName());
-	}
-
-	private void _setMBSuspiciousActivityUtilPersistence(
-		MBSuspiciousActivityPersistence mbSuspiciousActivityPersistence) {
-
-		try {
-			Field field = MBSuspiciousActivityUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mbSuspiciousActivityPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1162,30 +1161,14 @@ public class ContactsCardTemplatePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_setContactsCardTemplateUtilPersistence(this);
+		ContactsCardTemplateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setContactsCardTemplateUtilPersistence(null);
+		ContactsCardTemplateUtil.setPersistence(null);
 
 		entityCache.removeCache(ContactsCardTemplateImpl.class.getName());
-	}
-
-	private void _setContactsCardTemplateUtilPersistence(
-		ContactsCardTemplatePersistence contactsCardTemplatePersistence) {
-
-		try {
-			Field field = ContactsCardTemplateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, contactsCardTemplatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

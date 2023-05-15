@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -7001,30 +7000,14 @@ public class ObjectFieldPersistenceImpl
 			},
 			new String[] {"objectDefinitionId", "dbType", "indexed"}, false);
 
-		_setObjectFieldUtilPersistence(this);
+		ObjectFieldUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectFieldUtilPersistence(null);
+		ObjectFieldUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectFieldImpl.class.getName());
-	}
-
-	private void _setObjectFieldUtilPersistence(
-		ObjectFieldPersistence objectFieldPersistence) {
-
-		try {
-			Field field = ObjectFieldUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectFieldPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

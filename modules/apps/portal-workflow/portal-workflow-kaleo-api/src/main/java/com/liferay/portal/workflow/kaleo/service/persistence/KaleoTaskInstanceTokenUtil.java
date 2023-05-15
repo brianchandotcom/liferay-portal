@@ -1488,6 +1488,12 @@ public class KaleoTaskInstanceTokenUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		KaleoTaskInstanceTokenPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoTaskInstanceTokenPersistence _persistence;
 
 }

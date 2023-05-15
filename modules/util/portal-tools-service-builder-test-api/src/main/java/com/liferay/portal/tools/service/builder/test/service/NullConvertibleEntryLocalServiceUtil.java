@@ -321,6 +321,10 @@ public class NullConvertibleEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(NullConvertibleEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile NullConvertibleEntryLocalService _service;
 
 }

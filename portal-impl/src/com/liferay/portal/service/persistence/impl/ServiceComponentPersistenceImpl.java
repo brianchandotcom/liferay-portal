@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.ServiceComponentModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1476,29 +1475,13 @@ public class ServiceComponentPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"buildNamespace", "buildNumber"}, false);
 
-		_setServiceComponentUtilPersistence(this);
+		ServiceComponentUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setServiceComponentUtilPersistence(null);
+		ServiceComponentUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(ServiceComponentImpl.class.getName());
-	}
-
-	private void _setServiceComponentUtilPersistence(
-		ServiceComponentPersistence serviceComponentPersistence) {
-
-		try {
-			Field field = ServiceComponentUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, serviceComponentPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_SERVICECOMPONENT =

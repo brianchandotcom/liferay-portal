@@ -534,6 +534,12 @@ public class SharepointOAuth2TokenEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SharepointOAuth2TokenEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }

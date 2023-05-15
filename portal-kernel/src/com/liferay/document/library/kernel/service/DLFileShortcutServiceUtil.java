@@ -88,6 +88,10 @@ public class DLFileShortcutServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DLFileShortcutService service) {
+		_service = service;
+	}
+
 	private static volatile DLFileShortcutService _service;
 
 }

@@ -963,6 +963,10 @@ public class DLAppLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DLAppLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DLAppLocalService _service;
 
 }

@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -14352,29 +14351,14 @@ public class MBThreadPersistenceImpl
 			},
 			new String[] {"groupId", "categoryId", "status"}, false);
 
-		_setMBThreadUtilPersistence(this);
+		MBThreadUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMBThreadUtilPersistence(null);
+		MBThreadUtil.setPersistence(null);
 
 		entityCache.removeCache(MBThreadImpl.class.getName());
-	}
-
-	private void _setMBThreadUtilPersistence(
-		MBThreadPersistence mbThreadPersistence) {
-
-		try {
-			Field field = MBThreadUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mbThreadPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

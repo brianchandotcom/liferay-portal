@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class LayoutPageTemplateStructureServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		LayoutPageTemplateStructureServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class LayoutPageTemplateStructureServiceBaseImpl
 		layoutPageTemplateStructureService =
 			(LayoutPageTemplateStructureService)aopProxy;
 
-		_setServiceUtilService(layoutPageTemplateStructureService);
+		LayoutPageTemplateStructureServiceUtil.setService(
+			layoutPageTemplateStructureService);
 	}
 
 	/**
@@ -119,23 +118,6 @@ public abstract class LayoutPageTemplateStructureServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		LayoutPageTemplateStructureService layoutPageTemplateStructureService) {
-
-		try {
-			Field field =
-				LayoutPageTemplateStructureServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutPageTemplateStructureService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

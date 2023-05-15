@@ -413,6 +413,10 @@ public class CProductLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CProductLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CProductLocalService _service;
 
 }

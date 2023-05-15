@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2785,31 +2784,14 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			"countByLocalWellKnownURI", new String[] {String.class.getName()},
 			new String[] {"localWellKnownURI"}, false);
 
-		_setOAuthClientASLocalMetadataUtilPersistence(this);
+		OAuthClientASLocalMetadataUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setOAuthClientASLocalMetadataUtilPersistence(null);
+		OAuthClientASLocalMetadataUtil.setPersistence(null);
 
 		entityCache.removeCache(OAuthClientASLocalMetadataImpl.class.getName());
-	}
-
-	private void _setOAuthClientASLocalMetadataUtilPersistence(
-		OAuthClientASLocalMetadataPersistence
-			oAuthClientASLocalMetadataPersistence) {
-
-		try {
-			Field field = OAuthClientASLocalMetadataUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, oAuthClientASLocalMetadataPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

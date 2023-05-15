@@ -487,6 +487,12 @@ public class BatchEngineImportTaskErrorUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		BatchEngineImportTaskErrorPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile BatchEngineImportTaskErrorPersistence _persistence;
 
 }

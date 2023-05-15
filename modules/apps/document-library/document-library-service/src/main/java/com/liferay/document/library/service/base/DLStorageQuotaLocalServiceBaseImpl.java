@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -388,7 +386,7 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DLStorageQuotaLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -403,7 +401,7 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		dlStorageQuotaLocalService = (DLStorageQuotaLocalService)aopProxy;
 
-		_setLocalServiceUtilService(dlStorageQuotaLocalService);
+		DLStorageQuotaLocalServiceUtil.setService(dlStorageQuotaLocalService);
 	}
 
 	/**
@@ -445,22 +443,6 @@ public abstract class DLStorageQuotaLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DLStorageQuotaLocalService dlStorageQuotaLocalService) {
-
-		try {
-			Field field = DLStorageQuotaLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dlStorageQuotaLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

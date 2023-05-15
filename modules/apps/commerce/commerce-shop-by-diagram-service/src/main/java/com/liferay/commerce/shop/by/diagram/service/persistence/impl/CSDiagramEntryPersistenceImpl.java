@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2782,30 +2781,14 @@ public class CSDiagramEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "sequence"}, false);
 
-		_setCSDiagramEntryUtilPersistence(this);
+		CSDiagramEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCSDiagramEntryUtilPersistence(null);
+		CSDiagramEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(CSDiagramEntryImpl.class.getName());
-	}
-
-	private void _setCSDiagramEntryUtilPersistence(
-		CSDiagramEntryPersistence csDiagramEntryPersistence) {
-
-		try {
-			Field field = CSDiagramEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, csDiagramEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

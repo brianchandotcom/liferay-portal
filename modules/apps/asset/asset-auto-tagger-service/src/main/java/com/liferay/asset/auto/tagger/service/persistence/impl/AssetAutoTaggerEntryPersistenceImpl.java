@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2246,30 +2245,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"assetEntryId", "assetTagId"}, false);
 
-		_setAssetAutoTaggerEntryUtilPersistence(this);
+		AssetAutoTaggerEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAssetAutoTaggerEntryUtilPersistence(null);
+		AssetAutoTaggerEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(AssetAutoTaggerEntryImpl.class.getName());
-	}
-
-	private void _setAssetAutoTaggerEntryUtilPersistence(
-		AssetAutoTaggerEntryPersistence assetAutoTaggerEntryPersistence) {
-
-		try {
-			Field field = AssetAutoTaggerEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, assetAutoTaggerEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

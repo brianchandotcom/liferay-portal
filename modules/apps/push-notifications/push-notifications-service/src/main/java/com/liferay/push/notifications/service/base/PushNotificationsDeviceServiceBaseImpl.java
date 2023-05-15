@@ -30,8 +30,6 @@ import com.liferay.push.notifications.service.PushNotificationsDeviceService;
 import com.liferay.push.notifications.service.PushNotificationsDeviceServiceUtil;
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		PushNotificationsDeviceServiceUtil.setService(null);
 	}
 
 	@Override
@@ -75,7 +73,8 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 		pushNotificationsDeviceService =
 			(PushNotificationsDeviceService)aopProxy;
 
-		_setServiceUtilService(pushNotificationsDeviceService);
+		PushNotificationsDeviceServiceUtil.setService(
+			pushNotificationsDeviceService);
 	}
 
 	/**
@@ -118,23 +117,6 @@ public abstract class PushNotificationsDeviceServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		PushNotificationsDeviceService pushNotificationsDeviceService) {
-
-		try {
-			Field field =
-				PushNotificationsDeviceServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, pushNotificationsDeviceService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

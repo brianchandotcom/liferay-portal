@@ -690,6 +690,12 @@ public class AnnouncementsFlagUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AnnouncementsFlagPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AnnouncementsFlagPersistence _persistence;
 
 }

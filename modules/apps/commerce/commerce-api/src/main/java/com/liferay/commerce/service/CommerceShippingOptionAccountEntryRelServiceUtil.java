@@ -117,6 +117,12 @@ public class CommerceShippingOptionAccountEntryRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceShippingOptionAccountEntryRelService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceShippingOptionAccountEntryRelService
 		_service;
 

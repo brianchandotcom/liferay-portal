@@ -875,6 +875,12 @@ public class ObjectFieldSettingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectFieldSettingPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectFieldSettingPersistence _persistence;
 
 }

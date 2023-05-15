@@ -44,7 +44,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.EagerBl
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1456,29 +1455,13 @@ public class EagerBlobEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false);
 
-		_setEagerBlobEntryUtilPersistence(this);
+		EagerBlobEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setEagerBlobEntryUtilPersistence(null);
+		EagerBlobEntryUtil.setPersistence(null);
 
 		dummyEntityCache.removeCache(EagerBlobEntryImpl.class.getName());
-	}
-
-	private void _setEagerBlobEntryUtilPersistence(
-		EagerBlobEntryPersistence eagerBlobEntryPersistence) {
-
-		try {
-			Field field = EagerBlobEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, eagerBlobEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_EAGERBLOBENTRY =

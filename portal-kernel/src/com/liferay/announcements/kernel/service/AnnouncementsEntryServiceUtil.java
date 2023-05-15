@@ -81,6 +81,10 @@ public class AnnouncementsEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AnnouncementsEntryService service) {
+		_service = service;
+	}
+
 	private static volatile AnnouncementsEntryService _service;
 
 }

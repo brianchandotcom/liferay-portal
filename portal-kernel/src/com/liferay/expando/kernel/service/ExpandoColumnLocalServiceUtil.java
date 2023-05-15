@@ -492,6 +492,10 @@ public class ExpandoColumnLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ExpandoColumnLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ExpandoColumnLocalService _service;
 
 }

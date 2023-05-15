@@ -197,6 +197,10 @@ public class ObjectDefinitionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectDefinitionService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectDefinitionService _service;
 
 }

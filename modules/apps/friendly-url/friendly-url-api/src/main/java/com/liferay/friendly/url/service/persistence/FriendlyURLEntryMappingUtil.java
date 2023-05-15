@@ -360,6 +360,12 @@ public class FriendlyURLEntryMappingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		FriendlyURLEntryMappingPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile FriendlyURLEntryMappingPersistence _persistence;
 
 }

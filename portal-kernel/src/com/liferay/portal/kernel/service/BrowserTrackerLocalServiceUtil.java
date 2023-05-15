@@ -317,6 +317,10 @@ public class BrowserTrackerLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(BrowserTrackerLocalService service) {
+		_service = service;
+	}
+
 	private static volatile BrowserTrackerLocalService _service;
 
 }

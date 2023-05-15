@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4374,29 +4373,14 @@ public class CalendarPersistenceImpl
 			new String[] {"groupId", "calendarResourceId", "defaultCalendar"},
 			false);
 
-		_setCalendarUtilPersistence(this);
+		CalendarUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCalendarUtilPersistence(null);
+		CalendarUtil.setPersistence(null);
 
 		entityCache.removeCache(CalendarImpl.class.getName());
-	}
-
-	private void _setCalendarUtilPersistence(
-		CalendarPersistence calendarPersistence) {
-
-		try {
-			Field field = CalendarUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, calendarPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

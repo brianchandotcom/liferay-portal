@@ -331,6 +331,10 @@ public class ClassNameLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ClassNameLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ClassNameLocalService _service;
 
 }

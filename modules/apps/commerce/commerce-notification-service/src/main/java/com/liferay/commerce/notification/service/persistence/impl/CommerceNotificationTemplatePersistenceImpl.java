@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5199,33 +5198,15 @@ public class CommerceNotificationTemplatePersistenceImpl
 			},
 			new String[] {"groupId", "type_", "enabled"}, false);
 
-		_setCommerceNotificationTemplateUtilPersistence(this);
+		CommerceNotificationTemplateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceNotificationTemplateUtilPersistence(null);
+		CommerceNotificationTemplateUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceNotificationTemplateImpl.class.getName());
-	}
-
-	private void _setCommerceNotificationTemplateUtilPersistence(
-		CommerceNotificationTemplatePersistence
-			commerceNotificationTemplatePersistence) {
-
-		try {
-			Field field =
-				CommerceNotificationTemplateUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceNotificationTemplatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -834,6 +834,12 @@ public class CommerceAvailabilityEstimateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceAvailabilityEstimatePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceAvailabilityEstimatePersistence
 		_persistence;
 

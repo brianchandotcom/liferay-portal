@@ -31,8 +31,6 @@ import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryServic
 import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryServiceUtil;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -143,11 +141,11 @@ public abstract class LazyBlobEntryServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(lazyBlobEntryService);
+		LazyBlobEntryServiceUtil.setService(lazyBlobEntryService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		LazyBlobEntryServiceUtil.setService(null);
 	}
 
 	/**
@@ -189,22 +187,6 @@ public abstract class LazyBlobEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		LazyBlobEntryService lazyBlobEntryService) {
-
-		try {
-			Field field = LazyBlobEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, lazyBlobEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -328,6 +328,10 @@ public class SequenceEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SequenceEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SequenceEntryLocalService _service;
 
 }

@@ -40,7 +40,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.NullCon
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -869,29 +868,13 @@ public class NullConvertibleEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
 
-		_setNullConvertibleEntryUtilPersistence(this);
+		NullConvertibleEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setNullConvertibleEntryUtilPersistence(null);
+		NullConvertibleEntryUtil.setPersistence(null);
 
 		dummyEntityCache.removeCache(NullConvertibleEntryImpl.class.getName());
-	}
-
-	private void _setNullConvertibleEntryUtilPersistence(
-		NullConvertibleEntryPersistence nullConvertibleEntryPersistence) {
-
-		try {
-			Field field = NullConvertibleEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, nullConvertibleEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_NULLCONVERTIBLEENTRY =

@@ -1093,6 +1093,12 @@ public class CommerceDiscountUsageEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceDiscountUsageEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceDiscountUsageEntryPersistence _persistence;
 
 }

@@ -609,6 +609,10 @@ public class CTCommentUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CTCommentPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CTCommentPersistence _persistence;
 
 }

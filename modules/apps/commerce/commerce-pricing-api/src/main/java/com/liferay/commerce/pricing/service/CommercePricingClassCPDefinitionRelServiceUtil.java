@@ -150,6 +150,12 @@ public class CommercePricingClassCPDefinitionRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommercePricingClassCPDefinitionRelService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommercePricingClassCPDefinitionRelService _service;
 
 }

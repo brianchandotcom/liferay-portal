@@ -546,6 +546,10 @@ public class OAuth2ApplicationLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuth2ApplicationLocalService service) {
+		_service = service;
+	}
+
 	private static volatile OAuth2ApplicationLocalService _service;
 
 }

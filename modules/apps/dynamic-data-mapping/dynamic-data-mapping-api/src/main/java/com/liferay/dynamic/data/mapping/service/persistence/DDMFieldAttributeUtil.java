@@ -1210,6 +1210,12 @@ public class DDMFieldAttributeUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DDMFieldAttributePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DDMFieldAttributePersistence _persistence;
 
 }

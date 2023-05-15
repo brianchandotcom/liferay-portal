@@ -88,6 +88,10 @@ public class CSDiagramSettingServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CSDiagramSettingService service) {
+		_service = service;
+	}
+
 	private static volatile CSDiagramSettingService _service;
 
 }

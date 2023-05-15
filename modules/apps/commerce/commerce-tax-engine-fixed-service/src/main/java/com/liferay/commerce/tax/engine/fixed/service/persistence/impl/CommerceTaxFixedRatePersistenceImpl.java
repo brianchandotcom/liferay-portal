@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1984,30 +1983,14 @@ public class CommerceTaxFixedRatePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPTaxCategoryId", "commerceTaxMethodId"}, false);
 
-		_setCommerceTaxFixedRateUtilPersistence(this);
+		CommerceTaxFixedRateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceTaxFixedRateUtilPersistence(null);
+		CommerceTaxFixedRateUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceTaxFixedRateImpl.class.getName());
-	}
-
-	private void _setCommerceTaxFixedRateUtilPersistence(
-		CommerceTaxFixedRatePersistence commerceTaxFixedRatePersistence) {
-
-		try {
-			Field field = CommerceTaxFixedRateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceTaxFixedRatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

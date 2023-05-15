@@ -196,6 +196,10 @@ public class AccountEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AccountEntryService service) {
+		_service = service;
+	}
+
 	private static volatile AccountEntryService _service;
 
 }

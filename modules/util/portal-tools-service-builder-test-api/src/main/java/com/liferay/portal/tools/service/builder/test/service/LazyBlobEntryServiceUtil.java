@@ -47,6 +47,10 @@ public class LazyBlobEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LazyBlobEntryService service) {
+		_service = service;
+	}
+
 	private static volatile LazyBlobEntryService _service;
 
 }

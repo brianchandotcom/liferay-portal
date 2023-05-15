@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -482,7 +480,7 @@ public abstract class FVSEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		FVSEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -497,7 +495,7 @@ public abstract class FVSEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		fvsEntryLocalService = (FVSEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(fvsEntryLocalService);
+		FVSEntryLocalServiceUtil.setService(fvsEntryLocalService);
 	}
 
 	/**
@@ -539,22 +537,6 @@ public abstract class FVSEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		FVSEntryLocalService fvsEntryLocalService) {
-
-		try {
-			Field field = FVSEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, fvsEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

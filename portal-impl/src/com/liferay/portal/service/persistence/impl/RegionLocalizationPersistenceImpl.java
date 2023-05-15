@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.RegionLocalizationModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1428,29 +1427,13 @@ public class RegionLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"regionId", "languageId"}, false);
 
-		_setRegionLocalizationUtilPersistence(this);
+		RegionLocalizationUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setRegionLocalizationUtilPersistence(null);
+		RegionLocalizationUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(RegionLocalizationImpl.class.getName());
-	}
-
-	private void _setRegionLocalizationUtilPersistence(
-		RegionLocalizationPersistence regionLocalizationPersistence) {
-
-		try {
-			Field field = RegionLocalizationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, regionLocalizationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_REGIONLOCALIZATION =

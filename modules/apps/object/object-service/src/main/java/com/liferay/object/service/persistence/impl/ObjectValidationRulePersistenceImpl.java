@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2946,30 +2945,14 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "active_"}, false);
 
-		_setObjectValidationRuleUtilPersistence(this);
+		ObjectValidationRuleUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectValidationRuleUtilPersistence(null);
+		ObjectValidationRuleUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectValidationRuleImpl.class.getName());
-	}
-
-	private void _setObjectValidationRuleUtilPersistence(
-		ObjectValidationRulePersistence objectValidationRulePersistence) {
-
-		try {
-			Field field = ObjectValidationRuleUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectValidationRulePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

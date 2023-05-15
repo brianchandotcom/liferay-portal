@@ -333,6 +333,10 @@ public class DLStorageQuotaUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DLStorageQuotaPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DLStorageQuotaPersistence _persistence;
 
 }

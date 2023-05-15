@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -527,7 +525,7 @@ public abstract class CPDAvailabilityEstimateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPDAvailabilityEstimateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -543,7 +541,8 @@ public abstract class CPDAvailabilityEstimateLocalServiceBaseImpl
 		cpdAvailabilityEstimateLocalService =
 			(CPDAvailabilityEstimateLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpdAvailabilityEstimateLocalService);
+		CPDAvailabilityEstimateLocalServiceUtil.setService(
+			cpdAvailabilityEstimateLocalService);
 	}
 
 	/**
@@ -586,24 +585,6 @@ public abstract class CPDAvailabilityEstimateLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPDAvailabilityEstimateLocalService
-			cpdAvailabilityEstimateLocalService) {
-
-		try {
-			Field field =
-				CPDAvailabilityEstimateLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpdAvailabilityEstimateLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

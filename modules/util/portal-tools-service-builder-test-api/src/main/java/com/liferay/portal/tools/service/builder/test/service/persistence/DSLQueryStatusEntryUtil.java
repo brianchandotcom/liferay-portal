@@ -284,6 +284,12 @@ public class DSLQueryStatusEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DSLQueryStatusEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DSLQueryStatusEntryPersistence _persistence;
 
 }

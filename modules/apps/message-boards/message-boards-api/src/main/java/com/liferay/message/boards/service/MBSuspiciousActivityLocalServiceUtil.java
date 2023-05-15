@@ -430,6 +430,10 @@ public class MBSuspiciousActivityLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBSuspiciousActivityLocalService service) {
+		_service = service;
+	}
+
 	private static volatile MBSuspiciousActivityLocalService _service;
 
 }

@@ -402,6 +402,12 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceShippingOptionAccountEntryRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceShippingOptionAccountEntryRelLocalService
 		_service;
 

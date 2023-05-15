@@ -305,6 +305,10 @@ public class CacheFieldEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CacheFieldEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CacheFieldEntryLocalService _service;
 
 }

@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3168,34 +3167,15 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			new String[] {"commercePriceListId", "commerceAccountGroupId"},
 			false);
 
-		_setCommercePriceListCommerceAccountGroupRelUtilPersistence(this);
+		CommercePriceListCommerceAccountGroupRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommercePriceListCommerceAccountGroupRelUtilPersistence(null);
+		CommercePriceListCommerceAccountGroupRelUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommercePriceListCommerceAccountGroupRelImpl.class.getName());
-	}
-
-	private void _setCommercePriceListCommerceAccountGroupRelUtilPersistence(
-		CommercePriceListCommerceAccountGroupRelPersistence
-			commercePriceListCommerceAccountGroupRelPersistence) {
-
-		try {
-			Field field =
-				CommercePriceListCommerceAccountGroupRelUtil.class.
-					getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(
-				null, commercePriceListCommerceAccountGroupRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

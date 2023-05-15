@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -419,7 +417,7 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		MFAFIDO2CredentialEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -435,7 +433,8 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 		mfaFIDO2CredentialEntryLocalService =
 			(MFAFIDO2CredentialEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(mfaFIDO2CredentialEntryLocalService);
+		MFAFIDO2CredentialEntryLocalServiceUtil.setService(
+			mfaFIDO2CredentialEntryLocalService);
 	}
 
 	/**
@@ -478,24 +477,6 @@ public abstract class MFAFIDO2CredentialEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		MFAFIDO2CredentialEntryLocalService
-			mfaFIDO2CredentialEntryLocalService) {
-
-		try {
-			Field field =
-				MFAFIDO2CredentialEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, mfaFIDO2CredentialEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

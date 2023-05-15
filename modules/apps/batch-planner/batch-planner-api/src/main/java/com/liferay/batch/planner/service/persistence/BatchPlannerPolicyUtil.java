@@ -524,6 +524,12 @@ public class BatchPlannerPolicyUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		BatchPlannerPolicyPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile BatchPlannerPolicyPersistence _persistence;
 
 }

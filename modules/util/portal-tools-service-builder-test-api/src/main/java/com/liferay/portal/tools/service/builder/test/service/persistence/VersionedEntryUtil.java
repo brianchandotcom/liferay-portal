@@ -691,6 +691,10 @@ public class VersionedEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(VersionedEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile VersionedEntryPersistence _persistence;
 
 }

@@ -557,6 +557,10 @@ public class ObjectDefinitionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectDefinitionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectDefinitionLocalService _service;
 
 }

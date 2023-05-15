@@ -798,6 +798,10 @@ public class ObjectLayoutRowUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectLayoutRowPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectLayoutRowPersistence _persistence;
 
 }

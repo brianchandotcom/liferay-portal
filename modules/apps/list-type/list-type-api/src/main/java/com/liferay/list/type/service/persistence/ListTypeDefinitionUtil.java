@@ -875,6 +875,12 @@ public class ListTypeDefinitionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ListTypeDefinitionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ListTypeDefinitionPersistence _persistence;
 
 }

@@ -344,6 +344,12 @@ public class NullConvertibleEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NullConvertibleEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NullConvertibleEntryPersistence _persistence;
 
 }

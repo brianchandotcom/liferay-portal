@@ -942,6 +942,12 @@ public class JournalArticleResourceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		JournalArticleResourcePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile JournalArticleResourcePersistence _persistence;
 
 }

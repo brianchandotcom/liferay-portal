@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -8528,30 +8527,14 @@ public class CommerceDiscountPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCommerceDiscountUtilPersistence(this);
+		CommerceDiscountUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceDiscountUtilPersistence(null);
+		CommerceDiscountUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceDiscountImpl.class.getName());
-	}
-
-	private void _setCommerceDiscountUtilPersistence(
-		CommerceDiscountPersistence commerceDiscountPersistence) {
-
-		try {
-			Field field = CommerceDiscountUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceDiscountPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

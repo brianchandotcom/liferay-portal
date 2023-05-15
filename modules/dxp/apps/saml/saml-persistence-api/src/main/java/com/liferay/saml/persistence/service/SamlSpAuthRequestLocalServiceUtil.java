@@ -336,6 +336,10 @@ public class SamlSpAuthRequestLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SamlSpAuthRequestLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SamlSpAuthRequestLocalService _service;
 
 }

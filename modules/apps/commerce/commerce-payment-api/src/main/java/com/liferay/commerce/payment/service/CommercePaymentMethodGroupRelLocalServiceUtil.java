@@ -490,6 +490,12 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommercePaymentMethodGroupRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommercePaymentMethodGroupRelLocalService _service;
 
 }

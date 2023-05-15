@@ -2639,6 +2639,10 @@ public class GroupLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(GroupLocalService service) {
+		_service = service;
+	}
+
 	private static volatile GroupLocalService _service;
 
 }

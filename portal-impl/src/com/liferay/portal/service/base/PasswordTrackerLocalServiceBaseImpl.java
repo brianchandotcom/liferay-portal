@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -455,14 +453,14 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.PasswordTracker",
 			passwordTrackerLocalService);
 
-		_setLocalServiceUtilService(passwordTrackerLocalService);
+		PasswordTrackerLocalServiceUtil.setService(passwordTrackerLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.PasswordTracker");
 
-		_setLocalServiceUtilService(null);
+		PasswordTrackerLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -504,23 +502,6 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		PasswordTrackerLocalService passwordTrackerLocalService) {
-
-		try {
-			Field field =
-				PasswordTrackerLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, passwordTrackerLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5872,30 +5871,14 @@ public class AccountEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setAccountEntryUtilPersistence(this);
+		AccountEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAccountEntryUtilPersistence(null);
+		AccountEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(AccountEntryImpl.class.getName());
-	}
-
-	private void _setAccountEntryUtilPersistence(
-		AccountEntryPersistence accountEntryPersistence) {
-
-		try {
-			Field field = AccountEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, accountEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

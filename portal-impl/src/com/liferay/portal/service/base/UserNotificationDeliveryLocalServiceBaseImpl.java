@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -489,14 +487,15 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.UserNotificationDelivery",
 			userNotificationDeliveryLocalService);
 
-		_setLocalServiceUtilService(userNotificationDeliveryLocalService);
+		UserNotificationDeliveryLocalServiceUtil.setService(
+			userNotificationDeliveryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.UserNotificationDelivery");
 
-		_setLocalServiceUtilService(null);
+		UserNotificationDeliveryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -539,24 +538,6 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		UserNotificationDeliveryLocalService
-			userNotificationDeliveryLocalService) {
-
-		try {
-			Field field =
-				UserNotificationDeliveryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, userNotificationDeliveryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -46,7 +46,6 @@ import com.liferay.portal.model.impl.PortletItemModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2215,29 +2214,13 @@ public class PortletItemPersistenceImpl
 			new String[] {"groupId", "name", "portletId", "classNameId"},
 			false);
 
-		_setPortletItemUtilPersistence(this);
+		PortletItemUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setPortletItemUtilPersistence(null);
+		PortletItemUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(PortletItemImpl.class.getName());
-	}
-
-	private void _setPortletItemUtilPersistence(
-		PortletItemPersistence portletItemPersistence) {
-
-		try {
-			Field field = PortletItemUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, portletItemPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_PORTLETITEM =

@@ -379,6 +379,10 @@ public class ObjectStateFlowLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectStateFlowLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectStateFlowLocalService _service;
 
 }

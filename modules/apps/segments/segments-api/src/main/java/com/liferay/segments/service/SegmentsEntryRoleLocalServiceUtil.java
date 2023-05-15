@@ -371,6 +371,10 @@ public class SegmentsEntryRoleLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SegmentsEntryRoleLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SegmentsEntryRoleLocalService _service;
 
 }

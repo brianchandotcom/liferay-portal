@@ -595,6 +595,12 @@ public class DepotAppCustomizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DepotAppCustomizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DepotAppCustomizationPersistence _persistence;
 
 }

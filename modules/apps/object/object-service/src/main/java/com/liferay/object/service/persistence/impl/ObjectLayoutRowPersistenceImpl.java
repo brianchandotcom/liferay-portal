@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2349,30 +2348,14 @@ public class ObjectLayoutRowPersistenceImpl
 			"countByObjectLayoutBoxId", new String[] {Long.class.getName()},
 			new String[] {"objectLayoutBoxId"}, false);
 
-		_setObjectLayoutRowUtilPersistence(this);
+		ObjectLayoutRowUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectLayoutRowUtilPersistence(null);
+		ObjectLayoutRowUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectLayoutRowImpl.class.getName());
-	}
-
-	private void _setObjectLayoutRowUtilPersistence(
-		ObjectLayoutRowPersistence objectLayoutRowPersistence) {
-
-		try {
-			Field field = ObjectLayoutRowUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectLayoutRowPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

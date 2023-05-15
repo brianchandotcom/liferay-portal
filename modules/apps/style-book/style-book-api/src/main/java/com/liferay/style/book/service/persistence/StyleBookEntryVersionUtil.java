@@ -2959,6 +2959,12 @@ public class StyleBookEntryVersionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		StyleBookEntryVersionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile StyleBookEntryVersionPersistence _persistence;
 
 }

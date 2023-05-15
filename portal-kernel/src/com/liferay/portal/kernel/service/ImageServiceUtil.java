@@ -53,6 +53,10 @@ public class ImageServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ImageService service) {
+		_service = service;
+	}
+
 	private static volatile ImageService _service;
 
 }

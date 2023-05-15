@@ -520,6 +520,10 @@ public class CommerceTermEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceTermEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceTermEntryLocalService _service;
 
 }

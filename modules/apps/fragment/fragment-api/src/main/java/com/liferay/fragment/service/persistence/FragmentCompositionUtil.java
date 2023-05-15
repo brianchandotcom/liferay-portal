@@ -1946,6 +1946,12 @@ public class FragmentCompositionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		FragmentCompositionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile FragmentCompositionPersistence _persistence;
 
 }

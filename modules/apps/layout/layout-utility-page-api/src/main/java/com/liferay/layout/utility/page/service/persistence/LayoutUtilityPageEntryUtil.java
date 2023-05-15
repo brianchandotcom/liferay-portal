@@ -1763,6 +1763,12 @@ public class LayoutUtilityPageEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LayoutUtilityPageEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LayoutUtilityPageEntryPersistence _persistence;
 
 }

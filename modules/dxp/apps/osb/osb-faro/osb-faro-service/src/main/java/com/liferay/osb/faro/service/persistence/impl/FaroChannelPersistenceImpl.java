@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -2472,30 +2471,14 @@ public class FaroChannelPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"channelId", "workspaceGroupId"}, false);
 
-		_setFaroChannelUtilPersistence(this);
+		FaroChannelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFaroChannelUtilPersistence(null);
+		FaroChannelUtil.setPersistence(null);
 
 		entityCache.removeCache(FaroChannelImpl.class.getName());
-	}
-
-	private void _setFaroChannelUtilPersistence(
-		FaroChannelPersistence faroChannelPersistence) {
-
-		try {
-			Field field = FaroChannelUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, faroChannelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

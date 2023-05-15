@@ -893,6 +893,10 @@ public class PLOEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(PLOEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile PLOEntryPersistence _persistence;
 
 }

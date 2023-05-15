@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1688,30 +1687,14 @@ public class FaroProjectEmailDomainPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"faroProjectId"},
 			false);
 
-		_setFaroProjectEmailDomainUtilPersistence(this);
+		FaroProjectEmailDomainUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFaroProjectEmailDomainUtilPersistence(null);
+		FaroProjectEmailDomainUtil.setPersistence(null);
 
 		entityCache.removeCache(FaroProjectEmailDomainImpl.class.getName());
-	}
-
-	private void _setFaroProjectEmailDomainUtilPersistence(
-		FaroProjectEmailDomainPersistence faroProjectEmailDomainPersistence) {
-
-		try {
-			Field field = FaroProjectEmailDomainUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, faroProjectEmailDomainPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

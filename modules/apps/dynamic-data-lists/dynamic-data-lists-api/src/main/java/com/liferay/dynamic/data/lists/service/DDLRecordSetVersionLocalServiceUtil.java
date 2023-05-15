@@ -352,6 +352,10 @@ public class DDLRecordSetVersionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDLRecordSetVersionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDLRecordSetVersionLocalService _service;
 
 }

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3102,29 +3101,14 @@ public class DLContentPersistenceImpl
 			new String[] {"companyId", "repositoryId", "path_", "version"},
 			false);
 
-		_setDLContentUtilPersistence(this);
+		DLContentUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDLContentUtilPersistence(null);
+		DLContentUtil.setPersistence(null);
 
 		entityCache.removeCache(DLContentImpl.class.getName());
-	}
-
-	private void _setDLContentUtilPersistence(
-		DLContentPersistence dlContentPersistence) {
-
-		try {
-			Field field = DLContentUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dlContentPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

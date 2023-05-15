@@ -30,8 +30,6 @@ import com.liferay.segments.service.SegmentsEntryRelService;
 import com.liferay.segments.service.SegmentsEntryRelServiceUtil;
 import com.liferay.segments.service.persistence.SegmentsEntryRelPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class SegmentsEntryRelServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SegmentsEntryRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class SegmentsEntryRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		segmentsEntryRelService = (SegmentsEntryRelService)aopProxy;
 
-		_setServiceUtilService(segmentsEntryRelService);
+		SegmentsEntryRelServiceUtil.setService(segmentsEntryRelService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class SegmentsEntryRelServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		SegmentsEntryRelService segmentsEntryRelService) {
-
-		try {
-			Field field = SegmentsEntryRelServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, segmentsEntryRelService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

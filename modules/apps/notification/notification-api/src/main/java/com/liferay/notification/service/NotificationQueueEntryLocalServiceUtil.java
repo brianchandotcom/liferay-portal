@@ -350,6 +350,10 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(NotificationQueueEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile NotificationQueueEntryLocalService _service;
 
 }

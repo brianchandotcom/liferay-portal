@@ -48,7 +48,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.Kale
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5646,33 +5645,15 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"assigneeClassName", "assigneeClassPK"}, false);
 
-		_setKaleoTaskAssignmentInstanceUtilPersistence(this);
+		KaleoTaskAssignmentInstanceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setKaleoTaskAssignmentInstanceUtilPersistence(null);
+		KaleoTaskAssignmentInstanceUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			KaleoTaskAssignmentInstanceImpl.class.getName());
-	}
-
-	private void _setKaleoTaskAssignmentInstanceUtilPersistence(
-		KaleoTaskAssignmentInstancePersistence
-			kaleoTaskAssignmentInstancePersistence) {
-
-		try {
-			Field field =
-				KaleoTaskAssignmentInstanceUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoTaskAssignmentInstancePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

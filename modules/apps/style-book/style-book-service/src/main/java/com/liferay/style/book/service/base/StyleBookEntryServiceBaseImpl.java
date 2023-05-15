@@ -31,8 +31,6 @@ import com.liferay.style.book.service.StyleBookEntryServiceUtil;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
 import com.liferay.style.book.service.persistence.StyleBookEntryVersionPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class StyleBookEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		StyleBookEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class StyleBookEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		styleBookEntryService = (StyleBookEntryService)aopProxy;
 
-		_setServiceUtilService(styleBookEntryService);
+		StyleBookEntryServiceUtil.setService(styleBookEntryService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class StyleBookEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		StyleBookEntryService styleBookEntryService) {
-
-		try {
-			Field field = StyleBookEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, styleBookEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -97,6 +97,10 @@ public class SegmentsEntryRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SegmentsEntryRelService service) {
+		_service = service;
+	}
+
 	private static volatile SegmentsEntryRelService _service;
 
 }

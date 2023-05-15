@@ -105,6 +105,10 @@ public class DDMFormInstanceRecordVersionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMFormInstanceRecordVersionService service) {
+		_service = service;
+	}
+
 	private static volatile DDMFormInstanceRecordVersionService _service;
 
 }

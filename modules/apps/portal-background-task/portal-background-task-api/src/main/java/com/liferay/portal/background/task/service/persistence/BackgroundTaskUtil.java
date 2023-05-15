@@ -3025,6 +3025,10 @@ public class BackgroundTaskUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(BackgroundTaskPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile BackgroundTaskPersistence _persistence;
 
 }

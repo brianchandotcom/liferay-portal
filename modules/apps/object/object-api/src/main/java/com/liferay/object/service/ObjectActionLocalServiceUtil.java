@@ -415,6 +415,10 @@ public class ObjectActionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectActionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectActionLocalService _service;
 
 }

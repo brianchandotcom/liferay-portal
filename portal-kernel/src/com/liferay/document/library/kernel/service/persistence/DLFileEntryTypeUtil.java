@@ -1443,6 +1443,10 @@ public class DLFileEntryTypeUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DLFileEntryTypePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DLFileEntryTypePersistence _persistence;
 
 }

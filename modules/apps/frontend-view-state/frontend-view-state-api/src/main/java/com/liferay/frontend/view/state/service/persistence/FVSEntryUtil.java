@@ -614,6 +614,10 @@ public class FVSEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(FVSEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile FVSEntryPersistence _persistence;
 
 }

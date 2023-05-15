@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -8453,29 +8452,14 @@ public class CPInstancePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCPInstanceUtilPersistence(this);
+		CPInstanceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPInstanceUtilPersistence(null);
+		CPInstanceUtil.setPersistence(null);
 
 		entityCache.removeCache(CPInstanceImpl.class.getName());
-	}
-
-	private void _setCPInstanceUtilPersistence(
-		CPInstancePersistence cpInstancePersistence) {
-
-		try {
-			Field field = CPInstanceUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpInstancePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

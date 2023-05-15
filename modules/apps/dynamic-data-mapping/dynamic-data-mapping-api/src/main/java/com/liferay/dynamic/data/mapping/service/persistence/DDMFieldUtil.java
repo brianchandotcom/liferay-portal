@@ -861,6 +861,10 @@ public class DDMFieldUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DDMFieldPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DDMFieldPersistence _persistence;
 
 }

@@ -151,6 +151,10 @@ public class OAuth2ApplicationServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuth2ApplicationService service) {
+		_service = service;
+	}
+
 	private static volatile OAuth2ApplicationService _service;
 
 }

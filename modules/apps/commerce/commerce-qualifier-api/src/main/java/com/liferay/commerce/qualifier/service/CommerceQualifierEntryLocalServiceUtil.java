@@ -407,6 +407,10 @@ public class CommerceQualifierEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceQualifierEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceQualifierEntryLocalService _service;
 
 }

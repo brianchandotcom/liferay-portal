@@ -46,7 +46,6 @@ import com.liferay.saml.persistence.service.persistence.impl.constants.SamlPersi
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1990,30 +1989,14 @@ public class SamlPeerBindingPersistenceImpl
 			new String[] {"companyId", "userId", "deleted", "samlPeerEntityId"},
 			false);
 
-		_setSamlPeerBindingUtilPersistence(this);
+		SamlPeerBindingUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSamlPeerBindingUtilPersistence(null);
+		SamlPeerBindingUtil.setPersistence(null);
 
 		entityCache.removeCache(SamlPeerBindingImpl.class.getName());
-	}
-
-	private void _setSamlPeerBindingUtilPersistence(
-		SamlPeerBindingPersistence samlPeerBindingPersistence) {
-
-		try {
-			Field field = SamlPeerBindingUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, samlPeerBindingPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

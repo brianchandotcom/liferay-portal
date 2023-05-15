@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2902,29 +2901,14 @@ public class ObjectViewPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "defaultObjectView"}, false);
 
-		_setObjectViewUtilPersistence(this);
+		ObjectViewUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectViewUtilPersistence(null);
+		ObjectViewUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectViewImpl.class.getName());
-	}
-
-	private void _setObjectViewUtilPersistence(
-		ObjectViewPersistence objectViewPersistence) {
-
-		try {
-			Field field = ObjectViewUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectViewPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

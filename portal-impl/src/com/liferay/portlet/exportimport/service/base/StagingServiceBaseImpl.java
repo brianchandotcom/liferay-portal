@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -118,11 +116,11 @@ public abstract class StagingServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(stagingService);
+		StagingServiceUtil.setService(stagingService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		StagingServiceUtil.setService(null);
 	}
 
 	/**
@@ -156,19 +154,6 @@ public abstract class StagingServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(StagingService stagingService) {
-		try {
-			Field field = StagingServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, stagingService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

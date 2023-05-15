@@ -779,6 +779,12 @@ public class CPDefinitionInventoryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CPDefinitionInventoryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CPDefinitionInventoryPersistence _persistence;
 
 }

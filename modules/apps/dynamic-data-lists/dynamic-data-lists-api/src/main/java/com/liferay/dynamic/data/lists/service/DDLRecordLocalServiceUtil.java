@@ -800,6 +800,10 @@ public class DDLRecordLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDLRecordLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDLRecordLocalService _service;
 
 }

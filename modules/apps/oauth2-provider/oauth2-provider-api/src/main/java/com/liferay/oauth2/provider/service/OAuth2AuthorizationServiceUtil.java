@@ -96,6 +96,10 @@ public class OAuth2AuthorizationServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuth2AuthorizationService service) {
+		_service = service;
+	}
+
 	private static volatile OAuth2AuthorizationService _service;
 
 }

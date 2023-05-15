@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommerceWishListItemServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommerceWishListItemServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class CommerceWishListItemServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceWishListItemService = (CommerceWishListItemService)aopProxy;
 
-		_setServiceUtilService(commerceWishListItemService);
+		CommerceWishListItemServiceUtil.setService(commerceWishListItemService);
 	}
 
 	/**
@@ -117,23 +115,6 @@ public abstract class CommerceWishListItemServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommerceWishListItemService commerceWishListItemService) {
-
-		try {
-			Field field =
-				CommerceWishListItemServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceWishListItemService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3468,31 +3467,14 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionId", "entryCProductId"}, false);
 
-		_setCPDefinitionGroupedEntryUtilPersistence(this);
+		CPDefinitionGroupedEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDefinitionGroupedEntryUtilPersistence(null);
+		CPDefinitionGroupedEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDefinitionGroupedEntryImpl.class.getName());
-	}
-
-	private void _setCPDefinitionGroupedEntryUtilPersistence(
-		CPDefinitionGroupedEntryPersistence
-			cpDefinitionGroupedEntryPersistence) {
-
-		try {
-			Field field = CPDefinitionGroupedEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionGroupedEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

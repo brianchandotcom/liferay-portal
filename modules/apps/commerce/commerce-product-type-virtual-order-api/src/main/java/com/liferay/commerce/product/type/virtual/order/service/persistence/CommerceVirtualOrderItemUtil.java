@@ -787,6 +787,12 @@ public class CommerceVirtualOrderItemUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceVirtualOrderItemPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceVirtualOrderItemPersistence _persistence;
 
 }

@@ -65,6 +65,10 @@ public class MBBanServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBBanService service) {
+		_service = service;
+	}
+
 	private static volatile MBBanService _service;
 
 }

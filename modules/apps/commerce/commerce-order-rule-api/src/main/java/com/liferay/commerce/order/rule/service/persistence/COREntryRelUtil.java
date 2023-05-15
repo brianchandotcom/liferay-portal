@@ -712,6 +712,10 @@ public class COREntryRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(COREntryRelPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile COREntryRelPersistence _persistence;
 
 }

@@ -299,6 +299,10 @@ public class DSLQueryEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DSLQueryEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DSLQueryEntryLocalService _service;
 
 }

@@ -375,6 +375,10 @@ public class FaroChannelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FaroChannelLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FaroChannelLocalService _service;
 
 }

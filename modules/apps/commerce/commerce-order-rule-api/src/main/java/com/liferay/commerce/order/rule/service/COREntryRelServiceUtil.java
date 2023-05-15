@@ -175,6 +175,10 @@ public class COREntryRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(COREntryRelService service) {
+		_service = service;
+	}
+
 	private static volatile COREntryRelService _service;
 
 }

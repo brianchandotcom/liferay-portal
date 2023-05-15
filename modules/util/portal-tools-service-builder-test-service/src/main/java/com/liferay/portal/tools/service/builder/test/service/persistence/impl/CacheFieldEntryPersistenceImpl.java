@@ -41,7 +41,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.CacheFi
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1122,29 +1121,13 @@ public class CacheFieldEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_setCacheFieldEntryUtilPersistence(this);
+		CacheFieldEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setCacheFieldEntryUtilPersistence(null);
+		CacheFieldEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(CacheFieldEntryImpl.class.getName());
-	}
-
-	private void _setCacheFieldEntryUtilPersistence(
-		CacheFieldEntryPersistence cacheFieldEntryPersistence) {
-
-		try {
-			Field field = CacheFieldEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cacheFieldEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

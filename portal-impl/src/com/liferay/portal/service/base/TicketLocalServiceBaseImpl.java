@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -437,14 +435,14 @@ public abstract class TicketLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.Ticket", ticketLocalService);
 
-		_setLocalServiceUtilService(ticketLocalService);
+		TicketLocalServiceUtil.setService(ticketLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.Ticket");
 
-		_setLocalServiceUtilService(null);
+		TicketLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -486,22 +484,6 @@ public abstract class TicketLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		TicketLocalService ticketLocalService) {
-
-		try {
-			Field field = TicketLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ticketLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

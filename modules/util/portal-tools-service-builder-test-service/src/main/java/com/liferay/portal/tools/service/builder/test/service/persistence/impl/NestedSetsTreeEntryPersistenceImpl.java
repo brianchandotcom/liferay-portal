@@ -45,7 +45,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.NestedS
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -971,29 +970,13 @@ public class NestedSetsTreeEntryPersistenceImpl
 			},
 			true);
 
-		_setNestedSetsTreeEntryUtilPersistence(this);
+		NestedSetsTreeEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setNestedSetsTreeEntryUtilPersistence(null);
+		NestedSetsTreeEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(NestedSetsTreeEntryImpl.class.getName());
-	}
-
-	private void _setNestedSetsTreeEntryUtilPersistence(
-		NestedSetsTreeEntryPersistence nestedSetsTreeEntryPersistence) {
-
-		try {
-			Field field = NestedSetsTreeEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, nestedSetsTreeEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.PortletServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -137,11 +135,11 @@ public abstract class PortletServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(portletService);
+		PortletServiceUtil.setService(portletService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		PortletServiceUtil.setService(null);
 	}
 
 	/**
@@ -183,19 +181,6 @@ public abstract class PortletServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(PortletService portletService) {
-		try {
-			Field field = PortletServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, portletService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

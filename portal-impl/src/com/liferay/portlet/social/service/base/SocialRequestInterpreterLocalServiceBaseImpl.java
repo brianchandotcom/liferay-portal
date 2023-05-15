@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.social.kernel.service.SocialRequestInterpreterLocalService;
 import com.liferay.social.kernel.service.SocialRequestInterpreterLocalServiceUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -102,11 +100,12 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(socialRequestInterpreterLocalService);
+		SocialRequestInterpreterLocalServiceUtil.setService(
+			socialRequestInterpreterLocalService);
 	}
 
 	public void destroy() {
-		_setLocalServiceUtilService(null);
+		SocialRequestInterpreterLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -140,24 +139,6 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SocialRequestInterpreterLocalService
-			socialRequestInterpreterLocalService) {
-
-		try {
-			Field field =
-				SocialRequestInterpreterLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, socialRequestInterpreterLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

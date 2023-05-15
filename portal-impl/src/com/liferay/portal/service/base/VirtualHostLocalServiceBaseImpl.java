@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -452,14 +450,14 @@ public abstract class VirtualHostLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.VirtualHost",
 			virtualHostLocalService);
 
-		_setLocalServiceUtilService(virtualHostLocalService);
+		VirtualHostLocalServiceUtil.setService(virtualHostLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.VirtualHost");
 
-		_setLocalServiceUtilService(null);
+		VirtualHostLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -516,22 +514,6 @@ public abstract class VirtualHostLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		VirtualHostLocalService virtualHostLocalService) {
-
-		try {
-			Field field = VirtualHostLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, virtualHostLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

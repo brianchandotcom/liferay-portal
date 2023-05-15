@@ -80,6 +80,10 @@ public class CTCollectionTemplateServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CTCollectionTemplateService service) {
+		_service = service;
+	}
+
 	private static volatile CTCollectionTemplateService _service;
 
 }

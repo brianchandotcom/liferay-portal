@@ -338,6 +338,10 @@ public class CommerceAddressServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceAddressService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceAddressService _service;
 
 }

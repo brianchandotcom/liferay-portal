@@ -360,6 +360,12 @@ public class CommercePaymentEntryAuditLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommercePaymentEntryAuditLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommercePaymentEntryAuditLocalService _service;
 
 }

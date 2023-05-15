@@ -565,6 +565,10 @@ public class CPAttachmentFileEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPAttachmentFileEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CPAttachmentFileEntryLocalService _service;
 
 }

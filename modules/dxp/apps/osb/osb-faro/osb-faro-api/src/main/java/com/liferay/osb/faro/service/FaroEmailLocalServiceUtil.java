@@ -59,6 +59,10 @@ public class FaroEmailLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FaroEmailLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FaroEmailLocalService _service;
 
 }

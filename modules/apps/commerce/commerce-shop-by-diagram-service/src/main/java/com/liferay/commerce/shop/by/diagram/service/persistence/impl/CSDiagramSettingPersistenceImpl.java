@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2335,30 +2334,14 @@ public class CSDiagramSettingPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
 
-		_setCSDiagramSettingUtilPersistence(this);
+		CSDiagramSettingUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCSDiagramSettingUtilPersistence(null);
+		CSDiagramSettingUtil.setPersistence(null);
 
 		entityCache.removeCache(CSDiagramSettingImpl.class.getName());
-	}
-
-	private void _setCSDiagramSettingUtilPersistence(
-		CSDiagramSettingPersistence csDiagramSettingPersistence) {
-
-		try {
-			Field field = CSDiagramSettingUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, csDiagramSettingPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

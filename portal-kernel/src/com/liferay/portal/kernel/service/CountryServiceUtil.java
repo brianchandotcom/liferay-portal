@@ -245,6 +245,10 @@ public class CountryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CountryService service) {
+		_service = service;
+	}
+
 	private static volatile CountryService _service;
 
 }

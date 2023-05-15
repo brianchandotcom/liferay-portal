@@ -362,6 +362,12 @@ public class UserNotificationDeliveryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		UserNotificationDeliveryLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile UserNotificationDeliveryLocalService _service;
 
 }

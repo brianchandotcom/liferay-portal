@@ -335,6 +335,10 @@ public class ServiceComponentLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ServiceComponentLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ServiceComponentLocalService _service;
 
 }

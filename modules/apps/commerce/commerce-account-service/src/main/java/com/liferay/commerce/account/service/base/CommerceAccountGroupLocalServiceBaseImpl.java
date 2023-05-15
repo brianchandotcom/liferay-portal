@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 
-import java.lang.reflect.Field;
-
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -51,7 +49,7 @@ public abstract class CommerceAccountGroupLocalServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceAccountGroupLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -67,7 +65,8 @@ public abstract class CommerceAccountGroupLocalServiceBaseImpl
 		commerceAccountGroupLocalService =
 			(CommerceAccountGroupLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceAccountGroupLocalService);
+		CommerceAccountGroupLocalServiceUtil.setService(
+			commerceAccountGroupLocalService);
 	}
 
 	/**
@@ -86,23 +85,6 @@ public abstract class CommerceAccountGroupLocalServiceBaseImpl
 
 	protected String getModelClassName() {
 		return CommerceAccountGroup.class.getName();
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceAccountGroupLocalService commerceAccountGroupLocalService) {
-
-		try {
-			Field field =
-				CommerceAccountGroupLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceAccountGroupLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	protected CommerceAccountGroupLocalService commerceAccountGroupLocalService;

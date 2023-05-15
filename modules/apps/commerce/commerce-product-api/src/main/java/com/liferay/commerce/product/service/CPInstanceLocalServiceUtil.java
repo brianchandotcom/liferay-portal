@@ -760,6 +760,10 @@ public class CPInstanceLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPInstanceLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CPInstanceLocalService _service;
 
 }

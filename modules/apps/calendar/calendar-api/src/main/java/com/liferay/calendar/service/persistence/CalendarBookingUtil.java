@@ -2005,6 +2005,10 @@ public class CalendarBookingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CalendarBookingPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CalendarBookingPersistence _persistence;
 
 }

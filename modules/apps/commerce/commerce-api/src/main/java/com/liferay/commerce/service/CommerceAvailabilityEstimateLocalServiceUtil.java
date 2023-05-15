@@ -402,6 +402,12 @@ public class CommerceAvailabilityEstimateLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceAvailabilityEstimateLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceAvailabilityEstimateLocalService _service;
 
 }

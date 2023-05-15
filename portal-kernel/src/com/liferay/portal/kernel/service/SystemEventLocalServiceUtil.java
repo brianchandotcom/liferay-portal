@@ -353,6 +353,10 @@ public class SystemEventLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SystemEventLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SystemEventLocalService _service;
 
 }

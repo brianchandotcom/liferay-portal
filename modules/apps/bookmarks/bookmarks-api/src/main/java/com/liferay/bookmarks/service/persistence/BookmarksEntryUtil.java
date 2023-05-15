@@ -4022,6 +4022,10 @@ public class BookmarksEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(BookmarksEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile BookmarksEntryPersistence _persistence;
 
 }

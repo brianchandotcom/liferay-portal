@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class CPOptionValueServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CPOptionValueServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class CPOptionValueServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpOptionValueService = (CPOptionValueService)aopProxy;
 
-		_setServiceUtilService(cpOptionValueService);
+		CPOptionValueServiceUtil.setService(cpOptionValueService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class CPOptionValueServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CPOptionValueService cpOptionValueService) {
-
-		try {
-			Field field = CPOptionValueServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpOptionValueService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

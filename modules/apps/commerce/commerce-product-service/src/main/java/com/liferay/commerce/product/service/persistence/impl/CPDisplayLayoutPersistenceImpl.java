@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6757,30 +6756,14 @@ public class CPDisplayLayoutPersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
 
-		_setCPDisplayLayoutUtilPersistence(this);
+		CPDisplayLayoutUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDisplayLayoutUtilPersistence(null);
+		CPDisplayLayoutUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDisplayLayoutImpl.class.getName());
-	}
-
-	private void _setCPDisplayLayoutUtilPersistence(
-		CPDisplayLayoutPersistence cpDisplayLayoutPersistence) {
-
-		try {
-			Field field = CPDisplayLayoutUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDisplayLayoutPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

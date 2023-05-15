@@ -345,6 +345,10 @@ public class CommerceAccountLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceAccountLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceAccountLocalService _service;
 
 }

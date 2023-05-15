@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2417,33 +2416,15 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_setCommerceAvailabilityEstimateUtilPersistence(this);
+		CommerceAvailabilityEstimateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceAvailabilityEstimateUtilPersistence(null);
+		CommerceAvailabilityEstimateUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceAvailabilityEstimateImpl.class.getName());
-	}
-
-	private void _setCommerceAvailabilityEstimateUtilPersistence(
-		CommerceAvailabilityEstimatePersistence
-			commerceAvailabilityEstimatePersistence) {
-
-		try {
-			Field field =
-				CommerceAvailabilityEstimateUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceAvailabilityEstimatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -465,6 +465,10 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(KaleoDefinitionVersionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile KaleoDefinitionVersionLocalService _service;
 
 }

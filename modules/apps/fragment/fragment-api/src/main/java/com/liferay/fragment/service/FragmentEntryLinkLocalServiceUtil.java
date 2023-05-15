@@ -693,6 +693,10 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FragmentEntryLinkLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FragmentEntryLinkLocalService _service;
 
 }

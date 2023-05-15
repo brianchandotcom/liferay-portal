@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3994,30 +3993,14 @@ public class DDMFieldAttributePersistenceImpl
 			},
 			new String[] {"fieldId", "attributeName", "languageId"}, false);
 
-		_setDDMFieldAttributeUtilPersistence(this);
+		DDMFieldAttributeUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMFieldAttributeUtilPersistence(null);
+		DDMFieldAttributeUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMFieldAttributeImpl.class.getName());
-	}
-
-	private void _setDDMFieldAttributeUtilPersistence(
-		DDMFieldAttributePersistence ddmFieldAttributePersistence) {
-
-		try {
-			Field field = DDMFieldAttributeUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFieldAttributePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CalendarResourceServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CalendarResourceServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class CalendarResourceServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		calendarResourceService = (CalendarResourceService)aopProxy;
 
-		_setServiceUtilService(calendarResourceService);
+		CalendarResourceServiceUtil.setService(calendarResourceService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class CalendarResourceServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CalendarResourceService calendarResourceService) {
-
-		try {
-			Field field = CalendarResourceServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, calendarResourceService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -53,7 +53,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntry
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7097,30 +7096,15 @@ public class LVEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"headId"},
 			false);
 
-		_setLVEntryUtilPersistence(this);
+		LVEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setLVEntryUtilPersistence(null);
+		LVEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(LVEntryImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
-	}
-
-	private void _setLVEntryUtilPersistence(
-		LVEntryPersistence lvEntryPersistence) {
-
-		try {
-			Field field = LVEntryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, lvEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

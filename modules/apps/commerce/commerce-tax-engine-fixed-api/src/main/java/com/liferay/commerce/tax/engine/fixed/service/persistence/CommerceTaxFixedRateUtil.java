@@ -718,6 +718,12 @@ public class CommerceTaxFixedRateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceTaxFixedRatePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceTaxFixedRatePersistence _persistence;
 
 }

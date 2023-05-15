@@ -373,6 +373,10 @@ public class ChangesetEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ChangesetEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ChangesetEntryLocalService _service;
 
 }

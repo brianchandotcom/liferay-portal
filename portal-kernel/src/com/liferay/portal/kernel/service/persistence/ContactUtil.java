@@ -967,6 +967,10 @@ public class ContactUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ContactPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ContactPersistence _persistence;
 
 }

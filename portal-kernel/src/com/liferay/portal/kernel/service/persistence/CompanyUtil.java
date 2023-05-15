@@ -438,6 +438,10 @@ public class CompanyUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CompanyPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CompanyPersistence _persistence;
 
 }

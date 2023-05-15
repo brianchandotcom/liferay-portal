@@ -47,8 +47,6 @@ import com.liferay.redirect.service.persistence.RedirectNotFoundEntryPersistence
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -412,7 +410,7 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		RedirectNotFoundEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -428,7 +426,8 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 		redirectNotFoundEntryLocalService =
 			(RedirectNotFoundEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(redirectNotFoundEntryLocalService);
+		RedirectNotFoundEntryLocalServiceUtil.setService(
+			redirectNotFoundEntryLocalService);
 	}
 
 	/**
@@ -471,23 +470,6 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		RedirectNotFoundEntryLocalService redirectNotFoundEntryLocalService) {
-
-		try {
-			Field field =
-				RedirectNotFoundEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, redirectNotFoundEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

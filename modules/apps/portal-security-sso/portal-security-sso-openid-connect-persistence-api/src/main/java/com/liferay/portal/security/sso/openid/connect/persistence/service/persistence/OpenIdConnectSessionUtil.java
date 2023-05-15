@@ -943,6 +943,12 @@ public class OpenIdConnectSessionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		OpenIdConnectSessionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile OpenIdConnectSessionPersistence _persistence;
 
 }

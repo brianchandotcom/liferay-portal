@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3049,30 +3048,14 @@ public class NotificationTemplatePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setNotificationTemplateUtilPersistence(this);
+		NotificationTemplateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setNotificationTemplateUtilPersistence(null);
+		NotificationTemplateUtil.setPersistence(null);
 
 		entityCache.removeCache(NotificationTemplateImpl.class.getName());
-	}
-
-	private void _setNotificationTemplateUtilPersistence(
-		NotificationTemplatePersistence notificationTemplatePersistence) {
-
-		try {
-			Field field = NotificationTemplateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, notificationTemplatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

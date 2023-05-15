@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6675,31 +6674,14 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			},
 			false);
 
-		_setDEDataDefinitionFieldLinkUtilPersistence(this);
+		DEDataDefinitionFieldLinkUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDEDataDefinitionFieldLinkUtilPersistence(null);
+		DEDataDefinitionFieldLinkUtil.setPersistence(null);
 
 		entityCache.removeCache(DEDataDefinitionFieldLinkImpl.class.getName());
-	}
-
-	private void _setDEDataDefinitionFieldLinkUtilPersistence(
-		DEDataDefinitionFieldLinkPersistence
-			deDataDefinitionFieldLinkPersistence) {
-
-		try {
-			Field field = DEDataDefinitionFieldLinkUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, deDataDefinitionFieldLinkPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

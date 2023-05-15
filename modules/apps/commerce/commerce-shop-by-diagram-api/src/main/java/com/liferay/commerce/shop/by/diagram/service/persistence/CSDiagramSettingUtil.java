@@ -693,6 +693,10 @@ public class CSDiagramSettingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CSDiagramSettingPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CSDiagramSettingPersistence _persistence;
 
 }

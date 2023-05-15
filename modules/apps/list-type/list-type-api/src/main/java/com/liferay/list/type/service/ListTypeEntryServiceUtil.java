@@ -105,6 +105,10 @@ public class ListTypeEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ListTypeEntryService service) {
+		_service = service;
+	}
+
 	private static volatile ListTypeEntryService _service;
 
 }

@@ -163,6 +163,10 @@ public class SegmentsExperienceServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SegmentsExperienceService service) {
+		_service = service;
+	}
+
 	private static volatile SegmentsExperienceService _service;
 
 }

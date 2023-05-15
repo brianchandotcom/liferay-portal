@@ -804,6 +804,10 @@ public class OAuth2ScopeGrantUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(OAuth2ScopeGrantPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile OAuth2ScopeGrantPersistence _persistence;
 
 }

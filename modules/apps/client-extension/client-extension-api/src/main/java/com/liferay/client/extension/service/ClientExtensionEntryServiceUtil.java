@@ -105,6 +105,10 @@ public class ClientExtensionEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ClientExtensionEntryService service) {
+		_service = service;
+	}
+
 	private static volatile ClientExtensionEntryService _service;
 
 }

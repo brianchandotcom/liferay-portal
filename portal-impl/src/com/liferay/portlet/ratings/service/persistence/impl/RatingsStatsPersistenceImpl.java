@@ -49,7 +49,6 @@ import com.liferay.ratings.kernel.service.persistence.RatingsStatsUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -1503,29 +1502,13 @@ public class RatingsStatsPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
-		_setRatingsStatsUtilPersistence(this);
+		RatingsStatsUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setRatingsStatsUtilPersistence(null);
+		RatingsStatsUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(RatingsStatsImpl.class.getName());
-	}
-
-	private void _setRatingsStatsUtilPersistence(
-		RatingsStatsPersistence ratingsStatsPersistence) {
-
-		try {
-			Field field = RatingsStatsUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ratingsStatsPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_RATINGSSTATS =

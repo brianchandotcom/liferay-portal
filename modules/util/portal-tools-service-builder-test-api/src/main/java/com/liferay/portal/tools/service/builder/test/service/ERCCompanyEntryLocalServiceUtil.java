@@ -350,6 +350,10 @@ public class ERCCompanyEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ERCCompanyEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ERCCompanyEntryLocalService _service;
 
 }

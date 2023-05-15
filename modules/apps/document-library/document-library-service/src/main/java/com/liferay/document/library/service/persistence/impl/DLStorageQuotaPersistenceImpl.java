@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -833,30 +832,14 @@ public class DLStorageQuotaPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_setDLStorageQuotaUtilPersistence(this);
+		DLStorageQuotaUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDLStorageQuotaUtilPersistence(null);
+		DLStorageQuotaUtil.setPersistence(null);
 
 		entityCache.removeCache(DLStorageQuotaImpl.class.getName());
-	}
-
-	private void _setDLStorageQuotaUtilPersistence(
-		DLStorageQuotaPersistence dlStorageQuotaPersistence) {
-
-		try {
-			Field field = DLStorageQuotaUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dlStorageQuotaPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

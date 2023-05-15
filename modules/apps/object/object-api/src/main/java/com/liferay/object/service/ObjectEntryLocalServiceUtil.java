@@ -636,6 +636,10 @@ public class ObjectEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectEntryLocalService _service;
 
 }

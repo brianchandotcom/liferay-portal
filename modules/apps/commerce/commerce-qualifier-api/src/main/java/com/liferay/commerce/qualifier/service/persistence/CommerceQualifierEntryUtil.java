@@ -1204,6 +1204,12 @@ public class CommerceQualifierEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceQualifierEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceQualifierEntryPersistence _persistence;
 
 }

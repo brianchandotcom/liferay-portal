@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -531,7 +529,7 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceMLForecastAlertEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -547,7 +545,8 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 		commerceMLForecastAlertEntryLocalService =
 			(CommerceMLForecastAlertEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceMLForecastAlertEntryLocalService);
+		CommerceMLForecastAlertEntryLocalServiceUtil.setService(
+			commerceMLForecastAlertEntryLocalService);
 	}
 
 	/**
@@ -590,24 +589,6 @@ public abstract class CommerceMLForecastAlertEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceMLForecastAlertEntryLocalService
-			commerceMLForecastAlertEntryLocalService) {
-
-		try {
-			Field field =
-				CommerceMLForecastAlertEntryLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceMLForecastAlertEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

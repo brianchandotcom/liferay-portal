@@ -47,8 +47,6 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.persis
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -412,7 +410,7 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		OpenIdConnectSessionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -428,7 +426,8 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 		openIdConnectSessionLocalService =
 			(OpenIdConnectSessionLocalService)aopProxy;
 
-		_setLocalServiceUtilService(openIdConnectSessionLocalService);
+		OpenIdConnectSessionLocalServiceUtil.setService(
+			openIdConnectSessionLocalService);
 	}
 
 	/**
@@ -471,23 +470,6 @@ public abstract class OpenIdConnectSessionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		OpenIdConnectSessionLocalService openIdConnectSessionLocalService) {
-
-		try {
-			Field field =
-				OpenIdConnectSessionLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, openIdConnectSessionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -274,6 +274,10 @@ public class UADPartialEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(UADPartialEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile UADPartialEntryPersistence _persistence;
 
 }

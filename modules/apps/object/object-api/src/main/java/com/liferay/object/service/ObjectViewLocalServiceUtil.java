@@ -381,6 +381,10 @@ public class ObjectViewLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectViewLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectViewLocalService _service;
 
 }

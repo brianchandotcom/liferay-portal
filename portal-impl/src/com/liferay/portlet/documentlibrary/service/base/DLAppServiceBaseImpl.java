@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -118,11 +116,11 @@ public abstract class DLAppServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(dlAppService);
+		DLAppServiceUtil.setService(dlAppService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		DLAppServiceUtil.setService(null);
 	}
 
 	/**
@@ -156,19 +154,6 @@ public abstract class DLAppServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(DLAppService dlAppService) {
-		try {
-			Field field = DLAppServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dlAppService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -50,7 +50,6 @@ import com.liferay.portal.model.impl.CountryModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -5674,28 +5673,13 @@ public class CountryPersistenceImpl
 			},
 			new String[] {"companyId", "active_", "shippingAllowed"}, false);
 
-		_setCountryUtilPersistence(this);
+		CountryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setCountryUtilPersistence(null);
+		CountryUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(CountryImpl.class.getName());
-	}
-
-	private void _setCountryUtilPersistence(
-		CountryPersistence countryPersistence) {
-
-		try {
-			Field field = CountryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, countryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@BeanReference(type = CountryLocalizationPersistence.class)

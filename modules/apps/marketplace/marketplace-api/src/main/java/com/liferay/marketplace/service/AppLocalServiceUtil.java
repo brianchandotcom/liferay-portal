@@ -374,6 +374,10 @@ public class AppLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AppLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AppLocalService _service;
 
 }

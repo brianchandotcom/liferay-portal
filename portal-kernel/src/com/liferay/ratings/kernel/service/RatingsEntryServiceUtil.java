@@ -62,6 +62,10 @@ public class RatingsEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(RatingsEntryService service) {
+		_service = service;
+	}
+
 	private static volatile RatingsEntryService _service;
 
 }

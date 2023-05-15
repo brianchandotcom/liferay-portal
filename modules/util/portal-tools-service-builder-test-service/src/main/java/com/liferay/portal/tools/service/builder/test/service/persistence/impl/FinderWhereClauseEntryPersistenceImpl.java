@@ -41,7 +41,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.FinderW
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1185,29 +1184,13 @@ public class FinderWhereClauseEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
 
-		_setFinderWhereClauseEntryUtilPersistence(this);
+		FinderWhereClauseEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setFinderWhereClauseEntryUtilPersistence(null);
+		FinderWhereClauseEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(FinderWhereClauseEntryImpl.class.getName());
-	}
-
-	private void _setFinderWhereClauseEntryUtilPersistence(
-		FinderWhereClauseEntryPersistence finderWhereClauseEntryPersistence) {
-
-		try {
-			Field field = FinderWhereClauseEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, finderWhereClauseEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

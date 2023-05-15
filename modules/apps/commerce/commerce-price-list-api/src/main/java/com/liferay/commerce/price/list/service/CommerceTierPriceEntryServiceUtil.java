@@ -282,6 +282,10 @@ public class CommerceTierPriceEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceTierPriceEntryService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceTierPriceEntryService _service;
 
 }

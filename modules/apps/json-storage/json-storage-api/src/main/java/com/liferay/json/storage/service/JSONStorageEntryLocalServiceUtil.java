@@ -374,6 +374,10 @@ public class JSONStorageEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(JSONStorageEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile JSONStorageEntryLocalService _service;
 
 }

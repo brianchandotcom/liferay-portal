@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.OrgLaborModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1105,28 +1104,13 @@ public class OrgLaborPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"organizationId"}, false);
 
-		_setOrgLaborUtilPersistence(this);
+		OrgLaborUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setOrgLaborUtilPersistence(null);
+		OrgLaborUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(OrgLaborImpl.class.getName());
-	}
-
-	private void _setOrgLaborUtilPersistence(
-		OrgLaborPersistence orgLaborPersistence) {
-
-		try {
-			Field field = OrgLaborUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, orgLaborPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_ORGLABOR =

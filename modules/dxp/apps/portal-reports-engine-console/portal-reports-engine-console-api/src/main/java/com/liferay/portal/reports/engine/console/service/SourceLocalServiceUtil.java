@@ -401,6 +401,10 @@ public class SourceLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SourceLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SourceLocalService _service;
 
 }

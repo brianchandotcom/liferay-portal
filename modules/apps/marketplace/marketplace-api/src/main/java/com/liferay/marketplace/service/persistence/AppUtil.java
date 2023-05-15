@@ -1001,6 +1001,10 @@ public class AppUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(AppPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile AppPersistence _persistence;
 
 }

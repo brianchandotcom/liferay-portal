@@ -1153,6 +1153,12 @@ public class AssetDisplayPageEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AssetDisplayPageEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AssetDisplayPageEntryPersistence _persistence;
 
 }

@@ -1183,6 +1183,10 @@ public class CommerceDiscountLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceDiscountLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceDiscountLocalService _service;
 
 }

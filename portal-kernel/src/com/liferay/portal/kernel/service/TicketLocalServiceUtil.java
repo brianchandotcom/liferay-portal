@@ -351,6 +351,10 @@ public class TicketLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(TicketLocalService service) {
+		_service = service;
+	}
+
 	private static volatile TicketLocalService _service;
 
 }

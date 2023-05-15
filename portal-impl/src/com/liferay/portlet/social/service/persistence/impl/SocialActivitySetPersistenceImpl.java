@@ -46,7 +46,6 @@ import com.liferay.social.kernel.service.persistence.SocialActivitySetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4471,29 +4470,13 @@ public class SocialActivitySetPersistenceImpl
 			},
 			new String[] {"userId", "classNameId", "classPK", "type_"}, false);
 
-		_setSocialActivitySetUtilPersistence(this);
+		SocialActivitySetUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setSocialActivitySetUtilPersistence(null);
+		SocialActivitySetUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(SocialActivitySetImpl.class.getName());
-	}
-
-	private void _setSocialActivitySetUtilPersistence(
-		SocialActivitySetPersistence socialActivitySetPersistence) {
-
-		try {
-			Field field = SocialActivitySetUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, socialActivitySetPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_SOCIALACTIVITYSET =

@@ -3174,6 +3174,10 @@ public class UserLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(UserLocalService service) {
+		_service = service;
+	}
+
 	private static volatile UserLocalService _service;
 
 }

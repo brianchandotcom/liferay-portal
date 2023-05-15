@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.MembershipRequestServiceUtil;
 import com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -142,11 +140,11 @@ public abstract class MembershipRequestServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(membershipRequestService);
+		MembershipRequestServiceUtil.setService(membershipRequestService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		MembershipRequestServiceUtil.setService(null);
 	}
 
 	/**
@@ -189,22 +187,6 @@ public abstract class MembershipRequestServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		MembershipRequestService membershipRequestService) {
-
-		try {
-			Field field = MembershipRequestServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, membershipRequestService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

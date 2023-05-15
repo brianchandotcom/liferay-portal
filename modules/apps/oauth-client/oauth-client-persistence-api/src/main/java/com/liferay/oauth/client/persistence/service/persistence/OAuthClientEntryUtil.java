@@ -1145,6 +1145,10 @@ public class OAuthClientEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(OAuthClientEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile OAuthClientEntryPersistence _persistence;
 
 }

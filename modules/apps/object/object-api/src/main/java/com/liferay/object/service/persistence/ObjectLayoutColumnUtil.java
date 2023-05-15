@@ -983,6 +983,12 @@ public class ObjectLayoutColumnUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectLayoutColumnPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectLayoutColumnPersistence _persistence;
 
 }

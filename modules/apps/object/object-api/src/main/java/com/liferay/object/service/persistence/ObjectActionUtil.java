@@ -1253,6 +1253,10 @@ public class ObjectActionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectActionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectActionPersistence _persistence;
 
 }

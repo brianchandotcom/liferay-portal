@@ -47,6 +47,10 @@ public class ObjectLayoutTabServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectLayoutTabService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectLayoutTabService _service;
 
 }

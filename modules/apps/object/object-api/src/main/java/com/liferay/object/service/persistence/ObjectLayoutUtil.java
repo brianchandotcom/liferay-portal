@@ -993,6 +993,10 @@ public class ObjectLayoutUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectLayoutPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectLayoutPersistence _persistence;
 
 }

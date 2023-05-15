@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -452,14 +450,14 @@ public abstract class SystemEventLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.SystemEvent",
 			systemEventLocalService);
 
-		_setLocalServiceUtilService(systemEventLocalService);
+		SystemEventLocalServiceUtil.setService(systemEventLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.SystemEvent");
 
-		_setLocalServiceUtilService(null);
+		SystemEventLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -516,22 +514,6 @@ public abstract class SystemEventLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SystemEventLocalService systemEventLocalService) {
-
-		try {
-			Field field = SystemEventLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, systemEventLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

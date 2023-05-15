@@ -425,6 +425,10 @@ public class ExpandoRowLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ExpandoRowLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ExpandoRowLocalService _service;
 
 }

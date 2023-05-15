@@ -322,6 +322,10 @@ public class OrgLaborLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OrgLaborLocalService service) {
+		_service = service;
+	}
+
 	private static volatile OrgLaborLocalService _service;
 
 }

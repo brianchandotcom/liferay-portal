@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class CSDiagramSettingServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CSDiagramSettingServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class CSDiagramSettingServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		csDiagramSettingService = (CSDiagramSettingService)aopProxy;
 
-		_setServiceUtilService(csDiagramSettingService);
+		CSDiagramSettingServiceUtil.setService(csDiagramSettingService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class CSDiagramSettingServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CSDiagramSettingService csDiagramSettingService) {
-
-		try {
-			Field field = CSDiagramSettingServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, csDiagramSettingService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -432,6 +432,10 @@ public class LayoutSetPrototypeLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutSetPrototypeLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutSetPrototypeLocalService _service;
 
 }

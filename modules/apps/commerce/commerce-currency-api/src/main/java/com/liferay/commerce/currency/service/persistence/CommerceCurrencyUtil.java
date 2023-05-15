@@ -1434,6 +1434,10 @@ public class CommerceCurrencyUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CommerceCurrencyPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceCurrencyPersistence _persistence;
 
 }

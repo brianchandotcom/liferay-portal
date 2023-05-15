@@ -1213,6 +1213,12 @@ public class LVEntryLocalizationVersionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LVEntryLocalizationVersionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LVEntryLocalizationVersionPersistence _persistence;
 
 }

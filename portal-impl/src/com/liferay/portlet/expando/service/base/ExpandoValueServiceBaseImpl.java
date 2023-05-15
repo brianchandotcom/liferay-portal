@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -142,11 +140,11 @@ public abstract class ExpandoValueServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(expandoValueService);
+		ExpandoValueServiceUtil.setService(expandoValueService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		ExpandoValueServiceUtil.setService(null);
 	}
 
 	/**
@@ -188,22 +186,6 @@ public abstract class ExpandoValueServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		ExpandoValueService expandoValueService) {
-
-		try {
-			Field field = ExpandoValueServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, expandoValueService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

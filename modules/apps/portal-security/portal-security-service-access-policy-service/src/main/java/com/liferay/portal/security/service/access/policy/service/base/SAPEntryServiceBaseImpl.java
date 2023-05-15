@@ -30,8 +30,6 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryService
 import com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil;
 import com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class SAPEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SAPEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class SAPEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sapEntryService = (SAPEntryService)aopProxy;
 
-		_setServiceUtilService(sapEntryService);
+		SAPEntryServiceUtil.setService(sapEntryService);
 	}
 
 	/**
@@ -115,20 +113,6 @@ public abstract class SAPEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(SAPEntryService sapEntryService) {
-		try {
-			Field field = SAPEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sapEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

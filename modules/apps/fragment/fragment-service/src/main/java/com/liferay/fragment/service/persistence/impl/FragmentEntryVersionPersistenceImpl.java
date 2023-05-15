@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -17652,30 +17651,14 @@ public class FragmentEntryVersionPersistenceImpl
 			},
 			false);
 
-		_setFragmentEntryVersionUtilPersistence(this);
+		FragmentEntryVersionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFragmentEntryVersionUtilPersistence(null);
+		FragmentEntryVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(FragmentEntryVersionImpl.class.getName());
-	}
-
-	private void _setFragmentEntryVersionUtilPersistence(
-		FragmentEntryVersionPersistence fragmentEntryVersionPersistence) {
-
-		try {
-			Field field = FragmentEntryVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, fragmentEntryVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

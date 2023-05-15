@@ -396,6 +396,10 @@ public class ListTypeDefinitionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ListTypeDefinitionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ListTypeDefinitionLocalService _service;
 
 }

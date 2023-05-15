@@ -681,6 +681,10 @@ public class ObjectStateFlowUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectStateFlowPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectStateFlowPersistence _persistence;
 
 }

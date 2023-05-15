@@ -413,6 +413,12 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceShippingFixedOptionLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceShippingFixedOptionLocalService _service;
 
 }

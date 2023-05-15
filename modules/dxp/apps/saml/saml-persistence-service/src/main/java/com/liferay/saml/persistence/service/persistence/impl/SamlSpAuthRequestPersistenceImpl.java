@@ -47,7 +47,6 @@ import com.liferay.saml.persistence.service.persistence.impl.constants.SamlPersi
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -1528,30 +1527,14 @@ public class SamlSpAuthRequestPersistenceImpl
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"samlIdpEntityId", "samlSpAuthRequestKey"}, false);
 
-		_setSamlSpAuthRequestUtilPersistence(this);
+		SamlSpAuthRequestUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSamlSpAuthRequestUtilPersistence(null);
+		SamlSpAuthRequestUtil.setPersistence(null);
 
 		entityCache.removeCache(SamlSpAuthRequestImpl.class.getName());
-	}
-
-	private void _setSamlSpAuthRequestUtilPersistence(
-		SamlSpAuthRequestPersistence samlSpAuthRequestPersistence) {
-
-		try {
-			Field field = SamlSpAuthRequestUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, samlSpAuthRequestPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

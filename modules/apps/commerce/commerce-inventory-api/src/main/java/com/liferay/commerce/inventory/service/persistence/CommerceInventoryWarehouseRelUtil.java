@@ -782,6 +782,12 @@ public class CommerceInventoryWarehouseRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceInventoryWarehouseRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceInventoryWarehouseRelPersistence
 		_persistence;
 

@@ -1087,6 +1087,10 @@ public class DDMFormInstanceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DDMFormInstancePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DDMFormInstancePersistence _persistence;
 
 }

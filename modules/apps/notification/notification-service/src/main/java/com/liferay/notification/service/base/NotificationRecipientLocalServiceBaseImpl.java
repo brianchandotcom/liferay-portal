@@ -55,8 +55,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -546,7 +544,7 @@ public abstract class NotificationRecipientLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		NotificationRecipientLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -562,7 +560,8 @@ public abstract class NotificationRecipientLocalServiceBaseImpl
 		notificationRecipientLocalService =
 			(NotificationRecipientLocalService)aopProxy;
 
-		_setLocalServiceUtilService(notificationRecipientLocalService);
+		NotificationRecipientLocalServiceUtil.setService(
+			notificationRecipientLocalService);
 	}
 
 	/**
@@ -605,23 +604,6 @@ public abstract class NotificationRecipientLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		NotificationRecipientLocalService notificationRecipientLocalService) {
-
-		try {
-			Field field =
-				NotificationRecipientLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, notificationRecipientLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

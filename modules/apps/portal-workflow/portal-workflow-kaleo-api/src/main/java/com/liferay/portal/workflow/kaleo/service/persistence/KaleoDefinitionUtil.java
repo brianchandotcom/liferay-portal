@@ -1250,6 +1250,10 @@ public class KaleoDefinitionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KaleoDefinitionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoDefinitionPersistence _persistence;
 
 }

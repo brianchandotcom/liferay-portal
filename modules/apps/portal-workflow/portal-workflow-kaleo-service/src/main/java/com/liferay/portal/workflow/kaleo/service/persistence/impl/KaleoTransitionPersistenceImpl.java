@@ -49,7 +49,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.Kale
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3110,30 +3109,14 @@ public class KaleoTransitionPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"kaleoNodeId", "defaultTransition"}, false);
 
-		_setKaleoTransitionUtilPersistence(this);
+		KaleoTransitionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setKaleoTransitionUtilPersistence(null);
+		KaleoTransitionUtil.setPersistence(null);
 
 		entityCache.removeCache(KaleoTransitionImpl.class.getName());
-	}
-
-	private void _setKaleoTransitionUtilPersistence(
-		KaleoTransitionPersistence kaleoTransitionPersistence) {
-
-		try {
-			Field field = KaleoTransitionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoTransitionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

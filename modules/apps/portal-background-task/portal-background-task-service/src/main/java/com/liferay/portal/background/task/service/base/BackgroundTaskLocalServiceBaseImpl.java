@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -392,7 +390,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		BackgroundTaskLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -407,7 +405,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		backgroundTaskLocalService = (BackgroundTaskLocalService)aopProxy;
 
-		_setLocalServiceUtilService(backgroundTaskLocalService);
+		BackgroundTaskLocalServiceUtil.setService(backgroundTaskLocalService);
 	}
 
 	/**
@@ -449,22 +447,6 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		BackgroundTaskLocalService backgroundTaskLocalService) {
-
-		try {
-			Field field = BackgroundTaskLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, backgroundTaskLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

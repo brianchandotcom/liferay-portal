@@ -52,7 +52,6 @@ import com.liferay.portal.workflow.kaleo.forms.service.persistence.impl.constant
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3207,30 +3206,14 @@ public class KaleoProcessPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"DDLRecordSetId"}, false);
 
-		_setKaleoProcessUtilPersistence(this);
+		KaleoProcessUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setKaleoProcessUtilPersistence(null);
+		KaleoProcessUtil.setPersistence(null);
 
 		entityCache.removeCache(KaleoProcessImpl.class.getName());
-	}
-
-	private void _setKaleoProcessUtilPersistence(
-		KaleoProcessPersistence kaleoProcessPersistence) {
-
-		try {
-			Field field = KaleoProcessUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoProcessPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

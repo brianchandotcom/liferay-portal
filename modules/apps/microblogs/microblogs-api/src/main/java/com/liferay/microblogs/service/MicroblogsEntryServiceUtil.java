@@ -137,6 +137,10 @@ public class MicroblogsEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MicroblogsEntryService service) {
+		_service = service;
+	}
+
 	private static volatile MicroblogsEntryService _service;
 
 }

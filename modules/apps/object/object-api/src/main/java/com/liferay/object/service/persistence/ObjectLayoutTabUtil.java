@@ -977,6 +977,10 @@ public class ObjectLayoutTabUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectLayoutTabPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectLayoutTabPersistence _persistence;
 
 }

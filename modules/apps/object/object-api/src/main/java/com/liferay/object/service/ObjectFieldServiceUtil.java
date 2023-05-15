@@ -96,6 +96,10 @@ public class ObjectFieldServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectFieldService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectFieldService _service;
 
 }

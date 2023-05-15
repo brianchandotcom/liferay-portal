@@ -2591,6 +2591,10 @@ public class UserGroupUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(UserGroupPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile UserGroupPersistence _persistence;
 
 }

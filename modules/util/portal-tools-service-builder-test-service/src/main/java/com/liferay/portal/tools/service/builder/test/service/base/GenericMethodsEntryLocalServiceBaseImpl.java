@@ -30,8 +30,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.service.GenericMethodsEntryLocalServiceUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -101,11 +99,12 @@ public abstract class GenericMethodsEntryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(genericMethodsEntryLocalService);
+		GenericMethodsEntryLocalServiceUtil.setService(
+			genericMethodsEntryLocalService);
 	}
 
 	public void destroy() {
-		_setLocalServiceUtilService(null);
+		GenericMethodsEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -139,23 +138,6 @@ public abstract class GenericMethodsEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		GenericMethodsEntryLocalService genericMethodsEntryLocalService) {
-
-		try {
-			Field field =
-				GenericMethodsEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, genericMethodsEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

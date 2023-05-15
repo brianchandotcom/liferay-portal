@@ -506,6 +506,10 @@ public class AkismetEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(AkismetEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile AkismetEntryPersistence _persistence;
 
 }

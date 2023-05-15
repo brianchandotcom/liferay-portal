@@ -950,6 +950,10 @@ public class TranslationEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(TranslationEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile TranslationEntryPersistence _persistence;
 
 }

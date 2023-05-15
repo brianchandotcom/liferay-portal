@@ -1044,6 +1044,10 @@ public class JSONStorageEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(JSONStorageEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }

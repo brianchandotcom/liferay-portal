@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.spring.sample.service.persistenc
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -482,14 +480,14 @@ public abstract class SpringEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry",
 			springEntryLocalService);
 
-		_setLocalServiceUtilService(springEntryLocalService);
+		SpringEntryLocalServiceUtil.setService(springEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.spring.sample.model.SpringEntry");
 
-		_setLocalServiceUtilService(null);
+		SpringEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -531,22 +529,6 @@ public abstract class SpringEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SpringEntryLocalService springEntryLocalService) {
-
-		try {
-			Field field = SpringEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, springEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

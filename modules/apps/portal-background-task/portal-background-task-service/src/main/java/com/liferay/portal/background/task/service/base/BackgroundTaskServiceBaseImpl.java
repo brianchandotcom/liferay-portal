@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class BackgroundTaskServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		BackgroundTaskServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class BackgroundTaskServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		backgroundTaskService = (BackgroundTaskService)aopProxy;
 
-		_setServiceUtilService(backgroundTaskService);
+		BackgroundTaskServiceUtil.setService(backgroundTaskService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class BackgroundTaskServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		BackgroundTaskService backgroundTaskService) {
-
-		try {
-			Field field = BackgroundTaskServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, backgroundTaskService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

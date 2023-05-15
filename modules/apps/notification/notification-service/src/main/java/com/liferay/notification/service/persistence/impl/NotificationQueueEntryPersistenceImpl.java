@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -3640,30 +3639,14 @@ public class NotificationQueueEntryPersistenceImpl
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"type_", "status"}, false);
 
-		_setNotificationQueueEntryUtilPersistence(this);
+		NotificationQueueEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setNotificationQueueEntryUtilPersistence(null);
+		NotificationQueueEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(NotificationQueueEntryImpl.class.getName());
-	}
-
-	private void _setNotificationQueueEntryUtilPersistence(
-		NotificationQueueEntryPersistence notificationQueueEntryPersistence) {
-
-		try {
-			Field field = NotificationQueueEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, notificationQueueEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -51,8 +51,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -411,7 +409,7 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceChannelRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -427,7 +425,8 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 		commerceChannelRelLocalService =
 			(CommerceChannelRelLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceChannelRelLocalService);
+		CommerceChannelRelLocalServiceUtil.setService(
+			commerceChannelRelLocalService);
 	}
 
 	/**
@@ -485,23 +484,6 @@ public abstract class CommerceChannelRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceChannelRelLocalService commerceChannelRelLocalService) {
-
-		try {
-			Field field =
-				CommerceChannelRelLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceChannelRelLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -46,7 +46,6 @@ import com.liferay.portal.model.impl.CompanyModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1369,28 +1368,13 @@ public class CompanyPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"logoId"},
 			false);
 
-		_setCompanyUtilPersistence(this);
+		CompanyUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setCompanyUtilPersistence(null);
+		CompanyUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(CompanyImpl.class.getName());
-	}
-
-	private void _setCompanyUtilPersistence(
-		CompanyPersistence companyPersistence) {
-
-		try {
-			Field field = CompanyUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, companyPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_COMPANY =

@@ -447,6 +447,10 @@ public class TranslationEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(TranslationEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile TranslationEntryLocalService _service;
 
 }

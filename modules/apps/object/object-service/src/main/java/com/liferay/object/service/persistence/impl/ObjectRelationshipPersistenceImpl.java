@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -8727,30 +8726,14 @@ public class ObjectRelationshipPersistenceImpl
 			},
 			false);
 
-		_setObjectRelationshipUtilPersistence(this);
+		ObjectRelationshipUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectRelationshipUtilPersistence(null);
+		ObjectRelationshipUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectRelationshipImpl.class.getName());
-	}
-
-	private void _setObjectRelationshipUtilPersistence(
-		ObjectRelationshipPersistence objectRelationshipPersistence) {
-
-		try {
-			Field field = ObjectRelationshipUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectRelationshipPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

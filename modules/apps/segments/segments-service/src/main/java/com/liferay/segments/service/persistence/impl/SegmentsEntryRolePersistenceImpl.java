@@ -48,7 +48,6 @@ import com.liferay.segments.service.persistence.impl.constants.SegmentsPersisten
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2223,30 +2222,14 @@ public class SegmentsEntryRolePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"segmentsEntryId", "roleId"}, false);
 
-		_setSegmentsEntryRoleUtilPersistence(this);
+		SegmentsEntryRoleUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSegmentsEntryRoleUtilPersistence(null);
+		SegmentsEntryRoleUtil.setPersistence(null);
 
 		entityCache.removeCache(SegmentsEntryRoleImpl.class.getName());
-	}
-
-	private void _setSegmentsEntryRoleUtilPersistence(
-		SegmentsEntryRolePersistence segmentsEntryRolePersistence) {
-
-		try {
-			Field field = SegmentsEntryRoleUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, segmentsEntryRolePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

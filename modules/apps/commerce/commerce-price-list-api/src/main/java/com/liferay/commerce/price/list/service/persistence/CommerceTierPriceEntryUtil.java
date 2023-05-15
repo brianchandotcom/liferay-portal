@@ -1941,6 +1941,12 @@ public class CommerceTierPriceEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceTierPriceEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceTierPriceEntryPersistence _persistence;
 
 }

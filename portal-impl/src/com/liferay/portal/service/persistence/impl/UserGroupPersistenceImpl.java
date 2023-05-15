@@ -62,7 +62,6 @@ import com.liferay.portal.model.impl.UserGroupModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -8037,32 +8036,17 @@ public class UserGroupPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setUserGroupUtilPersistence(this);
+		UserGroupUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setUserGroupUtilPersistence(null);
+		UserGroupUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(UserGroupImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("Groups_UserGroups");
 		TableMapperFactory.removeTableMapper("UserGroups_Teams");
 		TableMapperFactory.removeTableMapper("Users_UserGroups");
-	}
-
-	private void _setUserGroupUtilPersistence(
-		UserGroupPersistence userGroupPersistence) {
-
-		try {
-			Field field = UserGroupUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, userGroupPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@BeanReference(type = GroupPersistence.class)

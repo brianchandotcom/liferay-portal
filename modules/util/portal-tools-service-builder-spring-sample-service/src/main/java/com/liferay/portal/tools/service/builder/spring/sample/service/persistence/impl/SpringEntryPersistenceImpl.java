@@ -47,7 +47,6 @@ import com.liferay.portal.tools.service.builder.spring.sample.service.persistenc
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2294,29 +2293,13 @@ public class SpringEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_setSpringEntryUtilPersistence(this);
+		SpringEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setSpringEntryUtilPersistence(null);
+		SpringEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(SpringEntryImpl.class.getName());
-	}
-
-	private void _setSpringEntryUtilPersistence(
-		SpringEntryPersistence springEntryPersistence) {
-
-		try {
-			Field field = SpringEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, springEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

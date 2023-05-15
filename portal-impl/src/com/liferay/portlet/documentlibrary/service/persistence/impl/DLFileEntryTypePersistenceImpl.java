@@ -59,7 +59,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4675,31 +4674,15 @@ public class DLFileEntryTypePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "fileEntryTypeKey"}, false);
 
-		_setDLFileEntryTypeUtilPersistence(this);
+		DLFileEntryTypeUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setDLFileEntryTypeUtilPersistence(null);
+		DLFileEntryTypeUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(DLFileEntryTypeImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("DLFileEntryTypes_DLFolders");
-	}
-
-	private void _setDLFileEntryTypeUtilPersistence(
-		DLFileEntryTypePersistence dlFileEntryTypePersistence) {
-
-		try {
-			Field field = DLFileEntryTypeUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dlFileEntryTypePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@BeanReference(type = DLFolderPersistence.class)

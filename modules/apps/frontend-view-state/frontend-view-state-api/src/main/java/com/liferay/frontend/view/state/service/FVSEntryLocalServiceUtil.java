@@ -335,6 +335,10 @@ public class FVSEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FVSEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FVSEntryLocalService _service;
 
 }

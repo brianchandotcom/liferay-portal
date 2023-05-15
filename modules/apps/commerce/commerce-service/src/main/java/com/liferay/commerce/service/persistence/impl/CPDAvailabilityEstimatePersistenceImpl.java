@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2656,30 +2655,14 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"CProductId"},
 			false);
 
-		_setCPDAvailabilityEstimateUtilPersistence(this);
+		CPDAvailabilityEstimateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDAvailabilityEstimateUtilPersistence(null);
+		CPDAvailabilityEstimateUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDAvailabilityEstimateImpl.class.getName());
-	}
-
-	private void _setCPDAvailabilityEstimateUtilPersistence(
-		CPDAvailabilityEstimatePersistence cpdAvailabilityEstimatePersistence) {
-
-		try {
-			Field field = CPDAvailabilityEstimateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpdAvailabilityEstimatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

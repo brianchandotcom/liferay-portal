@@ -386,6 +386,10 @@ public class CSDiagramSettingLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CSDiagramSettingLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CSDiagramSettingLocalService _service;
 
 }

@@ -95,6 +95,10 @@ public class PortletPreferencesServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PortletPreferencesService service) {
+		_service = service;
+	}
+
 	private static volatile PortletPreferencesService _service;
 
 }

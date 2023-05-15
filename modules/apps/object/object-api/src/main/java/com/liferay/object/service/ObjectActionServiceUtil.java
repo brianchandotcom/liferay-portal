@@ -97,6 +97,10 @@ public class ObjectActionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectActionService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectActionService _service;
 
 }

@@ -413,6 +413,10 @@ public class DEDataListViewLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DEDataListViewLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DEDataListViewLocalService _service;
 
 }

@@ -754,6 +754,10 @@ public class SamlSpSessionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SamlSpSessionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SamlSpSessionPersistence _persistence;
 
 }

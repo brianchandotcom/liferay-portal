@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3634,30 +3633,14 @@ public class ListTypeEntryPersistenceImpl
 			},
 			false);
 
-		_setListTypeEntryUtilPersistence(this);
+		ListTypeEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setListTypeEntryUtilPersistence(null);
+		ListTypeEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(ListTypeEntryImpl.class.getName());
-	}
-
-	private void _setListTypeEntryUtilPersistence(
-		ListTypeEntryPersistence listTypeEntryPersistence) {
-
-		try {
-			Field field = ListTypeEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, listTypeEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

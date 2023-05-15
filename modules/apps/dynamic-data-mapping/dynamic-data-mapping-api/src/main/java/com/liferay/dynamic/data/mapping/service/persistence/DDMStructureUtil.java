@@ -3238,6 +3238,10 @@ public class DDMStructureUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DDMStructurePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DDMStructurePersistence _persistence;
 
 }

@@ -1481,6 +1481,12 @@ public class OAuth2AuthorizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		OAuth2AuthorizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile OAuth2AuthorizationPersistence _persistence;
 
 }

@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -415,7 +413,7 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		AnalyticsDeleteMessageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -431,7 +429,8 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 		analyticsDeleteMessageLocalService =
 			(AnalyticsDeleteMessageLocalService)aopProxy;
 
-		_setLocalServiceUtilService(analyticsDeleteMessageLocalService);
+		AnalyticsDeleteMessageLocalServiceUtil.setService(
+			analyticsDeleteMessageLocalService);
 	}
 
 	/**
@@ -474,23 +473,6 @@ public abstract class AnalyticsDeleteMessageLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		AnalyticsDeleteMessageLocalService analyticsDeleteMessageLocalService) {
-
-		try {
-			Field field =
-				AnalyticsDeleteMessageLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, analyticsDeleteMessageLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

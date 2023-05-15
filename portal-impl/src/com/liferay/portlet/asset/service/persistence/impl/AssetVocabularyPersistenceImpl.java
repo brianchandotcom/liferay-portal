@@ -55,7 +55,6 @@ import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7536,29 +7535,13 @@ public class AssetVocabularyPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false);
 
-		_setAssetVocabularyUtilPersistence(this);
+		AssetVocabularyUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setAssetVocabularyUtilPersistence(null);
+		AssetVocabularyUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(AssetVocabularyImpl.class.getName());
-	}
-
-	private void _setAssetVocabularyUtilPersistence(
-		AssetVocabularyPersistence assetVocabularyPersistence) {
-
-		try {
-			Field field = AssetVocabularyUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, assetVocabularyPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_ASSETVOCABULARY =

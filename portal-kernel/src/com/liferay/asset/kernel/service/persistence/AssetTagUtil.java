@@ -1722,6 +1722,10 @@ public class AssetTagUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(AssetTagPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile AssetTagPersistence _persistence;
 
 }

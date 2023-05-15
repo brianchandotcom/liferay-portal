@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.CacheDi
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -472,14 +470,15 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry",
 			cacheDisabledEntryLocalService);
 
-		_setLocalServiceUtilService(cacheDisabledEntryLocalService);
+		CacheDisabledEntryLocalServiceUtil.setService(
+			cacheDisabledEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntry");
 
-		_setLocalServiceUtilService(null);
+		CacheDisabledEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -522,23 +521,6 @@ public abstract class CacheDisabledEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CacheDisabledEntryLocalService cacheDisabledEntryLocalService) {
-
-		try {
-			Field field =
-				CacheDisabledEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cacheDisabledEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

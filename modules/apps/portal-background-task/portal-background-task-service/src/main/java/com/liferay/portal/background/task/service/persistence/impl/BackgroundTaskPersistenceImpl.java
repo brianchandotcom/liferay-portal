@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -9500,30 +9499,14 @@ public class BackgroundTaskPersistenceImpl
 			},
 			false);
 
-		_setBackgroundTaskUtilPersistence(this);
+		BackgroundTaskUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setBackgroundTaskUtilPersistence(null);
+		BackgroundTaskUtil.setPersistence(null);
 
 		entityCache.removeCache(BackgroundTaskImpl.class.getName());
-	}
-
-	private void _setBackgroundTaskUtilPersistence(
-		BackgroundTaskPersistence backgroundTaskPersistence) {
-
-		try {
-			Field field = BackgroundTaskUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, backgroundTaskPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

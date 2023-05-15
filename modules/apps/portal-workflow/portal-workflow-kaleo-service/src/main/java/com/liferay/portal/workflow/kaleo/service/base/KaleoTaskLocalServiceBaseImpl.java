@@ -50,8 +50,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskPersistenc
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -385,7 +383,7 @@ public abstract class KaleoTaskLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		KaleoTaskLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -400,7 +398,7 @@ public abstract class KaleoTaskLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoTaskLocalService = (KaleoTaskLocalService)aopProxy;
 
-		_setLocalServiceUtilService(kaleoTaskLocalService);
+		KaleoTaskLocalServiceUtil.setService(kaleoTaskLocalService);
 	}
 
 	/**
@@ -456,22 +454,6 @@ public abstract class KaleoTaskLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		KaleoTaskLocalService kaleoTaskLocalService) {
-
-		try {
-			Field field = KaleoTaskLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoTaskLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

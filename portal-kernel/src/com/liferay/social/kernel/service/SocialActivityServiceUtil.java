@@ -630,6 +630,10 @@ public class SocialActivityServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SocialActivityService service) {
+		_service = service;
+	}
+
 	private static volatile SocialActivityService _service;
 
 }

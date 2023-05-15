@@ -31,8 +31,6 @@ import com.liferay.sharing.service.SharingEntryServiceUtil;
 import com.liferay.sharing.service.persistence.SharingEntryFinder;
 import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class SharingEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SharingEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class SharingEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sharingEntryService = (SharingEntryService)aopProxy;
 
-		_setServiceUtilService(sharingEntryService);
+		SharingEntryServiceUtil.setService(sharingEntryService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class SharingEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		SharingEntryService sharingEntryService) {
-
-		try {
-			Field field = SharingEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sharingEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

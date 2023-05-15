@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -516,7 +514,7 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DispatchTriggerLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -531,7 +529,7 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		dispatchTriggerLocalService = (DispatchTriggerLocalService)aopProxy;
 
-		_setLocalServiceUtilService(dispatchTriggerLocalService);
+		DispatchTriggerLocalServiceUtil.setService(dispatchTriggerLocalService);
 	}
 
 	/**
@@ -573,23 +571,6 @@ public abstract class DispatchTriggerLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DispatchTriggerLocalService dispatchTriggerLocalService) {
-
-		try {
-			Field field =
-				DispatchTriggerLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dispatchTriggerLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

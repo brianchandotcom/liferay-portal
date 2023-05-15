@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.ManyCol
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -461,14 +459,15 @@ public abstract class ManyColumnsEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry",
 			manyColumnsEntryLocalService);
 
-		_setLocalServiceUtilService(manyColumnsEntryLocalService);
+		ManyColumnsEntryLocalServiceUtil.setService(
+			manyColumnsEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry");
 
-		_setLocalServiceUtilService(null);
+		ManyColumnsEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -510,23 +509,6 @@ public abstract class ManyColumnsEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ManyColumnsEntryLocalService manyColumnsEntryLocalService) {
-
-		try {
-			Field field =
-				ManyColumnsEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, manyColumnsEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

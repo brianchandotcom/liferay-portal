@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.EmailAddressServiceUtil;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -142,11 +140,11 @@ public abstract class EmailAddressServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(emailAddressService);
+		EmailAddressServiceUtil.setService(emailAddressService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		EmailAddressServiceUtil.setService(null);
 	}
 
 	/**
@@ -188,22 +186,6 @@ public abstract class EmailAddressServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		EmailAddressService emailAddressService) {
-
-		try {
-			Field field = EmailAddressServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, emailAddressService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

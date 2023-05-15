@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1393,29 +1392,13 @@ public class PasswordPolicyRelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
-		_setPasswordPolicyRelUtilPersistence(this);
+		PasswordPolicyRelUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setPasswordPolicyRelUtilPersistence(null);
+		PasswordPolicyRelUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(PasswordPolicyRelImpl.class.getName());
-	}
-
-	private void _setPasswordPolicyRelUtilPersistence(
-		PasswordPolicyRelPersistence passwordPolicyRelPersistence) {
-
-		try {
-			Field field = PasswordPolicyRelUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, passwordPolicyRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_PASSWORDPOLICYREL =

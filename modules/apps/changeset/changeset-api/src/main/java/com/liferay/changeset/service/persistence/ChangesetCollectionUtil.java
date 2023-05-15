@@ -1060,6 +1060,12 @@ public class ChangesetCollectionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ChangesetCollectionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ChangesetCollectionPersistence _persistence;
 
 }

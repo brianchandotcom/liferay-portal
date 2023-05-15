@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class FragmentEntryLinkServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		FragmentEntryLinkServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class FragmentEntryLinkServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		fragmentEntryLinkService = (FragmentEntryLinkService)aopProxy;
 
-		_setServiceUtilService(fragmentEntryLinkService);
+		FragmentEntryLinkServiceUtil.setService(fragmentEntryLinkService);
 	}
 
 	/**
@@ -117,22 +115,6 @@ public abstract class FragmentEntryLinkServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		FragmentEntryLinkService fragmentEntryLinkService) {
-
-		try {
-			Field field = FragmentEntryLinkServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, fragmentEntryLinkService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

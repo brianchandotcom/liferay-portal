@@ -147,6 +147,10 @@ public class CommerceTermEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceTermEntryService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceTermEntryService _service;
 
 }

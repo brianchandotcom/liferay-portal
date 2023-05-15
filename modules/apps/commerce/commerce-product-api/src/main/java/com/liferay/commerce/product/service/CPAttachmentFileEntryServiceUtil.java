@@ -187,6 +187,10 @@ public class CPAttachmentFileEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPAttachmentFileEntryService service) {
+		_service = service;
+	}
+
 	private static volatile CPAttachmentFileEntryService _service;
 
 }

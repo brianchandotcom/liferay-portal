@@ -346,6 +346,10 @@ public class AnalyticsDeleteMessageLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AnalyticsDeleteMessageLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AnalyticsDeleteMessageLocalService _service;
 
 }

@@ -273,6 +273,10 @@ public class LocalizedEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(LocalizedEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile LocalizedEntryPersistence _persistence;
 
 }

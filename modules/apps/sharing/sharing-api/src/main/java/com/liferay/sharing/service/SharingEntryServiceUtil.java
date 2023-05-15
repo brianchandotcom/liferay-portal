@@ -156,6 +156,10 @@ public class SharingEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SharingEntryService service) {
+		_service = service;
+	}
+
 	private static volatile SharingEntryService _service;
 
 }

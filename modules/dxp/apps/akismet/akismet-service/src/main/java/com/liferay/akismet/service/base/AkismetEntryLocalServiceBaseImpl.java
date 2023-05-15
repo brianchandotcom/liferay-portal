@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -388,7 +386,7 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		AkismetEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -403,7 +401,7 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		akismetEntryLocalService = (AkismetEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(akismetEntryLocalService);
+		AkismetEntryLocalServiceUtil.setService(akismetEntryLocalService);
 	}
 
 	/**
@@ -445,22 +443,6 @@ public abstract class AkismetEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		AkismetEntryLocalService akismetEntryLocalService) {
-
-		try {
-			Field field = AkismetEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, akismetEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

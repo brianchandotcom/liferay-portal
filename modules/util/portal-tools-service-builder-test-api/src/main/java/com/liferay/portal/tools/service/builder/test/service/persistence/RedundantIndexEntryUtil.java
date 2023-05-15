@@ -349,6 +349,12 @@ public class RedundantIndexEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		RedundantIndexEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile RedundantIndexEntryPersistence _persistence;
 
 }

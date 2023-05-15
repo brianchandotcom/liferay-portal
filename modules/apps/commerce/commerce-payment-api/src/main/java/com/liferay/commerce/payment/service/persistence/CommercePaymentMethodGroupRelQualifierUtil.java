@@ -814,6 +814,12 @@ public class CommercePaymentMethodGroupRelQualifierUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommercePaymentMethodGroupRelQualifierPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommercePaymentMethodGroupRelQualifierPersistence
 		_persistence;
 

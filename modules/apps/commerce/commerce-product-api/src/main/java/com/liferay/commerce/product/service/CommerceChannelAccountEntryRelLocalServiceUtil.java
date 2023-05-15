@@ -413,6 +413,12 @@ public class CommerceChannelAccountEntryRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceChannelAccountEntryRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceChannelAccountEntryRelLocalService _service;
 
 }

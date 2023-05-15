@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1212,31 +1211,14 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"referenceType", "fileEntryId"}, false);
 
-		_setDLOpenerFileEntryReferenceUtilPersistence(this);
+		DLOpenerFileEntryReferenceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDLOpenerFileEntryReferenceUtilPersistence(null);
+		DLOpenerFileEntryReferenceUtil.setPersistence(null);
 
 		entityCache.removeCache(DLOpenerFileEntryReferenceImpl.class.getName());
-	}
-
-	private void _setDLOpenerFileEntryReferenceUtilPersistence(
-		DLOpenerFileEntryReferencePersistence
-			dlOpenerFileEntryReferencePersistence) {
-
-		try {
-			Field field = DLOpenerFileEntryReferenceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dlOpenerFileEntryReferencePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

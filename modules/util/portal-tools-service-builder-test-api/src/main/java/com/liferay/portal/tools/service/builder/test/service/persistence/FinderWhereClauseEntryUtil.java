@@ -466,6 +466,12 @@ public class FinderWhereClauseEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		FinderWhereClauseEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile FinderWhereClauseEntryPersistence _persistence;
 
 }

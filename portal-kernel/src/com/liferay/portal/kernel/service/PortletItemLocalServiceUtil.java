@@ -331,6 +331,10 @@ public class PortletItemLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PortletItemLocalService service) {
+		_service = service;
+	}
+
 	private static volatile PortletItemLocalService _service;
 
 }

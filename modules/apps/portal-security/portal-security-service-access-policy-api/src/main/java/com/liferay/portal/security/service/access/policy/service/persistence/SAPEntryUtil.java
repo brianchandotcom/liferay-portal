@@ -1377,6 +1377,10 @@ public class SAPEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SAPEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SAPEntryPersistence _persistence;
 
 }

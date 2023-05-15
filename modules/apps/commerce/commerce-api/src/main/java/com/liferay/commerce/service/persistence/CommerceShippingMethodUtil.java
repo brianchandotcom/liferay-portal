@@ -709,6 +709,12 @@ public class CommerceShippingMethodUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceShippingMethodPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceShippingMethodPersistence _persistence;
 
 }

@@ -308,6 +308,10 @@ public class CTMessageLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CTMessageLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CTMessageLocalService _service;
 
 }

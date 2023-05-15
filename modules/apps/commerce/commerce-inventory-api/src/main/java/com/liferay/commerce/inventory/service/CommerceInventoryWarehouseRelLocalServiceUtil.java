@@ -400,6 +400,12 @@ public class CommerceInventoryWarehouseRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceInventoryWarehouseRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceInventoryWarehouseRelLocalService _service;
 
 }

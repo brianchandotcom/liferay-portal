@@ -54,8 +54,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.sql.Blob;
 
 import java.util.List;
@@ -468,7 +466,7 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		AnalyticsMessageLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -483,7 +481,8 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		analyticsMessageLocalService = (AnalyticsMessageLocalService)aopProxy;
 
-		_setLocalServiceUtilService(analyticsMessageLocalService);
+		AnalyticsMessageLocalServiceUtil.setService(
+			analyticsMessageLocalService);
 	}
 
 	/**
@@ -525,23 +524,6 @@ public abstract class AnalyticsMessageLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		AnalyticsMessageLocalService analyticsMessageLocalService) {
-
-		try {
-			Field field =
-				AnalyticsMessageLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, analyticsMessageLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

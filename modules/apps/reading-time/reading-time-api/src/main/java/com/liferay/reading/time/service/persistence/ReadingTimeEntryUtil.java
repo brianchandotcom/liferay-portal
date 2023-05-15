@@ -762,6 +762,10 @@ public class ReadingTimeEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ReadingTimeEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ReadingTimeEntryPersistence _persistence;
 
 }

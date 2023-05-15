@@ -455,6 +455,10 @@ public class CPDisplayLayoutLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPDisplayLayoutLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CPDisplayLayoutLocalService _service;
 
 }

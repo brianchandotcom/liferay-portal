@@ -63,8 +63,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -598,7 +596,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		BookmarksFolderLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -613,7 +611,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		bookmarksFolderLocalService = (BookmarksFolderLocalService)aopProxy;
 
-		_setLocalServiceUtilService(bookmarksFolderLocalService);
+		BookmarksFolderLocalServiceUtil.setService(bookmarksFolderLocalService);
 	}
 
 	/**
@@ -655,23 +653,6 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		try {
-			Field field =
-				BookmarksFolderLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, bookmarksFolderLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

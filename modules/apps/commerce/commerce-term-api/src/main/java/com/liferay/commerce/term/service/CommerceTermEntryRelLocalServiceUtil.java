@@ -374,6 +374,10 @@ public class CommerceTermEntryRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceTermEntryRelLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceTermEntryRelLocalService _service;
 
 }

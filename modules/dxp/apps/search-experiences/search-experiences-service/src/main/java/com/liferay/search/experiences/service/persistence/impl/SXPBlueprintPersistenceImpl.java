@@ -58,7 +58,6 @@ import com.liferay.search.experiences.service.persistence.impl.constants.SXPPers
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3914,30 +3913,14 @@ public class SXPBlueprintPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setSXPBlueprintUtilPersistence(this);
+		SXPBlueprintUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSXPBlueprintUtilPersistence(null);
+		SXPBlueprintUtil.setPersistence(null);
 
 		entityCache.removeCache(SXPBlueprintImpl.class.getName());
-	}
-
-	private void _setSXPBlueprintUtilPersistence(
-		SXPBlueprintPersistence sxpBlueprintPersistence) {
-
-		try {
-			Field field = SXPBlueprintUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, sxpBlueprintPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

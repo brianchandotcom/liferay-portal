@@ -503,6 +503,10 @@ public class CalendarBookingServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CalendarBookingService service) {
+		_service = service;
+	}
+
 	private static volatile CalendarBookingService _service;
 
 }

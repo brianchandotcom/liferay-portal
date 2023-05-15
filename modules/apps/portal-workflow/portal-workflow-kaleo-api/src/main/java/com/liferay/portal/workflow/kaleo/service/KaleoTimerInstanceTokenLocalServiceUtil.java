@@ -408,6 +408,10 @@ public class KaleoTimerInstanceTokenLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(KaleoTimerInstanceTokenLocalService service) {
+		_service = service;
+	}
+
 	private static volatile KaleoTimerInstanceTokenLocalService _service;
 
 }

@@ -139,6 +139,10 @@ public class CommerceAccountGroupServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceAccountGroupService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceAccountGroupService _service;
 
 }

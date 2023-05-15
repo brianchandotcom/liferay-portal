@@ -328,6 +328,10 @@ public class PasswordTrackerLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PasswordTrackerLocalService service) {
+		_service = service;
+	}
+
 	private static volatile PasswordTrackerLocalService _service;
 
 }

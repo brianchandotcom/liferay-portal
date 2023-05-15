@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2791,29 +2790,14 @@ public class DDMFieldPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"storageId", "instanceId"}, false);
 
-		_setDDMFieldUtilPersistence(this);
+		DDMFieldUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMFieldUtilPersistence(null);
+		DDMFieldUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMFieldImpl.class.getName());
-	}
-
-	private void _setDDMFieldUtilPersistence(
-		DDMFieldPersistence ddmFieldPersistence) {
-
-		try {
-			Field field = DDMFieldUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFieldPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

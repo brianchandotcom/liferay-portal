@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.DataLim
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -452,14 +450,14 @@ public abstract class DataLimitEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.DataLimitEntry",
 			dataLimitEntryLocalService);
 
-		_setLocalServiceUtilService(dataLimitEntryLocalService);
+		DataLimitEntryLocalServiceUtil.setService(dataLimitEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.DataLimitEntry");
 
-		_setLocalServiceUtilService(null);
+		DataLimitEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -501,22 +499,6 @@ public abstract class DataLimitEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DataLimitEntryLocalService dataLimitEntryLocalService) {
-
-		try {
-			Field field = DataLimitEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dataLimitEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -768,14 +766,14 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 			"com.liferay.document.library.kernel.model.DLFileEntryType",
 			dlFileEntryTypeLocalService);
 
-		_setLocalServiceUtilService(dlFileEntryTypeLocalService);
+		DLFileEntryTypeLocalServiceUtil.setService(dlFileEntryTypeLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.document.library.kernel.model.DLFileEntryType");
 
-		_setLocalServiceUtilService(null);
+		DLFileEntryTypeLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -832,23 +830,6 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		try {
-			Field field =
-				DLFileEntryTypeLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dlFileEntryTypeLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -49,7 +49,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.Kale
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3926,30 +3925,14 @@ public class KaleoTaskFormInstancePersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"kaleoTaskFormId"}, false);
 
-		_setKaleoTaskFormInstanceUtilPersistence(this);
+		KaleoTaskFormInstanceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setKaleoTaskFormInstanceUtilPersistence(null);
+		KaleoTaskFormInstanceUtil.setPersistence(null);
 
 		entityCache.removeCache(KaleoTaskFormInstanceImpl.class.getName());
-	}
-
-	private void _setKaleoTaskFormInstanceUtilPersistence(
-		KaleoTaskFormInstancePersistence kaleoTaskFormInstancePersistence) {
-
-		try {
-			Field field = KaleoTaskFormInstanceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoTaskFormInstancePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

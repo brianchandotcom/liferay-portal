@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3279,30 +3278,14 @@ public class BatchEngineImportTaskPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setBatchEngineImportTaskUtilPersistence(this);
+		BatchEngineImportTaskUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setBatchEngineImportTaskUtilPersistence(null);
+		BatchEngineImportTaskUtil.setPersistence(null);
 
 		entityCache.removeCache(BatchEngineImportTaskImpl.class.getName());
-	}
-
-	private void _setBatchEngineImportTaskUtilPersistence(
-		BatchEngineImportTaskPersistence batchEngineImportTaskPersistence) {
-
-		try {
-			Field field = BatchEngineImportTaskUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, batchEngineImportTaskPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

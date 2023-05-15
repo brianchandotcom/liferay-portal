@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -672,7 +670,7 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPAttachmentFileEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -689,7 +687,8 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 		cpAttachmentFileEntryLocalService =
 			(CPAttachmentFileEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpAttachmentFileEntryLocalService);
+		CPAttachmentFileEntryLocalServiceUtil.setService(
+			cpAttachmentFileEntryLocalService);
 	}
 
 	/**
@@ -747,23 +746,6 @@ public abstract class CPAttachmentFileEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService) {
-
-		try {
-			Field field =
-				CPAttachmentFileEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpAttachmentFileEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

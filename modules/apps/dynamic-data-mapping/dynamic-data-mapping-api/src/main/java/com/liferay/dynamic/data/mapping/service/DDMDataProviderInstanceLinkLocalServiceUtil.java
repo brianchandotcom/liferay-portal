@@ -360,6 +360,12 @@ public class DDMDataProviderInstanceLinkLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		DDMDataProviderInstanceLinkLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile DDMDataProviderInstanceLinkLocalService _service;
 
 }

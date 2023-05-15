@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -58,7 +56,7 @@ public abstract class CompareRunsLocalServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CompareRunsLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -72,7 +70,7 @@ public abstract class CompareRunsLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		compareRunsLocalService = (CompareRunsLocalService)aopProxy;
 
-		_setLocalServiceUtilService(compareRunsLocalService);
+		CompareRunsLocalServiceUtil.setService(compareRunsLocalService);
 	}
 
 	/**
@@ -106,22 +104,6 @@ public abstract class CompareRunsLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CompareRunsLocalService compareRunsLocalService) {
-
-		try {
-			Field field = CompareRunsLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, compareRunsLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

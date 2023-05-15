@@ -60,6 +60,10 @@ public class ERUserGroupLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ERUserGroupLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ERUserGroupLocalService _service;
 
 }

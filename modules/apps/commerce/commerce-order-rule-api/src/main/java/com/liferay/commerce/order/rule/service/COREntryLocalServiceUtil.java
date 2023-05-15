@@ -513,6 +513,10 @@ public class COREntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(COREntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile COREntryLocalService _service;
 
 }

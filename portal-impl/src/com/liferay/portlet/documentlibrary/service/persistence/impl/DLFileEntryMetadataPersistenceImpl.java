@@ -48,7 +48,6 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelIm
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3426,29 +3425,13 @@ public class DLFileEntryMetadataPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"DDMStructureId", "fileVersionId"}, false);
 
-		_setDLFileEntryMetadataUtilPersistence(this);
+		DLFileEntryMetadataUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setDLFileEntryMetadataUtilPersistence(null);
+		DLFileEntryMetadataUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(DLFileEntryMetadataImpl.class.getName());
-	}
-
-	private void _setDLFileEntryMetadataUtilPersistence(
-		DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence) {
-
-		try {
-			Field field = DLFileEntryMetadataUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, dlFileEntryMetadataPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_DLFILEENTRYMETADATA =

@@ -118,6 +118,10 @@ public class TeamServiceUtil {
 		return _service;
 	}
 
+	public static void setService(TeamService service) {
+		_service = service;
+	}
+
 	private static volatile TeamService _service;
 
 }

@@ -58,6 +58,10 @@ public class SocialRequestServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SocialRequestService service) {
+		_service = service;
+	}
+
 	private static volatile SocialRequestService _service;
 
 }

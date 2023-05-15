@@ -357,6 +357,10 @@ public class MBCategoryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBCategoryService service) {
+		_service = service;
+	}
+
 	private static volatile MBCategoryService _service;
 
 }

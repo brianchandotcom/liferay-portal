@@ -75,6 +75,10 @@ public class DDMStructureLayoutServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMStructureLayoutService service) {
+		_service = service;
+	}
+
 	private static volatile DDMStructureLayoutService _service;
 
 }

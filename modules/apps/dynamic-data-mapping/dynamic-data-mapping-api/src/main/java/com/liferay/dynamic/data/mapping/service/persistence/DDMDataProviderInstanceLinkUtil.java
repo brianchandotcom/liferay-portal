@@ -741,6 +741,12 @@ public class DDMDataProviderInstanceLinkUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DDMDataProviderInstanceLinkPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DDMDataProviderInstanceLinkPersistence _persistence;
 
 }

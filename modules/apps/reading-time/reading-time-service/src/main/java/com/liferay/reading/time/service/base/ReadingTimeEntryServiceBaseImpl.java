@@ -30,8 +30,6 @@ import com.liferay.reading.time.service.ReadingTimeEntryService;
 import com.liferay.reading.time.service.ReadingTimeEntryServiceUtil;
 import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		ReadingTimeEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		readingTimeEntryService = (ReadingTimeEntryService)aopProxy;
 
-		_setServiceUtilService(readingTimeEntryService);
+		ReadingTimeEntryServiceUtil.setService(readingTimeEntryService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class ReadingTimeEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		ReadingTimeEntryService readingTimeEntryService) {
-
-		try {
-			Field field = ReadingTimeEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, readingTimeEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -451,14 +449,14 @@ public abstract class ResourceActionLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.ResourceAction",
 			resourceActionLocalService);
 
-		_setLocalServiceUtilService(resourceActionLocalService);
+		ResourceActionLocalServiceUtil.setService(resourceActionLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.ResourceAction");
 
-		_setLocalServiceUtilService(null);
+		ResourceActionLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -500,22 +498,6 @@ public abstract class ResourceActionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ResourceActionLocalService resourceActionLocalService) {
-
-		try {
-			Field field = ResourceActionLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, resourceActionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

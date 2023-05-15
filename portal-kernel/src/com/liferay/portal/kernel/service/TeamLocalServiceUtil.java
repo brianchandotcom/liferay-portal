@@ -577,6 +577,10 @@ public class TeamLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(TeamLocalService service) {
+		_service = service;
+	}
+
 	private static volatile TeamLocalService _service;
 
 }

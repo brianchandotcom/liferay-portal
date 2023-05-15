@@ -774,6 +774,12 @@ public class JournalArticleLocalizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		JournalArticleLocalizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile JournalArticleLocalizationPersistence _persistence;
 
 }

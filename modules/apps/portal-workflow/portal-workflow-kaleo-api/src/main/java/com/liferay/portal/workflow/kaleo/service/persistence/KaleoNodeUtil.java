@@ -818,6 +818,10 @@ public class KaleoNodeUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KaleoNodePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoNodePersistence _persistence;
 
 }

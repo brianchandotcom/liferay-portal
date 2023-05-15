@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -137,11 +135,11 @@ public abstract class AddressServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(addressService);
+		AddressServiceUtil.setService(addressService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		AddressServiceUtil.setService(null);
 	}
 
 	/**
@@ -183,19 +181,6 @@ public abstract class AddressServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(AddressService addressService) {
-		try {
-			Field field = AddressServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, addressService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

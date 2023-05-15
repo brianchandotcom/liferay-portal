@@ -54,8 +54,6 @@ import com.liferay.portal.reports.engine.console.service.persistence.DefinitionP
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -526,7 +524,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DefinitionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -541,7 +539,7 @@ public abstract class DefinitionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		definitionLocalService = (DefinitionLocalService)aopProxy;
 
-		_setLocalServiceUtilService(definitionLocalService);
+		DefinitionLocalServiceUtil.setService(definitionLocalService);
 	}
 
 	/**
@@ -583,22 +581,6 @@ public abstract class DefinitionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DefinitionLocalService definitionLocalService) {
-
-		try {
-			Field field = DefinitionLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, definitionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

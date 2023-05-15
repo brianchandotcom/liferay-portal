@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -587,7 +585,7 @@ public abstract class MBThreadLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		MBThreadLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -602,7 +600,7 @@ public abstract class MBThreadLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		mbThreadLocalService = (MBThreadLocalService)aopProxy;
 
-		_setLocalServiceUtilService(mbThreadLocalService);
+		MBThreadLocalServiceUtil.setService(mbThreadLocalService);
 	}
 
 	/**
@@ -658,22 +656,6 @@ public abstract class MBThreadLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		try {
-			Field field = MBThreadLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, mbThreadLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

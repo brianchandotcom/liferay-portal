@@ -51,7 +51,6 @@ import com.liferay.translation.service.persistence.impl.constants.TranslationPer
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3291,30 +3290,14 @@ public class TranslationEntryPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "languageId"}, false);
 
-		_setTranslationEntryUtilPersistence(this);
+		TranslationEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setTranslationEntryUtilPersistence(null);
+		TranslationEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(TranslationEntryImpl.class.getName());
-	}
-
-	private void _setTranslationEntryUtilPersistence(
-		TranslationEntryPersistence translationEntryPersistence) {
-
-		try {
-			Field field = TranslationEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, translationEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

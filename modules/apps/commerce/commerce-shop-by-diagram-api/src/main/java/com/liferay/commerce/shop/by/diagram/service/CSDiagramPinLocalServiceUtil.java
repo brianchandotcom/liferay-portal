@@ -327,6 +327,10 @@ public class CSDiagramPinLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CSDiagramPinLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CSDiagramPinLocalService _service;
 
 }

@@ -30,8 +30,6 @@ import com.liferay.search.experiences.service.SXPBlueprintService;
 import com.liferay.search.experiences.service.SXPBlueprintServiceUtil;
 import com.liferay.search.experiences.service.persistence.SXPBlueprintPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class SXPBlueprintServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SXPBlueprintServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class SXPBlueprintServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sxpBlueprintService = (SXPBlueprintService)aopProxy;
 
-		_setServiceUtilService(sxpBlueprintService);
+		SXPBlueprintServiceUtil.setService(sxpBlueprintService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class SXPBlueprintServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		SXPBlueprintService sxpBlueprintService) {
-
-		try {
-			Field field = SXPBlueprintServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sxpBlueprintService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

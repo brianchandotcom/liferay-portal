@@ -55,8 +55,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -567,14 +565,14 @@ public abstract class WebsiteLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.Website", websiteLocalService);
 
-		_setLocalServiceUtilService(websiteLocalService);
+		WebsiteLocalServiceUtil.setService(websiteLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.Website");
 
-		_setLocalServiceUtilService(null);
+		WebsiteLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -616,22 +614,6 @@ public abstract class WebsiteLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		WebsiteLocalService websiteLocalService) {
-
-		try {
-			Field field = WebsiteLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, websiteLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

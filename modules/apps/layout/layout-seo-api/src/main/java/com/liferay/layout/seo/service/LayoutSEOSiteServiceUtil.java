@@ -47,6 +47,10 @@ public class LayoutSEOSiteServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutSEOSiteService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutSEOSiteService _service;
 
 }

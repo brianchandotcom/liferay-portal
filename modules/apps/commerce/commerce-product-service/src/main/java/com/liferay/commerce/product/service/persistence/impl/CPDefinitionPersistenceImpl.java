@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -7115,30 +7114,14 @@ public class CPDefinitionPersistenceImpl
 			new String[] {Date.class.getName(), Integer.class.getName()},
 			new String[] {"displayDate", "status"}, false);
 
-		_setCPDefinitionUtilPersistence(this);
+		CPDefinitionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDefinitionUtilPersistence(null);
+		CPDefinitionUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDefinitionImpl.class.getName());
-	}
-
-	private void _setCPDefinitionUtilPersistence(
-		CPDefinitionPersistence cpDefinitionPersistence) {
-
-		try {
-			Field field = CPDefinitionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

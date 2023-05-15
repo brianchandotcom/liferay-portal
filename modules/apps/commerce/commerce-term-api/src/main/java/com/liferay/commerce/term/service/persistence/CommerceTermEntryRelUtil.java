@@ -728,6 +728,12 @@ public class CommerceTermEntryRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceTermEntryRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceTermEntryRelPersistence _persistence;
 
 }

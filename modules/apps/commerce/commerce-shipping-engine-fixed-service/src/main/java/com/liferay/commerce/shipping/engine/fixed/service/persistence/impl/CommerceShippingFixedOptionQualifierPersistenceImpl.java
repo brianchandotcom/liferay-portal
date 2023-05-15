@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2243,33 +2242,15 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			},
 			false);
 
-		_setCommerceShippingFixedOptionQualifierUtilPersistence(this);
+		CommerceShippingFixedOptionQualifierUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceShippingFixedOptionQualifierUtilPersistence(null);
+		CommerceShippingFixedOptionQualifierUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceShippingFixedOptionQualifierImpl.class.getName());
-	}
-
-	private void _setCommerceShippingFixedOptionQualifierUtilPersistence(
-		CommerceShippingFixedOptionQualifierPersistence
-			commerceShippingFixedOptionQualifierPersistence) {
-
-		try {
-			Field field =
-				CommerceShippingFixedOptionQualifierUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceShippingFixedOptionQualifierPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

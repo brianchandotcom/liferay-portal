@@ -72,6 +72,10 @@ public class NotificationQueueEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(NotificationQueueEntryService service) {
+		_service = service;
+	}
+
 	private static volatile NotificationQueueEntryService _service;
 
 }

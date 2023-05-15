@@ -123,6 +123,10 @@ public class SAPEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SAPEntryService service) {
+		_service = service;
+	}
+
 	private static volatile SAPEntryService _service;
 
 }

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3854,30 +3853,14 @@ public class OAuthClientEntryPersistenceImpl
 			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
 			false);
 
-		_setOAuthClientEntryUtilPersistence(this);
+		OAuthClientEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setOAuthClientEntryUtilPersistence(null);
+		OAuthClientEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(OAuthClientEntryImpl.class.getName());
-	}
-
-	private void _setOAuthClientEntryUtilPersistence(
-		OAuthClientEntryPersistence oAuthClientEntryPersistence) {
-
-		try {
-			Field field = OAuthClientEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, oAuthClientEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

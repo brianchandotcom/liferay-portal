@@ -86,6 +86,10 @@ public class ObjectValidationRuleServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectValidationRuleService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectValidationRuleService _service;
 
 }

@@ -1550,6 +1550,10 @@ public class WebsiteUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(WebsitePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile WebsitePersistence _persistence;
 
 }

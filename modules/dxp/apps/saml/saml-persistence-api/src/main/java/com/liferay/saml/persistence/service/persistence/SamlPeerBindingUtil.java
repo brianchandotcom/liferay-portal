@@ -713,6 +713,10 @@ public class SamlPeerBindingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SamlPeerBindingPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SamlPeerBindingPersistence _persistence;
 
 }

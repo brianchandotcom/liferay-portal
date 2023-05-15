@@ -612,6 +612,10 @@ public class CPDefinitionOptionRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPDefinitionOptionRelLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CPDefinitionOptionRelLocalService _service;
 
 }

@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		ERAssetVocabularyLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,8 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		erAssetVocabularyLocalService = (ERAssetVocabularyLocalService)aopProxy;
 
-		_setLocalServiceUtilService(erAssetVocabularyLocalService);
+		ERAssetVocabularyLocalServiceUtil.setService(
+			erAssetVocabularyLocalService);
 	}
 
 	/**
@@ -107,23 +106,6 @@ public abstract class ERAssetVocabularyLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ERAssetVocabularyLocalService erAssetVocabularyLocalService) {
-
-		try {
-			Field field =
-				ERAssetVocabularyLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, erAssetVocabularyLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

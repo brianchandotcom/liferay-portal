@@ -428,6 +428,10 @@ public class RatingsStatsUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(RatingsStatsPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile RatingsStatsPersistence _persistence;
 
 }

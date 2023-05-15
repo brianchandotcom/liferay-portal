@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.LayoutBranchModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -3108,29 +3107,13 @@ public class LayoutBranchPersistenceImpl
 			},
 			new String[] {"layoutSetBranchId", "plid", "master"}, false);
 
-		_setLayoutBranchUtilPersistence(this);
+		LayoutBranchUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setLayoutBranchUtilPersistence(null);
+		LayoutBranchUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(LayoutBranchImpl.class.getName());
-	}
-
-	private void _setLayoutBranchUtilPersistence(
-		LayoutBranchPersistence layoutBranchPersistence) {
-
-		try {
-			Field field = LayoutBranchUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutBranchPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_LAYOUTBRANCH =

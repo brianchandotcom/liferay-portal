@@ -52,8 +52,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.Version
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -507,14 +505,14 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.VersionedEntry",
 			versionedEntryLocalService);
 
-		_setLocalServiceUtilService(versionedEntryLocalService);
+		VersionedEntryLocalServiceUtil.setService(versionedEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.VersionedEntry");
 
-		_setLocalServiceUtilService(null);
+		VersionedEntryLocalServiceUtil.setService(null);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -948,22 +946,6 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		VersionedEntryLocalService versionedEntryLocalService) {
-
-		try {
-			Field field = VersionedEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, versionedEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2015,30 +2014,14 @@ public class CommerceTaxMethodPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "active_"}, false);
 
-		_setCommerceTaxMethodUtilPersistence(this);
+		CommerceTaxMethodUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceTaxMethodUtilPersistence(null);
+		CommerceTaxMethodUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceTaxMethodImpl.class.getName());
-	}
-
-	private void _setCommerceTaxMethodUtilPersistence(
-		CommerceTaxMethodPersistence commerceTaxMethodPersistence) {
-
-		try {
-			Field field = CommerceTaxMethodUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceTaxMethodPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

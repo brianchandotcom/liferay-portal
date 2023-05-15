@@ -1494,6 +1494,12 @@ public class AssetListEntryAssetEntryRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AssetListEntryAssetEntryRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AssetListEntryAssetEntryRelPersistence _persistence;
 
 }

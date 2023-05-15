@@ -47,7 +47,6 @@ import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7669,29 +7668,13 @@ public class ResourcePermissionPersistenceImpl
 			},
 			false);
 
-		_setResourcePermissionUtilPersistence(this);
+		ResourcePermissionUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setResourcePermissionUtilPersistence(null);
+		ResourcePermissionUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(ResourcePermissionImpl.class.getName());
-	}
-
-	private void _setResourcePermissionUtilPersistence(
-		ResourcePermissionPersistence resourcePermissionPersistence) {
-
-		try {
-			Field field = ResourcePermissionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, resourcePermissionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_RESOURCEPERMISSION =

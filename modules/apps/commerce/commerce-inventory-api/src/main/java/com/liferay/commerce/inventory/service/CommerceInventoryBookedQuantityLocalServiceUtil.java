@@ -432,6 +432,12 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceInventoryBookedQuantityLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceInventoryBookedQuantityLocalService
 		_service;
 

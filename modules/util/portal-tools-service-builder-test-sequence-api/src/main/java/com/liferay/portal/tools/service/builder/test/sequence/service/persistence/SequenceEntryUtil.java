@@ -629,6 +629,10 @@ public class SequenceEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SequenceEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SequenceEntryPersistence _persistence;
 
 }

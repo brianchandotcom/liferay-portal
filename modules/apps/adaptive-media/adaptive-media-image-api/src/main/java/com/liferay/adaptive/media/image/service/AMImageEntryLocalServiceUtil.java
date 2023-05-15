@@ -534,6 +534,10 @@ public class AMImageEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AMImageEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AMImageEntryLocalService _service;
 
 }

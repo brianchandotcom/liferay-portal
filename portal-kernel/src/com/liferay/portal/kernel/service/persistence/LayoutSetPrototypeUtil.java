@@ -1333,6 +1333,12 @@ public class LayoutSetPrototypeUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LayoutSetPrototypePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LayoutSetPrototypePersistence _persistence;
 
 }

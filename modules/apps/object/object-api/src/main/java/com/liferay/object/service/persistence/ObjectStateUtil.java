@@ -1044,6 +1044,10 @@ public class ObjectStateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectStatePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectStatePersistence _persistence;
 
 }

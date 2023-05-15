@@ -711,6 +711,12 @@ public class MFAFIDO2CredentialEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		MFAFIDO2CredentialEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile MFAFIDO2CredentialEntryPersistence _persistence;
 
 }

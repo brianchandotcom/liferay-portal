@@ -596,6 +596,12 @@ public class LVEntryLocalizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LVEntryLocalizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LVEntryLocalizationPersistence _persistence;
 
 }

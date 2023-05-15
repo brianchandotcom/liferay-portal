@@ -539,6 +539,10 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceShipmentItemLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceShipmentItemLocalService _service;
 
 }

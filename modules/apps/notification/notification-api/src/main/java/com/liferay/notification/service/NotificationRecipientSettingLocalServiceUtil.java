@@ -376,6 +376,12 @@ public class NotificationRecipientSettingLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		NotificationRecipientSettingLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile NotificationRecipientSettingLocalService _service;
 
 }

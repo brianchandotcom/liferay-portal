@@ -30,8 +30,6 @@ import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.service.RedirectEntryServiceUtil;
 import com.liferay.redirect.service.persistence.RedirectEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class RedirectEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		RedirectEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class RedirectEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		redirectEntryService = (RedirectEntryService)aopProxy;
 
-		_setServiceUtilService(redirectEntryService);
+		RedirectEntryServiceUtil.setService(redirectEntryService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class RedirectEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		RedirectEntryService redirectEntryService) {
-
-		try {
-			Field field = RedirectEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, redirectEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -2026,6 +2026,12 @@ public class CommerceInventoryWarehouseUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceInventoryWarehousePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceInventoryWarehousePersistence _persistence;
 
 }

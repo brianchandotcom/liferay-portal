@@ -954,6 +954,12 @@ public class CommercePriceModifierRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommercePriceModifierRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommercePriceModifierRelPersistence _persistence;
 
 }

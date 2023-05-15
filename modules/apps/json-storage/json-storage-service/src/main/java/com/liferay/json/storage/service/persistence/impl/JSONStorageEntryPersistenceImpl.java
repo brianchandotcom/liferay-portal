@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3316,30 +3315,14 @@ public class JSONStorageEntryPersistenceImpl
 			},
 			false);
 
-		_setJSONStorageEntryUtilPersistence(this);
+		JSONStorageEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setJSONStorageEntryUtilPersistence(null);
+		JSONStorageEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(JSONStorageEntryImpl.class.getName());
-	}
-
-	private void _setJSONStorageEntryUtilPersistence(
-		JSONStorageEntryPersistence jsonStorageEntryPersistence) {
-
-		try {
-			Field field = JSONStorageEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, jsonStorageEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

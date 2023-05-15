@@ -3229,6 +3229,12 @@ public class SegmentsExperienceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SegmentsExperiencePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SegmentsExperiencePersistence _persistence;
 
 }

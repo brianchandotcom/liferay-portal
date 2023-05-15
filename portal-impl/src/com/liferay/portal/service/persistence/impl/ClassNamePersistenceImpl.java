@@ -42,7 +42,6 @@ import com.liferay.portal.model.impl.ClassNameModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -838,28 +837,13 @@ public class ClassNamePersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"value"},
 			false);
 
-		_setClassNameUtilPersistence(this);
+		ClassNameUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setClassNameUtilPersistence(null);
+		ClassNameUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(ClassNameImpl.class.getName());
-	}
-
-	private void _setClassNameUtilPersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		try {
-			Field field = ClassNameUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, classNamePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_CLASSNAME =

@@ -654,6 +654,10 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FriendlyURLEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FriendlyURLEntryLocalService _service;
 
 }

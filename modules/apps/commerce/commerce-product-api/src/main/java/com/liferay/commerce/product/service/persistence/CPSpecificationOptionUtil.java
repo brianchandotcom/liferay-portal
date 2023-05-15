@@ -1393,6 +1393,12 @@ public class CPSpecificationOptionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CPSpecificationOptionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CPSpecificationOptionPersistence _persistence;
 
 }

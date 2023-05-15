@@ -1773,6 +1773,12 @@ public class CommerceChannelAccountEntryRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceChannelAccountEntryRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceChannelAccountEntryRelPersistence
 		_persistence;
 

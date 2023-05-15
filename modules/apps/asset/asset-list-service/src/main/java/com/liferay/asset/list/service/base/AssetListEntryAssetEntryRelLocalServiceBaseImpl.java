@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -571,7 +569,7 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		AssetListEntryAssetEntryRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -588,7 +586,8 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 		assetListEntryAssetEntryRelLocalService =
 			(AssetListEntryAssetEntryRelLocalService)aopProxy;
 
-		_setLocalServiceUtilService(assetListEntryAssetEntryRelLocalService);
+		AssetListEntryAssetEntryRelLocalServiceUtil.setService(
+			assetListEntryAssetEntryRelLocalService);
 	}
 
 	/**
@@ -647,24 +646,6 @@ public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		AssetListEntryAssetEntryRelLocalService
-			assetListEntryAssetEntryRelLocalService) {
-
-		try {
-			Field field =
-				AssetListEntryAssetEntryRelLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, assetListEntryAssetEntryRelLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

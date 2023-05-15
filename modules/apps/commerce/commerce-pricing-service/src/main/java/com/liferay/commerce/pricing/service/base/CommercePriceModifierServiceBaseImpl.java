@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -61,7 +59,7 @@ public abstract class CommercePriceModifierServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommercePriceModifierServiceUtil.setService(null);
 	}
 
 	@Override
@@ -75,7 +73,8 @@ public abstract class CommercePriceModifierServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceModifierService = (CommercePriceModifierService)aopProxy;
 
-		_setServiceUtilService(commercePriceModifierService);
+		CommercePriceModifierServiceUtil.setService(
+			commercePriceModifierService);
 	}
 
 	/**
@@ -118,23 +117,6 @@ public abstract class CommercePriceModifierServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommercePriceModifierService commercePriceModifierService) {
-
-		try {
-			Field field =
-				CommercePriceModifierServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePriceModifierService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

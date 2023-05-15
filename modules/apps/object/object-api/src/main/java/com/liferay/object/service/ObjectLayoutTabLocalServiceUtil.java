@@ -380,6 +380,10 @@ public class ObjectLayoutTabLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectLayoutTabLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectLayoutTabLocalService _service;
 
 }

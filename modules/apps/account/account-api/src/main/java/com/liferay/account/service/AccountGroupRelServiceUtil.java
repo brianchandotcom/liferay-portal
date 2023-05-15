@@ -86,6 +86,10 @@ public class AccountGroupRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AccountGroupRelService service) {
+		_service = service;
+	}
+
 	private static volatile AccountGroupRelService _service;
 
 }

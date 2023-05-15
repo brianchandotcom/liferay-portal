@@ -338,6 +338,10 @@ public class JournalFolderServiceUtil {
 		return _service;
 	}
 
+	public static void setService(JournalFolderService service) {
+		_service = service;
+	}
+
 	private static volatile JournalFolderService _service;
 
 }

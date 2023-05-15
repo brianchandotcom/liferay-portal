@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4037,29 +4036,14 @@ public class ModulePersistenceImpl
 			new String[] {"appId", "bundleSymbolicName", "bundleVersion"},
 			false);
 
-		_setModuleUtilPersistence(this);
+		ModuleUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setModuleUtilPersistence(null);
+		ModuleUtil.setPersistence(null);
 
 		entityCache.removeCache(ModuleImpl.class.getName());
-	}
-
-	private void _setModuleUtilPersistence(
-		ModulePersistence modulePersistence) {
-
-		try {
-			Field field = ModuleUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, modulePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -53,8 +53,6 @@ import com.liferay.search.experiences.service.persistence.SXPElementPersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -507,7 +505,7 @@ public abstract class SXPElementLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		SXPElementLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -522,7 +520,7 @@ public abstract class SXPElementLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sxpElementLocalService = (SXPElementLocalService)aopProxy;
 
-		_setLocalServiceUtilService(sxpElementLocalService);
+		SXPElementLocalServiceUtil.setService(sxpElementLocalService);
 	}
 
 	/**
@@ -564,22 +562,6 @@ public abstract class SXPElementLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SXPElementLocalService sxpElementLocalService) {
-
-		try {
-			Field field = SXPElementLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sxpElementLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

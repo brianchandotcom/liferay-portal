@@ -990,6 +990,12 @@ public class CalendarNotificationTemplateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CalendarNotificationTemplatePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CalendarNotificationTemplatePersistence
 		_persistence;
 

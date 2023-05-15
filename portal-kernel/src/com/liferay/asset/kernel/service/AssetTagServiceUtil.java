@@ -207,6 +207,10 @@ public class AssetTagServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AssetTagService service) {
+		_service = service;
+	}
+
 	private static volatile AssetTagService _service;
 
 }

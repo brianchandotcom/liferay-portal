@@ -44,7 +44,6 @@ import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -877,29 +876,13 @@ public class PortalPreferencesPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"ownerId", "ownerType"}, false);
 
-		_setPortalPreferencesUtilPersistence(this);
+		PortalPreferencesUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setPortalPreferencesUtilPersistence(null);
+		PortalPreferencesUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(PortalPreferencesImpl.class.getName());
-	}
-
-	private void _setPortalPreferencesUtilPersistence(
-		PortalPreferencesPersistence portalPreferencesPersistence) {
-
-		try {
-			Field field = PortalPreferencesUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, portalPreferencesPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_PORTALPREFERENCES =

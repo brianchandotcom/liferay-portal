@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -6526,30 +6525,14 @@ public class BatchPlannerPlanPersistenceImpl
 			},
 			new String[] {"companyId", "export", "template"}, false);
 
-		_setBatchPlannerPlanUtilPersistence(this);
+		BatchPlannerPlanUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setBatchPlannerPlanUtilPersistence(null);
+		BatchPlannerPlanUtil.setPersistence(null);
 
 		entityCache.removeCache(BatchPlannerPlanImpl.class.getName());
-	}
-
-	private void _setBatchPlannerPlanUtilPersistence(
-		BatchPlannerPlanPersistence batchPlannerPlanPersistence) {
-
-		try {
-			Field field = BatchPlannerPlanUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, batchPlannerPlanPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

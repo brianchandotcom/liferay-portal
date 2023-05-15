@@ -272,6 +272,10 @@ public class TestEntityUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(TestEntityPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile TestEntityPersistence _persistence;
 
 }

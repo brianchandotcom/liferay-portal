@@ -1989,6 +1989,10 @@ public class SharingEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SharingEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SharingEntryPersistence _persistence;
 
 }

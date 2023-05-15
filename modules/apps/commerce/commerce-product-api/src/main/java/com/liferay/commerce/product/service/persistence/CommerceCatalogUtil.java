@@ -1371,6 +1371,10 @@ public class CommerceCatalogUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CommerceCatalogPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceCatalogPersistence _persistence;
 
 }

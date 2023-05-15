@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -388,7 +386,7 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		ChangesetEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -403,7 +401,7 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		changesetEntryLocalService = (ChangesetEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(changesetEntryLocalService);
+		ChangesetEntryLocalServiceUtil.setService(changesetEntryLocalService);
 	}
 
 	/**
@@ -445,22 +443,6 @@ public abstract class ChangesetEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ChangesetEntryLocalService changesetEntryLocalService) {
-
-		try {
-			Field field = ChangesetEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, changesetEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

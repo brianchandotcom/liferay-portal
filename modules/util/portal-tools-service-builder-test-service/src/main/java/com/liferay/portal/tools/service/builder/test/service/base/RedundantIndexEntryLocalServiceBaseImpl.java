@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.Redunda
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -477,14 +475,15 @@ public abstract class RedundantIndexEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry",
 			redundantIndexEntryLocalService);
 
-		_setLocalServiceUtilService(redundantIndexEntryLocalService);
+		RedundantIndexEntryLocalServiceUtil.setService(
+			redundantIndexEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry");
 
-		_setLocalServiceUtilService(null);
+		RedundantIndexEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -527,23 +526,6 @@ public abstract class RedundantIndexEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		RedundantIndexEntryLocalService redundantIndexEntryLocalService) {
-
-		try {
-			Field field =
-				RedundantIndexEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, redundantIndexEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -415,7 +413,7 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		ContactsLayoutTemplateLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -431,7 +429,8 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		contactsLayoutTemplateLocalService =
 			(ContactsLayoutTemplateLocalService)aopProxy;
 
-		_setLocalServiceUtilService(contactsLayoutTemplateLocalService);
+		ContactsLayoutTemplateLocalServiceUtil.setService(
+			contactsLayoutTemplateLocalService);
 	}
 
 	/**
@@ -474,23 +473,6 @@ public abstract class ContactsLayoutTemplateLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ContactsLayoutTemplateLocalService contactsLayoutTemplateLocalService) {
-
-		try {
-			Field field =
-				ContactsLayoutTemplateLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, contactsLayoutTemplateLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.NestedS
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -477,14 +475,15 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry",
 			nestedSetsTreeEntryLocalService);
 
-		_setLocalServiceUtilService(nestedSetsTreeEntryLocalService);
+		NestedSetsTreeEntryLocalServiceUtil.setService(
+			nestedSetsTreeEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry");
 
-		_setLocalServiceUtilService(null);
+		NestedSetsTreeEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -527,23 +526,6 @@ public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		NestedSetsTreeEntryLocalService nestedSetsTreeEntryLocalService) {
-
-		try {
-			Field field =
-				NestedSetsTreeEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, nestedSetsTreeEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

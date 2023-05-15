@@ -1016,6 +1016,12 @@ public class ObjectValidationRuleUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectValidationRulePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectValidationRulePersistence _persistence;
 
 }

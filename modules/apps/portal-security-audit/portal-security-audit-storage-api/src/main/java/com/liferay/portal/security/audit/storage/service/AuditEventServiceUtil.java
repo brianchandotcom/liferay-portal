@@ -118,6 +118,10 @@ public class AuditEventServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AuditEventService service) {
+		_service = service;
+	}
+
 	private static volatile AuditEventService _service;
 
 }

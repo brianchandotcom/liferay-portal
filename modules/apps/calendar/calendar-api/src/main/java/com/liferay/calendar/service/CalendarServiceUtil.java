@@ -234,6 +234,10 @@ public class CalendarServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CalendarService service) {
+		_service = service;
+	}
+
 	private static volatile CalendarService _service;
 
 }

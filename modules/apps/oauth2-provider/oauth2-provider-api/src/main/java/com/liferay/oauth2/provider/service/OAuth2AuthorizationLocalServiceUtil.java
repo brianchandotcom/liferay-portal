@@ -567,6 +567,10 @@ public class OAuth2AuthorizationLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuth2AuthorizationLocalService service) {
+		_service = service;
+	}
+
 	private static volatile OAuth2AuthorizationLocalService _service;
 
 }

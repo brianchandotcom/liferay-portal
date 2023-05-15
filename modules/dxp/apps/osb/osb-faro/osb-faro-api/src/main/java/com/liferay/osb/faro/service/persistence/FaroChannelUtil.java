@@ -863,6 +863,10 @@ public class FaroChannelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(FaroChannelPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile FaroChannelPersistence _persistence;
 
 }

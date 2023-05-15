@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class DispatchTriggerServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		DispatchTriggerServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class DispatchTriggerServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		dispatchTriggerService = (DispatchTriggerService)aopProxy;
 
-		_setServiceUtilService(dispatchTriggerService);
+		DispatchTriggerServiceUtil.setService(dispatchTriggerService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class DispatchTriggerServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		DispatchTriggerService dispatchTriggerService) {
-
-		try {
-			Field field = DispatchTriggerServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dispatchTriggerService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

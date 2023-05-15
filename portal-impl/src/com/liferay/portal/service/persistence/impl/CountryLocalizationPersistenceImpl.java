@@ -43,7 +43,6 @@ import com.liferay.portal.model.impl.CountryLocalizationModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1434,29 +1433,13 @@ public class CountryLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "languageId"}, false);
 
-		_setCountryLocalizationUtilPersistence(this);
+		CountryLocalizationUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setCountryLocalizationUtilPersistence(null);
+		CountryLocalizationUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(CountryLocalizationImpl.class.getName());
-	}
-
-	private void _setCountryLocalizationUtilPersistence(
-		CountryLocalizationPersistence countryLocalizationPersistence) {
-
-		try {
-			Field field = CountryLocalizationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, countryLocalizationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_COUNTRYLOCALIZATION =

@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.UADPart
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -456,14 +454,14 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.UADPartialEntry",
 			uadPartialEntryLocalService);
 
-		_setLocalServiceUtilService(uadPartialEntryLocalService);
+		UADPartialEntryLocalServiceUtil.setService(uadPartialEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.UADPartialEntry");
 
-		_setLocalServiceUtilService(null);
+		UADPartialEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -505,23 +503,6 @@ public abstract class UADPartialEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		UADPartialEntryLocalService uadPartialEntryLocalService) {
-
-		try {
-			Field field =
-				UADPartialEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, uadPartialEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

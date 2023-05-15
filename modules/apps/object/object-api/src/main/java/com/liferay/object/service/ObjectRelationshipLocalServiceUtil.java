@@ -518,6 +518,10 @@ public class ObjectRelationshipLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectRelationshipLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectRelationshipLocalService _service;
 
 }

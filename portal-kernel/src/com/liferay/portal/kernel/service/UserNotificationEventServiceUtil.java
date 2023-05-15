@@ -65,6 +65,10 @@ public class UserNotificationEventServiceUtil {
 		return _service;
 	}
 
+	public static void setService(UserNotificationEventService service) {
+		_service = service;
+	}
+
 	private static volatile UserNotificationEventService _service;
 
 }

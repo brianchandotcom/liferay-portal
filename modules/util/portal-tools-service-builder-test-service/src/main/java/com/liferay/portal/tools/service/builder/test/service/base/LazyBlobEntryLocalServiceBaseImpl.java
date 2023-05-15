@@ -56,8 +56,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlo
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.sql.Blob;
 
 import java.util.List;
@@ -596,14 +594,14 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 			_useTempFile = true;
 		}
 
-		_setLocalServiceUtilService(lazyBlobEntryLocalService);
+		LazyBlobEntryLocalServiceUtil.setService(lazyBlobEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry");
 
-		_setLocalServiceUtilService(null);
+		LazyBlobEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -645,22 +643,6 @@ public abstract class LazyBlobEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		LazyBlobEntryLocalService lazyBlobEntryLocalService) {
-
-		try {
-			Field field = LazyBlobEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, lazyBlobEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.DSLQuer
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -477,14 +475,15 @@ public abstract class DSLQueryStatusEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.DSLQueryStatusEntry",
 			dslQueryStatusEntryLocalService);
 
-		_setLocalServiceUtilService(dslQueryStatusEntryLocalService);
+		DSLQueryStatusEntryLocalServiceUtil.setService(
+			dslQueryStatusEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.DSLQueryStatusEntry");
 
-		_setLocalServiceUtilService(null);
+		DSLQueryStatusEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -527,23 +526,6 @@ public abstract class DSLQueryStatusEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DSLQueryStatusEntryLocalService dslQueryStatusEntryLocalService) {
-
-		try {
-			Field field =
-				DSLQueryStatusEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dslQueryStatusEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -58,7 +56,7 @@ public abstract class FlagsEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		FlagsEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -72,7 +70,7 @@ public abstract class FlagsEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		flagsEntryService = (FlagsEntryService)aopProxy;
 
-		_setServiceUtilService(flagsEntryService);
+		FlagsEntryServiceUtil.setService(flagsEntryService);
 	}
 
 	/**
@@ -106,20 +104,6 @@ public abstract class FlagsEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(FlagsEntryService flagsEntryService) {
-		try {
-			Field field = FlagsEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, flagsEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

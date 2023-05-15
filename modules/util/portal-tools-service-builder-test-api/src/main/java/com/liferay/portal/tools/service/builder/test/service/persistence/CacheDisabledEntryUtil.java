@@ -342,6 +342,12 @@ public class CacheDisabledEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CacheDisabledEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CacheDisabledEntryPersistence _persistence;
 
 }

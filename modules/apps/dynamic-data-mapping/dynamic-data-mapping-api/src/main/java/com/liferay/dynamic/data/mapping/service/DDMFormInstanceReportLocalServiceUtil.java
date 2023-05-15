@@ -343,6 +343,10 @@ public class DDMFormInstanceReportLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMFormInstanceReportLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDMFormInstanceReportLocalService _service;
 
 }

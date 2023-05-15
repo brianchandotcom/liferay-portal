@@ -50,7 +50,6 @@ import com.liferay.portal.model.impl.RepositoryEntryModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3208,29 +3207,13 @@ public class RepositoryEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"repositoryId", "mappedId"}, false);
 
-		_setRepositoryEntryUtilPersistence(this);
+		RepositoryEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setRepositoryEntryUtilPersistence(null);
+		RepositoryEntryUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(RepositoryEntryImpl.class.getName());
-	}
-
-	private void _setRepositoryEntryUtilPersistence(
-		RepositoryEntryPersistence repositoryEntryPersistence) {
-
-		try {
-			Field field = RepositoryEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, repositoryEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_REPOSITORYENTRY =

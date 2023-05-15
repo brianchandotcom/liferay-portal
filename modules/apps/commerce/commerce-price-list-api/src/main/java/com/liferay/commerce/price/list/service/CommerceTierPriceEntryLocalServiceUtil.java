@@ -737,6 +737,10 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceTierPriceEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceTierPriceEntryLocalService _service;
 
 }

@@ -355,6 +355,12 @@ public class RenameFinderColumnEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		RenameFinderColumnEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile RenameFinderColumnEntryPersistence _persistence;
 
 }

@@ -324,6 +324,10 @@ public class KaleoTaskLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(KaleoTaskLocalService service) {
+		_service = service;
+	}
+
 	private static volatile KaleoTaskLocalService _service;
 
 }

@@ -60,8 +60,6 @@ import com.liferay.style.book.service.persistence.StyleBookEntryVersionPersisten
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -493,7 +491,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		StyleBookEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -508,7 +506,7 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		styleBookEntryLocalService = (StyleBookEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(styleBookEntryLocalService);
+		StyleBookEntryLocalServiceUtil.setService(styleBookEntryLocalService);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -977,22 +975,6 @@ public abstract class StyleBookEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		StyleBookEntryLocalService styleBookEntryLocalService) {
-
-		try {
-			Field field = StyleBookEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, styleBookEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

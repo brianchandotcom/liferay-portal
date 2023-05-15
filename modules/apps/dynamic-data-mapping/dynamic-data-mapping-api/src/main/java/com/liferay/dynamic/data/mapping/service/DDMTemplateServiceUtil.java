@@ -858,6 +858,10 @@ public class DDMTemplateServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMTemplateService service) {
+		_service = service;
+	}
+
 	private static volatile DDMTemplateService _service;
 
 }

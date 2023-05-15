@@ -2326,6 +2326,12 @@ public class CommercePriceModifierUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommercePriceModifierPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommercePriceModifierPersistence _persistence;
 
 }

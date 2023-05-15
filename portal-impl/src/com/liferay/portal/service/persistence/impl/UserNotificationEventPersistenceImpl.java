@@ -46,7 +46,6 @@ import com.liferay.portal.model.impl.UserNotificationEventModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -12482,29 +12481,13 @@ public class UserNotificationEventPersistenceImpl
 			},
 			false);
 
-		_setUserNotificationEventUtilPersistence(this);
+		UserNotificationEventUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setUserNotificationEventUtilPersistence(null);
+		UserNotificationEventUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(UserNotificationEventImpl.class.getName());
-	}
-
-	private void _setUserNotificationEventUtilPersistence(
-		UserNotificationEventPersistence userNotificationEventPersistence) {
-
-		try {
-			Field field = UserNotificationEventUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, userNotificationEventPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT =

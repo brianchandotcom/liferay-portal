@@ -504,6 +504,10 @@ public class DLSyncEventUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DLSyncEventPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DLSyncEventPersistence _persistence;
 
 }

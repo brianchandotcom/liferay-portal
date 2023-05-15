@@ -1025,6 +1025,10 @@ public class CTEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CTEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CTEntryPersistence _persistence;
 
 }

@@ -130,6 +130,10 @@ public class OAuthClientEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuthClientEntryService service) {
+		_service = service;
+	}
+
 	private static volatile OAuthClientEntryService _service;
 
 }

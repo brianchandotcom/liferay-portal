@@ -126,6 +126,10 @@ public class CommerceDiscountAccountRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceDiscountAccountRelService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceDiscountAccountRelService _service;
 
 }

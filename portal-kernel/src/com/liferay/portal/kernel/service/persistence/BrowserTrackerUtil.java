@@ -333,6 +333,10 @@ public class BrowserTrackerUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(BrowserTrackerPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile BrowserTrackerPersistence _persistence;
 
 }

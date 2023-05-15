@@ -339,6 +339,10 @@ public class EntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(EntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile EntryLocalService _service;
 
 }

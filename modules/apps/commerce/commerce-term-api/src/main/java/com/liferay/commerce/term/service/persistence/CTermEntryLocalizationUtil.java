@@ -544,6 +544,12 @@ public class CTermEntryLocalizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CTermEntryLocalizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CTermEntryLocalizationPersistence _persistence;
 
 }

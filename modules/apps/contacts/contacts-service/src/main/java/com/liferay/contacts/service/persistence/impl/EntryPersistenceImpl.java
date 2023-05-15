@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1415,27 +1414,14 @@ public class EntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "emailAddress"}, false);
 
-		_setEntryUtilPersistence(this);
+		EntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setEntryUtilPersistence(null);
+		EntryUtil.setPersistence(null);
 
 		entityCache.removeCache(EntryImpl.class.getName());
-	}
-
-	private void _setEntryUtilPersistence(EntryPersistence entryPersistence) {
-		try {
-			Field field = EntryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, entryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

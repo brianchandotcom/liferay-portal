@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -160,11 +158,11 @@ public abstract class DLFolderServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(dlFolderService);
+		DLFolderServiceUtil.setService(dlFolderService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		DLFolderServiceUtil.setService(null);
 	}
 
 	/**
@@ -206,20 +204,6 @@ public abstract class DLFolderServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(DLFolderService dlFolderService) {
-		try {
-			Field field = DLFolderServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dlFolderService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

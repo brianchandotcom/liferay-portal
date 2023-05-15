@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -520,7 +518,7 @@ public abstract class DDLRecordLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DDLRecordLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -535,7 +533,7 @@ public abstract class DDLRecordLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddlRecordLocalService = (DDLRecordLocalService)aopProxy;
 
-		_setLocalServiceUtilService(ddlRecordLocalService);
+		DDLRecordLocalServiceUtil.setService(ddlRecordLocalService);
 	}
 
 	/**
@@ -591,22 +589,6 @@ public abstract class DDLRecordLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		try {
-			Field field = DDLRecordLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ddlRecordLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

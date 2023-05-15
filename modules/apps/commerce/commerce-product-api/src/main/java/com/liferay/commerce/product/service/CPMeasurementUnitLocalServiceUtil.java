@@ -524,6 +524,10 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPMeasurementUnitLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CPMeasurementUnitLocalService _service;
 
 }

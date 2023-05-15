@@ -30,8 +30,6 @@ import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEn
 import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryServiceUtil;
 import com.liferay.portal.tools.service.builder.test.sequence.service.persistence.SequenceEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class SequenceEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SequenceEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class SequenceEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sequenceEntryService = (SequenceEntryService)aopProxy;
 
-		_setServiceUtilService(sequenceEntryService);
+		SequenceEntryServiceUtil.setService(sequenceEntryService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class SequenceEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		SequenceEntryService sequenceEntryService) {
-
-		try {
-			Field field = SequenceEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sequenceEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

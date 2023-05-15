@@ -766,6 +766,10 @@ public class CompanyLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CompanyLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CompanyLocalService _service;
 
 }

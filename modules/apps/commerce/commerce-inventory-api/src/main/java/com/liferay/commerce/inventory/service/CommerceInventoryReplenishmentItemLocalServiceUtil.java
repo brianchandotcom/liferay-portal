@@ -477,6 +477,12 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceInventoryReplenishmentItemLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceInventoryReplenishmentItemLocalService
 		_service;
 

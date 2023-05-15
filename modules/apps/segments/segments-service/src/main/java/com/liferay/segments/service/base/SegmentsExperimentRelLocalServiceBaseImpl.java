@@ -50,8 +50,6 @@ import com.liferay.segments.service.persistence.SegmentsExperimentRelPersistence
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -417,7 +415,7 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		SegmentsExperimentRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -434,7 +432,8 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 		segmentsExperimentRelLocalService =
 			(SegmentsExperimentRelLocalService)aopProxy;
 
-		_setLocalServiceUtilService(segmentsExperimentRelLocalService);
+		SegmentsExperimentRelLocalServiceUtil.setService(
+			segmentsExperimentRelLocalService);
 	}
 
 	/**
@@ -492,23 +491,6 @@ public abstract class SegmentsExperimentRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SegmentsExperimentRelLocalService segmentsExperimentRelLocalService) {
-
-		try {
-			Field field =
-				SegmentsExperimentRelLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, segmentsExperimentRelLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

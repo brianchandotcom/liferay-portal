@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2877,30 +2876,14 @@ public class ObjectLayoutTabPersistenceImpl
 			"countByObjectRelationshipId", new String[] {Long.class.getName()},
 			new String[] {"objectRelationshipId"}, false);
 
-		_setObjectLayoutTabUtilPersistence(this);
+		ObjectLayoutTabUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectLayoutTabUtilPersistence(null);
+		ObjectLayoutTabUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectLayoutTabImpl.class.getName());
-	}
-
-	private void _setObjectLayoutTabUtilPersistence(
-		ObjectLayoutTabPersistence objectLayoutTabPersistence) {
-
-		try {
-			Field field = ObjectLayoutTabUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectLayoutTabPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -30,8 +30,6 @@ import com.liferay.portal.language.override.service.PLOEntryService;
 import com.liferay.portal.language.override.service.PLOEntryServiceUtil;
 import com.liferay.portal.language.override.service.persistence.PLOEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class PLOEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		PLOEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class PLOEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ploEntryService = (PLOEntryService)aopProxy;
 
-		_setServiceUtilService(ploEntryService);
+		PLOEntryServiceUtil.setService(ploEntryService);
 	}
 
 	/**
@@ -115,20 +113,6 @@ public abstract class PLOEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(PLOEntryService ploEntryService) {
-		try {
-			Field field = PLOEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ploEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

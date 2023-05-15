@@ -990,6 +990,10 @@ public class ObjectViewColumnUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectViewColumnPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectViewColumnPersistence _persistence;
 
 }

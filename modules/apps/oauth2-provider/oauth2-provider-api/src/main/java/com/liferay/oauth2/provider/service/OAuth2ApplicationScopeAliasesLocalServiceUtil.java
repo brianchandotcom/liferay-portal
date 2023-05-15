@@ -370,6 +370,12 @@ public class OAuth2ApplicationScopeAliasesLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		OAuth2ApplicationScopeAliasesLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile OAuth2ApplicationScopeAliasesLocalService _service;
 
 }

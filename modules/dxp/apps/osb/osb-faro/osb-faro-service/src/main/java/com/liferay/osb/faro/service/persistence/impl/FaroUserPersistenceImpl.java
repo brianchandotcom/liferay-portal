@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -4147,29 +4146,14 @@ public class FaroUserPersistenceImpl
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"emailAddress", "status"}, false);
 
-		_setFaroUserUtilPersistence(this);
+		FaroUserUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFaroUserUtilPersistence(null);
+		FaroUserUtil.setPersistence(null);
 
 		entityCache.removeCache(FaroUserImpl.class.getName());
-	}
-
-	private void _setFaroUserUtilPersistence(
-		FaroUserPersistence faroUserPersistence) {
-
-		try {
-			Field field = FaroUserUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, faroUserPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

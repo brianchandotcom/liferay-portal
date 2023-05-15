@@ -341,6 +341,10 @@ public class CTCollectionTemplateLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CTCollectionTemplateLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CTCollectionTemplateLocalService _service;
 
 }

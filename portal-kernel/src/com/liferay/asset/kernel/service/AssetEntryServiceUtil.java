@@ -123,6 +123,10 @@ public class AssetEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AssetEntryService service) {
+		_service = service;
+	}
+
 	private static volatile AssetEntryService _service;
 
 }

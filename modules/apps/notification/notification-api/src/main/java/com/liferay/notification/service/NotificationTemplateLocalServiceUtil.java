@@ -391,6 +391,10 @@ public class NotificationTemplateLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(NotificationTemplateLocalService service) {
+		_service = service;
+	}
+
 	private static volatile NotificationTemplateLocalService _service;
 
 }

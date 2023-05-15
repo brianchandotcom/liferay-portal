@@ -1390,6 +1390,10 @@ public class KaleoLogUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KaleoLogPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoLogPersistence _persistence;
 
 }

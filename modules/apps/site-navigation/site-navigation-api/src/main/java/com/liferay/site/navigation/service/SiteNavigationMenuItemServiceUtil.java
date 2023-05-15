@@ -124,6 +124,10 @@ public class SiteNavigationMenuItemServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SiteNavigationMenuItemService service) {
+		_service = service;
+	}
+
 	private static volatile SiteNavigationMenuItemService _service;
 
 }

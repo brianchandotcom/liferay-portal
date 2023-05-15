@@ -1409,6 +1409,12 @@ public class ClientExtensionEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ClientExtensionEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ClientExtensionEntryPersistence _persistence;
 
 }

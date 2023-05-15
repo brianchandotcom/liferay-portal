@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2753,33 +2752,15 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "commerceChannelId"}, false);
 
-		_setCommerceShippingOptionAccountEntryRelUtilPersistence(this);
+		CommerceShippingOptionAccountEntryRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceShippingOptionAccountEntryRelUtilPersistence(null);
+		CommerceShippingOptionAccountEntryRelUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceShippingOptionAccountEntryRelImpl.class.getName());
-	}
-
-	private void _setCommerceShippingOptionAccountEntryRelUtilPersistence(
-		CommerceShippingOptionAccountEntryRelPersistence
-			commerceShippingOptionAccountEntryRelPersistence) {
-
-		try {
-			Field field =
-				CommerceShippingOptionAccountEntryRelUtil.class.
-					getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceShippingOptionAccountEntryRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

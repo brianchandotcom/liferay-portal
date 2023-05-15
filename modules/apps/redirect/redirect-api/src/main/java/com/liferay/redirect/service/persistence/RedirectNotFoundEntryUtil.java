@@ -517,6 +517,12 @@ public class RedirectNotFoundEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		RedirectNotFoundEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile RedirectNotFoundEntryPersistence _persistence;
 
 }

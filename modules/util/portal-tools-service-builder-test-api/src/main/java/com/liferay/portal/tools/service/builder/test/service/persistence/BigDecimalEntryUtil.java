@@ -1037,6 +1037,10 @@ public class BigDecimalEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(BigDecimalEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile BigDecimalEntryPersistence _persistence;
 
 }

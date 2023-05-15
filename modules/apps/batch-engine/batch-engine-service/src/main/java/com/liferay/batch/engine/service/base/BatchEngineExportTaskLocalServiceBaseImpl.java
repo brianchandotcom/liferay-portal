@@ -60,8 +60,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.sql.Blob;
 
 import java.util.List;
@@ -609,7 +607,7 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		BatchEngineExportTaskLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -625,7 +623,8 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 		batchEngineExportTaskLocalService =
 			(BatchEngineExportTaskLocalService)aopProxy;
 
-		_setLocalServiceUtilService(batchEngineExportTaskLocalService);
+		BatchEngineExportTaskLocalServiceUtil.setService(
+			batchEngineExportTaskLocalService);
 	}
 
 	/**
@@ -668,23 +667,6 @@ public abstract class BatchEngineExportTaskLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService) {
-
-		try {
-			Field field =
-				BatchEngineExportTaskLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, batchEngineExportTaskLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

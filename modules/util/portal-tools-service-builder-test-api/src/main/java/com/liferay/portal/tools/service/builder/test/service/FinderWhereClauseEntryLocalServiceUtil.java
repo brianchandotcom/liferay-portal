@@ -314,6 +314,10 @@ public class FinderWhereClauseEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FinderWhereClauseEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FinderWhereClauseEntryLocalService _service;
 
 }

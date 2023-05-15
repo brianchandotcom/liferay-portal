@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1732,30 +1731,14 @@ public class ContactsLayoutTemplatePersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "type_"}, false);
 
-		_setContactsLayoutTemplateUtilPersistence(this);
+		ContactsLayoutTemplateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setContactsLayoutTemplateUtilPersistence(null);
+		ContactsLayoutTemplateUtil.setPersistence(null);
 
 		entityCache.removeCache(ContactsLayoutTemplateImpl.class.getName());
-	}
-
-	private void _setContactsLayoutTemplateUtilPersistence(
-		ContactsLayoutTemplatePersistence contactsLayoutTemplatePersistence) {
-
-		try {
-			Field field = ContactsLayoutTemplateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, contactsLayoutTemplatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

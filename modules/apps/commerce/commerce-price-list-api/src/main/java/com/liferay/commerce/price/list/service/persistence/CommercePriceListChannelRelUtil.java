@@ -914,6 +914,12 @@ public class CommercePriceListChannelRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommercePriceListChannelRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommercePriceListChannelRelPersistence _persistence;
 
 }

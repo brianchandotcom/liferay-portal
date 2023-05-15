@@ -920,6 +920,10 @@ public class RepositoryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(RepositoryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile RepositoryPersistence _persistence;
 
 }

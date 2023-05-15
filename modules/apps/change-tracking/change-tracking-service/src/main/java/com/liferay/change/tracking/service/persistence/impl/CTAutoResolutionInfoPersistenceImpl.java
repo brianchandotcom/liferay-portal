@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2132,30 +2131,14 @@ public class CTAutoResolutionInfoPersistenceImpl
 			},
 			false);
 
-		_setCTAutoResolutionInfoUtilPersistence(this);
+		CTAutoResolutionInfoUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCTAutoResolutionInfoUtilPersistence(null);
+		CTAutoResolutionInfoUtil.setPersistence(null);
 
 		entityCache.removeCache(CTAutoResolutionInfoImpl.class.getName());
-	}
-
-	private void _setCTAutoResolutionInfoUtilPersistence(
-		CTAutoResolutionInfoPersistence ctAutoResolutionInfoPersistence) {
-
-		try {
-			Field field = CTAutoResolutionInfoUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ctAutoResolutionInfoPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

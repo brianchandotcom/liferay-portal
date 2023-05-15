@@ -1095,6 +1095,12 @@ public class NotificationQueueEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NotificationQueueEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NotificationQueueEntryPersistence _persistence;
 
 }

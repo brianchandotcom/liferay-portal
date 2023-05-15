@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -6186,31 +6185,14 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"CPDefinitionOptionRelId", "preselected"}, false);
 
-		_setCPDefinitionOptionValueRelUtilPersistence(this);
+		CPDefinitionOptionValueRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDefinitionOptionValueRelUtilPersistence(null);
+		CPDefinitionOptionValueRelUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDefinitionOptionValueRelImpl.class.getName());
-	}
-
-	private void _setCPDefinitionOptionValueRelUtilPersistence(
-		CPDefinitionOptionValueRelPersistence
-			cpDefinitionOptionValueRelPersistence) {
-
-		try {
-			Field field = CPDefinitionOptionValueRelUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionOptionValueRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class OAuthClientASLocalMetadataServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		OAuthClientASLocalMetadataServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class OAuthClientASLocalMetadataServiceBaseImpl
 		oAuthClientASLocalMetadataService =
 			(OAuthClientASLocalMetadataService)aopProxy;
 
-		_setServiceUtilService(oAuthClientASLocalMetadataService);
+		OAuthClientASLocalMetadataServiceUtil.setService(
+			oAuthClientASLocalMetadataService);
 	}
 
 	/**
@@ -119,23 +118,6 @@ public abstract class OAuthClientASLocalMetadataServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		OAuthClientASLocalMetadataService oAuthClientASLocalMetadataService) {
-
-		try {
-			Field field =
-				OAuthClientASLocalMetadataServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, oAuthClientASLocalMetadataService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

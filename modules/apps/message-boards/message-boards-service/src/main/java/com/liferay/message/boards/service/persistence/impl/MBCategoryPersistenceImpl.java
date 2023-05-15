@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -12623,29 +12622,14 @@ public class MBCategoryPersistenceImpl
 			},
 			false);
 
-		_setMBCategoryUtilPersistence(this);
+		MBCategoryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMBCategoryUtilPersistence(null);
+		MBCategoryUtil.setPersistence(null);
 
 		entityCache.removeCache(MBCategoryImpl.class.getName());
-	}
-
-	private void _setMBCategoryUtilPersistence(
-		MBCategoryPersistence mbCategoryPersistence) {
-
-		try {
-			Field field = MBCategoryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mbCategoryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

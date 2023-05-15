@@ -1183,6 +1183,12 @@ public class ObjectStateTransitionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectStateTransitionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectStateTransitionPersistence _persistence;
 
 }

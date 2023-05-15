@@ -340,6 +340,10 @@ public class PLOEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PLOEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile PLOEntryLocalService _service;
 
 }

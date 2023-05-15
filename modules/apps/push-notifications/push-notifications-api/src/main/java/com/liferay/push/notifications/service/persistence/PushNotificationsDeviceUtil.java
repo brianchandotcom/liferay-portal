@@ -625,6 +625,12 @@ public class PushNotificationsDeviceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		PushNotificationsDevicePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile PushNotificationsDevicePersistence _persistence;
 
 }

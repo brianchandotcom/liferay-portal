@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1202,30 +1201,14 @@ public class CommerceDiscountRulePersistenceImpl
 			"countByCommerceDiscountId", new String[] {Long.class.getName()},
 			new String[] {"commerceDiscountId"}, false);
 
-		_setCommerceDiscountRuleUtilPersistence(this);
+		CommerceDiscountRuleUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceDiscountRuleUtilPersistence(null);
+		CommerceDiscountRuleUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceDiscountRuleImpl.class.getName());
-	}
-
-	private void _setCommerceDiscountRuleUtilPersistence(
-		CommerceDiscountRulePersistence commerceDiscountRulePersistence) {
-
-		try {
-			Field field = CommerceDiscountRuleUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceDiscountRulePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

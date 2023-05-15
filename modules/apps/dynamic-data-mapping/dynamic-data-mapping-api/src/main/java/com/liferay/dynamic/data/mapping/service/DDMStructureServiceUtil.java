@@ -535,6 +535,10 @@ public class DDMStructureServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMStructureService service) {
+		_service = service;
+	}
+
 	private static volatile DDMStructureService _service;
 
 }

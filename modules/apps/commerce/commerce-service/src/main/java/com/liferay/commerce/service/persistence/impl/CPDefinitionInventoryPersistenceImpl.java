@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2674,30 +2673,14 @@ public class CPDefinitionInventoryPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
 
-		_setCPDefinitionInventoryUtilPersistence(this);
+		CPDefinitionInventoryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDefinitionInventoryUtilPersistence(null);
+		CPDefinitionInventoryUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDefinitionInventoryImpl.class.getName());
-	}
-
-	private void _setCPDefinitionInventoryUtilPersistence(
-		CPDefinitionInventoryPersistence cpDefinitionInventoryPersistence) {
-
-		try {
-			Field field = CPDefinitionInventoryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionInventoryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

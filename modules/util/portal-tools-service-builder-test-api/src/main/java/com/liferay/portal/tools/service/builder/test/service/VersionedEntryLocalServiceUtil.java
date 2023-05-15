@@ -413,6 +413,10 @@ public class VersionedEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(VersionedEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile VersionedEntryLocalService _service;
 
 }

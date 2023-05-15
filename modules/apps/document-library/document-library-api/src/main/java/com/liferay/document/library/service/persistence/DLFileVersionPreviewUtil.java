@@ -792,6 +792,12 @@ public class DLFileVersionPreviewUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DLFileVersionPreviewPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DLFileVersionPreviewPersistence _persistence;
 
 }

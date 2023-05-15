@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -575,7 +573,7 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		LayoutPageTemplateCollectionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -592,7 +590,8 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 		layoutPageTemplateCollectionLocalService =
 			(LayoutPageTemplateCollectionLocalService)aopProxy;
 
-		_setLocalServiceUtilService(layoutPageTemplateCollectionLocalService);
+		LayoutPageTemplateCollectionLocalServiceUtil.setService(
+			layoutPageTemplateCollectionLocalService);
 	}
 
 	/**
@@ -651,24 +650,6 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		LayoutPageTemplateCollectionLocalService
-			layoutPageTemplateCollectionLocalService) {
-
-		try {
-			Field field =
-				LayoutPageTemplateCollectionLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutPageTemplateCollectionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

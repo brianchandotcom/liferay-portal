@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -382,7 +380,7 @@ public abstract class FaroUserLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		FaroUserLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -397,7 +395,7 @@ public abstract class FaroUserLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		faroUserLocalService = (FaroUserLocalService)aopProxy;
 
-		_setLocalServiceUtilService(faroUserLocalService);
+		FaroUserLocalServiceUtil.setService(faroUserLocalService);
 	}
 
 	/**
@@ -439,22 +437,6 @@ public abstract class FaroUserLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		FaroUserLocalService faroUserLocalService) {
-
-		try {
-			Field field = FaroUserLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, faroUserLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

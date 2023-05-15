@@ -789,6 +789,10 @@ public class ObjectFilterUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectFilterPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectFilterPersistence _persistence;
 
 }

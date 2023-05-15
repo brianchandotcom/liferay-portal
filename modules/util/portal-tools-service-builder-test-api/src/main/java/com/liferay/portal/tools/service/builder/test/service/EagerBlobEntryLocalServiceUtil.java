@@ -329,6 +329,10 @@ public class EagerBlobEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(EagerBlobEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile EagerBlobEntryLocalService _service;
 
 }

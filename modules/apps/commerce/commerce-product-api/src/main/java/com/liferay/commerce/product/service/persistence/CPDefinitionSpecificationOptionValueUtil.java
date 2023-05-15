@@ -2026,6 +2026,12 @@ public class CPDefinitionSpecificationOptionValueUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CPDefinitionSpecificationOptionValuePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CPDefinitionSpecificationOptionValuePersistence
 		_persistence;
 

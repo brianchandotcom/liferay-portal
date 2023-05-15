@@ -174,6 +174,10 @@ public class CommerceChannelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceChannelService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceChannelService _service;
 
 }

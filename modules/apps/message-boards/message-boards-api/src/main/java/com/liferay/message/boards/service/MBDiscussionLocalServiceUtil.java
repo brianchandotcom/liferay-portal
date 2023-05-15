@@ -427,6 +427,10 @@ public class MBDiscussionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBDiscussionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile MBDiscussionLocalService _service;
 
 }

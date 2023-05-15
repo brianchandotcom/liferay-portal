@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5167,30 +5166,14 @@ public class CPSpecificationOptionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "key_"}, false);
 
-		_setCPSpecificationOptionUtilPersistence(this);
+		CPSpecificationOptionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPSpecificationOptionUtilPersistence(null);
+		CPSpecificationOptionUtil.setPersistence(null);
 
 		entityCache.removeCache(CPSpecificationOptionImpl.class.getName());
-	}
-
-	private void _setCPSpecificationOptionUtilPersistence(
-		CPSpecificationOptionPersistence cpSpecificationOptionPersistence) {
-
-		try {
-			Field field = CPSpecificationOptionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpSpecificationOptionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

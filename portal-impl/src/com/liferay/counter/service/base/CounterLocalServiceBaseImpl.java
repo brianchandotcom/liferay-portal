@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 
-import java.lang.reflect.Field;
-
 /**
  * Provides the base implementation for the counter local service.
  *
@@ -86,11 +84,11 @@ public abstract class CounterLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(counterLocalService);
+		CounterLocalServiceUtil.setService(counterLocalService);
 	}
 
 	public void destroy() {
-		_setLocalServiceUtilService(null);
+		CounterLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -109,22 +107,6 @@ public abstract class CounterLocalServiceBaseImpl
 
 	protected String getModelClassName() {
 		return Counter.class.getName();
-	}
-
-	private void _setLocalServiceUtilService(
-		CounterLocalService counterLocalService) {
-
-		try {
-			Field field = CounterLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, counterLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@BeanReference(type = CounterLocalService.class)

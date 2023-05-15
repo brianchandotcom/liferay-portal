@@ -426,6 +426,10 @@ public class KBTemplateLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(KBTemplateLocalService service) {
+		_service = service;
+	}
+
 	private static volatile KBTemplateLocalService _service;
 
 }

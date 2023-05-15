@@ -347,6 +347,10 @@ public class SamlPeerBindingLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SamlPeerBindingLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SamlPeerBindingLocalService _service;
 
 }

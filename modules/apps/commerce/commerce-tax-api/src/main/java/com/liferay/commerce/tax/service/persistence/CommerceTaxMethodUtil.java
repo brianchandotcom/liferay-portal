@@ -695,6 +695,12 @@ public class CommerceTaxMethodUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceTaxMethodPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceTaxMethodPersistence _persistence;
 
 }

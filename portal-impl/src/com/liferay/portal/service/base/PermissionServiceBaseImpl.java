@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.PermissionServiceUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -96,11 +94,11 @@ public abstract class PermissionServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(permissionService);
+		PermissionServiceUtil.setService(permissionService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		PermissionServiceUtil.setService(null);
 	}
 
 	/**
@@ -134,20 +132,6 @@ public abstract class PermissionServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(PermissionService permissionService) {
-		try {
-			Field field = PermissionServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, permissionService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

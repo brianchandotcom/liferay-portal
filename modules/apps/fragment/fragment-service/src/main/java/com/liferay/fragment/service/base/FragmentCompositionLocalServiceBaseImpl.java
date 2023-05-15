@@ -65,8 +65,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -625,7 +623,7 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		FragmentCompositionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -642,7 +640,8 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 		fragmentCompositionLocalService =
 			(FragmentCompositionLocalService)aopProxy;
 
-		_setLocalServiceUtilService(fragmentCompositionLocalService);
+		FragmentCompositionLocalServiceUtil.setService(
+			fragmentCompositionLocalService);
 	}
 
 	/**
@@ -700,23 +699,6 @@ public abstract class FragmentCompositionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		FragmentCompositionLocalService fragmentCompositionLocalService) {
-
-		try {
-			Field field =
-				FragmentCompositionLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, fragmentCompositionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

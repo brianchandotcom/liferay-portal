@@ -368,6 +368,12 @@ public class SocialActivityAchievementLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		SocialActivityAchievementLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile SocialActivityAchievementLocalService _service;
 
 }

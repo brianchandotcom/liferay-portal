@@ -329,6 +329,10 @@ public class ReleaseUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ReleasePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ReleasePersistence _persistence;
 
 }

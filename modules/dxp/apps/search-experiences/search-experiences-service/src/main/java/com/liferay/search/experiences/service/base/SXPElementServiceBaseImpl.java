@@ -30,8 +30,6 @@ import com.liferay.search.experiences.service.SXPElementService;
 import com.liferay.search.experiences.service.SXPElementServiceUtil;
 import com.liferay.search.experiences.service.persistence.SXPElementPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class SXPElementServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SXPElementServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class SXPElementServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sxpElementService = (SXPElementService)aopProxy;
 
-		_setServiceUtilService(sxpElementService);
+		SXPElementServiceUtil.setService(sxpElementService);
 	}
 
 	/**
@@ -115,20 +113,6 @@ public abstract class SXPElementServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(SXPElementService sxpElementService) {
-		try {
-			Field field = SXPElementServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sxpElementService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

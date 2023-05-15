@@ -2374,6 +2374,10 @@ public class LVEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(LVEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile LVEntryPersistence _persistence;
 
 }

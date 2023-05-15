@@ -48,7 +48,6 @@ import com.liferay.portlet.asset.model.impl.AssetLinkModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3904,28 +3903,13 @@ public class AssetLinkPersistenceImpl
 			},
 			new String[] {"entryId1", "entryId2", "type_"}, false);
 
-		_setAssetLinkUtilPersistence(this);
+		AssetLinkUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setAssetLinkUtilPersistence(null);
+		AssetLinkUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(AssetLinkImpl.class.getName());
-	}
-
-	private void _setAssetLinkUtilPersistence(
-		AssetLinkPersistence assetLinkPersistence) {
-
-		try {
-			Field field = AssetLinkUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, assetLinkPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_ASSETLINK =

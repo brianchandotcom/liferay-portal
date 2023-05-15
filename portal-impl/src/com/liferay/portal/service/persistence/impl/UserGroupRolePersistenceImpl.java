@@ -45,7 +45,6 @@ import com.liferay.portal.model.impl.UserGroupRoleModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3846,29 +3845,13 @@ public class UserGroupRolePersistenceImpl
 			},
 			new String[] {"userId", "groupId", "roleId"}, false);
 
-		_setUserGroupRoleUtilPersistence(this);
+		UserGroupRoleUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setUserGroupRoleUtilPersistence(null);
+		UserGroupRoleUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(UserGroupRoleImpl.class.getName());
-	}
-
-	private void _setUserGroupRoleUtilPersistence(
-		UserGroupRolePersistence userGroupRolePersistence) {
-
-		try {
-			Field field = UserGroupRoleUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, userGroupRolePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_USERGROUPROLE =

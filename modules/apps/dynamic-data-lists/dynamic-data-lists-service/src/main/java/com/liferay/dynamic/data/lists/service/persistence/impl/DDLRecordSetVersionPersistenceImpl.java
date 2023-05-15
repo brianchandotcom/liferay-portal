@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2310,30 +2309,14 @@ public class DDLRecordSetVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"recordSetId", "status"}, false);
 
-		_setDDLRecordSetVersionUtilPersistence(this);
+		DDLRecordSetVersionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDLRecordSetVersionUtilPersistence(null);
+		DDLRecordSetVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(DDLRecordSetVersionImpl.class.getName());
-	}
-
-	private void _setDDLRecordSetVersionUtilPersistence(
-		DDLRecordSetVersionPersistence ddlRecordSetVersionPersistence) {
-
-		try {
-			Field field = DDLRecordSetVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddlRecordSetVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

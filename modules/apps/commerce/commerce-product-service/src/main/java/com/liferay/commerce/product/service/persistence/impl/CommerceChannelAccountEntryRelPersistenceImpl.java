@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5534,33 +5533,15 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			},
 			false);
 
-		_setCommerceChannelAccountEntryRelUtilPersistence(this);
+		CommerceChannelAccountEntryRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceChannelAccountEntryRelUtilPersistence(null);
+		CommerceChannelAccountEntryRelUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceChannelAccountEntryRelImpl.class.getName());
-	}
-
-	private void _setCommerceChannelAccountEntryRelUtilPersistence(
-		CommerceChannelAccountEntryRelPersistence
-			commerceChannelAccountEntryRelPersistence) {
-
-		try {
-			Field field =
-				CommerceChannelAccountEntryRelUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceChannelAccountEntryRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

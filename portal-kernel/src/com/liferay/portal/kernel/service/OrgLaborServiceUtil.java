@@ -91,6 +91,10 @@ public class OrgLaborServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OrgLaborService service) {
+		_service = service;
+	}
+
 	private static volatile OrgLaborService _service;
 
 }

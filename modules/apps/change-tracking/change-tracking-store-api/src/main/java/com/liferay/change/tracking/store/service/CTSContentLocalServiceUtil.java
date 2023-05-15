@@ -362,6 +362,10 @@ public class CTSContentLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CTSContentLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CTSContentLocalService _service;
 
 }

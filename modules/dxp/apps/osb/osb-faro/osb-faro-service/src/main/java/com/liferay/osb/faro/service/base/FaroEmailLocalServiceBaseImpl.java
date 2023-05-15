@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -58,7 +56,7 @@ public abstract class FaroEmailLocalServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		FaroEmailLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -72,7 +70,7 @@ public abstract class FaroEmailLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		faroEmailLocalService = (FaroEmailLocalService)aopProxy;
 
-		_setLocalServiceUtilService(faroEmailLocalService);
+		FaroEmailLocalServiceUtil.setService(faroEmailLocalService);
 	}
 
 	/**
@@ -106,22 +104,6 @@ public abstract class FaroEmailLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		FaroEmailLocalService faroEmailLocalService) {
-
-		try {
-			Field field = FaroEmailLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, faroEmailLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

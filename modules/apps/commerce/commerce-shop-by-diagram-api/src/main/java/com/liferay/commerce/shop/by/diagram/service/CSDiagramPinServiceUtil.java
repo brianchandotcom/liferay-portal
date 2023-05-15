@@ -104,6 +104,10 @@ public class CSDiagramPinServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CSDiagramPinService service) {
+		_service = service;
+	}
+
 	private static volatile CSDiagramPinService _service;
 
 }

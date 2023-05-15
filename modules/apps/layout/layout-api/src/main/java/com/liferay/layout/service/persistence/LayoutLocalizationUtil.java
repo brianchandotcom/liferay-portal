@@ -995,6 +995,12 @@ public class LayoutLocalizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LayoutLocalizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LayoutLocalizationPersistence _persistence;
 
 }

@@ -73,6 +73,10 @@ public class LayoutBranchServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutBranchService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutBranchService _service;
 
 }

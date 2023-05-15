@@ -207,6 +207,12 @@ public class CommerceAccountOrganizationRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceAccountOrganizationRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceAccountOrganizationRelLocalService _service;
 
 }

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2324,30 +2323,14 @@ public class DDMStructureVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"structureId", "status"}, false);
 
-		_setDDMStructureVersionUtilPersistence(this);
+		DDMStructureVersionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMStructureVersionUtilPersistence(null);
+		DDMStructureVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMStructureVersionImpl.class.getName());
-	}
-
-	private void _setDDMStructureVersionUtilPersistence(
-		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
-
-		try {
-			Field field = DDMStructureVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmStructureVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

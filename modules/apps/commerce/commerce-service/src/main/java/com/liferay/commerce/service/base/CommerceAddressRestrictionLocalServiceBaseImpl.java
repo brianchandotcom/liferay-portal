@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -419,7 +417,7 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceAddressRestrictionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -435,7 +433,8 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 		commerceAddressRestrictionLocalService =
 			(CommerceAddressRestrictionLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceAddressRestrictionLocalService);
+		CommerceAddressRestrictionLocalServiceUtil.setService(
+			commerceAddressRestrictionLocalService);
 	}
 
 	/**
@@ -478,24 +477,6 @@ public abstract class CommerceAddressRestrictionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceAddressRestrictionLocalService
-			commerceAddressRestrictionLocalService) {
-
-		try {
-			Field field =
-				CommerceAddressRestrictionLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceAddressRestrictionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

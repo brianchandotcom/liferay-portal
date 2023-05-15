@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1499,33 +1498,15 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"notificationTemplateId", "objectFieldId"}, false);
 
-		_setNotificationTemplateAttachmentUtilPersistence(this);
+		NotificationTemplateAttachmentUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setNotificationTemplateAttachmentUtilPersistence(null);
+		NotificationTemplateAttachmentUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			NotificationTemplateAttachmentImpl.class.getName());
-	}
-
-	private void _setNotificationTemplateAttachmentUtilPersistence(
-		NotificationTemplateAttachmentPersistence
-			notificationTemplateAttachmentPersistence) {
-
-		try {
-			Field field =
-				NotificationTemplateAttachmentUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, notificationTemplateAttachmentPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

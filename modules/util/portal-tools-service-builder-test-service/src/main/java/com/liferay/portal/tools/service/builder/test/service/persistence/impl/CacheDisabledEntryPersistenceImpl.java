@@ -40,7 +40,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.CacheDi
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -859,29 +858,13 @@ public class CacheDisabledEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
 
-		_setCacheDisabledEntryUtilPersistence(this);
+		CacheDisabledEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setCacheDisabledEntryUtilPersistence(null);
+		CacheDisabledEntryUtil.setPersistence(null);
 
 		dummyEntityCache.removeCache(CacheDisabledEntryImpl.class.getName());
-	}
-
-	private void _setCacheDisabledEntryUtilPersistence(
-		CacheDisabledEntryPersistence cacheDisabledEntryPersistence) {
-
-		try {
-			Field field = CacheDisabledEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cacheDisabledEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_CACHEDISABLEDENTRY =

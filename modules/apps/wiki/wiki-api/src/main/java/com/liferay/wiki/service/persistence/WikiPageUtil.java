@@ -7659,6 +7659,10 @@ public class WikiPageUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(WikiPagePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile WikiPagePersistence _persistence;
 
 }

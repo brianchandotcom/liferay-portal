@@ -64,6 +64,10 @@ public class CTPreferencesServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CTPreferencesService service) {
+		_service = service;
+	}
+
 	private static volatile CTPreferencesService _service;
 
 }

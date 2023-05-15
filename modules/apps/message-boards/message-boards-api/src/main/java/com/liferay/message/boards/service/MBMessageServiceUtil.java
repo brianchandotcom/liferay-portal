@@ -413,6 +413,10 @@ public class MBMessageServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBMessageService service) {
+		_service = service;
+	}
+
 	private static volatile MBMessageService _service;
 
 }

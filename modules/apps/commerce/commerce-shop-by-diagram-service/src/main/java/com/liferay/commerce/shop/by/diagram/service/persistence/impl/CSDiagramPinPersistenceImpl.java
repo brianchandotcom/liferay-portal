@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -1401,30 +1400,14 @@ public class CSDiagramPinPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
 
-		_setCSDiagramPinUtilPersistence(this);
+		CSDiagramPinUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCSDiagramPinUtilPersistence(null);
+		CSDiagramPinUtil.setPersistence(null);
 
 		entityCache.removeCache(CSDiagramPinImpl.class.getName());
-	}
-
-	private void _setCSDiagramPinUtilPersistence(
-		CSDiagramPinPersistence csDiagramPinPersistence) {
-
-		try {
-			Field field = CSDiagramPinUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, csDiagramPinPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

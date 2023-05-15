@@ -142,6 +142,10 @@ public class StyleBookEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(StyleBookEntryService service) {
+		_service = service;
+	}
+
 	private static volatile StyleBookEntryService _service;
 
 }

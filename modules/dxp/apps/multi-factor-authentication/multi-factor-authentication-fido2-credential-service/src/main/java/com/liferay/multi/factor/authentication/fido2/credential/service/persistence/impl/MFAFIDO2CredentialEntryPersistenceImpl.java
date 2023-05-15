@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1982,30 +1981,14 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "credentialKeyHash"}, false);
 
-		_setMFAFIDO2CredentialEntryUtilPersistence(this);
+		MFAFIDO2CredentialEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMFAFIDO2CredentialEntryUtilPersistence(null);
+		MFAFIDO2CredentialEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(MFAFIDO2CredentialEntryImpl.class.getName());
-	}
-
-	private void _setMFAFIDO2CredentialEntryUtilPersistence(
-		MFAFIDO2CredentialEntryPersistence mfaFIDO2CredentialEntryPersistence) {
-
-		try {
-			Field field = MFAFIDO2CredentialEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mfaFIDO2CredentialEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

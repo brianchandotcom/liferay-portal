@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -1784,31 +1783,14 @@ public class CPDefinitionLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "languageId"}, false);
 
-		_setCPDefinitionLocalizationUtilPersistence(this);
+		CPDefinitionLocalizationUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDefinitionLocalizationUtilPersistence(null);
+		CPDefinitionLocalizationUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDefinitionLocalizationImpl.class.getName());
-	}
-
-	private void _setCPDefinitionLocalizationUtilPersistence(
-		CPDefinitionLocalizationPersistence
-			cpDefinitionLocalizationPersistence) {
-
-		try {
-			Field field = CPDefinitionLocalizationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionLocalizationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -1111,6 +1111,10 @@ public class SXPBlueprintUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SXPBlueprintPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SXPBlueprintPersistence _persistence;
 
 }

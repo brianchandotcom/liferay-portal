@@ -449,6 +449,10 @@ public class CSDiagramPinUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CSDiagramPinPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CSDiagramPinPersistence _persistence;
 
 }

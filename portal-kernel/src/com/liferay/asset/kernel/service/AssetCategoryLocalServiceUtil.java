@@ -675,6 +675,10 @@ public class AssetCategoryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AssetCategoryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AssetCategoryLocalService _service;
 
 }

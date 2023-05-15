@@ -543,6 +543,10 @@ public class StyleBookEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(StyleBookEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile StyleBookEntryLocalService _service;
 
 }

@@ -808,6 +808,12 @@ public class CommerceShippingFixedOptionQualifierUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceShippingFixedOptionQualifierPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceShippingFixedOptionQualifierPersistence
 		_persistence;
 

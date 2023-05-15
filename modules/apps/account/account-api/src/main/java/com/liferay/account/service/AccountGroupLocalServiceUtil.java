@@ -461,6 +461,10 @@ public class AccountGroupLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AccountGroupLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AccountGroupLocalService _service;
 
 }

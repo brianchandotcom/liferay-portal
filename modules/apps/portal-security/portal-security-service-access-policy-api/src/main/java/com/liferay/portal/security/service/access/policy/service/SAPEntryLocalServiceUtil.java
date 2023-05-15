@@ -396,6 +396,10 @@ public class SAPEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SAPEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SAPEntryLocalService _service;
 
 }

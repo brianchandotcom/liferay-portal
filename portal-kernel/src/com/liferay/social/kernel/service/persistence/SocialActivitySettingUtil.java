@@ -1134,6 +1134,12 @@ public class SocialActivitySettingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SocialActivitySettingPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SocialActivitySettingPersistence _persistence;
 
 }

@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -401,7 +399,7 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		JSONStorageEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -416,7 +414,8 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		jsonStorageEntryLocalService = (JSONStorageEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(jsonStorageEntryLocalService);
+		JSONStorageEntryLocalServiceUtil.setService(
+			jsonStorageEntryLocalService);
 	}
 
 	/**
@@ -473,23 +472,6 @@ public abstract class JSONStorageEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		JSONStorageEntryLocalService jsonStorageEntryLocalService) {
-
-		try {
-			Field field =
-				JSONStorageEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, jsonStorageEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

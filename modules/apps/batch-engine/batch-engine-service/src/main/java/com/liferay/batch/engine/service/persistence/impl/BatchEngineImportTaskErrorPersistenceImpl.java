@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1230,31 +1229,14 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"batchEngineImportTaskId"}, false);
 
-		_setBatchEngineImportTaskErrorUtilPersistence(this);
+		BatchEngineImportTaskErrorUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setBatchEngineImportTaskErrorUtilPersistence(null);
+		BatchEngineImportTaskErrorUtil.setPersistence(null);
 
 		entityCache.removeCache(BatchEngineImportTaskErrorImpl.class.getName());
-	}
-
-	private void _setBatchEngineImportTaskErrorUtilPersistence(
-		BatchEngineImportTaskErrorPersistence
-			batchEngineImportTaskErrorPersistence) {
-
-		try {
-			Field field = BatchEngineImportTaskErrorUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, batchEngineImportTaskErrorPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

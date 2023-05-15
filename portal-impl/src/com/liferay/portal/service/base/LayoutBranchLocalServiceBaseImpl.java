@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -451,14 +449,14 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.LayoutBranch",
 			layoutBranchLocalService);
 
-		_setLocalServiceUtilService(layoutBranchLocalService);
+		LayoutBranchLocalServiceUtil.setService(layoutBranchLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.LayoutBranch");
 
-		_setLocalServiceUtilService(null);
+		LayoutBranchLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -500,22 +498,6 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		LayoutBranchLocalService layoutBranchLocalService) {
-
-		try {
-			Field field = LayoutBranchLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutBranchLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

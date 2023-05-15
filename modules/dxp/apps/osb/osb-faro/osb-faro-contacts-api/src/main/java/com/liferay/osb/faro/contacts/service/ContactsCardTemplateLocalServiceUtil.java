@@ -334,6 +334,10 @@ public class ContactsCardTemplateLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ContactsCardTemplateLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ContactsCardTemplateLocalService _service;
 
 }

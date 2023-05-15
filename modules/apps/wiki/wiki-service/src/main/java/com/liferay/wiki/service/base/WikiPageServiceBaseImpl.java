@@ -31,8 +31,6 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.persistence.WikiPageFinder;
 import com.liferay.wiki.service.persistence.WikiPagePersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class WikiPageServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		WikiPageServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class WikiPageServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		wikiPageService = (WikiPageService)aopProxy;
 
-		_setServiceUtilService(wikiPageService);
+		WikiPageServiceUtil.setService(wikiPageService);
 	}
 
 	/**
@@ -116,20 +114,6 @@ public abstract class WikiPageServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(WikiPageService wikiPageService) {
-		try {
-			Field field = WikiPageServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, wikiPageService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -96,11 +94,11 @@ public abstract class ThemeLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(themeLocalService);
+		ThemeLocalServiceUtil.setService(themeLocalService);
 	}
 
 	public void destroy() {
-		_setLocalServiceUtilService(null);
+		ThemeLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -134,22 +132,6 @@ public abstract class ThemeLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ThemeLocalService themeLocalService) {
-
-		try {
-			Field field = ThemeLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, themeLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

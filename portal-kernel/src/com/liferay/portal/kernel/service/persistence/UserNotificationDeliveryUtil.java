@@ -561,6 +561,12 @@ public class UserNotificationDeliveryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		UserNotificationDeliveryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile UserNotificationDeliveryPersistence _persistence;
 
 }

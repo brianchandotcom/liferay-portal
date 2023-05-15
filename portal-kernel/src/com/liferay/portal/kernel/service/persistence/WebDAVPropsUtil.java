@@ -334,6 +334,10 @@ public class WebDAVPropsUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(WebDAVPropsPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile WebDAVPropsPersistence _persistence;
 
 }

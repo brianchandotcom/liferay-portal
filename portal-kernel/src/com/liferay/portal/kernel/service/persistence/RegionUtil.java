@@ -1189,6 +1189,10 @@ public class RegionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(RegionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile RegionPersistence _persistence;
 
 }

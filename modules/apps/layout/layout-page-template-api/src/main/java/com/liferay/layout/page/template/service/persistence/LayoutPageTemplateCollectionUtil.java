@@ -1404,6 +1404,12 @@ public class LayoutPageTemplateCollectionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LayoutPageTemplateCollectionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LayoutPageTemplateCollectionPersistence
 		_persistence;
 

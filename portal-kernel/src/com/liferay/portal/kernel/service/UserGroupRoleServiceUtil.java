@@ -85,6 +85,10 @@ public class UserGroupRoleServiceUtil {
 		return _service;
 	}
 
+	public static void setService(UserGroupRoleService service) {
+		_service = service;
+	}
+
 	private static volatile UserGroupRoleService _service;
 
 }

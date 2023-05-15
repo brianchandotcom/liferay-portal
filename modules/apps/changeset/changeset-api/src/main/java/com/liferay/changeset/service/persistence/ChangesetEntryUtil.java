@@ -1245,6 +1245,10 @@ public class ChangesetEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ChangesetEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ChangesetEntryPersistence _persistence;
 
 }

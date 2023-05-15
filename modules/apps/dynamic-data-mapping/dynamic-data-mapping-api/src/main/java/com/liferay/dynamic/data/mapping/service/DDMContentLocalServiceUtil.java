@@ -413,6 +413,10 @@ public class DDMContentLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMContentLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDMContentLocalService _service;
 
 }

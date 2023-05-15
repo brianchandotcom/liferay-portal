@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -13319,30 +13318,14 @@ public class DDMTemplatePersistenceImpl
 			},
 			false);
 
-		_setDDMTemplateUtilPersistence(this);
+		DDMTemplateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMTemplateUtilPersistence(null);
+		DDMTemplateUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMTemplateImpl.class.getName());
-	}
-
-	private void _setDDMTemplateUtilPersistence(
-		DDMTemplatePersistence ddmTemplatePersistence) {
-
-		try {
-			Field field = DDMTemplateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmTemplatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -61,7 +59,7 @@ public abstract class DDMFormInstanceRecordServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		DDMFormInstanceRecordServiceUtil.setService(null);
 	}
 
 	@Override
@@ -75,7 +73,8 @@ public abstract class DDMFormInstanceRecordServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmFormInstanceRecordService = (DDMFormInstanceRecordService)aopProxy;
 
-		_setServiceUtilService(ddmFormInstanceRecordService);
+		DDMFormInstanceRecordServiceUtil.setService(
+			ddmFormInstanceRecordService);
 	}
 
 	/**
@@ -118,23 +117,6 @@ public abstract class DDMFormInstanceRecordServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		DDMFormInstanceRecordService ddmFormInstanceRecordService) {
-
-		try {
-			Field field =
-				DDMFormInstanceRecordServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFormInstanceRecordService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

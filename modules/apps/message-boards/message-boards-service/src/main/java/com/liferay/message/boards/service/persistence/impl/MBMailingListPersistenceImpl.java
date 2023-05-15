@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3175,30 +3174,14 @@ public class MBMailingListPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "categoryId"}, false);
 
-		_setMBMailingListUtilPersistence(this);
+		MBMailingListUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMBMailingListUtilPersistence(null);
+		MBMailingListUtil.setPersistence(null);
 
 		entityCache.removeCache(MBMailingListImpl.class.getName());
-	}
-
-	private void _setMBMailingListUtilPersistence(
-		MBMailingListPersistence mbMailingListPersistence) {
-
-		try {
-			Field field = MBMailingListUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mbMailingListPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

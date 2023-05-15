@@ -324,6 +324,10 @@ public class TrashVersionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(TrashVersionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile TrashVersionLocalService _service;
 
 }

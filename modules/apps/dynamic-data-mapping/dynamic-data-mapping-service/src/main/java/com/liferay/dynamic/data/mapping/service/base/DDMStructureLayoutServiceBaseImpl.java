@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class DDMStructureLayoutServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		DDMStructureLayoutServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class DDMStructureLayoutServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ddmStructureLayoutService = (DDMStructureLayoutService)aopProxy;
 
-		_setServiceUtilService(ddmStructureLayoutService);
+		DDMStructureLayoutServiceUtil.setService(ddmStructureLayoutService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class DDMStructureLayoutServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		DDMStructureLayoutService ddmStructureLayoutService) {
-
-		try {
-			Field field = DDMStructureLayoutServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmStructureLayoutService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

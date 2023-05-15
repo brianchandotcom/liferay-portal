@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -469,14 +467,15 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.RecentLayoutBranch",
 			recentLayoutBranchLocalService);
 
-		_setLocalServiceUtilService(recentLayoutBranchLocalService);
+		RecentLayoutBranchLocalServiceUtil.setService(
+			recentLayoutBranchLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.RecentLayoutBranch");
 
-		_setLocalServiceUtilService(null);
+		RecentLayoutBranchLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -519,23 +518,6 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		RecentLayoutBranchLocalService recentLayoutBranchLocalService) {
-
-		try {
-			Field field =
-				RecentLayoutBranchLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, recentLayoutBranchLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

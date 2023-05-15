@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3516,30 +3515,14 @@ public class CommerceOrderNotePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCommerceOrderNoteUtilPersistence(this);
+		CommerceOrderNoteUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceOrderNoteUtilPersistence(null);
+		CommerceOrderNoteUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceOrderNoteImpl.class.getName());
-	}
-
-	private void _setCommerceOrderNoteUtilPersistence(
-		CommerceOrderNotePersistence commerceOrderNotePersistence) {
-
-		try {
-			Field field = CommerceOrderNoteUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceOrderNotePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

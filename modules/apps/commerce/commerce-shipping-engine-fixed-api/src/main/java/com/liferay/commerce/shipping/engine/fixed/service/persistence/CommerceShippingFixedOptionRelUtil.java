@@ -703,6 +703,12 @@ public class CommerceShippingFixedOptionRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceShippingFixedOptionRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceShippingFixedOptionRelPersistence
 		_persistence;
 

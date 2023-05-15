@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -1719,30 +1718,14 @@ public class DepotAppCustomizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"depotEntryId", "portletId"}, false);
 
-		_setDepotAppCustomizationUtilPersistence(this);
+		DepotAppCustomizationUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDepotAppCustomizationUtilPersistence(null);
+		DepotAppCustomizationUtil.setPersistence(null);
 
 		entityCache.removeCache(DepotAppCustomizationImpl.class.getName());
-	}
-
-	private void _setDepotAppCustomizationUtilPersistence(
-		DepotAppCustomizationPersistence depotAppCustomizationPersistence) {
-
-		try {
-			Field field = DepotAppCustomizationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, depotAppCustomizationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

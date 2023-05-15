@@ -967,6 +967,12 @@ public class LayoutPageTemplateStructureUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		LayoutPageTemplateStructurePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile LayoutPageTemplateStructurePersistence _persistence;
 
 }

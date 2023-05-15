@@ -93,6 +93,10 @@ public class GenericMethodsEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(GenericMethodsEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile GenericMethodsEntryLocalService _service;
 
 }

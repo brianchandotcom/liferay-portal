@@ -845,6 +845,12 @@ public class CommercePaymentEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommercePaymentEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommercePaymentEntryPersistence _persistence;
 
 }

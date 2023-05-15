@@ -501,6 +501,10 @@ public class LayoutUtilityPageEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutUtilityPageEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutUtilityPageEntryLocalService _service;
 
 }

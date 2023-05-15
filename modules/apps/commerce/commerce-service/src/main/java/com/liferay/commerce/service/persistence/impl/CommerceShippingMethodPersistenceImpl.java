@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2047,30 +2046,14 @@ public class CommerceShippingMethodPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "engineKey"}, false);
 
-		_setCommerceShippingMethodUtilPersistence(this);
+		CommerceShippingMethodUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceShippingMethodUtilPersistence(null);
+		CommerceShippingMethodUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceShippingMethodImpl.class.getName());
-	}
-
-	private void _setCommerceShippingMethodUtilPersistence(
-		CommerceShippingMethodPersistence commerceShippingMethodPersistence) {
-
-		try {
-			Field field = CommerceShippingMethodUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceShippingMethodPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

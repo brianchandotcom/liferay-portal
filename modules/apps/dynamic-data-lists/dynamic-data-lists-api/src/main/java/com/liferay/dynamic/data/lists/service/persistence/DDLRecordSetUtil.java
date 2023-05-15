@@ -1415,6 +1415,10 @@ public class DDLRecordSetUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DDLRecordSetPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DDLRecordSetPersistence _persistence;
 
 }

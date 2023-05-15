@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -9614,30 +9613,14 @@ public class ObjectDefinitionPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setObjectDefinitionUtilPersistence(this);
+		ObjectDefinitionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectDefinitionUtilPersistence(null);
+		ObjectDefinitionUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectDefinitionImpl.class.getName());
-	}
-
-	private void _setObjectDefinitionUtilPersistence(
-		ObjectDefinitionPersistence objectDefinitionPersistence) {
-
-		try {
-			Field field = ObjectDefinitionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectDefinitionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

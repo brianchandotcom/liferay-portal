@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1814,30 +1813,14 @@ public class FVSCustomEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_setFVSCustomEntryUtilPersistence(this);
+		FVSCustomEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFVSCustomEntryUtilPersistence(null);
+		FVSCustomEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(FVSCustomEntryImpl.class.getName());
-	}
-
-	private void _setFVSCustomEntryUtilPersistence(
-		FVSCustomEntryPersistence fvsCustomEntryPersistence) {
-
-		try {
-			Field field = FVSCustomEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, fvsCustomEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

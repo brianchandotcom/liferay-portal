@@ -329,6 +329,10 @@ public class FaroPreferencesLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FaroPreferencesLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FaroPreferencesLocalService _service;
 
 }

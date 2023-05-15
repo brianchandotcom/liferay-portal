@@ -392,6 +392,10 @@ public class RatingsEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(RatingsEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile RatingsEntryLocalService _service;
 
 }

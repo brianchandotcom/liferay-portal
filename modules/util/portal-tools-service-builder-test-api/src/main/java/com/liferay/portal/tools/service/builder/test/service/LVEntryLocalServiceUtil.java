@@ -572,6 +572,10 @@ public class LVEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LVEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LVEntryLocalService _service;
 
 }

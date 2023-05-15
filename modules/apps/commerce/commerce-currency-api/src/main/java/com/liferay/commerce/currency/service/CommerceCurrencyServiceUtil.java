@@ -163,6 +163,10 @@ public class CommerceCurrencyServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceCurrencyService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceCurrencyService _service;
 
 }

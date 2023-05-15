@@ -186,6 +186,10 @@ public class AccountEntryUserRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AccountEntryUserRelService service) {
+		_service = service;
+	}
+
 	private static volatile AccountEntryUserRelService _service;
 
 }

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class BookmarksFolderServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		BookmarksFolderServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class BookmarksFolderServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		bookmarksFolderService = (BookmarksFolderService)aopProxy;
 
-		_setServiceUtilService(bookmarksFolderService);
+		BookmarksFolderServiceUtil.setService(bookmarksFolderService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class BookmarksFolderServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		BookmarksFolderService bookmarksFolderService) {
-
-		try {
-			Field field = BookmarksFolderServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, bookmarksFolderService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

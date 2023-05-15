@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -604,7 +602,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CalendarBookingLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -619,7 +617,7 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		calendarBookingLocalService = (CalendarBookingLocalService)aopProxy;
 
-		_setLocalServiceUtilService(calendarBookingLocalService);
+		CalendarBookingLocalServiceUtil.setService(calendarBookingLocalService);
 	}
 
 	/**
@@ -676,23 +674,6 @@ public abstract class CalendarBookingLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CalendarBookingLocalService calendarBookingLocalService) {
-
-		try {
-			Field field =
-				CalendarBookingLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, calendarBookingLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

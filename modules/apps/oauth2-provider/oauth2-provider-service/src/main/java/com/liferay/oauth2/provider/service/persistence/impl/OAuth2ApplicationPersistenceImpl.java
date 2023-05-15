@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -5200,30 +5199,14 @@ public class OAuth2ApplicationPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setOAuth2ApplicationUtilPersistence(this);
+		OAuth2ApplicationUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setOAuth2ApplicationUtilPersistence(null);
+		OAuth2ApplicationUtil.setPersistence(null);
 
 		entityCache.removeCache(OAuth2ApplicationImpl.class.getName());
-	}
-
-	private void _setOAuth2ApplicationUtilPersistence(
-		OAuth2ApplicationPersistence oAuth2ApplicationPersistence) {
-
-		try {
-			Field field = OAuth2ApplicationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, oAuth2ApplicationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

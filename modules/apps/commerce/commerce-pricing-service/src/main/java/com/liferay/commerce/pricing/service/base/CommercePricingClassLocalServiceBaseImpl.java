@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -543,7 +541,7 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommercePricingClassLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -560,7 +558,8 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		commercePricingClassLocalService =
 			(CommercePricingClassLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commercePricingClassLocalService);
+		CommercePricingClassLocalServiceUtil.setService(
+			commercePricingClassLocalService);
 	}
 
 	/**
@@ -618,23 +617,6 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommercePricingClassLocalService commercePricingClassLocalService) {
-
-		try {
-			Field field =
-				CommercePricingClassLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePricingClassLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

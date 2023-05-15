@@ -1200,6 +1200,10 @@ public class ListTypeEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ListTypeEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ListTypeEntryPersistence _persistence;
 
 }

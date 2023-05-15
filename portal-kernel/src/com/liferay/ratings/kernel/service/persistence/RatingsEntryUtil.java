@@ -1183,6 +1183,10 @@ public class RatingsEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(RatingsEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile RatingsEntryPersistence _persistence;
 
 }

@@ -47,6 +47,10 @@ public class CommerceAddressRestrictionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceAddressRestrictionService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceAddressRestrictionService _service;
 
 }

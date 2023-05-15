@@ -56,8 +56,6 @@ import com.liferay.sharing.service.persistence.SharingEntryPersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -551,7 +549,7 @@ public abstract class SharingEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		SharingEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -566,7 +564,7 @@ public abstract class SharingEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		sharingEntryLocalService = (SharingEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(sharingEntryLocalService);
+		SharingEntryLocalServiceUtil.setService(sharingEntryLocalService);
 	}
 
 	/**
@@ -608,22 +606,6 @@ public abstract class SharingEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SharingEntryLocalService sharingEntryLocalService) {
-
-		try {
-			Field field = SharingEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, sharingEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

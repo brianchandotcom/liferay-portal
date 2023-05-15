@@ -136,6 +136,10 @@ public class ThemeLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ThemeLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ThemeLocalService _service;
 
 }

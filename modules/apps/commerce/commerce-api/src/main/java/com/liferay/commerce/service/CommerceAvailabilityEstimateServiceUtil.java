@@ -106,6 +106,10 @@ public class CommerceAvailabilityEstimateServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceAvailabilityEstimateService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceAvailabilityEstimateService _service;
 
 }

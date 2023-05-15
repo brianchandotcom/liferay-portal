@@ -374,6 +374,10 @@ public class ObjectViewFilterColumnLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectViewFilterColumnLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectViewFilterColumnLocalService _service;
 
 }

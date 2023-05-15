@@ -1019,6 +1019,12 @@ public class ObjectViewSortColumnUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectViewSortColumnPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectViewSortColumnPersistence _persistence;
 
 }

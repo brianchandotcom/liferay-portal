@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -2096,30 +2095,14 @@ public class NotificationRecipientPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
 			false);
 
-		_setNotificationRecipientUtilPersistence(this);
+		NotificationRecipientUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setNotificationRecipientUtilPersistence(null);
+		NotificationRecipientUtil.setPersistence(null);
 
 		entityCache.removeCache(NotificationRecipientImpl.class.getName());
-	}
-
-	private void _setNotificationRecipientUtilPersistence(
-		NotificationRecipientPersistence notificationRecipientPersistence) {
-
-		try {
-			Field field = NotificationRecipientUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, notificationRecipientPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

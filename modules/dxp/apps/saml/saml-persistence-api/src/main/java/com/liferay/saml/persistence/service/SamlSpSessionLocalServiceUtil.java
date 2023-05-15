@@ -394,6 +394,10 @@ public class SamlSpSessionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(SamlSpSessionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile SamlSpSessionLocalService _service;
 
 }

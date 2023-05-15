@@ -273,6 +273,10 @@ public class CacheMissEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CacheMissEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CacheMissEntryPersistence _persistence;
 
 }

@@ -432,6 +432,12 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceMLForecastAlertEntryLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceMLForecastAlertEntryLocalService _service;
 
 }

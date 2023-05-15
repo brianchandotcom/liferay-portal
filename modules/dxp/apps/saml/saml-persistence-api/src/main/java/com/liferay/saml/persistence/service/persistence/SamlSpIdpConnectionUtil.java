@@ -530,6 +530,12 @@ public class SamlSpIdpConnectionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SamlSpIdpConnectionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SamlSpIdpConnectionPersistence _persistence;
 
 }

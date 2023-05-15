@@ -2476,6 +2476,12 @@ public class AnnouncementsEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AnnouncementsEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AnnouncementsEntryPersistence _persistence;
 
 }

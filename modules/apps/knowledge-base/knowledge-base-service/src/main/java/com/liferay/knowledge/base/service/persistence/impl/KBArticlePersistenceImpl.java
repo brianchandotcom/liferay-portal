@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -37209,29 +37208,14 @@ public class KBArticlePersistenceImpl
 			new String[] {"groupId", "kbFolderId", "urlTitle", "status"},
 			false);
 
-		_setKBArticleUtilPersistence(this);
+		KBArticleUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setKBArticleUtilPersistence(null);
+		KBArticleUtil.setPersistence(null);
 
 		entityCache.removeCache(KBArticleImpl.class.getName());
-	}
-
-	private void _setKBArticleUtilPersistence(
-		KBArticlePersistence kbArticlePersistence) {
-
-		try {
-			Field field = KBArticleUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, kbArticlePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

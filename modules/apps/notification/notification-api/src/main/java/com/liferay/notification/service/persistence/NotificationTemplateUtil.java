@@ -879,6 +879,12 @@ public class NotificationTemplateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NotificationTemplatePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NotificationTemplatePersistence _persistence;
 
 }

@@ -1979,6 +1979,12 @@ public class AssetListEntryUsageUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AssetListEntryUsagePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AssetListEntryUsagePersistence _persistence;
 
 }

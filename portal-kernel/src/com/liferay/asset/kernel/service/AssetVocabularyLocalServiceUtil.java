@@ -621,6 +621,10 @@ public class AssetVocabularyLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AssetVocabularyLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AssetVocabularyLocalService _service;
 
 }

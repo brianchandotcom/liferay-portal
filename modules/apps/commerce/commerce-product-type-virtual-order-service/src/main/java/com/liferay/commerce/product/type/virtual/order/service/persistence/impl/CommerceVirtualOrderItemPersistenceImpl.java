@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2385,31 +2384,14 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			"countByCommerceOrderItemId", new String[] {Long.class.getName()},
 			new String[] {"commerceOrderItemId"}, false);
 
-		_setCommerceVirtualOrderItemUtilPersistence(this);
+		CommerceVirtualOrderItemUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceVirtualOrderItemUtilPersistence(null);
+		CommerceVirtualOrderItemUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceVirtualOrderItemImpl.class.getName());
-	}
-
-	private void _setCommerceVirtualOrderItemUtilPersistence(
-		CommerceVirtualOrderItemPersistence
-			commerceVirtualOrderItemPersistence) {
-
-		try {
-			Field field = CommerceVirtualOrderItemUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceVirtualOrderItemPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

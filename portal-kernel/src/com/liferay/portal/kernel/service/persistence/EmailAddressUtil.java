@@ -1562,6 +1562,10 @@ public class EmailAddressUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(EmailAddressPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile EmailAddressPersistence _persistence;
 
 }

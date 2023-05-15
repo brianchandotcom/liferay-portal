@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -400,7 +398,7 @@ public abstract class BatchPlannerPlanLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		BatchPlannerPlanLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -415,7 +413,8 @@ public abstract class BatchPlannerPlanLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		batchPlannerPlanLocalService = (BatchPlannerPlanLocalService)aopProxy;
 
-		_setLocalServiceUtilService(batchPlannerPlanLocalService);
+		BatchPlannerPlanLocalServiceUtil.setService(
+			batchPlannerPlanLocalService);
 	}
 
 	/**
@@ -457,23 +456,6 @@ public abstract class BatchPlannerPlanLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		BatchPlannerPlanLocalService batchPlannerPlanLocalService) {
-
-		try {
-			Field field =
-				BatchPlannerPlanLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, batchPlannerPlanLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -2410,30 +2409,14 @@ public class FaroProjectPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
 			false);
 
-		_setFaroProjectUtilPersistence(this);
+		FaroProjectUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFaroProjectUtilPersistence(null);
+		FaroProjectUtil.setPersistence(null);
 
 		entityCache.removeCache(FaroProjectImpl.class.getName());
-	}
-
-	private void _setFaroProjectUtilPersistence(
-		FaroProjectPersistence faroProjectPersistence) {
-
-		try {
-			Field field = FaroProjectUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, faroProjectPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -525,6 +525,10 @@ public class ServiceComponentUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ServiceComponentPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ServiceComponentPersistence _persistence;
 
 }

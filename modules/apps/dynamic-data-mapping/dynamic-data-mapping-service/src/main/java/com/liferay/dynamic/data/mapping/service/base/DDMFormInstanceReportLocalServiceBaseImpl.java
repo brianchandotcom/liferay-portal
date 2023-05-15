@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -415,7 +413,7 @@ public abstract class DDMFormInstanceReportLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DDMFormInstanceReportLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -432,7 +430,8 @@ public abstract class DDMFormInstanceReportLocalServiceBaseImpl
 		ddmFormInstanceReportLocalService =
 			(DDMFormInstanceReportLocalService)aopProxy;
 
-		_setLocalServiceUtilService(ddmFormInstanceReportLocalService);
+		DDMFormInstanceReportLocalServiceUtil.setService(
+			ddmFormInstanceReportLocalService);
 	}
 
 	/**
@@ -490,23 +489,6 @@ public abstract class DDMFormInstanceReportLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DDMFormInstanceReportLocalService ddmFormInstanceReportLocalService) {
-
-		try {
-			Field field =
-				DDMFormInstanceReportLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFormInstanceReportLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

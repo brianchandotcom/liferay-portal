@@ -436,6 +436,12 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CalendarNotificationTemplateLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CalendarNotificationTemplateLocalService _service;
 
 }

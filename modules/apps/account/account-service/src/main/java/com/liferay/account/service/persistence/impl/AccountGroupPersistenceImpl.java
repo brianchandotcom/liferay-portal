@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -7932,30 +7931,14 @@ public class AccountGroupPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setAccountGroupUtilPersistence(this);
+		AccountGroupUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAccountGroupUtilPersistence(null);
+		AccountGroupUtil.setPersistence(null);
 
 		entityCache.removeCache(AccountGroupImpl.class.getName());
-	}
-
-	private void _setAccountGroupUtilPersistence(
-		AccountGroupPersistence accountGroupPersistence) {
-
-		try {
-			Field field = AccountGroupUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, accountGroupPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

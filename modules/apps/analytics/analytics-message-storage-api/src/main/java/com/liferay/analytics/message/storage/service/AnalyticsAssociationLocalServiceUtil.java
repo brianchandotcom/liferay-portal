@@ -356,6 +356,10 @@ public class AnalyticsAssociationLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AnalyticsAssociationLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AnalyticsAssociationLocalService _service;
 
 }

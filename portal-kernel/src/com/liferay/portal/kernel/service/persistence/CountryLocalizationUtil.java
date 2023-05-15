@@ -536,6 +536,12 @@ public class CountryLocalizationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CountryLocalizationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CountryLocalizationPersistence _persistence;
 
 }

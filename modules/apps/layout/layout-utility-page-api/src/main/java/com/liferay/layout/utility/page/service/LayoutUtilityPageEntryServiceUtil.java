@@ -154,6 +154,10 @@ public class LayoutUtilityPageEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutUtilityPageEntryService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutUtilityPageEntryService _service;
 
 }

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2958,31 +2957,14 @@ public class CommercePriceModifierRelPersistenceImpl
 			new String[] {"commercePriceModifierId", "classNameId", "classPK"},
 			false);
 
-		_setCommercePriceModifierRelUtilPersistence(this);
+		CommercePriceModifierRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommercePriceModifierRelUtilPersistence(null);
+		CommercePriceModifierRelUtil.setPersistence(null);
 
 		entityCache.removeCache(CommercePriceModifierRelImpl.class.getName());
-	}
-
-	private void _setCommercePriceModifierRelUtilPersistence(
-		CommercePriceModifierRelPersistence
-			commercePriceModifierRelPersistence) {
-
-		try {
-			Field field = CommercePriceModifierRelUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePriceModifierRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

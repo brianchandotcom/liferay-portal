@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -175,11 +173,12 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(exportImportConfigurationService);
+		ExportImportConfigurationServiceUtil.setService(
+			exportImportConfigurationService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		ExportImportConfigurationServiceUtil.setService(null);
 	}
 
 	/**
@@ -222,23 +221,6 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		ExportImportConfigurationService exportImportConfigurationService) {
-
-		try {
-			Field field =
-				ExportImportConfigurationServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, exportImportConfigurationService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

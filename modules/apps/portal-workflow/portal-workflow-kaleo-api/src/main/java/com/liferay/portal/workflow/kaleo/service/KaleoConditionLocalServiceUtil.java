@@ -330,6 +330,10 @@ public class KaleoConditionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(KaleoConditionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile KaleoConditionLocalService _service;
 
 }

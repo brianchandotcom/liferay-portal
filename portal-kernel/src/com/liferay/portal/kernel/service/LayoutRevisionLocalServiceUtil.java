@@ -499,6 +499,10 @@ public class LayoutRevisionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutRevisionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutRevisionLocalService _service;
 
 }

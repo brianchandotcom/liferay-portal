@@ -343,6 +343,12 @@ public class PortalPreferencesUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		PortalPreferencesPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile PortalPreferencesPersistence _persistence;
 
 }

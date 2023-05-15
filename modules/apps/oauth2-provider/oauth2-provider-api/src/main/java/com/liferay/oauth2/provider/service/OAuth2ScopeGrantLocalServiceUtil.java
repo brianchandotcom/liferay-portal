@@ -498,6 +498,10 @@ public class OAuth2ScopeGrantLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuth2ScopeGrantLocalService service) {
+		_service = service;
+	}
+
 	private static volatile OAuth2ScopeGrantLocalService _service;
 
 }

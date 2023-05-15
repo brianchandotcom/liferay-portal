@@ -798,6 +798,10 @@ public class ObjectLayoutBoxUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectLayoutBoxPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectLayoutBoxPersistence _persistence;
 
 }

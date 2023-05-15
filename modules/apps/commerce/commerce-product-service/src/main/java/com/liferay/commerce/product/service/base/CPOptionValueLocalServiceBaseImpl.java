@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -515,7 +513,7 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPOptionValueLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -530,7 +528,7 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpOptionValueLocalService = (CPOptionValueLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpOptionValueLocalService);
+		CPOptionValueLocalServiceUtil.setService(cpOptionValueLocalService);
 	}
 
 	/**
@@ -587,22 +585,6 @@ public abstract class CPOptionValueLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPOptionValueLocalService cpOptionValueLocalService) {
-
-		try {
-			Field field = CPOptionValueLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpOptionValueLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

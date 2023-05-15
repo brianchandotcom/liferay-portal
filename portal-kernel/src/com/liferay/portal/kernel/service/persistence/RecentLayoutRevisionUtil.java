@@ -886,6 +886,12 @@ public class RecentLayoutRevisionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		RecentLayoutRevisionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile RecentLayoutRevisionPersistence _persistence;
 
 }

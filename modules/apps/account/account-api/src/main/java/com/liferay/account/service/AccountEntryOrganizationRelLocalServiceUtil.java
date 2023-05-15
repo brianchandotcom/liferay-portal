@@ -447,6 +447,12 @@ public class AccountEntryOrganizationRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		AccountEntryOrganizationRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile AccountEntryOrganizationRelLocalService _service;
 
 }

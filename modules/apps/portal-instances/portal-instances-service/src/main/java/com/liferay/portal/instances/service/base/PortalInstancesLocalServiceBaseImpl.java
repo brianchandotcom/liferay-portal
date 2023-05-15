@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class PortalInstancesLocalServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		PortalInstancesLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class PortalInstancesLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		portalInstancesLocalService = (PortalInstancesLocalService)aopProxy;
 
-		_setLocalServiceUtilService(portalInstancesLocalService);
+		PortalInstancesLocalServiceUtil.setService(portalInstancesLocalService);
 	}
 
 	/**
@@ -107,23 +105,6 @@ public abstract class PortalInstancesLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		PortalInstancesLocalService portalInstancesLocalService) {
-
-		try {
-			Field field =
-				PortalInstancesLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, portalInstancesLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

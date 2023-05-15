@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2322,30 +2321,14 @@ public class ObjectFilterPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"objectFieldId"},
 			false);
 
-		_setObjectFilterUtilPersistence(this);
+		ObjectFilterUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectFilterUtilPersistence(null);
+		ObjectFilterUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectFilterImpl.class.getName());
-	}
-
-	private void _setObjectFilterUtilPersistence(
-		ObjectFilterPersistence objectFilterPersistence) {
-
-		try {
-			Field field = ObjectFilterUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectFilterPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

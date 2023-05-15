@@ -500,6 +500,10 @@ public class OrganizationServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OrganizationService service) {
+		_service = service;
+	}
+
 	private static volatile OrganizationService _service;
 
 }

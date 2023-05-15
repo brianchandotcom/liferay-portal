@@ -45,7 +45,6 @@ import com.liferay.portal.model.impl.UserTrackerModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2191,29 +2190,13 @@ public class UserTrackerPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"sessionId"},
 			false);
 
-		_setUserTrackerUtilPersistence(this);
+		UserTrackerUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setUserTrackerUtilPersistence(null);
+		UserTrackerUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(UserTrackerImpl.class.getName());
-	}
-
-	private void _setUserTrackerUtilPersistence(
-		UserTrackerPersistence userTrackerPersistence) {
-
-		try {
-			Field field = UserTrackerUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, userTrackerPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_USERTRACKER =

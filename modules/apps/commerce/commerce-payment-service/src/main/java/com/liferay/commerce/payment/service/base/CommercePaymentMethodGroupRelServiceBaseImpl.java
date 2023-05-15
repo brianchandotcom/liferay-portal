@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommercePaymentMethodGroupRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 		commercePaymentMethodGroupRelService =
 			(CommercePaymentMethodGroupRelService)aopProxy;
 
-		_setServiceUtilService(commercePaymentMethodGroupRelService);
+		CommercePaymentMethodGroupRelServiceUtil.setService(
+			commercePaymentMethodGroupRelService);
 	}
 
 	/**
@@ -119,24 +118,6 @@ public abstract class CommercePaymentMethodGroupRelServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommercePaymentMethodGroupRelService
-			commercePaymentMethodGroupRelService) {
-
-		try {
-			Field field =
-				CommercePaymentMethodGroupRelServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePaymentMethodGroupRelService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

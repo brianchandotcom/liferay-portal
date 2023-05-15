@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -1170,30 +1169,14 @@ public class DDMFormInstanceReportPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"formInstanceId"}, false);
 
-		_setDDMFormInstanceReportUtilPersistence(this);
+		DDMFormInstanceReportUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMFormInstanceReportUtilPersistence(null);
+		DDMFormInstanceReportUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMFormInstanceReportImpl.class.getName());
-	}
-
-	private void _setDDMFormInstanceReportUtilPersistence(
-		DDMFormInstanceReportPersistence ddmFormInstanceReportPersistence) {
-
-		try {
-			Field field = DDMFormInstanceReportUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFormInstanceReportPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

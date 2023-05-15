@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -570,7 +568,7 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceNotificationAttachmentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -586,7 +584,8 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 		commerceNotificationAttachmentLocalService =
 			(CommerceNotificationAttachmentLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceNotificationAttachmentLocalService);
+		CommerceNotificationAttachmentLocalServiceUtil.setService(
+			commerceNotificationAttachmentLocalService);
 	}
 
 	/**
@@ -629,24 +628,6 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceNotificationAttachmentLocalService
-			commerceNotificationAttachmentLocalService) {
-
-		try {
-			Field field =
-				CommerceNotificationAttachmentLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceNotificationAttachmentLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2339,30 +2338,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"formInstanceId", "status"}, false);
 
-		_setDDMFormInstanceVersionUtilPersistence(this);
+		DDMFormInstanceVersionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDMFormInstanceVersionUtilPersistence(null);
+		DDMFormInstanceVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(DDMFormInstanceVersionImpl.class.getName());
-	}
-
-	private void _setDDMFormInstanceVersionUtilPersistence(
-		DDMFormInstanceVersionPersistence ddmFormInstanceVersionPersistence) {
-
-		try {
-			Field field = DDMFormInstanceVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddmFormInstanceVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

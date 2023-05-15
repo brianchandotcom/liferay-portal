@@ -1023,6 +1023,12 @@ public class ObjectViewFilterColumnUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectViewFilterColumnPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectViewFilterColumnPersistence _persistence;
 
 }

@@ -436,6 +436,10 @@ public class RepositoryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(RepositoryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile RepositoryLocalService _service;
 
 }

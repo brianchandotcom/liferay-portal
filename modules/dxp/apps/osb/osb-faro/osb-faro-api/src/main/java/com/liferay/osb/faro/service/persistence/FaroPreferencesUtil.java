@@ -501,6 +501,10 @@ public class FaroPreferencesUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(FaroPreferencesPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile FaroPreferencesPersistence _persistence;
 
 }

@@ -372,6 +372,10 @@ public class CommerceAddressLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceAddressLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceAddressLocalService _service;
 
 }

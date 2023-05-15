@@ -81,6 +81,10 @@ public class DDMStructureVersionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMStructureVersionService service) {
+		_service = service;
+	}
+
 	private static volatile DDMStructureVersionService _service;
 
 }

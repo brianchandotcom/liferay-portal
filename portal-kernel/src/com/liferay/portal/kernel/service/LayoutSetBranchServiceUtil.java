@@ -100,6 +100,10 @@ public class LayoutSetBranchServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutSetBranchService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutSetBranchService _service;
 
 }

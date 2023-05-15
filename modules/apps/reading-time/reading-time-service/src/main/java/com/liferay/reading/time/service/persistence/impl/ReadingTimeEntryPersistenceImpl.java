@@ -51,7 +51,6 @@ import com.liferay.reading.time.service.persistence.impl.constants.ReadingTimePe
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2678,30 +2677,14 @@ public class ReadingTimeEntryPersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
 
-		_setReadingTimeEntryUtilPersistence(this);
+		ReadingTimeEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setReadingTimeEntryUtilPersistence(null);
+		ReadingTimeEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(ReadingTimeEntryImpl.class.getName());
-	}
-
-	private void _setReadingTimeEntryUtilPersistence(
-		ReadingTimeEntryPersistence readingTimeEntryPersistence) {
-
-		try {
-			Field field = ReadingTimeEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, readingTimeEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

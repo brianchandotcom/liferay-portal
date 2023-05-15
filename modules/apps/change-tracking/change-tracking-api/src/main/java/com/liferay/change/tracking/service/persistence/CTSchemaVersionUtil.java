@@ -448,6 +448,10 @@ public class CTSchemaVersionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CTSchemaVersionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CTSchemaVersionPersistence _persistence;
 
 }

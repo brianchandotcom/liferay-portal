@@ -10007,6 +10007,10 @@ public class JournalArticleUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(JournalArticlePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile JournalArticlePersistence _persistence;
 
 }

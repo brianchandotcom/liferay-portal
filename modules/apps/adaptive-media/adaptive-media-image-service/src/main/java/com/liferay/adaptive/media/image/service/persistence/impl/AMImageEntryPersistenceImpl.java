@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5439,30 +5438,14 @@ public class AMImageEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"configurationUuid", "fileVersionId"}, false);
 
-		_setAMImageEntryUtilPersistence(this);
+		AMImageEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAMImageEntryUtilPersistence(null);
+		AMImageEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(AMImageEntryImpl.class.getName());
-	}
-
-	private void _setAMImageEntryUtilPersistence(
-		AMImageEntryPersistence amImageEntryPersistence) {
-
-		try {
-			Field field = AMImageEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, amImageEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

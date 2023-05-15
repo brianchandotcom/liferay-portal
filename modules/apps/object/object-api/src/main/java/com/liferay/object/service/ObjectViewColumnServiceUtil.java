@@ -47,6 +47,10 @@ public class ObjectViewColumnServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectViewColumnService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectViewColumnService _service;
 
 }

@@ -2095,6 +2095,10 @@ public class SocialRelationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SocialRelationPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SocialRelationPersistence _persistence;
 
 }

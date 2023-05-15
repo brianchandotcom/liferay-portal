@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.UserNotificationEventServiceUtil;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -146,11 +144,12 @@ public abstract class UserNotificationEventServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(userNotificationEventService);
+		UserNotificationEventServiceUtil.setService(
+			userNotificationEventService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		UserNotificationEventServiceUtil.setService(null);
 	}
 
 	/**
@@ -193,23 +192,6 @@ public abstract class UserNotificationEventServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		UserNotificationEventService userNotificationEventService) {
-
-		try {
-			Field field =
-				UserNotificationEventServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, userNotificationEventService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

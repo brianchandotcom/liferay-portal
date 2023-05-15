@@ -1097,6 +1097,12 @@ public class CommerceDiscountOrderTypeRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceDiscountOrderTypeRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceDiscountOrderTypeRelPersistence
 		_persistence;
 

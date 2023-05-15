@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3887,30 +3886,14 @@ public class CTCollectionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_setCTCollectionUtilPersistence(this);
+		CTCollectionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCTCollectionUtilPersistence(null);
+		CTCollectionUtil.setPersistence(null);
 
 		entityCache.removeCache(CTCollectionImpl.class.getName());
-	}
-
-	private void _setCTCollectionUtilPersistence(
-		CTCollectionPersistence ctCollectionPersistence) {
-
-		try {
-			Field field = CTCollectionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ctCollectionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

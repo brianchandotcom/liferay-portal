@@ -1368,6 +1368,12 @@ public class DDMFormInstanceRecordVersionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DDMFormInstanceRecordVersionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DDMFormInstanceRecordVersionPersistence
 		_persistence;
 

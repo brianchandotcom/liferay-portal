@@ -773,6 +773,10 @@ public class UserTrackerUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(UserTrackerPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile UserTrackerPersistence _persistence;
 
 }

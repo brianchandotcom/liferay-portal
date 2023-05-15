@@ -415,6 +415,10 @@ public class JournalContentSearchLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(JournalContentSearchLocalService service) {
+		_service = service;
+	}
+
 	private static volatile JournalContentSearchLocalService _service;
 
 }

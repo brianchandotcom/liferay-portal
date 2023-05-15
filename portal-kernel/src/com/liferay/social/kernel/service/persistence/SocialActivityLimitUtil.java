@@ -920,6 +920,12 @@ public class SocialActivityLimitUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SocialActivityLimitPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SocialActivityLimitPersistence _persistence;
 
 }

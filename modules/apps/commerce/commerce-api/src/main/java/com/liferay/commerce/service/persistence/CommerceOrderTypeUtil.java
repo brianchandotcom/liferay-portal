@@ -1925,6 +1925,12 @@ public class CommerceOrderTypeUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceOrderTypePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceOrderTypePersistence _persistence;
 
 }

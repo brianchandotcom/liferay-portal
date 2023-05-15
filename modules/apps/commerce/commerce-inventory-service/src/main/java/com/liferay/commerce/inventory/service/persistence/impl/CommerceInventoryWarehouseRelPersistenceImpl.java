@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2165,33 +2164,15 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			},
 			new String[] {"classNameId", "classPK", "CIWarehouseId"}, false);
 
-		_setCommerceInventoryWarehouseRelUtilPersistence(this);
+		CommerceInventoryWarehouseRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceInventoryWarehouseRelUtilPersistence(null);
+		CommerceInventoryWarehouseRelUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceInventoryWarehouseRelImpl.class.getName());
-	}
-
-	private void _setCommerceInventoryWarehouseRelUtilPersistence(
-		CommerceInventoryWarehouseRelPersistence
-			commerceInventoryWarehouseRelPersistence) {
-
-		try {
-			Field field =
-				CommerceInventoryWarehouseRelUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceInventoryWarehouseRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

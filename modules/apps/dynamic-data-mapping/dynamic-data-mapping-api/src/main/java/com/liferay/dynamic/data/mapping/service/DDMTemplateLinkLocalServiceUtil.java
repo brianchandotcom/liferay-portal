@@ -372,6 +372,10 @@ public class DDMTemplateLinkLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMTemplateLinkLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDMTemplateLinkLocalService _service;
 
 }

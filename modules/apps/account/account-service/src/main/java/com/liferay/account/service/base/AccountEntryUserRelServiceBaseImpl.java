@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class AccountEntryUserRelServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		AccountEntryUserRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class AccountEntryUserRelServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		accountEntryUserRelService = (AccountEntryUserRelService)aopProxy;
 
-		_setServiceUtilService(accountEntryUserRelService);
+		AccountEntryUserRelServiceUtil.setService(accountEntryUserRelService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class AccountEntryUserRelServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		AccountEntryUserRelService accountEntryUserRelService) {
-
-		try {
-			Field field = AccountEntryUserRelServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, accountEntryUserRelService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

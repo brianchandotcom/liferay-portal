@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -390,7 +388,7 @@ public abstract class COREntryRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		COREntryRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -405,7 +403,7 @@ public abstract class COREntryRelLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		corEntryRelLocalService = (COREntryRelLocalService)aopProxy;
 
-		_setLocalServiceUtilService(corEntryRelLocalService);
+		COREntryRelLocalServiceUtil.setService(corEntryRelLocalService);
 	}
 
 	/**
@@ -447,22 +445,6 @@ public abstract class COREntryRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		COREntryRelLocalService corEntryRelLocalService) {
-
-		try {
-			Field field = COREntryRelLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, corEntryRelLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

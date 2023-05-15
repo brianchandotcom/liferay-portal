@@ -690,6 +690,10 @@ public class ExpandoColumnUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ExpandoColumnPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ExpandoColumnPersistence _persistence;
 
 }

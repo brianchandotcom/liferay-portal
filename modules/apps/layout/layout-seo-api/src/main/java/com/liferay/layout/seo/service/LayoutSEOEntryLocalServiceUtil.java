@@ -451,6 +451,10 @@ public class LayoutSEOEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutSEOEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutSEOEntryLocalService _service;
 
 }

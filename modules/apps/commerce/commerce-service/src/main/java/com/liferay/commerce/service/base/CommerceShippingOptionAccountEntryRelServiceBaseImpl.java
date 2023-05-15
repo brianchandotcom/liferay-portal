@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommerceShippingOptionAccountEntryRelServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommerceShippingOptionAccountEntryRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class CommerceShippingOptionAccountEntryRelServiceBaseImpl
 		commerceShippingOptionAccountEntryRelService =
 			(CommerceShippingOptionAccountEntryRelService)aopProxy;
 
-		_setServiceUtilService(commerceShippingOptionAccountEntryRelService);
+		CommerceShippingOptionAccountEntryRelServiceUtil.setService(
+			commerceShippingOptionAccountEntryRelService);
 	}
 
 	/**
@@ -120,24 +119,6 @@ public abstract class CommerceShippingOptionAccountEntryRelServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommerceShippingOptionAccountEntryRelService
-			commerceShippingOptionAccountEntryRelService) {
-
-		try {
-			Field field =
-				CommerceShippingOptionAccountEntryRelServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceShippingOptionAccountEntryRelService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

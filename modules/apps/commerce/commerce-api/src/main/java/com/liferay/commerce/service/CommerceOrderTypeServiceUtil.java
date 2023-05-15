@@ -146,6 +146,10 @@ public class CommerceOrderTypeServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceOrderTypeService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceOrderTypeService _service;
 
 }

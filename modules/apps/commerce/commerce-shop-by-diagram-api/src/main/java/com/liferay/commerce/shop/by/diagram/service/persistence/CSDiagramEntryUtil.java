@@ -872,6 +872,10 @@ public class CSDiagramEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CSDiagramEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CSDiagramEntryPersistence _persistence;
 
 }

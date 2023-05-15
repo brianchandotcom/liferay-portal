@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -614,14 +612,15 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 			"com.liferay.announcements.kernel.model.AnnouncementsEntry",
 			announcementsEntryLocalService);
 
-		_setLocalServiceUtilService(announcementsEntryLocalService);
+		AnnouncementsEntryLocalServiceUtil.setService(
+			announcementsEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.announcements.kernel.model.AnnouncementsEntry");
 
-		_setLocalServiceUtilService(null);
+		AnnouncementsEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -664,23 +663,6 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		AnnouncementsEntryLocalService announcementsEntryLocalService) {
-
-		try {
-			Field field =
-				AnnouncementsEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, announcementsEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

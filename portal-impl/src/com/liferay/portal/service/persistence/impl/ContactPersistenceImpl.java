@@ -45,7 +45,6 @@ import com.liferay.portal.model.impl.ContactModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2741,28 +2740,13 @@ public class ContactPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
-		_setContactUtilPersistence(this);
+		ContactUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setContactUtilPersistence(null);
+		ContactUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(ContactImpl.class.getName());
-	}
-
-	private void _setContactUtilPersistence(
-		ContactPersistence contactPersistence) {
-
-		try {
-			Field field = ContactUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, contactPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_CONTACT =

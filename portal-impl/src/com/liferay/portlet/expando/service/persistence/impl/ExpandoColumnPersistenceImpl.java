@@ -52,7 +52,6 @@ import com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2568,29 +2567,13 @@ public class ExpandoColumnPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"tableId", "name"}, false);
 
-		_setExpandoColumnUtilPersistence(this);
+		ExpandoColumnUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setExpandoColumnUtilPersistence(null);
+		ExpandoColumnUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(ExpandoColumnImpl.class.getName());
-	}
-
-	private void _setExpandoColumnUtilPersistence(
-		ExpandoColumnPersistence expandoColumnPersistence) {
-
-		try {
-			Field field = ExpandoColumnUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, expandoColumnPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_EXPANDOCOLUMN =

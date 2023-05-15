@@ -1292,6 +1292,12 @@ public class CommerceWishListItemUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceWishListItemPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceWishListItemPersistence _persistence;
 
 }

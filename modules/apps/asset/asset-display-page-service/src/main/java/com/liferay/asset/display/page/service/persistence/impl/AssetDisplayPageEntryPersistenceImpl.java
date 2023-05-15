@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3826,30 +3825,14 @@ public class AssetDisplayPageEntryPersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
 
-		_setAssetDisplayPageEntryUtilPersistence(this);
+		AssetDisplayPageEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAssetDisplayPageEntryUtilPersistence(null);
+		AssetDisplayPageEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(AssetDisplayPageEntryImpl.class.getName());
-	}
-
-	private void _setAssetDisplayPageEntryUtilPersistence(
-		AssetDisplayPageEntryPersistence assetDisplayPageEntryPersistence) {
-
-		try {
-			Field field = AssetDisplayPageEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, assetDisplayPageEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

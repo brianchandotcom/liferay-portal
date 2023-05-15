@@ -720,6 +720,12 @@ public class DDMStructureVersionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DDMStructureVersionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DDMStructureVersionPersistence _persistence;
 
 }

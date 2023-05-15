@@ -86,6 +86,10 @@ public class DispatchLogServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DispatchLogService service) {
+		_service = service;
+	}
+
 	private static volatile DispatchLogService _service;
 
 }

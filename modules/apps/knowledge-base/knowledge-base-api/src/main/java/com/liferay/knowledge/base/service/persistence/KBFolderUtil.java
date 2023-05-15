@@ -1341,6 +1341,10 @@ public class KBFolderUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KBFolderPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KBFolderPersistence _persistence;
 
 }

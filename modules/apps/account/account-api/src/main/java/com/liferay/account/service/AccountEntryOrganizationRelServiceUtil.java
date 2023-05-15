@@ -123,6 +123,10 @@ public class AccountEntryOrganizationRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AccountEntryOrganizationRelService service) {
+		_service = service;
+	}
+
 	private static volatile AccountEntryOrganizationRelService _service;
 
 }

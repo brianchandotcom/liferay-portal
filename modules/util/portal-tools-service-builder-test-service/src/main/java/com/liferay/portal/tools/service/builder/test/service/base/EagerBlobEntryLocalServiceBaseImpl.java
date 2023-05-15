@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.EagerBl
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -482,14 +480,14 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry",
 			eagerBlobEntryLocalService);
 
-		_setLocalServiceUtilService(eagerBlobEntryLocalService);
+		EagerBlobEntryLocalServiceUtil.setService(eagerBlobEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry");
 
-		_setLocalServiceUtilService(null);
+		EagerBlobEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -531,22 +529,6 @@ public abstract class EagerBlobEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		EagerBlobEntryLocalService eagerBlobEntryLocalService) {
-
-		try {
-			Field field = EagerBlobEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, eagerBlobEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

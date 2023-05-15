@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
@@ -3127,30 +3126,14 @@ public class ObjectStatePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"listTypeEntryId", "objectStateFlowId"}, false);
 
-		_setObjectStateUtilPersistence(this);
+		ObjectStateUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectStateUtilPersistence(null);
+		ObjectStateUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectStateImpl.class.getName());
-	}
-
-	private void _setObjectStateUtilPersistence(
-		ObjectStatePersistence objectStatePersistence) {
-
-		try {
-			Field field = ObjectStateUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectStatePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

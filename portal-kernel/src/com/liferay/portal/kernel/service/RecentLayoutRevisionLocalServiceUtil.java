@@ -332,6 +332,10 @@ public class RecentLayoutRevisionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(RecentLayoutRevisionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile RecentLayoutRevisionLocalService _service;
 
 }

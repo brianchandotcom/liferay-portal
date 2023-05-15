@@ -305,6 +305,10 @@ public class UADPartialEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(UADPartialEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile UADPartialEntryLocalService _service;
 
 }

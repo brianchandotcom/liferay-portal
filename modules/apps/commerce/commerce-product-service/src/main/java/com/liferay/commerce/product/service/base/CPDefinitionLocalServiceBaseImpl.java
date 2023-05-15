@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -858,7 +856,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPDefinitionLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -873,7 +871,7 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpDefinitionLocalService = (CPDefinitionLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpDefinitionLocalService);
+		CPDefinitionLocalServiceUtil.setService(cpDefinitionLocalService);
 	}
 
 	/**
@@ -930,22 +928,6 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPDefinitionLocalService cpDefinitionLocalService) {
-
-		try {
-			Field field = CPDefinitionLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -916,6 +916,12 @@ public class AnalyticsAssociationUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		AnalyticsAssociationPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile AnalyticsAssociationPersistence _persistence;
 
 }

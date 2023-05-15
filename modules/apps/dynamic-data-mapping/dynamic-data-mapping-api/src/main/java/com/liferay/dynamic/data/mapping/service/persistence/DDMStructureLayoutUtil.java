@@ -1603,6 +1603,12 @@ public class DDMStructureLayoutUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DDMStructureLayoutPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DDMStructureLayoutPersistence _persistence;
 
 }

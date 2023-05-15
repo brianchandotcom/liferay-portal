@@ -46,7 +46,6 @@ import com.liferay.portal.security.audit.storage.service.persistence.impl.consta
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1131,29 +1130,14 @@ public class AuditEventPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_setAuditEventUtilPersistence(this);
+		AuditEventUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAuditEventUtilPersistence(null);
+		AuditEventUtil.setPersistence(null);
 
 		entityCache.removeCache(AuditEventImpl.class.getName());
-	}
-
-	private void _setAuditEventUtilPersistence(
-		AuditEventPersistence auditEventPersistence) {
-
-		try {
-			Field field = AuditEventUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, auditEventPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

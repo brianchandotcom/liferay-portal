@@ -47,7 +47,6 @@ import com.liferay.portal.tools.service.builder.test.sequence.service.persistenc
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
@@ -1783,30 +1782,14 @@ public class SequenceEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_setSequenceEntryUtilPersistence(this);
+		SequenceEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSequenceEntryUtilPersistence(null);
+		SequenceEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(SequenceEntryImpl.class.getName());
-	}
-
-	private void _setSequenceEntryUtilPersistence(
-		SequenceEntryPersistence sequenceEntryPersistence) {
-
-		try {
-			Field field = SequenceEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, sequenceEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

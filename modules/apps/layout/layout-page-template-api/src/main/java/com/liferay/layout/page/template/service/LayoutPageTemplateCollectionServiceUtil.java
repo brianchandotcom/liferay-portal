@@ -139,6 +139,10 @@ public class LayoutPageTemplateCollectionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutPageTemplateCollectionService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutPageTemplateCollectionService _service;
 
 }

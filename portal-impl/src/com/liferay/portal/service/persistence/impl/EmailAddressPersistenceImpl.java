@@ -50,7 +50,6 @@ import com.liferay.portal.model.impl.EmailAddressModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4970,29 +4969,13 @@ public class EmailAddressPersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "primary_"},
 			false);
 
-		_setEmailAddressUtilPersistence(this);
+		EmailAddressUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setEmailAddressUtilPersistence(null);
+		EmailAddressUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(EmailAddressImpl.class.getName());
-	}
-
-	private void _setEmailAddressUtilPersistence(
-		EmailAddressPersistence emailAddressPersistence) {
-
-		try {
-			Field field = EmailAddressUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, emailAddressPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_EMAILADDRESS =

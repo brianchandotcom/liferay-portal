@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class CommerceDiscountOrderTypeRelServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommerceDiscountOrderTypeRelServiceUtil.setService(null);
 	}
 
 	@Override
@@ -76,7 +74,8 @@ public abstract class CommerceDiscountOrderTypeRelServiceBaseImpl
 		commerceDiscountOrderTypeRelService =
 			(CommerceDiscountOrderTypeRelService)aopProxy;
 
-		_setServiceUtilService(commerceDiscountOrderTypeRelService);
+		CommerceDiscountOrderTypeRelServiceUtil.setService(
+			commerceDiscountOrderTypeRelService);
 	}
 
 	/**
@@ -119,24 +118,6 @@ public abstract class CommerceDiscountOrderTypeRelServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CommerceDiscountOrderTypeRelService
-			commerceDiscountOrderTypeRelService) {
-
-		try {
-			Field field =
-				CommerceDiscountOrderTypeRelServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceDiscountOrderTypeRelService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

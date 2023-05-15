@@ -321,6 +321,10 @@ public class DLStorageQuotaLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DLStorageQuotaLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DLStorageQuotaLocalService _service;
 
 }

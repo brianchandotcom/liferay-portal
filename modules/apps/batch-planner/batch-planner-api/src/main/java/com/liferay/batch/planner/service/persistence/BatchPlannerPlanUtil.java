@@ -1900,6 +1900,10 @@ public class BatchPlannerPlanUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(BatchPlannerPlanPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile BatchPlannerPlanPersistence _persistence;
 
 }

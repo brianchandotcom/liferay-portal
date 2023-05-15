@@ -381,6 +381,10 @@ public class ObjectFieldSettingLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectFieldSettingLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectFieldSettingLocalService _service;
 
 }

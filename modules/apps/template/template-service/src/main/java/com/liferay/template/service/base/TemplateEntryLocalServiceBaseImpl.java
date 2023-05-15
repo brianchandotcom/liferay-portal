@@ -56,8 +56,6 @@ import com.liferay.template.service.persistence.TemplateEntryPersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -529,7 +527,7 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		TemplateEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -544,7 +542,7 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		templateEntryLocalService = (TemplateEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(templateEntryLocalService);
+		TemplateEntryLocalServiceUtil.setService(templateEntryLocalService);
 	}
 
 	/**
@@ -601,22 +599,6 @@ public abstract class TemplateEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		TemplateEntryLocalService templateEntryLocalService) {
-
-		try {
-			Field field = TemplateEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, templateEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

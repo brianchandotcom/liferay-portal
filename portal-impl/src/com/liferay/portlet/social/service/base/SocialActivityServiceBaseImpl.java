@@ -31,8 +31,6 @@ import com.liferay.social.kernel.service.SocialActivityServiceUtil;
 import com.liferay.social.kernel.service.persistence.SocialActivityFinder;
 import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -163,11 +161,11 @@ public abstract class SocialActivityServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(socialActivityService);
+		SocialActivityServiceUtil.setService(socialActivityService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		SocialActivityServiceUtil.setService(null);
 	}
 
 	/**
@@ -209,22 +207,6 @@ public abstract class SocialActivityServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		SocialActivityService socialActivityService) {
-
-		try {
-			Field field = SocialActivityServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, socialActivityService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

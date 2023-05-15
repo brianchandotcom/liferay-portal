@@ -385,6 +385,12 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommerceAddressRestrictionLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommerceAddressRestrictionLocalService _service;
 
 }

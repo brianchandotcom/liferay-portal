@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -5156,33 +5155,15 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			},
 			false);
 
-		_setCommerceMLForecastAlertEntryUtilPersistence(this);
+		CommerceMLForecastAlertEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceMLForecastAlertEntryUtilPersistence(null);
+		CommerceMLForecastAlertEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceMLForecastAlertEntryImpl.class.getName());
-	}
-
-	private void _setCommerceMLForecastAlertEntryUtilPersistence(
-		CommerceMLForecastAlertEntryPersistence
-			commerceMLForecastAlertEntryPersistence) {
-
-		try {
-			Field field =
-				CommerceMLForecastAlertEntryUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceMLForecastAlertEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

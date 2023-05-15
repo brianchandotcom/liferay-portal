@@ -358,6 +358,10 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(PushNotificationsDeviceLocalService service) {
+		_service = service;
+	}
+
 	private static volatile PushNotificationsDeviceLocalService _service;
 
 }

@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -497,7 +495,7 @@ public abstract class ObjectLayoutTabLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		ObjectLayoutTabLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -512,7 +510,7 @@ public abstract class ObjectLayoutTabLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		objectLayoutTabLocalService = (ObjectLayoutTabLocalService)aopProxy;
 
-		_setLocalServiceUtilService(objectLayoutTabLocalService);
+		ObjectLayoutTabLocalServiceUtil.setService(objectLayoutTabLocalService);
 	}
 
 	/**
@@ -554,23 +552,6 @@ public abstract class ObjectLayoutTabLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ObjectLayoutTabLocalService objectLayoutTabLocalService) {
-
-		try {
-			Field field =
-				ObjectLayoutTabLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, objectLayoutTabLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

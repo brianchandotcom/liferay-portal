@@ -216,6 +216,10 @@ public class FragmentCollectionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FragmentCollectionService service) {
+		_service = service;
+	}
+
 	private static volatile FragmentCollectionService _service;
 
 }

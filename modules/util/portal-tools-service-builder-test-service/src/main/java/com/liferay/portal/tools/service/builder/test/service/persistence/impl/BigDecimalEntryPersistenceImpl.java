@@ -49,7 +49,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.LVEntry
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.math.BigDecimal;
@@ -2624,31 +2623,15 @@ public class BigDecimalEntryPersistenceImpl
 			new String[] {BigDecimal.class.getName()},
 			new String[] {"bigDecimalValue"}, false);
 
-		_setBigDecimalEntryUtilPersistence(this);
+		BigDecimalEntryUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setBigDecimalEntryUtilPersistence(null);
+		BigDecimalEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(BigDecimalEntryImpl.class.getName());
 
 		TableMapperFactory.removeTableMapper("BigDecimalEntries_LVEntries");
-	}
-
-	private void _setBigDecimalEntryUtilPersistence(
-		BigDecimalEntryPersistence bigDecimalEntryPersistence) {
-
-		try {
-			Field field = BigDecimalEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, bigDecimalEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@ServiceReference(type = EntityCache.class)

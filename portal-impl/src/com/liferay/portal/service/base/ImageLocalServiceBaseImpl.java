@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -438,14 +436,14 @@ public abstract class ImageLocalServiceBaseImpl
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.portal.kernel.model.Image", imageLocalService);
 
-		_setLocalServiceUtilService(imageLocalService);
+		ImageLocalServiceUtil.setService(imageLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.Image");
 
-		_setLocalServiceUtilService(null);
+		ImageLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -501,22 +499,6 @@ public abstract class ImageLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ImageLocalService imageLocalService) {
-
-		try {
-			Field field = ImageLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, imageLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

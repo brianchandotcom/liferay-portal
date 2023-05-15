@@ -49,8 +49,6 @@ import com.liferay.social.kernel.service.persistence.SocialActivityLimitPersiste
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -469,14 +467,15 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 			"com.liferay.social.kernel.model.SocialActivityLimit",
 			socialActivityLimitLocalService);
 
-		_setLocalServiceUtilService(socialActivityLimitLocalService);
+		SocialActivityLimitLocalServiceUtil.setService(
+			socialActivityLimitLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.social.kernel.model.SocialActivityLimit");
 
-		_setLocalServiceUtilService(null);
+		SocialActivityLimitLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -534,23 +533,6 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SocialActivityLimitLocalService socialActivityLimitLocalService) {
-
-		try {
-			Field field =
-				SocialActivityLimitLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, socialActivityLimitLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

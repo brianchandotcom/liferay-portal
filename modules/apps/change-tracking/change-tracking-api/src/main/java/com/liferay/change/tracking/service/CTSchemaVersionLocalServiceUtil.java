@@ -321,6 +321,10 @@ public class CTSchemaVersionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CTSchemaVersionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile CTSchemaVersionLocalService _service;
 
 }

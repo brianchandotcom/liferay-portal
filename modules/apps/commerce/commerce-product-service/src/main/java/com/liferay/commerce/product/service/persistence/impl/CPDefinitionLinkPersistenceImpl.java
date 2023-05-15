@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -5029,30 +5028,14 @@ public class CPDefinitionLinkPersistenceImpl
 			},
 			new String[] {"CPDefinitionId", "CProductId", "type_"}, false);
 
-		_setCPDefinitionLinkUtilPersistence(this);
+		CPDefinitionLinkUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPDefinitionLinkUtilPersistence(null);
+		CPDefinitionLinkUtil.setPersistence(null);
 
 		entityCache.removeCache(CPDefinitionLinkImpl.class.getName());
-	}
-
-	private void _setCPDefinitionLinkUtilPersistence(
-		CPDefinitionLinkPersistence cpDefinitionLinkPersistence) {
-
-		try {
-			Field field = CPDefinitionLinkUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpDefinitionLinkPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

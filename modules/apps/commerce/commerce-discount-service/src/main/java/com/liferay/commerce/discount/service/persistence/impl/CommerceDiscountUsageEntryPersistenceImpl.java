@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3024,31 +3023,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			},
 			false);
 
-		_setCommerceDiscountUsageEntryUtilPersistence(this);
+		CommerceDiscountUsageEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceDiscountUsageEntryUtilPersistence(null);
+		CommerceDiscountUsageEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceDiscountUsageEntryImpl.class.getName());
-	}
-
-	private void _setCommerceDiscountUsageEntryUtilPersistence(
-		CommerceDiscountUsageEntryPersistence
-			commerceDiscountUsageEntryPersistence) {
-
-		try {
-			Field field = CommerceDiscountUsageEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceDiscountUsageEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

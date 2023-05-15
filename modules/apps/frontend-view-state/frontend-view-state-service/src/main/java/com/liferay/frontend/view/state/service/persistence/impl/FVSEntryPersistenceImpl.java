@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1793,29 +1792,14 @@ public class FVSEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
-		_setFVSEntryUtilPersistence(this);
+		FVSEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFVSEntryUtilPersistence(null);
+		FVSEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(FVSEntryImpl.class.getName());
-	}
-
-	private void _setFVSEntryUtilPersistence(
-		FVSEntryPersistence fvsEntryPersistence) {
-
-		try {
-			Field field = FVSEntryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, fvsEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -2201,6 +2201,10 @@ public class CPDefinitionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CPDefinitionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CPDefinitionPersistence _persistence;
 
 }

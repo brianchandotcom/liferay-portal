@@ -46,7 +46,6 @@ import com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationMode
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3466,31 +3465,14 @@ public class ExportImportConfigurationPersistenceImpl
 			},
 			new String[] {"groupId", "type_", "status"}, false);
 
-		_setExportImportConfigurationUtilPersistence(this);
+		ExportImportConfigurationUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setExportImportConfigurationUtilPersistence(null);
+		ExportImportConfigurationUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(
 			ExportImportConfigurationImpl.class.getName());
-	}
-
-	private void _setExportImportConfigurationUtilPersistence(
-		ExportImportConfigurationPersistence
-			exportImportConfigurationPersistence) {
-
-		try {
-			Field field = ExportImportConfigurationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, exportImportConfigurationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_EXPORTIMPORTCONFIGURATION =

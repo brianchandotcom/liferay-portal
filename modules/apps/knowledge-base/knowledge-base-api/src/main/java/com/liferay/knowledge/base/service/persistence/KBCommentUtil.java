@@ -1905,6 +1905,10 @@ public class KBCommentUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KBCommentPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KBCommentPersistence _persistence;
 
 }

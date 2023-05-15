@@ -439,6 +439,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ReadingTimeEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ReadingTimeEntryLocalService _service;
 
 }

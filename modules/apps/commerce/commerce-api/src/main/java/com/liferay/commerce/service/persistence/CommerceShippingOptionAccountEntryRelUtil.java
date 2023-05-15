@@ -973,6 +973,12 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceShippingOptionAccountEntryRelPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceShippingOptionAccountEntryRelPersistence
 		_persistence;
 

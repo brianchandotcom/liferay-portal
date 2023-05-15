@@ -658,6 +658,12 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		OAuth2ApplicationScopeAliasesPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile OAuth2ApplicationScopeAliasesPersistence
 		_persistence;
 

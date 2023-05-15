@@ -443,6 +443,10 @@ public class CacheFieldEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CacheFieldEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CacheFieldEntryPersistence _persistence;
 
 }

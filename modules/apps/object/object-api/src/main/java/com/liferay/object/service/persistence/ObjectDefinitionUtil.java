@@ -2684,6 +2684,10 @@ public class ObjectDefinitionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectDefinitionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectDefinitionPersistence _persistence;
 
 }

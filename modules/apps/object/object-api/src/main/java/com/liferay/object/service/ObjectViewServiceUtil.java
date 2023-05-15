@@ -94,6 +94,10 @@ public class ObjectViewServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectViewService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectViewService _service;
 
 }

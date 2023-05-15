@@ -54,8 +54,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -579,14 +577,14 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 			"com.liferay.portal.kernel.model.PasswordPolicy",
 			passwordPolicyLocalService);
 
-		_setLocalServiceUtilService(passwordPolicyLocalService);
+		PasswordPolicyLocalServiceUtil.setService(passwordPolicyLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.kernel.model.PasswordPolicy");
 
-		_setLocalServiceUtilService(null);
+		PasswordPolicyLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -628,22 +626,6 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-
-		try {
-			Field field = PasswordPolicyLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, passwordPolicyLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -777,6 +777,10 @@ public class MemberRequestUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(MemberRequestPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile MemberRequestPersistence _persistence;
 
 }

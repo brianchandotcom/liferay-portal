@@ -494,6 +494,10 @@ public class LayoutClassedModelUsageLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutClassedModelUsageLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutClassedModelUsageLocalService _service;
 
 }

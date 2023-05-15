@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -419,7 +417,7 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DLOpenerFileEntryReferenceLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -435,7 +433,8 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 		dlOpenerFileEntryReferenceLocalService =
 			(DLOpenerFileEntryReferenceLocalService)aopProxy;
 
-		_setLocalServiceUtilService(dlOpenerFileEntryReferenceLocalService);
+		DLOpenerFileEntryReferenceLocalServiceUtil.setService(
+			dlOpenerFileEntryReferenceLocalService);
 	}
 
 	/**
@@ -478,24 +477,6 @@ public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DLOpenerFileEntryReferenceLocalService
-			dlOpenerFileEntryReferenceLocalService) {
-
-		try {
-			Field field =
-				DLOpenerFileEntryReferenceLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dlOpenerFileEntryReferenceLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

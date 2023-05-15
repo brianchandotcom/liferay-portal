@@ -485,6 +485,10 @@ public class AssetListEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(AssetListEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile AssetListEntryLocalService _service;
 
 }

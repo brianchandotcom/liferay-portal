@@ -562,6 +562,10 @@ public class UserIdMapperUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(UserIdMapperPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile UserIdMapperPersistence _persistence;
 
 }

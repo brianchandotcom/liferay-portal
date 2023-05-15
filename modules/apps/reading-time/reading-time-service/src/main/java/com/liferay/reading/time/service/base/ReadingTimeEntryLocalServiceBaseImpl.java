@@ -58,8 +58,6 @@ import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -563,7 +561,7 @@ public abstract class ReadingTimeEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		ReadingTimeEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -578,7 +576,8 @@ public abstract class ReadingTimeEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		readingTimeEntryLocalService = (ReadingTimeEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(readingTimeEntryLocalService);
+		ReadingTimeEntryLocalServiceUtil.setService(
+			readingTimeEntryLocalService);
 	}
 
 	/**
@@ -635,23 +634,6 @@ public abstract class ReadingTimeEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ReadingTimeEntryLocalService readingTimeEntryLocalService) {
-
-		try {
-			Field field =
-				ReadingTimeEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, readingTimeEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

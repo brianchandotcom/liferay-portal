@@ -117,6 +117,10 @@ public class OAuthClientASLocalMetadataServiceUtil {
 		return _service;
 	}
 
+	public static void setService(OAuthClientASLocalMetadataService service) {
+		_service = service;
+	}
+
 	private static volatile OAuthClientASLocalMetadataService _service;
 
 }

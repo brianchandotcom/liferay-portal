@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -394,7 +392,7 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CSDiagramEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -409,7 +407,7 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		csDiagramEntryLocalService = (CSDiagramEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(csDiagramEntryLocalService);
+		CSDiagramEntryLocalServiceUtil.setService(csDiagramEntryLocalService);
 	}
 
 	/**
@@ -466,22 +464,6 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CSDiagramEntryLocalService csDiagramEntryLocalService) {
-
-		try {
-			Field field = CSDiagramEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, csDiagramEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -442,6 +442,12 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		WorkflowMetricsSLADefinitionVersionLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile WorkflowMetricsSLADefinitionVersionLocalService
 		_service;
 

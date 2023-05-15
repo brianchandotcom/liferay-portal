@@ -177,6 +177,12 @@ public class CommercePaymentMethodGroupRelQualifierServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommercePaymentMethodGroupRelQualifierService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommercePaymentMethodGroupRelQualifierService
 		_service;
 

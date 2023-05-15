@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -163,11 +161,11 @@ public abstract class PasswordPolicyServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(passwordPolicyService);
+		PasswordPolicyServiceUtil.setService(passwordPolicyService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		PasswordPolicyServiceUtil.setService(null);
 	}
 
 	/**
@@ -209,22 +207,6 @@ public abstract class PasswordPolicyServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		PasswordPolicyService passwordPolicyService) {
-
-		try {
-			Field field = PasswordPolicyServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, passwordPolicyService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

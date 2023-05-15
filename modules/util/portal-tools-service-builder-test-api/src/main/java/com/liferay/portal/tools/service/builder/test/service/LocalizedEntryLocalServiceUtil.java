@@ -348,6 +348,10 @@ public class LocalizedEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LocalizedEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile LocalizedEntryLocalService _service;
 
 }

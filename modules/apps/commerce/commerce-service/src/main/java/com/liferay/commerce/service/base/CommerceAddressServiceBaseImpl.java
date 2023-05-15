@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 
-import java.lang.reflect.Field;
-
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,7 +48,7 @@ public abstract class CommerceAddressServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CommerceAddressServiceUtil.setService(null);
 	}
 
 	@Override
@@ -64,7 +62,7 @@ public abstract class CommerceAddressServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commerceAddressService = (CommerceAddressService)aopProxy;
 
-		_setServiceUtilService(commerceAddressService);
+		CommerceAddressServiceUtil.setService(commerceAddressService);
 	}
 
 	/**
@@ -83,22 +81,6 @@ public abstract class CommerceAddressServiceBaseImpl
 
 	protected String getModelClassName() {
 		return CommerceAddress.class.getName();
-	}
-
-	private void _setServiceUtilService(
-		CommerceAddressService commerceAddressService) {
-
-		try {
-			Field field = CommerceAddressServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceAddressService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Reference

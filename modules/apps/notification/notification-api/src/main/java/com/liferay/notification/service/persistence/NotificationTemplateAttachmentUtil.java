@@ -575,6 +575,12 @@ public class NotificationTemplateAttachmentUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NotificationTemplateAttachmentPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NotificationTemplateAttachmentPersistence
 		_persistence;
 

@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -2630,30 +2629,14 @@ public class AnalyticsAssociationPersistenceImpl
 			},
 			false);
 
-		_setAnalyticsAssociationUtilPersistence(this);
+		AnalyticsAssociationUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setAnalyticsAssociationUtilPersistence(null);
+		AnalyticsAssociationUtil.setPersistence(null);
 
 		entityCache.removeCache(AnalyticsAssociationImpl.class.getName());
-	}
-
-	private void _setAnalyticsAssociationUtilPersistence(
-		AnalyticsAssociationPersistence analyticsAssociationPersistence) {
-
-		try {
-			Field field = AnalyticsAssociationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, analyticsAssociationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -7355,30 +7354,14 @@ public class CalendarResourcePersistenceImpl
 			},
 			new String[] {"companyId", "code_", "active_"}, false);
 
-		_setCalendarResourceUtilPersistence(this);
+		CalendarResourceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCalendarResourceUtilPersistence(null);
+		CalendarResourceUtil.setPersistence(null);
 
 		entityCache.removeCache(CalendarResourceImpl.class.getName());
-	}
-
-	private void _setCalendarResourceUtilPersistence(
-		CalendarResourcePersistence calendarResourcePersistence) {
-
-		try {
-			Field field = CalendarResourceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, calendarResourcePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

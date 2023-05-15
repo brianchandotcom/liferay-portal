@@ -203,6 +203,10 @@ public class ObjectEntryServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectEntryService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectEntryService _service;
 
 }

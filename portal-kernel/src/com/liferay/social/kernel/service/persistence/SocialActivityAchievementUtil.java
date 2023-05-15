@@ -1313,6 +1313,12 @@ public class SocialActivityAchievementUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SocialActivityAchievementPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SocialActivityAchievementPersistence _persistence;
 
 }

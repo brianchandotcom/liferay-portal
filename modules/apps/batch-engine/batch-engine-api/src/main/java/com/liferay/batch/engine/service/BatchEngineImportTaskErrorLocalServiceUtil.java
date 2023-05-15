@@ -339,6 +339,12 @@ public class BatchEngineImportTaskErrorLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		BatchEngineImportTaskErrorLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile BatchEngineImportTaskErrorLocalService _service;
 
 }

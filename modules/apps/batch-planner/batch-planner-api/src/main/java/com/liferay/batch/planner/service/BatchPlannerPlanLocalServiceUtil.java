@@ -341,6 +341,10 @@ public class BatchPlannerPlanLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(BatchPlannerPlanLocalService service) {
+		_service = service;
+	}
+
 	private static volatile BatchPlannerPlanLocalService _service;
 
 }

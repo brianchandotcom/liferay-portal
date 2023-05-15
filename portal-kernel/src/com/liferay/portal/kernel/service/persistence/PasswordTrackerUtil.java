@@ -442,6 +442,10 @@ public class PasswordTrackerUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(PasswordTrackerPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile PasswordTrackerPersistence _persistence;
 
 }

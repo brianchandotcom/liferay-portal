@@ -64,8 +64,6 @@ import com.liferay.translation.service.persistence.TranslationEntryPersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -604,7 +602,7 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		TranslationEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -619,7 +617,8 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		translationEntryLocalService = (TranslationEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(translationEntryLocalService);
+		TranslationEntryLocalServiceUtil.setService(
+			translationEntryLocalService);
 	}
 
 	/**
@@ -676,23 +675,6 @@ public abstract class TranslationEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		TranslationEntryLocalService translationEntryLocalService) {
-
-		try {
-			Field field =
-				TranslationEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, translationEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

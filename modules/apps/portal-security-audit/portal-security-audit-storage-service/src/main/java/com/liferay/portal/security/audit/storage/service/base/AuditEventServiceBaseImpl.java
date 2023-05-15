@@ -30,8 +30,6 @@ import com.liferay.portal.security.audit.storage.service.AuditEventService;
 import com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil;
 import com.liferay.portal.security.audit.storage.service.persistence.AuditEventPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class AuditEventServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		AuditEventServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class AuditEventServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		auditEventService = (AuditEventService)aopProxy;
 
-		_setServiceUtilService(auditEventService);
+		AuditEventServiceUtil.setService(auditEventService);
 	}
 
 	/**
@@ -115,20 +113,6 @@ public abstract class AuditEventServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(AuditEventService auditEventService) {
-		try {
-			Field field = AuditEventServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, auditEventService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

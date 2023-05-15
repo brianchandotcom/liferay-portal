@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -519,7 +517,7 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		ObjectValidationRuleLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -535,7 +533,8 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 		objectValidationRuleLocalService =
 			(ObjectValidationRuleLocalService)aopProxy;
 
-		_setLocalServiceUtilService(objectValidationRuleLocalService);
+		ObjectValidationRuleLocalServiceUtil.setService(
+			objectValidationRuleLocalService);
 	}
 
 	/**
@@ -578,23 +577,6 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ObjectValidationRuleLocalService objectValidationRuleLocalService) {
-
-		try {
-			Field field =
-				ObjectValidationRuleLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, objectValidationRuleLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.FinderW
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -484,14 +482,15 @@ public abstract class FinderWhereClauseEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry",
 			finderWhereClauseEntryLocalService);
 
-		_setLocalServiceUtilService(finderWhereClauseEntryLocalService);
+		FinderWhereClauseEntryLocalServiceUtil.setService(
+			finderWhereClauseEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.FinderWhereClauseEntry");
 
-		_setLocalServiceUtilService(null);
+		FinderWhereClauseEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -534,23 +533,6 @@ public abstract class FinderWhereClauseEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		FinderWhereClauseEntryLocalService finderWhereClauseEntryLocalService) {
-
-		try {
-			Field field =
-				FinderWhereClauseEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, finderWhereClauseEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

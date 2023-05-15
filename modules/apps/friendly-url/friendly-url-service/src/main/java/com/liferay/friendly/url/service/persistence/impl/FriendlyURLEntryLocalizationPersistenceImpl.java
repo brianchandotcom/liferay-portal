@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4313,33 +4312,15 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
 			false);
 
-		_setFriendlyURLEntryLocalizationUtilPersistence(this);
+		FriendlyURLEntryLocalizationUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFriendlyURLEntryLocalizationUtilPersistence(null);
+		FriendlyURLEntryLocalizationUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			FriendlyURLEntryLocalizationImpl.class.getName());
-	}
-
-	private void _setFriendlyURLEntryLocalizationUtilPersistence(
-		FriendlyURLEntryLocalizationPersistence
-			friendlyURLEntryLocalizationPersistence) {
-
-		try {
-			Field field =
-				FriendlyURLEntryLocalizationUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, friendlyURLEntryLocalizationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

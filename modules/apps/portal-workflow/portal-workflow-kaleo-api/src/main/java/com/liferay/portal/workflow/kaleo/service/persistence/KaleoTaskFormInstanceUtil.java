@@ -1262,6 +1262,12 @@ public class KaleoTaskFormInstanceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		KaleoTaskFormInstancePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoTaskFormInstancePersistence _persistence;
 
 }

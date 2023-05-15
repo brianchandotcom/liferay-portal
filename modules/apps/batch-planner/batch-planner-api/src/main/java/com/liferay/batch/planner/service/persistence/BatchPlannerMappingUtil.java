@@ -543,6 +543,12 @@ public class BatchPlannerMappingUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		BatchPlannerMappingPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile BatchPlannerMappingPersistence _persistence;
 
 }

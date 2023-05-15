@@ -324,6 +324,12 @@ public class NestedSetsTreeEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		NestedSetsTreeEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile NestedSetsTreeEntryPersistence _persistence;
 
 }

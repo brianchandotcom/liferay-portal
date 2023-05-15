@@ -410,6 +410,12 @@ public class CommercePriceListDiscountRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		CommercePriceListDiscountRelLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile CommercePriceListDiscountRelLocalService _service;
 
 }

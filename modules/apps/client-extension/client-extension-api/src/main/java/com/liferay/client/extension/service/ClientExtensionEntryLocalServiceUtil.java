@@ -460,6 +460,10 @@ public class ClientExtensionEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ClientExtensionEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ClientExtensionEntryLocalService _service;
 
 }

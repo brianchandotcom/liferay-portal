@@ -56,8 +56,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -558,7 +556,7 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPMeasurementUnitLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -573,7 +571,8 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpMeasurementUnitLocalService = (CPMeasurementUnitLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpMeasurementUnitLocalService);
+		CPMeasurementUnitLocalServiceUtil.setService(
+			cpMeasurementUnitLocalService);
 	}
 
 	/**
@@ -631,23 +630,6 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
-
-		try {
-			Field field =
-				CPMeasurementUnitLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpMeasurementUnitLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

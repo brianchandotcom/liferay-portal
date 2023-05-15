@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -60,7 +58,7 @@ public abstract class MicroblogsEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		MicroblogsEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -74,7 +72,7 @@ public abstract class MicroblogsEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		microblogsEntryService = (MicroblogsEntryService)aopProxy;
 
-		_setServiceUtilService(microblogsEntryService);
+		MicroblogsEntryServiceUtil.setService(microblogsEntryService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class MicroblogsEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		MicroblogsEntryService microblogsEntryService) {
-
-		try {
-			Field field = MicroblogsEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, microblogsEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

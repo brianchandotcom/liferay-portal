@@ -30,8 +30,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class SiteNavigationMenuServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		SiteNavigationMenuServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class SiteNavigationMenuServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		siteNavigationMenuService = (SiteNavigationMenuService)aopProxy;
 
-		_setServiceUtilService(siteNavigationMenuService);
+		SiteNavigationMenuServiceUtil.setService(siteNavigationMenuService);
 	}
 
 	/**
@@ -116,22 +114,6 @@ public abstract class SiteNavigationMenuServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		SiteNavigationMenuService siteNavigationMenuService) {
-
-		try {
-			Field field = SiteNavigationMenuServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, siteNavigationMenuService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -1763,6 +1763,12 @@ public class CommerceMLForecastAlertEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CommerceMLForecastAlertEntryPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceMLForecastAlertEntryPersistence
 		_persistence;
 

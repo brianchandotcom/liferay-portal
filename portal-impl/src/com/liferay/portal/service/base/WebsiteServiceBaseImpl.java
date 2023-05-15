@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.WebsiteServiceUtil;
 import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -137,11 +135,11 @@ public abstract class WebsiteServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(websiteService);
+		WebsiteServiceUtil.setService(websiteService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		WebsiteServiceUtil.setService(null);
 	}
 
 	/**
@@ -183,19 +181,6 @@ public abstract class WebsiteServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(WebsiteService websiteService) {
-		try {
-			Field field = WebsiteServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, websiteService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

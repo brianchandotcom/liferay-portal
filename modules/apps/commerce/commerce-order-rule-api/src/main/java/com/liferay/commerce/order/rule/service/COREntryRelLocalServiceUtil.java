@@ -396,6 +396,10 @@ public class COREntryRelLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(COREntryRelLocalService service) {
+		_service = service;
+	}
+
 	private static volatile COREntryRelLocalService _service;
 
 }

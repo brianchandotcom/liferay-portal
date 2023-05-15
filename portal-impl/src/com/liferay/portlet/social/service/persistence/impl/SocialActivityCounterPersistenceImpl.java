@@ -46,7 +46,6 @@ import com.liferay.social.kernel.service.persistence.SocialActivityCounterUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3514,29 +3513,13 @@ public class SocialActivityCounterPersistenceImpl
 			},
 			false);
 
-		_setSocialActivityCounterUtilPersistence(this);
+		SocialActivityCounterUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setSocialActivityCounterUtilPersistence(null);
+		SocialActivityCounterUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(SocialActivityCounterImpl.class.getName());
-	}
-
-	private void _setSocialActivityCounterUtilPersistence(
-		SocialActivityCounterPersistence socialActivityCounterPersistence) {
-
-		try {
-			Field field = SocialActivityCounterUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, socialActivityCounterPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER =

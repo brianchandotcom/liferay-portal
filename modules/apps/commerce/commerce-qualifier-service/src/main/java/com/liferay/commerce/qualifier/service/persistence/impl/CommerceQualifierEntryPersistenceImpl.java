@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -3421,30 +3420,14 @@ public class CommerceQualifierEntryPersistenceImpl
 			},
 			false);
 
-		_setCommerceQualifierEntryUtilPersistence(this);
+		CommerceQualifierEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceQualifierEntryUtilPersistence(null);
+		CommerceQualifierEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(CommerceQualifierEntryImpl.class.getName());
-	}
-
-	private void _setCommerceQualifierEntryUtilPersistence(
-		CommerceQualifierEntryPersistence commerceQualifierEntryPersistence) {
-
-		try {
-			Field field = CommerceQualifierEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceQualifierEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

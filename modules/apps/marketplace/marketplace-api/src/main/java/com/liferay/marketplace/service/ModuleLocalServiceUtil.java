@@ -343,6 +343,10 @@ public class ModuleLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ModuleLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ModuleLocalService _service;
 
 }

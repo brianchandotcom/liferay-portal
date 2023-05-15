@@ -505,6 +505,10 @@ public class LazyBlobEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(LazyBlobEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile LazyBlobEntryPersistence _persistence;
 
 }

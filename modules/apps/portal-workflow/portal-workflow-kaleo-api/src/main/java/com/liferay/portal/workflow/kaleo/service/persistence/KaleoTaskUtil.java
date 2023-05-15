@@ -681,6 +681,10 @@ public class KaleoTaskUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(KaleoTaskPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile KaleoTaskPersistence _persistence;
 
 }

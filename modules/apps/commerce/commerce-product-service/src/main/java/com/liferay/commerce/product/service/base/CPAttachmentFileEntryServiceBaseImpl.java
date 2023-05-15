@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -61,7 +59,7 @@ public abstract class CPAttachmentFileEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		CPAttachmentFileEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -75,7 +73,8 @@ public abstract class CPAttachmentFileEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpAttachmentFileEntryService = (CPAttachmentFileEntryService)aopProxy;
 
-		_setServiceUtilService(cpAttachmentFileEntryService);
+		CPAttachmentFileEntryServiceUtil.setService(
+			cpAttachmentFileEntryService);
 	}
 
 	/**
@@ -118,23 +117,6 @@ public abstract class CPAttachmentFileEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		CPAttachmentFileEntryService cpAttachmentFileEntryService) {
-
-		try {
-			Field field =
-				CPAttachmentFileEntryServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpAttachmentFileEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

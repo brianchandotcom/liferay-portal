@@ -338,6 +338,12 @@ public class NotificationTemplateAttachmentLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(
+		NotificationTemplateAttachmentLocalService service) {
+
+		_service = service;
+	}
+
 	private static volatile NotificationTemplateAttachmentLocalService _service;
 
 }

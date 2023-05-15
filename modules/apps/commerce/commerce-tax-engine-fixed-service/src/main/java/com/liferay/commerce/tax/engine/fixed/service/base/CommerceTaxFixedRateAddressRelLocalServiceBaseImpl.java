@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -424,7 +422,7 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceTaxFixedRateAddressRelLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -440,7 +438,8 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 		commerceTaxFixedRateAddressRelLocalService =
 			(CommerceTaxFixedRateAddressRelLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceTaxFixedRateAddressRelLocalService);
+		CommerceTaxFixedRateAddressRelLocalServiceUtil.setService(
+			commerceTaxFixedRateAddressRelLocalService);
 	}
 
 	/**
@@ -483,24 +482,6 @@ public abstract class CommerceTaxFixedRateAddressRelLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceTaxFixedRateAddressRelLocalService
-			commerceTaxFixedRateAddressRelLocalService) {
-
-		try {
-			Field field =
-				CommerceTaxFixedRateAddressRelLocalServiceUtil.class.
-					getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceTaxFixedRateAddressRelLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

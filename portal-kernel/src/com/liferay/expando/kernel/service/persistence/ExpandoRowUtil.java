@@ -665,6 +665,10 @@ public class ExpandoRowUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ExpandoRowPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ExpandoRowPersistence _persistence;
 
 }

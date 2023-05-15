@@ -276,6 +276,10 @@ public class ManyColumnsEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ManyColumnsEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ManyColumnsEntryPersistence _persistence;
 
 }

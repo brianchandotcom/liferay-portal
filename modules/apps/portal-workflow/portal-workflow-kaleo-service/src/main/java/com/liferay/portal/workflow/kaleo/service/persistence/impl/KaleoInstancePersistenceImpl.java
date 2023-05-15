@@ -50,7 +50,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.Kale
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -5437,30 +5436,14 @@ public class KaleoInstancePersistenceImpl
 			},
 			false);
 
-		_setKaleoInstanceUtilPersistence(this);
+		KaleoInstanceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setKaleoInstanceUtilPersistence(null);
+		KaleoInstanceUtil.setPersistence(null);
 
 		entityCache.removeCache(KaleoInstanceImpl.class.getName());
-	}
-
-	private void _setKaleoInstanceUtilPersistence(
-		KaleoInstancePersistence kaleoInstancePersistence) {
-
-		try {
-			Field field = KaleoInstanceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoInstancePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

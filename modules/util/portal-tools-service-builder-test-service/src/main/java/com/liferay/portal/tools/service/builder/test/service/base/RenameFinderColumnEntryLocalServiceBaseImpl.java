@@ -48,8 +48,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.RenameF
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -489,14 +487,15 @@ public abstract class RenameFinderColumnEntryLocalServiceBaseImpl
 			"com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry",
 			renameFinderColumnEntryLocalService);
 
-		_setLocalServiceUtilService(renameFinderColumnEntryLocalService);
+		RenameFinderColumnEntryLocalServiceUtil.setService(
+			renameFinderColumnEntryLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry");
 
-		_setLocalServiceUtilService(null);
+		RenameFinderColumnEntryLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -539,24 +538,6 @@ public abstract class RenameFinderColumnEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		RenameFinderColumnEntryLocalService
-			renameFinderColumnEntryLocalService) {
-
-		try {
-			Field field =
-				RenameFinderColumnEntryLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, renameFinderColumnEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

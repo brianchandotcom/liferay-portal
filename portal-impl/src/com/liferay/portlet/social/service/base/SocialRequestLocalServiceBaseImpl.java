@@ -49,8 +49,6 @@ import com.liferay.social.kernel.service.persistence.SocialRequestPersistence;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -515,14 +513,14 @@ public abstract class SocialRequestLocalServiceBaseImpl
 			"com.liferay.social.kernel.model.SocialRequest",
 			socialRequestLocalService);
 
-		_setLocalServiceUtilService(socialRequestLocalService);
+		SocialRequestLocalServiceUtil.setService(socialRequestLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.social.kernel.model.SocialRequest");
 
-		_setLocalServiceUtilService(null);
+		SocialRequestLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -579,22 +577,6 @@ public abstract class SocialRequestLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SocialRequestLocalService socialRequestLocalService) {
-
-		try {
-			Field field = SocialRequestLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, socialRequestLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -903,6 +903,10 @@ public class AccountGroupRelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(AccountGroupRelPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile AccountGroupRelPersistence _persistence;
 
 }

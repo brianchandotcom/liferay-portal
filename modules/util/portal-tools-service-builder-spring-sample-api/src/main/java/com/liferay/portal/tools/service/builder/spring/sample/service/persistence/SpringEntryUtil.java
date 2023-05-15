@@ -798,6 +798,10 @@ public class SpringEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SpringEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SpringEntryPersistence _persistence;
 
 }

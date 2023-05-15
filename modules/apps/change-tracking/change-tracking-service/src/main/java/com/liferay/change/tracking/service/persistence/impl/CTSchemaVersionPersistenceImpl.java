@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
@@ -1130,30 +1129,14 @@ public class CTSchemaVersionPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_setCTSchemaVersionUtilPersistence(this);
+		CTSchemaVersionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCTSchemaVersionUtilPersistence(null);
+		CTSchemaVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(CTSchemaVersionImpl.class.getName());
-	}
-
-	private void _setCTSchemaVersionUtilPersistence(
-		CTSchemaVersionPersistence ctSchemaVersionPersistence) {
-
-		try {
-			Field field = CTSchemaVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ctSchemaVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

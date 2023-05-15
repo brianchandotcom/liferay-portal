@@ -57,8 +57,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -516,7 +514,7 @@ public abstract class CPTaxCategoryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CPTaxCategoryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -531,7 +529,7 @@ public abstract class CPTaxCategoryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		cpTaxCategoryLocalService = (CPTaxCategoryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(cpTaxCategoryLocalService);
+		CPTaxCategoryLocalServiceUtil.setService(cpTaxCategoryLocalService);
 	}
 
 	/**
@@ -588,22 +586,6 @@ public abstract class CPTaxCategoryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CPTaxCategoryLocalService cpTaxCategoryLocalService) {
-
-		try {
-			Field field = CPTaxCategoryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, cpTaxCategoryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

@@ -136,6 +136,10 @@ public class CommerceTermEntryRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommerceTermEntryRelService service) {
+		_service = service;
+	}
+
 	private static volatile CommerceTermEntryRelService _service;
 
 }

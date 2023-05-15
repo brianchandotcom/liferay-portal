@@ -46,7 +46,6 @@ import com.liferay.sharepoint.rest.oauth2.service.persistence.impl.constants.Sha
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1485,31 +1484,14 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "configurationPid"}, false);
 
-		_setSharepointOAuth2TokenEntryUtilPersistence(this);
+		SharepointOAuth2TokenEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSharepointOAuth2TokenEntryUtilPersistence(null);
+		SharepointOAuth2TokenEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(SharepointOAuth2TokenEntryImpl.class.getName());
-	}
-
-	private void _setSharepointOAuth2TokenEntryUtilPersistence(
-		SharepointOAuth2TokenEntryPersistence
-			sharepointOAuth2TokenEntryPersistence) {
-
-		try {
-			Field field = SharepointOAuth2TokenEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, sharepointOAuth2TokenEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

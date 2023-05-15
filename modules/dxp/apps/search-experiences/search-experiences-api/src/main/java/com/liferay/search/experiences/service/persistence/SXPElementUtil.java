@@ -1945,6 +1945,10 @@ public class SXPElementUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(SXPElementPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile SXPElementPersistence _persistence;
 
 }

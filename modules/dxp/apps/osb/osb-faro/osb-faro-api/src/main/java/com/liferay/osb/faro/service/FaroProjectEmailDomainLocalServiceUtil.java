@@ -341,6 +341,10 @@ public class FaroProjectEmailDomainLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(FaroProjectEmailDomainLocalService service) {
+		_service = service;
+	}
+
 	private static volatile FaroProjectEmailDomainLocalService _service;
 
 }

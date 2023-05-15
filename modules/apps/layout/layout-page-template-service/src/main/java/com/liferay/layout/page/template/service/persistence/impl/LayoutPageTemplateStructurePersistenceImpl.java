@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3270,33 +3269,15 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "plid"}, false);
 
-		_setLayoutPageTemplateStructureUtilPersistence(this);
+		LayoutPageTemplateStructureUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setLayoutPageTemplateStructureUtilPersistence(null);
+		LayoutPageTemplateStructureUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			LayoutPageTemplateStructureImpl.class.getName());
-	}
-
-	private void _setLayoutPageTemplateStructureUtilPersistence(
-		LayoutPageTemplateStructurePersistence
-			layoutPageTemplateStructurePersistence) {
-
-		try {
-			Field field =
-				LayoutPageTemplateStructureUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutPageTemplateStructurePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

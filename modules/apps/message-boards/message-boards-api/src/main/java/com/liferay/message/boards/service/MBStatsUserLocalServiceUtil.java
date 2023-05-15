@@ -90,6 +90,10 @@ public class MBStatsUserLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBStatsUserLocalService service) {
+		_service = service;
+	}
+
 	private static volatile MBStatsUserLocalService _service;
 
 }

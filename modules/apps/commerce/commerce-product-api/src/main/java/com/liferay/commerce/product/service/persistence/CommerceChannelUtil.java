@@ -1159,6 +1159,10 @@ public class CommerceChannelUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CommerceChannelPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CommerceChannelPersistence _persistence;
 
 }

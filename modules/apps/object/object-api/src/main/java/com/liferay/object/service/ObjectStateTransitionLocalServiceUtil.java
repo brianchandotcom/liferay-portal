@@ -393,6 +393,10 @@ public class ObjectStateTransitionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ObjectStateTransitionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile ObjectStateTransitionLocalService _service;
 
 }

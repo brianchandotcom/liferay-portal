@@ -53,7 +53,6 @@ import com.liferay.portal.language.override.service.persistence.impl.constants.P
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2705,29 +2704,14 @@ public class PLOEntryPersistenceImpl
 			},
 			new String[] {"companyId", "key_", "languageId"}, false);
 
-		_setPLOEntryUtilPersistence(this);
+		PLOEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setPLOEntryUtilPersistence(null);
+		PLOEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(PLOEntryImpl.class.getName());
-	}
-
-	private void _setPLOEntryUtilPersistence(
-		PLOEntryPersistence ploEntryPersistence) {
-
-		try {
-			Field field = PLOEntryUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ploEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

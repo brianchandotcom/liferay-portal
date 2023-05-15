@@ -439,6 +439,10 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DLFileEntryMetadataLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DLFileEntryMetadataLocalService _service;
 
 }

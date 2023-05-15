@@ -1351,6 +1351,10 @@ public class FaroUserUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(FaroUserPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile FaroUserPersistence _persistence;
 
 }

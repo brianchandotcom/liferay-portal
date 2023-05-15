@@ -50,8 +50,6 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersisten
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -388,7 +386,7 @@ public abstract class KaleoTimerLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		KaleoTimerLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -403,7 +401,7 @@ public abstract class KaleoTimerLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		kaleoTimerLocalService = (KaleoTimerLocalService)aopProxy;
 
-		_setLocalServiceUtilService(kaleoTimerLocalService);
+		KaleoTimerLocalServiceUtil.setService(kaleoTimerLocalService);
 	}
 
 	/**
@@ -460,22 +458,6 @@ public abstract class KaleoTimerLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		KaleoTimerLocalService kaleoTimerLocalService) {
-
-		try {
-			Field field = KaleoTimerLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, kaleoTimerLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

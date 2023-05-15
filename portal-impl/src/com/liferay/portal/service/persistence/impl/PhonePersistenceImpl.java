@@ -50,7 +50,6 @@ import com.liferay.portal.model.impl.PhoneModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4932,26 +4931,13 @@ public class PhonePersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "primary_"},
 			false);
 
-		_setPhoneUtilPersistence(this);
+		PhoneUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setPhoneUtilPersistence(null);
+		PhoneUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(PhoneImpl.class.getName());
-	}
-
-	private void _setPhoneUtilPersistence(PhonePersistence phonePersistence) {
-		try {
-			Field field = PhoneUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, phonePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_PHONE =

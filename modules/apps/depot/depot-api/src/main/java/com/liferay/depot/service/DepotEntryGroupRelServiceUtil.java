@@ -100,6 +100,10 @@ public class DepotEntryGroupRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DepotEntryGroupRelService service) {
+		_service = service;
+	}
+
 	private static volatile DepotEntryGroupRelService _service;
 
 }

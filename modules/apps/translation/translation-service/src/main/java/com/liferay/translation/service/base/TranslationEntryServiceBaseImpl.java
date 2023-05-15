@@ -30,8 +30,6 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.service.TranslationEntryServiceUtil;
 import com.liferay.translation.service.persistence.TranslationEntryPersistence;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 import org.osgi.service.component.annotations.Deactivate;
@@ -59,7 +57,7 @@ public abstract class TranslationEntryServiceBaseImpl
 	 */
 	@Deactivate
 	protected void deactivate() {
-		_setServiceUtilService(null);
+		TranslationEntryServiceUtil.setService(null);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public abstract class TranslationEntryServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		translationEntryService = (TranslationEntryService)aopProxy;
 
-		_setServiceUtilService(translationEntryService);
+		TranslationEntryServiceUtil.setService(translationEntryService);
 	}
 
 	/**
@@ -115,22 +113,6 @@ public abstract class TranslationEntryServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		TranslationEntryService translationEntryService) {
-
-		try {
-			Field field = TranslationEntryServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, translationEntryService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

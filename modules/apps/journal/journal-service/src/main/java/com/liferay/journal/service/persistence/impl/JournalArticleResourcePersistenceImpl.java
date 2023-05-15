@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3221,30 +3220,14 @@ public class JournalArticleResourcePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "articleId"}, false);
 
-		_setJournalArticleResourceUtilPersistence(this);
+		JournalArticleResourceUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setJournalArticleResourceUtilPersistence(null);
+		JournalArticleResourceUtil.setPersistence(null);
 
 		entityCache.removeCache(JournalArticleResourceImpl.class.getName());
-	}
-
-	private void _setJournalArticleResourceUtilPersistence(
-		JournalArticleResourcePersistence journalArticleResourcePersistence) {
-
-		try {
-			Field field = JournalArticleResourceUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, journalArticleResourcePersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

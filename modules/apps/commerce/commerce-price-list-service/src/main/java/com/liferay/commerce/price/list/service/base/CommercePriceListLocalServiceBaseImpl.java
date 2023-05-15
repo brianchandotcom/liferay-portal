@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -628,7 +626,7 @@ public abstract class CommercePriceListLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommercePriceListLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -643,7 +641,8 @@ public abstract class CommercePriceListLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		commercePriceListLocalService = (CommercePriceListLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commercePriceListLocalService);
+		CommercePriceListLocalServiceUtil.setService(
+			commercePriceListLocalService);
 	}
 
 	/**
@@ -701,23 +700,6 @@ public abstract class CommercePriceListLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommercePriceListLocalService commercePriceListLocalService) {
-
-		try {
-			Field field =
-				CommercePriceListLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePriceListLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

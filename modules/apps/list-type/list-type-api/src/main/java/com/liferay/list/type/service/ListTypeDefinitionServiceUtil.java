@@ -121,6 +121,10 @@ public class ListTypeDefinitionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ListTypeDefinitionService service) {
+		_service = service;
+	}
+
 	private static volatile ListTypeDefinitionService _service;
 
 }

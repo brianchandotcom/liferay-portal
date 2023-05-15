@@ -1296,6 +1296,12 @@ public class FragmentCollectionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		FragmentCollectionPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile FragmentCollectionPersistence _persistence;
 
 }

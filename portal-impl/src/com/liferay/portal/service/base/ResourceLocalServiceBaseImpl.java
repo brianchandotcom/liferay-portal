@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -98,11 +96,11 @@ public abstract class ResourceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setLocalServiceUtilService(resourceLocalService);
+		ResourceLocalServiceUtil.setService(resourceLocalService);
 	}
 
 	public void destroy() {
-		_setLocalServiceUtilService(null);
+		ResourceLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -136,22 +134,6 @@ public abstract class ResourceLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		ResourceLocalService resourceLocalService) {
-
-		try {
-			Field field = ResourceLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, resourceLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

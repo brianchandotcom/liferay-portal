@@ -353,6 +353,10 @@ public class MFAFIDO2CredentialEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MFAFIDO2CredentialEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile MFAFIDO2CredentialEntryLocalService _service;
 
 }

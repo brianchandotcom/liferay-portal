@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4415,29 +4414,14 @@ public class CPOptionPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false);
 
-		_setCPOptionUtilPersistence(this);
+		CPOptionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCPOptionUtilPersistence(null);
+		CPOptionUtil.setPersistence(null);
 
 		entityCache.removeCache(CPOptionImpl.class.getName());
-	}
-
-	private void _setCPOptionUtilPersistence(
-		CPOptionPersistence cpOptionPersistence) {
-
-		try {
-			Field field = CPOptionUtil.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, cpOptionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -432,6 +432,10 @@ public class MBMailingListLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(MBMailingListLocalService service) {
+		_service = service;
+	}
+
 	private static volatile MBMailingListLocalService _service;
 
 }

@@ -48,7 +48,6 @@ import com.liferay.segments.service.persistence.impl.constants.SegmentsPersisten
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -2294,30 +2293,14 @@ public class SegmentsExperimentRelPersistenceImpl
 			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
 			false);
 
-		_setSegmentsExperimentRelUtilPersistence(this);
+		SegmentsExperimentRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setSegmentsExperimentRelUtilPersistence(null);
+		SegmentsExperimentRelUtil.setPersistence(null);
 
 		entityCache.removeCache(SegmentsExperimentRelImpl.class.getName());
-	}
-
-	private void _setSegmentsExperimentRelUtilPersistence(
-		SegmentsExperimentRelPersistence segmentsExperimentRelPersistence) {
-
-		try {
-			Field field = SegmentsExperimentRelUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, segmentsExperimentRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

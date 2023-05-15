@@ -1295,6 +1295,12 @@ public class DDMDataProviderInstanceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		DDMDataProviderInstancePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile DDMDataProviderInstancePersistence _persistence;
 
 }

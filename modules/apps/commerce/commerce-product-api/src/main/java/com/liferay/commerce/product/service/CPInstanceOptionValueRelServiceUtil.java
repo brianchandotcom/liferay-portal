@@ -47,6 +47,10 @@ public class CPInstanceOptionValueRelServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CPInstanceOptionValueRelService service) {
+		_service = service;
+	}
+
 	private static volatile CPInstanceOptionValueRelService _service;
 
 }

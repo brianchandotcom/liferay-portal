@@ -48,7 +48,6 @@ import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -4443,29 +4442,13 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			},
 			false);
 
-		_setWorkflowDefinitionLinkUtilPersistence(this);
+		WorkflowDefinitionLinkUtil.setPersistence(this);
 	}
 
 	public void destroy() {
-		_setWorkflowDefinitionLinkUtilPersistence(null);
+		WorkflowDefinitionLinkUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(WorkflowDefinitionLinkImpl.class.getName());
-	}
-
-	private void _setWorkflowDefinitionLinkUtilPersistence(
-		WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence) {
-
-		try {
-			Field field = WorkflowDefinitionLinkUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, workflowDefinitionLinkPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	private static final String _SQL_SELECT_WORKFLOWDEFINITIONLINK =

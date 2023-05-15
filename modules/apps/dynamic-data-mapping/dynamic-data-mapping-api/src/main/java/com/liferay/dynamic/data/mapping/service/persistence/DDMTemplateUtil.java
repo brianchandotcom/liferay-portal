@@ -3816,6 +3816,10 @@ public class DDMTemplateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DDMTemplatePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DDMTemplatePersistence _persistence;
 
 }

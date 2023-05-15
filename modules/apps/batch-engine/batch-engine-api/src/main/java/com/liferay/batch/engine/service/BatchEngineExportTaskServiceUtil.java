@@ -74,6 +74,10 @@ public class BatchEngineExportTaskServiceUtil {
 		return _service;
 	}
 
+	public static void setService(BatchEngineExportTaskService service) {
+		_service = service;
+	}
+
 	private static volatile BatchEngineExportTaskService _service;
 
 }

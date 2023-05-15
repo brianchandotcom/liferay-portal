@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -1555,30 +1554,14 @@ public class BatchPlannerMappingPersistenceImpl
 			},
 			false);
 
-		_setBatchPlannerMappingUtilPersistence(this);
+		BatchPlannerMappingUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setBatchPlannerMappingUtilPersistence(null);
+		BatchPlannerMappingUtil.setPersistence(null);
 
 		entityCache.removeCache(BatchPlannerMappingImpl.class.getName());
-	}
-
-	private void _setBatchPlannerMappingUtilPersistence(
-		BatchPlannerMappingPersistence batchPlannerMappingPersistence) {
-
-		try {
-			Field field = BatchPlannerMappingUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, batchPlannerMappingPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

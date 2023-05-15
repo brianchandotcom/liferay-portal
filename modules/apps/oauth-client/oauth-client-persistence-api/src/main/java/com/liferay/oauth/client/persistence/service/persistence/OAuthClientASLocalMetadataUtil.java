@@ -868,6 +868,12 @@ public class OAuthClientASLocalMetadataUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		OAuthClientASLocalMetadataPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile OAuthClientASLocalMetadataPersistence _persistence;
 
 }

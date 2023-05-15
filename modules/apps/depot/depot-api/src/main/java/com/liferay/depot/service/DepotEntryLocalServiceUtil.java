@@ -438,6 +438,10 @@ public class DepotEntryLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DepotEntryLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DepotEntryLocalService _service;
 
 }

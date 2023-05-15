@@ -213,6 +213,10 @@ public class ResourcePermissionServiceUtil {
 		return _service;
 	}
 
+	public static void setService(ResourcePermissionService service) {
+		_service = service;
+	}
+
 	private static volatile ResourcePermissionService _service;
 
 }

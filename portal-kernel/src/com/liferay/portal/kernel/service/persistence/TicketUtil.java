@@ -940,6 +940,10 @@ public class TicketUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(TicketPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile TicketPersistence _persistence;
 
 }

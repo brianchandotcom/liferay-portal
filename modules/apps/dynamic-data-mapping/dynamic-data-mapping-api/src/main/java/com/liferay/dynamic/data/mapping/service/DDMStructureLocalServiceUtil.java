@@ -1270,6 +1270,10 @@ public class DDMStructureLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMStructureLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDMStructureLocalService _service;
 
 }

@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -387,7 +385,7 @@ public abstract class DispatchLogLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		DispatchLogLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -402,7 +400,7 @@ public abstract class DispatchLogLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		dispatchLogLocalService = (DispatchLogLocalService)aopProxy;
 
-		_setLocalServiceUtilService(dispatchLogLocalService);
+		DispatchLogLocalServiceUtil.setService(dispatchLogLocalService);
 	}
 
 	/**
@@ -444,22 +442,6 @@ public abstract class DispatchLogLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		DispatchLogLocalService dispatchLogLocalService) {
-
-		try {
-			Field field = DispatchLogLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, dispatchLogLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

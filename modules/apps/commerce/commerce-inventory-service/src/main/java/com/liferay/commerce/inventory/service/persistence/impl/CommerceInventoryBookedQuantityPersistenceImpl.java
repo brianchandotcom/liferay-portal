@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
@@ -2452,33 +2451,15 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, false);
 
-		_setCommerceInventoryBookedQuantityUtilPersistence(this);
+		CommerceInventoryBookedQuantityUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommerceInventoryBookedQuantityUtilPersistence(null);
+		CommerceInventoryBookedQuantityUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommerceInventoryBookedQuantityImpl.class.getName());
-	}
-
-	private void _setCommerceInventoryBookedQuantityUtilPersistence(
-		CommerceInventoryBookedQuantityPersistence
-			commerceInventoryBookedQuantityPersistence) {
-
-		try {
-			Field field =
-				CommerceInventoryBookedQuantityUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceInventoryBookedQuantityPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
@@ -3613,30 +3612,14 @@ public class DDLRecordVersionPersistenceImpl
 			},
 			false);
 
-		_setDDLRecordVersionUtilPersistence(this);
+		DDLRecordVersionUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setDDLRecordVersionUtilPersistence(null);
+		DDLRecordVersionUtil.setPersistence(null);
 
 		entityCache.removeCache(DDLRecordVersionImpl.class.getName());
-	}
-
-	private void _setDDLRecordVersionUtilPersistence(
-		DDLRecordVersionPersistence ddlRecordVersionPersistence) {
-
-		try {
-			Field field = DDLRecordVersionUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ddlRecordVersionPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

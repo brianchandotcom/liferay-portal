@@ -1193,6 +1193,12 @@ public class MBSuspiciousActivityUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		MBSuspiciousActivityPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }

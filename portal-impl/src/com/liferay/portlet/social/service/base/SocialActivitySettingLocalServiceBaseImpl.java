@@ -49,8 +49,6 @@ import com.liferay.social.kernel.service.persistence.SocialActivitySettingPersis
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -480,14 +478,15 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 			"com.liferay.social.kernel.model.SocialActivitySetting",
 			socialActivitySettingLocalService);
 
-		_setLocalServiceUtilService(socialActivitySettingLocalService);
+		SocialActivitySettingLocalServiceUtil.setService(
+			socialActivitySettingLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.social.kernel.model.SocialActivitySetting");
 
-		_setLocalServiceUtilService(null);
+		SocialActivitySettingLocalServiceUtil.setService(null);
 	}
 
 	/**
@@ -545,23 +544,6 @@ public abstract class SocialActivitySettingLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		SocialActivitySettingLocalService socialActivitySettingLocalService) {
-
-		try {
-			Field field =
-				SocialActivitySettingLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, socialActivitySettingLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

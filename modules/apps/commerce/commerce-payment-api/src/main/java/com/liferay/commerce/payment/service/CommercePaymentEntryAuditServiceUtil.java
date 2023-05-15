@@ -80,6 +80,10 @@ public class CommercePaymentEntryAuditServiceUtil {
 		return _service;
 	}
 
+	public static void setService(CommercePaymentEntryAuditService service) {
+		_service = service;
+	}
+
 	private static volatile CommercePaymentEntryAuditService _service;
 
 }

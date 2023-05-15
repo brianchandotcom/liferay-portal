@@ -46,8 +46,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -4466,30 +4464,14 @@ public class FaroNotificationPersistenceImpl
 			},
 			false);
 
-		_setFaroNotificationUtilPersistence(this);
+		FaroNotificationUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setFaroNotificationUtilPersistence(null);
+		FaroNotificationUtil.setPersistence(null);
 
 		entityCache.removeCache(FaroNotificationImpl.class.getName());
-	}
-
-	private void _setFaroNotificationUtilPersistence(
-		FaroNotificationPersistence faroNotificationPersistence) {
-
-		try {
-			Field field = FaroNotificationUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, faroNotificationPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -1010,6 +1010,12 @@ public class MembershipRequestUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		MembershipRequestPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile MembershipRequestPersistence _persistence;
 
 }

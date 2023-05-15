@@ -912,6 +912,10 @@ public class CProductUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CProductPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CProductPersistence _persistence;
 
 }

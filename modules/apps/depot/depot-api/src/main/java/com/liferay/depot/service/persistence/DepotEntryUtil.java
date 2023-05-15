@@ -737,6 +737,10 @@ public class DepotEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(DepotEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile DepotEntryPersistence _persistence;
 
 }

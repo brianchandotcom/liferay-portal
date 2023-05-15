@@ -2061,6 +2061,10 @@ public class CalendarResourceUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(CalendarResourcePersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile CalendarResourcePersistence _persistence;
 
 }

@@ -342,6 +342,10 @@ public class DDMFieldLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMFieldLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDMFieldLocalService _service;
 
 }

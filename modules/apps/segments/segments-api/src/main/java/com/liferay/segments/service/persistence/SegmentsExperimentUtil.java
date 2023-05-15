@@ -2044,6 +2044,12 @@ public class SegmentsExperimentUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		SegmentsExperimentPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile SegmentsExperimentPersistence _persistence;
 
 }

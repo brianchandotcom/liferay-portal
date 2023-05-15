@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2909,30 +2908,14 @@ public class ObjectLayoutPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "defaultObjectLayout"}, false);
 
-		_setObjectLayoutUtilPersistence(this);
+		ObjectLayoutUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setObjectLayoutUtilPersistence(null);
+		ObjectLayoutUtil.setPersistence(null);
 
 		entityCache.removeCache(ObjectLayoutImpl.class.getName());
-	}
-
-	private void _setObjectLayoutUtilPersistence(
-		ObjectLayoutPersistence objectLayoutPersistence) {
-
-		try {
-			Field field = ObjectLayoutUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, objectLayoutPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -47,8 +47,6 @@ import com.liferay.portal.language.override.service.persistence.PLOEntryPersiste
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -381,7 +379,7 @@ public abstract class PLOEntryLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		PLOEntryLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -396,7 +394,7 @@ public abstract class PLOEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		ploEntryLocalService = (PLOEntryLocalService)aopProxy;
 
-		_setLocalServiceUtilService(ploEntryLocalService);
+		PLOEntryLocalServiceUtil.setService(ploEntryLocalService);
 	}
 
 	/**
@@ -438,22 +436,6 @@ public abstract class PLOEntryLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		PLOEntryLocalService ploEntryLocalService) {
-
-		try {
-			Field field = PLOEntryLocalServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ploEntryLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

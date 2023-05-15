@@ -99,6 +99,10 @@ public class LayoutPrototypeServiceUtil {
 		return _service;
 	}
 
+	public static void setService(LayoutPrototypeService service) {
+		_service = service;
+	}
+
 	private static volatile LayoutPrototypeService _service;
 
 }

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -2894,33 +2893,15 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "active_"}, false);
 
-		_setCommercePaymentMethodGroupRelUtilPersistence(this);
+		CommercePaymentMethodGroupRelUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setCommercePaymentMethodGroupRelUtilPersistence(null);
+		CommercePaymentMethodGroupRelUtil.setPersistence(null);
 
 		entityCache.removeCache(
 			CommercePaymentMethodGroupRelImpl.class.getName());
-	}
-
-	private void _setCommercePaymentMethodGroupRelUtilPersistence(
-		CommercePaymentMethodGroupRelPersistence
-			commercePaymentMethodGroupRelPersistence) {
-
-		try {
-			Field field =
-				CommercePaymentMethodGroupRelUtil.class.getDeclaredField(
-					"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, commercePaymentMethodGroupRelPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

@@ -792,6 +792,12 @@ public class CTAutoResolutionInfoUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CTAutoResolutionInfoPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CTAutoResolutionInfoPersistence _persistence;
 
 }

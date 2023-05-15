@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
@@ -882,30 +881,14 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
-		_setMFATimeBasedOTPEntryUtilPersistence(this);
+		MFATimeBasedOTPEntryUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setMFATimeBasedOTPEntryUtilPersistence(null);
+		MFATimeBasedOTPEntryUtil.setPersistence(null);
 
 		entityCache.removeCache(MFATimeBasedOTPEntryImpl.class.getName());
-	}
-
-	private void _setMFATimeBasedOTPEntryUtilPersistence(
-		MFATimeBasedOTPEntryPersistence mfaTimeBasedOTPEntryPersistence) {
-
-		try {
-			Field field = MFATimeBasedOTPEntryUtil.class.getDeclaredField(
-				"_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, mfaTimeBasedOTPEntryPersistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	@Override

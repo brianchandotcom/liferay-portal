@@ -350,6 +350,10 @@ public class DDMTemplateVersionLocalServiceUtil {
 		return _service;
 	}
 
+	public static void setService(DDMTemplateVersionLocalService service) {
+		_service = service;
+	}
+
 	private static volatile DDMTemplateVersionLocalService _service;
 
 }

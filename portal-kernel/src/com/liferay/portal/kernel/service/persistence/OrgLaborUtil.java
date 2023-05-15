@@ -439,6 +439,10 @@ public class OrgLaborUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(OrgLaborPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile OrgLaborPersistence _persistence;
 
 }

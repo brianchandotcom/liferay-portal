@@ -2784,6 +2784,12 @@ public class ObjectRelationshipUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		ObjectRelationshipPersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectRelationshipPersistence _persistence;
 
 }

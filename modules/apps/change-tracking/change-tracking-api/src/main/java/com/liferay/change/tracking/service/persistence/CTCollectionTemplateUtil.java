@@ -540,6 +540,12 @@ public class CTCollectionTemplateUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(
+		CTCollectionTemplatePersistence persistence) {
+
+		_persistence = persistence;
+	}
+
 	private static volatile CTCollectionTemplatePersistence _persistence;
 
 }

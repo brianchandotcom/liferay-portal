@@ -47,8 +47,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Field;
-
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -412,7 +410,7 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_setLocalServiceUtilService(null);
+		CommerceWishListItemLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -428,7 +426,8 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 		commerceWishListItemLocalService =
 			(CommerceWishListItemLocalService)aopProxy;
 
-		_setLocalServiceUtilService(commerceWishListItemLocalService);
+		CommerceWishListItemLocalServiceUtil.setService(
+			commerceWishListItemLocalService);
 	}
 
 	/**
@@ -471,23 +470,6 @@ public abstract class CommerceWishListItemLocalServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setLocalServiceUtilService(
-		CommerceWishListItemLocalService commerceWishListItemLocalService) {
-
-		try {
-			Field field =
-				CommerceWishListItemLocalServiceUtil.class.getDeclaredField(
-					"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, commerceWishListItemLocalService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

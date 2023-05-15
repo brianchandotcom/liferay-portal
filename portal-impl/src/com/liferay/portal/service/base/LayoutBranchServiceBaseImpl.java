@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.service.LayoutBranchServiceUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutBranchPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.lang.reflect.Field;
-
 import javax.sql.DataSource;
 
 /**
@@ -142,11 +140,11 @@ public abstract class LayoutBranchServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		_setServiceUtilService(layoutBranchService);
+		LayoutBranchServiceUtil.setService(layoutBranchService);
 	}
 
 	public void destroy() {
-		_setServiceUtilService(null);
+		LayoutBranchServiceUtil.setService(null);
 	}
 
 	/**
@@ -188,22 +186,6 @@ public abstract class LayoutBranchServiceBaseImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
-		}
-	}
-
-	private void _setServiceUtilService(
-		LayoutBranchService layoutBranchService) {
-
-		try {
-			Field field = LayoutBranchServiceUtil.class.getDeclaredField(
-				"_service");
-
-			field.setAccessible(true);
-
-			field.set(null, layoutBranchService);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
 

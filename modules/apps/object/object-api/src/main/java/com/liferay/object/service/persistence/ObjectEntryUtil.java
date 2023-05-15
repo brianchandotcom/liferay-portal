@@ -1790,6 +1790,10 @@ public class ObjectEntryUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ObjectEntryPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ObjectEntryPersistence _persistence;
 
 }

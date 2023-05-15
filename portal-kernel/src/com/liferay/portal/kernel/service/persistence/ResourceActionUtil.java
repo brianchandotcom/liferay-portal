@@ -505,6 +505,10 @@ public class ResourceActionUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(ResourceActionPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ResourceActionPersistence _persistence;
 
 }

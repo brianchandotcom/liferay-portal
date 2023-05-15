@@ -2553,6 +2553,10 @@ public class JournalFolderUtil {
 		return _persistence;
 	}
 
+	public static void setPersistence(JournalFolderPersistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile JournalFolderPersistence _persistence;
 
 }

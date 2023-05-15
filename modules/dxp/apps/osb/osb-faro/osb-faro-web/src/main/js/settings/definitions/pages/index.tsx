@@ -2,7 +2,7 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import Loading from 'shared/pages/Loading';
 import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
-import {DEVELOPER_MODE} from 'shared/util/constants';
+import {DEVELOPER_MODE, ENABLE_BLOCKLIST_KEYWORDS} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
 import {Switch} from 'react-router-dom';
 
@@ -77,11 +77,13 @@ const Definitions: React.FC<IDefinitionsProps> = () => (
 				path={Routes.SETTINGS_DEFINITIONS}
 			/>
 
-			<BundleRouter
-				data={InterestTopics}
-				exact
-				path={Routes.SETTINGS_DEFINITIONS_INTEREST_TOPICS}
-			/>
+			{ENABLE_BLOCKLIST_KEYWORDS && (
+				<BundleRouter
+					data={InterestTopics}
+					exact
+					path={Routes.SETTINGS_DEFINITIONS_INTEREST_TOPICS}
+				/>
+			)}
 
 			<BundleRouter
 				data={IndividualAttributes}

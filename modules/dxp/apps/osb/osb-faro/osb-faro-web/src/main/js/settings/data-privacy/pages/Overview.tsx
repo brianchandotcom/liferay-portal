@@ -224,8 +224,12 @@ export const Overview: React.FC<IOverviewProps> = ({
 										</h4>
 
 										<p className='text-secondary'>
+											{/* TODO: Modify lang below to include "suppresion" in 4.1.0 release. 
+										
+										data-subjects-and-your-organization-can-request-access,-deletion-and-suppression-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready */}
+
 											{Liferay.Language.get(
-												'data-subjects-and-your-organization-can-request-access,-deletion-and-suppression-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready'
+												'data-subjects-and-your-organization-can-request-access-and-deletion-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready'
 											)}
 										</p>
 									</div>

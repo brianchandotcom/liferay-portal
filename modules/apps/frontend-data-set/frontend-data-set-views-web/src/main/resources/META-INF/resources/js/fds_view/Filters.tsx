@@ -28,21 +28,21 @@ import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 
-interface Field {
+interface IField {
 	format: string;
 	label: string;
 	name: string;
 	type: string;
 }
 
-interface Filter {
+interface IFilter {
 	id: number;
 	label: string;
 	name: string;
 	type: string;
 }
 
-interface DateFilter extends Filter {
+interface IDateFilter extends IFilter {
 	from: string;
 	to: string;
 }
@@ -118,9 +118,9 @@ function DateRange({
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
 	fdsView: FDSViewType;
-	fields: Field[];
+	fields: IField[];
 	namespace: string;
-	onSave: (newFilter: Filter) => void;
+	onSave: (newFilter: IFilter) => void;
 }
 
 function alertFailed() {
@@ -150,7 +150,9 @@ function AddFDSFilterModalContent({
 	const [to, setTo] = useState<string>('');
 
 	const handleFilterSave = async () => {
-		const field = fields.find((item: Field) => item.name === selectedField);
+		const field = fields.find(
+			(item: IField) => item.name === selectedField
+		);
 
 		if (!field) {
 			alertFailed();
@@ -208,7 +210,7 @@ function AddFDSFilterModalContent({
 		closeModal();
 	};
 
-	const field = fields.find((item: Field) => item.name === selectedField);
+	const field = fields.find((item: IField) => item.name === selectedField);
 
 	return (
 		<div className="fds-view-fields-modal">
@@ -307,8 +309,8 @@ interface IProps {
 }
 
 function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
-	const [fields, setFields] = useState<Field[]>([]);
-	const [filters, setFilters] = useState<Filter[]>([]);
+	const [fields, setFields] = useState<IField[]>([]);
+	const [filters, setFilters] = useState<IFilter[]>([]);
 	const [newFiltersOrder, setNewFiltersOrder] = useState<string>('');
 
 	const updateFDSFiltersOrder = async () => {
@@ -359,7 +361,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			),
 		});
 
-	const handleDelete = async ({item}: {item: Filter}) => {
+	const handleDelete = async ({item}: {item: IFilter}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this-filter'
@@ -391,7 +393,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 								setFilters(
 									filters.filter(
-										(filter: Filter) =>
+										(filter: IFilter) =>
 											filter.id !== item.id
 									)
 								);
@@ -417,10 +419,10 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 			const dateFiltersOrderer = responseJSON[
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER
-			] as DateFilter[];
+			] as IDateFilter[];
 			const dynamicFiltersOrderer = responseJSON[
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER
-			] as Filter[];
+			] as IFilter[];
 
 			let filtersOrdered = [
 				...dateFiltersOrderer,
@@ -430,7 +432,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			if (fdsView.fdsFiltersOrder) {
 				const order = fdsView.fdsFiltersOrder.split(',');
 
-				let notOrdered: Filter[] = [];
+				let notOrdered: IFilter[] = [];
 
 				if (filtersOrdered.length > order.length) {
 					notOrdered = filtersOrdered.filter(
@@ -445,7 +447,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 							(filter) => filter.id === Number(fdsFilterId)
 						)
 					)
-					.filter(Boolean) as Filter[];
+					.filter(Boolean) as IFilter[];
 
 				filtersOrdered = [...filtersOrdered, ...notOrdered];
 			}
@@ -497,7 +499,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				)}
 				onCancelButtonClick={() => navigate(fdsViewsURL)}
 				onCreationButtonClick={onCreationButtonClick}
-				onOrderChange={({orderedItems}: {orderedItems: Filter[]}) => {
+				onOrderChange={({orderedItems}: {orderedItems: IFilter[]}) => {
 					setNewFiltersOrder(
 						orderedItems.map((filter) => filter.id).join(',')
 					);

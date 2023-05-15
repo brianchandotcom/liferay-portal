@@ -46,7 +46,7 @@ const DATA_RENDERER_LABELS: {[key: string]: string} = {
 	status: Liferay.Language.get('status'),
 };
 
-interface FDSField {
+interface IFDSField {
 	externalReferenceCode: string;
 	id: number;
 	label: string;
@@ -56,7 +56,7 @@ interface FDSField {
 	type: string;
 }
 
-interface Field {
+interface IField {
 	id: number | null;
 	name: string;
 	selected: boolean;
@@ -64,9 +64,9 @@ interface Field {
 	visible: boolean;
 }
 
-interface SaveFDSFieldsModalContentProps {
+interface ISaveFDSFieldsModalContentProps {
 	closeModal: Function;
-	fdsFields: Array<FDSField>;
+	fdsFields: Array<IFDSField>;
 	fdsView: FDSViewType;
 	namespace: string;
 	onSave: Function;
@@ -80,8 +80,8 @@ const SaveFDSFieldsModalContent = ({
 	namespace,
 	onSave,
 	saveFDSFieldsURL,
-}: SaveFDSFieldsModalContentProps) => {
-	const [fields, setFields] = useState<Array<Field> | null>(null);
+}: ISaveFDSFieldsModalContentProps) => {
+	const [fields, setFields] = useState<Array<IField> | null>(null);
 	const [query, setQuery] = useState('');
 
 	const onSearch = (query: string) => {
@@ -144,7 +144,7 @@ const SaveFDSFieldsModalContent = ({
 			return;
 		}
 
-		const createdFDSFields: Array<FDSField> = await response.json();
+		const createdFDSFields: Array<IFDSField> = await response.json();
 
 		closeModal();
 
@@ -326,9 +326,9 @@ const SaveFDSFieldsModalContent = ({
 	);
 };
 
-interface EditFDSFieldModalContentProps {
+interface IEditFDSFieldModalContentProps {
 	closeModal: Function;
-	fdsField: FDSField;
+	fdsField: IFDSField;
 	namespace: string;
 	onSave: Function;
 }
@@ -338,7 +338,7 @@ const EditFDSFieldModalContent = ({
 	fdsField,
 	namespace,
 	onSave,
-}: EditFDSFieldModalContentProps) => {
+}: IEditFDSFieldModalContentProps) => {
 	const [selectedFDSFieldRenderer, setSelectedFDSFieldRenderer] = useState(
 		fdsField.renderer ?? 'default'
 	);
@@ -488,7 +488,7 @@ const Fields = ({
 	namespace,
 	saveFDSFieldsURL,
 }: FDSViewSectionInterface) => {
-	const [fdsFields, setFDSFields] = useState<Array<FDSField> | null>(null);
+	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 
 	const fdsFieldsOrderRef = useRef('');
 
@@ -532,12 +532,12 @@ const Fields = ({
 
 			const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
 
-			const orderedFDSFields: Array<FDSField> = [];
+			const orderedFDSFields: Array<IFDSField> = [];
 
 			const orderedFDSFieldIds: Array<number> = [];
 
 			storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
-				storedFDSFields.forEach((storedFDSField: FDSField) => {
+				storedFDSFields.forEach((storedFDSField: IFDSField) => {
 					if (fdsFieldId === String(storedFDSField.id)) {
 						orderedFDSFields.push(storedFDSField);
 
@@ -546,7 +546,7 @@ const Fields = ({
 				});
 			});
 
-			storedFDSFields.forEach((storedFDSField: FDSField) => {
+			storedFDSFields.forEach((storedFDSField: IFDSField) => {
 				if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
 					orderedFDSFields.push(storedFDSField);
 				}
@@ -558,7 +558,7 @@ const Fields = ({
 		}
 		else {
 			fdsFieldsOrderRef.current = storedFDSFields
-				.map((storedFDSField: FDSField) => storedFDSField.id)
+				.map((storedFDSField: IFDSField) => storedFDSField.id)
 				.join(',');
 
 			setFDSFields(storedFDSFields);
@@ -633,10 +633,10 @@ const Fields = ({
 						createdFDSFields,
 						deletedFDSFieldsIds,
 					}: {
-						createdFDSFields: Array<FDSField>;
+						createdFDSFields: Array<IFDSField>;
 						deletedFDSFieldsIds: Array<number>;
 					}) => {
-						const newFDSFields: Array<FDSField> = [];
+						const newFDSFields: Array<IFDSField> = [];
 
 						fdsFields?.forEach((fdsField) => {
 							if (!deletedFDSFieldsIds.includes(fdsField.id)) {
@@ -655,7 +655,7 @@ const Fields = ({
 			),
 		});
 
-	const onEditFDSField = ({editedFDSField}: {editedFDSField: FDSField}) => {
+	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {
 		setFDSFields(
 			fdsFields?.map((fdsField) => {
 				if (fdsField.id === editedFDSField.id) {
@@ -675,7 +675,7 @@ const Fields = ({
 						{
 							icon: 'pencil',
 							label: Liferay.Language.get('edit'),
-							onClick: ({item}: {item: FDSField}) => {
+							onClick: ({item}: {item: IFDSField}) => {
 								openModal({
 									contentComponent: ({
 										closeModal,
@@ -726,7 +726,7 @@ const Fields = ({
 					onOrderChange={({
 						orderedItems,
 					}: {
-						orderedItems: Array<FDSField>;
+						orderedItems: Array<IFDSField>;
 					}) => {
 						fdsFieldsOrderRef.current = orderedItems
 							.map((item) => item.id)

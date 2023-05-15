@@ -30,26 +30,26 @@ import Search from './Search';
 
 import '../../css/OrderableTable.scss';
 
-interface Action {
+interface IAction {
 	icon: string;
 	label: string;
 	onClick: Function;
 }
 
-interface ContentRendererProps {
+interface IContentRendererProps {
 	item: any;
 }
 
-interface Field {
-	contentRenderer?: React.FC<ContentRendererProps>;
+interface IField {
+	contentRenderer?: React.FC<IContentRendererProps>;
 	headingTitle?: boolean;
 	label: string;
 	name: string;
 }
 
-interface OrderableTableRowProps {
-	actions?: Array<Action>;
-	fields: Array<Field>;
+interface IOrderableTableRowProps {
+	actions?: Array<IAction>;
+	fields: Array<IField>;
 	index: number;
 	item: any;
 	onOrderChange: Function;
@@ -63,7 +63,7 @@ const OrderableTableRow = ({
 	item,
 	onOrderChange,
 	query,
-}: OrderableTableRowProps) => {
+}: IOrderableTableRowProps) => {
 	const tableRowRef = useRef<HTMLTableRowElement>(null);
 
 	const [{isDragging}, dragRef] = useDrag({
@@ -142,7 +142,7 @@ const OrderableTableRow = ({
 			{fields.map((field) => {
 				if (field.contentRenderer) {
 					const ContentRenderer = field.contentRenderer as React.FC<
-						ContentRendererProps
+						IContentRendererProps
 					>;
 
 					return (
@@ -221,10 +221,10 @@ const OrderableTableRow = ({
 	);
 };
 
-interface OrderableTableProps {
-	actions?: Array<Action>;
+interface IOrderableTableProps {
+	actions?: Array<IAction>;
 	disableSave?: boolean;
-	fields: Array<Field>;
+	fields: Array<IField>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;
@@ -249,7 +249,7 @@ const OrderableTable = ({
 	onOrderChange,
 	onSaveButtonClick,
 	title,
-}: OrderableTableProps) => {
+}: IOrderableTableProps) => {
 	const [items, setItems] = useState(initialItems);
 	const [query, setQuery] = useState('');
 

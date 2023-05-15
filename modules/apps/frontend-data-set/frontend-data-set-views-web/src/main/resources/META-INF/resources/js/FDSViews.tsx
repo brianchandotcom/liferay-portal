@@ -39,7 +39,7 @@ type FDSViewType = {
 	listOfItemsPerPage: string;
 };
 
-interface AddFDSViewModalContentInterface {
+interface IAddFDSViewModalContentInterface {
 	closeModal: Function;
 	fdsEntryId: string;
 	loadData: Function;
@@ -51,7 +51,7 @@ const AddFDSViewModalContent = ({
 	fdsEntryId,
 	loadData,
 	namespace,
-}: AddFDSViewModalContentInterface) => {
+}: IAddFDSViewModalContentInterface) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
 	const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);
@@ -191,7 +191,7 @@ const AddFDSViewModalContent = ({
 	);
 };
 
-interface FDSViewsInterface {
+interface IFDSViewsInterface {
 	fdsEntryId: string;
 	fdsEntryLabel: string;
 	fdsViewURL: string;
@@ -203,7 +203,7 @@ const FDSViews = ({
 	fdsEntryLabel,
 	fdsViewURL,
 	namespace,
-}: FDSViewsInterface) => {
+}: IFDSViewsInterface) => {
 	const onViewClick = ({itemData}: {itemData: FDSViewType}) => {
 		const url = new URL(fdsViewURL);
 

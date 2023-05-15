@@ -256,7 +256,7 @@ const RestEndpointDropdownMenu = ({
 	);
 };
 
-interface AddFDSEntryModalContentInterface {
+interface IAddFDSEntryModalContentInterface {
 	closeModal: Function;
 	loadData: Function;
 	namespace: string;
@@ -268,7 +268,7 @@ const AddFDSEntryModalContent = ({
 	loadData,
 	namespace,
 	restApplications,
-}: AddFDSEntryModalContentInterface) => {
+}: IAddFDSEntryModalContentInterface) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [
 		requiredRESTApplicationValidationError,
@@ -697,7 +697,7 @@ const AddFDSEntryModalContent = ({
 	);
 };
 
-interface FDSEntriesInterface {
+interface IFDSEntriesInterface {
 	fdsViewsURL: string;
 	namespace: string;
 	restApplications: Array<string>;
@@ -707,7 +707,7 @@ const FDSEntries = ({
 	fdsViewsURL,
 	namespace,
 	restApplications,
-}: FDSEntriesInterface) => {
+}: IFDSEntriesInterface) => {
 	const creationMenu = {
 		primaryItems: [
 			{

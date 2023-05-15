@@ -17,7 +17,7 @@ import {fetch, openToast} from 'frontend-js-web';
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 
-interface Field {
+interface IField {
 	format: string;
 	label: string;
 	name: string;
@@ -54,7 +54,7 @@ export async function getFields(fdsView: FDSViewType) {
 		return;
 	}
 
-	const fieldsArray: Array<Field> = [];
+	const fieldsArray: Array<IField> = [];
 
 	const isObjectSchema =
 		responseJSON.components.schemas[restSchema].xml.name === 'ObjectEntry';

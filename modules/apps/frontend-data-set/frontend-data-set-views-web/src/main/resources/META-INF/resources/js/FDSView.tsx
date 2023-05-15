@@ -50,14 +50,14 @@ const NAVIGATION_BAR_ITEMS = [
 	},
 ];
 
-interface FDSViewSectionInterface {
+interface IFDSViewSectionInterface {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
 }
 
-interface FDSViewInterface {
+interface IFDSViewInterface {
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -69,7 +69,7 @@ const FDSView = ({
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
-}: FDSViewInterface) => {
+}: IFDSViewInterface) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
 	const [loading, setLoading] = useState(true);
@@ -140,5 +140,5 @@ const FDSView = ({
 	);
 };
 
-export {FDSViewSectionInterface};
+export {IFDSViewSectionInterface as FDSViewSectionInterface};
 export default FDSView;

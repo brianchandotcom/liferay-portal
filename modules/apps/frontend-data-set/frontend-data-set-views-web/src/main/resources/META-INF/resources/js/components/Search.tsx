@@ -16,12 +16,12 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-interface SearchInterface {
+interface ISearchInterface {
 	onSearch: Function;
 	query: string;
 }
 
-const Search = ({onSearch, query}: SearchInterface) => (
+const Search = ({onSearch, query}: ISearchInterface) => (
 	<ClayInput.Group>
 		<ClayInput.GroupItem>
 			<ClayInput

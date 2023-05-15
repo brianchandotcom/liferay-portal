@@ -13,7 +13,7 @@ import com.liferay.gradle.plugins.defaults.internal.LiferayCIPatcherPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayCIPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayProfileDXPPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
-import com.liferay.gradle.plugins.defaults.internal.MavenDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.MavenPublishDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.NodeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.LiferayRelengUtil;
@@ -39,7 +39,7 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 
 		JavaDefaultsPlugin.INSTANCE.apply(project);
 		LiferayBaseDefaultsPlugin.INSTANCE.apply(project);
-		MavenDefaultsPlugin.INSTANCE.apply(project);
+		MavenPublishDefaultsPlugin.INSTANCE.apply(project);
 		NodeDefaultsPlugin.INSTANCE.apply(project);
 
 		String buildProfile = System.getProperty("build.profile");

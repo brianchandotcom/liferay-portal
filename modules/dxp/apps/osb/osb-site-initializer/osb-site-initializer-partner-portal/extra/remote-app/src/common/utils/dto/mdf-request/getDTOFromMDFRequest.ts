@@ -23,7 +23,9 @@ export function getDTOFromMDFRequest(
 		additionalOption: mdfRequest.additionalOption,
 		companyName: mdfRequest.company?.name,
 		currency: mdfRequest.currency,
-		emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
+		emailAddress: mdfRequest.id
+			? mdfRequest.emailAddress
+			: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCode,
 		externalReferenceCodeSF,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.join(
@@ -31,7 +33,9 @@ export function getDTOFromMDFRequest(
 		),
 		liferayBusinessSalesGoalsOther:
 			mdfRequest?.liferayBusinessSalesGoalsOther,
-		liferaysUserIdSF: Number(Liferay.ThemeDisplay.getUserId()),
+		liferaysUserIdSF: mdfRequest.id
+			? mdfRequest.liferaysUserIdSF
+			: Number(Liferay.ThemeDisplay.getUserId()),
 		maxDateActivity: mdfRequest.maxDateActivity,
 		mdfRequestStatus: mdfRequest.mdfRequestStatus,
 		minDateActivity: mdfRequest.minDateActivity,
@@ -39,7 +43,9 @@ export function getDTOFromMDFRequest(
 		overallCampaignName: mdfRequest.overallCampaignName,
 		partnerCountry: mdfRequest.partnerCountry,
 		r_accToMDFReqs_accountEntryId: mdfRequest.company?.id,
-		r_usrToMDFReqs_userId: Number(Liferay.ThemeDisplay.getUserId()),
+		r_usrToMDFReqs_userId: mdfRequest.id
+			? mdfRequest.r_usrToMDFReqs_userId
+			: Number(Liferay.ThemeDisplay.getUserId()),
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.join('; '),
 		targetMarkets: mdfRequest.targetMarkets?.join('; '),
 		totalCostOfExpense: mdfRequest.totalCostOfExpense,

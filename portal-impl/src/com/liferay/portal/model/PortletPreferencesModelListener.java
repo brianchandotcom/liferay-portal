@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 import java.util.Date;
@@ -140,11 +143,21 @@ public class PortletPreferencesModelListener
 					return;
 				}
 
-				layout.setModifiedDate(new Date());
+				if (layout.isDraftLayout()) {
+					ServiceContext serviceContext =
+						ServiceContextThreadLocal.getServiceContext();
 
-				LayoutLocalServiceUtil.updateLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), layout.getTypeSettings());
+					LayoutLocalServiceUtil.updateStatus(
+						serviceContext.getUserId(), layout.getPlid(),
+						WorkflowConstants.STATUS_DRAFT, serviceContext);
+				}
+				else {
+					layout.setModifiedDate(new Date());
+
+					LayoutLocalServiceUtil.updateLayout(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						layout.getLayoutId(), layout.getTypeSettings());
+				}
 			}
 		}
 		catch (Exception exception) {

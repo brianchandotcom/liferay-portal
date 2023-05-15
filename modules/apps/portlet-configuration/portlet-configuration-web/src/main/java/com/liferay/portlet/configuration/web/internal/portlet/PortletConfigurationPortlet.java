@@ -209,11 +209,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			portletLayoutListener.onSetup(
 				portlet.getPortletId(), layout.getPlid());
 		}
-
-		_updateLayoutStatus(
-			themeDisplay.getLayout(),
-			ServiceContextFactory.getInstance(actionRequest),
-			themeDisplay.getUserId());
 	}
 
 	public void editPublicRenderParameters(

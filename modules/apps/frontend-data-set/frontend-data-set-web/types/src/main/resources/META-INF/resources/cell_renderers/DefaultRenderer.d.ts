@@ -12,25 +12,25 @@
  * details.
  */
 
-import DefaultRenderer from './DefaultRenderer';
-import {
-	INTERNAL_CELL_RENDERERS,
-	InternalCellRenderer,
-} from './InternalCellRenderer';
-
-export function getInternalCellRenderer(name: string): InternalCellRenderer {
-	const renderer = INTERNAL_CELL_RENDERERS.find(
-		(renderer) => renderer.name === name
-	);
-
-	if (!renderer) {
-		return {
-			component: DefaultRenderer,
-			label: Liferay.Language.get('default'),
-			name: 'default',
-			type: 'internal',
-		};
-	}
-
-	return renderer;
+import React from 'react';
+interface DefaultRendererOptions {
+	truncate?: boolean;
 }
+declare type DefaultRendererValue =
+	| string
+	| number
+	| boolean
+	| null
+	| undefined
+	| {
+			icon?: string;
+			iconSymbol?: string;
+			label?: string;
+			label_i18n?: string;
+			text?: string;
+	  };
+declare const DefaultRenderer: React.FC<{
+	options: DefaultRendererOptions;
+	value: DefaultRendererValue;
+}>;
+export default DefaultRenderer;

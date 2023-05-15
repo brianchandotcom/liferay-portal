@@ -16,14 +16,6 @@
 		"type": "string"
 	},
 	{
-		"key": "integrationPlatform",
-		"name": "Integration Platform",
-		"name_i18n": {
-			"en-US": "Integration Platform"
-		},
-		"type": "string"
-	},
-	{
 		"key": "govpublicAdminPortal",
 		"name": "Gov/Public Admin Portal",
 		"name_i18n": {
@@ -36,6 +28,14 @@
 		"name": "Headless Platform",
 		"name_i18n": {
 			"en-US": "Headless Platform"
+		},
+		"type": "string"
+	},
+	{
+		"key": "integrationPlatform",
+		"name": "Integration Platform",
+		"name_i18n": {
+			"en-US": "Integration Platform"
 		},
 		"type": "string"
 	},
@@ -56,15 +56,15 @@
 		"type": "string"
 	},
 	{
-		"key": "resellerDistributorPortal",
-		"name": "Reseller/Distributor Portal",
+		"key": "resellerDistributorDealerPortal",
+		"name": "Reseller/Distributor/Dealer Portal",
 		"name_i18n": {
-			"en-US": "Reseller/Distributor Portal"
+			"en-US": "Reseller/Distributor/Dealer Portal"
 		},
 		"type": "string"
 	},
 	{
-		"key": "studnetCampusPortal",
+		"key": "studentCampusPortal",
 		"name": "Student/Campus Portal",
 		"name_i18n": {
 			"en-US": "Student/Campus Portal"
@@ -72,10 +72,10 @@
 		"type": "string"
 	},
 	{
-		"key": "dealerSupplierPortal",
-		"name": "Dealer/Supplier Portal",
+		"key": "vendorSupplierPortal",
+		"name": "Vendor/Supplier Portal",
 		"name_i18n": {
-			"en-US": "Dealer/Supplier Portal"
+			"en-US": "Vendor/Supplier Portal"
 		},
 		"type": "string"
 	}

@@ -85,6 +85,12 @@ definition {
 		Portlet.expandTree();
 	}
 
+	macro openSelectCategory {
+		Click(
+			key_vocabularyName = ${vocabularyName},
+			locator1 = "AssetCategorization#CATEGORY_SELECT");
+	}
+
 	macro removeCategories {
 		for (var categoryName : list ${categoryNameList}) {
 			var key_categoryName = ${categoryName};

@@ -92,12 +92,12 @@ public class EPNManager {
 				continue;
 			}
 
-			sb.append("<div><h4>");
+			sb.append("<div><h2 class=\"h4\">");
 			sb.append(
 				_language.get(
 					locale,
 					"enterprise-product-notification-title[" + key + "]"));
-			sb.append("</h4><div>");
+			sb.append("</h2><div>");
 			sb.append(
 				_language.format(
 					locale, "enterprise-product-notification-body[" + key + "]",

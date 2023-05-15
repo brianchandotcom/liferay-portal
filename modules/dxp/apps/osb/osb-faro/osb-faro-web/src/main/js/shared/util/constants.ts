@@ -12,6 +12,10 @@ export const ENABLE_ACCOUNTS = false;
 
 export const ENABLE_ASSET_CARD = false;
 
+// LRAC-13649 Hide the keywords blocklist screen from Settings>Definitions
+
+export const ENABLE_BLOCKLIST_KEYWORDS = false;
+
 // LRAC-11651 Disable temporarily CSV File
 
 export const ENABLE_CSVFILE = false;

@@ -101,7 +101,7 @@
 
 <tr>
 	<td>VIEW_ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'has-error')]//div[contains(@class,'form-feedback-item') and contains(.,'${key_errorMessage}')]</td>
+	<td>//div[contains(@class,'has-error')]//div[contains(@class,'form-feedback-item') and (text()='${key_errorMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

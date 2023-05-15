@@ -477,7 +477,7 @@ definition {
 				widgetPageName = "Test Page");
 		}
 
-		task ("Change Vanilla Counter portlet name") {
+		task ("And change Vanilla Counter portlet name") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 			Click(
@@ -492,7 +492,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Assert that Vanilla Counter name has been changed in Widget Page Editor") {
+		task ("And assert that Vanilla Counter name has been changed in Widget Page Editor") {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			Click(locator1 = "ControlMenu#ADD");
@@ -512,7 +512,7 @@ definition {
 				locator1 = "ClientExtension#APPLICATION_SEARCH_FIELD_WIDGET_SEARCH_REMOTE_APP");
 		}
 
-		task ("Assert Vanilla Counter continues displayed") {
+		task ("Then assert Vanilla Counter continues displayed") {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");

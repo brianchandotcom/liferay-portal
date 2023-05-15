@@ -135,6 +135,7 @@ exports[`SegmentEditor should render 1`] = `
                   class="btn-group-item"
                 >
                   <button
+                    aria-label="View Members"
                     class="button-root preview-criteria btn btn-outline-borderless btn-sm btn-outline-secondary"
                     data-testid="preview-criteria-button"
                     data-tooltip="true"

@@ -69,6 +69,7 @@ exports[`AttributeFilterSection renders w/ filter 1`] = `
                 </div>
               </button>
               <button
+                aria-label="Close"
                 class="button-root remove-button btn btn-unstyled"
                 type="button"
               >
@@ -92,6 +93,7 @@ exports[`AttributeFilterSection renders w/ filter 1`] = `
           aria-controls="clay-dropdown-menu-3"
           aria-expanded="false"
           aria-haspopup="true"
+          aria-label="Add"
           class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
           type="button"
         >

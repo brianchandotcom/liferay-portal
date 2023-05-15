@@ -166,6 +166,7 @@ exports[`Event Analysis Edit should render 1`] = `
                         assetClicked
                       </button>
                       <button
+                        aria-label="Close"
                         class="button-root remove-button btn btn-unstyled"
                         type="button"
                       >
@@ -249,6 +250,7 @@ exports[`Event Analysis Edit should render 1`] = `
                           </div>
                         </button>
                         <button
+                          aria-label="Close"
                           class="button-root remove-button btn btn-unstyled"
                           type="button"
                         >
@@ -316,6 +318,7 @@ exports[`Event Analysis Edit should render 1`] = `
                           </div>
                         </button>
                         <button
+                          aria-label="Close"
                           class="button-root remove-button btn btn-unstyled"
                           type="button"
                         >
@@ -339,6 +342,7 @@ exports[`Event Analysis Edit should render 1`] = `
                     aria-controls="clay-dropdown-menu-4"
                     aria-expanded="false"
                     aria-haspopup="true"
+                    aria-label="Add"
                     class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
                     type="button"
                   >
@@ -407,6 +411,7 @@ exports[`Event Analysis Edit should render 1`] = `
                           </div>
                         </button>
                         <button
+                          aria-label="Close"
                           class="button-root remove-button btn btn-unstyled"
                           type="button"
                         >
@@ -430,6 +435,7 @@ exports[`Event Analysis Edit should render 1`] = `
                     aria-controls="clay-dropdown-menu-6"
                     aria-expanded="false"
                     aria-haspopup="true"
+                    aria-label="Add"
                     class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
                     type="button"
                   >

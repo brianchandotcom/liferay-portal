@@ -26,6 +26,7 @@ exports[`Event Analysis Builder render 1`] = `
             aria-controls="clay-dropdown-menu-1"
             aria-expanded="false"
             aria-haspopup="true"
+            aria-label="Add"
             class="dropdown-toggle button-root add-event-button btn btn-sm btn-primary"
             type="button"
           >
@@ -95,6 +96,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
                 Article Views
               </button>
               <button
+                aria-label="Close"
                 class="button-root remove-button btn btn-unstyled"
                 type="button"
               >
@@ -133,6 +135,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
             aria-controls="clay-dropdown-menu-3"
             aria-expanded="false"
             aria-haspopup="true"
+            aria-label="Add"
             class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >
@@ -169,6 +172,7 @@ exports[`Event Analysis Builder render with filters & breakdowns 1`] = `
             aria-controls="clay-dropdown-menu-4"
             aria-expanded="false"
             aria-haspopup="true"
+            aria-label="Add"
             class="dropdown-toggle button-root add-attribute btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >

@@ -41,6 +41,7 @@ exports[`AttributeFilterChip render 1`] = `
           </div>
         </button>
         <button
+          aria-label="Close"
           class="button-root remove-button btn btn-unstyled"
           type="button"
         >

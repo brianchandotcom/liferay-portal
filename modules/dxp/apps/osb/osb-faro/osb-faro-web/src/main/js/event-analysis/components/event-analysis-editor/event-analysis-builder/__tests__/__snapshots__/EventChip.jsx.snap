@@ -15,6 +15,7 @@ exports[`EventChip render 1`] = `
         View Article
       </button>
       <button
+        aria-label="Close"
         class="button-root remove-button btn btn-unstyled"
         type="button"
       >

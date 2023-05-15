@@ -22,6 +22,7 @@ exports[`DistributionCard Tabs renders 1`] = `
             >
               Tab 1
               <button
+                aria-label="Close"
                 class="button-root remove-tab btn btn-sm btn-unstyled"
                 type="button"
               >
@@ -40,6 +41,7 @@ exports[`DistributionCard Tabs renders 1`] = `
       </div>
     </div>
     <button
+      aria-label="Add"
       class="button-root add-tab btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
       type="button"
     >

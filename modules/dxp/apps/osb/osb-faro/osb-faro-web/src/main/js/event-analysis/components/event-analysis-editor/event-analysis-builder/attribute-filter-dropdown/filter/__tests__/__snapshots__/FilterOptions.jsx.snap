@@ -30,6 +30,7 @@ exports[`FilterOptions should render 1`] = `
         >
           Filed Ticket
           <button
+            aria-label="Edit"
             class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             type="button"
           >

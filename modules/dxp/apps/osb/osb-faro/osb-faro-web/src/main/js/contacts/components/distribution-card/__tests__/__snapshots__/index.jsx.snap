@@ -24,6 +24,7 @@ exports[`DistributionCard renders /w AddPropertyForm 1`] = `
           </div>
         </div>
         <button
+          aria-label="Add"
           class="button-root add-tab active btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
           type="button"
         >
@@ -192,6 +193,7 @@ exports[`DistributionCard renders 1`] = `
                 >
                   Streets
                   <button
+                    aria-label="Close"
                     class="button-root remove-tab btn btn-sm btn-unstyled"
                     type="button"
                   >
@@ -210,6 +212,7 @@ exports[`DistributionCard renders 1`] = `
           </div>
         </div>
         <button
+          aria-label="Add"
           class="button-root add-tab btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
           type="button"
         >
@@ -279,6 +282,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
                 >
                   Streets
                   <button
+                    aria-label="Close"
                     class="button-root remove-tab btn btn-sm btn-unstyled"
                     type="button"
                   >
@@ -297,6 +301,7 @@ exports[`DistributionCard renders empty state via props with noResultsRenderer 1
           </div>
         </div>
         <button
+          aria-label="Add"
           class="button-root add-tab btn btn-monospaced btn-outline-borderless btn-sm btn-outline-secondary"
           type="button"
         >

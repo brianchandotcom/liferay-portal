@@ -73,6 +73,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
                 class="input-group-inset-item input-group-inset-item-after"
               >
                 <button
+                  aria-label="Search"
                   class="button-root btn btn-unstyled"
                   type="button"
                 >
@@ -345,6 +346,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
                 class="input-group-inset-item input-group-inset-item-after"
               >
                 <button
+                  aria-label="Search"
                   class="button-root btn btn-unstyled"
                   type="button"
                 >

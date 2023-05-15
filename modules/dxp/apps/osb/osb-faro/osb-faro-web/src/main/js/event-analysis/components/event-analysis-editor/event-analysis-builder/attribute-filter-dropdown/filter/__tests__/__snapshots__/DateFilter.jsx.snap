@@ -86,6 +86,7 @@ exports[`DateFilter should render 1`] = `
                   class="input-group-inset-item input-group-inset-item-after"
                 >
                   <button
+                    aria-label="Choose a date"
                     class="button-root btn btn-unstyled"
                     type="button"
                   >

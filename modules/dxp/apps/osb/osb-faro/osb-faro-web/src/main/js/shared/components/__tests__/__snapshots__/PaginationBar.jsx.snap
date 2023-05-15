@@ -114,6 +114,7 @@ exports[`PaginationBar should render 1`] = `
               aria-controls="clay-dropdown-menu-2"
               aria-expanded="false"
               aria-haspopup="true"
+              aria-label="See more"
               class="dropdown-toggle page-link btn btn-unstyled"
               type="button"
             >
@@ -249,6 +250,7 @@ exports[`PaginationBar should render different deltas 1`] = `
               aria-controls="clay-dropdown-menu-8"
               aria-expanded="false"
               aria-haspopup="true"
+              aria-label="See more"
               class="dropdown-toggle page-link btn btn-unstyled"
               type="button"
             >

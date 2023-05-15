@@ -148,6 +148,7 @@ exports[`InterestTopics should render 1`] = `
                       class="input-group-inset-item input-group-inset-item-after"
                     >
                       <button
+                        aria-label="Search"
                         class="button-root btn btn-unstyled"
                         type="button"
                       >
@@ -272,6 +273,7 @@ exports[`InterestTopics should render 1`] = `
                 >
                   <span>
                     <button
+                      aria-label="Delete"
                       class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
                       type="button"
                     >

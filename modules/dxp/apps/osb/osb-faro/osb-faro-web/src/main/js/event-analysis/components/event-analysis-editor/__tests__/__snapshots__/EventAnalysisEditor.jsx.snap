@@ -29,6 +29,7 @@ exports[`Event Analysis Editor render 1`] = `
               aria-controls="clay-dropdown-menu-1"
               aria-expanded="false"
               aria-haspopup="true"
+              aria-label="Add"
               class="dropdown-toggle button-root add-event-button btn btn-sm btn-primary"
               type="button"
             >

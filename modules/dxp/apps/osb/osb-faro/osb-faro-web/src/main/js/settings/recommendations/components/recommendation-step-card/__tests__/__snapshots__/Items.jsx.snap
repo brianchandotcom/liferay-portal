@@ -90,6 +90,7 @@ exports[`Items should render 1`] = `
                 <span>
                   <span>
                     <button
+                      aria-label="Remove"
                       class="button-root btn btn-outline-borderless btn-outline-secondary"
                       type="button"
                     >

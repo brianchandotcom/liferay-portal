@@ -19,6 +19,7 @@ exports[`FieldPreviewModal should render 1`] = `
           Field Preview "foo"
         </h4>
         <button
+          aria-label="Close"
           class="button-root close btn btn-secondary"
           type="button"
         >

@@ -78,6 +78,7 @@ exports[`Individuals Dashboard Individuals Interest Details renders 1`] = `
                         class="input-group-inset-item input-group-inset-item-after"
                       >
                         <button
+                          aria-label="Search"
                           class="button-root btn btn-unstyled"
                           type="button"
                         >

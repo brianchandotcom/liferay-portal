@@ -183,6 +183,7 @@ exports[`DataTransformation should render 1`] = `
             class="form-group-item add-on form-group-item-shrink"
           >
             <button
+              aria-label="Remove Field"
               class="button-root btn btn-unstyled"
               data-tooltip="true"
               title="Remove Field"

@@ -8,6 +8,7 @@ exports[`EmailReports should render 1`] = `
     Email Reports: 
     Disabled
     <button
+      aria-label="Configure Email Reports"
       class="button-root btn btn-outline-borderless btn-sm btn-outline-unstyled"
       disabled=""
       type="button"

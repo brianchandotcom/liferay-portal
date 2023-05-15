@@ -51,6 +51,7 @@ exports[`SearchCard should render 1`] = `
             />
           </div>
           <button
+            aria-label="Delete"
             class="button-root ml-1 btn btn-outline-borderless btn-outline-secondary"
             type="button"
           >
@@ -64,6 +65,7 @@ exports[`SearchCard should render 1`] = `
             </svg>
           </button>
           <button
+            aria-label="Add"
             class="button-root ml-1 btn btn-outline-borderless btn-outline-secondary"
             type="button"
           >

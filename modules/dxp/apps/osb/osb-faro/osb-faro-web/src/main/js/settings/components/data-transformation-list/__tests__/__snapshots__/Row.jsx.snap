@@ -63,6 +63,7 @@ exports[`Row should display an error state if it is a duplicate target field 1`]
     shrink={true}
   >
     <ClayButton
+      aria-label="Remove Field"
       className="button-root"
       data-tooltip={true}
       displayType="unstyled"
@@ -141,6 +142,7 @@ exports[`Row should render 1`] = `
     shrink={true}
   >
     <ClayButton
+      aria-label="Remove Field"
       className="button-root"
       data-tooltip={true}
       displayType="unstyled"
@@ -225,6 +227,7 @@ exports[`Row should update when receiving a new field: should contain "baz" and 
     shrink={true}
   >
     <ClayButton
+      aria-label="Remove Field"
       className="button-root"
       data-tooltip={true}
       displayType="unstyled"

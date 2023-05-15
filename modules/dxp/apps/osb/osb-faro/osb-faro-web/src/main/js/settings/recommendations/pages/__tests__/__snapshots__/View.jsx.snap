@@ -138,6 +138,7 @@ exports[`View should render 1`] = `
                 class="total-training-urls d-flex align-items-center"
               >
                 <button
+                  aria-label="Watch"
                   class="button-root btn btn-outline-borderless btn-outline-secondary"
                   type="button"
                 >

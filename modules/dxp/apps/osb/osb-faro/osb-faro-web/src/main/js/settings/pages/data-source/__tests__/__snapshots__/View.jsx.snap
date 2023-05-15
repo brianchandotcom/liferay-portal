@@ -893,6 +893,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
                           class="input-group-inset-item input-group-inset-item-after"
                         >
                           <button
+                            aria-label="Watch"
                             class="button-root btn btn-unstyled"
                             disabled=""
                             type="button"

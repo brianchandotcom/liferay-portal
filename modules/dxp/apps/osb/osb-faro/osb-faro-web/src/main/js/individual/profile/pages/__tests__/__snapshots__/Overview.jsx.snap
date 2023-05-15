@@ -45,6 +45,7 @@ exports[`IndividualOverview should render 1`] = `
                   class="input-group-inset-item input-group-inset-item-after"
                 >
                   <button
+                    aria-label="Search"
                     class="button-root btn btn-unstyled"
                     type="button"
                   >
@@ -446,6 +447,7 @@ Chrome"
                     aria-controls="clay-dropdown-menu-2"
                     aria-expanded="false"
                     aria-haspopup="true"
+                    aria-label="See more"
                     class="dropdown-toggle page-link btn btn-unstyled"
                     type="button"
                   >
@@ -613,6 +615,7 @@ Chrome"
                 class="input-group-inset-item input-group-inset-item-after"
               >
                 <button
+                  aria-label="Search"
                   class="button-root btn btn-unstyled"
                   type="button"
                 >

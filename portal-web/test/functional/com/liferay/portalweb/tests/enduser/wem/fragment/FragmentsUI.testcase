@@ -205,7 +205,7 @@ definition {
 		task ("Assert the actions order of a draft fragment") {
 			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Change Thumbnail,Discard Draft,Rename,View Usages,Export,Make a Copy,Move,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Change Thumbnail,Discard Draft,Rename,Mark as Cacheable,View Usages,Export,Make a Copy,Move,Delete");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Draft Fragment Example");
 		}
@@ -213,7 +213,7 @@ definition {
 		task ("Assert the actions order of a published fragment") {
 			LexiconEntry.openEntryMenu(rowEntry = "Approved Fragment Example");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Change Thumbnail,Rename,View Usages,Export,Make a Copy,Move,Delete");
+			MenuItem.viewOrder(menuItemList = "Edit,Change Thumbnail,Rename,Mark as Cacheable,View Usages,Export,Make a Copy,Move,Delete");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Approved Fragment Example");
 		}

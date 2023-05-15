@@ -147,7 +147,7 @@
 			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
 				url:
-					'<%= selectAssetDisplayPageDisplayContext.getURLViewInContext() %>',
+					'<%= HtmlUtil.escapeJS(selectAssetDisplayPageDisplayContext.getURLViewInContext()) %>',
 			});
 		});
 	}
@@ -157,7 +157,7 @@
 			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
 				url:
-					'<%= selectAssetDisplayPageDisplayContext.getURLViewInContext() %>',
+					'<%= HtmlUtil.escapeJS(selectAssetDisplayPageDisplayContext.getURLViewInContext()) %>',
 			});
 		});
 	}

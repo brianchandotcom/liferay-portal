@@ -24,150 +24,129 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "change-mdf-listing-pages"
-							},
-							"fragmentConfig": {
-								"channelAccountManager": true,
-								"channelFinanceManager": true,
-								"channelGeneralManager": true,
-								"channelGlobalMarketingManager": true,
-								"channelRegionalMarketingManager": true,
-								"user": false
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
 						},
 						"pageElements": [
 							{
 								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-tabs"
+									},
+									"fragmentConfig": {
+										"iconAlignment": "none",
+										"iconName": "check-circle",
+										"numberOfTabs": 2,
+										"tabActiveBarPosition": "bottom",
+										"tabDirection": "horizontal",
+										"tabStyle": "underline"
+									},
+									"fragmentFields": [
+										{
+											"id": "title1",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/marketing/mdf-requests"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "MDF Request",
+														"ca_ES": "MDF Request",
+														"de_DE": "MDF Request",
+														"en_US": "MDF Request",
+														"es_ES": "MDF Request",
+														"fi_FI": "MDF Request",
+														"fr_FR": "MDF Request",
+														"hu_HU": "MDF Request",
+														"ja_JP": "MDF Request",
+														"nl_NL": "MDF Request",
+														"pt_BR": "MDF Request",
+														"sv_SE": "MDF Request",
+														"zh_CN": "MDF Request"
+													}
+												}
+											}
+										},
+										{
+											"id": "title2",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/marketing/mdf-claims"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "MDF Claim",
+														"ca_ES": "MDF Claim",
+														"de_DE": "MDF Claim",
+														"en_US": "MDF Claim",
+														"es_ES": "MDF Claim",
+														"fi_FI": "MDF Claim",
+														"fr_FR": "MDF Claim",
+														"hu_HU": "MDF Claim",
+														"ja_JP": "MDF Claim",
+														"nl_NL": "MDF Claim",
+														"pt_BR": "MDF Claim",
+														"sv_SE": "MDF Claim",
+														"zh_CN": "MDF Claim"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-tabs"
-											},
-											"fragmentConfig": {
-												"iconAlignment": "none",
-												"iconName": "check-circle",
-												"numberOfTabs": 2,
-												"tabActiveBarPosition": "bottom",
-												"tabDirection": "horizontal",
-												"tabStyle": "underline"
-											},
-											"fragmentFields": [
-												{
-													"id": "title1",
-													"value": {
-														"fragmentLink": {
-															"value": {
-																"href": {
-																	"mapping": {
-																		"itemReference": {
-																			"className": "com.liferay.portal.kernel.model.Layout",
-																			"fields": [
-																				{
-																					"fieldName": "friendlyURL",
-																					"fieldValue": "/marketing/mdf-requests"
-																				},
-																				{
-																					"fieldName": "privatePage",
-																					"fieldValue": "false"
-																				}
-																			]
-																		}
-																	}
-																}
-															}
-														},
-														"text": {
-															"value_i18n": {
-																"ar_SA": "MDF Request",
-																"ca_ES": "MDF Request",
-																"de_DE": "MDF Request",
-																"en_US": "MDF Request",
-																"es_ES": "MDF Request",
-																"fi_FI": "MDF Request",
-																"fr_FR": "MDF Request",
-																"hu_HU": "MDF Request",
-																"ja_JP": "MDF Request",
-																"nl_NL": "MDF Request",
-																"pt_BR": "MDF Request",
-																"sv_SE": "MDF Request",
-																"zh_CN": "MDF Request"
-															}
-														}
-													}
-												},
-												{
-													"id": "title2",
-													"value": {
-														"fragmentLink": {
-															"value": {
-																"href": {
-																	"mapping": {
-																		"itemReference": {
-																			"className": "com.liferay.portal.kernel.model.Layout",
-																			"fields": [
-																				{
-																					"fieldName": "friendlyURL",
-																					"fieldValue": "/marketing/mdf-claims"
-																				},
-																				{
-																					"fieldName": "privatePage",
-																					"fieldValue": "false"
-																				}
-																			]
-																		}
-																	}
-																}
-															}
-														},
-														"text": {
-															"value_i18n": {
-																"ar_SA": "MDF Claim",
-																"ca_ES": "MDF Claim",
-																"de_DE": "MDF Claim",
-																"en_US": "MDF Claim",
-																"es_ES": "MDF Claim",
-																"fi_FI": "MDF Claim",
-																"fr_FR": "MDF Claim",
-																"hu_HU": "MDF Claim",
-																"ja_JP": "MDF Claim",
-																"nl_NL": "MDF Claim",
-																"pt_BR": "MDF Claim",
-																"sv_SE": "MDF Claim",
-																"zh_CN": "MDF Claim"
-															}
-														}
-													}
-												}
-											],
-											"indexed": true
+											"fragmentDropZoneId": "1"
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentDropZoneId": "1"
-												},
-												"type": "FragmentDropZone"
-											},
-											{
-												"definition": {
-													"fragmentDropZoneId": "2"
-												},
-												"type": "FragmentDropZone"
-											}
-										],
-										"type": "Fragment"
+										"type": "FragmentDropZone"
+									},
+									{
+										"definition": {
+											"fragmentDropZoneId": "2"
+										},
+										"type": "FragmentDropZone"
 									}
 								],
-								"type": "FragmentDropZone"
+								"type": "Fragment"
 							}
 						],
-						"type": "Fragment"
+						"type": "FragmentDropZone"
 					},
 					{
 						"definition": {

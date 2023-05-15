@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration;
-import com.liferay.portal.security.content.security.policy.constants.ContentSecurityPolicyConstants;
+import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
+import com.liferay.portal.security.content.security.policy.internal.constants.ContentSecurityPolicyConstants;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.Filter;

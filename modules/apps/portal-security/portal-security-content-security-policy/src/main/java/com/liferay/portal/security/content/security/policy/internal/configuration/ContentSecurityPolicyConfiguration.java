@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.content.security.policy.configuration;
+package com.liferay.portal.security.content.security.policy.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration",
+	id = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration",
 	localization = "content/Language",
 	name = "content-security-policy-configuration-name"
 )

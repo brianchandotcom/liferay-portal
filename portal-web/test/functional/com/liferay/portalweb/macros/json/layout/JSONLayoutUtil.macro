@@ -154,6 +154,9 @@ definition {
 		else if (${widgetName} == "Microblogs Status Update") {
 			var portletId = "com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet";
 		}
+		else if (${widgetName} == "Modified Facet") {
+			var portletId = "com_liferay_portal_search_web_modified_facet_portlet_ModifiedFacetPortlet";
+		}
 		else if (${widgetName} == "Most Viewed Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_MostViewedAssetsPortlet";
 		}
@@ -216,6 +219,9 @@ definition {
 		}
 		else if (${widgetName} == "Sites Directory") {
 			var portletId = "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet";
+		}
+		else if (${widgetName} == "Suggestions") {
+			var portletId = "com_liferay_portal_search_web_suggestions_portlet_SuggestionsPortlet";
 		}
 		else if (${widgetName} == "Tag Facet") {
 			var portletId = "com_liferay_portal_search_web_tag_facet_portlet_TagFacetPortlet";

@@ -527,6 +527,13 @@
   dependencies:
     classnames "^2.2.6"
 
+"@clayui/table@^3.56.0":
+  version "3.56.0"
+  resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.56.0.tgz#aba9f02b0ca87551aca834a4e5fbe06723b60806"
+  integrity sha512-puRgIDVRtUCpo/72OrLVsEASMM/Xf/H2MKnaD2OP3pz7L64rUsFofxao0HirdlTLi5aBkysunrTh75ZkuHfV2A==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/time-picker@^3.67.0":
   version "3.67.0"
   resolved "https://registry.yarnpkg.com/@clayui/time-picker/-/time-picker-3.67.0.tgz#e82f912dc118111cde9708baa2ce8fdcadafd267"

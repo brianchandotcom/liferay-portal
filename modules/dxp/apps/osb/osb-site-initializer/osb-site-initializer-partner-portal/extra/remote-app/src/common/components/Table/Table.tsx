@@ -53,7 +53,7 @@ const Table = <T extends unknown>({
 			{rows.map((row, rowIndex) => (
 				<ClayTable.Row key={rowIndex}>
 					{columns.map((column, colIndex) => {
-						const data = row[column.columnKey as keyof T];
+						const data: any = row[column.columnKey as keyof T];
 
 						return (
 							<ClayTable.Cell

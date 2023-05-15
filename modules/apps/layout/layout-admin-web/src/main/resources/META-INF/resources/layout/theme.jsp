@@ -118,9 +118,9 @@ else {
 
 	const sheetSection = themeContainer.closest('.sheet-section');
 
-	if ('<%= selLayout.getMasterLayoutPlid() > 0 %>') {
 		sheetSection.classList.add('hide');
 		sheetSection.setAttribute('aria-hidden', 'true');
+	if (<%= selLayout.getMasterLayoutPlid() > 0 %>) {
 	}
 
 	if (regularInheritLookAndFeel) {

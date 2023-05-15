@@ -159,12 +159,27 @@ definition {
 	}
 
 	@description = "LPS-183946. Confirm that the default value cannot be different from some of the pagination items"
-	@ignore = "true"
 	@priority = 4
 	test DefaultValueCannotDivergeFromPaginationItems {
+		task ("And the user fills the pagination items field") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
+		}
 
-		// TODO LPS-183946 DefaultValueCannotDivergeFromPaginationItems pending implementation
+		task ("And fills the default value field with a different number of one of the numbers written in the Pagination items field") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 4);
 
+			FrontendDataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Assert Save button is disabled") {
+			PRMMDFRequest.viewDisabledButton(buttonName = "Save");
+		}
+
+		task ("Then an error message appears") {
+			AssertElementPresent(
+				key_errorMessage = "The default value must exist in the list of items per page.",
+				locator1 = "FrontendDataSetAdmin#VIEW_ERROR_MESSAGE");
+		}
 	}
 
 	@description = "LPS-183940. Confirm that error appears when pagination item is blank"

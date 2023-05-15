@@ -36,7 +36,7 @@ gradleTest {
 installGradleTestSmokeSample100 {
 	dir = "src/gradleTest/smoke/dependencies/sample-100"
 	startParameter.systemPropertiesArgs = ["maven.repo.local": userMavenRepoLocalDir.absolutePath]
-	tasks = ["install"]
+	tasks = ["publishToMavenLocal"]
 }
 
 pluginBundle {

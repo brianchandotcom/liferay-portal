@@ -25,7 +25,7 @@ type SetAppFlowListStateProps = {
 };
 
 export function AppCreationFlow() {
-	const [{priceModel}] = useAppContext();
+	const [{priceModel, appProductId, appERC}] = useAppContext();
 	const [appFlowListItems, setAppFlowListItems] =
 		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
@@ -354,6 +354,8 @@ export function AppCreationFlow() {
 
 				{currentFlow === 'submit' && (
 					<ReviewAndSubmitAppPage
+						productERC={appERC}
+						productId={appProductId}
 						onClickBack={() => {
 							setAppFlowListState({
 								checkedItems: [

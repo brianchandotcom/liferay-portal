@@ -260,19 +260,16 @@ interface PostCheckoutCartResponse extends PostCartResponse {
 	cartItems: CartItem[];
 }
 
-type Product = {
+interface Product {
 	active: boolean;
-	categories: {
-		externalReferenceCode: string;
-		id: number;
-		name: string;
-		vocabulary: string;
-	}[];
+	attachments: ProductAttachment[];
+	categories: ProductCategories[];
 	catalogId: number;
 	description: {[key: string]: string};
 	name: {[key: string]: string};
 	externalReferenceCode: string;
 	id: number;
+	images: ProductImages[];
 	productId: number;
 	productStatus: number;
 	productType: string;
@@ -284,7 +281,25 @@ type Product = {
 	};
 	thumbnail: string;
 	modifiedDate: string;
+}
+
+interface ProductAttachment {
+	customFields?: CustomField[];
+	title: {[key: string]: string};
+	src: string;
+	priority: number;
+	id: number;
+	externalReferenceCode: string;
+}
+
+type ProductCategories = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	vocabulary: string;
 };
+
+interface ProductImages extends ProductAttachment {}
 
 type ProductOptionItem = {
 	id: number;

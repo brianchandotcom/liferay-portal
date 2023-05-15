@@ -12,7 +12,7 @@ type Quantity = {
 };
 
 interface LicensePriceChildren {
-	currency: Currency;
+	currency: string;
 	quantity: Quantity;
 	value: string;
 }
@@ -48,7 +48,7 @@ export function LicensePriceChildren({
 				</div>
 
 				<span className="license-currency-country-abbreviation">
-					{currency.name}
+					{currency}
 				</span>
 
 				<span className="license-currency-value">{value}</span>

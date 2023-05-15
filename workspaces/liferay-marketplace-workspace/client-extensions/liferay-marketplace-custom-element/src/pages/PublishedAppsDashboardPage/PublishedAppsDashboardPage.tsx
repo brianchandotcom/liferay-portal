@@ -120,7 +120,6 @@ export function PublishedAppsDashboardPage() {
 	const [accounts, setAccounts] = useState<Account[]>(initialAccountsState);
 	const [catalogId, setCatalogId] = useState<number>();
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
-	const [apps, setApps] = useState<AppProps[]>(Array<AppProps>());
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
 	const [showDashboardNavigation, setShowDashboardNavigation] =
 		useState(true);
@@ -130,6 +129,7 @@ export function PublishedAppsDashboardPage() {
 	const [page, setPage] = useState(1);
 	const [publishedAppTable, setPublishedAppTable] =
 		useState<PublishedAppTable>({items: [], pageSize: 7, totalCount: 1});
+	const [appsTotalCount, setAppTotalCount] = useState<number>(0);
 	const [selectedNavigationItem, setSelectedNavigationItem] =
 		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
@@ -288,13 +288,24 @@ export function PublishedAppsDashboardPage() {
 						}
 					});
 
-					setApps(newAppList);
-
 					const commerceAccountResponse =
 						await getAccountInfoFromCommerce(selectedAccount.id);
 
 					setCommerceAccount(commerceAccountResponse);
 
+					const newDashboardNavigationItems = dashboardNavigationItems.map(navigationItems => {
+						if (navigationItems.itemName === 'apps') {
+							return {
+								...navigationItems,
+								items: newAppList.slice(0,4),
+							};
+						}
+
+						return navigationItems;
+					})
+
+					setDashboardNavigationItems(newDashboardNavigationItems);
+					setAppTotalCount(newAppList.length);
 					setPublishedAppTable({
 						items: newAppList.slice(
 							publishedAppTable.pageSize * (page - 1),
@@ -308,27 +319,6 @@ export function PublishedAppsDashboardPage() {
 			}
 		})();
 	}, [page, publishedAppTable.pageSize, selectedAccount]);
-
-	useEffect(() => {
-		(() => {
-			const currentAppNavigationItem = dashboardNavigationItems.find(
-				(navigationItem) => navigationItem.itemName === 'apps'
-			) as DashboardListItems;
-
-			const newAppNavigationItem = {
-				...currentAppNavigationItem,
-				items: apps.slice(0, 4),
-			};
-
-			setDashboardNavigationItems([
-				newAppNavigationItem,
-				...dashboardNavigationItems.filter(
-					(navigationItem) => navigationItem.itemName !== 'apps'
-				),
-			]);
-		})();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [apps]);
 
 	useEffect(() => {
 		const clickedNavigationItem =
@@ -448,7 +438,7 @@ export function PublishedAppsDashboardPage() {
 		<div className="published-apps-dashboard-page-container">
 			{showDashboardNavigation && (
 				<DashboardNavigation
-					accountAppsNumber={apps.length.toString()}
+					accountAppsNumber={appsTotalCount}
 					accountIcon={showAccountImage(commerceAccount?.logoURL)}
 					accounts={accounts}
 					currentAccount={selectedAccount}
@@ -560,7 +550,7 @@ export function PublishedAppsDashboardPage() {
 					dashboardNavigationItems={dashboardNavigationItems}
 					selectedAccount={selectedAccount}
 					setDashboardNavigationItems={setDashboardNavigationItems}
-					totalApps={apps.length}
+					totalApps={appsTotalCount}
 					totalMembers={members.length}
 				/>
 			)}

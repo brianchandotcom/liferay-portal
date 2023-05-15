@@ -16,7 +16,7 @@ export interface DashboardListItems {
 }
 
 interface DashboardNavigationProps {
-	accountAppsNumber: string;
+	accountAppsNumber: number;
 	accountIcon: string;
 	accounts: Account[];
 	currentAccount: Account;

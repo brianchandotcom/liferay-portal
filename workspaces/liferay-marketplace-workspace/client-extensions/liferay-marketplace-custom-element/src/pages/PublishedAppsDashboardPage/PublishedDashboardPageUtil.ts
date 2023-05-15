@@ -7,8 +7,6 @@ import businessIcon from '../../assets/icons/business_center_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
 
-export const appList: AppProps[] = [];
-
 export type AccountBriefProps = {
 	externalReferenceCode: string;
 	id: number;
@@ -33,7 +31,7 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemName: 'apps',
 		itemSelected: true,
 		itemTitle: 'Apps',
-		items: appList,
+		items: [] as AppProps[],
 	},
 	{
 		itemIcon: solutionsIcon,

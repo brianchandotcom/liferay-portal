@@ -167,6 +167,19 @@ export default async function submitForm(
 			return;
 		}
 
+		if (values.mdfRequestStatus.key === Status.DRAFT.key) {
+			Liferay.Util.navigate(
+				`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
+			);
+
+			Liferay.Util.openToast({
+				message: 'MDF Request was successfully saved as draft.',
+				type: 'success',
+			});
+
+			return;
+		}
+
 		Liferay.Util.openToast({
 			message: 'MDF Request was successfully submitted.',
 			type: 'success',

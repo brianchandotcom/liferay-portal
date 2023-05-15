@@ -258,6 +258,17 @@ export default async function submitForm(
 			return;
 		}
 
+		if (submitValues.mdfClaimStatus.key === Status.DRAFT.key) {
+			Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
+
+			Liferay.Util.openToast({
+				message: 'MDF Claim was successfully saved as draft.',
+				type: 'success',
+			});
+
+			return;
+		}
+
 		Liferay.Util.openToast({
 			message: 'MDF Claim was successfully submitted.',
 			type: 'success',

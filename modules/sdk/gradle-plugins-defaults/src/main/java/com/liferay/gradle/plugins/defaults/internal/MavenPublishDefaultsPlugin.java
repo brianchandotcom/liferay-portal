@@ -19,8 +19,8 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 
 /**
  * @author Andrea Di Giorgi
@@ -35,7 +35,7 @@ public class MavenPublishDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, MavenPublishPlugin mavenPublishPlugin) {
 
-		_configureTaskUploadArchives(project);
+		_configureTaskPublish(project);
 	}
 
 	@Override
@@ -117,11 +117,11 @@ public class MavenPublishDefaultsPlugin
 	private MavenPublishDefaultsPlugin() {
 	}
 
-	private void _configureTaskUploadArchives(Project project) {
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+	private void _configureTaskPublish(Project project) {
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
-		uploadArchivesTask.doFirst(failReleaseOnWrongBranchAction);
+		publishTask.doFirst(failReleaseOnWrongBranchAction);
 	}
 
 }

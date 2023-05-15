@@ -20,13 +20,9 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.ant.AntTarget;
 
 /**
@@ -58,10 +54,6 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 		_applyPlugins(project);
 
-		// GRADLE-2427
-
-		_addTaskInstall(project);
-
 		_applyConfigScripts(project);
 
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
@@ -71,8 +63,8 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.excludeTasksWithProperty(
 			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
-			true, MavenPlugin.INSTALL_TASK_NAME,
-			BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+			true, MavenPublishPlugin.PUBLISH_LOCAL_LIFECYCLE_TASK_NAME,
+			PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -83,10 +75,10 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 						project);
 
 					// setProjectSnapshotVersion must be called before
-					// configureTaskUploadArchives, because the latter one needs
+					// configureTaskPublish, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskUploadArchives(project, updateVersionTask);
+					_configureTaskPublish(project, updateVersionTask);
 				}
 
 			});
@@ -130,21 +122,6 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 			});
 
 		return copyIvyDependenciesTask;
-	}
-
-	private Upload _addTaskInstall(Project project) {
-		Upload upload = GradleUtil.addTask(
-			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class);
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
-
-		upload.setConfiguration(configuration);
-		upload.setDescription(
-			"Installs the '" + configuration.getName() +
-				"' artifacts into the local Maven repository.");
-
-		return upload;
 	}
 
 	@SuppressWarnings("serial")
@@ -192,17 +169,17 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(GradleUtil.getProjectGroup(project, _GROUP));
 	}
 
-	private void _configureTaskUploadArchives(
+	private void _configureTaskPublish(
 		Project project, Task updatePluginVersionTask) {
 
 		if (GradlePluginsDefaultsUtil.isSnapshot(project)) {
 			return;
 		}
 
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
-		uploadArchivesTask.finalizedBy(updatePluginVersionTask);
+		publishTask.finalizedBy(updatePluginVersionTask);
 	}
 
 	private static final String _GROUP = "com.liferay.plugins";

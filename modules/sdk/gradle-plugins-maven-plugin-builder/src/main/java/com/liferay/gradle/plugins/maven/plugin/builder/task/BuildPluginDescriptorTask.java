@@ -56,7 +56,6 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedDependency;
-import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
@@ -85,10 +84,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public BuildPluginDescriptorTask() {
 		_configurationScopeMappings.put(
-			JavaPlugin.API_CONFIGURATION_NAME,
-			Conf2ScopeMappingContainer.COMPILE);
-		_configurationScopeMappings.put(
-			"provided", Conf2ScopeMappingContainer.PROVIDED);
+			JavaPlugin.API_CONFIGURATION_NAME, "compile");
 
 		_pomRepositories.put(
 			"liferay-public",

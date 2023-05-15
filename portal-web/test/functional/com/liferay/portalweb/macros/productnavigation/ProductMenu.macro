@@ -148,7 +148,7 @@ definition {
 			Button.click(button = "Back to Menu");
 		}
 
-		if (IsTextNotEqual(key_siteName = "", locator1 = "ProductMenu#SITE_NAME", value1 = ${site})) {
+		if (IsElementNotPresent(key_siteName = ${site}, locator1 = "ProductMenu#SITE_NAME")) {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
 

@@ -1333,7 +1333,7 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals(
 			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
 
-		// Object field relationship name and DB type cannot be changed
+		// Object field relationship
 
 		ObjectDefinition relatedObjectDefinition =
 			ObjectDefinitionTestUtil.addObjectDefinition(
@@ -1353,6 +1353,33 @@ public class ObjectFieldLocalServiceTest {
 				relatedObjectDefinition.getObjectDefinitionId(),
 				"r_relationship_" + objectDefinition.getPKObjectFieldName());
 
+		long relationshipObjectFieldId =
+			relationshipObjectField.getObjectFieldId();
+
+		// Object field relationship dbColumName cannot end with underline
+
+		relationshipObjectField = _updateCustomObjectField(
+			relationshipObjectField,
+			Arrays.asList(
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					relationshipObjectFieldId,
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_DEFINITION_1_SHORT_NAME),
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					relationshipObjectFieldId,
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME)));
+
+		String relationshipObjectFieldDBColumnName =
+			relationshipObjectField.getDBColumnName();
+
+		Assert.assertNotEquals(
+			StringPool.UNDERLINE,
+			relationshipObjectFieldDBColumnName.charAt(
+				relationshipObjectFieldDBColumnName.length() - 1));
+
+		// Object field relationship name and DB type cannot be changed
+
 		_assertFailure(
 			ObjectFieldRelationshipTypeException.class,
 			"Object field relationship name and DB type cannot be changed",
@@ -1364,7 +1391,7 @@ public class ObjectFieldLocalServiceTest {
 				).name(
 					"able"
 				).objectFieldId(
-					relationshipObjectField.getObjectFieldId()
+					relationshipObjectFieldId
 				).objectFieldSettings(
 					Collections.emptyList()
 				).build()));

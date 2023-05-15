@@ -14,15 +14,11 @@
 
 package com.liferay.frontend.token.definition;
 
-import java.util.Collection;
-
 /**
  * @author Iván Zaera
  */
 public interface FrontendTokenDefinitionRegistry {
 
 	public FrontendTokenDefinition getFrontendTokenDefinition(String themeId);
-
-	public Collection<FrontendTokenDefinition> getFrontendTokenDefinitions();
 
 }

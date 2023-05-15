@@ -32,8 +32,6 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -60,11 +58,6 @@ public class FrontendTokenDefinitionRegistryImpl
 	@Override
 	public FrontendTokenDefinition getFrontendTokenDefinition(String themeId) {
 		return themeIdFrontendTokenDefinitionImpls.get(themeId);
-	}
-
-	@Override
-	public Collection<FrontendTokenDefinition> getFrontendTokenDefinitions() {
-		return new ArrayList<>(bundleFrontendTokenDefinitionImpls.values());
 	}
 
 	@Activate

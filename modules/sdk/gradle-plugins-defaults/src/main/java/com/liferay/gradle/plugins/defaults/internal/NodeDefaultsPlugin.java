@@ -133,7 +133,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		final Project project = publishNodeModuleTask.getProject();
 
 		publishNodeModuleTask.doFirst(
-			MavenDefaultsPlugin.failReleaseOnWrongBranchAction);
+			MavenPublishDefaultsPlugin.failReleaseOnWrongBranchAction);
 
 		if (GradlePluginsDefaultsUtil.isPrivateProject(project)) {
 			publishNodeModuleTask.setEnabled(false);

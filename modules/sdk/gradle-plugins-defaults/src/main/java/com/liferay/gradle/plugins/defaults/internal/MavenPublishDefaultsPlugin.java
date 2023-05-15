@@ -20,25 +20,27 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
+public class MavenPublishDefaultsPlugin
+	extends BaseDefaultsPlugin<MavenPublishPlugin> {
 
-	public static final Plugin<Project> INSTANCE = new MavenDefaultsPlugin();
+	public static final Plugin<Project> INSTANCE =
+		new MavenPublishDefaultsPlugin();
 
 	@Override
 	protected void applyPluginDefaults(
-		Project project, MavenPlugin mavenPlugin) {
+		Project project, MavenPublishPlugin mavenPublishPlugin) {
 
 		_configureTaskUploadArchives(project);
 	}
 
 	@Override
-	protected Class<MavenPlugin> getPluginClass() {
-		return MavenPlugin.class;
+	protected Class<MavenPublishPlugin> getPluginClass() {
+		return MavenPublishPlugin.class;
 	}
 
 	protected static final Action<Task> failReleaseOnWrongBranchAction =
@@ -112,7 +114,7 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 
 		};
 
-	private MavenDefaultsPlugin() {
+	private MavenPublishDefaultsPlugin() {
 	}
 
 	private void _configureTaskUploadArchives(Project project) {

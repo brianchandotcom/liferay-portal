@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Price List Service
 Bundle-SymbolicName: com.liferay.commerce.price.list.service
 Bundle-Version: 4.0.61
-Liferay-Require-SchemaVersion: 2.6.1
+Liferay-Require-SchemaVersion: 2.7.0
 Liferay-Service: true
 -dsannotations-options: inherit

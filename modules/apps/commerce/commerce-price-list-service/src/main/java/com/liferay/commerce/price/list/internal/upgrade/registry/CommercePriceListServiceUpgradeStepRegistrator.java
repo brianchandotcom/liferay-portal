@@ -149,6 +149,11 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register("2.6.0", "2.6.1", new DummyUpgradeStep());
 
+		registry.register(
+			"2.6.1", "2.7.0",
+			new com.liferay.commerce.price.list.internal.upgrade.v2_7_0.
+				CommercePriceEntryUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price list upgrade step registrator finished");
 		}

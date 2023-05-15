@@ -90,7 +90,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Form Elements");
 		}
 
-		task ("And Given top most treeview checkbox state is indeterminate") {
+		task ("And top most treeview checkbox state is indeterminate") {
 			AssertAttributeValue(
 				attribute1 = "indeterminate",
 				key_label = "Liferay DXP",

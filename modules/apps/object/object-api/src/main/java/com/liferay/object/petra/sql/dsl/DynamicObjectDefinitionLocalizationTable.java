@@ -70,6 +70,19 @@ public class DynamicObjectDefinitionLocalizationTable
 				DataType.getSQLType(objectField.getDBType()),
 				Column.FLAG_DEFAULT);
 		}
+
+		_objectFieldColumns = ListUtil.filter(
+			new ArrayList<>(getColumns()),
+			column -> {
+				if (column.equals(getForeignKeyColumn()) ||
+					column.equals(getLanguageIdColumn()) ||
+					column.equals(getPrimaryKeyColumn())) {
+
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	public String getCreateTableSQL() {
@@ -129,18 +142,7 @@ public class DynamicObjectDefinitionLocalizationTable
 	public List<Column<DynamicObjectDefinitionLocalizationTable, ?>>
 		getObjectFieldColumns() {
 
-		return ListUtil.filter(
-			new ArrayList<>(getColumns()),
-			column -> {
-				if (column.equals(getForeignKeyColumn()) ||
-					column.equals(getLanguageIdColumn()) ||
-					column.equals(getPrimaryKeyColumn())) {
-
-					return false;
-				}
-
-				return true;
-			});
+		return _objectFieldColumns;
 	}
 
 	public List<ObjectField> getObjectFields() {
@@ -166,6 +168,8 @@ public class DynamicObjectDefinitionLocalizationTable
 
 	private final String _foreignKeyColumnName;
 	private final ObjectDefinition _objectDefinition;
+	private final List<Column<DynamicObjectDefinitionLocalizationTable, ?>>
+		_objectFieldColumns;
 	private final List<ObjectField> _objectFields;
 	private final String _primaryKeyColumnName;
 	private final String _tableName;

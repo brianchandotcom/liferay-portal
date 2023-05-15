@@ -455,12 +455,11 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 
 			_dropTable(objectDefinition.getDBTableName());
+			_dropTable(objectDefinition.getExtensionDBTableName());
 
 			if (objectDefinition.isEnableLocalization()) {
 				_dropTable(objectDefinition.getLocalizationDBTableName());
 			}
-
-			_dropTable(objectDefinition.getExtensionDBTableName());
 
 			undeployObjectDefinition(objectDefinition);
 

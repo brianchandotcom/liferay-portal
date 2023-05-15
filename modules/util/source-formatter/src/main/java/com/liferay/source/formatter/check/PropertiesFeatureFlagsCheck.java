@@ -63,7 +63,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			_allFileNames, new String[] {"**/test/**"},
 			new String[] {
 				"**/bnd.bnd", "**/*.java", "**/*.js", "**/*.jsp", "**/*.jspf",
-				"**/*.ts", "**/*.tsx"
+				"**/*.jsx", "**/*.ts", "**/*.tsx"
 			},
 			getSourceFormatterExcludes(), true);
 

@@ -5720,7 +5720,7 @@ information. Make sure to commit in all format-javadoc results.
 						<dirset
 							dir="modules/sdk"
 							excludes="${gradle.plugins.test.excludes}"
-							includes="gradle-plugins*"
+							includes="${gradle.plugins.test.includes}"
 						/>
 					</path>
 					<sequential>

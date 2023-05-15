@@ -247,6 +247,7 @@
 
 		<!-- Temporary suppressions for project-templates (Chema) -->
 
+		<suppress checks="GradleDependencyArtifactsCheck" files="modules/sdk/project-templates/project-templates-workspace/src/main/resources/archetype-resources/settings\.gradle" />
 		<suppress checks="JSONDeprecatedPackagesCheck" files="modules/sdk/project-templates/project-templates-form-field/src/main/resources/archetype-resources/package\.json" />
 
 		<!-- Temporary suppressions for frontend build setup (Chema) -->

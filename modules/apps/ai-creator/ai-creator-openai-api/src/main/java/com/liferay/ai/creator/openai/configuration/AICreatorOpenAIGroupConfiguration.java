@@ -35,7 +35,7 @@ public interface AICreatorOpenAIGroupConfiguration {
 		deflt = "true", name = "enable-openai-to-create-content",
 		required = false
 	)
-	public boolean enableOpenAIToCreateContentInYourSites();
+	public boolean enableOpenAIToCreateContent();
 
 	@Meta.AD(deflt = "", name = "api-key", required = false)
 	public String apiKey();

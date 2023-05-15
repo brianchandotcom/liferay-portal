@@ -39,24 +39,24 @@ public enum DataType {
 	STRING("VARCHAR(280)", String.class, "String", Types.VARCHAR);
 
 	public static String getDBType(String name) {
-		DataType dataType = _create(name);
+		DataType dataType = _getDataType(name);
 
 		return dataType._dbType;
 	}
 
 	public static Class<?> getJavaClass(String name) {
-		DataType dataType = _create(name);
+		DataType dataType = _getDataType(name);
 
 		return dataType._javaClass;
 	}
 
 	public static Integer getSQLType(String name) {
-		DataType dataType = _create(name);
+		DataType dataType = _getDataType(name);
 
 		return dataType._sqlType;
 	}
 
-	private static DataType _create(String name) {
+	private static DataType _getDataType(String name) {
 		for (DataType dataType : values()) {
 			if (Objects.equals(dataType._name, name)) {
 				return dataType;

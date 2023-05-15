@@ -6,8 +6,6 @@ import {useCallback, useEffect, useState} from 'react';
 
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
-import {showAccountImage} from '../../utils/util';
-
 import {
 	getAccountAddressesFromCommerce,
 	getAccounts,
@@ -25,6 +23,7 @@ import {
 	postCartByChannelId,
 	postCheckoutCart,
 } from '../../utils/api';
+import {showAccountImage} from '../../utils/util';
 import {AccountSelector} from './AccountSelector';
 
 import './GetAppModal.scss';

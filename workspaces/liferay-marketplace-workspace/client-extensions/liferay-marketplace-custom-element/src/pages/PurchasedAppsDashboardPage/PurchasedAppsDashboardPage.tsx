@@ -1,7 +1,6 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
-import {showAccountImage} from '../../utils/util';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
@@ -9,14 +8,15 @@ import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/Pu
 import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {getCompanyId} from '../../liferay/constants';
 import {
+	getAccountInfoFromCommerce,
 	getAccounts,
 	getChannels,
 	getMyUserAccount,
-	getAccountInfoFromCommerce,
 	getPlacedOrders,
 	getSKUCustomFieldExpandoValue,
 	getUserAccounts,
 } from '../../utils/api';
+import {showAccountImage} from '../../utils/util';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {
 	AccountBriefProps,
@@ -221,8 +221,7 @@ export function PurchasedAppsDashboardPage() {
 						type: placeOrderItem.subscription
 							? 'Subscription'
 							: 'Perpetual',
-						version:
-							Object.keys(version).length === 0 ? '' : version,
+						version: !Object.keys(version).length ? '' : version,
 					};
 				})
 			);
@@ -382,8 +381,8 @@ export function PurchasedAppsDashboardPage() {
 
 			{selectedNavigationItem === 'myApps' && (
 				<DashboardPage
-					buttonMessage="Add Apps"
 					buttonHref="https://marketplace.liferay.com/"
+					buttonMessage="Add Apps"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={appMessages}
 				>

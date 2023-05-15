@@ -1,5 +1,6 @@
 import ClayButton from '@clayui/button';
 import {useState} from 'react';
+
 import {GetAppModal} from '../../components/GetAppModal/GetAppModal';
 
 export default function GetAppPage() {

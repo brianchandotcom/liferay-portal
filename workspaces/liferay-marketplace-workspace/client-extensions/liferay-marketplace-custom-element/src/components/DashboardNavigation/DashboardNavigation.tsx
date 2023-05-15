@@ -2,8 +2,8 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {Dispatch} from 'react';
 
-import {DashboardNavigationList} from './DashboardNavigationList';
 import {showAccountImage} from '../../utils/util';
+import {DashboardNavigationList} from './DashboardNavigationList';
 
 import './DashboardNavigation.scss';
 import {AppProps} from '../DashboardTable/DashboardTable';

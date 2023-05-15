@@ -1,8 +1,6 @@
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
-import {showAccountImage} from '../../utils/util';
-
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
@@ -19,6 +17,7 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
+import {showAccountImage} from '../../utils/util';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {
 	DashboardListItems,

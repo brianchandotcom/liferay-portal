@@ -19,9 +19,9 @@ import {
 	getProductSpecifications,
 	getProductSubscriptionConfiguration,
 } from '../../utils/api';
+import {showAppImage} from '../../utils/util';
 import {CardSection} from './CardSection';
 import {ReviewAndSubmitAppPageUtilProps} from './ReviewAndSubmitAppPageUtil';
-import {showAppImage} from '../../utils/util';
 
 import './ReviewAndSubmitAppPage.scss';
 

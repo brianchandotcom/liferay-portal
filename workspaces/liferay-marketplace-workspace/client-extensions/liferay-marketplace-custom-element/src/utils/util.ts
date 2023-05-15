@@ -1,3 +1,5 @@
+import accountPlaceholder from '../assets/images/account_placeholder.png';
+import appPlaceholder from '../assets/images/app_placeholder.png';
 import {
 	createProductSpecification,
 	getAccountGroup,
@@ -6,9 +8,6 @@ import {
 	getUserAccountsById,
 	updateProductSpecification,
 } from './api';
-
-import accountPlaceholder from '../assets/images/account_placeholder.png';
-import appPlaceholder from '../assets/images/app_placeholder.png';
 
 type FileRequest = {
 	appERC: string;

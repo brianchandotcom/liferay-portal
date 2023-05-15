@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
 
 import './DashboardNavigationListItem.scss';
+import {showAppImage} from '../../utils/util';
 import {AppProps} from '../DashboardTable/DashboardTable';
 import {DashboardListItems} from './DashboardNavigation';
-import {showAppImage} from '../../utils/util';
 interface DashboardNavigationListItem {
 	dashboardNavigationItems: DashboardListItems[];
 	item: AppProps;

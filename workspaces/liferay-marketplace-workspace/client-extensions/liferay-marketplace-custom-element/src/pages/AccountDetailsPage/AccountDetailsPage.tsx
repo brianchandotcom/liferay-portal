@@ -11,9 +11,8 @@ import phoneIcon from '../../assets/icons/phone_icon.svg';
 import userIcon from '../../assets/icons/user_icon.svg';
 import {DetailedCard} from '../../components/DetailedCard/DetailedCard';
 import {getAccountPostalAddressesByAccountId} from '../../utils/api';
-import {showAccountImage} from '../../utils/util';
-
 import {getCustomFieldValue} from '../../utils/customFieldUtil';
+import {showAccountImage} from '../../utils/util';
 import {DashboardListItems} from '../DashBoardPage/DashboardPage';
 
 interface AccountDetailsPageProps {

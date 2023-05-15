@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 
 import {getAccountInfoFromCommerce} from '../../utils/api';
-import {RadioCard} from '../RadioCard/RadioCard';
 import {showAccountImage} from '../../utils/util';
+import {RadioCard} from '../RadioCard/RadioCard';
 
 import './AccountSelector.scss';
 

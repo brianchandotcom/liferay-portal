@@ -7,6 +7,7 @@ import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 
 import './PublisherGatePage.scss';
+
 import ClayLink from '@clayui/link';
 
 export function PublisherGatePage() {

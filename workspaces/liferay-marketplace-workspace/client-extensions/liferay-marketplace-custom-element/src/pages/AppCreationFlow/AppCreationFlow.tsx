@@ -15,9 +15,9 @@ import {CustomizeAppStorefrontPage} from '../StorefrontPage/CustomizeAppStorefro
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
+import {Liferay} from '../../liferay/liferay';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../DefineAppProfilePage/DefineAppProfilePage';
-import {Liferay} from '../../liferay/liferay';
 
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];

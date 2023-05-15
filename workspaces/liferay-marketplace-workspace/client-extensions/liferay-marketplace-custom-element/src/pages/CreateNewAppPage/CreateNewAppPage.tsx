@@ -16,7 +16,7 @@ export function CreateNewAppPage({onClickContinue}: CreateNewAppPageProps) {
 	const queryString = window.location.search;
 
 	const urlParams = new URLSearchParams(queryString);
-	
+
 	const catalogId = urlParams.get('catalogId');
 
 	return (

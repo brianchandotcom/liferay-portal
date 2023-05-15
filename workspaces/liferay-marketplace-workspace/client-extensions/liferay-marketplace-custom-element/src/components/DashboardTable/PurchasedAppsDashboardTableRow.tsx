@@ -5,10 +5,10 @@ import ClayTable from '@clayui/table';
 import './PurchasedAppsDashboardTableRow.scss';
 
 import DropDown from '@clayui/drop-down/lib/DropDown';
-import {showAppImage} from '../../utils/util';
 import classNames from 'classnames';
 
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
+import {showAppImage} from '../../utils/util';
 
 interface PurchasedAppsDashboardTableRowProps {
 	item: PurchasedAppProps;

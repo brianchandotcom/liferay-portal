@@ -2,19 +2,17 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {ReactNode, useState} from 'react';
 
-import {showAccountImage, showAppImage} from '../../utils/util';
-
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Liferay} from '../../liferay/liferay';
-
 import {
 	getAccountInfoFromCommerce,
 	getCart,
 	getCartItems,
 } from '../../utils/api';
+import {showAccountImage, showAppImage} from '../../utils/util';
 
 import './NextStepPage.scss';
 

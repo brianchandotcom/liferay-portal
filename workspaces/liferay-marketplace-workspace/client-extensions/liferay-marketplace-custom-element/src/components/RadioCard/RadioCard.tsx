@@ -86,7 +86,7 @@ export function RadioCard({
 					{small ? (
 						<div className="radio-card-main-info-small">
 							<div className="radio-card-main-info-small-background">
-								<img src={paypal} alt="paypal" />
+								<img alt="paypal" src={paypal} />
 							</div>
 
 							<span className="radio-card-main-info-small-text-small">

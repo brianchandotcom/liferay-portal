@@ -47,7 +47,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 										.PARTNER_ACCOUNT_NAME
 								]
 							}
-							label="Partner Accoount Name"
+							label="Partner Account Name"
 						/>
 					)}
 

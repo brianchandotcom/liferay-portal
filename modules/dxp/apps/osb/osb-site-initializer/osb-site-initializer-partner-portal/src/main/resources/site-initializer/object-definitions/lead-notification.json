@@ -98,14 +98,15 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
+			"businessType": "Picklist",
 			"externalReferenceCode": "af6bff17-da22-0297-6032-e88d35b8274c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Prospect Country Code"
+				"en_US": "Prospect Country"
 			},
-			"name": "prospectCountryCode",
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Countries$]",
+			"name": "prospectCountry",
 			"required": false,
 			"type": "String"
 		},

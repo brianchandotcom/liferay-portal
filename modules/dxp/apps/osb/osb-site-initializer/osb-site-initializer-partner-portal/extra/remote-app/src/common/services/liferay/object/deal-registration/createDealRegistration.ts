@@ -24,6 +24,10 @@ export default async function createDealRegistration(
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
-		getDTOFromDealRegistration(dealRegistration, leadExternalReferenceCode)
+		getDTOFromDealRegistration(
+			apiOption,
+			dealRegistration,
+			leadExternalReferenceCode
+		)
 	);
 }

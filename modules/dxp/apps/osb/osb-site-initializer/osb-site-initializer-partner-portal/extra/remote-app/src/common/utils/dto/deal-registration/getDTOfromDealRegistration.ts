@@ -11,12 +11,14 @@
 
 import DealRegistration from '../../../interfaces/dealRegistration';
 import DealRegistrationDTO from '../../../interfaces/dto/dealRegistrationDTO';
+import {ResourceName} from '../../../services/liferay/object/enum/resourceName';
 
 export function getDTOFromDealRegistration(
+	apiOption: ResourceName,
 	dealRegistration: DealRegistration,
 	leadExternalReferenceCode?: string
 ): DealRegistrationDTO {
-	return {
+	const dealObject: DealRegistrationDTO = {
 		accountExternalReferenceCode:
 			dealRegistration.accountExternalReferenceCode,
 		additionalContactEmailAddress:
@@ -60,4 +62,10 @@ export function getDTOFromDealRegistration(
 		r_accToDealRegs_accountEntryId: dealRegistration.partnerAccount.id,
 		r_actToDealRegs_c_activityId: dealRegistration.mdfActivityAssociated.id,
 	};
+
+	if (apiOption === ResourceName.LEAD_NOTIFICATION) {
+		dealObject.partnerAccountName = dealRegistration.partnerAccount.name;
+	}
+
+	return dealObject;
 }

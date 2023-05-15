@@ -1027,7 +1027,7 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
-		if (PropsValues.ENCRYPTED_OBJECT_FIELD_RESTRICTED) {
+		if (PropsValues.OBJECT_ENCRYPTION_RESTRICTED) {
 			throw new ObjectFieldBusinessTypeException(
 				ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED +
 					" business type is not available");
@@ -1045,9 +1045,8 @@ public class ObjectFieldLocalServiceImpl
 
 		try {
 			new SecretKeySpec(
-				Base64.decode(
-					PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_KEY),
-				PropsValues.ENCRYPTED_OBJECT_FIELD_ENCRYPTION_ALGORITHM);
+				Base64.decode(PropsValues.OBJECT_ENCRYPTION_KEY),
+				PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

@@ -1663,14 +1663,12 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _executeInsertIntoLocalizationTable(
+		Connection connection,
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
 		String insertIntoStatement,
 		Map<String, Map<String, String>> i18nObjectFieldValues, Locale locale,
 		long objectEntryId, List<ObjectField> objectFields) {
-
-		Connection connection = _currentConnection.getConnection(
-			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				insertIntoStatement)) {
@@ -2956,9 +2954,12 @@ public class ObjectEntryLocalServiceImpl
 			_language.getCompanyAvailableLocales(
 				objectDefinition.getCompanyId()));
 
+		Connection connection = _currentConnection.getConnection(
+			objectEntryPersistence.getDataSource());
+
 		for (Locale locale : locales) {
 			_executeInsertIntoLocalizationTable(
-				dynamicObjectDefinitionLocalizationTable,
+				connection, dynamicObjectDefinitionLocalizationTable,
 				insertIntoLocalizationTableStatement, i18nObjectFieldValues,
 				locale, objectEntryId,
 				dynamicObjectDefinitionLocalizationTable.getObjectFields());

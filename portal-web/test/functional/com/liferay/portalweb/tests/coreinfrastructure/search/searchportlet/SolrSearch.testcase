@@ -123,9 +123,13 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Suggestions");
 
-		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
+		Search.openSearchPage();
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -148,17 +152,7 @@ definition {
 
 		Navigator.openURL();
 
-		ContentPages.gotoPageEditor();
-
-		PageEditor.addWidget(
-			portletName = "Language Selector",
-			targetFragmentName = "Container");
-
-		PageEditor.publish();
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "de-DE",
-			textIcon = "deutsch-Deutschland");
+		Search.openSearchPage(locale = "de-DE");
 
 		for (var searchTerm : list "ächten,angreifen,anmarschieren") {
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
@@ -177,15 +171,17 @@ definition {
 	test ModifyPaginationPortalProperties {
 		property custom.properties = "search.container.page.default.delta=2";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		PagesAdmin.addPage(pageName = "Search Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search Page",
+			widgetName = "Search Results");
 
 		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -254,23 +250,23 @@ definition {
 
 	@priority = 4
 	test NavigateToSearchResultsViaURL {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "This is a blog about Potatoes",
 			entryTitle = "Potato Blog");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		PagesAdmin.addPage(pageName = "Search Page");
+		for (var portlet : list "Type Facet,Search Results,Search Bar") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
 
 		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Type Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureSearchBarWidget(
 			keywordsParameterName = "keywordparameter",
@@ -333,17 +329,9 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntry {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Title");
 
@@ -404,31 +392,19 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryCategory {
-		Navigator.openURL();
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-		Category.addCP(
-			categoryName = "Category Name",
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntryWithCategory(
-			categoryName = "Category Name",
+		JSONBlog.addEntry(
+			assetCategoryIds = ${categoryId},
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			vocabularyName = "Vocabulary Name");
-
-		Navigator.openURL();
+			entryTitle = "Blogs Entry Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
 
@@ -462,31 +438,19 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryCategoryQuotes {
-		Navigator.openURL();
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Vocabulary Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
-
-		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-		Category.addCP(
-			categoryName = "Category Name",
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntryWithCategory(
-			categoryName = "Category Name",
+		JSONBlog.addEntry(
+			assetCategoryIds = ${categoryId},
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			vocabularyName = "Vocabulary Name");
-
-		Navigator.openURL();
+			entryTitle = "Blogs Entry Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "\"Category Name\"");
 
@@ -524,17 +488,9 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryQuotes {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Title\"");
 
@@ -630,18 +586,10 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryTag {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntryWithTag(
+		JSONBlog.addEntry(
+			assetTagNames = "tag name",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			tagName = "tag name");
-
-		Navigator.openURL();
+			entryTitle = "Blogs Entry Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "tag name");
 
@@ -675,18 +623,10 @@ definition {
 
 	@priority = 4
 	test SearchBlogsEntryTagQuotes {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntryWithTag(
+		JSONBlog.addEntry(
+			assetTagNames = "tag name",
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			tagName = "tag name");
-
-		Navigator.openURL();
+			entryTitle = "Blogs Entry Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "\"tag name\"");
 
@@ -755,9 +695,14 @@ definition {
 	test SearchContentPagesSmoke {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Site Name");
 
 		PageEditor.addWidget(portletName = "Search Bar");
 
@@ -814,54 +759,34 @@ definition {
 	@description = "This test will set up a search page and search on a newly added site. It will also use different scopes to assert search results for assets from multiple sites"
 	@priority = 4
 	test SearchDifferentScopesViaNewSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Site Name 1");
+		JSONGroup.addGroup(groupName = "Site Name 1");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Guest",
 			title = "Apple");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name 2");
 
-		Site.addBlankCP(siteName = "Site Name 2");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Apple");
+			dmDocumentTitle = "Apple",
+			groupName = "Site Name 2",
+			mimeType = "application/docx",
+			sourceFileName = "Document_1.docx");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name 3");
 
-		Site.addBlankCP(siteName = "Site Name 3");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Apple");
+			entryTitle = "Apple",
+			groupName = "Site Name 3");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name 3",
+			layoutName = "Site 3 Home Page");
 
-		PagesAdmin.addPage(pageName = "Site 3 Home Page");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-3");
 
 		PagesAdmin.addPage(
 			inheritChanges = "disable",
@@ -907,30 +832,18 @@ definition {
 	test SearchDifferentScopesViaSearchWidget {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Potato Document",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_1.docx");
 
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Potato Document");
+		JSONGroup.addGroup(groupName = "Test Site");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "Test Site");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Test Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "This is a blog about Potatoes",
-			entryTitle = "Potato Blog");
+			entryTitle = "Potato Blog",
+			groupName = "Test Site");
 
 		var currentDate = DateUtil.getCurrentYear();
 
@@ -970,20 +883,13 @@ definition {
 
 	@priority = 5
 	test SearchDocumentsAndMediaDocument {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "moon rocks",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentSize = "0k",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "moon rocks");
-
-		Navigator.openURL();
+			groupName = "Guest",
+			mimeType = "text/txt",
+			sourceFileName = "Document_1.txt");
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
 
@@ -1055,26 +961,18 @@ definition {
 	@description = "This is a use case for LPS-81931"
 	@priority = 5
 	test SearchGlobalTemplateSmoke {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry 1 Content",
-			entryTitle = "Blogs Entry 1 Title");
+			entryTitle = "Blogs Entry 1 Title",
+			groupName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Home");
 
-		PagesAdmin.addPage(pageName = "Home");
+		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 		PagesAdmin.addPage(
 			inheritChanges = "disable",
@@ -1117,12 +1015,7 @@ definition {
 	test SearchUser {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1196,12 +1089,7 @@ definition {
 	test SearchUserWildcard {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1307,26 +1195,11 @@ definition {
 
 	@priority = 4
 	test SearchWikiPage {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Wiki Test Page");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoAllPagesPG();
-
-		WikiPage.addPG(
-			pageName = "Wiki Test Page",
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page Title");
-
-		Navigator.openURL();
+			wikiPageName = "Wiki Page Title");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki Page Title");
 
@@ -1373,15 +1246,10 @@ definition {
 
 	@priority = 4
 	test SearchXSSAsset {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = '''<script>alert(123);</script>''',
 			threadSubject = "Thread Subject");
-
-		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Subject");
 

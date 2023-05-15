@@ -1167,18 +1167,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@Override
 				public void execute(Task task) {
 					WorkResult workResult = project.copy(
-						copy -> {
-							copy.from(
+						copySpec -> {
+							copySpec.from(
 								new File(
 									workspaceExtension.getConfigsDir(),
 									"common"),
 								new File(
 									workspaceExtension.getConfigsDir(),
 									workspaceExtension.getEnvironment()));
-							copy.into(workspaceExtension.getHomeDir());
+							copySpec.into(workspaceExtension.getHomeDir());
 
 							_configureCopySpecExpandTomcatVersion(
-								copy, workspaceExtension);
+								copySpec, workspaceExtension);
 						});
 
 					if (workResult.getDidWork()) {

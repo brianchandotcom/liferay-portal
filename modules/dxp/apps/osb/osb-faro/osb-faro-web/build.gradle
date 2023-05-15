@@ -1,6 +1,3 @@
-import com.liferay.gradle.util.OSDetector
-import com.liferay.gradle.util.StringUtil
-
 afterEvaluate {
 	Task configJSModulesTask = tasks.findByName("configJSModules")
 
@@ -60,15 +57,7 @@ generateJSPJava {
 	enabled = false
 }
 
-task yarnInstallTask (name: "yarnInstall", type: Exec)
-
-packageRunFormat {
-	dependsOn yarnInstallTask
-}
-
 packageRunWebpack {
-	dependsOn yarnInstallTask
-
 	if (project.hasProperty("faroEnvironmentName")) {
 		environment "FARO_ENVIRONMENT_NAME", faroEnvironmentName
 	}
@@ -84,23 +73,4 @@ packageRunWebpack {
 
 processResources {
 	dependsOn packageRunWebpack
-}
-
-yarnInstallTask {
-	if (OSDetector.windows) {
-		executable "cmd.exe"
-
-		args "/c"
-		args new File(node.nodeDir, "node.exe")
-		args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-	}
-	else {
-		executable new File(node.nodeDir, "bin/node")
-
-		args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-	}
-
-	args "install"
-	dependsOn downloadNode
-	workingDir projectDir
 }

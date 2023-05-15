@@ -565,7 +565,7 @@ const Fields = ({
 		}
 	};
 
-	const handleDelete = ({item}: {item: FDSField}) => {
+	const handleDelete = ({item}: {item: IFDSField}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-this-field?-fragments-using-it-will-be-affected'
@@ -611,7 +611,7 @@ const Fields = ({
 
 						setFDSFields(
 							fdsFields?.filter(
-								(fdsField: FDSField) => fdsField.id !== item.id
+								(fdsField: IFDSField) => fdsField.id !== item.id
 							) || []
 						);
 					},

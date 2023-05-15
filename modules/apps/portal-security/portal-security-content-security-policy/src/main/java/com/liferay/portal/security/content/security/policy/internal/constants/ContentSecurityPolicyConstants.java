@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.content.security.policy.constants;
+package com.liferay.portal.security.content.security.policy.internal.constants;
 
 /**
  * @author Olivér Kecskeméty

@@ -26,5 +26,5 @@ gradleTest {
 	dependsOn jar
 
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(jar.destinationDir)}"
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }

@@ -10,7 +10,7 @@ dependencies {
 	compileInclude group: "org.joda", name: "joda-convert", version: "2.2.1"
 	compileInclude group: "org.springframework", name: "spring-beans", version: "5.2.22.RELEASE"
 	compileInclude group: "org.springframework", name: "spring-context", version: "5.2.22.RELEASE"
-	compileInclude group: "org.springframework", name: "spring-core", version: "5.2.22.RELEASE"
+	compileInclude group: "org.springframework", name: "spring-core", version: "5.2.24.RELEASE"
 	compileInclude group: "org.springframework", name: "spring-web", version: "5.2.22.RELEASE"
 	compileInclude group: "org.springframework.boot", name: "spring-boot", version: "2.4.13"
 	compileInclude group: "org.springframework.hateoas", name: "spring-hateoas", version: "1.4.1"

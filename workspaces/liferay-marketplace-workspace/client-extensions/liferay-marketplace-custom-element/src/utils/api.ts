@@ -447,17 +447,25 @@ export async function getOrderTypes() {
 	return items;
 }
 
-export async function getProduct({appERC}: {appERC: string}) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}
-		`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
+export async function getProduct({
+	appERC,
+	nestedFields,
+}: {
+	appERC: string;
+	nestedFields?: string;
+}) {
+	let url = `/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}`;
 
-	return await response.json();
+	if (nestedFields) {
+		url = url + `?nestedFields=${nestedFields}`;
+	}
+
+	const response = await fetch(url, {
+		headers,
+		method: 'GET',
+	});
+
+	return (await response.json()) as Product;
 }
 
 export async function getProductImages({appProductId}: {appProductId: number}) {

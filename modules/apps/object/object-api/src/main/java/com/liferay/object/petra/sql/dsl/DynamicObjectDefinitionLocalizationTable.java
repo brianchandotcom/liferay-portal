@@ -66,8 +66,8 @@ public class DynamicObjectDefinitionLocalizationTable
 		for (ObjectField objectField : objectFields) {
 			createColumn(
 				objectField.getDBColumnName(),
-				DataType.getJavaClass(objectField.getDBType()),
-				DataType.getSQLType(objectField.getDBType()),
+				DBType.getJavaClass(objectField.getDBType()),
+				DBType.getSQLType(objectField.getDBType()),
 				Column.FLAG_DEFAULT);
 		}
 
@@ -100,7 +100,7 @@ public class DynamicObjectDefinitionLocalizationTable
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");
-			sb.append(DataType.getDataType(objectField.getDBType()));
+			sb.append(DBType.getDataType(objectField.getDBType()));
 		}
 
 		sb.append(")");

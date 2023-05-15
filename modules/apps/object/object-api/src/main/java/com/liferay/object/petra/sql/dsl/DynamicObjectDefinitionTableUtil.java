@@ -29,11 +29,11 @@ public class DynamicObjectDefinitionTableUtil {
 	 *      java.sql.Connection, String, String, String)
 	 */
 	public static String getAlterTableAddColumnSQL(
-		String tableName, String columnName, String type) {
+		String tableName, String columnName, String dbType) {
 
 		String sql = StringBundler.concat(
 			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
-			DataType.getDataType(type), getSQLColumnNull(type));
+			DBType.getDataType(dbType), getSQLColumnNull(dbType));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);
@@ -42,16 +42,18 @@ public class DynamicObjectDefinitionTableUtil {
 		return sql;
 	}
 
-	public static String getSQLColumnNull(String type) {
-		if (type.equals("BigDecimal") || type.equals("Double") ||
-			type.equals("Integer") || type.equals("Long")) {
+	public static String getSQLColumnNull(String dbType) {
+		if (dbType.equals(DBType.BIG_DECIMAL.getDBType()) ||
+			dbType.equals(DBType.DOUBLE.getDBType()) ||
+			dbType.equals(DBType.INTEGER.getDBType()) ||
+			dbType.equals(DBType.LONG.getDBType())) {
 
 			return " default 0";
 		}
-		else if (type.equals("Boolean")) {
+		else if (dbType.equals(DBType.BOOLEAN.getDBType())) {
 			return " default FALSE";
 		}
-		else if (type.equals("Date")) {
+		else if (dbType.equals(DBType.DATE.getDBType())) {
 			return " null";
 		}
 

@@ -1560,7 +1560,7 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
 		sb.append(", languageId");
 
-		int columnsCount = 3;
+		int count = 3;
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isRequired() &&
@@ -1573,12 +1573,12 @@ public class ObjectEntryLocalServiceImpl
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 
-			columnsCount++;
+			count++;
 		}
 
 		sb.append(") values (?");
 
-		for (int i = 1; i < columnsCount; i++) {
+		for (int i = 1; i < count; i++) {
 			sb.append(", ?");
 		}
 

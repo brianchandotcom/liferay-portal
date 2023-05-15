@@ -196,6 +196,7 @@ MissingDiamondOperatorCheck | [Bug Prevention](bug_prevention_checks.markdown#bu
 [MissingEmptyLineCheck](check/missing_empty_line_check.markdown#missingemptylinecheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for missing line breaks around variable declarations. |
 MissingModifierCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Verifies that a method or global variable has a modifier specified. |
 MissingParenthesesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing parentheses in conditional statement. |
+ModifiedMethodCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks for incorrect `modified` method with `@Modified` annotation. |
 [ModifierOrderCheck](https://checkstyle.sourceforge.io/config_modifier.html#ModifierOrder) | [Styling](styling_checks.markdown#styling-checks) | Checks that the order of modifiers conforms to the suggestions in the Java Language specification, § 8.1.1, 8.3.1, 8.4.3 and 9.4. |
 [MultipleVariableDeclarationsCheck](https://checkstyle.sourceforge.io/config_coding.html#MultipleVariableDeclarations) | [Styling](styling_checks.markdown#styling-checks) | Checks that each variable declaration is in its own statement and on its own line. |
 NestedFieldAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Verifies that `NestedFieldSupport.class` is used in `service` property of `Component` annotation |

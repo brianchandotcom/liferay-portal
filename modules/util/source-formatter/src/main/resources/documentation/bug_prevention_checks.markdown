@@ -147,6 +147,7 @@ LogParametersCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates th
 [MissingDeprecatedCheck](https://checkstyle.sourceforge.io/config_annotation.html#MissingDeprecated) | .java | Verifies that the annotation @Deprecated and the Javadoc tag @deprecated are both present when either of them is present. |
 MissingDiamondOperatorCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing diamond operator for types that require diamond operator. |
 MissingModifierCheck | .java | Verifies that a method or global variable has a modifier specified. |
+ModifiedMethodCheck | .java | Checks for incorrect `modified` method with `@Modified` annotation. |
 NestedFieldAnnotationCheck | .java | Verifies that `NestedFieldSupport.class` is used in `service` property of `Component` annotation |
 NewFileCheck | | Finds new files in directories that should not have added files. |
 [NullAssertionInIfStatementCheck](check/null_assertion_in_if_statement_check.markdown#nullassertioninifstatementcheck) | .java | Verifies that null check should always be first in if-statement. |

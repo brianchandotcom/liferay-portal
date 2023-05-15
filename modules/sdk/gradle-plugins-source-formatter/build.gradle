@@ -47,6 +47,6 @@ updateReadme {
 	}
 }
 
-uploadArchives {
+publish {
 	dependsOn updateReadme
 }

@@ -16,7 +16,7 @@ buildscript {
 
 apply plugin: "biz.aQute.bnd.builder"
 apply plugin: "java-library"
-apply plugin: "maven"
+apply plugin: "maven-publish"
 
 Properties bndProperties = _getBndProperties(project)
 
@@ -26,6 +26,18 @@ version = bndProperties[Constants.BUNDLE_VERSION]
 
 jar {
 	bnd "-include": "bnd.bnd"
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifactId archivesBaseName
+			groupId group
+			version version
+
+			from components.java
+		}
+	}
 }
 
 private Properties _getBndProperties(Project project) {

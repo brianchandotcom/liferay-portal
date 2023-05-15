@@ -201,7 +201,7 @@ updateFileVersions {
 
 uploadProjectTemplateArchives {
 	dependsOn projectTemplateProjects.collect {
-		"${it.path}:uploadArchives"
+		"${it.path}:publish"
 	}
 }
 

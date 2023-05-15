@@ -6,7 +6,7 @@ task copyPortalCommonCSSJar(type: Copy)
 task unzipPortalCommonCSS(type: Copy)
 
 buildPluginDescriptor {
-	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
+	configurationScopeMapping "mavenCompile", "compile"
 
 	ext {
 		autoClean = false
@@ -73,7 +73,7 @@ liferayOSGi {
 
 test {
 	dependsOn copyPortalCommonCSSJar
-	dependsOn install
+	dependsOn publishToMavenLocal
 	dependsOn unzipPortalCommonCSS
 
 	doFirst {

@@ -96,12 +96,38 @@ definition {
 	}
 
 	@description = "LPS-183950. Confirm that pagination creation can be cancelled when clicking on cancel button"
-	@ignore = "true"
 	@priority = 5
 	test CanCancelPaginationCreationOnCancelButton {
+		task ("And the user fills in the pagination items field") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
+		}
 
-		// TODO LPS-183950 CanCancelPaginationCreationOnCancelButton pending implementation
+		task ("And fills the default value field") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+		}
 
+		task ("And Click on the Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then a success alert not appears") {
+			VerifyElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		}
+
+		task ("And the items set are not saved") {
+			FrontendDataSetAdmin.goToTab(
+				dataSetViewName = "View Test",
+				tabName = "Pagination");
+
+			AssertElementPresent(
+				key_fieldName = "List of Items per Page",
+				key_fieldValue = "4, 8, 20, 40, 60",
+				locator1 = "Translation#TARGET_LANGUAGE_TEXT_BOX_FIELD");
+
+			AssertElementPresent(
+				key_keyName = 20,
+				locator1 = "Picklist#DISABLE_PICKLIST_KEY");
+		}
 	}
 
 	@description = "LPS-183947. Confirm that pagination can be created"

@@ -393,6 +393,9 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/Status"
                     readOnly: true
+                supplierShipment:
+                    readOnly: true
+                    type: boolean
                 trackingNumber:
                     example: "123AD-asd"
                     readOnly: true

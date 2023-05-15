@@ -1,6 +1,6 @@
 {
 	"description": "",
-	"editorType": "richText",
+	"editorType": "freeMarker",
 	"name": "Partner Deal Registration",
 	"recipientType": "email",
 	"recipients": [

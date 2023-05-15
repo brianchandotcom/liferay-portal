@@ -55,4 +55,29 @@ definition {
 		echo("Successfully logged in to both nodes on JDBC_PING");
 	}
 
+	@priority = 3
+	test StartupJDBCPINGWithZombieEntries {
+		property app.server.bundles.size = "0";
+		property app.server.types = "tomcat";
+		property cluster.enabled = "true";
+		property cluster.tcp.jdbc.ping = "true";
+		property database.types = "mysql";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ClusteringConfigs#StartupJDBCPINGWithZombieEntries";
+
+		Clustering.viewTextPresentOnSpecificNode(
+			expectedText = "JDBC_PING",
+			nodePort = 8080);
+
+		AntCommands.runCommand("build-test.xml", "terminate-one-java-process -Dprocess.name=Bootstrap");
+
+		SQL.assertTextInMySQLStatementResult(
+			mysqlStatement = "SELECT COUNT(*) FROM lportal.JGROUPSPING",
+			text = 2);
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Smoke.viewWelcomeContentPage();
+	}
+
 }

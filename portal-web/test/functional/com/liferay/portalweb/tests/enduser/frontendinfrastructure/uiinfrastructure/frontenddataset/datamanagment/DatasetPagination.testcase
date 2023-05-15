@@ -20,7 +20,7 @@ definition {
 		task ("The user goes to add a new Dataset") {
 			FrontendDataSetAdmin.createDataSet(
 				key_name = "Test Dataset",
-				key_type = "/c/fdsviews");
+				key_type = "/c/fdsentries");
 		}
 
 		task ("Add a new view") {

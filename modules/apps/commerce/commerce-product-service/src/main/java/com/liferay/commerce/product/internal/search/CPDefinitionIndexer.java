@@ -842,63 +842,49 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	}
 
 	private BigDecimal _getBasePrice(List<CPInstance> cpInstances) {
-		if (cpInstances.size() == 1) {
-			CPInstance cpInstance = cpInstances.get(0);
+		if (cpInstances.isEmpty()) {
+			return null;
+		}
 
-			BigDecimal price = cpInstance.getPrice();
+		BigDecimal lowestPrice = null;
+
+		CommercePriceEntry commercePriceEntry = null;
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (!cpInstance.isApproved()) {
+				continue;
+			}
+
+			commercePriceEntry =
+				_commercePriceEntryLocalService.
+					getInstanceBaseCommercePriceEntry(
+						cpInstance.getCPInstanceUuid(),
+						CommercePriceListConstants.TYPE_PRICE_LIST);
+
+			if (commercePriceEntry == null) {
+				continue;
+			}
+
+			BigDecimal price = commercePriceEntry.getPrice();
+
+			if (lowestPrice == null) {
+				lowestPrice = price;
+			}
+
 			BigDecimal promoPrice = cpInstance.getPromoPrice();
 
 			if ((promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
 				CommerceBigDecimalUtil.lt(promoPrice, price)) {
 
-				return promoPrice;
+				price = promoPrice;
 			}
 
-			return price;
-		}
-		else if (!cpInstances.isEmpty()) {
-			BigDecimal lowestPrice = BigDecimal.ZERO;
-
-			CommercePriceEntry commercePriceEntry = null;
-
-			for (CPInstance cpInstance : cpInstances) {
-				if (!cpInstance.isApproved()) {
-					continue;
-				}
-
-				commercePriceEntry =
-					_commercePriceEntryLocalService.
-						getInstanceBaseCommercePriceEntry(
-							cpInstance.getCPInstanceUuid(),
-							CommercePriceListConstants.TYPE_PRICE_LIST);
-
-				if (commercePriceEntry == null) {
-					continue;
-				}
-
-				BigDecimal price = commercePriceEntry.getPrice();
-
-				if (lowestPrice.compareTo(BigDecimal.ZERO) == 0) {
-					lowestPrice = price;
-				}
-
-				BigDecimal promoPrice = cpInstance.getPromoPrice();
-
-				if ((promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-					CommerceBigDecimalUtil.lt(promoPrice, price)) {
-
-					price = promoPrice;
-				}
-
-				if (CommerceBigDecimalUtil.lt(price, lowestPrice)) {
-					lowestPrice = price;
-				}
+			if (CommerceBigDecimalUtil.lt(price, lowestPrice)) {
+				lowestPrice = price;
 			}
-
-			return lowestPrice;
 		}
 
-		return null;
+		return lowestPrice;
 	}
 
 	private List<CPOption> _getCPOptions(

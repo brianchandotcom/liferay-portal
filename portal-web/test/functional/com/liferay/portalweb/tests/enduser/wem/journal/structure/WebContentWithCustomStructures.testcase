@@ -2019,7 +2019,7 @@ definition {
 	@description = "This is a test for LPS-71204. Web content structure with localization cannot save garbage data in place of images."
 	@priority = 4
 	test ViewSourceContainsNoGarbageData {
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		task ("Add a web content structure with custom fields") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

@@ -29,14 +29,14 @@ public class SkuOptionUtil {
 
 	public static SkuOption[] getSkuOptions(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelsMap,
+				cpDefinitionOptionValueRelsMap,
 			String languageId)
 		throws Exception {
 
 		List<SkuOption> skuOptions = new ArrayList<>();
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				entry : cpDefinitionOptionRelsMap.entrySet()) {
+				entry : cpDefinitionOptionValueRelsMap.entrySet()) {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
 

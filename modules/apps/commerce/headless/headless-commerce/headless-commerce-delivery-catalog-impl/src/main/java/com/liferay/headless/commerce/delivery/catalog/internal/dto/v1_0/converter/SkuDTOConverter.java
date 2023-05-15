@@ -88,18 +88,17 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			(Long)cpSkuDTOConverterConvertContext.getId());
 
-		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
+		JSONArray jsonArray = _jsonHelper.toJSONArray(
 			_cpDefinitionOptionRelLocalService.
 				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 					cpInstance.getCPInstanceId()));
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelsMap =
+			cpDefinitionOptionValueRelsMap =
 				_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
-					cpInstance.getCPDefinitionId(),
-					keyValuesJSONArray.toString());
+					cpInstance.getCPDefinitionId(), jsonArray.toString());
 
-		DDMOption[] ddmOptions = _getDDMOptions(cpDefinitionOptionRelsMap);
+		DDMOption[] ddmOptions = _getDDMOptions(cpDefinitionOptionValueRelsMap);
 
 		CPInstance replacementCPInstance =
 			_cpInstanceLocalService.fetchCProductInstance(
@@ -173,9 +172,11 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					});
 				setSkuOptions(
 					() -> {
-						if (MapUtil.isNotEmpty(cpDefinitionOptionRelsMap)) {
+						if (MapUtil.isNotEmpty(
+								cpDefinitionOptionValueRelsMap)) {
+
 							return SkuOptionUtil.getSkuOptions(
-								cpDefinitionOptionRelsMap,
+								cpDefinitionOptionValueRelsMap,
 								_language.getLanguageId(
 									cpSkuDTOConverterConvertContext.
 										getLocale()));
@@ -244,12 +245,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private DDMOption[] _getDDMOptions(
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelsMap) {
+			cpDefinitionOptionValueRelsMap) {
 
 		List<DDMOption> ddmOptions = new ArrayList<>();
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				entry : cpDefinitionOptionRelsMap.entrySet()) {
+				entry : cpDefinitionOptionValueRelsMap.entrySet()) {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
 

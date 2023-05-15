@@ -99,7 +99,7 @@ public class CommerceProductInstanceFDSDataProvider
 
 			String cpDefinitionName = cpDefinition.getName(languageId);
 
-			JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
+			JSONArray jsonArray = _jsonHelper.toJSONArray(
 				cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
 
 			int stockQuantity = _commerceInventoryEngine.getStockQuantity(
@@ -124,7 +124,7 @@ public class CommerceProductInstanceFDSDataProvider
 					HtmlUtil.escape(
 						_getOptions(
 							cpInstance.getCPDefinitionId(),
-							keyValuesJSONArray.toString(), locale)),
+							jsonArray.toString(), locale)),
 					HtmlUtil.escape(_formatPrice(cpInstance, locale)),
 					cpDefinitionName, stockQuantity,
 					new LabelField(

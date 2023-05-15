@@ -1592,6 +1592,53 @@ public class ObjectEntryLocalServiceImpl
 		return insertIntoStatement;
 	}
 
+	private String _createUpdateLocalizationTableStatement(
+		DynamicObjectDefinitionLocalizationTable
+			dynamicObjectDefinitionLocalizationTable,
+		long objectEntryId, List<ObjectField> objectFields,
+		Map<String, Serializable> values) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("update ");
+		sb.append(dynamicObjectDefinitionLocalizationTable.getName());
+		sb.append(" set ");
+
+		int count = 0;
+
+		for (ObjectField objectField : objectFields) {
+			if (!values.containsKey(objectField.getI18nObjectFieldName())) {
+				continue;
+			}
+
+			if (count > 0) {
+				sb.append(", ");
+			}
+
+			sb.append(objectField.getDBColumnName());
+			sb.append(" = ?");
+
+			count++;
+		}
+
+		if (count == 0) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No values were provided for object entry " +
+						objectEntryId);
+			}
+
+			return null;
+		}
+
+		sb.append(" where ");
+		sb.append(
+			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
+		sb.append(" = ? and languageId = ?");
+
+		return sb.toString();
+	}
+
 	private void _deleteFileEntries(
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
@@ -3524,48 +3571,16 @@ public class ObjectEntryLocalServiceImpl
 		String languageId, long objectEntryId,
 		Map<String, Serializable> values) {
 
-		StringBundler sb = new StringBundler();
-
-		sb.append("update ");
-		sb.append(dynamicObjectDefinitionLocalizationTable.getName());
-		sb.append(" set ");
-
-		int count = 0;
-
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionLocalizationTable.getObjectFields();
 
-		for (ObjectField objectField : objectFields) {
-			if (!values.containsKey(objectField.getI18nObjectFieldName())) {
-				continue;
-			}
+		String updateStatement = _createUpdateLocalizationTableStatement(
+			dynamicObjectDefinitionLocalizationTable, objectEntryId,
+			objectFields, values);
 
-			if (count > 0) {
-				sb.append(", ");
-			}
-
-			sb.append(objectField.getDBColumnName());
-			sb.append(" = ?");
-
-			count++;
-		}
-
-		if (count == 0) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No values were provided for object entry " +
-						objectEntryId);
-			}
-
+		if (updateStatement == null) {
 			return;
 		}
-
-		sb.append(" where ");
-		sb.append(
-			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
-		sb.append(" = ? and languageId = ?");
-
-		String updateStatement = sb.toString();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + updateStatement);

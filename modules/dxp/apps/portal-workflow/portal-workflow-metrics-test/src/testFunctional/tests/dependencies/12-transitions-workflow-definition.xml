@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns="urn:liferay.com:liferay-workflow_7.3.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.3.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_3_0.xsd"
 >
+	<name>12 Transitions</name>
 	<description>Definition of the 12 transitions of SLA workflow.</description>
 	<version>1</version>
 	<state>
-		<id>created</id>
+		<name>created</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -20,26 +21,16 @@
 			]]>
 		</metadata>
 		<initial>true</initial>
-		<labels>
-			<label language-id="en_US">
-				created
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						review
-					</label>
-				</labels>
-				<id>created_review_review</id>
+				<name>review</name>
 				<target>review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<id>approved</id>
+		<name>approved</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -66,17 +57,22 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
-		<labels>
-			<label language-id="en_US">
-				approved
-			</label>
-		</labels>
 	</state>
 	<task>
-		<id>update</id>
+		<name>update</name>
 		<metadata>
 			<![CDATA[
 				{
+					"transitions": {
+						"resubmit": {
+							"bendpoints": [
+								[
+									303,
+									140
+								]
+							]
+						}
+					},
 					"xy": [
 						33.96307373046875,
 						319.0198516845703
@@ -99,31 +95,33 @@
 				<script-language>groovy</script-language>
 				<execution-type>onAssignment</execution-type>
 			</action>
+			<notification>
+				<name>Creator Modification Notification</name>
+				<template>
+					<![CDATA[Your submission was rejected by ${userName}, please modify and resubmit.]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
 		</actions>
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				update
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						resubmit
-					</label>
-				</labels>
-				<id>resubmit</id>
+				<name>resubmit</name>
 				<target>review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>review</id>
-		<description>Ask a user to work on the item.</description>
+		<name>review</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -164,15 +162,15 @@
 		<assignments>
 			<roles>
 				<role>
-					<role-type>asset library</role-type>
+					<role-type>depot</role-type>
 					<name>Asset Library Administrator</name>
 				</role>
 				<role>
-					<role-type>asset library</role-type>
+					<role-type>depot</role-type>
 					<name>Asset Library Content Reviewer</name>
 				</role>
 				<role>
-					<role-type>asset library</role-type>
+					<role-type>depot</role-type>
 					<name>Asset Library Owner</name>
 				</role>
 				<role>
@@ -209,146 +207,76 @@
 				</role>
 			</roles>
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				Review
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						approve
-					</label>
-				</labels>
-				<id>approve</id>
+				<name>approve</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						reject
-					</label>
-				</labels>
-				<id>reject</id>
+				<name>reject</name>
 				<target>update</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector19529
-					</label>
-				</labels>
-				<id>connector19529</id>
+				<name>connector19529</name>
 				<target>task19347</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector23773
-					</label>
-				</labels>
-				<id>connector23773</id>
+				<name>connector23773</name>
 				<target>task23591</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector26241
-					</label>
-				</labels>
-				<id>connector26241</id>
+				<name>connector26241</name>
 				<target>task26059</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector29994
-					</label>
-				</labels>
-				<id>connector29994</id>
+				<name>connector29994</name>
 				<target>task29812</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector32656
-					</label>
-				</labels>
-				<id>connector32656</id>
+				<name>connector32656</name>
 				<target>task32474</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector39758
-					</label>
-				</labels>
-				<id>connector39758</id>
+				<name>connector39758</name>
 				<target>task39576</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector45855
-					</label>
-				</labels>
-				<id>connector45855</id>
+				<name>connector45855</name>
 				<target>task45673</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector48229
-					</label>
-				</labels>
-				<id>connector48229</id>
+				<name>connector48229</name>
 				<target>task48047</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector51042
-					</label>
-				</labels>
-				<id>connector51042</id>
+				<name>connector51042</name>
 				<target>task50860</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector65445
-					</label>
-				</labels>
-				<id>connector65445</id>
+				<name>connector65445</name>
 				<target>task65263</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector70578
-					</label>
-				</labels>
-				<id>connector70578</id>
+				<name>connector70578</name>
 				<target>task70396</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task19347</id>
+		<name>task19347</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -362,26 +290,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task19347
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector53106
-					</label>
-				</labels>
-				<id>connector53106</id>
+				<name>connector53106</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task23591</id>
+		<name>task23591</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -395,26 +313,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task23591
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector56687
-					</label>
-				</labels>
-				<id>connector56687</id>
+				<name>connector56687</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task26059</id>
+		<name>task26059</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -428,26 +336,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task26059
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector63683
-					</label>
-				</labels>
-				<id>connector63683</id>
+				<name>connector63683</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task29812</id>
+		<name>task29812</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -461,26 +359,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task29812
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector67245
-					</label>
-				</labels>
-				<id>connector67245</id>
+				<name>connector67245</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task32474</id>
+		<name>task32474</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -494,26 +382,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task32474
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector64775
-					</label>
-				</labels>
-				<id>connector64775</id>
+				<name>connector64775</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task39576</id>
+		<name>task39576</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -527,26 +405,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task39576
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector62485
-					</label>
-				</labels>
-				<id>connector62485</id>
+				<name>connector62485</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task45673</id>
+		<name>task45673</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -560,26 +428,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task45673
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector54971
-					</label>
-				</labels>
-				<id>connector54971</id>
+				<name>connector54971</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task48047</id>
+		<name>task48047</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -593,26 +451,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task48047
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector60686
-					</label>
-				</labels>
-				<id>connector60686</id>
+				<name>connector60686</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task50860</id>
+		<name>task50860</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -626,26 +474,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task50860
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector57870
-					</label>
-				</labels>
-				<id>connector57870</id>
+				<name>connector57870</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task65263</id>
+		<name>task65263</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -659,26 +497,16 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task65263
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector67866
-					</label>
-				</labels>
-				<id>connector67866</id>
+				<name>connector67866</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<id>task70396</id>
+		<name>task70396</name>
 		<metadata>
 			<![CDATA[
 				{
@@ -692,19 +520,9 @@
 		<assignments>
 			<user />
 		</assignments>
-		<labels>
-			<label language-id="en_US">
-				task70396
-			</label>
-		</labels>
 		<transitions>
 			<transition>
-				<labels>
-					<label language-id="en_US">
-						connector74203
-					</label>
-				</labels>
-				<id>connector74203</id>
+				<name>connector74203</name>
 				<target>approved</target>
 				<default>true</default>
 			</transition>

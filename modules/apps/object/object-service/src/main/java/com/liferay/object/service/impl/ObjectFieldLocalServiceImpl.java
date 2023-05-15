@@ -144,7 +144,7 @@ public class ObjectFieldLocalServiceImpl
 		if (localized) {
 			runSQL(
 				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
-					objectDefinition.getL10nDBTableName(),
+					objectDefinition.getLocalizationDBTableName(),
 					objectField.getDBColumnName(), dbType));
 		}
 		else if (!objectField.compareBusinessType(
@@ -978,7 +978,7 @@ public class ObjectFieldLocalServiceImpl
 			objectField.isLocalized() && objectDefinition.isApproved()) {
 
 			_alterTableDropColumn(
-				objectDefinition.getL10nDBTableName(),
+				objectDefinition.getLocalizationDBTableName(),
 				objectField.getDBColumnName());
 		}
 

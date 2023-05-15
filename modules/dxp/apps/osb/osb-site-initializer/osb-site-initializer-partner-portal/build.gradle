@@ -133,8 +133,8 @@ processResources {
 	}
 }
 
-uploadExtraRemoteApp {
-	doLast {
+publishMavenPublicationToReleasesRepository {
+	doFirst {
 		File buildGradleFile = file("build.gradle")
 
 		String content = buildGradleFile.getText("UTF-8")
@@ -147,19 +147,17 @@ uploadExtraRemoteApp {
 
 		buildGradleFile.setText content, "UTF-8"
 	}
+}
 
-	repositories {
-		mavenDeployer {
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifact zipExtraRemoteApp
+
 			pom {
 				artifactId = GUtil.loadProperties(file("bnd.bnd"))["Bundle-SymbolicName"] + ".extra.remote.app"
 				groupId = "com.liferay"
 				version = dateString
-			}
-
-			if (project.path.startsWith(":dxp:")) {
-				repository(url: "https://repository.liferay.com/nexus/content/repositories/liferay-private-releases") {
-					authentication password: System.properties["repository.private.password"], userName: System.properties["repository.private.username"]
-				}
 			}
 		}
 	}

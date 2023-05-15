@@ -162,6 +162,10 @@ public class ${entity.name}Util {
 		return _persistence;
 	}
 
+	public static void setPersistence(${entity.name}Persistence persistence) {
+		_persistence = persistence;
+	}
+
 	private static volatile ${entity.name}Persistence _persistence;
 
 }

@@ -2839,7 +2839,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#list>
 
-		_set${entity.name}UtilPersistence(this);
+		${entity.name}Util.setPersistence(this);
 	}
 
 	<#if dependencyInjectorDS>
@@ -2849,7 +2849,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		public void destroy() {
 	</#if>
 
-		_set${entity.name}UtilPersistence(null);
+		${entity.name}Util.setPersistence(null);
 
 		${entityCache}.removeCache(${entity.name}Impl.class.getName());
 
@@ -2876,19 +2876,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			</#if>
 		</#list>
-	}
-
-	private void _set${entity.name}UtilPersistence(${entity.name}Persistence ${entity.variableName}Persistence) {
-		try {
-			Field field = ${entity.name}Util.class.getDeclaredField("_persistence");
-
-			field.setAccessible(true);
-
-			field.set(null, ${entity.variableName}Persistence);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
 	}
 
 	<#if dependencyInjectorDS>

@@ -128,6 +128,10 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 		return _service;
 	}
 
+	public static void setService(${entity.name}${sessionTypeName}Service service) {
+		_service = service;
+	}
+
 	private static volatile ${entity.name}${sessionTypeName}Service _service;
 
 }

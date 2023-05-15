@@ -1604,7 +1604,7 @@ import org.osgi.service.component.annotations.Reference;
 				}
 			</#if>
 
-			_set${sessionTypeName}ServiceUtilService(${entity.variableName}${sessionTypeName}Service);
+			${entity.name}${sessionTypeName}ServiceUtil.setService(${entity.variableName}${sessionTypeName}Service);
 		}
 	</#if>
 
@@ -1634,7 +1634,7 @@ import org.osgi.service.component.annotations.Reference;
 
 		@Deactivate
 		protected void deactivate() {
-			_set${sessionTypeName}ServiceUtilService(null);
+			${entity.name}${sessionTypeName}ServiceUtil.setService(null);
 		}
 
 		@Override
@@ -1656,7 +1656,7 @@ import org.osgi.service.component.annotations.Reference;
 		public void setAopProxy(Object aopProxy) {
 			${entity.variableName}${sessionTypeName}Service = (${entity.name}${sessionTypeName}Service)aopProxy;
 
-			_set${sessionTypeName}ServiceUtilService(${entity.variableName}${sessionTypeName}Service);
+			${entity.name}${sessionTypeName}ServiceUtil.setService(${entity.variableName}${sessionTypeName}Service);
 		}
 	<#else>
 		public void destroy() {
@@ -1668,7 +1668,7 @@ import org.osgi.service.component.annotations.Reference;
 				</#if>
 			</#if>
 
-			_set${sessionTypeName}ServiceUtilService(null);
+			${entity.name}${sessionTypeName}ServiceUtil.setService(null);
 		}
 	</#if>
 
@@ -2042,19 +2042,6 @@ import org.osgi.service.component.annotations.Reference;
 			}
 		}
 	</#if>
-
-	private void _set${sessionTypeName}ServiceUtilService(${entity.name}${sessionTypeName}Service ${entity.variableName}${sessionTypeName}Service) {
-		try {
-			Field field = ${entity.name}${sessionTypeName}ServiceUtil.class.getDeclaredField("_service");
-
-			field.setAccessible(true);
-
-			field.set(null, ${entity.variableName}${sessionTypeName}Service);
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			throw new RuntimeException(reflectiveOperationException);
-		}
-	}
 
 	<#list referenceEntities as referenceEntity>
 		<#if referenceEntity.hasLocalService()>

@@ -135,6 +135,7 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
 	@priority = 3
 	test CanNotAddDocumentWithInvalidFileName {
 		task ("When a put request is made to add a document with an invalid file name") {
@@ -159,15 +160,10 @@ definition {
 				actual = ${response},
 				expected = "Invalid file name FileName?.jpg");
 
-			User.loginPG(
-				password = "test",
-				userEmailAddress = "test@liferay.com");
-
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-			AssertElementNotPresent(
-				key_dmDocumentTitle = "DM Document Title",
-				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+			DocumentAPI.assertProperDocumentTotalCount(
+				expectedDocumentTotalCount = 0,
+				filtervalue = "title%20eq%20%27DM%20Document%20Title%27",
+				siteId = ${siteId});
 		}
 	}
 

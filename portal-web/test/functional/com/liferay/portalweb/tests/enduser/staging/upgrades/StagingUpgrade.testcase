@@ -893,7 +893,9 @@ definition {
 		property portal.version = "7.3.10.1";
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
-			Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
 
 			Refresh();
 
@@ -913,7 +915,9 @@ definition {
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
-			Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
 
 			Refresh();
 

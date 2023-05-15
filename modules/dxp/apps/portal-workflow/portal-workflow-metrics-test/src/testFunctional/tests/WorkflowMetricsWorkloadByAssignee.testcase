@@ -631,7 +631,7 @@ definition {
 		Workflow.assignToMeTaskByActions(
 			workflowAssetTitle = "Blogs Entry",
 			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+			workflowTask = "review");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "12 transitions");
 

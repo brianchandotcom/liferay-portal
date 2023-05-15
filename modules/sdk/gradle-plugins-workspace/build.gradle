@@ -81,6 +81,8 @@ copyHotFixZip {
 }
 
 copyGradleTestDependencies {
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
 	from configurations.compileClasspath
 	from jar
 	into gradleTestDependenciesDir

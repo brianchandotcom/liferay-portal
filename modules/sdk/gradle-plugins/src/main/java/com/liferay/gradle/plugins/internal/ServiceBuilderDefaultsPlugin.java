@@ -29,6 +29,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -265,6 +266,9 @@ public class ServiceBuilderDefaultsPlugin
 
 				@Override
 				public void execute(Copy processResourcesCopy) {
+					processResourcesCopy.setDuplicatesStrategy(
+						DuplicatesStrategy.INCLUDE);
+
 					processResourcesCopy.into(
 						"META-INF",
 						new Closure<Void>(processResourcesCopy) {

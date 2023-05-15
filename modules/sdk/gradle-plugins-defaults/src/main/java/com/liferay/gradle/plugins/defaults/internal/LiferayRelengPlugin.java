@@ -52,6 +52,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.PublishArtifact;
 import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
@@ -572,6 +573,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Copy processResourcesCopy) {
+					processResourcesCopy.setDuplicatesStrategy(
+						DuplicatesStrategy.INCLUDE);
+
 					processResourcesCopy.from(
 						new Callable<File>() {
 

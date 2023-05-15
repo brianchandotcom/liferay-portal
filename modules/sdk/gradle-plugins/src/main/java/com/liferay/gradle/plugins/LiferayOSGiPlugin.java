@@ -82,6 +82,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.RelativePath;
@@ -1186,6 +1187,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					deployFastCopy.setDestinationDir(
 						liferayExtension.getLiferayHome());
+					deployFastCopy.setDuplicatesStrategy(
+						DuplicatesStrategy.INCLUDE);
 					deployFastCopy.setIncludeEmptyDirs(false);
 
 					String bundleSymbolicName = bundleExtension.getInstruction(

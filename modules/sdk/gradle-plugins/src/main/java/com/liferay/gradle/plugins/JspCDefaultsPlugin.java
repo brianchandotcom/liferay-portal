@@ -22,6 +22,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.Convention;
@@ -205,6 +206,9 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 				@Override
 				public void execute(Copy processResourcesCopy) {
+					processResourcesCopy.setDuplicatesStrategy(
+						DuplicatesStrategy.INCLUDE);
+
 					SourceDirectorySet sourceDirectorySet =
 						javaMainSourceSet.getResources();
 

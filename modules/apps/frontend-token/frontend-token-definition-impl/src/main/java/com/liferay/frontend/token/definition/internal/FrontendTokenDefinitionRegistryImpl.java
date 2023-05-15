@@ -16,6 +16,7 @@ package com.liferay.frontend.token.definition.internal;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -57,15 +58,22 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	@Override
 	public FrontendTokenDefinition getFrontendTokenDefinition(String themeId) {
-		return _themeIdFrontendTokenDefinitionImpls.get(themeId);
+		Map<String, FrontendTokenDefinitionImpl>
+			themeIdFrontendTokenDefinitionImpls =
+				_themeIdFrontendTokenDefinitionImplsDCLSingleton.getSingleton(
+					() -> {
+						_bundleTracker.open();
+
+						return _themeIdFrontendTokenDefinitionImpls;
+					});
+
+		return themeIdFrontendTokenDefinitionImpls.get(themeId);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, _bundleTrackerCustomizer);
-
-		_bundleTracker.open();
 	}
 
 	@Deactivate
@@ -237,5 +245,7 @@ public class FrontendTokenDefinitionRegistryImpl
 
 	private final Map<String, FrontendTokenDefinitionImpl>
 		_themeIdFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
+	private final DCLSingleton<Map<String, FrontendTokenDefinitionImpl>>
+		_themeIdFrontendTokenDefinitionImplsDCLSingleton = new DCLSingleton<>();
 
 }

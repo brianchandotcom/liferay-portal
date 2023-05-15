@@ -6,6 +6,7 @@ dependencies {
 	compileOnly project(":apps:frontend-css:frontend-css-variables-api")
 	compileOnly project(":apps:frontend-token:frontend-token-definition-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 

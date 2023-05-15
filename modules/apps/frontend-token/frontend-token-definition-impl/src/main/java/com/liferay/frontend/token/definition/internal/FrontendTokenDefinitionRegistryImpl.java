@@ -163,9 +163,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 	}
 
-	protected Map<Bundle, FrontendTokenDefinitionImpl>
-		bundleFrontendTokenDefinitionImpls = new ConcurrentHashMap<>();
-	protected BundleTracker<Bundle> bundleTracker;
+	protected BundleTracker<FrontendTokenDefinitionImpl> bundleTracker;
 
 	@Reference
 	protected JSONFactory jsonFactory;
@@ -199,54 +197,45 @@ public class FrontendTokenDefinitionRegistryImpl
 	private static final Pattern _themeIdPattern = Pattern.compile(
 		".*<theme id=\"([^\"]*)\"[^>]*>.*");
 
-	private final BundleTrackerCustomizer<Bundle> _bundleTrackerCustomizer =
-		new BundleTrackerCustomizer<Bundle>() {
+	private final BundleTrackerCustomizer<FrontendTokenDefinitionImpl>
+		_bundleTrackerCustomizer =
+			new BundleTrackerCustomizer<FrontendTokenDefinitionImpl>() {
 
-			@Override
-			public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-					getFrontendTokenDefinitionImpl(bundle);
+				@Override
+				public FrontendTokenDefinitionImpl addingBundle(
+					Bundle bundle, BundleEvent bundleEvent) {
 
-				if (frontendTokenDefinitionImpl == null) {
-					return null;
-				}
-
-				synchronized (FrontendTokenDefinitionRegistryImpl.this) {
-					bundleFrontendTokenDefinitionImpls.put(
-						bundle, frontendTokenDefinitionImpl);
-
-					if (frontendTokenDefinitionImpl.getThemeId() != null) {
-						themeIdFrontendTokenDefinitionImpls.put(
-							frontendTokenDefinitionImpl.getThemeId(),
-							frontendTokenDefinitionImpl);
-					}
-				}
-
-				return bundle;
-			}
-
-			@Override
-			public void modifiedBundle(
-				Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
-			}
-
-			@Override
-			public void removedBundle(
-				Bundle bundle1, BundleEvent bundleEvent, Bundle bundle2) {
-
-				synchronized (FrontendTokenDefinitionRegistryImpl.this) {
 					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
-						bundleFrontendTokenDefinitionImpls.remove(bundle1);
+						getFrontendTokenDefinitionImpl(bundle);
 
 					if ((frontendTokenDefinitionImpl != null) &&
 						(frontendTokenDefinitionImpl.getThemeId() != null)) {
 
-						themeIdFrontendTokenDefinitionImpls.remove(
-							frontendTokenDefinitionImpl.getThemeId());
-					}
-				}
-			}
+						themeIdFrontendTokenDefinitionImpls.put(
+							frontendTokenDefinitionImpl.getThemeId(),
+							frontendTokenDefinitionImpl);
 
-		};
+						return frontendTokenDefinitionImpl;
+					}
+
+					return null;
+				}
+
+				@Override
+				public void modifiedBundle(
+					Bundle bundle, BundleEvent bundleEvent,
+					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
+				}
+
+				@Override
+				public void removedBundle(
+					Bundle bundle, BundleEvent bundleEvent,
+					FrontendTokenDefinitionImpl frontendTokenDefinitionImpl) {
+
+					themeIdFrontendTokenDefinitionImpls.remove(
+						frontendTokenDefinitionImpl.getThemeId());
+				}
+
+			};
 
 }

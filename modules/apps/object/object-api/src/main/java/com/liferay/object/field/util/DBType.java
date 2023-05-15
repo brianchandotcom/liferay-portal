@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.petra.sql.dsl;
+package com.liferay.object.field.util;
 
 import java.math.BigDecimal;
 

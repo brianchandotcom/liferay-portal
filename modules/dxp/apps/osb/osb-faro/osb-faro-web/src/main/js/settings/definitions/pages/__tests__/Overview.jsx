@@ -47,8 +47,10 @@ describe('Definitions Overview', () => {
 			container.querySelectorAll('.list-group-title a')[5]
 		).toHaveTextContent('Search');
 
-		expect(
-			container.querySelectorAll('.list-group-title a')[6]
-		).toHaveTextContent('Interests');
+		if (Constants.ENABLE_BLOCKLIST_KEYWORDS) {
+			expect(
+				container.querySelectorAll('.list-group-title a')[6]
+			).toHaveTextContent('Interests');
+		}
 	});
 });

@@ -132,16 +132,14 @@ public class FeatureFlagsManagementToolbarDisplayContext
 		DropdownItemList dropdownItemList = new DropdownItemList();
 
 		for (Filter filter : FILTERS) {
-			dropdownItemList.addGroup(
-				dropdownGroupItem -> dropdownGroupItem.setLabel(
-					langGet(filter.getLabel())));
+			DropdownItemList filterDropdownItemList = new DropdownItemList();
 
 			String currentValue = filter.getCurrentValue(httpServletRequest);
 
 			PortletURL portletURL = getPortletURL();
 
 			for (String value : filter.getValues()) {
-				dropdownItemList.add(
+				filterDropdownItemList.add(
 					dropdownItem -> {
 						dropdownItem.setActive(
 							Objects.equals(currentValue, value));
@@ -150,6 +148,12 @@ public class FeatureFlagsManagementToolbarDisplayContext
 						dropdownItem.setLabel(langGet(value));
 					});
 			}
+
+			dropdownItemList.addGroup(
+				dropdownGroupItem -> {
+					dropdownGroupItem.setDropdownItems(filterDropdownItemList);
+					dropdownGroupItem.setLabel(langGet(filter.getLabel()));
+				});
 		}
 
 		return dropdownItemList;

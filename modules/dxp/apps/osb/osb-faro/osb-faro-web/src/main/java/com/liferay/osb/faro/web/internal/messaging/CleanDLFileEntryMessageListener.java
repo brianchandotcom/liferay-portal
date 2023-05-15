@@ -42,7 +42,6 @@ import java.util.List;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -118,13 +117,6 @@ public class CleanDLFileEntryMessageListener extends BaseMessageListener {
 					dlFileVersion.getFileEntryId());
 			}
 		}
-	}
-
-	@Modified
-	protected void modified() {
-		deactivate();
-
-		activate();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

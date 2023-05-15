@@ -28,7 +28,6 @@ import java.util.concurrent.FutureTask;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -98,13 +97,6 @@ public class ContactsDemo {
 		if (_futureTask != null) {
 			_futureTask.cancel(true);
 		}
-	}
-
-	@Modified
-	protected void modified() {
-		deactivate();
-
-		activate();
 	}
 
 	private static final String _FARO_DEMO_CREATOR_METHOD = System.getenv(

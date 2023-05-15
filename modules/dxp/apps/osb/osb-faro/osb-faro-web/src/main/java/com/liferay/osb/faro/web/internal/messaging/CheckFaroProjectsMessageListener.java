@@ -52,7 +52,6 @@ import javax.mail.internet.InternetAddress;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -164,13 +163,6 @@ public class CheckFaroProjectsMessageListener extends BaseMessageListener {
 
 			_systemsDownStartTime = System.currentTimeMillis();
 		}
-	}
-
-	@Modified
-	protected void modified() {
-		deactivate();
-
-		activate();
 	}
 
 	protected void sendEmail(String subject, String body) throws Exception {

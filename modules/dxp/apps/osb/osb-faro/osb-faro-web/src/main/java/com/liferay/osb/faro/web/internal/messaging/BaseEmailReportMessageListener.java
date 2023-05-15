@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -86,13 +85,6 @@ public abstract class BaseEmailReportMessageListener
 	}
 
 	protected abstract String getFrequency();
-
-	@Modified
-	protected void modified() {
-		deactivate();
-
-		activate();
-	}
 
 	@Reference
 	protected EmailReportHelper emailReportHelper;

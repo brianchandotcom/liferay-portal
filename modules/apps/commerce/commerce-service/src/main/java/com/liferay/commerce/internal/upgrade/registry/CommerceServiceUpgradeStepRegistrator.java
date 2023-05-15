@@ -458,6 +458,13 @@ public class CommerceServiceUpgradeStepRegistrator
 				"CommerceOrderItem", "replacedCPInstanceId LONG",
 				"replacedSku VARCHAR(75) null"));
 
+		registry.register(
+			"9.2.0", "9.2.1",
+			new com.liferay.commerce.internal.upgrade.v9_2_1.
+				CommercePermissionUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

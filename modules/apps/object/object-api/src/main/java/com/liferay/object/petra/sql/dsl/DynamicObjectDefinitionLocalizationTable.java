@@ -76,7 +76,7 @@ public class DynamicObjectDefinitionLocalizationTable
 			column -> {
 				if (column.equals(getForeignKeyColumn()) ||
 					column.equals(getLanguageIdColumn()) ||
-					column.equals(getPrimaryKeyColumn())) {
+					column.equals(_getPrimaryKeyColumn())) {
 
 					return false;
 				}
@@ -149,18 +149,18 @@ public class DynamicObjectDefinitionLocalizationTable
 		return _objectFields;
 	}
 
-	public Column<DynamicObjectDefinitionLocalizationTable, Long>
-		getPrimaryKeyColumn() {
+	public String getPrimaryKeyColumnName() {
+		Column<DynamicObjectDefinitionLocalizationTable, Long>
+			primaryKeyColumn = _getPrimaryKeyColumn();
+
+		return primaryKeyColumn.getName();
+	}
+
+	private Column<DynamicObjectDefinitionLocalizationTable, Long>
+		_getPrimaryKeyColumn() {
 
 		return (Column<DynamicObjectDefinitionLocalizationTable, Long>)
 			getColumn(_primaryKeyColumnName);
-	}
-
-	public String getPrimaryKeyColumnName() {
-		Column<DynamicObjectDefinitionLocalizationTable, Long>
-			primaryKeyColumn = getPrimaryKeyColumn();
-
-		return primaryKeyColumn.getName();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

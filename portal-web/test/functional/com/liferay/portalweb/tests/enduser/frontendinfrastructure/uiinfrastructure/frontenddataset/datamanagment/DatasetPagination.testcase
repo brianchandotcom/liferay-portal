@@ -105,12 +105,23 @@ definition {
 	}
 
 	@description = "LPS-183947. Confirm that pagination can be created"
-	@ignore = "true"
 	@priority = 5
 	test CanCreatePagination {
+		task ("And the user fills in the pagination items field") {
+			FrontendDataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
+		}
 
-		// TODO LPS-183947 CanCreatePagination pending implementation
+		task ("And fills the default value field") {
+			FrontendDataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+		}
 
+		task ("And saves") {
+			Button.clickSave();
+		}
+
+		task ("Then a success alert appears.") {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	@description = "LPS-183941. Confirm the pagination can be created with one pagination item"

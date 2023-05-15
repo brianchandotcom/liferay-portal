@@ -256,7 +256,7 @@ definition {
 		Button.clickPublish();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#WARNING_FEEDBACK",
+			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 			value1 = "This field is required.");
 
 		CKEditor.addContentInWebContent(

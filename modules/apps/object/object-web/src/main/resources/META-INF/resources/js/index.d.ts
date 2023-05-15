@@ -256,6 +256,7 @@ type ObjectFieldSettingName =
 	| 'showFilesInDocumentsAndMedia'
 	| 'stateFlow'
 	| 'storageDLFolderPath'
+	| 'timeStorage'
 	| 'uniqueValues'
 	| 'uniqueValuesErrorMessage';
 

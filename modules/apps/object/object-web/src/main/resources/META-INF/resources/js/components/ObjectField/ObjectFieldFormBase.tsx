@@ -38,6 +38,7 @@ import {removeFieldSettings} from '../../utils/fieldSettings';
 import {toCamelCase} from '../../utils/string';
 import {AggregationFormBase} from './AggregationFormBase';
 import {AttachmentFormBase} from './AttachmentFormBase';
+import {TimeStorage} from './TimeStorage';
 import {UniqueValues} from './UniqueValues';
 import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
@@ -105,6 +106,15 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 			{
 				name: 'showCounter',
 				value: false,
+			},
+		],
+	],
+	[
+		'DateTime',
+		[
+			{
+				name: 'timeStorage',
+				value: 'convertToUTC',
 			},
 		],
 	],
@@ -466,6 +476,16 @@ export default function ObjectFieldFormBase({
 						</div>
 					)}
 				</AutoComplete>
+			)}
+
+			{values.businessType === 'DateTime' && (
+				<TimeStorage
+					disabled={disabled}
+					objectFieldSettings={
+						values.objectFieldSettings as ObjectFieldSetting[]
+					}
+					setValues={setValues}
+				/>
 			)}
 
 			{children}

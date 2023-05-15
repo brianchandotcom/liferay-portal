@@ -60,6 +60,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				"shortName", objectDefinition.getShortName()
 			).put(
 				"siteKeyValuePair", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("site")
+			).put(
+				"storageTypes", objectDefinitionsDetailsDisplayContext.getStoragesJSONArray()
 			).build()
 		%>'
 	/>

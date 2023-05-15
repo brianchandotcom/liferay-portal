@@ -227,6 +227,7 @@ export default class DatePicker extends React.Component {
 					</div>
 
 					<ClayButton
+						aria-label={Liferay.Language.get('previous-month')}
 						className='button-root'
 						disabled={this.isPrevDisabled()}
 						displayType='secondary'
@@ -249,6 +250,7 @@ export default class DatePicker extends React.Component {
 					</ClayButton>
 
 					<ClayButton
+						aria-label={Liferay.Language.get('next-month')}
 						className='button-root'
 						data-testid='next-month'
 						disabled={this.isNextDisabled()}

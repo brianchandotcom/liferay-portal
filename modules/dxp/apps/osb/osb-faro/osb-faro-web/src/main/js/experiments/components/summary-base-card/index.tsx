@@ -74,6 +74,9 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 							{modals.length > 1 && (
 								<>
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'down'
+										)}
 										className='button-root'
 										displayType='secondary'
 										onClick={() =>
@@ -139,6 +142,7 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 							onActiveChange={setCardActionActive}
 							trigger={
 								<ClayButton
+									aria-label={Liferay.Language.get('menu')}
 									className='button-root text-white'
 									displayType='unstyled'
 								>

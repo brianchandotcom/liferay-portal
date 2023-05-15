@@ -222,6 +222,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 			return (
 				<Nav>
 					<ClayButton
+						aria-label={Liferay.Language.get('delete')}
 						borderless
 						className='button-root nav-btn'
 						displayType='secondary'
@@ -293,6 +294,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 
 	const renderInlineRowActions = ({data: {id}, itemsSelected}) => (
 		<ClayButton
+			aria-label={Liferay.Language.get('delete')}
 			borderless
 			className='button-root'
 			disabled={itemsSelected}

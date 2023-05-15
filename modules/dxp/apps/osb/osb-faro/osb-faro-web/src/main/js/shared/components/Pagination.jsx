@@ -54,7 +54,11 @@ class PaginationEllipsis extends React.Component {
 				className={getCN('dropdown-root', className)}
 				closeOnClick
 				trigger={
-					<ClayButton className='page-link' displayType='unstyled'>
+					<ClayButton
+						aria-label={Liferay.Language.get('see-more')}
+						className='page-link'
+						displayType='unstyled'
+					>
 						{'...'}
 					</ClayButton>
 				}

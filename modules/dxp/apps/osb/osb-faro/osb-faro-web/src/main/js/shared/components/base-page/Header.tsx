@@ -95,6 +95,7 @@ const PageActions: React.FC<IPageActionsProps> = ({
 				alignmentPosition={Align.BottomRight}
 				trigger={
 					<ClayButton
+						aria-label={label && Liferay.Language.get('menu')}
 						disabled={disabled}
 						displayType={label.length ? 'primary' : 'unstyled'}
 					>

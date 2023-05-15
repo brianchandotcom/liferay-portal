@@ -128,6 +128,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 
 					<Input.Inset position='after'>
 						<ClayButton
+							aria-label={Liferay.Language.get('choose-a-date')}
 							className='button-root'
 							displayType='unstyled'
 							onClick={handleClick}

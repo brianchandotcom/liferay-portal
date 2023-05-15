@@ -20,6 +20,7 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>(
 			{children}
 
 			<ClayButton
+				aria-label={Liferay.Language.get('close')}
 				className='button-root remove-button'
 				displayType='unstyled'
 				onClick={() => onCloseClick()}

@@ -100,6 +100,7 @@ export const AttributeBreakdownSection: React.FC<IAttributeBreakdownSectionProps
 							onAttributeSelect={onAttributeSelect}
 							trigger={
 								<ClayButton
+									aria-label={Liferay.Language.get('add')}
 									borderless
 									className='button-root add-attribute'
 									displayType='secondary'

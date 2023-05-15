@@ -66,6 +66,7 @@ const RowActions: React.FC<IRowActionsProps> = ({
 				closeOnClick
 				trigger={
 					<ClayButton
+						aria-label={Liferay.Language.get('menu')}
 						className='component-action'
 						displayType='unstyled'
 					>

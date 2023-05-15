@@ -108,6 +108,7 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 
 			{report && (
 				<ClayButton
+					aria-label={Liferay.Language.get('configure-email-reports')}
 					borderless
 					className='button-root'
 					disabled={!sitesSynced}

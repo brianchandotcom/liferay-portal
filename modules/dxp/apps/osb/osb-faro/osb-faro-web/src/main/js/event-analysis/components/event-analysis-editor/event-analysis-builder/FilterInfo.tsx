@@ -25,6 +25,7 @@ const FilterInfo: React.FC<IFilterInfoProps> = ({
 			{name}
 
 			<ClayButton
+				aria-label={Liferay.Language.get('edit')}
 				borderless
 				className='button-root'
 				displayType='secondary'

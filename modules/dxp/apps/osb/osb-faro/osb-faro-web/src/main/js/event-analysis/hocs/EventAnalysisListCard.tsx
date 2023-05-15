@@ -163,6 +163,7 @@ const EventAnalysisListCard: React.FC<PropsFromRedux> = ({
 			return (
 				<Nav>
 					<ClayButton
+						aria-label={Liferay.Language.get('delete')}
 						borderless
 						className='button-root'
 						displayType='secondary'

@@ -49,6 +49,7 @@ const EventSection: React.FC<IEventSectionProps> = ({
 						onEventChange={handleEventChange}
 						trigger={
 							<ClayButton
+								aria-label={Liferay.Language.get('add')}
 								className='button-root add-event-button'
 								size='sm'
 							>

@@ -286,6 +286,7 @@ const UserList: React.FC<IUserListProps> = ({
 				</ClayButton>
 
 				<ClayButton
+					aria-label={Liferay.Language.get('delete')}
 					borderless
 					className='button-root'
 					displayType='secondary'

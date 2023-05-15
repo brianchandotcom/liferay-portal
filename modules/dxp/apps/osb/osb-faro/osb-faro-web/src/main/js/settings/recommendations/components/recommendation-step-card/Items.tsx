@@ -198,6 +198,9 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 									renderInlineRowActions={({data, items}) => (
 										<span>
 											<ClayButton
+												aria-label={Liferay.Language.get(
+													'remove'
+												)}
 												borderless
 												className='button-root'
 												displayType='secondary'

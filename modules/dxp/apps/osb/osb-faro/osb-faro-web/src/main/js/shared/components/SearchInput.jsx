@@ -106,6 +106,11 @@ export default class SearchInput extends React.Component {
 
 					<Input.Inset position='after'>
 						<ClayButton
+							aria-label={
+								value
+									? Liferay.Language.get('clear')
+									: Liferay.Language.get('search')
+							}
 							className='button-root'
 							disabled={disabled}
 							displayType='unstyled'

@@ -34,6 +34,7 @@ const Header: React.FC<IHeaderProps> = ({
 
 		{!!onClose && (
 			<ClayButton
+				aria-label={Liferay.Language.get('close')}
 				className='button-root close'
 				displayType='secondary'
 				onClick={onClose}

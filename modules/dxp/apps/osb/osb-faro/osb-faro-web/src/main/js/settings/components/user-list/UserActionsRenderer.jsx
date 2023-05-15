@@ -117,6 +117,7 @@ export default class UserActionsRenderer extends React.Component {
 							</ClayButton>
 
 							<ClayButton
+								aria-label={Liferay.Language.get('delete')}
 								borderless
 								className='button-root'
 								disabled={itemsSelected}

@@ -33,6 +33,7 @@ const TrainingItem: React.FC<ITrainingItemProps> = ({
 }) => (
 	<div className='training-item-root d-flex align-items-baseline'>
 		<ClayButton
+			aria-label={Liferay.Language.get('watch')}
 			borderless
 			className='button-root'
 			displayType='secondary'
@@ -105,6 +106,7 @@ const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 
 				<div className='total-training-urls d-flex align-items-center'>
 					<ClayButton
+						aria-label={Liferay.Language.get('watch')}
 						borderless
 						className='button-root'
 						displayType='secondary'

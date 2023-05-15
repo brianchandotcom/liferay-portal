@@ -47,6 +47,7 @@ const renderAddButton = (
 	) {
 		return (
 			<ClayButton
+				aria-label={Liferay.Language.get('add')}
 				borderless
 				className='button-root ml-1'
 				displayType='secondary'
@@ -246,6 +247,9 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 														/>
 														{authorized && (
 															<ClayButton
+																aria-label={Liferay.Language.get(
+																	'delete'
+																)}
 																borderless
 																className='button-root ml-1'
 																disabled={

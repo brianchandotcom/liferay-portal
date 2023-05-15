@@ -306,6 +306,11 @@ export default class Toolbar extends React.Component {
 					<Nav.Item>
 						{onOrderIOMapChange ? (
 							<ClayButton
+								aria-label={
+									ascending
+										? Liferay.Language.get('ascending')
+										: Liferay.Language.get('descending')
+								}
 								borderless
 								className='btn-root nav-link nav-link-monospaced'
 								disabled={disabled}

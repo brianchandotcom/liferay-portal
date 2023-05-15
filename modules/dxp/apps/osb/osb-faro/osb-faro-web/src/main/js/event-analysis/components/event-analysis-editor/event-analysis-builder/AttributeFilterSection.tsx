@@ -66,6 +66,7 @@ export const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 						eventId={eventId}
 						trigger={
 							<ClayButton
+								aria-label={Liferay.Language.get('add')}
 								borderless
 								className='button-root add-attribute'
 								displayType='secondary'

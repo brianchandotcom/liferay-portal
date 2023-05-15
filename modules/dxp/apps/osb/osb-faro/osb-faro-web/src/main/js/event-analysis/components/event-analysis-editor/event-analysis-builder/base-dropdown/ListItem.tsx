@@ -77,6 +77,7 @@ const ListItem: React.FC<IListItemProps> = ({
 
 				{!!onOptionsClick && (
 					<ClayButton
+						aria-label={Liferay.Language.get('control-panel')}
 						borderless
 						className='button-root options-button'
 						disabled={disabled}

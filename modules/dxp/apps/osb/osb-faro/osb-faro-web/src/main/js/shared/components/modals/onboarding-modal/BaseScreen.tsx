@@ -23,6 +23,7 @@ const BaseScreen: React.FC<IBaseScreenProps> = ({
 		<div className='header'>
 			<div className='d-flex justify-content-end'>
 				<ClayButton
+					aria-label={Liferay.Language.get('close')}
 					className='button-root close'
 					displayType='secondary'
 					onClick={onClose}

@@ -216,6 +216,9 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
 								<div className='btn-group-item'>
 									<ClayButton
+										aria-label={Liferay.Language.get(
+											'view-members'
+										)}
 										borderless
 										className='button-root preview-criteria'
 										data-testid='preview-criteria-button'

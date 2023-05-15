@@ -111,6 +111,7 @@ export default class ScrollableSection extends React.Component<
 				{showScroll && (
 					<div className='scroll-back-container d-flex align-items-center'>
 						<ClayButton
+							aria-label={Liferay.Language.get('scroll-left')}
 							borderless
 							className='button-root'
 							displayType='secondary'
@@ -138,6 +139,7 @@ export default class ScrollableSection extends React.Component<
 				{showScroll && (
 					<div className='scroll-forward-container d-flex align-items-center'>
 						<ClayButton
+							aria-label={Liferay.Language.get('scroll-right')}
 							borderless
 							className='button-root'
 							displayType='secondary'

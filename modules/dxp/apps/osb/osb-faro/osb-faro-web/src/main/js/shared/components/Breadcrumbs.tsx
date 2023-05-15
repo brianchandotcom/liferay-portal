@@ -83,6 +83,7 @@ const Breadcrumb: React.FC<IBreadcrumbProps> = ({
 					containerElement='li'
 					trigger={
 						<ClayButton
+							aria-label={Liferay.Language.get('menu')}
 							className='breadcrumb-link'
 							displayType='unstyled'
 						>

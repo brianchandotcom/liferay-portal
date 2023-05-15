@@ -50,6 +50,11 @@ export default class PasswordInput extends React.Component<
 				inset={{
 					content: (
 						<ClayButton
+							aria-label={
+								showPassword
+									? Liferay.Language.get('hidden')
+									: Liferay.Language.get('watch')
+							}
 							className='button-root'
 							disabled={disabled}
 							displayType='unstyled'

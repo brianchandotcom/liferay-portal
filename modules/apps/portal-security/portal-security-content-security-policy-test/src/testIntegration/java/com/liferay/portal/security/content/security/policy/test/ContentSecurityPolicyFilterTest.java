@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.content.security.policy.internal.servlet.filter.test;
+package com.liferay.portal.security.content.security.policy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;

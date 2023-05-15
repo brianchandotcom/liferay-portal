@@ -72,7 +72,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Test Resolution");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/6");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/7");
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -95,7 +95,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Test Resolution");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/7");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/8");
 
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
@@ -129,7 +129,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Test Resolution Edit");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/5");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/6");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -142,7 +142,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Test Resolution Edit");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/6");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/7");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

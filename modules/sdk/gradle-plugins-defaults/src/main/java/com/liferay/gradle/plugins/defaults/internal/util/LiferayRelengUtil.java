@@ -16,11 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
-import java.lang.reflect.Method;
-
 import java.nio.file.Files;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -32,11 +31,10 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.PublishArtifact;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.artifacts.maven.MavenDeployer;
+import org.gradle.api.artifacts.repositories.ArtifactRepository;
+import org.gradle.api.internal.artifacts.repositories.DefaultMavenArtifactRepository;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
-import org.gradle.api.tasks.Upload;
+import org.gradle.api.publish.PublishingExtension;
 import org.gradle.util.GUtil;
 import org.gradle.util.VersionNumber;
 
@@ -47,8 +45,7 @@ import org.gradle.util.VersionNumber;
 public class LiferayRelengUtil {
 
 	public static String getArtifactRemoteURL(
-			Project project, PublishArtifact publishArtifact, boolean cdn)
-		throws Exception {
+		Project project, PublishArtifact publishArtifact, boolean cdn) {
 
 		StringBuilder sb = _getArtifactRemoteBaseURL(project, cdn);
 
@@ -420,31 +417,45 @@ public class LiferayRelengUtil {
 	}
 
 	private static StringBuilder _getArtifactRemoteBaseURL(
-			Project project, boolean cdn)
-		throws Exception {
+		Project project, boolean cdn) {
 
-		Upload upload = (Upload)GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+		String url = null;
 
-		RepositoryHandler repositoryHandler = upload.getRepositories();
+		PublishingExtension publishingExtension = GradleUtil.getExtension(
+			project, PublishingExtension.class);
 
-		MavenDeployer mavenDeployer = (MavenDeployer)repositoryHandler.getAt(
-			MavenRepositoryHandlerConvention.DEFAULT_MAVEN_DEPLOYER_NAME);
+		RepositoryHandler repositoryHandler =
+			publishingExtension.getRepositories();
 
-		Object repository = mavenDeployer.getRepository();
+		Iterator<ArtifactRepository> iterator = repositoryHandler.iterator();
 
-		// org.apache.maven.artifact.ant.RemoteRepository is not in the
-		// classpath
+		while (iterator.hasNext()) {
+			ArtifactRepository artifactRepository = iterator.next();
 
-		Class<?> repositoryClass = repository.getClass();
+			if (artifactRepository instanceof DefaultMavenArtifactRepository) {
+				DefaultMavenArtifactRepository defaultMavenArtifactRepository =
+					(DefaultMavenArtifactRepository)artifactRepository;
 
-		Method getUrlMethod = repositoryClass.getMethod("getUrl");
+				String curURL = String.valueOf(
+					defaultMavenArtifactRepository.getUrl());
 
-		String url = (String)getUrlMethod.invoke(repository);
+				if (!curURL.contains("liferay.com")) {
+					continue;
+				}
 
-		if (cdn) {
-			url = url.replace(
-				"repository.liferay.com", "repository-cdn.liferay.com");
+				url = curURL;
+
+				if (cdn) {
+					url = curURL.replace(
+						"repository.liferay.com", "repository-cdn.liferay.com");
+				}
+
+				break;
+			}
+		}
+
+		if (url == null) {
+			throw new GradleException("Unable to get Nexus repository url");
 		}
 
 		StringBuilder sb = new StringBuilder(url);

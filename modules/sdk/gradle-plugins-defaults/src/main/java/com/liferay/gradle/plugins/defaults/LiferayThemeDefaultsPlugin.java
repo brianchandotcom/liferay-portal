@@ -34,17 +34,14 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.util.GUtil;
 
@@ -72,10 +69,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
 		_applyPlugins(project);
-
-		// GRADLE-2427
-
-		_addTaskInstall(project);
 
 		_applyConfigScripts(project);
 
@@ -117,8 +110,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.excludeTasksWithProperty(
 			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
-			true, MavenPlugin.INSTALL_TASK_NAME,
-			BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+			true, MavenPublishPlugin.PUBLISH_LOCAL_LIFECYCLE_TASK_NAME,
+			PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -139,10 +132,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 						project);
 
 					// setProjectSnapshotVersion must be called before
-					// configureTaskUploadArchives, because the latter one needs
+					// configureTaskPublish, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskUploadArchives(project, updateVersionTask);
+					_configureTaskPublish(project, updateVersionTask);
 				}
 
 			});
@@ -223,21 +216,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		copy.setIncludeEmptyDirs(false);
 
 		return copy;
-	}
-
-	private Upload _addTaskInstall(Project project) {
-		Upload upload = GradleUtil.addTask(
-			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class);
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
-
-		upload.setConfiguration(configuration);
-		upload.setDescription(
-			"Installs the '" + configuration.getName() +
-				"' artifacts into the local Maven repository.");
-
-		return upload;
 	}
 
 	private ReplaceRegexTask _addTaskUpdateVersion(
@@ -506,11 +484,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskUploadArchives(
+	private void _configureTaskPublish(
 		final Project project, Task updateVersionTask) {
 
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
 
 		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
 			Action<Task> action = new Action<Task>() {
@@ -524,11 +502,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			};
 
-			uploadArchivesTask.doFirst(action);
+			publishTask.doFirst(action);
 		}
 
 		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-			uploadArchivesTask.finalizedBy(updateVersionTask);
+			publishTask.finalizedBy(updateVersionTask);
 		}
 	}
 

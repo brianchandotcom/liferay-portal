@@ -22,7 +22,7 @@ import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.Convention;
-import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskProvider;
 
@@ -120,7 +120,8 @@ public class LiferayAntPlugin implements Plugin<Project> {
 			@Override
 			public String transform(String targetName) {
 				if (targetName.equals(BasePlugin.CLEAN_TASK_NAME) ||
-					targetName.equals(MavenPlugin.INSTALL_TASK_NAME)) {
+					targetName.equals(
+						PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME)) {
 
 					targetName = "ant" + StringUtil.capitalize(targetName);
 				}

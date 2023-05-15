@@ -80,11 +80,46 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "back-button-mdf-claim"
+										"key": "back-button"
 									},
 									"fragmentConfig": {
+										"buttonSize": "",
+										"inverted": false,
+										"style": "neutral",
+										"type": "ghost",
+										"uppercase": false
 									},
 									"fragmentFields": [
+										{
+											"id": "link",
+											"value": {
+												"fragmentLink": {
+													"value": {
+														"href": {
+															"mapping": {
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.model.Layout",
+																	"fields": [
+																		{
+																			"fieldName": "friendlyURL",
+																			"fieldValue": "/marketing/mdf-claims"
+																		},
+																		{
+																			"fieldName": "privatePage",
+																			"fieldValue": "false"
+																		},
+																		{
+																			"fieldName": "siteKey",
+																			"fieldValue": "[$GROUP_KEY$]"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												}
+											}
+										}
 									],
 									"indexed": true
 								},

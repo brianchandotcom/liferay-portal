@@ -74,14 +74,22 @@ definition {
 		return ${curl};
 	}
 
-	macro _filterDocumentInAssetLibrary {
-		Variables.assertDefined(parameterList = "${depotName},${filtervalue}");
+	macro _filterDocument {
+		Variables.assertDefined(parameterList = ${filtervalue});
 
-		var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (isSet(depotName)) {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
+
+			var api = "asset-libraries/${assetLibraryId}/documents?filter=${filtervalue}";
+		}
+		else {
+			var api = "sites/${siteId}/documents/?filter=${filtervalue}";
+		}
+
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/documents?filter=${filtervalue} \
+			${portalURL}/o/headless-delivery/v1.0/${api} \
 				-u test@liferay.com:test \
 				-H accept: application/json
 		''';
@@ -257,9 +265,10 @@ definition {
 	macro assertProperDocumentTotalCount {
 		Variables.assertDefined(parameterList = ${expectedDocumentTotalCount});
 
-		var response = DocumentAPI._filterDocumentInAssetLibrary(
+		var response = DocumentAPI._filterDocument(
 			depotName = ${depotName},
-			filtervalue = ${filtervalue});
+			filtervalue = ${filtervalue},
+			siteId = ${siteId});
 
 		var actualDocumentTotalCount = JSONUtil.getWithJSONPath(${response}, "$..['totalCount']");
 

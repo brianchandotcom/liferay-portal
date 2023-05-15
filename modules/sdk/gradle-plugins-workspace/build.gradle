@@ -226,7 +226,7 @@ gradleTest {
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }
 
 liferayOSGi {

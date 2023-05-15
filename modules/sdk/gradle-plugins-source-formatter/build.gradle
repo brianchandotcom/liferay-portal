@@ -30,7 +30,7 @@ gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
 
-	versions "5.6.4", gradleVersion
+	versions gradleVersion
 }
 
 pluginBundle {

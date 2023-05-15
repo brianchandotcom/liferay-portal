@@ -38,10 +38,10 @@ public enum DataType {
 	LONG("LONG", Long.class, "Long", Types.BIGINT),
 	STRING("VARCHAR(280)", String.class, "String", Types.VARCHAR);
 
-	public static String getDBType(String name) {
+	public static String getDataType(String name) {
 		DataType dataType = _getDataType(name);
 
-		return dataType._dbType;
+		return dataType._dataType;
 	}
 
 	public static Class<?> getJavaClass(String name) {
@@ -67,15 +67,15 @@ public enum DataType {
 	}
 
 	private DataType(
-		String dbType, Class<?> javaClass, String name, Integer sqlType) {
+		String dataType, Class<?> javaClass, String name, Integer sqlType) {
 
-		_dbType = dbType;
+		_dataType = dataType;
 		_javaClass = javaClass;
 		_name = name;
 		_sqlType = sqlType;
 	}
 
-	private final String _dbType;
+	private final String _dataType;
 	private final Class<?> _javaClass;
 	private final String _name;
 	private final Integer _sqlType;

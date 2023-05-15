@@ -2842,8 +2842,8 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 
 		Click(
-			key_text = "times-circle",
-			locator1 = "Icon#ANY");
+			key_entryName = "userfn1",
+			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
 
 		Alert.viewMutedMessage(muteMessage = "Assign a user to this person account.");
 

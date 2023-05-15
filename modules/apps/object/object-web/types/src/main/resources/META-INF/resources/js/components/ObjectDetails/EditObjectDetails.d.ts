@@ -37,6 +37,7 @@ interface EditObjectDetailsProps {
 	portletNamespace: string;
 	shortName: string;
 	siteKeyValuePair: KeyValuePair[];
+	storageTypes: LabelValueObject[];
 }
 export default function EditObjectDetails({
 	backURL,
@@ -53,5 +54,6 @@ export default function EditObjectDetails({
 	portletNamespace,
 	shortName,
 	siteKeyValuePair,
+	storageTypes,
 }: EditObjectDetailsProps): JSX.Element;
 export {};

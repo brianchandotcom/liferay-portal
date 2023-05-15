@@ -29,6 +29,7 @@ import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
 import {AccountRestrictionContainer} from './AccountRestrictionContainer';
+import {ExternalDataSourceContainer} from './ExternalDataSourceContainer';
 import {TranslationsContainer} from './TranslationsContainer';
 
 export type KeyValuePair = {
@@ -53,6 +54,7 @@ interface EditObjectDetailsProps {
 	portletNamespace: string;
 	shortName: string;
 	siteKeyValuePair: KeyValuePair[];
+	storageTypes: LabelValueObject[];
 }
 
 function setAccountRelationshipFieldMandatory(
@@ -92,6 +94,7 @@ export default function EditObjectDetails({
 	portletNamespace,
 	shortName,
 	siteKeyValuePair,
+	storageTypes,
 }: EditObjectDetailsProps) {
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 
@@ -251,6 +254,13 @@ export default function EditObjectDetails({
 						}
 						objectFields={objectFields}
 						setValues={setValues}
+						values={values}
+					/>
+
+					<ExternalDataSourceContainer
+						errors={errors}
+						setValues={setValues}
+						storageTypes={storageTypes}
 						values={values}
 					/>
 

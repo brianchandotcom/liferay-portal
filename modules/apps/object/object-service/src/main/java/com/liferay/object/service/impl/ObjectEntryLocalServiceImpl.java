@@ -442,7 +442,7 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectDefinition.isEnableLocalization()) {
 			_deleteFromTable(
-				objectDefinition.getL10nDBTableName(),
+				objectDefinition.getLocalizationDBTableName(),
 				objectDefinition.getPKObjectFieldDBColumnName(),
 				objectEntry.getObjectEntryId());
 		}

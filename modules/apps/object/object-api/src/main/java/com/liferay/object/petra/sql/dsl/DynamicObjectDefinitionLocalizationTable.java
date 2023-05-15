@@ -38,12 +38,12 @@ public class DynamicObjectDefinitionLocalizationTable
 	public DynamicObjectDefinitionLocalizationTable(
 		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
 
-		super(objectDefinition.getL10nDBTableName(), () -> null);
+		super(objectDefinition.getLocalizationDBTableName(), () -> null);
 
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
 
-		_tableName = objectDefinition.getL10nDBTableName();
+		_tableName = objectDefinition.getLocalizationDBTableName();
 
 		String primaryKeyColumnName = TextFormatter.format(
 			objectDefinition.getShortName() + "_l10nId", TextFormatter.I);

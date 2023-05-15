@@ -2278,13 +2278,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, Layout> _addOrUpdateLayout(
+			Map<String, String> layoutIdsStringUtilReplaceValues,
 			long parentLayoutId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		JSONObject pageJSONObject = _jsonFactory.createJSONObject(
-			SiteInitializerUtil.read(
-				parentResourcePath + "page.json", _servletContext));
+			_replace(
+				SiteInitializerUtil.read(
+					parentResourcePath + "page.json", _servletContext),
+				layoutIdsStringUtilReplaceValues));
 
 		Map<Locale, String> nameMap = new HashMap<>(
 			SiteInitializerUtil.toMap(pageJSONObject.getString("name_i18n")));
@@ -2298,7 +2301,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
 
-		if (Objects.equals(type, "url")) {
+		if (Objects.equals(type, "link_to_layout")) {
+			type = LayoutConstants.TYPE_LINK_TO_LAYOUT;
+		}
+		else if (Objects.equals(type, "url")) {
 			type = LayoutConstants.TYPE_URL;
 		}
 		else if (Objects.equals(type, "widget")) {
@@ -2363,6 +2369,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				layout.getPlid(), pageJSONObject.getInt("priority"));
 		}
 
+		layoutIdsStringUtilReplaceValues.put(
+			"LAYOUT_ID:", String.valueOf(layout.getLayoutId()));
+
 		Map<String, Layout> layouts = HashMapBuilder.<String, Layout>put(
 			parentResourcePath, layout
 		).build();
@@ -2395,7 +2404,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (resourcePath.endsWith("/")) {
 				layouts.putAll(
 					_addOrUpdateLayout(
-						layout.getLayoutId(), resourcePath, serviceContext));
+						layoutIdsStringUtilReplaceValues, layout.getLayoutId(),
+						resourcePath, serviceContext));
 			}
 		}
 
@@ -2426,8 +2436,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (resourcePath.endsWith("/")) {
 				layouts.putAll(
 					_addOrUpdateLayout(
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, resourcePath,
-						serviceContext));
+						null, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+						resourcePath, serviceContext));
 			}
 		}
 

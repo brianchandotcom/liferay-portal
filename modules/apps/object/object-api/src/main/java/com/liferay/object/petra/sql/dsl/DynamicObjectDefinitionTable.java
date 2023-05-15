@@ -92,7 +92,7 @@ public class DynamicObjectDefinitionTable
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");
-			sb.append(DataType.getDBType(objectField.getDBType()));
+			sb.append(DataType.getDataType(objectField.getDBType()));
 			sb.append(
 				DynamicObjectDefinitionTableUtil.getSQLColumnNull(
 					objectField.getDBType()));

@@ -329,9 +329,7 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Delete");
+		ClickNoError(locator1 = "Icon#DELETE");
 
 		Click(locator1 = "Button#MODAL_DELETE");
 

@@ -26,6 +26,8 @@ definition {
 			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
 
 			var response = DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "DM Document Title",
+				fileName = "FileName.jpg",
 				filePath = ${filePath},
 				siteId = ${siteId});
 
@@ -67,12 +69,12 @@ definition {
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 
 			AssertElementNotPresent(
-				key_dmDocumentTitle = "Document_1.jpg",
+				key_dmDocumentTitle = "DM Document Title",
 				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 
-			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");
+			DMDocument.downloadViaURL(dmDocumentTitle = "dm-document-title");
 
-			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+			DMDocument.assertFileNameFromTempFolder(fileName = "FileName.jpg");
 		}
 	}
 
@@ -130,6 +132,42 @@ definition {
 			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");
 
 			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
+	}
+
+	@priority = 3
+	test CanNotAddDocumentWithInvalidFileName {
+		task ("When a put request is made to add a document with an invalid file name") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var response = DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "DM Document Title",
+				fileName = "FileName?.jpg",
+				filePath = ${filePath},
+				siteId = ${siteId});
+		}
+
+		task ("Then file name and title can not be added") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "BAD_REQUEST");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Invalid file name FileName?.jpg");
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			AssertElementNotPresent(
+				key_dmDocumentTitle = "DM Document Title",
+				locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 		}
 	}
 
@@ -237,6 +275,114 @@ definition {
 			DMDocument.downloadViaURL(dmDocumentTitle = "document_1-jpg");
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanNotUpdateDocumentWithInvalidFileName {
+		task ("Given a document in a site") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var response = DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "DM Document Title",
+				fileName = "FileName.jpg",
+				filePath = ${filePath},
+				siteId = ${siteId});
+		}
+
+		task ("When a put request is made to update a document with an invalid file name") {
+			var documentId = JSONPathUtil.getIdValue(response = ${response});
+
+			var response = DocumentAPI.updateDocumentByDocumentId(
+				documentId = ${documentId},
+				fileName = "FileNameEdit?.jpg",
+				title = "DM Document Title Edit");
+
+			echo("####After updating the document: '${response}'");
+		}
+
+		task ("Then file name and title can not be updated") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "BAD_REQUEST");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "Invalid file name FileNameEdit?.jpg");
+
+			var response = DocumentAPI.getDocumentsByDifferentParameters(documentId = ${documentId});
+
+			var documentFileName = DocumentAPI.getFileNameOfDocument(responseToParse = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${documentFileName},
+				expected = "FileName.jpg");
+
+			var documentTitle = DocumentAPI.getTitleOfDocument(responseToParse = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${documentTitle},
+				expected = "DM Document Title");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test CanUpdateDocumentFileName {
+		task ("Given a document in a site") {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+			var response = DocumentAPI.addDocumentWithFileInSite(
+				dmDocumentTitle = "DM Document Title",
+				fileName = "FileName.jpg",
+				filePath = ${filePath},
+				siteId = ${siteId});
+		}
+
+		task ("When a put request is made to update document file name and title") {
+			var documentId = JSONPathUtil.getIdValue(response = ${response});
+
+			var response = DocumentAPI.updateDocumentByDocumentId(
+				documentId = ${documentId},
+				fileName = "FileNameEdit.jpg",
+				title = "DM Document Title Edit");
+
+			echo("####After updating the document: '${response}'");
+		}
+
+		task ("Then I receive a correct body response with updated file name and title") {
+			var documentFileName = DocumentAPI.getFileNameOfDocument(responseToParse = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${documentFileName},
+				expected = "FileNameEdit.jpg");
+
+			var documentTitle = DocumentAPI.getTitleOfDocument(responseToParse = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${documentTitle},
+				expected = "DM Document Title Edit");
+
+			var response = DocumentAPI.getDocumentsByDifferentParameters(documentId = ${documentId});
+
+			var documentFileName = DocumentAPI.getFileNameOfDocument(responseToParse = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${documentFileName},
+				expected = "FileNameEdit.jpg");
+
+			var documentTitle = DocumentAPI.getTitleOfDocument(responseToParse = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${documentTitle},
+				expected = "DM Document Title Edit");
 		}
 	}
 

@@ -28,6 +28,8 @@ definition {
 
 			var documentId = DocumentAPI.getIdOfCreatedDocument(
 				depotName = "Test Depot Name",
+				dmDocumentTitle = "DM Document Title",
+				fileName = "FileName.jpg",
 				filePath = ${filePath});
 
 			var response = DocumentAPI.getDMPermissionsWithDocumentID(documentId = ${documentId});
@@ -87,15 +89,15 @@ definition {
 				pageName = "Documents and Media Page",
 				siteName = "Site Name");
 
-			DMDocument.viewPG(dmDocumentTitle = "Document_1.jpg");
+			DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 
 			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 
 			DMDocument.downloadViaURL(
-				dmDocumentTitle = "document_1-jpg",
+				dmDocumentTitle = "dm-document-title",
 				siteURLKey = "asset-library-${depotId}");
 
-			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+			DMDocument.assertFileNameFromTempFolder(fileName = "FileName.jpg");
 		}
 	}
 

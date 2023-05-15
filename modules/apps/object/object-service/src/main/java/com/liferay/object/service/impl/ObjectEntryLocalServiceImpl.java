@@ -440,10 +440,12 @@ public class ObjectEntryLocalServiceImpl
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),
 			values);
 
-		Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
-			objectDefinition.getClassName());
+		if (objectDefinition.isActive()) {
+			Indexer<ObjectEntry> indexer = IndexerRegistryUtil.getIndexer(
+				objectDefinition.getClassName());
 
-		indexer.delete(objectEntry);
+			indexer.delete(objectEntry);
+		}
 
 		ObjectActionThreadLocal.clearObjectEntryIdsMap();
 

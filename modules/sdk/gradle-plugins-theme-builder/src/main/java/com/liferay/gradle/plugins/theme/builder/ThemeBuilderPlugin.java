@@ -22,6 +22,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTreeElement;
@@ -291,6 +292,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 			});
 
+		war.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
 		war.setIncludeEmptyDirs(false);
 	}
 

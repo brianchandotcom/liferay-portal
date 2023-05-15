@@ -24,6 +24,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
@@ -387,6 +388,9 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		}
 
 		if (buildWSDLTask.isIncludeWSDLs() && (processResourcesTask != null)) {
+			processResourcesTask.setDuplicatesStrategy(
+				DuplicatesStrategy.INCLUDE);
+
 			processResourcesTask.into(
 				"wsdl",
 				new Closure<Void>(project) {

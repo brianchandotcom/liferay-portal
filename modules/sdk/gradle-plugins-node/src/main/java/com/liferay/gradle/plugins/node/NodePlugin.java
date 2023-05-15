@@ -48,6 +48,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -765,6 +766,9 @@ public class NodePlugin implements Plugin<Project> {
 			}
 
 			processResourcesCopy.dependsOn(packageRunBuildTask);
+
+			processResourcesCopy.setDuplicatesStrategy(
+				DuplicatesStrategy.INCLUDE);
 
 			processResourcesCopy.from(
 				new Callable<File>() {

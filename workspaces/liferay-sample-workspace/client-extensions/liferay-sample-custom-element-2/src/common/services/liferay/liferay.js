@@ -4,16 +4,16 @@ export const Liferay = window.Liferay || {
 		getBuiltInRedirectURL: () => '',
 		getIntrospectURL: () => '',
 		getTokenURL: () => '',
-		getUserAgentApplication: (serviceName) => {},
+		getUserAgentApplication: (_serviceName) => {},
 	},
 	OAuth2Client: {
-		FromParameters: (options) => {
+		FromParameters: (_options) => {
 			return {};
 		},
-		FromUserAgentApplication: (userAgentApplicationId) => {
+		FromUserAgentApplication: (_userAgentApplicationId) => {
 			return {};
 		},
-		fetch: (url, options = {}) => {},
+		fetch: (_url, _options = {}) => {},
 	},
 	ThemeDisplay: {
 		getCompanyGroupId: () => 0,
@@ -24,4 +24,4 @@ export const Liferay = window.Liferay || {
 		},
 	},
 	authToken: '',
-}
+};

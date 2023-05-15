@@ -1044,6 +1044,14 @@ public class CommerceOrderContentDisplayContext {
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
 	}
 
+	public boolean hasManageQuotePermission() {
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CommerceOrderActionKeys.MANAGE_QUOTES);
+	}
+
 	public boolean hasModelPermission(
 			CommerceOrder commerceOrder, String actionId)
 		throws PortalException {
@@ -1137,7 +1145,13 @@ public class CommerceOrderContentDisplayContext {
 	public boolean isShowProcessQuote() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
-		return _hasOrderStatusQuoteRequested(commerceOrder.getOrderStatus());
+		if (hasManageQuotePermission() &&
+			_hasOrderStatusQuoteRequested(commerceOrder.getOrderStatus())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowPurchaseOrderNumber() throws PortalException {

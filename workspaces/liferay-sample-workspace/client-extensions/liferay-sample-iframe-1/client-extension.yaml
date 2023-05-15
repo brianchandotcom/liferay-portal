@@ -1,4 +1,5 @@
 liferay-sample-iframe-1-counter-app:
     name: Counter App
+    portletCategoryName: category.client-extensions
     type: iframe
     url: https://arnab-datta.github.io/counter-app

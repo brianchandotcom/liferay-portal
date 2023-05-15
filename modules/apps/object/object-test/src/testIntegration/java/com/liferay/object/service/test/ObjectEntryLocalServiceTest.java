@@ -1116,6 +1116,25 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		_assertCount(0);
+
+		// Delete an entry of an inactive definition
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"firstName", "John"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey3"
+			).build());
+
+		_objectDefinition.setActive(false);
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
+
+		_assertCount(0);
 	}
 
 	@Test

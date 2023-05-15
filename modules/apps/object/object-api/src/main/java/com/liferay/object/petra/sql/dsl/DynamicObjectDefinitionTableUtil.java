@@ -14,6 +14,7 @@
 
 package com.liferay.object.petra.sql.dsl;
 
+import com.liferay.object.field.util.DBType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;

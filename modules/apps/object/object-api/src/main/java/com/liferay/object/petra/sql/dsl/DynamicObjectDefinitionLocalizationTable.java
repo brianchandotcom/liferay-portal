@@ -14,6 +14,7 @@
 
 package com.liferay.object.petra.sql.dsl;
 
+import com.liferay.object.field.util.DBType;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;

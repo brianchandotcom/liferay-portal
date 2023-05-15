@@ -1703,8 +1703,8 @@ definition {
 
 		if (isSet(vocabularyType)) {
 			Select(
-                locator1 = "AssetCategorization#VOCABULARY_SELECT_OPTION",
-                value1 = ${vocabularyType});
+				locator1 = "AssetCategorization#VOCABULARY_SELECT_OPTION",
+				value1 = ${vocabularyType});
 
 			PageEditor.waitForAutoSave();
 		}

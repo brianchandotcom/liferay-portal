@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.internal.order.status;
 
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
@@ -21,6 +22,8 @@ import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.Locale;
 
@@ -97,10 +100,14 @@ public class QuoteProcessedCommerceOrderStatusImpl
 	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if ((commerceOrder.getOrderStatus() ==
+		if (((commerceOrder.getOrderStatus() ==
 				CommerceOrderConstants.ORDER_STATUS_QUOTE_REQUESTED) ||
-			(commerceOrder.getOrderStatus() ==
-				CommerceOrderConstants.ORDER_STATUS_ON_HOLD)) {
+			 (commerceOrder.getOrderStatus() ==
+				 CommerceOrderConstants.ORDER_STATUS_ON_HOLD)) &&
+			_portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.MANAGE_QUOTES)) {
 
 			return true;
 		}
@@ -119,5 +126,10 @@ public class QuoteProcessedCommerceOrderStatusImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -1902,6 +1902,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							new File(destinationDir, rootDirName),
 							destinationDir);
 					}
+
+					if (copy.getDidWork()) {
+						_deleteUnversionedTomcatDir(
+							copy.getDestinationDir(), project);
+					}
 				}
 
 			});
@@ -1953,19 +1958,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		_configureCopySpecExpandTomcatVersion(copy, workspaceExtension);
-
-		copy.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					if (task.getDidWork()) {
-						_deleteUnversionedTomcatDir(
-							copy.getDestinationDir(), project);
-					}
-				}
-
-			});
 	}
 
 	private void _configureTaskCopyBundlePreserveTimestamps(Copy copy) {

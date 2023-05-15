@@ -431,295 +431,294 @@ definition {
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
-		
+
 		task ("Given an object with scope to a site") {
-				JSONCategory.addVocabulary(
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = ${vocabularyName1});
+
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
 					groupName = "Global",
-					title = ${vocabularyName1});
-
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = "Global",
-						title = "Public Global Category ${i}",
-						vocabularyName = ${vocabularyName1});
-				}
-
-				JSONCategory.addVocabulary(
-					groupName = "Global",
-					title = ${vocabularyName2},
-					visibility = "internal");
-
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = "Global",
-						title = "Internal Global Category ${i}",
-						vocabularyName = ${vocabularyName2});
-				}
-
-				JSONCategory.addVocabulary(
-					groupName = ${randomSiteName},
-					title = ${vocabularyName3});
-
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = ${randomSiteName},
-						title = "Public Site Name Category ${i}",
-						vocabularyName = ${vocabularyName3});
-				}
-
-				JSONCategory.addVocabulary(
-					groupName = ${randomSiteName},
-					title = ${vocabularyName4},
-					visibility = "internal");
-
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = ${randomSiteName},
-						title = "Internal Site Name Category ${i}",
-						vocabularyName = ${vocabularyName4});
-				}
-
-				ObjectAdmin.addObjectViaAPI(
-					labelName = ${labelName},
-					objectName = ${objectName},
-					panelCategoryKey = "site_administration.categorization",
-					pluralLabelName = "${labelName}s",
-					scope = "site");
-
-				ObjectAdmin.addObjectFieldViaAPI(
-					fieldBusinessType = "Text",
-					fieldLabelName = "Name",
-					fieldName = "name",
-					fieldType = "String",
-					isRequired = "false",
-					objectName = ${objectName});
-
-				ObjectAdmin.addObjectLayoutViaAPI(
-					layoutName = "Layout Name",
-					objectName = ${objectName});
-
-				ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
-
-				ObjectAdmin.openObjectAdmin();
-
-				ObjectPortlet.selectCustomObject(label = ${labelName});
-
-				ObjectAdmin.goToLayoutsTab();
-
-				ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
-
-				ObjectAdmin.markLayoutAsDefault();
-
-				ObjectAdmin.goToLayoutTabOnLayouts();
-
-				ObjectAdmin.addTabFieldsOnLayout(
-					blockName = "Block 1",
-					columnsNumber = 1,
-					fieldLabelName = "Name",
-					tabName = "Field Tab");
-
-				ObjectAdmin.addCategorizationOnLayoutTab();
-
-				Button.clickSave();
-
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Content Page Name",
-					type = "content");
-
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = ${randomSiteName});
-
-				PageEditor.addFragment(
-					collectionName = "Form Components",
-					fragmentName = "Form Container");
-
-				PageEditor.mapFormContainerToObject(contentType = ${labelName});
-
-				PageEditor.viewInputStyle(
-					label = "Name",
-					showLabel = "true",
-					type = "text-input");
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Categories",
-					targetFragmentName = "Text Input");
-
-				PageEditor.clickConfigurableField(
-					fragmentName = "Categories",
-					index = 1);
-
-				PageEditor.configureFragment(vocabularyType = "Public");
-
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
-
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName3});
-
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Categories",
-					targetFragmentName = "Text Input");
-
-				PageEditor.clickConfigurableField(
-					fragmentName = "Categories",
-					index = 2);
-
-				PageEditor.configureFragment(vocabularyType = "Internal");
-
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName4});
-
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
-
-				PageEditor.publish();
+					title = "Public Global Category ${i}",
+					vocabularyName = ${vocabularyName1});
 			}
 
-			task ("When we add categories as input") {
-				ContentPagesNavigator.openViewContentPage(
-					pageName = "Test Content Page Name",
-					siteName = ${randomSiteName});
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = ${vocabularyName2},
+				visibility = "internal");
 
-				Type(
-					key_text = "Name",
-					locator1 = "TextInput#ANY",
-					value1 = "Test Name");
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
+					groupName = "Global",
+					title = "Internal Global Category ${i}",
+					vocabularyName = ${vocabularyName2});
 			}
 
-			task ("Then both site and global categories are shown") {
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+			JSONCategory.addVocabulary(
+				groupName = ${randomSiteName},
+				title = ${vocabularyName3});
 
-				AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
+					groupName = ${randomSiteName},
+					title = "Public Site Name Category ${i}",
+					vocabularyName = ${vocabularyName3});
+			}
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName3});
+			JSONCategory.addVocabulary(
+				groupName = ${randomSiteName},
+				title = ${vocabularyName4},
+				visibility = "internal");
 
-				AssetCategorization.selectCategories(categoryNameList = "Public Site Name Category 1,Public Site Name Category 2");
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
+					groupName = ${randomSiteName},
+					title = "Internal Site Name Category ${i}",
+					vocabularyName = ${vocabularyName4});
+			}
 
-				AssetCategorization.removeCategories(categoryNameList = "Public Site Name Category 1,Public Site Name Category 2,Public Global Category 1,Public Global Category 2");
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
+				scope = "site");
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${objectName});
 
-				AssetCategorization.gotoSelectCategory();
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = ${objectName});
 
-				for (var categoryName : list "Public Global Category 1,Public Global Category 2") {
-					Check.checkNotVisible(
-						key_nodeName = ${categoryName},
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
-				SelectFrameTop();
+			ObjectAdmin.openObjectAdmin();
 
-				Click(
-					key_modalTitle = ${vocabularyName1},
-					locator1 = "Button#CLOSE_MODAL");
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName3});
+			ObjectAdmin.goToLayoutsTab();
 
-				AssetCategorization.gotoSelectCategory();
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-				for (var categoryName : list "Public Site Name Category 1,Public Site Name Category 2") {
-					Check.checkNotVisible(
-						key_nodeName = ${categoryName},
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
+			ObjectAdmin.markLayoutAsDefault();
 
-				SelectFrameTop();
+			ObjectAdmin.goToLayoutTabOnLayouts();
 
-				Click(
-					key_modalTitle = ${vocabularyName3},
-					locator1 = "Button#CLOSE_MODAL");
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldLabelName = "Name",
+				tabName = "Field Tab");
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+			ObjectAdmin.addCategorizationOnLayoutTab();
 
-				AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+			Button.clickSave();
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName3});
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-				AssetCategorization.selectCategories(categoryNameList = "Public Site Name Category 1,Public Site Name Category 2");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
 
-				AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName4});
+			PageEditor.viewInputStyle(
+				label = "Name",
+				showLabel = "true",
+				type = "text-input");
 
-				AssetCategorization.selectCategories(categoryNameList = "Internal Site Name Category 1,Internal Site Name Category 2");
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Categories",
+				targetFragmentName = "Text Input");
 
-				AssetCategorization.removeCategories(categoryNameList = "Internal Site Name Category 1,Internal Site Name Category 2,Internal Global Category 1,Internal Global Category 2");
+			PageEditor.clickConfigurableField(
+				fragmentName = "Categories",
+				index = 1);
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+			PageEditor.configureFragment(vocabularyType = "Public");
 
-				AssetCategorization.gotoSelectCategory();
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
 
-				for (var categoryName : list "Internal Global Category 1,Internal Global Category 2") {
-					Check.checkNotVisible(
-						key_nodeName = ${categoryName},
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName3});
 
-				SelectFrameTop();
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Categories",
+				targetFragmentName = "Text Input");
 
-				Click(
-					key_modalTitle = ${vocabularyName2},
-					locator1 = "Button#CLOSE_MODAL");
+			PageEditor.clickConfigurableField(
+				fragmentName = "Categories",
+				index = 2);
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName4});
+			PageEditor.configureFragment(vocabularyType = "Internal");
 
-				AssetCategorization.gotoSelectCategory();
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName4});
 
-				for (var categoryName : list "Internal Site Name Category 1,Internal Site Name Category 2") {
-					Check.checkNotVisible(
-						key_nodeName = ${categoryName},
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
 
-				SelectFrameTop();
+			PageEditor.publish();
+		}
 
-				Click(
-					key_modalTitle = ${vocabularyName4},
-					locator1 = "Button#CLOSE_MODAL");
+		task ("When we add categories as input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
+		}
 
-				AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
+		task ("Then both site and global categories are shown") {
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName4});
+			AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
 
-				AssetCategorization.selectCategories(categoryNameList = "Internal Site Name Category 1,Internal Site Name Category 2");
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName3});
 
-				Button.clickSubmitButton();
+			AssetCategorization.selectCategories(categoryNameList = "Public Site Name Category 1,Public Site Name Category 2");
 
-				AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+			AssetCategorization.removeCategories(categoryNameList = "Public Site Name Category 1,Public Site Name Category 2,Public Global Category 1,Public Global Category 2");
 
-				ProductMenu.gotoPortlet(
-					category = "Categorization",
-					portlet = "${labelName}s");
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
 
-				ObjectPortlet.viewEntryDetails(entry = "Test Name");
+			AssetCategorization.gotoSelectCategory();
 
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName3});
+			for (var categoryName : list "Public Global Category 1,Public Global Category 2") {
+				Check.checkNotVisible(
+					key_nodeName = ${categoryName},
+					locator1 = "Treeview#NODE_CHECKBOX");
+			}
 
-				for (var i : list "1,2") {
-					AssetCategorization.viewCategory(categoryName = "Public Site Name Category ${i}");
-				}
+			SelectFrameTop();
 
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
+			Click(
+				key_modalTitle = ${vocabularyName1},
+				locator1 = "Button#CLOSE_MODAL");
 
-				for (var i : list "1,2") {
-					AssetCategorization.viewCategory(categoryName = "Public Global Category ${i}");
-				}
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName3});
 
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName4});
+			AssetCategorization.gotoSelectCategory();
 
-				for (var i : list "1,2") {
-					AssetCategorization.viewCategory(categoryName = "Internal Site Name Category ${i}");
-				}
+			for (var categoryName : list "Public Site Name Category 1,Public Site Name Category 2") {
+				Check.checkNotVisible(
+					key_nodeName = ${categoryName},
+					locator1 = "Treeview#NODE_CHECKBOX");
+			}
 
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
+			SelectFrameTop();
 
-				for (var i : list "1,2") {
-					AssetCategorization.viewCategory(categoryName = "Internal Global Category ${i}");
-				}
+			Click(
+				key_modalTitle = ${vocabularyName3},
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+
+			AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName3});
+
+			AssetCategorization.selectCategories(categoryNameList = "Public Site Name Category 1,Public Site Name Category 2");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+
+			AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName4});
+
+			AssetCategorization.selectCategories(categoryNameList = "Internal Site Name Category 1,Internal Site Name Category 2");
+
+			AssetCategorization.removeCategories(categoryNameList = "Internal Site Name Category 1,Internal Site Name Category 2,Internal Global Category 1,Internal Global Category 2");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+
+			AssetCategorization.gotoSelectCategory();
+
+			for (var categoryName : list "Internal Global Category 1,Internal Global Category 2") {
+				Check.checkNotVisible(
+					key_nodeName = ${categoryName},
+					locator1 = "Treeview#NODE_CHECKBOX");
+			}
+
+			SelectFrameTop();
+
+			Click(
+				key_modalTitle = ${vocabularyName2},
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName4});
+
+			AssetCategorization.gotoSelectCategory();
+
+			for (var categoryName : list "Internal Site Name Category 1,Internal Site Name Category 2") {
+				Check.checkNotVisible(
+					key_nodeName = ${categoryName},
+					locator1 = "Treeview#NODE_CHECKBOX");
+			}
+
+			SelectFrameTop();
+
+			Click(
+				key_modalTitle = ${vocabularyName4},
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+
+			AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName4});
+
+			AssetCategorization.selectCategories(categoryNameList = "Internal Site Name Category 1,Internal Site Name Category 2");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ProductMenu.gotoPortlet(
+				category = "Categorization",
+				portlet = "${labelName}s");
+
+			ObjectPortlet.viewEntryDetails(entry = "Test Name");
+
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName3});
+
+			for (var i : list "1,2") {
+				AssetCategorization.viewCategory(categoryName = "Public Site Name Category ${i}");
+			}
+
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
+
+			for (var i : list "1,2") {
+				AssetCategorization.viewCategory(categoryName = "Public Global Category ${i}");
+			}
+
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName4});
+
+			for (var i : list "1,2") {
+				AssetCategorization.viewCategory(categoryName = "Internal Site Name Category ${i}");
+			}
+
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
+
+			for (var i : list "1,2") {
+				AssetCategorization.viewCategory(categoryName = "Internal Global Category ${i}");
 			}
 		}
 	}
@@ -744,249 +743,309 @@ definition {
 		var objectName = "A${labelName}";
 
 		task ("Given an object with scope to an instance") {
-				JSONCategory.addVocabulary(
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = ${vocabularyName1});
+
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
 					groupName = "Global",
-					title = ${vocabularyName1});
+					title = "Public Global Category ${i}",
+					vocabularyName = ${vocabularyName1});
+			}
 
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = "Global",
-						title = "Public Global Category ${i}",
-						vocabularyName = ${vocabularyName1});
-				}
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = ${vocabularyName2},
+				visibility = "internal");
 
-				JSONCategory.addVocabulary(
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
 					groupName = "Global",
-					title = ${vocabularyName2},
-					visibility = "internal");
+					title = "Internal Global Category ${i}",
+					vocabularyName = ${vocabularyName2});
+			}
 
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = "Global",
-						title = "Internal Global Category ${i}",
-						vocabularyName = ${vocabularyName2});
-				}
+			JSONCategory.addVocabulary(
+				groupName = ${randomSiteName},
+				title = ${vocabularyName3});
 
-				JSONCategory.addVocabulary(
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
 					groupName = ${randomSiteName},
-					title = ${vocabularyName3});
+					title = "Public Site Name Category ${i}",
+					vocabularyName = ${vocabularyName3});
+			}
 
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = ${randomSiteName},
-						title = "Public Site Name Category ${i}",
-						vocabularyName = ${vocabularyName3});
-				}
+			JSONCategory.addVocabulary(
+				groupName = ${randomSiteName},
+				title = ${vocabularyName4},
+				visibility = "internal");
 
-				JSONCategory.addVocabulary(
+			for (var i : list "1,2") {
+				JSONCategory.addCategory(
 					groupName = ${randomSiteName},
-					title = ${vocabularyName4},
-					visibility = "internal");
+					title = "Internal Site Name Category ${i}",
+					vocabularyName = ${vocabularyName4});
+			}
 
-				for (var i : list "1,2") {
-					JSONCategory.addCategory(
-						groupName = ${randomSiteName},
-						title = "Internal Site Name Category ${i}",
-						vocabularyName = ${vocabularyName4});
-				}
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "control_panel.object",
+				pluralLabelName = "${labelName}s");
 
-				ObjectAdmin.addObjectViaAPI(
-					labelName = ${labelName},
-					objectName = ${objectName},
-					panelCategoryKey = "control_panel.object",
-					pluralLabelName = "${labelName}s");
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${objectName});
 
-				ObjectAdmin.addObjectFieldViaAPI(
-					fieldBusinessType = "Text",
-					fieldLabelName = "Name",
-					fieldName = "name",
-					fieldType = "String",
-					isRequired = "false",
-					objectName = ${objectName});
+			ObjectAdmin.addObjectLayoutViaAPI(
+				layoutName = "Layout Name",
+				objectName = ${objectName});
 
-				ObjectAdmin.addObjectLayoutViaAPI(
-					layoutName = "Layout Name",
-					objectName = ${objectName});
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
 
-				ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+			ObjectAdmin.openObjectAdmin();
 
-				ObjectAdmin.openObjectAdmin();
+			ObjectPortlet.selectCustomObject(label = ${labelName});
 
-				ObjectPortlet.selectCustomObject(label = ${labelName});
+			ObjectAdmin.goToLayoutsTab();
 
-				ObjectAdmin.goToLayoutsTab();
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-				ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.markLayoutAsDefault();
 
-				ObjectAdmin.markLayoutAsDefault();
+			ObjectAdmin.goToLayoutTabOnLayouts();
 
-				ObjectAdmin.goToLayoutTabOnLayouts();
+			ObjectAdmin.addTabFieldsOnLayout(
+				blockName = "Block 1",
+				columnsNumber = 1,
+				fieldLabelName = "Name",
+				tabName = "Field Tab");
 
-				ObjectAdmin.addTabFieldsOnLayout(
-					blockName = "Block 1",
-					columnsNumber = 1,
-					fieldLabelName = "Name",
-					tabName = "Field Tab");
+			ObjectAdmin.addCategorizationOnLayoutTab();
 
-				ObjectAdmin.addCategorizationOnLayoutTab();
+			Button.clickSave();
 
-				Button.clickSave();
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
 
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Content Page Name",
-					type = "content");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
 
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = ${randomSiteName});
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
 
-				PageEditor.addFragment(
-					collectionName = "Form Components",
-					fragmentName = "Form Container");
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-				PageEditor.mapFormContainerToObject(contentType = ${labelName});
+			PageEditor.viewInputStyle(
+				label = "Name",
+				showLabel = "true",
+				type = "text-input");
 
-				PageEditor.viewInputStyle(
-					label = "Name",
-					showLabel = "true",
-					type = "text-input");
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Categories",
+				targetFragmentName = "Text Input");
 
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Categories",
-					targetFragmentName = "Text Input");
+			PageEditor.clickConfigurableField(
+				fragmentName = "Categories",
+				index = 1);
 
-				PageEditor.clickConfigurableField(
-					fragmentName = "Categories",
-					index = 1);
+			PageEditor.configureFragment(vocabularyType = "Public");
 
-				PageEditor.configureFragment(vocabularyType = "Public");
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
 
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
+			AssertElementNotPresent(
+				key_vocabularyName = ${vocabularyName3},
+				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-				AssertElementNotPresent(
-					key_vocabularyName = ${vocabularyName3},
-					locator1 = "AssetCategorization#CATEGORIES_FIELD");
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Categories",
+				targetFragmentName = "Text Input");
 
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Categories",
-					targetFragmentName = "Text Input");
+			PageEditor.clickConfigurableField(
+				fragmentName = "Categories",
+				index = 2);
 
-				PageEditor.clickConfigurableField(
-					fragmentName = "Categories",
-					index = 2);
+			PageEditor.configureFragment(vocabularyType = "Internal");
 
-				PageEditor.configureFragment(vocabularyType = "Internal");
+			AssertElementNotPresent(
+				key_vocabularyName = ${vocabularyName4},
+				locator1 = "AssetCategorization#CATEGORIES_FIELD");
 
-				AssertElementNotPresent(
-					key_vocabularyName = ${vocabularyName4},
-					locator1 = "AssetCategorization#CATEGORIES_FIELD");
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
 
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Categories",
+				targetFragmentName = "Text Input");
 
-				PageEditor.addFragmentToFormContainer(
-					collectionName = "Form Components",
-					fragmentName = "Categories",
-					targetFragmentName = "Text Input");
+			PageEditor.clickConfigurableField(
+				fragmentName = "Categories",
+				index = 3);
 
-				PageEditor.clickConfigurableField(
-					fragmentName = "Categories",
-					index = 3);
+			PageEditor.configureFragment(vocabularyType = "All");
 
-				PageEditor.configureFragment(vocabularyType = "All");
-
-				PageEditor.publish();
+			PageEditor.publish();
 		}
 
-			task ("When we add categories as input") {
-				ContentPagesNavigator.openViewContentPage(
-					pageName = "Test Content Page Name",
-					siteName = ${randomSiteName});
+		task ("When we add categories as input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
 
-				Type(
-					key_text = "Name",
-					locator1 = "TextInput#ANY",
-					value1 = "Test Name");
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Test Name");
+		}
+
+		task ("Then both site and global categories are shown") {
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+
+			AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+
+			AssetCategorization.removeCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+
+			AssetCategorization.gotoSelectCategory();
+
+			for (var categoryName : list "Public Global Category 1,Public Global Category 2") {
+				Check.checkNotVisible(
+					key_nodeName = ${categoryName},
+					locator1 = "Treeview#NODE_CHECKBOX");
 			}
 
-			task ("Then both site and global categories are shown") {
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+			SelectFrameTop();
 
-				AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+			Click(
+				key_modalTitle = ${vocabularyName1},
+				locator1 = "Button#CLOSE_MODAL");
 
-				AssetCategorization.removeCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+			AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
 
-				AssetCategorization.gotoSelectCategory();
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
 
-				for (var categoryName : list "Public Global Category 1,Public Global Category 2") {
-					Check.checkNotVisible(
-						key_nodeName = ${categoryName},
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
+			AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
 
-				SelectFrameTop();
+			AssetCategorization.removeCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
 
-				Click(
-					key_modalTitle = ${vocabularyName1},
-					locator1 = "Button#CLOSE_MODAL");
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
 
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName1});
+			AssetCategorization.gotoSelectCategory();
 
-				AssetCategorization.selectCategories(categoryNameList = "Public Global Category 1,Public Global Category 2");
-
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
-
-				AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
-
-				AssetCategorization.removeCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
-
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
-
-				AssetCategorization.gotoSelectCategory();
-
-				for (var categoryName : list "Internal Global Category 1,Internal Global Category 2") {
-					Check.checkNotVisible(
-						key_nodeName = ${categoryName},
-						locator1 = "Treeview#NODE_CHECKBOX");
-				}
-
-				SelectFrameTop();
-
-				Click(
-					key_modalTitle = ${vocabularyName2},
-					locator1 = "Button#CLOSE_MODAL");
-
-				AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
-
-				AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
-
-				Button.clickSubmitButton();
-
-				AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
-
-				ApplicationsMenu.gotoPortlet(
-					category = "Object",
-					panel = "Control Panel",
-					portlet = "${labelName}s");
-
-				ObjectPortlet.viewEntryDetails(entry = "Test Name");
-
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
-
-				for (var i : list "1,2") {
-					AssetCategorization.viewCategory(categoryName = "Internal Global Category ${i}");
-				}
-
-				AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
-
-				for (var i : list "1,2") {
-					AssetCategorization.viewCategory(categoryName = "Public Global Category ${i}");
-				}
+			for (var categoryName : list "Internal Global Category 1,Internal Global Category 2") {
+				Check.checkNotVisible(
+					key_nodeName = ${categoryName},
+					locator1 = "Treeview#NODE_CHECKBOX");
 			}
+
+			SelectFrameTop();
+
+			Click(
+				key_modalTitle = ${vocabularyName2},
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssetCategorization.openSelectCategory(vocabularyName = ${vocabularyName2});
+
+			AssetCategorization.selectCategories(categoryNameList = "Internal Global Category 1,Internal Global Category 2");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${labelName}s");
+
+			ObjectPortlet.viewEntryDetails(entry = "Test Name");
+
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName2});
+
+			for (var i : list "1,2") {
+				AssetCategorization.viewCategory(categoryName = "Internal Global Category ${i}");
+			}
+
+			AssetCategorization.viewVocabulary(vocabularyName = ${vocabularyName1});
+
+			for (var i : list "1,2") {
+				AssetCategorization.viewCategory(categoryName = "Public Global Category ${i}");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-161638. A warning message is shown if the object does not have categorization enabled and we try to use categories"
+	@priority = 4
+	test ViewWarningMessageWithCategorizationDisabled {
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given an object with categorization disabled") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${labelName},
+				objectName = ${objectName},
+				panelCategoryKey = "site_administration.categorization",
+				pluralLabelName = "${labelName}s",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${objectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = ${labelName});
+
+			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#ENABLE_CATEGORIZATION_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("When we try to use categories fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = ${labelName});
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Categories",
+				targetFragmentName = "Text Input");
+		}
+
+		task ("Then a warning message is shown") {
+			Alert.viewInfoMessageSpecific(infoMessage = "Categorization is disabled for the selected content. To show categories in this fragment, categorization must be enabled.");
 		}
 	}
 

@@ -433,13 +433,6 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
-		if (objectDefinition.isEnableLocalization()) {
-			_deleteFromTable(
-				objectDefinition.getLocalizationDBTableName(),
-				objectDefinition.getPKObjectFieldDBColumnName(),
-				objectEntry.getObjectEntryId());
-		}
-
 		_deleteFromTable(
 			objectDefinition.getDBTableName(),
 			objectDefinition.getPKObjectFieldDBColumnName(),
@@ -448,6 +441,13 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getExtensionDBTableName(),
 			objectDefinition.getPKObjectFieldDBColumnName(),
 			objectEntry.getObjectEntryId());
+
+		if (objectDefinition.isEnableLocalization()) {
+			_deleteFromTable(
+				objectDefinition.getLocalizationDBTableName(),
+				objectDefinition.getPKObjectFieldDBColumnName(),
+				objectEntry.getObjectEntryId());
+		}
 
 		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),

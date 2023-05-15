@@ -87,7 +87,7 @@ export function CustomizeAppStorefrontPage({
 			<Section
 				label="App Storefront"
 				required
-				tooltip="More Info"
+				tooltip="Design the storefront for your app.  This will display information displayed on the app page in the Marketplace."
 				tooltipText="More Info"
 			>
 				<div className="storefront-page-info-container">

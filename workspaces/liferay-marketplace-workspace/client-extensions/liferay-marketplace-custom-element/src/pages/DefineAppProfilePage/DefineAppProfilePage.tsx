@@ -1,6 +1,7 @@
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
 import {useEffect, useState} from 'react';
+import ReactDOMServer from 'react-dom/server';
 
 import {UploadedFile} from '../../components/FileList/FileList';
 import {Header} from '../../components/Header/Header';
@@ -152,12 +153,29 @@ export function DefineAppProfilePage({
 			<div className="profile-page-body-container">
 				<Section
 					label="App Info"
-					tooltip="More Info"
-					tooltipText="More info"
+					tooltip="The app info section helps you differentiate your app offering from others in the Marketplace. It should be clear and concise - explaining the purpose, function, and value it provides to your prospective customer.  Tooltips along the way will provide you guidance as you determine the best content for each field.  Your app will be reviewed thoroughly before listing in the Marketplace and we will ensure the best quality apps are present in the Marketplace for our customers."
+					tooltipText="More Info"
 				>
 					<UploadLogo
 						onDeleteFile={handleLogoDelete}
 						onUpload={handleLogoUpload}
+						tooltip={ReactDOMServer.renderToString(
+							<span>
+								The icon is a small image representation of the
+								app. Icons must be a PNG, JPG, or GIF format and
+								cannot exceed 5MB. Animated images are
+								prohibited. The use of the Liferay logo,
+								including any permitted alternate versions of
+								the Liferay logo, is permitted only with
+								Liferay's express permission. Please refer to
+								our{' '}
+
+								<a href="https://www.liferay.com/trademark">
+									trademark policy
+								</a>{' '}
+								for details.
+							</span>
+						)}
 						uploadedFile={appLogo}
 					/>
 
@@ -175,7 +193,29 @@ export function DefineAppProfilePage({
 							}
 							placeholder="Enter app name"
 							required
-							tooltip="Name"
+							tooltip={ReactDOMServer.renderToString(
+								<span>
+									Customers of the marketplace will see this
+									as the name of the app. Please use a title
+									of no longer than 50 characters. Titles
+									longer than 18 characters may be truncated.
+									The App title may contain the word "Liferay"
+									to describe its use or intent as long as the
+									name does not imply official certification
+									or validation from Liferay, Inc. An example
+									of permissible names would be "Exchange
+									Connector for Liferay" or "Integration
+									Connector Kit for Liferay" while "Liferay
+									Mail App" or "Liferay Management Console"
+									would not be permitted without explicit
+									approval. Please refer to our{' '}
+
+									<a href="https://www.liferay.com/trademark">
+										trademark policy
+									</a>
+									.
+								</span>
+							)}
 							value={appName}
 						/>
 
@@ -183,6 +223,7 @@ export function DefineAppProfilePage({
 							component="textarea"
 							label="Description"
 							localized
+							localizedTooltipText="Descriptions can be localized for each language your app supports.  Please choose the appropriate language and enter description in the language selected."
 							onChange={({target}) =>
 								dispatch({
 									payload: {
@@ -193,7 +234,7 @@ export function DefineAppProfilePage({
 							}
 							placeholder="Enter app description"
 							required
-							tooltip="Description"
+							tooltip="You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text. Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material."
 							value={appDescription}
 						/>
 
@@ -210,7 +251,7 @@ export function DefineAppProfilePage({
 							}
 							placeholder="Select categories"
 							required
-							tooltip="Categories"
+							tooltip="Choose the Marketplace category that most accurately describes what your app does. Users looking for specific types of apps will often browse categories by searching on a specific category name in the main Marketplace home page. Having your app listed under the appropriate category will help them find your app."
 						/>
 
 						<MultiSelect
@@ -226,7 +267,7 @@ export function DefineAppProfilePage({
 							}
 							placeholder="Select tags"
 							required
-							tooltip="Tags"
+							tooltip="Tags help to describe your app in the Marketplace. Select the tags most relevant to your app. They can be changed if needed."
 						/>
 					</div>
 				</Section>

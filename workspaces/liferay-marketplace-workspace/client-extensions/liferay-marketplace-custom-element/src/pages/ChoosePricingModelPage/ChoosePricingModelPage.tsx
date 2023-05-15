@@ -36,7 +36,7 @@ export function ChoosePricingModelPage({
 			<Section
 				label="App Price"
 				required
-				tooltip="More Info"
+				tooltip="Select one of the pricing models for your app. This will define how much users will pay . To enable paid apps, you must be a business and enter payment information in your Marketplace account profile"
 				tooltipText="More Info"
 			>
 				<div className="choose-pricing-model-page-radio-container">
@@ -51,7 +51,7 @@ export function ChoosePricingModelPage({
 						}}
 						selected={priceModel.value === 'Free'}
 						title="FREE"
-						tooltip="More Info"
+						tooltip="The app is offered in the Marketplace with no charge."
 					/>
 
 					<RadioCard
@@ -65,7 +65,7 @@ export function ChoosePricingModelPage({
 						}}
 						selected={priceModel.value === 'Paid'}
 						title="Paid"
-						tooltip="More Info"
+						tooltip="For paid apps, you can choose the subscription model you want to use on the next screen."
 					/>
 				</div>
 			</Section>

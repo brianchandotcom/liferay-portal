@@ -12,8 +12,10 @@ interface InputProps
 	hideFeedback?: boolean;
 	label?: string;
 	localized?: boolean;
+	localizedTooltipText?: string;
 	required?: boolean;
 	tooltip?: string;
+	tooltipText?: string;
 	type?: 'number' | 'textarea' | 'text' | 'date';
 	value?: string;
 }
@@ -25,10 +27,12 @@ export function Input({
 	hideFeedback,
 	label,
 	localized = false,
+	localizedTooltipText,
 	onChange,
 	placeholder,
 	required,
 	tooltip,
+	tooltipText,
 	type,
 	value,
 	...otherProps
@@ -40,8 +44,10 @@ export function Input({
 			hideFeedback={hideFeedback}
 			label={label}
 			localized={localized}
+			localizedTooltipText={localizedTooltipText}
 			required={required}
 			tooltip={tooltip}
+			tooltipText={tooltipText}
 		>
 			<ClayInput
 				className="custom-input"

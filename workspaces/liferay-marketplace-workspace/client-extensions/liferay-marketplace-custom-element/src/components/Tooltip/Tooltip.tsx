@@ -24,6 +24,7 @@ export function Tooltip({tooltip, tooltipText}: TooltipProps) {
 			>
 				<div
 					className="tooltip-container"
+					data-title-set-as-html
 					data-tooltip-align="top"
 					title={tooltip}
 				>

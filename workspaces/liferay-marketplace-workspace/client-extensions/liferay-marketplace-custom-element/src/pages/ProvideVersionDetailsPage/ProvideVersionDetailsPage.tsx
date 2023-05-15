@@ -105,7 +105,7 @@ export function ProvideVersionDetailsPage({
 
 			<Section
 				label="App Version"
-				tooltip="More info"
+				tooltip="When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer."
 				tooltipText="More Info"
 			>
 				<Input
@@ -119,7 +119,7 @@ export function ProvideVersionDetailsPage({
 					}
 					placeholder="0.0.0"
 					required
-					tooltip="version"
+					tooltip={`Specify your app's version.  This will help the user to understand the latest version of your app offered on the Marketplace.`}
 					value={appVersion}
 				/>
 
@@ -135,7 +135,7 @@ export function ProvideVersionDetailsPage({
 					}
 					placeholder="Enter app description"
 					required
-					tooltip="notes"
+					tooltip="Notes pertaining to the release of the project.  These will be displayed when the customer goes to purchase and/or update the app."
 					value={appNotes}
 				/>
 			</Section>

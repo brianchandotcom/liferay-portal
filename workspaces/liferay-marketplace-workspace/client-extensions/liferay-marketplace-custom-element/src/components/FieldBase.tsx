@@ -49,6 +49,7 @@ interface FieldBaseProps {
 	id?: string;
 	label?: string;
 	localized?: boolean;
+	localizedTooltipText?: string;
 	required?: boolean;
 	tooltip?: string;
 	tooltipText?: string;
@@ -66,6 +67,7 @@ export function FieldBase({
 	id,
 	label,
 	localized,
+	localizedTooltipText,
 	required,
 	tooltip,
 	tooltipText,
@@ -108,7 +110,9 @@ export function FieldBase({
 						<>
 							&nbsp;
 							<Tooltip
-								tooltip="choose a language"
+								tooltip={
+									localizedTooltipText ?? 'choose a language'
+								}
 								tooltipText={tooltipText}
 							/>
 						</>

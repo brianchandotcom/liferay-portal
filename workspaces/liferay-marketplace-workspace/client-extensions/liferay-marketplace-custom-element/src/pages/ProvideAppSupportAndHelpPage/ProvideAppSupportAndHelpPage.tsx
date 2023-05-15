@@ -41,7 +41,7 @@ export function ProvideAppSupportAndHelpPage({
 
 			<Section
 				label="App Support and help"
-				tooltip="More info"
+				tooltip="Define the support and help references. Users can access these resources pre and post purchase to find out more information about your app or solution."
 				tooltipText="More Info"
 			>
 				<Input

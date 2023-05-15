@@ -63,7 +63,7 @@ export function InformLicensingTermsPage({
 			<Section
 				label="App License"
 				required
-				tooltip="More Info"
+				tooltip={`Define the licensing approach for your app. This will impact users' licensing renewal experience.`}
 				tooltipText="More Info"
 			>
 				<div className="informing-licensing-terms-page-app-license-container">
@@ -81,7 +81,7 @@ export function InformLicensingTermsPage({
 						}}
 						selected={appLicense.value === 'Perpetual'}
 						title="Perpetual License"
-						tooltip="More Info"
+						tooltip="A perpetual license requires no renewal and never expires."
 					/>
 
 					<RadioCard
@@ -99,7 +99,7 @@ export function InformLicensingTermsPage({
 						}}
 						selected={appLicense.value === 'non-perpetual'}
 						title="Non-perpetual license"
-						tooltip="More Info"
+						tooltip="A subscription license that must be renewed annually."
 					/>
 				</div>
 			</Section>
@@ -107,7 +107,7 @@ export function InformLicensingTermsPage({
 			<Section
 				label="30-day Trial"
 				required
-				tooltip="More Info"
+				tooltip="Trials can be offered to users for 30 days.  After this time, they will be notified of their pending trial expiration and given the opportunity to purchase the app at full price."
 				tooltipText="More Info"
 			>
 				<div className="informing-licensing-terms-page-day-trial-container">
@@ -123,7 +123,7 @@ export function InformLicensingTermsPage({
 						}}
 						selected={dayTrial === 'yes'}
 						title="Yes"
-						tooltip="More Info"
+						tooltip="Offer a 30-day free trial for this app"
 					/>
 
 					<RadioCard
@@ -137,7 +137,7 @@ export function InformLicensingTermsPage({
 						}}
 						selected={dayTrial === 'no'}
 						title="No"
-						tooltip="More Info"
+						tooltip="Do not offer a 30-day trial for this app"
 					/>
 				</div>
 			</Section>

@@ -1,5 +1,6 @@
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
+import ReactDOMServer from 'react-dom/server';
 
 import cancelIcon from '../../assets/icons/cancel_icon.svg';
 import cloudIcon from '../../assets/icons/cloud_fill_icon.svg';
@@ -93,8 +94,10 @@ export function ProvideAppBuildPage({
 			<Section
 				label="Cloud Compatible?"
 				required
-				tooltip="More Info"
-				tooltipText="MoreInfo"
+				tooltip={`A Liferay Cloud App is a collection of 1 to N client extension artifacts made available via the Liferay Marketplace. It is installed and managed as a single atomic unit in Liferay Experience Cloud.  
+
+				A DXP App is a JAR based collection meant to run within Liferay DXP.  It is only supported on Self Hosted or Self Managed Liferay Cloud instances.`}
+				tooltipText="More Info"
 			>
 				<div className="provide-app-build-page-cloud-compatible-container">
 					<RadioCard
@@ -108,7 +111,17 @@ export function ProvideAppBuildPage({
 						}}
 						selected={appType.value === 'cloud'}
 						title="Yes"
-						tooltip="More Info"
+						tooltip={ReactDOMServer.renderToString(
+							<span>
+								The app submission is compatible with Liferay
+								Experience Cloud and{' '}
+
+								<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions#client-extensions">
+									Client Extensions
+								</a>
+								.
+							</span>
+						)}
 					/>
 
 					<RadioCard
@@ -122,7 +135,7 @@ export function ProvideAppBuildPage({
 						}}
 						selected={appType.value === 'dxp'}
 						title="No"
-						tooltip="More Info"
+						tooltip="The app submission is integrates with Liferay DXP version 7.4 or later."
 					/>
 				</div>
 			</Section>
@@ -130,8 +143,8 @@ export function ProvideAppBuildPage({
 			<Section
 				label="App Build"
 				required
-				tooltip="More Info"
-				tooltipText="MoreInfo"
+				tooltip="An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace."
+				tooltipText="More Info"
 			>
 				<div className="provide-app-build-page-app-build-radio-container">
 					<RadioCard
@@ -146,7 +159,7 @@ export function ProvideAppBuildPage({
 						}}
 						selected={appBuild === 'LXC'}
 						title="Via Liferay Experience Cloud Integration"
-						tooltip="More Info"
+						tooltip="In the future, you will be able to submit your app directly from Liferay Experience Cloud projects."
 					/>
 
 					<RadioCard
@@ -161,7 +174,7 @@ export function ProvideAppBuildPage({
 						}}
 						selected={appBuild === 'GitHub'}
 						title="Via GitHub Repo"
-						tooltip="More Info"
+						tooltip="In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay."
 					/>
 
 					<RadioCard
@@ -175,7 +188,25 @@ export function ProvideAppBuildPage({
 						}}
 						selected={appBuild === 'upload'}
 						title="Via ZIP Upload"
-						tooltip="More Info"
+						tooltip={ReactDOMServer.renderToString(
+							<span>
+								ZIP Files must be in universal file format
+								archive (UFFA) - the specially structured, ZIP
+								encoded archive used to package client extension
+								project outputs This format must support the
+								following use cases: deliver batch engine data
+								files compatible with all deployment targets
+								deliver DXP configuration resource compatible
+								with all deployment targets deliver static
+								resources compatible with all deployment targets
+								deliver the infrastructure metadata necessary to
+								deploy to LXC-(SM) For more information see:{' '}
+
+								<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions/working-with-client-extensions#working-with-client-extensions">
+									Liferay Learn
+								</a>
+							</span>
+						)}
 					/>
 				</div>
 			</Section>
@@ -184,8 +215,8 @@ export function ProvideAppBuildPage({
 				description="Select a local file to upload"
 				label="Upload ZIP Files"
 				required
-				tooltip="MoreInfo"
-				tooltipText="MoreInfo"
+				tooltip="You can upload one or many ZIP files. Max total size is 500MB."
+				tooltipText="More Info"
 			>
 				<FileList
 					onDelete={handleDelete}

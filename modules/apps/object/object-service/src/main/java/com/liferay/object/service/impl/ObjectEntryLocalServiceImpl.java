@@ -2655,7 +2655,7 @@ public class ObjectEntryLocalServiceImpl
 							_getKey(), (String)objects[i]);
 					}
 					catch (Exception exception) {
-						throw new RuntimeException(exception);
+						throw new PortalException(exception);
 					}
 				}
 			}

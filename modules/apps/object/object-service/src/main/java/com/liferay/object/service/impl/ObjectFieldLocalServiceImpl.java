@@ -1049,7 +1049,7 @@ public class ObjectFieldLocalServiceImpl
 				PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			throw new PortalException(exception);
 		}
 	}
 

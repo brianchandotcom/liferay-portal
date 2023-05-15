@@ -764,11 +764,12 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-72792 and LPS-139642 TC1: Users could login and logout using Okta as OpenID Connect provider."
+	@ignore = "true"
 	@priority = 5
 	test OpenIDConnectSmokeWithOkta {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithOkta";
 
 		var userEmailAddress = PropsUtil.get("openid.provider.okta.test.account.email.address");

@@ -53,7 +53,7 @@ if (Validator.isNotNull(backURL)) {
 				<aui:fieldset>
 					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="name" />
 
-					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" />
+					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" readonly="<%= (commerceCurrency != null) ? true : false %>" type="text" />
 
 					<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="symbol" />
 

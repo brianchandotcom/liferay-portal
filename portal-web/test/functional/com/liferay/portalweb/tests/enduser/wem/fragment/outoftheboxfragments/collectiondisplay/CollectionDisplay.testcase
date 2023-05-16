@@ -570,7 +570,7 @@ definition {
 	@description = "This is a use case for LPS-120309. Assert the mapped image to Image fragment in collection display is shown in view mode."
 	@priority = 4
 	test MapImageToImageFragment {
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

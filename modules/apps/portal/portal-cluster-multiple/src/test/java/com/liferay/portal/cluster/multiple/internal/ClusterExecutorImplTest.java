@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -285,7 +286,14 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 	private ClusterExecutorImpl _getClusterExecutorImpl() {
 		ClusterExecutorImpl clusterExecutorImpl = new ClusterExecutorImpl();
 
-		clusterExecutorImpl.setProps(
+		ReflectionTestUtil.setFieldValue(
+			clusterExecutorImpl, "_clusterChannelFactory",
+			new TestClusterChannelFactory());
+		ReflectionTestUtil.setFieldValue(
+			clusterExecutorImpl, "_portalExecutorManager",
+			new MockPortalExecutorManager());
+		ReflectionTestUtil.setFieldValue(
+			clusterExecutorImpl, "_props",
 			PropsTestUtil.setProps(
 				HashMapBuilder.<String, Object>put(
 					PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
@@ -296,12 +304,6 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 				).put(
 					"configuration.override.", new Properties()
 				).build()));
-
-		clusterExecutorImpl.setClusterChannelFactory(
-			new TestClusterChannelFactory());
-
-		clusterExecutorImpl.setPortalExecutorManager(
-			new MockPortalExecutorManager());
 
 		clusterExecutorImpl.activate(
 			new MockComponentContext(new HashMapDictionary<>()));

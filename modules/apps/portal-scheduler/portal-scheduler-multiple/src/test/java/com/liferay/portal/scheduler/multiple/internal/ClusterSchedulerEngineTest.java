@@ -1338,11 +1338,6 @@ public class ClusterSchedulerEngineTest {
 	private static class MockClusterExecutor implements ClusterExecutor {
 
 		@Override
-		public void addClusterEventListener(
-			ClusterEventListener clusterEventListener) {
-		}
-
-		@Override
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
 			_clusterRequest = clusterRequest;
 
@@ -1386,11 +1381,6 @@ public class ClusterSchedulerEngineTest {
 		@Override
 		public boolean isEnabled() {
 			return true;
-		}
-
-		@Override
-		public void removeClusterEventListener(
-			ClusterEventListener clusterEventListener) {
 		}
 
 		private ClusterRequest _clusterRequest;

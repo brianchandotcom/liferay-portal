@@ -35,6 +35,8 @@ public interface PortletProvider {
 			HttpServletRequest httpServletRequest, Group group)
 		throws PortalException;
 
+	public Action[] getSupportedActions();
+
 	public enum Action {
 
 		ADD, BROWSE, EDIT, MANAGE, PREVIEW, VIEW

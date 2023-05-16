@@ -190,11 +190,11 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
-			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			String symbol, BigDecimal rate,
-			Map<Locale, String> formatPatternMap, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active, ServiceContext serviceContext)
+			long commerceCurrencyId, Map<Locale, String> nameMap, String symbol,
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -202,7 +202,7 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		return commerceCurrencyLocalService.updateCommerceCurrency(
-			commerceCurrencyId, code, nameMap, symbol, rate, formatPatternMap,
+			commerceCurrencyId, nameMap, symbol, rate, formatPatternMap,
 			maxFractionDigits, minFractionDigits, roundingMode, primary,
 			priority, active, serviceContext);
 	}

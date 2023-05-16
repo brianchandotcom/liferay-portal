@@ -330,11 +330,11 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
-			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			String symbol, BigDecimal rate,
-			Map<Locale, String> formatPatternMap, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active, ServiceContext serviceContext)
+			long commerceCurrencyId, Map<Locale, String> nameMap, String symbol,
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -346,7 +346,8 @@ public class CommerceCurrencyLocalServiceImpl
 
 		_validate(
 			commerceCurrency.getCommerceCurrencyId(),
-			serviceContext.getCompanyId(), code, nameMap, primary);
+			serviceContext.getCompanyId(), commerceCurrency.getCode(), nameMap,
+			primary);
 
 		if (formatPatternMap.isEmpty()) {
 			formatPatternMap.put(
@@ -367,7 +368,6 @@ public class CommerceCurrencyLocalServiceImpl
 			roundingMode = roundingModeEnum.name();
 		}
 
-		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setSymbol(symbol);
 		commerceCurrency.setRate(rate);

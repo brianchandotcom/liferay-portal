@@ -50,8 +50,9 @@ definition {
 		task ("Then the downloaded file contains $.actions node with createBatch") {
 			ImportExport.unzipDownloadedExportFile();
 
-			BatchEngine.assertExportedJsontContainsCorrectObject(
+			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				fileName = "export.batch-engine-data.json",
 				jsonObject = "$.actions.createBatch.href");
 		}
 	}
@@ -61,8 +62,9 @@ definition {
 		task ("Then the downloaded file contains $.actions node with deleteBatch") {
 			ImportExport.unzipDownloadedExportFile();
 
-			BatchEngine.assertExportedJsontContainsCorrectObject(
+			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				fileName = "export.batch-engine-data.json",
 				jsonObject = "$.actions.deleteBatch.href");
 		}
 	}
@@ -72,8 +74,9 @@ definition {
 		task ("Then the downloaded file contains $.actions node with updateBatch") {
 			ImportExport.unzipDownloadedExportFile();
 
-			BatchEngine.assertExportedJsontContainsCorrectObject(
+			BatchEngine.assertExportedFileContainsCorrectObject(
 				expectedValue = "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				fileName = "export.batch-engine-data.json",
 				jsonObject = "$.actions.updateBatch.href");
 		}
 	}

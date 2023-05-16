@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -27,6 +28,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -51,7 +53,7 @@ public class TaxonomyCategoryBriefUtil {
 					dtoConverterContext.isAcceptAllLanguages(),
 					assetCategory.getTitleMap());
 				taxonomyCategoryReference = _toTaxonomyCategoryReference(
-					assetCategory);
+					assetCategory, dtoConverterContext);
 			}
 		};
 	}
@@ -89,7 +91,7 @@ public class TaxonomyCategoryBriefUtil {
 	}
 
 	private static TaxonomyCategoryReference _toTaxonomyCategoryReference(
-		AssetCategory assetCategory) {
+		AssetCategory assetCategory, DTOConverterContext dtoConverterContext) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-178052")) {
 			return null;
@@ -102,6 +104,13 @@ public class TaxonomyCategoryBriefUtil {
 
 				setSiteKey(
 					() -> {
+						if (Objects.equals(
+								GetterUtil.getLong(assetCategory.getGroupId()),
+								dtoConverterContext.getAttribute("groupId"))) {
+
+							return null;
+						}
+
 						Group group = GroupLocalServiceUtil.fetchGroup(
 							assetCategory.getGroupId());
 

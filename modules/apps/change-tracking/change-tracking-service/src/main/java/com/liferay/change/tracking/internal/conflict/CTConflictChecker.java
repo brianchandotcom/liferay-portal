@@ -929,14 +929,17 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			while (resultSet.next()) {
 				long pk = resultSet.getLong(1);
-				long mvccVersion = resultSet.getLong(2);
 
 				CTEntry ctEntry = _modificationCTEntries.get(pk);
 
-				ctEntry.setModifiedDate(ctEntry.getModifiedDate());
-				ctEntry.setModelMvccVersion(mvccVersion);
+				if (ctEntry != null) {
+					long mvccVersion = resultSet.getLong(2);
 
-				_ctEntryLocalService.updateCTEntry(ctEntry);
+					ctEntry.setModifiedDate(ctEntry.getModifiedDate());
+					ctEntry.setModelMvccVersion(mvccVersion);
+
+					_ctEntryLocalService.updateCTEntry(ctEntry);
+				}
 			}
 		}
 		catch (SQLException sqlException) {

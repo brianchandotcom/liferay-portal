@@ -2,6 +2,7 @@ Bundle-Name: Liferay Site API
 Bundle-SymbolicName: com.liferay.site.api
 Bundle-Version: 16.4.1
 Export-Package:\
+	com.liferay.site.configuration,\
 	com.liferay.site.constants,\
 	com.liferay.site.display.context,\
 	com.liferay.site.exception,\

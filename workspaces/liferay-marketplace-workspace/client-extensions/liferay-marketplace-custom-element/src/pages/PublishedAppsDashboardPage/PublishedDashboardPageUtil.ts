@@ -21,6 +21,46 @@ export type CatalogProps = {
 	name: string;
 };
 
+export type MemberProps = {
+	accountBriefs: AccountBriefProps[];
+	dateCreated: string;
+	email: string;
+	image: string;
+	isCustomerAccount: boolean;
+	isPublisherAccount: boolean;
+	lastLoginDate: string;
+	name: string;
+	role: string;
+	userId: number;
+};
+
+export type ProductResponseProps = {
+	catalogId: number;
+	externalReferenceCode: string;
+	lastUpdatedBy: string;
+	modifiedDate: string;
+	name: {en_US: string};
+	productId: number;
+	thumbnail: string;
+	workflowStatusInfo: {label: string};
+};
+
+export type RoleBriefProps = {
+	id: number;
+	name: string;
+};
+
+export type UserAccountProps = {
+	accountBriefs: AccountBrief[];
+	dateCreated: string;
+	emailAddress: string;
+	id: number;
+	image: string;
+	lastLoginDate: string;
+	name: string;
+	roleBriefs: RoleBriefProps[];
+};
+
 export const customerRoles = [
 	'Account Administrator',
 	'Account Buyer',
@@ -61,47 +101,50 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 	},
 ];
 
-export type MemberProps = {
-	accountBriefs: AccountBriefProps[];
-	dateCreated: string;
-	email: string;
-	image: string;
-	isCustomerAccount: boolean;
-	isPublisherAccount: boolean;
-	lastLoginDate: string;
-	name: string;
-	role: string;
-	userId: number;
-};
+export const appTableHeaders = [
+	{
+		iconSymbol: 'order-arrow',
+		title: 'Name',
+		style: {width: '2%'},
+	},
+	{
+		title: 'Version',
+	},
+	{
+		title: 'Type',
+	},
+	{
+		title: 'Last Updated',
+	},
+	{
+		title: 'Status',
+	},
+];
 
-export type ProductResponseProps = {
-	catalogId: number;
-	externalReferenceCode: string;
-	lastUpdatedBy: string;
-	modifiedDate: string;
-	name: {en_US: string};
-	productId: number;
-	thumbnail: string;
-	workflowStatusInfo: {label: string};
-};
+export const memberTableHeaders = [
+	{
+		iconSymbol: 'order-arrow',
+		title: 'Name',
+	},
+	{
+		title: 'Email',
+	},
+	{
+		title: 'Role',
+	},
+];
+
+export const initialAccountsState: Account[] = [
+	{
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+		description: '',
+		type: '',
+	},
+];
 
 export const publisherRoles = ['Account Administrator', 'App Editor'];
-
-export type RoleBriefProps = {
-	id: number;
-	name: string;
-};
-
-export type UserAccountProps = {
-	accountBriefs: AccountBrief[];
-	dateCreated: string;
-	emailAddress: string;
-	id: number;
-	image: string;
-	lastLoginDate: string;
-	name: string;
-	roleBriefs: RoleBriefProps[];
-};
 
 export function formatDate(date: string) {
 	const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');

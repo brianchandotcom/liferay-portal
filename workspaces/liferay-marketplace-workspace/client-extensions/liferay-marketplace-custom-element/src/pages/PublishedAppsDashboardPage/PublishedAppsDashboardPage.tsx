@@ -24,13 +24,16 @@ import {
 	AccountBriefProps,
 	MemberProps,
 	UserAccountProps,
+	appTableHeaders,
 	customerRoles,
 	formatDate,
 	getAppListProductIds,
 	getAppListProductSpecifications,
 	getProductTypeFromSpecifications,
 	getRolesList,
+	initialAccountsState,
 	initialDashboardNavigationItems,
+	memberTableHeaders,
 	publisherRoles,
 } from './PublishedDashboardPageUtil';
 
@@ -38,49 +41,6 @@ import './PublishedAppsDashboardPage.scss';
 import {Liferay} from '../../liferay/liferay';
 import {getProductVersionFromSpecifications} from '../../utils/util';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
-
-const appTableHeaders = [
-	{
-		iconSymbol: 'order-arrow',
-		title: 'Name',
-		style: {width: '2%'},
-	},
-	{
-		title: 'Version',
-	},
-	{
-		title: 'Type',
-	},
-	{
-		title: 'Last Updated',
-	},
-	{
-		title: 'Status',
-	},
-];
-
-const memberTableHeaders = [
-	{
-		iconSymbol: 'order-arrow',
-		title: 'Name',
-	},
-	{
-		title: 'Email',
-	},
-	{
-		title: 'Role',
-	},
-];
-
-const initialAccountsState: Account[] = [
-	{
-		externalReferenceCode: '',
-		id: 0,
-		name: '',
-		description: '',
-		type: '',
-	},
-];
 
 interface PublishedAppTable {
 	items: AppProps[];

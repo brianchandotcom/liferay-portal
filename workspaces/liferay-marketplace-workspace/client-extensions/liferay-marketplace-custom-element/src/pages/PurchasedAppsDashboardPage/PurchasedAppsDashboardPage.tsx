@@ -24,6 +24,7 @@ import {
 	MemberProps,
 	UserAccountProps,
 	customerRoles,
+	getRolesList,
 	publisherRoles,
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
@@ -31,6 +32,8 @@ import './PurchasedAppsDashboardPage.scss';
 import {
 	initialAccountState,
 	initialDashboardNavigationItems,
+	memberTableHeaders,
+	tableHeaders,
 } from './PurchasedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
@@ -52,41 +55,6 @@ interface PurchasedAppTable {
 	pageSize: number;
 	totalCount: number;
 }
-
-const tableHeaders = [
-	{
-		title: 'Name',
-		style: {width: '2%'},
-	},
-	{
-		title: 'Purchased By',
-	},
-	{
-		title: 'Type',
-	},
-	{
-		title: 'Order ID',
-	},
-	{
-		title: 'Provisioning',
-	},
-	{
-		title: 'Installation',
-	},
-];
-
-const memberTableHeaders = [
-	{
-		iconSymbol: 'order-arrow',
-		title: 'Name',
-	},
-	{
-		title: 'Email',
-	},
-	{
-		title: 'Role',
-	},
-];
 
 const appMessages = {
 	description: 'Manage apps purchase from the Marketplace',
@@ -226,8 +194,7 @@ export function PurchasedAppsDashboardPage() {
 						type: placeOrderItem.subscription
 							? 'Subscription'
 							: 'Perpetual',
-						version:
-							!Object.keys(version).length ? '' : version,
+						version: !Object.keys(version).length ? '' : version,
 					};
 				})
 			);
@@ -247,20 +214,6 @@ export function PurchasedAppsDashboardPage() {
 
 		makeFetch();
 	}, [page, purchasedAppTable.pageSize, selectedAccount]);
-
-	function getRolesList(accountBriefs: AccountBrief[]) {
-		const rolesList: string[] = [];
-
-		const accountBrief = accountBriefs.find(
-			(accountBrief) => accountBrief.name === selectedAccount.name
-		);
-
-		accountBrief?.roleBriefs.forEach((role) => {
-			rolesList.push(role.name);
-		});
-
-		return rolesList.join(', ');
-	}
 
 	useEffect(() => {
 		const clickedNavigationItem =
@@ -332,7 +285,10 @@ export function PurchasedAppsDashboardPage() {
 							isPublisherAccount: false,
 							lastLoginDate: member.lastLoginDate,
 							name: member.name,
-							role: getRolesList(member.accountBriefs),
+							role: getRolesList(
+								member.accountBriefs,
+								selectedAccount.id
+							),
 							userId: member.id,
 						} as MemberProps;
 					}

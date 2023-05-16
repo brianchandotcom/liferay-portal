@@ -52,3 +52,38 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemTitle: 'Members',
 	},
 ];
+
+export const tableHeaders = [
+	{
+		title: 'Name',
+		style: {width: '2%'},
+	},
+	{
+		title: 'Purchased By',
+	},
+	{
+		title: 'Type',
+	},
+	{
+		title: 'Order ID',
+	},
+	{
+		title: 'Provisioning',
+	},
+	{
+		title: 'Installation',
+	},
+];
+
+export const memberTableHeaders = [
+	{
+		iconSymbol: 'order-arrow',
+		title: 'Name',
+	},
+	{
+		title: 'Email',
+	},
+	{
+		title: 'Role',
+	},
+];

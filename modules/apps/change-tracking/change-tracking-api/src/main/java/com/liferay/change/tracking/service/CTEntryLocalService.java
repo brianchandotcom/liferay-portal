@@ -76,6 +76,7 @@ public interface CTEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry addCTEntry(CTEntry ctEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry addCTEntry(
 			long ctCollectionId, long modelClassNameId, CTModel<?> ctModel,
 			long userId, int changeType)

@@ -492,7 +492,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("And assert that Vanilla Counter name has been changed in Widget Page Editor") {
+		task ("Then assert that Vanilla Counter name has been changed in Widget Page Editor") {
 			Navigator.gotoPage(pageName = "Test Page");
 
 			Click(locator1 = "ControlMenu#ADD");

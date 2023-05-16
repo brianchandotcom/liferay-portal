@@ -156,7 +156,14 @@ public class BaselinePlugin implements Plugin<Project> {
 						newJarTask.getProject(),
 						SourceSet.MAIN_SOURCE_SET_NAME);
 
-					return GradleUtil.getSrcDir(sourceSet.getResources());
+					File srcDir = GradleUtil.getSrcDir(
+						sourceSet.getResources());
+
+					if (!srcDir.exists()) {
+						srcDir.mkdirs();
+					}
+
+					return srcDir;
 				}
 
 			});

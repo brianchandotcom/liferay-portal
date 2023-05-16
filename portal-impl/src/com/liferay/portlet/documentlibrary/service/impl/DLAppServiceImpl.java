@@ -717,6 +717,37 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	@Override
+	public FileEntry copyFileEntry(
+			long fileEntryId, long destinationFolderId,
+			long destinationRepositoryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository sourceRepository = repositoryProvider.getFileEntryRepository(
+			fileEntryId);
+
+		return copyFileEntry(
+			getRepository(destinationRepositoryId),
+			sourceRepository.getFileEntry(fileEntryId), destinationFolderId,
+			serviceContext);
+	}
+
+	@Override
+	public FileShortcut copyFileShortcut(
+			long fileShortcutId, long destinationFolderId,
+			long destinationRepositoryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		Repository destinationRepository = repositoryProvider.getRepository(
+			destinationRepositoryId);
+
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+
+		return destinationRepository.addFileShortcut(
+			getUserId(), destinationFolderId, fileShortcut.getToFileEntryId(),
+			serviceContext);
+	}
+
+	@Override
 	public Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,

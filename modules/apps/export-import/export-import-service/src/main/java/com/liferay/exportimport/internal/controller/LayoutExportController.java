@@ -93,7 +93,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.model.Layout",
-	service = {ExportImportController.class, LayoutExportController.class}
+	service = ExportImportController.class
 )
 public class LayoutExportController implements ExportController {
 

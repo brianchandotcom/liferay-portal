@@ -168,9 +168,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"
+	@ignore = "true"
 	@priority = 5
 	test CanCreateSuppressRequest {
-		property analytics.cloud.upstream = "false";
+
+		// The Suppressed User card was hidden after this ticket: LRAC-13620
+
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateSuppressRequest";
 
 		var userEmail = "dcp3@liferay.com";
@@ -222,6 +225,7 @@ definition {
 
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9439
+		// The Suppressed User card was hidden after this ticket: LRAC-13620
 
 		var userEmail = "dcp4@liferay.com";
 		var userName = "dcp4";
@@ -299,6 +303,7 @@ definition {
 
 		// AC Refactor: Timing issues may happen on this test case
 		// AC Refactor ticket: LRAC-9438
+		// The Suppressed User card was hidden after this ticket: LRAC-13620
 
 		var userEmail = "dcp5@liferay.com";
 		var userName = "dcp5";

@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryReference;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -89,6 +90,10 @@ public class TaxonomyCategoryBriefUtil {
 
 	private static TaxonomyCategoryReference _toTaxonomyCategoryReference(
 		AssetCategory assetCategory) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178052")) {
+			return null;
+		}
 
 		return new TaxonomyCategoryReference() {
 			{

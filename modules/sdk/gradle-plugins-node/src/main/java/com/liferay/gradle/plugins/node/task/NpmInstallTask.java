@@ -34,6 +34,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
@@ -94,10 +95,14 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		executeNpmInstall(false);
 	}
 
+	@Internal
 	public File getNodeModulesCacheDir() {
 		return GradleUtil.toFile(getProject(), _nodeModulesCacheDir);
 	}
 
+	@InputFile
+	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getNodeModulesDigestFile() {
 		return GradleUtil.toFile(getProject(), _nodeModulesDigestFile);
 	}
@@ -142,6 +147,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		return _getExistentFile("npm-shrinkwrap.json");
 	}
 
+	@Input
 	public boolean isCheckDigest() {
 		if (_isCacheEnabled()) {
 			return false;
@@ -160,14 +166,17 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		return false;
 	}
 
+	@Input
 	public boolean isNodeModulesCacheNativeSync() {
 		return _nodeModulesCacheNativeSync;
 	}
 
+	@Input
 	public boolean isRemoveShrinkwrappedUrls() {
 		return GradleUtil.toBoolean(_removeShrinkwrappedUrls);
 	}
 
+	@Input
 	public boolean isUseNpmCI() {
 		return GradleUtil.toBoolean(_useNpmCI);
 	}
@@ -253,6 +262,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 		}
 	}
 
+	@Internal
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();

@@ -22,6 +22,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
@@ -70,10 +71,16 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toString(_copyrightYear);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJavaDir() {
-		return GradleUtil.toFile(getProject(), _javaDir);
+		File file = GradleUtil.toFile(getProject(), _javaDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -91,10 +98,16 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toString(_jspDirName);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getJspParentDir() {
-		return GradleUtil.toFile(getProject(), _jspParentDir);
+		File file = GradleUtil.toFile(getProject(), _jspParentDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	@Input
@@ -108,10 +121,16 @@ public class BuildTaglibsTask extends JavaExec {
 		return GradleUtil.toString(_templatesDirName);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getTldDir() {
-		return GradleUtil.toFile(getProject(), _tldDir);
+		File file = GradleUtil.toFile(getProject(), _tldDir);
+
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		return file;
 	}
 
 	public void setComponentsXmlFiles(Iterable<?> componentsXmlFiles) {

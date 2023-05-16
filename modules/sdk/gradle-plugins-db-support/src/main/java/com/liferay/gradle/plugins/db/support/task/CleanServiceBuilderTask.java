@@ -15,6 +15,7 @@ import java.util.List;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 
@@ -48,6 +49,7 @@ public class CleanServiceBuilderTask extends BaseDBSupportTask {
 		_servletContextName = servletContextName;
 	}
 
+	@Internal
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();

@@ -16,8 +16,11 @@ import java.util.List;
 
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 
@@ -49,16 +52,23 @@ public class BuildWSDDTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _inputFile);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
-	@Input
+	@InputFile
+	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getServerConfigFile() {
-		return GradleUtil.toFile(getProject(), _serverConfigFile);
+		File file = GradleUtil.toFile(getProject(), _serverConfigFile);
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 	@Input
@@ -86,6 +96,7 @@ public class BuildWSDDTask extends JavaExec {
 		_serviceNamespace = serviceNamespace;
 	}
 
+	@Internal
 	protected List<String> getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
@@ -94,12 +105,25 @@ public class BuildWSDDTask extends JavaExec {
 		args.add(
 			"wsdd.output.path=" + FileUtil.getAbsolutePath(getOutputDir()) +
 				"/");
+
+		File serverConfigFile = _getOptionalFile(
+			getServerConfigFile(), _serverConfigFile);
+
 		args.add(
 			"wsdd.server.config.file=" +
-				FileUtil.getAbsolutePath(getServerConfigFile()));
+				FileUtil.getAbsolutePath(serverConfigFile));
+
 		args.add("wsdd.service.namespace=" + getServiceNamespace());
 
 		return args;
+	}
+
+	private File _getOptionalFile(File file, Object defaultFile) {
+		if (file != null) {
+			return file;
+		}
+
+		return GradleUtil.toFile(getProject(), defaultFile);
 	}
 
 	private Object _builderClasspath;

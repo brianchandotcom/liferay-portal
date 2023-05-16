@@ -32,7 +32,6 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -42,19 +41,21 @@ import org.gradle.api.tasks.TaskAction;
 public class ReplaceRegexTask extends DefaultTask {
 
 	@Input
-	@SkipWhenEmpty
 	public Map<String, FileCollection> getMatches() {
 		return _matches;
 	}
 
+	@Input
 	public List<Closure<String>> getPre() {
 		return _preClosures;
 	}
 
+	@Input
 	public Object getReplacement() {
 		return _replacement;
 	}
 
+	@Input
 	public List<Closure<Boolean>> getReplaceOnlyIf() {
 		return _replaceOnlyIfClosures;
 	}

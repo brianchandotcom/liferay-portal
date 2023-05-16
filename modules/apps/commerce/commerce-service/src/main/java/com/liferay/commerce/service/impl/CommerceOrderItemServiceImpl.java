@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -231,10 +232,12 @@ public class CommerceOrderItemServiceImpl
 			_commerceOrderModelResourcePermission.check(
 				getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
 				ActionKeys.VIEW);
+
+			return commerceOrderItemLocalService.getChildCommerceOrderItems(
+				parentCommerceOrderItemId);
 		}
 
-		return commerceOrderItemLocalService.getChildCommerceOrderItems(
-			parentCommerceOrderItemId);
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -339,6 +342,27 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.getCommerceOrderItemsQuantity(
 			commerceOrderId);
+	}
+
+	@Override
+	public List<CommerceOrderItem> getSupplierCommerceOrderItems(
+			long customerCommerceOrderItemId, int start, int end)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.fetchCommerceOrderItem(
+				customerCommerceOrderItemId);
+
+		if (commerceOrderItem != null) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+				ActionKeys.VIEW);
+
+			return commerceOrderItemLocalService.getSupplierCommerceOrderItems(
+				customerCommerceOrderItemId, start, end);
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override

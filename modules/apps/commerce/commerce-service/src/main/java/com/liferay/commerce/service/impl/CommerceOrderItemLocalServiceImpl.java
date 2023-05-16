@@ -549,6 +549,14 @@ public class CommerceOrderItemLocalServiceImpl
 					CommerceOrderItemTable.INSTANCE.commerceOrderItemId)));
 	}
 
+	@Override
+	public List<CommerceOrderItem> getSupplierCommerceOrderItems(
+		long customerCommerceOrderItemId, int start, int end) {
+
+		return commerceOrderItemPersistence.findByCustomerCommerceOrderItemId(
+			customerCommerceOrderItemId, start, end);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem importCommerceOrderItem(

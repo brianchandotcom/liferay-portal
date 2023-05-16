@@ -32,7 +32,6 @@ dependencies {
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "3.0.75"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.testray", version: "1.0.15"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.9"
-	api group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
 	api group: "gradle.plugin.com.github.maiflai", name: "gradle-scalatest", version: "0.25"
 	api group: "gradle.plugin.com.github.spotbugs.snom", name: "spotbugs-gradle-plugin", version: "4.0.0"
 	api group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"

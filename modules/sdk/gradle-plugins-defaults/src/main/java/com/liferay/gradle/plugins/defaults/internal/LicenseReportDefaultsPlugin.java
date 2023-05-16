@@ -35,8 +35,6 @@ import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 
-import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
-
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -267,9 +265,6 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 			_addDependenciesLicenseReport(
 				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, dependencyNames);
-			_addDependenciesLicenseReport(
-				ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
-				dependencyNames);
 
 			return new String[] {
 				LiferayOSGiPlugin.COMPILE_INCLUDE_CONFIGURATION_NAME,

@@ -122,8 +122,6 @@ import java.util.stream.Stream;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 
-import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
-
 import org.apache.commons.io.FileUtils;
 
 import org.gradle.StartParameter;
@@ -1451,9 +1449,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					sb.append('(');
 					sb.append(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-					sb.append('|');
-					sb.append(
-						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
 					sb.append(") ");
 					sb.append(Pattern.quote(_getProjectDependency(project)));
 
@@ -1591,7 +1586,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JSDocPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPublishPlugin.class);
 		GradleUtil.applyPlugin(project, PmdPlugin.class);
-		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 		GradleUtil.applyPlugin(project, SpotBugsPlugin.class);
 
 		if (FileUtil.exists(project, "rest-config.yaml")) {
@@ -2170,7 +2164,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, Dependency.DEFAULT_CONFIGURATION);
 
 		Configuration providedConfiguration = GradleUtil.getConfiguration(
-			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
 
 		DependencySet dependencySet = providedConfiguration.getDependencies();
 

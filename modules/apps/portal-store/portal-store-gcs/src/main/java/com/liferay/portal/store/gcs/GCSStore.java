@@ -109,7 +109,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 	@Override
 	public String cleanUpDeletedStoreArea(
-		long companyId, TemporalAmount temporalAmount, String startOffset) {
+		long companyId, int deletionQuota, TemporalAmount temporalAmount,
+		String startOffset) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
 			return StringPool.BLANK;
@@ -123,15 +124,17 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 		List<BlobId> deletedBlobIdsBatch = new ArrayList<>();
 
-		int deletedBlobQuota = _DELETION_QUOTA;
-		int visitedPageLimit = _DELETION_QUOTA / 10;
+		int deletedBlobQuota = Math.max(deletionQuota, 1);
+
+		int pageSize = deletedBlobQuota * 2;
+		int visitedPageLimit = Math.max(deletedBlobQuota / 10, 10);
 
 		while ((deletedBlobQuota > 0) && (visitedPageLimit > 0)) {
 			Page<Blob> blobPage = bucket.list(
 				Storage.BlobListOption.fields(
 					Storage.BlobField.ID, Storage.BlobField.NAME,
 					Storage.BlobField.UPDATED),
-				Storage.BlobListOption.pageSize(_DELETION_QUOTA * 2),
+				Storage.BlobListOption.pageSize(pageSize),
 				Storage.BlobListOption.prefix(
 					StoreArea.DELETED.getPath(companyId)),
 				Storage.BlobListOption.startOffset(lastVisitedBlobName));
@@ -499,8 +502,6 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private static final int _DELETED_BATCH_SIZE = 10;
-
-	private static final int _DELETION_QUOTA = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 

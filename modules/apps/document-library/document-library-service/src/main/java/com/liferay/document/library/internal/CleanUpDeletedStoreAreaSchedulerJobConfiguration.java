@@ -66,7 +66,7 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 		_startOffsets.put(
 			companyId,
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
-				companyId, Duration.ofDays(31),
+				companyId, 100, Duration.ofDays(31),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
 	}
 

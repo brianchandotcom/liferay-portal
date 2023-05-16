@@ -22,6 +22,7 @@ import java.time.temporal.TemporalAmount;
 public interface StoreAreaProcessor {
 
 	public String cleanUpDeletedStoreArea(
-		long companyId, TemporalAmount temporalAmount, String startOffset);
+		long companyId, int deletionQuota, TemporalAmount temporalAmount,
+		String startOffset);
 
 }

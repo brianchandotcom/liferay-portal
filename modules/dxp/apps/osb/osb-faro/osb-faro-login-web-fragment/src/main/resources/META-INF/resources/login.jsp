@@ -201,7 +201,9 @@
 		</div>
 
 		<aui:script sandbox="<%= true %>">
-			var form = document.querySelector('[name=<portlet:namespace /><%= formName %>]')
+			var form = document.querySelector(
+				'[name=<portlet:namespace /><%= formName %>]'
+			);
 
 			form.addEventListener('submit', (event) => {
 				<c:if test="<%= Validator.isNotNull(redirect) %>">
@@ -214,7 +216,7 @@
 
 				submitForm(form);
 			});
-			
+
 			var password = form.querySelector('[name=<portlet:namespace />password');
 
 			password.addEventListener('keypress', (event) => {

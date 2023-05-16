@@ -109,17 +109,17 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			String nonce = _generateNonce();
 
 			httpServletResponseBody = httpServletResponseBody.replaceAll(
-				"<(?i)link ", "<link nonce='" + nonce + "' ");
+				"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
 			httpServletResponseBody = httpServletResponseBody.replaceAll(
-				"<(?i)link>", "<link nonce='" + nonce + "'>");
+				"<(?i)link>", "<link nonce=\"" + nonce + "\">");
 			httpServletResponseBody = httpServletResponseBody.replaceAll(
-				"<(?i)script ", "<script nonce='" + nonce + "' ");
+				"<(?i)script ", "<script nonce=\"" + nonce + "\" ");
 			httpServletResponseBody = httpServletResponseBody.replaceAll(
-				"<(?i)script>", "<script nonce='" + nonce + "'>");
+				"<(?i)script>", "<script nonce=\"" + nonce + "\">");
 			httpServletResponseBody = httpServletResponseBody.replaceAll(
-				"<(?i)style ", "<style nonce='" + nonce + "' ");
+				"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
 			httpServletResponseBody = httpServletResponseBody.replaceAll(
-				"<(?i)style>", "<style nonce='" + nonce + "'>");
+				"<(?i)style>", "<style nonce=\"" + nonce + "\">");
 
 			httpServletResponseWriter.write(httpServletResponseBody);
 

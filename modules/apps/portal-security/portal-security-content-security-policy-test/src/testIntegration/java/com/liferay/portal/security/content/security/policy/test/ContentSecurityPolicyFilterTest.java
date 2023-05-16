@@ -200,13 +200,13 @@ public class ContentSecurityPolicyFilterTest {
 			String responseBody = _getResponseBody(httpClient);
 
 			Assert.assertTrue(
-				responseBody.contains("<link nonce='" + nonce + "'"));
+				responseBody.contains("<link nonce=\"" + nonce + "\""));
 
 			Assert.assertTrue(
-				responseBody.contains("<script nonce='" + nonce + "'"));
+				responseBody.contains("<script nonce=\"" + nonce + "\""));
 
 			Assert.assertTrue(
-				responseBody.contains("<style nonce='" + nonce + "'"));
+				responseBody.contains("<style nonce=\"" + nonce + "\""));
 		}
 	}
 

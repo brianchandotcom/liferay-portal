@@ -1122,20 +1122,30 @@ public class FragmentCollectionContributorRegistryImpl
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
 
-			themeDisplay.setLanguageId(layout.getDefaultLanguageId());
-			themeDisplay.setLayout(layout);
+			if (layout != null) {
+				themeDisplay.setLanguageId(layout.getDefaultLanguageId());
+				themeDisplay.setLayout(layout);
 
-			LayoutSet layoutSet = layout.getLayoutSet();
+				LayoutSet layoutSet = layout.getLayoutSet();
 
-			themeDisplay.setLayoutSet(layoutSet);
+				themeDisplay.setLayoutSet(layoutSet);
 
-			themeDisplay.setLayoutTypePortlet(
-				(LayoutTypePortlet)layout.getLayoutType());
-			themeDisplay.setLocale(
-				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
-			themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
+				themeDisplay.setLayoutTypePortlet(
+					(LayoutTypePortlet)layout.getLayoutType());
+				themeDisplay.setLocale(
+					LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()));
+				themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
+				themeDisplay.setPlid(layout.getPlid());
+			}
+			else {
+				Locale locale = _portal.getSiteDefaultLocale(
+					group.getGroupId());
+
+				themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
+				themeDisplay.setLocale(locale);
+			}
+
 			themeDisplay.setPermissionChecker(permissionChecker);
-			themeDisplay.setPlid(layout.getPlid());
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
 			themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 			themeDisplay.setRealUser(user);

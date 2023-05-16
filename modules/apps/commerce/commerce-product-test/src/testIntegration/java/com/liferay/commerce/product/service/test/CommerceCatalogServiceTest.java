@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPConstants;
@@ -68,8 +69,9 @@ public class CommerceCatalogServiceTest {
 
 		CommerceCatalog commerceCatalog1 =
 			_commerceCatalogService.addCommerceCatalog(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				"USD", "en_US",
+				RandomTestUtil.randomString(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				RandomTestUtil.randomString(), "USD", "en_US",
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getCompanyId(), user1.getGroupId(),
 					user1.getUserId()));

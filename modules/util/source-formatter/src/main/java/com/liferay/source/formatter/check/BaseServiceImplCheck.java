@@ -73,29 +73,26 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 		while (iterator.hasNext()) {
 			Element element = iterator.next();
 
-			boolean found = false;
-
 			if (element.attributeValue("external-reference-code") != null) {
-				found = true;
-			}
-			else {
-				Iterator<Element> columnIterator = element.elementIterator(
-					"column");
-
-				while (columnIterator.hasNext() && !found) {
-					Element columnElement = columnIterator.next();
-
-					if (StringUtil.equals(
-							columnElement.attributeValue("name"),
-							"externalReferenceCode")) {
-
-						found = true;
-					}
-				}
-			}
-
-			if (found) {
 				ercEnabledEntityNames.add(element.attributeValue("name"));
+
+				continue;
+			}
+
+			Iterator<Element> columnIterator = element.elementIterator(
+				"column");
+
+			while (columnIterator.hasNext()) {
+				Element columnElement = columnIterator.next();
+
+				if (StringUtil.equals(
+						columnElement.attributeValue("name"),
+						"externalReferenceCode")) {
+
+					ercEnabledEntityNames.add(element.attributeValue("name"));
+
+					break;
+				}
 			}
 		}
 

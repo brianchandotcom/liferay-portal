@@ -281,7 +281,7 @@ definition {
 	@description = "LPS-154647. Assert intermediate step displays previous and next step button."
 	@priority = 5
 	test IntermediateStepHasPreviousAndNextStepPresent {
-		task ("And Given popover mode") {
+		task ("And popover mode") {
 			Walkthrough.enablePopoverMode();
 		}
 
@@ -291,7 +291,7 @@ definition {
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 
-		task ("And When click on next steps until second to last step") {
+		task ("And click on next steps until second to last step") {
 			Walkthrough.goToSpecificStep(key_step = 4);
 		}
 
@@ -301,11 +301,11 @@ definition {
 				locator1 = "Walkthrough#POPOVER_TITLE");
 		}
 
-		task ("And Then primary button is present") {
+		task ("And primary button is present") {
 			AssertElementPresent(locator1 = "Button#OK");
 		}
 
-		task ("And Then secondary button previous step is present") {
+		task ("Then secondary button previous step is present") {
 			AssertElementPresent(locator1 = "Button#PREVIOUS");
 		}
 	}

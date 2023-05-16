@@ -1446,6 +1446,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182032. The Review Date column is visible and shows the values propertly."
+	@priority = 5
+	test CheckReviewDateColumn {
+		task ("Given a web content with review date") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.addReviewDate(reviewDate = "01/01/2100");
+
+			PortletEntry.publish();
+		}
+
+		task ("When navigating to the content dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Then the review date column should be visible") {
+			AssertVisible(
+                key_columnName = "review-date",
+				key_tableEntry = "2100-01-01",
+                locator1 = "LexiconTable#TABLE_ENTRY_INFO");
+		}
+	}
+
 	@description = "LPS-152906 Given a Blogs Asset at Content Dashboard When the user accesses the its information panel Then the share button must be present"
 	@priority = 4
 	test CheckShareButtonIsPresentForBlogs {

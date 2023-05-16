@@ -30,80 +30,71 @@ definition {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
 
-		task("Given classic theme page"){
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Classic Theme Page");
-
+		task ("Given classic theme page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Classic Theme Page");
 		}
 
-		task("And Clay Sample portlet"){
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Classic Theme Page",
-			widgetName = "Clay Sample");
+		task ("And Clay Sample portlet") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Classic Theme Page",
+				widgetName = "Clay Sample");
 		}
 
+		task ("Given access the page design") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		task("Given access the page design"){
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Classic Theme Page");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "Configure",
-			pageName = "Classic Theme Page");
-		
-		Navigator.gotoNavTab(navTab = "Design");
+			Navigator.gotoNavTab(navTab = "Design");
 		}
 
-		task("When CSS is edited"){
+		task ("When CSS is edited") {
+			Theme.configureLookAndFeelSpecificLook();
 
-		Theme.configureLookAndFeelSpecificLook();
+			Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "false");
 
-		Theme.configureLookAndFeelShowHeaderSearch(showHeaderSearch = "false");
+			Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
 
-		Theme.configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = "true");
+			Theme.configureLookAndFeelCustomCSS(cssText = '''body, #wrapper{background-color: #42f4c5;}''');
 
-		Theme.configureLookAndFeelCustomCSS(cssText = '''body, #wrapper{background-color: #42f4c5;}''');
+			PortletEntry.save();
 
-		PortletEntry.save();
+			Navigator.gotoPage(pageName = "Classic Theme Page");
 
-		Navigator.gotoPage(pageName = "Classic Theme Page");
+			var htmlSourceText = '''body, #wrapper{background-color: #42f4c5;}''';
 
-		var htmlSourceText = '''body, #wrapper{background-color: #42f4c5;}''';
+			AssertHTMLSourceTextPresent(value1 = ${htmlSourceText});
 
-		AssertHTMLSourceTextPresent(value1 = ${htmlSourceText});
-
-		takeScreenshot();
+			takeScreenshot();
 		}
 
 		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
-		task("And go to Clay Sample portlet page"){
+		task ("And go to Clay Sample portlet page") {
+			Portlet.gotoPortletOptions(portletName = "Clay Sample");
 
-		Portlet.gotoPortletOptions(portletName = "Clay Sample");
+			Theme.viewMaxPortletOption();
 
-		Theme.viewMaxPortletOption();
-
-		Theme.viewMinPortlet();
-
+			Theme.viewMinPortlet();
 		}
-		
-		task("Then assert Clay Sample portet can be minimized/maximized"){
 
-		AssertTextEquals(
-			locator1 = "Portlet#H2_HEADER",
-			value1 = "Clay Sample");
+		task ("Then assert Clay Sample portet can be minimized/maximized") {
+			AssertTextEquals(
+				locator1 = "Portlet#H2_HEADER",
+				value1 = "Clay Sample");
 
-		AssertNotVisible(
-			key_portletName = "Clay Sample",
-			locator1 = "Portlet#BODY");
+			AssertNotVisible(
+				key_portletName = "Clay Sample",
+				locator1 = "Portlet#BODY");
 
-		Portlet.gotoPortletOptions(portletName = "Clay Sample");
-
+			Portlet.gotoPortletOptions(portletName = "Clay Sample");
 		}
 
 		Theme.viewRestorePortlet();

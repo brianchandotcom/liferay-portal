@@ -81,7 +81,9 @@ definition {
 
 	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"
 	macro signInTestSetup {
-		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = "test@liferay.com");
+		var userEmailAddress = JSONUtil2.getDefaultUserEmail();
+
+		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = ${userEmailAddress});
 
 		SignIn._signIn(
 			licenseExpired = ${licenseExpired},

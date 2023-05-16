@@ -243,12 +243,12 @@ definition {
 				var creatorEmailAddress = ${userEmailAddress};
 			}
 			else {
-				var creatorEmailAddress = "test@liferay.com";
+				var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
 			}
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = "test";
+			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 		}
 
 		var curl = '''
@@ -306,15 +306,15 @@ definition {
 		}
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userName = "test";
+			var userLoginInfo = "test:test";
 		}
 		else {
-			var userName = "test@liferay.com";
+			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users \
-				-u ${userName}:test \
+				-u ${userLoginInfo} \
 				-d companyId=${companyId} \
 				-d <CURL_DATA[start=-1]CURL_DATA> \
 				-d <CURL_DATA[end=-1]CURL_DATA>
@@ -335,7 +335,7 @@ definition {
 			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users \

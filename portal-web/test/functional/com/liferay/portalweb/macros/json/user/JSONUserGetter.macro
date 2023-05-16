@@ -7,15 +7,15 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userName = "test";
+			var userLoginInfo = "test:test";
 		}
 		else {
-			var userName = "test@liferay.com";
+			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
-				-u ${userName}:test \
+				-u ${userLoginInfo} \
 		''';
 
 		return ${curl};
@@ -26,7 +26,7 @@ definition {
 
 		var companyId = JSONCompany.getCompanyIdNoSelenium();
 		var portalURL = JSONCompany.getPortalURL();
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \

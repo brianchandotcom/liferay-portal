@@ -5,15 +5,15 @@ definition {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLogin = "test:test";
+			var userLoginInfo = "test:test";
 		}
 		else {
-			var userLogin = JSONUtil2.formatJSONUser();
+			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		}
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-				-u ${userLogin} \
+				-u ${userLoginInfo} \
 				-H Content-Type: application/json
 		''';
 
@@ -43,15 +43,15 @@ definition {
 			value = "\"${portalInstanceId}\"");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLogin = "test:test";
+			var userLoginInfo = "test:test";
 		}
 		else {
-			var userLogin = JSONUtil2.formatJSONUser();
+			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		}
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-				-u ${userLogin} \
+				-u ${userLoginInfo} \
 				-d ${parameters} \
 				-H Content-Type: application/json
 		''';
@@ -89,15 +89,15 @@ definition {
 			value = "\"${siteInitializerKey}\"");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLogin = "test:test";
+			var userLoginInfo = "test:test";
 		}
 		else {
-			var userLogin = JSONUtil2.formatJSONUser();
+			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		}
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-				-u ${userLogin} \
+				-u ${userLoginInfo} \
 				-d ${parameters} \
 				-H Content-Type: application/json
 		''';
@@ -128,15 +128,15 @@ definition {
 		var portalInstanceId = StringUtil.replace(${portalInstanceId}, " ", "%20");
 
 		if (${authenticationMethod} == "By Screen Name") {
-			var userLogin = "test:test";
+			var userLoginInfo = "test:test";
 		}
 		else {
-			var userLogin = JSONUtil2.formatJSONUser();
+			var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
 		}
 
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
-				-u ${userLogin} \
+				-u ${userLoginInfo} \
 				-H Content-Type: application/json
 		''';
 

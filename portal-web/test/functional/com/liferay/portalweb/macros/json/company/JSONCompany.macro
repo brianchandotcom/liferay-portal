@@ -72,12 +72,12 @@ definition {
 				}
 			}
 			else {
-				var creatorEmailAddress = JSONUtil2.getDefaultUserEmail();
+				var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
 			}
 		}
 
 		if (!(isSet(creatorPassword))) {
-			var creatorPassword = JSONUtil2.getDefaultUserPassword();
+			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 		}
 
 		var curl = '''

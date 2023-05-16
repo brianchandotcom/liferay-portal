@@ -140,6 +140,13 @@ definition {
 		}
 	}
 
+	macro formatJSONSuperAdminUser {
+		var superAdminUserEmail = JSONUtil2.getSuperAdminUserEmail();
+		var superAdminUserPassword = JSONUtil2.getSuperAdminUserPassword();
+
+		return "${superAdminUserEmail}:${superAdminUserPassword}";
+	}
+
 	@summary = "returns ${userEmail}:${password} to be used in JSON calls ONLY"
 	macro formatJSONUser {
 		var defaultUserEmail = JSONUtil2.getDefaultUserEmail();
@@ -168,6 +175,26 @@ definition {
 		}
 
 		return ${customDefaultUserPassword};
+	}
+
+	macro getSuperAdminUserEmail {
+		var customSuperAdminUserEmail = PropsUtil.get("custom.super.admin.user.email");
+
+		if (!(isSet(customSuperAdminUserEmail))) {
+			var customSuperAdminUserEmail = "test@liferay.com";
+		}
+
+		return ${customSuperAdminUserEmail};
+	}
+
+	macro getSuperAdminUserPassword {
+		var customSuperAdminUserPassword = PropsUtil.get("custom.super.admin.user.password");
+
+		if (!(isSet(customSuperAdminUserPassword))) {
+			var customSuperAdminUserPassword = "test";
+		}
+
+		return ${customSuperAdminUserPassword};
 	}
 
 }

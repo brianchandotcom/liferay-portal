@@ -12027,6 +12027,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			app.server.temp.dir=${app.server.tomcat.temp.dir}
 			app.server.type=${app.server.type}
 			component.names=${component.names}
+			custom.super.admin.user.email=${custom.super.admin.user.email}
+			custom.super.admin.user.password=${custom.super.admin.user.password}
 			custom.default.user.password=${custom.default.user.password}
 			custom.default.user.email=${custom.default.user.email}
 			get.location.max.retries=${test.get.location.max.retries}
@@ -12606,6 +12608,12 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 						<isset property="portal.proxy.path" />
 						<then>
 							<property name="default.portal.url" value="http://localhost:88/${portal.proxy.path}" />
+						</then>
+					</elseif>
+					<elseif>
+						<isset property="default.portal.url" />
+						<then>
+							<property name="default.portal.url" value="${default.portal.url}" />
 						</then>
 					</elseif>
 					<else>

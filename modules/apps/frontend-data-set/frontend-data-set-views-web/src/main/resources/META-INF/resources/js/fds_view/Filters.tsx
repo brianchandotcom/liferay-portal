@@ -127,7 +127,7 @@ function AddFDSFilterModalContent({
 
 		let body: any = {
 			fieldName: field.name,
-			label: formData.get(nameFormElementId) || field.label,
+			name: formData.get(nameFormElementId) || field.label,
 		};
 
 		let url: string = '';
@@ -725,8 +725,8 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				disableSave={!newFiltersOrder.length}
 				fields={[
 					{
-						label: Liferay.Language.get('label'),
-						name: 'label',
+						label: Liferay.Language.get('name'),
+						name: 'name',
 					},
 					{
 						label: Liferay.Language.get('Field Name'),

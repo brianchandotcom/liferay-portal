@@ -14,6 +14,7 @@
 
 import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
+import './ModalAddObjectDefinition.scss';
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
 	observer: Observer;

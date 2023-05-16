@@ -19,6 +19,7 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {
 	API,
+	BetaButton,
 	FormError,
 	Input,
 	REQUIRED_MSG,
@@ -32,6 +33,8 @@ import {
 	firstLetterUppercase,
 	removeAllSpecialCharacters,
 } from '../utils/string';
+
+import './ModalAddObjectDefinition.scss';
 
 const normalizeName: TNormalizeName = (str) => {
 	const split = str.split(' ');
@@ -160,25 +163,32 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 					/>
 
 					{Liferay.FeatureFlags['LPS-135430'] && (
-						<Select
-							label={Liferay.Language.get('storage-type')}
-							name="storageType"
-							onChange={({target: {value}}) => {
-								setValues({
-									...values,
-									storageType: storageTypes.find(
-										(storageType) => storageType === value
-									),
-								});
-							}}
-							options={storageTypes.map((storageType) => {
-								return {label: storageType};
-							})}
-							tooltip={Liferay.Language.get(
-								'object-definition-storage-type-tooltip'
-							)}
-							value={selectedStorageType(values.storageType)}
-						/>
+						<div className="lfr__object-web-modal-add-object-definition-storage-type">
+							<Select
+								label={Liferay.Language.get('storage-type')}
+								name="storageType"
+								onChange={({target: {value}}) => {
+									setValues({
+										...values,
+										storageType: storageTypes.find(
+											(storageType) =>
+												storageType === value
+										),
+									});
+								}}
+								options={storageTypes.map((storageType) => {
+									return {label: storageType};
+								})}
+								tooltip={Liferay.Language.get(
+									'object-definition-storage-type-tooltip'
+								)}
+								value={selectedStorageType(values.storageType)}
+							/>
+
+							<div className="lfr__object-web-modal-add-object-definition-storage-type-beta">
+								<BetaButton />
+							</div>
+						</div>
 					)}
 				</ClayModal.Body>
 

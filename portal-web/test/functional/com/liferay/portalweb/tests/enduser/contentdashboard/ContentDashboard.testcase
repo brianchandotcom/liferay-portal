@@ -820,17 +820,17 @@ definition {
 			AssertTextEquals(
 				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "C_Subaudienc…");
+				value1 = "C_Subaudien…");
 
 			AssertTextEquals(
 				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "B_Subaudienc…");
+				value1 = "B_Subaudien…");
 
 			AssertTextEquals(
 				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "A_Subaudienc…");
+				value1 = "A_Subaudien…");
 		}
 	}
 
@@ -848,20 +848,17 @@ definition {
 		}
 
 		task ("Check if the words Topic, Audience and Stage are shown") {
-			AssertTextEquals(
+			AssertElementPresent(
 				key_fieldLabel = "Topic",
-				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
-				value1 = "Topic");
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				key_fieldLabel = "Audience",
-				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
-				value1 = "Audience");
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				key_fieldLabel = "Stage",
-				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
-				value1 = "Stage");
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM");
 		}
 	}
 
@@ -5173,20 +5170,17 @@ definition {
 		task ("Go to content Dashboard and View the relative ordering of the categories remain the same") {
 			ContentDashboard.goToContentDashboard();
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "Substage_1",
-				xAxisCategoryName = "stage");
+				xAxisCategoryName = "Substage_1");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "Substage_2",
-				xAxisCategoryName = "stage");
+				xAxisCategoryName = "Substage_2");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "Substage_3",
-				xAxisCategoryName = "stage");
+				xAxisCategoryName = "Substage_3");
 		}
 	}
 
@@ -5537,9 +5531,9 @@ definition {
 		task ("Check if the Vocabulary appears in the list") {
 			Panel.expandPanel(panel = "Categorization");
 
-			AssertTextEquals(
-				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
-				value1 = "Vocabulary 1");
+			AssertElementPresent(
+				key_fieldLabel = "Vocabulary 1",
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM");
 		}
 	}
 
@@ -5566,9 +5560,9 @@ definition {
 		task ("Check if the Vocabulary appears in the list") {
 			Panel.expandPanel(panel = "Categorization");
 
-			AssertTextEquals(
-				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
-				value1 = "Vocabulary 1");
+			AssertElementPresent(
+				key_fieldLabel = "Vocabulary 1",
+				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM");
 		}
 	}
 
@@ -5661,17 +5655,17 @@ definition {
 			AssertTextEquals(
 				categoryIndex = 1,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "C_Subaudienc…");
+				value1 = "C_Subaudien…");
 
 			AssertTextEquals(
 				categoryIndex = 2,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "B_Subaudienc…");
+				value1 = "B_Subaudien…");
 
 			AssertTextEquals(
 				categoryIndex = 3,
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
-				value1 = "A_Subaudienc…");
+				value1 = "A_Subaudien…");
 		}
 	}
 

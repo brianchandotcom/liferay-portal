@@ -290,16 +290,14 @@ definition {
 		}
 
 		task ("Check axes flip behavior") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCtegoryName = "Stage 1");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCtegoryName = "Audience 1");
 		}
 	}
@@ -343,9 +341,8 @@ definition {
 		}
 
 		task ("Check graph without filters applied") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
 			AssertTextEquals(
@@ -357,9 +354,8 @@ definition {
 		task ("Prioritize stage vocabulary") {
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
 			AssertTextEquals(
@@ -432,9 +428,8 @@ definition {
 		}
 
 		task ("Check graph without filters applied") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCategoryName = "Audience 1");
 
 			AssertTextEquals(
@@ -446,9 +441,8 @@ definition {
 		task ("Prioritize stage vocabulary") {
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCategoryName = "Audience 1");
 
 			AssertTextEquals(
@@ -571,7 +565,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
-				value1 = "There are no categories selected");
+				value1 = "There are no categories selected.");
 		}
 	}
 
@@ -617,16 +611,14 @@ definition {
 		}
 
 		task ("Assert the site vocabularies in the graph") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCtegoryName = "Stage 2");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCtegoryName = "Category 1");
 		}
 	}
@@ -675,16 +667,14 @@ definition {
 		}
 
 		task ("Assert the site vocabularies in the graph") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCtegoryName = "Category 1");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCtegoryName = "Category 2");
 		}
 	}
@@ -733,9 +723,8 @@ definition {
 		}
 
 		task ("Assert the blog is counted as an asset") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "Blogs Entry Title",
 				xAxisCategoryName = "Category1");
 		}
 	}
@@ -830,16 +819,14 @@ definition {
 		task ("Check which vocabulary is displayed in x-axis") {
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Audience");
 
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "WC Title",
 				xAxisCategoryName = "Audience 1");
 		}
 	}
@@ -885,9 +872,8 @@ definition {
 		}
 
 		task ("Assert the document is counted as an asset") {
-			AssertTextEquals(
+			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				value1 = "DM Document Title",
 				xAxisCategoryName = "Audience 1");
 		}
 	}

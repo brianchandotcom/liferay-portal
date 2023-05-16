@@ -107,6 +107,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -2424,9 +2425,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return new HashMap<>();
 		}
 
-		Map<String, Layout> layouts = new HashMap<>();
-
 		Map<String, String> layoutIdsStringUtilReplaceValues = new HashMap<>();
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (Layout layout : layouts) {
+			layoutIdsStringUtilReplaceValues.put(
+				"LAYOUT_ID:" + layout.getName(),
+				String.valueOf(layout.getLayoutId()));
+		}
+
+		Map<String, Layout> layoutMap = new HashMap<>();
 
 		Set<String> sortedResourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
@@ -2437,7 +2448,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				layouts.putAll(
+				layoutMap.putAll(
 					_addOrUpdateLayout(
 						layoutIdsStringUtilReplaceValues,
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, resourcePath,
@@ -2445,7 +2456,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		return layouts;
+		return layoutMap;
 	}
 
 	private Map<String, String> _addOrUpdateListTypeDefinitions(

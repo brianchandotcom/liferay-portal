@@ -529,15 +529,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
-		"roleName": "Channel Finance Manager (CFM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
@@ -634,15 +625,6 @@
 		"actionIds": [
 			"VIEW",
 			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
-		"roleName": "Channel Finance Manager (CFM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
@@ -904,23 +886,15 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Account Manager (CAM)",
 		"scope": 1
 	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
+
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
@@ -929,26 +903,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Marketing Director (CMD)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
 	{
@@ -1005,16 +959,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Account Manager (CAM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
+			"VIEW",
+			"ADD_OBJECT_ENTRY",
+            "UPDATE" 
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -1032,7 +979,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
+			"VIEW",
+			"ADD_OBJECT_ENTRY",
+            "UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -1041,6 +990,8 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
+            "UPDATE",
 			"VIEW"
 		],
 		"primKey": "0",

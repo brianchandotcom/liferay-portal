@@ -11,7 +11,7 @@ task copyGradleTestDependencies(type: Copy)
 task downloadBundle(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 
 if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"

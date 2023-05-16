@@ -14,10 +14,12 @@
 
 package com.liferay.document.library.internal;
 
+import com.liferay.document.library.internal.configuration.StoreAreaConfiguration;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
@@ -35,7 +37,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = SchedulerJobConfiguration.class)
+@Component(
+	configurationPid = "com.liferay.document.library.internal.configuration.StoreAreaConfiguration",
+	service = SchedulerJobConfiguration.class
+)
 public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
@@ -54,19 +59,24 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
+		return TriggerConfiguration.createTriggerConfiguration(
+			_storeAreaConfiguration.cleanUpInterval(), TimeUnit.DAY);
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
 		_startOffsets = new ConcurrentHashMap<>();
+
+		_storeAreaConfiguration = ConfigurableUtil.createConfigurable(
+			StoreAreaConfiguration.class, properties);
 	}
 
 	private void _cleanUpDeletedStoreArea(Long companyId) {
 		_startOffsets.put(
 			companyId,
 			_storeAreaProcessor.cleanUpDeletedStoreArea(
-				companyId, 100, Duration.ofDays(31),
+				companyId, _storeAreaConfiguration.deletionQuota(),
+				Duration.ofDays(_storeAreaConfiguration.evictionAge()),
 				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
 	}
 
@@ -74,6 +84,7 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 	private CompanyLocalService _companyLocalService;
 
 	private Map<Long, String> _startOffsets;
+	private StoreAreaConfiguration _storeAreaConfiguration;
 
 	@Reference(target = "(default=true)")
 	private StoreAreaProcessor _storeAreaProcessor;

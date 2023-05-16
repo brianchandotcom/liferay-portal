@@ -30,15 +30,24 @@ definition {
 		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
 		property portal.acceptance = "true";
 
+		task("Given classic theme page"){
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Classic Theme Page");
+
+		}
+
+		task("And Clay Sample portlet"){
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Guest",
 			layoutName = "Classic Theme Page",
 			widgetName = "Clay Sample");
+		}
 
+
+		task("Given access the page design"){
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -46,8 +55,11 @@ definition {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = "Classic Theme Page");
-
+		
 		Navigator.gotoNavTab(navTab = "Design");
+		}
+
+		task("When CSS is edited"){
 
 		Theme.configureLookAndFeelSpecificLook();
 
@@ -66,14 +78,21 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = ${htmlSourceText});
 
 		takeScreenshot();
+		}
 
 		AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+		task("And go to Clay Sample portlet page"){
 
 		Portlet.gotoPortletOptions(portletName = "Clay Sample");
 
 		Theme.viewMaxPortletOption();
 
 		Theme.viewMinPortlet();
+
+		}
+		
+		task("Then assert Clay Sample portet can be minimized/maximized"){
 
 		AssertTextEquals(
 			locator1 = "Portlet#H2_HEADER",
@@ -84,6 +103,8 @@ definition {
 			locator1 = "Portlet#BODY");
 
 		Portlet.gotoPortletOptions(portletName = "Clay Sample");
+
+		}
 
 		Theme.viewRestorePortlet();
 	}

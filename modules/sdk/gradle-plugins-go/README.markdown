@@ -3,7 +3,7 @@
 The Go Gradle plugin lets you run [Go](https://golang.org/) as part of your
 build.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 

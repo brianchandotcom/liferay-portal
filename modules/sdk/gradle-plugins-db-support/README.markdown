@@ -7,7 +7,7 @@ following actions are available:
 - Cleans the Liferay database from the Service Builder tables and rows of a
 module.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 

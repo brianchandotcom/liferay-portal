@@ -42,7 +42,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				OAuth2AuthorizeRequest.withClientRegistrationId(
 					"liferay-partner-cron"
 				).principal(
-					"SampleCommandLineRunner"
+					"PartnerCommandLineRunner"
 				).build());
 
 		if (oAuth2AuthorizedClient == null) {

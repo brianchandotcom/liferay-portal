@@ -147,7 +147,12 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 								<span class="label-item label-item-expand"><liferay-ui:message key="expiring-soon" /></span>
 							</span>
 
-							<liferay-ui:icon-help message='<%= (kbArticle.getExpirationDate() != null) ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' />
+							<clay:icon
+								aria-label='<%= (kbArticle.getExpirationDate() != null) ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>'
+								cssClass="lfr-portal-tooltip"
+								symbol="question-circle-full"
+								title='<%= (kbArticle.getExpirationDate() != null) ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>'
+							/>
 						</c:if>
 					</span>
 				</liferay-ui:search-container-column-text>

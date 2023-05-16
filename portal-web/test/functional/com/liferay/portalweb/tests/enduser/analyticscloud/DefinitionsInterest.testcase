@@ -29,8 +29,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8785 | Test Summary: Add a keyword that already exists"
+	@ignore = "true"
 	@priority = 3
 	test AddKeywordAlreadyExists {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		task ("Enter in the Interests from Settings Definitions") {
 			var word = "ac keyword";
 
@@ -63,8 +67,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8786 | Test Summary: Add keyword when there are none"
+	@ignore = "true"
 	@priority = 3
 	test AddKeywordCurrentlyNone {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		task ("Go to AC Settings > definitions > Interests") {
 			ACNavigation.goToSettings();
 
@@ -89,8 +97,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8787 | Test Summary: Add multiple keywords"
+	@ignore = "true"
 	@priority = 3
 	test AddMultipleKeywords {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		task ("Go to settings > definitions > interests") {
 			var keywords = "ac keyword 1,ac keyword 2,ac keyword 3,ac keyword 4";
 
@@ -113,8 +125,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8795 | Test Summary: Add multiple of the same keyword"
+	@ignore = "true"
 	@priority = 3
 	test AddMultipleSameKeyword {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		task ("Enter in the Interests from Settings Definitions") {
 			var keywords = "ac keyword,ac keyword,ac keyword,ac keyword,ac keyword";
 
@@ -143,8 +159,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8788 | Test Summary: View only selected keywords"
+	@ignore = "true"
 	@priority = 3
 	test AssertSelectedKeywords {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		var keywordsList = "ac keyword 1,ac keyword 2,ac keyword 3,ac keyword 4";
 		var list1 = "ac keyword 1,ac keyword 3";
 		var list2 = "ac keyword 2,ac keyword 4";
@@ -193,8 +213,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: Delete a keyword block"
+	@ignore = "true"
 	@priority = 3
 	test DeleteKeywordBlock {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -225,8 +249,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8790 | Test Summary: Delete keyword using the check box"
+	@ignore = "true"
 	@priority = 3
 	test DeleteKeywordUsingTheCheckBox {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		var words = "ac keyword 1,ac keyword 2";
 
 		task ("Go to settings, definitions and definitions type") {
@@ -259,8 +287,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete multiple keywords"
+	@ignore = "true"
 	@priority = 3
 	test DeleteMultipleKeywords {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -289,8 +321,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8792 | Test Summary: Paginate keyword block list"
+	@ignore = "true"
 	@priority = 3
 	test PaginateKeywordBlockList {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		var words = "ac keyword 1,ac keyword 2,ac keyword 3,ac keyword 4,ac keyword 5,ac keyword 6";
 
 		task ("Go to settings, definitions and definitions type") {
@@ -356,8 +392,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8793 | Test Summary: Search for a blocked keyword"
+	@ignore = "true"
 	@priority = 3
 	test SearchForBlockedKeyword {
+
+		// The Keywords Blocklist Page was hidden after this ticket: LRAC-13648
+
 		var keywords = "test interest,ac keyword";
 
 		task ("Go to Interest session") {

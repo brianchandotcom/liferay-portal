@@ -45,6 +45,10 @@ task portalYarnInstall
 
 Set<File> bndPrintJarFiles = null
 
+Set<Project> implicitDependencyProjects = allprojects.findAll {
+	it.file(".lfrbuild-app-server-lib").exists() || it.file(".lfrbuild-portal-pre").exists()
+}
+
 if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	configurations {
 		bnd
@@ -448,9 +452,90 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.jasper.jspc") {
+			if (!project.name.endsWith("-demo")) {
+				compileJSP {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						mustRunAfter "${it.dependencyProject.path}:deploy"
+						mustRunAfter "${it.dependencyProject.path}:deployDependencies"
+					}
+
+					if (!implicitDependencyProjects.contains(project)) {
+						implicitDependencyProjects.forEach {
+							mustRunAfter "${it.path}:deploy"
+							mustRunAfter "${it.path}:deployDependencies"
+
+							if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+								mustRunAfter "${it.path}:deployAppServerPortalFile"
+							}
+						}
+					}
+				}
+
+				generateJSPJava {
+					configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+						mustRunAfter "${it.dependencyProject.path}:deploy"
+						mustRunAfter "${it.dependencyProject.path}:deployDependencies"
+					}
+
+					if (!implicitDependencyProjects.contains(project)) {
+						implicitDependencyProjects.forEach {
+							mustRunAfter "${it.path}:deploy"
+							mustRunAfter "${it.path}:deployDependencies"
+
+							if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+								mustRunAfter "${it.path}:deployAppServerPortalFile"
+							}
+						}
+					}
+				}
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
+			generateMetadataFileForMavenPublication {
+				mustRunAfter "formatSource"
+			}
+
+			generatePomFileForMavenPublication {
+				mustRunAfter "formatSource"
+			}
+
+			jarSources {
+				mustRunAfter buildPluginDescriptor
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			configurations {
 				xmltask
+			}
+
+			compileTestJava {
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
+					}
+				}
+			}
+
+			compileTestIntegrationJava {
+				configurations.testIntegrationImplementation.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
+					}
+				}
+
+				if (!implicitDependencyProjects.contains(project)) {
+					implicitDependencyProjects.forEach {
+						mustRunAfter "${it.path}:deploy"
+						mustRunAfter "${it.path}:deployDependencies"
+
+						if (it.name.equals("portal-osgi-web-jasper-plugins-taglib")) {
+							mustRunAfter "${it.path}:deployAppServerPortalFile"
+						}
+					}
+				}
 			}
 
 			dependencies {
@@ -575,9 +660,19 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("java") {
 			compileJava {
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
+					}
+				}
+
 				outputs.cacheIf {
 					false
 				}
+			}
+
+			processResources {
+				mustRunAfter "formatSource"
 			}
 		}
 

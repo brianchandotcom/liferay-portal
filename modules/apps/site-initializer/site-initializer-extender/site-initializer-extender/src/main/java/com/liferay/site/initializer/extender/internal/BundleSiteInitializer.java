@@ -2433,7 +2433,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (Layout layout : layouts) {
 			layoutIdsStringUtilReplaceValues.put(
-				"LAYOUT_ID:" + layout.getName(),
+				"LAYOUT_ID:" + layout.getName(LocaleUtil.getSiteDefault()),
 				String.valueOf(layout.getLayoutId()));
 		}
 

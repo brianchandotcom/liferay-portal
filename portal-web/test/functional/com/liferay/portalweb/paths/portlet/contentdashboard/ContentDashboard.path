@@ -342,7 +342,7 @@
 </tr>
 <tr>
 	<td>X_AXIS_CATEGORIES_NAME</td>
-	<td>(//*[contains(@class, 'xAxis')] //*[contains(@class,'recharts-text')]/*)[${categoryIndex}]</td>
+	<td>xpath=(//*[contains(@class, 'xAxis')]//*[contains(@class,'recharts-text')]/*)[${categoryIndex}]</td>
 	<td></td>
 </tr>
 <tr>

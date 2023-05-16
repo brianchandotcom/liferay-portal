@@ -33,7 +33,13 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
+LayoutType selLayoutType = selLayout.getLayoutType();
+
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
+
+Locale defaultLocale = LocaleUtil.getDefault();
+
+String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 %>
 
 <portlet:actionURL name="/layout_admin/edit_layout" var="editLayoutURL">
@@ -59,6 +65,14 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
+	<c:if test="<%= group.isLayoutPrototype() || !(selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem()) %>">
+		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
+	</c:if>
+
+	<c:if test="<%= group.isLayoutPrototype() %>">
+		<aui:input name='<%= "nameMapAsXML_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
+	</c:if>
+
 	<c:if test="<%= layoutsAdminDisplayContext.isLayoutPageTemplateEntry() || ((selLayout.isTypeAssetDisplay() || selLayout.isTypeContent()) && layoutsAdminDisplayContext.isDraft()) %>">
 
 		<%
@@ -77,10 +91,6 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />
-
-		<%
-		LayoutType selLayoutType = selLayout.getLayoutType();
-		%>
 
 		<c:if test="<%= !group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
 			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-friendly-url-is-already-in-use.-please-enter-a-unique-friendly-url" />

@@ -37,23 +37,9 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<c:choose>
-	<c:when test="<%= !group.isLayoutPrototype() %>">
-		<c:choose>
-			<c:when test="<%= selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
-				<liferay-friendly-url:input
-					className="<%= Layout.class.getName() %>"
-					classPK="<%= selLayout.getPlid() %>"
-					inputAddon="<%= friendlyURLBase %>"
-					name="friendlyURL"
-				/>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
-			</c:otherwise>
-		</c:choose>
-	</c:when>
-	<c:otherwise>
-		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
-	</c:otherwise>
-</c:choose>
+<liferay-friendly-url:input
+	className="<%= Layout.class.getName() %>"
+	classPK="<%= selLayout.getPlid() %>"
+	inputAddon="<%= friendlyURLBase %>"
+	name="friendlyURL"
+/>

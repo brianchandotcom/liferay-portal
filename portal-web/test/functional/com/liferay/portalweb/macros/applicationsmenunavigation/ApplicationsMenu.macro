@@ -46,8 +46,6 @@ definition {
 			Navigator.gotoNavItem(navItem = "All Sites");
 
 			SiteSelector.selectSite(site = ${site});
-
-			SelectFrameTop();
 		}
 		else {
 			Click(

@@ -181,6 +181,7 @@ export default function LinkField({field, onValueSelect, value}) {
 				<>
 					<MappingSelector
 						fieldType={EDITABLE_TYPES.link}
+						filterLinkTypes
 						mappedItem={nextValue}
 						onMappingSelect={(mappedItem) =>
 							handleChange(mappedItem)

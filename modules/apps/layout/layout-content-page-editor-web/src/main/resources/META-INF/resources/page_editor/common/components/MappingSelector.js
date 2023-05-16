@@ -47,13 +47,13 @@ const UNMAPPED_OPTION = {
 	value: 'unmapped',
 };
 
-function filterFields(fields, fieldType) {
+function filterFields(fields, fieldType, filterLinkTypes) {
 	return fields.reduce((acc, fieldSet) => {
 		const newFields = fieldSet.fields.filter((field) => {
 			if (fieldType === EDITABLE_TYPES['date-time']) {
 				return field.type === 'date';
 			}
-			else if (fieldType === EDITABLE_TYPES.link) {
+			else if (fieldType === EDITABLE_TYPES.link && filterLinkTypes) {
 				return (
 					field.type !== EDITABLE_TYPES.image && field.type !== 'date'
 				);
@@ -122,6 +122,7 @@ function loadMappingFields({dispatch, item, sourceType}) {
 
 export default function MappingSelectorWrapper({
 	fieldType,
+	filterLinkTypes = false,
 	mappedItem,
 	onMappingSelect,
 }) {
@@ -150,9 +151,11 @@ export default function MappingSelectorWrapper({
 		const fields = mappingFields[key];
 
 		if (fields) {
-			setCollectionFields(filterFields(fields, fieldType));
+			setCollectionFields(
+				filterFields(fields, fieldType, filterLinkTypes)
+			);
 		}
-	}, [collectionConfig, mappingFields, fieldType]);
+	}, [collectionConfig, mappingFields, fieldType, filterLinkTypes]);
 
 	useEffect(() => {
 		if (!collectionConfig?.collection?.itemType) {
@@ -232,13 +235,19 @@ export default function MappingSelectorWrapper({
 	) : (
 		<MappingSelector
 			fieldType={fieldType}
+			filterLinkTypes={filterLinkTypes}
 			mappedItem={mappedItem}
 			onMappingSelect={onMappingSelect}
 		/>
 	);
 }
 
-function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
+function MappingSelector({
+	fieldType,
+	filterLinkTypes,
+	mappedItem,
+	onMappingSelect,
+}) {
 	const dispatch = useDispatch();
 	const mappingFields = useSelector((state) => state.mappingFields);
 	const pageContents = useSelector(selectPageContents);
@@ -354,7 +363,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 		const fields = mappingFields[key];
 
 		if (fields) {
-			setItemFields(filterFields(fields, fieldType));
+			setItemFields(filterFields(fields, fieldType, filterLinkTypes));
 		}
 		else {
 			loadMappingFields({
@@ -368,6 +377,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	}, [
 		dispatch,
 		fieldType,
+		filterLinkTypes,
 		pageContents,
 		mappingFields,
 		selectedItem,

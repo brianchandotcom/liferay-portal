@@ -201,7 +201,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		}
 
 		for (Layout layout : layouts) {
-			int childLayoutsCount = 0;
 			JSONArray childLayoutsJSONArray = null;
 
 			if (ancestorLayouts.contains(layout) ||
@@ -226,13 +225,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 						layout.getLayoutId(), layout.isPrivateLayout(),
 						themeDisplay);
 				}
-
-				childLayoutsCount = childLayoutsJSONArray.length();
 			}
 			else {
-				childLayoutsCount = _layoutService.getLayoutsCount(
-					groupId, privateLayout, layout.getLayoutId());
-
 				childLayoutsJSONArray = _jsonFactory.createJSONArray();
 			}
 
@@ -252,7 +246,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 			layoutsJSONArray.put(
 				_toJSONObject(
-					afterDeleteSelectedLayout, childLayoutsCount,
+					afterDeleteSelectedLayout,
+					_layoutService.getLayoutsCount(
+						groupId, privateLayout, layout.getLayoutId()),
 					childLayoutsJSONArray, httpServletRequest, includeActions,
 					layout, themeDisplay));
 

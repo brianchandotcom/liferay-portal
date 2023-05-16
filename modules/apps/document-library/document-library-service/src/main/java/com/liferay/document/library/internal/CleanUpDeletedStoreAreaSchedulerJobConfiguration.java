@@ -17,6 +17,7 @@ package com.liferay.document.library.internal;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
@@ -24,6 +25,10 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.time.Duration;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,15 +43,13 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 	public UnsafeConsumer<Long, Exception>
 		getCompanyJobExecutorUnsafeConsumer() {
 
-		return companyId -> _storeAreaProcessor.cleanUpDeletedStoreArea(
-			companyId, Duration.ofDays(31));
+		return this::_cleanUpDeletedStoreArea;
 	}
 
 	@Override
 	public UnsafeRunnable<Exception> getJobExecutorUnsafeRunnable() {
 		return () -> _companyLocalService.forEachCompanyId(
-			companyId -> _storeAreaProcessor.cleanUpDeletedStoreArea(
-				companyId, Duration.ofDays(31)));
+			this::_cleanUpDeletedStoreArea);
 	}
 
 	@Override
@@ -54,8 +57,23 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 		return TriggerConfiguration.createTriggerConfiguration(1, TimeUnit.DAY);
 	}
 
+	@Activate
+	protected void activate() {
+		_startOffsets = new ConcurrentHashMap<>();
+	}
+
+	private void _cleanUpDeletedStoreArea(Long companyId) {
+		_startOffsets.put(
+			companyId,
+			_storeAreaProcessor.cleanUpDeletedStoreArea(
+				companyId, Duration.ofDays(31),
+				_startOffsets.getOrDefault(companyId, StringPool.BLANK)));
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private Map<Long, String> _startOffsets;
 
 	@Reference(target = "(default=true)")
 	private StoreAreaProcessor _storeAreaProcessor;

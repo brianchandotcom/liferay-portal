@@ -108,12 +108,14 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	@Override
-	public void cleanUpDeletedStoreArea(
-		long companyId, TemporalAmount temporalAmount) {
+	public String cleanUpDeletedStoreArea(
+		long companyId, TemporalAmount temporalAmount, String startOffset) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
-			return;
+			return StringPool.BLANK;
 		}
+
+		String lastVisitedBlobName = startOffset;
 
 		Bucket bucket = _gcsStore.get(_gcsStoreConfiguration.bucketName());
 
@@ -127,10 +129,12 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		while ((deletedBlobQuota > 0) && (visitedPageLimit > 0)) {
 			Page<Blob> blobPage = bucket.list(
 				Storage.BlobListOption.fields(
-					Storage.BlobField.ID, Storage.BlobField.UPDATED),
+					Storage.BlobField.ID, Storage.BlobField.NAME,
+					Storage.BlobField.UPDATED),
 				Storage.BlobListOption.pageSize(_DELETION_QUOTA * 2),
 				Storage.BlobListOption.prefix(
-					StoreArea.DELETED.getPath(companyId)));
+					StoreArea.DELETED.getPath(companyId)),
+				Storage.BlobListOption.startOffset(lastVisitedBlobName));
 
 			boolean emptyPage = true;
 
@@ -148,6 +152,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 				}
 
 				emptyPage = false;
+
+				lastVisitedBlobName = blob.getName();
 			}
 
 			if (deletedBlobIdsBatch.size() >= _DELETED_BATCH_SIZE) {
@@ -157,6 +163,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 			}
 
 			if (emptyPage) {
+				lastVisitedBlobName = StringPool.BLANK;
+
 				break;
 			}
 
@@ -166,6 +174,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		if (!deletedBlobIdsBatch.isEmpty()) {
 			_gcsStore.delete(deletedBlobIdsBatch);
 		}
+
+		return lastVisitedBlobName;
 	}
 
 	@Override

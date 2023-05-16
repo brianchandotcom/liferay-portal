@@ -137,6 +137,9 @@ public class DefaultDLViewFileVersionDisplayContext
 					).add(
 						_uiItemsBuilder::isMoveActionAvailable,
 						_uiItemsBuilder.createMoveDropdownItem()
+					).add(
+						_uiItemsBuilder::isCopyActionAvailable,
+						_uiItemsBuilder.createCopyDropdownItem()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}

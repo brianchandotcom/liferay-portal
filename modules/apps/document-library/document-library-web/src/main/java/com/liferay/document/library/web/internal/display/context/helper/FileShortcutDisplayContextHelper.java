@@ -75,6 +75,19 @@ public class FileShortcutDisplayContextHelper {
 		return _hasUpdatePermission;
 	}
 
+	public boolean hasViewPermission() throws PortalException {
+		if (_hasViewPermission == null) {
+			_hasViewPermission = DLFileShortcutPermission.contains(
+				_permissionChecker, _fileShortcut, ActionKeys.VIEW);
+		}
+
+		return _hasViewPermission;
+	}
+
+	public boolean isCopyActionAvailable() throws PortalException {
+		return hasViewPermission();
+	}
+
 	public boolean isDLFileShortcut() {
 		if (_dlFileShortcut == null) {
 			if (_fileShortcut.getModel() instanceof DLFileShortcut) {
@@ -121,6 +134,7 @@ public class FileShortcutDisplayContextHelper {
 	private Boolean _hasExportImportPermission;
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
+	private Boolean _hasViewPermission;
 	private final PermissionChecker _permissionChecker;
 
 }

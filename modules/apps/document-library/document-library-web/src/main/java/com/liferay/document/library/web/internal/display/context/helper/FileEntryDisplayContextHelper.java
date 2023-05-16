@@ -117,6 +117,15 @@ public class FileEntryDisplayContextHelper {
 		return _hasUpdatePermission;
 	}
 
+	public boolean hasViewPermission() throws PortalException {
+		if (_hasViewPermission == null) {
+			_hasViewPermission = DLFileEntryPermission.contains(
+				_permissionChecker, _fileEntry, ActionKeys.VIEW);
+		}
+
+		return _hasViewPermission;
+	}
+
 	public boolean isCancelCheckoutDocumentActionAvailable()
 		throws PortalException {
 
@@ -164,6 +173,14 @@ public class FileEntryDisplayContextHelper {
 
 	public boolean isCheckoutDocumentActionAvailable() throws PortalException {
 		if (hasUpdatePermission() && !isCheckedOut() && isSupportsLocking()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isCopyActionAvailable() throws PortalException {
+		if (hasViewPermission() && hasDownloadPermission()) {
 			return true;
 		}
 
@@ -270,6 +287,7 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
+	private Boolean _hasViewPermission;
 	private final PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
 

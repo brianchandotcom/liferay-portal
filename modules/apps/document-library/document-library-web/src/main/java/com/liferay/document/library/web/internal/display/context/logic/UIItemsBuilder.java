@@ -37,6 +37,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -247,6 +248,32 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_httpServletRequest, "compare-versions")
 		).setLabel(
 			LanguageUtil.get(_httpServletRequest, "compare-to")
+		).build();
+	}
+
+	public DropdownItem createCopyDropdownItem() {
+		String mvcRenderCommand;
+
+		if (_fileShortcut != null) {
+			mvcRenderCommand = "/document_library/copy_file_shortcut";
+		}
+		else {
+			mvcRenderCommand = "/document_library/copy_file_entry";
+		}
+
+		return DropdownItemBuilder.setHref(
+			() -> {
+				PortletURL portletURL = _getControlPanelRenderURL(
+					mvcRenderCommand);
+
+				return portletURL.toString();
+			}
+		).setIcon(
+			"copy"
+		).setKey(
+			DLUIItemKeys.COPY
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "copy-to")
 		).build();
 	}
 
@@ -593,6 +620,24 @@ public class UIItemsBuilder {
 	public boolean isCompareToActionAvailable() {
 		return DocumentConversionUtil.isComparableVersion(
 			_fileVersion.getExtension());
+	}
+
+	public boolean isCopyActionAvailable() throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPS-182512")) {
+
+			return false;
+		}
+
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isCopyActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isCopyActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isDeleteActionAvailable() throws PortalException {

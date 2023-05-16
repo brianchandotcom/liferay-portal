@@ -37,6 +37,8 @@ public class DLUIItemKeys {
 	public static final String COMPARE_TO =
 		DLUIItemKeys.class.getName() + "#compare-to";
 
+	public static final String COPY = DLUIItemKeys.class.getName() + "#copy";
+
 	public static final String DELETE =
 		DLUIItemKeys.class.getName() + "#delete";
 

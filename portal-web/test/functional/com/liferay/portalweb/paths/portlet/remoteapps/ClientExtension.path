@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAMPLE_CUSTOM_ELEMENT_2_DAD_JOKE</td>
+	<td>//liferay-sample-custom-element-2//div[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAMPLE_IFRAME_1_COUNTER_CART_TOTAL</td>
 	<td>//div[contains(@class,'navbar-brand') and contains(.,'Items')]//span[contains(@class,'badge-pill')]</td>
 	<td></td>

@@ -407,6 +407,12 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
+	macro orderByReviewDate {
+		ContentDashboard.openFilterAndOrder();
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
+
 	macro orderByTitle {
 		ContentDashboard.openFilterAndOrder();
 

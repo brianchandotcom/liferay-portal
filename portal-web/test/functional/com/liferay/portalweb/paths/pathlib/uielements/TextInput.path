@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_N</td>
+	<td>xpath=(//div[label[contains(.,'${key_text}')]]//input[not(contains(@type,'checkbox'))])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_SPECIFIC</td>
 	<td>//div/label[text()='${key_text}']/..//input[not(contains(@type,'checkbox'))]</td>
 	<td></td>

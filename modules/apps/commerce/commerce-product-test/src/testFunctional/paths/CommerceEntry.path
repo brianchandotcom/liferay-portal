@@ -1109,6 +1109,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIPTION_FIELD_LABEL_N</td>
+	<td>xpath=(//h4[contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//select)[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOGGLE_SWITCH_BUTTON</td>
 	<td>xpath=(//label[(contains(.,'${key_buttonName}')) or (contains(@for,'${key_buttonName}'))])[${key_indexNumber}]//input</td>
 	<td></td>

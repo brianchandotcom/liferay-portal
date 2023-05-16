@@ -272,13 +272,6 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
-		boolean priceOnApplication = false;
-
-		if (commercePriceList.isCatalogBasePriceList()) {
-			priceOnApplication = GetterUtil.getBoolean(
-				priceEntry.getPriceOnApplication());
-		}
-
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.addOrUpdateCommercePriceEntry(
 				priceEntry.getExternalReferenceCode(),
@@ -294,7 +287,8 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
-				BigDecimal.valueOf(priceEntry.getPrice()), priceOnApplication,
+				BigDecimal.valueOf(priceEntry.getPrice()),
+				GetterUtil.getBoolean(priceEntry.getPriceOnApplication()),
 				priceEntry.getSkuExternalReferenceCode(), serviceContext);
 
 		// Update nested resources
@@ -377,17 +371,6 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		DateConfig expirationDateConfig = DateConfig.toExpirationDateConfig(
 			priceEntry.getExpirationDate(), serviceContext.getTimeZone());
 
-		boolean priceOnApplication = false;
-
-		CommercePriceList commercePriceList =
-			commercePriceEntry.getCommercePriceList();
-
-		if (commercePriceList.isCatalogBasePriceList()) {
-			priceOnApplication = GetterUtil.getBoolean(
-				priceEntry.getPriceOnApplication(),
-				commercePriceEntry.isPriceOnApplication());
-		}
-
 		commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(),
@@ -418,7 +401,10 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
 				(BigDecimal)GetterUtil.get(
 					priceEntry.getPrice(), commercePriceEntry.getPrice()),
-				priceOnApplication, serviceContext);
+				GetterUtil.getBoolean(
+					priceEntry.getPriceOnApplication(),
+					commercePriceEntry.isPriceOnApplication()),
+				serviceContext);
 
 		// Update nested resources
 

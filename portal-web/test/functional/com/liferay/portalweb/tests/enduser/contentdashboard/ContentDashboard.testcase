@@ -6023,7 +6023,7 @@ definition {
 		task ("Check if extension is present") {
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "8 Results for");
+				value1 = "9 Results for");
 		}
 	}
 

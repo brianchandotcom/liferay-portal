@@ -390,18 +390,15 @@ definition {
 	@priority = 4
 	test CanDeleteNotification {
 		task ("Given a notification template is created") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "Liferay",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "Subject");
-
-			PortletEntry.save();
+				subject = "Subject",
+				templateName = "Notification Template",
+				toAddress = "test@liferay.com");
 		}
 
 		task ("And given an object with an attachment field is created") {
@@ -419,7 +416,6 @@ definition {
 				isRequired = "false",
 				objectName = "CustomObject161922",
 				showFilesInDocumentsAndMedia = "true");
-
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161922");
 		}
 
@@ -609,16 +605,15 @@ definition {
 			Notifications.goToNotificationTemplateAdmin();
 
 			for (var templateName : list "Test,Liferay,Site") {
-				ObjectNotifications.addNewNotificationTemplate(
-					emailBody = "Email Body",
-					entryTo = "test@liferay.com",
+				JSONObject.addEmailNotificationTemplateViaAPI(
+					bcc = "bccAddress",
+					bodyContent = "Email Body",
+					cc = "ccAddress ",
 					fromAddress = "Liferay",
 					fromName = "Test Test",
-					name = "Notification ${templateName}",
-					notificationType = "Email",
-					subject = "Subject");
-
-				PortletEntry.save();
+					subject = "Subject",
+					templateName = "Notification ${templateName}",
+					toAddress = "test@liferay.com");
 			}
 		}
 
@@ -656,19 +651,16 @@ definition {
 		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
-		task ("Go to Templates and add a new Notification Template") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+		task ("Given a new Notification Template") {
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "Liferay",
 				fromName = "CanSendEmailViaActionAdd",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "Subject");
-
-			PortletEntry.save();
+				subject = "Subject",
+				templateName = "Notification Template",
+				toAddress = "test@liferay.com");
 		}
 
 		task ("Create a Custom Object and add a field") {
@@ -735,18 +727,15 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "Liferay",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "Subject");
-
-			PortletEntry.save();
+				subject = "Subject",
+				templateName = "Notification Template",
+				toAddress = "test@liferay.com");
 		}
 
 		task ("And given a custom object with a text field and an object entry") {
@@ -830,21 +819,15 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Notifications",
-				panel = "Control Panel",
-				portlet = "Templates");
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "Subject");
-
-			PortletEntry.save();
+				subject = "Subject",
+				templateName = "Notification Template",
+				toAddress = "test@liferay.com");
 		}
 
 		task ("And given a Custom Object that contains an attachment field") {
@@ -920,18 +903,15 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "Subject");
-
-			PortletEntry.save();
+				subject = "Subject",
+				templateName = "Notification Template",
+				toAddress = "test@liferay.com");
 		}
 
 		task ("And create a Custom Object entryCustom Object with an Action (Standalone)") {
@@ -1007,18 +987,15 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an Email Notification Template") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "test@liferay.com",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "Liferay",
 				fromName = "Test Test",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "Subject");
-
-			PortletEntry.save();
+				subject = "Subject",
+				templateName = "Notification Template",
+				toAddress = "test@liferay.com");
 		}
 
 		task ("And given a custom object with a text field and an object entry") {
@@ -1424,19 +1401,16 @@ definition {
 		}
 
 		task ("And given an email notification template with the applicable fields filled with the Author and Current User terms") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "[%CURRENT_USER_EMAIL_ADDRESS%]",
 				fromName = "[%CURRENT_USER_FIRST_NAME%]",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "[%CUSTOMOBJECT180337_CUSTOMOBJECTFIELD%]");
-
-			PortletEntry.save();
-		}
+				subject = "[%CUSTOMOBJECT180337_CUSTOMOBJECTFIELD%]",
+				templateName = "Notification Template",
+				toAddress = "[%CURRENT_USER_EMAIL_ADDRESS%]");
+		}		
 
 		task ("And given an action to send an email notification after updating a custom object entry") {
 			ObjectAdmin.openObjectAdmin();
@@ -1499,18 +1473,15 @@ definition {
 		property test.smtp.server.enabled = "true";
 
 		task ("Given an email notification template with the applicable fields filled with the Author and Current User terms") {
-			Notifications.goToNotificationTemplateAdmin();
-
-			ObjectNotifications.addNewNotificationTemplate(
-				emailBody = "Email Body",
-				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+			JSONObject.addEmailNotificationTemplateViaAPI(
+				bcc = "bccAddress",
+				bodyContent = "Email Body",
+				cc = "ccAddress ",
 				fromAddress = "[%USER_AUTHOR_FIRST_NAME%]",
 				fromName = "[%CURRENT_USER_EMAIL_ADDRESS%]",
-				name = "Notification Template",
-				notificationType = "Email",
-				subject = "[%USER_AUTHOR_LAST_NAME%]");
-
-			PortletEntry.save();
+				subject = "[%USER_AUTHOR_LAST_NAME%]",
+				templateName = "Notification Template",
+				toAddress = "[%CURRENT_USER_EMAIL_ADDRESS%]");
 		}
 
 		task ("And given an action to send an email notification after updating a system object entry") {

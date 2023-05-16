@@ -43,18 +43,18 @@ public class DynamicObjectDefinitionTableUtil {
 		return sql;
 	}
 
-	public static String getSQLColumnNull(String dbType) {
-		if (dbType.equals(DBType.BIG_DECIMAL.getDBType()) ||
-			dbType.equals(DBType.DOUBLE.getDBType()) ||
-			dbType.equals(DBType.INTEGER.getDBType()) ||
-			dbType.equals(DBType.LONG.getDBType())) {
+	public static String getSQLColumnNull(String dbTypeString) {
+		DBType dbType = DBType.getDBType(dbTypeString);
+
+		if (dbType.equals(DBType.BIG_DECIMAL) || dbType.equals(DBType.DOUBLE) ||
+			dbType.equals(DBType.INTEGER) || dbType.equals(DBType.LONG)) {
 
 			return " default 0";
 		}
-		else if (dbType.equals(DBType.BOOLEAN.getDBType())) {
+		else if (dbType.equals(DBType.BOOLEAN)) {
 			return " default FALSE";
 		}
-		else if (dbType.equals(DBType.DATE.getDBType())) {
+		else if (dbType.equals(DBType.DATE)) {
 			return " null";
 		}
 

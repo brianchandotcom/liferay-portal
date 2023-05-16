@@ -1468,17 +1468,6 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/modal@^3.0.0-alpha.1":
-  version "3.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.0.0-alpha.1.tgz#9e15f037062effee2581d9ecfd67810974dcf838"
-  integrity sha512-2m/VbeKagPqq8B+Oc7FRoKwUP5925p83BMTVJnS49fU3+P8AfcmMkeZbm6qTIKvLnJ745rjbsA5WFDGCOK7FHA==
-  dependencies:
-    "@clayui/button" "^3.0.0-alpha.1"
-    "@clayui/icon" "^3.0.0-alpha.1"
-    "@clayui/shared" "^3.0.0-alpha.1"
-    classnames "^2.2.6"
-    warning "^4.0.3"
-
 "@clayui/modal@^3.93.0":
   version "3.94.0"
   resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.94.0.tgz#1694e2765a8759223c3fd5dbaae0d1575d396675"

@@ -1,12 +1,3 @@
-afterEvaluate {
-	Task configJSModulesTask = tasks.findByName("configJSModules")
-
-	if (configJSModulesTask != null) {
-		configJSModulesTask.dependsOn = []
-		configJSModulesTask.enabled = false
-	}
-}
-
 dependencies {
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-base", version: "2.11.4"
 	compileInclude group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.11.4"

@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext;
@@ -24,15 +23,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -52,46 +47,36 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
+public class EditFileShortcutMVCRenderCommand
+	extends BaseFileShortcutMVCRenderCommand {
 
 	@Override
-	public String render(
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, FileShortcut fileShortcut)
+		throws PortalException {
+
+		_fileShortcutModelResourcePermission.check(
+			permissionChecker, fileShortcut, ActionKeys.UPDATE);
+	}
+
+	@Override
+	protected String getPath() {
+		return "/document_library/edit_file_shortcut.jsp";
+	}
+
+	@Override
+	protected void setAttributes(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		throws PortalException {
 
-		try {
-			renderRequest.setAttribute(
-				DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_SHORTCUT_DISPLAY_CONTEXT,
-				new DLEditFileShortcutDisplayContext(
-					_dlAppService, _itemSelector, _language,
-					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse)));
+		super.setAttributes(renderRequest, renderResponse);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			FileShortcut fileShortcut = ActionUtil.getFileShortcut(
-				renderRequest);
-
-			if (fileShortcut != null) {
-				_fileShortcutModelResourcePermission.check(
-					themeDisplay.getPermissionChecker(), fileShortcut,
-					ActionKeys.UPDATE);
-			}
-
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut);
-
-			return "/document_library/edit_file_shortcut.jsp";
-		}
-		catch (NoSuchFileShortcutException | PrincipalException exception) {
-			SessionErrors.add(renderRequest, exception.getClass());
-
-			return "/document_library/error.jsp";
-		}
-		catch (PortalException portalException) {
-			throw new PortletException(portalException);
-		}
+		renderRequest.setAttribute(
+			DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_SHORTCUT_DISPLAY_CONTEXT,
+			new DLEditFileShortcutDisplayContext(
+				_dlAppService, _itemSelector, _language,
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse)));
 	}
 
 	@Reference

@@ -132,7 +132,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -482,68 +482,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private ServiceContext _createServiceContext(
 		long groupId, SitePage sitePage) {
 
-		List<Long> assetCategoryIds = new ArrayList<>();
-
-		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
-			sitePage.getTaxonomyCategoryBriefs();
-
-		if (taxonomyCategoryBriefs != null) {
-			for (TaxonomyCategoryBrief taxonomyCategoryBrief :
-					taxonomyCategoryBriefs) {
-
-				TaxonomyCategoryReference taxonomyCategoryReference =
-					taxonomyCategoryBrief.getTaxonomyCategoryReference();
-
-				if (taxonomyCategoryReference == null) {
-					continue;
-				}
-
-				long assetCategoryGroupId = groupId;
-
-				String siteKey = taxonomyCategoryReference.getSiteKey();
-
-				if (siteKey != null) {
-					Group group = _groupLocalService.fetchGroup(
-						contextCompany.getCompanyId(), siteKey);
-
-					if (group == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Could not find group for company ID ",
-									contextCompany.getCompanyId(),
-									" and site key ", siteKey));
-						}
-
-						continue;
-					}
-
-					assetCategoryGroupId = group.getGroupId();
-				}
-
-				String externalReferenceCode =
-					taxonomyCategoryReference.getExternalReferenceCode();
-
-				AssetCategory assetCategory =
-					_assetCategoryLocalService.
-						fetchAssetCategoryByExternalReferenceCode(
-							externalReferenceCode, assetCategoryGroupId);
-
-				if (assetCategory == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Could not find category for external ",
-								"reference code ", externalReferenceCode,
-								" and group ID ", assetCategoryGroupId));
-					}
-
-					continue;
-				}
-
-				assetCategoryIds.add(assetCategory.getCategoryId());
-			}
-		}
+		List<Long> assetCategoryIds = transform(
+			Arrays.asList(sitePage.getTaxonomyCategoryBriefs()),
+			taxonomyCategoryBrief -> _toAssetCategoryId(
+				groupId, taxonomyCategoryBrief));
 
 		String[] assetTagNames = new String[0];
 
@@ -823,6 +765,62 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return nestedFields.contains("pageDefinition");
+	}
+
+	private Long _toAssetCategoryId(
+		long groupId, TaxonomyCategoryBrief taxonomyCategoryBrief) {
+
+		TaxonomyCategoryReference taxonomyCategoryReference =
+			taxonomyCategoryBrief.getTaxonomyCategoryReference();
+
+		if (taxonomyCategoryReference == null) {
+			return null;
+		}
+
+		long assetCategoryGroupId = groupId;
+
+		String siteKey = taxonomyCategoryReference.getSiteKey();
+
+		if (siteKey != null) {
+			Group group = _groupLocalService.fetchGroup(
+				contextCompany.getCompanyId(), siteKey);
+
+			if (group == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Could not find group for company ID ",
+							contextCompany.getCompanyId(), " and site key ",
+							siteKey));
+				}
+
+				return null;
+			}
+
+			assetCategoryGroupId = group.getGroupId();
+		}
+
+		String externalReferenceCode =
+			taxonomyCategoryReference.getExternalReferenceCode();
+
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					externalReferenceCode, assetCategoryGroupId);
+
+		if (assetCategory == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Could not find category for external reference code ",
+						externalReferenceCode, " and group ID ",
+						assetCategoryGroupId));
+			}
+
+			return null;
+		}
+
+		return assetCategory.getCategoryId();
 	}
 
 	private String _toHTML(

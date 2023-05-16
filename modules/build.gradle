@@ -10,6 +10,7 @@ import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
 import org.apache.tools.ant.types.selectors.SelectorUtils
 
+import org.gradle.api.execution.TaskExecutionGraph
 import org.gradle.plugins.ide.api.XmlFileContentMerger
 import org.gradle.plugins.ide.eclipse.model.Classpath
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
@@ -712,61 +713,57 @@ if (bndPrintJarFiles != null) {
 	}
 }
 
-gradle.taskGraph.useFilter {
-	Task task ->
+gradle.taskGraph.whenReady {
+	TaskExecutionGraph taskExecutionGraph ->
 
-	boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
+	taskExecutionGraph.allTasks.each {
+		Task task ->
 
-	if (skipReadOnly) {
-		boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
+		boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
 
-		if (publicBranch && task.project.path.startsWith(":private:")) {
-			return false
+		if (skipReadOnly) {
+			boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
+
+			if (publicBranch && task.project.path.startsWith(":private:")) {
+				task.setEnabled(false)
+			}
+
+			File gitRepoDir = _getRootDir(task.project.projectDir, ".gitrepo")
+
+			if (gitRepoDir != null) {
+				File gitRepoFile = new File(gitRepoDir, ".gitrepo")
+
+				if (gitRepoFile.text.contains("mode = pull")) {
+					task.setEnabled(false)
+				}
+			}
 		}
 
-		File gitRepoDir = _getRootDir(task.project.projectDir, ".gitrepo")
+		if (task.name == "compileJSP") {
+			FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
 
-		if (gitRepoDir != null) {
-			File gitRepoFile = new File(gitRepoDir, ".gitrepo")
+			if (jspFileTree.empty) {
+				task.setEnabled(false)
+			}
+		}
+		else if (task.name == "deploy") {
+			String buildProfile = System.getProperty("build.profile")
 
-			if (gitRepoFile.text.contains("mode = pull")) {
-				return false
+			if ((buildProfile != null) && FileUtil.exists(task.project, ".lfrbuild-portal-skip-deploy")) {
+				task.setEnabled(false)
+			}
+		}
+		else if (task.name == "test") {
+			if (!_hasTestClasses(task, "src/test/java")) {
+				task.setEnabled(false)
+			}
+		}
+		else if (task.name == "testIntegration") {
+			if (!_hasTestClasses(task, "src/testIntegration/java")) {
+				task.setEnabled(false)
 			}
 		}
 	}
-
-	if (task.name == "compileJSP") {
-		FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
-
-		if (jspFileTree.empty) {
-			return false
-		}
-	}
-	else if (task.name == "deploy") {
-		String buildProfile = System.getProperty("build.profile")
-
-		if ((buildProfile != null) && FileUtil.exists(task.project, ".lfrbuild-portal-skip-deploy")) {
-			return false
-		}
-
-		String deployOnlyProfile = System.properties["deploy.only.profile"]
-
-		if (deployOnlyProfile && !FileUtil.exists(task.project, ".lfrbuild-${deployOnlyProfile}")) {
-			return false
-		}
-	}
-	else if (task.name == "test") {
-		if (!_hasTestClasses(task, "src/test/java")) {
-			return false
-		}
-	}
-	else if (task.name == "testIntegration") {
-		if (!_hasTestClasses(task, "src/testIntegration/java")) {
-			return false
-		}
-	}
-
-	return true
 }
 
 private File _getRootDir(File dir, String markerFileName) {

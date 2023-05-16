@@ -1251,20 +1251,27 @@ app.server.type=@{app.server.type}]]></echo>
 								<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
 							</sequential>
 
-							<if>
-								<resourcecount count="0" when="gt">
+							<sequential>
+								<for param="lfrbuild.file">
 									<fileset
 										dir="${project.dir}/modules"
 										includes="**/.lfrbuild-portal-deprecated"
 									/>
-								</resourcecount>
-								<then>
-									<gradle-execute dir="${project.dir}/modules" task="deploy">
-										<arg value="--parallel" />
-										<arg value="-Ddeploy.only.profile=portal-deprecated" />
-									</gradle-execute>
-								</then>
-							</if>
+									<sequential>
+										<local name="lfrbuild.dir" />
+
+										<antelope:stringutil property="lfrbuild.dir" string="@{lfrbuild.file}">
+											<antelope:replace regex="\\" replacement="/" />
+										</antelope:stringutil>
+
+										<antelope:stringutil property="lfrbuild.dir" string="${lfrbuild.dir}">
+											<antelope:replace regex="(.+)\/\.lfrbuild-portal-deprecated" replacement="$1" />
+										</antelope:stringutil>
+
+										<gradle-execute dir="${lfrbuild.dir}" task="deploy" />
+									</sequential>
+								</for>
+							</sequential>
 
 							<trycatch>
 								<try>
@@ -1308,20 +1315,27 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<if>
-								<resourcecount count="0" when="gt">
+							<sequential>
+								<for param="lfrbuild.file">
 									<fileset
 										dir="${project.dir}/modules"
 										includes="**/.lfrbuild-portal-deprecated"
 									/>
-								</resourcecount>
-								<then>
-									<gradle-execute dir="${project.dir}/modules" task="deploy">
-										<arg value="--parallel" />
-										<arg value="-Ddeploy.only.profile=portal-deprecated" />
-									</gradle-execute>
-								</then>
-							</if>
+									<sequential>
+										<local name="lfrbuild.dir" />
+
+										<antelope:stringutil property="lfrbuild.dir" string="@{lfrbuild.file}">
+											<antelope:replace regex="\\" replacement="/" />
+										</antelope:stringutil>
+
+										<antelope:stringutil property="lfrbuild.dir" string="${lfrbuild.dir}">
+											<antelope:replace regex="(.+)\/\.lfrbuild-portal-deprecated" replacement="$1" />
+										</antelope:stringutil>
+
+										<gradle-execute dir="${lfrbuild.dir}" task="deploy" />
+									</sequential>
+								</for>
+							</sequential>
 
 							<for param="app.dir">
 								<path>

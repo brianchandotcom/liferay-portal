@@ -68,10 +68,11 @@ definition {
 	@description = "Verify that, when duplicating a process, the user is able to edit its title"
 	@priority = 4
 	test CanEditTitleOfDuplicatedProcess {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderListView#CanEditTitleOfDuplicatedProcess";
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver 2");
+
+		Alert.viewSuccessMessage();
 
 		Navigator.gotoBack();
 

@@ -44,17 +44,18 @@ public class WrapSoyAlloyTemplateTask extends SourceTask {
 
 	@TaskAction
 	public void wrapAlloyTemplate() throws IOException {
-		_wrapSoyAlloyTemplateCommand.setModuleName(getModuleName());
-		_wrapSoyAlloyTemplateCommand.setNamespace(getNamespace());
+		WrapSoyAlloyTemplateCommand wrapSoyAlloyTemplateCommand =
+			new WrapSoyAlloyTemplateCommand();
+
+		wrapSoyAlloyTemplateCommand.setModuleName(getModuleName());
+		wrapSoyAlloyTemplateCommand.setNamespace(getNamespace());
 
 		for (File file : getSource()) {
-			_wrapSoyAlloyTemplateCommand.execute(file.toPath());
+			wrapSoyAlloyTemplateCommand.execute(file.toPath());
 		}
 	}
 
 	private Object _moduleName;
 	private Object _namespace;
-	private final WrapSoyAlloyTemplateCommand _wrapSoyAlloyTemplateCommand =
-		new WrapSoyAlloyTemplateCommand();
 
 }

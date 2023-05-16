@@ -27,6 +27,7 @@ import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -132,6 +133,10 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
+		themeDisplay = SitemapURLProviderUtil.updateThemeDisplay(
+			_language, _portal.getLocale(themeDisplay.getRequest()),
+			themeDisplay);
+
 		String currentSiteURL = _portal.getGroupFriendlyURL(
 			layout.getLayoutSet(), themeDisplay, false, false);
 
@@ -184,6 +189,9 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

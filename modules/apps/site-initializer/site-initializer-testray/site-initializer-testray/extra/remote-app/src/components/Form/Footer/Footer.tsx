@@ -23,6 +23,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 type FooterProps = {
+	hasPermission?: boolean;
 	onClose: () => void;
 	onSubmit: () => void;
 	primaryButtonProps?: ButtonProps;
@@ -30,26 +31,29 @@ type FooterProps = {
 };
 
 const Footer: React.FC<FooterProps> = ({
+	hasPermission,
 	onClose,
 	onSubmit,
 	primaryButtonProps: {loading, ...primaryButtonProps} = {},
 	secondaryButtonProps,
 }) => (
 	<ClayButton.Group spaced>
-		<ClayButton
-			{...primaryButtonProps}
-			className={classNames(
-				primaryButtonProps.className,
-				'align-items-center d-flex'
-			)}
-			disabled={primaryButtonProps?.disabled || loading}
-			displayType="primary"
-			onClick={onSubmit}
-		>
-			{loading && <ClayLoadingIndicator className="mb-0 mr-2 mt-0" />}
+		{hasPermission && (
+			<ClayButton
+				{...primaryButtonProps}
+				className={classNames(
+					primaryButtonProps.className,
+					'align-items-center d-flex'
+				)}
+				disabled={primaryButtonProps?.disabled || loading}
+				displayType="primary"
+				onClick={onSubmit}
+			>
+				{loading && <ClayLoadingIndicator className="mb-0 mr-2 mt-0" />}
 
-			{i18n.translate(primaryButtonProps?.title ?? 'save')}
-		</ClayButton>
+				{i18n.translate(primaryButtonProps?.title ?? 'save')}
+			</ClayButton>
+		)}
 
 		<ClayButton
 			{...secondaryButtonProps}

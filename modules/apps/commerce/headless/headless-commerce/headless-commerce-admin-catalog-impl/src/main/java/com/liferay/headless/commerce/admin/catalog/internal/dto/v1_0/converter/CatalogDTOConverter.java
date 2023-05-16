@@ -48,6 +48,7 @@ public class CatalogDTOConverter
 
 		return new Catalog() {
 			{
+				accountEntryId = commerceCatalog.getAccountEntryId();
 				actions = dtoConverterContext.getActions();
 				currencyCode = commerceCatalog.getCommerceCurrencyCode();
 				defaultLanguageId =

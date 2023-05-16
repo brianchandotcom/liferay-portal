@@ -90,17 +90,20 @@ export function AppDetailsPage({
 				</div>
 			</button>
 
-			<ClayAlert
-				className="app-details-page-alert-container"
-				displayType="info"
-			>
-				<span className="app-details-page-alert-text">
-					This submission is currently under review by Liferay. Once
-					the process is complete, you will be able to publish it to
-					the marketplace. Meanwhile, any information or data from
-					this app submission cannot be updated.
-				</span>
-			</ClayAlert>
+			{selectedApp.status === 'Draft' && (
+				<ClayAlert
+					className="app-details-page-alert-container"
+					displayType="info"
+				>
+					<span className="app-details-page-alert-text">
+						This submission is currently under review by Liferay.
+						Once the process is complete, you will be able to
+						publish it to the marketplace. Meanwhile, any
+						information or data from this app submission cannot be
+						updated.
+					</span>
+				</ClayAlert>
+			)}
 
 			<div className="app-details-page-app-info-main-container">
 				<div className="app-details-page-app-info-left-container">
@@ -128,11 +131,11 @@ export function AppDetailsPage({
 									'app-details-page-app-info-subtitle-icon',
 									{
 										'app-details-page-app-info-subtitle-icon-hidden':
-											selectedApp.status === 'Hidden',
+											selectedApp.status === 'Draft',
 										'app-details-page-app-info-subtitle-icon-pending':
 											selectedApp.status === 'Pending',
 										'app-details-page-app-info-subtitle-icon-published':
-											selectedApp.status === 'Published',
+											selectedApp.status === 'Approved',
 									}
 								)}
 								src={circleFullIcon}
@@ -180,10 +183,10 @@ export function AppDetailsPage({
 				</ClayNavigationBar>
 
 				<ReviewAndSubmitAppPage
-					productERC={selectedApp.externalReferenceCode}
-					productId={selectedApp.productId}
 					onClickBack={() => {}}
 					onClickContinue={() => {}}
+					productERC={selectedApp.externalReferenceCode}
+					productId={selectedApp.productId}
 					readonly
 				/>
 			</div>

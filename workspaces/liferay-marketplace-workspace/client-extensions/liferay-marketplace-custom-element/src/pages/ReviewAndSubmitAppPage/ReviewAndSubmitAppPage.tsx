@@ -10,8 +10,6 @@ import {
 	getProductSpecifications,
 } from '../../utils/api';
 import {showAppImage} from '../../utils/util';
-import {CardSection} from './CardSection';
-import {ReviewAndSubmitAppPageUtilProps} from './ReviewAndSubmitAppPageUtil';
 import {CardSectionsBody} from './CardSectionsBody';
 import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 

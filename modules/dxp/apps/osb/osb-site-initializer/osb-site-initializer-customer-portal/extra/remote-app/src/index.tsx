@@ -34,6 +34,7 @@ const AppRoutes = {
 type Properties = {
 	articleAccountSupportURL: string | null;
 	articleDeployingActivationKeysURL: string | null;
+	featureFlag?: string[];
 	importDate?: Date | null;
 	submitSupportTicketURL: string | null;
 };
@@ -91,6 +92,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'
 			),
+			featureFlag: (super.getAttribute('feature-flag') ?? '')
+				.split(',')
+				.map((featureflag) => featureflag.trim()),
 			importDate: super.getAttribute('import-date')
 				? new Date(super.getAttribute('import-date') as string)
 				: undefined,

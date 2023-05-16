@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -146,6 +147,16 @@ public class StyleBookVerticalCard
 	@Override
 	public String getStickerStyle() {
 		return "primary";
+	}
+
+	@Override
+	public String getStickerTitle() {
+		if (_styleBookEntry.isDefaultStyleBookEntry()) {
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(), "marked-as-default");
+		}
+
+		return null;
 	}
 
 	@Override

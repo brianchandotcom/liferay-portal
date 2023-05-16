@@ -35,6 +35,8 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Internal;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -76,10 +78,12 @@ public class CopyIvyDependenciesTask extends Copy {
 			});
 	}
 
+	@InputFiles
 	public Configuration getConfiguration() {
 		return _configuration;
 	}
 
+	@Internal
 	public Closure<Map<String, Object>> getDependencyTransformClosure() {
 		return _dependencyTransformClosure;
 	}

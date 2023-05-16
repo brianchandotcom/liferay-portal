@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.util.CollectionUtils;
 
@@ -109,6 +110,7 @@ public class FormatJavadocTask extends JavaExec {
 		_updateJavadocs = updateJavadocs;
 	}
 
+	@Internal
 	protected List<String> getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 

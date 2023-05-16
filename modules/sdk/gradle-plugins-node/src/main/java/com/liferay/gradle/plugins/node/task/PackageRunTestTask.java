@@ -7,6 +7,7 @@ package com.liferay.gradle.plugins.node.task;
 
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.VerificationTask;
 
 /**
@@ -44,6 +45,7 @@ public class PackageRunTestTask
 		return _ignoreFailures;
 	}
 
+	@Internal
 	public boolean isIgnoreFailures() {
 		return _ignoreFailures;
 	}

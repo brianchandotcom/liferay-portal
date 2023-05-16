@@ -15,6 +15,7 @@ import java.io.File;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
@@ -30,7 +31,7 @@ import org.w3c.dom.Element;
 @CacheableTask
 public class WriteMavenSettingsTask extends DefaultTask {
 
-	@Input
+	@InputDirectory
 	@Optional
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getLocalRepositoryDir() {

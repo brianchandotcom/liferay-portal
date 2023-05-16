@@ -18,12 +18,16 @@ import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Files;
 
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -99,8 +103,22 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
 			project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		npmInstallTask.setNodeModulesDigestFile(
-			new File(npmInstallTask.getNodeModulesDir(), ".digest"));
+		File file = new File(npmInstallTask.getNodeModulesDir(), ".digest");
+
+		if (!file.exists()) {
+			File dir = file.getParentFile();
+
+			try {
+				Files.createDirectories(dir.toPath());
+
+				file.createNewFile();
+			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
+			}
+		}
+
+		npmInstallTask.setNodeModulesDigestFile(file);
 
 		if (!PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
 			npmInstallTask.setUseNpmCI(Boolean.TRUE);

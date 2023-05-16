@@ -13,7 +13,9 @@ import org.gradle.api.Project;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 
@@ -27,6 +29,8 @@ public class PackageRunBuildTask extends PackageRunTask {
 		setScriptName("build");
 	}
 
+	@Optional
+	@OutputDirectory
 	public File getDestinationDir() {
 		return GradleUtil.toFile(getProject(), _destinationDir);
 	}
@@ -113,6 +117,7 @@ public class PackageRunBuildTask extends PackageRunTask {
 		return _getExistentFile("node_modules");
 	}
 
+	@Internal
 	public File getYarnWorkingDir() {
 		return GradleUtil.toFile(getProject(), _yarnWorkingDir);
 	}

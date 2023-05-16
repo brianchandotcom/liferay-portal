@@ -18,7 +18,13 @@ import java.util.List;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.util.CollectionUtils;
 
 /**
@@ -39,31 +45,47 @@ public class FormatSourceTask extends JavaExec {
 		super.exec();
 	}
 
+	@InputDirectory
+	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getBaseDir() {
 		return GradleUtil.toFile(
 			getProject(), _sourceFormatterArgs.getBaseDirName());
 	}
 
+	@Input
+	@Optional
 	public String getBaseDirName() {
 		return _sourceFormatterArgs.getBaseDirName();
 	}
 
+	@Input
+	@Optional
 	public List<String> getCheckCategoryNames() {
 		return _sourceFormatterArgs.getCheckCategoryNames();
 	}
 
+	@Input
+	@Optional
 	public List<String> getCheckNames() {
 		return _sourceFormatterArgs.getCheckNames();
 	}
 
+	@Input
+	@Optional
 	public List<String> getFileExtensions() {
 		return _sourceFormatterArgs.getFileExtensions();
 	}
 
+	@Input
+	@Optional
 	public List<String> getFileNames() {
 		return _sourceFormatterArgs.getFileNames();
 	}
 
+	@InputFiles
+	@Optional
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getFiles() {
 		Project project = getProject();
 
@@ -76,58 +98,73 @@ public class FormatSourceTask extends JavaExec {
 		return project.files(fileNames);
 	}
 
+	@Input
+	@Optional
 	public String getGitWorkingBranchName() {
 		return _sourceFormatterArgs.getGitWorkingBranchName();
 	}
 
+	@Input
 	public int getMaxLineLength() {
 		return _sourceFormatterArgs.getMaxLineLength();
 	}
 
+	@Input
 	public int getProcessorThreadCount() {
 		return _sourceFormatterArgs.getProcessorThreadCount();
 	}
 
+	@Input
 	public boolean isAutoFix() {
 		return _sourceFormatterArgs.isAutoFix();
 	}
 
+	@Input
 	public boolean isFailOnAutoFix() {
 		return _sourceFormatterArgs.isFailOnAutoFix();
 	}
 
+	@Input
 	public boolean isFailOnHasWarning() {
 		return _sourceFormatterArgs.isFailOnHasWarning();
 	}
 
+	@Input
 	public boolean isFormatCurrentBranch() {
 		return _sourceFormatterArgs.isFormatCurrentBranch();
 	}
 
+	@Input
 	public boolean isFormatLatestAuthor() {
 		return _sourceFormatterArgs.isFormatLatestAuthor();
 	}
 
+	@Input
 	public boolean isFormatLocalChanges() {
 		return _sourceFormatterArgs.isFormatLocalChanges();
 	}
 
+	@Input
 	public boolean isIncludeSubrepositories() {
 		return _sourceFormatterArgs.isIncludeSubrepositories();
 	}
 
+	@Input
 	public boolean isJavaParserEnabled() {
 		return _sourceFormatterArgs.isJavaParserEnabled();
 	}
 
+	@Input
 	public boolean isPrintErrors() {
 		return _sourceFormatterArgs.isPrintErrors();
 	}
 
+	@Input
 	public boolean isShowDebugInformation() {
 		return _sourceFormatterArgs.isShowDebugInformation();
 	}
 
+	@Input
 	public boolean isValidateCommitMessages() {
 		return _sourceFormatterArgs.isValidateCommitMessages();
 	}

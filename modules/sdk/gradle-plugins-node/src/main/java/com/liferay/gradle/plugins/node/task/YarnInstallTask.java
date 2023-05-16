@@ -13,6 +13,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
+
 /**
  * @author Peter Shin
  * @author David Truong
@@ -30,6 +33,7 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		super.executeNode();
 	}
 
+	@Input
 	public boolean isFrozenLockFile() {
 		return GradleUtil.toBoolean(_frozenLockFile);
 	}
@@ -38,6 +42,7 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		_frozenLockFile = frozenLockFile;
 	}
 
+	@Internal
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();

@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.JavaExec;
 
 /**
@@ -38,6 +39,7 @@ public class FormatTLDTask extends JavaExec {
 		_plugin = plugin;
 	}
 
+	@Internal
 	protected List<String> getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 

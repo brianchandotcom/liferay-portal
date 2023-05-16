@@ -146,11 +146,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 		gradleDependencies.addAll(gradleBuildFile.getBuildScriptDependencies());
 
-		Iterator<GradleDependency> iterator = gradleDependencies.iterator();
-
-		while (iterator.hasNext()) {
-			GradleDependency gradleDependency = iterator.next();
-
+		for (GradleDependency gradleDependency : gradleDependencies) {
 			String gradleDependencyGroup = gradleDependency.getGroup();
 			String gradleDependencyName = gradleDependency.getName();
 			String gradleDependencyVersion = gradleDependency.getVersion();

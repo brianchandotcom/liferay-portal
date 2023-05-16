@@ -121,7 +121,7 @@ if (workspacesYarnLockFile.exists()) {
 
 buildDir = new File(rootDir.parentFile, "build")
 
-for (String gradleVersion in ["6.9.2"]) {
+for (String gradleVersion in ["7.3.3"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 	String suffix = gradleVersion.replace(".", "")
 

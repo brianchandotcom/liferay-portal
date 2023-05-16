@@ -19,6 +19,9 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -69,6 +72,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	public CPInstanceDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommercePriceEntryService commercePriceEntryService,
 		CommercePriceFormatter commercePriceFormatter,
 		CommerceProductPriceCalculation commerceProductPriceCalculation,
 		CPDefinitionOptionRelService cpDefinitionOptionRelService,
@@ -79,6 +83,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		super(actionHelper, httpServletRequest);
 
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_commercePriceEntryService = commercePriceEntryService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
@@ -107,6 +112,16 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public CommercePriceEntry getCommercePriceEntry(CPInstance cpInstance) {
+		if (cpInstance == null) {
+			return null;
+		}
+
+		return _commercePriceEntryService.getInstanceBaseCommercePriceEntry(
+			cpInstance.getCPInstanceUuid(),
+			CommercePriceListConstants.TYPE_PRICE_LIST);
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
@@ -388,6 +403,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	}
 
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommercePriceEntryService _commercePriceEntryService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceProductPriceCalculation
 		_commerceProductPriceCalculation;

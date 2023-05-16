@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.se
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -101,9 +102,10 @@ public class CPDefinitionInstancesScreenNavigationEntry
 		CPInstanceDisplayContext cpInstanceDisplayContext =
 			new CPInstanceDisplayContext(
 				_actionHelper, httpServletRequest,
-				_commerceCurrencyLocalService, _commercePriceFormatter,
-				_commerceProductPriceCalculation, _cpDefinitionOptionRelService,
-				_cpInstanceHelper, _cpMeasurementUnitLocalService, _ddmHelper);
+				_commerceCurrencyLocalService, _commercePriceEntryService,
+				_commercePriceFormatter, _commerceProductPriceCalculation,
+				_cpDefinitionOptionRelService, _cpInstanceHelper,
+				_cpMeasurementUnitLocalService, _ddmHelper);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
@@ -127,6 +129,9 @@ public class CPDefinitionInstancesScreenNavigationEntry
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

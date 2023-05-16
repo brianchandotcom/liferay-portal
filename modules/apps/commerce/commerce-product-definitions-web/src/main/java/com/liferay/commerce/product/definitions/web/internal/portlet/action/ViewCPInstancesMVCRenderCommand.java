@@ -17,6 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
@@ -55,9 +56,10 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 		CPInstanceDisplayContext cpInstanceDisplayContext =
 			new CPInstanceDisplayContext(
 				_actionHelper, _portal.getHttpServletRequest(renderRequest),
-				_commerceCurrencyLocalService, _commercePriceFormatter,
-				_commerceProductPriceCalculation, _cpDefinitionOptionRelService,
-				_cpInstanceHelper, _cpMeasurementUnitLocalService, _ddmHelper);
+				_commerceCurrencyLocalService, _commercePriceEntryService,
+				_commercePriceFormatter, _commerceProductPriceCalculation,
+				_cpDefinitionOptionRelService, _cpInstanceHelper,
+				_cpMeasurementUnitLocalService, _ddmHelper);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
@@ -70,6 +72,9 @@ public class ViewCPInstancesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

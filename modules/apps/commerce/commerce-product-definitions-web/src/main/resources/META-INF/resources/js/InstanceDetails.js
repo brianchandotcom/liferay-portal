@@ -14,58 +14,6 @@
 
 import renderAutocomplete from 'commerce-frontend-js/components/autocomplete/entry';
 
-function handleReplacements({initialLabel, initialValue, namespace}) {
-	const discontinuedInput = document.getElementById(
-		`${namespace}discontinued`
-	);
-
-	const discontinuedDateInput = document.getElementById(
-		`${namespace}discontinuedDate`
-	);
-
-	const replacementAutocompleteWrapper = document.getElementById(
-		`${namespace}replacementAutocompleteWrapper`
-	);
-
-	discontinuedInput.addEventListener('change', (event) => {
-		if (event.target.checked) {
-			discontinuedDateInput.disabled = false;
-			discontinuedDateInput.classList.remove('disabled');
-			replacementAutocompleteWrapper.classList.remove('d-none');
-		}
-		else {
-			discontinuedDateInput.disabled = true;
-			discontinuedDateInput.classList.add('disabled');
-			replacementAutocompleteWrapper.classList.add('d-none');
-		}
-	});
-
-	renderAutocomplete('autocomplete', 'autocomplete-root', {
-		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
-		initialLabel,
-		initialValue,
-		inputId: 'replacementId',
-		inputName: `${namespace}replacementCPInstanceId`,
-		itemsKey: 'id',
-		itemsLabel: 'sku',
-		showDeleteButton: true,
-	});
-}
-
-function handlePublish({WORKFLOW_ACTION_PUBLISH, namespace}) {
-	const publishButton = document.getElementById(`${namespace}publishButton`);
-
-	publishButton.addEventListener('click', () => {
-		const workflowActionInput = document.getElementById(
-			`${namespace}workflowAction`
-		);
-
-		if (workflowActionInput) {
-			workflowActionInput.value = WORKFLOW_ACTION_PUBLISH;
-		}
-	});
-}
-
 function handleDDMForm({cpDefinitionId, namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 	let fieldValues = [];
@@ -140,10 +88,93 @@ function handleDDMForm({cpDefinitionId, namespace}) {
 	form.addEventListener('submit', saveInstance);
 }
 
+function handlePriceOnApplication({namespace}) {
+	const priceOnApplicationInput = document.getElementById(
+		`${namespace}priceOnApplication`
+	);
+
+	if (priceOnApplicationInput) {
+		const inputs = [
+			document.getElementById(`${namespace}price`),
+			document.getElementById(`${namespace}cost`),
+			document.getElementById(`${namespace}promoPrice`),
+		];
+
+		priceOnApplicationInput.addEventListener('change', (event) => {
+			inputs.forEach((input) => {
+				if (input) {
+					if (event.target.checked) {
+						input.disabled = true;
+						input.classList.add('disabled');
+					}
+					else {
+						input.disabled = false;
+						input.classList.remove('disabled');
+					}
+				}
+			});
+		});
+	}
+}
+
+function handlePublish({WORKFLOW_ACTION_PUBLISH, namespace}) {
+	const publishButton = document.getElementById(`${namespace}publishButton`);
+
+	publishButton.addEventListener('click', () => {
+		const workflowActionInput = document.getElementById(
+			`${namespace}workflowAction`
+		);
+
+		if (workflowActionInput) {
+			workflowActionInput.value = WORKFLOW_ACTION_PUBLISH;
+		}
+	});
+}
+
+function handleReplacements({initialLabel, initialValue, namespace}) {
+	const discontinuedInput = document.getElementById(
+		`${namespace}discontinued`
+	);
+
+	const discontinuedDateInput = document.getElementById(
+		`${namespace}discontinuedDate`
+	);
+
+	const replacementAutocompleteWrapper = document.getElementById(
+		`${namespace}replacementAutocompleteWrapper`
+	);
+
+	discontinuedInput.addEventListener('change', (event) => {
+		if (event.target.checked) {
+			discontinuedDateInput.disabled = false;
+			discontinuedDateInput.classList.remove('disabled');
+			replacementAutocompleteWrapper.classList.remove('d-none');
+		}
+		else {
+			discontinuedDateInput.disabled = true;
+			discontinuedDateInput.classList.add('disabled');
+			replacementAutocompleteWrapper.classList.add('d-none');
+		}
+	});
+
+	renderAutocomplete('autocomplete', 'autocomplete-root', {
+		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
+		initialLabel,
+		initialValue,
+		inputId: 'replacementId',
+		inputName: `${namespace}replacementCPInstanceId`,
+		itemsKey: 'id',
+		itemsLabel: 'sku',
+		showDeleteButton: true,
+	});
+}
+
 export default function (context) {
-	handleReplacements(context);
+	handleDDMForm(context);
+
+	handlePriceOnApplication(context);
 
 	handlePublish(context);
 
-	handleDDMForm(context);
+	handleReplacements(context);
 }

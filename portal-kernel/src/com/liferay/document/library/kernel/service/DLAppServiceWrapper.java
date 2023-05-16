@@ -511,6 +511,31 @@ public class DLAppServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry copyFileEntry(
+			long fileEntryId, long destinationFolderId,
+			long destinationRepositoryId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.copyFileEntry(
+			fileEntryId, destinationFolderId, destinationRepositoryId,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileShortcut
+			copyFileShortcut(
+				long fileShortcutId, long destinationFolderId,
+				long destinationRepositoryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.copyFileShortcut(
+			fileShortcutId, destinationFolderId, destinationRepositoryId,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,

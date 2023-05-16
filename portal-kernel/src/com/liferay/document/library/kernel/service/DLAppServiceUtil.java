@@ -507,6 +507,30 @@ public class DLAppServiceUtil {
 			fileEntryId, owner, expirationTime, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			copyFileEntry(
+				long fileEntryId, long destinationFolderId,
+				long destinationRepositoryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyFileEntry(
+			fileEntryId, destinationFolderId, destinationRepositoryId,
+			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileShortcut
+			copyFileShortcut(
+				long fileShortcutId, long destinationFolderId,
+				long destinationRepositoryId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyFileShortcut(
+			fileShortcutId, destinationFolderId, destinationRepositoryId,
+			serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,

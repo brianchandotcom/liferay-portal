@@ -14,21 +14,22 @@ import {
 	getAccountInfoFromCommerce,
 	getAccounts,
 	getMyUserAccount,
-	getProductSpecifications,
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
 import {showAccountImage} from '../../utils/util';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
-import {
-	DashboardListItems,
-	DashboardPage,
-} from '../DashBoardPage/DashboardPage';
+import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {
 	AccountBriefProps,
 	MemberProps,
 	UserAccountProps,
 	customerRoles,
+	formatDate,
+	getAppListProductIds,
+	getAppListProductSpecifications,
+	getProductTypeFromSpecifications,
+	getRolesList,
 	initialDashboardNavigationItems,
 	publisherRoles,
 } from './PublishedDashboardPageUtil';
@@ -144,78 +145,6 @@ export function PublishedAppsDashboardPage() {
 		'/publisher-dashboard',
 		'/create-new-app'
 	);
-
-	const formatDate = (date: string) => {
-		const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
-
-		const dateOptions: Intl.DateTimeFormatOptions = {
-			day: 'numeric',
-			month: 'short',
-			year: 'numeric',
-		};
-
-		const formattedDate = new Intl.DateTimeFormat(
-			locale,
-			dateOptions
-		).format(new Date(date));
-
-		return formattedDate;
-	};
-
-	async function getAppListProductSpecifications(productIds: number[]) {
-		return await Promise.all(
-			productIds.map(async (productId) => {
-				return await getProductSpecifications({
-					appProductId: productId,
-				});
-			})
-		);
-	}
-
-	function getAppListProductIds(products: {items: Product[]}) {
-		const productIds: number[] = [];
-
-		products.items.map((product) => {
-			productIds.push(product.productId);
-		});
-
-		return productIds;
-	}
-
-	function getProductTypeFromSpecifications(
-		specifications: ProductSpecification[]
-	) {
-		let productType = 'no type';
-
-		specifications.forEach((specification: ProductSpecification) => {
-			if (specification.specificationKey === 'type') {
-				productType = specification.value.en_US;
-
-				if (productType === 'cloud') {
-					productType = 'Cloud';
-				}
-				else if (productType === 'dxp') {
-					productType = 'DXP';
-				}
-			}
-		});
-
-		return productType;
-	}
-
-	function getRolesList(accountBriefs: AccountBrief[]) {
-		const rolesList: string[] = [];
-
-		const accountBrief = accountBriefs.find(
-			(accountBrief) => accountBrief.id === selectedAccount.id
-		);
-
-		accountBrief?.roleBriefs.forEach((role) => {
-			rolesList.push(role.name);
-		});
-
-		return rolesList.join(', ');
-	}
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -399,7 +328,10 @@ export function PublishedAppsDashboardPage() {
 							isPublisherAccount: false,
 							lastLoginDate: member.lastLoginDate,
 							name: member.name,
-							role: getRolesList(member.accountBriefs),
+							role: getRolesList(
+								member.accountBriefs,
+								selectedAccount.id
+							),
 							userId: member.id,
 						} as MemberProps;
 					}

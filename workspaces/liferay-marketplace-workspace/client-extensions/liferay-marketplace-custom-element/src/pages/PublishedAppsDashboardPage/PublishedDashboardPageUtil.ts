@@ -6,6 +6,8 @@ import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import businessIcon from '../../assets/icons/business_center_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
+import {Liferay} from '../../liferay/liferay';
+import {getProductSpecifications} from '../../utils/api';
 
 export type AccountBriefProps = {
 	externalReferenceCode: string;
@@ -100,3 +102,77 @@ export type UserAccountProps = {
 	name: string;
 	roleBriefs: RoleBriefProps[];
 };
+
+export function formatDate(date: string) {
+	const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
+
+	const dateOptions: Intl.DateTimeFormatOptions = {
+		day: 'numeric',
+		month: 'short',
+		year: 'numeric',
+	};
+
+	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
+		new Date(date)
+	);
+
+	return formattedDate;
+}
+
+export async function getAppListProductSpecifications(productIds: number[]) {
+	return await Promise.all(
+		productIds.map(async (productId) => {
+			return await getProductSpecifications({
+				appProductId: productId,
+			});
+		})
+	);
+}
+
+export function getAppListProductIds(products: {items: Product[]}) {
+	const productIds: number[] = [];
+
+	products.items.map((product) => {
+		productIds.push(product.productId);
+	});
+
+	return productIds;
+}
+
+export function getProductTypeFromSpecifications(
+	specifications: ProductSpecification[]
+) {
+	let productType = 'no type';
+
+	specifications.forEach((specification: ProductSpecification) => {
+		if (specification.specificationKey === 'type') {
+			productType = specification.value.en_US;
+
+			if (productType === 'cloud') {
+				productType = 'Cloud';
+			}
+			else if (productType === 'dxp') {
+				productType = 'DXP';
+			}
+		}
+	});
+
+	return productType;
+}
+
+export function getRolesList(
+	accountBriefs: AccountBrief[],
+	selectedAccountId: number
+) {
+	const rolesList: string[] = [];
+
+	const accountBrief = accountBriefs.find(
+		(accountBrief) => accountBrief.id === selectedAccountId
+	);
+
+	accountBrief?.roleBriefs.forEach((role) => {
+		rolesList.push(role.name);
+	});
+
+	return rolesList.join(', ');
+}

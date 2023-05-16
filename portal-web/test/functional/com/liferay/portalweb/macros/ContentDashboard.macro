@@ -391,7 +391,7 @@ definition {
 	}
 
 	macro openInfoPanel {
-		Click(
+		Click.javaScriptClick(
 			key_tableEntry = ${assetName},
 			key_text = "info-circle",
 			locator1 = "LexiconTable#TABLE_ENTRY_ICON");

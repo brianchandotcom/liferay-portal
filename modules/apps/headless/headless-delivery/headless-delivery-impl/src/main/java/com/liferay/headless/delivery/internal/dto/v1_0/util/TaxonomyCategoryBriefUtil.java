@@ -16,6 +16,9 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryReference;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -46,6 +49,8 @@ public class TaxonomyCategoryBriefUtil {
 				taxonomyCategoryName_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					assetCategory.getTitleMap());
+				taxonomyCategoryReference = _toTaxonomyCategoryReference(
+					assetCategory);
 			}
 		};
 	}
@@ -80,6 +85,25 @@ public class TaxonomyCategoryBriefUtil {
 				dtoConverterContext.getHttpServletRequest(), categoryId,
 				dtoConverterContext.getLocale(), uriInfo,
 				dtoConverterContext.getUser()));
+	}
+
+	private static TaxonomyCategoryReference _toTaxonomyCategoryReference(
+		AssetCategory assetCategory) {
+
+		return new TaxonomyCategoryReference() {
+			{
+				externalReferenceCode =
+					assetCategory.getExternalReferenceCode();
+
+				setSiteKey(
+					() -> {
+						Group group = GroupLocalServiceUtil.fetchGroup(
+							assetCategory.getGroupId());
+
+						return group.getGroupKey();
+					});
+			}
+		};
 	}
 
 }

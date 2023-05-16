@@ -83,11 +83,10 @@ definition {
 	}
 
 	macro addCustomerPortalSite {
-		Site.openSitesAdmin();
-
-		Site.addSiteTemplateCP(
+		HeadlessSite.addSite(
 			siteName = ${siteName},
-			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+			templateName = "Liferay OSB Site Initializer Customer Portal",
+			templateType = "Site Initializer");
 	}
 
 	macro addIdPCForCustomerPortal {

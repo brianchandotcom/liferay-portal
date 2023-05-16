@@ -296,6 +296,8 @@ definition {
 
 		Navigator.gotoBack();
 
+		Refresh();
+
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = 0,
 			key_overdue = 0,

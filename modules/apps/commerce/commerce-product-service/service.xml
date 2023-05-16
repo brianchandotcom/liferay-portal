@@ -20,6 +20,7 @@
 
 		<!-- Other fields -->
 
+		<column name="accountEntryId" type="long" />
 		<column name="name" type="String" />
 		<column name="commerceCurrencyCode" type="String" />
 		<column name="catalogDefaultLanguageId" type="String" />

@@ -45,7 +45,7 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 	@Override
 	public CommerceCatalog addCommerceCatalog(
-			String externalReferenceCode, String name,
+			String externalReferenceCode, long accountEntryId, String name,
 			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -58,8 +58,8 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CATALOG);
 
 		return commerceCatalogLocalService.addCommerceCatalog(
-			externalReferenceCode, name, commerceCurrencyCode,
-			catalogDefaultLanguageId, serviceContext);
+			externalReferenceCode, accountEntryId, name, commerceCurrencyCode,
+			catalogDefaultLanguageId, false, serviceContext);
 	}
 
 	@Override
@@ -158,15 +158,15 @@ public class CommerceCatalogServiceImpl extends CommerceCatalogServiceBaseImpl {
 
 	@Override
 	public CommerceCatalog updateCommerceCatalog(
-			long commerceCatalogId, String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId)
+			long commerceCatalogId, long accountEntryId, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws PortalException {
 
 		_commerceCatalogModelResourcePermission.check(
 			getPermissionChecker(), commerceCatalogId, ActionKeys.UPDATE);
 
 		return commerceCatalogLocalService.updateCommerceCatalog(
-			commerceCatalogId, name, commerceCurrencyCode,
+			commerceCatalogId, accountEntryId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
 	}
 

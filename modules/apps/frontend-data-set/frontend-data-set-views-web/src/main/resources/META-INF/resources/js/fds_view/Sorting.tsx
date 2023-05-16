@@ -297,6 +297,65 @@ const Sorting = ({fdsView, fdsViewsURL}: IFDSViewSectionInterface) => {
 		});
 	}, [fdsView]);
 
+	const handleDelete = ({item}: {item: IFDSSort}) => {
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this-sorting?-fragments-using-it-will-be-affected'
+			),
+			buttons: [
+				{
+					autoFocus: true,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					displayType: 'warning',
+					label: Liferay.Language.get('delete'),
+					onClick: async ({
+						processClose,
+					}: {
+						processClose: Function;
+					}) => {
+						processClose();
+
+						const url = `${API_URL.FDS_SORTS}/${item.id}`;
+
+						const response = await fetch(url, {
+							method: 'DELETE',
+						});
+
+						if (!response.ok) {
+							openToast({
+								message: Liferay.Language.get(
+									'your-request-failed-to-complete'
+								),
+								type: 'danger',
+							});
+
+							return;
+						}
+
+						openToast({
+							message: Liferay.Language.get(
+								'your-request-completed-successfully'
+							),
+							type: 'success',
+						});
+
+						setFDSSorts(
+							fdsSorts?.filter(
+								(fdsSort: IFDSSort) => fdsSort.id !== item.id
+							) || []
+						);
+					},
+				},
+			],
+			status: 'warning',
+			title: Liferay.Language.get('delete-filter'),
+		});
+	};
+
 	const updateFDSFieldsOrder = async () => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
@@ -357,6 +416,13 @@ const Sorting = ({fdsView, fdsViewsURL}: IFDSViewSectionInterface) => {
 					</ClayAlert>
 
 					<OrderableTable
+						actions={[
+							{
+								icon: 'trash',
+								label: Liferay.Language.get('delete'),
+								onClick: handleDelete,
+							},
+						]}
 						disableSave={!newFDSSortsOrder.length}
 						fields={[
 							{

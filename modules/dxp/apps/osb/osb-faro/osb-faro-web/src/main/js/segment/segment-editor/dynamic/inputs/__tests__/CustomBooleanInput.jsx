@@ -1,6 +1,6 @@
 import CustomBooleanInput from '../CustomBooleanInput';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {Property} from 'shared/util/records';
 
@@ -10,7 +10,7 @@ describe('CustomBooleanInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<CustomBooleanInput
 				displayValue='Do Not Call'
 				operatorRenderer={() => <div>{'operator'}</div>}
@@ -30,7 +30,10 @@ describe('CustomBooleanInput', () => {
 				})}
 			/>
 		);
+		fireEvent.click(getByText('True'));
 
+		expect(getAllByText('True')[1]).toBeTruthy();
+		expect(getByText('False')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 });

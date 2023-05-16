@@ -4,13 +4,13 @@ import React from 'react';
 import {AttributeTypes} from 'event-analysis/utils/types';
 import {createNewGroup} from '../../utils/utils';
 import {CustomValue, Property} from 'shared/util/records';
+import {fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockEventAttributeDefinitionsReq} from 'test/graphql-data';
 import {range} from 'lodash';
 import {RelationalOperators} from '../../utils/constants';
-import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {waitForLoading} from 'test/helpers';
 
@@ -18,7 +18,7 @@ jest.unmock('react-dom');
 
 describe('EventInput', () => {
 	it('should render', async () => {
-		const {container} = render(
+		const {container, getAllByRole, getAllByText, getByText} = render(
 			<MockedProvider
 				mocks={[
 					mockEventAttributeDefinitionsReq(
@@ -92,6 +92,39 @@ describe('EventInput', () => {
 		await waitForLoading(container);
 
 		jest.runAllTimers();
+
+		fireEvent.click(getAllByRole('combobox')[0]);
+		fireEvent.click(getByText('since'));
+		fireEvent.click(getByText('Last 24 hours'));
+		fireEvent.click(getByText('displayName-2'));
+
+		expect(getByText('at least')).toBeTruthy();
+		expect(getByText('at most')).toBeTruthy();
+
+		expect(getAllByText('since')[1]).toBeTruthy();
+		expect(getByText('after')).toBeTruthy();
+		expect(getByText('before')).toBeTruthy();
+		expect(getByText('between')).toBeTruthy();
+		expect(getByText('ever')).toBeTruthy();
+		expect(getByText('on')).toBeTruthy();
+
+		expect(getAllByText('Last 24 hours')[1]).toBeTruthy();
+		expect(getByText('Yesterday')).toBeTruthy();
+		expect(getByText('Last 7 days')).toBeTruthy();
+		expect(getByText('Last 28 days')).toBeTruthy();
+		expect(getByText('Last 30 days')).toBeTruthy();
+		expect(getByText('Last 90 days')).toBeTruthy();
+
+		expect(getByText('displayName-0')).toBeTruthy();
+		expect(getByText('displayName-1')).toBeTruthy();
+		expect(getAllByText('displayName-2')[1]).toBeTruthy();
+		expect(getByText('displayName-3')).toBeTruthy();
+		expect(getByText('displayName-4')).toBeTruthy();
+		expect(getByText('displayName-5')).toBeTruthy();
+		expect(getByText('displayName-6')).toBeTruthy();
+		expect(getByText('displayName-7')).toBeTruthy();
+		expect(getByText('displayName-8')).toBeTruthy();
+		expect(getByText('displayName-9')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

@@ -1,7 +1,7 @@
 import CriteriaRow from '../CriteriaRow';
 import mockStore from 'test/mock-store';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {fromJS, Map} from 'immutable';
 import {Provider} from 'react-redux';
 import {wrapInTestContext} from 'react-dnd-test-utils';
@@ -14,7 +14,7 @@ describe('CriteriaRow', () => {
 	it('should render', () => {
 		const CriteriaRowContext = wrapInTestContext(CriteriaRow);
 
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<Provider store={mockStore()}>
 				<CriteriaRowContext
 					criterion={{
@@ -52,6 +52,14 @@ describe('CriteriaRow', () => {
 			</Provider>
 		);
 
+		fireEvent.click(getByText('is not'));
+
+		expect(getByText('is')).toBeTruthy();
+		expect(getAllByText('is not')[1]).toBeTruthy();
+		expect(getByText('contains')).toBeTruthy();
+		expect(getByText('does not contain')).toBeTruthy();
+		expect(getByText('is known')).toBeTruthy();
+		expect(getByText('is unknown')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 

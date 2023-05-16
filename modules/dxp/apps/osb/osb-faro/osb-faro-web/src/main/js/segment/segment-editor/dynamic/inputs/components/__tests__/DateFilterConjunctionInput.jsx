@@ -1,6 +1,6 @@
 import DateFilterConjunctionInput from '../DateFilterConjunctionInput';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {
 	FunctionalOperators,
 	RelationalOperators
@@ -12,12 +12,20 @@ describe('DateFilterConjunctionInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<DateFilterConjunctionInput
 				conjunctionCriterion={{propertyName: 'date'}}
 				onChange={jest.fn()}
 			/>
 		);
+		fireEvent.click(getByText('ever'));
+
+		expect(getByText('since')).toBeTruthy();
+		expect(getByText('after')).toBeTruthy();
+		expect(getByText('before')).toBeTruthy();
+		expect(getByText('between')).toBeTruthy();
+		expect(getAllByText('ever')[1]).toBeTruthy();
+		expect(getByText('on')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

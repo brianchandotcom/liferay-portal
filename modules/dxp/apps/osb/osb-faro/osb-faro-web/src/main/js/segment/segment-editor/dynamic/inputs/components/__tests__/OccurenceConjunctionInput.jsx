@@ -1,13 +1,13 @@
 import OccurenceConjunctionInput from '../OccurenceConjunctionInput';
 import React from 'react';
+import {fireEvent, render} from '@testing-library/react';
 import {RelationalOperators} from '../../../utils/constants';
-import {render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
 describe('OccurenceConjunctionInput', () => {
 	it('should render', () => {
-		const {container} = render(
+		const {container, getByRole, getByText} = render(
 			<OccurenceConjunctionInput
 				onChange={jest.fn()}
 				operatorName={RelationalOperators.LT}
@@ -16,6 +16,10 @@ describe('OccurenceConjunctionInput', () => {
 				value={123}
 			/>
 		);
+		fireEvent.click(getByRole('combobox'));
+
+		expect(getByText('at least')).toBeTruthy();
+		expect(getByText('at most')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

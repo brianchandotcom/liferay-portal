@@ -1,17 +1,17 @@
 import React from 'react';
 import ValueInput from '../ValueInput';
 import {DataTypes} from 'event-analysis/utils/types';
+import {fireEvent, render} from '@testing-library/react';
 import {
 	FunctionalOperators,
 	RelationalOperators
 } from '../../../../utils/constants';
-import {render} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
 describe('ValueInput', () => {
 	it('should render', () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<ValueInput
 				dataType={DataTypes.Boolean}
 				onChange={jest.fn()}
@@ -21,6 +21,10 @@ describe('ValueInput', () => {
 				value='true'
 			/>
 		);
+		fireEvent.click(getByText('Select an option'));
+
+		expect(getByText('True')).toBeTruthy();
+		expect(getByText('False')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

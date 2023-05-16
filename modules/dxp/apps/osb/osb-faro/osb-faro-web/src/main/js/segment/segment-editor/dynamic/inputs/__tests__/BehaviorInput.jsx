@@ -2,7 +2,7 @@ import BehaviorInput, {AssetItem} from '../BehaviorInput';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ACTIVITY_KEY, RelationalOperators} from '../../utils/constants';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
 import {Map} from 'immutable';
 import {Property} from 'shared/util/records';
@@ -45,7 +45,21 @@ describe('BehaviorInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(<DefaultComponent />);
+		const {container, getAllByText, getByText} = render(
+			<DefaultComponent />
+		);
+
+		fireEvent.click(getByText('at least'));
+		fireEvent.click(getByText('ever'));
+
+		expect(getAllByText('at least')[1]).toBeTruthy();
+		expect(getByText('at most')).toBeTruthy();
+
+		expect(getByText('since')).toBeTruthy();
+		expect(getByText('before')).toBeTruthy();
+		expect(getByText('between')).toBeTruthy();
+		expect(getAllByText('ever')[1]).toBeTruthy();
+		expect(getByText('on')).toBeTruthy();
 
 		expect(container).toMatchSnapshot();
 	});

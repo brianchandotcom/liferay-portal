@@ -2,7 +2,7 @@ import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-hooks';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {mockUser} from 'test/data';
 import {Overview} from '../Overview';
 import {Provider} from 'react-redux';
@@ -16,7 +16,7 @@ describe('Data Privacy Overview', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, getByText} = render(
 			<ApolloProvider client={client}>
 				<Provider store={mockStore()}>
 					<StaticRouter>
@@ -30,7 +30,10 @@ describe('Data Privacy Overview', () => {
 		);
 
 		jest.runAllTimers();
+		fireEvent.click(getByText('Select an option'));
 
+		expect(getByText('7 Months')).toBeTruthy();
+		expect(getByText('13 Months')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 

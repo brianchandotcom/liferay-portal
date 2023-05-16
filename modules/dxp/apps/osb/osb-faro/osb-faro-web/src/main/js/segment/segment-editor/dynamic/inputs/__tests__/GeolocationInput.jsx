@@ -1,7 +1,7 @@
 import * as data from 'test/data';
 import GeolocationInput from '../GeolocationInput';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
 import {Property} from 'shared/util/records';
 import {RelationalOperators, TimeSpans} from '../../utils/constants';
@@ -58,7 +58,7 @@ describe('GeolocationInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<GeolocationInput
 				onChange={jest.fn()}
 				property={new Property(data.mockProperty({}))}
@@ -67,6 +67,21 @@ describe('GeolocationInput', () => {
 				value={emptyMockValue}
 			/>
 		);
+		fireEvent.click(getByText('was'));
+		fireEvent.click(getByText('on'));
+
+		expect(getAllByText('was')[1]).toBeTruthy();
+		expect(getByText('was not')).toBeTruthy();
+		expect(getByText('contained')).toBeTruthy();
+		expect(getByText('did not contain')).toBeTruthy();
+
+		expect(getByText('since')).toBeTruthy();
+		expect(getByText('after')).toBeTruthy();
+		expect(getByText('before')).toBeTruthy();
+		expect(getByText('between')).toBeTruthy();
+		expect(getByText('ever')).toBeTruthy();
+		expect(getAllByText('on')[1]).toBeTruthy();
+
 		expect(container).toMatchSnapshot();
 	});
 
@@ -80,7 +95,6 @@ describe('GeolocationInput', () => {
 				value={emptyMockValue}
 			/>
 		);
-
 		expect(container.querySelector('.select-input-root')).toHaveClass(
 			'has-error'
 		);
@@ -96,7 +110,6 @@ describe('GeolocationInput', () => {
 				value={mockValue}
 			/>
 		);
-
 		expect(container.querySelectorAll('input').length).toBe(4);
 	});
 

@@ -1,6 +1,6 @@
 import CustomStringInput from '../CustomStringInput';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {
 	createCustomValueMap,
 	setPropertyValue
@@ -30,18 +30,34 @@ describe('CustomStringInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(<DefaultComponent valid={false} />);
+		const {container, getAllByText, getByText} = render(
+			<DefaultComponent valid={false} />
+		);
+		fireEvent.click(getByText('is'));
 
+		expect(getAllByText('is')[1]).toBeTruthy();
+		expect(getByText('is not')).toBeTruthy();
+		expect(getByText('contains')).toBeTruthy();
+		expect(getByText('does not contain')).toBeTruthy();
+		expect(getByText('is known')).toBeTruthy();
+		expect(getByText('is unknown')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render with data', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<DefaultComponent
 				value={setPropertyValue(mockValue, 'value', 0, '123 West Road')}
 			/>
 		);
+		fireEvent.click(getByText('is'));
 
+		expect(getAllByText('is')[1]).toBeTruthy();
+		expect(getByText('is not')).toBeTruthy();
+		expect(getByText('contains')).toBeTruthy();
+		expect(getByText('does not contain')).toBeTruthy();
+		expect(getByText('is known')).toBeTruthy();
+		expect(getByText('is unknown')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 

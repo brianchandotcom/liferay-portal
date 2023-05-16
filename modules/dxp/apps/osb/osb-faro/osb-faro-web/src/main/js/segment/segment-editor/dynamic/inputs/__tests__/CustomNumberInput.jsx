@@ -1,6 +1,6 @@
 import CustomNumberInput from '../CustomNumberInput';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {Property} from 'shared/util/records';
 
@@ -10,7 +10,7 @@ describe('CustomNumberInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<CustomNumberInput
 				property={new Property()}
 				touched={false}
@@ -20,12 +20,19 @@ describe('CustomNumberInput', () => {
 				})}
 			/>
 		);
+		fireEvent.click(getByText('is equal to'));
 
+		expect(getAllByText('is equal to')[1]).toBeTruthy();
+		expect(getByText('greater than')).toBeTruthy();
+		expect(getByText('less than')).toBeTruthy();
+		expect(getByText('is not equal to')).toBeTruthy();
+		expect(getByText('is known')).toBeTruthy();
+		expect(getByText('is unknown')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render with data', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<CustomNumberInput
 				displayValue='Revenue'
 				operatorRenderer={() => <div>{'operator'}</div>}
@@ -39,7 +46,14 @@ describe('CustomNumberInput', () => {
 				})}
 			/>
 		);
+		fireEvent.click(getByText('is equal to'));
 
+		expect(getAllByText('is equal to')[1]).toBeTruthy();
+		expect(getByText('greater than')).toBeTruthy();
+		expect(getByText('less than')).toBeTruthy();
+		expect(getByText('is not equal to')).toBeTruthy();
+		expect(getByText('is known')).toBeTruthy();
+		expect(getByText('is unknown')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 

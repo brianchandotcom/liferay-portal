@@ -1,6 +1,6 @@
 import AccountInput from '../AccountInput';
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import {fromJS} from 'immutable';
 import {Property} from 'shared/util/records';
 import {PropertyTypes, RelationalOperators} from '../../utils/constants';
@@ -13,13 +13,21 @@ describe('AccountInput', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const {container} = render(
+		const {container, getAllByText, getByText} = render(
 			<AccountInput
 				property={new Property()}
 				value={fromJS({criterionGroup: {items: [{operatorName: EQ}]}})}
 			/>
 		);
 
+		fireEvent.click(getByText('is'));
+
+		expect(getAllByText('is')[1]).toBeTruthy();
+		expect(getByText('is not')).toBeTruthy();
+		expect(getByText('contains')).toBeTruthy();
+		expect(getByText('does not contain')).toBeTruthy();
+		expect(getByText('is known')).toBeTruthy();
+		expect(getByText('is unknown')).toBeTruthy();
 		expect(container).toMatchSnapshot();
 	});
 

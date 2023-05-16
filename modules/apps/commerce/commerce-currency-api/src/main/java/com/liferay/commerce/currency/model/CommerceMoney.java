@@ -36,4 +36,6 @@ public interface CommerceMoney {
 
 	public boolean isEmpty();
 
+	public boolean isPriceOnApplication();
+
 }

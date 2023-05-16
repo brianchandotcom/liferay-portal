@@ -31,25 +31,8 @@ import java.util.Locale;
 @ProviderType
 public interface ProductHelper {
 
-	public PriceModel getMinPrice(
+	public PriceModel getMinPriceModel(
 			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
-		throws PortalException;
-
-	/**
-	 * @param      cpInstanceId
-	 * @param      quantity
-	 * @param      commerceContext
-	 * @param      locale
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             #getPriceModel(long, int, CommerceContext, String, Locale)}
-	 */
-	@Deprecated
-	public PriceModel getPrice(
-			long cpInstanceId, int quantity, CommerceContext commerceContext,
-			Locale locale)
 		throws PortalException;
 
 	public PriceModel getPriceModel(

@@ -79,6 +79,10 @@ public class CommerceProductPriceImpl implements CommerceProductPrice {
 		return _unitPromoPriceWithTaxAmount;
 	}
 
+	public boolean isPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
 	public void setCommerceDiscountValue(
 		CommerceDiscountValue commerceDiscountValue) {
 
@@ -104,6 +108,10 @@ public class CommerceProductPriceImpl implements CommerceProductPrice {
 		CommerceMoney finalPriceWithTaxAmount) {
 
 		_finalPriceWithTaxAmount = finalPriceWithTaxAmount;
+	}
+
+	public void setPriceOnApplication(boolean priceOnApplication) {
+		_priceOnApplication = priceOnApplication;
 	}
 
 	public void setQuantity(int quantity) {
@@ -139,6 +147,7 @@ public class CommerceProductPriceImpl implements CommerceProductPrice {
 	private long _commercePriceListId;
 	private CommerceMoney _finalPrice;
 	private CommerceMoney _finalPriceWithTaxAmount;
+	private boolean _priceOnApplication;
 	private int _quantity;
 	private BigDecimal _taxValue;
 	private CommerceMoney _unitPrice;

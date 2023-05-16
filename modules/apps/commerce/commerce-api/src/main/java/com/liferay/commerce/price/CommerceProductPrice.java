@@ -46,4 +46,8 @@ public interface CommerceProductPrice {
 
 	public CommerceMoney getUnitPromoPriceWithTaxAmount();
 
+	public boolean isPriceOnApplication();
+
+	public void setPriceOnApplication(boolean priceOnApplication);
+
 }

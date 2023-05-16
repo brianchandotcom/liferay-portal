@@ -47,6 +47,10 @@ public class PriceModel {
 		return _promoPrice;
 	}
 
+	public boolean isPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
 	public void setDiscount(String discount) {
 		_discount = discount;
 	}
@@ -67,6 +71,10 @@ public class PriceModel {
 		_price = price;
 	}
 
+	public void setPriceOnApplication(boolean priceOnApplication) {
+		_priceOnApplication = priceOnApplication;
+	}
+
 	public void setPromoPrice(String promoPrice) {
 		_promoPrice = promoPrice;
 	}
@@ -76,6 +84,7 @@ public class PriceModel {
 	private String[] _discountPercentages;
 	private String _finalPrice;
 	private String _price;
+	private boolean _priceOnApplication;
 	private String _promoPrice;
 
 }

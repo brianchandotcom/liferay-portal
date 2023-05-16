@@ -36,7 +36,6 @@ import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ProductHelperImpl implements ProductHelper {
 
 	@Override
-	public PriceModel getMinPrice(
+	public PriceModel getMinPriceModel(
 			long cpDefinitionId, CommerceContext commerceContext, Locale locale)
 		throws PortalException {
 
@@ -72,32 +71,15 @@ public class ProductHelperImpl implements ProductHelper {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return new PriceModel(
+		PriceModel priceModel = new PriceModel(
 			_language.format(
 				resourceBundle, "from-x",
 				cpDefinitionMinimumPriceCommerceMoney.format(locale), false));
-	}
 
-	/**
-	 * @param      cpInstanceId
-	 * @param      quantity
-	 * @param      commerceContext
-	 * @param      locale
-	 * @return
-	 *
-	 * @throws     PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 *             #getPriceModel(long, int, CommerceContext, String, Locale)}
-	 */
-	@Deprecated
-	@Override
-	public PriceModel getPrice(
-			long cpInstanceId, int quantity, CommerceContext commerceContext,
-			Locale locale)
-		throws PortalException {
+		priceModel.setPriceOnApplication(
+			cpDefinitionMinimumPriceCommerceMoney.isPriceOnApplication());
 
-		return getPriceModel(
-			cpInstanceId, quantity, commerceContext, StringPool.BLANK, locale);
+		return priceModel;
 	}
 
 	@Override
@@ -134,14 +116,16 @@ public class ProductHelperImpl implements ProductHelper {
 				commerceProductPrice.getFinalPriceWithTaxAmount(),
 				commerceProductPrice.getUnitPriceWithTaxAmount(),
 				commerceProductPrice.getUnitPromoPriceWithTaxAmount(),
-				commerceProductPrice.getDiscountValueWithTaxAmount(), locale);
+				commerceProductPrice.getDiscountValueWithTaxAmount(),
+				commerceProductPrice.isPriceOnApplication(), locale);
 		}
 
 		return _getPriceModel(
 			commerceProductPrice.getFinalPrice(),
 			commerceProductPrice.getUnitPrice(),
 			commerceProductPrice.getUnitPromoPrice(),
-			commerceProductPrice.getDiscountValue(), locale);
+			commerceProductPrice.getDiscountValue(),
+			commerceProductPrice.isPriceOnApplication(), locale);
 	}
 
 	@Override
@@ -228,18 +212,23 @@ public class ProductHelperImpl implements ProductHelper {
 			CommerceMoney finalPriceCommerceMoney,
 			CommerceMoney unitPriceCommerceMoney,
 			CommerceMoney unitPromoPriceCommerceMoney,
-			CommerceDiscountValue commerceDiscountValue, Locale locale)
+			CommerceDiscountValue commerceDiscountValue,
+			boolean priceOnApplication, Locale locale)
 		throws PortalException {
 
 		PriceModel priceModel = new PriceModel(
 			unitPriceCommerceMoney.format(locale));
 
-		if (!unitPromoPriceCommerceMoney.isEmpty()) {
+		priceModel.setPriceOnApplication(priceOnApplication);
+
+		if (!unitPromoPriceCommerceMoney.isEmpty() && !priceOnApplication) {
 			BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
 
 			if ((unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-				(unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
-					0)) {
+				(unitPriceCommerceMoney.isPriceOnApplication() ||
+				 (unitPriceCommerceMoney.getPrice() == null) ||
+				 (unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
+					 0))) {
 
 				priceModel.setPromoPrice(
 					unitPromoPriceCommerceMoney.format(locale));

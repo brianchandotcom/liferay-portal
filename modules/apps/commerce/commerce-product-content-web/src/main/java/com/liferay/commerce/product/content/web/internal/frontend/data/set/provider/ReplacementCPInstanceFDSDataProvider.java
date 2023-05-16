@@ -119,7 +119,7 @@ public class ReplacementCPInstanceFDSDataProvider
 				cpInstanceId, 1, commerceContext, StringPool.BLANK, locale);
 		}
 
-		return _productHelper.getMinPrice(
+		return _productHelper.getMinPriceModel(
 			cpDefinitionId, commerceContext, locale);
 	}
 

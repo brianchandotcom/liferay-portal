@@ -36,4 +36,6 @@ public interface CommerceMoneyFactory {
 
 	public CommerceMoney emptyCommerceMoney();
 
+	public CommerceMoney priceOnApplicationCommerceMoney();
+
 }

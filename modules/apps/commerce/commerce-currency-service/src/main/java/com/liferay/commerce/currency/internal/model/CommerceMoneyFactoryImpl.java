@@ -104,9 +104,52 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 				return true;
 			}
 
+			@Override
+			public boolean isPriceOnApplication() {
+				return false;
+			}
+
 		};
 
 		return _emptyCommerceMoney;
+	}
+
+	@Override
+	public CommerceMoney priceOnApplicationCommerceMoney() {
+		if (_priceOnApplicationCommerceMoney != null) {
+			return _priceOnApplicationCommerceMoney;
+		}
+
+		_priceOnApplicationCommerceMoney = new CommerceMoney() {
+
+			@Override
+			public String format(Locale locale) throws PortalException {
+				return _commercePriceFormatter.format(BigDecimal.ZERO, locale);
+			}
+
+			@Override
+			public CommerceCurrency getCommerceCurrency() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public BigDecimal getPrice() {
+				return BigDecimal.ZERO;
+			}
+
+			@Override
+			public boolean isEmpty() {
+				return true;
+			}
+
+			@Override
+			public boolean isPriceOnApplication() {
+				return true;
+			}
+
+		};
+
+		return _priceOnApplicationCommerceMoney;
 	}
 
 	@Activate
@@ -121,5 +164,6 @@ public class CommerceMoneyFactoryImpl implements CommerceMoneyFactory {
 	private CommercePriceFormatter _commercePriceFormatter;
 
 	private CommerceMoney _emptyCommerceMoney;
+	private CommerceMoney _priceOnApplicationCommerceMoney;
 
 }

@@ -186,7 +186,7 @@ public class PriceTag extends IncludeTag {
 				themeDisplay.getLocale());
 		}
 
-		return _productHelper.getMinPrice(
+		return _productHelper.getMinPriceModel(
 			_cpCatalogEntry.getCPDefinitionId(), commerceContext,
 			themeDisplay.getLocale());
 	}

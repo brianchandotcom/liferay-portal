@@ -35,6 +35,8 @@ public class CommerceMoneyImpl implements CommerceMoney {
 		_commerceCurrency = commerceCurrency;
 		_commercePriceFormatter = commercePriceFormatter;
 		_price = price;
+
+		_priceOnApplication = false;
 	}
 
 	@Override
@@ -68,6 +70,11 @@ public class CommerceMoneyImpl implements CommerceMoney {
 		return false;
 	}
 
+	@Override
+	public boolean isPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
 	protected CommercePriceFormatter getCommercePriceFormatter() {
 		return _commercePriceFormatter;
 	}
@@ -75,5 +82,6 @@ public class CommerceMoneyImpl implements CommerceMoney {
 	private final CommerceCurrency _commerceCurrency;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final BigDecimal _price;
+	private final boolean _priceOnApplication;
 
 }

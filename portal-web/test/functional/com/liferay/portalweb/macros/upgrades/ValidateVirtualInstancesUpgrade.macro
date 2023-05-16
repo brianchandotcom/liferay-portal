@@ -1,5 +1,106 @@
 definition {
 
+	macro viewCustomObjectsUpgrade {
+		task ("Assert custom object on default instance") {
+			Navigator.openURL();
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementPresent(
+				key_category = "Object",
+				key_portlet = "Custom Objects",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Custom Object");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+				value1 = "Custom Objects");
+
+			AssertElementPresent(
+				locator1 = "CreateObject#TITLE_FIELD",
+				value1 = "Custom Field Text");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				value1 = "Control Panel > Object");
+		}
+
+		task ("Assert custom object on second instance") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementPresent(
+				key_category = "Object",
+				key_portlet = "Custom Objects 2",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 2");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Custom Object 2");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+				value1 = "Custom Objects 2");
+
+			AssertElementPresent(
+				locator1 = "CreateObject#TITLE_FIELD",
+				value1 = "Custom Field Text 2");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				value1 = "Control Panel > Object");
+		}
+
+		task ("Assert custom object on third instance") {
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+			AssertElementPresent(
+				key_category = "Object",
+				key_portlet = "Custom Objects 3",
+				locator1 = "ApplicationsMenu#PORTLET");
+
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet");
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 3");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Custom Object 3");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+				value1 = "Custom Objects 3");
+
+			AssertElementPresent(
+				locator1 = "CreateObject#TITLE_FIELD",
+				value1 = "Custom Field Text 3");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				value1 = "Control Panel > Object");
+		}
+	}
+
 	macro viewVirtualInstancesUpgrade {
 		task ("Assert user on default instance") {
 			ApplicationsMenu.gotoPortlet(

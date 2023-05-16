@@ -6,43 +6,52 @@ exports[`EventInput should render 1`] = `
     class="criteria-statement"
   >
     <div
+      aria-hidden="true"
       class="form-group form-group-autofit"
+      data-aria-hidden="true"
     >
-      <div>
+      <div
+        aria-hidden="true"
+        data-aria-hidden="true"
+      >
         test
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       >
         performed
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item display-value form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       >
         <b>
           Asset Clicked
         </b>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
-        <select
-          class="form-control operator-input"
-        >
-          <option
-            value="ge"
-          >
-            at least
-          </option>
-          <option
-            value="le"
-          >
-            at most
-          </option>
-        </select>
+        <button
+          aria-activedescendant="gt"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-1"
+          class="form-control form-control-select form-control-select-secondary operator-input show"
+          role="combobox"
+          style=""
+          tabindex="0"
+        />
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
         <input
           class="input-root form-control number-input"
@@ -53,164 +62,97 @@ exports[`EventInput should render 1`] = `
         />
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item unit form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       >
         time(s)
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
-        <select
-          class="form-control conjunction-input"
+        <button
+          aria-activedescendant="since"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-2"
+          class="form-control form-control-select form-control-select-secondary conjunction-input show"
           data-testid="conjunction-input"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="since"
-          >
-            since
-          </option>
-          <option
-            value="gt"
-          >
-            after
-          </option>
-          <option
-            value="lt"
-          >
-            before
-          </option>
-          <option
-            value="between"
-          >
-            between
-          </option>
-          <option
-            value="ever"
-          >
-            ever
-          </option>
-          <option
-            value="eq"
-          >
-            on
-          </option>
-        </select>
+          since
+        </button>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
-        <select
-          class="form-control operator-input"
+        <button
+          aria-activedescendant="last24Hours"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-3"
+          class="form-control form-control-select form-control-select-secondary operator-input show"
           data-testid="clay-select"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="last24Hours"
-          >
-            Last 24 hours
-          </option>
-          <option
-            value="yesterday"
-          >
-            Yesterday
-          </option>
-          <option
-            value="last7Days"
-          >
-            Last 7 days
-          </option>
-          <option
-            value="last28Days"
-          >
-            Last 28 days
-          </option>
-          <option
-            value="last30Days"
-          >
-            Last 30 days
-          </option>
-          <option
-            value="last90Days"
-          >
-            Last 90 days
-          </option>
-        </select>
+          Last 24 hours
+        </button>
       </div>
     </div>
     <div
+      aria-hidden="true"
       class="form-group form-group-autofit"
+      data-aria-hidden="true"
     >
       <div
+        aria-hidden="true"
         class="form-group-item conjunction form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       >
         where
       </div>
       <div
         class="form-group-item form-group-item-shrink"
       >
-        <select
-          class="form-control attribute-input"
+        <button
+          aria-activedescendant="2"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-4"
+          class="form-control form-control-select form-control-select-secondary attribute-input show"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="0"
-          >
-            displayName-0
-          </option>
-          <option
-            value="1"
-          >
-            displayName-1
-          </option>
-          <option
-            value="2"
-          >
-            displayName-2
-          </option>
-          <option
-            value="3"
-          >
-            displayName-3
-          </option>
-          <option
-            value="4"
-          >
-            displayName-4
-          </option>
-          <option
-            value="5"
-          >
-            displayName-5
-          </option>
-          <option
-            value="6"
-          >
-            displayName-6
-          </option>
-          <option
-            value="7"
-          >
-            displayName-7
-          </option>
-          <option
-            value="8"
-          >
-            displayName-8
-          </option>
-          <option
-            value="9"
-          >
-            displayName-9
-          </option>
-        </select>
+          displayName-2
+        </button>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
-        <select
-          class="form-control operator-input"
+        <button
+          aria-activedescendant=""
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          class="form-control form-control-select form-control-select-secondary operator-input"
+          role="combobox"
+          tabindex="0"
         />
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
         <input
           class="input-root form-control"

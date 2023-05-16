@@ -8,11 +8,16 @@ exports[`AssignSegments should render 1`] = `
     <div
       class="modal-body d-flex flex-column align-items-center"
     >
-      <h2>
+      <h2
+        aria-hidden="true"
+        data-aria-hidden="true"
+      >
         Assign Existing Segments
       </h2>
       <span
+        aria-hidden="true"
         class="subtitle"
+        data-aria-hidden="true"
       >
         Your existing segments will be hidden until they have been assigned. A segment can only belong to a single property.
       </span>
@@ -25,7 +30,10 @@ exports[`AssignSegments should render 1`] = `
           <table
             class="table table-autofit table-hover table-heading-nowrap table-nowrap"
           >
-            <thead>
+            <thead
+              aria-hidden="true"
+              data-aria-hidden="true"
+            >
               <tr>
                 <th
                   class="table-head-title"
@@ -76,43 +84,39 @@ exports[`AssignSegments should render 1`] = `
               <tr
                 class=""
               >
-                <td>
+                <td
+                  aria-hidden="true"
+                  data-aria-hidden="true"
+                >
                   Seattle1
                 </td>
-                <td>
+                <td
+                  aria-hidden="true"
+                  data-aria-hidden="true"
+                >
                   -
                 </td>
                 <td>
-                  <select
-                    class="form-control"
+                  <button
+                    aria-activedescendant=""
+                    aria-expanded="true"
+                    aria-haspopup="listbox"
+                    aria-owns="clay-id-1"
+                    class="form-control form-control-select form-control-select-secondary show"
                     data-testid="select-1"
                     required=""
+                    role="combobox"
+                    style=""
+                    tabindex="0"
                   >
-                    <option
-                      value=""
-                    >
-                      Unassigned
-                    </option>
-                    <option
-                      value="DELETE"
-                    >
-                      Delete
-                    </option>
-                    <option
-                      value="1"
-                    >
-                      Channel 1
-                    </option>
-                    <option
-                      value="2"
-                    >
-                      Channel 2
-                    </option>
-                  </select>
+                    Select an option
+                  </button>
                 </td>
               </tr>
               <tr
+                aria-hidden="true"
                 class=""
+                data-aria-hidden="true"
               >
                 <td>
                   Seattle2
@@ -121,32 +125,18 @@ exports[`AssignSegments should render 1`] = `
                   -
                 </td>
                 <td>
-                  <select
-                    class="form-control"
+                  <button
+                    aria-activedescendant=""
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    class="form-control form-control-select form-control-select-secondary"
                     data-testid="select-2"
                     required=""
+                    role="combobox"
+                    tabindex="0"
                   >
-                    <option
-                      value=""
-                    >
-                      Unassigned
-                    </option>
-                    <option
-                      value="DELETE"
-                    >
-                      Delete
-                    </option>
-                    <option
-                      value="1"
-                    >
-                      Channel 1
-                    </option>
-                    <option
-                      value="2"
-                    >
-                      Channel 2
-                    </option>
-                  </select>
+                    Select an option
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -155,7 +145,9 @@ exports[`AssignSegments should render 1`] = `
       </div>
     </div>
     <div
+      aria-hidden="true"
       class="modal-footer d-flex justify-content-end"
+      data-aria-hidden="true"
     >
       <button
         class="btn btn-secondary"

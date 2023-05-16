@@ -5,40 +5,37 @@ exports[`AttributeConjunctionInput should render 1`] = `
   <div
     class="form-group-item form-group-item-shrink"
   >
-    <select
-      class="form-control attribute-input"
+    <button
+      aria-activedescendant="1"
+      aria-expanded="true"
+      aria-haspopup="listbox"
+      aria-owns="clay-id-1"
+      class="form-control form-control-select form-control-select-secondary attribute-input show"
+      role="combobox"
+      style=""
+      tabindex="0"
     >
-      <option
-        value="0"
-      >
-        displayName-0
-      </option>
-      <option
-        value="1"
-      >
-        displayName-1
-      </option>
-      <option
-        value="2"
-      >
-        displayName-2
-      </option>
-      <option
-        value="3"
-      >
-        displayName-3
-      </option>
-    </select>
+      displayName-1
+    </button>
   </div>
   <div
+    aria-hidden="true"
     class="form-group-item form-group-item-shrink"
+    data-aria-hidden="true"
   >
-    <select
-      class="form-control operator-input"
+    <button
+      aria-activedescendant=""
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="form-control form-control-select form-control-select-secondary operator-input"
+      role="combobox"
+      tabindex="0"
     />
   </div>
   <div
+    aria-hidden="true"
     class="form-group-item form-group-item-shrink"
+    data-aria-hidden="true"
   >
     <input
       class="input-root form-control"

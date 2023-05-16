@@ -6,13 +6,17 @@ exports[`CriteriaRow should render 1`] = `
     class="criterion-row-root"
   >
     <div
+      aria-hidden="true"
       class="color-stripe color--session"
+      data-aria-hidden="true"
     />
     <div
       class="edit-container"
     >
       <div
+        aria-hidden="true"
         class="drag-icon"
+        data-aria-hidden="true"
       >
         <svg
           class="lexicon-icon lexicon-icon-drag icon-root"
@@ -36,55 +40,39 @@ exports[`CriteriaRow should render 1`] = `
               class="form-group form-group-autofit"
             >
               <div
+                aria-hidden="true"
                 class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+                data-aria-hidden="true"
               >
                 Session
               </div>
               <div
+                aria-hidden="true"
                 class="form-group-item display-value form-group-item-label form-group-item-shrink"
+                data-aria-hidden="true"
               >
                 Referrer
               </div>
               <div
                 class="form-group-item form-group-item-shrink"
               >
-                <select
-                  class="form-control"
+                <button
+                  aria-activedescendant="ne"
+                  aria-expanded="true"
+                  aria-haspopup="listbox"
+                  aria-owns="clay-id-1"
+                  class="form-control form-control-select form-control-select-secondary show"
+                  role="combobox"
+                  style=""
+                  tabindex="0"
                 >
-                  <option
-                    value="eq"
-                  >
-                    is
-                  </option>
-                  <option
-                    value="ne"
-                  >
-                    is not
-                  </option>
-                  <option
-                    value="contains"
-                  >
-                    contains
-                  </option>
-                  <option
-                    value="not-contains"
-                  >
-                    does not contain
-                  </option>
-                  <option
-                    value="is-known"
-                  >
-                    is known
-                  </option>
-                  <option
-                    value="is-unknown"
-                  >
-                    is unknown
-                  </option>
-                </select>
+                  is not
+                </button>
               </div>
               <div
+                aria-hidden="true"
                 class="form-group-item"
+                data-aria-hidden="true"
               >
                 <div
                   aria-haspopup="true"
@@ -119,46 +107,24 @@ exports[`CriteriaRow should render 1`] = `
           </div>
         </div>
         <div
+          aria-hidden="true"
           class="form-group form-group-autofit"
+          data-aria-hidden="true"
         >
           <div
             class="form-group-item form-group-item-shrink"
           >
-            <select
-              class="form-control conjunction-input"
+            <button
+              aria-activedescendant=""
+              aria-expanded="false"
+              aria-haspopup="listbox"
+              class="form-control form-control-select form-control-select-secondary conjunction-input"
               data-testid="conjunction-input"
+              role="combobox"
+              tabindex="0"
             >
-              <option
-                value="since"
-              >
-                since
-              </option>
-              <option
-                value="gt"
-              >
-                after
-              </option>
-              <option
-                value="lt"
-              >
-                before
-              </option>
-              <option
-                value="between"
-              >
-                between
-              </option>
-              <option
-                value="ever"
-              >
-                ever
-              </option>
-              <option
-                value="eq"
-              >
-                on
-              </option>
-            </select>
+              after
+            </button>
           </div>
           <div
             class="form-group-item form-group-item-shrink"
@@ -202,7 +168,9 @@ exports[`CriteriaRow should render 1`] = `
         </div>
       </div>
       <div
+        aria-hidden="true"
         class="actions"
+        data-aria-hidden="true"
       >
         <div
           class="dropdown dropdown-action"

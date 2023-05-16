@@ -19,7 +19,9 @@ exports[`BehaviorInput should render 1`] = `
     class="criteria-statement"
   >
     <div
+      aria-hidden="true"
       class="form-group form-group-autofit"
+      data-aria-hidden="true"
     >
       <div
         class="form-group-item entity-name form-group-item-label form-group-item-shrink"
@@ -84,25 +86,27 @@ exports[`BehaviorInput should render 1`] = `
       class="form-group form-group-autofit"
     >
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
-        <select
-          class="form-control operator-input"
+        <button
+          aria-activedescendant="ge"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-1"
+          class="form-control form-control-select form-control-select-secondary operator-input show"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="ge"
-          >
-            at least
-          </option>
-          <option
-            value="le"
-          >
-            at most
-          </option>
-        </select>
+          at least
+        </button>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
         <input
           class="input-root form-control number-input"
@@ -113,51 +117,35 @@ exports[`BehaviorInput should render 1`] = `
         />
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item unit form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       >
         time(s)
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
-        <select
-          class="form-control conjunction-input"
+        <button
+          aria-activedescendant="ever"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-2"
+          class="form-control form-control-select form-control-select-secondary conjunction-input show"
           data-testid="conjunction-input"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="since"
-          >
-            since
-          </option>
-          <option
-            value="gt"
-          >
-            after
-          </option>
-          <option
-            value="lt"
-          >
-            before
-          </option>
-          <option
-            value="between"
-          >
-            between
-          </option>
-          <option
-            value="ever"
-          >
-            ever
-          </option>
-          <option
-            value="eq"
-          >
-            on
-          </option>
-        </select>
+          ever
+        </button>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       />
     </div>
   </div>
@@ -237,20 +225,16 @@ exports[`BehaviorInput should render w/ data 1`] = `
       <div
         class="form-group-item form-group-item-shrink"
       >
-        <select
-          class="form-control operator-input"
+        <button
+          aria-activedescendant=""
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          class="form-control form-control-select form-control-select-secondary operator-input"
+          role="combobox"
+          tabindex="0"
         >
-          <option
-            value="ge"
-          >
-            at least
-          </option>
-          <option
-            value="le"
-          >
-            at most
-          </option>
-        </select>
+          at least
+        </button>
       </div>
       <div
         class="form-group-item form-group-item-shrink"
@@ -271,41 +255,17 @@ exports[`BehaviorInput should render w/ data 1`] = `
       <div
         class="form-group-item form-group-item-shrink"
       >
-        <select
-          class="form-control conjunction-input"
+        <button
+          aria-activedescendant=""
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          class="form-control form-control-select form-control-select-secondary conjunction-input"
           data-testid="conjunction-input"
+          role="combobox"
+          tabindex="0"
         >
-          <option
-            value="since"
-          >
-            since
-          </option>
-          <option
-            value="gt"
-          >
-            after
-          </option>
-          <option
-            value="lt"
-          >
-            before
-          </option>
-          <option
-            value="between"
-          >
-            between
-          </option>
-          <option
-            value="ever"
-          >
-            ever
-          </option>
-          <option
-            value="eq"
-          >
-            on
-          </option>
-        </select>
+          ever
+        </button>
       </div>
       <div
         class="form-group-item form-group-item-shrink"

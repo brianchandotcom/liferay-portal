@@ -9,36 +9,35 @@ exports[`CustomDateInput should render 1`] = `
       class="form-group form-group-autofit"
     >
       <div
+        aria-hidden="true"
         class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       />
       <div
+        aria-hidden="true"
         class="form-group-item display-value form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       />
       <div
         class="form-group-item operator form-group-item-shrink"
       >
-        <select
-          class="form-control criterion-input operator-input"
+        <button
+          aria-activedescendant="gt"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-1"
+          class="form-control form-control-select form-control-select-secondary criterion-input operator-input show"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="lt"
-          >
-            is before
-          </option>
-          <option
-            value="eq"
-          >
-            is
-          </option>
-          <option
-            value="gt"
-          >
-            is after
-          </option>
-        </select>
+          is after
+        </button>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item form-group-item-shrink"
+        data-aria-hidden="true"
       >
         <div
           aria-haspopup="true"

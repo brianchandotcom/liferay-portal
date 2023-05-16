@@ -5,23 +5,21 @@ exports[`OccurenceConjunctionInput should render 1`] = `
   <div
     class="form-group-item form-group-item-shrink"
   >
-    <select
-      class="form-control operator-input"
-    >
-      <option
-        value="ge"
-      >
-        at least
-      </option>
-      <option
-        value="le"
-      >
-        at most
-      </option>
-    </select>
+    <button
+      aria-activedescendant="lt"
+      aria-expanded="true"
+      aria-haspopup="listbox"
+      aria-owns="clay-id-1"
+      class="form-control form-control-select form-control-select-secondary operator-input show"
+      role="combobox"
+      style=""
+      tabindex="0"
+    />
   </div>
   <div
+    aria-hidden="true"
     class="form-group-item form-group-item-shrink"
+    data-aria-hidden="true"
   >
     <input
       class="input-root form-control number-input"
@@ -32,7 +30,9 @@ exports[`OccurenceConjunctionInput should render 1`] = `
     />
   </div>
   <div
+    aria-hidden="true"
     class="form-group-item unit form-group-item-label form-group-item-shrink"
+    data-aria-hidden="true"
   >
     time(s)
   </div>

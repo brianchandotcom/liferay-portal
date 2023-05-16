@@ -9,51 +9,35 @@ exports[`AccountInput should render 1`] = `
       class="form-group form-group-autofit"
     >
       <div
+        aria-hidden="true"
         class="form-group-item entity-name form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       />
       <div
+        aria-hidden="true"
         class="form-group-item display-value form-group-item-label form-group-item-shrink"
+        data-aria-hidden="true"
       />
       <div
         class="form-group-item form-group-item-shrink"
       >
-        <select
-          class="form-control"
+        <button
+          aria-activedescendant="eq"
+          aria-expanded="true"
+          aria-haspopup="listbox"
+          aria-owns="clay-id-1"
+          class="form-control form-control-select form-control-select-secondary show"
+          role="combobox"
+          style=""
+          tabindex="0"
         >
-          <option
-            value="eq"
-          >
-            is
-          </option>
-          <option
-            value="ne"
-          >
-            is not
-          </option>
-          <option
-            value="contains"
-          >
-            contains
-          </option>
-          <option
-            value="not-contains"
-          >
-            does not contain
-          </option>
-          <option
-            value="is-known"
-          >
-            is known
-          </option>
-          <option
-            value="is-unknown"
-          >
-            is unknown
-          </option>
-        </select>
+          is
+        </button>
       </div>
       <div
+        aria-hidden="true"
         class="form-group-item"
+        data-aria-hidden="true"
       >
         <div
           aria-haspopup="true"

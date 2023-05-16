@@ -5,25 +5,18 @@ exports[`OperatorSelect should render 1`] = `
   <div
     class="form-group-item form-group-item-shrink"
   >
-    <select
-      class="form-control operator-input"
+    <button
+      aria-activedescendant="gt"
+      aria-expanded="true"
+      aria-haspopup="listbox"
+      aria-owns="clay-id-1"
+      class="form-control form-control-select form-control-select-secondary operator-input show"
+      role="combobox"
+      style=""
+      tabindex="0"
     >
-      <option
-        value="gt"
-      >
-        is greater than
-      </option>
-      <option
-        value="lt"
-      >
-        is less than
-      </option>
-      <option
-        value="between"
-      >
-        between
-      </option>
-    </select>
+      Select an option
+    </button>
   </div>
 </div>
 `;

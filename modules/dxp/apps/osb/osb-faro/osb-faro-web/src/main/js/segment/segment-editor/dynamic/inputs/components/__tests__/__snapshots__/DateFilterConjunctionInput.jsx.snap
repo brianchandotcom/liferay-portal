@@ -5,44 +5,24 @@ exports[`DateFilterConjunctionInput should render 1`] = `
   <div
     class="form-group-item form-group-item-shrink"
   >
-    <select
-      class="form-control conjunction-input"
+    <button
+      aria-activedescendant="ever"
+      aria-expanded="true"
+      aria-haspopup="listbox"
+      aria-owns="clay-id-1"
+      class="form-control form-control-select form-control-select-secondary conjunction-input show"
       data-testid="conjunction-input"
+      role="combobox"
+      style=""
+      tabindex="0"
     >
-      <option
-        value="since"
-      >
-        since
-      </option>
-      <option
-        value="gt"
-      >
-        after
-      </option>
-      <option
-        value="lt"
-      >
-        before
-      </option>
-      <option
-        value="between"
-      >
-        between
-      </option>
-      <option
-        value="ever"
-      >
-        ever
-      </option>
-      <option
-        value="eq"
-      >
-        on
-      </option>
-    </select>
+      ever
+    </button>
   </div>
   <div
+    aria-hidden="true"
     class="form-group-item form-group-item-shrink"
+    data-aria-hidden="true"
   />
 </div>
 `;

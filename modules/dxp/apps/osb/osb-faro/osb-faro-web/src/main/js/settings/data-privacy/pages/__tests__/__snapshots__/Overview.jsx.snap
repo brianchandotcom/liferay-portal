@@ -6,10 +6,14 @@ exports[`Data Privacy Overview should render 1`] = `
     class="settings-base-page-root data-privacy-overview-root"
   >
     <div
+      aria-hidden="true"
       class="maintenance-alert-root"
+      data-aria-hidden="true"
     />
     <div
+      aria-hidden="true"
       class="content-header"
+      data-aria-hidden="true"
     >
       <div
         class="header-text"
@@ -54,7 +58,9 @@ exports[`Data Privacy Overview should render 1`] = `
                   class="row justify-content-between"
                 >
                   <div
+                    aria-hidden="true"
                     class="col-lg-8"
+                    data-aria-hidden="true"
                   >
                     <h4>
                       Retention Period
@@ -68,26 +74,29 @@ exports[`Data Privacy Overview should render 1`] = `
                   <div
                     class="col-lg-auto align-self-center"
                   >
-                    <select
-                      class="form-control"
+                    <button
+                      aria-activedescendant="18144000000"
+                      aria-expanded="true"
+                      aria-haspopup="listbox"
+                      aria-owns="clay-id-1"
+                      class="form-control form-control-select form-control-select-secondary show"
                       data-testid="data-retention-period-select-input"
+                      role="combobox"
+                      style=""
+                      tabindex="0"
                     >
-                      <option
-                        value="18144000000"
-                      >
-                        7 Months
-                      </option>
-                      <option
-                        value="33696000000"
-                      >
-                        13 Months
-                      </option>
-                    </select>
+                      Select an option
+                    </button>
                   </div>
                 </div>
-                <hr />
+                <hr
+                  aria-hidden="true"
+                  data-aria-hidden="true"
+                />
                 <div
+                  aria-hidden="true"
                   class="row mt-3 justify-content-between"
+                  data-aria-hidden="true"
                 >
                   <div
                     class="col-lg-8"
@@ -118,9 +127,14 @@ exports[`Data Privacy Overview should render 1`] = `
                     </button>
                   </div>
                 </div>
-                <hr />
+                <hr
+                  aria-hidden="true"
+                  data-aria-hidden="true"
+                />
                 <div
+                  aria-hidden="true"
                   class="row mt-3 justify-content-between"
+                  data-aria-hidden="true"
                 >
                   <div
                     class="col-lg-8"

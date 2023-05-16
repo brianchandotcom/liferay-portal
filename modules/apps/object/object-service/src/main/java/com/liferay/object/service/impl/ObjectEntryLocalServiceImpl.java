@@ -1713,9 +1713,8 @@ public class ObjectEntryLocalServiceImpl
 		Connection connection,
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
-		String insertIntoStatement,
-		Map<String, Serializable> values, Locale locale,
-		long objectEntryId, List<ObjectField> objectFields) {
+		String insertIntoStatement, Map<String, Serializable> values,
+		Locale locale, long objectEntryId, List<ObjectField> objectFields) {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				insertIntoStatement)) {
@@ -2975,13 +2974,16 @@ public class ObjectEntryLocalServiceImpl
 
 		Set<Locale> locales = new HashSet<>();
 
-		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			if (!StringUtil.endsWith(entry.getKey(), "_i18n")) {
-				continue;
-			}
+		for (ObjectField objectField :
+				dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
 
 			Map<String, String> languageIdValues =
-				(Map<String, String>)entry.getValue();
+				(Map<String, String>)values.get(
+					objectField.getI18nObjectFieldName());
+
+			if (languageIdValues == null) {
+				continue;
+			}
 
 			for (String languageId : languageIdValues.keySet()) {
 				locales.add(LocaleUtil.fromLanguageId(languageId));
@@ -2999,8 +3001,8 @@ public class ObjectEntryLocalServiceImpl
 		for (Locale locale : locales) {
 			_executeInsertIntoLocalizationTable(
 				connection, dynamicObjectDefinitionLocalizationTable,
-				insertIntoLocalizationTableStatement, values,
-				locale, objectEntryId,
+				insertIntoLocalizationTableStatement, values, locale,
+				objectEntryId,
 				dynamicObjectDefinitionLocalizationTable.getObjectFields());
 		}
 	}

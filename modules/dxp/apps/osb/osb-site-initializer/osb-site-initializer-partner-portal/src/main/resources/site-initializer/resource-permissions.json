@@ -949,7 +949,7 @@
 		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
-            "UPDATE" 
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -969,7 +969,7 @@
 		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
-            "UPDATE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -979,7 +979,7 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-            "UPDATE",
+			"UPDATE",
 			"VIEW"
 		],
 		"primKey": "0",

@@ -76,7 +76,8 @@ html#{$cadmin-selector}:not(._) {
 				}
 
 				.nav-link.active {
-					color: $cadmin-white;
+					background-color: $cadmin-white;
+					color: $cadmin-gray-900;
 				}
 
 				.sidebar-dd {

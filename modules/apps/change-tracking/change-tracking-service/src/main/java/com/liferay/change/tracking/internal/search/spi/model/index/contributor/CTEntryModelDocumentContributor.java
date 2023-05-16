@@ -76,7 +76,11 @@ public class CTEntryModelDocumentContributor
 	private <T extends BaseModel<T>> Locale[] _getAvailableLocales(
 		T model, CTDisplayRenderer ctDisplayRenderer) {
 
-		String[] languageIds = ctDisplayRenderer.getAvailableLanguageIds(model);
+		String[] languageIds = new String[0];
+
+		if (model != null) {
+			languageIds = ctDisplayRenderer.getAvailableLanguageIds(model);
+		}
 
 		if (ArrayUtil.isNotEmpty(languageIds)) {
 			return LocaleUtil.fromLanguageIds(languageIds);
@@ -131,6 +135,19 @@ public class CTEntryModelDocumentContributor
 			ctEntry.getCtCollectionId(), CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
+		Locale[] locales = _getAvailableLocales(
+			model,
+			_ctDisplayRendererRegistry.getCTDisplayRenderer(
+				ctEntry.getModelClassNameId()));
+
+		document.addLocalizedKeyword(
+			"typeName",
+			_getTypeNameMap(locales, ctEntry.getModelClassNameId()));
+
+		if (model == null) {
+			return;
+		}
+
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
 
@@ -143,11 +160,6 @@ public class CTEntryModelDocumentContributor
 			}
 		}
 
-		Locale[] locales = _getAvailableLocales(
-			model,
-			_ctDisplayRendererRegistry.getCTDisplayRenderer(
-				ctEntry.getModelClassNameId()));
-
 		document.addLocalizedText(
 			Field.TITLE,
 			_getTitleMap(locales, model, ctEntry.getModelClassNameId()));
@@ -156,10 +168,6 @@ public class CTEntryModelDocumentContributor
 			"hideable",
 			_ctDisplayRendererRegistry.isHideable(
 				model, ctEntry.getModelClassNameId()));
-
-		document.addLocalizedKeyword(
-			"typeName",
-			_getTypeNameMap(locales, ctEntry.getModelClassNameId()));
 
 		Map<String, Object> modelAttributes = model.getModelAttributes();
 

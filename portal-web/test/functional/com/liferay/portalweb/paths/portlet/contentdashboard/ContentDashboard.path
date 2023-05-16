@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_CATEGORY_CHECKBOX</td>
-	<td>//label/descendant-or-self::*[contains(text(),'${auditGraphCheckboxName}']</td>
+	<td>//label/descendant-or-self::*[contains(text(),'${auditGraphCheckboxName}')]</td>
 	<td></td>
 </tr>
 <tr>

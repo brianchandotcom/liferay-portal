@@ -183,6 +183,31 @@ definition {
 		return ${response};
 	}
 
+	macro createObjectEntryWithAllFields {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${customBooleanValue},${customLongTextValue},${customPicklistValue},${customPrecisionDecimalValue},${requiredFieldLabel},${requiredFieldValue}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"customBoolean": ${customBooleanValue},
+					"customLongText": "${customLongTextValue}",
+					"customPicklist": {"key":"${customPicklistValue}"},
+					"customPrecisionDecimal": ${customPrecisionDecimalValue},
+					"${requiredFieldLabel}": "${requiredFieldValue}"
+				}
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		var objectId = JSONPathUtil.getIdValue(response = ${response});
+
+		return ${objectId};
+	}
+
 	macro createObjectEntryWithFields {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldName},${fieldValue}");
 

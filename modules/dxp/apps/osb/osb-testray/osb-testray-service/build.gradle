@@ -1,5 +1,5 @@
 buildService {
-	apiDir = "../osb-testaray-api/src/main/java"
+	apiDir = "../osb-testray-api/src/main/java"
 }
 
 dependencies {

@@ -29,6 +29,7 @@ const Modal = ({
 	bodyHTML,
 	buttons,
 	center,
+	className,
 	containerProps = {
 		className: 'cadmin',
 	},
@@ -203,7 +204,7 @@ const Modal = ({
 			{visible && (
 				<ClayModal
 					center={center}
-					className="liferay-modal"
+					className={classNames('liferay-modal', className)}
 					containerProps={{...containerProps}}
 					disableAutoClose={disableAutoClose}
 					id={id}

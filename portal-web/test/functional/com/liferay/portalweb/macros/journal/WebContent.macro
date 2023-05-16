@@ -316,6 +316,22 @@ definition {
 			value1 = ${priority});
 	}
 
+	macro addReviewDate {
+		Panel.expandPanel(panel = "Schedule");
+
+		Uncheck(locator1 = "Checkbox#NEVER_REVIEW");
+
+		Type.clickAtType(
+			locator1 = "TextInput#REVIEW_DATE",
+			value1 = ${reviewDate});
+
+		if (isSet(reviewTime)) {
+			Type.clickAtType(
+				locator1 = "TextInput#REVIEW_DATE_TIME",
+				value1 = ${reviewTime});
+		}
+	}
+
 	macro addViaCKEditor {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 

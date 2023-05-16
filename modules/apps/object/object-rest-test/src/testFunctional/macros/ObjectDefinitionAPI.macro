@@ -677,6 +677,47 @@ definition {
 		return ${managerId};
 	}
 
+	macro createObjectDefinitionWithAllKindsOfFieldTypes {
+		var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = ${en_US_label},
+			en_US_plural_label = ${en_US_plural_label},
+			name = ${objectDefinitionName},
+			requiredStringFieldName = ${requiredStringFieldName});
+
+		if (isSet(picklistId)) {
+			ObjectDefinitionAPI.postObjectDefinitionObjectField(
+				businessType = "Picklist",
+				dBType = "String",
+				listTypeDefinitionId = ${picklistId},
+				name = "customPicklist",
+				objectDefinitionName = ${objectDefinitionName});
+		}
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Attachment",
+			fieldLabelName = "customAttachment",
+			fieldName = "customAttachment",
+			fieldType = "Long",
+			fileSource = "userComputer",
+			isRequired = "false",
+			objectName = ${objectDefinitionName});
+
+		ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
+			dbType = "BigDecimal",
+			name = "customPrecisionDecimal",
+			objectDefinitionId = ${objectDefinitionId});
+
+		ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
+			dbType = "Boolean",
+			name = "customBoolean",
+			objectDefinitionId = ${objectDefinitionId});
+
+		ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
+			dbType = "Clob",
+			name = "customLongText",
+			objectDefinitionId = ${objectDefinitionId});
+	}
+
 	macro createObjectEntryWithName {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = ${en_US_plural_label},

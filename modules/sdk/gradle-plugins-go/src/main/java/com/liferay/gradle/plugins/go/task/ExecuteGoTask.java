@@ -17,6 +17,10 @@ import java.util.Map;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -66,30 +70,39 @@ public class ExecuteGoTask extends DefaultTask {
 		_goExecutor.execute();
 	}
 
+	@Input
 	public List<Object> getArgs() {
 		return _goExecutor.getArgs();
 	}
 
+	@Input
 	public String getCommand() {
 		return _goExecutor.getCommand();
 	}
 
+	@Input
 	public Map<?, ?> getEnvironment() {
 		return _goExecutor.getEnvironment();
 	}
 
+	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getGoDir() {
 		return _goExecutor.getGoDir();
 	}
 
+	@InputDirectory
+	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getWorkingDir() {
 		return _goExecutor.getWorkingDir();
 	}
 
+	@Input
 	public boolean isInheritProxy() {
 		return _goExecutor.isInheritProxy();
 	}
 
+	@Input
 	public boolean isUseGradleExec() {
 		return _goExecutor.isUseGradleExec();
 	}

@@ -28,6 +28,7 @@ import org.gradle.api.tasks.TaskAction;
 @CacheableTask
 public class WriteDigestTask extends SourceTask {
 
+	@Input
 	public String getDigest() {
 		return FileUtil.getDigest(
 			getProject(), getSource(), isExcludeIgnoredFiles());
@@ -38,6 +39,7 @@ public class WriteDigestTask extends SourceTask {
 		return GradleUtil.toFile(getProject(), _digestFile);
 	}
 
+	@Input
 	public String getOldDigest() {
 		try {
 			File digestFile = getDigestFile();

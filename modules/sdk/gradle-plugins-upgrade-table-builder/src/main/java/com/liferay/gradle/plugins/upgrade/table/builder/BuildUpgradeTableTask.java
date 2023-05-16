@@ -17,7 +17,6 @@ import java.util.List;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
@@ -48,7 +47,7 @@ public class BuildUpgradeTableTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}
 
-	@InputFile
+	@Input
 	@Optional
 	public String getReleaseInfoVersion() {
 		return GradleUtil.toString(_releaseInfoVersion);

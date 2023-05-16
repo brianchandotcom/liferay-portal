@@ -22,6 +22,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
@@ -61,13 +62,13 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 		return this;
 	}
 
-	@Input
+	@InputFiles
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getAuxClasspath() {
 		return _auxClasspath;
 	}
 
-	@Input
+	@InputFiles
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getClasspath() {
 		return _classpath;
@@ -83,7 +84,7 @@ public class WriteFindBugsProjectTask extends DefaultTask {
 		return GradleUtil.toString(_projectName);
 	}
 
-	@Input
+	@InputFiles
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public FileCollection getSrcDirs() {
 		return _srcDirs;

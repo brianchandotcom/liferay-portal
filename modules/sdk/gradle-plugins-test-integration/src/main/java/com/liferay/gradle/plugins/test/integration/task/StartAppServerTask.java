@@ -10,7 +10,6 @@ import java.io.OutputStream;
 
 import java.util.concurrent.Callable;
 
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.TaskAction;
 
 import org.zeroturnaround.exec.ProcessExecutor;
@@ -19,7 +18,6 @@ import org.zeroturnaround.exec.StartedProcess;
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class StartAppServerTask extends BaseAppServerTask {
 
 	@TaskAction

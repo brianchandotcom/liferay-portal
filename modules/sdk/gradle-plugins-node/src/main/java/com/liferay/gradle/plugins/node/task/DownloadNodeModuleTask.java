@@ -18,6 +18,7 @@ import org.gradle.api.Task;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.OutputDirectory;
 
 /**
@@ -85,6 +86,7 @@ public class DownloadNodeModuleTask extends ExecutePackageManagerTask {
 		_moduleVersion = moduleVersion;
 	}
 
+	@Internal
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();

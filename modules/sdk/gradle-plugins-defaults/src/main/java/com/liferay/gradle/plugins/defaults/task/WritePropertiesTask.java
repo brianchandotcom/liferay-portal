@@ -17,27 +17,23 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
  */
-@CacheableTask
 public class WritePropertiesTask extends DefaultTask {
 
-	@Input
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getOutputFile() {
 		return GradleUtil.toFile(getProject(), _outputFile);
 	}
 
 	@Input
-	@SkipWhenEmpty
+	@Optional
 	public Map<String, Object> getProperties() {
 		Map<String, Object> properties = new TreeMap<>();
 

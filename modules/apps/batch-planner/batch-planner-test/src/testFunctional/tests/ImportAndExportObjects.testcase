@@ -1,0 +1,273 @@
+@component-name = "portal-batch-engine"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Batch Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		BatchPlanner.batchPlannerTearDown();
+
+		Picklist.deletePicklistViaAPI(picklistName = "customPicklist");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test ExportCustomObjectEntryWithManyToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("Given two custom objects published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "university",
+				en_US_plural_label = "universities",
+				name = "University",
+				requiredStringFieldName = "name");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "subject",
+				en_US_plural_label = "subjects",
+				name = "Subject",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given manyToMany releationship has been set between them") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "universitiesSubjects",
+				parentObjectName = "University",
+				type = "manyToMany");
+		}
+
+		task ("And Given one entry related to antoher one") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Oxford");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Math");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "subjects",
+				childEntryName = "Math",
+				parent_plural_label = "universities",
+				parentEntryName = "Oxford",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("When user export custom object as entity type") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "C_Subject (v1_0 - Liferay Object REST)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then zip file contains related file type export successfully") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "Math",
+				fileName = "export.json",
+				jsonObject = "$..[0]name");
+		}
+	}
+
+	@priority = 4
+	test ExportCustomObjectEntryWithOneToManyRelationship {
+		property portal.acceptance = "true";
+
+		task ("Given two custom objects published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "university",
+				en_US_plural_label = "universities",
+				name = "University",
+				requiredStringFieldName = "name");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given oneToMany releationship has been set between them") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				deletionType = "cascade",
+				name = "universityStudents",
+				parentObjectName = "University",
+				type = "oneToMany");
+		}
+
+		task ("And Given one entry related to antoher one") {
+			var universityEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Oxford");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Pearl");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "students",
+				childEntryName = "Pearl",
+				parent_plural_label = "universities",
+				parentEntryName = "Oxford",
+				relationshipName = "universityStudents");
+		}
+
+		task ("When user export custom object as entity type") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then zip file contains related file type export successfully") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "Pearl",
+				fileName = "export.json",
+				jsonObject = "$..[0]name");
+		}
+	}
+
+	@priority = 4
+	test ExportCustomObjectWithAllFieldTypesMapped {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with all kinds of field type is publushed") {
+			Picklist.addPicklistViaAPI(picklistName = "customPicklist");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "distance1",
+				itemName = "distance1",
+				picklistName = "customPicklist");
+
+			var picklistId = JSONObject.getPicklistId(picklistName = "customPicklist");
+
+			ObjectDefinitionAPI.createObjectDefinitionWithAllKindsOfFieldTypes(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				objectDefinitionName = "Student",
+				picklistId = ${picklistId},
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given object entry is created") {
+			var studentEntryId = CustomObjectAPI.createObjectEntryWithAllFields(
+				customBooleanValue = "true",
+				customLongTextValue = "This is a custom LongText field",
+				customPicklistValue = "distance1",
+				customPrecisionDecimalValue = "12.55",
+				en_US_plural_label = "students",
+				entryId = ${studentEntryId},
+				requiredFieldLabel = "name",
+				requiredFieldValue = "Jessica");
+
+			ObjectAdmin.selectAttachmentFileInObjectEntryViaUI(
+				fileName = "Document_3.png",
+				key_entry = ${studentEntryId},
+				label = "student",
+				objectName = "Student");
+		}
+
+		task ("When user export custom object with all attributes codes selected") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "name,creator,customAttachment,customBoolean,customLongText,customPicklist,customPrecisionDecimal,",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then the zip file contains a related file type export successfully") {
+			ImportExport.assertFileContent(
+				comparisonFileName = "json_objectEntry_export.txt",
+				fileName = "export.json");
+		}
+	}
+
+	@priority = 4
+	test ExportCustomObjectWithObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object is published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given object entry is created") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Jessica");
+		}
+
+		task ("When user export custom object as entity type and map attribute codes") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSON");
+		}
+
+		task ("Then the zip file contains a related file type export successfully") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "Jessica",
+				fileName = "export.json",
+				jsonObject = "$..[0]name");
+		}
+	}
+
+	@priority = 4
+	test SelectCustomObjectAsEntityType {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object is published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("When select the custom object as the entity type to export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("Then no error in server console") {
+			AssertConsoleTextNotPresent(value1 = "HTTP 404");
+		}
+	}
+
+}

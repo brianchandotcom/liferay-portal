@@ -68,6 +68,9 @@ function alignMenu() {
 		) {
 			menu.style.right = `${window.innerWidth - toggleRect.right}px`;
 		}
+		else {
+			menu.style.right = null;
+		}
 
 		// If rtl check the overflow to the left
 

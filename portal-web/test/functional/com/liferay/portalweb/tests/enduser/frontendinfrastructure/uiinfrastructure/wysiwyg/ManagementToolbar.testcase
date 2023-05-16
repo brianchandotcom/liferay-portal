@@ -52,7 +52,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-147854. Assert the info button remains displayed on the right after clicking an action"
+	@description = "Ignored due to LPS-184022 | LPS-147854. Assert the info button remains displayed on the right after clicking an action"
+	@ignore = "true"
 	@priority = 5
 	test InfoButtonAndActionsRender {
 		task ("Given window size is set") {

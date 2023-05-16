@@ -4844,6 +4844,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182032. User can Filter by the to be reviewed column."
+	@priority = 5
+	test FilterByToBeReviewed {
+		task ("Given a web content with review date") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.addReviewDate(reviewDate = "01/01/2100");
+
+			PortletEntry.publish();
+		}
+
+		task ("When navigating to the content dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Then the user can filter by to be reviewed option") {
+			ContentDashboard.filterByToBeReviewed(filterOption = "To Be Reviewed");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Web Content Title");
+
+			AssertVisible(
+                key_columnName = "review-date",
+                locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+                key_tableEntry = "2100-01-01");
+		}
+	}
+
 	@description = "LPS-124960 When there's a WebContent1 of type Subtype1 and WebContent2 of type Subtype2, and the user filters by Subtype1 and Subtype2, both web content are shown in the list"
 	@priority = 3
 	test FilterByTypes {

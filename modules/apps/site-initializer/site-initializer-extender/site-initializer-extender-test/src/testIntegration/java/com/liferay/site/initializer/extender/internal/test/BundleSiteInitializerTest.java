@@ -2061,7 +2061,7 @@ public class BundleSiteInitializerTest {
 		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
 			_group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(5, publicLayoutsCount);
+		Assert.assertEquals(6, publicLayoutsCount);
 
 		Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");
@@ -2174,6 +2174,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("url", layout.getType());
 		Assert.assertEquals(
 			"url=/test-public-layout\n", layout.getTypeSettings());
+		Assert.assertFalse(layout.isHidden());
+
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-link-to-layout");
+
+		Assert.assertEquals(
+			"Test Link to Layout", layout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("link_to_layout", layout.getType());
 		Assert.assertFalse(layout.isHidden());
 	}
 

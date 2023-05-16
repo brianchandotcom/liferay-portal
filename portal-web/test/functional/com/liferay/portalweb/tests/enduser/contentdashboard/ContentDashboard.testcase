@@ -5741,6 +5741,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182032. User can Order by the new column."
+	@priority = 5
+	test OrderByReviewDate {
+		task ("Given two web contents with review date") {
+			for (var count : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 1");
+
+			WebContent.addReviewDate(reviewDate = "01/01/2100");
+
+			PortletEntry.publish();
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC Title 2");
+
+			WebContent.addReviewDate(reviewDate = "01/01/2200");
+
+			PortletEntry.publish();
+		}
+
+		task ("When navigating to the content dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByType(typeName = "Basic Web Content");
+		}
+
+		task ("Then the user can Order by the review date column.") {
+			ContentDashboard.orderByReviewDate(filterOption = "Review Date");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 2");
+
+			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 1");
+		}
+	}
+
 	@description = "Validate if the user can order by title"
 	@priority = 5
 	test OrderByTitle {

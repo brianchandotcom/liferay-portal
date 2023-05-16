@@ -82,15 +82,15 @@ const ActivationKeysTable = ({
 		statusfilterByTitle: [statusFilter, setStatusFilter],
 	} = useStatusCountNavigation(activationKeys);
 
-	const {activationKeysByStatusPaginated, paginationConfig} = usePagination(
-		activationKeys,
-		statusFilter
-	);
-
 	const [filters, setFilters] = useFilters(
 		setFilterTerm,
 		productName,
 		initialFilter
+	);
+
+	const {activationKeysByStatusPaginated, paginationConfig} = usePagination(
+		activationKeys,
+		statusFilter
 	);
 
 	const [currentActivationKey, setCurrentActivationKey] = useState();

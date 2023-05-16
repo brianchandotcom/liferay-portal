@@ -575,8 +575,14 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			] as IFilter[];
 
 			let filtersOrdered = [
-				...dateFiltersOrderer,
-				...dynamicFiltersOrderer,
+				...dateFiltersOrderer.map((item) => ({
+					...item,
+					type: Liferay.Language.get('date-filter'),
+				})),
+				...dynamicFiltersOrderer.map((item) => ({
+					...item,
+					type: Liferay.Language.get('dynamic-filter'),
+				})),
 			];
 
 			if (fdsView.fdsFiltersOrder) {

@@ -153,14 +153,12 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
 					friendlyURLEntry.getFriendlyURLEntryId())) {
 
-			String alternateFriendlyURL = StringBundler.concat(
-				currentSiteURL, urlSeparator,
-				friendlyURLEntryLocalization.getUrlTitle());
-
 			alternateFriendlyURLs.put(
 				LocaleUtil.fromLanguageId(
 					friendlyURLEntryLocalization.getLanguageId()),
-				alternateFriendlyURL);
+				StringBundler.concat(
+					currentSiteURL, urlSeparator,
+					friendlyURLEntryLocalization.getUrlTitle()));
 		}
 
 		String categoryFriendlyURL =

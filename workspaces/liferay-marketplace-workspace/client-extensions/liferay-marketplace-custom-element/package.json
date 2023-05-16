@@ -15,6 +15,7 @@
 		"@clayui/table": "^3.56.0",
 		"@clayui/tooltip": "^3.85.0",
 		"@types/lodash": "^4.14.191",
+		"@types/warning": "^3.0.0",
 		"classnames": "^2.3.2",
 		"filesize": "^10.0.6",
 		"lodash": "^4.17.21",

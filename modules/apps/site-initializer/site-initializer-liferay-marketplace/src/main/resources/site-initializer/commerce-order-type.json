@@ -6,12 +6,11 @@
 		},
 		"displayOrder": 0,
 		"externalReferenceCode": "CLOUDAPP",
-		"name":
-		{
+		"name": {
 			"en_US": "Cloud App"
 		},
 		"neverExpire": true
-    },
+	},
 	{
 		"active": true,
 		"description": {
@@ -19,8 +18,7 @@
 		},
 		"displayOrder": 1,
 		"externalReferenceCode": "DXPAPP",
-		"name":
-		{
+		"name": {
 			"en_US": "DXP App"
 		},
 		"neverExpire": true
@@ -32,8 +30,7 @@
 		},
 		"displayOrder": 2,
 		"externalReferenceCode": "PROJECT60",
-		"name":
-		{
+		"name": {
 			"en_US": "Project - 60 days"
 		},
 		"neverExpire": true
@@ -45,8 +42,7 @@
 		},
 		"displayOrder": 3,
 		"externalReferenceCode": "SOLUTIONS30",
-		"name":
-		{
+		"name": {
 			"en_US": "Solutions - 30 day trial"
 		},
 		"neverExpire": true
@@ -58,8 +54,7 @@
 		},
 		"displayOrder": 4,
 		"externalReferenceCode": "CLOUDAPP30",
-		"name":
-		{
+		"name": {
 			"en_US": "Cloud App - 30 day trial"
 		},
 		"neverExpire": true
@@ -71,8 +66,7 @@
 		},
 		"displayOrder": 5,
 		"externalReferenceCode": "DXPAPP30",
-		"name":
-		{
+		"name": {
 			"en_US": "DXP App - 30 day trial"
 		},
 		"neverExpire": true

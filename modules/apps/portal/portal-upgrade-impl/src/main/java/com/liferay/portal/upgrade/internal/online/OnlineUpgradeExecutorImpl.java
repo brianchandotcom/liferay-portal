@@ -53,11 +53,11 @@ public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
 	}
 
 	private String _getTempTableName(String tableName) {
-		return _ONLINE_UPGRADE_TABLE_NAME_PREFIX.concat(tableName);
+		return _UPGRADE_ONLINE_TABLE_NAME_PREFIX.concat(tableName);
 	}
 
-	private static final String _ONLINE_UPGRADE_TABLE_NAME_PREFIX =
+	private static final String _UPGRADE_ONLINE_TABLE_NAME_PREFIX =
 		GetterUtil.get(
-			PropsUtil.get("online.upgrade.table.name.prefix"), "tmp_");
+			PropsUtil.get("upgrade.online.table.name.prefix"), "tmp_");
 
 }

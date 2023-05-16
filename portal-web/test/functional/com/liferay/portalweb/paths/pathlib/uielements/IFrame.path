@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>DIALOG_BOX</td>
-	<td>//div[contains(@class,'modal-header')]/h3</td>
+	<td>//div[contains(@class,'modal-title')]</td>
 	<td></td>
 </tr>
 <tr>

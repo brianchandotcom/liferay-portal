@@ -1,7 +1,6 @@
 import com.liferay.gradle.plugins.patcher.PatchTask
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task patch(type: PatchTask)
 
@@ -15,9 +14,10 @@ dependencies {
 	api group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.20"
 	api group: "org.antlr", name: "antlr", version: "3.3"
 	api group: "org.antlr", name: "antlr-runtime", version: "3.3"
-	api group: "org.drools", name: "drools-core", optional, version: "5.4.0.Final"
 	api group: "org.drools", name: "knowledge-api", version: "5.4.0.Final"
 	api group: "org.drools", name: "knowledge-internal-api", version: "5.4.0.Final"
+
+	compileOnly group: "org.drools", name: "drools-core", version: "5.4.0.Final"
 }
 
 patch {

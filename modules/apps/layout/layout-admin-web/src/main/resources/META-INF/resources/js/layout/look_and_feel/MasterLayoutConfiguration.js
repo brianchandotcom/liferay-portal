@@ -61,17 +61,17 @@ export default function MasterLayoutConfiguration({
 			return;
 		}
 
-		const sheetSection = themeContainer.closest('.sheet-section');
+		const sheet = themeContainer.closest('.sheet');
 
 		if (masterLayout.plid === DEFAULT_MASTER_LAYOUT_PLID) {
-			sheetSection.classList.remove('hide');
+			sheet.classList.remove('hide');
 
-			sheetSection.removeAttribute('aria-hidden');
+			sheet.removeAttribute('aria-hidden');
 		}
 		else {
-			sheetSection.classList.add('hide');
+			sheet.classList.add('hide');
 
-			sheetSection.setAttribute('aria-hidden', 'true');
+			sheet.setAttribute('aria-hidden', 'true');
 		}
 	}, [masterLayout.plid, portletNamespace]);
 

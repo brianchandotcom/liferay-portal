@@ -224,7 +224,7 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to...");
 
 		AssertTextEquals(
-			locator1 = "IFrame#DIALOG_BOX",
+			locator1 = "WCPreview#PREVIEW_TITLE",
 			value1 = "Assign to...");
 
 		IFrame.selectConfigurationFrame();

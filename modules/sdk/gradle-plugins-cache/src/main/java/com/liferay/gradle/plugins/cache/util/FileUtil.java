@@ -6,6 +6,8 @@
 package com.liferay.gradle.plugins.cache.util;
 
 import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.hash.HashUtil;
+import com.liferay.gradle.util.hash.HashValue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,8 +37,6 @@ import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
-import org.gradle.internal.hash.HashUtil;
-import org.gradle.internal.hash.HashValue;
 import org.gradle.process.ExecSpec;
 import org.gradle.process.internal.ExecException;
 

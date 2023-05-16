@@ -6,6 +6,8 @@
 package com.liferay.gradle.plugins.node.internal.util;
 
 import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.hash.HashUtil;
+import com.liferay.gradle.util.hash.HashValue;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +26,6 @@ import java.util.TreeSet;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.UncheckedIOException;
-import org.gradle.internal.hash.HashUtil;
-import org.gradle.internal.hash.HashValue;
 
 /**
  * @author Hugo Huijser

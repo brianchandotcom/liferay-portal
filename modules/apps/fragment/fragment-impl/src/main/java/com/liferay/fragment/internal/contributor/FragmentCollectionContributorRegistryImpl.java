@@ -1137,13 +1137,12 @@ public class FragmentCollectionContributorRegistryImpl
 			themeDisplay.setPermissionChecker(permissionChecker);
 			themeDisplay.setPlid(layout.getPlid());
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
-			themeDisplay.setPortalURL(
-				company.getPortalURL(layout.getGroupId()));
+			themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 			themeDisplay.setRealUser(user);
-			themeDisplay.setScopeGroupId(layout.getGroupId());
+			themeDisplay.setScopeGroupId(group.getGroupId());
 			themeDisplay.setServerPort(
 				_portal.getPortalServerPort(_isHttpsEnabled()));
-			themeDisplay.setSiteGroupId(layout.getGroupId());
+			themeDisplay.setSiteGroupId(group.getGroupId());
 			themeDisplay.setTimeZone(user.getTimeZone());
 			themeDisplay.setUser(user);
 

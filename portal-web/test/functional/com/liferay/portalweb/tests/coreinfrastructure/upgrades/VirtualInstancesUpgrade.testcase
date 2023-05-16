@@ -14,6 +14,18 @@ definition {
 	}
 
 	@priority = 4
+	test ViewVirtualInstancesArchive7413U33 {
+		property data.archive.type = "data-archive-virtual-instances";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "7.4.13.u33";
+		property test.assert.warning.exceptions = "false";
+
+		ValidateVirtualInstancesUpgrade.viewVirtualInstancesUpgrade();
+
+		ValidateVirtualInstancesUpgrade.viewCustomObjectsUpgrade();
+	}
+
+	@priority = 4
 	test ViewVirtualInstancesArchive621021 {
 		property data.archive.type = "data-archive-virtual-instances";
 		property database.types = "db2,mysql,oracle,postgresql,sqlserver,sybase";

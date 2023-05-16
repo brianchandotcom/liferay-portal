@@ -231,3 +231,62 @@ export async function createNewGenerateKey(
 
 	return response.json();
 }
+
+export async function putSubscriptionInKey(
+	provisioningServerAPI,
+	licenseKeyIds,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyIds=${licenseKeyIds}`,
+
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'PUT',
+		}
+	);
+
+	return response;
+}
+
+export async function deleteSubscriptionInKey(
+	provisioningServerAPI,
+	licenseKeyIds,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyIds=${licenseKeyIds}`,
+
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'DELETE',
+		}
+	);
+
+	return response;
+}
+
+export async function getSubscriptionInKey(
+	provisioningServerAPI,
+	licenseKeyIds,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyId=${licenseKeyIds}`,
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'GET',
+		}
+	);
+
+	return response.json();
+}

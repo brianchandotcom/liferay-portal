@@ -7,7 +7,7 @@ import {CardLink} from '../../components/Card/CardLink';
 import {CardView} from '../../components/Card/CardView';
 import {LicensePriceChildren} from '../../components/LicensePriceCard/LicensePriceChildren';
 import {Tag} from '../../components/Tag/Tag';
-import {removeUnnecessaryURLString} from '../../utils/string';
+import {extractHTMLText, removeUnnecessaryURLString} from '../../utils/string';
 import {CardSection} from './CardSection';
 import {App} from './ReviewAndSubmitAppPageUtil';
 
@@ -28,7 +28,7 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 				sectionName="Description"
 			>
 				<p className="card-section-body-section-paragraph">
-					{app?.description}
+					{extractHTMLText(app?.description)}
 				</p>
 			</CardSection>
 

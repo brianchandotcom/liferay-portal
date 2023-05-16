@@ -32,8 +32,6 @@ import com.liferay.source.formatter.util.GradleBuildFile;
 import com.liferay.source.formatter.util.GradleDependency;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -509,7 +507,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		return _cachedKnownVulnerabilities;
 	}
 
-	private String _getCiGithubAccessToken() throws Exception {
+	private String _getCiGithubAccessToken() {
 		Properties properties = new Properties();
 
 		try {
@@ -559,26 +557,20 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			file.getAbsolutePath(), _BUILD_PROPERTIES_FILE_NAME);
 
 		if (!buildPropertiesFile.exists()) {
-			throw new FileNotFoundException(
-				StringBundler.concat(
-					_BUILD_PROPERTIES_FILE_NAME,
-					" does not exist, place your github access token in ",
-					"'github.access.token' in ", file.getCanonicalPath(), "/",
-					_BUILD_PROPERTIES_FILE_NAME));
+			return null;
 		}
 
 		Properties properties = new Properties();
 
-		properties.load(new FileInputStream(buildPropertiesFile));
+		properties.load(Files.newInputStream(buildPropertiesFile.toPath()));
 
 		return properties.getProperty("github.access.token");
 	}
 
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
-			String packageName, String cursor,
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
-			List<String> severities, String githubToken)
-		throws Exception {
+		String packageName, String cursor,
+		SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
+		List<String> severities, String githubToken) {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
@@ -617,10 +609,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
 			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-				throw new Exception(
-					"Unable to access GitHub GraphQL API, check " +
-						"'github.asscess.token' in " +
-							_BUILD_PROPERTIES_FILE_NAME);
+				return Collections.emptyList();
 			}
 
 			JSONObject jsonObject = new JSONObjectImpl(
@@ -689,6 +678,9 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			if (!securityVulnerabilityNodes.isEmpty()) {
 				return securityVulnerabilityNodes;
 			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return Collections.emptyList();

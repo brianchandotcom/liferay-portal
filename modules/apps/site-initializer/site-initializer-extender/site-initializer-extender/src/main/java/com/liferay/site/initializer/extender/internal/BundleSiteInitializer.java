@@ -2370,7 +2370,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		layoutIdsStringUtilReplaceValues.put(
-			"LAYOUT_ID:", String.valueOf(layout.getLayoutId()));
+			"LAYOUT_ID:" + layout.getName(LocaleUtil.getSiteDefault()),
+			String.valueOf(layout.getLayoutId()));
 
 		Map<String, Layout> layouts = HashMapBuilder.<String, Layout>put(
 			parentResourcePath, layout
@@ -2425,6 +2426,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Map<String, Layout> layouts = new HashMap<>();
 
+		Map<String, String> layoutIdsStringUtilReplaceValues = new HashMap<>();
+
 		Set<String> sortedResourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
@@ -2436,8 +2439,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (resourcePath.endsWith("/")) {
 				layouts.putAll(
 					_addOrUpdateLayout(
-						null, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-						resourcePath, serviceContext));
+						layoutIdsStringUtilReplaceValues,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, resourcePath,
+						serviceContext));
 			}
 		}
 

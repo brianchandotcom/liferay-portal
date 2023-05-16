@@ -64,16 +64,143 @@ definition {
 					locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
 			}
 
-			AssertTextEquals(
-				key_text = "Day",
-				locator1 = "TextInput#ANY",
-				value1 = 5);
+			for (var subscriptionFieldName : list "Day,Subscription Length") {
+				AssertTextEquals(
+					key_fieldLabel = ${subscriptionFieldName},
+					key_indexNumber = 2,
+					locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+					value1 = 5);
+			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11150. Can view if the product and SKU subscription configurations are correctly saved"
+	@priority = 3
+	test CanViewProductAndSKUSubscriptionConfigurationsCorrectlySaved {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin configures a product's delivery subscription with exact day of year") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+			CommerceProducts.configureSubscription(
+				subscriptionExactDay = 5,
+				subscriptionLength = 5,
+				subscriptionMode = "Exact Day of Year",
+				subscriptionMonth = "March",
+				subscriptionName = "Delivery Subscription",
+				subscriptionType = "Year");
+		}
+
+		task ("Then all subscription fields are correctly saved") {
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+			for (var subscriptionFieldLabel : list "Subscription Type:Year,Mode:Exact Day of Year,Month:March") {
+				var subscriptionFieldName = StringUtil.extractFirst(${subscriptionFieldLabel}, ":");
+				var subscriptionValue = StringUtil.extractLast(${subscriptionFieldLabel}, ":");
+
+				AssertElementPresent(
+					key_fieldLabel = ${subscriptionFieldName},
+					key_value = ${subscriptionValue},
+					locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+			}
+
+			for (var subscriptionFieldName : list "Day,Subscription Length") {
+				AssertTextEquals(
+					key_fieldLabel = ${subscriptionFieldName},
+					key_indexNumber = 2,
+					locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+					value1 = 5);
+			}
+		}
+
+		task ("And the delivery subscription fields does not affect the default payment subscription") {
+			Check.checkToggleSwitch(
+				key_subscriptionName = "Payment Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_TOGGLE");
+
+			Button.clickPublish();
+
+			AssertElementPresent(
+				key_fieldLabel = "Subscription Type",
+				key_value = "Day",
+				locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+
+			Select(
+				key_subscriptionFieldLabel = "Subscription Type",
+				key_subscriptionName = "Payment Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+				value1 = "Year");
+
+			Button.clickPublish();
+
+			AssertElementPresent(
+				key_fieldLabel = "Mode",
+				key_value = "Order Date",
+				locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+		}
+
+		task ("When the admin goes to a SKU's delivery subscription") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscriptions");
+
+			Check.checkToggleSwitch(
+				key_subscriptionName = "Override Subscription Settings",
+				locator1 = "ACUtils#TOGGLE_ICON");
+
+			Check.checkToggleSwitch(
+				key_subscriptionName = "Delivery Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_TOGGLE");
+
+			Button.clickSave();
+		}
+
+		task ("Then the subscription fields are shown as default and can be updated") {
+			AssertElementPresent(
+				key_fieldLabel = "Subscription Type",
+				key_value = "Day",
+				locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+
+			Select(
+				key_subscriptionFieldLabel = "Subscription Type",
+				key_subscriptionName = "Delivery Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+				value1 = "Year");
+
+			AssertElementPresent(
+				key_fieldLabel = "Mode",
+				key_value = "Order Date",
+				locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+
+			Button.clickSave();
+
+			for (var subscriptionFieldLabel : list "Subscription Type:Year,Mode:Order Date") {
+				var subscriptionFieldName = StringUtil.extractFirst(${subscriptionFieldLabel}, ":");
+				var subscriptionValue = StringUtil.extractLast(${subscriptionFieldLabel}, ":");
+
+				AssertElementPresent(
+					key_fieldLabel = ${subscriptionFieldName},
+					key_value = ${subscriptionValue},
+					locator1 = "CreateObject#ASSERT_SELECTED_VALUE");
+			}
 
 			AssertTextEquals(
 				key_fieldLabel = "Subscription Length",
 				key_indexNumber = 2,
 				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
-				value1 = 5);
+				value1 = 1);
 		}
 	}
 

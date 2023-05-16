@@ -1,11 +1,9 @@
-apply plugin: "nebula.optional-base"
-
 configurations {
 	jarjar
 }
 
 dependencies {
-	api group: "com.ibm.icu", name: "icu4j", optional, version: "54.1.1"
+	compileOnly group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
 
 	jarjar group: "com.googlecode.jarjar", name: "jarjar", version: "1.3"
 }

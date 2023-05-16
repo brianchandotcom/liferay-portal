@@ -2,7 +2,6 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 import com.liferay.gradle.util.FileUtil
 
 apply plugin: "com.liferay.patcher"
-apply plugin: "nebula.optional-base"
 
 task patch(type: PatchTask)
 task war(type: Zip)
@@ -15,7 +14,8 @@ String jenkinsCoreVersion = "1.565.1"
 
 dependencies {
 	api group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	api group: "org.jenkins-ci.main", name: jenkinsCoreName, optional, version: jenkinsCoreVersion
+
+	compileOnly group: "org.jenkins-ci.main", name: jenkinsCoreName, version: jenkinsCoreVersion
 }
 
 patch {

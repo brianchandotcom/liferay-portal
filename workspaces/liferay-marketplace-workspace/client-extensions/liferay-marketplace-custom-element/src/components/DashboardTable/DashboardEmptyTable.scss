@@ -1,17 +1,36 @@
 .dashboard-empty-state {
+	align-items: center;
 	border: 1px #e2e2e4 solid;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
 	padding: 64px 468px;
-	text-align: center;
+	
+	&-background {
+		align-items: center;
+		background-color: #e7efff;
+		border-radius: 8px;
+		display: flex;
+		height: 80px;
+		justify-content: center;
+		width: 144px;
+	}
 
 	&-description {
 		color: #54555f;
 		white-space: pre-line;
+		word-break: break-all;
 
 		&-first::after {
 			content: '\a';
 			white-space: pre;
 		}
+	}
+
+	&-image {
+		filter: invert(18%) sepia(87%) saturate(3738%) hue-rotate(218deg)
+			brightness(85%) contrast(103%);
+		width: 42px;
 	}
 
 	&-title {

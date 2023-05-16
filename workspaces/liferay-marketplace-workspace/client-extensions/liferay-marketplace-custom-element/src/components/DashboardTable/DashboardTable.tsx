@@ -34,6 +34,7 @@ interface DashboardTableProps<T> {
 		description2: string;
 		title: string;
 	};
+	icon: string;
 	items: T[];
 	tableHeaders: TableHeaders;
 }
@@ -41,6 +42,7 @@ interface DashboardTableProps<T> {
 export function DashboardTable<T>({
 	children,
 	emptyStateMessage,
+	icon,
 	items,
 	tableHeaders,
 }: DashboardTableProps<T>) {
@@ -51,6 +53,7 @@ export function DashboardTable<T>({
 			<DashboardEmptyTable
 				description1={description1}
 				description2={description2}
+				icon={icon}
 				title={title}
 			/>
 		);

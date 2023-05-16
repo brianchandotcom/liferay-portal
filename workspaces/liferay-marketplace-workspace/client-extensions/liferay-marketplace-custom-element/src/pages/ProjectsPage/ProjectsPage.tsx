@@ -17,6 +17,7 @@ import './ProjectsPage.scss';
 
 interface ProjectsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
+	icon: string;
 	selectedAccount: Account;
 	setShowDashboardNavigation: (value: boolean) => void;
 }
@@ -44,6 +45,7 @@ const projectsTableHeaders: TableHeaders = [
 
 export function ProjectsPage({
 	dashboardNavigationItems,
+	icon,
 	selectedAccount,
 	setShowDashboardNavigation,
 }: ProjectsPageProps) {
@@ -107,6 +109,7 @@ export function ProjectsPage({
 										'Click on “New Projects” to start.',
 									title: 'No projects yet',
 								}}
+								icon={icon}
 								items={projectOrders}
 								tableHeaders={projectsTableHeaders}
 							>

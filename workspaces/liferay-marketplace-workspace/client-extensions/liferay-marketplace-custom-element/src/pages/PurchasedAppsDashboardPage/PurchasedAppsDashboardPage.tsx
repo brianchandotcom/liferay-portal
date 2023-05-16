@@ -31,6 +31,9 @@ import {
 	initialAccountState,
 	initialDashboardNavigationItems,
 } from './PurchasedDashboardPageUtil';
+import solutionsIcon from '../../assets/icons/analytics_icon.svg';
+import appsIcon from '../../assets/icons/apps_fill_icon.svg';
+import membersIcon from '../../assets/icons/person_fill_icon.svg';
 
 import './PurchasedAppsDashboardPage.scss';
 
@@ -390,6 +393,7 @@ export function PurchasedAppsDashboardPage() {
 				>
 					<DashboardTable<PurchasedAppProps>
 						emptyStateMessage={appMessages.emptyStateMessage}
+						icon={appsIcon}
 						items={purchasedAppTable.items}
 						tableHeaders={tableHeaders}
 					>
@@ -428,6 +432,7 @@ export function PurchasedAppsDashboardPage() {
 				>
 					<DashboardTable
 						emptyStateMessage={solutionMessages.emptyStateMessage}
+						icon={solutionsIcon}
 						items={solutionsItems}
 						tableHeaders={[]}
 					>
@@ -449,6 +454,7 @@ export function PurchasedAppsDashboardPage() {
 					) : (
 						<DashboardTable<MemberProps>
 							emptyStateMessage={memberMessages.emptyStateMessage}
+							icon={membersIcon}
 							items={members}
 							tableHeaders={memberTableHeaders}
 						>

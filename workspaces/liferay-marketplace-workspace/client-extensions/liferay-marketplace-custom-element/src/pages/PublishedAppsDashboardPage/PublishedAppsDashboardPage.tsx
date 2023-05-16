@@ -36,6 +36,10 @@ import './PublishedAppsDashboardPage.scss';
 import {Liferay} from '../../liferay/liferay';
 import {getProductVersionFromSpecifications} from '../../utils/util';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
+import solutionsIcon from '../../assets/icons/analytics_icon.svg';
+import appsIcon from '../../assets/icons/apps_fill_icon.svg';
+import membersIcon from '../../assets/icons/person_fill_icon.svg';
+import projectsIcon from '../../assets/icons/projects_icon.svg';
 
 const appTableHeaders = [
 	{
@@ -460,6 +464,7 @@ export function PublishedAppsDashboardPage() {
 				>
 					<DashboardTable<AppProps>
 						emptyStateMessage={appMessages.emptyStateMessage}
+						icon={appsIcon}
 						items={publishedAppTable.items}
 						tableHeaders={appTableHeaders}
 					>
@@ -500,6 +505,7 @@ export function PublishedAppsDashboardPage() {
 				>
 					<DashboardTable
 						emptyStateMessage={solutionMessages.emptyStateMessage}
+						icon={solutionsIcon}
 						items={[]}
 						tableHeaders={[]}
 					>
@@ -511,6 +517,7 @@ export function PublishedAppsDashboardPage() {
 			{selectedNavigationItem === 'Projects' && (
 				<ProjectsPage
 					dashboardNavigationItems={dashboardNavigationItems}
+					icon={projectsIcon}
 					selectedAccount={selectedAccount}
 					setShowDashboardNavigation={setShowDashboardNavigation}
 				/>
@@ -529,6 +536,7 @@ export function PublishedAppsDashboardPage() {
 					) : (
 						<DashboardTable<MemberProps>
 							emptyStateMessage={memberMessages.emptyStateMessage}
+							icon={membersIcon}
 							items={members}
 							tableHeaders={memberTableHeaders}
 						>

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
 	enabled = false, service = ClusterEventListener.class
 )
-public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
+public class DebuggingClusterEventListener implements ClusterEventListener {
 
 	@Override
 	public void processClusterEvent(ClusterEvent clusterEvent) {
@@ -78,7 +78,7 @@ public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DebuggingClusterEventListenerImpl.class);
+		DebuggingClusterEventListener.class);
 
 	private volatile ClusterExecutorConfiguration _clusterExecutorConfiguration;
 

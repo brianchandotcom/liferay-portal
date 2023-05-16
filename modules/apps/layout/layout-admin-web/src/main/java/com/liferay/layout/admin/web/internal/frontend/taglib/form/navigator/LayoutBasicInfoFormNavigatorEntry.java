@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 
@@ -51,6 +52,14 @@ public class LayoutBasicInfoFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
+		Group group = layout.getGroup();
+
+		if ((layout.isDraftLayout() || layout.isSystem()) &&
+			!group.isLayoutSetPrototype()) {
+
+			return false;
+		}
+
 		if (layout.isTypeAssetDisplay() ||
 			(layout.isTypeContent() && (layout.fetchDraftLayout() == null))) {
 

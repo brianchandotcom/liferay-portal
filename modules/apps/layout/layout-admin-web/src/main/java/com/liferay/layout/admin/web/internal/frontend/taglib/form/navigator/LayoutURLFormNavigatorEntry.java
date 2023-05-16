@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.User;
 
 import javax.servlet.ServletContext;
@@ -50,6 +51,14 @@ public class LayoutURLFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (layout.isDraftLayout() || layout.isSystem() ||
+			!layoutType.isURLFriendliable()) {
+
+			return false;
+		}
+
 		if (layout.isTypeAssetDisplay() ||
 			(layout.isTypeContent() && (layout.fetchDraftLayout() == null))) {
 

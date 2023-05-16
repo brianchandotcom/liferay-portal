@@ -12,16 +12,17 @@
 			"fieldReference": "parentStructureFieldSet1",
 			"indexType": "none",
 			"label": {
-				"en_US": ""
+				"en_US": "Fields Group"
 			},
-			"localizable": false,
+			"labelAtStructureLevel": true,
+			"localizable": true,
 			"name": "parentStructureFieldSet1",
 			"predefinedValue": {
 			},
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
-			"showLabel": false,
+			"showLabel": true,
 			"tip": {
 			},
 			"type": "fieldset",

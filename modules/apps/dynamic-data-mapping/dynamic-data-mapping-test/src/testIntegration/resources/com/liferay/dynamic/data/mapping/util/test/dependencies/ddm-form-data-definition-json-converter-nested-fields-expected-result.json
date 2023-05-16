@@ -11,9 +11,10 @@
 			"ddmStructureLayoutId": "",
 			"fieldReference": "TextFieldSet",
 			"label": {
-				"en_US": ""
+				"en_US": "Fields Group"
 			},
-			"localizable": false,
+			"labelAtStructureLevel": true,
+			"localizable": true,
 			"name": "TextFieldSet",
 			"nestedFields": [
 				{
@@ -64,9 +65,10 @@
 					"ddmStructureLayoutId": "",
 					"fieldReference": "TextFieldSetFieldSet",
 					"label": {
-						"en_US": ""
+						"en_US": "Fields Group"
 					},
-					"localizable": false,
+					"labelAtStructureLevel": true,
+					"localizable": true,
 					"name": "TextFieldSetFieldSet",
 					"nestedFields": [
 						{
@@ -118,7 +120,7 @@
 					"repeatable": false,
 					"required": false,
 					"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text\"]}]}]",
-					"showLabel": false,
+					"showLabel": true,
 					"tip": {
 					},
 					"type": "fieldset",
@@ -131,7 +133,7 @@
 			"repeatable": false,
 			"required": false,
 			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"TextFieldSetFieldSet\"]}]}]",
-			"showLabel": false,
+			"showLabel": true,
 			"tip": {
 			},
 			"type": "fieldset",
@@ -143,9 +145,10 @@
 			"ddmStructureLayoutId": "",
 			"fieldReference": "NumberFieldSet",
 			"label": {
-				"en_US": ""
+				"en_US": "Fields Group"
 			},
-			"localizable": false,
+			"labelAtStructureLevel": true,
+			"localizable": true,
 			"name": "NumberFieldSet",
 			"nestedFields": [
 				{
@@ -177,9 +180,10 @@
 					"ddmStructureLayoutId": "",
 					"fieldReference": "NumberFieldSetFieldSet",
 					"label": {
-						"en_US": ""
+						"en_US": "Fields Group"
 					},
-					"localizable": false,
+					"labelAtStructureLevel": true,
+					"localizable": true,
 					"name": "NumberFieldSetFieldSet",
 					"nestedFields": [
 						{
@@ -212,7 +216,7 @@
 					"repeatable": false,
 					"required": false,
 					"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Number\"]}]}]",
-					"showLabel": false,
+					"showLabel": true,
 					"tip": {
 					},
 					"type": "fieldset",
@@ -225,7 +229,7 @@
 			"repeatable": false,
 			"required": false,
 			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Number\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"NumberFieldSetFieldSet\"]}]}]",
-			"showLabel": false,
+			"showLabel": true,
 			"tip": {
 			},
 			"type": "fieldset",

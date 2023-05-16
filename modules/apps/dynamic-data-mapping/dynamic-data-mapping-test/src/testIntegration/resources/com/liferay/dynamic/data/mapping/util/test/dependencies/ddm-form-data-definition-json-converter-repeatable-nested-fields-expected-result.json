@@ -11,9 +11,10 @@
 			"ddmStructureLayoutId": "",
 			"fieldReference": "TextFieldSet",
 			"label": {
-				"en_US": ""
+				"en_US": "Fields Group"
 			},
-			"localizable": false,
+			"labelAtStructureLevel": true,
+			"localizable": true,
 			"name": "TextFieldSet",
 			"nestedFields": [
 				{
@@ -64,9 +65,10 @@
 					"ddmStructureLayoutId": "",
 					"fieldReference": "TextFieldSetFieldSet",
 					"label": {
-						"en_US": ""
+						"en_US": "Fields Group"
 					},
-					"localizable": false,
+					"labelAtStructureLevel": true,
+					"localizable": true,
 					"name": "TextFieldSetFieldSet",
 					"nestedFields": [
 						{
@@ -75,9 +77,10 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "HTMLFieldSet",
 							"label": {
-								"en_US": ""
+								"en_US": "Fields Group"
 							},
-							"localizable": false,
+							"labelAtStructureLevel": true,
+							"localizable": true,
 							"name": "HTMLFieldSet",
 							"nestedFields": [
 								{
@@ -109,9 +112,10 @@
 									"ddmStructureLayoutId": "",
 									"fieldReference": "HTMLFieldSetFieldSet",
 									"label": {
-										"en_US": ""
+										"en_US": "Fields Group"
 									},
-									"localizable": false,
+									"labelAtStructureLevel": true,
+									"localizable": true,
 									"name": "HTMLFieldSetFieldSet",
 									"nestedFields": [
 										{
@@ -143,7 +147,7 @@
 									"repeatable": false,
 									"required": false,
 									"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"LinkToPage\"]}]}]",
-									"showLabel": false,
+									"showLabel": true,
 									"tip": {
 									},
 									"type": "fieldset",
@@ -156,7 +160,7 @@
 							"repeatable": false,
 							"required": false,
 							"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"HTML\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"HTMLFieldSetFieldSet\"]}]}]",
-							"showLabel": false,
+							"showLabel": true,
 							"tip": {
 							},
 							"type": "fieldset",
@@ -191,9 +195,10 @@
 							"ddmStructureLayoutId": "",
 							"fieldReference": "ImageFieldSet",
 							"label": {
-								"en_US": ""
+								"en_US": "Fields Group"
 							},
-							"localizable": false,
+							"labelAtStructureLevel": true,
+							"localizable": true,
 							"name": "ImageFieldSet",
 							"nestedFields": [
 								{
@@ -225,9 +230,10 @@
 									"ddmStructureLayoutId": "",
 									"fieldReference": "ImageFieldSetFieldSet",
 									"label": {
-										"en_US": ""
+										"en_US": "Fields Group"
 									},
-									"localizable": false,
+									"labelAtStructureLevel": true,
+									"localizable": true,
 									"name": "ImageFieldSetFieldSet",
 									"nestedFields": [
 										{
@@ -259,7 +265,7 @@
 									"repeatable": false,
 									"required": false,
 									"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Geolocation\"]}]}]",
-									"showLabel": false,
+									"showLabel": true,
 									"tip": {
 									},
 									"type": "fieldset",
@@ -272,7 +278,7 @@
 							"repeatable": true,
 							"required": false,
 							"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Image\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"ImageFieldSetFieldSet\"]}]}]",
-							"showLabel": false,
+							"showLabel": true,
 							"tip": {
 							},
 							"type": "fieldset",
@@ -285,7 +291,7 @@
 					"repeatable": false,
 					"required": false,
 					"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"HTMLFieldSet\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"Date\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"ImageFieldSet\"]}]}]",
-					"showLabel": false,
+					"showLabel": true,
 					"tip": {
 					},
 					"type": "fieldset",
@@ -298,7 +304,7 @@
 			"repeatable": true,
 			"required": false,
 			"rows": "[{\"columns\":[{\"size\":12,\"fields\":[\"Text\"]}]},{\"columns\":[{\"size\":12,\"fields\":[\"TextFieldSetFieldSet\"]}]}]",
-			"showLabel": false,
+			"showLabel": true,
 			"tip": {
 			},
 			"type": "fieldset",

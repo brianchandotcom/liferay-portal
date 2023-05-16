@@ -161,6 +161,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -3071,11 +3072,22 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				newI18nObjectFieldValues.put(
+				newI18nObjectFieldValues.computeIfAbsent(
 					objectField.getI18nObjectFieldName(),
-					HashMapBuilder.put(
+					key -> HashMapBuilder.put(
 						entry.getKey(), entry.getValue()
 					).build());
+				newI18nObjectFieldValues.computeIfPresent(
+					objectField.getI18nObjectFieldName(),
+					(key, value) -> {
+						MapUtil.merge(
+							HashMapBuilder.put(
+								entry.getKey(), entry.getValue()
+							).build(),
+							(Map<String, String>)value);
+
+						return (Serializable)value;
+					});
 			}
 		}
 

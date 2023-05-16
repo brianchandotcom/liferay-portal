@@ -61,7 +61,8 @@ public interface CommercePriceEntryService extends BaseService {
 	 */
 	public CommercePriceEntry addCommercePriceEntry(
 			String externalReferenceCode, long cpInstanceId,
-			long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+			long commercePriceListId, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -162,7 +163,8 @@ public interface CommercePriceEntryService extends BaseService {
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			long commercePriceEntryId, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException;
 

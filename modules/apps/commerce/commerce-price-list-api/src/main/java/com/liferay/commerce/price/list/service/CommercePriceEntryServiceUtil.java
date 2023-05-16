@@ -42,13 +42,13 @@ public class CommercePriceEntryServiceUtil {
 	public static CommercePriceEntry addCommercePriceEntry(
 			String externalReferenceCode, long cpInstanceId,
 			long commercePriceListId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice,
+			boolean priceOnApplication, java.math.BigDecimal promoPrice,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePriceEntry(
 			externalReferenceCode, cpInstanceId, commercePriceListId, price,
-			promoPrice, serviceContext);
+			priceOnApplication, promoPrice, serviceContext);
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
@@ -219,12 +219,13 @@ public class CommercePriceEntryServiceUtil {
 
 	public static CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice,
+			boolean priceOnApplication, java.math.BigDecimal promoPrice,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommercePriceEntry(
-			commercePriceEntryId, price, promoPrice, serviceContext);
+			commercePriceEntryId, price, priceOnApplication, promoPrice,
+			serviceContext);
 	}
 
 	public static CommercePriceEntry updateCommercePriceEntry(

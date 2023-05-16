@@ -54,7 +54,8 @@ public class CommercePriceEntryServiceHttp {
 			addCommercePriceEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long cpInstanceId, long commercePriceListId,
-				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+				java.math.BigDecimal price, boolean priceOnApplication,
+				java.math.BigDecimal promoPrice,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -65,7 +66,8 @@ public class CommercePriceEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpInstanceId,
-				commercePriceListId, price, promoPrice, serviceContext);
+				commercePriceListId, price, priceOnApplication, promoPrice,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -784,7 +786,8 @@ public class CommercePriceEntryServiceHttp {
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry
 			updateCommercePriceEntry(
 				HttpPrincipal httpPrincipal, long commercePriceEntryId,
-				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+				java.math.BigDecimal price, boolean priceOnApplication,
+				java.math.BigDecimal promoPrice,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -794,8 +797,8 @@ public class CommercePriceEntryServiceHttp {
 				_updateCommercePriceEntryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePriceEntryId, price, promoPrice,
-				serviceContext);
+				methodKey, commercePriceEntryId, price, priceOnApplication,
+				promoPrice, serviceContext);
 
 			Object returnObj = null;
 
@@ -937,7 +940,7 @@ public class CommercePriceEntryServiceHttp {
 	private static final Class<?>[] _addCommercePriceEntryParameterTypes0 =
 		new Class[] {
 			String.class, long.class, long.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class,
+			boolean.class, java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCommercePriceEntryParameterTypes1 =
@@ -1008,7 +1011,8 @@ public class CommercePriceEntryServiceHttp {
 		};
 	private static final Class<?>[] _updateCommercePriceEntryParameterTypes16 =
 		new Class[] {
-			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
+			long.class, java.math.BigDecimal.class, boolean.class,
+			java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCommercePriceEntryParameterTypes17 =

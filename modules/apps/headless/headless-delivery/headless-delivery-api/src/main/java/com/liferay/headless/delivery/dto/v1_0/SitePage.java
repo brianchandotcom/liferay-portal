@@ -710,11 +710,12 @@ public class SitePage implements Serializable {
 	}
 
 	@GraphQLField(description = "The categories associated with this page.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	@Schema(
-		description = "A write-only field that adds `TaxonomyCategory` instances to the page."
+		deprecated = true,
+		description = "A write-only field that adds `TaxonomyCategory` instances to the page. Deprecated as of Cavanaugh (7.4.x), replaced by `taxonomyCategoryBriefs.taxonomyCategoryReference`"
 	)
 	public Long[] getTaxonomyCategoryIds() {
 		return taxonomyCategoryIds;
@@ -739,8 +740,9 @@ public class SitePage implements Serializable {
 		}
 	}
 
+	@Deprecated
 	@GraphQLField(
-		description = "A write-only field that adds `TaxonomyCategory` instances to the page."
+		description = "A write-only field that adds `TaxonomyCategory` instances to the page. Deprecated as of Cavanaugh (7.4.x), replaced by `taxonomyCategoryBriefs.taxonomyCategoryReference`"
 	)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected Long[] taxonomyCategoryIds;

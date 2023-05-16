@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/test-private-child-layout-1",
+	"friendlyURL": "/test-private-child-layout-2",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Test Private Child Layout 1"
+		"en_US": "Test Private Child Layout 2"
 	},
 	"private": true,
 	"system": false,

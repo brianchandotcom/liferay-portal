@@ -1,0 +1,34 @@
+{
+	"friendlyURL": "/test-public-permissions-layout",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test Public Permissions Layout"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"UPDATE_LAYOUT_CONTENT"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Test Role 4",
+			"scope": 3
+		}
+	],
+	"priority": 0,
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

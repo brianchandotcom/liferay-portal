@@ -113,18 +113,18 @@ definition {
 			if ((${testPortalInstance} == "true") && !(IsTestName(locator1 = "", value1 = ${testNameSkipPortalInstance}))) {
 				var portalURL = PropsUtil.get("portal.url");
 
-				var portalURL = StringUtil.replace(${portalURL}, "http://", "");
+				var portalURL = Regex.removeHTTP(url = ${portalURL});
 
-				var portalURL = StringUtil.extractFirst(${portalURL}, ":8");
+				var portalURL = Regex.removePortNumber(url = ${portalURL});
 
 				return ${portalURL};
 			}
 			else if (${testLiferayVirtualInstance} == "true") {
 				var portalURL = PropsUtil.get("portal.url");
 
-				var portalURL = StringUtil.replace(${portalURL}, "http://", "");
+				var portalURL = Regex.removeHTTP(url = ${portalURL});
 
-				var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
+				var portalURL = Regex.removePortNumber(url = ${portalURL});
 
 				return ${portalURL};
 			}

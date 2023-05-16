@@ -61,9 +61,9 @@ definition {
 	macro signInPortalInstanceSetUp {
 		var portalURL = PropsUtil.get("portal.url");
 
-		var portalURL = StringUtil.replace(${portalURL}, "http://", "");
+		var portalURL = Regex.removeHTTP(url = ${portalURL});
 
-		var portalURL = StringUtil.extractFirst(${portalURL}, ":8");
+		var portalURL = Regex.removePortNumber(url = ${portalURL});
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			authenticationMethod = ${authenticationMethod},

@@ -220,11 +220,11 @@ definition {
 	macro parsePortalInstanceURL {
 		Variables.assertDefined(parameterList = ${portalURL});
 
-		var portalInstanceName = StringUtil.replace(${portalURL}, "http://", "");
+		var portalURL = Regex.removeHTTP(url = ${portalURL});
 
-		var portalInstanceName = StringUtil.extractFirst(${portalInstanceName}, ":8");
+		var portalURL = Regex.removePortNumber(url = ${portalURL});
 
-		return ${portalInstanceName};
+		return ${portalURL};
 	}
 
 }

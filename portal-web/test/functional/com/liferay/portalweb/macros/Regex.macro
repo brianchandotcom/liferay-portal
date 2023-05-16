@@ -1,0 +1,19 @@
+definition {
+
+	macro removeHTTP {
+		Variables.assertDefined(parameterList = ${url});
+
+		var url = StringUtil.regexReplaceFirst(${url}, "https?:\/\/", "");
+
+		return ${url};
+	}
+
+	macro removePortNumber {
+		Variables.assertDefined(parameterList = ${url});
+
+		var url = StringUtil.regexReplaceFirst(${url}, "(.*?):[0-9]{4,}", "$1");
+
+		return ${url};
+	}
+
+}

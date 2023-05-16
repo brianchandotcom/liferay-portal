@@ -127,16 +127,16 @@ definition {
 		task ("Click on first bar and assert elements") {
 			ContentDashboard.clickOnFirstBar();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE",
 				value1 = "Press escape to remove the bar's category filters.");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
 				value1 = "Category: Audience 1");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				categoryName = "Stage 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
 				value1 = "Category: Stage 1");
@@ -196,16 +196,16 @@ definition {
 		task ("Click on first bar and assert elements") {
 			ContentDashboard.clickOnFirstBar();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#BAR_SELECTED_MESSAGE",
 				value1 = "Press escape to remove the bar's category filters.");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
 				value1 = "Category: Audience 1");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				categoryName = "Stage 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
 				value1 = "Category: Stage 1");
@@ -214,7 +214,7 @@ definition {
 		task ("Let only one filter active and assert elements") {
 			ContentDashboard.deleteSecondCategoryFilter();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				categoryName = "Audience 1",
 				locator1 = "ContentDashboard#FILTER_CATEGORY_NAME",
 				value1 = "Category: Audience 1");
@@ -290,14 +290,14 @@ definition {
 		}
 
 		task ("Check axes flip behavior") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Stage 1");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Audience 1");
@@ -343,12 +343,12 @@ definition {
 		}
 
 		task ("Check graph without filters applied") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphTitle = "Content per Stage",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
 				value1 = "Content per Stage");
@@ -357,12 +357,12 @@ definition {
 		task ("Prioritize stage vocabulary") {
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphTitle = "Content per Stage",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
 				value1 = "Content per Stage");
@@ -395,12 +395,12 @@ definition {
 		}
 
 		task ("Check gray bar when category hasn't an asset associated") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "No Audience",
 				xAxisCategoryName = "No Audience");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphCheckboxName = "No Stage Specified",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
 				value1 = "No Stage Specified");
@@ -432,12 +432,12 @@ definition {
 		}
 
 		task ("Check graph without filters applied") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Audience 1");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphTitle = "Content per Audience",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
 				value1 = "Content per Audience");
@@ -446,12 +446,12 @@ definition {
 		task ("Prioritize stage vocabulary") {
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Audience 1");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphTitle = "Content per Audience",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
 				value1 = "Content per Audience");
@@ -484,7 +484,7 @@ definition {
 		}
 
 		task ("Assert that filter is still aplied") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
 				value1 = "Author: Test Test");
 		}
@@ -569,7 +569,7 @@ definition {
 				checkboxName = "Stage 1",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#NO_CATEGORIES_SELECTED_TEXT",
 				value1 = "There are no categories selected");
 		}
@@ -617,14 +617,14 @@ definition {
 		}
 
 		task ("Assert the site vocabularies in the graph") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Stage 2");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Category 1");
@@ -675,14 +675,14 @@ definition {
 		}
 
 		task ("Assert the site vocabularies in the graph") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Category 1");
 
 			ContentDashboard.flipGraphAxes();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCtegoryName = "Category 2");
@@ -733,7 +733,7 @@ definition {
 		}
 
 		task ("Assert the blog is counted as an asset") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "Blogs Entry Title",
 				xAxisCategoryName = "Category1");
@@ -796,14 +796,14 @@ definition {
 		task ("Check which vocabulary is displayed in x-axis") {
 			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Stage");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphCheckboxName = "Stage 1",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
 				value1 = "WC Title");
 
 			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Audience");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				auditGraphCheckboxName = "Audience 1",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
 				value1 = "WC Title");
@@ -830,14 +830,14 @@ definition {
 		task ("Check which vocabulary is displayed in x-axis") {
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Stage");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Stage 1");
 
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Audience");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "WC Title",
 				xAxisCategoryName = "Audience 1");
@@ -861,7 +861,7 @@ definition {
 		}
 
 		task ("Assert the are no info in the Audit Graph") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#EMPTY_AUDIT_GRAPH_TEXT",
 				value1 = "There is no data.");
 		}
@@ -885,7 +885,7 @@ definition {
 		}
 
 		task ("Assert the document is counted as an asset") {
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
 				value1 = "DM Document Title",
 				xAxisCategoryName = "Audience 1");

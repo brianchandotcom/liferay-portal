@@ -323,14 +323,14 @@ definition {
 
 			ContentDashboard.goToContentDashboard();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "Audience 1",
 				xAxisCategoryName = "Audience 1");
 
 			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#X_AXIS_CATEGORIES_NAME",
 				value1 = "Stage 1",
 				xAxisCategoryName = "Stage 1");
@@ -614,7 +614,7 @@ definition {
 
 			WaitForPageLoad();
 
-			AssertTextPresent(
+			AssertTextEquals(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "Blogs Entry Title");
 		}

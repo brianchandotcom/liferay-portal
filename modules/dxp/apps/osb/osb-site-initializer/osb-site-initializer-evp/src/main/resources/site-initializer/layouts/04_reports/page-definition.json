@@ -110,7 +110,7 @@
 																},
 																{
 																	"fieldName": "siteKey",
-																	"fieldValue": "[$GROUP_KEY$]"
+																	"fieldValue": "EVP"
 																}
 															]
 														}
@@ -129,7 +129,7 @@
 												"definition": {
 													"fragment": {
 														"key": "evp-card",
-														"siteKey": "[$GROUP_KEY$]"
+														"siteKey": "EVP"
 													},
 													"fragmentConfig": {
 													},
@@ -194,12 +194,79 @@
 								"pageElements": [
 									{
 										"definition": {
+											"cssClasses": [
+												"EVPRequestsListing"
+											],
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"itemReference": {
+															"className": "com.liferay.portal.kernel.model.Layout",
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/financial-report"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																},
+																{
+																	"fieldName": "siteKey",
+																	"fieldValue": "EVP"
+																}
+															]
+														}
+													}
+												}
+											},
 											"indexed": true,
 											"layout": {
 												"opacity": 100,
 												"widthType": "Fluid"
-											}
+											},
+											"name": "Container EVP Financial Report"
 										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "evp-card",
+														"siteKey": "EVP"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "1-card-title",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "EVP Financial Report"
+																	}
+																}
+															}
+														},
+														{
+															"id": "1-card-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Go to EVP Financial Report Page"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
 										"type": "Section"
 									}
 								],

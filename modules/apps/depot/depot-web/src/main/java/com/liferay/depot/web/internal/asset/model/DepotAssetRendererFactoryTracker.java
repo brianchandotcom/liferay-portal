@@ -118,7 +118,7 @@ public class DepotAssetRendererFactoryTracker {
 			}
 
 			Integer serviceRanking = (Integer)serviceReference.getProperty(
-				"service.ranking:Integer");
+				"service.ranking");
 
 			long defaultRanking = Integer.MAX_VALUE - 1000;
 

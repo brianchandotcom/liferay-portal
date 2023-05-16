@@ -131,7 +131,7 @@ definition {
 		task ("When functional cookies are declined") {
 			CookieConsentPanel.cookiesDeclineAll();
 
-			Alert.viewWarningSpecific(warningMessage = "Cookies Not Allowed:You can not compare products when functional cookies are not allowed.");
+			Alert.viewWarningSpecific(warningMessage = "Cookies Not Allowed:You cannot compare products when functional cookies are not allowed.");
 		}
 
 		task ("Then the buyer navigates to the catalog page") {

@@ -15,7 +15,6 @@
 package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -58,6 +57,8 @@ import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AdminAccountGroup;
+import com.liferay.headless.commerce.admin.account.resource.v1_0.AdminAccountGroupResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
@@ -194,14 +195,14 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
+import javax.servlet.ServletContext;
 import java.io.Serializable;
-
 import java.net.URL;
 import java.net.URLConnection;
-
 import java.text.DateFormat;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -216,17 +217,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.wiring.BundleWiring;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
+		AdminAccountGroupResource.Factory adminAccountGroupResourceFactory,
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
 		AccountRoleResource.Factory accountRoleResourceFactory,
@@ -300,6 +297,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
+		_adminAccountGroupResourceFactory = adminAccountGroupResourceFactory;
 		_accountResourceFactory = accountResourceFactory;
 		_accountRoleLocalService = accountRoleLocalService;
 		_accountRoleResourceFactory = accountRoleResourceFactory;
@@ -454,6 +452,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder =
 					new SiteNavigationMenuItemSettingsBuilder();
+
+			_invoke(() -> _addAccountGroups(serviceContext));
 
 			_invoke(() -> _addAccounts(serviceContext));
 
@@ -665,6 +665,40 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			accountResource.putAccountByExternalReferenceCode(
 				account.getExternalReferenceCode(), account);
+		}
+	}
+
+	private void _addAccountGroups(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/account-groups.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		AdminAccountGroupResource.Builder builder =
+			_adminAccountGroupResourceFactory.create();
+
+		AdminAccountGroupResource adminAccountGroupResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			AdminAccountGroup accountGroup = AdminAccountGroup.toDTO(
+				String.valueOf(jsonArray.getJSONObject(i)));
+
+			if (accountGroup == null) {
+				_log.error(
+					"Unable to transform accountGroup from JSON: " + json);
+
+				continue;
+			}
+
+			adminAccountGroupResource.postAccountGroup(accountGroup);
 		}
 	}
 
@@ -4889,6 +4923,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
+	private final AdminAccountGroupResource.Factory _adminAccountGroupResourceFactory;
 	private final AccountResource.Factory _accountResourceFactory;
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final AccountRoleResource.Factory _accountRoleResourceFactory;

@@ -1,10 +1,10 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.92.0",
-		"@clayui/form": "3.94.0",
+		"@clayui/form": "3.95.0",
 		"@clayui/label": "3.88.0",
 		"@clayui/management-toolbar": "3.93.0",
-		"@clayui/panel": "3.94.0",
+		"@clayui/panel": "3.95.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/object-js-components-web": "*",
 		"frontend-js-web": "*"

@@ -1,5 +1,11 @@
-.published-apps-dashboard-page-container {
-	display: flex;
-	gap: 2rem;
-	padding: 2rem;
+.published-apps-dashboard-page {
+	&-container {
+		display: flex;
+		gap: 2rem;
+		padding: 2rem;
+	}
+
+	&-loading-indicator {
+		align-self: center;
+	}
 }

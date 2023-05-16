@@ -1,3 +1,4 @@
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
@@ -137,6 +138,7 @@ export function PublishedAppsDashboardPage() {
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
 		initialAccountsState[0]
 	);
+	const [loading, setLoading] = useState(false);
 
 	const buttonRedirectURL = Liferay.ThemeDisplay.getCanonicalURL().replaceAll(
 		'/publisher-dashboard',
@@ -238,7 +240,9 @@ export function PublishedAppsDashboardPage() {
 	}, []);
 
 	useEffect(() => {
-		(async () => {
+		const makeFetch = async () => {
+			setLoading(true);
+
 			const accountCustomField = selectedAccount.customFields?.find(
 				(customField) => customField.name === 'CatalogId'
 			);
@@ -293,16 +297,17 @@ export function PublishedAppsDashboardPage() {
 
 					setCommerceAccount(commerceAccountResponse);
 
-					const newDashboardNavigationItems = dashboardNavigationItems.map(navigationItems => {
-						if (navigationItems.itemName === 'apps') {
-							return {
-								...navigationItems,
-								items: newAppList.slice(0,4),
-							};
-						}
+					const newDashboardNavigationItems =
+						dashboardNavigationItems.map((navigationItems) => {
+							if (navigationItems.itemName === 'apps') {
+								return {
+									...navigationItems,
+									items: newAppList.slice(0, 4),
+								};
+							}
 
-						return navigationItems;
-					})
+							return navigationItems;
+						});
 
 					setDashboardNavigationItems(newDashboardNavigationItems);
 					setAppTotalCount(newAppList.length);
@@ -315,9 +320,13 @@ export function PublishedAppsDashboardPage() {
 						pageSize: publishedAppTable.pageSize,
 						totalCount: newAppList.length,
 					});
+
+					setLoading(false);
 				}
 			}
-		})();
+		};
+
+		makeFetch();
 	}, [page, publishedAppTable.pageSize, selectedAccount]);
 
 	useEffect(() => {
@@ -335,8 +344,10 @@ export function PublishedAppsDashboardPage() {
 	}, [dashboardNavigationItems]);
 
 	useEffect(() => {
-		(async () => {
+		const makeFetch = async () => {
 			if (selectedNavigationItem === 'Members') {
+				setLoading(true);
+
 				const currentUserAccountResponse = await getMyUserAccount();
 
 				const currentUserAccount = {
@@ -430,8 +441,11 @@ export function PublishedAppsDashboardPage() {
 				);
 
 				setMembers(filteredMembersList);
+				setLoading(false);
 			}
-		})();
+		};
+
+		makeFetch();
 	}, [selectedAccount, selectedNavigationItem]);
 
 	return (
@@ -449,7 +463,16 @@ export function PublishedAppsDashboardPage() {
 				/>
 			)}
 
-			{selectedNavigationItem === 'Apps' && (
+			{loading && (
+				<ClayLoadingIndicator
+					className="published-apps-dashboard-page-loading-indicator"
+					displayType="primary"
+					shape="circle"
+					size="md"
+				/>
+			)}
+
+			{!loading && selectedNavigationItem === 'Apps' && (
 				<DashboardPage
 					buttonHref={`${buttonRedirectURL}?catalogId=${catalogId}`}
 					buttonMessage="+ New App"
@@ -491,7 +514,7 @@ export function PublishedAppsDashboardPage() {
 				</DashboardPage>
 			)}
 
-			{selectedNavigationItem === 'Solutions' && (
+			{!loading && selectedNavigationItem === 'Solutions' && (
 				<DashboardPage
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={solutionMessages}
@@ -508,7 +531,7 @@ export function PublishedAppsDashboardPage() {
 				</DashboardPage>
 			)}
 
-			{selectedNavigationItem === 'Projects' && (
+			{!loading && selectedNavigationItem === 'Projects' && (
 				<ProjectsPage
 					dashboardNavigationItems={dashboardNavigationItems}
 					selectedAccount={selectedAccount}
@@ -516,7 +539,7 @@ export function PublishedAppsDashboardPage() {
 				/>
 			)}
 
-			{selectedNavigationItem === 'Members' && (
+			{!loading && selectedNavigationItem === 'Members' && (
 				<DashboardPage
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={memberMessages}
@@ -544,7 +567,7 @@ export function PublishedAppsDashboardPage() {
 				</DashboardPage>
 			)}
 
-			{selectedNavigationItem === 'Account' && (
+			{!loading && selectedNavigationItem === 'Account' && (
 				<AccountDetailsPage
 					commerceAccount={commerceAccount}
 					dashboardNavigationItems={dashboardNavigationItems}

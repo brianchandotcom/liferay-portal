@@ -194,7 +194,10 @@ public class CatalogResourceImpl
 
 		_commerceCatalogService.updateCommerceCatalog(
 			commerceCatalog.getCommerceCatalogId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, catalog.getName(),
+			GetterUtil.get(
+				catalog.getAccountEntryId(),
+				commerceCatalog.getAccountEntryId()),
+			catalog.getName(),
 			GetterUtil.get(
 				catalog.getCurrencyCode(),
 				commerceCatalog.getCommerceCurrencyCode()),
@@ -237,14 +240,20 @@ public class CatalogResourceImpl
 		if (commerceCatalog == null) {
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 				catalog.getExternalReferenceCode(),
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, catalog.getName(),
-				catalog.getCurrencyCode(), catalog.getDefaultLanguageId(),
+				GetterUtil.get(
+					catalog.getAccountEntryId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+				catalog.getName(), catalog.getCurrencyCode(),
+				catalog.getDefaultLanguageId(),
 				_serviceContextHelper.getServiceContext());
 		}
 		else {
 			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
 				commerceCatalog.getCommerceCatalogId(),
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, catalog.getName(),
+				GetterUtil.get(
+					catalog.getAccountEntryId(),
+					commerceCatalog.getAccountEntryId()),
+				catalog.getName(),
 				GetterUtil.get(
 					catalog.getCurrencyCode(),
 					commerceCatalog.getCommerceCurrencyCode()),

@@ -132,6 +132,8 @@ definition {
 
 		User.firstLoginPG();
 
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Navigation Menu Page");
@@ -256,6 +258,8 @@ definition {
 		property test.name.skip.portal.instance = "Locale#EnableRedirectToDefaultLocale";
 
 		User.firstLoginPG();
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -664,6 +668,8 @@ definition {
 	test UseDefaultPortetTitleWithoutTranslation {
 		task ("Given a page with language selector widget and a portlet") {
 			User.firstLoginPG();
+
+			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

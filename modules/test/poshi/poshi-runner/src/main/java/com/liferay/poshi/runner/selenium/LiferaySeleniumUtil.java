@@ -42,8 +42,11 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -335,7 +338,7 @@ public class LiferaySeleniumUtil {
 	public static String getSourceDirFilePath(String fileName)
 		throws Exception {
 
-		List<String> filePaths = new ArrayList<>();
+		Set<String> filePaths = new HashSet<>();
 
 		List<String> baseDirNames = new ArrayList<>();
 
@@ -374,7 +377,9 @@ public class LiferaySeleniumUtil {
 			throw new Exception("File not found " + fileName);
 		}
 
-		return filePaths.get(0);
+		Iterator<String> iterator = filePaths.iterator();
+
+		return iterator.next();
 	}
 
 	public static String getTestConsoleLogFileContent() throws Exception {

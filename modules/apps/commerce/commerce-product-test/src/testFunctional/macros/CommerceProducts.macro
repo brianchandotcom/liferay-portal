@@ -393,16 +393,27 @@ definition {
 				value1 = ${subscriptionType});
 
 			if (isSet(subscriptionMode)) {
-				Select(
-					key_subscriptionFieldLabel = "Mode",
-					key_subscriptionName = ${subscriptionName},
-					locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
-					value1 = ${subscriptionMode});
+				if (${subscriptionType} == "Month") {
+					Select(
+						key_subscriptionFieldLabel = "Mode",
+						key_subscriptionName = ${subscriptionName},
+						locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+						value1 = ${subscriptionMode});
+				}
+				else {
+					Select(
+						key_indexNumber = 2,
+						key_subscriptionFieldLabel = "Mode",
+						key_subscriptionName = ${subscriptionName},
+						locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL_N",
+						value1 = ${subscriptionMode});
+				}
 
 				if (${subscriptionMode} == "Exact Day of Month") {
 					Type(
+						key_indexNumber = ${indexNumber},
 						key_text = "On",
-						locator1 = "TextInput#ANY",
+						locator1 = "TextInput#ANY_N",
 						value1 = ${subscriptionExactDay});
 				}
 
@@ -414,8 +425,9 @@ definition {
 						value1 = ${subscriptionMonth});
 
 					Type(
+						key_indexNumber = ${indexNumber},
 						key_text = "Day",
-						locator1 = "TextInput#ANY",
+						locator1 = "TextInput#ANY_N",
 						value1 = ${subscriptionExactDay});
 				}
 			}

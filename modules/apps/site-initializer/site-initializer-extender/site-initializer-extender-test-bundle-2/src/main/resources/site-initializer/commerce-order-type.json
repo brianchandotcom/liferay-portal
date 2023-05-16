@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"description": {
+			"en_US": "TEST DESC 2"
+		},
+		"displayOrder": 2,
+		"externalReferenceCode": "TEST-ORDER-TYPE-2",
+		"name": {
+			"en_US": "TEST NAME 2"
+		},
+		"neverExpire": true
+	}
+]

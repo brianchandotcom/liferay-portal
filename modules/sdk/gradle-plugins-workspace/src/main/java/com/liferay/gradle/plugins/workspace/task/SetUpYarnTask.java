@@ -53,7 +53,6 @@ public class SetUpYarnTask extends DefaultTask {
 	}
 
 	@OutputFile
-	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getPackageJsonFile() {
 		Project project = getProject();
 

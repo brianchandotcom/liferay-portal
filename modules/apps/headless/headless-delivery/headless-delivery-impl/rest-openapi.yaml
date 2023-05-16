@@ -4786,7 +4786,6 @@ components:
                         The categories associated with this page.
                     items:
                         $ref: "#/components/schemas/TaxonomyCategoryBrief"
-                    readOnly: true
                     type: array
                 taxonomyCategoryIds:
                     # @review

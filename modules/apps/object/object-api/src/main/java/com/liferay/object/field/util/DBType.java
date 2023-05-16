@@ -39,28 +39,12 @@ public enum DBType {
 	STRING("VARCHAR(280)", "String", String.class, Types.VARCHAR);
 
 	public static String getDataType(String dbTypeString) {
-		DBType dbType = _getDBType(dbTypeString);
+		DBType dbType = getDBType(dbTypeString);
 
 		return dbType._dataType;
 	}
 
-	public static Class<?> getJavaClass(String dbTypeString) {
-		DBType dbType = _getDBType(dbTypeString);
-
-		return dbType._javaClass;
-	}
-
-	public static Integer getSQLType(String dbTypeString) {
-		DBType dbType = _getDBType(dbTypeString);
-
-		return dbType._sqlType;
-	}
-
-	public String getDBType() {
-		return _dbType;
-	}
-
-	private static DBType _getDBType(String dbTypeString) {
+	public static DBType getDBType(String dbTypeString) {
 		for (DBType dbType : values()) {
 			if (Objects.equals(dbType._dbType, dbTypeString)) {
 				return dbType;
@@ -68,6 +52,18 @@ public enum DBType {
 		}
 
 		throw new IllegalArgumentException("Invalid dbType " + dbTypeString);
+	}
+
+	public static Class<?> getJavaClass(String dbTypeString) {
+		DBType dbType = getDBType(dbTypeString);
+
+		return dbType._javaClass;
+	}
+
+	public static Integer getSQLType(String dbTypeString) {
+		DBType dbType = getDBType(dbTypeString);
+
+		return dbType._sqlType;
 	}
 
 	private DBType(

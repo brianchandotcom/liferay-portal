@@ -29,7 +29,7 @@
 [#function get_fields_by_activity activity]
 	[#assign fields = { "prmtact001": get_event_fields(activity), "prmtact002": get_digital_marketing_fields(activity), "prmtact003": get_content_marketing_fields(activity), "prmtact004": get_miscellaneous_marketing_fields(activity) }]
 
-	[#return fields[activity.typeActivity.key] /]
+	[#return activity.typeActivity?has_content?then(fields[activity.typeActivity.key], [{ "title": "-", "value": "-"}]) /]
 [/#function]
 
 [#function get_activity_fields activity]
@@ -69,7 +69,7 @@
 [/#macro]
 
 [#macro leads_table activity]
-	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": activity.leadGenerated?string("Yes", "No") }, { "title": "Target # of Leads", "value": activity.targetOfLeads }, { "title": "Lead Follow Up strategy", "value": activity.leadFollowUpStrategies }, { "title": "Details on Lead Follow Up", "value": activity.detailsLeadFollowUp }] /]
+	[#assign items = [{"title": "Is a lead list an outcome of this activity?", "value": activity.leadGenerated?string("Yes", "No") }, { "title": "Target # of Leads", "value": (activity.targetOfLeads)!"-" }, { "title": "Lead Follow Up strategy", "value": (activity.leadFollowUpStrategies)!"-" }, { "title": "Details on Lead Follow Up", "value": (activity.detailsLeadFollowUp)!"-" }] /]
 
 	[@table title="Lead List" items=items /]
 [/#macro]
@@ -79,7 +79,7 @@
 [/#macro]
 
 [#macro budgets_table budgets currency_key="USD"]
-	[#assign items = budgets?map(budget -> {"title": budget.expense.name, "value": budget.cost?number?string["¤,##0.00;; currencyCode=${currency_key}"]}) /]
+	[#assign items = budgets?map(budget -> {"title": (budget.expense.name)!"-", "value": budget.cost?number?string["¤,##0.00;; currencyCode=${currency_key}"]}) /]
 
 	[@table title="Budget Breakdown" items=items /]
 [/#macro]

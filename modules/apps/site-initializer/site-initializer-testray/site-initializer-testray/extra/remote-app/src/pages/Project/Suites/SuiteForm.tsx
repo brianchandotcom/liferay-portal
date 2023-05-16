@@ -91,7 +91,7 @@ const SuiteForm = () => {
 
 		const searchBuilder = new SearchBuilder();
 
-		if (caseParameters?.testrayCaseTypes) {
+		if (caseParameters?.testrayCaseTypes.length) {
 			searchBuilder
 				.in(
 					'caseTypeId',
@@ -100,7 +100,7 @@ const SuiteForm = () => {
 				.or();
 		}
 
-		if (caseParameters?.testrayComponents) {
+		if (caseParameters?.testrayComponents.length) {
 			searchBuilder
 				.in(
 					'componentId',
@@ -109,7 +109,7 @@ const SuiteForm = () => {
 				.or();
 		}
 
-		if (caseParameters?.testrayPriorities) {
+		if (caseParameters?.testrayPriorities.length) {
 			searchBuilder
 				.inEqualNumbers(
 					'priority',
@@ -118,7 +118,7 @@ const SuiteForm = () => {
 				.or();
 		}
 
-		if (caseParameters?.testrayRequirements) {
+		if (caseParameters?.testrayRequirements.length) {
 			searchBuilder.in(
 				'requerimentsId',
 				getCaseValues(caseParameters.testrayRequirements)

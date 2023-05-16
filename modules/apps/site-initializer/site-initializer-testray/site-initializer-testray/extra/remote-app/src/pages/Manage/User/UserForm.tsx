@@ -325,10 +325,12 @@ const UserForm = () => {
 				)}
 
 				<Form.Footer
-					hasPermission={Boolean(hasEditPermission)}
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
-					primaryButtonProps={{loading: isSubmitting}}
+					primaryButtonProps={{
+						disabled: !hasEditPermission,
+						loading: isSubmitting,
+					}}
 				/>
 			</ClayForm>
 		</Container>

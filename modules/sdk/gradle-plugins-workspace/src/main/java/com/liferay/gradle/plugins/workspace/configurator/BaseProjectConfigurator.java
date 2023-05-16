@@ -26,6 +26,7 @@ import org.gradle.api.GradleException;
 import org.gradle.api.NamedDomainObjectCollection;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskProvider;
@@ -101,6 +102,8 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		Copy copy = GradleUtil.addTask(
 			project, RootProjectConfigurator.DOCKER_DEPLOY_TASK_NAME,
 			Copy.class);
+
+		copy.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 
 		copy.from(sourcePath);
 

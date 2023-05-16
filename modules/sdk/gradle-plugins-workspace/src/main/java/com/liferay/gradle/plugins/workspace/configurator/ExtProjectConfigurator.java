@@ -36,6 +36,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
@@ -163,6 +164,8 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			Copy.class);
 
 		dockerDeploy.dependsOn(rootDockerDeployTask);
+
+		dockerDeploy.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 
 		File configsDir = workspaceExtension.getConfigsDir();
 

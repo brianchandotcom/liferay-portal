@@ -5,7 +5,7 @@ single, combined HTML document for an application that spans different
 subprojects, each one representing a different component of the same
 application.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 

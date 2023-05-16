@@ -5,7 +5,7 @@ library to ensure that unit tests fully cover your project's code. See
 [here](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-whip/src/gradleTest/smoke)
 for a usage sample.
 
-The plugin has been successfully tested with Gradle 6.9.2.
+The plugin has been successfully tested with Gradle 7.3.3.
 
 ## Usage
 

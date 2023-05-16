@@ -177,8 +177,8 @@ const RequiredInformation = ({
 			startDate: infoSelectedKey?.selectedSubscription.startDate,
 		};
 
-		const subscriptionKey = async (id) => {
-			await putSubscriptionInKey(provisioningServerAPI, id, sessionId);
+		const saveSubscriptionKey = async (id) => {
+			return putSubscriptionInKey(provisioningServerAPI, id, sessionId);
 		};
 
 		if (infoSelectedKey.hasNotPermanentLicence) {
@@ -190,7 +190,8 @@ const RequiredInformation = ({
 				sessionId,
 				licenseKey
 			);
-			await subscriptionKey(results[0].items.id);
+
+			await saveSubscriptionKey(results[0].items[0].id);
 			setIsLoadingUserInvitation(false);
 		} else {
 			setIsLoadingUserInvitation(true);
@@ -210,7 +211,7 @@ const RequiredInformation = ({
 				})
 			);
 
-			await subscriptionKey(results[0].items[0].id);
+			await saveSubscriptionKey(results[0].items[0].id);
 			setIsLoadingUserInvitation(false);
 		}
 
@@ -453,7 +454,7 @@ const RequiredInformation = ({
 										</Button>
 									</ClayTooltipProvider>
 
-									{featureFlag.includes('LPS-148344') && (
+									{featureFlag.includes('LPS-153478') && (
 										<>
 											<div className="d-flex">
 												<div className="pr-2 pt-1">
@@ -464,7 +465,10 @@ const RequiredInformation = ({
 														id="expiration-checkbox"
 														onChange={() =>
 															setCheckedBoxSubscription(
-																(val) => !val
+																(
+																	checkedBoxSubcription
+																) =>
+																	!checkedBoxSubcription
 															)
 														}
 													/>

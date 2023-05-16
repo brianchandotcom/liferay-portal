@@ -753,8 +753,6 @@ definition {
 	@description = ""
 	@priority = 4
 	test CheckDMVocabularyAssetSubtypeBasicDocument {
-		property osgi.modules.includes = "document-library-google-docs";
-
 		task ("Create a vocabulary with Associated Asset Type of Document > Basic Document") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -820,8 +818,6 @@ definition {
 	@description = ""
 	@priority = 4
 	test CheckDMVocabularyAssetSubtypeExternalVideoShortcut {
-		property osgi.modules.includes = "document-library-google-docs";
-
 		task ("Create a vocabulary with Associated Asset Type of Document > External Video Shortcut") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
@@ -887,8 +883,6 @@ definition {
 	@description = ""
 	@priority = 4
 	test CheckDMVocabularyAssetSubtypeGoogleDriveShortcut {
-		property osgi.modules.includes = "document-library-google-docs";
-
 		task ("Create a vocabulary with Associated Asset Type of Document > Google Drive Shortcut") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 

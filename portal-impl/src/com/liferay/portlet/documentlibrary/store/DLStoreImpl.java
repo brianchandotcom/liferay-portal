@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.store.StoreArea;
+import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
@@ -136,7 +137,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+		if (_isStoreAreaSupported()) {
 			for (String fileName :
 					_store.getFileNames(companyId, repositoryId, dirName)) {
 
@@ -163,7 +164,7 @@ public class DLStoreImpl implements DLStore {
 		for (String versionLabel :
 				_store.getFileVersions(companyId, repositoryId, fileName)) {
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+			if (_isStoreAreaSupported()) {
 				_copy(
 					StoreArea.DELETED, companyId, repositoryId, fileName,
 					versionLabel);
@@ -182,7 +183,7 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		try {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+			if (_isStoreAreaSupported()) {
 				_copy(
 					StoreArea.DELETED, companyId, repositoryId, fileName,
 					versionLabel);
@@ -367,7 +368,7 @@ public class DLStoreImpl implements DLStore {
 				_store.getFileAsStream(
 					companyId, repositoryId, fileName, versionLabel));
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+			if (_isStoreAreaSupported()) {
 				_copy(
 					StoreArea.DELETED, companyId, repositoryId, fileName,
 					versionLabel);
@@ -438,7 +439,7 @@ public class DLStoreImpl implements DLStore {
 		_store.addFile(
 			companyId, repositoryId, fileName, toVersionLabel, inputStream);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+		if (_isStoreAreaSupported()) {
 			_copy(
 				StoreArea.DELETED, companyId, repositoryId, fileName,
 				fromVersionLabel);
@@ -637,6 +638,16 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
+	private boolean _isStoreAreaSupported() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-174816") &&
+			(_storeAreaProcessor != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _validateVersionLabel(String versionLabel)
 		throws PortalException {
 
@@ -646,5 +657,9 @@ public class DLStoreImpl implements DLStore {
 	private static volatile Store _store =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			Store.class, DLStoreImpl.class, "_store", "(default=true)", true);
+	private static volatile StoreAreaProcessor _storeAreaProcessor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			StoreAreaProcessor.class, DLStoreImpl.class, "_storeAreaProcessor",
+			"(default=true)", false, true);
 
 }

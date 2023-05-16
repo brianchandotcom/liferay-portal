@@ -161,7 +161,8 @@ public class UpgradeManagerTest {
 	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	@Inject(
-		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",
+		blocking = false,
+		filter = "component.name=com.liferay.portal.upgrade.internal.jmx.UpgradeManager",
 		type = Inject.NoType.class
 	)
 	private Object _upgradeManager;

@@ -20,7 +20,7 @@ const DXP = () => {
 	return (
 		<div className="mr-4">
 			<ActivationKeysTable
-				initialFilter="startswith(productName,'DXP') or startswith(productName,'Digital')"
+				initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital'))"
 				productName="DXP"
 				project={project}
 				sessionId={sessionId}

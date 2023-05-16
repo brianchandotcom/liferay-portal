@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>EVPUtils</title>
+</head>
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EVPUtils</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TAB_TITLE</td>
+	<td>//head//title[contains(.,'${key_tabTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN</td>
+	<td>//div//a[contains(@class,'btn-solid') and contains(.,'Sign In')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

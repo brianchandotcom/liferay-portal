@@ -1,0 +1,46 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+
+		EVPUtils.gotoEVP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP");
+		}
+	}
+
+	@description = "This is a test for LPS-178427. Verify that there is a Home, Request, Organization and Reports navigation tabs on page header"
+	@priority = 5
+	test CanNavigateToPages {
+		task ("Verify that is possible to navigate in different pages") {
+			EVPNavigator.viewPage(pageList = "Home,Request,Organization,Reports");
+		}
+	}
+
+}

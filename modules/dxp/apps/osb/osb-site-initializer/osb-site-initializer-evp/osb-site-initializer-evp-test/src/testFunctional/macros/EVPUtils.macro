@@ -1,0 +1,19 @@
+definition {
+    macro addEVPSite {
+        Site.openSitesAdmin();
+        TeamExtranet.addSiteTemplateCP(
+            siteName = "EVP",
+            siteTemplateName = "EVP");
+    }
+    macro assertPageTitle {
+        AssertElementPresent(
+            key_tabTitle = ${tabTitle},
+            locator1 = "EVPUtils#TAB_TITLE");
+    }
+    macro gotoEVP {
+        Navigator.openSiteURL(siteName = "EVP");
+        if (IsElementPresent(locator1 = "EVPUtils#SIGN_IN")) {
+            Click(locator1 = "EVPUtils#SIGN_IN");
+        }
+    }
+}

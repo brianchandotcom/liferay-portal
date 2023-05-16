@@ -1,0 +1,16 @@
+definition {
+    macro goToNavItem {
+        Click(
+            key_navItem = ${navItem},
+            locator1 = "EVPNavigation#NAV_LINK");
+        WaitForPageLoad();
+    }
+    macro viewPage {
+        for (var pageName : list ${pageList}) {
+            EVPNavigator.goToNavItem(navItem = ${pageName});
+            EVPUtils.assertPageTitle(tabTitle = ${pageName});
+            var pageName = StringUtil.lowerCase(${pageName});
+            AssertLocation.assertPartialLocation(value1 = ${pageName});
+        }
+    }
+}

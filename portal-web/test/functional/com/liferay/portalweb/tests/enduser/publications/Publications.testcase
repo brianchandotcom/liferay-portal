@@ -1093,6 +1093,41 @@ definition {
 			userScreenName = "testscreen");
 	}
 
+	@description = "This is a use case for LPS-175323 - FragmentEntryLink table definition references defined incorrectly."
+	@priority = 3
+	test NoChangesCanBeFoundAfterDiscardingHomePageChange {
+		task ("Create Publication and modify Home Page") {
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Image");
+
+			PageEditor.publish();
+		}
+
+		task ("Discard change and assert no changes were found") {
+			PublicationsNavigator.gotoReviewChanges();
+
+			PublicationsChanges.discardChanges(
+				changeCategory = "Page",
+				changeTitle = "Home");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+		}
+	}
+
 	@description = "Assert publications changes can search and sort"
 	@priority = 4
 	test PublicationsChangesCanSearchAndSort {

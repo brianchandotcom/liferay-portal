@@ -21,7 +21,7 @@ task downloadProductInfo(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 File gradleTestDependenciesDir = new File(buildDir, "gradle-test-dependencies")
-String gradleVersion = "6.9.2"
+String gradleVersion = "7.3.3"
 String hotFixZipUrl = "https://us-east-1.linodeobjects.com/devtools-s3.liferay.com/gradle-plugins-workspace/liferay-hotfix-1072-7210.zip"
 String pluginsSdkUrl = "https://repository-cdn.liferay.com/nexus/service/local/repositories/liferay-public-releases/content/com/liferay/portal/com.liferay.portal.plugins.sdk/1.0.22/com.liferay.portal.plugins.sdk-1.0.22-withdependencies.zip"
 

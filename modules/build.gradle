@@ -25,7 +25,7 @@ apply plugin: "com.liferay.yarn.defaults.plugin"
 
 ext {
 	projectTemplateTokens = [
-		"biz.aQute.bnd.version": "5.2.0",
+		"biz.aQute.bnd.version": "5.3.0",
 		"com.liferay.ant.bnd.version": "3.2.9",
 		"com.liferay.css.builder.version": "3.1.0",
 		"com.liferay.gradle.plugins.css.builder.version": "5.0.4",
@@ -51,7 +51,7 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	}
 
 	dependencies {
-		bnd group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.3.0"
+		bnd group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "5.3.0"
 	}
 
 	repositories {

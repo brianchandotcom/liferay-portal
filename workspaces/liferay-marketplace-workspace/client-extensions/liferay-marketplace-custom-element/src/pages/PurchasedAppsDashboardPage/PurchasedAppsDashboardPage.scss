@@ -1,7 +1,13 @@
-.purchased-apps-dashboard-page-container {
-	display: flex;
-	gap: 2rem;
-	padding: 2rem;
+.purchased-apps-dashboard-page {
+	&-container {
+		display: flex;
+		gap: 2rem;
+		padding: 2rem;
+	}
+
+	&-loading-indicator {
+		align-self: center;
+	}
 
 	.table-responsive {
 		overflow-x: unset;

@@ -28,8 +28,6 @@ import com.liferay.portal.upgrade.online.OnlineUpgradeExecutor;
 import com.liferay.portal.upgrade.online.OnlineUpgradeStepFactory;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -108,35 +106,22 @@ public class OnlineUpgradeExecutorTest {
 			OnlineUpgradeStepFactory.alterColumnType(
 				"name", "VARCHAR(255) null"));
 
-		String tempTableName = _getTempTableName();
-
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				tempTableName, "name", "VARCHAR(255) null"));
+				_getTempTableName(), "name", "VARCHAR(255) null"));
 	}
 
 	@Test
 	public void testEmptyUpgrade() throws Exception {
-		_onlineUpgradeExecutor.upgrade(_TABLE_NAME);
+		try {
+			_onlineUpgradeExecutor.upgrade(_TABLE_NAME);
 
-		String tempTableName = _getTempTableName();
-
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "id"));
-		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "name"));
-
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + tempTableName + " order by id asc");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.next());
-			Assert.assertEquals(1, resultSet.getLong("id"));
-			Assert.assertEquals("test_a", resultSet.getString("name"));
-
-			Assert.assertTrue(resultSet.next());
-			Assert.assertEquals(2, resultSet.getLong("id"));
-			Assert.assertEquals("test_b", resultSet.getString("name"));
-
-			Assert.assertFalse(resultSet.next());
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			if (!(exception instanceof IllegalArgumentException)) {
+				Assert.fail();
+			}
 		}
 	}
 

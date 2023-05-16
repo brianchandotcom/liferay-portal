@@ -70,7 +70,7 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("And When search for a known uniquely named headless provider") {
+		task ("And search for a known uniquely named headless provider") {
 			FrontendDataSetAdmin.searchProvider(
 				dropdownLabel = "Choose an Option",
 				key_provider = "/c/fdsentries");

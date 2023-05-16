@@ -609,7 +609,7 @@ if (bndPrintJarFiles != null) {
 	}
 }
 
-no cartão com até 5% OFFgradle.taskGraph.useFilter {
+gradle.taskGraph.useFilter {
 	Task task ->
 
 	boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))

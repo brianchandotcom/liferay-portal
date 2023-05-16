@@ -1,0 +1,14 @@
+[
+	{
+		"externalReferenceCode": "TESTACCOUNTGROUP1",
+		"name": "Test Account Group 1"
+	},
+	{
+		"externalReferenceCode": "TESTACCOUNTGROUP2",
+		"name": "Test Account Group 2 Update"
+	},
+	{
+		"externalReferenceCode": "TESTACCOUNTGROUP4",
+		"name": "Test Account Group 4"
+	}
+]

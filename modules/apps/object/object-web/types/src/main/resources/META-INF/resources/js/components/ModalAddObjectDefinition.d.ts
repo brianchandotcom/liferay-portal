@@ -14,6 +14,7 @@
 
 import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
+import './ModalAddObjectDefinition.scss';
 declare type Storage = {
 	label: string;
 	type: string;

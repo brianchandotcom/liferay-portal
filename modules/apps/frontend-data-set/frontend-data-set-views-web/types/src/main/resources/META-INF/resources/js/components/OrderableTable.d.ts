@@ -13,7 +13,6 @@
  */
 
 import React from 'react';
-
 import '../../css/OrderableTable.scss';
 interface IAction {
 	icon: string;

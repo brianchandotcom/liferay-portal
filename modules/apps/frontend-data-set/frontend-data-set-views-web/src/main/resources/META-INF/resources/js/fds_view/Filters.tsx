@@ -83,6 +83,7 @@ function AddFDSFilterModalContent({
 	onSave,
 }: IPropsAddFDSFilterModalContent) {
 	const fromFormElementId = `${namespace}From`;
+	const formElementId = `${namespace}Form`;
 	const toFormElementId = `${namespace}To`;
 	const nameFormElementId = `${namespace}Name`;
 	const selectedFieldFormElementId = `${namespace}SelectedField`;
@@ -91,14 +92,7 @@ function AddFDSFilterModalContent({
 	const includeModeFormElementId = `${namespace}IncludeMode`;
 	const preselectedValuesFormElementId = `${namespace}PreselectedValues`;
 
-	const [picklists, setPicklists] = useState<IPickList[]>([]);
-	const [multiSelectValues, setMultiSelectValues] = useState<any[]>([]);
-
-	useEffect(() => {
-		getAllPicklists().then((items) => setPicklists(items));
-	}, []);
-
-	const [formValues, setFormValues] = useState({
+	const [formValues, setFormValues] = useState<{[key: string]: string}>({
 		[fromFormElementId]: '',
 		[includeModeFormElementId]: 'true',
 		[multipleFormElementId]: 'true',
@@ -108,13 +102,21 @@ function AddFDSFilterModalContent({
 		[sourceOptionFormElementId]: '',
 		[toFormElementId]: '',
 	});
+	const [multiSelectValues, setMultiSelectValues] = useState<any[]>([]);
+	const [picklists, setPicklists] = useState<IPickList[]>([]);
+
+	useEffect(() => {
+		getAllPicklists().then((items) => setPicklists(items));
+	}, []);
 
 	const handleFilterSave = async (event: any) => {
 		event.preventDefault();
 
+		const formData = new FormData(event.target);
+
 		const field = fields.find(
 			(item: IField) =>
-				item.name === formValues[selectedFieldFormElementId]
+				item.name === formData.get(selectedFieldFormElementId)
 		);
 
 		if (!field) {
@@ -125,7 +127,7 @@ function AddFDSFilterModalContent({
 
 		let body: any = {
 			fieldName: field.name,
-			label: formValues[nameFormElementId] || field.label,
+			label: formData.get(nameFormElementId) || field.label,
 		};
 
 		let url: string = '';
@@ -136,8 +138,8 @@ function AddFDSFilterModalContent({
 			body = {
 				...body,
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER_ID]: fdsView.id,
-				from: formValues[fromFormElementId],
-				to: formValues[toFormElementId],
+				from: formData.get(fromFormElementId),
+				to: formData.get(toFormElementId),
 				type: field.format,
 			};
 		}
@@ -148,11 +150,12 @@ function AddFDSFilterModalContent({
 				...body,
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID]:
 					fdsView.id,
-				include: formValues[includeModeFormElementId] === 'true',
-				listTypeDefinitionId: formValues[sourceOptionFormElementId],
-				multiple: formValues[multipleFormElementId] === 'true',
-				preselectedListTypeEntries:
-					formValues[preselectedValuesFormElementId],
+				include: formData.get(includeModeFormElementId) === 'true',
+				listTypeDefinitionId: formData.get(sourceOptionFormElementId),
+				multiple: formData.get(multipleFormElementId) === 'true',
+				preselectedValues: formData.getAll(
+					preselectedValuesFormElementId
+				),
 			};
 		}
 		const response = await fetch(url, {
@@ -177,25 +180,14 @@ function AddFDSFilterModalContent({
 		closeModal();
 	};
 
-	const field = fields.find(
+	const selectedField = fields.find(
 		(item: IField) => item.name === formValues[selectedFieldFormElementId]
 	);
-	const picklist = picklists.find(
+
+	const selectedPicklist = picklists.find(
 		(item: IPickList) =>
 			String(item.id) === formValues[sourceOptionFormElementId]
 	);
-
-	function handleChange(event: any) {
-		const formElement = event.target;
-
-		const newFormValues = {...formValues};
-
-		if (Object.keys(newFormValues).includes(formElement.name)) {
-			newFormValues[formElement.name] = formElement.value;
-
-			setFormValues(newFormValues);
-		}
-	}
 
 	const isValidDateRange =
 		!formValues[fromFormElementId] || !formValues[toFormElementId]
@@ -211,13 +203,26 @@ function AddFDSFilterModalContent({
 			!(multiSelectValues.length > 1));
 
 	return (
-		<div className="fds-view-fields-modal">
+		<>
 			<ClayModal.Header>
 				{Liferay.Language.get('new-filter')}
 			</ClayModal.Header>
 
-			<ClayForm onChange={handleChange} onSubmit={handleFilterSave}>
-				<ClayModal.Body>
+			<ClayModal.Body>
+				<ClayForm
+					id={formElementId}
+					onChange={(event: any) => {
+						const {name, value} = event?.target;
+
+						if (name) {
+							setFormValues({
+								...formValues,
+								[name]: value,
+							});
+						}
+					}}
+					onSubmit={handleFilterSave}
+				>
 					<ClayForm.Group>
 						<label htmlFor={nameFormElementId}>
 							{Liferay.Language.get('name')}
@@ -269,7 +274,7 @@ function AddFDSFilterModalContent({
 						/>
 					</ClayForm.Group>
 
-					{field?.format === 'date-time' && (
+					{selectedField?.format === 'date-time' && (
 						<ClayForm.Group className="form-group-autofit">
 							<div
 								className={classNames('form-group-item', {
@@ -319,7 +324,7 @@ function AddFDSFilterModalContent({
 						</ClayForm.Group>
 					)}
 
-					{field?.format === 'string' && (
+					{selectedField?.format === 'string' && (
 						<>
 							<ClayForm.Group>
 								<label htmlFor={sourceOptionFormElementId}>
@@ -449,9 +454,9 @@ function AddFDSFilterModalContent({
 												'select-a-default-value-for-your-filter'
 											)}
 											sourceItems={
-												!picklist
+												!selectedPicklist
 													? []
-													: picklist.listTypeEntries.map(
+													: selectedPicklist.listTypeEntries.map(
 															(item) => ({
 																label:
 																	item.name,
@@ -520,26 +525,26 @@ function AddFDSFilterModalContent({
 							)}
 						</>
 					)}
-				</ClayModal.Body>
+				</ClayForm>
+			</ClayModal.Body>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton type="submit">
-								{Liferay.Language.get('save')}
-							</ClayButton>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton form={formElementId} type="submit">
+							{Liferay.Language.get('save')}
+						</ClayButton>
 
-							<ClayButton
-								displayType="secondary"
-								onClick={() => closeModal()}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</ClayForm>
-		</div>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => closeModal()}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
 	);
 }
 
@@ -553,6 +558,61 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 	const [fields, setFields] = useState<IField[]>([]);
 	const [filters, setFilters] = useState<IFilter[]>([]);
 	const [newFiltersOrder, setNewFiltersOrder] = useState<string>('');
+
+	useEffect(() => {
+		const getFilters = async () => {
+			const response = await fetch(
+				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER},${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER}`
+			);
+
+			const responseJSON = await response.json();
+
+			const dateFiltersOrderer = responseJSON[
+				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER
+			] as IDateFilter[];
+			const dynamicFiltersOrderer = responseJSON[
+				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER
+			] as IFilter[];
+
+			let filtersOrdered = [
+				...dateFiltersOrderer,
+				...dynamicFiltersOrderer,
+			];
+
+			if (fdsView.fdsFiltersOrder) {
+				const order = fdsView.fdsFiltersOrder.split(',');
+
+				let notOrdered: IFilter[] = [];
+
+				if (filtersOrdered.length > order.length) {
+					notOrdered = filtersOrdered.filter(
+						(filter) => !order.includes(String(filter.id))
+					);
+				}
+
+				filtersOrdered = fdsView.fdsFiltersOrder
+					.split(',')
+					.map((fdsFilterId) =>
+						filtersOrdered.find(
+							(filter) => filter.id === Number(fdsFilterId)
+						)
+					)
+					.filter(Boolean) as IFilter[];
+
+				filtersOrdered = [...filtersOrdered, ...notOrdered];
+			}
+
+			setFilters(filtersOrdered);
+		};
+
+		getFields(fdsView).then((newFields) => {
+			if (newFields) {
+				setFields(newFields);
+			}
+		});
+
+		getFilters();
+	}, [fdsView]);
 
 	const updateFDSFiltersOrder = async () => {
 		const response = await fetch(
@@ -591,6 +651,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 	const onCreationButtonClick = () =>
 		openModal({
+			className: 'overflow-auto',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<AddFDSFilterModalContent
 					closeModal={closeModal}
@@ -650,61 +711,6 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			title: Liferay.Language.get('delete-filter'),
 		});
 	};
-
-	useEffect(() => {
-		const getFilters = async () => {
-			const response = await fetch(
-				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER},${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER}`
-			);
-
-			const responseJSON = await response.json();
-
-			const dateFiltersOrderer = responseJSON[
-				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DATE_FILTER
-			] as IDateFilter[];
-			const dynamicFiltersOrderer = responseJSON[
-				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER
-			] as IFilter[];
-
-			let filtersOrdered = [
-				...dateFiltersOrderer,
-				...dynamicFiltersOrderer,
-			];
-
-			if (fdsView.fdsFiltersOrder) {
-				const order = fdsView.fdsFiltersOrder.split(',');
-
-				let notOrdered: IFilter[] = [];
-
-				if (filtersOrdered.length > order.length) {
-					notOrdered = filtersOrdered.filter(
-						(filter) => !order.includes(String(filter.id))
-					);
-				}
-
-				filtersOrdered = fdsView.fdsFiltersOrder
-					.split(',')
-					.map((fdsFilterId) =>
-						filtersOrdered.find(
-							(filter) => filter.id === Number(fdsFilterId)
-						)
-					)
-					.filter(Boolean) as IFilter[];
-
-				filtersOrdered = [...filtersOrdered, ...notOrdered];
-			}
-
-			setFilters(filtersOrdered);
-		};
-
-		getFields(fdsView).then((newFields) => {
-			if (newFields) {
-				setFields(newFields);
-			}
-		});
-
-		getFilters();
-	}, [fdsView]);
 
 	return (
 		<ClayLayout.ContainerFluid>

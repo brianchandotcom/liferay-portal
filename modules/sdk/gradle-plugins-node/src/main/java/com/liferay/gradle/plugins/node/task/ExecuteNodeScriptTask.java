@@ -14,11 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.tasks.CacheableTask;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Internal;
-import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
 
 /**
  * @author Andrea Di Giorgi
@@ -40,9 +36,7 @@ public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 		}
 	}
 
-	@InputFile
-	@Optional
-	@PathSensitive(PathSensitivity.RELATIVE)
+	@Internal
 	public File getScriptFile() {
 		File file = GradleUtil.toFile(getProject(), _scriptFile);
 

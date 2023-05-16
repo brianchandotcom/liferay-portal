@@ -143,8 +143,6 @@ public class ContentSecurityPolicyFilterTest {
 						CONTENT_SECURITY_POLICY_HEADER),
 				cspPolicy);
 		}
-
-		_configureContentSecurityPolicy(true, cspPolicy);
 	}
 
 	@Test

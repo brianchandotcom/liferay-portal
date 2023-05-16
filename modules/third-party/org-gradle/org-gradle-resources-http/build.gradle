@@ -12,6 +12,8 @@ tasks.eclipse {
 
 dependencies {
 	api fileTree(dir: gradle.gradleHomeDir, include: "lib/**/*.jar")
+	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.48"
+	api group: "org.apache.maven", name: "maven-artifact", version: "3.6.3"
 }
 
 jar {

@@ -261,10 +261,12 @@ export function PublishedAppsDashboardPage() {
 							appListProductIds
 						);
 
-					const newAppList: AppProps[] = [];
+					let newAppList: AppProps[] = [];
 
 					appList.items.forEach((product, index: number) => {
-						if (product.catalogId === accountCatalogId) {
+						const isApp = product.categories.find((category) => category.name === 'App');
+
+						if (product.catalogId === accountCatalogId && isApp) {
 							newAppList.push({
 								catalogId: product.catalogId,
 								externalReferenceCode:
@@ -287,12 +289,12 @@ export function PublishedAppsDashboardPage() {
 						}
 					});
 
+					setApps(newAppList);
+
 					const commerceAccountResponse =
 						await getAccountInfoFromCommerce(selectedAccount.id);
 
 					setCommerceAccount(commerceAccountResponse);
-
-					setApps(newAppList);
 
 					setPublishedAppTable({
 						items: newAppList.slice(

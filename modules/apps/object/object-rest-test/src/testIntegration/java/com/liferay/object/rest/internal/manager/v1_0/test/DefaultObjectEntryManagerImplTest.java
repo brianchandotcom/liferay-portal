@@ -21,7 +21,6 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -48,6 +47,7 @@ import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
@@ -163,7 +163,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
-@FeatureFlags("LPS-164801")
+@FeatureFlags({"LPS-146755", "LPS-164801"})
 @RunWith(Arquillian.class)
 public class DefaultObjectEntryManagerImplTest {
 
@@ -290,6 +290,17 @@ public class DefaultObjectEntryManagerImplTest {
 				).name(
 					"longIntegerObjectFieldName"
 				).build(),
+				new LongTextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedLongTextObjectFieldName"
+				).objectFieldSettings(
+					Collections.emptyList()
+				).build(),
 				new PicklistObjectFieldBuilder(
 				).indexed(
 					true
@@ -315,6 +326,17 @@ public class DefaultObjectEntryManagerImplTest {
 				).name(
 					"richTextObjectFieldName"
 				).build(),
+				new RichTextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedRichTextObjectFieldName"
+				).objectFieldSettings(
+					Collections.emptyList()
+				).build(),
 				new TextObjectFieldBuilder(
 				).indexed(
 					true
@@ -323,6 +345,19 @@ public class DefaultObjectEntryManagerImplTest {
 						RandomTestUtil.randomString())
 				).name(
 					"textObjectFieldName"
+				).build(),
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedTextObjectFieldName"
+				).objectFieldSettings(
+					Collections.emptyList()
 				).build()));
 
 		ObjectRelationship objectRelationship1 =
@@ -1334,6 +1369,31 @@ public class DefaultObjectEntryManagerImplTest {
 							_objectRelationshipFieldName,
 							parentObjectEntry1.getId()
 						).put(
+							"localizedLongTextObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US",
+								"en_US localizedLongTextObjectFieldValue"
+							).put(
+								"pt_BR",
+								"pt_BR localizedLongTextObjectFieldValue"
+							).build()
+						).put(
+							"localizedRichTextObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US",
+								"en_US <i>localizedRichTextObjectFieldValue</i>"
+							).put(
+								"pt_BR",
+								"pt_BR <i>localizedRichTextObjectFieldValue</i>"
+							).build()
+						).put(
+							"localizedTextObjectFieldName_i18n",
+							HashMapBuilder.put(
+								"en_US", "en_US localizedTextObjectFieldValue"
+							).put(
+								"pt_BR", "pt_BR localizedTextObjectFieldValue"
+							).build()
+						).put(
 							"picklistObjectFieldName", picklistObjectFieldValue1
 						).put(
 							"textObjectFieldName", "aaa"
@@ -1341,6 +1401,32 @@ public class DefaultObjectEntryManagerImplTest {
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						_objectRelationshipFieldName, parentObjectEntry1.getId()
+					).put(
+						"localizedLongTextObjectFieldName",
+						"en_US localizedLongTextObjectFieldValue"
+					).put(
+						"localizedRichTextObjectFieldName",
+						"en_US <i>localizedRichTextObjectFieldValue</i>"
+					).put(
+						"localizedRichTextObjectFieldNameRawText",
+						"en_US localizedRichTextObjectFieldValue"
+					).put(
+						"localizedTextObjectFieldName",
+						"en_US localizedTextObjectFieldValue"
+					).put(
+						"picklistObjectFieldName", picklistObjectFieldValue1
+					).put(
+						"textObjectFieldName", "aaa"
+					).build();
+				}
+			},
+			childObjectEntry1);
 
 		ObjectEntry parentObjectEntry2 =
 			_defaultObjectEntryManager.addObjectEntry(
@@ -1434,6 +1520,14 @@ public class DefaultObjectEntryManagerImplTest {
 					parentObjectEntry2.getExternalReferenceCode())
 			).build(),
 			childObjectEntry2);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildEqualsExpressionFilterString(
+					"localizedLongTextObjectFieldName",
+					"en_US localizedLongTextObjectFieldValue")
+			).build(),
+			childObjectEntry1);
 
 		// In expression
 
@@ -1544,6 +1638,15 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_testGetObjectEntries(
 			HashMapBuilder.put(
+				"search", "en_US"
+			).build(),
+			childObjectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", "pt_BR"
+			).build());
+		_testGetObjectEntries(
+			HashMapBuilder.put(
 				"search", String.valueOf(childObjectEntry1.getId())
 			).build(),
 			childObjectEntry1);
@@ -1597,6 +1700,16 @@ public class DefaultObjectEntryManagerImplTest {
 				"sort", "textObjectFieldName:desc"
 			).build(),
 			childObjectEntry2, childObjectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedTextObjectFieldName:asc"
+			).build(),
+			childObjectEntry2, childObjectEntry1);
+		_testGetObjectEntries(
+			HashMapBuilder.put(
+				"sort", "localizedTextObjectFieldName:desc"
+			).build(),
+			childObjectEntry1, childObjectEntry2);
 	}
 
 	@Test
@@ -1801,8 +1914,166 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	@Test
-	public void testUpdateObjectEntryAccountEntryRestriction()
-		throws Exception {
+	public void testUpdateObjectEntry() throws Exception {
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, _objectDefinition2,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedLongTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedLongTextObjectFieldValue"
+						).put(
+							"pt_BR", "pt_BR localizedLongTextObjectFieldValue"
+						).build()
+					).put(
+						"localizedRichTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US",
+							"en_US <i>localizedRichTextObjectFieldValue</i>"
+						).put(
+							"pt_BR",
+							"pt_BR <i>localizedRichTextObjectFieldValue</i>"
+						).build()
+					).put(
+						"localizedTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedTextObjectFieldValue"
+						).put(
+							"pt_BR", "pt_BR localizedTextObjectFieldValue"
+						).build()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Role role = _roleLocalService.getRole(
+			_companyId, RoleConstants.ADMINISTRATOR);
+
+		_user = _addUser();
+
+		_userLocalService.addRoleUser(role.getRoleId(), _user);
+
+		_assertLocalizedValues(
+			HashMapBuilder.<String, Object>put(
+				"localizedLongTextObjectFieldName",
+				"en_US localizedLongTextObjectFieldValue"
+			).put(
+				"localizedRichTextObjectFieldName",
+				"en_US <i>localizedRichTextObjectFieldValue</i>"
+			).put(
+				"localizedRichTextObjectFieldNameRawText",
+				"en_US localizedRichTextObjectFieldValue"
+			).put(
+				"localizedTextObjectFieldName",
+				"en_US localizedTextObjectFieldValue"
+			).build(),
+			"en_US", objectEntry.getId());
+		_assertLocalizedValues(
+			HashMapBuilder.<String, Object>put(
+				"localizedLongTextObjectFieldName",
+				"pt_BR localizedLongTextObjectFieldValue"
+			).put(
+				"localizedRichTextObjectFieldName",
+				"pt_BR <i>localizedRichTextObjectFieldValue</i>"
+			).put(
+				"localizedRichTextObjectFieldNameRawText",
+				"pt_BR localizedRichTextObjectFieldValue"
+			).put(
+				"localizedTextObjectFieldName",
+				"pt_BR localizedTextObjectFieldValue"
+			).build(),
+			"pt_BR", objectEntry.getId());
+
+		_defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition2, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedLongTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedLongTextObjectFieldValue"
+						).put(
+							"pt_BR", ""
+						).build()
+					).put(
+						"localizedRichTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"ar_SA", "ar_SA localizedRichTextObjectFieldValue"
+						).put(
+							"ca_ES", "ca_ES localizedRichTextObjectFieldValue"
+						).put(
+							"en_US",
+							"en_US <i>localizedRichTextObjectFieldValue</i>"
+						).build()
+					).put(
+						"localizedTextObjectFieldName_i18n",
+						HashMapBuilder.put(
+							"en_US", "en_US localizedTextObjectFieldValue"
+						).put(
+							"pt_BR", "pt_BR localizedTextObjectFieldValue"
+						).build()
+					).build();
+				}
+			});
+
+		_assertLocalizedValues(
+			HashMapBuilder.<String, Object>put(
+				"localizedLongTextObjectFieldName", ""
+			).put(
+				"localizedRichTextObjectFieldName",
+				"ar_SA localizedRichTextObjectFieldValue"
+			).put(
+				"localizedRichTextObjectFieldNameRawText",
+				"ar_SA localizedRichTextObjectFieldValue"
+			).put(
+				"localizedTextObjectFieldName", ""
+			).build(),
+			"ar_SA", objectEntry.getId());
+		_assertLocalizedValues(
+			HashMapBuilder.<String, Object>put(
+				"localizedLongTextObjectFieldName", ""
+			).put(
+				"localizedRichTextObjectFieldName",
+				"ca_ES localizedRichTextObjectFieldValue"
+			).put(
+				"localizedRichTextObjectFieldNameRawText",
+				"ca_ES localizedRichTextObjectFieldValue"
+			).put(
+				"localizedTextObjectFieldName", ""
+			).build(),
+			"ca_ES", objectEntry.getId());
+		_assertLocalizedValues(
+			HashMapBuilder.<String, Object>put(
+				"localizedLongTextObjectFieldName",
+				"en_US localizedLongTextObjectFieldValue"
+			).put(
+				"localizedRichTextObjectFieldName",
+				"en_US <i>localizedRichTextObjectFieldValue</i>"
+			).put(
+				"localizedRichTextObjectFieldNameRawText",
+				"en_US localizedRichTextObjectFieldValue"
+			).put(
+				"localizedTextObjectFieldName",
+				"en_US localizedTextObjectFieldValue"
+			).build(),
+			"en_US", objectEntry.getId());
+		_assertLocalizedValues(
+			HashMapBuilder.<String, Object>put(
+				"localizedLongTextObjectFieldName", ""
+			).put(
+				"localizedRichTextObjectFieldName", ""
+			).put(
+				"localizedRichTextObjectFieldNameRawText", ""
+			).put(
+				"localizedTextObjectFieldName",
+				"pt_BR localizedTextObjectFieldValue"
+			).build(),
+			"pt_BR", objectEntry.getId());
+	}
+
+	@Test
+	public void testUpdateObjectEntryAccountRestriction() throws Exception {
 
 		// Regular roles' company scope permissions should not be restricted by
 		// account entry
@@ -2261,13 +2532,6 @@ public class DefaultObjectEntryManagerImplTest {
 				}
 			}
 			else if (Objects.equals(
-						expectedEntry.getKey(), "richTextObjectFieldName")) {
-
-				Assert.assertEquals(
-					expectedEntry.getValue(),
-					actualObjectEntryProperties.get(expectedEntry.getKey()));
-			}
-			else if (Objects.equals(
 						expectedEntry.getKey(),
 						"richTextObjectFieldNameRawText")) {
 
@@ -2316,6 +2580,28 @@ public class DefaultObjectEntryManagerImplTest {
 		catch (Exception exception) {
 			Assert.assertEquals(exception.getMessage(), message);
 		}
+	}
+
+	private void _assertLocalizedValues(
+			Map<String, Object> expectedLocalizedValues, String languageId,
+			long objectEntryId)
+		throws Exception {
+
+		_user.setLanguageId(languageId);
+
+		_user = _userLocalService.updateUser(_user);
+
+		_assertEquals(
+			new ObjectEntry() {
+				{
+					setProperties(expectedLocalizedValues);
+				}
+			},
+			_defaultObjectEntryManager.getObjectEntry(
+				new DefaultDTOConverterContext(
+					false, Collections.emptyMap(), _dtoConverterRegistry, null,
+					LocaleUtil.getDefault(), null, _user),
+				_objectDefinition2, objectEntryId));
 	}
 
 	private void _assertObjectEntriesSize(long size) throws Exception {
@@ -2449,7 +2735,7 @@ public class DefaultObjectEntryManagerImplTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				_adminUser.getUserId(), false, false,
+				_adminUser.getUserId(), false, true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -2562,10 +2848,6 @@ public class DefaultObjectEntryManagerImplTest {
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	private Role _accountManagerRole;
-
-	@Inject
-	private AccountRoleLocalService _accountRoleLocalService;
-
 	private Role _buyerRole;
 
 	@Inject

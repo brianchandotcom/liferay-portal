@@ -57,6 +57,7 @@ export default function FieldsSidebarSettingsBody({field}) {
 	const {
 		defaultLanguageId,
 		editingLanguageId,
+		focusedField,
 		objectFields,
 		pages,
 		rules,
@@ -86,14 +87,25 @@ export default function FieldsSidebarSettingsBody({field}) {
 					switch (type) {
 						case CORE_EVENT_TYPES.FIELD.BLUR:
 						case CORE_EVENT_TYPES.FIELD.CHANGE: {
-							dispatch({
-								payload: {
-									propertyName:
-										payload.fieldInstance.fieldName,
-									propertyValue: payload.value,
-								},
-								type,
-							});
+							if (payload.fieldInstance.fieldName !== 'options') {
+								dispatch({
+									payload: {
+										propertyName:
+											payload.fieldInstance.fieldName,
+										propertyValue: payload.value,
+									},
+									type,
+								});
+							}
+							else {
+								dispatch({
+									payload: {
+										propertyName: focusedField.fieldName,
+										propertyValue: focusedField.options,
+									},
+									type,
+								});
+							}
 
 							break;
 						}

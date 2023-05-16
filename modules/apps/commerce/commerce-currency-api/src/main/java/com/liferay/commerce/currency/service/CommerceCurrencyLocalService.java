@@ -357,11 +357,11 @@ public interface CommerceCurrencyLocalService
 		CommerceCurrency commerceCurrency);
 
 	public CommerceCurrency updateCommerceCurrency(
-			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			String symbol, BigDecimal rate,
-			Map<Locale, String> formatPatternMap, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active, ServiceContext serviceContext)
+			long commerceCurrencyId, Map<Locale, String> nameMap, String symbol,
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceCurrency updateCommerceCurrencyRate(

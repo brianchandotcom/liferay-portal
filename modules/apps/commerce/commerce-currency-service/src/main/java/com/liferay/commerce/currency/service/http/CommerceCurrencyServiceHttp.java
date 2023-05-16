@@ -528,8 +528,8 @@ public class CommerceCurrencyServiceHttp {
 	public static com.liferay.commerce.currency.model.CommerceCurrency
 			updateCommerceCurrency(
 				HttpPrincipal httpPrincipal, long commerceCurrencyId,
-				String code, java.util.Map<java.util.Locale, String> nameMap,
-				String symbol, java.math.BigDecimal rate,
+				java.util.Map<java.util.Locale, String> nameMap, String symbol,
+				java.math.BigDecimal rate,
 				java.util.Map<java.util.Locale, String> formatPatternMap,
 				int maxFractionDigits, int minFractionDigits,
 				String roundingMode, boolean primary, double priority,
@@ -543,7 +543,7 @@ public class CommerceCurrencyServiceHttp {
 				_updateCommerceCurrencyParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceCurrencyId, code, nameMap, symbol, rate,
+				methodKey, commerceCurrencyId, nameMap, symbol, rate,
 				formatPatternMap, maxFractionDigits, minFractionDigits,
 				roundingMode, primary, priority, active, serviceContext);
 
@@ -686,7 +686,7 @@ public class CommerceCurrencyServiceHttp {
 	};
 	private static final Class<?>[] _updateCommerceCurrencyParameterTypes11 =
 		new Class[] {
-			long.class, String.class, java.util.Map.class, String.class,
+			long.class, java.util.Map.class, String.class,
 			java.math.BigDecimal.class, java.util.Map.class, int.class,
 			int.class, String.class, boolean.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

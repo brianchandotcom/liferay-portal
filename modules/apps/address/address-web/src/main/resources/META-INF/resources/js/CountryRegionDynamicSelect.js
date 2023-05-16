@@ -32,7 +32,9 @@ function CountryRegionDynamicSelect({
 						(country) => country.a2 === 'JP'
 					);
 
-					japanCountryId = countryJP.countryId;
+					if (countryJP !== undefined) {
+						japanCountryId = countryJP.countryId;
+					}
 
 					callback(countries);
 				});

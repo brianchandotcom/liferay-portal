@@ -403,6 +403,9 @@
 		<finder name="CProductId" return-type="Collection">
 			<finder-column name="CProductId" />
 		</finder>
+		<finder name="CustomerCommerceOrderItemId" return-type="Collection">
+			<finder-column name="customerCommerceOrderItemId" />
+		</finder>
 		<finder name="ParentCommerceOrderItemId" return-type="Collection">
 			<finder-column name="parentCommerceOrderItemId" />
 		</finder>

@@ -37,6 +37,11 @@ public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
 			String tableName, OnlineUpgradeStep... onlineUpgradeSteps)
 		throws Exception {
 
+		if ((onlineUpgradeSteps == null) || (onlineUpgradeSteps.length == 0)) {
+			throw new IllegalArgumentException(
+				"At least one upgrade step is required");
+		}
+
 		try (Connection connection = DataAccess.getConnection()) {
 			String tempTableName = _getTempTableName(tableName);
 

@@ -283,7 +283,7 @@ definition {
 		var remoteAppNameToBeRemoved = ${tableEntry};
 
 		if (isSet(remoteAppNameToBeRemoved)) {
-			AssertConfirm(value1 = "Are you sure you want to delete ${remoteAppNameToBeRemoved}? Client extension will be removed immediately. Sites using this client extension will be affected. This action can not be undone.");
+			AssertConfirm(value1 = "Are you sure you want to delete ${remoteAppNameToBeRemoved}? Client extension will be removed immediately. Sites using this client extension will be affected. This action cannot be undone.");
 		}
 		else {
 			AssertConfirm.assertPartialConfirmation(value1 = "Client extension will be removed immediately. Sites using this client extension will be affected. This action can not be undone.");

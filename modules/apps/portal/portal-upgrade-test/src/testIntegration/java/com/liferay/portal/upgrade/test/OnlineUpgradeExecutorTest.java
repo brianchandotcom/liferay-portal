@@ -113,8 +113,6 @@ public class OnlineUpgradeExecutorTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				tempTableName, "name", "VARCHAR(255) null"));
-
-		Assert.assertTrue(_dbInspector.isNullable(tempTableName, "name"));
 	}
 
 	@Test

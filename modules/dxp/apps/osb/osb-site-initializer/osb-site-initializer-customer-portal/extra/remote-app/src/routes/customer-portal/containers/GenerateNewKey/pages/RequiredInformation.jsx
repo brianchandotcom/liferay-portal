@@ -10,6 +10,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FieldArray, Formik} from 'formik';
@@ -20,7 +21,10 @@ import {Badge, Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {patchOrderItemByExternalReferenceCode} from '../../../../../common/services/liferay/graphql/queries';
-import {createNewGenerateKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import {
+	createNewGenerateKey,
+	putSubscriptionInKey,
+} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getInitialGenerateNewKey from '../../../../../common/utils/constants/getInitialGenerateNewKey';
 import GenerateCardLayout from '../GenerateCardLayout';
 import KeyInputs from '../KeyInputs';
@@ -40,13 +44,20 @@ const RequiredInformation = ({
 	urlPreviousPage,
 	values,
 }) => {
-	const {client, provisioningServerAPI} = useAppPropertiesContext();
+	const {
+		client,
+		featureFlag,
+		provisioningServerAPI,
+	} = useAppPropertiesContext();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);
 	const [showKeyEmptyError, setShowKeyEmptyError] = useState(false);
-
+	const [isLoadingUserInvitation, setIsLoadingUserInvitation] = useState(
+		false
+	);
 	const [availableKeys, setAvailableKeys] = useState(1);
+	const [checkedBoxSubscription, setCheckedBoxSubscription] = useState(false);
 	const navigate = useNavigate();
 
 	const hasTouched = !Object.keys(touched).length;
@@ -166,16 +177,25 @@ const RequiredInformation = ({
 			startDate: infoSelectedKey?.selectedSubscription.startDate,
 		};
 
+		const subscriptionKey = async (id) => {
+			await putSubscriptionInKey(provisioningServerAPI, id, sessionId);
+		};
+
 		if (infoSelectedKey.hasNotPermanentLicence) {
-			await createNewGenerateKey(
+			setIsLoadingUserInvitation(true);
+
+			const results = await createNewGenerateKey(
 				accountKey,
 				provisioningServerAPI,
 				sessionId,
 				licenseKey
 			);
-		}
-		else {
-			await Promise.all(
+			await subscriptionKey(results[0].items.id);
+			setIsLoadingUserInvitation(false);
+		} else {
+			setIsLoadingUserInvitation(true);
+
+			const results = await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
 					licenseKey.macAddresses = macAddresses.replace('\n', ',');
 					licenseKey.hostName = hostName.replace('\n', ',');
@@ -189,6 +209,9 @@ const RequiredInformation = ({
 					);
 				})
 			);
+
+			await subscriptionKey(results[0].items[0].id);
+			setIsLoadingUserInvitation(false);
 		}
 
 		await client.mutate({
@@ -242,8 +265,12 @@ const RequiredInformation = ({
 							</Button>
 
 							<Button
-								disabled={baseButtonDisabled}
+								disabled={
+									baseButtonDisabled ||
+									isLoadingUserInvitation
+								}
 								displayType="primary"
+								isLoading={isLoadingUserInvitation}
 								onClick={() => submitKey()}
 							>
 								{infoSelectedKey.hasNotPermanentLicence
@@ -426,7 +453,34 @@ const RequiredInformation = ({
 										</Button>
 									</ClayTooltipProvider>
 
-									<div className="dropdown-divider"></div>
+									{featureFlag.includes('LPS-148344') && (
+										<>
+											<div className="d-flex">
+												<div className="pr-2 pt-1">
+													<ClayCheckbox
+														checked={
+															checkedBoxSubscription
+														}
+														id="expiration-checkbox"
+														onChange={() =>
+															setCheckedBoxSubscription(
+																(val) => !val
+															)
+														}
+													/>
+												</div>
+
+												<label htmlFor="expiration-checkbox">
+													{i18n.sub(
+														'receive-expiration-notifications-through-email-when-this-activation-key-is-about-to-expire-x-days-before,-x-days-before,-and-on-the-day-of-expiration.-unsubscribe-at-any-time',
+														[30, 15]
+													)}
+												</label>
+											</div>
+
+											<div className="dropdown-divider"></div>
+										</>
+									)}
 								</div>
 							) : (
 								<div className="cp-input-generate-label px-6">

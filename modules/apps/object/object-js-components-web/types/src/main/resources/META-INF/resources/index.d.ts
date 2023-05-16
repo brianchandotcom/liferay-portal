@@ -13,6 +13,7 @@
  */
 
 export {default as AutoComplete} from './components/AutoComplete/index';
+export {BetaButton} from './components/BetaButton';
 export {BuilderScreen} from './components/BuilderScreen/BuilderScreen';
 export {Card} from './components/Card';
 export {

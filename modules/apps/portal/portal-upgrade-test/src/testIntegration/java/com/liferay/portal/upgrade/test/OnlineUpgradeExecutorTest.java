@@ -28,6 +28,8 @@ import com.liferay.portal.upgrade.online.OnlineUpgradeExecutor;
 import com.liferay.portal.upgrade.online.OnlineUpgradeStepFactory;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -97,6 +99,8 @@ public class OnlineUpgradeExecutorTest {
 
 		Assert.assertFalse(_dbInspector.hasColumn(tempTableName, "name"));
 		Assert.assertTrue(_dbInspector.hasColumn(tempTableName, "title"));
+
+		_checkData(tempTableName, "title");
 	}
 
 	@Test
@@ -106,9 +110,13 @@ public class OnlineUpgradeExecutorTest {
 			OnlineUpgradeStepFactory.alterColumnType(
 				"name", "VARCHAR(255) null"));
 
+		String tempTableName = _getTempTableName();
+
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_getTempTableName(), "name", "VARCHAR(255) null"));
+				tempTableName, "name", "VARCHAR(255) null"));
+
+		_checkData(tempTableName, "name");
 	}
 
 	@Test
@@ -141,6 +149,27 @@ public class OnlineUpgradeExecutorTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				tempTableName, "title", "VARCHAR(255) null"));
+
+		_checkData(tempTableName, "title");
+	}
+
+	private void _checkData(String tempTableName, String columnName)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + tempTableName + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals("test_a", resultSet.getString(columnName));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals("test_b", resultSet.getString(columnName));
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	private String _getTempTableName() {

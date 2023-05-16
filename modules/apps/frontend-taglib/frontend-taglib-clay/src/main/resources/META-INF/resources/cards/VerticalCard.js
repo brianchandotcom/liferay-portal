@@ -50,6 +50,7 @@ export default function VerticalCard({
 	stickerLabel,
 	stickerShape,
 	stickerStyle,
+	stickerTitle,
 	symbol,
 	title,
 	...otherProps
@@ -66,6 +67,7 @@ export default function VerticalCard({
 			className: stickerCssClass,
 			displayType: stickerStyle,
 			shape: stickerShape,
+			title: stickerTitle,
 		};
 
 		if (stickerImageSrc) {
@@ -89,6 +91,7 @@ export default function VerticalCard({
 		stickerLabel,
 		stickerShape,
 		stickerStyle,
+		stickerTitle,
 	]);
 
 	const handleToggleAllItems = useCallback(

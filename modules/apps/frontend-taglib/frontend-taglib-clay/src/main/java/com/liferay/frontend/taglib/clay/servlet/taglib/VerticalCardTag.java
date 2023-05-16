@@ -177,6 +177,16 @@ public class VerticalCardTag extends BaseCardTag {
 		return _stickerStyle;
 	}
 
+	public String getStickerTitle() {
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_stickerTitle == null) && (verticalCard != null)) {
+			return verticalCard.getStickerTitle();
+		}
+
+		return _stickerTitle;
+	}
+
 	public String getSubtitle() {
 		VerticalCard verticalCard = getVerticalCard();
 
@@ -312,6 +322,10 @@ public class VerticalCardTag extends BaseCardTag {
 		_stickerStyle = stickerStyle;
 	}
 
+	public void setStickerTitle(String stickerTitle) {
+		_stickerTitle = stickerTitle;
+	}
+
 	public void setSubtitle(String subtitle) {
 		_subtitle = subtitle;
 	}
@@ -342,6 +356,7 @@ public class VerticalCardTag extends BaseCardTag {
 		_stickerLabel = null;
 		_stickerShape = null;
 		_stickerStyle = null;
+		_stickerTitle = null;
 		_subtitle = null;
 		_title = null;
 	}
@@ -368,6 +383,7 @@ public class VerticalCardTag extends BaseCardTag {
 		props.put("stickerLabel", getStickerLabel());
 		props.put("stickerShape", getStickerShape());
 		props.put("stickerStyle", getStickerStyle());
+		props.put("stickerTitle", getStickerTitle());
 		props.put("title", getTitle());
 
 		return super.prepareProps(props);
@@ -666,6 +682,7 @@ public class VerticalCardTag extends BaseCardTag {
 	private String _stickerLabel;
 	private String _stickerShape;
 	private String _stickerStyle;
+	private String _stickerTitle;
 	private String _subtitle;
 	private String _title;
 

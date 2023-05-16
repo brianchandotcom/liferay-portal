@@ -76,6 +76,10 @@ public interface VerticalCard extends BaseClayCard {
 		return null;
 	}
 
+	public default String getStickerTitle() {
+		return null;
+	}
+
 	public default String getSubtitle() {
 		return null;
 	}

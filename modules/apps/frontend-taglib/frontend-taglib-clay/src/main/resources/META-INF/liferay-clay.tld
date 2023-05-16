@@ -2943,6 +2943,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>stickerTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>subtitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

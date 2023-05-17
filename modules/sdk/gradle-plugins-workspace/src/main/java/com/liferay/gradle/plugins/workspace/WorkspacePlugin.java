@@ -26,10 +26,13 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+
+import net.saliman.gradle.plugin.properties.PropertiesPlugin;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -57,6 +60,8 @@ public class WorkspacePlugin implements Plugin<Settings> {
 	public void apply(Settings settings) {
 		Gradle gradle = settings.getGradle();
 		File rootDir = settings.getRootDir();
+
+		_applyPlugins(settings);
 
 		final WorkspaceExtension workspaceExtension = _addWorkspaceExtension(
 			settings);
@@ -178,6 +183,18 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 		return extensionContainer.create(
 			EXTENSION_NAME, WorkspaceExtension.class, settings);
+	}
+
+	private void _applyPlugins(Settings settings) {
+		if (GradleUtil.getProperty(
+				settings,
+				WorkspacePlugin.PROPERTY_PREFIX +
+					"feature.net.saliman.properties.plugin.enabled",
+				true)) {
+
+			settings.apply(
+				Collections.singletonMap("plugin", PropertiesPlugin.class));
+		}
 	}
 
 	private void _setPortalVersion(

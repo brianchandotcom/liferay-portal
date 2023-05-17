@@ -134,7 +134,7 @@ definition {
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON",
 			value1 = "Edit");
 
-		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	macro gotoEditSpecific {
@@ -146,7 +146,7 @@ definition {
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON",
 			value1 = "Edit");
 
-		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	macro gotoEditViaDialogBox {
@@ -154,7 +154,7 @@ definition {
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON",
 			value1 = "Edit");
 
-		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	macro saveEvent {

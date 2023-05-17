@@ -752,7 +752,7 @@ definition {
 
 		Click(locator1 = "Staging#HISTORY_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	macro gotoNavTab {

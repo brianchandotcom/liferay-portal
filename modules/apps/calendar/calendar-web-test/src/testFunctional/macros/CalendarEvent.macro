@@ -1068,7 +1068,7 @@ definition {
 	}
 
 	macro selectEventIframe {
-		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	macro selectRepeatFrequency {

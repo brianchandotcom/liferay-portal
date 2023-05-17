@@ -370,7 +370,7 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
-		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		var key_imageFileName = ${dmDocumentTitle};
 		var key_imageFileName = StringUtil.replace(${dmDocumentTitle}, " ", "+");

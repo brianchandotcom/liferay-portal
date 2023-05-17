@@ -141,11 +141,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METADATA_SETS_IFRAME</td>
-	<td>//div[contains(@class,'modal-body')]/iframe</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MODAL_BODY</td>
 	<td>//div[contains(@class,'modal-body')]//iframe</td>
 	<td></td>

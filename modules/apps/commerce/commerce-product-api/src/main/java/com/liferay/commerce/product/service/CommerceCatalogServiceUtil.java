@@ -39,13 +39,13 @@ public class CommerceCatalogServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceCatalog addCommerceCatalog(
-			String externalReferenceCode, String name,
+			String externalReferenceCode, long accountEntryId, String name,
 			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceCatalog(
-			externalReferenceCode, name, commerceCurrencyCode,
+			externalReferenceCode, accountEntryId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId, serviceContext);
 	}
 
@@ -112,12 +112,12 @@ public class CommerceCatalogServiceUtil {
 	}
 
 	public static CommerceCatalog updateCommerceCatalog(
-			long commerceCatalogId, String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId)
+			long commerceCatalogId, long accountEntryId, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws PortalException {
 
 		return getService().updateCommerceCatalog(
-			commerceCatalogId, name, commerceCurrencyCode,
+			commerceCatalogId, accountEntryId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
 	}
 

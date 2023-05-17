@@ -56,7 +56,7 @@ public interface CommerceCatalogService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CommerceCatalogServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce catalog remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceCatalogServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceCatalog addCommerceCatalog(
-			String externalReferenceCode, String name,
+			String externalReferenceCode, long accountEntryId, String name,
 			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -102,8 +102,8 @@ public interface CommerceCatalogService extends BaseService {
 		throws PortalException;
 
 	public CommerceCatalog updateCommerceCatalog(
-			long commerceCatalogId, String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId)
+			long commerceCatalogId, long accountEntryId, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws PortalException;
 
 	public CommerceCatalog updateCommerceCatalogExternalReferenceCode(

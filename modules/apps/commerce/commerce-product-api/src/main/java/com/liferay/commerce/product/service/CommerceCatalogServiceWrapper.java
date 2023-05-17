@@ -39,13 +39,13 @@ public class CommerceCatalogServiceWrapper
 
 	@Override
 	public CommerceCatalog addCommerceCatalog(
-			String externalReferenceCode, String name,
+			String externalReferenceCode, long accountEntryId, String name,
 			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceCatalogService.addCommerceCatalog(
-			externalReferenceCode, name, commerceCurrencyCode,
+			externalReferenceCode, accountEntryId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId, serviceContext);
 	}
 
@@ -124,12 +124,12 @@ public class CommerceCatalogServiceWrapper
 
 	@Override
 	public CommerceCatalog updateCommerceCatalog(
-			long commerceCatalogId, String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId)
+			long commerceCatalogId, long accountEntryId, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceCatalogService.updateCommerceCatalog(
-			commerceCatalogId, name, commerceCurrencyCode,
+			commerceCatalogId, accountEntryId, name, commerceCurrencyCode,
 			catalogDefaultLanguageId);
 	}
 

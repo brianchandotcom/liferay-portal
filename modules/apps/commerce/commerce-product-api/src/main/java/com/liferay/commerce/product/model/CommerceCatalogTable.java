@@ -57,6 +57,9 @@ public class CommerceCatalogTable extends BaseTable<CommerceCatalogTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceCatalogTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceCatalogTable, Long> accountEntryId =
+		createColumn(
+			"accountEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceCatalogTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceCatalogTable, String> commerceCurrencyCode =

@@ -49,6 +49,8 @@ public interface SystemObjectDefinitionManager {
 			String externalReferenceCode, long companyId)
 		throws PortalException;
 
+	public String getExternalReferenceCode();
+
 	public String getExternalReferenceCode(long primaryKey)
 		throws PortalException;
 

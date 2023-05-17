@@ -197,7 +197,7 @@ public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 
 				return HttpComponentsUtil.addParameters(
 					themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-						"/layout_reports/get_layout_reports_issues",
+						"/portal/get_layout_reports_issues",
 					"redirect", completeURL, "backURL", completeURL, "groupId",
 					layout.getGroupId(), "privateLayout",
 					layout.isPrivateLayout(), "screenNavigationEntryKey", "seo",
@@ -222,7 +222,7 @@ public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 
 			return HttpComponentsUtil.addParameters(
 				themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-					"/layout_reports/get_layout_reports_issues",
+					"/portal/get_layout_reports_issues",
 				"redirect", _getCompleteURL(themeDisplay), "factoryPid",
 				configurationPid, "pid", configurationPid);
 		}

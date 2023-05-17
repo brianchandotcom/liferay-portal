@@ -215,7 +215,7 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 
 		return HttpComponentsUtil.addParameters(
 			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/layout_reports/get_layout_reports_issues",
+				"/portal/get_layout_reports_issues",
 			"groupId", String.valueOf(groupId), "url", url);
 	}
 

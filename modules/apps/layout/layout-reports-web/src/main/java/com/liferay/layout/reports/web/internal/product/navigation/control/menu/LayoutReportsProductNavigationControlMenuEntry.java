@@ -210,7 +210,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		return HttpComponentsUtil.addParameters(
 			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/layout_reports/get_layout_reports_data",
+				"/portal/get_layout_reports_data",
 			"p_l_id", themeDisplay.getPlid());
 	}
 

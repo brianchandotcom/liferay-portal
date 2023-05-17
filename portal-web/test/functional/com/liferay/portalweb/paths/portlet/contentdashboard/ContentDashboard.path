@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>AUDIT_GRAPH_TITLE</td>
-	<td>//*[contains(@class, 'autofit-col autofit-col-expand') and contains(text(),'${auditGraphTitle}')]</td>
+	<td>//*[contains(@class, 'sheet-title') and contains(.,'${auditGraphTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>FILTER_TEXT</td>
-	<td>//*[contains(@class, 'label-section')]</td>
+	<td>//*[contains(@class, 'tbar-section')]//span[contains(@class,'label-item')]</td>
 	<td></td>
 </tr>
 <tr>

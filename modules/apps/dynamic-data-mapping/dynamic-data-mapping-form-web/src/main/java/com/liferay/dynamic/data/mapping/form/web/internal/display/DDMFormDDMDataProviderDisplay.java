@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.form.web.internal.display;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.data.provider.display.DDMDataProviderDisplay;
-import com.liferay.dynamic.data.mapping.form.web.internal.tab.item.DDMFormAdminFieldSetTabItem;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -68,8 +67,10 @@ public class DDMFormDDMDataProviderDisplay implements DDMDataProviderDisplay {
 	)
 	private DDMDisplayTabItem _ddmFormAdminDataProviderTabItem;
 
-	@Reference
-	private DDMFormAdminFieldSetTabItem _ddmFormAdminFieldSetTabItem;
+	@Reference(
+		target = "(component.name=com.liferay.dynamic.data.mapping.form.web.internal.tab.item.DDMFormAdminFieldSetTabItem)"
+	)
+	private DDMDisplayTabItem _ddmFormAdminFieldSetTabItem;
 
 	@Reference(
 		target = "(component.name=com.liferay.dynamic.data.mapping.form.web.internal.tab.item.DDMFormAdminTabItem)"

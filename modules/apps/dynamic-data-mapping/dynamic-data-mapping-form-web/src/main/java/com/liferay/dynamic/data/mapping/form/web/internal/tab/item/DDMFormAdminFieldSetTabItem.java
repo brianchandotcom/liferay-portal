@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-	service = {DDMDisplayTabItem.class, DDMFormAdminFieldSetTabItem.class}
+	service = DDMDisplayTabItem.class
 )
 public class DDMFormAdminFieldSetTabItem extends DDMFormAdminTabItem {
 

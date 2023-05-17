@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -36,7 +35,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,18 +71,8 @@ public class KnowledgeBaseAttachmentResourceImpl
 				siteId, knowledgeBaseArticleExternalReferenceCode);
 
 		FileEntry fileEntry =
-			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
-				externalReferenceCode, kbArticle.getGroupId());
-
-		if (kbArticle.getAttachmentsFolderId() != fileEntry.getFolderId()) {
-			throw new NotFoundException(
-				StringBundler.concat(
-					"No knowledge base attachment exists with external ",
-					"reference code ", externalReferenceCode, ", site ID ",
-					String.valueOf(kbArticle.getGroupId()),
-					", and knowledge base article with external reference ",
-					"code ", knowledgeBaseArticleExternalReferenceCode));
-		}
+			kbArticle.getAttachmentsFileEntryByExternalReferenceCode(
+				externalReferenceCode);
 
 		_portletFileRepository.deletePortletFileEntry(
 			fileEntry.getFileEntryId());

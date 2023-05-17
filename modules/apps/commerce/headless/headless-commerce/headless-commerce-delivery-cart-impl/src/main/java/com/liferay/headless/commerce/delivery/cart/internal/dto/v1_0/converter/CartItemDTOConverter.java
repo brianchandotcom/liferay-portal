@@ -152,6 +152,8 @@ public class CartItemDTOConverter
 				currency = commerceCurrency.getName(locale);
 				price = unitPrice.doubleValue();
 				priceFormatted = unitPriceCommerceMoney.format(locale);
+				priceOnApplication =
+					commerceOrderItemPrice.isPriceOnApplication();
 			}
 		};
 

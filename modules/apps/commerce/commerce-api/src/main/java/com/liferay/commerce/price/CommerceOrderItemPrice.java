@@ -63,6 +63,10 @@ public class CommerceOrderItemPrice {
 		return _unitPrice;
 	}
 
+	public boolean isPriceOnApplication() {
+		return _priceOnApplication;
+	}
+
 	public void setDiscountAmount(CommerceMoney discountAmount) {
 		_discountAmount = discountAmount;
 	}
@@ -99,6 +103,10 @@ public class CommerceOrderItemPrice {
 		_finalPrice = finalPrice;
 	}
 
+	public void setPriceOnApplication(boolean priceOnApplication) {
+		_priceOnApplication = priceOnApplication;
+	}
+
 	public void setPromoPrice(CommerceMoney promoPrice) {
 		_promoPrice = promoPrice;
 	}
@@ -114,6 +122,7 @@ public class CommerceOrderItemPrice {
 	private BigDecimal _discountPercentageLevel3;
 	private BigDecimal _discountPercentageLevel4;
 	private CommerceMoney _finalPrice;
+	private boolean _priceOnApplication;
 	private CommerceMoney _promoPrice;
 	private CommerceMoney _unitPrice;
 

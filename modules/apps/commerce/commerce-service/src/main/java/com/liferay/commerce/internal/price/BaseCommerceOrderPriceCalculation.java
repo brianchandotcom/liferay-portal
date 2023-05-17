@@ -486,6 +486,9 @@ public abstract class BaseCommerceOrderPriceCalculation
 			new CommerceOrderItemPrice(
 				commerceMoneyFactory.create(commerceCurrency, unitPrice));
 
+		commerceOrderItemPrice.setPriceOnApplication(
+			commerceOrderItem.isPriceOnApplication());
+
 		_updatePromoPrice(commerceCurrency, commerceOrderItemPrice, promoPrice);
 
 		_updateFinalPrice(commerceCurrency, commerceOrderItemPrice, finalPrice);

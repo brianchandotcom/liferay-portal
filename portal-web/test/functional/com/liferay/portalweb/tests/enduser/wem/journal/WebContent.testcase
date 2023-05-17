@@ -179,6 +179,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182417. Can map date-time field to editable field and customize date-time format on content page"
+	@priority = 3
+	test MapDateAndTimeFieldOnContentPage {
+		task ("Given a web content with a date and time field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Date and Time",
+				fieldName = "Date and Time");
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			DERenderer.inputDataInDateField(
+				fieldLabel = "Date and Time",
+				index = 1,
+				value = "08/06/2021 10:00 AM");
+
+			PageEditor.publish();
+		}
+
+		task ("When we have a content page with a date fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Date");
+		}
+
+		task ("Then you can map the date and time field to an editable field and customize the date and time format") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Date",
+				id = "element-date");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Date and Time");
+
+			Select(
+				key_fieldLabel = "Date Format",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Custom");
+
+			Type(
+				key_fieldLabel = "Custom Format",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "dd-MM-YYYY HH:mm a");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "date",
+				id = "element-date",
+				text = "06-08-2021 10:00 AM");
+		}
+	}
+
 	@description = "The user cannot republish an expired web content."
 	@priority = 4
 	test CannotRepublishExpiredWebContent {

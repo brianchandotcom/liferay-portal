@@ -78,7 +78,8 @@ public class AcceptLanguageContextProviderTest {
 		CompanyTestUtil.resetCompanyLocales(
 			_company.getCompanyId(),
 			Arrays.asList(
-				LocaleUtil.BRAZIL, LocaleUtil.GERMAN, LocaleUtil.JAPAN,
+				LocaleUtil.BRAZIL, new Locale("ca", "ES", "VALENCIA"),
+				LocaleUtil.GERMAN, LocaleUtil.JAPAN, new Locale("sr_RS_latin"),
 				LocaleUtil.TAIWAN),
 			LocaleUtil.TAIWAN);
 
@@ -132,9 +133,27 @@ public class AcceptLanguageContextProviderTest {
 				new AcceptLanguageMockHttpServletRequest(
 					user, LocaleUtil.JAPAN)));
 
-		// One partial locale
+		// One locale with variant
+
+		Locale caLocale = new Locale("ca", "ES", "VALENCIA");
 
 		AcceptLanguage acceptLanguage = _contextProvider.createContext(
+			new MockMessage(
+				new AcceptLanguageMockHttpServletRequest(user, caLocale)));
+
+		Assert.assertEquals(caLocale, acceptLanguage.getPreferredLocale());
+
+		Locale srLocale = new Locale("sr", "RS", "latin");
+
+		acceptLanguage = _contextProvider.createContext(
+			new MockMessage(
+				new AcceptLanguageMockHttpServletRequest(user, srLocale)));
+
+		Assert.assertEquals(srLocale, acceptLanguage.getPreferredLocale());
+
+		// One partial locale
+
+		acceptLanguage = _contextProvider.createContext(
 			new MockMessage(
 				new AcceptLanguageMockHttpServletRequest(
 					user, new Locale("pt", ""))));

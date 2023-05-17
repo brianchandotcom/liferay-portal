@@ -4,6 +4,7 @@ definition {
 	property custom.properties = "feature.flag.COMMERCE-8087=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testray.component.names = "Object";
 	property testray.main.component.name = "Batch Engine";
 
 	setUp {

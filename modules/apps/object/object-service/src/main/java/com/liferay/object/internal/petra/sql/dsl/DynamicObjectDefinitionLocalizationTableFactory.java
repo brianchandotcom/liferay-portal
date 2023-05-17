@@ -16,20 +16,17 @@ package com.liferay.object.internal.petra.sql.dsl;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
-import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Feliphe Marinho
  */
-@Component(service = DynamicObjectDefinitionLocalizationTableFactory.class)
 public class DynamicObjectDefinitionLocalizationTableFactory {
 
-	public DynamicObjectDefinitionLocalizationTable create(
-		ObjectDefinition objectDefinition) {
+	public static DynamicObjectDefinitionLocalizationTable create(
+		ObjectDefinition objectDefinition,
+		ObjectFieldLocalService objectFieldLocalService) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-146755") ||
 			!objectDefinition.isEnableLocalization()) {
@@ -39,11 +36,8 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 
 		return new DynamicObjectDefinitionLocalizationTable(
 			objectDefinition,
-			_objectFieldPersistence.findByODI_L(
-				objectDefinition.getObjectDefinitionId(), true));
+			objectFieldLocalService.getLocalizedObjectFields(
+				objectDefinition.getObjectDefinitionId()));
 	}
-
-	@Reference
-	private ObjectFieldPersistence _objectFieldPersistence;
 
 }

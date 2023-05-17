@@ -59,7 +59,7 @@ export function NewAppToolBar({
 	];
 
 	return (
-		<div className="new-app-tool-bar-container">
+		<div className="container new-app-tool-bar-container">
 			<ClayManagementToolbar.ItemList expand>
 				<div className="new-app-tool-bar-main-account-logo">
 					<img

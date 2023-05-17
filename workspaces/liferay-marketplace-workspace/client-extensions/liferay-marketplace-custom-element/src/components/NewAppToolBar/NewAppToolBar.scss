@@ -3,7 +3,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		padding: 1.5rem;
+		padding: 0.5rem;
 		width: 100%;
 	}
 
@@ -21,6 +21,7 @@
 		margin-right: 1.438rem;
 
 		&-img {
+			border-radius: 8px;
 			height: 3rem;
 			width: 3rem;
 		}

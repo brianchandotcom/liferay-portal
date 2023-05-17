@@ -134,27 +134,33 @@ path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
 
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
-cluster.name: LiferayElasticsearchCluster
+			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchCluster
 http.host: ["_local_", "_site_"]
 ingest.geoip.downloader.enabled: false
-xpack.license.self_generated.type: trial</echo>
+xpack.license.self_generated.type: trial
+xpack.security.enabled: false</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-elasticsearch-second-cluster-properties">
 		<sequential>
-			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}bootstrap.system_call_filter: false
-cluster.name: LiferayElasticsearchClusterTwo
+			<echo file="${elasticsearch.dir}-2/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchClusterTwo
 http.port: 9202
 ingest.geoip.downloader.enabled: false
 transport.port: 9500-9600
-xpack.license.self_generated.type: trial</echo>
+xpack.license.self_generated.type: trial
+xpack.security.enabled: false</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-elasticsearch-x-pack-pki-security-properties">
 		<sequential>
+			<replaceregexp
+				file="${elasticsearch.dir}/config/elasticsearch.yml"
+				match="xpack.security.enabled.*"
+				replace=""
+			/>
+
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.enabled: true
 xpack.security.http.ssl.certificate: certs/elastic-certificates.crt
 xpack.security.http.ssl.certificate_authorities : [ "certs/ca.crt" ]
@@ -185,6 +191,12 @@ kibana_system:
 
 	<macrodef name="configure-elasticsearch-x-pack-security-properties">
 		<sequential>
+			<replaceregexp
+				file="${elasticsearch.dir}/config/elasticsearch.yml"
+				match="xpack.security.enabled.*"
+				replace=""
+			/>
+
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.enabled: true
 xpack.security.http.ssl.enabled: true
 xpack.security.http.ssl.keystore.path: certs/elastic-certificates.p12
@@ -204,6 +216,12 @@ xpack.security.http.ssl.supported_protocols: [ "TLSv1.1", "TLSv1.2" ]</echo>
 
 	<macrodef name="configure-elasticsearch-x-pack-security-tls-cipher-suites-properties">
 		<sequential>
+			<replaceregexp
+				file="${elasticsearch.dir}/config/elasticsearch.yml"
+				match="xpack.security.enabled.*"
+				replace=""
+			/>
+
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.security.enabled: true
 xpack.security.http.ssl.enabled: true
 xpack.security.http.ssl.keystore.path: certs/elastic-certificates.p12

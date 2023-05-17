@@ -162,6 +162,7 @@ function AddToCartButton({
 					if (showOrderTypeModal && !order.items.length) {
 						setEvent(event);
 						Liferay.fire(OPEN_MODAL, {
+							addToCart: true,
 							id: `${randomNamespace}add-order-modal`,
 							size: MEDIUM_MODAL_SIZE,
 						});

@@ -302,7 +302,7 @@
 </tr>
 <tr>
 	<td>URL_LABEL</td>
-	<td>//*[contains(@class, 'sidebar-dl') and descendant::input] //h5</td>
+	<td>//*[contains(@class, 'sidebar-section') and descendant::input]//h5[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

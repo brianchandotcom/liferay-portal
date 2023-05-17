@@ -455,6 +455,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11472. User can not view a product with an expired SKU using the price range facet"
+	@priority = 5
+	test CannotViewExpiredProductSKUByPriceRangeFacet {
+		property portal.acceptance = "true";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the SKU of 'ABS Sensor' is updated to be expired") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Never Expire",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+
+			Alert.viewSuccessMessage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Expired");
+		}
+
+		task ("When the buyer navigates to the Minium Catalog") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And selects the price range of the expired SKU") {
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 50.00 - $ 99.99",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		task ("Then the product with an expired SKU is not shown") {
+			var productNames = "CV Axles,Wheel Bearing Grease,Shock Absorber,Oil Pump,Bearings,Master Cylinder,Calipers,Wear Sensors,Premium Brake Fluid,Brake Fluid";
+
+			for (var productName : list ${productNames}) {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertElementNotPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+	}
+
 	@description = "Test for COMMERCE-11353. The price range facet should filter the products as per the approved SKU of the product and should display the corresponding price"
 	@priority = 5
 	test CanPriceRangeFacetFilterActiveSkuPrice {

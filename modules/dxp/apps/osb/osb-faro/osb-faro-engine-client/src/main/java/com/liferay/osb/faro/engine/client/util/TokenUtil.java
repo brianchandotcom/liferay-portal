@@ -12,24 +12,24 @@
  *
  */
 
-package com.liferay.osb.faro.engine.client.constants;
+package com.liferay.osb.faro.engine.client.util;
+
+import com.liferay.osb.faro.util.FaroPropsValues;
 
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author André Miranda
+ * @author Leilany Ulisses
+ * @author Marcos Martins
  */
-public class TokenConstants {
+public class TokenUtil {
 
-	public static final String OSB_ASAH_SECURITY_TOKEN;
+	public static String getOSBAsahSecurityToken() {
+		if (StringUtils.isNotBlank(FaroPropsValues.OSB_ASAH_SECURITY_TOKEN)) {
+			return FaroPropsValues.OSB_ASAH_SECURITY_TOKEN;
+		}
 
-	static {
-		if (StringUtils.isNotBlank(System.getenv("OSB_ASAH_SECURITY_TOKEN"))) {
-			OSB_ASAH_SECURITY_TOKEN = System.getenv("OSB_ASAH_SECURITY_TOKEN");
-		}
-		else {
-			OSB_ASAH_SECURITY_TOKEN = System.getenv("OSB_ASAH_TOKEN");
-		}
+		return FaroPropsValues.OSB_ASAH_TOKEN;
 	}
 
 }

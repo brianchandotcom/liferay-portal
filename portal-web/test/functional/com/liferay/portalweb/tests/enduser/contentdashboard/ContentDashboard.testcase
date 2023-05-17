@@ -11,12 +11,6 @@ definition {
 		User.firstLoginPG();
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
-
-		Navigator.openURL();
-
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "tree.png",
-			groupName = "Guest");
 	}
 
 	tearDown {

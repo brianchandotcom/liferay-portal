@@ -29,14 +29,14 @@ export function ChoosePricingModelPage({
 	return (
 		<div className="choose-pricing-model-page-container">
 			<Header
-				description="Select one of the pricing models for your app. This will define how much users will pay and their acquisition experience."
+				description="Select one of the pricing models for your app. This will define how much users will pay. To enable paid apps, you must be a business and enter payment information in your Marketplace account profile."
 				title="Choose pricing model"
 			/>
 
 			<Section
 				label="App Price"
 				required
-				tooltip="Select one of the pricing models for your app. This will define how much users will pay . To enable paid apps, you must be a business and enter payment information in your Marketplace account profile"
+				tooltip="Choose Free or Paid. Apps that are free have no further payment obligations once installed."
 				tooltipText="More Info"
 			>
 				<div className="choose-pricing-model-page-radio-container">

@@ -80,14 +80,14 @@ export function CustomizeAppStorefrontPage({
 	return (
 		<div className="storefront-page-container">
 			<Header
-				description="Design the storefront for your app. This will set the information displayed on ths app’s page."
+				description="Design the storefront for your app.  This will set the information displayed on the app page in the Marketplace."
 				title="Customize app storefront"
 			/>
 
 			<Section
 				label="App Storefront"
 				required
-				tooltip="Design the storefront for your app.  This will display information displayed on the app page in the Marketplace."
+				tooltip="Screenshots for your app must not exceed 1080 pixels in width and 678 pixels in height and must be in JPG or PNG format.  The file site of each screenshot must not exceed 384KB.  Each screenshot should preferrably be the same size, but each will be automatically scaled to match the aspect ratio of the above dimensions. It is preferrable if they are named sequentially, but you can reorder them as needed."
 				tooltipText="More Info"
 			>
 				<div className="storefront-page-info-container">

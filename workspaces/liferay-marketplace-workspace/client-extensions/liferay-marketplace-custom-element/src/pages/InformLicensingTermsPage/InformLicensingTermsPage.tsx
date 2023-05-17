@@ -56,14 +56,14 @@ export function InformLicensingTermsPage({
 	return (
 		<div className="informing-licensing-terms-page-container">
 			<Header
-				description="Define the licensing approach for your app. This will impact users' licensing renew experience."
+				description="Define the licensing approach for your app. This will impact users' licensing renewal experience."
 				title="Inform licensing terms"
 			/>
 
 			<Section
 				label="App License"
 				required
-				tooltip={`Define the licensing approach for your app. This will impact users' licensing renewal experience.`}
+				tooltip="More Info"
 				tooltipText="More Info"
 			>
 				<div className="informing-licensing-terms-page-app-license-container">
@@ -112,7 +112,7 @@ export function InformLicensingTermsPage({
 			>
 				<div className="informing-licensing-terms-page-day-trial-container">
 					<RadioCard
-						description="Offer a 30-day free trial for this app"
+						description="Offer a 30-day free trial for this app."
 						disabled={priceModel.value === 'Free'}
 						icon={taskCheckedIcon}
 						onChange={() => {
@@ -123,11 +123,11 @@ export function InformLicensingTermsPage({
 						}}
 						selected={dayTrial === 'yes'}
 						title="Yes"
-						tooltip="Offer a 30-day free trial for this app"
+						tooltip="Offer a 30-day free trial for this app."
 					/>
 
 					<RadioCard
-						description="Do not offer a 30-day free trial"
+						description="Do not offer a 30-day free trial."
 						icon={cancelIcon}
 						onChange={() => {
 							dispatch({
@@ -137,7 +137,7 @@ export function InformLicensingTermsPage({
 						}}
 						selected={dayTrial === 'no'}
 						title="No"
-						tooltip="Do not offer a 30-day trial for this app"
+						tooltip="Do not offer a 30-day trial for this app."
 					/>
 				</div>
 			</Section>

@@ -51,7 +51,7 @@ public class DiscardChangesMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(actionRequest, "modelClassPK");
 
-		_ctCollectionService.discardCTEntries(
+		_ctCollectionService.discardCTEntry(
 			ctCollectionId, modelClassNameId, modelClassPK);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

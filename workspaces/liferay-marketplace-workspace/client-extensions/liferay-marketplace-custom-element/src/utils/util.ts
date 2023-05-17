@@ -188,48 +188,51 @@ export async function submitFile({
 		externalReferenceCode: appERC,
 	});
 
-	response.json();
+	return (await response.json()) as ProductAttachment;
 }
 
-export function submitBase64EncodedFile({
+export async function submitBase64EncodedFile({
 	appERC,
 	file,
 	index,
 	requestFunction,
 	title,
 }: FileRequest) {
-	const reader = new FileReader();
+	return new Promise((resolve) => {
+		let attachmentId;
+		const reader = new FileReader();
+		reader.addEventListener(
+			'load',
+			async () => {
+				let result = reader.result as string;
 
-	reader.addEventListener(
-		'load',
-		() => {
-			let result = reader.result as string;
+				if (result?.includes('application/zip')) {
+					result = result?.substring(28);
+				}
+				else if (
+					result?.includes('image/gif') ||
+					result?.includes('image/png')
+				) {
+					result = result?.substring(22);
+				}
+				else if (result?.includes('image/jpeg')) {
+					result = result?.substring(23);
+				}
 
-			if (result?.includes('application/zip')) {
-				result = result?.substring(28);
-			}
-			else if (
-				result?.includes('image/gif') ||
-				result?.includes('image/png')
-			) {
-				result = result?.substring(22);
-			}
-			else if (result?.includes('image/jpeg')) {
-				result = result?.substring(23);
-			}
-
-			if (result) {
-				submitFile({
-					appERC,
-					file: result,
-					index,
-					requestFunction,
-					title,
-				});
-			}
-		},
-		false
-	);
-
-	reader.readAsDataURL(file as File);
+				if (result) {
+					const {id} = await submitFile({
+						appERC,
+						file: result,
+						index,
+						requestFunction,
+						title,
+					});
+					attachmentId = id;
+					resolve(attachmentId);
+				}
+			},
+			false
+		);
+		reader.readAsDataURL(file as File);
+	});
 }

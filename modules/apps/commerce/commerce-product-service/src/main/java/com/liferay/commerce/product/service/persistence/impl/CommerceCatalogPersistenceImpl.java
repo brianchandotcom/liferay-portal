@@ -5065,6 +5065,7 @@ public class CommerceCatalogPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("accountEntryId");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("commerceCurrencyCode");
 		ctStrictColumnNames.add("catalogDefaultLanguageId");

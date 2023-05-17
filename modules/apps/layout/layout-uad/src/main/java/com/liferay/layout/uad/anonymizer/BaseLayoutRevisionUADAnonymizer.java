@@ -53,8 +53,12 @@ public abstract class BaseLayoutRevisionUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutRevision layoutRevision) throws PortalException {
-		layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+	public void delete(LayoutRevision layoutRevision, long userId)
+		throws PortalException {
+
+		if (layoutRevision.getUserId() == userId) {
+			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+		}
 	}
 
 	@Override

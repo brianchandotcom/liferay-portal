@@ -53,8 +53,12 @@ public abstract class BaseJournalFolderUADAnonymizer
 	}
 
 	@Override
-	public void delete(JournalFolder journalFolder) throws PortalException {
-		journalFolderLocalService.deleteFolder(journalFolder);
+	public void delete(JournalFolder journalFolder, long userId)
+		throws PortalException {
+
+		if (journalFolder.getUserId() == userId) {
+			journalFolderLocalService.deleteFolder(journalFolder);
+		}
 	}
 
 	@Override

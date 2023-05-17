@@ -52,8 +52,10 @@ public abstract class BaseLayoutUADAnonymizer
 	}
 
 	@Override
-	public void delete(Layout layout) throws PortalException {
-		layoutLocalService.deleteLayout(layout);
+	public void delete(Layout layout, long userId) throws PortalException {
+		if (layout.getUserId() == userId) {
+			layoutLocalService.deleteLayout(layout);
+		}
 	}
 
 	@Override

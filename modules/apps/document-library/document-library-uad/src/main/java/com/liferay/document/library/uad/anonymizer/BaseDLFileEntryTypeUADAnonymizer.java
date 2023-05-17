@@ -48,8 +48,12 @@ public abstract class BaseDLFileEntryTypeUADAnonymizer
 	}
 
 	@Override
-	public void delete(DLFileEntryType dlFileEntryType) throws PortalException {
-		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
+	public void delete(DLFileEntryType dlFileEntryType, long userId)
+		throws PortalException {
+
+		if (dlFileEntryType.getUserId() == userId) {
+			dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
+		}
 	}
 
 	@Override

@@ -53,8 +53,12 @@ public abstract class BaseDDLRecordUADAnonymizer
 	}
 
 	@Override
-	public void delete(DDLRecord ddlRecord) throws PortalException {
-		ddlRecordLocalService.deleteRecord(ddlRecord);
+	public void delete(DDLRecord ddlRecord, long userId)
+		throws PortalException {
+
+		if (ddlRecord.getUserId() == userId) {
+			ddlRecordLocalService.deleteRecord(ddlRecord);
+		}
 	}
 
 	@Override

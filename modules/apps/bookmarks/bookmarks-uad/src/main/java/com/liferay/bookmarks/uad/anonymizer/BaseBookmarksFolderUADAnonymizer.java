@@ -53,8 +53,12 @@ public abstract class BaseBookmarksFolderUADAnonymizer
 	}
 
 	@Override
-	public void delete(BookmarksFolder bookmarksFolder) throws PortalException {
-		bookmarksFolderLocalService.deleteFolder(bookmarksFolder);
+	public void delete(BookmarksFolder bookmarksFolder, long userId)
+		throws PortalException {
+
+		if (bookmarksFolder.getUserId() == userId) {
+			bookmarksFolderLocalService.deleteFolder(bookmarksFolder);
+		}
 	}
 
 	@Override

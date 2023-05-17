@@ -48,8 +48,12 @@ public abstract class BaseLayoutPrototypeUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutPrototype layoutPrototype) throws PortalException {
-		layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototype);
+	public void delete(LayoutPrototype layoutPrototype, long userId)
+		throws PortalException {
+
+		if (layoutPrototype.getUserId() == userId) {
+			layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototype);
+		}
 	}
 
 	@Override

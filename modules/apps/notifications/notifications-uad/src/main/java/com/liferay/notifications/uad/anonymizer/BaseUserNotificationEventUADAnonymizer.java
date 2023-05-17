@@ -39,18 +39,20 @@ public abstract class BaseUserNotificationEventUADAnonymizer
 		throws PortalException {
 
 		if (userNotificationEvent.getUserId() == userId) {
-			delete(userNotificationEvent);
+			delete(userNotificationEvent, userId);
 
 			autoAnonymizeAssetEntry(userNotificationEvent, anonymousUser);
 		}
 	}
 
 	@Override
-	public void delete(UserNotificationEvent userNotificationEvent)
+	public void delete(UserNotificationEvent userNotificationEvent, long userId)
 		throws PortalException {
 
-		userNotificationEventLocalService.deleteUserNotificationEvent(
-			userNotificationEvent);
+		if (userNotificationEvent.getUserId() == userId) {
+			userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent);
+		}
 	}
 
 	@Override

@@ -50,11 +50,13 @@ public abstract class BaseLayoutFriendlyURLUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutFriendlyURL layoutFriendlyURL)
+	public void delete(LayoutFriendlyURL layoutFriendlyURL, long userId)
 		throws PortalException {
 
-		layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
-			layoutFriendlyURL);
+		if (layoutFriendlyURL.getUserId() == userId) {
+			layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
+				layoutFriendlyURL);
+		}
 	}
 
 	@Override

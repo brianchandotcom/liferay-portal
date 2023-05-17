@@ -48,8 +48,12 @@ public abstract class BaseSystemEventUADAnonymizer
 	}
 
 	@Override
-	public void delete(SystemEvent systemEvent) throws PortalException {
-		systemEventLocalService.deleteSystemEvent(systemEvent);
+	public void delete(SystemEvent systemEvent, long userId)
+		throws PortalException {
+
+		if (systemEvent.getUserId() == userId) {
+			systemEventLocalService.deleteSystemEvent(systemEvent);
+		}
 	}
 
 	@Override

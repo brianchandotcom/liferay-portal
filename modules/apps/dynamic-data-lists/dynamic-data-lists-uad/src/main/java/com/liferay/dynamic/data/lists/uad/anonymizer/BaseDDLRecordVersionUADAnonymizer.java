@@ -53,10 +53,13 @@ public abstract class BaseDDLRecordVersionUADAnonymizer
 	}
 
 	@Override
-	public void delete(DDLRecordVersion ddlRecordVersion)
+	public void delete(DDLRecordVersion ddlRecordVersion, long userId)
 		throws PortalException {
 
-		ddlRecordVersionLocalService.deleteDDLRecordVersion(ddlRecordVersion);
+		if (ddlRecordVersion.getUserId() == userId) {
+			ddlRecordVersionLocalService.deleteDDLRecordVersion(
+				ddlRecordVersion);
+		}
 	}
 
 	@Override

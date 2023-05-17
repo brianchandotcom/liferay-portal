@@ -53,8 +53,12 @@ public abstract class BaseJournalArticleUADAnonymizer
 	}
 
 	@Override
-	public void delete(JournalArticle journalArticle) throws PortalException {
-		journalArticleLocalService.deleteArticle(journalArticle);
+	public void delete(JournalArticle journalArticle, long userId)
+		throws PortalException {
+
+		if (journalArticle.getUserId() == userId) {
+			journalArticleLocalService.deleteArticle(journalArticle);
+		}
 	}
 
 	@Override

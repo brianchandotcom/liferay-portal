@@ -84,14 +84,18 @@ public class ObjectEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(ObjectEntry objectEntry) throws PortalException {
-		try {
-			ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+	public void delete(ObjectEntry objectEntry, long userId)
+		throws PortalException {
 
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
-		}
-		finally {
-			ObjectEntryThreadLocal.setDisassociateRelatedModels(false);
+		if (objectEntry.getUserId() == userId) {
+			try {
+				ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+
+				_objectEntryLocalService.deleteObjectEntry(objectEntry);
+			}
+			finally {
+				ObjectEntryThreadLocal.setDisassociateRelatedModels(false);
+			}
 		}
 	}
 

@@ -48,8 +48,12 @@ public abstract class BaseLayoutSetBranchUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutSetBranch layoutSetBranch) throws PortalException {
-		layoutSetBranchLocalService.deleteLayoutSetBranch(layoutSetBranch);
+	public void delete(LayoutSetBranch layoutSetBranch, long userId)
+		throws PortalException {
+
+		if (layoutSetBranch.getUserId() == userId) {
+			layoutSetBranchLocalService.deleteLayoutSetBranch(layoutSetBranch);
+		}
 	}
 
 	@Override

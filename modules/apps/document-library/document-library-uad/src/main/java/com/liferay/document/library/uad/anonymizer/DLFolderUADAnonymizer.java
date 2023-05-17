@@ -29,11 +29,11 @@ public class DLFolderUADAnonymizer extends BaseDLFolderUADAnonymizer {
 	}
 
 	@Override
-	public void delete(DLFolder dlFolder) throws PortalException {
+	public void delete(DLFolder dlFolder, long userId) throws PortalException {
 		if (dlFolderLocalService.fetchDLFolder(dlFolder.getFolderId()) !=
 				null) {
 
-			super.delete(dlFolder);
+			super.delete(dlFolder, userId);
 		}
 	}
 

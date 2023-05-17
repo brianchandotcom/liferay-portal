@@ -53,8 +53,10 @@ public abstract class BaseDLFolderUADAnonymizer
 	}
 
 	@Override
-	public void delete(DLFolder dlFolder) throws PortalException {
-		dlFolderLocalService.deleteFolder(dlFolder);
+	public void delete(DLFolder dlFolder, long userId) throws PortalException {
+		if (dlFolder.getUserId() == userId) {
+			dlFolderLocalService.deleteFolder(dlFolder);
+		}
 	}
 
 	@Override

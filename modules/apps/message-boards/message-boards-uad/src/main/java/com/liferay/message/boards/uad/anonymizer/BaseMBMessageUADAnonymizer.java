@@ -53,8 +53,12 @@ public abstract class BaseMBMessageUADAnonymizer
 	}
 
 	@Override
-	public void delete(MBMessage mbMessage) throws PortalException {
-		mbMessageLocalService.deleteMessage(mbMessage);
+	public void delete(MBMessage mbMessage, long userId)
+		throws PortalException {
+
+		if (mbMessage.getUserId() == userId) {
+			mbMessageLocalService.deleteMessage(mbMessage);
+		}
 	}
 
 	@Override

@@ -53,8 +53,12 @@ public abstract class BaseDLFileShortcutUADAnonymizer
 	}
 
 	@Override
-	public void delete(DLFileShortcut dlFileShortcut) throws PortalException {
-		dlFileShortcutLocalService.deleteFileShortcut(dlFileShortcut);
+	public void delete(DLFileShortcut dlFileShortcut, long userId)
+		throws PortalException {
+
+		if (dlFileShortcut.getUserId() == userId) {
+			dlFileShortcutLocalService.deleteFileShortcut(dlFileShortcut);
+		}
 	}
 
 	@Override

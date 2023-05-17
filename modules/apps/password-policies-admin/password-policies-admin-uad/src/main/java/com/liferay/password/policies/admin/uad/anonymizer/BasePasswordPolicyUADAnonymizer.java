@@ -48,8 +48,12 @@ public abstract class BasePasswordPolicyUADAnonymizer
 	}
 
 	@Override
-	public void delete(PasswordPolicy passwordPolicy) throws PortalException {
-		passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
+	public void delete(PasswordPolicy passwordPolicy, long userId)
+		throws PortalException {
+
+		if (passwordPolicy.getUserId() == userId) {
+			passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
+		}
 	}
 
 	@Override

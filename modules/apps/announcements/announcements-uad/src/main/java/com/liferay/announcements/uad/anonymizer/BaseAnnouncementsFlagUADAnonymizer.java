@@ -49,10 +49,12 @@ public abstract class BaseAnnouncementsFlagUADAnonymizer
 	}
 
 	@Override
-	public void delete(AnnouncementsFlag announcementsFlag)
+	public void delete(AnnouncementsFlag announcementsFlag, long userId)
 		throws PortalException {
 
-		announcementsFlagLocalService.deleteFlag(announcementsFlag);
+		if (announcementsFlag.getUserId() == userId) {
+			announcementsFlagLocalService.deleteFlag(announcementsFlag);
+		}
 	}
 
 	@Override

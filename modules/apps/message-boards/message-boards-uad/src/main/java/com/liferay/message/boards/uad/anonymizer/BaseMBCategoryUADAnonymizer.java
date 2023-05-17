@@ -53,8 +53,12 @@ public abstract class BaseMBCategoryUADAnonymizer
 	}
 
 	@Override
-	public void delete(MBCategory mbCategory) throws PortalException {
-		mbCategoryLocalService.deleteCategory(mbCategory);
+	public void delete(MBCategory mbCategory, long userId)
+		throws PortalException {
+
+		if (mbCategory.getUserId() == userId) {
+			mbCategoryLocalService.deleteCategory(mbCategory);
+		}
 	}
 
 	@Override

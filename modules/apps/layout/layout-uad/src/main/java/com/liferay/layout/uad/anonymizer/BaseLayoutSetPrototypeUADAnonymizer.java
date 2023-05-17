@@ -50,11 +50,13 @@ public abstract class BaseLayoutSetPrototypeUADAnonymizer
 	}
 
 	@Override
-	public void delete(LayoutSetPrototype layoutSetPrototype)
+	public void delete(LayoutSetPrototype layoutSetPrototype, long userId)
 		throws PortalException {
 
-		layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
-			layoutSetPrototype);
+		if (layoutSetPrototype.getUserId() == userId) {
+			layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
+				layoutSetPrototype);
+		}
 	}
 
 	@Override

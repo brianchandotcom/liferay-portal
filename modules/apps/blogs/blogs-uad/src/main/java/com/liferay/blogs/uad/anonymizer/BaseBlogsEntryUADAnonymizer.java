@@ -53,8 +53,12 @@ public abstract class BaseBlogsEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(BlogsEntry blogsEntry) throws PortalException {
-		blogsEntryLocalService.deleteBlogsEntry(blogsEntry);
+	public void delete(BlogsEntry blogsEntry, long userId)
+		throws PortalException {
+
+		if (blogsEntry.getUserId() == userId) {
+			blogsEntryLocalService.deleteBlogsEntry(blogsEntry);
+		}
 	}
 
 	@Override

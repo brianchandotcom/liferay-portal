@@ -51,11 +51,15 @@ public abstract class BaseKaleoTaskAssignmentInstanceUADAnonymizer
 	}
 
 	@Override
-	public void delete(KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance)
+	public void delete(
+			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance,
+			long userId)
 		throws PortalException {
 
-		kaleoTaskAssignmentInstanceLocalService.
-			deleteKaleoTaskAssignmentInstance(kaleoTaskAssignmentInstance);
+		if (kaleoTaskAssignmentInstance.getUserId() == userId) {
+			kaleoTaskAssignmentInstanceLocalService.
+				deleteKaleoTaskAssignmentInstance(kaleoTaskAssignmentInstance);
+		}
 	}
 
 	@Override

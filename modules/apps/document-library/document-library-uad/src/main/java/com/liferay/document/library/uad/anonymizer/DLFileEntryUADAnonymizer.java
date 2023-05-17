@@ -43,8 +43,12 @@ public class DLFileEntryUADAnonymizer extends BaseDLFileEntryUADAnonymizer {
 	}
 
 	@Override
-	public void delete(DLFileEntry dlFileEntry) throws PortalException {
-		_dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
+	public void delete(DLFileEntry dlFileEntry, long userId)
+		throws PortalException {
+
+		if (dlFileEntry.getUserId() == userId) {
+			_dlAppLocalService.deleteFileEntry(dlFileEntry.getFileEntryId());
+		}
 	}
 
 	private void _anonymizeDLFileVersion(

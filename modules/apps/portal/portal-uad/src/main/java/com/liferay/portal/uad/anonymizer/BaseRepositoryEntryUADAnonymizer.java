@@ -48,8 +48,12 @@ public abstract class BaseRepositoryEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(RepositoryEntry repositoryEntry) throws PortalException {
-		repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntry);
+	public void delete(RepositoryEntry repositoryEntry, long userId)
+		throws PortalException {
+
+		if (repositoryEntry.getUserId() == userId) {
+			repositoryEntryLocalService.deleteRepositoryEntry(repositoryEntry);
+		}
 	}
 
 	@Override

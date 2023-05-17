@@ -53,8 +53,10 @@ public abstract class BaseWikiPageUADAnonymizer
 	}
 
 	@Override
-	public void delete(WikiPage wikiPage) throws PortalException {
-		wikiPageLocalService.deletePage(wikiPage);
+	public void delete(WikiPage wikiPage, long userId) throws PortalException {
+		if (wikiPage.getUserId() == userId) {
+			wikiPageLocalService.deletePage(wikiPage);
+		}
 	}
 
 	@Override

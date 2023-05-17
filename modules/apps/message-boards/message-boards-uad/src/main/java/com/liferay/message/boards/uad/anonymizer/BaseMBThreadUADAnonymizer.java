@@ -61,8 +61,10 @@ public abstract class BaseMBThreadUADAnonymizer
 	}
 
 	@Override
-	public void delete(MBThread mbThread) throws PortalException {
-		mbThreadLocalService.deleteThread(mbThread);
+	public void delete(MBThread mbThread, long userId) throws PortalException {
+		if (mbThread.getUserId() == userId) {
+			mbThreadLocalService.deleteThread(mbThread);
+		}
 	}
 
 	@Override

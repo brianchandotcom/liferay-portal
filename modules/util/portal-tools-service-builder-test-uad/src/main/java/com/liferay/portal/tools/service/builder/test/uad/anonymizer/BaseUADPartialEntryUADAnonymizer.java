@@ -48,8 +48,12 @@ public abstract class BaseUADPartialEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(UADPartialEntry uadPartialEntry) throws PortalException {
-		uadPartialEntryLocalService.deleteUADPartialEntry(uadPartialEntry);
+	public void delete(UADPartialEntry uadPartialEntry, long userId)
+		throws PortalException {
+
+		if (uadPartialEntry.getUserId() == userId) {
+			uadPartialEntryLocalService.deleteUADPartialEntry(uadPartialEntry);
+		}
 	}
 
 	@Override

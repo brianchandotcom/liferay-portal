@@ -47,8 +47,10 @@ public abstract class BaseEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(Entry entry) throws PortalException {
-		entryLocalService.deleteEntry(entry);
+	public void delete(Entry entry, long userId) throws PortalException {
+		if (entry.getUserId() == userId) {
+			entryLocalService.deleteEntry(entry);
+		}
 	}
 
 	@Override

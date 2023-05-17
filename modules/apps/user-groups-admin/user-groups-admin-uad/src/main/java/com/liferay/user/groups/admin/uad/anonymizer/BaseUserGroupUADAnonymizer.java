@@ -48,8 +48,12 @@ public abstract class BaseUserGroupUADAnonymizer
 	}
 
 	@Override
-	public void delete(UserGroup userGroup) throws PortalException {
-		userGroupLocalService.deleteUserGroup(userGroup);
+	public void delete(UserGroup userGroup, long userId)
+		throws PortalException {
+
+		if (userGroup.getUserId() == userId) {
+			userGroupLocalService.deleteUserGroup(userGroup);
+		}
 	}
 
 	@Override

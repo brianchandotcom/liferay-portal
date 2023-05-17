@@ -47,8 +47,10 @@ public abstract class BaseRoleUADAnonymizer
 	}
 
 	@Override
-	public void delete(Role role) throws PortalException {
-		roleLocalService.deleteRole(role);
+	public void delete(Role role, long userId) throws PortalException {
+		if (role.getUserId() == userId) {
+			roleLocalService.deleteRole(role);
+		}
 	}
 
 	@Override

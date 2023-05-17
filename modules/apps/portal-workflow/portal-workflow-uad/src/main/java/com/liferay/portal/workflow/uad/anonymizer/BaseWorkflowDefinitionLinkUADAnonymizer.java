@@ -50,11 +50,14 @@ public abstract class BaseWorkflowDefinitionLinkUADAnonymizer
 	}
 
 	@Override
-	public void delete(WorkflowDefinitionLink workflowDefinitionLink)
+	public void delete(
+			WorkflowDefinitionLink workflowDefinitionLink, long userId)
 		throws PortalException {
 
-		workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			workflowDefinitionLink);
+		if (workflowDefinitionLink.getUserId() == userId) {
+			workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+		}
 	}
 
 	@Override

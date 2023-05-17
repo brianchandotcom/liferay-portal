@@ -53,8 +53,12 @@ public abstract class BaseDDMFormInstanceUADAnonymizer
 	}
 
 	@Override
-	public void delete(DDMFormInstance ddmFormInstance) throws PortalException {
-		ddmFormInstanceLocalService.deleteFormInstance(ddmFormInstance);
+	public void delete(DDMFormInstance ddmFormInstance, long userId)
+		throws PortalException {
+
+		if (ddmFormInstance.getUserId() == userId) {
+			ddmFormInstanceLocalService.deleteFormInstance(ddmFormInstance);
+		}
 	}
 
 	@Override

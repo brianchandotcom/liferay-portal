@@ -38,15 +38,19 @@ public abstract class BaseUserTrackerUADAnonymizer
 		throws PortalException {
 
 		if (userTracker.getUserId() == userId) {
-			delete(userTracker);
+			delete(userTracker, userId);
 
 			autoAnonymizeAssetEntry(userTracker, anonymousUser);
 		}
 	}
 
 	@Override
-	public void delete(UserTracker userTracker) throws PortalException {
-		userTrackerLocalService.deleteUserTracker(userTracker);
+	public void delete(UserTracker userTracker, long userId)
+		throws PortalException {
+
+		if (userTracker.getUserId() == userId) {
+			userTrackerLocalService.deleteUserTracker(userTracker);
+		}
 	}
 
 	@Override

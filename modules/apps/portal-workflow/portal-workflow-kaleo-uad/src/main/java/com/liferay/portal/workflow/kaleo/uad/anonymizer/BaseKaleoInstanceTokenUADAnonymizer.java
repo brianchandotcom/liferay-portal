@@ -50,11 +50,13 @@ public abstract class BaseKaleoInstanceTokenUADAnonymizer
 	}
 
 	@Override
-	public void delete(KaleoInstanceToken kaleoInstanceToken)
+	public void delete(KaleoInstanceToken kaleoInstanceToken, long userId)
 		throws PortalException {
 
-		kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(
-			kaleoInstanceToken);
+		if (kaleoInstanceToken.getUserId() == userId) {
+			kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(
+				kaleoInstanceToken);
+		}
 	}
 
 	@Override

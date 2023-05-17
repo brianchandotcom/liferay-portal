@@ -50,11 +50,13 @@ public abstract class BaseMBSuspiciousActivityUADAnonymizer
 	}
 
 	@Override
-	public void delete(MBSuspiciousActivity mbSuspiciousActivity)
+	public void delete(MBSuspiciousActivity mbSuspiciousActivity, long userId)
 		throws PortalException {
 
-		mbSuspiciousActivityLocalService.deleteMBSuspiciousActivity(
-			mbSuspiciousActivity);
+		if (mbSuspiciousActivity.getUserId() == userId) {
+			mbSuspiciousActivityLocalService.deleteMBSuspiciousActivity(
+				mbSuspiciousActivity);
+		}
 	}
 
 	@Override

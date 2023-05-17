@@ -53,8 +53,10 @@ public abstract class BaseWikiNodeUADAnonymizer
 	}
 
 	@Override
-	public void delete(WikiNode wikiNode) throws PortalException {
-		wikiNodeLocalService.deleteNode(wikiNode);
+	public void delete(WikiNode wikiNode, long userId) throws PortalException {
+		if (wikiNode.getUserId() == userId) {
+			wikiNodeLocalService.deleteNode(wikiNode);
+		}
 	}
 
 	@Override

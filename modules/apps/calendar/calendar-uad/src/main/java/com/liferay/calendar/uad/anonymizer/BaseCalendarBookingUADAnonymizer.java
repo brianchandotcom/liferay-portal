@@ -53,8 +53,12 @@ public abstract class BaseCalendarBookingUADAnonymizer
 	}
 
 	@Override
-	public void delete(CalendarBooking calendarBooking) throws PortalException {
-		calendarBookingLocalService.deleteCalendarBooking(calendarBooking);
+	public void delete(CalendarBooking calendarBooking, long userId)
+		throws PortalException {
+
+		if (calendarBooking.getUserId() == userId) {
+			calendarBookingLocalService.deleteCalendarBooking(calendarBooking);
+		}
 	}
 
 	@Override

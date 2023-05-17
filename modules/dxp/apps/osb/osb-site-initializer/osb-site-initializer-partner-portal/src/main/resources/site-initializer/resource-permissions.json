@@ -841,10 +841,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"DELETE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -853,7 +851,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
@@ -874,8 +871,7 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -906,7 +902,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
@@ -927,7 +922,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
@@ -939,8 +933,7 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -949,10 +942,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"DELETE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -961,10 +952,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"DELETE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -1055,10 +1044,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"DELETE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1067,10 +1054,8 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"DELETE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1172,14 +1157,6 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
-		"roleName": "Channel Enablement Manager (CEM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
@@ -1227,7 +1204,9 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
+			"VIEW",
+			"ADD_OBJECT_ENTRY",
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Partner Sales User (PSU)",
@@ -1239,14 +1218,6 @@
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Partner Technical User (PTU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Channel Enablement Manager (CEM)",
 		"scope": 1
 	},
 	{

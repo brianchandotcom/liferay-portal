@@ -156,6 +156,8 @@ public class SearchUtil {
 				renderResponse
 			).setMVCPath(
 				"/view_content.jsp"
+			).setRedirect(
+				currentURL
 			).setPortletMode(
 				PortletMode.VIEW
 			).setWindowState(

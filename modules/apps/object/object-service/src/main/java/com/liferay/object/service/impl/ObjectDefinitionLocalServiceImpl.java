@@ -1082,8 +1082,8 @@ public class ObjectDefinitionLocalServiceImpl
 	private void _createLocalizedTable(ObjectDefinition objectDefinition) {
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
-					objectDefinition);
+				DynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition, _objectFieldLocalService);
 
 		if (dynamicObjectDefinitionLocalizedTable == null) {
 			return;
@@ -1807,10 +1807,6 @@ public class ObjectDefinitionLocalServiceImpl
 				"creator", "createDate", "externalReferenceCode", "id",
 				"modifiedDate", "status"
 			});
-
-	@Reference
-	private DynamicObjectDefinitionLocalizationTableFactory
-		_dynamicObjectDefinitionLocalizationTableFactory;
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

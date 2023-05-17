@@ -130,86 +130,89 @@ export function PurchasedAppsDashboardPage() {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			setLoading(true);
+			if (selectedAccount.id !== 0) {
+				setLoading(true);
 
-			const channels = await getChannels();
+				const channels = await getChannels();
 
-			const channel =
-				channels.find(
-					(channel) => channel.name === 'Marketplace Channel'
-				) || channels[0];
+				const channel =
+					channels.find(
+						(channel) => channel.name === 'Marketplace Channel'
+					) || channels[0];
 
-			const placedOrders = await getPlacedOrders(
-				selectedAccount?.id || 50307,
-				channel.id,
-				page,
-				purchasedAppTable.pageSize
-			);
+				const placedOrders = await getPlacedOrders(
+					selectedAccount?.id || 50307,
+					channel.id,
+					page,
+					purchasedAppTable.pageSize
+				);
 
-			const commerceAccountResponse = await getAccountInfoFromCommerce(
-				selectedAccount.id
-			);
+				const commerceAccountResponse =
+					await getAccountInfoFromCommerce(selectedAccount.id);
 
-			setCommerceAccount(commerceAccountResponse);
+				setCommerceAccount(commerceAccountResponse);
 
-			const filteredAppOrders = placedOrders.items.filter(
-				({orderTypeExternalReferenceCode}) =>
-					orderTypeExternalReferenceCode === 'CLOUDAPP' ||
-					orderTypeExternalReferenceCode === 'DXPAPP'
-			);
+				const filteredAppOrders = placedOrders.items.filter(
+					({orderTypeExternalReferenceCode}) =>
+						orderTypeExternalReferenceCode === 'CLOUDAPP' ||
+						orderTypeExternalReferenceCode === 'DXPAPP'
+				);
 
-			const filteredSolutionsOrders = placedOrders.items.filter(
-				({orderTypeExternalReferenceCode}) =>
-					orderTypeExternalReferenceCode === 'SOLUTION30'
-			);
+				const filteredSolutionsOrders = placedOrders.items.filter(
+					({orderTypeExternalReferenceCode}) =>
+						orderTypeExternalReferenceCode === 'SOLUTION30'
+				);
 
-			const newAppOrderItems = await Promise.all(
-				filteredAppOrders.map(async (order) => {
-					const [placeOrderItem] = order.placedOrderItems;
+				const newAppOrderItems = await Promise.all(
+					filteredAppOrders.map(async (order) => {
+						const [placeOrderItem] = order.placedOrderItems;
 
-					const date = new Date(order.createDate);
-					const options: Intl.DateTimeFormatOptions = {
-						day: 'numeric',
-						month: 'short',
-						year: 'numeric',
-					};
-					const formattedDate = date.toLocaleDateString(
-						'en-US',
-						options
-					);
+						const date = new Date(order.createDate);
+						const options: Intl.DateTimeFormatOptions = {
+							day: 'numeric',
+							month: 'short',
+							year: 'numeric',
+						};
+						const formattedDate = date.toLocaleDateString(
+							'en-US',
+							options
+						);
 
-					const version = await getSKUCustomFieldExpandoValue({
-						companyId: Number(getCompanyId()),
-						customFieldName: 'version',
-						skuId: placeOrderItem.skuId,
-					});
+						const version = await getSKUCustomFieldExpandoValue({
+							companyId: Number(getCompanyId()),
+							customFieldName: 'version',
+							skuId: placeOrderItem.skuId,
+						});
 
+						return {
+							image: placeOrderItem.thumbnail,
+							name: placeOrderItem.name,
+							orderId: order.id,
+							provisioning: order.orderStatusInfo.label_i18n,
+							purchasedBy: order.author,
+							purchasedDate: formattedDate,
+							type: placeOrderItem.subscription
+								? 'Subscription'
+								: 'Perpetual',
+							version: !Object.keys(version).length
+								? ''
+								: version,
+						};
+					})
+				);
+
+				setSolutionsItems(filteredSolutionsOrders);
+
+				setPurchasedAppTable((previousPurchasedAppTable) => {
 					return {
-						image: placeOrderItem.thumbnail,
-						name: placeOrderItem.name,
-						orderId: order.id,
-						provisioning: order.orderStatusInfo.label_i18n,
-						purchasedBy: order.author,
-						purchasedDate: formattedDate,
-						type: placeOrderItem.subscription
-							? 'Subscription'
-							: 'Perpetual',
-						version: !Object.keys(version).length ? '' : version,
+						...previousPurchasedAppTable,
+						items: newAppOrderItems,
+						totalCount: placedOrders.totalCount,
 					};
-				})
-			);
+				});
 
-			setSolutionsItems(filteredSolutionsOrders);
-
-			setPurchasedAppTable((previousPurchasedAppTable) => {
-				return {
-					...previousPurchasedAppTable,
-					items: newAppOrderItems,
-					totalCount: placedOrders.totalCount,
-				};
-			});
-
-			setLoading(false);
+				setLoading(false);
+			}
 		};
 
 		makeFetch();

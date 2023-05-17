@@ -137,6 +137,8 @@ definition {
 	test CanHideEvents {
 		property ci.retries.disabled = "true";
 
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
 		CalendarNavigator.gotoAddEventViaMyCalendars(user = "Test Test");
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title 1");
@@ -145,7 +147,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		CalendarNavigator.gotoAddEventViaCurrentSite(site = "Liferay DXP");
+		CalendarNavigator.gotoAddEventViaCurrentSite(site = ${siteName});
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title 2");
 

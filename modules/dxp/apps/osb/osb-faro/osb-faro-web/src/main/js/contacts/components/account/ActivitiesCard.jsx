@@ -153,6 +153,8 @@ export default class ActivitiesCard extends React.Component {
 
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
 						displayType='secondary'
 						href={toRoute(Routes.CONTACTS_ACCOUNT_ACTIVITIES, {
@@ -160,12 +162,13 @@ export default class ActivitiesCard extends React.Component {
 							groupId,
 							id
 						})}
+						small
 					>
 						{Liferay.Language.get('view-all-activities')}
 
 						<ClayIcon
 							className='icon-root ml-2'
-							symbol='angle-right'
+							symbol='angle-right-small'
 						/>
 					</ClayLink>
 				</Card.Footer>

@@ -285,8 +285,10 @@ class DistributionChart extends React.Component<
 
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
-						displayType='unstyled'
+						displayType='secondary'
 						href={viewAllLink}
 						small
 					>
@@ -294,7 +296,7 @@ class DistributionChart extends React.Component<
 
 						<ClayIcon
 							className='icon-root ml-2'
-							symbol='angle-right'
+							symbol='angle-right-small'
 						/>
 					</ClayLink>
 				</Card.Footer>

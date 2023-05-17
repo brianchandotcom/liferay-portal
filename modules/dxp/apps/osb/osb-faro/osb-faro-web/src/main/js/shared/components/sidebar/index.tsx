@@ -258,7 +258,9 @@ const Sidebar: React.FC<ISidebarProps> = ({
 					)}
 
 					<SidebarItem
-						icon={collapsed ? 'angle-right' : 'angle-left'}
+						icon={
+							collapsed ? 'angle-right-small' : 'angle-left-small'
+						}
 						onClick={onToggle}
 					/>
 				</ul>

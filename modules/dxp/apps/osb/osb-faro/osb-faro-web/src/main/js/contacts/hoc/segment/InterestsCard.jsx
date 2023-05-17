@@ -92,7 +92,10 @@ const InterestsCard = ({channelId, groupId, id}) => (
 			>
 				{Liferay.Language.get('view-all-interests')}
 
-				<ClayIcon className='icon-root ml-2' symbol='angle-right' />
+				<ClayIcon
+					className='icon-root ml-2'
+					symbol='angle-right-small'
+				/>
 			</ClayLink>
 		</Card.Footer>
 	</Card>

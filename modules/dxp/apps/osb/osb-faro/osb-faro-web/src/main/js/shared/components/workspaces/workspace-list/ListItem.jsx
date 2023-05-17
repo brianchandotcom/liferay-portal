@@ -147,7 +147,7 @@ export default class WorkspaceListItem extends React.Component {
 		return (
 			<ClayIcon
 				className='icon-root'
-				symbol={available ? 'angle-right' : 'reload'}
+				symbol={available ? 'angle-right-small' : 'reload'}
 			/>
 		);
 	}

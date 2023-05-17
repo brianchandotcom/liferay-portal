@@ -67,7 +67,10 @@ const BreakdownOptions: React.FC<IBreakdownOptionsProps> = ({
 					onClick={() => onAttributeChange(null)}
 					size='sm'
 				>
-					<ClayIcon className='icon-root mr-2' symbol='angle-left' />
+					<ClayIcon
+						className='icon-root mr-2'
+						symbol='angle-left-small'
+					/>
 
 					{Liferay.Language.get('back-to-attributes')}
 				</ClayButton>

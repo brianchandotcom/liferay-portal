@@ -215,7 +215,7 @@ class Pagination extends React.Component {
 					onChange={onChange}
 					page={page - 1}
 				>
-					<ClayIcon className='icon-root' symbol='angle-left' />
+					<ClayIcon className='icon-root' symbol='angle-left-small' />
 				</PaginationItem>
 
 				{this.getPages().map((item, index) => (
@@ -236,7 +236,10 @@ class Pagination extends React.Component {
 					onChange={onChange}
 					page={page + 1}
 				>
-					<ClayIcon className='icon-root' symbol='angle-right' />
+					<ClayIcon
+						className='icon-root'
+						symbol='angle-right-small'
+					/>
 				</PaginationItem>
 			</ul>
 		);

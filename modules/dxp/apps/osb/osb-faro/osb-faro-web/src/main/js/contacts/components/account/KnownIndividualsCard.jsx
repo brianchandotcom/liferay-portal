@@ -136,6 +136,8 @@ export default class KnownIndividualsCard extends React.Component {
 
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
 						displayType='secondary'
 						href={toRoute(Routes.CONTACTS_ACCOUNT_INDIVIDUALS, {
@@ -143,10 +145,11 @@ export default class KnownIndividualsCard extends React.Component {
 							groupId,
 							id
 						})}
+						small
 					>
 						{Liferay.Language.get('view-all-individuals')}
 
-						<ClayIcon className='ml-2' symbol='angle-right' />
+						<ClayIcon className='ml-2' symbol='angle-right-small' />
 					</ClayLink>
 				</Card.Footer>
 			</Card>

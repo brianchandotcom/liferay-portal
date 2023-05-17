@@ -178,6 +178,8 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 			{!!Object.keys(footer).length && (
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
 						displayType='secondary'
 						href={setUriQueryValues(
@@ -190,7 +192,7 @@ const TopPagesCardWithData: React.FC<ITopPageCardWithData> = ({
 
 						<ClayIcon
 							className='icon-root ml-2'
-							symbol='angle-right'
+							symbol='angle-right-small'
 						/>
 					</ClayLink>
 				</Card.Footer>

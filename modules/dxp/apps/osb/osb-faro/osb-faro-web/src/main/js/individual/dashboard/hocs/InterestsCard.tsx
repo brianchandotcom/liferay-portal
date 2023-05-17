@@ -125,15 +125,22 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			<Card.Footer>
 				<ClayLink
+					borderless
+					button
 					className='button-root'
+					displayType='secondary'
 					href={toRoute(Routes.CONTACTS_INDIVIDUALS_INTERESTS, {
 						channelId,
 						groupId
 					})}
+					small
 				>
 					{Liferay.Language.get('view-all-interests')}
 
-					<ClayIcon className='icon-root ml-2' symbol='angle-right' />
+					<ClayIcon
+						className='icon-root ml-2'
+						symbol='angle-right-small'
+					/>
 				</ClayLink>
 			</Card.Footer>
 		</Card>

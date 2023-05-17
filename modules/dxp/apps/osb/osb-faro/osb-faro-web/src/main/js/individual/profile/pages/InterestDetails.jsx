@@ -84,7 +84,7 @@ export default class InterestDetails extends React.Component {
 					>
 						<ClayIcon
 							className='icon-root mr-2'
-							symbol='angle-left'
+							symbol='angle-left-small'
 						/>
 
 						{Liferay.Language.get('back-to-interests')}

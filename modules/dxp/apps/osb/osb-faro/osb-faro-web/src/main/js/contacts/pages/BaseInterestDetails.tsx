@@ -185,10 +185,11 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 						id,
 						type
 					})}
+					small
 				>
 					<ClayIcon
 						className='icon-root icon-size-sm mr-2'
-						symbol='angle-left'
+						symbol='angle-left-small'
 					/>
 
 					{Liferay.Language.get('back-to-interests')}

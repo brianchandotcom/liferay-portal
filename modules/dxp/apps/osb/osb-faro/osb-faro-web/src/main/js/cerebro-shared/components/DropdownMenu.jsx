@@ -162,7 +162,7 @@ export class OptionItem extends React.Component {
 							{items && !!items.length && (
 								<ClayIcon
 									className='icon-root ml-1'
-									symbol='angle-right'
+									symbol='angle-right-small'
 								/>
 							)}
 						</div>

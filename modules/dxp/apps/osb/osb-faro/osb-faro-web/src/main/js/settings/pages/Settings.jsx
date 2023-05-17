@@ -242,7 +242,7 @@ export class Settings extends React.Component {
 							<span className='icon-wrapper'>
 								<ClayIcon
 									className='icon-root'
-									symbol='angle-left'
+									symbol='angle-left-small'
 								/>
 							</span>
 

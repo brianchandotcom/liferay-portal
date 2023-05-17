@@ -36,7 +36,10 @@ const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 						})
 					)}
 				>
-					<ClayIcon className='icon-root mr-2' symbol='angle-left' />
+					<ClayIcon
+						className='icon-root mr-2'
+						symbol='angle-left-small'
+					/>
 
 					{Liferay.Language.get('back-to-interests')}
 				</ClayLink>

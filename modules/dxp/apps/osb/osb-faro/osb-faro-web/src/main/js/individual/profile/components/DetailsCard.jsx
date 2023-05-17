@@ -60,7 +60,10 @@ export default class DetailsCard extends React.PureComponent {
 
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
+						displayType='secondary'
 						href={toRoute(Routes.CONTACTS_INDIVIDUAL_DETAILS, {
 							channelId,
 							groupId,
@@ -71,8 +74,8 @@ export default class DetailsCard extends React.PureComponent {
 						{Liferay.Language.get('view-all-details')}
 
 						<ClayIcon
-							className='icon-root ml-2'
-							symbol='angle-right'
+							classname='icon-root ml-2'
+							symbol='angle-right-small'
 						/>
 					</ClayLink>
 				</Card.Footer>

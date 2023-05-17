@@ -149,15 +149,18 @@ export default class AssociatedSegmentsCard extends React.Component {
 
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
 						displayType='secondary'
 						href={pageUrl}
+						small
 					>
 						{Liferay.Language.get('view-all-segments')}
 
 						<ClayIcon
 							className='icon-root ml-2'
-							symbol='angle-right'
+							symbol='angle-right-small'
 						/>
 					</ClayLink>
 				</Card.Footer>

@@ -235,7 +235,10 @@ export default class DatePicker extends React.Component {
 						onClick={this.handlePrevMonth}
 						size='sm'
 					>
-						<ClayIcon className='icon-root' symbol='angle-left' />
+						<ClayIcon
+							className='icon-root'
+							symbol='angle-left-small'
+						/>
 					</ClayButton>
 
 					<ClayButton
@@ -259,7 +262,10 @@ export default class DatePicker extends React.Component {
 						onClick={this.handleNextMonth}
 						size='sm'
 					>
-						<ClayIcon className='icon-root' symbol='angle-right' />
+						<ClayIcon
+							className='icon-root'
+							symbol='angle-right-small'
+						/>
 					</ClayButton>
 				</div>
 

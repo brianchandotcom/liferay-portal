@@ -118,18 +118,22 @@ export default class InterestsCard extends React.PureComponent {
 
 				<Card.Footer>
 					<ClayLink
+						borderless
+						button
 						className='button-root'
+						displayType='secondary'
 						href={toRoute(Routes.CONTACTS_INDIVIDUAL_INTERESTS, {
 							channelId,
 							groupId,
 							id
 						})}
+						small
 					>
 						{Liferay.Language.get('view-all-interests')}
 
 						<ClayIcon
 							className='icon-root ml-2'
-							symbol='angle-right'
+							symbol='angle-right-small'
 						/>
 					</ClayLink>
 				</Card.Footer>

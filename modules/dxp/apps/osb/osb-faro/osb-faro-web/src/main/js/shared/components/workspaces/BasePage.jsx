@@ -127,7 +127,7 @@ export class WorkspacesBasePage extends React.Component {
 									>
 										<ClayIcon
 											className='icon-root'
-											symbol='angle-left'
+											symbol='angle-left-small'
 										/>
 
 										{backLabel}

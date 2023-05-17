@@ -121,7 +121,7 @@ export default class ScrollableSection extends React.Component<
 						>
 							<ClayIcon
 								className='icon-root'
-								symbol='angle-left'
+								symbol='angle-left-small'
 							/>
 						</ClayButton>
 					</div>
@@ -149,7 +149,7 @@ export default class ScrollableSection extends React.Component<
 						>
 							<ClayIcon
 								className='icon-root'
-								symbol='angle-right'
+								symbol='angle-right-small'
 							/>
 						</ClayButton>
 					</div>

@@ -236,10 +236,16 @@ public class ObjectValidationRuleLocalServiceImpl
 			}
 
 			if (GetterUtil.getBoolean(results.get("invalidFields"))) {
+				Locale locale = LocaleUtil.getMostRelevantLocale();
+
 				User user = _userLocalService.fetchUser(userId);
 
+				if (user != null) {
+					locale = user.getLocale();
+				}
+
 				throw new ObjectValidationRuleEngineException.InvalidFields(
-					objectValidationRule.getErrorLabel(user.getLocale()));
+					objectValidationRule.getErrorLabel(locale));
 			}
 
 			if (GetterUtil.getBoolean(results.get("invalidScript"))) {

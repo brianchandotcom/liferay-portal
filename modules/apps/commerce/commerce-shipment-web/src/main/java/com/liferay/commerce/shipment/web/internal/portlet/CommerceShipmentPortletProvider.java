@@ -16,9 +16,7 @@ package com.liferay.commerce.shipment.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,18 +25,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.model.CommerceShipment",
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = PortletProvider.class
 )
-public class CommerceShipmentPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class CommerceShipmentPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return CommercePortletKeys.COMMERCE_SHIPMENT;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {
+		Action.EDIT, Action.MANAGE, Action.VIEW
+	};
 
 }

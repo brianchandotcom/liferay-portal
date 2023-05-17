@@ -18,7 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
@@ -34,10 +34,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.tax.model.CommerceTaxMethod",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
-public class CommerceTaxMethodPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class CommerceTaxMethodPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -54,7 +53,14 @@ public class CommerceTaxMethodPortletProvider
 			PortletRequest.RENDER_PHASE);
 	}
 
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
 	@Reference
 	private Portal _portal;
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

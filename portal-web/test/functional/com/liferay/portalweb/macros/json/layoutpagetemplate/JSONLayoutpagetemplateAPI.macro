@@ -264,4 +264,21 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	@summary = "Set the layoutPageTemplateEntry as non-default by using layoutPageTemplateEntryId"
+	macro _setLayoutPageTemplateEntryAsNonDefault {
+		Variables.assertDefined(parameterList = ${layoutPageTemplateEntryId});
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/update-layout-page-template-entry \
+				-u ${userLoginInfo} \
+				-d layoutPageTemplateEntryId=${layoutPageTemplateEntryId} \
+				-d defaultTemplate=false
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 }

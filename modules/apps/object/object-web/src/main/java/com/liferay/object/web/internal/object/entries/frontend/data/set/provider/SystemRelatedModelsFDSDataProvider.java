@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.List;
@@ -117,6 +118,15 @@ public class SystemRelatedModelsFDSDataProvider
 						relatedModel, _dtoConverterRegistry,
 						objectDefinition.getName(),
 						_systemObjectDefinitionManagerRegistry, user);
+
+				if (!StringUtil.equals(
+						objectDefinition.getName(), "CPDefinition")) {
+
+					objectEntryValues.put(
+						"createDate", objectEntryValues.get("dateCreated"));
+					objectEntryValues.put(
+						"modifiedDate", objectEntryValues.get("dateModified"));
+				}
 
 				return new RelatedModel(
 					objectDefinition.getClassName(),

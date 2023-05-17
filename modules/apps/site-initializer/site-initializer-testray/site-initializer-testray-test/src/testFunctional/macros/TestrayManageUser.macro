@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro add a user with role via UI."
 	macro addUser {
 		if (isSet(userFirstNameEdit)) {
 			Type(
@@ -46,12 +47,14 @@ definition {
 		Button.clickSave();
 	}
 
+	@summary = "This macro select a role."
 	macro changeRole {
 		Click(
 			key_fieldLabel = ${roleName},
 			locator1 = "Checkbox#CHECKBOX_LABEL");
 	}
 
+	@summary = "This macro edits user information."
 	macro editUserInformation {
 		if (isSet(userFirstNameEdit)) {
 			Type(
@@ -80,6 +83,7 @@ definition {
 		Button.clickSave();
 	}
 
+	@summary = "This macro assert user information."
 	macro viewUserInfomation {
 		AssertTextEquals(
 			locator1 = "Testray#DETAILS_LAST_NAME_FIELD",

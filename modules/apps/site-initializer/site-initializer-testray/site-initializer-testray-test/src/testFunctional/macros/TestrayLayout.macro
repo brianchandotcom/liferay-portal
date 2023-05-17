@@ -1,37 +1,45 @@
 definition {
 
+	@summary = "This macro assert dropdrown in the sidebar."
 	macro assertDropdownOnSidebar {
 		AssertElementPresent(locator1 = "TestrayLayout#DROPDOWN_ON_SIDEBAR");
 	}
 
+	@summary = "This macro assert page tab title."
 	macro assertTabPageTitle {
 		AssertElementPresent(
 			key_pageTabTitle = ${pageTabTitle},
 			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
 	}
 
+	@summary = "This macro assert that page tab title is not present."
 	macro assertTabPageTitleIsNotPresent {
 		AssertElementNotPresent(
 			key_pageTabTitle = ${pageTabTitle},
 			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
 	}
 
+	@summary = "This macro click on the logo in the sidebar."
 	macro clickLogoOnSidebar {
 		Click(locator1 = "TestrayLayout#TESTRAY_LOGO_SIDEBAR");
 	}
 
+	@summary = "This macro click on the manager in the sidebar."
 	macro clickManageOnSidebar {
 		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
 	}
 
+	@summary = "This macro click on the result in the sidebar."
 	macro clickResultsOnSidebar {
 		Click(locator1 = "Testray#RESULTS_SIDEBAR");
 	}
 
+	@summary = "This macro click on the user in the sidebar."
 	macro clickUserOnSidebar {
 		Click(locator1 = "TestrayLayout#USER_SIDEBAR");
 	}
 
+	@summary = "This macro click on the manage account in the sidebar."
 	macro manageAccountSidebar {
 		Click(locator1 = "TestrayLayout#USER_SIDEBAR");
 

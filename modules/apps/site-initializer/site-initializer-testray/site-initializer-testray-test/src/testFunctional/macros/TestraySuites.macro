@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro add a suite via UI."
 	macro addSuite {
 		LexiconEntry.gotoAdd();
 
@@ -116,6 +117,7 @@ definition {
 		Button.clickSave();
 	}
 
+	@summary = "This macro delete a suite."
 	macro deleteSuite {
 		TestrayContextMenu.clickContextMenuProjects(name = ${suiteName});
 
@@ -126,6 +128,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro edit smart suite."
 	macro editSmartSuite {
 		TestrayContextMenu.clickContextMenuProjects(name = ${suiteName});
 
@@ -236,6 +239,7 @@ definition {
 		Button.clickSave();
 	}
 
+	@summary = "This macro edit a simple suite."
 	macro editSuite {
 		TestrayContextMenu.clickContextMenuProjects(name = ${suiteName});
 
@@ -248,12 +252,14 @@ definition {
 		Button.clickSave();
 	}
 
+	@summary = "This macro go to suite."
 	macro goToSuiteDetails {
 		Click(
 			key_projectName = ${suiteName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
+	@summary = "This macro type to the fields of the suite."
 	macro typeSuiteField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -265,6 +271,7 @@ definition {
 			value1 = ${suiteDescription});
 	}
 
+	@summary = "This macro assert case parameters details in the table."
 	macro verifyCaseParametersInSuite {
 		AssertElementPresent(
 			key_caseType = ${caseType},
@@ -274,6 +281,7 @@ definition {
 			locator1 = "TestraySuites#VIEW_CASE_PARAMETERS");
 	}
 
+	@summary = "This macro assert suite details in the table."
 	macro verifySuite {
 		AssertElementPresent(
 			key_suiteDescription = ${description},

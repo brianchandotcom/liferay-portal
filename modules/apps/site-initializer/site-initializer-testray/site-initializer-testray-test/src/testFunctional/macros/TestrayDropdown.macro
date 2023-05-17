@@ -1,19 +1,23 @@
 definition {
 
+	@summary = "This macro assert that the dropdown is disabled."
 	macro assertTheDropdownDisabled {
 		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 	}
 
+	@summary = "This macro assert the title breadcrumb."
 	macro assertTitleBreadcrumbs {
 		AssertElementPresent(
 			key_projectName = ${key_projectName},
 			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
 	}
 
+	@summary = "This macro click on the dropdown."
 	macro clickOnTheDropdown {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 	}
 
+	@summary = "This macro select projects from project directory."
 	macro selectProjectDirectory {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
 
@@ -22,6 +26,7 @@ definition {
 			locator1 = "TestrayDropdown#SELECT_PROJECT_DIRECTORY");
 	}
 
+	@summary = "This macro select projects from dropdown."
 	macro selectTheProjectFromDropdown {
 		Click(
 			key_itemvalue = ${key_value},

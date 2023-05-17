@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro assert that a subtask has been merged."
 	macro assertMergedSubtasks {
 		for (var subtaskMerged : list ${listSubtaskMerged}) {
 			AssertElementPresent(
@@ -8,18 +9,21 @@ definition {
 		}
 	}
 
+	@summary = "This macro assert that a subtask has not been merged."
 	macro assertNotMergedSubtasks {
 		AssertElementNotPresent(
 			key_subtaskMerged = ${subtask},
 			locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
 	}
 
+	@summary = "This macro go to subtask."
 	macro goToSubtask {
 		Click(
 			key_projectName = ${subtaskName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
+	@summary = "This macro merge the subtasks."
 	macro mergeSubtasks {
 		for (var subtaskName : list ${wcsubtaskName}) {
 			Click.clickAtNotVisible(
@@ -37,6 +41,7 @@ definition {
 		Button.click(button = "Merge Subtasks");
 	}
 
+	@summary = "This macro assert subtask details in the table."
 	macro verifySubtaskDetails {
 		AssertElementPresent(
 			key_comment = ${comment},

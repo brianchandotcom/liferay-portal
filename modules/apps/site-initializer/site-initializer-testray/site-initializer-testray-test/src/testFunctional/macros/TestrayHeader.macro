@@ -1,17 +1,20 @@
 definition {
 
+	@summary = "This macro assert the title of the breadcrumb."
 	macro assertBreadcrumbTitle {
 		AssertElementPresent(
 			key_breadcrumbName = ${key_value},
 			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
 	}
 
+	@summary = "This macro assert the title of the page."
 	macro assertTabPageTitle {
 		Click(
 			key_pageTabTitle = ${pageTabTitle},
 			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
 	}
 
+	@summary = "This macro click in the title of the breadcrumb."
 	macro clickBreadcrumbTitle {
 		Click(
 			key_breadcrumbName = ${breadcrumbName},

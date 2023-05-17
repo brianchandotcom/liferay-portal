@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro assert the issue present in the table."
 	macro assertIssue {
 		AssertElementPresent(
 			key_issue = ${issue},
@@ -7,12 +8,14 @@ definition {
 			locator1 = "TestrayResults#ISSUE_WITH_LABEL");
 	}
 
+	@summary = "This macro assert the total of the case results in the graph."
 	macro caseResultsMetrics {
 		AssertTextEquals(
 			locator1 = "TestrayResults#TOTAL_TEST_CASE_RESULTS",
 			value1 = ${totalTestCases});
 	}
 
+	@summary = "This macro go to case result."
 	macro goToCaseResults {
 		TestrayRoutines.goToRoutine(routineName = ${caseResultsName});
 	}

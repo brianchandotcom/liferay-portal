@@ -1,11 +1,13 @@
 definition {
 
+	@summary = "This macro right click on a specific project."
 	macro clickContextMenuProjects {
 		var key_projectName = ${name};
 
 		RightClick.rightClick(locator1 = "Testray#ITEM_NAME");
 	}
 
+	@summary = "This macro select item in the right click."
 	macro selectItemFromProjectsContextMenu {
 		var menuItem = ${item};
 

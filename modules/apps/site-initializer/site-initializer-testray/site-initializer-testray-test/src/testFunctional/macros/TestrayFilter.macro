@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro assert the multi selection on the filters."
 	macro assertMultiSelect {
 		for (var option : list ${listMultiSelect}) {
 			AssertElementPresent(
@@ -8,26 +9,31 @@ definition {
 		}
 	}
 
+	@summary = "This macro assert no results found."
 	macro assertNoResultsFound {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
 			value1 = "No Results Found");
 	}
 
+	@summary = "This macro click on the column icon."
 	macro clickColumn {
 		Click(locator1 = "TestrayFilter#COLUMNS_ICON");
 	}
 
+	@summary = "This macro click on the filter icon."
 	macro clickFilter {
 		Click(locator1 = "TestrayFilter#FILTER_ICON");
 	}
 
+	@summary = "This macro click on the filter icon."
 	macro clickMultiSelect {
 		Click(
 			key_label = ${header},
 			locator1 = "TestrayFilter#CLICK_MULTI_SELECT");
 	}
 
+	@summary = "This macro selects multiple options in the filter."
 	macro multiSelect {
 		TestrayFilter.clickMultiSelect(header = ${header});
 
@@ -39,18 +45,21 @@ definition {
 		}
 	}
 
+	@summary = "This macro pin result in the filter."
 	macro pinResult {
 		Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
 
 		Alert.viewSuccessMessageText(successMessage = "Filters pinned successfully.");
 	}
 
+	@summary = "This macro search filter."
 	macro searchFilter {
 		Type(
 			locator1 = "TestrayFilter#SEARCH_FILTERS",
 			value1 = ${value});
 	}
 
+	@summary = "This macro select columns."
 	macro selectColumns {
 		for (var column : list ${listColumn}) {
 			Click(
@@ -61,6 +70,7 @@ definition {
 		Button.click(button = "Apply");
 	}
 
+	@summary = "This macro type in the filter."
 	macro typeFilter {
 		Type(
 			key_fieldLabel = ${label},
@@ -70,6 +80,7 @@ definition {
 		Button.click(button = "Apply");
 	}
 
+	@summary = "This macro unpin result in the filter."
 	macro unpinResult {
 		Click.javaScriptClick(locator1 = "TestrayFilter#UNPIN_ICON");
 

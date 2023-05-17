@@ -1,17 +1,20 @@
 definition {
 
+	@summary = "This macro assert that the status of the build is disabled."
 	macro assertStatusBuildDisabled {
 		AssertElementPresent(
 			key_item = ${key_item},
 			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
 	}
 
+	@summary = "This macro click in the status of the build."
 	macro clickStatusBuildHistory {
 		Click(
 			key_item = ${key_item},
 			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
 	}
 
+	@summary = "This macro add a routine via UI."
 	macro createRoutine {
 		Click(locator1 = "Testray#ADD_PROJECT");
 
@@ -22,10 +25,12 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro delete a routine."
 	macro deleteRoutine {
 		Testray.deleteComponent(itemName = ${itemName});
 	}
 
+	@summary = "This macro delete a routine in the setup."
 	macro deleteRoutineSetup {
 		TestrayLayout.clickResultsOnSidebar();
 
@@ -46,6 +51,7 @@ definition {
 		}
 	}
 
+	@summary = "This macro edit a routine."
 	macro editRoutine {
 		TestrayManage.editProductVersion(
 			caseName = ${newNameRoutine},
@@ -53,12 +59,14 @@ definition {
 			valueName = ${routineName});
 	}
 
+	@summary = "This macro go to routine."
 	macro goToRoutine {
 		Click(
 			key_projectName = ${routineName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
+	@summary = "This macro add environment factors via UI."
 	macro selectDefaultEnvironmentFactors {
 		Testray.kebabMenuOption(kebabOption = "Select Default Environment Factors");
 
@@ -91,6 +99,7 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	@summary = "This macro select option in the dropdown on routine."
 	macro selectOptionDropdownRoutine {
 		Click(locator1 = "TestrayRoutines#DROPDOWN_ROUTINE");
 
@@ -99,6 +108,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro writes into the routine field."
 	macro typeRoutineField {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",

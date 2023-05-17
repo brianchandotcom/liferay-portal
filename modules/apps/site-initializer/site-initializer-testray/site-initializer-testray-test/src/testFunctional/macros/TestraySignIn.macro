@@ -1,33 +1,39 @@
 definition {
 
+	@summary = "This macro type a email in the field."
 	macro addEmailTestray {
 		Type(
 			locator1 = "TestrayUser#FIELD_EMAIL",
 			value1 = ${key_itemvalue});
 	}
 
+	@summary = "This macro type a password in the field."
 	macro addPasswordTestray {
 		Type(
 			locator1 = "TestrayUser#FIELD_PASSWORD",
 			value1 = ${key_itemvalue});
 	}
 
+	@summary = "This macro assert the failed icon."
 	macro assertTitleFailed {
 		AssertElementPresent(
 			key_fieldName = ${key_title},
 			locator1 = "TestrayUser#TITLE_FAILED");
 	}
 
+	@summary = "This macro assert the success icon."
 	macro assertTitleSucess {
 		AssertElementPresent(
 			key_fieldName = ${key_title},
 			locator1 = "TestrayUser#TITLE_SUCCESS");
 	}
 
+	@summary = "This macro click in the sign in button."
 	macro buttonSignInTestray {
 		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
 	}
 
+	@summary = "This macro sets the changed password."
 	macro enableChangePassword {
 		PasswordPolicies.openPasswordPoliciesAdmin();
 

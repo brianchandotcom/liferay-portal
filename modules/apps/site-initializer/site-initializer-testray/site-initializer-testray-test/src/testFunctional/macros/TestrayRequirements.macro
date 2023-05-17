@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro add a requirement via UI."
 	macro addRequirement {
 		LexiconEntry.gotoAdd();
 
@@ -40,6 +41,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro link the requirement to a case."
 	macro addRequirementCase {
 		Click(
 			key_text = ${linkText},
@@ -54,6 +56,7 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
+	@summary = "This macro edit a requirement."
 	macro editRequirement {
 		Type(
 			key_fieldLabel = "Summary",
@@ -77,12 +80,14 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro go to requirement."
 	macro goToRequirement {
 		Click(
 			key_projectName = ${requirementSummary},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
+	@summary = "This macro assert the requirement details in the table."
 	macro verifyRequirement {
 		AssertElementPresent(
 			key_linkTitle = ${linkTitle},
@@ -92,6 +97,7 @@ definition {
 			locator1 = "TestrayRequirements#REQUIREMENT_DETAIL");
 	}
 
+	@summary = "This macro assert the requirementCase details in the table."
 	macro verifyRequirementCase {
 		AssertElementPresent(
 			key_requirementCaseName = ${requirementCaseName},

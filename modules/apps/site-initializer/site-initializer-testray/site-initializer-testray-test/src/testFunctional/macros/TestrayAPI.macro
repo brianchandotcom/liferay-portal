@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "create a build via API"
+	@summary = "create a build via API."
 	macro createBuildAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -29,7 +29,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create second Case Result via API"
+	@summary = "create second Case Result via API."
 	macro createCaseResult2API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -57,7 +57,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create third Case Result via API"
+	@summary = "create third Case Result via API."
 	macro createCaseResult3API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -85,7 +85,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create fourth Case Result via API"
+	@summary = "create fourth Case Result via API."
 	macro createCaseResult4API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -113,7 +113,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case Result via API"
+	@summary = "create a Case Result via API."
 	macro createCaseResultAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -141,7 +141,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create second Case Results For second Subtask via API"
+	@summary = "create second Case Results For second Subtask via API."
 	macro createCaseResultsForSubtask2API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -164,7 +164,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create third Case Results For second Subtask via API"
+	@summary = "create third Case Results For second Subtask via API."
 	macro createCaseResultsForSubtask3API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -187,7 +187,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create fourth Case Results For second Subtask via API"
+	@summary = "create fourth Case Results For second Subtask via API."
 	macro createCaseResultsForSubtask4API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -210,7 +210,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case Results For Subtask via API"
+	@summary = "create a Case Results For Subtask via API."
 	macro createCaseResultsForSubtaskAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -233,7 +233,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case via API"
+	@summary = "create a Case via API."
 	macro createCasesAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -262,7 +262,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Case Type via API"
+	@summary = "create a Case Type via API."
 	macro createCaseTypeAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -283,7 +283,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Component via API"
+	@summary = "create a Component via API."
 	macro createComponentAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -306,7 +306,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Factor Categories via API"
+	@summary = "create a Factor Categories via API."
 	macro createFactorCategoriesAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -327,7 +327,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Factor Options via API"
+	@summary = "create a Factor Options via API."
 	macro createFactorOptionsAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -349,7 +349,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a product version via API"
+	@summary = "create a product version via API."
 	macro createProductVersionAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -371,7 +371,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a project with description via API"
+	@summary = "create a project with description via API."
 	macro createProjectAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -393,7 +393,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Requirements via API"
+	@summary = "create a Requirements via API."
 	macro createRequirementAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -420,7 +420,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a routine via API"
+	@summary = "create a routine via API."
 	macro createRoutineAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -443,7 +443,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Run via API"
+	@summary = "create a Run via API."
 	macro createRunAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -466,7 +466,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create second Subtask via API"
+	@summary = "create second Subtask via API."
 	macro createSubtask2API {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -494,7 +494,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Subtask via API"
+	@summary = "create a Subtask via API."
 	macro createSubtaskAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -522,7 +522,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Suite via API"
+	@summary = "create a Suite via API."
 	macro createSuiteAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -547,7 +547,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Task via API"
+	@summary = "create a Task via API."
 	macro createTaskAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -573,7 +573,7 @@ definition {
 		return ${response};
 	}
 
-	@summary = "create a Team via API"
+	@summary = "create a Team via API."
 	macro createTeamAPI {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -595,6 +595,7 @@ definition {
 		return ${response};
 	}
 
+	@summary = "Delete all objects by groupId via API."
 	macro deleteTestrayGroupId {
 		var portalURL = JSONCompany.getPortalURL();
 

@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "Get the Id of project, routine and product version to add a build."
 	macro addBuild {
 		Variables.assertDefined(parameterList = "${buildName},${projectName},${routineName},${productVersion}");
 
@@ -14,6 +15,7 @@ definition {
 			routineId = ${routineId});
 	}
 
+	@summary = "Get the Id of build, component, case and run to add a case result."
 	macro addCaseResult {
 		Variables.assertDefined(parameterList = "${buildName},${caseResultName},${componentName},${caseName},${runName}");
 
@@ -31,6 +33,7 @@ definition {
 			runId = ${runId});
 	}
 
+	@summary = "Get the Id of case result and subtask to add a case result for subtask."
 	macro addCaseResultForSubtask {
 		Variables.assertDefined(parameterList = "${caseResultForSubtask},${caseResultName},${subtaskName}");
 
@@ -43,6 +46,7 @@ definition {
 			subtaskId = ${subtaskId});
 	}
 
+	@summary = "Get the Id of case type, component and project to add a case."
 	macro addCases {
 		Variables.assertDefined(parameterList = "${caseName},${caseType},${projectName},${componentName}");
 
@@ -60,10 +64,12 @@ definition {
 			steps = ${steps});
 	}
 
+	@summary = "This macro add a case type via API."
 	macro addCaseType {
 		var caseTypeId = JSONTestrayAPI.createCaseTypeAPI(caseType = ${caseType});
 	}
 
+	@summary = "Get the Id of project and team to add a component."
 	macro addComponent {
 		Variables.assertDefined(parameterList = "${componentName},${projectName},${teamName}");
 
@@ -76,6 +82,7 @@ definition {
 			teamId = ${teamId});
 	}
 
+	@summary = "Get the Id of category, routine and option to add a environment factor."
 	macro addEnvironmentFactors {
 		Variables.assertDefined(parameterList = ${environmentFactorsName});
 
@@ -109,12 +116,14 @@ definition {
 			routineId = ${routineId});
 	}
 
+	@summary = "Get the Id of category to add a factor category."
 	macro addFactorCategory {
 		Variables.assertDefined(parameterList = ${categoryName});
 
 		var factorCategoryId = JSONTestrayAPI.createFactorCategoriesAPI(categoryName = ${categoryName});
 	}
 
+	@summary = "Get the Id of category and option to add a factor option."
 	macro addFactorOptions {
 		Variables.assertDefined(parameterList = ${optionsName});
 
@@ -123,6 +132,7 @@ definition {
 			optionsName = ${optionsName});
 	}
 
+	@summary = "Get the Id of project to add a case."
 	macro addProductVersion {
 		Variables.assertDefined(parameterList = "${productVersion},${projectName}");
 
@@ -137,6 +147,7 @@ definition {
 			projectId = ${projectId});
 	}
 
+	@summary = "This macro add the project via API"
 	macro addProject {
 		Variables.assertDefined(parameterList = "${projectName},${projectDescription}");
 
@@ -145,6 +156,7 @@ definition {
 			projectName = ${projectName});
 	}
 
+	@summary = "Get the Id of component and project to add a requirement."
 	macro addRequirement {
 		Variables.assertDefined(parameterList = "${componentName},${linkTitle},${projectName},${requirementName}");
 
@@ -159,6 +171,7 @@ definition {
 			requirementName = ${requirementName});
 	}
 
+	@summary = "Get the Id of project to add a routine."
 	macro addRoutine {
 		Variables.assertDefined(parameterList = "${routineName},${projectName}");
 
@@ -169,6 +182,7 @@ definition {
 			routineName = ${routineName});
 	}
 
+	@summary = "Get the Id of build to add a run."
 	macro addRun {
 		Variables.assertDefined(parameterList = "${runName},${buildName}");
 
@@ -179,6 +193,7 @@ definition {
 			runName = ${runName});
 	}
 
+	@summary = "Get the Id of task to add a subtask."
 	macro addSubtask {
 		Variables.assertDefined(parameterList = "${subtaskName},${subtaskNumber},${taskName},${key},${score}");
 
@@ -194,6 +209,7 @@ definition {
 			taskId = ${taskId});
 	}
 
+	@summary = "Get the Id of project to add a suite."
 	macro addSuite {
 		if (!(isSet(projectName))) {
 			var projectName = "Project 1";
@@ -206,6 +222,7 @@ definition {
 			suiteName = ${suiteName});
 	}
 
+	@summary = "Get the Id of build to add a task."
 	macro addTask {
 		Variables.assertDefined(parameterList = "${taskName},${key},${statusTask},${buildName}");
 
@@ -218,6 +235,7 @@ definition {
 			taskName = ${taskName});
 	}
 
+	@summary = "Get the Id of project to add a team."
 	macro addTeam {
 		Variables.assertDefined(parameterList = "${teamName},${projectName}");
 

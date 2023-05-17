@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro add a task via UI."
 	macro addTask {
 		Click(locator1 = "Button#PLUS");
 
@@ -37,6 +38,7 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	@summary = "This macro assert that a task is assigned to a specific user."
 	macro assertAssignTask {
 		AssertElementPresent(
 			key_email = ${email},
@@ -44,6 +46,7 @@ definition {
 			locator1 = "TestrayTestflow#ASSIGN_INFORMATIONS");
 	}
 
+	@summary = "This macro assert that the status specific appears on a specific page."
 	macro assertStatus {
 		AssertElementPresent(
 			key_label = ${label},
@@ -51,6 +54,7 @@ definition {
 			locator1 = "TestrayTestflow#TESTFLOW_STATUS");
 	}
 
+	@summary = "This macro assert the task details in the table."
 	macro assertTaskDetails {
 		AssertElementPresent(
 			key_build = ${build},
@@ -61,6 +65,7 @@ definition {
 			locator1 = "TestrayTestflow#TASK_DETAILS");
 	}
 
+	@summary = "This macro select a user."
 	macro assignUsers {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
@@ -69,6 +74,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro edit the breadcrumb."
 	macro editBreadcrumb {
 		Click(locator1 = "TestrayTestflow#BREADCRUMB_EDIT");
 
@@ -97,6 +103,7 @@ definition {
 		}
 	}
 
+	@summary = "This macro edit the status."
 	macro editStatus {
 		Select(
 			locator1 = "TestrayTestflow#SELECT_STATUS_CASE_RESULTS",
@@ -117,6 +124,7 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	@summary = "This macro edit a task."
 	macro editTask {
 		Button.click(button = "Edit Task");
 
@@ -141,16 +149,19 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	@summary = "This macro go to task."
 	macro goToTask {
 		Click(
 			key_projectName = ${taskName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
+	@summary = "This macro go to TestFlow in the sidebar."
 	macro goToTestflow {
 		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 	}
 
+	@summary = "This macro select the options in the task."
 	macro taskOptions {
 		if (isSet(taskName)) {
 			Type(
@@ -161,12 +172,14 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	@summary = "This macro assert that avatar icon is not present."
 	macro userAvatarNotPresent {
 		AssertElementNotPresent(
 			label = ${label},
 			locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
+	@summary = "This macro assert that avatar icon is present."
 	macro userAvatarPresent {
 		AssertElementPresent(
 			label = ${label},

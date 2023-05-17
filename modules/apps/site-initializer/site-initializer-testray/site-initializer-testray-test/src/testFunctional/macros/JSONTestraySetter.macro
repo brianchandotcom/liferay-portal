@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "Get the Id of build."
 	macro getBuildId {
 		var buildId = JSONTestrayAPI._getObjectId(
 			object = "builds",
@@ -8,6 +9,7 @@ definition {
 		return ${buildId};
 	}
 
+	@summary = "Get the Id of case."
 	macro getCaseId {
 		var caseId = JSONTestrayAPI._getObjectId(
 			object = "cases",
@@ -16,6 +18,7 @@ definition {
 		return ${caseId};
 	}
 
+	@summary = "Get the Id of case result."
 	macro getCaseResultId {
 		var caseResultId = JSONTestrayAPI._getObjectId(
 			object = "caseresults",
@@ -24,6 +27,7 @@ definition {
 		return ${caseResultId};
 	}
 
+	@summary = "Get the Id of case type."
 	macro getCaseTypeId {
 		var caseTypeId = JSONTestrayAPI._getObjectId(
 			object = "casetypes",
@@ -32,6 +36,7 @@ definition {
 		return ${caseTypeId};
 	}
 
+	@summary = "Get the Id of component"
 	macro getComponentId {
 		var componentId = JSONTestrayAPI._getObjectId(
 			object = "components",
@@ -40,6 +45,7 @@ definition {
 		return ${componentId};
 	}
 
+	@summary = "Get the Id of factor category."
 	macro getFactorCategoryId {
 		var factorCategoryId = JSONTestrayAPI._getObjectId(
 			object = "factorcategories",
@@ -48,12 +54,14 @@ definition {
 		return ${factorCategoryId};
 	}
 
+	@summary = "Get the Id of factor option."
 	macro getFactorOptionsId {
 		var factorOptionsId = JSONTestrayAPI._getOptionsId(optionsName = ${optionsName});
 
 		return ${factorOptionsId};
 	}
 
+	@summary = "Get the Id of product version."
 	macro getProductVersionId {
 		var productVersionId = JSONTestrayAPI._getObjectId(
 			object = "productversions",
@@ -62,6 +70,7 @@ definition {
 		return ${productVersionId};
 	}
 
+	@summary = "Get the Id of project."
 	macro getProjectId {
 		Variables.assertDefined(parameterList = ${projectName});
 
@@ -70,6 +79,7 @@ definition {
 		return ${projectId};
 	}
 
+	@summary = "Get the Id of requirement."
 	macro getRequirementId {
 		var requirementId = JSONTestrayAPI._getObjectId(
 			object = "requirements",
@@ -78,6 +88,7 @@ definition {
 		return ${requirementId};
 	}
 
+	@summary = "Get the Id of routine."
 	macro getRoutineId {
 		var routineId = JSONTestrayAPI._getObjectId(
 			object = "routines",
@@ -86,6 +97,7 @@ definition {
 		return ${routineId};
 	}
 
+	@summary = "Get the Id of run."
 	macro getRunId {
 		var runId = JSONTestrayAPI._getObjectId(
 			object = "runs",
@@ -94,6 +106,7 @@ definition {
 		return ${runId};
 	}
 
+	@summary = "Get the Id of subtask."
 	macro getSubtaskId {
 		var subtaskId = JSONTestrayAPI._getObjectId(
 			object = "subtasks",
@@ -102,6 +115,7 @@ definition {
 		return ${subtaskId};
 	}
 
+	@summary = "Get the Id of suite."
 	macro getSuiteId {
 		var suiteId = JSONTestrayAPI._getObjectId(
 			object = "suites",
@@ -110,6 +124,7 @@ definition {
 		return ${suiteId};
 	}
 
+	@summary = "Get the Id of task."
 	macro getTaskId {
 		var taskId = JSONTestrayAPI._getObjectId(
 			object = "tasks",
@@ -118,6 +133,7 @@ definition {
 		return ${taskId};
 	}
 
+	@summary = "Get the Id of team."
 	macro getTeamId {
 		var teamId = JSONTestrayAPI._getTeamId(teamName = ${teamName});
 

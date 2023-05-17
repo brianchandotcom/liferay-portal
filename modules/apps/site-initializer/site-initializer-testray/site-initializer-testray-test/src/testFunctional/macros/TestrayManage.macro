@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro add a category via UI."
 	macro addNewCategory {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
@@ -12,6 +13,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro add product version in the build."
 	macro addProductVersionInBuild {
 		Click(locator1 = "Button#PLUS");
 
@@ -22,6 +24,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON_IN_MODAL");
 	}
 
+	@summary = "This macro add project by sidebar."
 	macro addProjectManageBar {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -36,16 +39,19 @@ definition {
 		Click(locator1 = "TestrayManage#CLOSE_MODAL");
 	}
 
+	@summary = "This macro assert title in the modal."
 	macro assertTitleModal {
 		AssertElementNotPresent(
 			key_title = ${key_itemvalue},
 			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
 	}
 
+	@summary = "This macro close the modal"
 	macro closeModalInOptions {
 		Click(locator1 = "TestrayManage#CLOSE_MODAL");
 	}
 
+	@summary = "This macro add case type via UI."
 	macro createNewCaseTypes {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
@@ -56,6 +62,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro add option via UI."
 	macro createNewOption {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
@@ -70,6 +77,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro add product version via UI."
 	macro createProductVersion {
 		TestrayContextMenu.clickContextMenuProjects(name = ${nameOptions});
 
@@ -86,6 +94,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro add team via UI."
 	macro createTeam {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
@@ -110,6 +119,7 @@ definition {
 		Button.clickSave();
 	}
 
+	@summary = "This macro delete all case types."
 	macro deleteAllCasesTypes {
 		Refresh();
 
@@ -134,6 +144,7 @@ definition {
 		}
 	}
 
+	@summary = "This macro delete all categories."
 	macro deleteAllCategories {
 		Refresh();
 
@@ -154,6 +165,7 @@ definition {
 		}
 	}
 
+	@summary = "This macro delete a case type."
 	macro deleteCasesTypes {
 		TestrayContextMenu.clickContextMenuProjects(name = ${valueName});
 
@@ -164,6 +176,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	@summary = "This macro delete a categorie."
 	macro deleteCategory {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -180,6 +193,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	@summary = "This macro delete a option."
 	macro deleteOption {
 		TestrayContextMenu.clickContextMenuProjects(name = ${nameOptions});
 
@@ -190,6 +204,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro delete a product version."
 	macro deleteProductVersion {
 		TestrayContextMenu.clickContextMenuProjects(name = ${versionName});
 
@@ -198,6 +213,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro edit a categorie."
 	macro editCategoryOption {
 		Type(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
@@ -208,6 +224,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	@summary = "This macro edit a categorie."
 	macro editCategoryTitle {
 		TestrayContextMenu.clickContextMenuProjects(name = ${category});
 
@@ -220,6 +237,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro edit a case type."
 	macro editNewName {
 		TestrayContextMenu.clickContextMenuProjects(name = ${valueName});
 
@@ -234,6 +252,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	@summary = "This macro edit the options in the categorie."
 	macro editOptionTitle {
 		TestrayContextMenu.clickContextMenuProjects(name = ${option});
 
@@ -252,6 +271,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
+	@summary = "This macro edit a product version."
 	macro editProductVersion {
 		TestrayContextMenu.clickContextMenuProjects(name = ${valueName});
 
@@ -264,6 +284,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro edit a team."
 	macro editTeam {
 		TestrayManage.editProductVersion(
 			caseName = ${newTeamName},
@@ -271,6 +292,7 @@ definition {
 			valueName = ${currentTeamName});
 	}
 
+	@summary = "This macro select options in the categorie."
 	macro selectOptionDropdownCategory {
 		Click(locator1 = "TestrayManage#DROPDOWN_CATEGORIES");
 
@@ -279,6 +301,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@summary = "This macro select options in the sidebar."
 	macro selectOptionsManage {
 		Click(
 			key_itemvalue = ${itemValue},

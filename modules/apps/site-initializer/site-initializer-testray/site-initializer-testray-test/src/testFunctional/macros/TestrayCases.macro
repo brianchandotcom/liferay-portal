@@ -1,5 +1,6 @@
 definition {
 
+	@summary = "This macro edit a case."
 	macro editCases {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -32,6 +33,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro export cases."
 	macro exportCases {
 		Button.click(button = "Add Cases");
 
@@ -46,6 +48,7 @@ definition {
 		Button.click(button = "Export");
 	}
 
+	@summary = "This macro link cases the requirement."
 	macro linkCasesRequirement {
 		TestrayRequirements.addRequirementCase(
 			buttonText = ${buttonText},
@@ -53,6 +56,7 @@ definition {
 			linkText = ${linkText});
 	}
 
+	@summary = "This macro writes to the case fields."
 	macro typeCasesField {
 		LexiconEntry.gotoAdd();
 
@@ -93,6 +97,7 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	@summary = "This macro assert the case details in the table."
 	macro verifyCase {
 		AssertElementPresent(
 			key_caseComponent = ${caseComponent},
@@ -101,6 +106,7 @@ definition {
 			locator1 = "TestrayCases#CASE_DETAIL");
 	}
 
+	@summary = "This macro assert the link caseRequirement in the table."
 	macro verifyLinkCaseRequirement {
 		AssertElementPresent(
 			key_component = ${component},

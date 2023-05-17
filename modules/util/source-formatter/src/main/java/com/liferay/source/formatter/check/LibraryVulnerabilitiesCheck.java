@@ -93,11 +93,7 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_getGithubAccessToken(sourceFormatterArgs);
-
-		if (Validator.isNull(_githubAccessToken)) {
-			return content;
-		}
+		_githubAccessToken = _getGithubAccessToken(sourceFormatterArgs);
 
 		if (fileName.endsWith(".gradle")) {
 			_checkGradleLibraryVulnerabilities(fileName, absolutePath, content);
@@ -425,6 +421,10 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			}
 		}
 
+		if (Validator.isNull(_githubAccessToken)) {
+			return;
+		}
+
 		if (!_cachedVulnerableVersionMap.containsKey(
 				securityAdvisoryEcosystemEnum + ":" + packageName)) {
 
@@ -528,12 +528,12 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		return properties.getProperty("github.access.token");
 	}
 
-	private synchronized void _getGithubAccessToken(
+	private synchronized String _getGithubAccessToken(
 			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		if (Validator.isNotNull(_githubAccessToken)) {
-			return;
+			return _githubAccessToken;
 		}
 
 		if (sourceFormatterArgs.isUseCiGithubAccessToken() ||
@@ -544,6 +544,8 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		else {
 			_githubAccessToken = _getLocalGithubAccessToken();
 		}
+
+		return _githubAccessToken;
 	}
 
 	private String _getLocalGithubAccessToken() throws Exception {

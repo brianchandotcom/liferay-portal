@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.model.impl;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
@@ -107,6 +108,26 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 			getGroupId(), getAttachmentsFolderId(),
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new RepositoryModelTitleComparator<>(true));
+	}
+
+	@Override
+	public FileEntry getAttachmentsFileEntryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		FileEntry fileEntry =
+			PortletFileRepositoryUtil.
+				getPortletFileEntryByExternalReferenceCode(
+					externalReferenceCode, getGroupId());
+
+		if (getAttachmentsFolderId() == fileEntry.getFolderId()) {
+			return fileEntry;
+		}
+
+		throw new NoSuchFileEntryException(
+			StringBundler.concat(
+				"No FileEntry exists with the key {externalReferenceCode=",
+				externalReferenceCode, ", groupId=", getGroupId(), "}"));
 	}
 
 	@Override

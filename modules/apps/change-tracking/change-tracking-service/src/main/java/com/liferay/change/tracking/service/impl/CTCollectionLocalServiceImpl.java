@@ -570,11 +570,13 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<CTEntry> getDiscardCTEntries(
-		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+	public Map<Long, List<CTEntry>> getDiscardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException {
 
-		return _getRelatedCTEntries(
-			ctCollectionId, modelClassNameId, modelClassPK);
+		return _getDiscardCTEntries(
+			ctCollectionPersistence.findByPrimaryKey(ctCollectionId),
+			modelClassNameId, modelClassPK);
 	}
 
 	public List<CTCollection> getExclusivePublishedCTCollections(

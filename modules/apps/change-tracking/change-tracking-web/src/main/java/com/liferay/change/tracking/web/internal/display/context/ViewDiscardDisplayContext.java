@@ -18,6 +18,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -30,10 +31,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -67,17 +67,15 @@ public class ViewDiscardDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getReactData() {
-		Set<Long> ctEntryIds = new HashSet<>();
-		Set<Long> classNameIds = new HashSet<>();
+	public Map<String, Object> getReactData() throws Exception {
+		Map<Long, List<CTEntry>> discardCTEntries =
+			_ctCollectionLocalService.getDiscardCTEntries(
+				_ctCollectionId, _modelClassNameId, _modelClassPK);
 
-		List<CTEntry> ctEntries = _ctCollectionLocalService.getDiscardCTEntries(
-			_ctCollectionId, _modelClassNameId, _modelClassPK);
+		List<CTEntry> ctEntries = new ArrayList<>();
 
-		for (CTEntry ctEntry : ctEntries) {
-			ctEntryIds.add(ctEntry.getCtEntryId());
-
-			classNameIds.add(ctEntry.getModelClassNameId());
+		for (List<CTEntry> value : discardCTEntries.values()) {
+			ctEntries.addAll(value);
 		}
 
 		return HashMapBuilder.<String, Object>put(
@@ -124,14 +122,17 @@ public class ViewDiscardDisplayContext {
 		).put(
 			"typeNames",
 			DisplayContextUtil.getTypeNamesJSONObject(
-				classNameIds, _ctDisplayRendererRegistry, _themeDisplay)
+				discardCTEntries.keySet(), _ctDisplayRendererRegistry,
+				_themeDisplay)
 		).put(
 			"userInfo",
 			DisplayContextUtil.getUserInfoJSONObject(
 				CTEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId),
 				CTEntryTable.INSTANCE, _themeDisplay, _userLocalService,
 				CTEntryTable.INSTANCE.ctEntryId.in(
-					ctEntryIds.toArray(new Long[0])))
+					TransformUtil.transformToArray(
+						ctEntries, ctEntry -> ctEntry.getCtEntryId(),
+						Long.class)))
 		).build();
 	}
 

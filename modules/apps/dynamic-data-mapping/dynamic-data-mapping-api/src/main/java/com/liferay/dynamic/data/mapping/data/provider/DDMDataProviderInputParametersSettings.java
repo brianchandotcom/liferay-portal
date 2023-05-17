@@ -34,7 +34,9 @@ public interface DDMDataProviderInputParametersSettings {
 	)
 	public String inputParameterName();
 
-	@DDMFormField(label = "%required", type = "checkbox", visibilityExpression = "FALSE")
+	@DDMFormField(
+		label = "%required", type = "checkbox", visibilityExpression = "FALSE"
+	)
 	public boolean inputParameterRequired();
 
 	@DDMFormField(

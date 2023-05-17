@@ -29,16 +29,16 @@ import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 import RequiredMark from '../components/RequiredMark';
 
+interface IAddFDSSortModalContentInterface {
+	closeModal: Function;
+	fdsView: FDSViewType;
+	fields: IField[];
+	onSave: (newSort: IFDSSort) => void;
+}
+
 interface IContentRendererProps {
 	item: IFDSSort;
 	query: string;
-}
-
-interface IField {
-	format: string;
-	label: string;
-	name: string;
-	type: string;
 }
 
 interface IFDSSort {
@@ -48,11 +48,11 @@ interface IFDSSort {
 	sortingDirection: string;
 }
 
-interface IAddFDSSortModalContentInterface {
-	closeModal: Function;
-	fdsView: FDSViewType;
-	fields: IField[];
-	onSave: (newSort: IFDSSort) => void;
+interface IField {
+	format: string;
+	label: string;
+	name: string;
+	type: string;
 }
 
 const SORTING_DIRECTION = {
@@ -432,6 +432,18 @@ const Sorting = ({
 		});
 	}, [fdsView]);
 
+	const handleCreation = () =>
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: Function}) => (
+				<AddFDSSortModalContent
+					closeModal={closeModal}
+					fdsView={fdsView}
+					fields={fields}
+					onSave={(newSort) => setFDSSorts([...fdsSorts, newSort])}
+				/>
+			),
+		});
+
 	const handleDelete = ({item}: {item: IFDSSort}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
@@ -515,7 +527,7 @@ const Sorting = ({
 		});
 	};
 
-	const updateFDSFieldsOrder = async () => {
+	const handleSave = async () => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
@@ -549,18 +561,6 @@ const Sorting = ({
 			alertFailed();
 		}
 	};
-
-	const onCreationButtonClick = () =>
-		openModal({
-			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<AddFDSSortModalContent
-					closeModal={closeModal}
-					fdsView={fdsView}
-					fields={fields}
-					onSave={(newSort) => setFDSSorts([...fdsSorts, newSort])}
-				/>
-			),
-		});
 
 	return (
 		<ClayLayout.ContainerFluid>
@@ -614,7 +614,7 @@ const Sorting = ({
 							'no-default-sort-created-yet'
 						)}
 						onCancelButtonClick={() => navigate(fdsViewsURL)}
-						onCreationButtonClick={onCreationButtonClick}
+						onCreationButtonClick={handleCreation}
 						onOrderChange={({
 							orderedItems,
 						}: {
@@ -626,7 +626,7 @@ const Sorting = ({
 									.join(',')
 							);
 						}}
-						onSaveButtonClick={updateFDSFieldsOrder}
+						onSaveButtonClick={handleSave}
 						title={Liferay.Language.get('sorting')}
 					/>
 				</>

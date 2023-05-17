@@ -48,9 +48,7 @@ definition {
 		var startTime = "11:45:00.000";
 		var endDate = "2022-05-13";
 		var endTime = "09:20:00.000";
-		var type = "page";
-
-		var upperCaseType = StringUtil.upperCase(${type});
+		var typeList = "event,page,individual,segment";
 		var status = "PENDING";
 		var message = "A new data export file for this date range and type will be created. Please come back later.";
 
@@ -58,25 +56,29 @@ definition {
 			var token = ACApi.getTokenValue();
 		}
 
-		task ("Create a new export schedule via API") {
-			ACApi.createNewExportSchedule(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				token = ${token},
-				type = ${type});
-		}
+		for (var type : list ${typeList}) {
+			task ("Create a new export schedule via API") {
+				ACApi.createNewExportSchedule(
+					endDate = ${endDate},
+					endTime = ${endTime},
+					startDate = ${startDate},
+					startTime = ${startTime},
+					token = ${token},
+					type = ${type});
+			}
 
-		task ("Check if the API response is correct for a new export schedule") {
-			ACApi.viewApiResponseForExportProcess(
-				endDate = ${endDate},
-				endTime = ${endTime},
-				message = ${message},
-				startDate = ${startDate},
-				startTime = ${startTime},
-				status = ${status},
-				upperCaseType = ${upperCaseType});
+			task ("Check if the API response is correct for a new export schedule") {
+				var upperCaseType = StringUtil.upperCase(${type});
+
+				ACApi.viewApiResponseForExportProcess(
+					endDate = ${endDate},
+					endTime = ${endTime},
+					message = ${message},
+					startDate = ${startDate},
+					startTime = ${startTime},
+					status = ${status},
+					upperCaseType = ${upperCaseType});
+			}
 		}
 	}
 

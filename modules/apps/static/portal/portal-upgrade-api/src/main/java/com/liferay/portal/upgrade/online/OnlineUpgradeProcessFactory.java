@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 /**
  * @author Kevin Lee
  */
-public class OnlineUpgradeStepFactory {
+public class OnlineUpgradeProcessFactory {
 
-	public static OnlineUpgradeStep alterColumnName(
+	public static OnlineUpgradeProcess alterColumnName(
 		String oldColumnName, String newColumnDefinition) {
 
 		return tableName -> {
@@ -34,7 +34,7 @@ public class OnlineUpgradeStepFactory {
 		};
 	}
 
-	public static OnlineUpgradeStep alterColumnType(
+	public static OnlineUpgradeProcess alterColumnType(
 		String columnName, String newColumnType) {
 
 		return tableName -> {

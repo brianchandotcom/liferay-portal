@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.upgrade.online.OnlineUpgradeExecutor;
-import com.liferay.portal.upgrade.online.OnlineUpgradeStep;
+import com.liferay.portal.upgrade.online.OnlineUpgradeProcess;
 
 import java.sql.Connection;
 
@@ -34,10 +34,12 @@ public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
 
 	@Override
 	public void upgrade(
-			String tableName, OnlineUpgradeStep... onlineUpgradeSteps)
+			String tableName, OnlineUpgradeProcess... onlineUpgradeProcesses)
 		throws Exception {
 
-		if ((onlineUpgradeSteps == null) || (onlineUpgradeSteps.length == 0)) {
+		if ((onlineUpgradeProcesses == null) ||
+			(onlineUpgradeProcesses.length == 0)) {
+
 			throw new IllegalArgumentException(
 				"At least one upgrade step is required");
 		}
@@ -49,8 +51,10 @@ public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
 
 			db.copyTableStructure(connection, tableName, tempTableName);
 
-			for (OnlineUpgradeStep onlineUpgradeStep : onlineUpgradeSteps) {
-				onlineUpgradeStep.upgrade(tempTableName);
+			for (OnlineUpgradeProcess onlineUpgradeProcess :
+					onlineUpgradeProcesses) {
+
+				onlineUpgradeProcess.upgrade(tempTableName);
 			}
 
 			db.copyTableRows(connection, tableName, tempTableName);

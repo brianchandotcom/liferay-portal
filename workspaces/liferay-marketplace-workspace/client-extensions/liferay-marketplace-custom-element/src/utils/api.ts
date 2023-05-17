@@ -478,6 +478,24 @@ export async function getProduct({
 	return (await response.json()) as Product;
 }
 
+export async function getProductAttachments(
+	accountId: number,
+	channelId: number,
+	productId: number
+) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}/attachments?accountId=${accountId}`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	const {items} = await response.json();
+
+	return items as ProductAttachment[];
+}
+
 export async function getProductIdCategories({appId}: {appId: string}) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/categories`,
@@ -575,24 +593,28 @@ export async function getSKUById(skuId: number) {
 	return await response.json();
 }
 
-export async function getSKUCustomFieldExpandoValue({
+export async function getCustomFieldExpandoValue({
+	className,
+	classPK,
+	columnName,
 	companyId,
-	customFieldName,
-	skuId,
+	tableName,
 }: {
+	className: string;
+	classPK: number;
+	columnName: string;
 	companyId: number;
-	customFieldName: string;
-	skuId: number;
+	tableName: string;
 }) {
 	let response = '';
 	await Liferay.Service(
 		'/expandovalue/get-data',
 		{
-			className: 'com.liferay.commerce.product.model.CPInstance',
-			classPK: skuId,
-			columnName: customFieldName,
+			className,
+			classPK,
+			columnName,
 			companyId,
-			tableName: 'CUSTOM_FIELDS',
+			tableName,
 		},
 		(object: any) => {
 			response = object;

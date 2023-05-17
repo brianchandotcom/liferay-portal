@@ -32,13 +32,13 @@ export function PurchasedAppsDashboardTableRow({
 	item,
 }: PurchasedAppsDashboardTableRowProps) {
 	const {
-		image,
 		name,
 		orderId,
 		project,
 		provisioning,
 		purchasedBy,
 		purchasedDate,
+		thumbnail,
 		type,
 		version,
 	} = item;
@@ -51,7 +51,7 @@ export function PurchasedAppsDashboardTableRow({
 						<img
 							alt="App Image"
 							className="dashboard-table-row-name-logo"
-							src={showAppImage(image)}
+							src={showAppImage(thumbnail)}
 						/>
 					</div>
 

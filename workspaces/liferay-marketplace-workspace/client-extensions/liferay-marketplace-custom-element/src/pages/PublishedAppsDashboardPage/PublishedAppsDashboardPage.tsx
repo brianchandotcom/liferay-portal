@@ -164,7 +164,7 @@ export function PublishedAppsDashboardPage() {
 				if (accountCatalogId && accountCatalogId !== 0) {
 					setCatalogId(accountCatalogId);
 					const {items: productsItems} = await getProducts(
-						'productChannels'
+						'productChannels, attachments'
 					);
 
 					const appListProductIds: number[] =
@@ -194,6 +194,7 @@ export function PublishedAppsDashboardPage() {
 							product.catalogId === accountCatalogId
 						) {
 							newAppList.push({
+								attachments: product.attachments,
 								catalogId: product.catalogId,
 								externalReferenceCode:
 									product.externalReferenceCode,

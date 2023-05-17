@@ -16,6 +16,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
+import solutionsIcon from '../../assets/icons/analytics_icon.svg';
+import appsIcon from '../../assets/icons/apps_fill_icon.svg';
+import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
@@ -27,9 +30,10 @@ import {
 	getAccountInfoFromCommerce,
 	getAccounts,
 	getChannels,
+	getCustomFieldExpandoValue,
 	getMyUserAccount,
 	getPlacedOrders,
-	getSKUCustomFieldExpandoValue,
+	getProductAttachments,
 	getUserAccounts,
 } from '../../utils/api';
 import {showAccountImage} from '../../utils/util';
@@ -42,11 +46,6 @@ import {
 	getRolesList,
 	publisherRoles,
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
-
-import './PurchasedAppsDashboardPage.scss';
-import solutionsIcon from '../../assets/icons/analytics_icon.svg';
-import appsIcon from '../../assets/icons/apps_fill_icon.svg';
-import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {
 	initialAccountState,
 	initialDashboardNavigationItems,
@@ -54,14 +53,16 @@ import {
 	tableHeaders,
 } from './PurchasedDashboardPageUtil';
 
+import './PurchasedAppsDashboardPage.scss';
+
 export interface PurchasedAppProps {
-	image: string;
 	name: string;
 	orderId: number;
 	project?: string;
 	provisioning: string;
 	purchasedBy: string;
 	purchasedDate: string;
+	thumbnail: string;
 	type: string;
 	version: string;
 }
@@ -194,14 +195,40 @@ export function PurchasedAppsDashboardPage() {
 							options
 						);
 
-						const version = await getSKUCustomFieldExpandoValue({
+						const version = await getCustomFieldExpandoValue({
+							className:
+								'com.liferay.commerce.product.model.CPInstance',
+							classPK: placeOrderItem.skuId,
+							columnName: 'version',
 							companyId: Number(getCompanyId()),
-							customFieldName: 'version',
-							skuId: placeOrderItem.skuId,
+							tableName: 'CUSTOM_FIELDS',
 						});
 
+						const attachments = await getProductAttachments(
+							selectedAccount.id,
+							channel.id as number,
+							placeOrderItem.productId
+						);
+
+						const orderThumbnail = attachments.find(
+							async (currentAttachment) => {
+								const attachmentsCustomField =
+									await getCustomFieldExpandoValue({
+										className:
+											'com.liferay.commerce.product.model.CPAttachmentFileEntry',
+										classPK: currentAttachment.id,
+										columnName: 'App Icon',
+										companyId: Number(getCompanyId()),
+										tableName: 'CUSTOM_FIELDS',
+									});
+
+								if (attachmentsCustomField === 'Yes') {
+									return currentAttachment;
+								}
+							}
+						);
+
 						return {
-							image: placeOrderItem.thumbnail,
 							name: placeOrderItem.name,
 							orderId: order.id,
 							provisioning: order.orderStatusInfo.label_i18n,
@@ -210,6 +237,7 @@ export function PurchasedAppsDashboardPage() {
 							type: placeOrderItem.subscription
 								? 'Subscription'
 								: 'Perpetual',
+							thumbnail: orderThumbnail?.src as string,
 							version: !Object.keys(version).length
 								? ''
 								: version,

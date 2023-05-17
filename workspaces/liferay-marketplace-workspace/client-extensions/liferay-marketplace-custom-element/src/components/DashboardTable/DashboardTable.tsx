@@ -22,6 +22,7 @@ import React, {ReactNode} from 'react';
 import {DashboardEmptyTable} from './DashboardEmptyTable';
 
 export type AppProps = {
+	attachments: Partial<ProductAttachment>[];
 	catalogId: number;
 	externalReferenceCode: string;
 	lastUpdatedBy?: string;

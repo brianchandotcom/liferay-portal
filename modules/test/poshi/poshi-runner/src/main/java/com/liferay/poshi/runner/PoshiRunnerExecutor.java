@@ -756,6 +756,7 @@ public class PoshiRunnerExecutor {
 
 		for (Element rootVarElement : rootVarElements) {
 			_poshiVariablesContext.pushCommandMap();
+
 			runRootVarElement(rootVarElement, true);
 		}
 
@@ -1069,6 +1070,7 @@ public class PoshiRunnerExecutor {
 
 		for (Element rootVarElement : rootVarElements) {
 			_poshiVariablesContext.pushCommandMap();
+
 			runRootVarElement(rootVarElement, false);
 		}
 

@@ -23,8 +23,8 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateR
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.helper.AddFormInstanceRecordMVCCommandHelper;
+import com.liferay.dynamic.data.mapping.form.web.internal.util.DDMLayoutUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -307,9 +307,7 @@ public class AddFormInstanceRecordMVCActionCommand
 			ddmFormInstance.getSettingsModel();
 
 		if (StringUtil.startsWith(
-				currentURL,
-				_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-					getFormLayoutURL(themeDisplay)) &&
+				currentURL, DDMLayoutUtil.getFormLayoutURL(themeDisplay)) &&
 			!ddmFormInstanceSettings.published()) {
 
 			throw new FormInstanceNotPublishedException(
@@ -317,10 +315,6 @@ public class AddFormInstanceRecordMVCActionCommand
 					" is not published");
 		}
 	}
-
-	@Reference
-	private AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
-		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 
 	@Reference
 	private AddFormInstanceRecordMVCCommandHelper

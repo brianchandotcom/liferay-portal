@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle;
 
 import com.liferay.dynamic.data.mapping.form.web.internal.layout.type.constants.DDMFormPortletLayoutTypeConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,28 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(
-	service = {
-		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener.class,
-		PortalInstanceLifecycleListener.class
-	}
-)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
-
-	public String getFormLayoutURL(ThemeDisplay themeDisplay) {
-		return StringBundler.concat(
-			themeDisplay.getPortalURL(),
-			themeDisplay.getPathFriendlyURLPublic(), "/forms/shared/-/form/");
-	}
-
-	public boolean isSharedLayout(ThemeDisplay themeDisplay) {
-		Layout layout = themeDisplay.getLayout();
-
-		String type = layout.getType();
-
-		return type.equals(DDMFormPortletLayoutTypeConstants.LAYOUT_TYPE);
-	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {

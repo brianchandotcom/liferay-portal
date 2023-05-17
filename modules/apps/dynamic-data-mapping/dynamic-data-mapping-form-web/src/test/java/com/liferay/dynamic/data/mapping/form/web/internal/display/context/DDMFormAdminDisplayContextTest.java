@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -347,7 +346,6 @@ public class DDMFormAdminDisplayContextTest {
 
 		_ddmFormAdminDisplayContext = new DDMFormAdminDisplayContext(
 			_renderRequest, Mockito.mock(RenderResponse.class),
-			new AddDefaultSharedFormLayoutPortalInstanceLifecycleListener(),
 			Mockito.mock(DDMFormBuilderContextFactory.class),
 			Mockito.mock(DDMFormBuilderSettingsRetriever.class),
 			_getDDMFormContextToDDMFormValues(),

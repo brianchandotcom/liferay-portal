@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFact
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper.FieldSetPermissionCheckerHelper;
-import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetRowChecker;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FieldSetSearchTerms;
@@ -93,8 +92,6 @@ public class DDMFormAdminFieldSetDisplayContext
 
 	public DDMFormAdminFieldSetDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
-			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
 		DDMFormContextDeserializer<DDMFormValues> ddmFormContextToDDMFormValues,
@@ -118,12 +115,10 @@ public class DDMFormAdminFieldSetDisplayContext
 		Portal portal) {
 
 		super(
-			renderRequest, renderResponse,
-			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
-			ddmFormBuilderContextFactory, ddmFormBuilderSettingsRetriever,
-			ddmFormContextToDDMFormValues, ddmFormFieldTypeServicesRegistry,
-			ddmFormFieldTypesSerializer, ddmFormInstanceLocalService,
-			ddmFormInstanceRecordLocalService,
+			renderRequest, renderResponse, ddmFormBuilderContextFactory,
+			ddmFormBuilderSettingsRetriever, ddmFormContextToDDMFormValues,
+			ddmFormFieldTypeServicesRegistry, ddmFormFieldTypesSerializer,
+			ddmFormInstanceLocalService, ddmFormInstanceRecordLocalService,
 			ddmFormInstanceRecordWriterRegistry, ddmFormInstanceService,
 			ddmFormInstanceVersionLocalService, ddmFormRenderer,
 			ddmFormTemplateContextFactory, ddmFormValuesFactory,

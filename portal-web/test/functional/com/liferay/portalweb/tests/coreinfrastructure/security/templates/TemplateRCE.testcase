@@ -34,6 +34,39 @@ definition {
 		}
 	}
 
+	@description = "This is a usecase for LPS-153227."
+	@priority = 3
+	test CreateBreadcumbTemplate {
+		property test.assert.warning.exceptions = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Design",
+			portlet = "Templates");
+
+		Navigator.gotoNavTab(navTab = "Widget Templates");
+
+		ApplicationDisplayTemplates.addCP(
+			adtFile = "adt_breadcrumb.ftl",
+			adtType = "Breadcrumb");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Breadcrumb Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Breadcrumb Page",
+			widgetName = "Breadcrumb");
+
+		Navigator.gotoPage(pageName = "Test Breadcrumb Page");
+
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Breadcrumb",
+			templateName = "Breadcrumb Test ADT");
+
+		Refresh();
+	}
+
 	@priority = 4
 	test ViewInstanceManager {
 		property app.server.types = "tomcat";

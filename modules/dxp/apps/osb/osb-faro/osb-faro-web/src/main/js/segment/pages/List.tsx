@@ -339,7 +339,6 @@ export const List: React.FC<IListProps> = ({
 			delta={delta}
 			emptyStateTitle={Liferay.Language.get('no-data-sources-connected')}
 			entityLabel={Liferay.Language.get('segments')}
-			hideNav
 			noResultsConfig={{
 				description: (
 					<>

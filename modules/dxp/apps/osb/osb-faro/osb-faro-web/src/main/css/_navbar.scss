@@ -38,3 +38,7 @@
 		height: 3.9375rem;
 	}
 }
+
+.nav-link.active:after {
+	background-color: $primary !important;
+}

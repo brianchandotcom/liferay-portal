@@ -5,7 +5,6 @@ import ClayLink from '@clayui/link';
 import EmbeddedAlertList, {
 	IEmbeddedAlertListProps
 } from 'shared/components/EmbeddedAlertList';
-import Nav from 'shared/components/Nav';
 import NoResultsDisplay, {
 	INoResultsDisplayProps
 } from 'shared/components/NoResultsDisplay';
@@ -66,7 +65,6 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	filterBy,
 	filterByOptions,
 	forwardedRef,
-	hideNav = false,
 	noResultsConfig,
 	orderByOptions = [
 		{
@@ -79,7 +77,6 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	pageActions,
 	pageActionsLabel,
 	query,
-	renderSelectedAction,
 	rowIdentifier = 'id',
 	showCheckbox = false,
 	...otherProps
@@ -90,18 +87,6 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 
 	const dataSourceStates = useDataSource();
 	const {empty, error, loading} = dataSourceStates;
-
-	const renderNav = checkedItemsISet => {
-		if (!hideNav && renderSelectedAction && !checkedItemsISet.isEmpty()) {
-			return (
-				<Nav>
-					<Nav.Item key='PRIMARY_ACTION'>
-						{renderSelectedAction(checkedItemsISet)}
-					</Nav.Item>
-				</Nav>
-			);
-		}
-	};
 
 	const ConnectDataSourceButton = () => (
 		<ClayLink
@@ -218,7 +203,6 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 									entityLabel={entityLabel}
 									filterBy={filterBy}
 									filterByOptions={filterByOptions}
-									navRenderer={renderNav}
 									noResultsRenderer={renderNoResults}
 									orderByOptions={orderByOptions}
 									orderIOMap={orderIOMap}

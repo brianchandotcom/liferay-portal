@@ -5,17 +5,6 @@
 		.card-footer {
 			display: flex;
 			justify-content: flex-end;
-
-			.button-root {
-				color: $mainLighten28;
-				font-size: $fontSizeSmall;
-				font-weight: $fontWeightSemiBold;
-
-				.icon-root {
-					margin-left: 5px;
-					width: 10px;
-				}
-			}
 		}
 
 		.table-root {
@@ -38,10 +27,6 @@
 				}
 			}
 		}
-	}
-
-	.container-fluid {
-		justify-content: center;
 	}
 
 	.overview-column-side {

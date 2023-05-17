@@ -9,10 +9,6 @@ $table: '.analytics-variant-card-table';
 
 		& > .navigation-bar {
 			margin-bottom: 65px;
-
-			.navbar-nav .nav-link.active:after {
-				background-color: $primary;
-			}
 		}
 	}
 

@@ -72,7 +72,6 @@ const List: React.FC<IListProps> = ({
 				'no-accounts-synced-from-data-sources'
 			)}
 			entityLabel={Liferay.Language.get('accounts')}
-			hideNav
 			noResultsConfig={{
 				description: (
 					<>

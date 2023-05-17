@@ -60,32 +60,6 @@
 			}
 		}
 
-		.page-subnav .nav-item {
-			.nav-link {
-				margin: 0 8px;
-				padding: 4px 0 12px;
-
-				> .title {
-					font-size: $fontSizeSmall;
-					font-weight: $fontWeightSemiBold;
-					line-height: 24px;
-					margin-bottom: 0;
-				}
-			}
-
-			&:first-child {
-				.nav-link {
-					margin-left: 0;
-				}
-			}
-
-			&:last-child {
-				.nav-link {
-					margin-right: 0;
-				}
-			}
-		}
-
 		.title-section {
 			&.subtitle {
 				margin-bottom: 0;

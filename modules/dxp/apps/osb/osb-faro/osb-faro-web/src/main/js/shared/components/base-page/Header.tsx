@@ -3,8 +3,8 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import getCN from 'classnames';
-import Nav from 'shared/components/Nav';
 import NotificationAlertList, {
 	useNotificationsAPI
 } from '../NotificationAlertList';
@@ -13,7 +13,7 @@ import Row from './Row';
 import TextTruncate from 'shared/components/TextTruncate';
 import {getMatchedRoute, setUriQueryValues, toRoute} from 'shared/util/router';
 import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
-import {noop, pickBy} from 'lodash';
+import {pickBy} from 'lodash';
 
 type NavBarItem = {
 	exact: boolean;
@@ -29,28 +29,31 @@ interface INavBarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const NavBar: React.FC<INavBarProps> = ({
 	items,
-	onClick = noop,
 	routeParams = {},
 	routeQueries = {}
 }) => {
 	const matchedRoute = getMatchedRoute(items);
 
 	return (
-		<Nav className='page-subnav' display='underline'>
-			{items.map(({label, route}) => (
-				<Nav.Item
-					active={matchedRoute === route}
-					href={setUriQueryValues(
-						pickBy(routeQueries),
-						toRoute(route, routeParams)
-					)}
-					key={label}
-					onClick={onClick}
-				>
-					<span className='title'>{label}</span>
-				</Nav.Item>
-			))}
-		</Nav>
+		<div className='row'>
+			<ClayNavigationBar triggerLabel={matchedRoute}>
+				{items.map(({label, route}) => (
+					<ClayNavigationBar.Item
+						active={matchedRoute === route}
+						key={label}
+					>
+						<ClayLink
+							href={setUriQueryValues(
+								pickBy(routeQueries),
+								toRoute(route, routeParams)
+							)}
+						>
+							{label}
+						</ClayLink>
+					</ClayNavigationBar.Item>
+				))}
+			</ClayNavigationBar>
+		</div>
 	);
 };
 

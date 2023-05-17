@@ -361,6 +361,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INPUT_FIELD_READ_ONLY</td>
+	<td>//div[label[contains(.,'${key_fieldName}')]]//input[@readonly='readonly']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISCOUNT_TARGET_SELECT</td>
 	<td>//div[label[contains(.,'Target')]]/select</td>
 	<td></td>

@@ -15,11 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			var companyWebId = JSONCompany.getWebId();
-		}
+		var companyWebId = JSONCompany.getWebId();
 	}
 
 	tearDown {
@@ -267,9 +263,17 @@ definition {
 	@description = "Smoke test Liferay Sample Etc Spring Boot"
 	@priority = 4
 	test LiferaySampleEtcSpringBootSmoke {
-		property workspaces.client.extension.names = "liferay-sample-custom-element-2";
+		task ("Given: Liferay Sample Custom Element 2 and Liferay Sample Etc Spring Boot are deployed into the current virtual instance") {
+			var clientExtensionSamples = "liferay-sample-custom-element-2,liferay-sample-etc-spring-boot";
 
-		task ("Given: A new widget page is created") {
+			for (var clientExtension : list ${clientExtensionSamples}) {
+				AntCommand(
+					locator1 = "build-test-liferay-sample-workspace.xml",
+					value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+			}
+		}
+
+		task ("And: A new widget page is created") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Test Page");
@@ -281,15 +285,7 @@ definition {
 			Portlet.addPG(portletName = "Liferay Sample Custom Element 2");
 		}
 
-		task ("And: Liferay Sample Etc Spring Boot is deployed into the current virtual instance") {
-			var clientExtensionName = "liferay-sample-etc-spring-boot";
-
-			AntCommand(
-				locator1 = "build-test-liferay-sample-workspace.xml",
-				value1 = "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtensionName}");
-		}
-
-		task ("When: The Spring-boot is deployed") {
+		task ("When: The Spring-boot is started") {
 			AntCommand(
 				locator1 = "build-test-liferay-sample-workspace.xml",
 				value1 = "start-liferay-sample-etc-spring-boot -Dvirtual.instance.id=${companyWebId}");

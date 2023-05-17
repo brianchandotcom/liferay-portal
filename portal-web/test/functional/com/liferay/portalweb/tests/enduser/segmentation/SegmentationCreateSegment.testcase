@@ -609,13 +609,13 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Segment");
 
-			Segmentation.fillProperty(selectLink = "Segment With User1");
+			Segmentation.fillProperty(selectEntry = "Segment With User1");
 
 			Segmentation.addProperties(propertyOption = "Segment");
 
 			Segmentation.fillProperty(
 				indexNumber = 2,
-				selectLink = "Segment With User2");
+				selectEntry = "Segment With User2");
 
 			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
 
@@ -695,13 +695,13 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Segment");
 
-			Segmentation.fillProperty(selectLink = "Segment With User1");
+			Segmentation.fillProperty(selectEntry = "Segment With User1");
 
 			Segmentation.addProperties(propertyOption = "Segment");
 
 			Segmentation.fillProperty(
 				indexNumber = 2,
-				selectLink = "Segment With User2");
+				selectEntry = "Segment With User2");
 
 			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
 
@@ -2504,7 +2504,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Segment");
 
-			Segmentation.fillProperty(selectLink = "First Segment");
+			Segmentation.fillProperty(selectEntry = "First Segment");
 
 			Segmentation.gotoSidebar(fieldType = "User");
 

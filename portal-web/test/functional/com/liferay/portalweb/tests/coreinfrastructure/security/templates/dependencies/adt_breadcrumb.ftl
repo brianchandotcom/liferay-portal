@@ -1,0 +1,1 @@
+<#assign size2 = breadcrumbUtil.getLayoutBreadcrumbEntries(httpServletRequest, themeDisplay)?size />

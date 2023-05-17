@@ -121,8 +121,8 @@ public class KnowledgeBaseAttachmentResourceImpl
 				siteId, knowledgeBaseArticleExternalReferenceCode);
 
 		return _toKnowledgeBaseAttachment(
-			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
-				externalReferenceCode, kbArticle.getGroupId()));
+			kbArticle.getAttachmentsFileEntryByExternalReferenceCode(
+				externalReferenceCode));
 	}
 
 	@Override

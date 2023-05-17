@@ -525,53 +525,13 @@ public class CTCollectionLocalServiceImpl
 				"Change tracking collection " + ctCollection + " is read only");
 		}
 
-		CTClosure ctClosure = _ctClosureFactory.create(
-			ctCollection.getCtCollectionId());
+		Map<Long, List<CTEntry>> discardCTEntries = _getDiscardCTEntries(
+			ctCollection, modelClassNameId, modelClassPK);
 
-		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
-			ctClosure, modelClassNameId, modelClassPK);
+		for (Map.Entry<Long, List<CTEntry>> entry :
+				discardCTEntries.entrySet()) {
 
-		for (Map.Entry<Long, Long> entry :
-				CTEnclosureUtil.getEnclosureParentEntries(
-					ctClosure, enclosureMap)) {
-
-			long classNameId = entry.getKey();
-			long classPK = entry.getValue();
-
-			int count = _ctEntryPersistence.countByC_MCNI_MCPK(
-				ctCollectionId, classNameId, classPK);
-
-			if (count > 0) {
-				throw new CTEnclosureException(
-					StringBundler.concat(
-						"{classNameId=", classNameId, ", classPK=", classPK,
-						", ctCollectionId=", ctCollectionId, "}"));
-			}
-		}
-
-		for (Map.Entry<Long, Set<Long>> enclosureEntry :
-				enclosureMap.entrySet()) {
-
-			long classNameId = enclosureEntry.getKey();
-
-			Set<Long> classPKs = enclosureEntry.getValue();
-
-			List<CTEntry> ctEntries = new ArrayList<>(classPKs.size());
-
-			for (long classPK : classPKs) {
-				CTEntry ctEntry = _ctEntryPersistence.fetchByC_MCNI_MCPK(
-					ctCollectionId, classNameId, classPK);
-
-				if (ctEntry != null) {
-					ctEntries.add(ctEntry);
-				}
-			}
-
-			if (ctEntries.isEmpty()) {
-				continue;
-			}
-
-			_discardCTEntries(ctCollection, classNameId, ctEntries);
+			_discardCTEntries(ctCollection, entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -1095,6 +1055,65 @@ public class CTCollectionLocalServiceImpl
 					return null;
 				});
 		}
+	}
+
+	private Map<Long, List<CTEntry>> _getDiscardCTEntries(
+			CTCollection ctCollection, long modelClassNameId, long modelClassPK)
+		throws PortalException {
+
+		CTClosure ctClosure = _ctClosureFactory.create(
+			ctCollection.getCtCollectionId());
+
+		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
+			ctClosure, modelClassNameId, modelClassPK);
+
+		for (Map.Entry<Long, Long> entry :
+				CTEnclosureUtil.getEnclosureParentEntries(
+					ctClosure, enclosureMap)) {
+
+			long classNameId = entry.getKey();
+			long classPK = entry.getValue();
+
+			int count = _ctEntryPersistence.countByC_MCNI_MCPK(
+				ctCollection.getCtCollectionId(), classNameId, classPK);
+
+			if (count > 0) {
+				throw new CTEnclosureException(
+					StringBundler.concat(
+						"{classNameId=", classNameId, ", classPK=", classPK,
+						", ctCollectionId=", ctCollection.getCtCollectionId(),
+						"}"));
+			}
+		}
+
+		Map<Long, List<CTEntry>> discardCTEntries = new HashMap<>();
+
+		for (Map.Entry<Long, Set<Long>> enclosureEntry :
+				enclosureMap.entrySet()) {
+
+			long classNameId = enclosureEntry.getKey();
+
+			Set<Long> classPKs = enclosureEntry.getValue();
+
+			List<CTEntry> ctEntries = new ArrayList<>(classPKs.size());
+
+			for (long classPK : classPKs) {
+				CTEntry ctEntry = _ctEntryPersistence.fetchByC_MCNI_MCPK(
+					ctCollection.getCtCollectionId(), classNameId, classPK);
+
+				if (ctEntry != null) {
+					ctEntries.add(ctEntry);
+				}
+			}
+
+			if (ctEntries.isEmpty()) {
+				continue;
+			}
+
+			discardCTEntries.put(classNameId, ctEntries);
+		}
+
+		return discardCTEntries;
 	}
 
 	private List<CTEntry> _getRelatedCTEntries(

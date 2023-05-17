@@ -520,7 +520,7 @@ definition {
 	@description = "LPS-182287 - A user can configure Custom Filter widgets with DDM fields"
 	@priority = 4
 	test FilterByDDMFields {
-		task ("Add a Web Content Structure with text field") {
+		task ("Add a web content structure with a text field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
 
 			NavItem.gotoStructures();
@@ -532,7 +532,7 @@ definition {
 			Button.clickSave();
 		}
 
-		task ("Create two Web Contents with the Web Content Structure created") {
+		task ("Add two web content articles with the structure") {
 			NavItem.gotoWebContent();
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
@@ -554,39 +554,30 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Create a regular Web Content Article") {
+		task ("Add a basic web content article") {
 			JSONWebcontent.addWebContent(
 				content = "Coconut",
 				groupName = "Guest",
 				title = "Fruit 3");
 		}
 
-		task ("Add Custom filter widget in the Search Page") {
+		task ("Add the Custom Filter widget to the default search page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Search",
 				widgetName = "Custom Filter");
 		}
 
-		task ("Go to the Search page and execute a search for the web content articles") {
+		task ("Go to the search page and execute a search for the web content articles") {
 			Search.openSearchPage(searchTerm = "Fruit");
 		}
 
-		task ("Configure the parent nested query Custom Filter widget") {
+		task ("Configure the Custom Filter widget as a parent nested query") {
 			SearchPortlets.configureCustomFilter(
 				filterField = "ddmFieldArray",
 				filterQueryType = "Nested",
 				occur = "Filter",
 				queryName = "parent_query");
-
-			task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
-				var port = Elasticsearch.getServerPort();
-				var portalHostname = PropsUtil.get("portal.hostname");
-
-				var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
-
-				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[0]._source.ddmFieldArray[0].ddmFieldName");
-			}
 		}
 
 		task ("Add a second Custom Filter widget and configure it as a child query matching the DDM field name") {
@@ -596,6 +587,15 @@ definition {
 				widgetName = "Custom Filter");
 
 			Refresh();
+
+			task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
+				var port = Elasticsearch.getServerPort();
+				var portalHostname = PropsUtil.get("portal.hostname");
+
+				var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+
+				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[0]._source.ddmFieldArray[0].ddmFieldName");
+			}
 
 			SearchPortlets.configureCustomFilter(
 				filterField = "ddmFieldArray.ddmFieldName",
@@ -608,7 +608,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Assert the custom web content structure articles still appear in the search results and the regular web content article does not") {
+		task ("Assert the web content structure articles still appear in the search results and the basic web content article does not") {
 			SearchResultPortlet.viewMultipleSearchResults(
 				resultsList = "Fruit 1/Web Content Article,Fruit 2/Web Content Article",
 				searchTerm = "Fruit");
@@ -636,7 +636,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Assert the custom web content structure articles still appear in the search results") {
+		task ("Assert the web content structure articles still appear in the search results") {
 			SearchResultPortlet.viewMultipleSearchResults(
 				resultsList = "Fruit 1/Web Content Article,Fruit 2/Web Content Article",
 				searchTerm = "Fruit");

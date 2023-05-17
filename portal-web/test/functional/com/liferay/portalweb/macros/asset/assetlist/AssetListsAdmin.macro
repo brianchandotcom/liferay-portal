@@ -127,7 +127,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconTable.clickTableEntryTitle(tableEntry = ${segmentName});
+		Click(
+			key_tableEntry = ${segmentName},
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 
 		SelectFrameTop();
 

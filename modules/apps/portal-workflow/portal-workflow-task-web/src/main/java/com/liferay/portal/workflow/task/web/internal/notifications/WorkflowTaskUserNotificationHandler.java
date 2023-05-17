@@ -274,6 +274,10 @@ public class WorkflowTaskUserNotificationHandler
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				userNotificationEvent.getPayload());
 
+			if (!jsonObject.has("workflowTaskId")) {
+				return false;
+			}
+
 			long ctCollectionId = jsonObject.getLong(
 				WorkflowConstants.CONTEXT_CT_COLLECTION_ID);
 

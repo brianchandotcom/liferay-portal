@@ -786,16 +786,16 @@ definition {
 			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Stage");
 
 			AssertTextEquals(
-				auditGraphCheckboxName = "Stage 1",
+				auditGraphCheckboxName = "Audience 1",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
-				value1 = "WC Title");
+				value1 = "Audience 1");
 
 			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Audience");
 
 			AssertTextEquals(
-				auditGraphCheckboxName = "Audience 1",
+				auditGraphCheckboxName = "Stage 1",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
-				value1 = "WC Title");
+				value1 = "Stage 1");
 		}
 	}
 

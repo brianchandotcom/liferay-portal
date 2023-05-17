@@ -57,6 +57,9 @@ public class CommerceChannelTable extends BaseTable<CommerceChannelTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceChannelTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceChannelTable, Long> accountEntryId =
+		createColumn(
+			"accountEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceChannelTable, Long> siteGroupId = createColumn(
 		"siteGroupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceChannelTable, String> name = createColumn(

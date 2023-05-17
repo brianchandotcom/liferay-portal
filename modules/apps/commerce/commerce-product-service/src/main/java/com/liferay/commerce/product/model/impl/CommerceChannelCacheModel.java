@@ -78,7 +78,7 @@ public class CommerceChannelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class CommerceChannelCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", accountEntryId=");
+		sb.append(accountEntryId);
 		sb.append(", siteGroupId=");
 		sb.append(siteGroupId);
 		sb.append(", name=");
@@ -165,6 +167,7 @@ public class CommerceChannelCacheModel
 			commerceChannelImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		commerceChannelImpl.setAccountEntryId(accountEntryId);
 		commerceChannelImpl.setSiteGroupId(siteGroupId);
 
 		if (name == null) {
@@ -226,6 +229,8 @@ public class CommerceChannelCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		accountEntryId = objectInput.readLong();
+
 		siteGroupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
@@ -271,6 +276,8 @@ public class CommerceChannelCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(accountEntryId);
 
 		objectOutput.writeLong(siteGroupId);
 
@@ -322,6 +329,7 @@ public class CommerceChannelCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long accountEntryId;
 	public long siteGroupId;
 	public String name;
 	public String type;

@@ -459,6 +459,7 @@ create table CommerceChannel (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	accountEntryId LONG,
 	siteGroupId LONG,
 	name VARCHAR(75) null,
 	type_ VARCHAR(75) null,

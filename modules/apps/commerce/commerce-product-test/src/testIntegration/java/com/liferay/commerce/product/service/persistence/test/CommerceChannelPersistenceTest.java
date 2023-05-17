@@ -144,6 +144,8 @@ public class CommerceChannelPersistenceTest {
 
 		newCommerceChannel.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCommerceChannel.setAccountEntryId(RandomTestUtil.nextLong());
+
 		newCommerceChannel.setSiteGroupId(RandomTestUtil.nextLong());
 
 		newCommerceChannel.setName(RandomTestUtil.randomString());
@@ -194,6 +196,9 @@ public class CommerceChannelPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCommerceChannel.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceChannel.getModifiedDate()));
+		Assert.assertEquals(
+			existingCommerceChannel.getAccountEntryId(),
+			newCommerceChannel.getAccountEntryId());
 		Assert.assertEquals(
 			existingCommerceChannel.getSiteGroupId(),
 			newCommerceChannel.getSiteGroupId());
@@ -306,9 +311,9 @@ public class CommerceChannelPersistenceTest {
 			"CommerceChannel", "mvccVersion", true, "ctCollectionId", true,
 			"uuid", true, "externalReferenceCode", true, "commerceChannelId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "siteGroupId", true,
-			"name", true, "type", true, "typeSettings", true,
-			"commerceCurrencyCode", true, "priceDisplayType", true,
+			"createDate", true, "modifiedDate", true, "accountEntryId", true,
+			"siteGroupId", true, "name", true, "type", true, "typeSettings",
+			true, "commerceCurrencyCode", true, "priceDisplayType", true,
 			"discountsTargetNetPrice", true);
 	}
 
@@ -619,6 +624,8 @@ public class CommerceChannelPersistenceTest {
 		commerceChannel.setCreateDate(RandomTestUtil.nextDate());
 
 		commerceChannel.setModifiedDate(RandomTestUtil.nextDate());
+
+		commerceChannel.setAccountEntryId(RandomTestUtil.nextLong());
 
 		commerceChannel.setSiteGroupId(RandomTestUtil.nextLong());
 

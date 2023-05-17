@@ -4348,6 +4348,7 @@ public class CommerceChannelPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("accountEntryId");
 		ctStrictColumnNames.add("siteGroupId");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("type_");

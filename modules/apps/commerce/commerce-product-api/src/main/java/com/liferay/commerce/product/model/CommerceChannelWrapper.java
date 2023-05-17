@@ -55,6 +55,7 @@ public class CommerceChannelWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("accountEntryId", getAccountEntryId());
 		attributes.put("siteGroupId", getSiteGroupId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
@@ -129,6 +130,12 @@ public class CommerceChannelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long accountEntryId = (Long)attributes.get("accountEntryId");
+
+		if (accountEntryId != null) {
+			setAccountEntryId(accountEntryId);
+		}
+
 		Long siteGroupId = (Long)attributes.get("siteGroupId");
 
 		if (siteGroupId != null) {
@@ -177,6 +184,16 @@ public class CommerceChannelWrapper
 	@Override
 	public CommerceChannel cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the account entry ID of this commerce channel.
+	 *
+	 * @return the account entry ID of this commerce channel
+	 */
+	@Override
+	public long getAccountEntryId() {
+		return model.getAccountEntryId();
 	}
 
 	/**
@@ -399,6 +416,16 @@ public class CommerceChannelWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the account entry ID of this commerce channel.
+	 *
+	 * @param accountEntryId the account entry ID of this commerce channel
+	 */
+	@Override
+	public void setAccountEntryId(long accountEntryId) {
+		model.setAccountEntryId(accountEntryId);
 	}
 
 	/**

@@ -91,15 +91,16 @@ public interface CommerceChannelLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceChannel addCommerceChannel(
-			String externalReferenceCode, long siteGroupId, String name,
-			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long accountEntryId, long siteGroupId,
+			String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceChannel addOrUpdateCommerceChannel(
-			long userId, String externalReferenceCode, long siteGroupId,
-			String name, String type,
+			long userId, String externalReferenceCode, long accountEntryId,
+			long siteGroupId, String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException;
@@ -397,7 +398,8 @@ public interface CommerceChannelLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceChannel updateCommerceChannel(
-			long commerceChannelId, long siteGroupId, String name, String type,
+			long commerceChannelId, long accountEntryId, long siteGroupId,
+			String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException;

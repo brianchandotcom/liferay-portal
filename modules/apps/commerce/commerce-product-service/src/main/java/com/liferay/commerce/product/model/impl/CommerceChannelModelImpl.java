@@ -79,8 +79,9 @@ public class CommerceChannelModelImpl
 		{"commerceChannelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"siteGroupId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"typeSettings", Types.VARCHAR},
+		{"accountEntryId", Types.BIGINT}, {"siteGroupId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"typeSettings", Types.VARCHAR},
 		{"commerceCurrencyCode", Types.VARCHAR},
 		{"priceDisplayType", Types.VARCHAR},
 		{"discountsTargetNetPrice", Types.BOOLEAN}
@@ -100,6 +101,7 @@ public class CommerceChannelModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("siteGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
@@ -110,7 +112,7 @@ public class CommerceChannelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN,primary key (commerceChannelId, ctCollectionId))";
+		"create table CommerceChannel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountEntryId LONG,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN,primary key (commerceChannelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannel";
 
@@ -287,6 +289,8 @@ public class CommerceChannelModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", CommerceChannel::getModifiedDate);
 			attributeGetterFunctions.put(
+				"accountEntryId", CommerceChannel::getAccountEntryId);
+			attributeGetterFunctions.put(
 				"siteGroupId", CommerceChannel::getSiteGroupId);
 			attributeGetterFunctions.put("name", CommerceChannel::getName);
 			attributeGetterFunctions.put("type", CommerceChannel::getType);
@@ -355,6 +359,10 @@ public class CommerceChannelModelImpl
 				"modifiedDate",
 				(BiConsumer<CommerceChannel, Date>)
 					CommerceChannel::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"accountEntryId",
+				(BiConsumer<CommerceChannel, Long>)
+					CommerceChannel::setAccountEntryId);
 			attributeSetterBiConsumers.put(
 				"siteGroupId",
 				(BiConsumer<CommerceChannel, Long>)
@@ -605,6 +613,21 @@ public class CommerceChannelModelImpl
 
 	@JSON
 	@Override
+	public long getAccountEntryId() {
+		return _accountEntryId;
+	}
+
+	@Override
+	public void setAccountEntryId(long accountEntryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_accountEntryId = accountEntryId;
+	}
+
+	@JSON
+	@Override
 	public long getSiteGroupId() {
 		return _siteGroupId;
 	}
@@ -822,6 +845,7 @@ public class CommerceChannelModelImpl
 		commerceChannelImpl.setUserName(getUserName());
 		commerceChannelImpl.setCreateDate(getCreateDate());
 		commerceChannelImpl.setModifiedDate(getModifiedDate());
+		commerceChannelImpl.setAccountEntryId(getAccountEntryId());
 		commerceChannelImpl.setSiteGroupId(getSiteGroupId());
 		commerceChannelImpl.setName(getName());
 		commerceChannelImpl.setType(getType());
@@ -860,6 +884,8 @@ public class CommerceChannelModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		commerceChannelImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceChannelImpl.setAccountEntryId(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
 		commerceChannelImpl.setSiteGroupId(
 			this.<Long>getColumnOriginalValue("siteGroupId"));
 		commerceChannelImpl.setName(
@@ -1009,6 +1035,8 @@ public class CommerceChannelModelImpl
 			commerceChannelCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commerceChannelCacheModel.accountEntryId = getAccountEntryId();
+
 		commerceChannelCacheModel.siteGroupId = getSiteGroupId();
 
 		commerceChannelCacheModel.name = getName();
@@ -1130,6 +1158,7 @@ public class CommerceChannelModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _accountEntryId;
 	private long _siteGroupId;
 	private String _name;
 	private String _type;
@@ -1179,6 +1208,7 @@ public class CommerceChannelModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("accountEntryId", _accountEntryId);
 		_columnOriginalValues.put("siteGroupId", _siteGroupId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("type_", _type);
@@ -1232,19 +1262,21 @@ public class CommerceChannelModelImpl
 
 		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("siteGroupId", 1024L);
+		columnBitmasks.put("accountEntryId", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("siteGroupId", 2048L);
 
-		columnBitmasks.put("type_", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("typeSettings", 8192L);
+		columnBitmasks.put("type_", 8192L);
 
-		columnBitmasks.put("commerceCurrencyCode", 16384L);
+		columnBitmasks.put("typeSettings", 16384L);
 
-		columnBitmasks.put("priceDisplayType", 32768L);
+		columnBitmasks.put("commerceCurrencyCode", 32768L);
 
-		columnBitmasks.put("discountsTargetNetPrice", 65536L);
+		columnBitmasks.put("priceDisplayType", 65536L);
+
+		columnBitmasks.put("discountsTargetNetPrice", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

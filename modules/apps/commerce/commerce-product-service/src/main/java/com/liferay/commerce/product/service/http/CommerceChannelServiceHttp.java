@@ -53,7 +53,7 @@ public class CommerceChannelServiceHttp {
 	public static com.liferay.commerce.product.model.CommerceChannel
 			addCommerceChannel(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long siteGroupId, String name, String type,
+				long accountEntryId, long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode,
@@ -66,8 +66,8 @@ public class CommerceChannelServiceHttp {
 				_addCommerceChannelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, siteGroupId, name, type,
-				typeSettingsUnicodeProperties, commerceCurrencyCode,
+				methodKey, externalReferenceCode, accountEntryId, siteGroupId,
+				name, type, typeSettingsUnicodeProperties, commerceCurrencyCode,
 				serviceContext);
 
 			Object returnObj = null;
@@ -102,7 +102,7 @@ public class CommerceChannelServiceHttp {
 	public static com.liferay.commerce.product.model.CommerceChannel
 			addOrUpdateCommerceChannel(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long siteGroupId, String name, String type,
+				long accountEntryId, long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode,
@@ -115,8 +115,8 @@ public class CommerceChannelServiceHttp {
 				_addOrUpdateCommerceChannelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, siteGroupId, name, type,
-				typeSettingsUnicodeProperties, commerceCurrencyCode,
+				methodKey, externalReferenceCode, accountEntryId, siteGroupId,
+				name, type, typeSettingsUnicodeProperties, commerceCurrencyCode,
 				serviceContext);
 
 			Object returnObj = null;
@@ -530,7 +530,7 @@ public class CommerceChannelServiceHttp {
 	public static com.liferay.commerce.product.model.CommerceChannel
 			updateCommerceChannel(
 				HttpPrincipal httpPrincipal, long commerceChannelId,
-				long siteGroupId, String name, String type,
+				long accountEntryId, long siteGroupId, String name, String type,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					typeSettingsUnicodeProperties,
 				String commerceCurrencyCode)
@@ -542,8 +542,8 @@ public class CommerceChannelServiceHttp {
 				_updateCommerceChannelParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceChannelId, siteGroupId, name, type,
-				typeSettingsUnicodeProperties, commerceCurrencyCode);
+				methodKey, commerceChannelId, accountEntryId, siteGroupId, name,
+				type, typeSettingsUnicodeProperties, commerceCurrencyCode);
 
 			Object returnObj = null;
 
@@ -672,13 +672,13 @@ public class CommerceChannelServiceHttp {
 
 	private static final Class<?>[] _addCommerceChannelParameterTypes0 =
 		new Class[] {
-			String.class, long.class, String.class, String.class,
+			String.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCommerceChannelParameterTypes1 =
 		new Class[] {
-			String.class, long.class, String.class, String.class,
+			String.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -711,7 +711,7 @@ public class CommerceChannelServiceHttp {
 		};
 	private static final Class<?>[] _updateCommerceChannelParameterTypes11 =
 		new Class[] {
-			long.class, long.class, String.class, String.class,
+			long.class, long.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, String.class
 		};
 	private static final Class<?>[] _updateCommerceChannelParameterTypes12 =

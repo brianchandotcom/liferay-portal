@@ -239,6 +239,20 @@ public interface CommerceChannelModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the account entry ID of this commerce channel.
+	 *
+	 * @return the account entry ID of this commerce channel
+	 */
+	public long getAccountEntryId();
+
+	/**
+	 * Sets the account entry ID of this commerce channel.
+	 *
+	 * @param accountEntryId the account entry ID of this commerce channel
+	 */
+	public void setAccountEntryId(long accountEntryId);
+
+	/**
 	 * Returns the site group ID of this commerce channel.
 	 *
 	 * @return the site group ID of this commerce channel

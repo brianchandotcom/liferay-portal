@@ -156,6 +156,107 @@ definition {
 		}
 	}
 
+	@description = "Smoke test Liferay Sample Etc Cron"
+	@priority = 4
+	test LiferaySampleEtcCronSmoke {
+		property workspaces.client.extension.names = "liferay-sample-etc-cron";
+
+		task ("Get the Sample Etc Cron Client Secret") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			OAuth2.openOAuth2Admin();
+
+			while (IsElementNotPresent(key_rowEntry = "Liferay Sample Etc Cron Oauth Application Headless Server", locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
+				OAuth2.openOAuth2Admin();
+			}
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Liferay Sample Etc Cron Oauth Application Headless Server");
+
+			OAuth2.assertPortletHeader(header = "Liferay Sample Etc Cron Oauth Application Headless Server");
+
+			var clientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+		}
+
+		task ("Assert the Message Board Thread Count of 0") {
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
+
+			var projectDir = PropsUtil.get("project.dir");
+
+			var springBootLogFile = "${projectDir}/workspaces/liferay-sample-workspace/client-extensions/liferay-sample-etc-cron/logs/spring.log";
+
+			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
+
+			echo(${springBootLogFileContent});
+
+			if (!(contains(${springBootLogFileContent}, "There are 0 message board threads in the Guest site"))) {
+				fail("Could not find 'There are 0 message board threads in the Guest site'");
+			}
+		}
+
+		task ("Add a new Message Board Thread") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
+
+		task ("Assert the Message Board Thread Count of 1") {
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
+
+			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
+
+			echo(${springBootLogFileContent});
+
+			if (!(contains(${springBootLogFileContent}, "There are 1 message board threads in the Guest site"))) {
+				fail("Could not find 'There are 1 message board threads in the Guest site'");
+			}
+		}
+	}
+
+	@description = "Smoke test Liferay Sample Etc Spring Boot"
+	@priority = 4
+	test LiferaySampleEtcSpringBootSmoke {
+		property workspaces.client.extension.names = "liferay-sample-custom-element-2,liferay-sample-etc-spring-boot";
+
+		task ("Given: A new widget page is created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page");
+
+			Navigator.openSitePage(
+				pageName = "Test Page",
+				siteName = "Guest");
+
+			Portlet.addPG(portletName = "Liferay Sample Custom Element 2");
+		}
+
+		task ("When: The Spring-boot is started") {
+			AntCommand(
+				locator1 = "build-test-liferay-sample-workspace.xml",
+				value1 = "start-liferay-sample-etc-spring-boot");
+
+			var projectDir = PropsUtil.get("project.dir");
+
+			var springBootLogFile = "${projectDir}/workspaces/liferay-sample-workspace/client-extensions/liferay-sample-etc-spring-boot/logs/spring.log";
+
+			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
+
+			var dadJoke = RegexUtil.replace(${springBootLogFileContent}, "Dad joke:(^\n+)", 1);
+		}
+
+		task ("Then: Sample element displays a dad joke") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ClientExtension#SAMPLE_CUSTOM_ELEMENT_2_DAD_JOKE",
+				value1 = ${dadJoke});
+		}
+	}
+
 	@description = "Smoke test Liferay Sample Global CSS"
 	@priority = 4
 	test LiferaySampleGlobalCSSSmoke {

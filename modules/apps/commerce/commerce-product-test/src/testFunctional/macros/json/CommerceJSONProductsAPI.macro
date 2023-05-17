@@ -875,25 +875,27 @@ definition {
 		return ${cpDefinitionId};
 	}
 
-	macro _getProductCreateDate {
+	macro _getProductById {
+		Variables.assertDefined(parameterList = ${productName});
+
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		var productCreateDate = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
-			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?search=%22${search}%22 \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId} \
 				-u ${userLoginInfo} \
 				-H 'accept: application/json' \
 		''';
 
-		var productCreateDate = JSONCurlUtil.get(${curl}, "$.items[?(@['name'].['en_US'] == '${productName}')].['productCreateDate']");
+		var responseBody = JSONCurlUtil.get(${curl});
 
-		return ${productCreateDate};
+		return ${responseBody};
 	}
 
 	macro _getProductId {
@@ -1377,6 +1379,18 @@ definition {
 		var skuId = JSONUtil.getWithJSONPath(${responseBody}, "$..['id']");
 
 		return ${skuId};
+	}
+
+	macro getProductField {
+		Variables.assertDefined(parameterList = "${jsonPath},${productName}");
+
+		var responseBody = CommerceJSONProductsAPI._getProductById(productName = ${productName});
+
+		var fieldValue = JSONUtil.getWithJSONPath(${responseBody}, ${jsonPath});
+
+		echo("Field: ${fieldValue}");
+
+		return ${fieldValue};
 	}
 
 	macro getProductIdsByName {

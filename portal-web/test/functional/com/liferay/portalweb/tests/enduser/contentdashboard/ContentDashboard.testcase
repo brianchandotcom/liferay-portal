@@ -4464,7 +4464,7 @@ definition {
 		task ("Then the asset is exhibited") {
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "");
+				value1 = "Document_1.txt");
 		}
 	}
 
@@ -4498,7 +4498,7 @@ definition {
 		task ("Then the asset is exhibited") {
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "");
+				value1 = "Web Content Title");
 		}
 	}
 

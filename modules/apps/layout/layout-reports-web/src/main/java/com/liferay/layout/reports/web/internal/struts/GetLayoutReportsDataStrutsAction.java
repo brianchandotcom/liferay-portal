@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "path=/layout_reports/get_layout_reports_data",
+	property = "path=/portal/get_layout_reports_data",
 	service = StrutsAction.class
 )
 public class GetLayoutReportsDataStrutsAction implements StrutsAction {

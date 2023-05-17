@@ -71,6 +71,7 @@ page import="com.liferay.document.library.kernel.exception.FolderNameException" 
 page import="com.liferay.document.library.kernel.exception.InvalidFileVersionException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileException" %><%@
+page import="com.liferay.document.library.kernel.exception.NoSuchFileShortcutException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFolderException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchMetadataSetException" %><%@
 page import="com.liferay.document.library.kernel.exception.RepositoryNameException" %><%@

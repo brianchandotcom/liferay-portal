@@ -31,6 +31,7 @@ page import="com.liferay.document.library.util.DLFileEntryTypeUtil" %><%@
 page import="com.liferay.document.library.web.internal.bulk.selection.BulkSelectionRunnerUtil" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAccessFromDesktopDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider" %><%@
+page import="com.liferay.document.library.web.internal.display.context.DLCopyEntryDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLCopyFolderDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDataEngineDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext" %><%@

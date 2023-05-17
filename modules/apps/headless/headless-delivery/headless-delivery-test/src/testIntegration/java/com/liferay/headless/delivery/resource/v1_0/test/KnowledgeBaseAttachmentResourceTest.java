@@ -116,10 +116,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				_kbArticle.getResourcePrimKey(),
-				randomKnowledgeBaseAttachment(), getMultipartFiles());
+		return _addKnowledgeBaseAttachment();
 	}
 
 	@Override
@@ -127,10 +124,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				_kbArticle.getResourcePrimKey(),
-				randomKnowledgeBaseAttachment(), getMultipartFiles());
+		return _addKnowledgeBaseAttachment();
 	}
 
 	@Override
@@ -170,10 +164,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				_kbArticle.getResourcePrimKey(),
-				randomKnowledgeBaseAttachment(), getMultipartFiles());
+		return _addKnowledgeBaseAttachment();
 	}
 
 	@Override
@@ -181,10 +172,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				_kbArticle.getResourcePrimKey(),
-				randomKnowledgeBaseAttachment(), getMultipartFiles());
+		return _addKnowledgeBaseAttachment();
 	}
 
 	@Override
@@ -244,10 +232,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				_kbArticle.getResourcePrimKey(),
-				randomKnowledgeBaseAttachment(), getMultipartFiles());
+		return _addKnowledgeBaseAttachment();
 	}
 
 	@Override
@@ -264,6 +249,15 @@ public class KnowledgeBaseAttachmentResourceTest
 		throws Exception {
 
 		return testGroup.getGroupId();
+	}
+
+	private KnowledgeBaseAttachment _addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				_kbArticle.getResourcePrimKey(),
+				randomKnowledgeBaseAttachment(), getMultipartFiles());
 	}
 
 	private String _read(String url) throws Exception {

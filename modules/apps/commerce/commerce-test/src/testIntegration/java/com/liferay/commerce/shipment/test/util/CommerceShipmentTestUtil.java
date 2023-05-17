@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipment.test.util;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -61,9 +62,9 @@ public class CommerceShipmentTestUtil {
 		if (commerceChannel == null) {
 			commerceChannel =
 				CommerceChannelLocalServiceUtil.addCommerceChannel(
-					null, groupId, "Test Channel",
-					CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-					commerceCurrency.getCode(), serviceContext);
+					null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, groupId,
+					"Test Channel", CommerceChannelConstants.CHANNEL_TYPE_SITE,
+					null, commerceCurrency.getCode(), serviceContext);
 		}
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =

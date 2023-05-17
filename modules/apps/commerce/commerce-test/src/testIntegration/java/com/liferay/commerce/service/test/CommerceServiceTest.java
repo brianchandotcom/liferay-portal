@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -85,7 +86,8 @@ public class CommerceServiceTest {
 			_group.getGroupId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			null, _group.getGroupId(), "Test Channel",
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 

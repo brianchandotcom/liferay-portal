@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.importer.type.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
@@ -112,7 +113,8 @@ public class CommerceOrderImporterTypeTest {
 			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			null, _group.getGroupId(), "Test Channel",
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 

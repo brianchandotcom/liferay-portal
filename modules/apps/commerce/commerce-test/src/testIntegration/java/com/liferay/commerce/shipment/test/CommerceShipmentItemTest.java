@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipment.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
@@ -87,7 +88,8 @@ public class CommerceShipmentItemTest {
 			_group.getCompanyId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			null, _group.getGroupId(), "Test Channel",
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(), "Test Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), serviceContext);
 

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -103,7 +104,8 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 			_user.getUserId(), _commerceCurrency.getCode());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			RandomTestUtil.randomString(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, testGroup.getGroupId(),
 			RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);

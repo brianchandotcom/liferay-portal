@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.notification.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -91,7 +92,8 @@ public class CommerceNotificationTest {
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			StringPool.BLANK, _group.getGroupId(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -87,12 +88,14 @@ public class CommerceChannelRelLocalServiceTest {
 			_user.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel1 = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			null, _group.getGroupId(), "Channel",
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(), "Channel",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 
 		_commerceChannel2 = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			null, _group.getGroupId(), "Channel Test",
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(), "Channel Test",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);
 

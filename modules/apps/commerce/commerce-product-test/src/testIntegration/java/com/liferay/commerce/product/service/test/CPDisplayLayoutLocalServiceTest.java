@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -79,7 +80,8 @@ public class CPDisplayLayoutLocalServiceTest {
 			_group1.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceChannel1 = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			StringPool.BLANK, _group2.getGroupId(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group2.getGroupId(),
 			_group2.getName(_serviceContext.getLanguageId()) + " Portal1",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);
@@ -88,7 +90,8 @@ public class CPDisplayLayoutLocalServiceTest {
 			_group1.getCompanyId(), _user.getUserId(), 0);
 
 		_commerceChannel2 = CommerceChannelLocalServiceUtil.addCommerceChannel(
-			StringPool.BLANK, _group3.getGroupId(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group3.getGroupId(),
 			_group3.getName(_serviceContext.getLanguageId()) + " Portal2",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.channel.web.internal.portlet.action;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -180,7 +181,8 @@ public class EditCommerceChannelMVCActionCommand
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
 		commerceChannel = _commerceChannelService.updateCommerceChannel(
-			commerceChannel.getCommerceChannelId(), siteGroupId,
+			commerceChannel.getCommerceChannelId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, siteGroupId,
 			commerceChannel.getName(), commerceChannel.getType(),
 			commerceChannel.getTypeSettingsUnicodeProperties(),
 			commerceChannel.getCommerceCurrencyCode());

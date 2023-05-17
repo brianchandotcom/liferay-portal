@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.test.util;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
@@ -271,7 +272,8 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		return CommerceChannelLocalServiceUtil.addCommerceChannel(
-			StringPool.BLANK, groupId, RandomTestUtil.randomString(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			groupId, RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			commerceCurrencyCode,
 			ServiceContextTestUtil.getServiceContext(groupId));
@@ -282,8 +284,8 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		return CommerceChannelLocalServiceUtil.addCommerceChannel(
-			StringPool.BLANK, RandomTestUtil.nextLong(),
-			RandomTestUtil.randomString(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			commerceCurrencyCode, ServiceContextTestUtil.getServiceContext());
 	}

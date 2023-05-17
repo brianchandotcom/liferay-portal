@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.inventory.engine.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseException;
@@ -86,7 +87,8 @@ public class CommerceInventoryEngineTest {
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			StringPool.BLANK, _group.getGroupId(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			_group.getGroupId(),
 			_group.getName(_serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);

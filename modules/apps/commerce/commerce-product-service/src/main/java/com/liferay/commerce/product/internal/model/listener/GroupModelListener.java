@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.model.listener;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +44,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			if (commerceChannel != null) {
 				_commerceChannelLocalService.updateCommerceChannel(
 					commerceChannel.getCommerceChannelId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					commerceChannel.getName(), commerceChannel.getType(),
 					commerceChannel.getTypeSettingsUnicodeProperties(),

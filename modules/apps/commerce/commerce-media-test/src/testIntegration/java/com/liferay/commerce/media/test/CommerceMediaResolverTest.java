@@ -133,7 +133,8 @@ public class CommerceMediaResolverTest {
 			_commerceCurrency.getCode());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			RandomTestUtil.randomString(), _group.getGroupId(),
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, _group.getGroupId(),
 			RandomTestUtil.randomString(),
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			_commerceCurrency.getCode(), _serviceContext);

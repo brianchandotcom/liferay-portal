@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.theme.speedwell.site.initializer.internal;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -352,7 +353,8 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 		Group group = serviceContext.getScopeGroup();
 
 		return _commerceChannelLocalService.addCommerceChannel(
-			StringPool.BLANK, group.getGroupId(),
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			group.getGroupId(),
 			group.getName(serviceContext.getLanguageId()) + " Portal",
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
 			commerceCatalog.getCommerceCurrencyCode(), serviceContext);

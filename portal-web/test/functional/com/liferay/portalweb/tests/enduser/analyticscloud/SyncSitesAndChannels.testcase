@@ -660,10 +660,11 @@ definition {
 
 			ACDXPSettings.getAssignedPropertyName();
 			
+			var propertyNameExtracted = StringUtil.extractFirst(${assignedPropertyName}, "-");
 		}
 
-		var sitesPageListUp = "${assignedPropertyName},Minium Demo,Site Name";
-		var sitesPageListDown = "Site Name,Minium Demo,${assignedPropertyName}";
+		var sitesPageListUp = "${propertyNameExtracted},Minium Demo,Site Name";
+		var sitesPageListDown = "Site Name,Minium Demo,${propertyNameExtracted}";
 
 		task ("Toggle Commerce On > Click on the Assign button") {
 			Check.checkToggleSwitch(

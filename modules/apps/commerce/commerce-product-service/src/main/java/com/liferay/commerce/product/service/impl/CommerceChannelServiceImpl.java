@@ -46,8 +46,9 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 
 	@Override
 	public CommerceChannel addCommerceChannel(
-			String externalReferenceCode, long siteGroupId, String name,
-			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long accountEntryId, long siteGroupId,
+			String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,15 +60,16 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CHANNEL);
 
 		return commerceChannelLocalService.addCommerceChannel(
-			externalReferenceCode, siteGroupId, name, type,
+			externalReferenceCode, accountEntryId, siteGroupId, name, type,
 			typeSettingsUnicodeProperties, commerceCurrencyCode,
 			serviceContext);
 	}
 
 	@Override
 	public CommerceChannel addOrUpdateCommerceChannel(
-			String externalReferenceCode, long siteGroupId, String name,
-			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long accountEntryId, long siteGroupId,
+			String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -79,8 +81,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), null, CPActionKeys.ADD_COMMERCE_CHANNEL);
 
 		return commerceChannelLocalService.addOrUpdateCommerceChannel(
-			getUserId(), externalReferenceCode, siteGroupId, name, type,
-			typeSettingsUnicodeProperties, commerceCurrencyCode,
+			getUserId(), externalReferenceCode, accountEntryId, siteGroupId,
+			name, type, typeSettingsUnicodeProperties, commerceCurrencyCode,
 			serviceContext);
 	}
 
@@ -184,7 +186,8 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 
 	@Override
 	public CommerceChannel updateCommerceChannel(
-			long commerceChannelId, long siteGroupId, String name, String type,
+			long commerceChannelId, long accountEntryId, long siteGroupId,
+			String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException {
@@ -193,7 +196,7 @@ public class CommerceChannelServiceImpl extends CommerceChannelServiceBaseImpl {
 			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannelId, siteGroupId, name, type,
+			commerceChannelId, accountEntryId, siteGroupId, name, type,
 			typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 

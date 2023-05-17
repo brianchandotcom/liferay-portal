@@ -14,6 +14,10 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.AccountEntryTypeException;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
@@ -58,6 +62,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -84,8 +89,9 @@ public class CommerceChannelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceChannel addCommerceChannel(
-			String externalReferenceCode, long siteGroupId, String name,
-			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			String externalReferenceCode, long accountEntryId, long siteGroupId,
+			String name, String type,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -116,6 +122,10 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setCompanyId(user.getCompanyId());
 		commerceChannel.setUserId(user.getUserId());
 		commerceChannel.setUserName(user.getFullName());
+
+		_validateAccountEntry(accountEntryId);
+
+		commerceChannel.setAccountEntryId(accountEntryId);
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
@@ -156,8 +166,8 @@ public class CommerceChannelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceChannel addOrUpdateCommerceChannel(
-			long userId, String externalReferenceCode, long siteGroupId,
-			String name, String type,
+			long userId, String externalReferenceCode, long accountEntryId,
+			long siteGroupId, String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode, ServiceContext serviceContext)
 		throws PortalException {
@@ -179,14 +189,14 @@ public class CommerceChannelLocalServiceImpl
 
 		if (commerceChannel == null) {
 			return commerceChannelLocalService.addCommerceChannel(
-				externalReferenceCode, siteGroupId, name, type,
+				externalReferenceCode, accountEntryId, siteGroupId, name, type,
 				typeSettingsUnicodeProperties, commerceCurrencyCode,
 				serviceContext);
 		}
 
 		return commerceChannelLocalService.updateCommerceChannel(
-			commerceChannel.getCommerceChannelId(), siteGroupId, name, type,
-			typeSettingsUnicodeProperties, commerceCurrencyCode);
+			commerceChannel.getCommerceChannelId(), accountEntryId, siteGroupId,
+			name, type, typeSettingsUnicodeProperties, commerceCurrencyCode);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -400,7 +410,8 @@ public class CommerceChannelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceChannel updateCommerceChannel(
-			long commerceChannelId, long siteGroupId, String name, String type,
+			long commerceChannelId, long accountEntryId, long siteGroupId,
+			String name, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			String commerceCurrencyCode)
 		throws PortalException {
@@ -412,6 +423,9 @@ public class CommerceChannelLocalServiceImpl
 
 		long oldSiteGroupId = commerceChannel.getSiteGroupId();
 
+		_validateAccountEntry(accountEntryId);
+
+		commerceChannel.setAccountEntryId(accountEntryId);
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
 		commerceChannel.setType(type);
@@ -601,6 +615,24 @@ public class CommerceChannelLocalServiceImpl
 			group.getGroupId(), typeSettingsUnicodeProperties.toString());
 	}
 
+	private void _validateAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		if (accountEntryId != 0) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getAccountEntry(accountEntryId);
+
+			if (!StringUtil.equals(
+					accountEntry.getType(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER)) {
+
+				throw new AccountEntryTypeException(
+					"Channel can only be assigned with an account type:" +
+						AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER);
+			}
+		}
+	}
+
 	private void _validateType(String type) throws PortalException {
 		if (Validator.isNull(type) ||
 			(_commerceChannelTypeRegistry.getCommerceChannelType(type) ==
@@ -613,6 +645,9 @@ public class CommerceChannelLocalServiceImpl
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID
 	};
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

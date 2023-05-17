@@ -58,6 +58,7 @@
 
 		<!-- Other fields -->
 
+		<column name="accountEntryId" type="long" />
 		<column name="siteGroupId" type="long" />
 		<column name="name" type="String" />
 		<column name="type" type="String" />

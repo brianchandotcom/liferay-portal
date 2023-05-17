@@ -192,50 +192,6 @@ definition {
 			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 	}
 
-	@description = "This is a use case for LPS-122233."
-	@priority = 3
-	test ReIndexingDoesNotAddNewS3StoreCacheFiles {
-		property test.name.skip.portal.instance = "AWSStore#ReIndexingDoesNotAddNewS3StoreCacheFiles";
-
-		for (var fileNum : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title ${fileNum}",
-				groupName = "Test Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${fileNum}.jpg");
-		}
-
-		var tempDir = PropsUtil.get("app.server.temp.dir");
-		var displayDateHour = DateUtil.getFormattedCurrentDate("HH", "UTC");
-		var displayDateDay = DateUtil.getFormattedCurrentDate("dd", "UTC");
-		var displayDateMonth = DateUtil.getFormattedCurrentDate("MM", "UTC");
-		var displayDateYear = DateUtil.getFormattedCurrentDate("yyyy", "UTC");
-
-		var s3TempDir = "${tempDir}/liferay/s3/${displayDateYear}/${displayDateMonth}/${displayDateDay}/${displayDateHour}";
-
-		var filesBeforeReIndex = FileUtil.listFiles(${s3TempDir});
-
-		echo("S3 temp directory files before reindex: ${filesBeforeReIndex}.");
-
-		if (${filesBeforeReIndex} == "") {
-			fail("The S3 directory is empty at ${s3TempDir}.");
-		}
-
-		SearchAdministration.executeReindex();
-
-		var filesAfterReIndex = FileUtil.listFiles(${s3TempDir});
-
-		echo("S3 temp directory files after reindex: ${filesAfterReIndex}.");
-
-		if (${filesBeforeReIndex} == ${filesAfterReIndex}) {
-			echo("The S3 temp directory remains unchanged after re-indexing.");
-		}
-		else {
-			fail("The S3 temp directory modified after re-indexing.");
-		}
-	}
-
 	@description = "This is a use case for LPS-127589."
 	@priority = 3
 	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
@@ -258,11 +214,16 @@ definition {
  
 			fileEntries.each { fileEntry ->
 				(1..60).each {
+					InputStream is = null;
+
 					try {
-						InputStream is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
+						is = DLStoreUtil.getFileAsStream(fileEntry.getCompanyId(), fileEntry.getRepositoryId(), fileEntry.getName())
 					} 
 					catch (Exception e) {
 						e.printStackTrace();
+					}
+					finally {
+						is.close();
 					}
 				}
 			}

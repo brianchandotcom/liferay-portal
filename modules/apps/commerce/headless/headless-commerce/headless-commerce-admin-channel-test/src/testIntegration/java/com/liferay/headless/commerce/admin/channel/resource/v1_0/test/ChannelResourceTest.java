@@ -111,6 +111,7 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	protected Channel randomChannel() throws Exception {
 		return new Channel() {
 			{
+				accountId = AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
@@ -127,6 +128,7 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	protected Channel randomPatchChannel() throws Exception {
 		return new Channel() {
 			{
+				accountId = AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
 				currencyCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
@@ -221,6 +223,7 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	private Channel _toChannel(CommerceChannel commerceChannel) {
 		return new Channel() {
 			{
+				accountId = commerceChannel.getAccountEntryId();
 				currencyCode = commerceChannel.getCommerceCurrencyCode();
 				externalReferenceCode =
 					commerceChannel.getExternalReferenceCode();

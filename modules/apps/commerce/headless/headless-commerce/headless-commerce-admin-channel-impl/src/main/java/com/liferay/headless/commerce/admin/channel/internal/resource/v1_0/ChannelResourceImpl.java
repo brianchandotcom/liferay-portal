@@ -133,6 +133,10 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		Channel existingChannel = getChannel(channelId);
 
+		if (channel.getAccountId() != null) {
+			existingChannel.setAccountId(channel.getAccountId());
+		}
+
 		if (channel.getCurrencyCode() != null) {
 			existingChannel.setCurrencyCode(channel.getCurrencyCode());
 		}
@@ -171,6 +175,10 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		Channel existingChannel = getChannel(
 			commerceChannel.getCommerceChannelId());
 
+		if (channel.getAccountId() != null) {
+			existingChannel.setAccountId(channel.getAccountId());
+		}
+
 		if (channel.getCurrencyCode() != null) {
 			existingChannel.setCurrencyCode(channel.getCurrencyCode());
 		}
@@ -197,7 +205,9 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 		return _toChannel(
 			_commerceChannelService.addCommerceChannel(
 				channel.getExternalReferenceCode(),
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				GetterUtil.get(
+					channel.getAccountId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
 				GetterUtil.get(channel.getSiteGroupId(), 0), channel.getName(),
 				channel.getType(), null, channel.getCurrencyCode(),
 				_serviceContextHelper.getServiceContext(contextUser)));
@@ -216,7 +226,10 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		return _toChannel(
 			_commerceChannelService.updateCommerceChannel(
-				channelId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				channelId,
+				GetterUtil.get(
+					channel.getAccountId(),
+					commerceChannel.getAccountEntryId()),
 				channel.getSiteGroupId(), channel.getName(), channel.getType(),
 				null, channel.getCurrencyCode()));
 	}
@@ -228,8 +241,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		return _toChannel(
 			_commerceChannelService.addOrUpdateCommerceChannel(
-				externalReferenceCode,
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				externalReferenceCode, channel.getAccountId(),
 				channel.getSiteGroupId(), channel.getName(), channel.getType(),
 				null, channel.getCurrencyCode(),
 				_serviceContextHelper.getServiceContext()));

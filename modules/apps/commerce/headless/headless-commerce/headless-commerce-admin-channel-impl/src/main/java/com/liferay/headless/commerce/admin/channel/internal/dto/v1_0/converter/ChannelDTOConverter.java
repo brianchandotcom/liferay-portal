@@ -48,6 +48,7 @@ public class ChannelDTOConverter
 
 		return new Channel() {
 			{
+				accountId = commerceChannel.getAccountEntryId();
 				currencyCode = commerceChannel.getCommerceCurrencyCode();
 				externalReferenceCode =
 					commerceChannel.getExternalReferenceCode();

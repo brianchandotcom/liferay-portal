@@ -107,7 +107,9 @@ public class JSONStorageAdapter implements StorageAdapter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONStorageAdapter.class);
 
-	@Reference
-	private DefaultStorageAdapter _defaultStorageAdapter;
+	@Reference(
+		target = "(component.name=com.liferay.dynamic.data.mapping.internal.storage.DefaultStorageAdapter)"
+	)
+	private StorageAdapter _defaultStorageAdapter;
 
 }

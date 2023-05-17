@@ -62,8 +62,10 @@ public class StorageAdapterRegistryImpl implements StorageAdapterRegistry {
 		_serviceTrackerMap.close();
 	}
 
-	@Reference
-	private DefaultStorageAdapter _defaultStorageAdapter;
+	@Reference(
+		target = "(component.name=com.liferay.dynamic.data.mapping.internal.storage.DefaultStorageAdapter)"
+	)
+	private StorageAdapter _defaultStorageAdapter;
 
 	private ServiceTrackerMap<String, StorageAdapter> _serviceTrackerMap;
 

@@ -40,8 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	property = "service.ranking:Integer=100",
-	service = {DefaultStorageAdapter.class, StorageAdapter.class}
+	property = "service.ranking:Integer=100", service = StorageAdapter.class
 )
 public class DefaultStorageAdapter extends BaseStorageAdapter {
 

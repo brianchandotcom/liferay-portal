@@ -984,9 +984,11 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
 
-			for (var fieldName : list "Text,Rich Text") {
+			for (var fieldName : list "Text,Rich Text,Date") {
 				DataEngine.addField(
 					fieldFieldLabel = ${fieldName},
 					fieldName = ${fieldName});
@@ -1015,6 +1017,7 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
+				webContentDate = "10/10/2020",
 				webContentNumeric = 9,
 				webContentNumericFieldLabel = "Integer",
 				webContentRichText = "This is a Rich Text field",
@@ -1088,6 +1091,17 @@ definition {
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "This is a Rich Text field",
+				fragmentName = "Button",
+				id = "link");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Date");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "10/10/20",
 				fragmentName = "Button",
 				id = "link");
 

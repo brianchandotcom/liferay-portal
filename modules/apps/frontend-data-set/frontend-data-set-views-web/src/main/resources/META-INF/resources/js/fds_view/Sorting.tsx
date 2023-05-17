@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
@@ -253,11 +253,9 @@ interface IEditFDSSortModalContentProps {
 const EditFDSSortModalContent = ({
 	closeModal,
 	fdsSort,
-	fields,
 	namespace,
 	onSave,
 }: IEditFDSSortModalContentProps) => {
-	const [selectedField, setSelectedField] = useState(fdsSort.fieldName);
 	const [selectedSortingDirection, setSelectedSortingDirection] = useState(
 		fdsSort.sortingDirection
 	);
@@ -267,7 +265,6 @@ const EditFDSSortModalContent = ({
 			`${API_URL.FDS_SORTS}/by-external-reference-code/${fdsSort.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fieldName: selectedField,
 					sortingDirection: selectedSortingDirection,
 				}),
 				headers: {
@@ -299,37 +296,25 @@ const EditFDSSortModalContent = ({
 			<ClayModal.Header>
 				{Liferay.Util.sub(
 					Liferay.Language.get('edit-x'),
-					Liferay.Language.get('sorting')
+					fdsSort.fieldName
 				)}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<ClayForm.Group>
-					<label htmlFor={fdsSortFieldNameInputId}>
+					<label
+						className="disabled"
+						htmlFor={fdsSortFieldNameInputId}
+					>
 						{Liferay.Language.get('field')}
-
-						<RequiredMark />
 					</label>
 
-					<ClaySelectWithOption
+					<ClayInput
 						aria-label={Liferay.Language.get('field')}
-						defaultValue={selectedField}
+						disabled
 						name={fdsSortFieldNameInputId}
-						onChange={(event) => {
-							setSelectedField(event.target.value);
-						}}
-						options={[
-							{
-								disabled: true,
-								label: Liferay.Language.get('choose-an-option'),
-								value: '',
-							},
-							...fields.map((item) => ({
-								label: item.label,
-								value: item.name,
-							})),
-						]}
 						title={Liferay.Language.get('field')}
+						value={fdsSort.fieldName}
 					/>
 				</ClayForm.Group>
 

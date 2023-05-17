@@ -168,12 +168,15 @@ export function PublishedAppsDashboardPage() {
 									channel.name === 'Marketplace Channel'
 							);
 
-						const isApp = product.categories.find((category) => category.name === 'App');
+						const isApp = product.categories.find(
+							(category) => category.name === 'App'
+						);
 
 						if (
+							isApp &&
 							marketPlaceChannel &&
 							product.catalogId === accountCatalogId
-						 && isApp) {
+						) {
 							newAppList.push({
 								catalogId: product.catalogId,
 								externalReferenceCode:

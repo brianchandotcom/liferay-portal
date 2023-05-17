@@ -145,6 +145,15 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	protected String getCopyTableStructureSQL(
+		String tableName, String newTableName) {
+
+		return StringBundler.concat(
+			"create table ", newTableName, " (like ", tableName,
+			" including all excluding indexes)");
+	}
+
+	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

@@ -1038,6 +1038,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					</exec>
 
 					<move
+						failonerror="false"
 						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-darwin-x86_64"
 						tofile="${elastic.kibana.dir}"
 					/>
@@ -1072,6 +1073,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					/>
 
 					<move
+						failonerror="false"
 						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-linux-x86_64"
 						tofile="${elastic.kibana.dir}"
 					/>
@@ -1100,6 +1102,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					/>
 
 					<move
+						failonerror="false"
 						file="${app.server.parent.dir}/kibana-${elasticsearch.version}-windows-x86"
 						tofile="${elastic.kibana.dir}"
 					/>

@@ -7,6 +7,10 @@
 
 .dropdown-menu {
 	max-height: 22rem;
+
+	&.date-picker-dropdown-menu {
+		max-height: none;
+	}
 }
 
 .lfr-object__single-select--with-label {

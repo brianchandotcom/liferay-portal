@@ -2,36 +2,36 @@
 	{
 		"active": false,
 		"description": {
-			"en_US": "TEST DESC 1"
+			"en_US": "This is the description for Test Commerce Order Type 1."
 		},
 		"displayOrder": 1,
 		"externalReferenceCode": "TESTORDERTYPE1",
 		"name": {
-			"en_US": "TEST NAME 1"
+			"en_US": "Test Commerce Order Type 1"
 		},
 		"neverExpire": false
 	},
 	{
 		"active": true,
 		"description": {
-			"en_US": "TEST DESC 2"
+			"en_US": "This is the description for Test Commerce Order Type 2."
 		},
 		"displayOrder": 2,
 		"externalReferenceCode": "TESTORDERTYPE2",
 		"name": {
-			"en_US": "TEST NAME 2 UPDATE"
+			"en_US": "Test Commerce Order Type 2 Update"
 		},
 		"neverExpire": true
 	},
 	{
 		"active": false,
 		"description": {
-			"en_US": "TEST DESC 3"
+			"en_US": "This is the description for Test Commerce Order Type 3."
 		},
 		"displayOrder": 3,
 		"externalReferenceCode": "TESTORDERTYPE3",
 		"name": {
-			"en_US": "TEST NAME 3"
+			"en_US": "Test Commerce Order Type 3"
 		},
 		"neverExpire": false
 	}

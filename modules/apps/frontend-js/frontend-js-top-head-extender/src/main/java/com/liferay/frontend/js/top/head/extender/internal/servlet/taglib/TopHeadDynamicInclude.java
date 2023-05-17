@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.top.head.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -45,9 +46,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
@@ -100,32 +102,52 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_topHeadResourcesServiceTracker = ServiceTrackerFactory.open(
+			bundleContext, TopHeadResources.class,
+			new ServiceTrackerCustomizer<TopHeadResources, TopHeadResources>() {
+
+				@Override
+				public TopHeadResources addingService(
+					ServiceReference<TopHeadResources> serviceReference) {
+
+					synchronized (_topHeadResourcesServiceReferences) {
+						_topHeadResourcesServiceReferences.add(
+							serviceReference);
+
+						_resourceURLsBag = null;
+					}
+
+					return bundleContext.getService(serviceReference);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<TopHeadResources> serviceReference,
+					TopHeadResources topHeadResources) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<TopHeadResources> serviceReference,
+					TopHeadResources topHeadResources) {
+
+					synchronized (_topHeadResourcesServiceReferences) {
+						_topHeadResourcesServiceReferences.remove(
+							serviceReference);
+
+						_resourceURLsBag = null;
+					}
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void addTopHeadResources(
-		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
-
-		synchronized (_topHeadResourcesServiceReferences) {
-			_topHeadResourcesServiceReferences.add(
-				topHeadResourcesServiceReference);
-
-			_resourceURLsBag = null;
-		}
-	}
-
-	protected void removeTopHeadResources(
-		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
-
-		synchronized (_topHeadResourcesServiceReferences) {
-			_topHeadResourcesServiceReferences.remove(
-				topHeadResourcesServiceReference);
-
-			_resourceURLsBag = null;
-		}
+	@Deactivate
+	protected void deactivate() {
+		_topHeadResourcesServiceTracker.close();
 	}
 
 	private void _addPortalBundles(List<String> urls, String propsKey) {
@@ -288,6 +310,8 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	private volatile ResourceURLsBag _resourceURLsBag;
 	private final Collection<ServiceReference<TopHeadResources>>
 		_topHeadResourcesServiceReferences = new TreeSet<>();
+	private ServiceTracker<TopHeadResources, TopHeadResources>
+		_topHeadResourcesServiceTracker;
 
 	private static class ResourceURLsBag {
 

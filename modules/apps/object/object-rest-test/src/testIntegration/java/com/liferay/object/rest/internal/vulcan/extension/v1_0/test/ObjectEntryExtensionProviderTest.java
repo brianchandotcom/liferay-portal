@@ -193,7 +193,8 @@ public class ObjectEntryExtensionProviderTest {
 			businessType, dbType, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, name, required, false, Collections.emptyList());
+			false, name, ObjectFieldConstants.READ_ONLY_FALSE, null, required,
+			false, Collections.emptyList());
 	}
 
 	private void _assertPropertyDefinition(

@@ -310,7 +310,8 @@ public class AddInfoItemStrutsActionTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, "myText", false, false, Collections.emptyList());
+			false, "myText", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
+			false, Collections.emptyList());
 
 		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 

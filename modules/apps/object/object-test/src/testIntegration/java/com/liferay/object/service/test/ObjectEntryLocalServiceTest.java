@@ -37,8 +37,8 @@ import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
-import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -594,11 +594,7 @@ public class ObjectEntryLocalServiceTest {
 	@Test
 	public void testAddObjectEntryWithFormulaObjectField() throws Exception {
 		ObjectField objectField = _addCustomObjectField(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_FORMULA
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_STRING
+			new FormulaObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap("Overweight")
 			).name(
@@ -2091,6 +2087,8 @@ public class ObjectEntryLocalServiceTest {
 			objectField.isIndexedAsKeyword(),
 			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
 			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
 			objectField.isRequired(), objectField.isState(),
 			objectField.getObjectFieldSettings());
 	}

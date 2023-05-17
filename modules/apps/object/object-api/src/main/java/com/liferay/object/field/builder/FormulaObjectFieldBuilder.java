@@ -17,16 +17,14 @@ package com.liferay.object.field.builder;
 import com.liferay.object.constants.ObjectFieldConstants;
 
 /**
- * @author Feliphe Marinho
+ * @author Guilherme Camacho
  */
-public class AggregationObjectFieldBuilder extends ObjectFieldBuilder {
+public class FormulaObjectFieldBuilder extends ObjectFieldBuilder {
 
-	public AggregationObjectFieldBuilder() {
-		objectField.setBusinessType(
-			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION);
+	public FormulaObjectFieldBuilder() {
+		objectField.setBusinessType(ObjectFieldConstants.BUSINESS_TYPE_FORMULA);
 		objectField.setDBType(ObjectFieldConstants.DB_TYPE_STRING);
 		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_TRUE);
-		objectField.setReadOnlyConditionExpression(null);
 	}
 
 }

@@ -245,8 +245,9 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
-			false, Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
+			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
+			Collections.emptyList());
 
 		// Custom object definition names are automatically prepended with
 		// with "C_"
@@ -298,7 +299,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Dog"), false, "dog", true, false,
+			LocalizedMapUtil.getLocalizedMap("Dog"), false, "dog",
+			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
 			Collections.emptyList());
 
 		// After publish, database table
@@ -849,8 +851,9 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", true,
-			false, Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able",
+			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
+			Collections.emptyList());
 
 		// Database table
 
@@ -1198,7 +1201,8 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), true, false, Collections.emptyList());
+			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
+			null, true, false, Collections.emptyList());
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
@@ -1392,8 +1396,9 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", true,
-			false, Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able",
+			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
+			Collections.emptyList());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -1436,7 +1441,8 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), true, false, Collections.emptyList());
+			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
+			null, true, false, Collections.emptyList());
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateTitleObjectFieldId(

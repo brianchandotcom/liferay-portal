@@ -422,7 +422,8 @@ public class ObjectViewLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(objectFieldLabel), false,
-			objectFieldName, true, false, Collections.emptyList());
+			objectFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null, true,
+			false, Collections.emptyList());
 
 		return objectField.getName();
 	}

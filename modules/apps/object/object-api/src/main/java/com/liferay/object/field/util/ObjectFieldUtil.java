@@ -14,6 +14,7 @@
 
 package com.liferay.object.field.util;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
@@ -36,7 +37,8 @@ public class ObjectFieldUtil {
 		return createObjectField(
 			businessType, dbColumnName, dbType, indexed, indexedAsKeyword,
 			indexedLanguageId, label, listTypeDefinitionId, name,
-			Collections.emptyList(), required, system);
+			Collections.emptyList(), ObjectFieldConstants.READ_ONLY_FALSE, null,
+			required, system);
 	}
 
 	public static ObjectField createObjectField(
@@ -57,8 +59,8 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			businessType, null, dbType, indexed, indexedAsKeyword,
-			indexedLanguageId, label, 0, name, objectFieldSettings, required,
-			false);
+			indexedLanguageId, label, 0, name, objectFieldSettings,
+			ObjectFieldConstants.READ_ONLY_FALSE, null, required, false);
 	}
 
 	public static ObjectField createObjectField(
@@ -71,8 +73,8 @@ public class ObjectFieldUtil {
 		String businessType, String dbColumnName, String dbType,
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 		String label, long listTypeDefinitionId, String name,
-		List<ObjectFieldSetting> objectFieldSettings, boolean required,
-		boolean system) {
+		List<ObjectFieldSetting> objectFieldSettings, String readOnly,
+		String readOnlyConditionExpression, boolean required, boolean system) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
@@ -87,6 +89,8 @@ public class ObjectFieldUtil {
 		objectField.setLabelMap(LocalizedMapUtil.getLocalizedMap(label));
 		objectField.setName(name);
 		objectField.setObjectFieldSettings(objectFieldSettings);
+		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
+		objectField.setReadOnlyConditionExpression(null);
 		objectField.setRequired(required);
 		objectField.setSystem(system);
 
@@ -99,7 +103,8 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			businessType, null, dbType, false, false, null, name, 0, name,
-			objectFieldSettings, false, false);
+			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			false, false);
 	}
 
 	public static ObjectField createObjectField(
@@ -123,7 +128,8 @@ public class ObjectFieldUtil {
 
 		return createObjectField(
 			businessType, null, dbType, false, false, null, label, 0, name,
-			objectFieldSettings, false, false);
+			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			false, false);
 	}
 
 }

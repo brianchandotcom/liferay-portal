@@ -338,6 +338,8 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US.toString(), "a" + objectField.getName()));
 		objectField.setName("a" + objectField.getName());
+		objectField.setReadOnly(ObjectField.ReadOnly.FALSE);
+		objectField.setReadOnlyConditionExpression((String)null);
 		objectField.setState(false);
 
 		return objectField;

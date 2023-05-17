@@ -101,7 +101,8 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, _listFieldName, true, false, Collections.emptyList());
+			false, _listFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			true, false, Collections.emptyList());
 
 		_parentObjectDefinitionName = _parentObjectDefinition.getShortName();
 		_parentObjectDefinitionPrimaryKeyName = StringUtil.removeFirst(
@@ -481,7 +482,8 @@ public class ObjectDefinitionGraphQLTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, _objectFieldName, false, false, Collections.emptyList());
+			false, _objectFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			false, false, Collections.emptyList());
 
 		return objectDefinition;
 	}

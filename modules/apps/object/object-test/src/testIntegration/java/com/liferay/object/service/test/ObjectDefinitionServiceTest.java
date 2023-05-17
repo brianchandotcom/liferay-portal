@@ -422,7 +422,8 @@ public class ObjectDefinitionServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					false, StringUtil.randomId(), false, false,
+					false, StringUtil.randomId(),
+					ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
 					Collections.emptyList());
 
 			objectDefinition =

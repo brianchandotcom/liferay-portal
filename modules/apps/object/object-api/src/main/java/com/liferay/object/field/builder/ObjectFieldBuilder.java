@@ -14,6 +14,7 @@
 
 package com.liferay.object.field.builder;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
@@ -26,6 +27,11 @@ import java.util.Map;
  * @author Feliphe Marinho
  */
 public class ObjectFieldBuilder {
+
+	public ObjectFieldBuilder() {
+		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
+		objectField.setReadOnlyConditionExpression(null);
+	}
 
 	public ObjectField build() {
 		return objectField;
@@ -121,6 +127,18 @@ public class ObjectFieldBuilder {
 		List<ObjectFieldSetting> objectFieldSettings) {
 
 		objectField.setObjectFieldSettings(objectFieldSettings);
+
+		return this;
+	}
+
+	public ObjectFieldBuilder readOnly(String readOnly) {
+		objectField.setReadOnly(readOnly);
+
+		return this;
+	}
+
+	public ObjectFieldBuilder readOnlyConditionExpression(String readOnly) {
+		objectField.setReadOnly(readOnly);
 
 		return this;
 	}

@@ -56,7 +56,8 @@ public class ObjectFieldTestUtil {
 			null, userId, 0, objectDefinition.getObjectDefinitionId(),
 			businessType, dbType, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(objectFieldName), false,
-			objectFieldName, false, false, objectFieldSettings);
+			objectFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null, false,
+			false, objectFieldSettings);
 	}
 
 }

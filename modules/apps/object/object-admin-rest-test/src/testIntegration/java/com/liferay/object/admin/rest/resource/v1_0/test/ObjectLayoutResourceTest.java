@@ -66,8 +66,9 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", true,
-			false, Collections.emptyList());
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able",
+			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
+			Collections.emptyList());
 	}
 
 	@After

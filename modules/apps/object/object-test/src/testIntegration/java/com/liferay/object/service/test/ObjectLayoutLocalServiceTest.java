@@ -515,7 +515,8 @@ public class ObjectLayoutLocalServiceTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(name), false,
-			StringUtil.randomId(), true, false, Collections.emptyList());
+			StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE, null,
+			true, false, Collections.emptyList());
 
 		return objectField.getObjectFieldId();
 	}

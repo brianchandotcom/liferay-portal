@@ -883,7 +883,8 @@ public class ObjectActionLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, StringUtil.randomId(), false, false,
+				false, StringUtil.randomId(),
+				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
 				Collections.emptyList());
 		ObjectField objectField2 =
 			_objectFieldLocalService.addCustomObjectField(
@@ -892,7 +893,8 @@ public class ObjectActionLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, StringUtil.randomId(), false, false,
+				false, StringUtil.randomId(),
+				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
 				Collections.emptyList());
 
 		// Add object action to create user after adding an object entry

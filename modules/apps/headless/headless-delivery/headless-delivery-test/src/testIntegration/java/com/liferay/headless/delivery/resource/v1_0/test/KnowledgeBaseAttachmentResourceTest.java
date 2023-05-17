@@ -123,6 +123,33 @@ public class KnowledgeBaseAttachmentResourceTest
 	}
 
 	@Override
+	protected KnowledgeBaseAttachment
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return knowledgeBaseAttachmentResource.
+			postKnowledgeBaseArticleKnowledgeBaseAttachment(
+				_kbArticle.getResourcePrimKey(),
+				randomKnowledgeBaseAttachment(), getMultipartFiles());
+	}
+
+	@Override
+	protected String
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
+		throws Exception {
+
+		return _kbArticle.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Long
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
 	protected Map<String, Map<String, String>>
 			testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getExpectedActions(
 				Long knowledgeBaseArticleId)

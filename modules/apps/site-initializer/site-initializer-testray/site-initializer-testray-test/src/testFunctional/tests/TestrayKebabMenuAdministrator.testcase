@@ -91,8 +91,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
@@ -109,6 +107,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -117,6 +117,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Components in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageComponents {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanAddManageComponents";
+
 		task ("Given that the user go to components") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
@@ -137,6 +139,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Product Versions in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageProductVersions {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanAddManageProductVersions";
+
 		task ("Given that the user go to product version") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
@@ -157,6 +161,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can add Manage Teams in the kebab menu"
 	@priority = 3
 	test AdminCanAddManageTeams {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanAddManageTeams";
+
 		task ("Given that the user go to teams") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
@@ -177,6 +183,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit build in the kebab menu"
 	@priority = 3
 	test AdminCanEditBuild {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanEditBuild";
+
 		task ("Given that the user go to build") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
@@ -212,6 +220,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit cases in the kebab menu"
 	@priority = 3
 	test AdminCanEditCases {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanEditCases";
+
 		task ("Given that the user go to case") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
@@ -249,6 +259,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit project in the kebab menu"
 	@priority = 3
 	test AdminCanEditProject {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanEditProject";
+
 		task ("Given that the user go to project") {
 			Testray.goToProjectPage(projectName = ${projectName});
 		}
@@ -275,6 +287,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Requirements in the kebab menu"
 	@priority = 3
 	test AdminCanEditRequirements {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanEditRequirements";
+
 		task ("Given that the user go to requirement") {
 			JSONTestray.addRequirement(
 				componentName = ${componentName},
@@ -315,6 +329,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can edit routine in the kebab menu"
 	@priority = 3
 	test AdminCanEditRoutine {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanEditRoutine";
+
 		task ("Given that the user go to routine") {
 			Testray.goToProjectPage(projectName = ${projectName});
 
@@ -345,6 +361,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if As an Administrator, I should be able to edit Suite in the kebab menu"
 	@priority = 3
 	test AdminCanEditSuite {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanEditSuite";
+
 		task ("Given that the user go to suite") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
@@ -377,6 +395,8 @@ definition {
 	@description = "Story ID: LPS-159526 | Test Summary: Verify if as an administrator can promoted build in the kebab menu"
 	@priority = 3
 	test AdminCanPromotedBuilds {
+		property test.name.skip.portal.instance = "TestrayKebabMenuAdministrator#AdminCanPromotedBuilds";
+
 		task ("Given that the user go to build") {
 			Testray.goToProjectPage(projectName = ${projectName});
 

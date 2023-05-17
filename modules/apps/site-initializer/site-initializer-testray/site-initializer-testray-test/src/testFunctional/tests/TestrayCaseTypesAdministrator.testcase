@@ -22,9 +22,9 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		Testray.testrayApisTearDown();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -34,6 +34,8 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Add Case Types"
 	@priority = 5
 	test AdminCanAddCaseTypes {
+		property test.name.skip.portal.instance = "TestrayCaseTypesAdministrator#AdminCanAddCaseTypes";
+
 		task ("When I create a Case Type") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -58,6 +60,8 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify that as an Administrator I can delete Case Types"
 	@priority = 5
 	test AdminCanDeleteCaseTypes {
+		property test.name.skip.portal.instance = "TestrayCaseTypesAdministrator#AdminCanDeleteCaseTypes";
+
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
@@ -88,6 +92,8 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify if the Administrator can Edit Case Types"
 	@priority = 5
 	test AdminCanEditCaseTypes {
+		property test.name.skip.portal.instance = "TestrayCaseTypesAdministrator#AdminCanEditCaseTypes";
+
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
@@ -126,6 +132,8 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate cases types"
 	@priority = 3
 	test AdminCanNotAddDuplicateCasesTypes {
+		property test.name.skip.portal.instance = "TestrayCaseTypesAdministrator#AdminCanNotAddDuplicateCasesTypes";
+
 		task ("Given that I create a 'Case Type' via API") {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
@@ -156,6 +164,8 @@ definition {
 	@description = "Story ID: LPS-146938 | Test Summary: Verify that the user can not create a case type if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
+		property test.name.skip.portal.instance = "TestrayCaseTypesAdministrator#AdminCanViewRequiredField";
+
 		task ("When I go to the manage menu") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

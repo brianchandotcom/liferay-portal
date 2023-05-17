@@ -29,11 +29,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -43,6 +43,8 @@ definition {
 	@description = "Story ID: LPS-159530 | Test Summary: Verify if As an Administrator I am able to add Product Versions"
 	@priority = 5
 	test AdminCanAddProductVersion {
+		property test.name.skip.portal.instance = "TestrayProductVersionAdministrator#AdminCanAddProductVersion";
+
 		task ("Given that I create a new 'Product Version' via API") {
 			JSONTestray.addProductVersion(
 				productVersion = ${productVersion},

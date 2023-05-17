@@ -164,8 +164,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "subtasks",
 			objectName = "Subtask_1");
@@ -204,6 +202,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -212,6 +212,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by assignee"
 	@priority = 3
 	test AdminCanFilterTasksByAssignee {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTasksByAssignee";
+
 		task ("Add a user") {
 			JSONUser.addUser(
 				userEmailAddress = "user@liferay.com",
@@ -269,6 +271,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by build name"
 	@priority = 3
 	test AdminCanFilterTasksByBuildName {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTasksByBuildName";
+
 		task ("Given that the user has two build different in the table") {
 			AssertElementPresent(
 				key_projectName = "Build 1",
@@ -303,6 +307,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by project name"
 	@priority = 4
 	test AdminCanFilterTasksByProjectName {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTasksByProjectName";
+
 		task ("Given that the user has two project different in the table") {
 			AssertElementPresent(
 				key_projectName = "Project 1",
@@ -340,6 +346,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by routine name"
 	@priority = 3
 	test AdminCanFilterTasksByRoutineName {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTasksByRoutineName";
+
 		task ("Given that the user has two routine different in the table") {
 			AssertElementPresent(
 				key_projectName = "Routine 1",
@@ -377,6 +385,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by status"
 	@priority = 4
 	test AdminCanFilterTasksByStatus {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTasksByStatus";
+
 		task ("Given that task 1 is assigned to user Test Test") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
 
@@ -416,6 +426,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter tasks by task name"
 	@priority = 3
 	test AdminCanFilterTasksByTaskName {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTasksByTaskName";
+
 		task ("Given that the user has two tasks different in the table") {
 			AssertElementPresent(
 				key_projectName = "Task_1",
@@ -450,6 +462,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should be able to filter task using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterTaskWithMultipleOptions {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanFilterTaskWithMultipleOptions";
+
 		task ("Add a user") {
 			JSONUser.addUser(
 				userEmailAddress = "user@liferay.com",
@@ -524,6 +538,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an Administrator I should not see task that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentTask {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#AdminCanNotFilterForNonExistentTask";
+
 		task ("Given that the user has two tasks that existent in the table") {
 			AssertElementPresent(
 				key_projectName = "Task_1",
@@ -552,6 +568,8 @@ definition {
 	@description = "Story ID: LPS-173521 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
+		property test.name.skip.portal.instance = "TestrayFiltersTaskAdministrator#CanSearchByFilter";
+
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();
 

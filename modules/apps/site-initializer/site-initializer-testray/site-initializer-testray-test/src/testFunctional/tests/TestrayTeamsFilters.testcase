@@ -125,8 +125,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "productversions",
 			objectName = "1.2");
@@ -155,6 +153,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -163,6 +163,8 @@ definition {
 	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an Administrator I should be able to filter team by team name"
 	@priority = 3
 	test AdminCanFilterTeamByTeamName {
+		property test.name.skip.portal.instance = "TestrayTeamsFilters#AdminCanFilterTeamByTeamName";
+
 		task ("Given that the user has two teams different in the table") {
 			Testray.changePagination(
 				numberItems = 20,
@@ -210,6 +212,8 @@ definition {
 	@description = "Story ID: LPS-173527 | Test Summary: Verify if as an User I should be able to search by a filter"
 	@priority = 2
 	test CanSearchByFilter {
+		property test.name.skip.portal.instance = "TestrayTeamsFilters#CanSearchByFilter";
+
 		task ("When the user searches for a field called priority") {
 			TestrayFilter.clickFilter();
 

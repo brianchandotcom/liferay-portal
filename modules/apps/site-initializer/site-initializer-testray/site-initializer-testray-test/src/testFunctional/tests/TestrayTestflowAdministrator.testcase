@@ -87,8 +87,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "tasks",
 			objectName = "Task_1");
@@ -109,6 +107,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -117,6 +117,8 @@ definition {
 	@description = "Story ID: LPS-162695 | Test Summary: Verify if as an Administrator I should be able to add a task with user groups"
 	@priority = 5
 	test AdminCanAddTaskWithUserGroups {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanAddTaskWithUserGroups";
+
 		task ("Given the user add a user and UserGroups") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -193,6 +195,8 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to delete a task through the Context Menu"
 	@priority = 5
 	test AdminCanDeleteTaskContextMenu {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanDeleteTaskContextMenu";
+
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -250,6 +254,8 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to edit a task"
 	@priority = 4
 	test AdminCanEditTask {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanEditTask";
+
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -303,6 +309,8 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Task"
 	@priority = 5
 	test AdminCanNotAddDuplicateTestflow {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanNotAddDuplicateTestflow";
+
 		task ("When the user try to add a duplicate Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -343,6 +351,8 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an abandoned task"
 	@priority = 3
 	test AdminCanReanalyzeAbandonedTask {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanReanalyzeAbandonedTask";
+
 		task ("Given that the user add a Task and subtask via API") {
 			JSONTestray.addTask(
 				buildName = ${buildName},
@@ -392,6 +402,8 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an administrator I can reanalyze an complete task"
 	@priority = 3
 	test AdminCanReanalyzeCompleteTask {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanReanalyzeCompleteTask";
+
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -437,6 +449,8 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify if as an Administrator I should be able to update a task's status to complete"
 	@priority = 4
 	test AdminCanUpdateTaskStatusToComplete {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanUpdateTaskStatusToComplete";
+
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -476,6 +490,8 @@ definition {
 	@description = "Story ID: LPS-170515 | Test Summary: Verify that as an Administrator I should see the build that is associated with the task"
 	@priority = 2
 	test AdminCanViewAssociatedBuildInTask {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanViewAssociatedBuildInTask";
+
 		task ("Given that the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -513,6 +529,8 @@ definition {
 	@description = "Story ID: LPS-162695 | Test Summary: Verify that the user cannot create a task without assign users"
 	@priority = 4
 	test AdminCanViewRequiredAssignUsers {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanViewRequiredAssignUsers";
+
 		task ("When the user try to add a Task without User") {
 			TestrayTestflow.goToTestflow();
 
@@ -532,6 +550,8 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user cannot create a task without Case Type"
 	@priority = 2
 	test AdminCanViewRequiredCaseType {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanViewRequiredCaseType";
+
 		task ("When the user try to add a Task without case type") {
 			TestrayTestflow.goToTestflow();
 
@@ -551,6 +571,8 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify if as an Administrator I should be able view task in analysis"
 	@priority = 4
 	test AdminCanViewTaskInAnalysis {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#AdminCanViewTaskInAnalysis";
+
 		task ("Given the user add a Task in a different flow") {
 			TestrayLayout.clickResultsOnSidebar();
 
@@ -595,6 +617,8 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that As an administrator can remove users from the context menu"
 	@priority = 3
 	test CanRemoveUser {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#CanRemoveUser";
+
 		task ("Given the user add a Task") {
 			TestrayTestflow.goToTestflow();
 
@@ -638,6 +662,8 @@ definition {
 	@description = "Story ID: LPS-162693 | Test Summary: Verify that the user can not create a task without name"
 	@priority = 2
 	test CanViewFieldNameRequired {
+		property test.name.skip.portal.instance = "TestrayTestflowAdministrator#CanViewFieldNameRequired";
+
 		task ("When the user try to add a Task without name") {
 			TestrayTestflow.goToTestflow();
 

@@ -123,8 +123,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
 		JSONTestrayAPI.deleteObjectViaAPI(
@@ -151,6 +149,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -159,6 +159,8 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by assignee"
 	@priority = 4
 	test AdminCanFilterSubtasksByAssignee {
+		property test.name.skip.portal.instance = "TestrayFiltersSubtasksAdministrator#CanSearchBAdminCanFilterSubtasksByAssigneeyFilter";
+
 		task ("Given that subtask 1 is assigned to user userfn userln") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
 
@@ -206,6 +208,8 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by errors"
 	@priority = 3
 	test AdminCanFilterSubtasksByError {
+		property test.name.skip.portal.instance = "TestrayFiltersSubtasksAdministrator#AdminCanFilterSubtasksByError";
+
 		task ("Given that the user has two subtasks different in the table") {
 			AssertElementPresent(
 				key_projectName = "Subtask_1",
@@ -244,6 +248,8 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtasks by name"
 	@priority = 3
 	test AdminCanFilterSubtasksByName {
+		property test.name.skip.portal.instance = "TestrayFiltersSubtasksAdministrator#AdminCanFilterSubtasksByName";
+
 		task ("Given that the user has two subtasks different in the table") {
 			AssertElementPresent(
 				key_projectName = "Subtask_1",
@@ -282,6 +288,8 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should be able to filter subtask using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterSubtaskWithMultipleOptions {
+		property test.name.skip.portal.instance = "TestrayFiltersSubtasksAdministrator#AdminCanFilterSubtaskWithMultipleOptions";
+
 		task ("Given that subtask 1 is assigned to user userfn userln") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
 
@@ -357,6 +365,8 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify if as an Administrator I should not see subtask that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentSubtask {
+		property test.name.skip.portal.instance = "TestrayFiltersSubtasksAdministrator#AdminCanNotFilterForNonExistentSubtask";
+
 		task ("Given that the user has two subtasks that existent in the table") {
 			AssertElementPresent(
 				key_projectName = "Subtask_1",
@@ -389,6 +399,8 @@ definition {
 	@description = "Story ID: LPS-173522 | Test Summary: Verify that can search for a field"
 	@priority = 2
 	test AdminCanSearchForField {
+		property test.name.skip.portal.instance = "TestrayFiltersSubtasksAdministrator#AdminCanSearchForField";
+
 		task ("When the user searches for a field called Assignee") {
 			TestrayFilter.clickFilter();
 

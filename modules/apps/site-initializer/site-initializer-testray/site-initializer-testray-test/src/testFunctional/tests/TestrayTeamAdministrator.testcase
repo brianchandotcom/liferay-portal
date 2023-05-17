@@ -29,11 +29,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -43,6 +43,8 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to add a Team"
 	@priority = 5
 	test AdminCanAddTeam {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AdminCanAddTeam";
+
 		task ("When the team are created") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -65,6 +67,8 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to delete a Team"
 	@priority = 5
 	test AdminCanDeleteTeam {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AdminCanDeleteTeam";
+
 		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -97,6 +101,8 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I am able to edit a Team"
 	@priority = 5
 	test AdminCanEditTeam {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AdminCanEditTeam";
+
 		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -129,6 +135,8 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate Teams"
 	@priority = 3
 	test AdminCanNotAddDuplicateTeams {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AdminCanNotAddDuplicateTeams";
+
 		task ("Given that a team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -159,6 +167,8 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Team that does not exist the system should not return that team"
 	@priority = 3
 	test AdminCanNotSearchTeamNonExistent {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AdminCanNotSearchTeamNonExistent";
+
 		task ("Given that two team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -195,6 +205,8 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Team the system should return that team"
 	@priority = 4
 	test AdminCanSearchTeam {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AdminCanSearchTeam";
+
 		task ("Given that two team are created via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -251,6 +263,8 @@ definition {
 	@description = "Story ID: LPS-159529 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
 	@priority = 2
 	test AssertThatTheFieldIsRequired {
+		property test.name.skip.portal.instance = "TestrayTeamAdministrator#AssertThatTheFieldIsRequired";
+
 		task ("Given I go to the manage teams") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

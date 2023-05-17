@@ -33,8 +33,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
 		Testray.tearDownCP();
@@ -42,6 +40,8 @@ definition {
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -51,6 +51,8 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify that as an administrator can add and delete a new user"
 	@priority = 5
 	test AdminCanAddAndDeleteNewUser {
+		property test.name.skip.portal.instance = "TestrayManageUsers#AdminCanAddAndDeleteNewUser";
+
 		task ("When that the administrator add a user") {
 			TestrayLayout.clickManageOnSidebar();
 
@@ -92,6 +94,8 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should be able to filter manage users by name"
 	@priority = 4
 	test AdminCanFilterUsersByName {
+		property test.name.skip.portal.instance = "TestrayManageUsers#AdminCanFilterUsersByName";
+
 		task ("Given that there are two users present in the table") {
 			TestrayLayout.clickManageOnSidebar();
 
@@ -128,6 +132,8 @@ definition {
 	@description = "Story ID: LPS-173531 | Test Summary: Verify if as an Administrator I should not see manage users that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentUsers {
+		property test.name.skip.portal.instance = "TestrayManageUsers#AdminCanNotFilterForNonExistentUsers";
+
 		task ("When filtering a user by his non-existent name") {
 			TestrayLayout.clickManageOnSidebar();
 
@@ -154,6 +160,8 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify if as an User can edit account information"
 	@priority = 4
 	test CanEditAccountInformation {
+		property test.name.skip.portal.instance = "TestrayManageUsers#CanEditAccountInformation";
+
 		task ("When the user change the account informations") {
 			TestrayLayout.clickManageOnSidebar();
 
@@ -188,6 +196,8 @@ definition {
 	@description = "Story ID: LPS-164964 | Test Summary: Verify if as an administrator I cannot save roles without the select options"
 	@priority = 3
 	test CanNotSaveRolesWithoutOptions {
+		property test.name.skip.portal.instance = "TestrayManageUsers#CanNotSaveRolesWithoutOptions";
+
 		task ("When the user tries to save roles without options selected") {
 			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
 
@@ -208,6 +218,8 @@ definition {
 	@description = "Story ID: LPS-149551 | Test Summary: Verify that the user can not edit informations of user if all the required fields are not filled in"
 	@priority = 2
 	test CanViewFieldRequired {
+		property test.name.skip.portal.instance = "TestrayManageUsers#CanViewFieldRequired";
+
 		task ("When the user tries to created account without informations") {
 			TestrayLayout.clickManageOnSidebar();
 

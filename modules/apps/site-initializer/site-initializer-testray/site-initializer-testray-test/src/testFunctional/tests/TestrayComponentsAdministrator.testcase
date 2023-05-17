@@ -34,11 +34,11 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -48,6 +48,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I am able to add Components"
 	@priority = 5
 	test AdminCanAddComponent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanAddComponent";
+
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -75,6 +77,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a component that does not have a team"
 	@priority = 5
 	test AdminCanAddComponentWithoutTeam {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanAddComponentWithoutTeam";
+
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -101,6 +105,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I am able to edit Components while connecting a Team"
 	@priority = 5
 	test AdminCanAddTeamToComponent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanAddTeamToComponent";
+
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -138,6 +144,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an administrator I can change the team assigned to the Component"
 	@priority = 3
 	test AdminCanChangeTeamToComponent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanChangeTeamToComponent";
+
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -175,6 +183,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to delete a component that does not have a team"
 	@priority = 3
 	test AdminCanDeleteComponentWithoutTeam {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanDeleteComponentWithoutTeam";
+
 		task ("Given I go to Manage Component") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -207,6 +217,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should be able to add a Component that has a Team"
 	@priority = 5
 	test AdminCanDeleteComponentWithTeam {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanDeleteComponentWithTeam";
+
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -242,6 +254,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify that as an Administrator I can edit Components"
 	@priority = 4
 	test AdminCanEditComponent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanEditComponent";
+
 		task ("Given that I create a new 'Team' and a new 'Component' via API") {
 			JSONTestray.addTeam(
 				projectName = ${projectName},
@@ -285,6 +299,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate component"
 	@priority = 3
 	test AdminCanNotAddDuplicatedComponent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanNotAddDuplicatedComponent";
+
 		task ("Given that I create a new 'Component' via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -316,6 +332,8 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component the system should return that component"
 	@priority = 4
 	test AdminCanSearchComponent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanSearchComponent";
+
 		task ("Given that two component are created via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -380,6 +398,8 @@ definition {
 	@description = "Story ID: LPS-177839 | Test Summary: Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
 	@priority = 3
 	test AdminCanSearchComponentNonExistent {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#AdminCanSearchComponentNonExistent";
+
 		task ("Given that component are created via API") {
 			JSONTestray.addComponent(
 				componentName = ${componentName},
@@ -417,6 +437,8 @@ definition {
 	@description = "Story ID: LPS-159528 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name"
 	@priority = 2
 	test CannotAddComponentWithoutAName {
+		property test.name.skip.portal.instance = "TestrayComponentsAdministrator#CannotAddComponentWithoutAName";
+
 		task ("Given I go to the Manage Component page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

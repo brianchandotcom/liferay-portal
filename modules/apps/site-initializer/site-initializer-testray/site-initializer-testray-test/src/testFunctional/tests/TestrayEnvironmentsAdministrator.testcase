@@ -26,13 +26,13 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "factorcategories",
 			objectName = "Category 1");
 
 		Testray.testrayApisTearDown();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -42,6 +42,8 @@ definition {
 	@description = "Story ID: LPS-159465 | Test Summary: Verify if As an Administrator I should be able to add and delete a Factor Option"
 	@priority = 5
 	test AdminCanAddAndDeleteFactorOption {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanAddAndDeleteFactorOption";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -80,6 +82,8 @@ definition {
 	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to add Factor Categories"
 	@priority = 5
 	test AdminCanAddCategory {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanAddCategory";
+
 		task ("When I create a new Category") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -98,6 +102,8 @@ definition {
 	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I am able to add Options"
 	@priority = 5
 	test AdminCanAddOptions {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanAddOptions";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -128,6 +134,8 @@ definition {
 	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
 	@priority = 3
 	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanConfigureDefaultEnvironmentFactorsForRoutine";
+
 		task ("Given I create a new 'Project', a new 'Routine' and new 'Environment Factors' via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
@@ -169,6 +177,8 @@ definition {
 	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to delete Factor Categories"
 	@priority = 5
 	test AdminCanDeleteCategory {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanDeleteCategory";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -195,6 +205,8 @@ definition {
 	@description = "Story ID: LPS-146939 | Test Summary: Verify if as an Administrator I am able to edit Factor Categories"
 	@priority = 5
 	test AdminCanEditFactorCategories {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanEditFactorCategories";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -227,6 +239,8 @@ definition {
 	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I am able to edit the Option by changing the Category"
 	@priority = 4
 	test AdminCanEditOptionChangingCategory {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanEditOptionChangingCategory";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -282,6 +296,8 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if As an Administrator I should not be able to add a duplicate Factor Category"
 	@priority = 3
 	test AdminCanNotAddDuplicateFactorCategory {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanNotAddDuplicateFactorCategory";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -304,6 +320,8 @@ definition {
 	@description = "Story ID: LPS-165582 | Test Summary: Verify if As an Administrator I should not be able to add a duplicate Factor Options"
 	@priority = 3
 	test AdminCanNotAddDuplicateFactorOptions {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanNotAddDuplicateFactorOptions";
+
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
 		}
@@ -332,6 +350,8 @@ definition {
 	@description = "Story ID: LPS-159465 | Test Summary: Verify that the user can not create a options if all the required fields are not filled in"
 	@priority = 2
 	test AdminCanViewRequiredField {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanViewRequiredField";
+
 		task ("Given I try to create Options without a title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
@@ -358,6 +378,8 @@ definition {
 	@description = "Story ID: LPS-159465 | Test Summary: Verify if as an Administrator I can see the warning message 'This field is required' when trying to save without a name in Category"
 	@priority = 2
 	test AdminCanViewWarningMessage {
+		property test.name.skip.portal.instance = "TestrayEnvironmentsAdministrator#AdminCanViewWarningMessage";
+
 		task ("Given I try to create Category without a title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 

@@ -135,8 +135,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "productversions",
 			objectName = "1.2");
@@ -169,6 +167,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -177,6 +177,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by assignee"
 	@priority = 3
 	test AdminCanFilterByAssignee {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterByAssignee";
+
 		task ("Given that the user assign to me a case result") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -218,6 +220,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by product version name"
 	@priority = 2
 	test AdminCanFilterByProductVersionName {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterByProductVersionName";
+
 		task ("Given that the user has two product version different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -263,6 +267,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by routine"
 	@priority = 3
 	test AdminCanFilterByRoutine {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterByRoutine";
+
 		task ("Given that the user has two routine different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -304,6 +310,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by status"
 	@priority = 3
 	test AdminCanFilterByStatus {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterByStatus";
+
 		task ("Given that the user complete a test with passed status") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -339,6 +347,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by environment"
 	@priority = 3
 	test AdminCanFilterCaseHistoryByEnvironment {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterCaseHistoryByEnvironment";
+
 		task ("Given that the user has two enviroments different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -386,6 +396,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by error"
 	@priority = 4
 	test AdminCanFilterCaseHistoryByError {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterCaseHistoryByError";
+
 		task ("Given that the user has two case result with errors different in the table") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -433,6 +445,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by team"
 	@priority = 3
 	test AdminCanFilterCaseHistoryTeam {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterCaseHistoryTeam";
+
 		task ("Given that the user has a team in the table") {
 			AssertElementPresent(
 				key_projectName = "Team 1",
@@ -474,6 +488,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterOptionsToFilter";
+
 		task ("When the user searches for a field called routine") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -500,6 +516,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterWithMultipleOptions {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterWithMultipleOptions";
+
 		task ("Given that the user complete a test with passed status") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 
@@ -574,6 +592,8 @@ definition {
 	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should not see case results that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentCaseResult {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanNotFilterForNonExistentCaseResult";
+
 		task ("Given that the user filter a case result history existent") {
 			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
 

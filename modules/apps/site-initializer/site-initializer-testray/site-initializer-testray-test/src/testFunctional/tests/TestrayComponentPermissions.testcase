@@ -41,8 +41,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		task ("Logout And Login with test user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
@@ -59,6 +57,8 @@ definition {
 			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 		}
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -67,6 +67,8 @@ definition {
 	@description = "Story ID: LPS-178259 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create/edit/delete the component but can view"
 	@priority = 3
 	test AnalystRoleCanNotCreateEditAndDelete {
+		property test.name.skip.portal.instance = "TestrayComponentPermissions#AnalystRoleCanNotCreateEditAndDelete";
+
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "analyst@testray.com",
@@ -117,6 +119,8 @@ definition {
 	@description = "Story ID: LPS-178259 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create/edit/delete the component but can view"
 	@priority = 3
 	test LeadRoleCanNotCreateEditAndDelete {
+		property test.name.skip.portal.instance = "TestrayComponentPermissions#LeadRoleCanNotCreateEditAndDelete";
+
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "lead@testray.com",
@@ -167,6 +171,8 @@ definition {
 	@description = "Story ID: LPS-178259 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the component but can view"
 	@priority = 3
 	test UserRoleCanNotCreateEditAndDelete {
+		property test.name.skip.portal.instance = "TestrayComponentPermissions#UserRoleCanNotCreateEditAndDelete";
+
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user@testray.com",

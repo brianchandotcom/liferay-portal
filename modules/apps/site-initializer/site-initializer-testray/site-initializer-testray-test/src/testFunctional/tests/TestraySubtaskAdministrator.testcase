@@ -124,8 +124,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "subtasks",
 			objectName = "Subtask_1");
@@ -156,6 +154,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -164,6 +164,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as the Administrator, should be able to assign me a subtask that has been assigned to an offline user from the context menu"
 	@priority = 3
 	test AdminCanAssignToMeSubtaskAssignedToTheOfflineUser {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanAssignToMeSubtaskAssignedToTheOfflineUser";
+
 		task ("Given that the user different assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
 
@@ -192,6 +194,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if, as an Administrator, can cancel merge subtasks"
 	@priority = 2
 	test AdminCanCancelMergeSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanCancelMergeSubtask";
+
 		task ("Given that the user trying merge subtasks") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -216,6 +220,8 @@ definition {
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as Blocked"
 	@priority = 3
 	test AdminCanCompleteSubtaskAsBlocked {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanCompleteSubtaskAsBlocked";
+
 		task ("Given the user edit a Subtask as Blocked") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -255,6 +261,8 @@ definition {
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as failing"
 	@priority = 3
 	test AdminCanCompleteSubtaskAsFailing {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanCompleteSubtaskAsFailing";
+
 		task ("Given the user edit a Subtask as Failed") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -294,6 +302,8 @@ definition {
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as passing"
 	@priority = 5
 	test AdminCanCompleteSubtaskAsPassing {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanCompleteSubtaskAsPassing";
+
 		task ("Given the user edit a Subtask as passed") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -322,6 +332,8 @@ definition {
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able to complete a subtask as Test Fix"
 	@priority = 3
 	test AdminCanCompleteSubtaskAsTestFix {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanCompleteSubtaskAsTestFix";
+
 		task ("Given the user edit a Subtask as Test Fix") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -357,6 +369,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that can complete a subtask after have merged it"
 	@priority = 5
 	test AdminCanCompleteSubtaskThatBeenMerged {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanCompleteSubtaskThatBeenMerged";
+
 		task ("Given that the user logged in assign a subtask") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
 
@@ -387,6 +401,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as  an Administrator I should be able to merge an Complete subtask with a Open subtask"
 	@priority = 3
 	test AdminCanMergeCompleteSubtaskWithOpenSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanMergeCompleteSubtaskWithOpenSubtask";
+
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -427,6 +443,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as  an Administrator I should be able to merge an in analysis subtask with a completed subtask"
 	@priority = 4
 	test AdminCanMergeInAnalysisSubtaskWithCompletedSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanMergeInAnalysisSubtaskWithCompletedSubtask";
+
 		task ("Given that the user complete a Subtask") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -486,6 +504,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as Administrator, should not be able to edit subtask with user logged off"
 	@priority = 3
 	test AdminCanNotEditSubtaskWithUserOffline {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanNotEditSubtaskWithUserOffline";
+
 		task ("Given that the user different assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
 
@@ -506,6 +526,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge only one subtask"
 	@priority = 3
 	test AdminCanNotMergeOnlyOneSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanNotMergeOnlyOneSubtask";
+
 		task ("When the user trying merging a single subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1");
 		}
@@ -520,6 +542,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that, as an Administrator, should not be able to merge subtasks with different users"
 	@priority = 4
 	test AdminCanNotMergeSubtasksWithDifferentUsers {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanNotMergeSubtasksWithDifferentUsers";
+
 		task ("Given that the user different assign a subtask") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
 
@@ -550,6 +574,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify that can reanalyze a subtask"
 	@priority = 4
 	test AdminCanReanalyzeSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanReanalyzeSubtask";
+
 		task ("Given that the user assign a subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
 
@@ -584,6 +610,8 @@ definition {
 	@description = "Story ID: LPS-164984 | Test Summary: Verify if as an Administrator I should be able a subtask return to open"
 	@priority = 3
 	test AdminCanReturnToOpenSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminCanReturnToOpenSubtask";
+
 		task ("When that the user Assign and Begin Analysis of the subtask") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -612,6 +640,8 @@ definition {
 	@description = "Story ID: LPS-166230 | Test Summary: Verify if as an Administrator I should be able to merge multiple unassigned subtasks"
 	@priority = 3
 	test AdminShouldBeAbleToMergeMultipleUnassignedSubtasks {
+		property test.name.skip.portal.instance = "TestraySubtaskAdministrator#AdminShouldBeAbleToMergeMultipleUnassignedSubtasks";
+
 		task ("When the user merged a subtask with status open") {
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",

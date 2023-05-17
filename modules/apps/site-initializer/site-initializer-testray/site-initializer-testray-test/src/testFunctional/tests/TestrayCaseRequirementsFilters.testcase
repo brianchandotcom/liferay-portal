@@ -93,8 +93,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "casetypes",
 			objectName = ${caseType});
@@ -102,6 +100,8 @@ definition {
 		JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 		Testray.testrayApisTearDown();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -111,6 +111,8 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by link"
 	@priority = 3
 	test AdminCanFilterCaseRequirementsByLink {
+		property test.name.skip.portal.instance = "TestrayCaseRequirementsFilters#AdminCanFilterCaseRequirementsByLink";
+
 		task ("When the user filter a case requirement by link") {
 			TestrayFilter.clickFilter();
 
@@ -136,6 +138,8 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements by summary"
 	@priority = 3
 	test AdminCanFilterCaseRequirementsBySummary {
+		property test.name.skip.portal.instance = "TestrayCaseRequirementsFilters#AdminCanFilterCaseRequirementsBySummary";
+
 		task ("When the user filter a case requirement by summary") {
 			TestrayFilter.clickFilter();
 
@@ -157,6 +161,8 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter case requirements using multiple filtering options"
 	@priority = 4
 	test AdminCanFilterCaseRequirementsWithMultipleOptions {
+		property test.name.skip.portal.instance = "TestrayCaseRequirementsFilters#AdminCanFilterCaseRequirementsWithMultipleOptions";
+
 		task ("When the user filter a case requirement with multiple options") {
 			TestrayFilter.clickFilter();
 
@@ -187,6 +193,8 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should not see case requirements that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanFilterForNonexistantCaseRequirements {
+		property test.name.skip.portal.instance = "TestrayCaseRequirementsFilters#AdminCanFilterForNonexistantCaseRequirements";
+
 		task ("When the user filters a case requirement by its non-existent name") {
 			TestrayFilter.clickFilter();
 
@@ -206,6 +214,8 @@ definition {
 	@description = "Story ID: LPS-173530 | Test Summary: Verify if as an Administrator I should be able to filter the filter options"
 	@priority = 2
 	test AdminCanFilterOptionsToFilter {
+		property test.name.skip.portal.instance = "TestrayCaseRequirementsFilters#AdminCanFilterOptionsToFilter";
+
 		task ("When the user search field called link") {
 			TestrayFilter.clickFilter();
 

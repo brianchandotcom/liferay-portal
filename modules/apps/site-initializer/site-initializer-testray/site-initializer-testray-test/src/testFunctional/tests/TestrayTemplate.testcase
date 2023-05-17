@@ -77,8 +77,6 @@ definition {
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
 		JSONTestrayAPI.deleteObjectViaAPI(
 			object = "factorcategories",
 			objectName = "Category 1");
@@ -95,6 +93,8 @@ definition {
 
 		Testray.testrayApisTearDown();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -103,6 +103,8 @@ definition {
 	@description = "Story ID: LPS-178541 | Test Summary: Verify if as an Administrator I should be able to filter by template name"
 	@priority = 3
 	test AdminCanFilterTemplateByName {
+		property test.name.skip.portal.instance = "TestrayTemplate#AdminCanFilterTemplateByName";
+
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -164,6 +166,8 @@ definition {
 	@description = "Story ID: LPS-162435 | Test Summary: Verify if as an Administrator I should not be able to add a duplicate template"
 	@priority = 3
 	test AdminCanNotAddDuplicateTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#AdminCanNotAddDuplicateTemplate";
+
 		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -190,6 +194,8 @@ definition {
 	@description = "Story ID: LPS-178541 | Test Summary: Verify if as an Administrator I should not see template that don't exist when I try filtering for them"
 	@priority = 3
 	test AdminCanNotFilterForNonExistentTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#AdminCanNotFilterForNonExistentTemplate";
+
 		task ("Given that the user add build Template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -223,6 +229,8 @@ definition {
 	@description = "Story ID: LPS-162439 | Test Summary: Verify if that can Activate Disabled Template"
 	@priority = 4
 	test CanActivateDisabledTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanActivateDisabledTemplate";
+
 		task ("Given that the user adds a Template with status Activated") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -265,6 +273,8 @@ definition {
 	@description = "Story ID: LPS-162439 | Test Summary: Verify that when creating a build with template, it comes with 'Active' status by default"
 	@priority = 4
 	test CanCreateTemplateWithActiveDefault {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanCreateTemplateWithActiveDefault";
+
 		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -286,6 +296,8 @@ definition {
 	@description = "Story ID: LPS-162439 | Test Summary: Verify if can delete an deactived template"
 	@priority = 5
 	test CanDeleteDeactiveTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanDeleteDeactiveTemplate";
+
 		task ("Given that the user adds a Template with status Deactivated") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -323,6 +335,8 @@ definition {
 	@description = "Story ID: LPS-178541 | Test Summary: Verify that can filter out activated template"
 	@priority = 4
 	test CanFilterActiveTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanFilterActiveTemplate";
+
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -386,6 +400,8 @@ definition {
 	@description = "Story ID: LPS-178541 | Test Summary: Verify that can filter out deactived template"
 	@priority = 3
 	test CanFilterDeactivedTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanFilterDeactivedTemplate";
+
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -449,6 +465,8 @@ definition {
 	@description = "Story ID: LPS-162435 | Test Summary: Verify if As an administrator can search for the new template created"
 	@priority = 3
 	test CanSeachTemplate {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanSeachTemplate";
+
 		task ("Given the user adds a template") {
 			TestrayTemplate.addTemplate(
 				description = "Template Description",
@@ -466,6 +484,8 @@ definition {
 	@description = "Story ID: LPS-162435 | Test Summary: Verify if, as an Administrator, can see the required field message"
 	@priority = 2
 	test CanViewRequiredField {
+		property test.name.skip.portal.instance = "TestrayTemplate#CanViewRequiredField";
+
 		task ("When the user tries add a new template without filling out the required fields") {
 			TestrayTemplate.addTemplate(dropdownItem = "New Template");
 		}

@@ -433,6 +433,7 @@ create table CommerceCatalog (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	accountEntryId LONG,
 	name VARCHAR(75) null,
 	commerceCurrencyCode VARCHAR(75) null,
 	catalogDefaultLanguageId VARCHAR(75) null,

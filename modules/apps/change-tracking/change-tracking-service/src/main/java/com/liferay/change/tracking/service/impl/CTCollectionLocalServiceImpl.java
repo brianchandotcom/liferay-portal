@@ -1063,6 +1063,18 @@ public class CTCollectionLocalServiceImpl
 			CTCollection ctCollection, long modelClassNameId, long modelClassPK)
 		throws PortalException {
 
+		int count = _ctEntryPersistence.countByC_MCNI_MCPK(
+			ctCollection.getCtCollectionId(), modelClassNameId, modelClassPK);
+
+		if (count == 0) {
+			throw new CTEnclosureException(
+				StringBundler.concat(
+					"Unable to find CTEntry for {classNameId=",
+					modelClassNameId, ", classPK=", modelClassPK,
+					", ctCollectionId=", ctCollection.getCtCollectionId(),
+					"}"));
+		}
+
 		CTClosure ctClosure = _ctClosureFactory.create(
 			ctCollection.getCtCollectionId());
 
@@ -1076,7 +1088,7 @@ public class CTCollectionLocalServiceImpl
 			long classNameId = entry.getKey();
 			long classPK = entry.getValue();
 
-			int count = _ctEntryPersistence.countByC_MCNI_MCPK(
+			count = _ctEntryPersistence.countByC_MCNI_MCPK(
 				ctCollection.getCtCollectionId(), classNameId, classPK);
 
 			if (count > 0) {

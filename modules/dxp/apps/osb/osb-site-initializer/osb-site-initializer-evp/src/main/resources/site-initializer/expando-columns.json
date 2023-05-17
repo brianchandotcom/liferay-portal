@@ -1,0 +1,22 @@
+[
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "Cost Center"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "Entity"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "Location Code"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "Manager"
+	}
+]

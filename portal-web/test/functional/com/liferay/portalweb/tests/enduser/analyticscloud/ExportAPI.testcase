@@ -218,7 +218,7 @@ definition {
 		var endDate = "2008-05-13";
 		var endTime = "09:20:00.000";
 		var typeList = "accounts,acqa";
-		var message = "The \"type\" query parameter must be either \"individual\", \"page\", or \"segment\"";
+		var message = "The \"type\" query parameter must be either \"event\", \"individual\", \"page\", or \"segment\"";
 
 		task ("Get the token value") {
 			var token = ACApi.getTokenValue();

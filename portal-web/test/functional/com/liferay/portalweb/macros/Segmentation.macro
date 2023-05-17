@@ -315,6 +315,25 @@ definition {
 
 			SelectFrame(value1 = "relative=top");
 		}
+		else if (isSet(selectEntry)) {
+			if (isSet(indexNumber)) {
+				Click(
+					key_indexNumber = ${indexNumber},
+					key_text = "Select",
+					locator1 = "Button#ANY_N");
+			}
+			else {
+				Button.clickSelect();
+			}
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Click(
+				key_rowEntry = ${selectEntry},
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			SelectFrame(value1 = "relative=top");
+		}
 		else if (isSet(dateValue)) {
 			Type.sendKeys(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",

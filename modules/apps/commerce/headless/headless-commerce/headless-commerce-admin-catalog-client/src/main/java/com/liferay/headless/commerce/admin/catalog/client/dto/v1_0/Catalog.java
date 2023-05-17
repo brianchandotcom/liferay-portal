@@ -35,6 +35,27 @@ public class Catalog implements Cloneable, Serializable {
 		return CatalogSerDes.toDTO(json);
 	}
 
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public void setAccountId(
+		UnsafeSupplier<Long, Exception> accountIdUnsafeSupplier) {
+
+		try {
+			accountId = accountIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long accountId;
+
 	public Map<String, Map<String, String>> getActions() {
 		return actions;
 	}

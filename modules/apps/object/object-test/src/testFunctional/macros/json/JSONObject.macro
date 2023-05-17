@@ -90,6 +90,70 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	@summary = "This calls the JSON WS API to create an Objects entry with any number of fields"
+	macro addObjectEntryViaJSONAPI {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = ${groupName},
+			site = "true");
+		var objectId = JSONObject.getObjectId(
+			objectName = ${objectName},
+			userEmailAddress = ${userEmailAddress},
+			userPassword = ${userPassword});
+		var objectName = StringUtil.toLowerCase(${objectName});
+
+		if (!(isSet(fieldList))) {
+			Variables.assertDefined(parameterList = "${fieldName},${fieldValue}");
+
+			var entryValues = "{\"${fieldName}\": \"${fieldValue}\"}";
+		}
+		else {
+			Variables.assertDefined(parameterList = ${fieldList});
+
+			var fieldList = ListUtil.newListFromString(${fieldList});
+			var entryValues = "";
+
+			for (var fieldNameValue : list ${fieldList}) {
+				var fieldName = StringUtil.extractFirst(${fieldNameValue}, "/");
+				var fieldValue = StringUtil.extractLast(${fieldNameValue}, "/");
+
+				var entryValues = "${entryValues}\"${fieldName}\": \"${fieldValue}\"";
+
+				ListUtil.remove(${fieldList}, ${fieldNameValue});
+
+				var size = ListUtil.size(${fieldList});
+				var listEmpty = ListUtil.isEmpty(${fieldList});
+
+				if (${listEmpty} == "false") {
+					var entryValues = "${entryValues},";
+				}
+			}
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/object.objectentry/add-object-entry \
+				-u ${userEmailAddress}:${userPassword} \
+				-d groupId=${groupId} \
+				-d objectDefinitionId=${objectId} \
+				-d values={${entryValues}}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	@summary = "This calls the JSON WS API to add a field in an object"
 	macro addObjectField {
 		var portalURL = JSONCompany.getPortalURL();
@@ -1027,6 +1091,31 @@ definition {
 				-d '{
 					"accountEntryRestricted": true,
 					"accountEntryRestrictedObjectFieldName": "${accountEntryRestrictedObjectFieldName}"
+				}'
+		''';
+
+		JSONCurlUtil.patch(${curl});
+	}
+
+	@summary = "This calls the patchObjectDefinition Headless API endpoint to update a configuration within an object definition"
+	macro updateObject {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId} \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"${configKey}": "${configValue}"
 				}'
 		''';
 

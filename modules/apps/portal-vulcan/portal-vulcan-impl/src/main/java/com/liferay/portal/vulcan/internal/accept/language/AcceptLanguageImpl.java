@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.accept.language;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -78,25 +78,25 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 				Locale.LanguageRange.parse(acceptLanguage),
 				companyAvailableLocales);
 
-			List<Locale> fixedLocales = new ArrayList<>();
-
-			for (Locale locale : locales) {
-				for (Locale companyAvailableLocale : companyAvailableLocales) {
-					if (LocaleUtil.equals(locale, companyAvailableLocale)) {
-						fixedLocales.add(companyAvailableLocale);
-
-						break;
+			locales = TransformUtil.transform(
+				locales,
+				locale -> {
+					for (Locale availableLocale : companyAvailableLocales) {
+						if (LocaleUtil.equals(locale, availableLocale)) {
+							return availableLocale;
+						}
 					}
-				}
-			}
 
-			if (ListUtil.isEmpty(fixedLocales)) {
+					return null;
+				});
+
+			if (ListUtil.isEmpty(locales)) {
 				throw new NotAcceptableException(
 					"No locales match the accepted languages: " +
 						acceptLanguage);
 			}
 
-			return fixedLocales;
+			return locales;
 		}
 		catch (PortalException portalException) {
 			throw new InternalServerErrorException(

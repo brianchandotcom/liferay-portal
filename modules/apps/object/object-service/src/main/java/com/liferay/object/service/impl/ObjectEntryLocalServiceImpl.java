@@ -3064,14 +3064,15 @@ public class ObjectEntryLocalServiceImpl
 					continue;
 				}
 
-				newI18nObjectFieldValues.computeIfAbsent(
-					objectField.getI18nObjectFieldName(),
-					key -> HashMapBuilder.put(
-						entry.getKey(), entry.getValue()
-					).build());
-				newI18nObjectFieldValues.computeIfPresent(
+				newI18nObjectFieldValues.compute(
 					objectField.getI18nObjectFieldName(),
 					(key, value) -> {
+						if (value == null) {
+							return HashMapBuilder.put(
+								entry.getKey(), entry.getValue()
+							).build();
+						}
+
 						MapUtil.merge(
 							HashMapBuilder.put(
 								entry.getKey(), entry.getValue()

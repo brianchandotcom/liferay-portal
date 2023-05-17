@@ -34,7 +34,7 @@ public abstract class Base${entity.name}UADAnonymizer extends DynamicQueryUADAno
 
 					if (${entity.variableName}.get${uadUserIdEntityColumn.methodName}() == userId) {
 						<#if entity.UADAutoDelete>
-							delete(${entity.variableName});
+							delete(${entity.variableName}, userId);
 						<#else>
 							<#list entity.UADAnonymizableEntityColumnsMap[uadUserIdColumnName] as uadAnonymizableEntityColumn>
 								${entity.variableName}.set${uadAnonymizableEntityColumn.methodName}(anonymousUser.get${textFormatter.format(uadAnonymizableEntityColumn.UADAnonymizeFieldName, 6)}());
@@ -53,8 +53,20 @@ public abstract class Base${entity.name}UADAnonymizer extends DynamicQueryUADAno
 	}
 
 	@Override
-	public void delete(${entity.name} ${entity.variableName}) throws PortalException {
-		${entity.variableName}LocalService.${deleteUADEntityMethodName}(${entity.variableName});
+	public void delete(${entity.name} ${entity.variableName}, long userId) throws PortalException {
+		<#if entity.UADUserIdColumnNames?seq_contains("userId")>
+			<#list entity.UADUserIdColumnNames as uadUserIdColumnName>
+				<#assign uadUserIdEntityColumn = entity.getEntityColumn(uadUserIdColumnName) />
+
+					<#if stringUtil.equals(uadUserIdEntityColumn.name, "userId")>
+						if (${entity.variableName}.get${uadUserIdEntityColumn.methodName}() == userId) {
+									${entity.variableName}LocalService.${deleteUADEntityMethodName}(${entity.variableName});
+							}
+					</#if>
+			</#list>
+		<#else>
+			${entity.variableName}LocalService.${deleteUADEntityMethodName}(${entity.variableName});
+		</#if>
 	}
 
 	@Override

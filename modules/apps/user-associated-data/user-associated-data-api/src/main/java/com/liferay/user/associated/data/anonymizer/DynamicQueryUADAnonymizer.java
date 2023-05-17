@@ -49,7 +49,7 @@ public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
 			getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(T baseModel) -> delete(baseModel));
+			(T baseModel) -> delete(baseModel, userId));
 
 		actionableDynamicQuery.performActions();
 	}

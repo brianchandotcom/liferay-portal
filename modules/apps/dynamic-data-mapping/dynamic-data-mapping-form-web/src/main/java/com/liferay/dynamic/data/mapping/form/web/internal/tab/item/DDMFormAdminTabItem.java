@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-	service = {DDMDisplayTabItem.class, DDMFormAdminTabItem.class}
+	service = DDMDisplayTabItem.class
 )
 public class DDMFormAdminTabItem implements DDMDisplayTabItem {
 

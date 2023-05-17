@@ -521,6 +521,160 @@ definition {
 		}
 	}
 
+	@description = "LPS-172376 - The Custom Filter widget supports filtering by custom Object fields."
+	@priority = 3
+	test FilterByCustomObjectFields {
+		task ("Create a site scoped object and add the field 'title' as a keyword") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				panelCategoryKey = "site_administration.content",
+				pluralLabelName = "Custom Objects",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Title",
+				fieldName = "title",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			JSONObject.updateObject(
+				configKey = "titleObjectFieldName",
+				configValue = "title",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Create two object entries") {
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldName = "Apple Fruit",
+				fieldValue = "title",
+				objectName = "CustomObject");
+
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldName = "Banana Fruit",
+				fieldValue = "title",
+				objectName = "CustomObject");
+		}
+
+		task ("Create a Web Content article") {
+			JSONWebcontent.addWebContent(
+				content = "Coconut Fruit",
+				groupName = "Guest",
+				title = "Coconut Fruit");
+		}
+
+		task ("Add a Custom Filter to the search page and perform a search") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Filter");
+
+			Search.openSearchPage(searchTerm = "fruit");
+		}
+
+		task ("Configure the Custom Filter widget as a parent nested query") {
+			SearchPortlets.configureCustomFilter(
+				filterField = "nestedFieldArray",
+				filterQueryType = "Nested",
+				occur = "Filter",
+				queryName = "parent_query");
+
+			Refresh();
+		}
+
+		task ("Assert that only search results associated with the configuration above are returned") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Banana Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Coconut Fruit",
+				searchAssetType = "Web Content Article");
+		}
+
+		task ("Add a second Custom Filter widget and configure it as a child query matching the field Name") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Filter");
+
+			Refresh();
+
+			SearchPortlets.configureCustomFilter(
+				filterField = "nestedFieldArray.fieldName",
+				filterQueryType = "Term",
+				filterValue = "title",
+				occur = "Filter",
+				parentQueryName = "parent_query",
+				portletIndex = 2);
+		}
+
+		task ("Add a third Custom Filter widget and configure it as a child query matching the value keyword") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = "Custom Filter");
+
+			Refresh();
+
+			SearchPortlets.configureCustomFilter(
+				filterField = "nestedFieldArray.value_keyword",
+				filterQueryType = "Term",
+				occur = "Filter",
+				parentQueryName = "parent_query",
+				portletIndex = 3);
+
+			Refresh();
+		}
+
+		task ("Assert that only search results associated with the configuration above are returned") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Banana Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Coconut Fruit",
+				searchAssetType = "Web Content Article");
+		}
+
+		task ("Type 'apple fruit' in the filter input for the third custom filter") {
+			Type(
+				key_name = "nestedFieldArray.value_keyword",
+				locator1 = "Search#CUSTOM_FILTER_WIDGET_VALUE_INPUT",
+				value1 = "apple fruit");
+
+			Click(
+				key_text = "Apply",
+				locator1 = "Button#ANY_LAST");
+		}
+
+		task ("Assert that only search results associated with the configuration above are returned") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Apple Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Banana Fruit",
+				searchAssetType = "Custom Object");
+
+			SearchResultPortlet.viewSearchResultNotPresent(
+				searchAssetTitle = "Coconut Fruit",
+				searchAssetType = "Web Content Article");
+		}
+	}
+
 	@description = "LPS-182287 - A user can configure Custom Filter widgets with DDM fields"
 	@priority = 4
 	test FilterByDDMFields {

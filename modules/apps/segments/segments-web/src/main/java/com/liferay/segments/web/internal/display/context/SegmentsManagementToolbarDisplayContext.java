@@ -25,12 +25,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsActionKeys;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsResourcePermission;
 
 import java.util.List;
@@ -85,10 +83,7 @@ public class SegmentsManagementToolbarDisplayContext
 			).setParameter(
 				"displayStyle", getDisplayStyle()
 			).setParameter(
-				"orderByCol",
-				SearchOrderByUtil.getOrderByCol(
-					liferayPortletRequest, SegmentsPortletKeys.SEGMENTS,
-					"modified-date")
+				"orderByCol", getOrderByCol()
 			).setParameter(
 				"orderByType", getOrderByType()
 			).buildPortletURL()

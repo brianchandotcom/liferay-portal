@@ -82,6 +82,63 @@ definition {
 			value1 = "Blogs Entry Abstract Description");
 	}
 
+	@description = "This checks that users can add a comment to a blog entry through the page comment widget when a blog entry is displayed through a DPT."
+	@priority = 5
+	test CanAddCommentToBlogEntryWhenEntryIsDisplayedWithDPT {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Guest");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addWidget(portletName = "Blogs");
+
+		PageEditor.addWidget(
+			portletName = "Page Comments",
+			targetFragmentName = "Blogs");
+
+		PageEditor.publish();
+
+		JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+			groupName = "Guest",
+			layoutPageTemplateEntryName = "Display Page Name",
+			type = "Display Page Template");
+
+		Navigator.openSpecificURL(url = "${portalURL}/b/blogs-entry-title");
+
+		Comments.addPG(entryComment = "Blogs Entry Comment");
+
+		Comments.viewPG(
+			commentCount = 1,
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test");
+
+		JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsNonDefault(
+			groupName = "Guest",
+			layoutPageTemplateEntryName = "Display Page Name",
+			type = "Display Page Template");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Comments.viewPG(
+			commentCount = 1,
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test");
+	}
+
 	@description = "This checks that a comment can be deleted from a blog entry."
 	@priority = 4
 	@refactordone
@@ -710,6 +767,47 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			readingTime = "Less Than a Minute Read");
+	}
+
+	@description = "This checks that the comment section is hidden when viewing a blog entry through the blogs widget in a DPT."
+	@priority = 5
+	test CommentsSectionOfBlogsWidgetIsHiddenWhenViewingEntryInDPT {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Guest");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addWidget(portletName = "Blogs");
+
+		AssertElementNotPresent(
+			key_href = "discussionContainer",
+			key_text = "Comment",
+			locator1 = "Link#ANY_HREF_2");
+
+		PageEditor.publish();
+
+		JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+			groupName = "Guest",
+			layoutPageTemplateEntryName = "Display Page Name",
+			type = "Display Page Template");
+
+		Navigator.openSpecificURL(url = "${portalURL}/b/blogs-entry-title");
+
+		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementNotPresent(
+			key_text = "comments",
+			locator1 = "Icon#ANY");
 	}
 
 	@description = "This is a usecase for LPS-66970. It checks that both the old and new blog URLs lead to the current entry."

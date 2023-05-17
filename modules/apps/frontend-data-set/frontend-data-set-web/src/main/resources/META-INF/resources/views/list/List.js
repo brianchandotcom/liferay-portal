@@ -66,6 +66,7 @@ const Title = ({item, title, titleRenderer}) => {
 const ListItem = ({item, schema}) => {
 	const {
 		itemsActions,
+		onSelect,
 		selectItems,
 		selectable,
 		selectedItemsKey,
@@ -81,8 +82,14 @@ const ListItem = ({item, schema}) => {
 		<ClayList.Item
 			className={classNames({
 				'menu-active': menuActive,
+				selectable,
 			})}
 			flex
+			onClick={() => {
+				selectItems(item[selectedItemsKey]);
+
+				onSelect?.({selectedItems: [item]});
+			}}
 		>
 			{selectable && (
 				<ClayList.ItemField className="justify-content-center">
@@ -91,14 +98,12 @@ const ListItem = ({item, schema}) => {
 							checked={selectedItemsValue
 								.map((element) => String(element))
 								.includes(String(item[selectedItemsKey]))}
-							onChange={() => selectItems(item[selectedItemsKey])}
 						/>
 					) : (
 						<ClayCheckbox
 							checked={selectedItemsValue
 								.map((element) => String(element))
 								.includes(String(item[selectedItemsKey]))}
-							onChange={() => selectItems(item[selectedItemsKey])}
 						/>
 					)}
 				</ClayList.ItemField>

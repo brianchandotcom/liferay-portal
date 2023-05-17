@@ -38,4 +38,8 @@
 			margin-bottom: map-get($spacers, 3);
 		}
 	}
+
+	.selectable {
+		cursor: pointer;
+	}
 }

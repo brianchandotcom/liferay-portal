@@ -130,9 +130,8 @@ public class CommerceSiteInitializer {
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			servletContext);
 
-		_addOrUpdateCPOptionCategories(serviceContext, servletContext);
-
 		_addOrUpdateCommerceOrderType(serviceContext, servletContext);
+		_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 	}
 
 	public void addPortletSettings(
@@ -762,6 +761,13 @@ public class CommerceSiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			OrderType orderType = OrderType.toDTO(
 				String.valueOf(jsonArray.getJSONObject(i)));
+
+			if (orderType == null) {
+				_log.error(
+					"Unable to transform commerce catalog from JSON: " + json);
+
+				continue;
+			}
 
 			CommerceOrderType serviceBuilderCommerceOrderType =
 				_commerceOrderTypeLocalService.

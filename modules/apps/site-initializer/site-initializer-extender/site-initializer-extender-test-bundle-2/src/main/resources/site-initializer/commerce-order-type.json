@@ -1,14 +1,38 @@
 [
 	{
+		"active": false,
+		"description": {
+			"en_US": "TEST DESC 1"
+		},
+		"displayOrder": 1,
+		"externalReferenceCode": "TESTORDERTYPE1",
+		"name": {
+			"en_US": "TEST NAME 1"
+		},
+		"neverExpire": false
+	},
+	{
 		"active": true,
 		"description": {
 			"en_US": "TEST DESC 2"
 		},
 		"displayOrder": 2,
-		"externalReferenceCode": "TEST-ORDER-TYPE-2",
+		"externalReferenceCode": "TESTORDERTYPE2",
 		"name": {
-			"en_US": "TEST NAME 2"
+			"en_US": "TEST NAME 2 UPDATE"
 		},
 		"neverExpire": true
+	},
+	{
+		"active": false,
+		"description": {
+			"en_US": "TEST DESC 3"
+		},
+		"displayOrder": 3,
+		"externalReferenceCode": "TESTORDERTYPE3",
+		"name": {
+			"en_US": "TEST NAME 3"
+		},
+		"neverExpire": false
 	}
 ]

@@ -659,7 +659,7 @@ definition {
 			ACDXPSettings.connectAnalyticsCloud();
 
 			ACDXPSettings.getAssignedPropertyName();
-			
+
 			var propertyNameExtracted = StringUtil.extractFirst(${assignedPropertyName}, "-");
 		}
 

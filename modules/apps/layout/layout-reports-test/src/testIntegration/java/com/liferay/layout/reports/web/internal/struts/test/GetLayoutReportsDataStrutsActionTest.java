@@ -394,7 +394,7 @@ public class GetLayoutReportsDataStrutsActionTest {
 		serviceContext.setRequest(mockHttpServletRequest);
 
 		mockHttpServletRequest.setParameter(
-			"plid", String.valueOf(layout.getPlid()));
+			"p_l_id", String.valueOf(layout.getPlid()));
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

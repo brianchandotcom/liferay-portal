@@ -194,6 +194,16 @@ public class LargeDatasetCTTest {
 		}
 	}
 
+	@Test
+	public void testGetDiscardCTEntries() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_ctCollectionLocalService.getDiscardCTEntries(
+				_ctCollection.getCtCollectionId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				_layoutContent.getPrimaryKey());
+		}
+	}
+
 	@Ignore
 	@Test
 	public void testIncludeLayoutContent() throws Exception {

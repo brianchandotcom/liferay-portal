@@ -83,7 +83,12 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 
 			setFieldValue('deleteRequest', checked);
 
-			setFieldValue('suppressRequest', checked);
+			// TODO: Remove if statement below but keep setFieldValue('suppressRequest', checked)
+			// when Suppressed Users is available in the UI again.
+
+			if (ENABLE_SUPPRESSED_USERS) {
+				setFieldValue('suppressRequest', checked);
+			}
 		}
 	};
 

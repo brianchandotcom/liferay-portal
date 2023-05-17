@@ -314,6 +314,12 @@ public abstract class PoshiElement
 
 		sb.append(blockName);
 
+		String arguments = attributeValue("arguments");
+
+		if (Validator.isNotNull(arguments)) {
+			sb.append("(" + arguments + ")");
+		}
+
 		sb.append(" {");
 
 		PoshiNode<?, ?> previousPoshiNode = null;

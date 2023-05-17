@@ -80,7 +80,7 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(131);
+		StringBundler sb = new StringBundler(133);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -172,6 +172,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(name);
 		sb.append(", priceManuallyAdjusted=");
 		sb.append(priceManuallyAdjusted);
+		sb.append(", priceOnApplication=");
+		sb.append(priceOnApplication);
 		sb.append(", printedNote=");
 		sb.append(printedNote);
 		sb.append(", promoPrice=");
@@ -349,6 +351,7 @@ public class CommerceOrderItemCacheModel
 		}
 
 		commerceOrderItemImpl.setPriceManuallyAdjusted(priceManuallyAdjusted);
+		commerceOrderItemImpl.setPriceOnApplication(priceOnApplication);
 
 		if (printedNote == null) {
 			commerceOrderItemImpl.setPrintedNote("");
@@ -492,6 +495,8 @@ public class CommerceOrderItemCacheModel
 		name = objectInput.readUTF();
 
 		priceManuallyAdjusted = objectInput.readBoolean();
+
+		priceOnApplication = objectInput.readBoolean();
 		printedNote = objectInput.readUTF();
 		promoPrice = (BigDecimal)objectInput.readObject();
 		promoPriceWithTaxAmount = (BigDecimal)objectInput.readObject();
@@ -642,6 +647,8 @@ public class CommerceOrderItemCacheModel
 
 		objectOutput.writeBoolean(priceManuallyAdjusted);
 
+		objectOutput.writeBoolean(priceOnApplication);
+
 		if (printedNote == null) {
 			objectOutput.writeUTF("");
 		}
@@ -751,6 +758,7 @@ public class CommerceOrderItemCacheModel
 	public long maxSubscriptionCycles;
 	public String name;
 	public boolean priceManuallyAdjusted;
+	public boolean priceOnApplication;
 	public String printedNote;
 	public BigDecimal promoPrice;
 	public BigDecimal promoPriceWithTaxAmount;

@@ -185,6 +185,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		createColumn(
 			"priceManuallyAdjusted", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Boolean> priceOnApplication =
+		createColumn(
+			"priceOnApplication", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, String> printedNote =
 		createColumn(
 			"printedNote", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

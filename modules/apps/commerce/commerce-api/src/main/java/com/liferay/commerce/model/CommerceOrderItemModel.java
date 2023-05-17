@@ -860,6 +860,27 @@ public interface CommerceOrderItemModel
 	public void setPriceManuallyAdjusted(boolean priceManuallyAdjusted);
 
 	/**
+	 * Returns the price on application of this commerce order item.
+	 *
+	 * @return the price on application of this commerce order item
+	 */
+	public boolean getPriceOnApplication();
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is price on application.
+	 *
+	 * @return <code>true</code> if this commerce order item is price on application; <code>false</code> otherwise
+	 */
+	public boolean isPriceOnApplication();
+
+	/**
+	 * Sets whether this commerce order item is price on application.
+	 *
+	 * @param priceOnApplication the price on application of this commerce order item
+	 */
+	public void setPriceOnApplication(boolean priceOnApplication);
+
+	/**
 	 * Returns the printed note of this commerce order item.
 	 *
 	 * @return the printed note of this commerce order item

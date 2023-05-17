@@ -240,6 +240,9 @@ public class CommerceOrderItemPersistenceTest {
 		newCommerceOrderItem.setPriceManuallyAdjusted(
 			RandomTestUtil.randomBoolean());
 
+		newCommerceOrderItem.setPriceOnApplication(
+			RandomTestUtil.randomBoolean());
+
 		newCommerceOrderItem.setPrintedNote(RandomTestUtil.randomString());
 
 		newCommerceOrderItem.setPromoPrice(
@@ -430,6 +433,9 @@ public class CommerceOrderItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderItem.isPriceManuallyAdjusted(),
 			newCommerceOrderItem.isPriceManuallyAdjusted());
+		Assert.assertEquals(
+			existingCommerceOrderItem.isPriceOnApplication(),
+			newCommerceOrderItem.isPriceOnApplication());
 		Assert.assertEquals(
 			existingCommerceOrderItem.getPrintedNote(),
 			newCommerceOrderItem.getPrintedNote());
@@ -649,9 +655,10 @@ public class CommerceOrderItemPersistenceTest {
 			"discountWithTaxAmount", true, "finalPrice", true,
 			"finalPriceWithTaxAmount", true, "freeShipping", true, "height",
 			true, "manuallyAdjusted", true, "maxSubscriptionCycles", true,
-			"name", true, "priceManuallyAdjusted", true, "printedNote", true,
-			"promoPrice", true, "promoPriceWithTaxAmount", true, "quantity",
-			true, "replacedCPInstanceId", true, "replacedSku", true,
+			"name", true, "priceManuallyAdjusted", true, "priceOnApplication",
+			true, "printedNote", true, "promoPrice", true,
+			"promoPriceWithTaxAmount", true, "quantity", true,
+			"replacedCPInstanceId", true, "replacedSku", true,
 			"requestedDeliveryDate", true, "shipSeparately", true, "shippable",
 			true, "shippedQuantity", true, "shippingExtraPrice", true, "sku",
 			true, "subscription", true, "subscriptionLength", true,
@@ -1075,6 +1082,8 @@ public class CommerceOrderItemPersistenceTest {
 
 		commerceOrderItem.setPriceManuallyAdjusted(
 			RandomTestUtil.randomBoolean());
+
+		commerceOrderItem.setPriceOnApplication(RandomTestUtil.randomBoolean());
 
 		commerceOrderItem.setPrintedNote(RandomTestUtil.randomString());
 

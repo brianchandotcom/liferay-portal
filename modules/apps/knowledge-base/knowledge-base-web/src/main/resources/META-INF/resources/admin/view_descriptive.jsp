@@ -140,7 +140,16 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					</c:if>
 
 					<span class="text-default">
-						<aui:workflow-status helpMessage='<%= kbArticle.isExpired() ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>' markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+
+						<%
+						String expirationDate = StringPool.BLANK;
+
+						if (kbArticle.getExpirationDate() != null) {
+							expirationDate = dateFormatDateTime.format(kbArticle.getExpirationDate());
+						}
+						%>
+
+						<aui:workflow-status helpMessage="<%= kbArticle.isExpired() ? expirationDate : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
 
 						<c:if test="<%= kbArticleViewDisplayContext.isExpiringSoon(kbArticle) %>">
 							<span class="label label-warning">
@@ -148,10 +157,10 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 							</span>
 
 							<clay:icon
-								aria-label='<%= (kbArticle.getExpirationDate() != null) ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>'
+								aria-label="<%= expirationDate %>"
 								cssClass="lfr-portal-tooltip"
 								symbol="question-circle-full"
-								title='<%= (kbArticle.getExpirationDate() != null) ? dateFormatDateTime.format(kbArticle.getExpirationDate()) : "" %>'
+								title="<%= expirationDate %>"
 							/>
 						</c:if>
 					</span>

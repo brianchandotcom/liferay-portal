@@ -554,6 +554,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_ddmStructureLocalService, _ddmTemplateLocalService,
 					documentsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder));
+			_invoke(() -> _enableRestrictedAccountEntry(serviceContext));
 
 			_invoke(
 				() -> _addOrUpdateNotificationTemplates(
@@ -1326,9 +1327,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
-		Map<String, ObjectDefinition> accountEntryRestrictedObjectDefinitions =
-			new HashMap<>();
-
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
 			_objectDefinitionResourceFactory.create();
 
@@ -1368,13 +1366,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionsPage.fetchFirstItem();
 
 			if (existingObjectDefinition == null) {
-				if (GetterUtil.getBoolean(
-						objectDefinition.getAccountEntryRestricted())) {
-
-					accountEntryRestrictedObjectDefinitions.put(
-						objectDefinition.getName(), objectDefinition);
-				}
-
 				objectDefinition =
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
@@ -1438,22 +1429,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_invoke(
 			() -> _addOrUpdateObjectRelationships(
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
-
-		for (Map.Entry<String, ObjectDefinition> entry :
-				accountEntryRestrictedObjectDefinitions.entrySet()) {
-
-			com.liferay.object.model.ObjectDefinition
-				serviceBuilderObjectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						serviceContext.getCompanyId(), "C_" + entry.getKey());
-
-			_objectDefinitionLocalService.enableAccountEntryRestricted(
-				_objectRelationshipLocalService.
-					getObjectRelationshipByObjectDefinitionId(
-						serviceBuilderObjectDefinition.getObjectDefinitionId(),
-						"accountEntryTo" +
-							serviceBuilderObjectDefinition.getShortName()));
-		}
 
 		_invoke(
 			() -> _addOrUpdateObjectFields(
@@ -4600,6 +4575,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 					accountBriefsJSONObject.getString("externalReferenceCode"),
 					accountRole.getId(), emailAddress);
+		}
+	}
+
+	private void _enableRestrictedAccountEntry(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/restrict-account-entry.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			com.liferay.object.model.ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					serviceContext.getCompanyId(),
+					jsonObject.getString("objectDefinitionName"));
+
+			_objectDefinitionLocalService.enableAccountEntryRestricted(
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectDefinition.getObjectDefinitionId(),
+					jsonObject.getString("relationShipName")));
 		}
 	}
 

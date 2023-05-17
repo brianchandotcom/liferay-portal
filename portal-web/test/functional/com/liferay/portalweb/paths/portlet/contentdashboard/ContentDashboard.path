@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>FIRST_ELEMENT_LISTED</td>
-	<td>(//*[@data-qa-id='row'] //*[contains(@class,'table-title')] //span[@class='text-truncate'])[1]</td>
+	<td>xpath=(//*[@data-qa-id='row'] //*[contains(@class,'table-title')] //span[@class='text-truncate'])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@
 </tr>
 <tr>
 	<td>FIRST_ELEMENT_LISTED_MODIFIED_DATE</td>
-	<td>(//*[contains(@class, 'lfr-modified-date-column')] //*[contains(@class, 'lfr-portal-tooltip')])[1]</td>
+	<td>xpath=(//*[contains(@class, 'lfr-modified-date-column')] //*[contains(@class, 'lfr-portal-tooltip')])[1]</td>
 	<td></td>
 </tr>
 <tr>

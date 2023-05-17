@@ -14,14 +14,17 @@
 
 package com.liferay.osb.faro.web.internal.request.filter;
 
-import com.liferay.osb.faro.engine.client.constants.TokenConstants;
+import com.liferay.osb.faro.engine.client.util.TokenUtil;
 import com.liferay.osb.faro.web.internal.annotations.TokenAuthentication;
 import com.liferay.osb.faro.web.internal.util.ServletRequestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import javax.annotation.Priority;
@@ -57,9 +60,12 @@ public class TokenAuthenticationFilter implements ContainerRequestFilter {
 		if (Objects.equals(
 				faroBackendSecuritySignature,
 				DigestUtils.sha256Hex(
-					TokenConstants.OSB_ASAH_SECURITY_TOKEN.concat(
-						ServletRequestUtil.getOriginalURL(
-							_httpServletRequest))))) {
+					StringUtil.merge(
+						Arrays.asList(
+							TokenUtil.getOSBAsahSecurityToken(),
+							ServletRequestUtil.getOriginalURL(
+								_httpServletRequest)),
+						StringPool.BLANK)))) {
 
 			return;
 		}

@@ -74,9 +74,9 @@ public class EntityCacheImplTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		_frameworkUtilMockedStatic.close();
-
 		_finderCacheServiceRegistration.unregister();
+
+		_frameworkUtilMockedStatic.close();
 	}
 
 	@Before

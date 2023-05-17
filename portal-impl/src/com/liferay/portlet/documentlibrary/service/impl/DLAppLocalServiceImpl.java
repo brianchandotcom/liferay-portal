@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepository;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.service.base.DLAppLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
@@ -61,6 +62,7 @@ import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Provides the local service for accessing, adding, deleting, moving,
@@ -710,6 +712,17 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			groupId);
 
 		for (Repository repository : repositories) {
+			if (Objects.equals(
+					repository.getClassName(),
+					TemporaryFileEntryRepository.class.getName())) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Skipping temporary file entry repository");
+				}
+
+				continue;
+			}
+
 			try {
 				LocalRepository localRepository = getLocalRepository(
 					repository.getRepositoryId());

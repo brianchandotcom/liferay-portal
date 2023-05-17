@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>ASSET_CATEGORY_LABEL</td>
-	<td>//*[@data-qa-id and descendant::span[text()='${assetName}']] //*[contains(@class, 'lfr-audience-column')] //*[contains(@class, 'category-label-see-more') or contains(@class, 'label-item')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_STATUS_LABEL</td>
 	<td>//*[@data-qa-id and descendant::span[text()='${assetName}']] //*[contains(@class, 'lfr-status-column')] //*[contains(@class, 'label-item')]</td>
 	<td></td>
@@ -106,11 +101,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_PAGE_TITLE</td>
-	<td>//*[@data-qa-id='headerTitle']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EMPTY_AUDIT_GRAPH_TEXT</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There is no data')]</td>
 	<td></td>
@@ -123,11 +113,6 @@
 <tr>
 	<td>FILTER_BAR</td>
 	<td>//nav[contains(@class,'subnav-tbar')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_BY_EXTENSION_EMPTY</td>
-	<td>//*[contains(@class, 'sheet-text') and contains(@class, 'text-center') and contains(text(), '${noResultMessage}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -163,16 +148,6 @@
 <tr>
 	<td>FIRST_ELEMENT_LISTED</td>
 	<td>xpath=(//*[@data-qa-id='row'] //*[contains(@class,'table-title')] //span[@class='text-truncate'])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIRST_ELEMENT_LISTED_DISPLAY_PAGE</td>
-	<td>xpath=(//span[contains(@title, 'This content has a display page')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIRST_ELEMENT_LISTED_MODIFIED_DATE</td>
-	<td>xpath=(//*[contains(@class, 'lfr-modified-date-column')] //*[contains(@class, 'lfr-portal-tooltip')])[1]</td>
 	<td></td>
 </tr>
 <tr>

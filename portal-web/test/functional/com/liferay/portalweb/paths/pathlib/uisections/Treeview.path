@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>FILTER_BY_RESULTS_BAR_MESSAGE</td>
-	<td>//div[@class='align-items-center container-fluid d-flex justify-content-between p-0']//p[text()='resultMessage']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NODE_CHECKBOX</td>
 	<td>//*[contains(@class,'component-text') or contains(@class,'flex-grow')][normalize-space(text())='${key_nodeName}']/ancestor::div[contains(@class,'treeview')]//input[@type='checkbox']</td>
 	<td></td>

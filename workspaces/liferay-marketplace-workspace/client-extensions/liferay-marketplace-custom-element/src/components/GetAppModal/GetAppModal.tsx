@@ -74,6 +74,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	});
 	const [appVersion, setAppVersion] = useState<string>('');
 	const [channel, setChannel] = useState<Channel>({
+		channelId: 0,
 		currencyCode: '',
 		externalReferenceCode: '',
 		id: 0,
@@ -257,7 +258,10 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 							}) => customField.name === 'CatalogId'
 						);
 
-						return catalogIdField?.customValue.data == String(catalogId);
+						return (
+							catalogIdField?.customValue.data ==
+							String(catalogId)
+						);
 					}
 				}
 			);

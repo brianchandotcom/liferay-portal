@@ -44,11 +44,13 @@ export function createApp({
 	appDescription,
 	appName,
 	catalogId,
+	productChannels,
 }: {
 	appCategories: Categories[];
 	appDescription: string;
 	appName: string;
 	catalogId: number;
+	productChannels?: Partial<Channel>[];
 }) {
 	return fetch(`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products`, {
 		body: JSON.stringify({
@@ -60,6 +62,7 @@ export function createApp({
 			name: {en_US: appName},
 			productStatus: 2,
 			productType: 'virtual',
+			productChannels,
 		}),
 		headers,
 		method: 'POST',
@@ -481,14 +484,17 @@ export async function getProductImages({appProductId}: {appProductId: number}) {
 	return await response.json();
 }
 
-export async function getProducts() {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=-1`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
+export async function getProducts(nestedFields?: string) {
+	let url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products?pageSize=-1`;
+
+	if (nestedFields) {
+		url = url + `&nestedFields=${nestedFields}`;
+	}
+
+	const response = await fetch(url, {
+		headers,
+		method: 'GET',
+	});
 
 	return (await response.json()) as {items: Product[]};
 }

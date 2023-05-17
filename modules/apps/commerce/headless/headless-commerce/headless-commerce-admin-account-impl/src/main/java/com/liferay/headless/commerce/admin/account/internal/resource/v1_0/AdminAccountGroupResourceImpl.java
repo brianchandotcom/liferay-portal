@@ -238,8 +238,8 @@ public class AdminAccountGroupResourceImpl
 
 		if (accountGroup == null) {
 			accountGroup = _accountGroupService.addAccountGroup(
-				contextCompany.getCompanyId(),
-				adminAccountGroup.getDescription(), adminAccountGroup.getName(),
+				contextUser.getUserId(), adminAccountGroup.getDescription(),
+				adminAccountGroup.getName(),
 				_serviceContextHelper.getServiceContext());
 
 			accountGroup = _accountGroupService.updateExternalReferenceCode(

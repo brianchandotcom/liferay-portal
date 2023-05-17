@@ -1,0 +1,10 @@
+[
+	{
+		"relationShipName": "accountEntryToTestObjectDefinition4",
+		"objectDefinitionName": "AccountEntry"
+	},
+	{
+		"relationShipName": "accountEntryToTestObjectDefinition5",
+		"objectDefinitionName": "AccountEntry"
+	}
+]

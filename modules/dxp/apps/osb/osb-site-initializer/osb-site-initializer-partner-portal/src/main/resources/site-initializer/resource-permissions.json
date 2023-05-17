@@ -896,18 +896,19 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
+		"roleName": "Channel Operations Manager (COM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			{
-				"actionIds": [
-					"ADD_OBJECT_ENTRY",
-					"UPDATE"
-				],
-				"primKey": "0",
-				"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-				"roleName": "Channel Operations Manager (COM)",
-				"scope": 1
-			},			"UPDATE"
+			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -922,17 +923,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Partner Technical User (PTU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW",
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Operations Manager (COM)",
 		"scope": 1
 	},
 	{

@@ -7,6 +7,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
 import {
+	baseURL,
 	getAccountAddressesFromCommerce,
 	getAccounts,
 	getChannels,
@@ -23,7 +24,7 @@ import {
 	postCartByChannelId,
 	postCheckoutCart,
 } from '../../utils/api';
-import {showAccountImage} from '../../utils/util';
+import {showAccountImage, showAppImage} from '../../utils/util';
 import {AccountSelector} from './AccountSelector';
 
 import './GetAppModal.scss';
@@ -516,12 +517,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									<img
 										alt="App Image"
 										className="get-app-modal-body-content-image"
-										src={app.urlImage.replace(
-											Liferay.ThemeDisplay.getPortalURL().replace(
-												'http',
-												'https'
-											),
-											''
+										src={showAppImage(app.urlImage).replace(
+											app.urlImage.split('/o')[0],
+											baseURL
 										)}
 									/>
 

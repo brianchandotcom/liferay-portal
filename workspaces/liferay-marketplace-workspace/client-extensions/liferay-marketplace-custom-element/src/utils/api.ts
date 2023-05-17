@@ -6,14 +6,15 @@ const headers = {
 	'X-CSRF-Token': Liferay.authToken,
 };
 
-const baseURL = window.location.origin + Liferay.ThemeDisplay.getPathContext();
-
 type Categories = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
 	vocabulary: string;
 };
+
+export const baseURL =
+	window.location.origin + Liferay.ThemeDisplay.getPathContext();
 
 export async function addSkuExpandoValue({
 	companyId,

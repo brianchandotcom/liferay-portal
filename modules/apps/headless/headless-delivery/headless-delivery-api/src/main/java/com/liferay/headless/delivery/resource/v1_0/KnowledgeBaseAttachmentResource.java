@@ -89,22 +89,16 @@ public interface KnowledgeBaseAttachmentResource {
 			Long knowledgeBaseAttachmentId)
 		throws Exception;
 
-	public KnowledgeBaseAttachment
-			getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+	public void
+			deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
 				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
 				String externalReferenceCode)
 		throws Exception;
 
 	public KnowledgeBaseAttachment
-			postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+			getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
 				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
-				String externalReferenceCode, MultipartBody multipartBody)
-		throws Exception;
-
-	public KnowledgeBaseAttachment
-			putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-				Long siteId, String knowledgeBaseArticleExternalReferenceCode,
-				String externalReferenceCode, MultipartBody multipartBody)
+				String externalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

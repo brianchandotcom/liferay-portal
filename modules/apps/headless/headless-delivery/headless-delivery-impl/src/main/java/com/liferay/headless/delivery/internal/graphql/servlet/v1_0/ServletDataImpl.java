@@ -841,15 +841,10 @@ public class ServletDataImpl implements ServletData {
 							KnowledgeBaseAttachmentResourceImpl.class,
 							"deleteKnowledgeBaseAttachmentBatch"));
 					put(
-						"mutation#createSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
+						"mutation#deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
 						new ObjectValuePair<>(
 							KnowledgeBaseAttachmentResourceImpl.class,
-							"postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
-					put(
-						"mutation#updateSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode",
-						new ObjectValuePair<>(
-							KnowledgeBaseAttachmentResourceImpl.class,
-							"putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
+							"deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode"));
 					put(
 						"mutation#deleteKnowledgeBaseFolder",
 						new ObjectValuePair<>(

@@ -511,6 +511,63 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseAttachmentResource.
+				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected KnowledgeBaseAttachment
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
 		throws Exception {
 
@@ -648,130 +705,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
-	}
-
-	@Test
-	public void testPostSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
-		throws Exception {
-
-		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
-			randomKnowledgeBaseAttachment();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
-			testPostSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment(
-				randomKnowledgeBaseAttachment, multipartFiles);
-
-		assertEquals(
-			randomKnowledgeBaseAttachment, postKnowledgeBaseAttachment);
-		assertValid(postKnowledgeBaseAttachment);
-
-		assertValid(postKnowledgeBaseAttachment, multipartFiles);
-	}
-
-	protected KnowledgeBaseAttachment
-			testPostSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment(
-				KnowledgeBaseAttachment knowledgeBaseAttachment,
-				Map<String, File> multipartFiles)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
-		throws Exception {
-
-		KnowledgeBaseAttachment postKnowledgeBaseAttachment =
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
-
-		KnowledgeBaseAttachment randomKnowledgeBaseAttachment =
-			randomKnowledgeBaseAttachment();
-
-		Map<String, File> multipartFiles = getMultipartFiles();
-
-		KnowledgeBaseAttachment putKnowledgeBaseAttachment =
-			knowledgeBaseAttachmentResource.
-				putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					postKnowledgeBaseAttachment.getExternalReferenceCode(),
-					randomKnowledgeBaseAttachment, multipartFiles);
-
-		assertEquals(randomKnowledgeBaseAttachment, putKnowledgeBaseAttachment);
-		assertValid(putKnowledgeBaseAttachment);
-
-		KnowledgeBaseAttachment getKnowledgeBaseAttachment =
-			knowledgeBaseAttachmentResource.
-				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					putKnowledgeBaseAttachment.getExternalReferenceCode());
-
-		assertEquals(randomKnowledgeBaseAttachment, getKnowledgeBaseAttachment);
-		assertValid(getKnowledgeBaseAttachment);
-
-		assertValid(getKnowledgeBaseAttachment, multipartFiles);
-
-		KnowledgeBaseAttachment newKnowledgeBaseAttachment =
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_createKnowledgeBaseAttachment();
-
-		putKnowledgeBaseAttachment =
-			knowledgeBaseAttachmentResource.
-				putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					newKnowledgeBaseAttachment.getExternalReferenceCode(),
-					newKnowledgeBaseAttachment, getMultipartFiles());
-
-		assertEquals(newKnowledgeBaseAttachment, putKnowledgeBaseAttachment);
-		assertValid(putKnowledgeBaseAttachment);
-
-		getKnowledgeBaseAttachment =
-			knowledgeBaseAttachmentResource.
-				getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
-					testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
-					putKnowledgeBaseAttachment.getExternalReferenceCode());
-
-		assertEquals(newKnowledgeBaseAttachment, getKnowledgeBaseAttachment);
-
-		Assert.assertEquals(
-			newKnowledgeBaseAttachment.getExternalReferenceCode(),
-			putKnowledgeBaseAttachment.getExternalReferenceCode());
-	}
-
-	protected Long
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected KnowledgeBaseAttachment
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_createKnowledgeBaseAttachment()
-		throws Exception {
-
-		return randomKnowledgeBaseAttachment();
-	}
-
-	protected KnowledgeBaseAttachment
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected KnowledgeBaseAttachment

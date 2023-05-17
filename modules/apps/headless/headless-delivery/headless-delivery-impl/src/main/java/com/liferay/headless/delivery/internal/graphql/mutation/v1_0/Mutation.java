@@ -2586,59 +2586,28 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Creates the knowledge base article attachment by external reference code with the information sent in the request body. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
+		description = "Delete the knowledge base attachment by knowledge base article's and knowledge base attachment's external reference codes."
 	)
-	@GraphQLName(
-		description = "Creates the knowledge base article attachment by external reference code with the information sent in the request body. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
-		value = "postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeSiteIdKnowledgeBaseArticleExternalReferenceCodeExternalReferenceCodeMultipartBody"
-	)
-	public KnowledgeBaseAttachment
-			createSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+	public boolean
+			deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
 				@GraphQLName("siteKey") @NotEmpty String siteKey,
 				@GraphQLName("knowledgeBaseArticleExternalReferenceCode") String
 					knowledgeBaseArticleExternalReferenceCode,
 				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("multipartBody") MultipartBody multipartBody)
+					externalReferenceCode)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_knowledgeBaseAttachmentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			knowledgeBaseAttachmentResource ->
 				knowledgeBaseAttachmentResource.
-					postSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
+					deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
 						Long.valueOf(siteKey),
 						knowledgeBaseArticleExternalReferenceCode,
-						externalReferenceCode, multipartBody));
-	}
+						externalReferenceCode));
 
-	@GraphQLField(
-		description = "Replaces the knowledge base article attachment by external reference code with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata."
-	)
-	@GraphQLName(
-		description = "Replaces the knowledge base article attachment by external reference code with the information sent in the request body. Any missing fields are deleted, unless they are required. The request body must be `multipart/form-data` with two parts, the file's bytes (`file`), and an optional JSON string (`knowledgeBaseAttachment`) with the metadata.",
-		value = "putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeSiteIdKnowledgeBaseArticleExternalReferenceCodeExternalReferenceCodeMultipartBody"
-	)
-	public KnowledgeBaseAttachment
-			updateSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-				@GraphQLName("siteKey") @NotEmpty String siteKey,
-				@GraphQLName("knowledgeBaseArticleExternalReferenceCode") String
-					knowledgeBaseArticleExternalReferenceCode,
-				@GraphQLName("externalReferenceCode") String
-					externalReferenceCode,
-				@GraphQLName("multipartBody") MultipartBody multipartBody)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_knowledgeBaseAttachmentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			knowledgeBaseAttachmentResource ->
-				knowledgeBaseAttachmentResource.
-					putSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode(
-						Long.valueOf(siteKey),
-						knowledgeBaseArticleExternalReferenceCode,
-						externalReferenceCode, multipartBody));
+		return true;
 	}
 
 	@GraphQLField(

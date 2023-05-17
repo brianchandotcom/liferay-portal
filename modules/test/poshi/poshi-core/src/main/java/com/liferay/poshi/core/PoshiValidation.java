@@ -278,7 +278,7 @@ public class PoshiValidation {
 		String filePath = _getFilePath(poshiElement);
 
 		List<String> possibleAttributeNames = Arrays.asList(
-			"line-number", "name", "prose", "return", "summary",
+			"arguments", "line-number", "name", "prose", "return", "summary",
 			"summary-ignore");
 
 		validatePossibleAttributeNames(poshiElement, possibleAttributeNames);

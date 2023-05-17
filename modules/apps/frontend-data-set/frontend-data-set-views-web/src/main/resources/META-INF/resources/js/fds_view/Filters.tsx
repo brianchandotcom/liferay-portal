@@ -589,7 +589,10 @@ function AddFDSFilterModalContent({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={!selectedField}
+							disabled={
+								!selectedField ||
+								(!multiple && preselectedValues.length > 1)
+							}
 							form={formElementId}
 							type="submit"
 						>

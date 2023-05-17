@@ -5923,7 +5923,7 @@ definition {
 		}
 
 		task ("Then a new major version is created") {
-			ContentDashboard.openInfoPanel(assetName = "DM Document Title Edit");
+			ContentDashboard.openInfoPanel(assetName = "DM Document Title");
 
 			ContentDashboard.openVersionsTab();
 

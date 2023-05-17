@@ -292,13 +292,13 @@ definition {
 		task ("Check axes flip behavior") {
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCtegoryName = "Stage 1");
+				xAxisCategoryName = "Stage 1");
 
 			ContentDashboard.flipGraphAxes();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCtegoryName = "Audience 1");
+				xAxisCategoryName = "Audience 1");
 		}
 	}
 
@@ -613,13 +613,13 @@ definition {
 		task ("Assert the site vocabularies in the graph") {
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCtegoryName = "Stage 2");
+				xAxisCategoryName = "Stage 2");
 
 			ContentDashboard.flipGraphAxes();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCtegoryName = "Category 1");
+				xAxisCategoryName = "Category 1");
 		}
 	}
 
@@ -669,13 +669,13 @@ definition {
 		task ("Assert the site vocabularies in the graph") {
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCtegoryName = "Category 1");
+				xAxisCategoryName = "Category 1");
 
 			ContentDashboard.flipGraphAxes();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCtegoryName = "Category 2");
+				xAxisCategoryName = "Category 2");
 		}
 	}
 
@@ -719,7 +719,7 @@ definition {
 		}
 
 		task ("Move vocabularies between In Use and Available") {
-			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience,Vocabulary Name 1,Stage,Vocabulary Name 2");
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience,Vocabulary 1,Stage,Vocabulary 2");
 		}
 
 		task ("Assert the blog is counted as an asset") {
@@ -821,13 +821,13 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Stage 1");
+				xAxisCategoryName = "Audience 1");
 
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Audience");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Audience 1");
+				xAxisCategoryName = "Stage 1");
 		}
 	}
 

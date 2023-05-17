@@ -12,7 +12,7 @@
 
 				<span aria-live="assertive" data-error-message="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-message="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentEntryLinkNamespace}-length-warning-text"></span>:
 			</span>
-			<span id="${fragmentEntryLinkNamespace}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
+			<span id="${fragmentEntryLinkNamespace}-current-length">0</span>[#if input.attributes.maxLength??] / ${input.attributes.maxLength}[/#if]
 		</p>
 
 		[#if input.showHelpText && input.helpText?has_content]

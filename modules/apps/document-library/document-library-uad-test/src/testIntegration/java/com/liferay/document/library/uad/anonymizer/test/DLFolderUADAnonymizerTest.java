@@ -68,9 +68,9 @@ public class DLFolderUADAnonymizerTest
 			_dlAppLocalService, _dlFolderLocalService, user.getUserId(),
 			_group.getGroupId(), parentDLFolder.getFolderId());
 
-		_uadAnonymizer.delete(parentDLFolder);
+		_uadAnonymizer.delete(parentDLFolder, user.getUserId());
 
-		_uadAnonymizer.delete(childDLFolder);
+		_uadAnonymizer.delete(childDLFolder, user.getUserId());
 	}
 
 	@Override

@@ -139,7 +139,7 @@ public class DLFileEntryUADAnonymizerTest
 				"The AssetLink should be associated with the DLFileEntry",
 				assetLink.getEntryId2(), dlFileEntryAssetEntry.getEntryId());
 
-			_uadAnonymizer.delete(dlFileEntry);
+			_uadAnonymizer.delete(dlFileEntry, user.getUserId());
 
 			dlFileEntryAssetEntry = _assetEntryLocalService.fetchEntry(
 				DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());

@@ -94,7 +94,7 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 	public void testDelete() throws Exception {
 		T baseModel = addBaseModel(user.getUserId(), false);
 
-		uadAnonymizer.delete(baseModel);
+		uadAnonymizer.delete(baseModel, user.getUserId());
 
 		deleteBaseModels(Arrays.asList(baseModel));
 

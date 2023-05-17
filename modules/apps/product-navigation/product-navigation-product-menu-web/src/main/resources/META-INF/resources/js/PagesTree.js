@@ -104,7 +104,7 @@ export default function PagesTree({
 	}, []);
 
 	return (
-		<div className="pages-tree">
+		<div className="mx-3 pages-tree">
 			<ClayTreeView
 				defaultItems={items}
 				displayType="dark"

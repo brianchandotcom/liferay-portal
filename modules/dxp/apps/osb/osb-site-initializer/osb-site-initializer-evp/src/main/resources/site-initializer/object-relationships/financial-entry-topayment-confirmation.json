@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Payment Confirmation"
+	},
+	"name": "paymentConfirmation",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:EVPFinancial$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPPaymentConfirmation$]",
+	"objectDefinitionName2": "EVPPaymentConfirmation",
+	"type": "oneToMany"
+}

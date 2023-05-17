@@ -120,12 +120,15 @@ const AddFDSSortModalContent = ({
 	fields,
 	onSave,
 }: IAddFDSSortModalContentInterface) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [selectedField, setSelectedField] = useState<string>();
 	const [selectedSortingDirection, setSelectedSortingDirection] = useState<
 		string
 	>(SORTING_DIRECTION.ASCENDING.value);
 
 	const handleSave = async () => {
+		setIsSubmitting(true);
+
 		const field = fields.find(
 			(item: IField) => item.name === selectedField
 		);
@@ -133,7 +136,7 @@ const AddFDSSortModalContent = ({
 		if (!field) {
 			alertFailed();
 
-			return null;
+			return;
 		}
 
 		const response = await fetch(API_URL.FDS_SORTS, {
@@ -150,9 +153,11 @@ const AddFDSSortModalContent = ({
 		});
 
 		if (!response.ok) {
+			setIsSubmitting(false);
+
 			alertFailed();
 
-			return null;
+			return;
 		}
 
 		const responseJSON = await response.json();
@@ -230,7 +235,7 @@ const AddFDSSortModalContent = ({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!selectedField}
+							disabled={isSubmitting || !selectedField}
 							onClick={handleSave}
 						>
 							{Liferay.Language.get('save')}
@@ -256,11 +261,14 @@ const EditFDSSortModalContent = ({
 	namespace,
 	onSave,
 }: IEditFDSSortModalContentProps) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [selectedSortingDirection, setSelectedSortingDirection] = useState(
 		fdsSort.sortingDirection
 	);
 
 	const handleSave = async () => {
+		setIsSubmitting(true);
+
 		const response = await fetch(
 			`${API_URL.FDS_SORTS}/by-external-reference-code/${fdsSort.externalReferenceCode}`,
 			{
@@ -276,7 +284,11 @@ const EditFDSSortModalContent = ({
 		);
 
 		if (!response.ok) {
+			setIsSubmitting(false);
+
 			alertFailed();
+
+			return;
 		}
 
 		const editedFDSSort = await response.json();
@@ -340,15 +352,18 @@ const EditFDSSortModalContent = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton onClick={handleSave}>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
 						<ClayButton
 							displayType="secondary"
 							onClick={() => closeModal()}
 						>
 							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={isSubmitting}
+							onClick={handleSave}
+						>
+							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

@@ -244,7 +244,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Column<?, Long> primaryKeyColumn =
 				systemObjectDefinitionManager.getPrimaryKeyColumn();
 
-			return addSystemObjectDefinition(
+			objectDefinition = addSystemObjectDefinition(
 				userId, systemObjectDefinitionManager.getModelClassName(),
 				table.getTableName(), false,
 				systemObjectDefinitionManager.getLabelMap(), false,
@@ -256,6 +256,11 @@ public class ObjectDefinitionLocalServiceImpl
 				systemObjectDefinitionManager.getVersion(),
 				WorkflowConstants.STATUS_APPROVED,
 				systemObjectDefinitionManager.getObjectFields());
+
+			objectDefinition.setExternalReferenceCode(
+				systemObjectDefinitionManager.getExternalReferenceCode());
+
+			return objectDefinitionPersistence.update(objectDefinition);
 		}
 
 		objectDefinition.setVersion(systemObjectDefinitionManager.getVersion());

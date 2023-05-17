@@ -69,6 +69,11 @@ public interface KBArticle extends KBArticleModel, PersistedModel {
 			getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry
+			getAttachmentsFileEntryByExternalReferenceCode(
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public long getAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

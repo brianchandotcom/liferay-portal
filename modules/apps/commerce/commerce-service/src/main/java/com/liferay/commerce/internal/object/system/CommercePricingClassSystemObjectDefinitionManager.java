@@ -90,6 +90,11 @@ public class CommercePricingClassSystemObjectDefinitionManager
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return "USOD_COMMERCE_PRODUCT_GROUP";
+	}
+
+	@Override
 	public String getExternalReferenceCode(long primaryKey)
 		throws PortalException {
 

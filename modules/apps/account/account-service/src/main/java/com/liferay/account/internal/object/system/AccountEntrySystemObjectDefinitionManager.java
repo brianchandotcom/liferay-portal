@@ -86,6 +86,11 @@ public class AccountEntrySystemObjectDefinitionManager
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return "USOD_ACCOUNT";
+	}
+
+	@Override
 	public String getExternalReferenceCode(long primaryKey)
 		throws PortalException {
 

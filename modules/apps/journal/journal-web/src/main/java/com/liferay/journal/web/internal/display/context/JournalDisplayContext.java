@@ -929,7 +929,7 @@ public class JournalDisplayContext {
 		}
 
 		if (Validator.isNotNull(tab)) {
-			portletURL.setParameter("tabs1", tab);
+			portletURL.setParameter("tab", tab);
 		}
 
 		return portletURL;
@@ -1010,14 +1010,14 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
-	public String getTabs1() {
-		if (_tabs1 != null) {
-			return _tabs1;
+	public String getTab() {
+		if (_tab != null) {
+			return _tab;
 		}
 
-		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1");
+		_tab = ParamUtil.getString(_httpServletRequest, "tab");
 
-		return _tabs1;
+		return _tab;
 	}
 
 	public int getTotalItems() throws PortalException {
@@ -1058,8 +1058,8 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isCommentsTabSelected() throws PortalException {
-		if (Objects.equals(getTabs1(), "comments") ||
-			(hasCommentsResults() && Validator.isNull(getTabs1()))) {
+		if (Objects.equals(getTab(), "comments") ||
+			(hasCommentsResults() && Validator.isNull(getTab()))) {
 
 			return true;
 		}
@@ -1116,8 +1116,8 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isVersionsTabSelected() throws PortalException {
-		if (Objects.equals(getTabs1(), "versions") ||
-			(hasVersionsResults() && Validator.isNull(getTabs1()))) {
+		if (Objects.equals(getTab(), "versions") ||
+			(hasVersionsResults() && Validator.isNull(getTab()))) {
 
 			return true;
 		}
@@ -1126,8 +1126,8 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isWebContentTabSelected() throws PortalException {
-		if (Objects.equals(getTabs1(), "web-content") ||
-			(hasResults() && Validator.isNull(getTabs1()))) {
+		if (Objects.equals(getTab(), "web-content") ||
+			(hasResults() && Validator.isNull(getTab()))) {
 
 			return true;
 		}
@@ -1587,7 +1587,7 @@ public class JournalDisplayContext {
 	private Integer _restrictionType;
 	private SearchContainer<?> _searchContainer;
 	private Integer _status;
-	private String _tabs1;
+	private String _tab;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

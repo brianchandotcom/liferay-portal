@@ -15,7 +15,11 @@ import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitA
 
 import './AppDetailsPage.scss';
 import {getProductSpecifications} from '../../utils/api';
-import {getProductVersionFromSpecifications} from '../../utils/util';
+import {
+	getProductVersionFromSpecifications,
+	getThumbnailByProductAttachment,
+	showAppImage,
+} from '../../utils/util';
 
 interface AppDetailsPageProps {
 	dashboardNavigationItems: DashboardListItems[];
@@ -33,6 +37,7 @@ export function AppDetailsPage({
 		useState('App Details');
 
 	const [_, dispatch] = useAppContext();
+	const thumbnail = getThumbnailByProductAttachment(selectedApp.attachments);
 
 	useEffect(() => {
 		dispatch({
@@ -111,7 +116,7 @@ export function AppDetailsPage({
 						<img
 							alt="App Logo"
 							className="app-details-page-app-info-logo"
-							src={selectedApp.thumbnail}
+							src={showAppImage(thumbnail)}
 						/>
 					</div>
 

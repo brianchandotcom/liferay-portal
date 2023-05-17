@@ -18,6 +18,14 @@ export const initialAccountState: Account[] = [
 ];
 
 export const initialAppState: AppProps = {
+	attachments: [
+		{
+			externalReferenceCode: '',
+			id: 0,
+			src: '',
+			title: {},
+		},
+	],
 	catalogId: 0,
 	externalReferenceCode: '',
 	lastUpdatedBy: '',

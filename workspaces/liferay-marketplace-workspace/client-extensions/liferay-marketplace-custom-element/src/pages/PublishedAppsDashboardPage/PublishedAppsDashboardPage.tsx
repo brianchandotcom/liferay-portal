@@ -17,7 +17,10 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
-import {showAccountImage} from '../../utils/util';
+import {
+	getProductVersionFromSpecifications,
+	showAccountImage,
+} from '../../utils/util';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {
@@ -38,13 +41,12 @@ import {
 } from './PublishedDashboardPageUtil';
 
 import './PublishedAppsDashboardPage.scss';
-import {Liferay} from '../../liferay/liferay';
-import {getProductVersionFromSpecifications} from '../../utils/util';
-import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
+import {Liferay} from '../../liferay/liferay';
+import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 
 interface PublishedAppTable {
 	items: AppProps[];
@@ -148,7 +150,7 @@ export function PublishedAppsDashboardPage() {
 				if (accountCatalogId && accountCatalogId !== 0) {
 					setCatalogId(accountCatalogId);
 					const {items: productsItems} = await getProducts(
-						'productChannels'
+						'productChannels, attachments'
 					);
 
 					const appListProductIds: number[] =
@@ -178,6 +180,7 @@ export function PublishedAppsDashboardPage() {
 							product.catalogId === accountCatalogId
 						) {
 							newAppList.push({
+								attachments: product.attachments,
 								catalogId: product.catalogId,
 								externalReferenceCode:
 									product.externalReferenceCode,

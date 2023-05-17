@@ -225,6 +225,7 @@ interface PlacedOrder {
 interface PlacedOrderItems {
 	id: number;
 	name: string;
+	productId: number;
 	skuId: number;
 	subscription: boolean;
 	thumbnail: string;

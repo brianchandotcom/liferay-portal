@@ -496,6 +496,39 @@ definition {
 		AssertLocation(value1 = "${portalURL}/en/web/test-site-name/test-page");
 	}
 
+	@description = "This is a use case for LPS-153713. Verify users can reorder pages with prependended locale."
+	@priority = 3
+	test ReorderPagesWithPrependedLocale {
+		property custom.properties = "locale.prepend.friendly.url.style=2";
+		property test.name.skip.portal.instance = "Locale#ReorderPagesWithPrependedLocale";
+
+		User.firstLoginPG();
+
+		for (var number : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page ${number}");
+		}
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		AssertLocation.assertPartialLocation(value1 = "en/group/guest");
+
+		PagesAdmin.movePageItemUp(
+			pageName = "Test Page 2",
+			pageNameTo = "Test Page 1");
+
+		PagesAdmin.viewPagesOrder(
+			depth = 1,
+			pageNameList = "Home,Search,Test Page 2,Test Page 1");
+
+		Refresh();
+
+		PagesAdmin.viewPagesOrder(
+			depth = 1,
+			pageNameList = "Home,Search,Test Page 2,Test Page 1");
+	}
+
 	@priority = 4
 	test RestrictAvailableLocales {
 		property custom.properties = "locales=ca_ES,zh_CN,nl_NL,en_AU,en_GB,en_US,fi_FI,fr_FR,de_DE,it_IT,iw_IL,hu_HU,ja_JP,pt_BR,es_ES";

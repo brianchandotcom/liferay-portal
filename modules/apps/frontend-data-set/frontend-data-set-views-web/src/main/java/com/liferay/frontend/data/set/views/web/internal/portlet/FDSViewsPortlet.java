@@ -23,7 +23,9 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -197,6 +199,13 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "sorts-order"), "fdsSortsOrder",
 						false)));
+
+		ObjectField labelObjectField = _objectFieldLocalService.getObjectField(
+			fdsViewObjectDefinition.getObjectDefinitionId(), "label");
+
+		_objectDefinitionLocalService.updateTitleObjectFieldId(
+			fdsViewObjectDefinition.getObjectDefinitionId(),
+			labelObjectField.getObjectFieldId());
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId());
@@ -385,6 +394,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

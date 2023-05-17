@@ -866,7 +866,7 @@ public class JournalDisplayContext {
 		return _parentFolderId;
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL(String tab) {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		String navigation = ParamUtil.getString(
@@ -928,10 +928,8 @@ public class JournalDisplayContext {
 			portletURL.setParameter("orderByType", orderByType);
 		}
 
-		String tabs1 = getTabs1();
-
-		if (Validator.isNotNull(tabs1)) {
-			portletURL.setParameter("tabs1", tabs1);
+		if (Validator.isNotNull(tab)) {
+			portletURL.setParameter("tabs1", tab);
 		}
 
 		return portletURL;

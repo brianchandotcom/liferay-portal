@@ -130,6 +130,7 @@ type Category = {
 };
 
 type Channel = {
+  channelId: number;
   currencyCode: string;
   externalReferenceCode: string;
   id: number;
@@ -277,6 +278,7 @@ interface Product {
   externalReferenceCode: string;
   id: number;
   images: ProductImages[];
+  productChannels: Channel[];
   productId: number;
   productStatus: number;
   productType: string;

@@ -50,7 +50,7 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 
 			<%
 			int usersCount = UserLocalServiceUtil.searchCount(
-				company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY,
+				company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
 				LinkedHashMapBuilder.<String, Object>put(
 					"usersUserGroups", Long.valueOf(userGroup.getUserGroupId())
 				).build());

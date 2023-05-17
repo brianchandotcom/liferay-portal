@@ -43,9 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	property = "model.class.name=com.liferay.account.model.AccountRole",
-	service = {
-		AccountRoleModelResourcePermission.class, ModelResourcePermission.class
-	}
+	service = ModelResourcePermission.class
 )
 public class AccountRoleModelResourcePermission
 	implements ModelResourcePermission<AccountRole> {

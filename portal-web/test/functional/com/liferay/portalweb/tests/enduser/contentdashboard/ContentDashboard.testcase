@@ -5697,8 +5697,8 @@ definition {
 			Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
 
 			AssertTextEquals(
-				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "WC Title 1");
+				locator1 = "ContentDashboard#LAST_ELEMENT_LISTED",
+				value1 = "WC Title 5");
 		}
 	}
 
@@ -5722,7 +5722,7 @@ definition {
 			ContentDashboard.orderByTitle(filterOption = "Title");
 
 			AssertTextEquals(
-				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				locator1 = "ContentDashboard#LAST_ELEMENT_LISTED",
 				value1 = "WC Title 5");
 		}
 
@@ -5731,7 +5731,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-				value1 = "WC Title 1");
+				value1 = "WC Title 5");
 		}
 	}
 

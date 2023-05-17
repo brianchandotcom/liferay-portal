@@ -65,23 +65,28 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		ResourceURLsBag resourceURLsBag = _resourceURLsBag;
+
 		if (themeDisplay.isThemeJsFastLoad()) {
 			if (themeDisplay.isThemeJsBarebone()) {
 				_renderBundleComboURLs(
-					httpServletRequest, httpServletResponse, _jsResourceURLs);
+					httpServletRequest, httpServletResponse,
+					resourceURLsBag._jsResourceURLs);
 			}
 			else {
 				_renderBundleComboURLs(
 					httpServletRequest, httpServletResponse,
-					_allJsResourceURLs);
+					resourceURLsBag._allJsResourceURLs);
 			}
 		}
 		else {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleURLs(httpServletResponse, _jsResourceURLs);
+				_renderBundleURLs(
+					httpServletResponse, resourceURLsBag._jsResourceURLs);
 			}
 			else {
-				_renderBundleURLs(httpServletResponse, _allJsResourceURLs);
+				_renderBundleURLs(
+					httpServletResponse, resourceURLsBag._allJsResourceURLs);
 			}
 		}
 	}
@@ -144,14 +149,17 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			return;
 		}
 
-		_allJsResourceURLs.clear();
+		_resourceURLsBag = new ResourceURLsBag();
 
 		_addPortalBundles(
-			_allJsResourceURLs, PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
+			_resourceURLsBag._allJsResourceURLs,
+			PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
 
-		_jsResourceURLs.clear();
+		_resourceURLsBag._jsResourceURLs.clear();
 
-		_addPortalBundles(_jsResourceURLs, PropsKeys.JAVASCRIPT_BAREBONE_FILES);
+		_addPortalBundles(
+			_resourceURLsBag._jsResourceURLs,
+			PropsKeys.JAVASCRIPT_BAREBONE_FILES);
 
 		synchronized (_topHeadResourcesServiceReferences) {
 			for (ServiceReference<TopHeadResources>
@@ -177,15 +185,16 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 						String url = urlPrefix + jsResourcePath;
 
-						_allJsResourceURLs.add(url);
-						_jsResourceURLs.add(url);
+						_resourceURLsBag._allJsResourceURLs.add(url);
+						_resourceURLsBag._jsResourceURLs.add(url);
 					}
 
 					for (String jsResourcePath :
 							topHeadResources.
 								getAuthenticatedJsResourcePaths()) {
 
-						_allJsResourceURLs.add(urlPrefix + jsResourcePath);
+						_resourceURLsBag._allJsResourceURLs.add(
+							urlPrefix + jsResourcePath);
 					}
 				}
 				finally {
@@ -259,14 +268,20 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private volatile List<String> _allJsResourceURLs = new ArrayList<>();
 	private BundleContext _bundleContext;
-	private volatile List<String> _jsResourceURLs = new ArrayList<>();
 
 	@Reference
 	private Portal _portal;
 
+	private volatile ResourceURLsBag _resourceURLsBag;
 	private final Collection<ServiceReference<TopHeadResources>>
 		_topHeadResourcesServiceReferences = new TreeSet<>();
+
+	private static class ResourceURLsBag {
+
+		private final List<String> _allJsResourceURLs = new ArrayList<>();
+		private final List<String> _jsResourceURLs = new ArrayList<>();
+
+	}
 
 }

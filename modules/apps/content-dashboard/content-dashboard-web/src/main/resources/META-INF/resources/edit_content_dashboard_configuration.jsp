@@ -20,10 +20,6 @@
 ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurationDisplayContext = (ContentDashboardAdminConfigurationDisplayContext)request.getAttribute(ContentDashboardAdminConfigurationDisplayContext.class.getName());
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/vocabularies_selection.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <liferay-frontend:edit-form
 	action="<%= contentDashboardAdminConfigurationDisplayContext.getActionURL() %>"
 	method="post"

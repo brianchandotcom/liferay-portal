@@ -2,6 +2,8 @@
 @import 'variables';
 
 @import './download-spreadsheet-button';
+@import './tree';
+@import './vocabularies_selection';
 
 html#{$cadmin-selector} {
 	.cadmin {

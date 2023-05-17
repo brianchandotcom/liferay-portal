@@ -95,6 +95,10 @@ export function showAppImage(url?: string) {
 	return url?.includes('/default') || !url ? appPlaceholder : url;
 }
 
+export function removeProtocolURL(url: string) {
+	return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '').split('/')[0];
+}
+
 async function submitSpecification(
 	appId: string,
 	productId: number,

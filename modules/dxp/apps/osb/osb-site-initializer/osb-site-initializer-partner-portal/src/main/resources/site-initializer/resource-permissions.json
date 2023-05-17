@@ -874,41 +874,12 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Marketing Director (CMD)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
 	{
@@ -927,8 +898,16 @@
 		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
-			"DELETE",
-			"UPDATE"
+			{
+				"actionIds": [
+					"ADD_OBJECT_ENTRY",
+					"UPDATE"
+				],
+				"primKey": "0",
+				"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
+				"roleName": "Channel Operations Manager (COM)",
+				"scope": 1
+			},			"UPDATE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -958,15 +937,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Marketing Manager (CMM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
 			"UPDATE"
@@ -985,17 +955,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Finance Manager (CFM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Administrator",
 		"scope": 1
 	},
 	{
@@ -1244,33 +1203,6 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Channel Marketing Manager (CMM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Channel Marketing Director (CMD)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
 	{
@@ -2358,14 +2290,6 @@
 			"VIEW"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Channel Account Manager (CAM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Channel Enablement Manager (CEM)",
 		"scope": 1
 	},
@@ -2395,14 +2319,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
 			"UPDATE"
@@ -2413,28 +2329,12 @@
 	},
 	{
 		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Partner Marketing User (PMU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"VIEW",
 			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Partner Sales User (PSU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
-		"roleName": "Partner Technical User (PTU)",
 		"scope": 1
 	}
 ]

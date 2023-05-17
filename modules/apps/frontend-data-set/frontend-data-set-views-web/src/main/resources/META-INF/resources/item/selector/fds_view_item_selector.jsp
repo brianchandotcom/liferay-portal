@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.frontend.data.set.views.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Marko Cikos
- */
-public class FDSViewsWebKeys {
-
-	public static final String FDS_VIEW_ITEM_SELECTOR_DISPLAY_CONTEXT =
-		"FDS_VIEW_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-	public static final String FDS_VIEWS_DISPLAY_CONTEXT =
-		"FDS_VIEWS_DISPLAY_CONTEXT";
-
-}
+<react:component
+	module="item/selector/FDSViewItemSelector"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"className", fdsViewItemSelectorDisplayContext.getClassName()
+		).put(
+			"classNameId", fdsViewItemSelectorDisplayContext.getClassNameId()
+		).build()
+	%>'
+/>

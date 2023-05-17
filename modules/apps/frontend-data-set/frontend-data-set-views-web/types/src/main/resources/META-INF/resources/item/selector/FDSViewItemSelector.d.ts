@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.frontend.data.set.views.web.internal.constants;
+/// <reference types="react" />
 
-/**
- * @author Marko Cikos
- */
-public class FDSViewsWebKeys {
-
-	public static final String FDS_VIEW_ITEM_SELECTOR_DISPLAY_CONTEXT =
-		"FDS_VIEW_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-	public static final String FDS_VIEWS_DISPLAY_CONTEXT =
-		"FDS_VIEWS_DISPLAY_CONTEXT";
-
-}
+import './FDSViewItemSelector.scss';
+declare const FDSViewItemSelector: ({
+	className,
+	classNameId,
+}: {
+	className: String;
+	classNameId: String;
+}) => JSX.Element;
+export default FDSViewItemSelector;

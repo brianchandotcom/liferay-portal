@@ -33,7 +33,7 @@ const Item: React.FC<CohortHeatMapType> = ({
 
 	return (
 		<td
-			className='cohort-item-root table-cell-expand table-column-text-center'
+			className='cohort-item-root table-column-text-center'
 			onBlur={handleMouseOver}
 			onFocus={handleMouseOut}
 			onMouseOut={handleMouseOut}

@@ -32,10 +32,7 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 				</th>
 
 				{aggregatedCounts.map(({retention}, i) => (
-					<th
-						className='table-cell-expand table-column-text-center'
-						key={i}
-					>
+					<th className='table-column-text-center' key={i}>
 						{`${retention.toFixed(2)}%`}
 					</th>
 				))}
@@ -50,13 +47,13 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 			<tr>
 				<th />
 
-				<th className='visitors-header table-cell-expand table-column-text-end'>
+				<th className='visitors-header table-column-text-end'>
 					{Liferay.Language.get('visitors')}
 				</th>
 
 				{periodLabels.map(periodLabel => (
 					<th
-						className='period table-cell-expand table-column-text-center'
+						className='period table-column-text-center'
 						key={periodLabel}
 					>
 						{periodLabel}

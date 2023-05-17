@@ -120,6 +120,11 @@ public class SegmentsManagementToolbarDisplayContext
 			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 	}
 
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"modified-date", "name"};
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

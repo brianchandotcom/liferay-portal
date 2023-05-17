@@ -16,9 +16,7 @@ package com.liferay.commerce.pricing.web.internal.portlet;
 
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,18 +25,22 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.discount.model.CommerceDiscount",
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = PortletProvider.class
 )
-public class CommerceDiscountPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class CommerceDiscountPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return CommercePricingPortletKeys.COMMERCE_DISCOUNT;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {
+		Action.EDIT, Action.MANAGE, Action.VIEW
+	};
 
 }

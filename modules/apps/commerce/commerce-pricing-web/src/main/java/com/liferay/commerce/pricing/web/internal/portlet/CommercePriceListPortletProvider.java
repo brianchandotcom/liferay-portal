@@ -16,7 +16,7 @@ package com.liferay.commerce.pricing.web.internal.portlet;
 
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,14 +25,20 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.price.list.model.CommercePriceList",
-	service = EditPortletProvider.class
+	service = PortletProvider.class
 )
-public class CommercePriceListPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class CommercePriceListPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
 		return CommercePricingPortletKeys.COMMERCE_PRICE_LIST;
 	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.EDIT};
 
 }

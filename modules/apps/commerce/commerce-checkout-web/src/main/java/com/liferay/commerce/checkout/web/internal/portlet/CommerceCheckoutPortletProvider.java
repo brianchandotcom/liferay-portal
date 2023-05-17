@@ -18,10 +18,8 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,14 +37,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=" + CommercePortletKeys.COMMERCE_CHECKOUT,
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = PortletProvider.class
 )
-public class CommerceCheckoutPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class CommerceCheckoutPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -74,7 +67,16 @@ public class CommerceCheckoutPortletProvider
 			PortletRequest.RENDER_PHASE);
 	}
 
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
 	@Reference
 	private Portal _portal;
+
+	private final Action[] _supportedActions = {
+		Action.EDIT, Action.MANAGE, Action.VIEW
+	};
 
 }

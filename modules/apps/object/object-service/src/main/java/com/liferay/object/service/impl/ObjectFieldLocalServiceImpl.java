@@ -566,8 +566,8 @@ public class ObjectFieldLocalServiceImpl
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
 		if (objectField.isLocalized()) {
-			return _dynamicObjectDefinitionLocalizationTableFactory.create(
-				objectDefinition);
+			return DynamicObjectDefinitionLocalizationTableFactory.create(
+				objectDefinition, this);
 		}
 
 		if (Objects.equals(
@@ -1265,10 +1265,6 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DynamicObjectDefinitionLocalizationTableFactory
-		_dynamicObjectDefinitionLocalizationTableFactory;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

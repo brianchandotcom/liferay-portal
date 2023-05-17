@@ -2737,6 +2737,241 @@ definition {
 		Blueprints.viewEntriesSpecificOrder(entryList = "Test Blueprint 2,Test Blueprint 3,Test Blueprint 1");
 	}
 
+	@description = "This is a use case for LPS-172131"
+	test SortByCustomObjectFieldsViaBlueprintsConfig {
+		task ("Create a site scoped object and add the following fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				panelCategoryKey = "site_administration.content",
+				pluralLabelName = "Custom Objects",
+				scope = "site");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Title",
+				fieldName = "title",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date",
+				fieldName = "date",
+				fieldType = "Date",
+				indexedAsKeyword = "false",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Integer",
+				fieldLabelName = "Site ID",
+				fieldName = "siteID",
+				fieldType = "Integer",
+				indexedAsKeyword = "false",
+				isRequired = "false",
+				objectName = "CustomObject");
+
+			JSONObject.updateObject(
+				configKey = "titleObjectFieldName",
+				configValue = "title",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("Create three object entries") {
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "title/Apple Fruit,siteID/3,date/2023-04-02",
+				objectName = "CustomObject");
+
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "title/Banana Fruit,siteID/2,date/2023-04-01",
+				objectName = "CustomObject");
+
+			JSONObject.addObjectEntryViaJSONAPI(
+				fieldList = "title/Coconut Fruit,siteID/1,date/2023-04-03",
+				objectName = "CustomObject");
+		}
+
+		task ("Create a Blueprint") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.createBlueprint(title = "Test Blueprint");
+		}
+
+		task ("Configure the blueprint Sort Configuration to sort by the custom object's 'title' field in ascending order") {
+			Navigator.gotoNavTab(navTab = "Configuration");
+
+			var customJson = '''
+	{
+		"sorts": [
+			{
+				"nestedFieldArray.value_keyword": {
+					"nested": {
+						"nested_path": "nestedFieldArray",
+						"nested_filter": {
+							"term": {
+								"nestedFieldArray.fieldName": "title"
+							}
+						}
+					},
+					"order": "asc"
+				}
+			}
+		]
+	}
+		''';
+
+			Type.typeCodeMirrorEditorNoError(
+				key_configurationField = "Sort Configuration",
+				locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+				value1 = ${customJson});
+		}
+
+		task ("Assert that the blueprint preview results are sorted based on the Sort Configuration above") {
+			var ranking = 1;
+
+			Blueprints.searchBlueprintsPreview(searchTerm = "fruit");
+
+			for (var item : list "Apple Fruit,Banana Fruit,Coconut Fruit") {
+				AssertTextEquals.assertPartialText(
+					key_resultRanking = ${ranking},
+					locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+					value1 = ${item});
+
+				var ranking = ${ranking} + 1;
+			}
+		}
+
+		task ("Update the blueprint Sort Configuration to sort by the custom object's 'siteID' field in ascending order") {
+			var customJson = '''
+{
+	"sorts": [
+		{
+			"nestedFieldArray.value_integer": {
+				"nested": {
+					"nested_path": "nestedFieldArray",
+					"nested_filter": {
+						"term": {
+							"nestedFieldArray.fieldName": "siteID"
+						}
+					}
+				},
+				"order": "asc"
+			}
+		}
+	]
+}
+		''';
+
+			Type.typeCodeMirrorEditorNoError(
+				key_configurationField = "Sort Configuration",
+				locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+				value1 = ${customJson});
+		}
+
+		task ("Assert that the blueprint preview results are sorted based on the Sort Configuration above") {
+			Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_REFRESH_SEARCH_BUTTON");
+
+			var ranking = 1;
+
+			for (var item : list "Coconut Fruit,Banana Fruit,Apple Fruit") {
+				AssertTextEquals.assertPartialText(
+					key_resultRanking = ${ranking},
+					locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+					value1 = ${item});
+
+				var ranking = ${ranking} + 1;
+			}
+		}
+
+		task ("Update the blueprint Sort Configuration to sort by the custom object's 'date' field in ascending order") {
+			var customJson = '''
+{
+	"sorts": [
+		{
+			"nestedFieldArray.value_date": {
+				"nested": {
+					"nested_path": "nestedFieldArray",
+					"nested_filter": {
+						"term": {
+							"nestedFieldArray.fieldName": "date"
+						}
+					}
+				},
+				"order": "asc"
+			}
+		}
+	]
+}
+		''';
+
+			Type.typeCodeMirrorEditorNoError(
+				key_configurationField = "Sort Configuration",
+				locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+				value1 = ${customJson});
+		}
+
+		task ("Assert that the blueprint preview results are sorted based on the Sort Configuration above") {
+			Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_REFRESH_SEARCH_BUTTON");
+
+			var ranking = 1;
+
+			for (var item : list "Banana Fruit,Apple Fruit,Coconut Fruit") {
+				AssertTextEquals.assertPartialText(
+					key_resultRanking = ${ranking},
+					locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+					value1 = ${item});
+
+				var ranking = ${ranking} + 1;
+			}
+		}
+
+		task ("Update the blueprint Sort Configuration to sort by the custom object's 'date' field in descending order") {
+			var customJson = '''
+{
+	"sorts": [
+		{
+			"nestedFieldArray.value_date": {
+				"nested": {
+					"nested_path": "nestedFieldArray",
+					"nested_filter": {
+						"term": {
+							"nestedFieldArray.fieldName": "date"
+						}
+					}
+				},
+				"order": "desc"
+			}
+		}
+	]
+}
+		''';
+
+			Type.typeCodeMirrorEditorNoError(
+				key_configurationField = "Sort Configuration",
+				locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+				value1 = ${customJson});
+		}
+
+		task ("Assert that the blueprint preview results are sorted based on the Sort Configuration above") {
+			Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_REFRESH_SEARCH_BUTTON");
+
+			var ranking = 1;
+
+			for (var item : list "Coconut Fruit,Apple Fruit,Banana Fruit") {
+				AssertTextEquals.assertPartialText(
+					key_resultRanking = ${ranking},
+					locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
+					value1 = ${item});
+
+				var ranking = ${ranking} + 1;
+			}
+		}
+	}
+
 	test SortElementsAdminTable {
 		Blueprints.openBlueprintsAdmin();
 

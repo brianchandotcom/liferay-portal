@@ -4,6 +4,9 @@
 	<source-check>
 		<suppress checks="CDNCheck" files="org-gradle/org-gradle-resources-http/src/main/java/org/gradle/internal/resource/transport/http/LiferayHttpResourceAccessor\.java" />
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
+		<suppress checks="GradleDependencyConfigurationCheck" files="com-h3xstream-findsecbugs/build\.gradle" />
+		<suppress checks="GradleDependencyConfigurationCheck" files="org-elasticsearch-painless/build\.gradle" />
+		<suppress checks="GradleDependencyConfigurationCheck" files="org-elasticsearch7-painless/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="com-h3xstream-findsecbugs/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="com-webex-schemas/build\.gradle" />
 		<suppress checks="LibraryVulnerabilitiesCheck" files="org-apache-ivy/build\.gradle" />

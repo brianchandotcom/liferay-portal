@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "org.codelibs.elasticsearch.module", name: "lang-painless", transitive: false, version: "7.9.0"
+	compileOnly group: "org.codelibs.elasticsearch.module", name: "lang-painless", version: "7.9.0"
 }
 
 patch {

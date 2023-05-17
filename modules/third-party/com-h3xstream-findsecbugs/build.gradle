@@ -5,9 +5,9 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "com.google.code.findbugs", name: "findbugs", transitive: false, version: "3.0.1"
-	compileOnly group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", transitive: false, version: "1.10.1"
-	compileOnly group: "org.apache.bcel", name: "bcel", transitive: false, version: "6.3.1"
+	compileOnly group: "com.google.code.findbugs", name: "findbugs", version: "3.0.1"
+	compileOnly group: "com.h3xstream.findsecbugs", name: "findsecbugs-plugin", version: "1.10.1"
+	compileOnly group: "org.apache.bcel", name: "bcel", version: "6.3.1"
 }
 
 patch {

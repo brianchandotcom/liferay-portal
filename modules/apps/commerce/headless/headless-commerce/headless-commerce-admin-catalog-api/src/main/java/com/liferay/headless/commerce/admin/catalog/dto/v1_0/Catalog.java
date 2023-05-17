@@ -61,6 +61,35 @@ public class Catalog implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Catalog.class, json);
 	}
 
+	@DecimalMin("0")
+	@Schema(example = "30130")
+	public Long getAccountEntryId() {
+		return accountEntryId;
+	}
+
+	public void setAccountEntryId(Long accountEntryId) {
+		this.accountEntryId = accountEntryId;
+	}
+
+	@JsonIgnore
+	public void setAccountEntryId(
+		UnsafeSupplier<Long, Exception> accountEntryIdUnsafeSupplier) {
+
+		try {
+			accountEntryId = accountEntryIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long accountEntryId;
+
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
@@ -283,6 +312,16 @@ public class Catalog implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (accountEntryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountEntryId\": ");
+
+			sb.append(accountEntryId);
+		}
 
 		if (actions != null) {
 			if (sb.length() > 1) {

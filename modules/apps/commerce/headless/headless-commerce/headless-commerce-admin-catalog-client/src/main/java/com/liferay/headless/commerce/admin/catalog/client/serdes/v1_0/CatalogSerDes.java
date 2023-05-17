@@ -53,6 +53,16 @@ public class CatalogSerDes {
 
 		sb.append("{");
 
+		if (catalog.getAccountEntryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountEntryId\": ");
+
+			sb.append(catalog.getAccountEntryId());
+		}
+
 		if (catalog.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -157,6 +167,14 @@ public class CatalogSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (catalog.getAccountEntryId() == null) {
+			map.put("accountEntryId", null);
+		}
+		else {
+			map.put(
+				"accountEntryId", String.valueOf(catalog.getAccountEntryId()));
+		}
+
 		if (catalog.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -230,7 +248,13 @@ public class CatalogSerDes {
 			Catalog catalog, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "accountEntryId")) {
+				if (jsonParserFieldValue != null) {
+					catalog.setAccountEntryId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					catalog.setActions(
 						(Map)CatalogSerDes.toMap((String)jsonParserFieldValue));

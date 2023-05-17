@@ -16,6 +16,7 @@ package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.util.ListUtil;
+import com.liferay.poshi.core.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,6 +121,12 @@ public class CommandPoshiElement extends PoshiElement {
 
 		if (blockNameMatcher.find()) {
 			addAttribute("name", blockNameMatcher.group(3));
+
+			String arguments = blockNameMatcher.group(4);
+
+			if (Validator.isNotNull(arguments)) {
+				addAttribute("arguments", getParentheticalContent(arguments));
+			}
 		}
 
 		String blockContent = getBlockContent(poshiScript);
@@ -145,7 +152,7 @@ public class CommandPoshiElement extends PoshiElement {
 
 			String name = poshiElementAttribute.getName();
 
-			if (name.equals("name")) {
+			if (name.equals("arguments") || name.equals("name")) {
 				continue;
 			}
 
@@ -254,7 +261,7 @@ public class CommandPoshiElement extends PoshiElement {
 
 	private static final Pattern _blockNamePattern = Pattern.compile(
 		"^" + BLOCK_NAME_ANNOTATION_REGEX + _POSHI_SCRIPT_KEYWORD_REGEX +
-			"[\\s]*([\\w]*)",
+			"[\\s]*([\\w]*)[\\s]*(\\(.*\\)|)",
 		Pattern.DOTALL);
 
 }

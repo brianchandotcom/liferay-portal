@@ -383,16 +383,22 @@ public class DBTest {
 		boolean supportsDuplicatedIndexName = ReflectionTestUtil.invoke(
 			_db, "isSupportsDuplicatedIndexName", new Class<?>[0]);
 
+		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
+		Assert.assertFalse(_dbInspector.hasRows(_TABLE_NAME_2));
+		Assert.assertFalse(_dbInspector.isNullable(_TABLE_NAME_2, "id"));
+		Assert.assertFalse(
+			_dbInspector.isNullable(_TABLE_NAME_2, "notNilColumn"));
+
 		String indexNamePrefix = StringPool.BLANK;
 
 		if (!supportsDuplicatedIndexName) {
 			indexNamePrefix = "TMP_";
 		}
 
-		Assert.assertTrue(_dbInspector.hasTable(_TABLE_NAME_2));
 		Assert.assertTrue(
 			_dbInspector.hasIndex(
 				_TABLE_NAME_2, indexNamePrefix + _INDEX_NAME));
+
 		Assert.assertArrayEquals(
 			new String[] {_dbInspector.normalizeName("id")},
 			_db.getPrimaryKeyColumnNames(_connection, _TABLE_NAME_2));

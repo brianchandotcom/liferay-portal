@@ -23,6 +23,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
@@ -409,7 +410,10 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			inputTemplateNode.addAttribute("options", options);
 		}
-		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
+		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType ||
+				 infoField.getInfoFieldType() instanceof
+					 LongTextInfoFieldType) {
+
 			inputTemplateNode.addAttribute(
 				"maxLength",
 				infoField.getAttribute(TextInfoFieldType.MAX_LENGTH));

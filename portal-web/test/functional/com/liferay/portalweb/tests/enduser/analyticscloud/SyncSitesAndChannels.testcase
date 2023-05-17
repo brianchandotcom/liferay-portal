@@ -663,7 +663,6 @@ definition {
 		}
 
 		var sitesPageListUp = "${assignedPropertyName},Minium Demo,Site Name";
-		
 		var sitesPageListDown = "Site Name,Minium Demo,${assignedPropertyName}";
 
 		task ("Toggle Commerce On > Click on the Assign button") {

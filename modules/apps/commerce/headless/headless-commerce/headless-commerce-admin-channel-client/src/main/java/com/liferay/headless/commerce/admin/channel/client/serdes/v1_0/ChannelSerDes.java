@@ -53,6 +53,16 @@ public class ChannelSerDes {
 
 		sb.append("{");
 
+		if (channel.getAccountId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountId\": ");
+
+			sb.append(channel.getAccountId());
+		}
+
 		if (channel.getCurrencyCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -147,6 +157,13 @@ public class ChannelSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (channel.getAccountId() == null) {
+			map.put("accountId", null);
+		}
+		else {
+			map.put("accountId", String.valueOf(channel.getAccountId()));
+		}
+
 		if (channel.getCurrencyCode() == null) {
 			map.put("currencyCode", null);
 		}
@@ -211,7 +228,13 @@ public class ChannelSerDes {
 			Channel channel, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "currencyCode")) {
+			if (Objects.equals(jsonParserFieldName, "accountId")) {
+				if (jsonParserFieldValue != null) {
+					channel.setAccountId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "currencyCode")) {
 				if (jsonParserFieldValue != null) {
 					channel.setCurrencyCode((String)jsonParserFieldValue);
 				}

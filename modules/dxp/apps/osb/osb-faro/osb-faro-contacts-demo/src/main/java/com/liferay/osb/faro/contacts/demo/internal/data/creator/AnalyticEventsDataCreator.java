@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -67,7 +68,7 @@ public class AnalyticEventsDataCreator extends DataCreator {
 				"X-Forwarded-For", internet.publicIpV4Address()
 			).build());
 
-		options.setLocation(_OSB_ASAH_PUBLISHER_URL);
+		options.setLocation(FaroPropsValues.OSB_ASAH_PUBLISHER_URL);
 		options.setPost(true);
 
 		for (Map<String, Object> object : objects) {
@@ -246,9 +247,6 @@ public class AnalyticEventsDataCreator extends DataCreator {
 		"Beryl Promotions Newsletter", "Beryl Urban Farming Newsletter",
 		"Check out", "Loyalty Program"
 	};
-
-	private static final String _OSB_ASAH_PUBLISHER_URL = System.getenv(
-		"OSB_ASAH_PUBLISHER_URL");
 
 	private static final String[] _SEARCH_TERMS = {
 		"FF-2100 Owners Manual", "Hydroponics", "MX-350 Rebate",

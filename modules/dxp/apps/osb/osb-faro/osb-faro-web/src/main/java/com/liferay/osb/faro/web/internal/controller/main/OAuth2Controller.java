@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
@@ -259,7 +260,8 @@ public class OAuth2Controller extends BaseFaroController {
 		Client client = ClientBuilder.newClient();
 
 		WebTarget webTarget = client.target(
-			String.format(_O_AUTH2_ENDPOINT_TEMPLATE, _FARO_URL));
+			String.format(
+				_O_AUTH2_ENDPOINT_TEMPLATE, FaroPropsValues.FARO_URL));
 
 		Invocation.Builder builder = webTarget.request(
 			MediaType.APPLICATION_FORM_URLENCODED);
@@ -302,8 +304,6 @@ public class OAuth2Controller extends BaseFaroController {
 
 		expandoBridge.setAttribute("groupId", groupId, false);
 	}
-
-	private static final String _FARO_URL = System.getenv("FARO_URL");
 
 	private static final String _O_AUTH2_ENDPOINT_TEMPLATE =
 		"%s/o/oauth2/token";

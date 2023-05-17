@@ -17,6 +17,7 @@ package com.liferay.osb.faro.contacts.demo.internal.data.creator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -59,7 +60,8 @@ public class LiferayAssociationsDataCreator extends DataCreator {
 				"OSB-Asah-Data-Source-ID", dataSourceId
 			).build());
 
-		options.setLocation(_OSB_ASAH_PUBLISHER_URL + "/dxp-entities");
+		options.setLocation(
+			FaroPropsValues.OSB_ASAH_PUBLISHER_URL + "/dxp-entities");
 		options.setPost(true);
 
 		try {
@@ -111,9 +113,6 @@ public class LiferayAssociationsDataCreator extends DataCreator {
 	}
 
 	protected String dataSourceId;
-
-	private static final String _OSB_ASAH_PUBLISHER_URL = System.getenv(
-		"OSB_ASAH_PUBLISHER_URL");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayAssociationsDataCreator.class);

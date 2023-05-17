@@ -66,6 +66,7 @@ import com.liferay.osb.faro.engine.client.util.FilterBuilder;
 import com.liferay.osb.faro.engine.client.util.FilterUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -389,7 +390,10 @@ public class ContactsEngineClientImpl
 				String.valueOf(UUID.randomUUID()), CharPool.DASH,
 				StringPool.BLANK);
 
-			projectId = GetterUtil.get(_FARO_PROJECT_ID_PREFIX, "asah") + uuid;
+			String osbFaroProjectIdPrefix = GetterUtil.get(
+				FaroPropsValues.FARO_PROJECT_ID_PREFIX, "asah");
+
+			projectId = osbFaroProjectIdPrefix + uuid;
 		}
 
 		faroProject.setWeDeployKey(projectId);
@@ -2717,15 +2721,10 @@ public class ContactsEngineClientImpl
 	}
 
 	protected String getWorkspaceURL(long groupId) {
-		return _FARO_URL + "/workspace/" + groupId;
+		return FaroPropsValues.FARO_URL + "/workspace/" + groupId;
 	}
 
-	private static final String _FARO_PROJECT_ID_PREFIX = System.getenv(
-		"FARO_PROJECT_ID_PREFIX");
-
 	private static final String _FARO_TEMP_FIELD = "faro_temp_field";
-
-	private static final String _FARO_URL = System.getenv("FARO_URL");
 
 	private static final int _PAYLOAD_MAX_BYTE_SIZE = 200000;
 

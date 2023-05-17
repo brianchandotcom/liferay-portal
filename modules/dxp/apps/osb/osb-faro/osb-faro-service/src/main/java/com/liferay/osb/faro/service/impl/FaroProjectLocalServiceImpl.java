@@ -26,6 +26,7 @@ import com.liferay.osb.faro.service.FaroProjectEmailDomainLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.service.base.FaroProjectLocalServiceBaseImpl;
 import com.liferay.osb.faro.util.EmailUtil;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.CharPool;
@@ -271,7 +272,8 @@ public class FaroProjectLocalServiceImpl
 				_language.format(
 					resourceBundle, "email-sign-in-or-create-an-account",
 					new String[] {
-						"<a class=\"body-link\" href=\"" + _FARO_URL + "\">",
+						"<a class=\"body-link\" href=\"" +
+							FaroPropsValues.FARO_URL + "\">",
 						"</a>",
 						"<b class=\"link-override\">" +
 							faroUser.getEmailAddress() + "</strong>"
@@ -334,8 +336,6 @@ public class FaroProjectLocalServiceImpl
 
 		return faroProjectPersistence.update(faroProject);
 	}
-
-	private static final String _FARO_URL = System.getenv("FARO_URL");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FaroProjectLocalServiceImpl.class);

@@ -14,7 +14,7 @@
 
 package com.liferay.osb.faro.web.internal.antivirus;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.osb.faro.util.FaroPropsValues;
 
 import fi.solita.clamav.ClamAVClient;
 import fi.solita.clamav.ClamAVSizeLimitException;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class ClamAVScanner {
 
 	public void scan(InputStream inputStream) {
-		if (!_OSB_FARO_ANTIVIRUS_ENABLED) {
+		if (!FaroPropsValues.OSB_FARO_ANTIVIRUS_ENABLED) {
 			return;
 		}
 
@@ -54,9 +54,11 @@ public class ClamAVScanner {
 
 	@Activate
 	protected void activate() {
-		if (_OSB_FARO_ANTIVIRUS_ENABLED) {
+		if (FaroPropsValues.OSB_FARO_ANTIVIRUS_ENABLED) {
 			_clamAVClient = new ClamAVClient(
-				_CLAMAV_HOSTNAME, _CLAMAV_PORT, _CLAMAV_TIMEOUT);
+				FaroPropsValues.OSB_FARO_CLAMAV_HOSTNAME,
+				FaroPropsValues.OSB_FARO_CLAMAV_PORT,
+				FaroPropsValues.OSB_FARO_CLAMAV_TIMEOUT);
 		}
 	}
 
@@ -66,18 +68,6 @@ public class ClamAVScanner {
 		return virusName.substring(
 			"stream: ".length(), virusName.length() - (" FOUND".length() + 1));
 	}
-
-	private static final String _CLAMAV_HOSTNAME = GetterUtil.getString(
-		System.getenv("OSB_FARO_CLAMAV_HOSTNAME"), "antivirus");
-
-	private static final int _CLAMAV_PORT = GetterUtil.getInteger(
-		System.getenv("OSB_FARO_CLAMAV_PORT"), 3310);
-
-	private static final int _CLAMAV_TIMEOUT = GetterUtil.getInteger(
-		System.getenv("OSB_FARO_CLAMAV_TIMEOUT"), 10000);
-
-	private static final boolean _OSB_FARO_ANTIVIRUS_ENABLED =
-		GetterUtil.getBoolean(System.getenv("OSB_FARO_ANTIVIRUS_ENABLED"));
 
 	private ClamAVClient _clamAVClient;
 

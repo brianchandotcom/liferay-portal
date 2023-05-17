@@ -26,48 +26,51 @@ public class EmailUtil {
 
 	public static String getEmailBannerURL(String frequency) {
 		if (Objects.equals(frequency, "daily")) {
-			return _FARO_URL.concat(
+			return FaroPropsValues.FARO_URL.concat(
 				"/o/osb-faro-web/images/email/ac-email-banner-daily.png");
 		}
 		else if (Objects.equals(frequency, "monthly")) {
-			return _FARO_URL.concat(
+			return FaroPropsValues.FARO_URL.concat(
 				"/o/osb-faro-web/images/email/ac-email-banner-monthly.png");
 		}
 
-		return _FARO_URL.concat(
+		return FaroPropsValues.FARO_URL.concat(
 			"/o/osb-faro-web/images/email/ac-email-banner-weekly.png");
 	}
 
 	public static String getLiferayLogoIconURL() {
-		return _FARO_URL.concat(
+		return FaroPropsValues.FARO_URL.concat(
 			"/o/osb-faro-web/images/email/liferay-logo.png");
 	}
 
 	public static String getLogoIconURL() {
-		return _FARO_URL.concat("/o/osb-faro-web/images/email/ac-chart.png");
+		return FaroPropsValues.FARO_URL.concat(
+			"/o/osb-faro-web/images/email/ac-chart.png");
 	}
 
 	public static String getTitleIconURL() {
-		return _FARO_URL.concat("/o/osb-faro-web/images/email/ac-title.png");
+		return FaroPropsValues.FARO_URL.concat(
+			"/o/osb-faro-web/images/email/ac-title.png");
 	}
 
 	public static String getTrendIconURL(String trend) {
 		if (Objects.equals(trend, "NEGATIVE")) {
-			return _FARO_URL.concat(
+			return FaroPropsValues.FARO_URL.concat(
 				"/o/osb-faro-web/images/email/icon-order-arrow-down.png");
 		}
 		else if (Objects.equals(trend, "POSITIVE")) {
-			return _FARO_URL.concat(
+			return FaroPropsValues.FARO_URL.concat(
 				"/o/osb-faro-web/images/email/icon-order-arrow-up.png");
 		}
 
-		return _FARO_URL.concat("/o/osb-faro-web/images/email/icon-empty.png");
+		return FaroPropsValues.FARO_URL.concat(
+			"/o/osb-faro-web/images/email/icon-empty.png");
 	}
 
 	public static String getWorkspaceURL(Group group) {
 		StringBuilder sb = new StringBuilder(4);
 
-		sb.append(_FARO_URL);
+		sb.append(FaroPropsValues.FARO_URL);
 		sb.append("/workspace");
 
 		String friendlyURL = group.getFriendlyURL();
@@ -93,7 +96,5 @@ public class EmailUtil {
 
 		return sb.toString();
 	}
-
-	private static final String _FARO_URL = System.getenv("FARO_URL");
 
 }

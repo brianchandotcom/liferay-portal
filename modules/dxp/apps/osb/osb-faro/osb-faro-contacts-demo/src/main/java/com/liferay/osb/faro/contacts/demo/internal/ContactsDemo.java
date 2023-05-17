@@ -16,6 +16,7 @@ package com.liferay.osb.faro.contacts.demo.internal;
 
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -38,8 +39,9 @@ public class ContactsDemo {
 
 	@Activate
 	protected void activate() {
-		if (Validator.isBlank(_FARO_DEMO_CREATOR_METHOD) ||
-			StringUtil.equals(_FARO_DEMO_CREATOR_METHOD, "none")) {
+		if (Validator.isBlank(FaroPropsValues.FARO_DEMO_CREATOR_METHOD) ||
+			StringUtil.equals(
+				FaroPropsValues.FARO_DEMO_CREATOR_METHOD, "none")) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skip demo data creation");
@@ -59,7 +61,8 @@ public class ContactsDemo {
 						FaroProject faroProject =
 							_faroProjectLocalService.createFaroProject(0);
 
-						faroProject.setWeDeployKey(_WE_DEPLOY_KEY);
+						faroProject.setWeDeployKey(
+							FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
 
 						break;
 					}
@@ -70,7 +73,9 @@ public class ContactsDemo {
 					}
 				}
 
-				if (StringUtil.equals(_FARO_DEMO_CREATOR_METHOD, "nanite")) {
+				if (StringUtil.equals(
+						FaroPropsValues.FARO_DEMO_CREATOR_METHOD, "nanite")) {
+
 					_naniteDemoCreatorService.createDemo();
 				}
 				else {
@@ -98,12 +103,6 @@ public class ContactsDemo {
 			_futureTask.cancel(true);
 		}
 	}
-
-	private static final String _FARO_DEMO_CREATOR_METHOD = System.getenv(
-		"FARO_DEMO_CREATOR_METHOD");
-
-	private static final String _WE_DEPLOY_KEY = System.getenv(
-		"FARO_DEFAULT_WE_DEPLOY_KEY");
 
 	private static final Log _log = LogFactoryUtil.getLog(ContactsDemo.class);
 

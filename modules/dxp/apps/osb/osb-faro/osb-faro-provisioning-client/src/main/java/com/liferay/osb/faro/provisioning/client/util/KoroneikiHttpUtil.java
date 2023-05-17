@@ -15,6 +15,7 @@
 package com.liferay.osb.faro.provisioning.client.util;
 
 import com.liferay.osb.faro.provisioning.client.constants.KoroneikiConstants;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
@@ -205,17 +206,7 @@ public class KoroneikiHttpUtil {
 		}
 	}
 
-	private static final Integer _OSB_API_PORT = Integer.valueOf(
-		System.getenv("OSB_API_PORT"));
-
-	private static final String _OSB_API_PROTOCOL = System.getenv(
-		"OSB_API_PROTOCOL");
-
-	private static final String _OSB_API_TOKEN = System.getenv("OSB_API_TOKEN");
-
 	private static final String _OSB_API_TOKEN_KEY = "API_Token";
-
-	private static final String _OSB_API_URL = System.getenv("OSB_API_URL");
 
 	private static final AccountResource _accountResource;
 	private static final ContactResource _contactResource;
@@ -227,9 +218,10 @@ public class KoroneikiHttpUtil {
 			AccountResource.builder();
 
 		_accountResource = accountResourceBuilder.endpoint(
-			_OSB_API_URL, _OSB_API_PORT, _OSB_API_PROTOCOL
+			FaroPropsValues.OSB_API_URL, FaroPropsValues.OSB_API_PORT,
+			FaroPropsValues.OSB_API_PROTOCOL
 		).header(
-			_OSB_API_TOKEN_KEY, _OSB_API_TOKEN
+			_OSB_API_TOKEN_KEY, FaroPropsValues.OSB_API_TOKEN
 		).parameter(
 			"nestedFields", "productPurchases"
 		).build();
@@ -238,27 +230,30 @@ public class KoroneikiHttpUtil {
 			ContactResource.builder();
 
 		_contactResource = contactResourceBuilder.endpoint(
-			_OSB_API_URL, _OSB_API_PORT, _OSB_API_PROTOCOL
+			FaroPropsValues.OSB_API_URL, FaroPropsValues.OSB_API_PORT,
+			FaroPropsValues.OSB_API_PROTOCOL
 		).header(
-			_OSB_API_TOKEN_KEY, _OSB_API_TOKEN
+			_OSB_API_TOKEN_KEY, FaroPropsValues.OSB_API_TOKEN
 		).build();
 
 		ContactRoleResource.Builder contactRoleResourceBuilder =
 			ContactRoleResource.builder();
 
 		_contactRoleResource = contactRoleResourceBuilder.endpoint(
-			_OSB_API_URL, _OSB_API_PORT, _OSB_API_PROTOCOL
+			FaroPropsValues.OSB_API_URL, FaroPropsValues.OSB_API_PORT,
+			FaroPropsValues.OSB_API_PROTOCOL
 		).header(
-			_OSB_API_TOKEN_KEY, _OSB_API_TOKEN
+			_OSB_API_TOKEN_KEY, FaroPropsValues.OSB_API_TOKEN
 		).build();
 
 		ProductResource.Builder productResourceBuilder =
 			ProductResource.builder();
 
 		_productResource = productResourceBuilder.endpoint(
-			_OSB_API_URL, _OSB_API_PORT, _OSB_API_PROTOCOL
+			FaroPropsValues.OSB_API_URL, FaroPropsValues.OSB_API_PORT,
+			FaroPropsValues.OSB_API_PROTOCOL
 		).header(
-			_OSB_API_TOKEN_KEY, _OSB_API_TOKEN
+			_OSB_API_TOKEN_KEY, FaroPropsValues.OSB_API_TOKEN
 		).build();
 	}
 

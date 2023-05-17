@@ -33,6 +33,7 @@ import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.engine.client.web.client.ResponseErrorHandler;
 import com.liferay.osb.faro.engine.client.web.util.UriTemplateHandler;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.util.FaroThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
@@ -345,7 +346,7 @@ public abstract class BaseEngineClient {
 			_log.error(uriSyntaxException);
 		}
 
-		return _OSB_ASAH_BACKEND_URL;
+		return FaroPropsValues.OSB_ASAH_BACKEND_URL;
 	}
 
 	protected RestTemplate getRestTemplate(FaroProject faroProject) {
@@ -673,9 +674,6 @@ public abstract class BaseEngineClient {
 			registerModule(new Jackson2HalModule());
 		}
 	};
-
-	private static final String _OSB_ASAH_BACKEND_URL = System.getenv(
-		"OSB_ASAH_BACKEND_URL");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseEngineClient.class);

@@ -20,6 +20,7 @@ import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroEmailLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.util.EmailUtil;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -74,7 +75,8 @@ public class EmailServlet extends BaseAsahServlet {
 	}
 
 	private String _getDownloadURL(String batchId, long groupId) {
-		String url = _FARO_URL + "/o/proxy/download/data-control-tasks";
+		String url =
+			FaroPropsValues.FARO_URL + "/o/proxy/download/data-control-tasks";
 
 		url = HttpComponentsUtil.addParameter(url, "projectGroupId", groupId);
 
@@ -126,8 +128,6 @@ public class EmailServlet extends BaseAsahServlet {
 
 		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));
 	}
-
-	private static final String _FARO_URL = System.getenv("FARO_URL");
 
 	@Reference
 	private FaroEmailLocalService _faroEmailLocalService;

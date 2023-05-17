@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,7 +64,8 @@ public class LiferayUsersDataCreator extends DataCreator {
 				"X-Forwarded-For", internet.publicIpV4Address()
 			).build());
 
-		options.setLocation(_OSB_ASAH_PUBLISHER_URL + "/dxp-entities");
+		options.setLocation(
+			FaroPropsValues.OSB_ASAH_PUBLISHER_URL + "/dxp-entities");
 		options.setPost(true);
 
 		try {
@@ -125,9 +127,6 @@ public class LiferayUsersDataCreator extends DataCreator {
 			"type", "com.liferay.portal.kernel.model.User"
 		).build();
 	}
-
-	private static final String _OSB_ASAH_PUBLISHER_URL = System.getenv(
-		"OSB_ASAH_PUBLISHER_URL");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayUsersDataCreator.class);

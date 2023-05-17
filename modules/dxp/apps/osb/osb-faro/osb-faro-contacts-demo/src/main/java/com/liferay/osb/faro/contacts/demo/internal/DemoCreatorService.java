@@ -25,6 +25,7 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,7 +60,7 @@ public abstract class DemoCreatorService {
 
 	public void createDemo() throws Exception {
 		faroProject = faroProjectLocalService.fetchFaroProjectByCorpProjectUuid(
-			_PROJECT_ID);
+			FaroPropsValues.FARO_PROJECT_ID);
 
 		if (faroProject == null) {
 			faroProject = createFaroProject();
@@ -116,8 +117,8 @@ public abstract class DemoCreatorService {
 	protected FaroProject createFaroProject() throws Exception {
 		Http.Options options = new Http.Options();
 
-		options.addPart("corpProjectUuid", _PROJECT_ID);
-		options.addPart("name", _PROJECT_ID);
+		options.addPart("corpProjectUuid", FaroPropsValues.FARO_PROJECT_ID);
+		options.addPart("name", FaroPropsValues.FARO_PROJECT_ID);
 		options.addPart("ownerEmailAddress", "test@liferay.com");
 		options.addPart("serverLocation", LCPProject.Cluster.US.toString());
 		options.addPart("timeZoneId", "UTC");
@@ -232,8 +233,6 @@ public abstract class DemoCreatorService {
 
 	@Reference
 	protected UserLocalService userLocalService;
-
-	private static final String _PROJECT_ID = System.getenv("FARO_PROJECT_ID");
 
 	private static final String[][] _USER_INFO = {
 		{"bryan.cheung", RoleConstants.SITE_OWNER},

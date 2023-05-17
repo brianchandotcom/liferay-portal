@@ -287,6 +287,24 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
+	@description = "This is a use case for LPS-174721 - Create Publications Form does not submit on Enter keypress."
+	@priority = 3
+	test CanCreatePublicationViaKeyboard {
+		PublicationsNavigator.openPublicationsAdmin();
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "Test Publication");
+
+		KeyPress(
+			locator1 = "Publications#PUBLICATION_NAME",
+			value1 = "\ENTER");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@description = "Filter Publications Changes."
 	@priority = 4
 	test CanFilterChangesInReview {

@@ -236,6 +236,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LAST_ELEMENT_LISTED</td>
+	<td>xpath=(//*[@data-qa-id='row'] //*[contains(@class,'table-title')] //span[@class='text-truncate'])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_CATEGORIES_SELECTED_TEXT</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'There are no categories selected')]</td>
 	<td></td>

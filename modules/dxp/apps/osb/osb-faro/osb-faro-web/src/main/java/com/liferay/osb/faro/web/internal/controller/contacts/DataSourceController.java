@@ -65,7 +65,6 @@ import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.search.FaroSearchContext;
 import com.liferay.osb.faro.web.internal.util.ContactsCSVHelper;
 import com.liferay.osb.faro.web.internal.util.FieldMappingUtil;
-import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.OAuthUtil;
 import com.liferay.osb.faro.web.internal.util.TokenManager;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -73,6 +72,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1321,12 +1321,11 @@ public class DataSourceController extends BaseFaroController {
 				url, StringPool.SLASH + dataSourceId, StringPool.BLANK);
 		}
 
-		String json = JSONUtil.writeValueAsString(
-			HashMapBuilder.<String, Object>put(
-				"token", _tokenManager.getToken(dataSourceId, faroProjectId)
-			).put(
-				"url", url
-			));
+		String json = JSONUtil.put(
+			"token", _tokenManager.getToken(dataSourceId, faroProjectId)
+		).put(
+			"url", url
+		).toString();
 
 		return Base64.encode(json.getBytes(StandardCharsets.UTF_8));
 	}

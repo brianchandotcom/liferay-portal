@@ -1145,8 +1145,23 @@ public class ObjectEntryDisplayContextImpl
 		Object value = _getValue(ddmFormField, values);
 
 		if (value == null) {
-			ddmFormFieldValue.setValue(
-				new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
+			String ddmFormFieldType = ddmFormField.getType();
+
+			if (ddmFormFieldType.equals(DDMFormFieldTypeConstants.SELECT) &&
+				!values.containsKey(ddmFormField.getName())) {
+
+				LocalizedValue ddmFormFieldPredefinedValue =
+					ddmFormField.getPredefinedValue();
+
+				ddmFormFieldValue.setValue(
+					new UnlocalizedValue(
+						ddmFormFieldPredefinedValue.getString(
+							_objectRequestHelper.getLocale())));
+			}
+			else {
+				ddmFormFieldValue.setValue(
+					new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
+			}
 		}
 		else if (value instanceof ArrayList) {
 			ddmFormFieldValue.setValue(

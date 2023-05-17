@@ -925,9 +925,10 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
+				DynamicObjectDefinitionLocalizationTableFactory.create(
 					_objectDefinitionPersistence.findByPrimaryKey(
-						objectEntry.getObjectDefinitionId()));
+						objectEntry.getObjectDefinitionId()),
+					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId());
@@ -985,9 +986,10 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
+				DynamicObjectDefinitionLocalizationTableFactory.create(
 					_objectDefinitionPersistence.findByPrimaryKey(
-						objectDefinitionId));
+						objectDefinitionId),
+					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
@@ -1064,9 +1066,10 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
+				DynamicObjectDefinitionLocalizationTableFactory.create(
 					_objectDefinitionPersistence.findByPrimaryKey(
-						objectDefinitionId));
+						objectDefinitionId),
+					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
@@ -2179,9 +2182,10 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
+				DynamicObjectDefinitionLocalizationTableFactory.create(
 					_objectDefinitionPersistence.findByPrimaryKey(
-						objectDefinitionId2));
+						objectDefinitionId2),
+					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(objectDefinitionId2);
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
@@ -2363,9 +2367,10 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
+				DynamicObjectDefinitionLocalizationTableFactory.create(
 					_objectDefinitionPersistence.findByPrimaryKey(
-						objectRelationship.getObjectDefinitionId2()));
+						objectRelationship.getObjectDefinitionId2()),
+					_objectFieldLocalService);
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
 				objectRelationship.getObjectDefinitionId2());
@@ -2958,8 +2963,8 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
-					objectDefinition);
+				DynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition, _objectFieldLocalService);
 
 		String insertIntoLocalizationTableStatement =
 			_createInsertIntoLocalizationTableStatement(
@@ -3011,8 +3016,8 @@ public class ObjectEntryLocalServiceImpl
 
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable =
-				_dynamicObjectDefinitionLocalizationTableFactory.create(
-					objectDefinition);
+				DynamicObjectDefinitionLocalizationTableFactory.create(
+					objectDefinition, _objectFieldLocalService);
 
 		if (dynamicObjectDefinitionLocalizationTable == null) {
 			return;
@@ -4279,10 +4284,6 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private Encryptor _encryptor;
-
-	@Reference
-	private DynamicObjectDefinitionLocalizationTableFactory
-		_dynamicObjectDefinitionLocalizationTableFactory;
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;

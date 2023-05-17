@@ -17,7 +17,7 @@ import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
-	addSkuExpandoValue,
+	addExpandoValue,
 	createAppSKU,
 	deleteTrialSKU,
 	getProductSKU,
@@ -283,11 +283,16 @@ export function InformLicensingTermsPage({
 								});
 							}
 
-							addSkuExpandoValue({
+							addExpandoValue({
+								attributeValues: {
+									'Version': appVersion,
+									'Version Description': appNotes,
+								},
+								className:
+									'com.liferay.commerce.product.model.CPInstance',
+								classPK: skuTrialId,
 								companyId: Number(getCompanyId()),
-								notesValue: appNotes,
-								skuId: skuTrialId,
-								versionValue: appVersion,
+								tableName: 'CUSTOM_FIELDS',
 							});
 						}
 						else if (skuTrialId) {

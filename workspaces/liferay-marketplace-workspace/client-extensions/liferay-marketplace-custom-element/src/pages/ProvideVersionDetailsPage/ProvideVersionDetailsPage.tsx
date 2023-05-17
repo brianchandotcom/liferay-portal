@@ -8,7 +8,7 @@ import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
-	addSkuExpandoValue,
+	addExpandoValue,
 	createAppSKU,
 	getOptions,
 	getProductSKU,
@@ -151,10 +151,10 @@ export function ProvideVersionDetailsPage({
 							sku === createSkuName(appProductId, appVersion)
 					);
 
-					let id;
+					let skuId;
 
 					if (versionSku) {
-						id = versionSku.id;
+						skuId = versionSku.id;
 					}
 					else {
 						const response = await createAppSKU({
@@ -172,7 +172,7 @@ export function ProvideVersionDetailsPage({
 							},
 						});
 
-						id = response.id;
+						skuId = response.id;
 
 						dispatch({
 							payload: {
@@ -182,11 +182,16 @@ export function ProvideVersionDetailsPage({
 						});
 					}
 
-					addSkuExpandoValue({
+					addExpandoValue({
+						attributeValues: {
+							'Version': appVersion,
+							'Version Description': appNotes,
+						},
+						className:
+							'com.liferay.commerce.product.model.CPInstance',
+						classPK: skuId,
 						companyId: Number(getCompanyId()),
-						notesValue: appNotes,
-						skuId: id,
-						versionValue: appVersion,
+						tableName: 'CUSTOM_FIELDS',
 					});
 
 					onClickContinue();

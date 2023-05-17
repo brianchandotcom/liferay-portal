@@ -20,7 +20,7 @@ const IndividualAttributesModal: React.FC<IIndividualAttributesModalInterface> =
 	<Modal>
 		<Modal.Header onClose={onClose} title={fieldName} />
 
-		<Modal.Body className='mt-3'>
+		<Modal.Body>
 			<h5>{Liferay.Language.get('data-sources')}</h5>
 
 			<Table

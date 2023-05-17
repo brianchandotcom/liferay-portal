@@ -90,7 +90,7 @@ public interface CommerceCatalogLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCatalog addCommerceCatalog(
-			String externalReferenceCode, String name,
+			String externalReferenceCode, long accountEntryId, String name,
 			String commerceCurrencyCode, String catalogDefaultLanguageId,
 			boolean system, ServiceContext serviceContext)
 		throws PortalException;
@@ -375,8 +375,8 @@ public interface CommerceCatalogLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCatalog updateCommerceCatalog(
-			long commerceCatalogId, String name, String commerceCurrencyCode,
-			String catalogDefaultLanguageId)
+			long commerceCatalogId, long accountEntryId, String name,
+			String commerceCurrencyCode, String catalogDefaultLanguageId)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

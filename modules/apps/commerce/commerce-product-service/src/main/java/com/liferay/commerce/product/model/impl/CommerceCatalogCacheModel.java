@@ -78,7 +78,7 @@ public class CommerceCatalogCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class CommerceCatalogCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", accountEntryId=");
+		sb.append(accountEntryId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", commerceCurrencyCode=");
@@ -159,6 +161,8 @@ public class CommerceCatalogCacheModel
 			commerceCatalogImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		commerceCatalogImpl.setAccountEntryId(accountEntryId);
+
 		if (name == null) {
 			commerceCatalogImpl.setName("");
 		}
@@ -204,6 +208,8 @@ public class CommerceCatalogCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		accountEntryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		commerceCurrencyCode = objectInput.readUTF();
 		catalogDefaultLanguageId = objectInput.readUTF();
@@ -247,6 +253,8 @@ public class CommerceCatalogCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(accountEntryId);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -281,6 +289,7 @@ public class CommerceCatalogCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long accountEntryId;
 	public String name;
 	public String commerceCurrencyCode;
 	public String catalogDefaultLanguageId;

@@ -18,7 +18,7 @@ package com.liferay.portal.upgrade.online;
  * @author Kevin Lee
  */
 @FunctionalInterface
-public interface OnlineUpgradeStep {
+public interface OnlineUpgradeProcess {
 
 	public void upgrade(String tableName) throws Exception;
 

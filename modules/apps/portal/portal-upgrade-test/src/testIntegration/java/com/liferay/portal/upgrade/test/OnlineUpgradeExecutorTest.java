@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.online.OnlineUpgradeExecutor;
-import com.liferay.portal.upgrade.online.OnlineUpgradeStepFactory;
+import com.liferay.portal.upgrade.online.OnlineUpgradeProcessFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,7 +92,7 @@ public class OnlineUpgradeExecutorTest {
 	public void testAlterColumnName() throws Exception {
 		_onlineUpgradeExecutor.upgrade(
 			_TABLE_NAME,
-			OnlineUpgradeStepFactory.alterColumnName(
+			OnlineUpgradeProcessFactory.alterColumnName(
 				"name", "title VARCHAR(128) not null"));
 
 		String tempTableName = _getTempTableName();
@@ -107,7 +107,7 @@ public class OnlineUpgradeExecutorTest {
 	public void testAlterColumnType() throws Exception {
 		_onlineUpgradeExecutor.upgrade(
 			_TABLE_NAME,
-			OnlineUpgradeStepFactory.alterColumnType(
+			OnlineUpgradeProcessFactory.alterColumnType(
 				"name", "VARCHAR(255) null"));
 
 		String tempTableName = _getTempTableName();
@@ -137,9 +137,9 @@ public class OnlineUpgradeExecutorTest {
 	public void testMultipleUpgrades() throws Exception {
 		_onlineUpgradeExecutor.upgrade(
 			_TABLE_NAME,
-			OnlineUpgradeStepFactory.alterColumnName(
+			OnlineUpgradeProcessFactory.alterColumnName(
 				"name", "title VARCHAR(128) not null"),
-			OnlineUpgradeStepFactory.alterColumnType(
+			OnlineUpgradeProcessFactory.alterColumnType(
 				"title", "VARCHAR(255) null"));
 
 		String tempTableName = _getTempTableName();

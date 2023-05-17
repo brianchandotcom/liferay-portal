@@ -762,23 +762,23 @@ public class BundleSiteInitializerTest {
 			orderTypeResource.getOrderTypeByExternalReferenceCode(
 				"TESTORDERTYPE1");
 
-		Map<String, String> orderName = orderType.getName();
-
-		String orderTypeName = orderName.get("en_US");
+		Map<String, String> orderTypeName = orderType.getName();
 
 		Assert.assertNotNull(orderType);
-		Assert.assertEquals("TEST NAME 1", orderTypeName);
+
+		Assert.assertEquals(
+			"Test Commerce Order Type 1", orderTypeName.get("en_US"));
 		Assert.assertFalse(orderType.getActive());
 
 		orderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
 			"TESTORDERTYPE2");
 
-		orderName = orderType.getName();
-
-		orderTypeName = orderName.get("en_US");
+		orderTypeName = orderType.getName();
 
 		Assert.assertNotNull(orderType);
-		Assert.assertEquals("TEST NAME 2", orderTypeName);
+
+		Assert.assertEquals(
+			"Test Commerce Order Type 2", orderTypeName.get("en_US"));
 		Assert.assertTrue(orderType.getActive());
 	}
 
@@ -793,34 +793,34 @@ public class BundleSiteInitializerTest {
 			orderTypeResource.getOrderTypeByExternalReferenceCode(
 				"TESTORDERTYPE1");
 
-		Map<String, String> orderName2 = orderType2.getName();
-
-		String orderTypeName2 = orderName2.get("en_US");
+		Map<String, String> orderTypeName = orderType2.getName();
 
 		Assert.assertNotNull(orderType2);
-		Assert.assertEquals("TEST NAME 1", orderTypeName2);
+
+		Assert.assertEquals(
+			"Test Commerce Order Type 1", orderTypeName.get("en_US"));
 		Assert.assertFalse(orderType2.getActive());
 
 		orderType2 = orderTypeResource.getOrderTypeByExternalReferenceCode(
 			"TESTORDERTYPE2");
 
-		orderName2 = orderType2.getName();
-
-		orderTypeName2 = orderName2.get("en_US");
+		orderTypeName = orderType2.getName();
 
 		Assert.assertNotNull(orderType2);
-		Assert.assertEquals("TEST NAME 2 UPDATE", orderTypeName2);
+
+		Assert.assertEquals(
+			"Test Commerce Order Type 2 Update", orderTypeName.get("en_US"));
 		Assert.assertTrue(orderType2.getActive());
 
 		orderType2 = orderTypeResource.getOrderTypeByExternalReferenceCode(
 			"TESTORDERTYPE3");
 
-		orderName2 = orderType2.getName();
-
-		orderTypeName2 = orderName2.get("en_US");
+		orderTypeName = orderType2.getName();
 
 		Assert.assertNotNull(orderType2);
-		Assert.assertEquals("TEST NAME 3", orderTypeName2);
+
+		Assert.assertEquals(
+			"Test Commerce Order Type 3", orderTypeName.get("en_US"));
 		Assert.assertFalse(orderType2.getActive());
 	}
 

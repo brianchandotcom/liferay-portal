@@ -764,7 +764,8 @@ public class CommerceSiteInitializer {
 
 			if (orderType == null) {
 				_log.error(
-					"Unable to transform commerce catalog from JSON: " + json);
+					"Unable to transform commerce order type from JSON: " +
+						json);
 
 				continue;
 			}

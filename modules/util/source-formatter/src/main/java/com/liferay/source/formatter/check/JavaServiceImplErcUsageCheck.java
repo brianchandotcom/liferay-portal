@@ -96,12 +96,22 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 
 		String methodName = javaTermName + StringPool.OPEN_PARENTHESIS;
 
-		int x = indexOf(javaTermContent, methodName);
+		int x = -1;
 
-		if (x != -1) {
-			javaTermContent = StringUtil.insert(
-				javaTermContent, "String externalReferenceCode, ",
-				methodName.length() + x);
+		while (true) {
+			x = javaTermContent.indexOf(methodName, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (!isInsideComment(javaTermContent, x)) {
+				javaTermContent = StringUtil.insert(
+					javaTermContent, "String externalReferenceCode, ",
+					methodName.length() + x);
+
+				break;
+			}
 		}
 
 		String lastMethodNameContent = StringUtil.extractLast(

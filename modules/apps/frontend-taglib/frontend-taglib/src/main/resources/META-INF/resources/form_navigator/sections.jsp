@@ -30,7 +30,7 @@ for (FormNavigatorEntry<Object> curFormNavigatorEntry : formNavigatorEntries) {
 
 	String label = curFormNavigatorEntry.getLabel(locale);
 
-	if ((i == 0) && (formNavigatorEntries.size() == 1)) {
+	if ((i == 0) && (formNavigatorEntries.size() == 1) && (formNavigatorDisplayContext.getType() != FormNavigatorConstants.FormNavigatorType.SHEET_SECTIONS)) {
 		label = StringPool.BLANK;
 	}
 %>

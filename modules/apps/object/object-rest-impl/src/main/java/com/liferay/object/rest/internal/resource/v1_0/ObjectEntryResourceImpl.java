@@ -209,11 +209,17 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
+		String filterString = null;
+
+		if (contextHttpServletRequest != null) {
+			filterString = ParamUtil.getString(
+				contextHttpServletRequest, "filter");
+		}
+
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
-			_getDTOConverterContext(null),
-			ParamUtil.getString(contextHttpServletRequest, "filter"),
-			pagination, search, sorts);
+			_getDTOConverterContext(null), filterString, pagination, search,
+			sorts);
 	}
 
 	@Override

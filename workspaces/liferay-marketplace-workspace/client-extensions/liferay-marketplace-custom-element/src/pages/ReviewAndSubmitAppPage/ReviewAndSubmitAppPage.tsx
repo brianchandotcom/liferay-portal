@@ -238,7 +238,6 @@ export function ReviewAndSubmitAppPage({
 						regarding this app submission until Liferay completes
 						its review process and I agree with the Liferay
 						Marketplace <a href="#">terms</a> and{' '}
-
 						<a href="#">privacy</a>
 					</span>
 				</div>

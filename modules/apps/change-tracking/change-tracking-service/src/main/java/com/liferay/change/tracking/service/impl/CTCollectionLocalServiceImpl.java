@@ -509,40 +509,6 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public void discardCTEntries(
-			long ctCollectionId, long modelClassNameId, long modelClassPK,
-			boolean force)
-		throws PortalException {
-
-		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
-			ctCollectionId);
-
-		if (!force &&
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
-
-			throw new PortalException(
-				"Change tracking collection " + ctCollection + " is read only");
-		}
-
-		Map<Long, List<CTEntry>> ctEntriesMap = new HashMap<>();
-
-		List<CTEntry> discardCTEntries = getDiscardCTEntries(
-			ctCollectionId, modelClassNameId, modelClassPK);
-
-		for (CTEntry ctEntry : discardCTEntries) {
-			List<CTEntry> ctEntries = ctEntriesMap.computeIfAbsent(
-				ctEntry.getModelClassNameId(), key -> new ArrayList<>());
-
-			ctEntries.add(ctEntry);
-		}
-
-		for (Map.Entry<Long, List<CTEntry>> entry : ctEntriesMap.entrySet()) {
-			_discardCTEntries(ctCollection, entry.getKey(), entry.getValue());
-		}
-	}
-
-	@Override
 	public void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK,
 			boolean force)

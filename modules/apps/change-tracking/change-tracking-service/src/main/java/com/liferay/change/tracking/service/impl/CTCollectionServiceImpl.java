@@ -103,21 +103,6 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 	}
 
 	@Override
-	public void discardCTEntries(
-			long ctCollectionId, long modelClassNameId, long modelClassPK)
-		throws PortalException {
-
-		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
-			ctCollectionId);
-
-		_ctCollectionModelResourcePermission.check(
-			getPermissionChecker(), ctCollection, ActionKeys.UPDATE);
-
-		ctCollectionLocalService.discardCTEntries(
-			ctCollectionId, modelClassNameId, modelClassPK, false);
-	}
-
-	@Override
 	public void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws PortalException {

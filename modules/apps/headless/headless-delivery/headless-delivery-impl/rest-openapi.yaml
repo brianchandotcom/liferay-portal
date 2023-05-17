@@ -12794,6 +12794,35 @@ paths:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
             tags: ["KnowledgeBaseArticle"]
     "/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{knowledgeBaseArticleExternalReferenceCode}/knowledge-base-attachments/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Delete the knowledge base attachment by knowledge base article's and knowledge base attachment's
+                external reference codes.
+            operationId: deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: knowledgeBaseArticleExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["KnowledgeBaseAttachment"]
         get:
             # @review
             description:

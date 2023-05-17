@@ -12,6 +12,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="accountEntryId" type="long" />
 		<field name="name" type="String" />
 		<field name="commerceCurrencyCode" type="String" />
 		<field name="catalogDefaultLanguageId" type="String" />

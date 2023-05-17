@@ -755,6 +755,7 @@ public class PoshiRunnerExecutor {
 			"macro", className, namespace);
 
 		for (Element rootVarElement : rootVarElements) {
+			_poshiVariablesContext.pushCommandMap();
 			runRootVarElement(rootVarElement, true);
 		}
 
@@ -1067,6 +1068,7 @@ public class PoshiRunnerExecutor {
 			"test-case", className, namespace);
 
 		for (Element rootVarElement : rootVarElements) {
+			_poshiVariablesContext.pushCommandMap();
 			runRootVarElement(rootVarElement, false);
 		}
 

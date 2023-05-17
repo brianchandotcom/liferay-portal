@@ -450,7 +450,6 @@ definition {
 	test MakePaginationInChannelsAndSitesTabsOnAssignedPropertyModal {
 		var firstChannelsPageList = "AC Sort Channel 1,AC Sort Channel 2,AC Sort Channel 3,AC Sort Channel 4,AC Sort Channel 5";
 		var secondChannelsPageList = "Minium Demo Portal";
-		var firstSitesPageList = "AC Site 1,AC Site 2,AC Site 3,Liferay DXP,Minium Demo";
 		var secondSitesPageList = "Site Name";
 
 		task ("Create five new channels") {
@@ -473,6 +472,8 @@ definition {
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
+
+		var firstSitesPageList = "AC Site 1,AC Site 2,AC Site 3,${assignedPropertyName},Minium Demo";
 
 		task ("Click on the Assign button") {
 			Check.checkToggleSwitch(
@@ -644,8 +645,6 @@ definition {
 	test SortInChannelsAndSitesTabOnAssignedPropertyModal {
 		var channelsPageListUp = "AC Sort Channels,DXP Sort Channels,Minium Demo Portal";
 		var channelsPageListDown = "Minium Demo Portal,DXP Sort Channels,AC Sort Channels";
-		var sitesPageListUp = "Liferay DXP,Minium Demo,Site Name";
-		var sitesPageListDown = "Site Name,Minium Demo,Liferay DXP";
 
 		task ("Create two new channels") {
 			for (var channelName : list "AC Sort Channels,DXP Sort Channels") {
@@ -660,7 +659,12 @@ definition {
 			ACDXPSettings.connectAnalyticsCloud();
 
 			ACDXPSettings.getAssignedPropertyName();
+			
 		}
+
+		var sitesPageListUp = "${assignedPropertyName},Minium Demo,Site Name";
+		
+		var sitesPageListDown = "Site Name,Minium Demo,${assignedPropertyName}";
 
 		task ("Toggle Commerce On > Click on the Assign button") {
 			Check.checkToggleSwitch(

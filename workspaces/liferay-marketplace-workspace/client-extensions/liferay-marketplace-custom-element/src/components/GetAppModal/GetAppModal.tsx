@@ -254,10 +254,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				({customFields}: Account) => {
 					if (customFields) {
 						const catalogIdField = customFields.find(
-							(customField: {
-								customValue: {data: string};
-								name: string;
-							}) => customField.name === 'CatalogId'
+							(customField) => customField.name === 'CatalogId'
 						);
 
 						return (

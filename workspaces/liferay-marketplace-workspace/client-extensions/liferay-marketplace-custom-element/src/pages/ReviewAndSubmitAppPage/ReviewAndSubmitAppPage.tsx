@@ -1,3 +1,4 @@
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 
 import {Checkbox} from '../../components/Checkbox/Checkbox';
@@ -14,8 +15,6 @@ import {CardSectionsBody} from './CardSectionsBody';
 import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 
 import './ReviewAndSubmitAppPage.scss';
-
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 interface ReviewAndSubmitAppPageProps {
 	onClickBack: () => void;
@@ -74,11 +73,11 @@ export function ReviewAndSubmitAppPage({
 
 			nonTrialSKU?.customFields?.forEach(({customValue, name}) => {
 				if (name === 'version') {
-					version = customValue.data;
+					version = customValue.data as string;
 				}
 
 				if (name === 'Version Description') {
-					versionDescription = customValue.data;
+					versionDescription = customValue.data as string;
 				}
 			});
 

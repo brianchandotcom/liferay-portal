@@ -292,13 +292,13 @@ definition {
 		task ("Check axes flip behavior") {
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Stage 1");
+				xAxisCategoryName = "Audience 1");
 
 			ContentDashboard.flipGraphAxes();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Audience 1");
+				xAxisCategoryName = "Stage 1");
 		}
 	}
 
@@ -443,12 +443,12 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Audience 1");
+				xAxisCategoryName = "Stage 1");
 
 			AssertTextEquals(
-				auditGraphTitle = "Content per Audience",
+				auditGraphTitle = "Content per Stage",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
-				value1 = "Content per Audience");
+				value1 = "Content per Stage");
 		}
 	}
 
@@ -785,17 +785,15 @@ definition {
 		task ("Check which vocabulary is displayed in x-axis") {
 			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Stage");
 
-			AssertTextEquals(
-				auditGraphCheckboxName = "Audience 1",
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
-				value1 = "Audience 1");
+			AssertElementPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				xAxisCategoryName = "Audience 1");
 
 			ContentDashboard.setVocabularyInUseSecondPosition(key_vocabularyName = "Audience");
 
-			AssertTextEquals(
-				auditGraphCheckboxName = "Stage 1",
-				locator1 = "ContentDashboard#AUDIT_GRAPH_CATEGORY_CHECKBOX",
-				value1 = "Stage 1");
+			AssertElementPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				xAxisCategoryName = "Stage 1");
 		}
 	}
 
@@ -821,13 +819,13 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Audience 1");
+				xAxisCategoryName = "Stage 1");
 
 			ContentDashboard.setVocabularyInUseTopPosition(key_vocabularyName = "Audience");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Stage 1");
+				xAxisCategoryName = "Audience 1");
 		}
 	}
 

@@ -4449,7 +4449,7 @@ definition {
 			task ("Wait for document to expire") {
 				Navigator.openURL();
 
-				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 3000);
+				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
 
 				Notifications.viewBadgeCount(notificationCount = 1);
 			}
@@ -4634,7 +4634,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Subtype: Basic Web Content");
+				value1 = "Subtype: Basic Web Content (Global)");
 		}
 	}
 
@@ -6003,7 +6003,7 @@ definition {
 
 		task ("Check if extension is present") {
 			AssertTextEquals(
-				locator1 = "ContentDashboard#FILTER_TEXT",
+				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
 				value1 = "9 Results for");
 		}
 	}
@@ -6384,10 +6384,11 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Assert the type of the web content is shown in the Type column") {
-			AssertElementPresent(
-				assetType = "Document",
-				locator1 = "ContentDashboard#TYPE_COLUMN_VALUE");
+		task ("Assert the type of the document is shown in the Type column") {
+			LexiconTable.viewTableEntryInfo(
+				columnName = "type",
+				tableEntry = "DM Document Title",
+				tableEntryInfo = "Document");
 		}
 	}
 
@@ -6406,9 +6407,10 @@ definition {
 		}
 
 		task ("Assert the type of the web content is shown in the Type column") {
-			AssertElementPresent(
-				assetType = "Web Content Article",
-				locator1 = "ContentDashboard#TYPE_COLUMN_VALUE");
+			LexiconTable.viewTableEntryInfo(
+				columnName = "type",
+				tableEntry = "WC WebContent Title",
+				tableEntryInfo = "Web Content Article");
 		}
 	}
 

@@ -80,6 +80,7 @@ const InterestsCard = () => {
 					<Card.Footer>
 						<ClayLink
 							className='button-root'
+							displayType='secondary'
 							href={setUriQueryValues(
 								rangeSelectors,
 								toRoute(Routes.SITES_INTERESTS, {

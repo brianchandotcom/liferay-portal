@@ -1714,15 +1714,15 @@ public class ObjectEntryLocalServiceImpl
 					dynamicObjectDefinitionLocalizationTable.getColumn(
 						objectField.getDBColumnName());
 
-				Map<String, String> languageIdValues =
+				Map<String, String> localizedValues =
 					(Map<String, String>)values.get(
 						objectField.getI18nObjectFieldName());
 
 				String value = StringPool.BLANK;
 
-				if (languageIdValues != null) {
+				if (localizedValues != null) {
 					value = Objects.toString(
-						languageIdValues.get(languageId), StringPool.BLANK);
+						localizedValues.get(languageId), StringPool.BLANK);
 				}
 
 				_setColumn(
@@ -2927,15 +2927,15 @@ public class ObjectEntryLocalServiceImpl
 		for (ObjectField objectField :
 				dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
 
-			Map<String, String> languageIdValues =
+			Map<String, String> localizedValues =
 				(Map<String, String>)values.get(
 					objectField.getI18nObjectFieldName());
 
-			if (languageIdValues == null) {
+			if (localizedValues == null) {
 				continue;
 			}
 
-			for (String languageId : languageIdValues.keySet()) {
+			for (String languageId : localizedValues.keySet()) {
 				locales.add(LocaleUtil.fromLanguageId(languageId));
 			}
 		}
@@ -2995,13 +2995,11 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			Map<String, String> languageIdValues =
+			Map<String, String> localizedValues =
 				(Map<String, String>)values.get(
 					objectField.getI18nObjectFieldName());
 
-			for (Map.Entry<String, String> entry :
-					languageIdValues.entrySet()) {
-
+			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
 				if (objectEntryPersistedLanguageIds.contains(entry.getKey())) {
 					_updateLocalizationTable(
 						dynamicObjectDefinitionLocalizationTable,

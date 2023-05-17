@@ -928,7 +928,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (${replicateIndividualDeletions} == "true") {
 			AssertVisible(locator1 = "Staging#STAGING_CONTENT_DELETIONS");
@@ -1418,7 +1418,7 @@ definition {
 	macro viewNoPublishContentCountViaPortletStagingCP {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertElementNotPresent(locator1 = "Staging#STAGING_CONTENT_COUNT");
 
@@ -1576,7 +1576,7 @@ definition {
 	macro viewPublishContentCountViaPortletStagingCP {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
 			locator1 = "Staging#STAGING_CONTENT_COUNT",

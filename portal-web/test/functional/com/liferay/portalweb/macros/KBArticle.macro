@@ -670,7 +670,7 @@ definition {
 			portletName = ${portletName},
 			portletOption = "Configuration");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
 
 		if ((${portletName} == "Knowledge Base Search") || (${portletName} == "Knowledge Base Section")) {
 			Navigator.gotoNavTab(navTab = "Display Settings");

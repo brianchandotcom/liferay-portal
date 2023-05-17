@@ -5,7 +5,7 @@ definition {
 			portletName = "Knowledge Base Section",
 			portletOption = "Configuration");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
 
 		AddSelection(
 			locator1 = "KnowledgeBaseArticle#SECTION_WIDGET_SELECT",

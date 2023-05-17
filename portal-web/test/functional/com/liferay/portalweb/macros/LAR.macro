@@ -69,7 +69,7 @@ definition {
 	}
 
 	macro _export {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(contentLastRange)) {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_LAST_CHANGE");
@@ -197,7 +197,7 @@ definition {
 	}
 
 	macro _selectImportFile {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		NavItem.click(navItem = "Import");
 
@@ -433,7 +433,7 @@ definition {
 		if (isSet(deleteFromPortlet)) {
 			LAR._gotoExportImport();
 
-			SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 			Click(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_TAB");
 		}

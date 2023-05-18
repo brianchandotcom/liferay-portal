@@ -276,8 +276,8 @@ server.ssl.certificateAuthorities: [ "${elasticsearch.dir}/config/certs/ca.crt" 
 				</then>
 				<else>
 					<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">
-elasticsearch.password: "${elastic.xpack.elastic.user.password}"
-elasticsearch.username: "elastic"</echo>
+elasticsearch.password: "${elastic.xpack.kibana.user.password}"
+elasticsearch.username: "kibana_system"</echo>
 				</else>
 			</if>
 
@@ -728,6 +728,14 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				override="true"
 				property="elastic.xpack.elastic.user.password"
 				regexp="(PASSWORD elastic = )(\S*)"
+				select="\2"
+			/>
+
+			<propertyregex
+				input="${elastic.xpack.user.passwords}"
+				override="true"
+				property="elastic.xpack.kibana.user.password"
+				regexp="(PASSWORD kibana_system = )(\S*)"
 				select="\2"
 			/>
 		</sequential>

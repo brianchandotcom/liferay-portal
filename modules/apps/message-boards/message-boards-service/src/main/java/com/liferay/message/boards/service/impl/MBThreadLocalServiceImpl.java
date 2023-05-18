@@ -17,10 +17,12 @@ import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.SplitThreadException;
 import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
 import com.liferay.message.boards.model.impl.MBTreeWalkerImpl;
+import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
@@ -183,6 +185,17 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			PortletFileRepositoryUtil.deletePortletFolder(folderId);
+		}
+
+		// Discussion
+
+		MBDiscussion discussion =
+			_mbDiscussionLocalService.fetchThreadDiscussion(
+				thread.getThreadId());
+
+		if (discussion != null) {
+			_mbDiscussionLocalService.deleteMBDiscussion(
+				discussion.getDiscussionId());
 		}
 
 		// Subscriptions
@@ -1192,6 +1205,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Reference
 	private MBCategoryPersistence _mbCategoryPersistence;
+
+	@Reference
+	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 	@Reference
 	private MBMessageFinder _mbMessageFinder;

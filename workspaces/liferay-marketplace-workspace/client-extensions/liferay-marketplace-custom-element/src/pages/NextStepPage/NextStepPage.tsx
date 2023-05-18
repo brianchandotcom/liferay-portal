@@ -8,6 +8,7 @@ import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Liferay} from '../../liferay/liferay';
 import {
+	baseURL,
 	getAccountInfoFromCommerce,
 	getCart,
 	getCartItems,
@@ -89,11 +90,12 @@ export function NextStepPage({
 							<div className="next-step-page-cards">
 								<AccountAndAppCard
 									category="Application"
-									logo={
-										showAppImage(
-											appLogo as string
-										) as string
-									}
+									logo={showAppImage(
+										appLogo as string
+									).replace(
+										(appLogo as string)?.split('/o')[0],
+										baseURL
+									)}
 									title={appName ?? ''}
 								></AccountAndAppCard>
 

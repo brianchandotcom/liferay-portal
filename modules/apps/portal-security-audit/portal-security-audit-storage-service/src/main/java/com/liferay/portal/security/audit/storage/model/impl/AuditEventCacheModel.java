@@ -66,10 +66,10 @@ public class AuditEventCacheModel
 
 		sb.append("{auditEventId=");
 		sb.append(auditEventId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -106,8 +106,8 @@ public class AuditEventCacheModel
 		AuditEventImpl auditEventImpl = new AuditEventImpl();
 
 		auditEventImpl.setAuditEventId(auditEventId);
-		auditEventImpl.setCompanyId(companyId);
 		auditEventImpl.setGroupId(groupId);
+		auditEventImpl.setCompanyId(companyId);
 		auditEventImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -200,9 +200,9 @@ public class AuditEventCacheModel
 
 		auditEventId = objectInput.readLong();
 
-		companyId = objectInput.readLong();
-
 		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
@@ -224,9 +224,9 @@ public class AuditEventCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(auditEventId);
 
-		objectOutput.writeLong(companyId);
-
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
 
@@ -306,8 +306,8 @@ public class AuditEventCacheModel
 	}
 
 	public long auditEventId;
-	public long companyId;
 	public long groupId;
+	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;

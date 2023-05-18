@@ -3,8 +3,8 @@
 <model-hints>
 	<model name="com.liferay.portal.security.audit.storage.model.AuditEvent">
 		<field name="auditEventId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>

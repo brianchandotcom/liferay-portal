@@ -493,43 +493,6 @@ definition {
 		return ${objectEntryId};
 	}
 
-	@summary = "This calls the JSON WS API to add a single object field entry"
-	macro addObjectSingleFieldEntryViaJSONAPI {
-		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
-		}
-
-		if (!(isSet(userPassword))) {
-			var userPassword = "test";
-		}
-
-		if (!(isSet(groupName))) {
-			var groupName = "Guest";
-		}
-
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = ${groupName},
-			site = "true");
-		var objectId = JSONObject.getObjectId(
-			objectName = ${objectName},
-			userEmailAddress = ${userEmailAddress},
-			userPassword = ${userPassword});
-		var objectName = StringUtil.toLowerCase(${objectName});
-		var curl = '''
-			${portalURL}/api/jsonws/object.objectentry/add-object-entry \
-				-u ${userEmailAddress}:${userPassword} \
-				-d groupId=${groupId} \
-				-d objectDefinitionId=${objectId} \
-				-d values={
-					"${fieldName}": "${value}"
-				}
-		''';
-
-		JSONCurlUtil.post(${curl});
-	}
-
 	@summary = "This calls the JSON WS API to add a picklist"
 	macro addPicklist {
 		Variables.assertDefined(parameterList = ${picklistName});

@@ -116,7 +116,7 @@ public class ProductDTOConverter
 						CommerceChannel commerceChannel =
 							commerceChannelRel.getCommerceChannel();
 
-						return commerceChannel.getGroupId();
+						return commerceChannel.getCommerceChannelId();
 					},
 					Long.class);
 				productId = cProduct.getCProductId();

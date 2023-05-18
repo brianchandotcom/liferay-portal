@@ -34,7 +34,7 @@ exports[`IndividualAttributesModal should render 1`] = `
         </button>
       </div>
       <div
-        class="modal-body mt-3"
+        class="modal-body"
       >
         <h5>
           Data Sources

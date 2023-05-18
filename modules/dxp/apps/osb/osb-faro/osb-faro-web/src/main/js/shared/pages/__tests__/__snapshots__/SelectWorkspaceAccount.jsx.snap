@@ -142,11 +142,11 @@ exports[`SelectWorkspaceAccount should render 1`] = `
                         </div>
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>
@@ -193,11 +193,11 @@ exports[`SelectWorkspaceAccount should render 1`] = `
                         />
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>

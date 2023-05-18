@@ -230,11 +230,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             href=""
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              class="lexicon-icon lexicon-icon-angle-left-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-left"
+                xlink:href="#angle-left-small"
               />
             </svg>
           </a>
@@ -258,11 +258,11 @@ exports[`CrossPageSelect should render the selected list when the user presses t
             href=""
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -589,11 +589,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             href="/?page=0"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              class="lexicon-icon lexicon-icon-angle-left-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-left"
+                xlink:href="#angle-left-small"
               />
             </svg>
           </a>
@@ -636,11 +636,11 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
             href="/?page=2"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>

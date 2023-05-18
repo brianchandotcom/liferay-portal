@@ -19,11 +19,11 @@ exports[`Sites Dashboard InterestDetails render 1`] = `
             href="/workspace/123/456/sites/interests?rangeKey=30"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-left icon-root mr-2"
+              class="lexicon-icon lexicon-icon-angle-left-small icon-root mr-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-left"
+                xlink:href="#angle-left-small"
               />
             </svg>
             Back to Interests

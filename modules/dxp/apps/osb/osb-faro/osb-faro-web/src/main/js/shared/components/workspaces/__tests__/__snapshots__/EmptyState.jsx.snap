@@ -17,7 +17,7 @@ exports[`Workspace Empty State - CardEmpty should render CardEmpty 1`] = `
       CardEmpty Description
     </p>
     <button
-      class="btn btn-primary"
+      class="btn btn-secondary"
       type="button"
     >
       CardEmpty Button Label
@@ -73,13 +73,12 @@ exports[`Workspace Empty State should render 1`] = `
         <p>
           90 Day Full Feature Trial
         </p>
-        <button
-          class="btn btn-secondary"
+        <a
+          class="c-link link-secondary text-decoration-underline"
           href="/workspace/add/trial"
-          type="button"
         >
           Start Free Trial
-        </button>
+        </a>
       </div>
     </div>
   </div>

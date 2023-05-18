@@ -397,11 +397,11 @@ exports[`Sidebar should render 1`] = `
                 class="icon-wrapper"
               >
                 <svg
-                  class="lexicon-icon lexicon-icon-angle-left icon-root"
+                  class="lexicon-icon lexicon-icon-angle-left-small icon-root"
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-left"
+                    xlink:href="#angle-left-small"
                   />
                 </svg>
               </span>

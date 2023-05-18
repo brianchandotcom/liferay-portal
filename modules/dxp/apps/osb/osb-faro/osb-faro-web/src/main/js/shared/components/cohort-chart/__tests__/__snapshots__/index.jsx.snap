@@ -9,17 +9,17 @@ exports[`CohortChart should render 1`] = `
       <tr>
         <th />
         <th
-          class="visitors-header table-cell-expand table-column-text-end"
+          class="visitors-header table-column-text-end"
         >
           Visitors
         </th>
         <th
-          class="period table-cell-expand table-column-text-center"
+          class="period table-column-text-center"
         >
           Month 0
         </th>
         <th
-          class="period table-cell-expand table-column-text-center"
+          class="period table-column-text-center"
         >
           Month 1
         </th>
@@ -32,12 +32,12 @@ exports[`CohortChart should render 1`] = `
           10
         </th>
         <th
-          class="table-cell-expand table-column-text-center"
+          class="table-column-text-center"
         >
           12.12%
         </th>
         <th
-          class="table-cell-expand table-column-text-center"
+          class="table-column-text-center"
         >
           42.12%
         </th>
@@ -56,7 +56,7 @@ exports[`CohortChart should render 1`] = `
           10
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(0, 0, 0);"
         >
           <span
@@ -66,7 +66,7 @@ exports[`CohortChart should render 1`] = `
           </span>
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(0, 0, 0);"
         >
           <span
@@ -88,7 +88,7 @@ exports[`CohortChart should render 1`] = `
           60
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(0, 0, 0);"
         >
           <span

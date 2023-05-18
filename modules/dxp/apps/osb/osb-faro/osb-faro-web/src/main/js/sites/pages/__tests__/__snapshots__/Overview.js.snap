@@ -189,16 +189,16 @@ exports[`Sites Dashboard Overview render 1`] = `
             class="card-footer"
           >
             <a
-              class="button-root c-link link-secondary text-decoration-underline"
+              class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
               href="/workspace/23/123123/sites/pages?rangeKey=30"
             >
               View Pages
               <svg
-                class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+                class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right"
+                  xlink:href="#angle-right-small"
                 />
               </svg>
             </a>
@@ -445,16 +445,16 @@ exports[`Sites Dashboard Overview render 1`] = `
             class="card-footer"
           >
             <a
-              class="button-root"
+              class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
               href="/workspace/23/123123/sites/interests?rangeEnd=null&rangeKey=30&rangeStart=null"
             >
               All Interests
               <svg
-                class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+                class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
                 role="presentation"
               >
                 <use
-                  xlink:href="#angle-right"
+                  xlink:href="#angle-right-small"
                 />
               </svg>
             </a>

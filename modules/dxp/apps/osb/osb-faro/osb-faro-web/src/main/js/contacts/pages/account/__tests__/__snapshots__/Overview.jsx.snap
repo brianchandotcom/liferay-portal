@@ -79,16 +79,16 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root c-link link-secondary text-decoration-underline"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/accounts/1/activities"
           >
             View All Activities
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -145,16 +145,16 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root link-unstyled"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/accounts/test/interests"
           >
             View All Interests
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -262,16 +262,16 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root c-link link-secondary text-decoration-underline"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/accounts/test/segments"
           >
             View All Segments
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -529,16 +529,16 @@ exports[`AccountOverview should render 1`] = `
           class="card-footer"
         >
           <a
-            class="button-root c-link link-secondary text-decoration-underline"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/accounts/test/individuals"
           >
             View All Individuals
             <svg
-              class="lexicon-icon lexicon-icon-angle-right ml-2"
+              class="lexicon-icon lexicon-icon-angle-right-small ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>

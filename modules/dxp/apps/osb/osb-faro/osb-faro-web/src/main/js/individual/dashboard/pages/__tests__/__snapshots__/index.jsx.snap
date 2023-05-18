@@ -51,75 +51,103 @@ exports[`Individuals Dashboard renders 1`] = `
             </h1>
           </span>
         </div>
-        <ul
-          class="nav-root page-subnav nav nav-underline"
-          role="tablist"
+        <div
+          class="row"
         >
-          <li
-            class="nav-item"
-            role="presentation"
+          <nav
+            class="navbar navbar-collapse-relative navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
           >
-            <a
-              class="nav-link"
-              href="/workspace/123/contacts/individuals"
-              role="tab"
+            <div
+              class="container-fluid container-fluid-max-xl"
             >
-              <span
-                class="title"
+              <button
+                aria-expanded="false"
+                class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+                type="button"
               >
-                Overview
-              </span>
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            role="presentation"
-          >
-            <a
-              class="nav-link"
-              href="/workspace/123/contacts/individuals/known-individuals"
-              role="tab"
-            >
-              <span
-                class="title"
+                <span
+                  class="navbar-text-truncate"
+                />
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-bottom"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#caret-bottom"
+                  />
+                </svg>
+              </button>
+              <div
+                class="navbar-collapse collapse"
               >
-                Known Individuals
-              </span>
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            role="presentation"
-          >
-            <a
-              class="nav-link"
-              href="/workspace/123/contacts/individuals/interests"
-              role="tab"
-            >
-              <span
-                class="title"
-              >
-                Interests
-              </span>
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            role="presentation"
-          >
-            <a
-              class="nav-link"
-              href="/workspace/123/contacts/individuals/distribution"
-              role="tab"
-            >
-              <span
-                class="title"
-              >
-                Distribution
-              </span>
-            </a>
-          </li>
-        </ul>
+                <div
+                  class="container-fluid container-fluid-max-xl"
+                >
+                  <ul
+                    class="navbar-nav"
+                  >
+                    <li
+                      class="nav-item"
+                    >
+                      <a
+                        class="nav-link"
+                        href="/workspace/123/contacts/individuals"
+                      >
+                        <span
+                          class="navbar-text-truncate"
+                        >
+                          Overview
+                        </span>
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                    >
+                      <a
+                        class="nav-link"
+                        href="/workspace/123/contacts/individuals/known-individuals"
+                      >
+                        <span
+                          class="navbar-text-truncate"
+                        >
+                          Known Individuals
+                        </span>
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                    >
+                      <a
+                        class="nav-link"
+                        href="/workspace/123/contacts/individuals/interests"
+                      >
+                        <span
+                          class="navbar-text-truncate"
+                        >
+                          Interests
+                        </span>
+                      </a>
+                    </li>
+                    <li
+                      class="nav-item"
+                    >
+                      <a
+                        class="nav-link"
+                        href="/workspace/123/contacts/individuals/distribution"
+                      >
+                        <span
+                          class="navbar-text-truncate"
+                        >
+                          Distribution
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
       </div>
     </header>
   </div>

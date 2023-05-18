@@ -130,16 +130,16 @@ exports[`KnownIndividualsCard should render 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root c-link link-secondary text-decoration-underline"
+        class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
         href="/workspace/23/123/contacts/accounts/23/individuals"
       >
         View All Individuals
         <svg
-          class="lexicon-icon lexicon-icon-angle-right ml-2"
+          class="lexicon-icon lexicon-icon-angle-right-small ml-2"
           role="presentation"
         >
           <use
-            xlink:href="#angle-right"
+            xlink:href="#angle-right-small"
           />
         </svg>
       </a>
@@ -194,16 +194,16 @@ exports[`KnownIndividualsCard should render w/ NoResultsDisplay 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root c-link link-secondary text-decoration-underline"
+        class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
         href="/workspace/23/123/contacts/accounts/23/individuals"
       >
         View All Individuals
         <svg
-          class="lexicon-icon lexicon-icon-angle-right ml-2"
+          class="lexicon-icon lexicon-icon-angle-right-small ml-2"
           role="presentation"
         >
           <use
-            xlink:href="#angle-right"
+            xlink:href="#angle-right-small"
           />
         </svg>
       </a>

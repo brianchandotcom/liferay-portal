@@ -193,16 +193,16 @@ exports[`TopPagesCard renders 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root c-link link-secondary text-decoration-underline"
+        class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
         href="/?rangeKey=30"
       >
         view pages
         <svg
-          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
           role="presentation"
         >
           <use
-            xlink:href="#angle-right"
+            xlink:href="#angle-right-small"
           />
         </svg>
       </a>

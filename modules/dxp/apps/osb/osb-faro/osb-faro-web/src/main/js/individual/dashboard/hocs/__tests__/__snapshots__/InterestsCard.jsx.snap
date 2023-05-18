@@ -358,16 +358,16 @@ exports[`InterestsCard renders 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root"
+        class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
         href="/workspace/123/456/contacts/individuals/interests"
       >
         View All Interests
         <svg
-          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
           role="presentation"
         >
           <use
-            xlink:href="#angle-right"
+            xlink:href="#angle-right-small"
           />
         </svg>
       </a>
@@ -423,16 +423,16 @@ exports[`InterestsCard renders with empty data 1`] = `
       class="card-footer"
     >
       <a
-        class="button-root"
+        class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
         href="/workspace/123/456/contacts/individuals/interests"
       >
         View All Interests
         <svg
-          class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+          class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
           role="presentation"
         >
           <use
-            xlink:href="#angle-right"
+            xlink:href="#angle-right-small"
           />
         </svg>
       </a>

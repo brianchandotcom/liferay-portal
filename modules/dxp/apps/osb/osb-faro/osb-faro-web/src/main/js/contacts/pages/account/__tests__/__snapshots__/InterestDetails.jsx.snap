@@ -9,15 +9,15 @@ exports[`InterestDetails should render 1`] = `
       class="back-button-root mb-2"
     >
       <a
-        class="btn btn-outline-borderless btn-outline-secondary"
+        class="btn btn-outline-borderless btn-sm btn-outline-secondary"
         href="/workspace/123/contacts/accounts/123/interests"
       >
         <svg
-          class="lexicon-icon lexicon-icon-angle-left icon-root icon-size-sm mr-2"
+          class="lexicon-icon lexicon-icon-angle-left-small icon-root icon-size-sm mr-2"
           role="presentation"
         >
           <use
-            xlink:href="#angle-left"
+            xlink:href="#angle-left-small"
           />
         </svg>
         Back to Interests

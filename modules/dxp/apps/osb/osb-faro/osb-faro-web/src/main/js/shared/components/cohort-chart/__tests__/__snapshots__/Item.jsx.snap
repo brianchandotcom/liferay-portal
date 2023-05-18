@@ -3,7 +3,7 @@
 exports[`CohortChartItem should render 1`] = `
 <div>
   <td
-    class="cohort-item-root table-cell-expand table-column-text-center"
+    class="cohort-item-root table-column-text-center"
     style="background: rgb(0, 0, 0);"
   >
     <span

@@ -398,11 +398,11 @@ Chrome"
                   href=""
                 >
                   <svg
-                    class="lexicon-icon lexicon-icon-angle-left icon-root"
+                    class="lexicon-icon lexicon-icon-angle-left-small icon-root"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-left"
+                      xlink:href="#angle-left-small"
                     />
                   </svg>
                 </a>
@@ -473,11 +473,11 @@ Chrome"
                   href=""
                 >
                   <svg
-                    class="lexicon-icon lexicon-icon-angle-right icon-root"
+                    class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right"
+                      xlink:href="#angle-right-small"
                     />
                   </svg>
                 </a>
@@ -519,17 +519,17 @@ Chrome"
           class="card-footer"
         >
           <a
-            class="button-root"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/individuals/known-individuals/0/details"
           >
             View All Details
             <svg
-              class="lexicon-icon lexicon-icon-angle-right"
+              class="lexicon-icon lexicon-icon-angle-right-small"
               classname="icon-root ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -568,16 +568,16 @@ Chrome"
           class="card-footer"
         >
           <a
-            class="button-root"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/individuals/known-individuals/0/interests"
           >
             View All Interests
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -685,16 +685,16 @@ Chrome"
           class="card-footer"
         >
           <a
-            class="button-root c-link link-secondary text-decoration-underline"
+            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
             href="/workspace/23/contacts/individuals/known-individuals/test/segments"
           >
             View All Segments
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>

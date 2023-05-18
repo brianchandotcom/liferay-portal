@@ -10,11 +10,11 @@ exports[`InterestDetails should render 1`] = `
       href="/workspace/23/contacts/individuals/known-individuals/test/interests"
     >
       <svg
-        class="lexicon-icon lexicon-icon-angle-left icon-root mr-2"
+        class="lexicon-icon lexicon-icon-angle-left-small icon-root mr-2"
         role="presentation"
       >
         <use
-          xlink:href="#angle-left"
+          xlink:href="#angle-left-small"
         />
       </svg>
       Back to Interests
@@ -337,11 +337,11 @@ exports[`InterestDetails should render 1`] = `
                 href="/?page=0"
               >
                 <svg
-                  class="lexicon-icon lexicon-icon-angle-left icon-root"
+                  class="lexicon-icon lexicon-icon-angle-left-small icon-root"
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-left"
+                    xlink:href="#angle-left-small"
                   />
                 </svg>
               </a>
@@ -365,11 +365,11 @@ exports[`InterestDetails should render 1`] = `
                 href="/?page=2"
               >
                 <svg
-                  class="lexicon-icon lexicon-icon-angle-right icon-root"
+                  class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                   role="presentation"
                 >
                   <use
-                    xlink:href="#angle-right"
+                    xlink:href="#angle-right-small"
                   />
                 </svg>
               </a>

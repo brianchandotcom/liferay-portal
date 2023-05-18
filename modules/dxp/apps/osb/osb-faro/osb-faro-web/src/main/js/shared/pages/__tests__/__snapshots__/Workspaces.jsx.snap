@@ -138,11 +138,11 @@ exports[`Workspaces should render a list of projects if there is only one projec
                         </div>
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>
@@ -312,13 +312,12 @@ exports[`Workspaces should render empty state 1`] = `
                 <p>
                   90 Day Full Feature Trial
                 </p>
-                <button
-                  class="btn btn-secondary"
+                <a
+                  class="c-link link-secondary text-decoration-underline"
                   href="/workspace/add/trial"
-                  type="button"
                 >
                   Start Free Trial
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -467,11 +466,11 @@ exports[`Workspaces should render with a message that all basic tier plans have 
                         </div>
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>
@@ -517,11 +516,11 @@ exports[`Workspaces should render with a message that all basic tier plans have 
                         </div>
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>
@@ -691,11 +690,11 @@ exports[`Workspaces should render with a message that one or more basic tier wor
                         </div>
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>
@@ -741,11 +740,11 @@ exports[`Workspaces should render with a message that one or more basic tier wor
                         </div>
                       </div>
                       <svg
-                        class="lexicon-icon lexicon-icon-angle-right icon-root"
+                        class="lexicon-icon lexicon-icon-angle-right-small icon-root"
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          xlink:href="#angle-right-small"
                         />
                       </svg>
                     </div>

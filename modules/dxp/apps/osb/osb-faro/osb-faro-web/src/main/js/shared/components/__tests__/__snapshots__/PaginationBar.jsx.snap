@@ -45,11 +45,11 @@ exports[`PaginationBar should render 1`] = `
             href="/?page=2"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              class="lexicon-icon lexicon-icon-angle-left-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-left"
+                xlink:href="#angle-left-small"
               />
             </svg>
           </a>
@@ -140,11 +140,11 @@ exports[`PaginationBar should render 1`] = `
             href="/?page=4"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>
@@ -201,11 +201,11 @@ exports[`PaginationBar should render different deltas 1`] = `
             href="/?page=0"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-left icon-root"
+              class="lexicon-icon lexicon-icon-angle-left-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-left"
+                xlink:href="#angle-left-small"
               />
             </svg>
           </a>
@@ -276,11 +276,11 @@ exports[`PaginationBar should render different deltas 1`] = `
             href="/?page=2"
           >
             <svg
-              class="lexicon-icon lexicon-icon-angle-right icon-root"
+              class="lexicon-icon lexicon-icon-angle-right-small icon-root"
               role="presentation"
             >
               <use
-                xlink:href="#angle-right"
+                xlink:href="#angle-right-small"
               />
             </svg>
           </a>

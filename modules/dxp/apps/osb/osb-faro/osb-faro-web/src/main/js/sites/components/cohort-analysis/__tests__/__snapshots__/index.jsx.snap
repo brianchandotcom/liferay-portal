@@ -9,22 +9,22 @@ exports[`CohortAnalysis should render 1`] = `
       <tr>
         <th />
         <th
-          class="visitors-header table-cell-expand table-column-text-end"
+          class="visitors-header table-column-text-end"
         >
           Visitors
         </th>
         <th
-          class="period table-cell-expand table-column-text-center"
+          class="period table-column-text-center"
         >
           Day 0
         </th>
         <th
-          class="period table-cell-expand table-column-text-center"
+          class="period table-column-text-center"
         >
           Day 1
         </th>
         <th
-          class="period table-cell-expand table-column-text-center"
+          class="period table-column-text-center"
         >
           Day 2
         </th>
@@ -37,17 +37,17 @@ exports[`CohortAnalysis should render 1`] = `
           0
         </th>
         <th
-          class="table-cell-expand table-column-text-center"
+          class="table-column-text-center"
         >
           0.00%
         </th>
         <th
-          class="table-cell-expand table-column-text-center"
+          class="table-column-text-center"
         >
           0.00%
         </th>
         <th
-          class="table-cell-expand table-column-text-center"
+          class="table-column-text-center"
         >
           0.00%
         </th>
@@ -66,7 +66,7 @@ exports[`CohortAnalysis should render 1`] = `
           0
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
         >
           <span
             class="retention"
@@ -75,7 +75,7 @@ exports[`CohortAnalysis should render 1`] = `
           </span>
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(161, 231, 204);"
         >
           <span
@@ -85,7 +85,7 @@ exports[`CohortAnalysis should render 1`] = `
           </span>
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(161, 231, 204);"
         >
           <span
@@ -107,7 +107,7 @@ exports[`CohortAnalysis should render 1`] = `
           0
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
         >
           <span
             class="retention"
@@ -116,7 +116,7 @@ exports[`CohortAnalysis should render 1`] = `
           </span>
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(161, 231, 204);"
         >
           <span
@@ -126,7 +126,7 @@ exports[`CohortAnalysis should render 1`] = `
           </span>
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(161, 231, 204);"
         >
           <span
@@ -148,7 +148,7 @@ exports[`CohortAnalysis should render 1`] = `
           0
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
         >
           <span
             class="retention"
@@ -157,7 +157,7 @@ exports[`CohortAnalysis should render 1`] = `
           </span>
         </td>
         <td
-          class="cohort-item-root table-cell-expand table-column-text-center"
+          class="cohort-item-root table-column-text-center"
           style="background: rgb(161, 231, 204);"
         >
           <span

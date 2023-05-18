@@ -11,16 +11,16 @@ exports[`DistributionCard DistributionChart renders 1`] = `
     class="card-footer"
   >
     <a
-      class="button-root link-unstyled"
+      class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
       href="test/:id"
     >
       Explore Breakdown
       <svg
-        class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+        class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
         role="presentation"
       >
         <use
-          xlink:href="#angle-right"
+          xlink:href="#angle-right-small"
         />
       </svg>
     </a>
@@ -43,16 +43,16 @@ exports[`DistributionCard DistributionChart renders empty state via props with n
     class="card-footer"
   >
     <a
-      class="button-root link-unstyled"
+      class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
       href="test/:id"
     >
       Explore Breakdown
       <svg
-        class="lexicon-icon lexicon-icon-angle-right icon-root ml-2"
+        class="lexicon-icon lexicon-icon-angle-right-small icon-root ml-2"
         role="presentation"
       >
         <use
-          xlink:href="#angle-right"
+          xlink:href="#angle-right-small"
         />
       </svg>
     </a>

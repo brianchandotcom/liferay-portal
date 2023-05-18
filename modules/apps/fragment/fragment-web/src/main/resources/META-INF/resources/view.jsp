@@ -24,6 +24,26 @@ List<FragmentCollection> systemFragmentCollections = (List<FragmentCollection>)r
 List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDisplayContext.getFragmentCollectionContributors(locale);
 %>
 
+<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateFragmentCollectionKeyException.class %>">
+
+	<%
+	DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
+	%>
+
+	<liferay-ui:message arguments='<%= "<em>" + dfcke.getMessage() + "</em>" %>' key="a-fragment-set-with-the-key-x-already-exists" />
+</liferay-ui:error>
+
+<liferay-ui:error embed="<%= false %>" exception="<%= DuplicateFragmentEntryKeyException.class %>">
+
+	<%
+	DuplicateFragmentEntryKeyException dfeke = (DuplicateFragmentEntryKeyException)errorException;
+	%>
+
+	<liferay-ui:message arguments='<%= "<em>" + dfeke.getMessage() + "</em>" %>' key="a-fragment-entry-with-the-key-x-already-exists" />
+</liferay-ui:error>
+
+<liferay-ui:error embed="<%= false %>" exception="<%= InvalidFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />
+
 <liferay-ui:success key="fragmentEntryCopied" message="the-fragment-was-copied-successfully" />
 
 <clay:container-fluid
@@ -331,3 +351,33 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 <aui:form cssClass="hide" name="fm">
 </aui:form>
+
+<%
+ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest);
+
+List<String> draftFragmentsImporterResultEntries = importDisplayContext.getFragmentsImporterResultEntries(FragmentsImporterResultEntry.Status.IMPORTED_DRAFT);
+%>
+
+<aui:script>
+	<c:if test="<%= ListUtil.isNotEmpty(draftFragmentsImporterResultEntries) %>">
+		Liferay.Util.openToast({
+			message:
+				'<liferay-ui:message arguments='<%= "<strong>" + StringUtil.merge(draftFragmentsImporterResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>" %>' key="the-following-fragments-have-validation-issues.-they-have-been-left-in-draft-status-x" />',
+			title: '<liferay-ui:message key="warning" />:',
+			type: 'warning',
+		});
+	</c:if>
+
+	<%
+	List<String> invalidFragmentsImporterResultEntries = importDisplayContext.getFragmentsImporterResultEntries(FragmentsImporterResultEntry.Status.INVALID);
+	%>
+
+	<c:if test="<%= ListUtil.isNotEmpty(invalidFragmentsImporterResultEntries) %>">
+		Liferay.Util.openToast({
+			message:
+				'<liferay-ui:message arguments='<%= "<strong>" + StringUtil.merge(invalidFragmentsImporterResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>" %>' key="the-following-fragments-could-not-be-imported-x" />',
+			title: '<liferay-ui:message key="warning" />:',
+			type: 'warning',
+		});
+	</c:if>
+</aui:script>

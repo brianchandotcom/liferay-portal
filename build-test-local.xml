@@ -186,7 +186,18 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			</then>
 		</if>
 
+		<if>
+			<available file="${app.server.parent.dir}/license" type="dir" />
+			<then>
+				<var name="test.bundle.type" value="portal-release" />
+			</then>
+			<else>
+				<var name="test.bundle.type" value="default" />
+			</else>
+		</if>
+
 		<ant antfile="build-test-tomcat-${database.type}.xml" target="run-selenium-tomcat-${database.type}">
+			<property name="env.CI_TEST_SUITE" value="${test.bundle.type}" />
 			<property name="test.class" value="${test.class}" />
 		</ant>
 	</target>
@@ -335,7 +346,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 
 		<copy
 			file="${local.bundles.release.license.file}"
-			todir="${app.server.parent.dir}/deploy/"
+			tofile="${app.server.parent.dir}/deploy/license.xml"
 			verbose="true"
 		/>
 

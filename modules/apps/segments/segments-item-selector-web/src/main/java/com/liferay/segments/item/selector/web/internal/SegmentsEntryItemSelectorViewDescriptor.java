@@ -17,11 +17,11 @@ package com.liferay.segments.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.item.selector.SegmentsEntryItemSelectorReturnType;
 import com.liferay.segments.item.selector.web.internal.display.context.SegmentsEntryDisplayContext;
 import com.liferay.segments.model.SegmentsEntry;
 
@@ -62,7 +62,7 @@ public class SegmentsEntryItemSelectorViewDescriptor
 
 	@Override
 	public ItemSelectorReturnType getItemSelectorReturnType() {
-		return new UUIDItemSelectorReturnType();
+		return new SegmentsEntryItemSelectorReturnType();
 	}
 
 	@Override

@@ -17,11 +17,11 @@ package com.liferay.segments.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.item.selector.SegmentsEntryItemSelectorCriterion;
+import com.liferay.segments.item.selector.SegmentsEntryItemSelectorReturnType;
 import com.liferay.segments.item.selector.web.internal.display.context.SegmentsEntryDisplayContext;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
@@ -96,7 +96,7 @@ public class SegmentsEntryItemSelectorView
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
-			new UUIDItemSelectorReturnType());
+			new SegmentsEntryItemSelectorReturnType());
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer

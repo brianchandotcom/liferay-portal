@@ -3115,6 +3115,42 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testFilterObjectEntriesByRelatesSystemObjectEntriesFields()
+		throws Exception {
+
+		// One to many relationship
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _userSystemObjectDefinition,
+			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_testFilterObjectEntriesByRelatesSystemObjectEntriesFields(
+			_escape(
+				String.format(
+					"%s/%s eq '%s'", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2)),
+			_objectDefinition1);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+
+		// Many to many relationship
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _userSystemObjectDefinition,
+			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testFilterObjectEntriesByRelatesSystemObjectEntriesFields(
+			_escape(
+				String.format(
+					"%s/%s eq '%s'", _objectRelationship1.getName(),
+					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2)),
+			_objectDefinition1);
+	}
+
+	@Test
 	public void testGetNestedFieldDetailsInRelationshipsWithCustomObjectDefinition()
 		throws Exception {
 
@@ -5075,6 +5111,21 @@ public class ObjectEntryResourceTest {
 					taxonomyCategories, TaxonomyCategory::getId, String.class)
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+	}
+
+	private void _testFilterObjectEntriesByRelatesSystemObjectEntriesFields(
+			String filterString, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null,
+			objectDefinition.getRESTContextPath() + "?filter=" + filterString,
+			Http.Method.GET);
+
+		Assert.assertEquals(
+			"Filtering over system objects is not supported",
+			jsonObject.getString("title"));
+		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
 	}
 
 	private void _testGetNestedFieldDetailsInRelationships(

@@ -64,7 +64,7 @@ function SelectEntityInput({
 
 						onChange({
 							displayValue: valueJSON.segmentsEntryName,
-							value: valueJSON.segmentEntryId,
+							value: valueJSON.segmentsEntryId,
 						});
 					}
 					catch {

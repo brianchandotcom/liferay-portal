@@ -22,7 +22,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  *
  * <ul>
  * <li>
- * <code>segmentEntryId</code>: The segmentEntryId of the selected segments entry
+ * <code>segmentsEntryId</code>: The segmentsEntryId of the selected segments entry
  * </li>
  * <li>
  * <code>segmentsEntryName</code>: The name of the selected segments entry

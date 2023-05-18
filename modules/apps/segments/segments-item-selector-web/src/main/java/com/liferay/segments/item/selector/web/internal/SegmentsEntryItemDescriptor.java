@@ -56,7 +56,7 @@ public class SegmentsEntryItemDescriptor
 				WebKeys.THEME_DISPLAY);
 
 		return JSONUtil.put(
-			"segmentEntryId",
+			"segmentsEntryId",
 			String.valueOf(_segmentsEntry.getSegmentsEntryId())
 		).put(
 			"segmentsEntryName",

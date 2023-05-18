@@ -108,7 +108,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
-						segmentsEntryId: valueJSON.segmentEntryId,
+						segmentsEntryId: valueJSON.segmentsEntryId,
 					},
 					url: '<%= addAssetListEntryVariationURL %>',
 				});

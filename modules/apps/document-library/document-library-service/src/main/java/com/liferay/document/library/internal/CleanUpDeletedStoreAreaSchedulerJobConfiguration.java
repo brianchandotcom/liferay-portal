@@ -33,6 +33,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -86,7 +89,11 @@ public class CleanUpDeletedStoreAreaSchedulerJobConfiguration
 	private Map<Long, String> _startOffsets;
 	private StoreAreaConfiguration _storeAreaConfiguration;
 
-	@Reference(target = "(default=true)")
-	private StoreAreaProcessor _storeAreaProcessor;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
+	)
+	private volatile StoreAreaProcessor _storeAreaProcessor;
 
 }

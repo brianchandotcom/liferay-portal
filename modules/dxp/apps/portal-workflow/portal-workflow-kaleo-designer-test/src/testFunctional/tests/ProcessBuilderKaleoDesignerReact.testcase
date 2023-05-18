@@ -4043,7 +4043,6 @@ definition {
 	}
 
 	@description = "Publish workflow definition with no End Node And View Error Message"
-	@ignore = "true"
 	@priority = 4
 	test DefinitionRequiresEndNodeToPublish {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefinitionRequiresEndNodeToPublish";
@@ -4058,7 +4057,7 @@ definition {
 
 		Button.clickPublish();
 
-		Alert.viewErrorMessage(errorMessage = "The item_0 node must have an outgoing transition");
+		Alert.viewErrorMessage(errorMessage = "The Start node must have an outgoing transition");
 	}
 
 	@description = "Publish workflow definition with no start node and view error message"

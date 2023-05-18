@@ -12,7 +12,7 @@ Here are some of the types of changes documented in this file:
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain feature or API will be dropped in an upcoming version.
 
-*This document has been reviewed through the breaking change entry at commit `525b211de2d94caa9c0131a15080cf76908c9209`.*
+*This document has been reviewed through the breaking change entry at commit `82b63e085ae8430b70a483d841b830501918ee96`.*
 
 Each change must have a brief descriptive title and contain the following information:
 
@@ -1314,26 +1314,26 @@ To resolve [LPS-181233](https://issues.liferay.com/browse/LPS-181233), the value
 
 ---------------------------------------
 
-## Remove Log4j1 compatibility
+## Remove Log4j1 Compatibility
 
 - **Date:** 2023-May-9
 - **JIRA Ticket:** [LPS-181002](https://issues.liferay.com/browse/LPS-181002)
 
 ### What changed?
 
-Log4j1 config format support is removed.
+Support for Log4j1 XML configuration syntax is removed.
 
 ### Who is affected?
 
-Code that's using Log4j1 config format's config files.
+This affects any code using Log4j1 configuration files.
 
 ### How should I update my code?
 
-Use Log4j2 strict XML format.
+[Convert](https://logging.apache.org/log4j/2.x/manual/migration.html#Log4j2ConfigurationFormat) Log4j1 configuration files to use Log4j2 XML syntax.
 
 ### Why was this change made?
 
-Portal has been using Log4j2. After this change, all log4j config files will use log4j2 config format.
+Liferay's source code has been using Log4j2 for some time, and Log4j1 reached [end of life in 2015](https://news.apache.org/foundation/entry/apache_logging_services_project_announces). After this change, all log4j configuration files must use log4j2 syntax.
 
 ---------------------------------------
 

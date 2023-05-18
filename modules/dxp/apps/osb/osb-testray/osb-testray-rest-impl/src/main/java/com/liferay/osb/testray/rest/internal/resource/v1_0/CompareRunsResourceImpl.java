@@ -40,24 +40,22 @@ public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
 			"PASSED", "FAILED", "BLOCKED", "TEST FIX", "DNR"
 		};
 
-		int[][] matrix = new int[5][5];
+		int[][] statusMatrix = new int[5][5];
 		int i;
 		int j;
 
 		for (i = 0; i < dueStatuses.length; i = i + 1) {
 			for (j = 0; j < dueStatuses.length; j = j + 1) {
-				int entry = _compareRunsService.getComparison(
+				statusMatrix[i][j] = _compareRunsService.getComparison(
 					idTestrayRunA, idTestrayRunB, dueStatuses[i],
 					dueStatuses[j], contextCompany.getCompanyId());
-
-				matrix[i][j] = entry;
 			}
 		}
 
 		return new CompareRuns() {
 			{
 				dueStatuses = dueStatuses;
-				values = matrix;
+				values = statusMatrix;
 			}
 		};
 	}

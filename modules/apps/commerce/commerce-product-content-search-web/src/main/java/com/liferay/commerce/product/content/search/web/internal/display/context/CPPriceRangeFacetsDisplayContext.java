@@ -153,6 +153,16 @@ public class CPPriceRangeFacetsDisplayContext {
 		return parameterValuesOptional.isPresent();
 	}
 
+	public boolean isStagingEnabled() {
+		String currentURL = _themeDisplay.getURLCurrent();
+
+		if (currentURL.contains("staging")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean showInputRange() {
 		return _cpPriceRangeFacetsPortletInstanceConfiguration.showInputRange();
 	}

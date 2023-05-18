@@ -1314,7 +1314,7 @@ To resolve [LPS-181233](https://issues.liferay.com/browse/LPS-181233), the value
 
 ---------------------------------------
 
-## Remove Log4j1 Compatibility
+## Removed Log4j1 Compatibility
 
 - **Date:** 2023-May-9
 - **JIRA Ticket:** [LPS-181002](https://issues.liferay.com/browse/LPS-181002)
@@ -1337,26 +1337,26 @@ Liferay's source code has been using Log4j2 for some time, and Log4j1 reached [e
 
 ---------------------------------------
 
-## Remove verifyDB function from Server Administration
+## Removed the `verifyDB` function from Server Administration and its services
 
 - **Date:** 2023-May-10
 - **JIRA Ticket:** [LPS-184192](https://issues.liferay.com/browse/LPS-184192)
 
 ### What changed?
 
-The verifyDB() method was removed from ServiceComponentLocalService. The "Verify database tables of all plugins." function was removed from "Server Administration" -> "Verification Actions"
+The `verifyDB()` method was removed from `ServiceComponentLocalService`. The corresponding _Verify database tables of all plugins_ functionality was removed from the Server Administration console's Verification Actions.
 
 ### Who is affected?
 
-This affects anyone calling the `ServiceComponentLocalService.verifyDB()` method from their code and using the UI function.
+This affects anyone calling the `ServiceComponentLocalService.verifyDB()` method from their code or using the Server Administration functionality.
 
 ### How should I update my code?
 
-Remove usage of `ServiceComponentLocalService.verifyDB()`
+Remove all usages of `ServiceComponentLocalService.verifyDB()`.
 
 ### Why was this change made?
 
-Upgrade framework manages all modules' tables and Release record creation. This verifyDB function does not do anything.
+The upgrade framework manages all modules' tables and `Release` record creation. The `verifyDB` method is non-functional.
 
 ---------------------------------------
 

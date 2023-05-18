@@ -2360,20 +2360,16 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject");
 
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
-
-		CreateObject.selectTitleField(fieldLabel = "title");
-
-		CreateObject.saveObject();
+		JSONObject.updateObject(
+			configKey = "titleObjectFieldName",
+			configValue = "title",
+			objectName = "CustomObject");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 
-		JSONObject.addObjectSingleFieldEntryViaJSONAPI(
-			fieldName = "title",
-			objectName = "CustomObject",
-			value = "apple");
+		JSONObject.addObjectEntryViaJSONAPI(
+			fieldList = "title/apple",
+			objectName = "CustomObject");
 
 		Search.openSearchPage();
 

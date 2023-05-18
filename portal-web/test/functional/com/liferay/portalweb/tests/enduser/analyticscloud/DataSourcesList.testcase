@@ -35,11 +35,17 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		for (var n : list "1,2,3") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.goToDataSources();
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
+
+			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 
 			ACUtils.launchDXP();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(acToken = ${token});
 
 			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 
@@ -67,11 +73,17 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		for (var n : list "1,2,3,4,5,6") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.goToDataSources();
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
+
+			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 
 			ACUtils.launchDXP();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(acToken = ${token});
 
 			var dataSource = StringUtil.replace(${propertyName}, " Combined Property", "");
 

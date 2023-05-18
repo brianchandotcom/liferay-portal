@@ -54,7 +54,21 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 
-		Paste(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
+		if (isSet(acToken)) {
+			Type(
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = ${acToken});
+		}
+		else if (isSet(staticExistingSourceToken)) {
+			Type(
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = ${staticExistingSourceToken});
+		}
+		else {
+			Type(
+				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
+				value1 = ${staticACToken});
+		}
 
 		WaitForElementNotPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");
 
@@ -62,7 +76,12 @@ definition {
 	}
 
 	macro connectDXPtoAnalyticsCloud {
-		ACDXPSettings.connectAnalyticsCloud();
+		if (isSet(acToken)) {
+			ACDXPSettings.connectAnalyticsCloud(acToken = ${acToken});
+		}
+		else {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
 
 		var assignedPropertyName = ACDXPSettings.getAssignedPropertyName();
 

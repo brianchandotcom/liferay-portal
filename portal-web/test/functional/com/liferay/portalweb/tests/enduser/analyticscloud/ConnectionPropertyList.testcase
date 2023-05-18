@@ -425,7 +425,13 @@ definition {
 		task ("Copy the token from AC again") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.goToDataSources();
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
+
+			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Go to DXP") {
@@ -433,7 +439,7 @@ definition {
 		}
 
 		task ("Connect DXP to AC again to create a new property automatically") {
-			ACDXPSettings.connectAnalyticsCloud();
+			ACDXPSettings.connectAnalyticsCloud(acToken = ${token});
 
 			var propertyName2 = ACDXPSettings.getAssignedPropertyName();
 		}
@@ -459,13 +465,19 @@ definition {
 		}
 
 		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.goToDataSources();
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
+
+			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Go to DXP > Connect the DXP to AC") {
 			ACUtils.launchDXP();
 
-			ACDXPSettings.connectAnalyticsCloud();
+			ACDXPSettings.connectAnalyticsCloud(acToken = ${token});
 		}
 
 		task ("Go to AC > Go to Settings > Go to Properties") {
@@ -571,7 +583,13 @@ definition {
 		}
 
 		task ("Copy the token from AC") {
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.goToDataSources();
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
+
+			var tokenOne = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Set up instance and sign in DXP") {
@@ -585,7 +603,7 @@ definition {
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.goToInstanceSettingsAC();
 
-			ACDXPSettings.connectAnalyticsCloud();
+			ACDXPSettings.connectAnalyticsCloud(acToken = ${tokenOne});
 
 			ACDXPSettings.viewGenericListItem(itemValueList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 
@@ -603,7 +621,13 @@ definition {
 		task ("Launch AC and Connect new data source") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACSettings.goToDataSources();
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
+
+			var tokenTwo = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Connect DXP to AC") {
@@ -611,7 +635,7 @@ definition {
 
 			ACDXPSettings.goToInstanceSettingsAC();
 
-			ACDXPSettings.connectAnalyticsCloud();
+			ACDXPSettings.connectAnalyticsCloud(acToken = ${tokenTwo});
 		}
 
 		task ("Assert a new property is created along with old property") {

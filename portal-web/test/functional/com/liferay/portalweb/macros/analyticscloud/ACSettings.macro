@@ -486,11 +486,13 @@ definition {
 
 		ACUtils.clickAnyButton(buttonName = "Clear Data");
 
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+		var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+		Type(
+			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+			value1 = ${confirmMessage});
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 
@@ -598,9 +600,11 @@ definition {
 	//			locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
 	//			value1 = "\SPACE");
 	//		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-	//		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//		var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Type(
+	//			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+	//			value1 = ${confirmMessage});
 	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	//}
 	//}
@@ -624,9 +628,11 @@ definition {
 	//	if (IsElementPresent(key_text = "Edit CSV", locator1 = "Button#ANY")) {
 	//		var dataSourceName = selenium.getText("//div[contains(@class,'sheet-header')]//h3");
 	//		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
-	//		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//		var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Type(
+	//			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+	//			value1 = ${confirmMessage});
 	//		Click(locator1 = "ACSettings#DELETE_BUTTON_DATA_SOURCE");
 	//		AssertTextEquals(
 	//			locator1 = "Modal#HEADER",
@@ -647,9 +653,11 @@ definition {
 	//				locator1 = "Modal#HEADER",
 	//				value1 = "Delete ${dataSourceName}");
 	//}
-	//		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//		var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//		Type(
+	//			locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+	//			value1 = ${confirmMessage});
 	//		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	//}
 	//}
@@ -694,9 +702,11 @@ definition {
 	//	AssertTextPresent(
 	//		locator1 = "Modal#BODY",
 	//		value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
-	//	Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//	var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//	Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//	Type(
+	//		locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+	//		value1 = ${confirmMessage});
 	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	//	Alert.viewSuccessMessage();
 	//}
@@ -717,9 +727,11 @@ definition {
 	//	AssertTextPresent(
 	//		locator1 = "Modal#BODY",
 	//		value1 = "This will result in the complete removal of this property's historical events. You will not be able to undo this operation.");
-	//	Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+	//	var confirmMessage = selenium.getElementValue("ACSettings#DELETE_CONFIRMATION_MESSAGE");
 	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-	//	Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+	//	Type(
+	//		locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT",
+	//		value1 = ${confirmMessage});
 	//	Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	//	Alert.viewSuccessMessage();
 	//}
@@ -902,7 +914,11 @@ definition {
 
 		Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
-		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
+		var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
+
+		static var staticACToken = ${token};
+
+		return ${staticACToken};
 	}
 
 	@summary = "Takes the token from an existing data source to make a reconnection"
@@ -915,7 +931,11 @@ definition {
 
 		ACUtils.clickAnyButton(button = "Reconnect");
 
-		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
+		var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
+
+		static var staticExistingSourceToken = ${token};
+
+		return ${staticExistingSourceToken};
 	}
 
 	macro verifyCannotAddUser {

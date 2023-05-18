@@ -274,7 +274,11 @@ definition {
 			entryContent = ${entryContent},
 			entryTitle = ${entryTitle});
 
-		Copy(locator1 = "BlogsEntry#COMMENTS_TRACKBACK_URL");
+		WaitForSPARefresh();
+
+		MouseOver(locator1 = "BlogsEntry#COMMENTS_TRACKBACK_URL");
+
+		var backtrackURL = selenium.getElementValue("BlogsEntry#COMMENTS_TRACKBACK_URL");
 
 		if (${virtualHosts} == "true") {
 			Navigator.gotoSpecificURLPage(
@@ -293,7 +297,9 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		Paste(locator1 = "TextInput#TRACKBACKS");
+		Type(
+			locator1 = "TextInput#TRACKBACKS",
+			value1 = ${backtrackURL});
 
 		AssertClick(
 			locator1 = "Button#PUBLISH",

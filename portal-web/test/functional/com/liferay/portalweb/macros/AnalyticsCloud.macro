@@ -29,7 +29,7 @@ definition {
 
 		Click(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 
-		Copy(locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
+		var token = selenium.getElementValue("AnalyticsCloudConnection#ANALYTICS_CLOUD_TOKEN_INPUT");
 
 		ACUtils.launchDXP();
 

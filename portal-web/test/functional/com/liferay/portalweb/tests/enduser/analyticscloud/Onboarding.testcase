@@ -84,13 +84,13 @@ definition {
 		}
 
 		task ("Copy the token from AC") {
-			Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
+			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 		}
 
 		task ("Go to DXP and connect the DXP to AC") {
 			ACUtils.launchDXP();
 
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
+			ACDXPSettings.connectDXPtoAnalyticsCloud(acToken = ${token});
 		}
 
 		// Now we are going to add a new DXP Data Source and validate the info shown in the connection modal from Settings.

@@ -3038,12 +3038,6 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-portal-security-audit-osgi-configuration">
-		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config">enabled=B"true"</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-portal-template-freemarker-osgi-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration.config">asyncRenderTimeout=L"7200000"${line.separator}loopCountThreshold=I"2147483647"</echo>
@@ -11163,18 +11157,6 @@ ${update.properties}</echo>
 			</not>
 			<then>
 				<prepare-portal-search-osgi-configuration/>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="testray.main.component.name" />
-
-		<if>
-			<or>
-				<equals arg1="${testray.main.component.name}" arg2="Audit" />
-				<equals arg1="${testray.main.component.name}" arg2="Multi Factor Authentication" />
-			</or>
-			<then>
-				<prepare-portal-security-audit-osgi-configuration />
 			</then>
 		</if>
 

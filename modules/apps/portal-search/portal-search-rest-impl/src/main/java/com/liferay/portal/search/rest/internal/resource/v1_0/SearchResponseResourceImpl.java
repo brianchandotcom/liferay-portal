@@ -366,7 +366,10 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 			String.valueOf(
 				new SearchResponse() {
 					{
-						if (Float.isNaN(searchHits.getMaxScore())) {
+						List<SearchHit> searchHitsList =
+							searchHits.getSearchHits();
+
+						if (searchHitsList.isEmpty()) {
 							maxScore = null;
 						}
 						else {

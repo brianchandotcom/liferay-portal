@@ -272,7 +272,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_DELETE_BUTTON</td>
-	<td>portal/screenshots/ddm/form_delete.png</td>
+	<td>//div[contains(label,'${key_fieldFieldLabel}')]/following-sibling::div//*[contains(@class, 'icon-trash')]</td>
 	<td></td>
 </tr>
 <tr>

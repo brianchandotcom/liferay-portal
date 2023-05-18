@@ -2463,6 +2463,26 @@ definition {
 		Button.clickSelect();
 	}
 
+	macro selectTags {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if (!(isSet(tagNameList))) {
+			var tagNameList = ${tagName};
+		}
+
+		for (var tableEntry : list ${tagNameList}) {
+			LexiconTable.checkTableCheckbox(tableEntry = ${tableEntry});
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClickNoError(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+	}
+
 	macro setExpirationDate {
 		Panel.expandPanel(panel = "Expiration Date");
 
@@ -4113,6 +4133,24 @@ definition {
 			key_dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DocumentsAndMedia#SEARCH_TITLE",
 			value1 = ${dmDocumentTitle});
+	}
+
+	macro ViewSelectedTags {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		if (!(isSet(tagNameList))) {
+			var tagNameList = ${tagName};
+		}
+
+		for (var tableEntry : list ${tagNameList}) {
+			AssertChecked.assertCheckedNotVisible(
+				key_tableEntry = ${tableEntry},
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+		}
+
+		SelectFrame(value1 = "relative=top");
 	}
 
 	macro viewStagingDetailsManagementBar {

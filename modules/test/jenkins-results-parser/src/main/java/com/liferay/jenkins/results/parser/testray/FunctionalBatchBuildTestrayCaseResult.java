@@ -167,6 +167,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
 		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
 
+		testrayAttachments.add(_getPoshiConsoleTestrayAttachment());
 		testrayAttachments.add(_getPoshiReportTestrayAttachment());
 		testrayAttachments.add(_getPoshiSummaryTestrayAttachment());
 
@@ -208,6 +209,22 @@ public class FunctionalBatchBuildTestrayCaseResult
 		}
 
 		return super.getLiferayOSGiLogTestrayAttachments();
+	}
+
+	private TestrayAttachment _getPoshiConsoleTestrayAttachment() {
+		if (getTestResult() == null) {
+			return null;
+		}
+
+		String name = getName();
+
+		name = name.replace("#", "_");
+
+		return getTestrayAttachment(
+			getBuild(), "Poshi Console",
+			JenkinsResultsParserUtil.combine(
+				getAxisBuildURLPath(), "/",
+				JenkinsResultsParserUtil.fixURL(name), "/output.log.gz"));
 	}
 
 	private TestrayAttachment _getPoshiReportTestrayAttachment() {

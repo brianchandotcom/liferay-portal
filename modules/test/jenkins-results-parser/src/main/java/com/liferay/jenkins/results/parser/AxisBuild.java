@@ -176,6 +176,13 @@ public class AxisBuild extends BaseBuild {
 			Dom4JUtil.getNewAnchorElement(
 				poshiJUnitTestResult.getPoshiSummaryURL(),
 				poshiSummaryListItemElement, "Poshi Summary");
+
+			Element poshiConsoleListItemElement = Dom4JUtil.getNewElement(
+				"li", reportLinksUnorderedListElement);
+
+			Dom4JUtil.getNewAnchorElement(
+				poshiJUnitTestResult.getPoshiConsoleURL(),
+				poshiConsoleListItemElement, "Poshi Console");
 		}
 
 		Dom4JUtil.addToElement(

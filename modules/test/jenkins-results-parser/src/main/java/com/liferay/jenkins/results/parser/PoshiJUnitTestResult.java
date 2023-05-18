@@ -60,6 +60,9 @@ public class PoshiJUnitTestResult extends JUnitTestResult {
 				getPoshiSummaryURL(), "Poshi Summary"),
 			" - ",
 			Dom4JUtil.getNewAnchorElement(
+				getPoshiConsoleURL(), "Poshi Console"),
+			" - ",
+			Dom4JUtil.getNewAnchorElement(
 				getConsoleOutputURL(), "Console Output"));
 
 		TestHistory testHistory = getTestHistory();
@@ -140,6 +143,19 @@ public class PoshiJUnitTestResult extends JUnitTestResult {
 
 	protected PoshiJUnitTestResult(Build build, JSONObject caseJSONObject) {
 		super(build, caseJSONObject);
+	}
+
+	protected String getPoshiConsoleURL() {
+		StringBuilder sb = new StringBuilder();
+
+		String name = getDisplayName();
+
+		sb.append(getTestrayLogsURL());
+		sb.append("/");
+		sb.append(name.replace('#', '_'));
+		sb.append("/output.log.gz");
+
+		return sb.toString();
 	}
 
 	protected String getPoshiReportURL() {

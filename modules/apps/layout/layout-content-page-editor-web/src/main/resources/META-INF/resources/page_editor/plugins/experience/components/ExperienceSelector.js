@@ -186,12 +186,17 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 			const element = document.querySelector(
 				'.dropdown-menu__experience--active'
 			);
+			const focusableElements = getKeyboardFocusableElements(
+				selectorRef.current
+			);
 
 			element?.scrollIntoView?.({
 				behavior: 'smooth',
 				block: 'nearest',
 				inline: 'nearest',
 			});
+
+			focusableElements[0]?.focus();
 		}
 	}, [open]);
 
@@ -432,17 +437,6 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 				disabled={!canUpdateExperiences}
 				displayType="secondary"
 				onClick={() => debouncedSetOpen(!open)}
-				onKeyDown={(event) => {
-					if (event.key === 'Tab' && !event.shiftKey && open) {
-						event.preventDefault();
-
-						const focusableElements = getKeyboardFocusableElements(
-							selectorRef.current
-						);
-
-						focusableElements[0]?.focus();
-					}
-				}}
 				ref={buttonRef}
 				size="sm"
 				type="button"

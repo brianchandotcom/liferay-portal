@@ -763,6 +763,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			_mbThreadLocalService.deleteMBThread(thread);
 
+			// Discussion
+
+			if (message.isDiscussion()) {
+				MBDiscussion discussion =
+					_mbDiscussionLocalService.getThreadDiscussion(
+						message.getThreadId());
+
+				_mbDiscussionLocalService.deleteMBDiscussion(
+					discussion.getDiscussionId());
+			}
+
 			// Indexer
 
 			Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(

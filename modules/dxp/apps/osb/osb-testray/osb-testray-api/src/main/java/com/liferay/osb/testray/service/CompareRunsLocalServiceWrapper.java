@@ -39,11 +39,11 @@ public class CompareRunsLocalServiceWrapper
 
 	@Override
 	public int getComparison(
-		long runIdA, long runIdB, String statusA, String statusB,
-		long companyId) {
+		long companyId, long runIdA, long runIdB, String statusA,
+		String statusB) {
 
 		return _compareRunsLocalService.getComparison(
-			runIdA, runIdB, statusA, statusB, companyId);
+			companyId, runIdA, runIdB, statusA, statusB);
 	}
 
 	/**

@@ -51,8 +51,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CompareRunsServiceHttp {
 
 	public static int getComparison(
-		HttpPrincipal httpPrincipal, long runIdA, long runIdB, String statusA,
-		String statusB, long companyId) {
+		HttpPrincipal httpPrincipal, long companyId, long runIdA, long runIdB,
+		String statusA, String statusB) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -60,7 +60,7 @@ public class CompareRunsServiceHttp {
 				_getComparisonParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, runIdA, runIdB, statusA, statusB, companyId);
+				methodKey, companyId, runIdA, runIdB, statusA, statusB);
 
 			Object returnObj = null;
 
@@ -88,7 +88,7 @@ public class CompareRunsServiceHttp {
 
 	private static final Class<?>[] _getComparisonParameterTypes0 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, long.class
+			long.class, long.class, long.class, String.class, String.class
 		};
 
 }

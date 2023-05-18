@@ -69,13 +69,11 @@ definition {
 	test CanClearTheResultsOfASearch {
 		CalendarPermissions.gotoPermissions();
 
-		CalendarPermissions.searchRoleName(searchTerm = "Guest");
+		Search.searchCP(searchTerm = "Guest");
 
-		CalendarPermissions.viewSearchResult(searchResults = "1 Result for \"Guest\"");
+		Click(locator1 = "CalendarPermissions#PERMISSIONS_SEARCH_CLEAR");
 
-		CalendarPermissions.cleanSearchResult();
-
-		CalendarPermissions.resultBarIsnotDisplayed();
+		AssertElementNotPresent(locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR");
 	}
 
 	@description = "LRQA-71890 - Verify that the user can search for a existent permission"

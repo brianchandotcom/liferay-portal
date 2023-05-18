@@ -41,6 +41,9 @@ export default function _JournalPortlet({
 	const actionInput = document.getElementById(
 		`${namespace}javax-portlet-action`
 	);
+	const availableLocalesInput = document.getElementById(
+		`${namespace}availableLocales`
+	);
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
@@ -59,6 +62,8 @@ export default function _JournalPortlet({
 		...initialAvailableLocales,
 		initialDefaultLanguageId,
 	];
+
+	availableLocalesInput.value = availableLocales;
 
 	let articleId = initialArticleId;
 	let defaultLanguageId = initialDefaultLanguageId;
@@ -196,10 +201,6 @@ export default function _JournalPortlet({
 			);
 
 			articleIdInput.value = articleId;
-
-			const availableLocalesInput = document.getElementById(
-				`${namespace}availableLocales`
-			);
 
 			availableLocalesInput.value = availableLocales;
 
@@ -398,6 +399,7 @@ export default function _JournalPortlet({
 			onLocaleChangedCallback: (_context, languageId) => {
 				if (!availableLocales.includes(languageId)) {
 					availableLocales.push(languageId);
+					availableLocalesInput.value = availableLocales;
 				}
 
 				selectedLanguageId = languageId;

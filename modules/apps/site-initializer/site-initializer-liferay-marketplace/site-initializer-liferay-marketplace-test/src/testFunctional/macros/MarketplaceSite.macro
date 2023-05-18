@@ -1,9 +1,11 @@
 definition {
-    macro addMarketplaceSite {
+
+	macro addMarketplaceSite {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
 			siteName = ${siteName},
 			siteTemplateName = "Liferay Marketplace");
 	}
+
 }

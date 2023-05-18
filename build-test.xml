@@ -12442,6 +12442,17 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<equals arg1="${test.run.type}" arg2="parallel" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.run.type=${test.run.type}
+					test.run.thread.pool.size=3
+					thread.portal.url=http://www.able.com:8080,http://www.baker.com:8080,http://www.charlie.com:8080
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<contains string="${test.class}" substring="," />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

@@ -1000,7 +1000,8 @@ public class EditAssetListDisplayContext {
 		_selectSegmentsEntryURL = String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-				"selectEntity", segmentsEntryItemSelectorCriterion));
+				_portletResponse.getNamespace() + "selectEntity",
+				segmentsEntryItemSelectorCriterion));
 
 		return _selectSegmentsEntryURL;
 	}

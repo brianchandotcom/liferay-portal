@@ -1,0 +1,21 @@
+assemble:
+    - include:
+        - package.json
+        - "**/*.js"
+liferay-sample-node-oauth-application-user-agent:
+    .serviceAddress: localhost:3001
+    .serviceScheme: http
+    name: Liferay Sample Node OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent
+liferay-sample-node-object-action-1:
+    name: Liferay Sample Node Object Action 1
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-node-oauth-application-user-agent
+    resourcePath: /sample/object/action/1
+    type: objectAction
+liferay-sample-node-object-action-2:
+    name: Liferay Sample Node Object Action 2
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-node-oauth-application-user-agent
+    resourcePath: /sample/object/action/2
+    type: objectAction

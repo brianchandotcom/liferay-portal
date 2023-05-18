@@ -53,90 +53,78 @@ public class CompareRunsLocalServiceImpl
 		long runIdA, long runIdB, String statusA, String statusB,
 		long companyId) {
 
-		ObjectDefinition caseObjectDefinition = _getObjectDefinitionByTableName(
-			_CASE, companyId);
+		DynamicObjectDefinitionTable testrayCaseExtensionDynamicTable =
+			_getDynamicObjectDefinitionTable(_getObjectDefinitionByTableName("_Case", companyId), true);
 
-		DynamicObjectDefinitionTable caseExtensionDynamicTable =
-			_getDynamicObjectDefinitionTable(caseObjectDefinition, true);
+		DynamicObjectDefinitionTable testrayCaseResultExtensionDynamicTable =
+			_getDynamicObjectDefinitionTable(_getObjectDefinitionByTableName("_CaseResult", companyId), true);
 
-		ObjectDefinition caseResultObjectDefinition =
-			_getObjectDefinitionByTableName(_CASE_RESULT, companyId);
+		DynamicObjectDefinitionTable testrayCaseResultDynamicTable =
+			_getDynamicObjectDefinitionTable(_getObjectDefinitionByTableName("_CaseResult", companyId), false);
 
-		DynamicObjectDefinitionTable caseResultExtensionDynamicTable =
-			_getDynamicObjectDefinitionTable(caseResultObjectDefinition, true);
-
-		DynamicObjectDefinitionTable caseResultDynamicTable =
-			_getDynamicObjectDefinitionTable(caseResultObjectDefinition, false);
-
-		Column<DynamicObjectDefinitionTable, Long> runToCaseResultColumn =
+		Column<DynamicObjectDefinitionTable, Long> testrayRunToCaseResultColumn =
 			(Column<DynamicObjectDefinitionTable, Long>)
-				caseResultExtensionDynamicTable.getColumn(
+				testrayCaseResultExtensionDynamicTable.getColumn(
 					"r_runToCaseResult_c_runId");
 
-		Column<DynamicObjectDefinitionTable, String> dueStatucColumn =
+		Column<DynamicObjectDefinitionTable, String> testrayDueStatusColumn =
 			(Column<DynamicObjectDefinitionTable, String>)
-				caseResultDynamicTable.getColumn("dueStatus_");
+				testrayCaseResultDynamicTable.getColumn("dueStatus_");
 
-		Column<DynamicObjectDefinitionTable, Long> caseToCaseResultIdColumn =
+		Column<DynamicObjectDefinitionTable, Long> testrayCaseToCaseResultIdColumn =
 			(Column<DynamicObjectDefinitionTable, Long>)
-				caseResultExtensionDynamicTable.getColumn(
+				testrayCaseResultExtensionDynamicTable.getColumn(
 					"r_caseToCaseResult_c_caseId");
 
-		Predicate predicateA = runToCaseResultColumn.eq(
-			Long.valueOf(runIdA)
-		).and(
-			dueStatucColumn.eq(statusA)
-		);
-
-		Predicate predicateB = runToCaseResultColumn.eq(
-			runIdB
-		).and(
-			dueStatucColumn.eq(statusB)
-		);
-
-		JoinStep genericQuery = DSLQueryFactoryUtil.select(
-			caseExtensionDynamicTable.getColumn("c_caseId_")
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			testrayCaseExtensionDynamicTable.getColumn("c_caseId_")
 		).from(
-			caseResultExtensionDynamicTable
+			testrayCaseResultExtensionDynamicTable
 		).innerJoinON(
-			caseExtensionDynamicTable,
-			caseExtensionDynamicTable.getPrimaryKeyColumn(
+			testrayCaseExtensionDynamicTable,
+			testrayCaseExtensionDynamicTable.getPrimaryKeyColumn(
 			).eq(
-				caseToCaseResultIdColumn
+				testrayCaseToCaseResultIdColumn
 			)
 		).innerJoinON(
-			caseResultDynamicTable,
-			caseResultExtensionDynamicTable.getPrimaryKeyColumn(
+			testrayCaseResultDynamicTable,
+			testrayCaseResultExtensionDynamicTable.getPrimaryKeyColumn(
 			).eq(
-				caseResultDynamicTable.getPrimaryKeyColumn()
+				testrayCaseResultDynamicTable.getPrimaryKeyColumn()
 			)
 		);
 
 		Collection<Column<?, ?>> tableTemplate = new ArrayList<Column<?, ?>>() {
 		};
 
-		Column<DynamicObjectDefinitionTable, Long> caseIdDynamicColumn =
+		Column<DynamicObjectDefinitionTable, Long> testrayCaseIdDynamicColumn =
 			(Column<DynamicObjectDefinitionTable, Long>)
-				caseExtensionDynamicTable.getColumn("c_caseId_");
+				testrayCaseExtensionDynamicTable.getColumn("c_caseId_");
 
-		tableTemplate.add(caseIdDynamicColumn);
+		tableTemplate.add(testrayCaseIdDynamicColumn);
 
-		Table table1 = genericQuery.where(
-			predicateA
+		Table table = joinStep.where(
+			testrayRunToCaseResultColumn.eq(
+				runIdA
+			).and(
+				testrayDueStatusColumn.eq(statusA)
+			)
 		).as(
 			"table1", tableTemplate
 		);
 
-		Column<?, ?> caseIdColumn = table1.getColumn("c_caseId_");
-
-		DSLQuery table2 = genericQuery.where(predicateB);
+		Column<?, ?> testrayCaseIdColumn = table.getColumn("c_caseId_");
 
 		return _objectEntryLocalService.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
-				table1
+				table
 			).where(
-				caseIdColumn.in(table2)
+				testrayCaseIdColumn.in(joinStep.where(testrayRunToCaseResultColumn.eq(
+					runIdB
+				).and(
+					testrayDueStatusColumn.eq(statusB)
+				)))
 			));
 	}
 
@@ -180,9 +168,6 @@ public class CompareRunsLocalServiceImpl
 		return objectDefinitionList.get(0);
 	}
 
-	private static final String _CASE = "_Case";
-
-	private static final String _CASE_RESULT = "_CaseResult";
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

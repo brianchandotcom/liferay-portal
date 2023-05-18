@@ -40,6 +40,7 @@ const ActivationKeysInputs = ({
 	const [{project, userAccount}] = useCustomerPortal();
 
 	const {
+		articleGettingStartedWithLiferayEnterpriseSearchURL,
 		client,
 		provisioningServerAPI,
 		submitSupportTicketURL,
@@ -280,6 +281,24 @@ const ActivationKeysInputs = ({
 			</Button>
 
 			{hasLicenseDownloadError && currentEnterpriseMessage}
+
+			<p className="pt-3 text-neutral-7">
+				{`${i18n.translate(
+					'for-instructions-on-how-to-setup-your-liferay-enterprise-search-software-please-read-the'
+				)} `}
+
+				<a
+					href={articleGettingStartedWithLiferayEnterpriseSearchURL}
+					rel="noreferrer noopener"
+					target="_blank"
+				>
+					<u className="font-weight-semi-bold text-neutral-7">
+						{i18n.translate(
+							'getting-started-with-liferay-enterprise-search-article'
+						)}
+					</u>
+				</a>
+			</p>
 		</div>
 	);
 };

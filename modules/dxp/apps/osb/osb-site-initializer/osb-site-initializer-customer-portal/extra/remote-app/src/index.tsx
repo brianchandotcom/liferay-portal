@@ -34,6 +34,7 @@ const AppRoutes = {
 type Properties = {
 	articleAccountSupportURL: string | null;
 	articleDeployingActivationKeysURL: string | null;
+	articleGettingStartedWithLiferayEnterpriseSearchURL: string | null;
 	featureFlag?: string[];
 	importDate?: Date | null;
 	submitSupportTicketURL: string | null;
@@ -91,6 +92,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 			),
 			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'
+			),
+			articleGettingStartedWithLiferayEnterpriseSearchURL: super.getAttribute(
+				'article-getting-started-with-liferay-enterprise-search-url'
 			),
 			featureFlag: (super.getAttribute('feature-flag') ?? '')
 				.split(',')

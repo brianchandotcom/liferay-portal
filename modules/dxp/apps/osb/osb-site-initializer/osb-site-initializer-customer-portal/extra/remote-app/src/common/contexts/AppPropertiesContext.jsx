@@ -14,6 +14,7 @@ import {createContext, useContext} from 'react';
 export const AppPropertiesContext = createContext({
 	articleAccountSupportURL: '',
 	articleDeployingActivationKeysURL: '',
+	articleGettingStartedWithLiferayEnterpriseSearchURL: '',
 	client: null,
 	gravatarAPI: '',
 	importDate: null,

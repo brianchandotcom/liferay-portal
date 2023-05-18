@@ -483,7 +483,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		AssertTextEquals(
-			locator1 = "IFrame#DIALOG_BOX",
+			locator1 = "Modal#HEADER",
 			value1 = "Delete workflow?");
 
 		AssertTextEquals(
@@ -503,7 +503,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		AssertTextEquals(
-			locator1 = "IFrame#DIALOG_BOX",
+			locator1 = "Modal#HEADER",
 			value1 = "Delete workflow?");
 
 		AssertTextEquals(

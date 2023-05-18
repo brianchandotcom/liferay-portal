@@ -206,7 +206,7 @@ definition {
 		Click(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_BUTTON");
 
 		AssertTextEquals(
-			locator1 = "IFrame#DIALOG_BOX",
+			locator1 = "Modal#HEADER",
 			value1 = ${fieldFieldLabel});
 
 		AssertTextEquals(

@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -76,9 +75,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_editableElementMapperServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, EditableElementMapper.class, "type");
 		_editableElementParserServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, EditableElementParser.class, "type");
@@ -87,7 +83,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Deactivate
 	protected void deactivate() {
 		_editableElementParserServiceTrackerMap.close();
-		_editableElementMapperServiceTrackerMap.close();
 	}
 
 	private JSONObject _getDefaultEditableValuesJSONObject(String html) {
@@ -139,8 +134,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return _editableElementParserServiceTrackerMap.getService(type);
 	}
 
-	private ServiceTrackerMap<String, EditableElementMapper>
-		_editableElementMapperServiceTrackerMap;
 	private ServiceTrackerMap<String, EditableElementParser>
 		_editableElementParserServiceTrackerMap;
 

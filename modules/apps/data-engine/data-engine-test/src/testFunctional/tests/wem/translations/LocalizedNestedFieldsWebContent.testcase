@@ -411,6 +411,7 @@ definition {
 
 		AssertTextEquals(
 			key_localizedLanguage = "en-US",
+			key_portlet = "JournalPortlet",
 			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 			value1 = "Default");
 	}

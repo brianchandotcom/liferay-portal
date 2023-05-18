@@ -248,11 +248,13 @@ definition {
 
 		AssertTextEquals(
 			key_localizedLanguage = "es-ES",
+			key_portlet = "JournalPortlet",
 			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 			value1 = "Translated");
 
 		AssertTextEquals(
 			key_localizedLanguage = "de-DE",
+			key_portlet = "JournalPortlet",
 			locator1 = "Translation#TRANSLATION_STATUS_TITLE",
 			value1 = "Not Translated");
 	}

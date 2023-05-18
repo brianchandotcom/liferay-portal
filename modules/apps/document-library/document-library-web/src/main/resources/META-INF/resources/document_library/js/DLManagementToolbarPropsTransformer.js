@@ -178,6 +178,18 @@ export default function propsTransformer({
 		);
 	};
 
+	const filterByCategory = (categoriesFilterURL) => {
+		openSelectionModal({
+			buttonAddLabel: Liferay.Language.get('select'),
+			height: '70vh',
+			multiple: true,
+			selectEventName: `${portletNamespace}selectedAssetCategory`,
+			size: 'md',
+			title: Liferay.Language.get('filter-by-categories'),
+			url: categoriesFilterURL,
+		});
+	};
+
 	const filterByDocumentType = () => {
 		openSelectionModal({
 			onSelect(selectedItem) {
@@ -389,7 +401,10 @@ export default function propsTransformer({
 			}
 		},
 		onFilterDropdownItemClick(event, {item}) {
-			if (item?.data?.action === 'openDocumentTypesSelector') {
+			if (item?.data?.action === 'openCategoriesSelector') {
+				filterByCategory(item?.data?.categoriesFilterURL);
+			}
+			else if (item?.data?.action === 'openDocumentTypesSelector') {
 				filterByDocumentType();
 			}
 			else if (item?.data?.action === 'openExtensionSelector') {

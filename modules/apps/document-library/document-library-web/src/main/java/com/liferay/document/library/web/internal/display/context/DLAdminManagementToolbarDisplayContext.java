@@ -531,6 +531,18 @@ public class DLAdminManagementToolbarDisplayContext
 				return HtmlUtil.escapeJS(navigation);
 			}
 		).setParameter(
+			"assetTagId",
+			() -> {
+				String[] assetTagIds = ArrayUtil.toStringArray(
+					_getSelectedAssetTagIds(_httpServletRequest));
+
+				if (ArrayUtil.isNotEmpty(assetTagIds)) {
+					return assetTagIds;
+				}
+
+				return null;
+			}
+		).setParameter(
 			"curEntry",
 			() -> {
 				int curEntry = ParamUtil.getInteger(
@@ -550,6 +562,17 @@ public class DLAdminManagementToolbarDisplayContext
 
 				if (deltaEntry > 0) {
 					return deltaEntry;
+				}
+
+				return null;
+			}
+		).setParameter(
+			"extension",
+			() -> {
+				String[] extensions = _getExtensions(_httpServletRequest);
+
+				if (ArrayUtil.isNotEmpty(extensions)) {
+					return extensions;
 				}
 
 				return null;

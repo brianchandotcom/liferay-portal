@@ -262,7 +262,7 @@ server.ssl.certificate: ${elasticsearch.dir}/config/certs/elastic-certificates.c
 server.ssl.enabled: true
 server.ssl.key: ${elasticsearch.dir}/config/certs/elastic-certificates.key
 xpack.security.encryptionKey: "xsomethingxatxleastx32xcharactersx"
-xpack.security.sessionTimeout: 600000</echo>
+xpack.security.session.idleTimeout: 600000</echo>
 
 			<if>
 				<equals arg1="${elastic.pki.authentication.enabled}" arg2="true" />

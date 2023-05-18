@@ -235,7 +235,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-26982."
-	@ignore = "true"
 	@priority = 4
 	test AssertFieldValuesNotLostDuringReviewTask {
 		ProductMenu.gotoPortlet(
@@ -1400,7 +1399,6 @@ definition {
 			workflowAssetTitle = "Kaleo Forms Process");
 	}
 
-	@ignore = "true"
 	@priority = 3
 	test CompleteProcessAndAssertFieldOrder {
 		Navigator.openURL();

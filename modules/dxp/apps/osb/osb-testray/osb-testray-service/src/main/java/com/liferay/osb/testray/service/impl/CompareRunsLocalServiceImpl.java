@@ -23,8 +23,6 @@ import com.liferay.osb.testray.service.base.CompareRunsLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -50,17 +48,16 @@ public class CompareRunsLocalServiceImpl
 	extends CompareRunsLocalServiceBaseImpl {
 
 	public int getComparison(
-		long runIdA, long runIdB, String statusA, String statusB,
-		long companyId) {
+		long companyId, long runIdA, long runIdB, String statusA, String statusB) {
 
 		DynamicObjectDefinitionTable testrayCaseExtensionDynamicTable =
-			_getDynamicObjectDefinitionTable(_getObjectDefinitionByTableName("_Case", companyId), true);
+			_getDynamicObjectDefinitionTable(true, _getObjectDefinitionByTableName(companyId, "_Case"));
 
 		DynamicObjectDefinitionTable testrayCaseResultExtensionDynamicTable =
-			_getDynamicObjectDefinitionTable(_getObjectDefinitionByTableName("_CaseResult", companyId), true);
+			_getDynamicObjectDefinitionTable(true, _getObjectDefinitionByTableName(companyId,"_CaseResult"));
 
 		DynamicObjectDefinitionTable testrayCaseResultDynamicTable =
-			_getDynamicObjectDefinitionTable(_getObjectDefinitionByTableName("_CaseResult", companyId), false);
+			_getDynamicObjectDefinitionTable( false, _getObjectDefinitionByTableName(companyId,"_CaseResult"));
 
 		Column<DynamicObjectDefinitionTable, Long> testrayRunToCaseResultColumn =
 			(Column<DynamicObjectDefinitionTable, Long>)
@@ -129,7 +126,7 @@ public class CompareRunsLocalServiceImpl
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
-		ObjectDefinition objectDefinition, boolean extension) {
+		boolean extension, ObjectDefinition objectDefinition) {
 
 		if (extension) {
 			return new DynamicObjectDefinitionTable(
@@ -149,7 +146,7 @@ public class CompareRunsLocalServiceImpl
 	}
 
 	private ObjectDefinition _getObjectDefinitionByTableName(
-		String tableName, Long companyId) {
+		long companyId, String tableName) {
 
 		DynamicQuery dynamicQuery =
 			_objectDefinitionLocalService.dynamicQuery();

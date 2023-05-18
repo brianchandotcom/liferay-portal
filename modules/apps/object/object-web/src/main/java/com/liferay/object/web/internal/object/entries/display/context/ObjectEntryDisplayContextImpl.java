@@ -710,7 +710,8 @@ public class ObjectEntryDisplayContextImpl
 
 		DDMFormField ddmFormField = new DDMFormField(
 			objectField.getName(),
-			objectFieldBusinessType.getDDMFormFieldTypeName());
+			objectFieldBusinessType.getDDMFormFieldTypeName(
+				objectField.isLocalized()));
 
 		Map<String, Object> properties = objectFieldBusinessType.getProperties(
 			objectField, _createObjectFieldRenderingContext(objectEntry));

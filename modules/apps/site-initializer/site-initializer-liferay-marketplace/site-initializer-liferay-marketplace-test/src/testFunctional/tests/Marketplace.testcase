@@ -1,0 +1,50 @@
+@component-name = "portal-liferay-online"
+definition {
+
+	property osgi.modules.includes = "site-initializer-liferay-marketplace";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Liferay Marketplace";
+
+	var testSiteName = "Marketplace Site";
+	var testSiteURL = "marketplace-site";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Marketplace Site") {
+			MarketplaceSite.addMarketplaceSite(siteName = ${testSiteName});
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Story ID: LPS-183566 | Test Summary: Verify if Liferay Marketplace can be created with Site initializer"
+	@priority = 5
+	test CanMP20BeCreated {
+		task ("Given that I go to the Marketplace Site") {
+			ApplicationsMenu.gotoSite(site = ${testSiteName});
+		}
+
+		task ("Then I should be able to assert that the App Marketplace page is present") {
+			AssertElementPresent(
+				key_title = "App Marketplace",
+				locator1 = "Marketplace#FRAGMENT_HEADING");
+		}
+	}
+
+}

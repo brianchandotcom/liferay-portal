@@ -5,7 +5,7 @@
 			"en_US": "This is the description for Test Commerce Order Type 1."
 		},
 		"displayOrder": 1,
-		"externalReferenceCode": "TESTORDERTYPE1",
+		"externalReferenceCode": "TESTCOMMERCEORDERTYPE1",
 		"name": {
 			"en_US": "Test Commerce Order Type 1"
 		},
@@ -17,7 +17,7 @@
 			"en_US": "This is the description for Test Commerce Order Type 2."
 		},
 		"displayOrder": 2,
-		"externalReferenceCode": "TESTORDERTYPE2",
+		"externalReferenceCode": "TESTCOMMERCEORDERTYPE2",
 		"name": {
 			"en_US": "Test Commerce Order Type 2 Update"
 		},
@@ -29,7 +29,7 @@
 			"en_US": "This is the description for Test Commerce Order Type 3."
 		},
 		"displayOrder": 3,
-		"externalReferenceCode": "TESTORDERTYPE3",
+		"externalReferenceCode": "TESTCOMMERCEORDERTYPE3",
 		"name": {
 			"en_US": "Test Commerce Order Type 3"
 		},

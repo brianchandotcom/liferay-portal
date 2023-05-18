@@ -760,7 +760,7 @@ public class BundleSiteInitializerTest {
 
 		OrderType orderType =
 			orderTypeResource.getOrderTypeByExternalReferenceCode(
-				"TESTORDERTYPE1");
+				"TESTCOMMERCEORDERTYPE1");
 
 		Map<String, String> orderTypeName = orderType.getName();
 
@@ -771,7 +771,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertFalse(orderType.getActive());
 
 		orderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
-			"TESTORDERTYPE2");
+			"TESTCOMMERCEORDERTYPE2");
 
 		orderTypeName = orderType.getName();
 
@@ -791,7 +791,7 @@ public class BundleSiteInitializerTest {
 
 		OrderType orderType2 =
 			orderTypeResource.getOrderTypeByExternalReferenceCode(
-				"TESTORDERTYPE1");
+				"TESTCOMMERCEORDERTYPE1");
 
 		Map<String, String> orderTypeName = orderType2.getName();
 
@@ -802,7 +802,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertFalse(orderType2.getActive());
 
 		orderType2 = orderTypeResource.getOrderTypeByExternalReferenceCode(
-			"TESTORDERTYPE2");
+			"TESTCOMMERCEORDERTYPE2");
 
 		orderTypeName = orderType2.getName();
 
@@ -813,7 +813,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(orderType2.getActive());
 
 		orderType2 = orderTypeResource.getOrderTypeByExternalReferenceCode(
-			"TESTORDERTYPE3");
+			"TESTCOMMERCEORDERTYPE3");
 
 		orderTypeName = orderType2.getName();
 

@@ -15,23 +15,26 @@
 package com.liferay.frontend.editor.alloyeditor.web.internal;
 
 import com.liferay.portal.kernel.editor.Editor;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
 /**
- * @author Ambrín Chaudhary
+ * @author Joao Victor Alves
  */
-@Component(
-	property = "name=" + AlloyEditorBBCodeEditor.EDITOR_NAME,
-	service = Editor.class
-)
-public class AlloyEditorBBCodeEditor extends BaseAlloyEditor {
-
-	public static final String EDITOR_NAME = "alloyeditor_bbcode";
+public abstract class BaseAlloyEditor implements Editor {
 
 	@Override
-	public String getName() {
-		return EDITOR_NAME;
+	public String[] getJavaScriptModules() {
+		return new String[] {"liferay-alloy-editor"};
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/alloyeditor.jsp";
+	}
+
+	@Override
+	public String getResourceType() {
+		return PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR;
 	}
 
 }

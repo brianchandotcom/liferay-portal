@@ -162,6 +162,7 @@ import org.gradle.api.component.SoftwareComponentContainer;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
@@ -175,7 +176,7 @@ import org.gradle.api.logging.LogLevel;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.BasePluginExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.quality.Pmd;
@@ -307,6 +308,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		BundleExtension bundleExtension = BndUtil.getBundleExtension(
 			project.getExtensions());
 
+		BasePluginExtension basePluginExtension = GradleUtil.getExtension(
+			project, BasePluginExtension.class);
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
@@ -436,7 +439,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		File appBndFile = _getAppBndFile(project, portalRootDir);
 
-		_configureBasePlugin(project, portalRootDir);
+		_configureBasePlugin(basePluginExtension, portalRootDir);
 		_configureBundleDefaultInstructions(
 			project, portalRootDir, appBndFile, publishing);
 		_configureConfigurations(
@@ -2013,20 +2016,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureBasePlugin(Project project, File portalRootDir) {
+	private void _configureBasePlugin(
+		BasePluginExtension basePluginExtension, File portalRootDir) {
+
 		if (portalRootDir == null) {
 			return;
 		}
 
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
-
 		File dir = new File(portalRootDir, "tools/sdk/dist");
 
-		String dirName = FileUtil.relativize(dir, project.getBuildDir());
+		DirectoryProperty directoryProperty =
+			basePluginExtension.getDistsDirectory();
 
-		basePluginConvention.setDistsDirName(dirName);
-		basePluginConvention.setLibsDirName(dirName);
+		directoryProperty.set(dir);
+
+		directoryProperty = basePluginExtension.getLibsDirectory();
+
+		directoryProperty.set(dir);
 	}
 
 	private void _configureBundleDefaultInstructions(

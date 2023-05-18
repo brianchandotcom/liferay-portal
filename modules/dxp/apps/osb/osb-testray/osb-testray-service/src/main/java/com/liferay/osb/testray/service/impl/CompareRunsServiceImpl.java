@@ -30,4 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class CompareRunsServiceImpl extends CompareRunsServiceBaseImpl {
+
+	public int getComparison(long runIdA, long runIdB, String statusA, String statusB, long companyId) {
+
+		return compareRunsLocalService.getComparison(runIdA, runIdB, statusA, statusB, companyId);
+
+	}
+
 }

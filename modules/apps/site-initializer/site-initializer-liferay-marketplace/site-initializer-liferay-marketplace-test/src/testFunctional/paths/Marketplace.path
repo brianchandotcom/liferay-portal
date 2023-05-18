@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Marketplace</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Marketplace</td></tr>
+</thead>
+
+<tbody>
+
+<!--FRAGMENT-->
+
+<tr>
+	<td>FRAGMENT_HEADING</td>
+	<td>//*[contains(@class,'component-heading') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

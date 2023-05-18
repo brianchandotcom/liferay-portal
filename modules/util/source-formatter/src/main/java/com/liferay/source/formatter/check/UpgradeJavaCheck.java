@@ -16,10 +16,8 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
-import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -41,15 +39,6 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 		if (!fileName.endsWith(".java")) {
 			return content;
 		}
-
-		SourceProcessor sourceProcessor = getSourceProcessor();
-
-		SourceFormatterArgs sourceFormatterArgs =
-			sourceProcessor.getSourceFormatterArgs();
-
-		sourceFormatterArgs.setJavaParserEnabled(false);
-
-		sourceProcessor.setSourceFormatterArgs(sourceFormatterArgs);
 
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 

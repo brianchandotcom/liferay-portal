@@ -88,6 +88,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 			super.getSourceFormatterArgs();
 
 		sourceFormatterArgs.setCheckCategoryNames(checkCategoryNames);
+		sourceFormatterArgs.setJavaParserEnabled(false);
 		sourceFormatterArgs.setSourceFormatterProperties(
 			sourceFormatterProperties);
 

@@ -22,43 +22,30 @@ export default function useStatusCountNavigation(activationKeys) {
 
 	useEffect(() => {
 		if (activationKeys) {
-			const statusCount = activationKeys.reduce(
-				(statusCountAccumulator, activationKey) => {
-					const isNotActivate = FILTER_TYPES.notActivated(
-						activationKey
-					);
+			const statusCountMap = {
+				activatedTotalCount: 0,
+				allTotalCount: activationKeys.length,
+				expiredTotalCount: 0,
+				notActiveTotalCount: 0,
+			};
 
-					if (isNotActivate) {
-						statusCountAccumulator.notActiveTotalCount = ++statusCountAccumulator.notActiveTotalCount;
+			for (const activationKey of activationKeys) {
+				const isNotActivate = FILTER_TYPES.notActivated(activationKey);
+				const isActivate = FILTER_TYPES.activated(activationKey);
+				const isExpired = FILTER_TYPES.expired(activationKey);
 
-						return statusCountAccumulator;
-					}
-
-					const isActivate = FILTER_TYPES.activated(activationKey);
-					if (isActivate) {
-						statusCountAccumulator.activatedTotalCount = ++statusCountAccumulator.activatedTotalCount;
-
-						return statusCountAccumulator;
-					}
-
-					const isExpired = FILTER_TYPES.expired(activationKey);
-					if (isExpired) {
-						statusCountAccumulator.expiredTotalCount = ++statusCountAccumulator.expiredTotalCount;
-
-						return statusCountAccumulator;
-					}
-				},
-				{
-					activatedTotalCount: 0,
-					allTotalCount: 0,
-					expiredTotalCount: 0,
-					notActiveTotalCount: 0,
+				if (isNotActivate) {
+					statusCountMap.notActiveTotalCount = ++statusCountMap.notActiveTotalCount;
 				}
-			);
+				else if (isActivate) {
+					statusCountMap.activatedTotalCount = ++statusCountMap.activatedTotalCount;
+				}
+				else if (isExpired) {
+					statusCountMap.expiredTotalCount = ++statusCountMap.expiredTotalCount;
+				}
+			}
 
-			statusCount.allTotalCount = activationKeys.length;
-
-			setStatusCountNavigation(statusCount);
+			setStatusCountNavigation(statusCountMap);
 		}
 	}, [activationKeys]);
 

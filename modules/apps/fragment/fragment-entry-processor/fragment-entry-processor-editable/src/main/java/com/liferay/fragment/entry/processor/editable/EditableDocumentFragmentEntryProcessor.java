@@ -228,8 +228,8 @@ public class EditableDocumentFragmentEntryProcessor
 
 	@Deactivate
 	protected void deactivate() {
-		_editableElementParserServiceTrackerMap.close();
 		_editableElementMapperServiceTrackerMap.close();
+		_editableElementParserServiceTrackerMap.close();
 	}
 
 	private JSONObject _getDefaultEditableValuesJSONObject(Document document) {

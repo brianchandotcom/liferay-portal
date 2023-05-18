@@ -949,25 +949,35 @@ public class CommerceOrderContentDisplayContext {
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
-		if (isOpenOrderContentPortlet()) {
-			_searchContainer.setResultsAndTotal(
-				() -> _commerceOrderService.getUserPendingCommerceOrders(
-					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getCommerceChannelGroupId(), keywords,
-					_searchContainer.getStart(), _searchContainer.getEnd()),
-				(int)_commerceOrderService.getUserPendingCommerceOrdersCount(
-					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getCommerceChannelGroupId(), keywords));
+		try {
+			if (isOpenOrderContentPortlet()) {
+				_searchContainer.setResultsAndTotal(
+					() -> _commerceOrderService.getUserPendingCommerceOrders(
+						_cpRequestHelper.getCompanyId(),
+						_cpRequestHelper.getCommerceChannelGroupId(), keywords,
+						_searchContainer.getStart(), _searchContainer.getEnd()),
+					(int)
+						_commerceOrderService.getUserPendingCommerceOrdersCount(
+							_cpRequestHelper.getCompanyId(),
+							_cpRequestHelper.getCommerceChannelGroupId(),
+							keywords));
+			}
+			else {
+				_searchContainer.setResultsAndTotal(
+					() -> _commerceOrderService.getUserPlacedCommerceOrders(
+						_cpRequestHelper.getCompanyId(),
+						_cpRequestHelper.getCommerceChannelGroupId(), keywords,
+						_searchContainer.getStart(), _searchContainer.getEnd()),
+					(int)_commerceOrderService.getUserPlacedCommerceOrdersCount(
+						_cpRequestHelper.getCompanyId(),
+						_cpRequestHelper.getCommerceChannelGroupId(),
+						keywords));
+			}
 		}
-		else {
-			_searchContainer.setResultsAndTotal(
-				() -> _commerceOrderService.getUserPlacedCommerceOrders(
-					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getCommerceChannelGroupId(), keywords,
-					_searchContainer.getStart(), _searchContainer.getEnd()),
-				(int)_commerceOrderService.getUserPlacedCommerceOrdersCount(
-					_cpRequestHelper.getCompanyId(),
-					_cpRequestHelper.getCommerceChannelGroupId(), keywords));
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
 		return _searchContainer;

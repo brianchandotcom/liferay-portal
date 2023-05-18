@@ -50,7 +50,9 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 	</clay:content-col>
 </clay:content-row>
 
-<clay:content-row>
+<clay:content-row
+	cssClass="c-mt-2"
+>
 	<clay:content-col
 		expand="<%= true %>"
 	>

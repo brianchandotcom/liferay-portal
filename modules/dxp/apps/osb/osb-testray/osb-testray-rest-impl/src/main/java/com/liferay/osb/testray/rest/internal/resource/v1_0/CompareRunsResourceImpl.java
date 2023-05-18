@@ -47,8 +47,8 @@ public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
 		for (i = 0; i < dueStatuses.length; i = i + 1) {
 			for (j = 0; j < dueStatuses.length; j = j + 1) {
 				statusMatrix[i][j] = _compareRunsService.getComparison(
-					contextCompany.getCompanyId(), idTestrayRunA, idTestrayRunB, dueStatuses[i],
-					dueStatuses[j]);
+					contextCompany.getCompanyId(), idTestrayRunA, idTestrayRunB,
+					dueStatuses[i], dueStatuses[j]);
 			}
 		}
 

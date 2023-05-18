@@ -328,7 +328,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				UADAnonymizer.class,
 				new ObjectEntryUADAnonymizer(
 					_assetEntryLocalService, objectDefinition,
-					_objectEntryLocalService),
+					_objectEntryLocalService, _resourcePermissionLocalService),
 				null),
 			_bundleContext.registerService(
 				UADDisplay.class,

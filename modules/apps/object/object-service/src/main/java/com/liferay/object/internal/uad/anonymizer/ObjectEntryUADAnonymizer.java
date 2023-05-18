@@ -24,7 +24,10 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 /**
@@ -36,11 +39,13 @@ public class ObjectEntryUADAnonymizer
 	public ObjectEntryUADAnonymizer(
 		AssetEntryLocalService assetEntryLocalService,
 		ObjectDefinition objectDefinition,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectEntryLocalService objectEntryLocalService,
+		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
 	}
 
 	@Override
@@ -67,6 +72,23 @@ public class ObjectEntryUADAnonymizer
 			assetEntry.setUserName(anonymousUser.getFullName());
 
 			_assetEntryLocalService.updateAssetEntry(assetEntry);
+		}
+
+		for (ResourcePermission resourcePermission :
+				_resourcePermissionLocalService.getResourcePermissions(
+					objectEntry.getCompanyId(),
+					_objectDefinition.getClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(objectEntry.getPrimaryKey()))) {
+
+			if (resourcePermission.getOwnerId() != userId) {
+				continue;
+			}
+
+			resourcePermission.setOwnerId(anonymousUser.getUserId());
+
+			_resourcePermissionLocalService.updateResourcePermission(
+				resourcePermission);
 		}
 	}
 
@@ -113,5 +135,7 @@ public class ObjectEntryUADAnonymizer
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
 }

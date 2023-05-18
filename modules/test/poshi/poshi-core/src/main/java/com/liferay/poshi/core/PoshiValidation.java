@@ -20,8 +20,8 @@ import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.OSDetector;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.PropsUtil;
-import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
@@ -80,8 +80,10 @@ public class PoshiValidation {
 
 		long start = System.currentTimeMillis();
 
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			PropsValues.POSHI_FILE_READ_THREAD_POOL);
+			poshiProperties.poshiFileReadThreadPool);
 
 		for (final String finalFilePath : PoshiContext.getFilePaths()) {
 			executorService.execute(

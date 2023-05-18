@@ -15,6 +15,7 @@
 package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 
 import java.net.URL;
@@ -170,5 +171,8 @@ public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 			throw poshiScriptParserException;
 		}
 	}
+
+	public PoshiProperties poshiProperties =
+		PoshiProperties.getPoshiProperties();
 
 }

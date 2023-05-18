@@ -19,7 +19,7 @@ import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTrace;
 import com.liferay.poshi.core.PoshiVariablesContext;
 import com.liferay.poshi.core.util.FileUtil;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
@@ -92,7 +92,7 @@ public final class SummaryLogger {
 
 		summaryHTMLContent = StringUtil.replace(
 			summaryHTMLContent, "<script defer src=\"../js/update_images.js\"",
-			"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+			"<script defer src=\"" + _poshiProperties.loggerResourcesUrl +
 				"/js/update_images.js\"");
 
 		StringBuilder sb = new StringBuilder();
@@ -282,6 +282,7 @@ public final class SummaryLogger {
 	private SummaryLogger(String testNamespacedClassCommandName) {
 		_testNamespacedClassCommandName = testNamespacedClassCommandName;
 
+		_poshiProperties = PoshiProperties.getPoshiProperties();
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
 			testNamespacedClassCommandName);
 		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariablesContext(
@@ -957,6 +958,7 @@ public final class SummaryLogger {
 	private Element _minorStepElement;
 	private LoggerElement _minorStepLoggerElement;
 	private LoggerElement _minorStepsLoggerElement;
+	private final PoshiProperties _poshiProperties;
 	private final PoshiStackTrace _poshiStackTrace;
 	private final PoshiVariablesContext _poshiVariablesContext;
 	private LoggerElement _summaryContentContainerLoggerElement;

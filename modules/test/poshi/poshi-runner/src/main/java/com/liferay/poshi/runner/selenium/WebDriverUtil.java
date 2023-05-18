@@ -16,7 +16,7 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
@@ -57,7 +57,7 @@ import org.openqa.selenium.safari.SafariOptions;
  * @author Kenji Heigel
  * @author Michael Hashimoto
  */
-public class WebDriverUtil extends PropsValues {
+public class WebDriverUtil {
 
 	public static LiferaySelenium getLiferaySelenium(String testName) {
 		if (!_webDrivers.containsKey(testName)) {
@@ -77,39 +77,41 @@ public class WebDriverUtil extends PropsValues {
 				"WebDriver instance already started for: " + testName);
 		}
 
-		String portalURL = PORTAL_URL;
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (TCAT_ENABLED) {
+		String portalURL = poshiProperties.portalUrl;
+
+		if (poshiProperties.tcatEnabled) {
 			portalURL = "http://localhost:8180/console";
 		}
 
-		if (BROWSER_TYPE.equals("chrome")) {
+		if (poshiProperties.browserType.equals("chrome")) {
 			_webDrivers.put(
 				testName,
 				new ChromeWebDriverImpl(portalURL, _getChromeDriver()));
 		}
-		else if (BROWSER_TYPE.equals("edge")) {
-			if (SELENIUM_EDGE_DRIVER_EXECUTABLE != null) {
+		else if (poshiProperties.browserType.equals("edge")) {
+			if (poshiProperties.seleniumEdgeDriverExecutable != null) {
 				System.setProperty(
 					"webdriver.edge.driver",
-					SELENIUM_EXECUTABLE_DIR_NAME +
-						SELENIUM_EDGE_DRIVER_EXECUTABLE);
+					poshiProperties.seleniumExecutableDirName +
+						poshiProperties.seleniumEdgeDriverExecutable);
 			}
 
 			_webDrivers.put(
 				testName, new EdgeWebDriverImpl(portalURL, _getEdgeDriver()));
 		}
-		else if (BROWSER_TYPE.equals("firefox")) {
+		else if (poshiProperties.browserType.equals("firefox")) {
 			_webDrivers.put(
 				testName,
 				new FirefoxWebDriverImpl(portalURL, _getFirefoxDriver()));
 		}
-		else if (BROWSER_TYPE.equals("internetexplorer")) {
-			if (SELENIUM_IE_DRIVER_EXECUTABLE != null) {
+		else if (poshiProperties.browserType.equals("internetexplorer")) {
+			if (poshiProperties.seleniumIeDriverExecutable != null) {
 				System.setProperty(
 					"webdriver.ie.driver",
-					SELENIUM_EXECUTABLE_DIR_NAME +
-						SELENIUM_IE_DRIVER_EXECUTABLE);
+					poshiProperties.seleniumExecutableDirName +
+						poshiProperties.seleniumIeDriverExecutable);
 			}
 
 			_webDrivers.put(
@@ -117,14 +119,15 @@ public class WebDriverUtil extends PropsValues {
 				new InternetExplorerWebDriverImpl(
 					portalURL, _getInternetExplorerDriver()));
 		}
-		else if (BROWSER_TYPE.equals("safari")) {
+		else if (poshiProperties.browserType.equals("safari")) {
 			_webDrivers.put(
 				testName,
 				new SafariWebDriverImpl(portalURL, _getSafariDriver()));
 		}
 
 		if (!_webDrivers.containsKey(testName)) {
-			throw new RuntimeException("Invalid browser type " + BROWSER_TYPE);
+			throw new RuntimeException(
+				"Invalid browser type " + poshiProperties.browserType);
 		}
 
 		LiferaySelenium liferaySelenium = (LiferaySelenium)_webDrivers.get(
@@ -144,7 +147,9 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getChromeDriver() {
-		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
 			return _getChromeRemoteDriver();
 		}
 
@@ -152,11 +157,11 @@ public class WebDriverUtil extends PropsValues {
 
 		ChromeOptions chromeOptions = _getDefaultChromeOptions();
 
-		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_FILE)) {
-			chromeOptions.setBinary(PropsValues.BROWSER_CHROME_BIN_FILE);
+		if (Validator.isNotNull(poshiProperties.browserChromeBinFile)) {
+			chromeOptions.setBinary(poshiProperties.browserChromeBinFile);
 		}
 
-		if (PropsValues.TEST_RUN_TYPE.equals("parallel")) {
+		if (poshiProperties.testRunType.equals("parallel")) {
 			ChromeDriverService chromeDriverService =
 				ChromeDriverService.createServiceWithConfig(chromeOptions);
 
@@ -182,7 +187,9 @@ public class WebDriverUtil extends PropsValues {
 
 		Map<String, Object> preferences = new HashMap<>();
 
-		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		String outputDirName = poshiProperties.outputDirName;
 
 		try {
 			File file = new File(outputDirName);
@@ -207,9 +214,9 @@ public class WebDriverUtil extends PropsValues {
 
 		chromeOptions.setExperimentalOption("prefs", preferences);
 
-		if (Validator.isNotNull(PropsValues.BROWSER_CHROME_BIN_ARGS)) {
+		if (Validator.isNotNull(poshiProperties.browserChromeBinArgs)) {
 			chromeOptions.addArguments(
-				PropsValues.BROWSER_CHROME_BIN_ARGS.split("\\s+"));
+				poshiProperties.browserChromeBinArgs.split("\\s+"));
 		}
 
 		chromeOptions.addArguments("--remote-allow-origins=*");
@@ -232,7 +239,9 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getEdgeDriver() {
-		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
 			return _getEdgeRemoteDriver();
 		}
 
@@ -250,7 +259,9 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getFirefoxDriver() {
-		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
 			return _getFirefoxRemoteDriver();
 		}
 
@@ -260,7 +271,7 @@ public class WebDriverUtil extends PropsValues {
 
 		_setGenericCapabilities(firefoxOptions);
 
-		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+		String outputDirName = poshiProperties.outputDirName;
 
 		if (OSDetector.isWindows()) {
 			outputDirName = StringUtil.replace(
@@ -281,8 +292,8 @@ public class WebDriverUtil extends PropsValues {
 		firefoxOptions.addPreference("dom.max_chrome_script_run_time", 300);
 		firefoxOptions.addPreference("dom.max_script_run_time", 300);
 
-		if (Validator.isNotNull(PropsValues.BROWSER_FIREFOX_BIN_FILE)) {
-			File file = new File(PropsValues.BROWSER_FIREFOX_BIN_FILE);
+		if (Validator.isNotNull(poshiProperties.browserFirefoxBinFile)) {
+			File file = new File(poshiProperties.browserFirefoxBinFile);
 
 			FirefoxBinary firefoxBinary = new FirefoxBinary(file);
 
@@ -320,7 +331,9 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getInternetExplorerDriver() {
-		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
 			return _getInternetExplorerRemoteDriver();
 		}
 
@@ -331,10 +344,12 @@ public class WebDriverUtil extends PropsValues {
 		InternetExplorerOptions internetExplorerOptions =
 			_getDefaultInternetExplorerOptions();
 
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
 		internetExplorerOptions.setCapability(
-			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
+			"platform", poshiProperties.seleniumDesiredCapabilitiesPlatform);
 		internetExplorerOptions.setCapability(
-			"version", PropsValues.BROWSER_VERSION);
+			"version", poshiProperties.browserVersion);
 
 		return _getRemoteWebDriver(internetExplorerOptions);
 	}
@@ -351,7 +366,9 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private static WebDriver _getSafariDriver() {
-		if (Validator.isNotNull(SELENIUM_REMOTE_DRIVER_URL)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
 			return _getSafariRemoteDriver();
 		}
 
@@ -380,7 +397,9 @@ public class WebDriverUtil extends PropsValues {
 			mutableCapabilities.setCapability(entry.getKey(), entry.getValue());
 		}
 
-		if (PropsValues.PROXY_SERVER_ENABLED) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (poshiProperties.proxyServerEnabled) {
 			mutableCapabilities.setCapability(
 				CapabilityType.PROXY, ProxyUtil.getSeleniumProxy());
 		}
@@ -389,13 +408,15 @@ public class WebDriverUtil extends PropsValues {
 	private static void _validateWebDriverBinary(
 		String webDriverBinaryPropertyName, String webDriverBinaryName) {
 
-		if ((SELENIUM_EXECUTABLE_DIR_NAME != null) &&
-			(SELENIUM_CHROME_DRIVER_EXECUTABLE != null)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if ((poshiProperties.seleniumExecutableDirName != null) &&
+			(poshiProperties.seleniumChromeDriverExecutable != null)) {
 
 			System.setProperty(
 				webDriverBinaryPropertyName,
-				SELENIUM_EXECUTABLE_DIR_NAME +
-					SELENIUM_CHROME_DRIVER_EXECUTABLE);
+				poshiProperties.seleniumExecutableDirName +
+					poshiProperties.seleniumChromeDriverExecutable);
 		}
 
 		String webDriverChromeDriverPath = System.getProperty(
@@ -420,24 +441,34 @@ public class WebDriverUtil extends PropsValues {
 	private static final Map<String, Object> _genericCapabilities =
 		new HashMap<String, Object>() {
 			{
-				if (PropsValues.PROXY_SERVER_ENABLED) {
+				PoshiProperties poshiProperties =
+					PoshiProperties.getPoshiProperties();
+
+				if (poshiProperties.proxyServerEnabled) {
 					put(CapabilityType.ACCEPT_INSECURE_CERTS, true);
 				}
 			}
 		};
+
 	private static final Map<String, WebDriver> _webDrivers = new HashMap<>();
 
 	static {
 		try {
-			if (Validator.isNull(SELENIUM_REMOTE_DRIVER_URL)) {
+			PoshiProperties poshiProperties =
+				PoshiProperties.getPoshiProperties();
+
+			if (Validator.isNull(poshiProperties.seleniumRemoteDriverUrl)) {
 				_REMOTE_DRIVER_URL = new URL("http://localhost:4444/wd/hub");
 			}
-			else if (SELENIUM_REMOTE_DRIVER_URL.matches(".*\\/wd\\/hub\\/?$")) {
-				_REMOTE_DRIVER_URL = new URL(SELENIUM_REMOTE_DRIVER_URL);
+			else if (poshiProperties.seleniumRemoteDriverUrl.matches(
+						".*\\/wd\\/hub\\/?$")) {
+
+				_REMOTE_DRIVER_URL = new URL(
+					poshiProperties.seleniumRemoteDriverUrl);
 			}
 			else {
 				_REMOTE_DRIVER_URL = new URL(
-					SELENIUM_REMOTE_DRIVER_URL + "/wd/hub");
+					poshiProperties.seleniumRemoteDriverUrl + "/wd/hub");
 			}
 		}
 		catch (MalformedURLException malformedURLException) {

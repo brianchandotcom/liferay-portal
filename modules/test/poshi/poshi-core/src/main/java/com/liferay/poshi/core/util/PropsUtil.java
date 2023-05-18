@@ -17,9 +17,6 @@ package com.liferay.poshi.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -28,13 +25,17 @@ import java.util.Properties;
 public class PropsUtil {
 
 	public static void clear() {
-		_propsUtil._props.clear();
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		setProperties(_getClassProperties());
+		poshiProperties.clear();
+
+		_setProperties(_getClassProperties());
 	}
 
 	public static String get(String key) {
-		return _propsUtil._get(key);
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		return poshiProperties.getProperty(key);
 	}
 
 	public static String getEnvironmentVariable(String name) {
@@ -42,23 +43,21 @@ public class PropsUtil {
 	}
 
 	public static Properties getProperties() {
-		return _propsUtil._props;
+		return PoshiProperties.getPoshiProperties();
 	}
 
 	public static void set(String key, String value) {
-		_propsUtil._set(key, value);
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		poshiProperties.setProperty(key, value);
 	}
 
 	public static void setProperties(Properties properties) {
-		for (String propertyName : properties.stringPropertyNames()) {
-			String propertyValue = properties.getProperty(propertyName);
+		_setProperties(properties);
 
-			if (propertyValue == null) {
-				continue;
-			}
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-			set(propertyName, propertyValue);
-		}
+		poshiProperties.printProperties(true);
 	}
 
 	private static Properties _getClassProperties() {
@@ -89,53 +88,18 @@ public class PropsUtil {
 		return classProperties;
 	}
 
-	private PropsUtil() {
-		Properties properties = _getClassProperties();
+	private static void _setProperties(Properties properties) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		for (String propertyName : properties.stringPropertyNames()) {
-			_props.setProperty(
-				propertyName, properties.getProperty(propertyName));
-		}
+			String propertyValue = properties.getProperty(propertyName);
 
-		_printProperties(false);
+			if (propertyValue == null) {
+				continue;
+			}
+
+			poshiProperties.setProperty(propertyName, propertyValue);
+		}
 	}
-
-	private String _get(String key) {
-		String value = System.getProperty(key);
-
-		if (Validator.isNull(value)) {
-			value = _props.getProperty(key);
-		}
-
-		return value;
-	}
-
-	private void _printProperties(boolean update) {
-		List<String> keys = Collections.list(
-			(Enumeration<String>)_props.propertyNames());
-
-		keys = ListUtil.sort(keys);
-
-		if (update) {
-			System.out.println("-- updated properties --");
-		}
-		else {
-			System.out.println("-- listing properties --");
-		}
-
-		for (String key : keys) {
-			System.out.println(key + "=" + _get(key));
-		}
-
-		System.out.println("");
-	}
-
-	private void _set(String key, String value) {
-		_props.setProperty(key, value);
-	}
-
-	private static final PropsUtil _propsUtil = new PropsUtil();
-
-	private final Properties _props = new Properties();
 
 }

@@ -20,7 +20,7 @@ import com.liferay.poshi.core.PoshiVariablesContext;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
@@ -54,6 +54,7 @@ public final class CommandLogger {
 
 		_testNamespacedClassCommandName = testNamespacedClassCommandName;
 
+		_poshiProperties = PoshiProperties.getPoshiProperties();
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
 			testNamespacedClassCommandName);
 		_poshiVariablesContext = PoshiVariablesContext.getPoshiVariablesContext(
@@ -65,7 +66,7 @@ public final class CommandLogger {
 		throws IOException {
 
 		Path sourcePath = Paths.get(
-			PropsValues.TEST_DEPENDENCIES_DIR_NAME + "/ocular/" + imageName +
+			_poshiProperties.testDependenciesDirName + "/ocular/" + imageName +
 				"/" + filePath);
 
 		String testClassCommandName = getTestNamespacedClassCommandName();
@@ -836,6 +837,7 @@ public final class CommandLogger {
 	private final LoggerElement _commandLogLoggerElement;
 	private int _detailsLinkId;
 	private int _functionLinkId;
+	private final PoshiProperties _poshiProperties;
 	private final PoshiStackTrace _poshiStackTrace;
 	private final PoshiVariablesContext _poshiVariablesContext;
 	private final String _testNamespacedClassCommandName;

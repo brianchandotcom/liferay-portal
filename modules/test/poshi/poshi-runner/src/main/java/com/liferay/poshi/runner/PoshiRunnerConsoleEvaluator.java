@@ -15,7 +15,7 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.core.util.FileUtil;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumUtil;
 
 import java.io.BufferedReader;
@@ -73,10 +73,18 @@ public class PoshiRunnerConsoleEvaluator {
 			_TEST_POSHI_WARNINGS_FILE_NAME, poshiWarningsFileContent.trim());
 	}
 
-	private static final String _TEST_CONSOLE_SHUT_DOWN_FILE_NAME =
-		PropsValues.TEST_CONSOLE_SHUT_DOWN_FILE_NAME;
+	private static final String _TEST_CONSOLE_SHUT_DOWN_FILE_NAME;
 
-	private static final String _TEST_POSHI_WARNINGS_FILE_NAME =
-		PropsValues.TEST_POSHI_WARNINGS_FILE_NAME;
+	private static final String _TEST_POSHI_WARNINGS_FILE_NAME;
+
+	static {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		_TEST_CONSOLE_SHUT_DOWN_FILE_NAME =
+			poshiProperties.testConsoleShutDownFileName;
+
+		_TEST_POSHI_WARNINGS_FILE_NAME =
+			poshiProperties.testPoshiWarningsFileName;
+	}
 
 }

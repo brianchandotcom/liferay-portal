@@ -54,7 +54,7 @@ public class ParallelPrintStream extends PrintStream {
 		_logFiles.remove(thread.getName());
 
 		try {
-			_addPrintStream();
+			_addPrintStream(thread.getName());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -296,18 +296,16 @@ public class ParallelPrintStream extends PrintStream {
 		printStream.write(i);
 	}
 
-	private static PrintStream _addPrintStream() throws IOException {
-		Thread currentThread = Thread.currentThread();
+	private static PrintStream _addPrintStream(String threadName)
+		throws IOException {
 
-		String currentThreadName = currentThread.getName();
+		File file = new File("test-results/" + threadName + ".log");
 
-		File file = new File("test-results/" + currentThreadName + ".log");
-
-		_logFiles.put(currentThreadName, file.getCanonicalFile());
+		_logFiles.put(threadName, file.getCanonicalFile());
 
 		PrintStream printStream = new PrintStream(file.getCanonicalPath());
 
-		_printStreams.put(currentThreadName, printStream);
+		_printStreams.put(threadName, printStream);
 
 		return printStream;
 	}
@@ -328,7 +326,7 @@ public class ParallelPrintStream extends PrintStream {
 				return _originalPrintStream;
 			}
 
-			return _addPrintStream();
+			return _addPrintStream(currentThreadName);
 		}
 		catch (IOException ioException) {
 			return _originalPrintStream;

@@ -25,8 +25,8 @@ import com.liferay.poshi.core.util.ExternalMethod;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.OSDetector;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.PropsUtil;
-import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
@@ -181,7 +181,9 @@ public class PoshiGetterUtil {
 	}
 
 	public static String getExtendedTestCaseName() {
-		String testName = PropsValues.TEST_NAME;
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		String testName = poshiProperties.testName;
 
 		Element rootElement = PoshiContext.getTestCaseRootElement(
 			getClassNameFromNamespacedClassCommandName(testName),
@@ -368,7 +370,9 @@ public class PoshiGetterUtil {
 	}
 
 	public static String getProjectDirName() {
-		return FileUtil.getCanonicalPath(PropsValues.PROJECT_DIR);
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		return FileUtil.getCanonicalPath(poshiProperties.projectDir);
 	}
 
 	public static Element getRootElementFromURL(URL url) throws Exception {

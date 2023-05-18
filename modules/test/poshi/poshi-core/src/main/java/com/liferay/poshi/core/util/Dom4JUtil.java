@@ -275,7 +275,10 @@ public class Dom4JUtil {
 			saxReader.read(url);
 		}
 		catch (DocumentException documentException) {
-			if (PropsValues.DEBUG_STACKTRACE) {
+			PoshiProperties poshiProperties =
+				PoshiProperties.getPoshiProperties();
+
+			if (poshiProperties.debugStacktrace) {
 				documentException.printStackTrace();
 			}
 

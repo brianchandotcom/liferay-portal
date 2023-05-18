@@ -22,7 +22,7 @@ import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.PoshiVariablesContext;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.logger.PoshiLogger;
 import com.liferay.poshi.runner.logger.SummaryLogger;
@@ -102,8 +102,10 @@ public class PoshiRunner {
 	public static List<String> getList() throws Exception {
 		List<String> namespacedClassCommandNames = new ArrayList<>();
 
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
 		List<String> testNames = Arrays.asList(
-			PropsValues.TEST_NAME.split("\\s*,\\s*"));
+			poshiProperties.testName.split("\\s*,\\s*"));
 
 		PoshiContext.readFiles(false);
 
@@ -181,10 +183,10 @@ public class PoshiRunner {
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
 			_testNamespacedClassCommandName);
 
-		FileUtil.delete(new File(PropsValues.OUTPUT_DIR_NAME));
+		FileUtil.delete(new File(_poshiProperties.outputDirName));
 
 		try {
-			if (PropsValues.LIFERAY_DATA_GUARD_ENABLED) {
+			if (_poshiProperties.liferayDataGuardEnabled) {
 				_dataGuardClient = new DataGuardClient();
 
 				_dataGuardClient.connect();
@@ -225,7 +227,7 @@ public class PoshiRunner {
 		_summaryLogger.createSummaryReport();
 
 		try {
-			if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
+			if (!_poshiProperties.testSkipTearDown) {
 				_runTearDown();
 			}
 		}
@@ -235,7 +237,7 @@ public class PoshiRunner {
 			exception.printStackTrace();
 		}
 		finally {
-			if (PropsValues.PROXY_SERVER_ENABLED) {
+			if (_poshiProperties.proxyServerEnabled) {
 				ProxyUtil.stopBrowserMobProxy();
 			}
 
@@ -248,7 +250,7 @@ public class PoshiRunner {
 			SummaryLogger.clear(_testNamespacedClassCommandName);
 		}
 
-		if (!PropsValues.LIFERAY_DATA_GUARD_ENABLED) {
+		if (!_poshiProperties.liferayDataGuardEnabled) {
 			return;
 		}
 
@@ -360,6 +362,8 @@ public class PoshiRunner {
 	private static DataGuardClient _dataGuardClient;
 	private static long _dataGuardId;
 	private static int _jvmRetryCount;
+	private static final PoshiProperties _poshiProperties =
+		PoshiProperties.getPoshiProperties();
 	private static final Map<String, List<String>> _testResults =
 		new HashMap<>();
 
@@ -412,7 +416,8 @@ public class PoshiRunner {
 
 						System.out.println(
 							"Retrying test attempt " + _testcaseRetryCount +
-								" of " + PropsValues.TEST_TESTCASE_MAX_RETRIES);
+								" of " +
+									_poshiProperties.testTestcaseMaxRetries);
 					}
 				}
 			}
@@ -467,7 +472,7 @@ public class PoshiRunner {
 			}
 
 			private boolean _isRetryable(Throwable throwable) {
-				if (_jvmRetryCount >= PropsValues.TEST_JVM_MAX_RETRIES) {
+				if (_jvmRetryCount >= _poshiProperties.testJvmMaxRetries) {
 					System.out.println(
 						"Test retry attempts exceeded in Poshi Runner JVM");
 
@@ -483,9 +488,9 @@ public class PoshiRunner {
 
 			private boolean _isTestcaseRetryable() {
 				if ((_testcaseRetryCount >=
-						PropsValues.TEST_TESTCASE_MAX_RETRIES) ||
-					PropsValues.TEST_SKIP_TEAR_DOWN ||
-					(PropsValues.TEST_TESTCASE_MAX_RETRIES == 0)) {
+						_poshiProperties.testTestcaseMaxRetries) ||
+					_poshiProperties.testSkipTearDown ||
+					(_poshiProperties.testTestcaseMaxRetries == 0)) {
 
 					return false;
 				}

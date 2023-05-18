@@ -19,7 +19,6 @@ import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.NaturalOrderStringComparator;
-import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
@@ -288,7 +287,7 @@ public abstract class PoshiElement
 		try {
 			parsePoshiScript(poshiScript.trim());
 
-			if (PropsValues.TEST_POSHI_SCRIPT_VALIDATION &&
+			if (poshiProperties.testPoshiScriptValidation &&
 				!PoshiNodeFactory.validationInitialized.contains(
 					getFilePathURL())) {
 

@@ -15,7 +15,6 @@
 package com.liferay.poshi.core.elements;
 
 import com.liferay.poshi.core.script.PoshiScriptParserException;
-import com.liferay.poshi.core.util.PropsValues;
 
 import org.dom4j.Comment;
 import org.dom4j.tree.DefaultComment;
@@ -55,7 +54,7 @@ public abstract class PoshiComment
 
 		parsePoshiScript(poshiScript.trim());
 
-		if (PropsValues.TEST_POSHI_SCRIPT_VALIDATION) {
+		if (poshiProperties.testPoshiScriptValidation) {
 			validatePoshiScript();
 		}
 	}

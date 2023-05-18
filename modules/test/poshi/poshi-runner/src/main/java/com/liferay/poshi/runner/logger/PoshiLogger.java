@@ -21,7 +21,7 @@ import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerLoggerException;
 
@@ -44,6 +44,8 @@ public class PoshiLogger {
 		_syntaxLogger = _getSyntaxLogger(testNamespacedClassCommandName);
 
 		_testNamespacedClassCommandName = testNamespacedClassCommandName;
+
+		_poshiProperties = PoshiProperties.getPoshiProperties();
 
 		_poshiStackTrace = PoshiStackTrace.getPoshiStackTrace(
 			testNamespacedClassCommandName);
@@ -73,7 +75,7 @@ public class PoshiLogger {
 					"></ul>",
 				_syntaxLogger.getSyntaxLogText());
 
-			if (PropsValues.TEST_RUN_LOCALLY) {
+			if (_poshiProperties.testRunLocally) {
 				FileUtil.copyFileFromResource(
 					"META-INF/resources/css/main.css",
 					currentDirName + "/test-results/css/main.css");
@@ -90,22 +92,24 @@ public class PoshiLogger {
 			else {
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent, "<link href=\"../css/main.css\"",
-					"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
+					"<link href=\"" + _poshiProperties.loggerResourcesUrl +
 						"/css/main.css\"");
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent,
 					"<script defer src=\"../js/component.js\"",
-					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-						"/js/component.js\"");
+					"<script defer src=\"" +
+						_poshiProperties.loggerResourcesUrl +
+							"/js/component.js\"");
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent, "<script defer src=\"../js/main.js\"",
-					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-						"/js/main.js\"");
+					"<script defer src=\"" +
+						_poshiProperties.loggerResourcesUrl + "/js/main.js\"");
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent,
 					"<script defer src=\"../js/update_images.js\"",
-					"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
-						"/js/update_images.js\"");
+					"<script defer src=\"" +
+						_poshiProperties.loggerResourcesUrl +
+							"/js/update_images.js\"");
 			}
 		}
 		catch (OutOfMemoryError outOfMemoryError) {
@@ -302,6 +306,7 @@ public class PoshiLogger {
 
 	private final CommandLogger _commandLogger;
 	private int _functionLinkId;
+	private final PoshiProperties _poshiProperties;
 	private final PoshiStackTrace _poshiStackTrace;
 	private final SyntaxLogger _syntaxLogger;
 	private final String _testNamespacedClassCommandName;

@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.runner.junit.ParallelParameterized;
 import com.liferay.poshi.runner.logger.ParallelPrintStream;
 
@@ -121,6 +122,8 @@ public class ParallelPoshiRunner extends PoshiRunner {
 		originalSystemOutPrintStream.println(
 			"Writing log for " + getTestNamespacedClassCommandName() + " to " +
 				ParallelPrintStream.getLogFile());
+
+		PoshiProperties.addThreadBasedPoshiProperties();
 
 		super.setUp();
 	}

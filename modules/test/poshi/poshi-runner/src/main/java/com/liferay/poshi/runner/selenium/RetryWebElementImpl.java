@@ -15,7 +15,7 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PropsValues;
+import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.Validator;
 
 import java.util.List;
@@ -466,8 +466,13 @@ public class RetryWebElementImpl extends RemoteWebElement {
 		_remoteWebElement = (RemoteWebElement)_webElement;
 	}
 
-	private static final int _RETRY_WAIT_TIME =
-		PropsValues.TEST_RETRY_COMMAND_WAIT_TIME;
+	private static final int _RETRY_WAIT_TIME;
+
+	static {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		_RETRY_WAIT_TIME = poshiProperties.testRetryCommandWaitTime;
+	}
 
 	private final String _locator;
 	private RemoteWebElement _remoteWebElement;

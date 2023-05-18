@@ -169,6 +169,17 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			return false;
 		}
 
+		for (String internallyExcludedUriPath :
+				_INTERNALLY_EXCLUDED_URI_PATHS) {
+
+			if (Validator.isNotNull(internallyExcludedUriPath) &&
+				requestURI.startsWith(
+					StringUtil.toLowerCase(internallyExcludedUriPath))) {
+
+				return true;
+			}
+		}
+
 		requestURI = StringUtil.toLowerCase(requestURI);
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
@@ -178,8 +189,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 				contentSecurityPolicyConfiguration.excludedPaths()) {
 
 			if (Validator.isNotNull(excludedPath) &&
-				requestURI.startsWith(
-					StringUtil.toLowerCase(excludedPath))) {
+				requestURI.startsWith(StringUtil.toLowerCase(excludedPath))) {
 
 				return true;
 			}
@@ -187,6 +197,10 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 		return false;
 	}
+
+	private static final String[] _INTERNALLY_EXCLUDED_URI_PATHS = {
+		"/group/", "/user/", "/web/"
+	};
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

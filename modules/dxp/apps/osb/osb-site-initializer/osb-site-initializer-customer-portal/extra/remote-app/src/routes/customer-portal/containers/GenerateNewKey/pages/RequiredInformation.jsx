@@ -46,7 +46,7 @@ const RequiredInformation = ({
 }) => {
 	const {
 		client,
-		featureFlag,
+		featureFlags,
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
 
@@ -454,7 +454,7 @@ const RequiredInformation = ({
 										</Button>
 									</ClayTooltipProvider>
 
-									{featureFlag.includes('LPS-153478') && (
+									{featureFlags.includes('LPS-180001') && (
 										<>
 											<div className="d-flex">
 												<div className="pr-2 pt-1">

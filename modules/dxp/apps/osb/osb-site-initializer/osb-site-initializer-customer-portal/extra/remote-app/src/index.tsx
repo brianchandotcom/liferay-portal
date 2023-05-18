@@ -96,7 +96,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 			articleGettingStartedWithLiferayEnterpriseSearchURL: super.getAttribute(
 				'article-getting-started-with-liferay-enterprise-search-url'
 			),
-			featureFlag: (super.getAttribute('feature-flag') ?? '')
+			featureFlags: (super.getAttribute('feature-flags') ?? '')
 				.split(',')
 				.map((featureflag) => featureflag.trim()),
 			importDate: super.getAttribute('import-date')

@@ -56,11 +56,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DIALOG_BOX</td>
-	<td>//div[contains(@class,'modal-title')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_TYPES</td>
 	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
 	<td></td>

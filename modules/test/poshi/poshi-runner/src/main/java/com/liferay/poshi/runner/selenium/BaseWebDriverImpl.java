@@ -2142,7 +2142,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String targetURL = url.trim();
 
 		if (targetURL.startsWith("/")) {
-			targetURL = poshiProperties.portalUrl + targetURL;
+			targetURL = poshiProperties.portalURL + targetURL;
 		}
 
 		get(targetURL);
@@ -3570,8 +3570,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		for (Element element : elements) {
 			String href = element.attr("href");
 
-			if (!href.contains(poshiProperties.portalUrl)) {
-				href = poshiProperties.portalUrl + href;
+			if (!href.contains(poshiProperties.portalURL)) {
+				href = poshiProperties.portalURL + href;
 			}
 
 			Connection connection = Jsoup.connect(href);

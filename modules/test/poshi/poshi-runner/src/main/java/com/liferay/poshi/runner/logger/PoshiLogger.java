@@ -92,23 +92,23 @@ public class PoshiLogger {
 			else {
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent, "<link href=\"../css/main.css\"",
-					"<link href=\"" + _poshiProperties.loggerResourcesUrl +
+					"<link href=\"" + _poshiProperties.loggerResourcesURL +
 						"/css/main.css\"");
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent,
 					"<script defer src=\"../js/component.js\"",
 					"<script defer src=\"" +
-						_poshiProperties.loggerResourcesUrl +
+						_poshiProperties.loggerResourcesURL +
 							"/js/component.js\"");
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent, "<script defer src=\"../js/main.js\"",
 					"<script defer src=\"" +
-						_poshiProperties.loggerResourcesUrl + "/js/main.js\"");
+						_poshiProperties.loggerResourcesURL + "/js/main.js\"");
 				indexHTMLContent = StringUtil.replace(
 					indexHTMLContent,
 					"<script defer src=\"../js/update_images.js\"",
 					"<script defer src=\"" +
-						_poshiProperties.loggerResourcesUrl +
+						_poshiProperties.loggerResourcesURL +
 							"/js/update_images.js\"");
 			}
 		}

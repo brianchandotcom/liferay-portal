@@ -79,7 +79,7 @@ public class WebDriverUtil {
 
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		String portalURL = poshiProperties.portalUrl;
+		String portalURL = poshiProperties.portalURL;
 
 		if (poshiProperties.tcatEnabled) {
 			portalURL = "http://localhost:8180/console";
@@ -149,7 +149,7 @@ public class WebDriverUtil {
 	private static WebDriver _getChromeDriver() {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverURL)) {
 			return _getChromeRemoteDriver();
 		}
 
@@ -241,7 +241,7 @@ public class WebDriverUtil {
 	private static WebDriver _getEdgeDriver() {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverURL)) {
 			return _getEdgeRemoteDriver();
 		}
 
@@ -261,7 +261,7 @@ public class WebDriverUtil {
 	private static WebDriver _getFirefoxDriver() {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverURL)) {
 			return _getFirefoxRemoteDriver();
 		}
 
@@ -333,7 +333,7 @@ public class WebDriverUtil {
 	private static WebDriver _getInternetExplorerDriver() {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverURL)) {
 			return _getInternetExplorerRemoteDriver();
 		}
 
@@ -368,7 +368,7 @@ public class WebDriverUtil {
 	private static WebDriver _getSafariDriver() {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverUrl)) {
+		if (Validator.isNotNull(poshiProperties.seleniumRemoteDriverURL)) {
 			return _getSafariRemoteDriver();
 		}
 
@@ -457,18 +457,18 @@ public class WebDriverUtil {
 			PoshiProperties poshiProperties =
 				PoshiProperties.getPoshiProperties();
 
-			if (Validator.isNull(poshiProperties.seleniumRemoteDriverUrl)) {
+			if (Validator.isNull(poshiProperties.seleniumRemoteDriverURL)) {
 				_REMOTE_DRIVER_URL = new URL("http://localhost:4444/wd/hub");
 			}
-			else if (poshiProperties.seleniumRemoteDriverUrl.matches(
+			else if (poshiProperties.seleniumRemoteDriverURL.matches(
 						".*\\/wd\\/hub\\/?$")) {
 
 				_REMOTE_DRIVER_URL = new URL(
-					poshiProperties.seleniumRemoteDriverUrl);
+					poshiProperties.seleniumRemoteDriverURL);
 			}
 			else {
 				_REMOTE_DRIVER_URL = new URL(
-					poshiProperties.seleniumRemoteDriverUrl + "/wd/hub");
+					poshiProperties.seleniumRemoteDriverURL + "/wd/hub");
 			}
 		}
 		catch (MalformedURLException malformedURLException) {

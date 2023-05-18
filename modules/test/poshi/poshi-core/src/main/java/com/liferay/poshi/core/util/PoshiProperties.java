@@ -307,9 +307,9 @@ public class PoshiProperties extends Properties {
 		getProperty(LIFERAY_DATA_GUARD_ENABLED), false);
 	public String liferayPortalBranch = getProperty(LIFERAY_PORTAL_BRANCH);
 	public String liferayPortalBundle = getProperty(LIFERAY_PORTAL_BUNDLE);
-	public String loggerResourcesUrl = getProperty(LOGGER_RESOURCES_URL);
+	public String loggerResourcesURL = getProperty(LOGGER_RESOURCES_URL);
 	public String outputDirName = getProperty(OUTPUT_DIR_NAME);
-	public String portalUrl = getProperty(PORTAL_URL);
+	public String portalURL = getProperty(PORTAL_URL);
 	public int poshiFileReadThreadPool = GetterUtil.getInteger(
 		getProperty(POSHI_FILE_READ_THREAD_POOL));
 	public String printJavaProcessOnFail = getProperty(
@@ -337,7 +337,7 @@ public class PoshiProperties extends Properties {
 		SELENIUM_IE_DRIVER_EXECUTABLE);
 	public boolean seleniumRemoteDriverEnabled = GetterUtil.getBoolean(
 		getProperty(SELENIUM_REMOTE_DRIVER_ENABLED));
-	public String seleniumRemoteDriverUrl = getProperty(
+	public String seleniumRemoteDriverURL = getProperty(
 		SELENIUM_REMOTE_DRIVER_URL);
 	public String tcatAdminRepository = getProperty(TCAT_ADMIN_REPOSITORY);
 	public boolean tcatEnabled = GetterUtil.getBoolean(

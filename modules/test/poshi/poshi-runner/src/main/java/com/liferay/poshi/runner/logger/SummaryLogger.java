@@ -92,7 +92,7 @@ public final class SummaryLogger {
 
 		summaryHTMLContent = StringUtil.replace(
 			summaryHTMLContent, "<script defer src=\"../js/update_images.js\"",
-			"<script defer src=\"" + _poshiProperties.loggerResourcesUrl +
+			"<script defer src=\"" + _poshiProperties.loggerResourcesURL +
 				"/js/update_images.js\"");
 
 		StringBuilder sb = new StringBuilder();

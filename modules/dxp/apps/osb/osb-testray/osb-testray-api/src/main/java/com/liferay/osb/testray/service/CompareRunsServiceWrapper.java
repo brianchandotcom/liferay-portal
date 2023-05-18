@@ -34,6 +34,15 @@ public class CompareRunsServiceWrapper
 		_compareRunsService = compareRunsService;
 	}
 
+	@Override
+	public int getComparison(
+		long runIdA, long runIdB, String statusA, String statusB,
+		long companyId) {
+
+		return _compareRunsService.getComparison(
+			runIdA, runIdB, statusA, statusB, companyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

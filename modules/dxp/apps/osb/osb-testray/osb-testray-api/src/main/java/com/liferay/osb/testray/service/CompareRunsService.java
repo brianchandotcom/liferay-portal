@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -47,6 +48,10 @@ public interface CompareRunsService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.osb.testray.service.impl.CompareRunsServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the compare runs remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CompareRunsServiceUtil} if injection and service tracking are not available.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getComparison(
+		long runIdA, long runIdB, String statusA, String statusB,
+		long companyId);
 
 	/**
 	 * Returns the OSGi service identifier.

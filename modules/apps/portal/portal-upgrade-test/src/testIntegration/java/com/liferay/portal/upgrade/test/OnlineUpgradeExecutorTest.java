@@ -127,9 +127,7 @@ public class OnlineUpgradeExecutorTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			if (!(exception instanceof IllegalArgumentException)) {
-				Assert.fail();
-			}
+			Assert.assertTrue(exception instanceof IllegalArgumentException);
 		}
 	}
 

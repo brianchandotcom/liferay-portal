@@ -101,7 +101,11 @@ public class DefaultAuditRouter implements AuditRouter {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		modified(properties);
+		AuditConfiguration auditConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AuditConfiguration.class, properties);
+
+		_auditEnabled = auditConfiguration.enabled();
 	}
 
 	@Modified

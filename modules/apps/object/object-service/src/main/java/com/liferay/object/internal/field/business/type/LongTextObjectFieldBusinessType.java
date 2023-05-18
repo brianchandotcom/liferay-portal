@@ -63,6 +63,15 @@ public class LongTextObjectFieldBusinessType
 	}
 
 	@Override
+	public String getDDMFormFieldTypeName(boolean localized) {
+		if (localized) {
+			return DDMFormFieldTypeConstants.LOCALIZABLE_TEXT;
+		}
+
+		return getDDMFormFieldTypeName();
+	}
+
+	@Override
 	public String getDescription(Locale locale) {
 		return _language.get(locale, "add-text-that-up-to-65,000-characters");
 	}

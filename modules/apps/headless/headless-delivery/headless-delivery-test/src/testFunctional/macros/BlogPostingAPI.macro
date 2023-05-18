@@ -64,29 +64,24 @@ definition {
 			var externalReferenceCode = "erc";
 		}
 
-		if (!(isSet(testCase))) {
-			var testCase = "";
-		}
+		if ((${testCase} == "updateOneBlogPosting") || (${testCase} == "updateAllFields")) {
+			var response = BlogPostingAPI.getBlogPostings();
 
-		if (isSet(testCase)) {
-			if ((${testCase} == "updateOneBlogPosting") || (${testCase} == "updateAllFields")) {
-				var response = BlogPostingAPI.getBlogPostings();
+			var existingHeadline = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+				fieldName = "headline",
+				response = ${response});
+			var existingArticleBody = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+				fieldName = "articleBody",
+				response = ${response});
+			var existingExternalReferenceCode = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+				fieldName = "externalReferenceCode",
+				response = ${response});
+			var id = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
+				fieldName = "id",
+				response = ${response});
 
-				var existingHeadline = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
-					fieldName = "headline",
-					response = ${response});
-				var existingArticleBody = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
-					fieldName = "articleBody",
-					response = ${response});
-				var existingExternalReferenceCode = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
-					fieldName = "externalReferenceCode",
-					response = ${response});
-				var id = BlogPostingAPI._getFieldValueOfExistingBlogPosting(
-					fieldName = "id",
-					response = ${response});
-
-				if (${testCase} == "updateOneBlogPosting") {
-					var body = '''
+			if (${testCase} == "updateOneBlogPosting") {
+				var body = '''
 						[
 							{
 								"headline": "${existingHeadline}",
@@ -100,9 +95,9 @@ definition {
 							}
 						]
 					''';
-				}
-				else if (${testCase} == "updateAllFields") {
-					var body = '''
+			}
+			else if (${testCase} == "updateAllFields") {
+				var body = '''
 						[
 							{
 								"headline": "headlineUpdated",
@@ -112,10 +107,10 @@ definition {
 							}
 						]
 					''';
-				}
 			}
-			else if (${testCase} == "incorrectData") {
-				var body = '''
+		}
+		else if (${testCase} == "incorrectData") {
+			var body = '''
 					[
 						{
 							"headline": "headline",
@@ -130,9 +125,9 @@ definition {
 						}
 					]
 				''';
-			}
-			else if (${testCase} == "nonExistingId") {
-				var body = '''
+		}
+		else if (${testCase} == "nonExistingId") {
+			var body = '''
 					[
 						{
 							"headline": "headlineUpdated",
@@ -142,57 +137,38 @@ definition {
 						}
 					]
 				''';
-			}
-			else {
-				var size = ${numberOfBlogPostings};
-				var i = 0;
-				var body = '''
+		}
+		else {
+			var size = ${numberOfBlogPostings};
+			var i = 0;
+			var body = '''
 					[
 				''';
 
-				while ((${i} != ${size}) && (maxIterations = "100")) {
-					var blogPostingBody = '''
+			while ((${i} != ${size}) && (maxIterations = "100")) {
+				var blogPostingBody = '''
 						{
 							"headline": "${headline}${i}",
 							"articleBody": "${articleBody}${i}",
 							"externalReferenceCode": "${externalReferenceCode}${i}"
 						}
 					''';
-					var j = ${i} + 1;
+				var j = ${i} + 1;
 
-					if (${j} == ${size}) {
-						var body = StringUtil.replace(${body}, ${body}, "${body}${blogPostingBody}]");
-					}
-					else {
-						var blogPostingBody = StringUtil.replace(${blogPostingBody}, ${blogPostingBody}, "${blogPostingBody},");
-
-						var body = StringUtil.replace(${body}, ${body}, "${body}${blogPostingBody}");
-					}
-
-					var i = ${i} + 1;
+				if (${j} == ${size}) {
+					var body = StringUtil.replace(${body}, ${body}, "${body}${blogPostingBody}]");
 				}
+				else {
+					var blogPostingBody = StringUtil.replace(${blogPostingBody}, ${blogPostingBody}, "${blogPostingBody},");
+
+					var body = StringUtil.replace(${body}, ${body}, "${body}${blogPostingBody}");
+				}
+
+				var i = ${i} + 1;
 			}
 		}
 
 		return ${body};
-	}
-
-	macro _deleteBlogPosting {
-		Variables.assertDefined(parameterList = ${blogPostingId});
-
-		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "Guest",
-			site = "true");
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId} \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json
-		''';
-
-		var curl = JSONCurlUtil.delete(${curl});
-
-		return ${curl};
 	}
 
 	macro _deleteBlogPostingsBatch {
@@ -210,23 +186,6 @@ definition {
 		''';
 
 		var curl = JSONCurlUtil.delete(${curl});
-
-		return ${curl};
-	}
-
-	macro _getBlogPostings {
-		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "Guest",
-			site = "true");
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json
-		''';
-
-		var curl = JSONCurlUtil.get(${curl});
 
 		return ${curl};
 	}
@@ -340,26 +299,14 @@ definition {
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
+		var api = "blog-postings";
+
+		if (isSet(parameter)) {
+			var api = StringUtil.add(${api}, "?${parameter}=${restrictFieldsValue}", "");
+		}
 
 		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json
-		''';
-
-		var curl = JSONCurlUtil.get(${curl});
-
-		return ${curl};
-	}
-
-	macro getBlogPostingsbyDifferentParameters {
-		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
-			groupName = "Guest",
-			site = "true");
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings?${parameter}=${restrictFieldsValue} \
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/${api} \
 				-u test@liferay.com:test \
 				-H Content-Type: application/json
 		''';
@@ -370,7 +317,7 @@ definition {
 	}
 
 	macro getBlogPostingsIdList {
-		var response = BlogPostingAPI._getBlogPostings();
+		var response = BlogPostingAPI.getBlogPostings();
 
 		var idList = JSONUtil.getWithJSONPath(${response}, "$.items.[*].id");
 
@@ -420,7 +367,7 @@ definition {
 		return ${blogPostingsExportBatchId};
 	}
 
-	macro getIdOfUpdatedPostingBatchEngineImportTask {
+	macro getIdOfUpdatedBlogPostingBatchEngineImportTask {
 		if (!(isSet(importStrategy))) {
 			var importStrategy = "ON_ERROR_FAIL";
 		}

@@ -32,7 +32,7 @@ definition {
 		}
 
 		task ("When with curl I request GET getSiteBlogPostingsPage with siteId and restrictFields equal all fields except id field") {
-			var response = BlogPostingAPI.getBlogPostingsbyDifferentParameters(
+			var response = BlogPostingAPI.getBlogPostings(
 				parameter = "restrictFields",
 				restrictFieldsValue = "aggregateRating,alternativeHeadline,articleBody,creator,customFields,dateCreated,dateModified,datePublished,description,encodingFormat,externalReferenceCode,friendlyUrlPath,headline,image,keywords,numberOfComments,relatedContents,renderedContents,siteId,taxonomyCategoryBriefs,x-class-name,facets,actions");
 		}

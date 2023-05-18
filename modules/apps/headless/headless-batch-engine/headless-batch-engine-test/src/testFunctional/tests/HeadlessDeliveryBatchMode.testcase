@@ -155,7 +155,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When I use PUT 'blog-postings/batch?updateStrategy=PARTIAL_UPDATE with non existing id") {
-			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfUpdatedBlogPostingBatchEngineImportTask(
 				numberOfBlogPostings = 1,
 				testCase = "nonExistingId",
 				updateStrategy = "PARTIAL_UPDATE");
@@ -190,7 +190,7 @@ definition {
 		}
 
 		task ("When I use PUT '/blog-postings/batch' with parameter createStrategy set to UPDATE with non existing externalReferenceCode as one of the updated fields") {
-			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfUpdatedBlogPostingBatchEngineImportTask(
 				numberOfBlogPostings = 1,
 				testCase = "updateOneBlogPosting",
 				updateStrategy = "UPDATE");
@@ -317,7 +317,7 @@ definition {
 		}
 
 		task ("When I use PUT '/blog-postings/batch' with parameter createStrategy set to UPDATE with non existing externalReferenceCode as one of the updated fields") {
-			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfUpdatedBlogPostingBatchEngineImportTask(
 				numberOfBlogPostings = 1,
 				testCase = "updateAllFields",
 				updateStrategy = "UPDATE");
@@ -386,7 +386,7 @@ definition {
 		}
 
 		task ("When I use PUT 'blog-postings/batch?updateStrategy=UPDATE' with parameter importStrategy=ON_ERROR_CONTINUE with two data set with one non existing") {
-			var importTaskId = BlogPostingAPI.getIdOfUpdatedPostingBatchEngineImportTask(
+			var importTaskId = BlogPostingAPI.getIdOfUpdatedBlogPostingBatchEngineImportTask(
 				importStrategy = "ON_ERROR_CONTINUE",
 				numberOfBlogPostings = 1,
 				testCase = "updateOneBlogPosting",

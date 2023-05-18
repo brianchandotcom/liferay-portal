@@ -93,4 +93,96 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182417. No accessibility issue in web content with date-time field structure"
+	@priority = 4
+	test ViewNoAccessibilityIssuesInDateTimeField {
+		var structureName = StringUtil.randomString(8);
+
+		var structureName = StringUtil.toLowerCase(${structureName});
+		var webContentName = StringUtil.randomString(8);
+
+		var webContentName = StringUtil.toLowerCase(${webContentName});
+
+		task ("Given a web content with a date and time field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "${structureName} Description",
+				structureName = ${structureName});
+
+			DataEngine.addField(
+				fieldFieldLabel = "Date and Time",
+				fieldName = "Date and Time");
+
+			AssertAccessible();
+
+			WebContentStructures.saveCP(structureName = ${structureName});
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = ${structureName});
+
+			PortletEntry.inputTitle(title = ${webContentName});
+
+			DERenderer.inputDataInDateField(
+				fieldLabel = "Date and Time",
+				index = 1,
+				value = "08/06/2021 10:00 AM");
+
+			AssertAccessible();
+
+			PageEditor.publish();
+		}
+
+		task ("When we have a content page with a date fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Date");
+
+			AssertAccessible();
+		}
+
+		task ("Then should be no accessibility problem in Web content with date and time field structure") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Date",
+				id = "element-date");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = ${webContentName},
+				navItem = "Web Content");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Date and Time");
+
+			Select(
+				key_fieldLabel = "Date Format",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Custom");
+
+			Type(
+				key_fieldLabel = "Custom Format",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "dd-MM-YYYY HH:mm a");
+
+			PageEditor.waitForAutoSave();
+
+			AssertAccessible();
+
+			PageEditor.publish();
+		}
+	}
+
 }

@@ -7013,12 +7013,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				${browser.docker.run.options} \
 				${docker.add.host.hostname.arg} \
 				${docker.add.host.node.name.arg} \
-				--add-host www.able.com:${ip.address} \
-				--add-host www.baker.com:${ip.address} \
-				--add-host www.charlie.com:${ip.address} \
-				--add-host www.dog.com:${ip.address} \
-				--add-host www.easy.com:${ip.address} \
-				--add-host www.fox.com:${ip.address} \
+				--add-host www.able.com:127.0.0.1 \
+				--add-host www.baker.com:127.0.0.1 \
+				--add-host www.charlie.com:127.0.0.1 \
+				--add-host www.dog.com:127.0.0.1 \
+				--add-host www.easy.com:127.0.0.1 \
+				--add-host www.fox.com:127.0.0.1 \
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
 			</start-docker-container>
 

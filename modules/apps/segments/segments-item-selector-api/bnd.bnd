@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Segments Item Selector API
 Bundle-SymbolicName: com.liferay.segments.item.selector.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.segments.item.selector
+Export-Package:\
+	com.liferay.segments.item.selector,\
+	com.liferay.segments.item.selector.criterion

@@ -49,15 +49,28 @@ dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
 		</liferay-ui:error>
 
 		<liferay-frontend:fieldset>
-			<liferay-ui:message key="document-library-copy-folder-help" />
+			<clay:alert
+				cssClass="c-mb-4"
+				displayType="warning"
+				message='<%= LanguageUtil.get(request, "document-library-copy-folder-help") %>'
+				title='<%= LanguageUtil.get(request, "alert") %>'
+			/>
 
-			<br /><br />
+			<aui:input label="current-location" name="sourceFolderName" type="resource" value="<%= dlCopyFolderDisplayContext.getSourceFolderName() %>" />
 
-			<aui:input label="source-folder" name="sourceFolderName" type="resource" value="<%= dlCopyFolderDisplayContext.getSourceFolderName() %>" />
+			<div class="c-mb-0 form-group">
+				<div class="input-group">
+					<div class="input-group-item">
+						<div class="w-100">
+							<aui:input label="new-location" name="destinationParentFolderName" type="resource" value="" />
+						</div>
+					</div>
 
-			<aui:input label="target-folder" name="destinationParentFolderName" type="resource" value="" />
-
-			<aui:button name="selectFolderButton" value="select" />
+					<span class="input-group-item input-group-item-shrink my-auto">
+						<aui:button name="selectFolderButton" value="select" />
+					</span>
+				</div>
+			</div>
 		</liferay-frontend:fieldset>
 
 		<aui:script sandbox="<%= true %>">

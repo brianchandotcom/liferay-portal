@@ -107,9 +107,9 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 </div>
 
 <script>
-	(function () {
+	document.addEventListener('DOMContentLoaded', () => {
 		<portlet:namespace />checkExtraFieldsRendering();
-	})();
+	});
 
 	function <portlet:namespace />checkExtraFieldsRendering() {
 		var extraFieldsForZendeskDivElement = document.getElementById(

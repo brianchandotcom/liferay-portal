@@ -111,19 +111,13 @@ definition {
 
 	@priority = 4
 	test AssertBasicFacetSelection {
-		var webContentserviceContext1 = '''{"assetTagNames": ["fruit"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "fruit",
 			content = "WC WebContent Content 1",
 			groupName = "Guest",
-			serviceContext = ${webContentserviceContext1},
 			title = "apple");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "Blog Entry Content",
 			entryTitle = "apple");
 
@@ -278,9 +272,13 @@ definition {
 	@description = "This is a use case for LPS-138720."
 	@priority = 4
 	test AssertCustomFacetNoXSS {
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Custom Facet");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -501,16 +499,26 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
+		for (var portlet : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
+
+		SearchPortlets.addWidgets(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
-			Portlet._clickAddPortlet(portletName = "Similar Results");
+			JSONLayout.addWidgetToPublicLayout(
+				column = 2,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = "Similar Results");
 
-			AssertElementPresent(
-				key_portletName = "Similar Results",
-				locator1 = "Portlet#LOADED");
+			Refresh();
 
 			AssertElementPresent(
 				key_portletName = "Similar Results",
@@ -800,12 +808,6 @@ definition {
 	@priority = 3
 	test AssertTagFacetTermsWithDifferentDisplayTemplates {
 		property portal.acceptance = "true";
-
-		for (var tagName : list "engineering,product,2021,2022") {
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = ${tagName});
-		}
 
 		JSONWebcontent.addWebContent(
 			assetTagNames = "engineering,product,2021,2022",
@@ -1301,13 +1303,7 @@ definition {
 	}
 
 	test CanOrderTagFacetTerms {
-		task ("Create the tags and the Web Contents") {
-			for (var tagList : list "engineering,product,2021,2022") {
-				JSONAssettag.addTag(
-					groupName = "Guest",
-					tagName = ${tagList});
-			}
-
+		task ("Create Web Contents with tags") {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "engineering,product,2021,2022",
 				content = "WC Content 1",
@@ -1437,6 +1433,8 @@ definition {
 
 	@priority = 3
 	test CanOrderUserFacetTerms {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		for (var userList : list "carter.braxton,john.adams,jonathan.franklin") {
 			var firstName = StringUtil.extractFirst(${userList}, ".");
 			var lastName = StringUtil.extractLast(${userList}, ".");
@@ -1455,51 +1453,36 @@ definition {
 				groupName = "Guest",
 				roleTitle = "Site Administrator",
 				userEmailAddress = "${userList}@liferay.com");
-		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "john.adams@liferay.com",
-			userLoginFullName = "john adams");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "${userList}@liferay.com");
+		}
 
 		for (var count : list "1,2,3,4") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Test",
-				webContentTitle = "WC WebContent Title ${count}");
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "Test",
+				groupName = "Guest",
+				title = "WC WebContent Title ${count}",
+				userEmailAddress = "john.adams@liferay.com",
+				userPassword = "test");
 		}
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "carter.braxton@liferay.com",
-			userLoginFullName = "carter braxton");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
 
 		for (var count : list "1,2") {
-			Blogs.addEntry(
+			JSONBlog.addEntry(
 				entryContent = "Test",
-				entryTitle = "Blogs Entry Title ${count}");
+				entryTitle = "Blogs Entry Title ${count}",
+				userEmailAddress = "carter.braxton@liferay.com",
+				userPassword = "test");
 		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "jonathan.franklin@liferay.com",
-			userLoginFullName = "jonathan franklin");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Test",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "Test",
+			groupName = "Guest",
+			title = "WC WebContent Title",
+			userEmailAddress = "jonathan.franklin@liferay.com",
+			userPassword = "test");
 
 		Navigator.gotoPage(pageName = "Home");
 
@@ -1620,7 +1603,7 @@ definition {
 	@description = "This is a use case for LPS-167195. Facet selection and search results should match after using browser back button"
 	@priority = 3
 	test FacetSelectionAndSearchResultsMatchWhenUsingBrowserBackButton {
-		task ("Create two Categories and two Tags") {
+		task ("Create two Categories") {
 			var categoryId1 = JSONCategory.addCategory(
 				groupName = "Global",
 				title = "cat1",
@@ -1629,12 +1612,6 @@ definition {
 				groupName = "Global",
 				title = "cat2",
 				vocabularyName = "Topic");
-
-			for (var tagList : list "tag1,tag2") {
-				JSONAssettag.addTag(
-					groupName = "Guest",
-					tagName = ${tagList});
-			}
 		}
 
 		task ("Create six Web Contents") {
@@ -1746,14 +1723,6 @@ definition {
 			content = "WC Content",
 			groupName = "Guest",
 			title = "WebContent Title 1");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		WebContent.viewVersion(
-			version = "1.0",
-			webContentTitle = "WebContent Title 1");
 
 		Search.openSearchPage();
 
@@ -2371,15 +2340,19 @@ definition {
 	@description = "This is a use case for LPS-74299."
 	@priority = 3
 	test ViewFacetPersistence {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
 
-		PagesAdmin.addPage(pageName = "Search Page");
+		for (var portlet : list "Site Facet,Search Results,Search Bar") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
 
 		Navigator.gotoPage(pageName = "Search Page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
 

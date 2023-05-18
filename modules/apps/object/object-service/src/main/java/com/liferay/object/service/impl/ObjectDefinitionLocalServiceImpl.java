@@ -514,28 +514,33 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition enableAccountEntryRestricted(
-			ObjectRelationship objectRelationship)
+	public ObjectDefinition enableObjectRestricted(
+		ObjectDefinition objectDefinition2,
+		ObjectField objectField)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition1 = getObjectDefinition(
-			objectRelationship.getObjectDefinitionId1());
+		if(Objects.equals(objectDefinition2.getStorageType(), "default")) {
 
-		if (!Objects.equals(objectDefinition1.getShortName(), "AccountEntry")) {
-			throw new ObjectDefinitionAccountEntryRestrictedException(
-				"Custom object definitions can only be restricted by account " +
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+			ObjectDefinition objectDefinition1 =
+				objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (!Objects.equals(
+				objectDefinition1.getShortName(),
+				"AccountEntry")) {
+				throw new ObjectDefinitionAccountEntryRestrictedException(
+					"Custom object definitions can only be restricted by account " +
 					"entry");
+			}
 		}
-
-		ObjectDefinition objectDefinition2 = getObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
 
 		if (objectDefinition2.isAccountEntryRestricted()) {
 			return objectDefinition2;
 		}
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
 
 		objectDefinition2.setAccountEntryRestrictedObjectFieldId(
 			objectField.getObjectFieldId());

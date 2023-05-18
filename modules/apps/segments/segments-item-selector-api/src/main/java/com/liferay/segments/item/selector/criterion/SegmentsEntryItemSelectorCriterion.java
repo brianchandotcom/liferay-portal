@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.item.selector;
+package com.liferay.segments.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 

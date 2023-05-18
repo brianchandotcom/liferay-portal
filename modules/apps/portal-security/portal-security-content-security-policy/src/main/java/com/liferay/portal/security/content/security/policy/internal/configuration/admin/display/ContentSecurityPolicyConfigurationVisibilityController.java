@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Olivér Kecskeméty
  */
 @Component(
-	property = "configuration.pid=com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration",
+	property = "configuration.pid=com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration",
 	service = ConfigurationVisibilityController.class
 )
 public class ContentSecurityPolicyConfigurationVisibilityController

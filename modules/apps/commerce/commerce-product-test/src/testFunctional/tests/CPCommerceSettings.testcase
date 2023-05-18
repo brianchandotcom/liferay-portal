@@ -63,6 +63,174 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11451. CanViewLanguageTagsForCategoryOnSitemapPage. Verify that the sitemap contain the URL for the translated category friendly URL"
+	@priority = 5
+	test CanViewLanguageTagsForCategoryOnSitemapPage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CanViewLanguageTagsForCategoryOnSitemapPage";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("Given an account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce",
+				accountEntryType = "Business");
+		}
+
+		task ("And a new widget page with the Category Content is created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Widget Page",
+				widgetName = "Category Content");
+		}
+
+		task ("And a category friendly URL is translated") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Navigator.gotoNavNested(navNested = "Minium");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Brake System");
+
+			Navigator.gotoNavUnderline(navUnderline = "Friendly URL");
+
+			PortletEntry.changeLocale(
+				fieldName = "Friendly URL",
+				locale = "ca-ES");
+
+			Type(
+				key_fieldLabel = "Friendly URL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "system-brake-es");
+
+			PortletEntry.save();
+		}
+
+		task ("And Uuid is acquired") {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Minium",
+				site = "true");
+			var basePortalURL = PropsUtil.get("portal.url");
+
+			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+
+			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
+				field = "uuid",
+				groupName = "Minium",
+				title = "Widget Page");
+		}
+
+		task ("When the widget page sitemap link is opened") {
+			var uuid = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].uuid");
+
+			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+		}
+
+		task ("Then the default and translated category friendly URL are shown") {
+			for (var categoryName : list "brake-system,system-brake-es") {
+				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+					key_basePortalURL = ${basePortalURL},
+					key_categoryName = ${categoryName},
+					locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL");
+			}
+
+			for (var categoryURLName : list "brake-system,system-brake-es") {
+				for (var category : list "brake-system:en-US,system-brake-es:ca-ES") {
+					var categoryName = StringUtil.extractFirst(${category}, ":");
+					var categoryNameLang = StringUtil.extractLast(${category}, ":");
+
+					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+						key_basePortalURL = ${basePortalURL},
+						key_categoryName = ${categoryName},
+						key_categoryNameLang = ${categoryNameLang},
+						key_categoryURLName = ${categoryURLName},
+						locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL_HREF_HREFLANG");
+				}
+			}
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11452. CanViewSubcategoryForCategoryOnSitemapPage. Verify that the sitemap contain the URL for the subcategory"
+	@priority = 5
+	test CanViewSubcategoryForCategoryOnSitemapPage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPCommerceSettings#CanViewSubcategoryForCategoryOnSitemapPage";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("Given an account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce",
+				accountEntryType = "Business");
+		}
+
+		task ("And a new widget page with the Category Content is created") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Widget Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Widget Page",
+				widgetName = "Category Content");
+		}
+
+		task ("And a subcategory is created") {
+			Category.openCategoriesAdmin(siteURLKey = "global");
+
+			Subcategory.addCP(
+				categoryName = "Brake System",
+				subcategoryName = "System Brake Sub Category",
+				vocabularyName = "Minium");
+		}
+
+		task ("And Uuid is acquired") {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Minium",
+				site = "true");
+			var basePortalURL = PropsUtil.get("portal.url");
+
+			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+
+			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
+				field = "uuid",
+				groupName = "Minium",
+				title = "Widget Page");
+		}
+
+		task ("When the widget page sitemap link is opened") {
+			var uuid = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].uuid");
+
+			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+		}
+
+		task ("Then both the category and subcategoty URL are shown") {
+			for (var subCategoryName : list "brake-system,system-brake-sub-category") {
+				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+					key_basePortalURL = ${basePortalURL},
+					key_categoryName = ${subCategoryName},
+					locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL");
+			}
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+		}
+	}
+
 	@priority = 5
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "true";

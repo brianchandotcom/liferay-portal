@@ -14,13 +14,19 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment;
+import com.liferay.headless.commerce.delivery.order.dto.v1_0.Status;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,9 +51,18 @@ public class PlacedOrderItemShipmentDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		PlacedOrderItemShipmentDTOConverterContext
+			placedOrderItemShipmentDTOConverterContext =
+				(PlacedOrderItemShipmentDTOConverterContext)dtoConverterContext;
+
+		Long commerceShipmentItemId =
+			(Long)placedOrderItemShipmentDTOConverterContext.getId();
+
+		Locale locale = dtoConverterContext.getLocale();
+
 		CommerceShipmentItem commerceShipmentItem =
 			_commerceShipmentItemService.getCommerceShipmentItem(
-				(Long)dtoConverterContext.getId());
+				commerceShipmentItemId);
 
 		CommerceShipment commerceShipment =
 			_commerceShipmentLocalService.getCommerceShipment(
@@ -68,6 +83,22 @@ public class PlacedOrderItemShipmentDTOConverter
 				shippingMethodId =
 					commerceShipment.getCommerceShippingMethodId();
 				shippingOptionName = commerceShipment.getShippingOptionName();
+
+				status = new Status() {
+					{
+						code = commerceShipment.getStatus();
+						label =
+							CommerceShipmentConstants.getShipmentStatusLabel(
+								commerceShipment.getStatus());
+						label_i18n = _language.get(
+							LanguageResources.getResourceBundle(locale),
+							CommerceShipmentConstants.getShipmentStatusLabel(
+								commerceShipment.getStatus()));
+					}
+				};
+				supplierShipment =
+					placedOrderItemShipmentDTOConverterContext.
+						isSupplierShipment();
 				trackingNumber = commerceShipment.getTrackingNumber();
 			}
 		};
@@ -78,5 +109,8 @@ public class PlacedOrderItemShipmentDTOConverter
 
 	@Reference
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
+
+	@Reference
+	private Language _language;
 
 }

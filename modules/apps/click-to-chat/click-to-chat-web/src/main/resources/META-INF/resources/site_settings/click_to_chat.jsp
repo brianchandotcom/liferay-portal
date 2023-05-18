@@ -55,7 +55,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <div class="form-group row">
 	<div class="col-md-6">
-		<aui:select disabled="<%= disabled %>" label="chat-provider" name="chatProviderId" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeClickToChatChatProviderId(event);" %>' value="<%= GetterUtil.getString(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ID)) %>">
+		<aui:select disabled="<%= disabled %>" label="chat-provider" name="chatProviderId" id="chatProviderId" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeClickToChatChatProviderId(event);" %>' value="<%= GetterUtil.getString(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ID)) %>">
 			<aui:option label="" value="" />
 
 			<%
@@ -70,17 +70,6 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 		</aui:select>
 
-		<%
-		boolean clickToChatGuestUsersAllowed = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_GUEST_USERS_ALLOWED));
-		%>
-
-		<aui:input checked="<%= clickToChatGuestUsersAllowed %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "guest-users-allowed") %>' labelCssClass="simple-toggle-switch" name="guestUsersAllowed" type="toggle-switch" value="<%= clickToChatGuestUsersAllowed %>" />
-
-		<%
-		boolean clickToChatHideInControlPanel = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_HIDE_IN_CONTROL_PANEL));
-		%>
-
-		<aui:input checked="<%= clickToChatHideInControlPanel %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "hide-in-control-panel") %>' labelCssClass="simple-toggle-switch" name="hideInControlPanel" type="toggle-switch" value="<%= clickToChatHideInControlPanel %>" />
 	</div>
 
 	<div class="col-md-6">
@@ -104,7 +93,53 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	</div>
 </div>
 
+<div class="form-group row hide" id='<portlet:namespace />extraFieldsForZendesk'>
+	<div class="col-md-6">
+	 	<aui:input label="chat-provider-key-id" disabled="<%= disabled %>" name="chatProviderKeyId" type="text" value="<%= clickToChatConfiguration.chatProviderKeyId() %>" />
+	</div>
+
+	<div class="col-md-6">
+		<aui:input label="chat-provider-secret-key" disabled="<%= disabled %>" name="chatProviderSecretKey" type="text" value="<%= clickToChatConfiguration.chatProviderSecretKey() %>" />
+	</div>
+</div>
+
+<div class="form-group row">
+	<div class="col-md-6">
+			<%
+				boolean clickToChatGuestUsersAllowed = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_GUEST_USERS_ALLOWED));
+			%>
+
+			<aui:input checked="<%= clickToChatGuestUsersAllowed %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "guest-users-allowed") %>' labelCssClass="simple-toggle-switch" name="guestUsersAllowed" type="toggle-switch" value="<%= clickToChatGuestUsersAllowed %>" />
+
+			<%
+				boolean clickToChatHideInControlPanel = GetterUtil.getBoolean(request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_HIDE_IN_CONTROL_PANEL));
+			%>
+
+			<aui:input checked="<%= clickToChatHideInControlPanel %>" disabled="<%= disabled %>" inlineLabel="right" label='<%= LanguageUtil.get(resourceBundle, "hide-in-control-panel") %>' labelCssClass="simple-toggle-switch" name="hideInControlPanel" type="toggle-switch" value="<%= clickToChatHideInControlPanel %>" />
+	</div>
+</div>
+
 <script>
+
+	(function() {
+		<portlet:namespace />checkExtraFieldsRendering();
+	})();
+
+	function <portlet:namespace />checkExtraFieldsRendering(){
+		var extraFieldsForZendeskDivElement = document.getElementById(
+					'<portlet:namespace />extraFieldsForZendesk'
+		);
+
+		var selectedChat = document.getElementById('<portlet:namespace />chatProviderId');
+
+		if (selectedChat.value === '<%= ClickToChatConstants.ZENDESK_WEB_WIDGET%>') {
+			extraFieldsForZendeskDivElement.classList.remove('hide');
+		}
+		else {
+			extraFieldsForZendeskDivElement.classList.add('hide');
+		}
+	}
+
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
 		var clickToChatChatProviderIdElement = document.getElementById(
 			'<portlet:namespace />chatProviderId'

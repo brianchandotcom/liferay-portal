@@ -22,10 +22,31 @@
 			function setZendeskUserInfo() {
 				if ('<%= themeDisplay.isSignedIn() %>' === 'true') {
 
-					//zE('webWidget', 'identify', {
-					//	email: '<%= user.getEmailAddress() %>',
-					//	name: '<%= user.getScreenName() %>',
-					//});
+					<%
+						ClickToChatConfiguration clickToChatConfiguration =
+								ClickToChatConfigurationUtil.getClickToChatConfiguration(
+									themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
+
+						String stringKey = clickToChatConfiguration.chatProviderSecretKey();
+
+						byte[] keyBytes = stringKey.getBytes(StandardCharsets.UTF_8);
+
+						String jwt = Jwts.builder()
+							.setHeaderParam("alg", SignatureAlgorithm.HS256.getValue())
+							.setHeaderParam("typ", "JWT")
+							.setHeaderParam("kid", clickToChatConfiguration.chatProviderKeyId())
+							.claim("scope", "user")
+							.claim("name", user.getScreenName())
+							.claim("email", user.getEmailAddress())
+							.claim("external_id", String.valueOf(user.getUserId()))
+							.signWith(Keys.hmacShaKeyFor(keyBytes), SignatureAlgorithm.HS256)
+							.compact();
+
+					%>
+
+					zE('messenger', 'loginUser', function (callback) {
+						callback('<%= jwt %>');
+					});
 
 				}
 			}

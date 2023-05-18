@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration" %><%@
 page import="com.liferay.click.to.chat.web.internal.constants.ClickToChatConstants" %><%@
 page import="com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys" %><%@
+page import="com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfigurationUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
@@ -41,7 +42,12 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Http" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="io.jsonwebtoken.Jwts" %><%@
+page import="io.jsonwebtoken.SignatureAlgorithm" %><%@
+page import="io.jsonwebtoken.security.Keys" %><%@
+page import="java.nio.charset.StandardCharsets" %><%@
+page import="java.security.Key" %>
 
 <%@ page import="java.util.Objects" %>
 

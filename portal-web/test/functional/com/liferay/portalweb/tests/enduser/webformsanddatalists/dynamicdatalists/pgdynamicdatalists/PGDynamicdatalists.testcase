@@ -97,7 +97,7 @@ definition {
 			Click.mouseOverClick(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_BUTTON_2");
 
 			AssertTextEquals(
-				locator1 = "IFrame#DIALOG_BOX",
+				locator1 = "Modal#HEADER",
 				value1 = "Boolean");
 
 			AssertTextEquals(

@@ -34,11 +34,11 @@ public class XMLUpgradeDTDVersionCheck extends XMLDTDVersionCheck {
 		_upgradeToVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
 
-		if (_upgradeToVersion == null) {
+		if ((_upgradeToVersion == null) || !fileName.endsWith(".xml")) {
 			return content;
 		}
 
-		return super.doProcess(fileName, absolutePath, content);
+		return checkDTDVersion(content);
 	}
 
 	@Override

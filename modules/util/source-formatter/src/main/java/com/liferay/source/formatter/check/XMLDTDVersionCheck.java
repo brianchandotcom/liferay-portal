@@ -31,36 +31,10 @@ import java.util.regex.Pattern;
  */
 public class XMLDTDVersionCheck extends BaseFileCheck {
 
-	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
-
-		if (fileName.endsWith(".xml")) {
-			return _checkDTDVersion(content);
-		}
-
-		return content;
-	}
-
-	protected String getLPVersion() {
-		return _releaseProperties.getProperty("lp.version");
-	}
-
-	protected String getLPVersionDTD() {
-		return _releaseProperties.getProperty("lp.version.dtd");
-	}
-
-	private String _checkDTDVersion(String content) throws IOException {
+	protected String checkDTDVersion(String content) throws IOException {
 		Matcher matcher = _doctypePattern.matcher(content);
 
 		if (!matcher.find()) {
-			return content;
-		}
-
-		_readReleaseProperties();
-
-		if (_releaseProperties == null) {
 			return content;
 		}
 
@@ -82,6 +56,28 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 				matcher.group(1), lpVersion, matcher.group(3), lpVersionDTD,
 				matcher.group(5)),
 			matcher.start());
+	}
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		_readReleaseProperties();
+
+		if ((_releaseProperties == null) || !fileName.endsWith(".xml")) {
+			return content;
+		}
+
+		return checkDTDVersion(content);
+	}
+
+	protected String getLPVersion() {
+		return _releaseProperties.getProperty("lp.version");
+	}
+
+	protected String getLPVersionDTD() {
+		return _releaseProperties.getProperty("lp.version.dtd");
 	}
 
 	private void _readReleaseProperties() throws IOException {

@@ -70,7 +70,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testXMLUpgradeDTDVersionCheck() throws Exception {
-		test("upgrade/GradleUpgradeReleaseDxpCheck.testgradle");
+		test("upgrade/XMLUpgradeDTDVersionCheck.testxml");
 	}
 
 	@Override

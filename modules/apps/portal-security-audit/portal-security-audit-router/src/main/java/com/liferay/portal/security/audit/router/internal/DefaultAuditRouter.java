@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.audit.router.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditException;
@@ -21,27 +23,19 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.security.audit.configuration.AuditConfiguration;
 import com.liferay.portal.security.audit.router.internal.constants.AuditConstants;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -57,15 +51,13 @@ public class DefaultAuditRouter implements AuditRouter {
 
 	@Override
 	public boolean isDeployed() {
-		int auditMessageProcessorsCount = _auditMessageProcessors.size();
+		Set<String> keySet = _serviceTrackerMap.keySet();
 
-		if ((auditMessageProcessorsCount > 0) ||
-			!_globalAuditMessageProcessors.isEmpty()) {
-
-			return true;
+		if (keySet.isEmpty()) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
@@ -79,14 +71,19 @@ public class DefaultAuditRouter implements AuditRouter {
 			return;
 		}
 
-		for (AuditMessageProcessor globalAuditMessageProcessor :
-				_globalAuditMessageProcessors) {
+		List<AuditMessageProcessor> globalAuditMessageProcessors =
+			_serviceTrackerMap.getService(StringPool.STAR);
 
-			globalAuditMessageProcessor.process(auditMessage);
+		if (globalAuditMessageProcessors != null) {
+			for (AuditMessageProcessor globalAuditMessageProcessor :
+					globalAuditMessageProcessors) {
+
+				globalAuditMessageProcessor.process(auditMessage);
+			}
 		}
 
-		Set<AuditMessageProcessor> auditMessageProcessors =
-			_auditMessageProcessors.get(auditMessage.getEventType());
+		List<AuditMessageProcessor> auditMessageProcessors =
+			_serviceTrackerMap.getService(auditMessage.getEventType());
 
 		if (auditMessageProcessors != null) {
 			for (AuditMessageProcessor auditMessageProcessor :
@@ -106,6 +103,15 @@ public class DefaultAuditRouter implements AuditRouter {
 				AuditConfiguration.class, properties);
 
 		_auditEnabled = auditConfiguration.enabled();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, AuditMessageProcessor.class,
+			AuditConstants.EVENT_TYPES);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@Modified
@@ -117,80 +123,11 @@ public class DefaultAuditRouter implements AuditRouter {
 		_auditEnabled = auditConfiguration.enabled();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setAuditMessageProcessor(
-		AuditMessageProcessor auditMessageProcessor,
-		Map<String, Object> properties) {
-
-		String[] eventTypes = _getEventTypes(properties);
-
-		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
-			_globalAuditMessageProcessors.add(auditMessageProcessor);
-
-			return;
-		}
-
-		for (String eventType : eventTypes) {
-			Set<AuditMessageProcessor> auditMessageProcessorsSet =
-				_auditMessageProcessors.get(eventType);
-
-			if (auditMessageProcessorsSet == null) {
-				auditMessageProcessorsSet = new HashSet<>();
-
-				_auditMessageProcessors.put(
-					eventType, auditMessageProcessorsSet);
-			}
-
-			auditMessageProcessorsSet.add(auditMessageProcessor);
-		}
-	}
-
-	protected void unsetAuditMessageProcessor(
-		AuditMessageProcessor auditMessageProcessor,
-		Map<String, Object> properties) {
-
-		String[] eventTypes = _getEventTypes(properties);
-
-		if ((eventTypes.length == 1) && eventTypes[0].equals(StringPool.STAR)) {
-			_globalAuditMessageProcessors.remove(auditMessageProcessor);
-
-			return;
-		}
-
-		for (String eventType : eventTypes) {
-			Set<AuditMessageProcessor> auditMessageProcessorsSet =
-				_auditMessageProcessors.get(eventType);
-
-			if (auditMessageProcessorsSet == null) {
-				continue;
-			}
-
-			auditMessageProcessorsSet.remove(auditMessageProcessor);
-		}
-	}
-
-	private String[] _getEventTypes(Map<String, Object> properties) {
-		String eventTypes = (String)properties.get(AuditConstants.EVENT_TYPES);
-
-		if (Validator.isNull(eventTypes)) {
-			throw new IllegalArgumentException(
-				"The property \"" + AuditConstants.EVENT_TYPES + "\" is null");
-		}
-
-		return StringUtil.split(eventTypes);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultAuditRouter.class);
 
 	private volatile boolean _auditEnabled;
-	private final Map<String, Set<AuditMessageProcessor>>
-		_auditMessageProcessors = new ConcurrentHashMap<>();
-	private final List<AuditMessageProcessor> _globalAuditMessageProcessors =
-		new CopyOnWriteArrayList<>();
+	private ServiceTrackerMap<String, List<AuditMessageProcessor>>
+		_serviceTrackerMap;
 
 }

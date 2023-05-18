@@ -85,6 +85,12 @@ public class SaveCompanyConfigurationMVCActionCommand
 			).put(
 				"siteSettingsStrategy",
 				ParamUtil.getString(actionRequest, "siteSettingsStrategy")
+			).put(
+				"chatProviderKeyId",
+				ParamUtil.getString(actionRequest, "chatProviderKeyId")
+			).put(
+				"chatProviderSecretKey",
+				ParamUtil.getString(actionRequest, "chatProviderSecretKey")
 			).build());
 	}
 

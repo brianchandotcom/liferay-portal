@@ -17,6 +17,7 @@ package com.liferay.click.to.chat.web.internal.servlet.taglib;
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfigurationUtil;
 import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
+import com.liferay.click.to.chat.web.internal.constants.ClickToChatConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -101,12 +102,25 @@ public class ClickToChatBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
+		if (clickToChatConfiguration.chatProviderId() == ClickToChatConstants.ZENDESK_WEB_WIDGET
+			&& Validator.isNull(clickToChatConfiguration.chatProviderKeyId()) ||
+				Validator.isNull(clickToChatConfiguration.chatProviderSecretKey())){
+
+			return;
+		}
+
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ACCOUNT_ID,
 			clickToChatConfiguration.chatProviderAccountId());
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ID,
 			clickToChatConfiguration.chatProviderId());
+		httpServletRequest.setAttribute(
+			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID,
+			clickToChatConfiguration.chatProviderKeyId());
+		httpServletRequest.setAttribute(
+			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY,
+			clickToChatConfiguration.chatProviderSecretKey());
 
 		super.include(httpServletRequest, httpServletResponse, key);
 	}

@@ -43,4 +43,7 @@ public interface ClickToChatConfiguration {
 
 	public String siteSettingsStrategy();
 
+	public String chatProviderKeyId();
+
+	public String chatProviderSecretKey();
 }

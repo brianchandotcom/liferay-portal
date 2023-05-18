@@ -106,6 +106,12 @@ public class ClickToChatSiteSettingsConfigurationScreenContributor
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_HIDE_IN_CONTROL_PANEL,
 			clickToChatConfiguration.hideInControlPanel());
+		httpServletRequest.setAttribute(
+			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID,
+			clickToChatConfiguration.chatProviderKeyId());
+		httpServletRequest.setAttribute(
+			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY,
+			clickToChatConfiguration.chatProviderSecretKey());
 	}
 
 	@Reference

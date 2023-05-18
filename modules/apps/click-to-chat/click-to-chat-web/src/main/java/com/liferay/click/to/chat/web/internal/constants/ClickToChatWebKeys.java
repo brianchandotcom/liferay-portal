@@ -36,4 +36,9 @@ public interface ClickToChatWebKeys {
 	public static final String CLICK_TO_CHAT_SITE_SETTINGS_STRATEGY =
 		"CLICK_TO_CHAT_SITE_SETTINGS_STRATEGY";
 
+	public static final String CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID =
+		"CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID";
+
+	public static final String CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY =
+		"CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY";
 }

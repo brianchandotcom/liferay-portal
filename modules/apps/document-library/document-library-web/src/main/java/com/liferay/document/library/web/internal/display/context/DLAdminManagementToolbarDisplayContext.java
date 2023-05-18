@@ -732,6 +732,19 @@ public class DLAdminManagementToolbarDisplayContext
 		sortingURL.setParameter(
 			"fileEntryTypeId", String.valueOf(_getFileEntryTypeId()));
 
+		String[] extensions = _getExtensions(_httpServletRequest);
+
+		if (ArrayUtil.isNotEmpty(extensions)) {
+			sortingURL.setParameter("extension", extensions);
+		}
+
+		String[] assetTagIds = ArrayUtil.toStringArray(
+			_getSelectedAssetTagIds(_httpServletRequest));
+
+		if (ArrayUtil.isNotEmpty(assetTagIds)) {
+			sortingURL.setParameter("assetTagId", assetTagIds);
+		}
+
 		return sortingURL;
 	}
 

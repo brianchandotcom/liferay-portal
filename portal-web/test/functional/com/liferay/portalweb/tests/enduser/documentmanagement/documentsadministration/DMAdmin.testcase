@@ -157,9 +157,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		LAR.importPortlet(
-			deleteApplicationData = "true",
-			larFileName = "DM.portlet.lar");
+		LAR.importPortletWithDeleteApplicationData(larFileName = "DM.portlet.lar");
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "Document_1.jpg",

@@ -87,6 +87,7 @@ public class SearchResponseResourceTest
 		super.setUp();
 
 		_locale = LocaleUtil.getSiteDefault();
+		_searchEngine = _searchEngineHelper.getSearchEngine();
 
 		_user = TestPropsValues.getUser();
 
@@ -110,22 +111,16 @@ public class SearchResponseResourceTest
 		JournalArticle journalArticle = _addJournalArticle(
 			assetCategory, assetTag);
 
-		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
-
 		_testPostSearchWithCategoryFacet(assetCategory);
 		_testPostSearchWithCategoryTreeFacet(assetCategory);
 		_testPostSearchWithCustomFacet();
 		_testPostSearchWithDateRangeFacet();
 		_testPostSearchWithEntryClassNames();
-		_testPostSearchWithFields(journalArticle, searchEngine);
+		_testPostSearchWithFields(journalArticle);
 		_testPostSearchWithFolderFacet(journalArticle);
 		_testPostSearchWithIncludeAssetFields(journalArticle);
 		_testPostSearchWithKeywords(journalArticle);
-
-		if (Objects.equals(searchEngine.getVendor(), "Elasticsearch")) {
-			_testPostSearchWithNestedFacet(ddmStructure);
-		}
-
+		_testPostSearchWithNestedFacet(ddmStructure);
 		_testPostSearchWithSiteFacet();
 		_testPostSearchWithTagFacet(assetTag);
 		_testPostSearchWithUserFacet();
@@ -382,8 +377,7 @@ public class SearchResponseResourceTest
 			clazz.getName());
 	}
 
-	private void _testPostSearchWithFields(
-			JournalArticle journalArticle, SearchEngine searchEngine)
+	private void _testPostSearchWithFields(JournalArticle journalArticle)
 		throws Exception {
 
 		SearchResponse searchResponse = _postSearch(
@@ -395,7 +389,7 @@ public class SearchResponseResourceTest
 
 		Set<String> keySet = documentJSONObject.keySet();
 
-		if (Objects.equals(searchEngine.getVendor(), "Solr")) {
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
 			Assert.assertTrue(keySet.size() == 2);
 		}
 		else {
@@ -446,6 +440,10 @@ public class SearchResponseResourceTest
 
 	private void _testPostSearchWithNestedFacet(DDMStructure ddmStructure)
 		throws Exception {
+
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
+			return;
+		}
 
 		_assertFacet(
 			HashMapBuilder.<String, Object>put(
@@ -527,6 +525,8 @@ public class SearchResponseResourceTest
 
 	@Inject
 	private Portal _portal;
+
+	private SearchEngine _searchEngine;
 
 	@Inject
 	private SearchEngineHelper _searchEngineHelper;

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchEngine;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -108,16 +110,22 @@ public class SearchResponseResourceTest
 		JournalArticle journalArticle = _addJournalArticle(
 			assetCategory, assetTag);
 
+		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
+
 		_testPostSearchWithCategoryFacet(assetCategory);
 		_testPostSearchWithCategoryTreeFacet(assetCategory);
 		_testPostSearchWithCustomFacet();
 		_testPostSearchWithDateRangeFacet();
 		_testPostSearchWithEntryClassNames();
-		_testPostSearchWithFields(journalArticle);
+		_testPostSearchWithFields(journalArticle, searchEngine);
 		_testPostSearchWithFolderFacet(journalArticle);
 		_testPostSearchWithIncludeAssetFields(journalArticle);
 		_testPostSearchWithKeywords(journalArticle);
-		_testPostSearchWithNestedFacet(ddmStructure);
+
+		if (Objects.equals(searchEngine.getVendor(), "Elasticsearch")) {
+			_testPostSearchWithNestedFacet(ddmStructure);
+		}
+
 		_testPostSearchWithSiteFacet();
 		_testPostSearchWithTagFacet(assetTag);
 		_testPostSearchWithUserFacet();
@@ -374,7 +382,8 @@ public class SearchResponseResourceTest
 			clazz.getName());
 	}
 
-	private void _testPostSearchWithFields(JournalArticle journalArticle)
+	private void _testPostSearchWithFields(
+			JournalArticle journalArticle, SearchEngine searchEngine)
 		throws Exception {
 
 		SearchResponse searchResponse = _postSearch(
@@ -386,9 +395,15 @@ public class SearchResponseResourceTest
 
 		Set<String> keySet = documentJSONObject.keySet();
 
-		Assert.assertTrue(keySet.size() == 3);
+		if (Objects.equals(searchEngine.getVendor(), "Solr")) {
+			Assert.assertTrue(keySet.size() == 2);
+		}
+		else {
+			Assert.assertTrue(keySet.size() == 3);
+			Assert.assertTrue(keySet.contains("id"));
+		}
+
 		Assert.assertTrue(keySet.contains(Field.ARTICLE_ID));
-		Assert.assertTrue(keySet.contains("id"));
 		Assert.assertTrue(keySet.contains("score"));
 	}
 
@@ -512,6 +527,9 @@ public class SearchResponseResourceTest
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SearchEngineHelper _searchEngineHelper;
 
 	private ServiceContext _serviceContext;
 	private User _user;

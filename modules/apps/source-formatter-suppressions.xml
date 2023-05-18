@@ -7,8 +7,6 @@
 		<suppress checks="ComponentExposureCheck" files="asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/configuration/AssetPublisherSelectionStyleConfigurationUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="asset/asset-taglib/src/main/java/com/liferay/asset/taglib/internal/item/selector/ItemSelectorUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="captcha/captcha-api/src/main/java/com/liferay/captcha/util/CaptchaUtil\.java" />
-		<suppress checks="ComponentExposureCheck" files="change-tracking/change-tracking-web/src/main/java/com/liferay/change/tracking/web/internal/timeline/CTCollectionHistoryProviderRegistry\.java" />
-		<suppress checks="ComponentExposureCheck" files="configuration-admin/configuration-admin-web/src/main/java/com/liferay/configuration/admin/web/internal/util/ConfigurationFieldOptionsProviderUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="data-engine/data-engine-taglib/src/main/java/com/liferay/data/engine/taglib/internal/servlet/taglib/util/DataLayoutTaglibUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-item-selector-web/src/main/java/com/liferay/document/library/item/selector/web/internal/criterion/DLItemSelectorCriterionCreationMenuRestrictionUtil\.java" />
 		<suppress checks="ComponentExposureCheck" files="document-library/document-library-taglib/src/main/java/com/liferay/document/library/taglib/internal/display/context/DLViewFileVersionDisplayContextUtil\.java" />

@@ -46,4 +46,5 @@ public interface ClickToChatConfiguration {
 	public String chatProviderKeyId();
 
 	public String chatProviderSecretKey();
+
 }

@@ -75,6 +75,12 @@ public class SaveSiteConfigurationMVCActionCommand
 				"chatProviderId",
 				ParamUtil.getString(actionRequest, "chatProviderId")
 			).put(
+				"chatProviderKeyId",
+				ParamUtil.getString(actionRequest, "chatProviderKeyId")
+			).put(
+				"chatProviderSecretKey",
+				ParamUtil.getString(actionRequest, "chatProviderSecretKey")
+			).put(
 				"enabled", ParamUtil.getBoolean(actionRequest, "enabled")
 			).put(
 				"guestUsersAllowed",
@@ -85,12 +91,6 @@ public class SaveSiteConfigurationMVCActionCommand
 			).put(
 				"siteSettingsStrategy",
 				ParamUtil.getBoolean(actionRequest, "siteSettingsStrategy")
-			).put(
-				"chatProviderKeyId",
-				ParamUtil.getString(actionRequest, "chatProviderKeyId")
-			).put(
-				"chatProviderSecretKey",
-				ParamUtil.getString(actionRequest, "chatProviderSecretKey")
 			).build());
 	}
 

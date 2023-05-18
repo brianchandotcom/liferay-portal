@@ -25,10 +25,10 @@ public interface ClickToChatConstants {
 		"zendesk_web_widget_classic"
 	};
 
-	public static final String ZENDESK_WEB_WIDGET = "zendesk_web_widget";
-
 	public static final String[] SITE_SETTINGS_STRATEGIES = {
 		"always-inherit", "always-override", "inherit-or-override"
 	};
+
+	public static final String ZENDESK_WEB_WIDGET = "zendesk_web_widget";
 
 }

@@ -51,7 +51,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <div class="form-group row" id="<portlet:namespace />clickToChatChatProviders">
 	<div class="col-md-6">
-		<aui:select label="chat-provider" name="chatProviderId" id="chatProviderId" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeClickToChatChatProviderId(event);" %>' value="<%= clickToChatConfiguration.chatProviderId() %>">
+		<aui:select id="chatProviderId" label="chat-provider" name="chatProviderId" onchange='<%= liferayPortletResponse.getNamespace() + "onChangeClickToChatChatProviderId(event);" %>' value="<%= clickToChatConfiguration.chatProviderId() %>">
 			<aui:option label="" value="" />
 
 			<%
@@ -63,8 +63,8 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 			<%
 			}
 			%>
-		</aui:select>
 
+		</aui:select>
 	</div>
 
 	<div class="col-md-6">
@@ -88,9 +88,9 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	</div>
 </div>
 
-<div class="form-group row hide" id='<portlet:namespace />extraFieldsForZendesk'>
+<div class="form-group hide row" id="<portlet:namespace />extraFieldsForZendesk">
 	<div class="col-md-6">
-	 	<aui:input label="chat-provider-key-id" name="chatProviderKeyId" type="text" value="<%= clickToChatConfiguration.chatProviderKeyId() %>" />
+		<aui:input label="chat-provider-key-id" name="chatProviderKeyId" type="text" value="<%= clickToChatConfiguration.chatProviderKeyId() %>" />
 	</div>
 
 	<div class="col-md-6">
@@ -107,18 +107,22 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 </div>
 
 <script>
-	(function() {
+	(function () {
 		<portlet:namespace />checkExtraFieldsRendering();
-    })();
+	})();
 
-	function <portlet:namespace />checkExtraFieldsRendering(){
+	function <portlet:namespace />checkExtraFieldsRendering() {
 		var extraFieldsForZendeskDivElement = document.getElementById(
-        	'<portlet:namespace />extraFieldsForZendesk'
+			'<portlet:namespace />extraFieldsForZendesk'
 		);
 
-		var selectedChat = document.getElementById('<portlet:namespace />chatProviderId');
+		var selectedChat = document.getElementById(
+			'<portlet:namespace />chatProviderId'
+		);
 
-		if (selectedChat.value === '<%= ClickToChatConstants.ZENDESK_WEB_WIDGET%>') {
+		if (
+			selectedChat.value === '<%= ClickToChatConstants.ZENDESK_WEB_WIDGET %>'
+		) {
 			extraFieldsForZendeskDivElement.classList.remove('hide');
 		}
 		else {
@@ -127,7 +131,6 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	}
 
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
-
 		<portlet:namespace />checkExtraFieldsRendering();
 
 		var clickToChatChatProviderIdElement = document.getElementById(

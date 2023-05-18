@@ -22,7 +22,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PropsValues;
@@ -85,7 +84,6 @@ public class EncryptedObjectFieldBusinessType
 	@Override
 	public boolean isVisible(ObjectDefinition objectDefinition) {
 		if (objectDefinition.isDefaultStorageType() &&
-			FeatureFlagManagerUtil.isEnabled("LPS-178057") &&
 			PropsValues.OBJECT_ENCRYPTION_ENABLED) {
 
 			return true;

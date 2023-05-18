@@ -1367,11 +1367,11 @@ The upgrade framework manages all modules' tables and `Release` record creation.
 
 ### What changed?
 
- `PortalSharedSearchSettings` methods related to 7.1 compatibility are removed.
+`PortalSharedSearchSettings` methods related to 7.1 compatibility were removed.
 
 ### Who is affected?
 
-This affects anyone who is calling these methods from there code: `getParameter71()`, `getParameterValues71()`, and `getPortletPreferences71()`
+This affects anyone calling these methods: `getParameter71()`, `getParameterValues71()`, and `getPortletPreferences71()`.
 
 ### How should I update my code?
 
@@ -1379,4 +1379,4 @@ Replace `getParameter71()` with `getParameterOptional()`, `getParameterValues71(
 
 ### Why was this change made?
 
-These methods were added back in 7.2 for forward compatibility: [LPS-101007](https://issues.liferay.com/browse/LPS-101007). Now in 7.4, they are only redundant methods to their Optional and String version.
+These methods were added in 7.2 for forward compatibility: see [LPS-101007](https://issues.liferay.com/browse/LPS-101007). In 7.4 they are redundant to the `Optional` and `String[]` variations.

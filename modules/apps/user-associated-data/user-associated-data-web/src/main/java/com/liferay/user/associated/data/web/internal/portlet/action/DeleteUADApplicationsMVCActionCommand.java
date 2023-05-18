@@ -6,9 +6,6 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
@@ -63,10 +60,10 @@ public class DeleteUADApplicationsMVCActionCommand
 					try {
 						uadAnonymizer.delete(entity);
 					}
-					catch (NoSuchModelException noSuchModelException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(noSuchModelException);
-						}
+					catch (Exception exception) {
+						handleExceptions(
+							actionRequest, actionResponse, uadAnonymizer,
+							exception);
 					}
 				}
 			}
@@ -74,8 +71,5 @@ public class DeleteUADApplicationsMVCActionCommand
 
 		doReviewableRedirect(actionRequest, actionResponse);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteUADApplicationsMVCActionCommand.class);
 
 }

@@ -6,15 +6,10 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -124,30 +119,9 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 					entityUADAnonymizer.delete(entity);
 				}
 				catch (Exception exception) {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)actionRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					Map<Class<?>, String> exceptionMessageMap =
-						entityUADAnonymizer.getExceptionMessageMap(
-							themeDisplay.getLocale());
-
-					if (exceptionMessageMap.containsKey(exception.getClass())) {
-						SessionErrors.add(
-							actionRequest, "deleteUADEntityException",
-							exceptionMessageMap.get(exception.getClass()));
-
-						String redirect = ParamUtil.getString(
-							actionRequest, "redirect");
-
-						if (Validator.isNotNull(redirect)) {
-							sendRedirect(
-								actionRequest, actionResponse, redirect);
-						}
-					}
-					else {
-						throw exception;
-					}
+					handleExceptions(
+						actionRequest, actionResponse, entityUADAnonymizer,
+						exception);
 				}
 			}
 			else {
@@ -179,10 +153,10 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 								containerItemUADAnonymizer.delete(
 									containerItem);
 							}
-							catch (NoSuchModelException noSuchModelException) {
-								if (_log.isDebugEnabled()) {
-									_log.debug(noSuchModelException);
-								}
+							catch (Exception exception) {
+								handleExceptions(
+									actionRequest, actionResponse,
+									containerItemUADAnonymizer, exception);
 							}
 						});
 				}
@@ -192,9 +166,6 @@ public class DeleteUADEntitiesMVCActionCommand extends BaseUADMVCActionCommand {
 			entityUADAnonymizer.delete(entity);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteUADEntitiesMVCActionCommand.class);
 
 	@Reference
 	private Portal _portal;

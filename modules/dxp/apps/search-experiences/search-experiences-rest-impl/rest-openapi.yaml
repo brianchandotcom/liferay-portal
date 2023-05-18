@@ -837,6 +837,51 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPBlueprint"
             tags: ["SXPBlueprint"]
+    /sxp-blueprints/by-external-reference-code/{externalReferenceCode}:
+        get:
+            operationId: getSXPBlueprintByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+            tags: ["SXPBlueprint"]
+        put:
+            operationId: putSXPBlueprintByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SXPBlueprint"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SXPBlueprint"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SXPBlueprint"
+            tags: ["SXPBlueprint"]
     /sxp-blueprints/validate:
         post:
             operationId: postSXPBlueprintValidate

@@ -254,43 +254,6 @@ public class KnowledgeBaseAttachmentResourceTest
 		return testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
 	}
 
-	@Override
-	protected KnowledgeBaseAttachment
-			testPostSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment(
-				KnowledgeBaseAttachment knowledgeBaseAttachment,
-				Map<String, File> multipartFiles)
-		throws Exception {
-
-		return knowledgeBaseAttachmentResource.
-			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				_kbArticle.getResourcePrimKey(), knowledgeBaseAttachment,
-				multipartFiles);
-	}
-
-	@Override
-	protected KnowledgeBaseAttachment
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
-		throws Exception {
-
-		return _addKnowledgeBaseAttachment();
-	}
-
-	@Override
-	protected String
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
-		throws Exception {
-
-		return _kbArticle.getExternalReferenceCode();
-	}
-
-	@Override
-	protected Long
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
-		throws Exception {
-
-		return testGroup.getGroupId();
-	}
-
 	private KBArticle _addKBArticle() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 

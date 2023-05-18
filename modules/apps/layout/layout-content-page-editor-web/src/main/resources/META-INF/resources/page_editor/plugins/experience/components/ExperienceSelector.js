@@ -223,6 +223,17 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 		window
 	);
 
+	useEventListener(
+		'keyup',
+		() => {
+			if (open && !selectorRef.current.contains(document.activeElement)) {
+				debouncedSetOpen(false);
+			}
+		},
+		true,
+		window
+	);
+
 	const onExperienceCreation = ({
 		name,
 		segmentsEntryId,

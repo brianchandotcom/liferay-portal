@@ -410,7 +410,12 @@ definition {
 
 		SAMLRole.enable(samlEntityId = ${spEntityId});
 
-		User.logoutPG(specificURL = ${spURL});
+		if (${keepSPLogin} == "true") {
+			User.viewLoggedInPG();
+		}
+		else {
+			User.logoutPG(specificURL = ${spURL});
+		}
 
 		// Add a configured SP connection to an IdP
 

@@ -1037,11 +1037,15 @@ definition {
 	}
 
 	macro openSitesAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage/-/sites");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/control_panel/manage/-/sites");
 	}
 
 	macro openSiteSettingsAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings");
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings");
 	}
 
 	macro openSiteTeamsAdmin {

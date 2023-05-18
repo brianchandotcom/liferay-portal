@@ -341,6 +341,13 @@ definition {
 			Check(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNATURE_REQUIRED_CHECKBOX");
 		}
 
+		if (${authnrequestsigningallowsdynamicacsurl} == "disable") {
+			Uncheck(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNING_ALLOWS_DYNAMIC_ACS_URL_CHECKBOX");
+		}
+		else {
+			Check(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTHN_REQUEST_SIGNING_ALLOWS_DYNAMIC_ACS_URL_CHECKBOX");
+		}
+
 		PortletEntry.save();
 	}
 

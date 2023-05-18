@@ -3392,6 +3392,132 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-170940. TC-2: The SAML configuration is not applied to the sites when ACS is disabled."
+	@priority = 5
+	test SAMLConfigurationNotApplyToSitesAfterACSDisabled {
+		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#SAMLConfigurationNotApplyToSitesAfterACSDisabled";
+
+		task ("Given: Create user, custom domain site and create SAML link between baker.com and able.com") {
+			SAML.addVirtualInstances(virtualHosts = "www.able.com,www.baker.com");
+
+			SAML.configureLiferaySAMLAsIdP(
+				idpURL = "http://www.baker.com:8080",
+				samlEntityId = "samlidp",
+				userEmailAddress = "test@www.baker.com");
+
+			JSONUser.addUser(
+				creatorEmailAddress = "test@www.baker.com",
+				creatorPassword = "test",
+				portalInstanceName = "www.baker.com",
+				specificURL = "http://www.baker.com:8080",
+				userEmailAddress = "usera@www.baker.com",
+				userFirstName = "user",
+				userLastName = "a",
+				userScreenName = "usera");
+
+			User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
+
+			UserNavigator.gotoUser(userScreenName = "usera");
+
+			User.editPassword(newPassword = "test");
+
+			SAML.setupSP(
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			HeadlessSite.addSite(
+				portalURL = "http://www.able.com:8080",
+				siteName = "Site Name",
+				templateName = "Welcome",
+				templateType = "Site Initializer",
+				userEmailAddress = "test@www.able.com",
+				userPassword = "test");
+
+			Site.openSiteSettingsAdmin(
+				baseURL = "http://www.able.com:8080",
+				siteURLKey = "site-name");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.easy.com");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "samlidp",
+				idpURL = "http://www.baker.com:8080",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				sPUserEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+		}
+
+		task ("And: Disable the Authn Request Signing Allows Dynamic ACS URL checkbox") {
+			SAML.goToSAMLAdmin(baseURL = "http://www.baker.com:8080");
+
+			SAMLNavigation.gotoIdentityProvider();
+
+			MouseOver(
+				key_tooltipInfo = "ACS",
+				locator1 = "Staging#STAGING_TOOLTIP");
+
+			AssertTextPresent(
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT",
+				value1 = "When the Authn request is signed, the service provider can request to use other ACS (Assertion Consumer Service) URLs not specified in the metadata for receiving the Authn response.");
+
+			AssertChecked(
+				checkboxName = "Authn Request Signing Allows Dynamic ACS URL",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			SAMLPortlet.configureIdentityProvider(authnrequestsigningallowsdynamicacsurl = "disable");
+
+			User.logoutPG(specificURL = "http://www.baker.com:8080");
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("When: User log in to able.com normally and log out") {
+			User.firstLoginUI(
+				idpName = "samlidp",
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "usera@www.baker.com");
+
+			OpenIDConnect.acceptConditions();
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME",
+				value1 = "user a");
+
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Then: User is unable to initiate SP SSO on easy.com") {
+			User.firstLoginUI(
+				idpName = "samlidp",
+				password = "test",
+				specificURL = "http://www.easy.com:8080",
+				userEmailAddress = "usera@www.baker.com");
+
+			User.viewLoggedOutPG();
+		}
+	}
+
 	@description = "LPS-105169 TC-3: SP initiated login should not sync IdP&SP user attributes if not part of attribute mapping - Using virtual instances."
 	@priority = 4
 	test SPInitiatedSSODoesNotSyncAttributesIfNotMapped {
@@ -3946,6 +4072,238 @@ definition {
 			User.viewLoggedInPG();
 
 			AssertConsoleTextPresent(value1 = "nameid-format:unspecified");
+		}
+	}
+
+	@description = "This is a use case for LPS-170940. TC-1: Verify SSO login and logout mechanism works the same when having multiple sites configured as SP."
+	@priority = 5
+	test SSOLoginLogoutWorkSameWhenSitesConfiguredAsSP {
+		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#SSOLoginLogoutWorkSameWhenSitesConfiguredAsSP";
+
+		task ("Given: Create users, custom domain sites and create SAML links between two IdPs and two SPs") {
+			SAML.addVirtualInstances(virtualHosts = "www.able.com,www.baker.com,www.dog.com,www.fox.com");
+
+			SAML.configureLiferaySAMLAsIdP(
+				idpURL = "http://www.dog.com:8080",
+				samlEntityId = "IP1",
+				userEmailAddress = "test@www.dog.com");
+
+			JSONUser.addUser(
+				creatorEmailAddress = "test@www.dog.com",
+				creatorPassword = "test",
+				portalInstanceName = "www.dog.com",
+				specificURL = "http://www.dog.com:8080",
+				userEmailAddress = "user1@www.dog.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			User.openUsersAdmin(baseURL = "http://www.dog.com:8080");
+
+			UserNavigator.gotoUser(userScreenName = "user1");
+
+			User.editPassword(newPassword = "test");
+
+			SAML.configureLiferaySAMLAsIdP(
+				idpURL = "http://www.fox.com:8080",
+				samlEntityId = "IP2",
+				userEmailAddress = "test@www.fox.com");
+
+			JSONUser.addUser(
+				creatorEmailAddress = "test@www.fox.com",
+				creatorPassword = "test",
+				portalInstanceName = "www.fox.com",
+				specificURL = "http://www.fox.com:8080",
+				userEmailAddress = "user2@www.fox.com",
+				userFirstName = "user2",
+				userLastName = "user2",
+				userScreenName = "user2");
+
+			User.openUsersAdmin(baseURL = "http://www.fox.com:8080");
+
+			UserNavigator.gotoUser(userScreenName = "user2");
+
+			User.editPassword(newPassword = "test");
+
+			SAML.setupSP(
+				samlEntityId = "SP1",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			SAML.setupSP(
+				samlEntityId = "SP2",
+				spURL = "http://www.baker.com:8080",
+				userEmailAddress = "test@www.baker.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.baker.com:8080",
+				userEmailAddress = "test@www.baker.com");
+
+			for (var siteNum : list "1,2") {
+				HeadlessSite.addSite(
+					portalURL = "http://www.baker.com:8080",
+					siteName = "Site${siteNum}",
+					templateName = "Welcome",
+					templateType = "Site Initializer",
+					userEmailAddress = "test@www.baker.com",
+					userPassword = "test");
+			}
+
+			Site.openSiteSettingsAdmin(
+				baseURL = "http://www.baker.com:8080",
+				siteURLKey = "site1");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.easy.com");
+
+			Site.openSiteSettingsAdmin(
+				baseURL = "http://www.baker.com:8080",
+				siteURLKey = "site2");
+
+			Site.addVirtualHostsURLCP(
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.charlie.com");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "IP1",
+				idpURL = "http://www.dog.com:8080",
+				keepSPLogin = "true",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "SP1",
+				spURL = "http://www.able.com:8080",
+				sPUserEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "IP2",
+				idpURL = "http://www.fox.com:8080",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "SP1",
+				spURL = "http://www.able.com:8080",
+				sPUserEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "IP1",
+				idpURL = "http://www.dog.com:8080",
+				keepSPLogin = "true",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "SP2",
+				spURL = "http://www.baker.com:8080",
+				sPUserEmailAddress = "test@www.baker.com",
+				userResolution = "dynamic");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "IP2",
+				idpURL = "http://www.fox.com:8080",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "SP2",
+				spURL = "http://www.baker.com:8080",
+				sPUserEmailAddress = "test@www.baker.com",
+				userResolution = "dynamic");
+
+			User.logoutPG(specificURL = "http://www.dog.com:8080");
+
+			User.viewLoggedOutPG();
+
+			User.logoutPG(specificURL = "http://www.fox.com:8080");
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("When: Log in user1 to able.com and easy.com, then log in user2 to charlie.com and baker.com") {
+			User.firstLoginUI(
+				idpName = "IP1",
+				password = "test",
+				samlMultiIdPs = "true",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "user1@www.dog.com");
+
+			OpenIDConnect.acceptConditions();
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME",
+				value1 = "user1 user1");
+
+			Navigator.openSpecificURL(url = "http://www.easy.com:8080");
+
+			User._clickSignInLink(
+				idpName = "IP1",
+				samlMultiIdPs = "true");
+
+			OpenIDConnect.acceptConditions();
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME",
+				value1 = "user1 user1");
+
+			User.firstLoginUI(
+				idpName = "IP2",
+				password = "test",
+				samlMultiIdPs = "true",
+				specificURL = "http://www.charlie.com:8080",
+				userEmailAddress = "user2@www.fox.com");
+
+			OpenIDConnect.acceptConditions();
+
+			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME",
+				value1 = "user2 user2");
+
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+			User._clickSignInLink(
+				idpName = "IP2",
+				samlMultiIdPs = "true");
+
+			User.viewLoggedInPG();
+		}
+
+		task ("And: Log out user2 from charlie.com") {
+			User.logoutPG(specificURL = "http://www.charlie.com:8080");
+		}
+
+		task ("Then: Verify that user2 is logged out from baker.com but user1 not from able.com and easy.com") {
+			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+			User.viewLoggedOutPG();
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			User.viewLoggedInPG();
+
+			Navigator.openSpecificURL(url = "http://www.easy.com:8080");
+
+			User.viewLoggedInPG();
 		}
 	}
 

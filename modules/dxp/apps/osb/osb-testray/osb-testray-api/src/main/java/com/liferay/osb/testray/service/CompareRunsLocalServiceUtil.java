@@ -34,11 +34,11 @@ public class CompareRunsLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.testray.service.impl.CompareRunsLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static int getComparison(
-		long runIdA, long runIdB, java.lang.String statusA,
-		java.lang.String statusB, long companyId) {
+		long companyId, long runIdA, long runIdB, java.lang.String statusA,
+		java.lang.String statusB) {
 
 		return getService().getComparison(
-			runIdA, runIdB, statusA, statusB, companyId);
+			companyId, runIdA, runIdB, statusA, statusB);
 	}
 
 	/**

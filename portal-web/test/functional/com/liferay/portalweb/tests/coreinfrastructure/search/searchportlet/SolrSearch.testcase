@@ -1271,18 +1271,11 @@ definition {
 	@description = "This is a use case for LPS-84035."
 	@priority = 5
 	test ViewCreatedSearchPagePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Guest",
@@ -1335,9 +1328,7 @@ definition {
 				locator1 = "Portlet#BODY");
 		}
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.loginPG(userEmailAddress = "userea@liferay.com");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
@@ -1358,18 +1349,11 @@ definition {
 	@description = "This is a use case for LPS-84035."
 	@priority = 5
 	test ViewDefaultSearchPagePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Guest",
@@ -1416,9 +1400,7 @@ definition {
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.loginPG(userEmailAddress = "userea@liferay.com");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
@@ -1514,9 +1496,7 @@ definition {
 
 		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Let the User Choose");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 

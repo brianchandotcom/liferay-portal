@@ -17,12 +17,13 @@ package com.liferay.portal.vulcan.extension.validation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import java.util.Map;
 import java.util.Set;
@@ -47,17 +48,17 @@ public class DefaultPropertyValidator implements PropertyValidator {
 
 		if (propertyType == PropertyDefinition.PropertyType.DATE_TIME) {
 			if (propertyValue instanceof String) {
-				DateFormat dateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
 				try {
-					dateFormat.parse((String)propertyValue);
+					LocalDateTime.parse(
+						(String)propertyValue,
+						DateTimeFormatter.ofPattern(
+							_getDateTimePattern((String)propertyValue)));
 
 					valid = true;
 				}
-				catch (ParseException parseException) {
+				catch (DateTimeParseException dateTimeParseException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(parseException);
+						_log.debug(dateTimeParseException);
 					}
 				}
 			}
@@ -105,6 +106,26 @@ public class DefaultPropertyValidator implements PropertyValidator {
 					propertyDefinition.getPropertyName(),
 					"\" is invalid for property type ", propertyType));
 		}
+	}
+
+	private String _getDateTimePattern(String value) {
+		if (value.length() == 16) {
+			return "yyyy-MM-dd HH:mm";
+		}
+		else if (value.length() == 20) {
+			return "yyyy-MM-dd'T'HH:mm:ss'Z'";
+		}
+		else if (value.length() == 21) {
+			return "yyyy-MM-dd HH:mm:ss.S";
+		}
+		else if ((value.length() == 23) && (value.charAt(10) == 'T')) {
+			return "yyyy-MM-dd'T'HH:mm:ss.SSS";
+		}
+		else if ((value.length() == 24) && (value.charAt(10) == 'T')) {
+			return "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+		}
+
+		return DateUtil.ISO_8601_PATTERN;
 	}
 
 	private boolean _isReadable(Set<Class<?>> classes, Object object) {

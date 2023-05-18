@@ -1,6 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
+import Comic from './common/components/Comic';
 import DadJoke from './common/components/DadJoke';
 import api from './common/services/liferay/api';
 import {Liferay} from './common/services/liferay/liferay';
@@ -25,6 +26,8 @@ const App = ({route}) => {
 
 			{Liferay.ThemeDisplay.isSignedIn() && (
 				<div>
+					<Comic />
+					<hr />
 					<DadJoke />
 				</div>
 			)}

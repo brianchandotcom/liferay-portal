@@ -1,0 +1,10 @@
+@default = "isEditable"
+definition {
+
+	function isEditable {
+		WaitForSPARefresh();
+
+		selenium.isEditable();
+	}
+
+}

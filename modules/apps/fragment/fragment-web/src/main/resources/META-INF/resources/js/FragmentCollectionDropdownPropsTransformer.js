@@ -27,7 +27,7 @@ const ACTIONS = {
 			},
 		});
 	},
-	openImportCollectionView({portletNamespace, viewImportURL}) {
+	openImportCollectionView({importURL, portletNamespace, viewImportURL}) {
 		if (Liferay.FeatureFlags['LPS-174939']) {
 			const modalContainer = document.createElement('div');
 			modalContainer.classList.add('cadmin');
@@ -44,6 +44,7 @@ const ACTIONS = {
 				ImportModal,
 				{
 					disposeModal,
+					importURL,
 					portletNamespace,
 				},
 				modalContainer

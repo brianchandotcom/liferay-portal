@@ -81,6 +81,8 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 														).put(
 															"exportFragmentCollectionsURL", fragmentCollectionsViewContext.get("exportFragmentCollectionsURL")
 														).put(
+															"importURL", fragmentCollectionsViewContext.get("importURL")
+														).put(
 															"viewDeleteFragmentCollectionsURL", fragmentCollectionsViewContext.get("viewDeleteFragmentCollectionsURL")
 														).put(
 															"viewExportFragmentCollectionsURL", fragmentCollectionsViewContext.get("viewExportFragmentCollectionsURL")

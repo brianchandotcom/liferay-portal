@@ -15,7 +15,7 @@
 import {ACTIONS} from './actions';
 
 export default function propsTransformer({
-	additionalProps: {action, viewImportURL},
+	additionalProps: {action, importURL, viewImportURL},
 	portletNamespace,
 	...props
 }) {
@@ -23,6 +23,7 @@ export default function propsTransformer({
 		...props,
 		onClick() {
 			ACTIONS[action]({
+				importURL,
 				portletNamespace,
 				viewImportURL,
 			});

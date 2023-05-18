@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -110,6 +111,9 @@ public class FragmentDisplayContext {
 		).add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "openImportView");
+				dropdownItem.putData(
+					"importURL",
+					(String)fragmentCollectionsViewContext.get("importURL"));
 				dropdownItem.putData(
 					"viewImportURL",
 					(String)fragmentCollectionsViewContext.get(
@@ -388,6 +392,22 @@ public class FragmentDisplayContext {
 
 				return exportFragmentCollectionsURL.toString();
 			}
+		).put(
+			"importURL",
+			() -> PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/fragment/import"
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setPortletResource(
+				() -> {
+					PortletDisplay portletDisplay =
+						_themeDisplay.getPortletDisplay();
+
+					return portletDisplay.getId();
+				}
+			).buildString()
 		).put(
 			"viewDeleteFragmentCollectionsURL",
 			() -> PortletURLBuilder.createRenderURL(

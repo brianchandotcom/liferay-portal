@@ -18,6 +18,7 @@ export default function propsTransformer({
 	additionalProps: {
 		deleteFragmentCollectionURL,
 		exportFragmentCollectionsURL,
+		importURL,
 		viewDeleteFragmentCollectionsURL,
 		viewExportFragmentCollectionsURL,
 		viewImportURL,
@@ -43,6 +44,7 @@ export default function propsTransformer({
 								ACTIONS[action]({
 									deleteFragmentCollectionURL,
 									exportFragmentCollectionsURL,
+									importURL,
 									portletNamespace,
 									viewDeleteFragmentCollectionsURL,
 									viewExportFragmentCollectionsURL,

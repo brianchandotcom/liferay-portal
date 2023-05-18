@@ -16,10 +16,12 @@
 
 interface Props {
 	disposeModal: () => void;
+	importURL: string;
 	portletNamespace: string;
 }
 declare function ImportModal({
 	disposeModal,
+	importURL,
 	portletNamespace,
 }: Props): JSX.Element;
 export default ImportModal;

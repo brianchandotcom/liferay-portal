@@ -20,6 +20,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -43,6 +46,10 @@ public class FragmentCollectionActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -101,6 +108,26 @@ public class FragmentCollectionActionDropdownItemsProvider {
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "openImportCollectionView");
+							dropdownItem.putData(
+								"importURL",
+								PortletURLBuilder.createActionURL(
+									_renderResponse
+								).setActionName(
+									"/fragment/import"
+								).setRedirect(
+									themeDisplay.getURLCurrent()
+								).setPortletResource(
+									() -> {
+										PortletDisplay portletDisplay =
+											themeDisplay.getPortletDisplay();
+
+										return portletDisplay.getId();
+									}
+								).setParameter(
+									"fragmentCollectionId",
+									_fragmentDisplayContext.
+										getFragmentCollectionId()
+								).buildString());
 							dropdownItem.putData(
 								"viewImportURL",
 								PortletURLBuilder.createRenderURL(

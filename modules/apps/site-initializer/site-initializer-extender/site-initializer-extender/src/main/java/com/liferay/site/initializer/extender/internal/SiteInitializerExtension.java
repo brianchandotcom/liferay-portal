@@ -96,6 +96,7 @@ import org.osgi.framework.Bundle;
 public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
+		DependencyManager dependencyManager,
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
 		AccountRoleResource.Factory accountRoleResourceFactory,
@@ -168,7 +169,7 @@ public class SiteInitializerExtension {
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
-		_dependencyManager = new DependencyManager(bundle.getBundleContext());
+		_dependencyManager = dependencyManager;
 
 		_component = _dependencyManager.createComponent();
 

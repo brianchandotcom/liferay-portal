@@ -46,11 +46,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(service = {})
 public class ServiceConfigurationExtender
-	implements BundleTrackerCustomizer
-		<ServiceConfigurationExtender.ServiceConfigurationExtension> {
+	implements BundleTrackerCustomizer<org.apache.felix.dm.Component> {
 
 	@Override
-	public ServiceConfigurationExtension addingBundle(
+	public org.apache.felix.dm.Component addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		Dictionary<String, String> headers = bundle.getHeaders(
@@ -79,116 +78,85 @@ public class ServiceConfigurationExtender
 				bundle, classLoader, serviceConfiguration,
 				_serviceComponentLocalService);
 
-		ServiceConfigurationExtension serviceConfigurationExtension =
-			new ServiceConfigurationExtension(
-				bundle, requireSchemaVersion, serviceConfigurationInitializer);
+		org.apache.felix.dm.Component component =
+			_dependencyManager.createComponent();
 
-		serviceConfigurationExtension.start();
+		component.setImplementation(serviceConfigurationInitializer);
 
-		return serviceConfigurationExtension;
+		if (requireSchemaVersion == null) {
+			return null;
+		}
+
+		String versionRangeFilter = null;
+
+		// See LPS-76926
+
+		try {
+			Version version = new Version(requireSchemaVersion);
+
+			versionRangeFilter = _getVersionRangerFilter(version);
+		}
+		catch (IllegalArgumentException illegalArgumentException1) {
+			try {
+				VersionRange versionRange = new VersionRange(
+					requireSchemaVersion);
+
+				versionRangeFilter = versionRange.toFilterString(
+					"release.schema.version");
+			}
+			catch (IllegalArgumentException illegalArgumentException2) {
+				illegalArgumentException1.addSuppressed(
+					illegalArgumentException2);
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid \"Liferay-Require-SchemaVersion\" header " +
+							"for bundle: " + bundle.getBundleId(),
+						illegalArgumentException1);
+				}
+			}
+		}
+
+		if (versionRangeFilter == null) {
+			return null;
+		}
+
+		ServiceDependency serviceDependency =
+			_dependencyManager.createServiceDependency();
+
+		serviceDependency.setRequired(true);
+
+		serviceDependency.setService(
+			Release.class,
+			StringBundler.concat(
+				"(&(release.bundle.symbolic.name=", bundle.getSymbolicName(),
+				")", versionRangeFilter, ")"));
+
+		component.add(serviceDependency);
+
+		_dependencyManager.add(component);
+
+		return component;
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		ServiceConfigurationExtension serviceConfigurationExtension) {
+		org.apache.felix.dm.Component component) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		ServiceConfigurationExtension serviceConfigurationExtension) {
+		org.apache.felix.dm.Component component) {
 
-		serviceConfigurationExtension.destroy();
-	}
-
-	public static class ServiceConfigurationExtension {
-
-		public void destroy() {
-			_dependencyManager.remove(_component);
-		}
-
-		public void start() {
-			_dependencyManager.add(_component);
-		}
-
-		private ServiceConfigurationExtension(
-			Bundle bundle, String requireSchemaVersion,
-			ServiceConfigurationInitializer serviceConfigurationInitializer) {
-
-			_dependencyManager = new DependencyManager(
-				bundle.getBundleContext());
-
-			_component = _dependencyManager.createComponent();
-
-			_component.setImplementation(serviceConfigurationInitializer);
-
-			if (requireSchemaVersion == null) {
-				return;
-			}
-
-			String versionRangeFilter = null;
-
-			// See LPS-76926
-
-			try {
-				Version version = new Version(requireSchemaVersion);
-
-				versionRangeFilter = _getVersionRangerFilter(version);
-			}
-			catch (IllegalArgumentException illegalArgumentException1) {
-				try {
-					VersionRange versionRange = new VersionRange(
-						requireSchemaVersion);
-
-					versionRangeFilter = versionRange.toFilterString(
-						"release.schema.version");
-				}
-				catch (IllegalArgumentException illegalArgumentException2) {
-					illegalArgumentException1.addSuppressed(
-						illegalArgumentException2);
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Invalid \"Liferay-Require-SchemaVersion\" " +
-								"header for bundle: " + bundle.getBundleId(),
-							illegalArgumentException1);
-					}
-				}
-			}
-
-			if (versionRangeFilter == null) {
-				return;
-			}
-
-			ServiceDependency serviceDependency =
-				_dependencyManager.createServiceDependency();
-
-			serviceDependency.setRequired(true);
-
-			serviceDependency.setService(
-				Release.class,
-				StringBundler.concat(
-					"(&(release.bundle.symbolic.name=",
-					bundle.getSymbolicName(), ")", versionRangeFilter, ")"));
-
-			_component.add(serviceDependency);
-		}
-
-		private String _getVersionRangerFilter(Version version) {
-			return StringBundler.concat(
-				"(&(release.schema.version>=", version.getMajor(), ".",
-				version.getMinor(), ".0)(!(release.schema.version>=",
-				version.getMajor() + 1, ".0.0)))");
-		}
-
-		private final org.apache.felix.dm.Component _component;
-		private final DependencyManager _dependencyManager;
-
+		_dependencyManager.remove(component);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_dependencyManager = new DependencyManager(bundleContext);
+
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, this);
 
@@ -200,10 +168,18 @@ public class ServiceConfigurationExtender
 		_bundleTracker.close();
 	}
 
+	private String _getVersionRangerFilter(Version version) {
+		return StringBundler.concat(
+			"(&(release.schema.version>=", version.getMajor(), ".",
+			version.getMinor(), ".0)(!(release.schema.version>=",
+			version.getMajor() + 1, ".0.0)))");
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceConfigurationExtender.class);
 
 	private BundleTracker<?> _bundleTracker;
+	private DependencyManager _dependencyManager;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

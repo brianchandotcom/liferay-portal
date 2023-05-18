@@ -238,7 +238,7 @@ definition {
 
 		GogoShell.executeCommand(commandName = "dm wtf");
 
-		GogoShell.viewOutput(outputContent = "com.liferay.portal.kernel.model.Release (&(release.bundle.symbolic.name=com.liferay.revert.schema.version.service)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0)))(|(!(release.state=*))(release.state=0))) for bundle com.liferay.revert.schema.version.service");
+		GogoShell.viewOutput(outputContent = "com.liferay.portal.kernel.model.Release (&(release.bundle.symbolic.name=com.liferay.revert.schema.version.service)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0)))) for bundle com.liferay.revert.schema.version.service");
 	}
 
 }

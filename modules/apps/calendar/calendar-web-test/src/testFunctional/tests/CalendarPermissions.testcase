@@ -114,11 +114,15 @@ definition {
 	test SystemDisplaysMessageWhenNoRoleIsFound {
 		CalendarPermissions.gotoPermissions();
 
-		CalendarPermissions.searchRoleName(searchTerm = "DXP Client");
+		Search.searchCP(searchTerm = "DXP Client");
 
-		CalendarPermissions.viewSearchResult(searchResults = "0 Results for \"DXP Client\"");
+		AssertTextEquals(
+			locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR",
+			value1 = "0 Results for \"DXP Client\"");
 
-		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
+		AssertTextEquals(
+			locator1 = "CalendarPermissions#NO_ROLES_WERE_FOUND",
+			value1 = "No roles were found.");
 	}
 
 }

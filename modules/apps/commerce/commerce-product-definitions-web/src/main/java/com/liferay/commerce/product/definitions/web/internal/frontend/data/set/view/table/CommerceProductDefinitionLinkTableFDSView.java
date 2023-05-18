@@ -54,7 +54,7 @@ public class CommerceProductDefinitionLinkTableFDSView
 		).add(
 			"order", "order"
 		).add(
-			"createDate", "create-date"
+			"createDateString", "create-date"
 		).build();
 	}
 

@@ -32,6 +32,15 @@ public class FragmentsImporterResultEntry {
 		_errorMessage = errorMessage;
 	}
 
+	public FragmentsImporterResultEntry(
+		String name, Status status, Type type, String errorMessage) {
+
+		_name = name;
+		_status = status;
+		_type = type;
+		_errorMessage = errorMessage;
+	}
+
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
@@ -42,6 +51,10 @@ public class FragmentsImporterResultEntry {
 
 	public Status getStatus() {
 		return _status;
+	}
+
+	public Type getType() {
+		return _type;
 	}
 
 	public enum Status {
@@ -61,8 +74,25 @@ public class FragmentsImporterResultEntry {
 
 	}
 
+	public enum Type {
+
+		COMPOSITION("composition"), FRAGMENT("fragment");
+
+		public String getLabel() {
+			return _label;
+		}
+
+		private Type(String label) {
+			_label = label;
+		}
+
+		private final String _label;
+
+	}
+
 	private String _errorMessage;
 	private final String _name;
 	private final Status _status;
+	private Type _type;
 
 }

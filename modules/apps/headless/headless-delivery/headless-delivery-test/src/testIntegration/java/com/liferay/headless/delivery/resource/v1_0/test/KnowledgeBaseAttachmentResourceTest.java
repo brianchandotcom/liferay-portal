@@ -35,6 +35,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -50,17 +51,56 @@ public class KnowledgeBaseAttachmentResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ServiceContext serviceContext = new ServiceContext();
+		_kbArticle = _addKBArticle();
+	}
 
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(testGroup.getGroupId());
+	@Override
+	@Test
+	public void testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode()
+		throws Exception {
 
-		_kbArticle = KBArticleLocalServiceUtil.addKBArticle(
-			null, UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
-			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, null, null, serviceContext);
+		super.
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode();
+
+		KnowledgeBaseAttachment knowledgeBaseAttachment =
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
+
+		// Nonexistent knowledge base article
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					RandomTestUtil.randomString(),
+					knowledgeBaseAttachment.getExternalReferenceCode()));
+
+		// Nonexistent knowledge base attachment
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
+					RandomTestUtil.randomString()));
+
+		// Knowledge base attachment associated to a different article
+
+		KBArticle prevKBArticle = _kbArticle;
+
+		_kbArticle = _addKBArticle();
+
+		KnowledgeBaseAttachment newKnowledgeBaseAttachment =
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment();
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
+					prevKBArticle.getExternalReferenceCode(),
+					newKnowledgeBaseAttachment.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -249,6 +289,20 @@ public class KnowledgeBaseAttachmentResourceTest
 		throws Exception {
 
 		return testGroup.getGroupId();
+	}
+
+	private KBArticle _addKBArticle() throws Exception {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(testGroup.getGroupId());
+
+		return KBArticleLocalServiceUtil.addKBArticle(
+			null, UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
+			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, null, null, serviceContext);
 	}
 
 	private KnowledgeBaseAttachment _addKnowledgeBaseAttachment()

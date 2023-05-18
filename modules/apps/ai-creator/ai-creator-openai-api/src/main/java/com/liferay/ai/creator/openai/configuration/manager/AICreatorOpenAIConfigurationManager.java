@@ -24,6 +24,9 @@ public interface AICreatorOpenAIConfigurationManager {
 	public String getAICreatorOpenAICompanyApiKey(long companyId)
 		throws ConfigurationException;
 
+	public String getAICreatorOpenAIGroupApiKey(long groupId)
+		throws ConfigurationException;
+
 	public String getAICreatorOpenAIGroupApiKey(long companyId, long groupId)
 		throws ConfigurationException;
 
@@ -35,6 +38,10 @@ public interface AICreatorOpenAIConfigurationManager {
 
 	public void saveAICreatorOpenAICompanyConfiguration(
 			long companyId, String apiKey, boolean enabled)
+		throws ConfigurationException;
+
+	public void saveAICreatorOpenAIGroupConfiguration(
+			long groupId, String apiKey, boolean enabled)
 		throws ConfigurationException;
 
 }

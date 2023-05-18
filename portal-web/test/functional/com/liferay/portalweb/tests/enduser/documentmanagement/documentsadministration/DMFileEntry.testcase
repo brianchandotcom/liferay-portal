@@ -3064,6 +3064,94 @@ definition {
 			fileName = "Document_2.doc");
 	}
 
+	@description = "This test ensures that users can filter documents by exact tags."
+	@priority = 4
+	test FilesAreFilteredByExactTags {
+		property custom.properties = "feature.flag.LPS-84424=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1,tag2",
+			dmDocumentTitle = "DM Document Title 1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1,tag3",
+			dmDocumentTitle = "DM Document Title 2",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+		DMDocument.selectTags(tagNameList = "tag1,tag2");
+
+		AssertElementPresent(
+			key_dmDocumentTitle = "DM Document Title 1",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "DM Document Title 2",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+		DMDocument.ViewSelectedTags(tagNameList = "tag1,tag2");
+
+		DMDocument.selectTags(tagName = "tag3");
+
+		DMDocument.viewDefault();
+	}
+
+	@description = "This test ensures that files outside folder will not appear in filter results"
+	@priority = 4
+	test FilesOutsideFolderWillNotAppearInFilterResults {
+		property custom.properties = "feature.flag.LPS-84424=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1",
+			dmDocumentTitle = "DM Document Title 1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1",
+			dmDocumentTitle = "DM Document Title 2",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+		DMDocument.selectTags(tagName = "tag1");
+
+		DMDocument.viewFilterSummaryResults(
+			filterScope = "Tag: tag1",
+			searchResults = "1 Result");
+
+		AssertElementPresent(
+			key_dmDocumentTitle = "DM Document Title 2",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "DM Document Title 1",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+	}
+
 	@description = "This ensures that the friendly URL of a document created on a site will be updated automatically if it duplicates the existing one on the site."
 	@priority = 4
 	test FriendlyURLDuplicatingSiteDocIsAutomaticallyChanged {

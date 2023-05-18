@@ -12,20 +12,12 @@ definition {
 			value1 = "${itemsPerPage} Entries");
 	}
 
-	macro cleanSearchResult {
-		Click(locator1 = "CalendarPermissions#PERMISSIONS_SEARCH_CLEAR");
-	}
-
 	macro gotoPermissions {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Permissions");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-	}
-
-	macro resultBarIsnotDisplayed {
-		AssertElementNotPresent(locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR");
 	}
 
 	macro searchRoleName {
@@ -55,12 +47,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR",
 			value1 = ${searchResults});
-	}
-
-	macro viewTableDisplay {
-		AssertTextEquals(
-			locator1 = "CalendarPermissions#NO_ROLES_WERE_FOUND",
-			value1 = ${message});
 	}
 
 }

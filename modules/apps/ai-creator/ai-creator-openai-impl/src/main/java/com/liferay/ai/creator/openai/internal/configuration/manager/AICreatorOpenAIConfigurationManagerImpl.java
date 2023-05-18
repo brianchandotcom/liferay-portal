@@ -45,6 +45,17 @@ public class AICreatorOpenAIConfigurationManagerImpl
 	}
 
 	@Override
+	public String getAICreatorOpenAIGroupApiKey(long groupId)
+		throws ConfigurationException {
+
+		AICreatorOpenAIGroupConfiguration aiCreatorOpenAIGroupConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				AICreatorOpenAIGroupConfiguration.class, groupId);
+
+		return aiCreatorOpenAIGroupConfiguration.apiKey();
+	}
+
+	@Override
 	public String getAICreatorOpenAIGroupApiKey(long companyId, long groupId)
 		throws ConfigurationException {
 
@@ -106,6 +117,20 @@ public class AICreatorOpenAIConfigurationManagerImpl
 
 		_configurationProvider.saveCompanyConfiguration(
 			AICreatorOpenAICompanyConfiguration.class, companyId,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"apiKey", apiKey
+			).put(
+				"enableOpenAIToCreateContent", enabled
+			).build());
+	}
+
+	@Override
+	public void saveAICreatorOpenAIGroupConfiguration(
+			long groupId, String apiKey, boolean enabled)
+		throws ConfigurationException {
+
+		_configurationProvider.saveGroupConfiguration(
+			AICreatorOpenAIGroupConfiguration.class, groupId,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"apiKey", apiKey
 			).put(

@@ -20,7 +20,6 @@ interface Item {
 	[key: string]: string | undefined;
 }
 const GoalsEntries = ({mdfRequest}: IProps) => (
-	
 	<div>
 		<Table<Item>
 			className="bg-brand-primary-lighten-6 border-top table-striped"
@@ -70,8 +69,14 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Liferay business/sales goals',
-					value: mdfRequest.liferayBusinessSalesGoals !== undefined && mdfRequest.liferayBusinessSalesGoals.includes ("Other - Please describe") ? mdfRequest.liferayBusinessSalesGoalsOther : mdfRequest.liferayBusinessSalesGoals?.join('; ')
-				}
+					value:
+						mdfRequest.liferayBusinessSalesGoals !== undefined &&
+						mdfRequest.liferayBusinessSalesGoals.includes(
+							'Other - Please describe'
+						)
+							? mdfRequest.liferayBusinessSalesGoalsOther
+							: mdfRequest.liferayBusinessSalesGoals?.join('; '),
+				},
 			]}
 		/>
 

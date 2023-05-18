@@ -18,18 +18,23 @@ import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment;
+import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemShipmentDTOConverterContext;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemShipmentResource;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,24 +70,60 @@ public class PlacedOrderItemShipmentResourceImpl
 			throw new NoSuchOrderException();
 		}
 
-		return Page.of(
-			transform(
-				_commerceShipmentItemService.
-					getCommerceShipmentItemsByCommerceOrderItemId(
-						placedOrderItemId),
-				commerceShipmentItem -> _toPlaceOrderItemShipment(
-					commerceShipmentItem.getCommerceShipmentItemId())));
+		return Page.of(_toPlaceOrderItemShipment(placedOrderItemId));
 	}
 
-	private PlacedOrderItemShipment _toPlaceOrderItemShipment(
-			long commerceShipmentItemId)
+	private List<PlacedOrderItemShipment> _toPlaceOrderItemShipment(
+			long placedOrderItemId)
 		throws Exception {
 
-		return _placedOrderItemShipmentDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				_dtoConverterRegistry, commerceShipmentItemId,
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+		List<CommerceShipmentItem> commerceShipmentItems =
+			_commerceShipmentItemService.
+				getCommerceShipmentItemsByCommerceOrderItemId(
+					placedOrderItemId);
+
+		if (ListUtil.isNotEmpty(commerceShipmentItems)) {
+			return transform(
+				commerceShipmentItems,
+				commerceShipmentItem ->
+					_placedOrderItemShipmentDTOConverter.toDTO(
+						new PlacedOrderItemShipmentDTOConverterContext(
+							commerceShipmentItem.getCommerceShipmentItemId(),
+							contextAcceptLanguage.getPreferredLocale(),
+							false)));
+		}
+
+		List<CommerceOrderItem> supplierCommerceOrderItems =
+			_commerceOrderItemService.getSupplierCommerceOrderItems(
+				placedOrderItemId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		List<CommerceShipmentItem> supplierCommerceShipmentItems =
+			new ArrayList<>();
+
+		for (CommerceOrderItem supplierCommerceOrderItem :
+				supplierCommerceOrderItems) {
+
+			CommerceOrder supplierCommerceOrder =
+				supplierCommerceOrderItem.getCommerceOrder();
+
+			if (supplierCommerceOrder.isOpen()) {
+				continue;
+			}
+
+			supplierCommerceShipmentItems.addAll(
+				_commerceShipmentItemService.
+					getCommerceShipmentItemsByCommerceOrderItemId(
+						supplierCommerceOrderItem.getCommerceOrderItemId()));
+		}
+
+		return transform(
+			supplierCommerceShipmentItems,
+			supplierCommerceShipmentItem ->
+				_placedOrderItemShipmentDTOConverter.toDTO(
+					new PlacedOrderItemShipmentDTOConverterContext(
+						supplierCommerceShipmentItem.
+							getCommerceShipmentItemId(),
+						contextAcceptLanguage.getPreferredLocale(), true)));
 	}
 
 	@Reference
@@ -90,9 +131,6 @@ public class PlacedOrderItemShipmentResourceImpl
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
-
-	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemShipmentDTOConverter)"

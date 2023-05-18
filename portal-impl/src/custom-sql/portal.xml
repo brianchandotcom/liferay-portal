@@ -1294,6 +1294,18 @@
 				(UserGroupRole.roleId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUserGroupsTeams">
+		<![CDATA[
+			INNER JOIN
+				Users_UserGroups ON
+					Users_UserGroups.userId = User_.userId
+			INNER JOIN
+				UserGroups_Teams ON
+					UserGroups_Teams.userGroupId = Users_UserGroups.userGroupId
+			WHERE
+				UserGroups_Teams.teamId = ?
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUsersGroups">
 		<![CDATA[
 			INNER JOIN

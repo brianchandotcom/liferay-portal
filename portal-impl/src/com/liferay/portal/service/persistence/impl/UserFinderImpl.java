@@ -118,6 +118,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	public static final String JOIN_BY_USER_GROUP_ROLE =
 		UserFinder.class.getName() + ".joinByUserGroupRole";
 
+	public static final String JOIN_BY_USER_GROUPS_TEAMS =
+		UserFinder.class.getName() + ".joinByUserGroupsTeams";
+
 	public static final String JOIN_BY_USERS_GROUPS =
 		UserFinder.class.getName() + ".joinByUsersGroups";
 
@@ -891,6 +894,9 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		else if (key.equals("userGroupRole")) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_ROLE);
 		}
+		else if (key.equals("userGroupsTeams")) {
+			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
+		}
 		else if (key.equals("usersGroups")) {
 			join = CustomSQLUtil.get(JOIN_BY_USERS_GROUPS);
 		}
@@ -966,6 +972,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 		LinkedHashMap<String, Object> params6 = null;
 
+		LinkedHashMap<String, Object> params7 = null;
+
 		Long[] groupIds = null;
 
 		if (params.get("usersGroups") instanceof Long) {
@@ -990,6 +998,19 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		}
 		else {
 			roleIds = (Long[])params.get("usersRoles");
+		}
+
+		Long[] teamIds = null;
+
+		if (params.get("usersTeams") instanceof Long) {
+			Long teamId = (Long)params.get("usersTeams");
+
+			if (teamId > 0) {
+				teamIds = new Long[] {teamId};
+			}
+		}
+		else {
+			teamIds = (Long[])params.get("usersTeams");
 		}
 
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
@@ -1143,6 +1164,16 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			}
 		}
 
+		if (ArrayUtil.isNotEmpty(teamIds) && inherit &&
+			!socialRelationTypeUnionUserGroups) {
+
+			params7 = new LinkedHashMap<>(params1);
+
+			params7.remove("usersTeams");
+
+			params7.put("userGroupsTeams", teamIds);
+		}
+
 		if (socialRelationTypeUnionUserGroups) {
 			boolean hasSocialRelationTypes = Validator.isNotNull(
 				params.get("socialRelationType"));
@@ -1185,6 +1216,10 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 		if (params6 != null) {
 			paramsList.add(params6);
+		}
+
+		if (params7 != null) {
+			paramsList.add(params7);
 		}
 
 		return paramsList;
@@ -1289,6 +1324,34 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			if (Validator.isNull(groupId)) {
 				join = StringUtil.removeSubstring(
 					join, "(UserGroupRole.groupId = ?) AND");
+			}
+		}
+		else if (key.equals("userGroupsTeams")) {
+			Long[] teamIds = (Long[])value;
+
+			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
+
+			if (teamIds.length > 1) {
+				StringBundler sb = new StringBundler((teamIds.length * 2) + 1);
+
+				sb.append("UserGroups_Teams.teamId IN (");
+
+				for (long teamId : teamIds) {
+					sb.append(teamId);
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				join = StringUtil.replace(
+					join, "UserGroups_Teams.teamId = ?", sb.toString());
+			}
+			else {
+				join = StringUtil.replace(
+					join, "UserGroups_Teams.teamId = ?",
+					"UserGroups_Teams.teamId = " + teamIds[0]);
 			}
 		}
 		else if (key.equals("usersGroups")) {
@@ -1536,6 +1599,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 			else if (value instanceof Long[]) {
 				if (key.equals("groupsOrgs") ||
 					key.equals("groupsUserGroups") ||
+					key.equals("userGroupsTeams") ||
 					key.equals("usersGroups") || key.equals("usersOrgs") ||
 					key.equals("usersUserGroups")) {
 

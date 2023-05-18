@@ -27,16 +27,16 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.aop.AopService;
-
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Abelenda
@@ -49,104 +49,148 @@ import java.util.List;
 public class CompareRunsLocalServiceImpl
 	extends CompareRunsLocalServiceBaseImpl {
 
-	public int getComparison(long runIdA, long runIdB, String statusA, String statusB, long companyId) {
+	public int getComparison(
+		long runIdA, long runIdB, String statusA, String statusB,
+		long companyId) {
 
+		ObjectDefinition caseObjectDefinition = _getObjectDefinitionByTableName(
+			_CASE, companyId);
 
-		ObjectDefinition caseObjectDefinition = _getObjectDefinitionByTableName(_CASE, companyId).get(0);
-		DynamicObjectDefinitionTable caseExtensionDynamicTable = _getDynamicObjectDefinitionTable(caseObjectDefinition, true);
+		DynamicObjectDefinitionTable caseExtensionDynamicTable =
+			_getDynamicObjectDefinitionTable(caseObjectDefinition, true);
 
-		ObjectDefinition caseResultObjectDefinition = _getObjectDefinitionByTableName(_CASE_RESULT, companyId).get(0);
-		DynamicObjectDefinitionTable caseResultExtensionDynamicTable = _getDynamicObjectDefinitionTable(caseResultObjectDefinition, true);
+		ObjectDefinition caseResultObjectDefinition =
+			_getObjectDefinitionByTableName(_CASE_RESULT, companyId);
 
-		DynamicObjectDefinitionTable caseResultDynamicTable = _getDynamicObjectDefinitionTable(caseResultObjectDefinition, false);
+		DynamicObjectDefinitionTable caseResultExtensionDynamicTable =
+			_getDynamicObjectDefinitionTable(caseResultObjectDefinition, true);
+
+		DynamicObjectDefinitionTable caseResultDynamicTable =
+			_getDynamicObjectDefinitionTable(caseResultObjectDefinition, false);
 
 		Column<DynamicObjectDefinitionTable, Long> runToCaseResultColumn =
-			(Column<DynamicObjectDefinitionTable, Long>) caseResultExtensionDynamicTable.getColumn("r_runToCaseResult_c_runId");
+			(Column<DynamicObjectDefinitionTable, Long>)
+				caseResultExtensionDynamicTable.getColumn(
+					"r_runToCaseResult_c_runId");
 
 		Column<DynamicObjectDefinitionTable, String> dueStatucColumn =
-			(Column<DynamicObjectDefinitionTable, String>) caseResultDynamicTable.getColumn("dueStatus_");
+			(Column<DynamicObjectDefinitionTable, String>)
+				caseResultDynamicTable.getColumn("dueStatus_");
 
 		Column<DynamicObjectDefinitionTable, Long> caseToCaseResultIdColumn =
-			(Column<DynamicObjectDefinitionTable, Long>) caseResultExtensionDynamicTable.getColumn("r_caseToCaseResult_c_caseId");
+			(Column<DynamicObjectDefinitionTable, Long>)
+				caseResultExtensionDynamicTable.getColumn(
+					"r_caseToCaseResult_c_caseId");
 
-		Predicate predicateA = runToCaseResultColumn.eq(Long.valueOf(runIdA)).and(dueStatucColumn.eq(statusA));
+		Predicate predicateA = runToCaseResultColumn.eq(
+			Long.valueOf(runIdA)
+		).and(
+			dueStatucColumn.eq(statusA)
+		);
 
-		Predicate predicateB = runToCaseResultColumn.eq(runIdB).and(dueStatucColumn.eq(statusB));
+		Predicate predicateB = runToCaseResultColumn.eq(
+			runIdB
+		).and(
+			dueStatucColumn.eq(statusB)
+		);
 
 		JoinStep genericQuery = DSLQueryFactoryUtil.select(
-				caseExtensionDynamicTable.getColumn("c_caseId_")
-			).from(caseResultExtensionDynamicTable).
-			innerJoinON(caseExtensionDynamicTable,
-				caseExtensionDynamicTable.getPrimaryKeyColumn().
-					eq(caseToCaseResultIdColumn)
-			).innerJoinON(caseResultDynamicTable,
-				caseResultExtensionDynamicTable.getPrimaryKeyColumn().
-					eq(caseResultDynamicTable.getPrimaryKeyColumn())
-			);
+			caseExtensionDynamicTable.getColumn("c_caseId_")
+		).from(
+			caseResultExtensionDynamicTable
+		).innerJoinON(
+			caseExtensionDynamicTable,
+			caseExtensionDynamicTable.getPrimaryKeyColumn(
+			).eq(
+				caseToCaseResultIdColumn
+			)
+		).innerJoinON(
+			caseResultDynamicTable,
+			caseResultExtensionDynamicTable.getPrimaryKeyColumn(
+			).eq(
+				caseResultDynamicTable.getPrimaryKeyColumn()
+			)
+		);
 
-		Collection<Column<?, ?>> tableTemplate = new ArrayList<Column<?, ?>>() {};
+		Collection<Column<?, ?>> tableTemplate = new ArrayList<Column<?, ?>>() {
+		};
 
-		Column<DynamicObjectDefinitionTable,Long> caseId = (Column<DynamicObjectDefinitionTable,Long>) caseExtensionDynamicTable.getColumn("c_caseId_");
+		Column<DynamicObjectDefinitionTable, Long> caseIdDynamicColumn =
+			(Column<DynamicObjectDefinitionTable, Long>)
+				caseExtensionDynamicTable.getColumn("c_caseId_");
 
-		tableTemplate.add(caseId);
+		tableTemplate.add(caseIdDynamicColumn);
 
-		Table table1 = genericQuery.where(predicateA).as("table1", tableTemplate);
+		Table table1 = genericQuery.where(
+			predicateA
+		).as(
+			"table1", tableTemplate
+		);
+
+		Column<?, ?> caseIdColumn = table1.getColumn("c_caseId_");
 
 		DSLQuery table2 = genericQuery.where(predicateB);
 
 		return _objectEntryLocalService.dslQueryCount(
-			DSLQueryFactoryUtil.count().from(
+			DSLQueryFactoryUtil.count(
+			).from(
 				table1
 			).where(
-				table1.getColumn("c_caseId_").in(table2)
+				caseIdColumn.in(table2)
 			));
-
-	}
-
-	private List<ObjectDefinition> _getObjectDefinitionByTableName(String tableName, Long companyId) {
-
-		DynamicQuery dynamicQuery = _objectDefinitionLocalService.dynamicQuery();
-
-		Criterion criterion = RestrictionsFactoryUtil.like("dbTableName", "%" + String.valueOf(companyId) + tableName);
-
-		RestrictionsFactoryUtil.and(criterion, RestrictionsFactoryUtil.eq("companyId", companyId));
-
-		dynamicQuery.add(criterion);
-
-		return _objectDefinitionLocalService.dynamicQuery(dynamicQuery);
-
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(
 		ObjectDefinition objectDefinition, boolean extension) {
 
-		if(extension == true) {
+		if (extension) {
 			return new DynamicObjectDefinitionTable(
 				objectDefinition,
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId(),
 					objectDefinition.getExtensionDBTableName()),
-				objectDefinition.getExtensionDBTableName()
-			);
-		} else {
-			return new DynamicObjectDefinitionTable(
-				objectDefinition,
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId(),
-					objectDefinition.getDBTableName()),
-				objectDefinition.getDBTableName()
-			);
+				objectDefinition.getExtensionDBTableName());
 		}
+
+		return new DynamicObjectDefinitionTable(
+			objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getDBTableName()),
+			objectDefinition.getDBTableName());
 	}
 
-	private static String _CASE = "_Case";
-	private static String _CASE_RESULT = "_CaseResult";
+	private ObjectDefinition _getObjectDefinitionByTableName(
+		String tableName, Long companyId) {
+
+		DynamicQuery dynamicQuery =
+			_objectDefinitionLocalService.dynamicQuery();
+
+		Criterion criterion = RestrictionsFactoryUtil.like(
+			"dbTableName", "%" + String.valueOf(companyId) + tableName);
+
+		RestrictionsFactoryUtil.and(
+			criterion, RestrictionsFactoryUtil.eq("companyId", companyId));
+
+		dynamicQuery.add(criterion);
+
+		List<ObjectDefinition> objectDefinitionList =
+			_objectDefinitionLocalService.dynamicQuery(dynamicQuery);
+
+		return objectDefinitionList.get(0);
+	}
+
+	private static final String _CASE = "_Case";
+
+	private static final String _CASE_RESULT = "_CaseResult";
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

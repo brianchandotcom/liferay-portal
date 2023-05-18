@@ -19,11 +19,6 @@ package com.liferay.fragment.importer;
  */
 public class FragmentsImporterResultEntry {
 
-	public FragmentsImporterResultEntry(String name, Status status) {
-		_name = name;
-		_status = status;
-	}
-
 	public FragmentsImporterResultEntry(
 		String name, Status status, String errorMessage) {
 
@@ -90,7 +85,7 @@ public class FragmentsImporterResultEntry {
 
 	}
 
-	private String _errorMessage;
+	private final String _errorMessage;
 	private final String _name;
 	private final Status _status;
 	private Type _type;

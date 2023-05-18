@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.junit;
 
+import com.liferay.poshi.core.util.PoshiProperties;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +37,11 @@ public class ParallelParameterized extends Parameterized {
 	private static class ThreadPoolScheduler implements RunnerScheduler {
 
 		public ThreadPoolScheduler() {
-			_executorService = Executors.newFixedThreadPool(3);
+			PoshiProperties poshiProperties =
+				PoshiProperties.getPoshiProperties();
+
+			_executorService = Executors.newFixedThreadPool(
+				poshiProperties.testRunThreadPoolSize);
 		}
 
 		@Override

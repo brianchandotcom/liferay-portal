@@ -21,7 +21,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -50,19 +49,14 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 
 	@Override
 	public Predicate getPredicate(
-			ObjectRelationship objectRelationship, Predicate predicate)
+			ObjectRelationship objectRelationship, Predicate predicate,
+			ObjectDefinition relatedObjectDefinition)
 		throws PortalException {
 
 		Column<?, ?> dynamicObjectDefinitionTableColumn =
 			getPKObjectFieldColumn(
 				getDynamicObjectDefinitionTable(objectDefinition),
 				objectDefinition.getPKObjectFieldDBColumnName());
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
-				_getRelatedObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId(),
-					objectRelationship));
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
@@ -124,16 +118,6 @@ public class ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl
 						predicate
 					))
 			));
-	}
-
-	private long _getRelatedObjectDefinitionId(
-		long objectDefinitionId, ObjectRelationship objectRelationship) {
-
-		if (objectRelationship.getObjectDefinitionId1() != objectDefinitionId) {
-			return objectRelationship.getObjectDefinitionId1();
-		}
-
-		return objectRelationship.getObjectDefinitionId2();
 	}
 
 }

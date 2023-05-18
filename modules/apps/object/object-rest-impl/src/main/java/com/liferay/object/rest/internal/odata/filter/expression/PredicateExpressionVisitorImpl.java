@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
 import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
@@ -543,6 +544,9 @@ public class PredicateExpressionVisitorImpl
 					leftParts.get(leftParts.size() - 1),
 					_getRelatedObjectDefinitionId(
 						objectValuePair.getValue(), objectValuePair.getKey())));
+		}
+		catch (InvalidFilterException invalidFilterException) {
+			throw invalidFilterException;
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

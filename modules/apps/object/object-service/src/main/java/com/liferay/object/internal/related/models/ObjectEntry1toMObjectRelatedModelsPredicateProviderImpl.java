@@ -47,7 +47,8 @@ public class ObjectEntry1toMObjectRelatedModelsPredicateProviderImpl
 
 	@Override
 	public Predicate getPredicate(
-			ObjectRelationship objectRelationship, Predicate predicate)
+			ObjectRelationship objectRelationship, Predicate predicate,
+			ObjectDefinition relatedObjectDefinition)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition1 = _getObjectDefinition1(

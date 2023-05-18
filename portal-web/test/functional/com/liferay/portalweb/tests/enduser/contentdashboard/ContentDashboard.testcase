@@ -1285,35 +1285,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. The .xls file is exported with the review date column."
-	@priority = 3
-	test CheckExportXLSButtonWithReviewDate {
-		task ("Given a web content with review date") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.addReviewDate(reviewDate = "01/01/2100");
-
-			PortletEntry.publish();
-		}
-
-		task ("When navigating to the content dashboard") {
-			ContentDashboard.goToContentDashboard();
-		}
-
-		task ("Assert the Export XLS button is enabled") {
-			AssertEditable(
-				key_text = "Export XLS",
-				locator1 = "Button#ANY");
-		}
-	}
-
 	@description = "LPS-117341 When there's a label with "..." indicating 'more categories' and the user hovers on it, a tooltip with the rest of categories assigned shows"
 	@priority = 5
 	test CheckForMoreCategories {
@@ -1401,40 +1372,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. If a content has the Never Review fild checked, the column must shows -"
-	@priority = 4
-	test CheckNeverReviewChecked {
-		task ("Given a web content with never review checked") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			Panel.expandPanel(panel = "Schedule");
-
-			AssertChecked(locator1 = "Checkbox#NEVER_REVIEW");
-
-			PortletEntry.publish();
-		}
-
-		task ("When navigating to the content dashboard") {
-			ContentDashboard.goToContentDashboard();
-
-			ContentDashboard.filterByType(typeName = "Basic Web Content");
-		}
-
-		task ("Then the review date column must shows -") {
-			AssertVisible(
-				key_columnName = "review-date",
-				key_tableEntry = "-",
-				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
-		}
-	}
-
 	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
 	@priority = 3
 	test CheckOrderEvenWithSomeUnassignedCategories {
@@ -1506,36 +1443,6 @@ definition {
 					fillColor = "FF5F5F",
 					locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 			}
-		}
-	}
-
-	@description = "This is a test for LPS-182032. The Review Date column is visible and shows the values propertly."
-	@priority = 5
-	test CheckReviewDateColumn {
-		task ("Given a web content with review date") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-			WebContent.addReviewDate(reviewDate = "01/01/2100");
-
-			PortletEntry.publish();
-		}
-
-		task ("When navigating to the content dashboard") {
-			ContentDashboard.goToContentDashboard();
-		}
-
-		task ("Then the review date column should be visible") {
-			AssertVisible(
-				key_columnName = "review-date",
-				key_tableEntry = "2100-01-01",
-				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
 		}
 	}
 
@@ -6733,6 +6640,35 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182032. The .xls file is exported with the review date column."
+	@priority = 3
+	test ViewExportXLSButtonWithReviewDate {
+		task ("Given a web content with review date") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.addReviewDate(reviewDate = "01/01/2100");
+
+			PortletEntry.publish();
+		}
+
+		task ("When navigating to the content dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Then the Export XLS button is enabled") {
+			AssertEditable(
+				key_text = "Export XLS",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "LPS-151911 Bug: Content Dashboard shows error when displaying details of article whose authors has been deleted"
 	@priority = 4
 	test ViewInfoPanelDeletedUser {
@@ -6895,6 +6831,70 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Content Dashboard");
 
 			AssertElementNotPresent(locator1 = "ContentDashboard#INFO_PANEL");
+		}
+	}
+
+	@description = "This is a test for LPS-182032. If a content has the Never Review field checked, the column must shows -"
+	@priority = 4
+	test ViewNeverReviewChecked {
+		task ("Given a web content with never review checked") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			Panel.expandPanel(panel = "Schedule");
+
+			AssertChecked(locator1 = "Checkbox#NEVER_REVIEW");
+
+			PortletEntry.publish();
+		}
+
+		task ("When navigating to the content dashboard") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByType(typeName = "Basic Web Content");
+		}
+
+		task ("Then the review date column must shows -") {
+			AssertVisible(
+				key_columnName = "review-date",
+				key_tableEntry = "-",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
+		}
+	}
+
+	@description = "This is a test for LPS-182032. The Review Date column is visible and shows the values propertly."
+	@priority = 5
+	test ViewReviewDateColumn {
+		task ("Given a web content with review date") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.addReviewDate(reviewDate = "01/01/2100");
+
+			PortletEntry.publish();
+		}
+
+		task ("When navigating to the content dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Then the review date column should be visible") {
+			AssertVisible(
+				key_columnName = "review-date",
+				key_tableEntry = "2100-01-01",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO");
 		}
 	}
 

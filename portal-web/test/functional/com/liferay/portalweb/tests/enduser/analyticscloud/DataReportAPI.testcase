@@ -369,7 +369,7 @@ definition {
 		}
 
 		task ("Add 2 users") {
-			for (var name : list ${usernameList}) {
+			for (var name : list ${userNameList}) {
 				JSONUser.addUser(
 					userEmailAddress = "${name}@liferay.com",
 					userFirstName = ${name},

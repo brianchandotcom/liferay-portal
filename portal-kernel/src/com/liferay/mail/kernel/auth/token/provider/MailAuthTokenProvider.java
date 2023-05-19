@@ -21,4 +21,6 @@ public interface MailAuthTokenProvider {
 
 	public String getAccessToken(long companyId);
 
+	public boolean isProtocolSupported(long companyId, String protocol);
+
 }

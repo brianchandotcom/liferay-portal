@@ -56,4 +56,22 @@ public interface MailOutlookAuthConnectorCompanyConfiguration {
 	)
 	public String tenantId();
 
+	@ExtendedAttributeDefinition(requiredInput = true)
+	@Meta.AD(
+		deflt = "false",
+		description = "outlook-auth-connector-pop3-connection-enabled-description",
+		name = "outlook-auth-connector-pop3-connection-enabled",
+		required = false
+	)
+	public boolean pop3ConnectionEnabled();
+
+	@ExtendedAttributeDefinition(requiredInput = true)
+	@Meta.AD(
+		deflt = "false",
+		description = "outlook-auth-connector-smtp-connection-enabled-description",
+		name = "outlook-auth-connector-smtp-connection-enabled",
+		required = false
+	)
+	public boolean smtpConnectionEnabled();
+
 }

@@ -24,6 +24,21 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 public class MailAuthTokenProviderRegistryUtil {
 
 	public static MailAuthTokenProvider getMailAuthTokenProvider(
+		long companyId, String mailServerName, String protocol) {
+
+		MailAuthTokenProvider mailAuthTokenProvider =
+			_serviceTrackerMap.getService(mailServerName);
+
+		if ((mailAuthTokenProvider == null) ||
+			!mailAuthTokenProvider.isProtocolSupported(companyId, protocol)) {
+
+			return null;
+		}
+
+		return mailAuthTokenProvider;
+	}
+
+	public static MailAuthTokenProvider getMailAuthTokenProvider(
 		String mailServerName) {
 
 		return _serviceTrackerMap.getService(mailServerName);

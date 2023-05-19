@@ -15,6 +15,7 @@
 package com.liferay.mail.outlook.auth.connector.provider.internal.token.provider;
 
 import com.liferay.mail.kernel.auth.token.provider.MailAuthTokenProvider;
+import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.outlook.auth.connector.provider.internal.configuration.MailOutlookAuthConnectorCompanyConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +28,7 @@ import com.microsoft.aad.msal4j.ConfidentialClientApplication;
 import com.microsoft.aad.msal4j.IAuthenticationResult;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import org.osgi.service.component.annotations.Component;
@@ -85,6 +87,38 @@ public class MailOutlookMailAuthTokenProvider implements MailAuthTokenProvider {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public boolean isProtocolSupported(long companyId, String protocol) {
+		try {
+			MailOutlookAuthConnectorCompanyConfiguration
+				mailOutlookAuthConnectorCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						MailOutlookAuthConnectorCompanyConfiguration.class,
+						companyId);
+
+			if (Objects.equals(Account.PROTOCOL_POPS, protocol)) {
+				return mailOutlookAuthConnectorCompanyConfiguration.
+					pop3ConnectionEnabled();
+			}
+
+			if (Objects.equals(Account.PROTOCOL_SMTP, protocol)) {
+				return mailOutlookAuthConnectorCompanyConfiguration.
+					smtpConnectionEnabled();
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				protocol + " protocol is not supported for company id " +
+					companyId);
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

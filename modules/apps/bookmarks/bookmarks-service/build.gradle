@@ -19,6 +19,7 @@ dependencies {
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:staging:staging-api")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:trash:trash-api")

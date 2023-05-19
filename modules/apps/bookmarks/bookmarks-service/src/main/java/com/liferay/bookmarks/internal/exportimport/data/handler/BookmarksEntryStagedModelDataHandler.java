@@ -15,7 +15,7 @@
 package com.liferay.bookmarks.internal.exportimport.data.handler;
 
 import com.liferay.bookmarks.constants.BookmarksFolderConstants;
-import com.liferay.bookmarks.internal.exportimport.staged.model.repository.BookmarksEntryStagedModelRepository;
+import com.liferay.bookmarks.internal.exportimport.staged.model.repository.BookmarksEntryStagedModelRepositoryUtil;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -120,7 +120,7 @@ public class BookmarksEntryStagedModelDataHandler
 		}
 		else {
 			importedEntry =
-				_bookmarksEntryStagedModelRepository.updateStagedModel(
+				BookmarksEntryStagedModelRepositoryUtil.updateStagedModel(
 					portletDataContext, importedEntry,
 					existingEntry.getEntryId());
 		}
@@ -136,7 +136,7 @@ public class BookmarksEntryStagedModelDataHandler
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
-	private BookmarksEntryStagedModelRepository
+	private StagedModelRepository<BookmarksEntry>
 		_bookmarksEntryStagedModelRepository;
 
 }

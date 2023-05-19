@@ -19,7 +19,7 @@ package com.liferay.site.configuration.manager;
  */
 public interface MenuAccessConfigurationManager {
 
-	public String[] getRoleIdsCanAccessControlMenu(long groupId)
+	public String[] getAccessToControlMenuRoleIds(long groupId)
 		throws Exception;
 
 	public boolean isShowControlMenuByRole(long groupId) throws Exception;

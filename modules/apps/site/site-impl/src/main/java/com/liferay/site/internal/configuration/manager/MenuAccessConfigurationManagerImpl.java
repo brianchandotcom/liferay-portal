@@ -29,14 +29,14 @@ public class MenuAccessConfigurationManagerImpl
 	implements MenuAccessConfigurationManager {
 
 	@Override
-	public String[] getRoleIdsCanAccessControlMenu(long groupId)
+	public String[] getAccessToControlMenuRoleIds(long groupId)
 		throws Exception {
 
 		MenuAccessConfiguration menuAccessConfiguration =
 			_configurationProvider.getGroupConfiguration(
 				MenuAccessConfiguration.class, groupId);
 
-		return menuAccessConfiguration.roleIdsCanAccessControlMenu();
+		return menuAccessConfiguration.accessToControlMenuRoleIds();
 	}
 
 	@Override

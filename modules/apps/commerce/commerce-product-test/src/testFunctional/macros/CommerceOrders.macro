@@ -247,27 +247,6 @@ definition {
 		}
 	}
 
-	macro createQuoteRequest {
-		if (isSet(requestAQuoteInMiniCart)) {
-			Button.click(button = "Request a Quote");
-		}
-
-		if (isSet(requestAQuoteInOpenOrdersPage)) {
-			Click(
-				buttonId = "requestQuote",
-				locator1 = "Button#BUTTON_ID");
-		}
-
-		if (isSet(quoteRequestValue)) {
-			Type(
-				key_value = "requestQuote",
-				locator1 = "CommerceFrontStore#TEXTAREA_FIELD",
-				value1 = ${quoteRequestValue});
-		}
-
-		Button.click(button = "Submit");
-	}
-
 	macro checkoutFullWorkflow {
 		Click(
 			key_index = "Create Shipment",
@@ -317,6 +296,27 @@ definition {
 		Click(
 			key_index = "Deliver",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+	}
+
+	macro createQuoteRequest {
+		if (isSet(requestAQuoteInMiniCart)) {
+			Button.click(button = "Request a Quote");
+		}
+
+		if (isSet(requestAQuoteInOpenOrdersPage)) {
+			Click(
+				buttonId = "requestQuote",
+				locator1 = "Button#BUTTON_ID");
+		}
+
+		if (isSet(quoteRequestValue)) {
+			Type(
+				key_value = "requestQuote",
+				locator1 = "CommerceFrontStore#TEXTAREA_FIELD",
+				value1 = ${quoteRequestValue});
+		}
+
+		Button.click(button = "Submit");
 	}
 
 	macro createShipment {

@@ -15,11 +15,19 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentSitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.layout.importer.LayoutsImporter;
@@ -77,9 +85,11 @@ import java.io.InputStream;
 
 import java.net.URLEncoder;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -376,6 +386,36 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				layoutPageTemplateStructureRel);
 
 		return segmentsExperience;
+	}
+
+	private void _assertEqualsIgnoringOrder(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs1,
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs2) {
+
+		Assert.assertEquals(
+			Arrays.toString(taxonomyCategoryBriefs2),
+			taxonomyCategoryBriefs1.length, taxonomyCategoryBriefs2.length);
+
+		for (TaxonomyCategoryBrief taxonomyCategoryBrief1 :
+				taxonomyCategoryBriefs1) {
+
+			boolean contains = false;
+
+			for (TaxonomyCategoryBrief taxonomyCategoryBrief2 :
+					taxonomyCategoryBriefs2) {
+
+				if (taxonomyCategoryBrief1.equals(taxonomyCategoryBrief2)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				Arrays.toString(taxonomyCategoryBriefs2) +
+					" does not contain " + taxonomyCategoryBrief1,
+				contains);
+		}
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -899,9 +939,91 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			expectedPagePermissions, inputPagePermissions);
 	}
 
+	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefs(
+			TaxonomyCategoryBrief[] expectedTaxonomyCategoryBriefs,
+			TaxonomyCategoryBrief[] inputTaxonomyCategoryBriefs)
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		randomSitePage.setTaxonomyCategoryBriefs(inputTaxonomyCategoryBriefs);
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			Layout.class.getName(), layout.getPlid());
+
+		long[] assetCategoryIds =
+			_assetEntryAssetCategoryRelLocalService.getAssetCategoryPrimaryKeys(
+				assetEntry.getEntryId());
+
+		Assert.assertEquals(
+			Arrays.toString(assetCategoryIds),
+			expectedTaxonomyCategoryBriefs.length, assetCategoryIds.length);
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
+
+			TaxonomyCategoryBrief[] filteredTaxonomyCategoryBriefs =
+				ArrayUtil.filter(
+					expectedTaxonomyCategoryBriefs,
+					taxonomyCategoryBrief -> {
+						TaxonomyCategoryReference taxonomyCategoryReference =
+							taxonomyCategoryBrief.
+								getTaxonomyCategoryReference();
+
+						Group group = _groupLocalService.fetchGroup(
+							assetCategory.getGroupId());
+
+						if (Objects.equals(
+								taxonomyCategoryReference.
+									getExternalReferenceCode(),
+								assetCategory.getExternalReferenceCode()) &&
+							(((taxonomyCategoryReference.getSiteKey() ==
+								null) &&
+							  (layout.getGroupId() ==
+								  assetCategory.getGroupId())) ||
+							 ((taxonomyCategoryReference.getSiteKey() !=
+								 null) &&
+							  Objects.equals(
+								  taxonomyCategoryReference.getSiteKey(),
+								  group.getGroupKey())))) {
+
+							return true;
+						}
+
+						return false;
+					});
+
+			Assert.assertEquals(
+				Arrays.toString(filteredTaxonomyCategoryBriefs), 1,
+				filteredTaxonomyCategoryBriefs.length);
+		}
+
+		_assertEqualsIgnoringOrder(
+			expectedTaxonomyCategoryBriefs,
+			postSitePage.getTaxonomyCategoryBriefs());
+	}
+
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
 		"com.liferay.headless.delivery.internal.resource.v1_0." +
 			"SitePageResourceImpl";
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;

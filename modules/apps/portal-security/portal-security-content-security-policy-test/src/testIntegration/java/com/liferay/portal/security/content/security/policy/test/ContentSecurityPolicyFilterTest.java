@@ -61,10 +61,10 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper = _configureContentSecurityPolicy(
 					false, "")) {
 
-			HttpURLConnection httpClient = _executePortalCall();
+			HttpURLConnection httpURLConnection = _createHttpURLConnection();
 
 			Map<String, List<String>> headerFields =
-				httpClient.getHeaderFields();
+				httpURLConnection.getHeaderFields();
 
 			Assert.assertFalse(
 				headerFields.containsKey(
@@ -81,10 +81,10 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper = _configureContentSecurityPolicy(
 					true, "")) {
 
-			HttpURLConnection httpClient = _executePortalCall();
+			HttpURLConnection httpURLConnection = _createHttpURLConnection();
 
 			Map<String, List<String>> headerFields =
-				httpClient.getHeaderFields();
+				httpURLConnection.getHeaderFields();
 
 			Assert.assertFalse(
 				headerFields.containsKey(
@@ -101,17 +101,17 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper = _configureContentSecurityPolicy(
 					true, "")) {
 
-			HttpURLConnection httpClient = _executePortalCall();
+			HttpURLConnection httpURLConnection = _createHttpURLConnection();
 
 			Map<String, List<String>> headerFields =
-				httpClient.getHeaderFields();
+				httpURLConnection.getHeaderFields();
 
 			Assert.assertFalse(
 				headerFields.containsKey(
 					ContentSecurityPolicyConstants.
 						CONTENT_SECURITY_POLICY_HEADER));
 
-			String responseBody = _getResponseBody(httpClient);
+			String responseBody = _getResponseBody(httpURLConnection);
 
 			Assert.assertFalse(responseBody.contains("nonce="));
 		}
@@ -127,10 +127,10 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper = _configureContentSecurityPolicy(
 					true, cspPolicy)) {
 
-			HttpURLConnection httpClient = _executePortalCall();
+			HttpURLConnection httpURLConnection = _createHttpURLConnection();
 
 			Map<String, List<String>> headerFields =
-				httpClient.getHeaderFields();
+				httpURLConnection.getHeaderFields();
 
 			Assert.assertTrue(
 				headerFields.containsKey(
@@ -138,7 +138,7 @@ public class ContentSecurityPolicyFilterTest {
 						CONTENT_SECURITY_POLICY_HEADER));
 
 			Assert.assertEquals(
-				httpClient.getHeaderField(
+				httpURLConnection.getHeaderField(
 					ContentSecurityPolicyConstants.
 						CONTENT_SECURITY_POLICY_HEADER),
 				cspPolicy);
@@ -157,18 +157,20 @@ public class ContentSecurityPolicyFilterTest {
 				configurationTemporarySwapper = _configureContentSecurityPolicy(
 					true, cspPolicy)) {
 
-			HttpURLConnection httpClient = _executePortalCall();
+			HttpURLConnection httpURLConnection = _createHttpURLConnection();
 
 			Map<String, List<String>> headerFields =
-				httpClient.getHeaderFields();
+				httpURLConnection.getHeaderFields();
 
 			Assert.assertTrue(
 				headerFields.containsKey(
 					ContentSecurityPolicyConstants.
 						CONTENT_SECURITY_POLICY_HEADER));
 
-			String contentSecurityPolicyHeaderValue = httpClient.getHeaderField(
-				ContentSecurityPolicyConstants.CONTENT_SECURITY_POLICY_HEADER);
+			String contentSecurityPolicyHeaderValue =
+				httpURLConnection.getHeaderField(
+					ContentSecurityPolicyConstants.
+						CONTENT_SECURITY_POLICY_HEADER);
 
 			Assert.assertNotNull(contentSecurityPolicyHeaderValue);
 
@@ -195,7 +197,7 @@ public class ContentSecurityPolicyFilterTest {
 			Assert.assertEquals(
 				contentSecurityPolicyHeaderValue, substitutedCspPolicy);
 
-			String responseBody = _getResponseBody(httpClient);
+			String responseBody = _getResponseBody(httpURLConnection);
 
 			Assert.assertTrue(
 				responseBody.contains("<link nonce=\"" + nonce + "\""));
@@ -224,23 +226,24 @@ public class ContentSecurityPolicyFilterTest {
 			SettingsFactoryUtil.getSettingsFactory());
 	}
 
-	private HttpURLConnection _executePortalCall() throws IOException {
+	private HttpURLConnection _createHttpURLConnection() throws IOException {
 		URL url = new URL("http://localhost:8080/web/guest");
 
-		HttpURLConnection httpClient = (HttpURLConnection)url.openConnection();
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
 
-		httpClient.setRequestMethod("GET");
+		httpURLConnection.setRequestMethod("GET");
 
-		return httpClient;
+		return httpURLConnection;
 	}
 
-	private String _getResponseBody(HttpURLConnection httpClient)
+	private String _getResponseBody(HttpURLConnection httpURLConnection)
 		throws IOException {
 
 		StringBuilder sb = new StringBuilder();
 
 		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(httpClient.getInputStream()))) {
+				new InputStreamReader(httpURLConnection.getInputStream()))) {
 
 			String line;
 

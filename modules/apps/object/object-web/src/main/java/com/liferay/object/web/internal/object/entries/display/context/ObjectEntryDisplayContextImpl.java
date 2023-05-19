@@ -728,6 +728,8 @@ public class ObjectEntryDisplayContextImpl
 
 		ddmFormField.setLabel(ddmFormFieldLabelLocalizedValue);
 
+		ddmFormField.setLocalizable(objectField.isLocalized());
+
 		properties.forEach(
 			(key, value) -> ddmFormField.setProperty(key, value));
 
@@ -784,6 +786,13 @@ public class ObjectEntryDisplayContextImpl
 		}
 
 		ddmFormField.setRequired(objectField.isRequired());
+
+		if (objectField.isLocalized() &&
+			StringUtil.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.TEXT)) {
+
+			ddmFormField.setType(DDMFormFieldTypeConstants.LOCALIZABLE_TEXT);
+		}
 
 		return ddmFormField;
 	}

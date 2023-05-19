@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.configuration.CommercePriceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -69,6 +70,12 @@ public class MiniCartTag extends IncludeTag {
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+			if (accountEntry != null) {
+				_accountEntryId = accountEntry.getAccountEntryId();
+			}
+
 			_checkoutURL = StringPool.BLANK;
 
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -206,6 +213,7 @@ public class MiniCartTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_accountEntryId = 0;
 		_checkoutURL = null;
 		_commerceChannelGroupId = 0;
 		_commerceChannelId = 0;
@@ -231,6 +239,8 @@ public class MiniCartTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:accountEntryId", _accountEntryId);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:cartViews", _views);
 		httpServletRequest.setAttribute(
@@ -343,5 +353,6 @@ public class MiniCartTag extends IncludeTag {
 	private String _siteDefaultURL = StringPool.BLANK;
 	private boolean _toggleable = true;
 	private Map<String, String> _views = new HashMap<>();
+	private long _accountEntryId;
 
 }

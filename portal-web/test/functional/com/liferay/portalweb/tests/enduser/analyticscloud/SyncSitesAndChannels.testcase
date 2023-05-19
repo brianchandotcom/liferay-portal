@@ -132,8 +132,8 @@ definition {
 			ACDXPSettings.completeWizardConfiguration();
 		}
 
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
+		task ("Go to the properties page in the sidebar") {
+			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
 		task ("Click on the Assign button") {

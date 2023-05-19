@@ -48,8 +48,8 @@ public class CompareRunsLocalServiceImpl
 	extends CompareRunsLocalServiceBaseImpl {
 
 	public int getComparison(
-		long companyId, long runIdA, long runIdB, String statusA,
-		String statusB) {
+		long companyId, long testrayRunId1, long testrayRunId2,
+		String testrayDueStatus1, String testrayDueStatus2) {
 
 		DynamicObjectDefinitionTable testrayCaseExtensionDynamicTable =
 			_getDynamicObjectDefinitionTable(
@@ -75,13 +75,62 @@ public class CompareRunsLocalServiceImpl
 			(Column<DynamicObjectDefinitionTable, String>)
 				testrayCaseResultDynamicTable.getColumn("dueStatus_");
 
+		Collection<Column<?, ?>> tableTemplate = new ArrayList<Column<?, ?>>();
+
+		Column<DynamicObjectDefinitionTable, Long> testrayCaseIdDynamicColumn =
+			(Column<DynamicObjectDefinitionTable, Long>)
+				testrayCaseExtensionDynamicTable.getColumn("c_caseId_");
+
+		tableTemplate.add(testrayCaseIdDynamicColumn);
+
+		Table table = _getJoinStep(
+			testrayCaseExtensionDynamicTable,
+			testrayCaseResultDynamicTable,
+			testrayCaseResultExtensionDynamicTable
+		).where(
+			testrayRunToCaseResultColumn.eq(
+				testrayRunId1
+			).and(
+				testrayDueStatusColumn.eq(testrayDueStatus1)
+			)
+		).as(
+			"table1", tableTemplate
+		);
+
+		Column<?, ?> testrayCaseIdColumn = table.getColumn("c_caseId_");
+
+		return _objectEntryLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				table
+			).where(
+				testrayCaseIdColumn.in(
+					_getJoinStep(
+						testrayCaseExtensionDynamicTable,
+						testrayCaseResultDynamicTable,
+						testrayCaseResultExtensionDynamicTable
+					).where(
+						testrayRunToCaseResultColumn.eq(
+							testrayRunId2
+						).and(
+							testrayDueStatusColumn.eq(testrayDueStatus2)
+						)))
+			));
+	}
+
+	private static JoinStep _getJoinStep(
+		DynamicObjectDefinitionTable testrayCaseExtensionDynamicTable,
+		DynamicObjectDefinitionTable testrayCaseResultDynamicTable,
+		DynamicObjectDefinitionTable testrayCaseResultExtensionDynamicTable) {
+
+
 		Column<DynamicObjectDefinitionTable, Long>
 			testrayCaseToCaseResultIdColumn =
-				(Column<DynamicObjectDefinitionTable, Long>)
-					testrayCaseResultExtensionDynamicTable.getColumn(
-						"r_caseToCaseResult_c_caseId");
+			(Column<DynamicObjectDefinitionTable, Long>)
+				testrayCaseResultExtensionDynamicTable.getColumn(
+					"r_caseToCaseResult_c_caseId");
 
-		JoinStep joinStep = DSLQueryFactoryUtil.select(
+		return DSLQueryFactoryUtil.select(
 			testrayCaseExtensionDynamicTable.getColumn("c_caseId_")
 		).from(
 			testrayCaseResultExtensionDynamicTable
@@ -98,41 +147,6 @@ public class CompareRunsLocalServiceImpl
 				testrayCaseResultDynamicTable.getPrimaryKeyColumn()
 			)
 		);
-
-		Collection<Column<?, ?>> tableTemplate = new ArrayList<Column<?, ?>>() {
-		};
-
-		Column<DynamicObjectDefinitionTable, Long> testrayCaseIdDynamicColumn =
-			(Column<DynamicObjectDefinitionTable, Long>)
-				testrayCaseExtensionDynamicTable.getColumn("c_caseId_");
-
-		tableTemplate.add(testrayCaseIdDynamicColumn);
-
-		Table table = joinStep.where(
-			testrayRunToCaseResultColumn.eq(
-				runIdA
-			).and(
-				testrayDueStatusColumn.eq(statusA)
-			)
-		).as(
-			"table1", tableTemplate
-		);
-
-		Column<?, ?> testrayCaseIdColumn = table.getColumn("c_caseId_");
-
-		return _objectEntryLocalService.dslQueryCount(
-			DSLQueryFactoryUtil.count(
-			).from(
-				table
-			).where(
-				testrayCaseIdColumn.in(
-					joinStep.where(
-						testrayRunToCaseResultColumn.eq(
-							runIdB
-						).and(
-							testrayDueStatusColumn.eq(statusB)
-						)))
-			));
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable(

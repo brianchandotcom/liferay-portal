@@ -376,8 +376,6 @@ definition {
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
-
-		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 	}
 
 	@summary = "This macro writes to the field in project."

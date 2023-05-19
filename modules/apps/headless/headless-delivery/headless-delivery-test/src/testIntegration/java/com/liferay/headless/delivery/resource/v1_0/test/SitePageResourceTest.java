@@ -250,9 +250,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageFailureFriendlyURLEndsWithSlash();
 		_testPostSiteSitePageFailureFriendlyURLTooLong();
 		_testPostSiteSitePageFailureFriendlyURLTooShort();
+		_testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting();
 		_testPostSiteSitePageSuccessInvalidParentSitePage();
 		_testPostSiteSitePageSuccessKeywords();
-		_testPostSiteSitePageFailurePagePermissionsActionKeyNonexisting();
 		_testPostSiteSitePageSuccessPagePermissions();
 		_testPostSiteSitePageSuccessPagePermissionsActionKeysEmpty();
 		_testPostSiteSitePageSuccessPagePermissionsEmpty();

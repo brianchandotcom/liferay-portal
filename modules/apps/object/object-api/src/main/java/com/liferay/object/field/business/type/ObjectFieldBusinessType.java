@@ -64,6 +64,10 @@ public interface ObjectFieldBusinessType {
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
+		if (objectField.isLocalized()) {
+			return values.get(objectField.getI18nObjectFieldName());
+		}
+
 		return getValue(objectField, userId, values);
 	}
 

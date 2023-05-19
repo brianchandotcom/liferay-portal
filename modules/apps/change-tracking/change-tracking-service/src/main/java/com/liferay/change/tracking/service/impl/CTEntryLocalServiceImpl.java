@@ -266,7 +266,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CTEntry updateModelMvccVersion(long ctEntryId, long modelMvccVersion) {
+	public CTEntry updateModelMvccVersion(
+		long ctEntryId, long modelMvccVersion) {
+
 		CTEntry ctEntry = ctEntryPersistence.fetchByPrimaryKey(ctEntryId);
 
 		ctEntry.setModelMvccVersion(modelMvccVersion);

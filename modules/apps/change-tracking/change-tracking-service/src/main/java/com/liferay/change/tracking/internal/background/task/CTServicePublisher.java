@@ -405,10 +405,8 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 				CTEntry ctEntry = ctEntries.get(pk);
 
-				ctEntry.setModifiedDate(ctEntry.getModifiedDate());
-				ctEntry.setModelMvccVersion(mvccVersion);
-
-				_ctEntryLocalService.updateCTEntry(ctEntry);
+				_ctEntryLocalService.updateModelMvccVersion(
+					ctEntry.getCtEntryId(), mvccVersion);
 			}
 		}
 	}

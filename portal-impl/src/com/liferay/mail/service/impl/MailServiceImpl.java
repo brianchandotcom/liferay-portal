@@ -160,6 +160,7 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 		properties.setProperty(storePrefix + "host", pop3Host);
 
+		boolean oAuth2AuthEnable = false;
 		MailAuthTokenProvider pop3MailAuthTokenProvider =
 			MailAuthTokenProviderRegistryUtil.getMailAuthTokenProvider(
 				companyId, pop3Host, storeProtocol);
@@ -171,6 +172,8 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			properties.put(
 				storePrefix + "auth.xoauth2.two.line.authentication.format",
 				"true");
+
+			oAuth2AuthEnable = true;
 		}
 
 		properties.setProperty(storePrefix + "password", pop3Password);
@@ -210,6 +213,8 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			properties.put(
 				transportPrefix + "auth.xoauth2.two.line.authentication.format",
 				"false");
+
+			oAuth2AuthEnable = true;
 		}
 
 		properties.setProperty(transportPrefix + "password", smtpPassword);
@@ -269,7 +274,9 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 			properties.list(System.out);
 		}
 
-		_sessions.put(companyId, session);
+		if (!oAuth2AuthEnable) {
+			_sessions.put(companyId, session);
+		}
 
 		return session;
 	}

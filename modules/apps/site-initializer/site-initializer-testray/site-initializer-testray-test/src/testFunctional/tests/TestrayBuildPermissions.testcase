@@ -235,4 +235,45 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the build"
+	@priority = 4
+	test AssertLeadRoleCanEditBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertLeadRoleCanEditBuild";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user edit a build") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayBuild.editBuild(
+				description = "Description Edited",
+				fieldName = "Build Edited",
+				gitHash = 12345,
+				productVersion = "1.2",
+				routine = ${routineName});
+		}
+
+		task ("Then the user can see the build edited in the list") {
+			AssertElementPresent(
+				key_projectName = "Build Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

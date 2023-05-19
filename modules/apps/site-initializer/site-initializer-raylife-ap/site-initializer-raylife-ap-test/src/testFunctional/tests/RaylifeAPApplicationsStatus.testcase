@@ -34,6 +34,8 @@ definition {
 	}
 
 	tearDown {
+		User.firstLoginPG();
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		Raylife.tearDownCP();
@@ -46,9 +48,9 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-159688 - Verify if the details of the Summary on the Bound application view appears."
+	@description = "Story ID: LPS-159688 | Test Summary: Verify if the details of the Summary on the Bound application view appears"
 	@priority = 4
-	test AssertCanOpenBoundAppDetails {
+	test AssertThatTheUserCanOpenAppDetailsInBoundApplications {
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertCanOpenBoundAppDetails";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
@@ -58,7 +60,7 @@ definition {
 		}
 
 		if (IsElementPresent(key_product = "Auto", key_status = "Bound", locator1 = "RaylifeAP#APPLICATIONS_NUMBER_WITH_STATUS")) {
-			task ("When the search term is present") {
+			task ("And the search term is present") {
 				RaylifeAP.search(searchTerm = "AP");
 
 				RaylifeAP.clickInApplicationNumber(
@@ -66,7 +68,7 @@ definition {
 					status = "Bound");
 			}
 
-			task ("Then assert the Detail view page and go back to 'Test Test' User") {
+			task ("And assert the Detail view page and go back to 'Test Test' User") {
 				AssertElementPresent(
 					key_tabTitle = "App Details",
 					locator1 = "RaylifeAP#TAB_TITLE");
@@ -74,18 +76,16 @@ definition {
 				Navigator.openSpecificURL(url = "http://localhost:8080/home");
 
 				User.logoutPG();
-
-				User.firstLoginPG();
 			}
 		}
 		else {
-			task ("Given the new Application flow is open") {
+			task ("And the new Application flow is open") {
 				RaylifeApplicationModal.openNewApplicationFlow(
 					button = "Next",
 					insurance = "Personal");
 			}
 
-			task ("When the user fulfill all the creation forms and generate a quote") {
+			task ("And the user fulfill all the creation forms and generate a quote") {
 				RaylifeApplicationModal.typeAllNewApplicationContactInfoFields(
 					apt = 0000,
 					city = "New York",
@@ -128,11 +128,10 @@ definition {
 				Button.click(button = "Generate Quote");
 			}
 
-			task ("And search for the new application") {
+			task ("When search for the new application") {
 				RaylifeAP.search(searchTerm = "Testing");
 
 				RaylifeAP.clickInApplicationNumber(
-					index = 1,
 					product = "Auto",
 					status = "Bound");
 			}

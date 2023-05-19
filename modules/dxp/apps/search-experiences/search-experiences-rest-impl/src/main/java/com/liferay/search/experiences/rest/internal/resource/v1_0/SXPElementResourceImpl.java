@@ -18,6 +18,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -35,7 +38,10 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.FieldSet;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
 import com.liferay.search.experiences.rest.internal.odata.entity.v1_0.SXPElementEntityModel;
@@ -46,6 +52,7 @@ import com.liferay.search.experiences.service.SXPElementService;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -274,6 +281,19 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	}
 
 	@Override
+	public SXPElement postSXPElementPreview(SXPElement sxpElement)
+		throws Exception {
+
+		sxpElement.setDescription(
+			_getLocalization(sxpElement.getDescription_i18n()));
+		sxpElement.setElementDefinition(
+			_getLocalizedElementDefinition(sxpElement.getElementDefinition()));
+		sxpElement.setTitle(_getLocalization(sxpElement.getTitle_i18n()));
+
+		return sxpElement;
+	}
+
+	@Override
 	public SXPElement postSXPElementValidate(String json) throws Exception {
 		return SXPElementUtil.toSXPElement(json);
 	}
@@ -287,10 +307,70 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			ElementDefinitionUtil.unpack(sxpElement.getElementDefinition()));
 	}
 
+	private String _getLocalization(Map<String, String> localizationMap) {
+		return _language.get(
+			contextHttpServletRequest,
+			localizationMap.get(
+				contextAcceptLanguage.getPreferredLanguageId()));
+	}
+
+	private ElementDefinition _getLocalizedElementDefinition(
+		ElementDefinition elementDefinition) {
+
+		try {
+			UiConfiguration uiConfiguration =
+				elementDefinition.getUiConfiguration();
+
+			if (uiConfiguration == null) {
+				return elementDefinition;
+			}
+
+			FieldSet[] fieldSets = uiConfiguration.getFieldSets();
+
+			if (fieldSets == null) {
+				return elementDefinition;
+			}
+
+			for (FieldSet fieldSet : fieldSets) {
+				com.liferay.search.experiences.rest.dto.v1_0.Field[] fields =
+					fieldSet.getFields();
+
+				for (com.liferay.search.experiences.rest.dto.v1_0.Field field :
+						fields) {
+
+					if (!Validator.isBlank(field.getHelpText())) {
+						field.setHelpTextLocalized(
+							_language.get(
+								contextHttpServletRequest,
+								field.getHelpText()));
+					}
+
+					if (!Validator.isBlank(field.getLabel())) {
+						field.setLabelLocalized(
+							_language.get(
+								contextHttpServletRequest, field.getLabel()));
+					}
+				}
+			}
+
+			return elementDefinition;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return null;
+		}
+	}
+
 	private String _getSchemaVersion() {
 		return StringUtils.substringBetween(
 			contextUriInfo.getPath(), "v", StringPool.SLASH);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SXPElementResourceImpl.class);
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
@@ -300,6 +380,9 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(component.name=com.liferay.search.experiences.rest.internal.dto.v1_0.converter.SXPElementDTOConverter)"

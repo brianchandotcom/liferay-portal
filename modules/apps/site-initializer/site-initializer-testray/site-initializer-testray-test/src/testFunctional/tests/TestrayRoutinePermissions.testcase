@@ -84,38 +84,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the routine"
-	@priority = 3
-	test AssertAnalystRoleCanNotEditRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertAnalystRoleCanNotEditRoutine";
-
-		task ("Given that the user login with the Testray Analyst role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "analyst@testray.com",
-				userLoginFullName = "Analyst User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When The user right click in routine") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			RightClick.rightClick(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Then the user can not edit the routine") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
-		}
-	}
-
 	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to delete the routine"
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteRoutine {
@@ -148,6 +116,38 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the routine"
+	@priority = 3
+	test AssertAnalystRoleCanNotEditRoutine {
+		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertAnalystRoleCanNotEditRoutine";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When The user right click in routine") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			RightClick.rightClick(
+				key_projectName = ${routineName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the routine") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create the routine"
 	@priority = 3
 	test AssertLeadRoleCanNotCreateRoutine {
@@ -171,38 +171,6 @@ definition {
 
 		task ("Then the user can not create routine") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
-		}
-	}
-
-	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to edit the routine"
-	@priority = 3
-	test AssertLeadRoleCanNotEditRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertLeadRoleCanNotEditRoutine";
-
-		task ("Given that the user login with the Testray Lead role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "lead@testray.com",
-				userLoginFullName = "Lead User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When The user right click in routine") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			RightClick.rightClick(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Then the user can not edit the routine") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 	}
 
@@ -238,6 +206,38 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to edit the routine"
+	@priority = 3
+	test AssertLeadRoleCanNotEditRoutine {
+		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertLeadRoleCanNotEditRoutine";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When The user right click in routine") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			RightClick.rightClick(
+				key_projectName = ${routineName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the routine") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the routine"
 	@priority = 3
 	test AssertUserRoleCanNotCreateRoutine {
@@ -261,38 +261,6 @@ definition {
 
 		task ("Then the user can not create routine") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
-		}
-	}
-
-	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the routine"
-	@priority = 3
-	test AssertUserRoleCanNotEditRoutine {
-		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertUserRoleCanNotEditRoutine";
-
-		task ("Given that the user login with the Testray User role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user@testray.com",
-				userLoginFullName = "User User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When The user right click in routine") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			RightClick.rightClick(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Then the user can not edit the routine") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 	}
 
@@ -324,6 +292,38 @@ definition {
 		task ("Then the user can not delete the routine") {
 			AssertElementNotPresent(
 				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
+	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the routine"
+	@priority = 3
+	test AssertUserRoleCanNotEditRoutine {
+		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertUserRoleCanNotEditRoutine";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When The user right click in routine") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			RightClick.rightClick(
+				key_projectName = ${routineName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the routine") {
+			AssertElementNotPresent(
+				item = "Edit",
 				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 	}

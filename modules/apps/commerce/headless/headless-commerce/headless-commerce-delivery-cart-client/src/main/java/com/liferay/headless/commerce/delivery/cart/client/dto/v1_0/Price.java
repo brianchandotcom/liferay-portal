@@ -294,6 +294,27 @@ public class Price implements Cloneable, Serializable {
 
 	protected String priceFormatted;
 
+	public Boolean getPriceOnApplication() {
+		return priceOnApplication;
+	}
+
+	public void setPriceOnApplication(Boolean priceOnApplication) {
+		this.priceOnApplication = priceOnApplication;
+	}
+
+	public void setPriceOnApplication(
+		UnsafeSupplier<Boolean, Exception> priceOnApplicationUnsafeSupplier) {
+
+		try {
+			priceOnApplication = priceOnApplicationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean priceOnApplication;
+
 	public Double getPromoPrice() {
 		return promoPrice;
 	}

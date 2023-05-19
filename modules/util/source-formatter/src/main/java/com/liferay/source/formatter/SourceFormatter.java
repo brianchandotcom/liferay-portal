@@ -132,6 +132,10 @@ public class SourceFormatter {
 					ArgumentsUtil.getString(
 						arguments, "source.check.category.names", null),
 					StringPool.COMMA));
+			sourceFormatterArgs.setCheckErcUsage(
+				ArgumentsUtil.getBoolean(
+					arguments, "check.erc.usage",
+					SourceFormatterArgs.CHECK_ERC_USAGE));
 			sourceFormatterArgs.setCheckNames(
 				ListUtil.fromString(
 					ArgumentsUtil.getString(

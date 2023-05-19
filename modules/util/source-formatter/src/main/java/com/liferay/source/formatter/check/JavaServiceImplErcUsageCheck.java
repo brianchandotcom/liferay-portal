@@ -16,10 +16,12 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
 import java.io.IOException;
 
@@ -38,6 +40,15 @@ public class JavaServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
 		throws DocumentException, IOException {
+
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		if (!sourceFormatterArgs.isCheckErcUsage()) {
+			return javaTerm.getContent();
+		}
 
 		JavaClass javaClass = javaTerm.getParentJavaClass();
 

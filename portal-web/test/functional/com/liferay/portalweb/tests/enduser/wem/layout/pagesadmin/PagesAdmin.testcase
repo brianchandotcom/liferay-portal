@@ -1782,6 +1782,153 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177031. Page option Copy Page with Permissions works in content page and widget page for available roles to normal site"
+	@priority = 4
+	test ViewCopyPageWithPermissionsForAvailableRolesToNormalSite {
+		var randomRoleKey = StringUtil.randomString(8);
+
+		var randomRoleKey = StringUtil.toLowerCase(${randomRoleKey});
+
+		task ("Given a content page and a widget page without view permissions for Guest and Site Member") {
+			JSONRole.addRegularRole(
+				roleKey = ${randomRoleKey},
+				roleTitle = ${randomRoleKey});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.publish();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Content Page Name");
+
+			IFrame.selectPermissionsFrame();
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Site Member");
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = ${randomRoleKey});
+		}
+
+		task ("When we copy these pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Copy",
+				pageName = "Test Content Page Name");
+
+			DropdownMenuItem.click(menuItem = "Page With Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Copy Content Page Name");
+
+			Button.click(button = "Add");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			PagesAdmin.viewPageStatus(
+				pageName = "Copy Content Page Name",
+				status = "Draft");
+
+			PermissionsInline.gotoPagePG(
+				pageName = "Copy Content Page Name",
+				site = ${randomSiteName});
+
+			for (var roleTitle : list "Guest,Site Member") {
+				Role.viewPermissionPG(
+					permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+					permissionFlagged = "false",
+					roleTitle = ${roleTitle});
+			}
+
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				permissionFlagged = "true",
+				roleTitle = ${randomRoleKey});
+		}
+
+		task ("Then the permissions must be the same as on the original pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Widget Page Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Widget Page Name");
+
+			IFrame.selectPermissionsFrame();
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Site Member");
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = ${randomRoleKey});
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Copy",
+				pageName = "Test Widget Page Name");
+
+			DropdownMenuItem.click(menuItem = "Page With Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Copy Widget Page Name");
+
+			Button.click(button = "Add");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			PermissionsInline.gotoPagePG(
+				pageName = "Copy Widget Page Name",
+				site = ${randomSiteName});
+
+			for (var roleTitle : list "Guest,Site Member") {
+				Role.viewPermissionPG(
+					permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+					permissionFlagged = "false",
+					roleTitle = ${roleTitle});
+			}
+
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				permissionFlagged = "true",
+				roleTitle = ${randomRoleKey});
+		}
+	}
+
 	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
 	@priority = 5
 	test ViewDisplayPageTemplateViaCollectionItems {

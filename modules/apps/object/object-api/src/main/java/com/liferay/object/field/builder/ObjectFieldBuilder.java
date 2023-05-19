@@ -30,7 +30,6 @@ public class ObjectFieldBuilder {
 
 	public ObjectFieldBuilder() {
 		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
-		objectField.setReadOnlyConditionExpression(null);
 	}
 
 	public ObjectField build() {

@@ -304,7 +304,6 @@ public class ObjectDefinitionResourceTest
 						localized = !objectDefinition.getSystem();
 						name = StringUtil.randomId();
 						readOnly = ReadOnly.FALSE;
-						readOnlyConditionExpression = null;
 						required = false;
 						system = false;
 					}

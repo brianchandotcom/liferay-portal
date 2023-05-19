@@ -26,7 +26,6 @@ public class AggregationObjectFieldBuilder extends ObjectFieldBuilder {
 			ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION);
 		objectField.setDBType(ObjectFieldConstants.DB_TYPE_STRING);
 		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_TRUE);
-		objectField.setReadOnlyConditionExpression(null);
 	}
 
 }

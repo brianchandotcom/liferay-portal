@@ -233,7 +233,6 @@ public class ObjectDefinitionVulcanBatchEngineTaskItemDelegateTest {
 				label = Collections.singletonMap("en_US", "Column");
 				name = "column";
 				readOnly = ReadOnly.FALSE;
-				readOnlyConditionExpression = null;
 				required = false;
 				system = false;
 			}

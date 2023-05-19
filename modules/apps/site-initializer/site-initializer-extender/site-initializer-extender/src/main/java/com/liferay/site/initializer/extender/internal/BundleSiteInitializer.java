@@ -4604,7 +4604,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("objectDefinitionName"));
 
 			if(Objects.equals(serviceBuildObjectDefinition.getStorageType(),
-				"default")) {
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
 
 				com.liferay.object.model.ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.

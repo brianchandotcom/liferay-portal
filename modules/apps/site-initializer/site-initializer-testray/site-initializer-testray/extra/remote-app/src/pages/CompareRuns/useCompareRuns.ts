@@ -60,10 +60,10 @@ const useCompareRuns = (
 	const operator = type === 'details' ? '' : type;
 
 	const {data} = useFetch<CompareRunsResponse>(
-		`/o/c/compare-runs/${runA}/${runB}/${operator}`,
+		`/compare-runs/${runA}/${runB}/${operator}`,
 		{
 			params: {customParams: {componentId, teamId}},
-			swrConfig: {shouldFetch: false},
+			swrConfig: {shouldFetch: true},
 		}
 	);
 

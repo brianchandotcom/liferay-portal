@@ -18,19 +18,23 @@ import FetcherError from './FetchError';
 
 const liferayHost = window.location.origin;
 
+const headlessAdminUserAPIs = ['account', 'roles', 'user-groups'];
+
+const headlessDeliveryAPIs = [
+	'message-board-messages',
+	'message-board-threads',
+];
+
 function changeResource(resource: RequestInfo) {
-	const headlessAdminUserAPIs = ['account', 'roles', 'user-groups'];
-
-	const headlessDeliveryAPIs = [
-		'message-board-messages',
-		'message-board-threads',
-	];
-
 	const getIsResourceFromAPI = (apis: string[]) =>
 		apis.some((api) => resource.toString().includes(api));
 
 	if (resource.toString().startsWith('http')) {
 		return resource;
+	}
+
+	if (resource.toString().startsWith('/compare-runs')) {
+		return `${liferayHost}/o/osb-testray-rest/v1.0${resource}`;
 	}
 
 	if (resource.toString().startsWith('/dispatch-triggers')) {

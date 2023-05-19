@@ -27,7 +27,7 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 			<c:if test="<%= Validator.isNotNull(contentId) %>">
 				<li>
 					<a class="<%= linkClass %>" href="<%= contentId %>">
-						<liferay-ui:message key="skip-to-content" />
+						<liferay-ui:message key="skip-to-main-content" />
 					</a>
 				</li>
 			</c:if>

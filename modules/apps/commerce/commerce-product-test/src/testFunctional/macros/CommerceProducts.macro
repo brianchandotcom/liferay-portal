@@ -971,4 +971,103 @@ definition {
 		}
 	}
 
+	macro viewVirtualSkuConfiguration {
+		if (isSet(virtualURL) || isSet(virtualProductFile)) {
+			if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
+				Click(
+					key_accordionTitle = "details",
+					locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
+			}
+
+			if (isSet(virtualURL)) {
+				AssertTextEquals(
+					key_labelName = "URL",
+					locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+					value1 = ${virtualURL});
+			}
+
+			if (isSet(virtualProductFile)) {
+				AssertElementPresent(
+					key_text = ${virtualProductFile},
+					locator1 = "Link#ANY");
+			}
+			else {
+				AssertElementPresent(
+					labelOption = "None",
+					locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+			}
+		}
+
+		if (isSet(activationStatus) || isSet(duration) || isSet(maxDownloads)) {
+			if (IsElementPresent(key_accordionTitle = "base-information", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
+				Click(
+					key_accordionTitle = "base-information",
+					locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
+			}
+
+			if (isSet(activationStatus)) {
+				AssertSelectedLabel(
+					key_fieldLabel = "Activation Status",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${activationStatus});
+			}
+
+			if (isSet(duration)) {
+				AssertTextEquals(
+					key_text = "Duration",
+					locator1 = "TextInput#ANY",
+					value1 = ${duration});
+			}
+
+			if (isSet(maxDownloads)) {
+				AssertTextEquals(
+					key_fieldLabel = "Max Number of Downloads",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${maxDownloads});
+			}
+		}
+
+		if (isSet(enableSample)) {
+			if (IsElementPresent(key_accordionTitle = "sample", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
+				Click(
+					key_accordionTitle = "sample",
+					locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS");
+			}
+
+			if (${enableSample} == "true") {
+				AssertChecked.assertCheckedNotVisible(
+					key_toggleSwitchLabel = "Enable Sample",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				if (isSet(sampleFileName)) {
+					AssertElementPresent(
+						key_indexNumber = 2,
+						key_text = ${sampleFileName},
+						locator1 = "Link#ANY_N");
+				}
+
+				if (isSet(virtualURL)) {
+					AssertTextEquals(
+						key_labelName = "Sample File URL",
+						locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+						value1 = ${simpleFileURL});
+				}
+			}
+			else if (${enableSample} == "false") {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_toggleSwitchLabel = "Enable Sample",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				AssertElementPresent(
+					key_indexNumber = 2,
+					labelOption = "None",
+					locator1 = "FormViewBuilder#FIELD_LABEL_OPTION_N");
+
+				AssertElementPresent(
+					key_fieldLabel = "Sample File URL",
+					locator1 = "FormFields#FIELD_DISABLED_TEXT");
+			}
+		}
+	}
+
 }

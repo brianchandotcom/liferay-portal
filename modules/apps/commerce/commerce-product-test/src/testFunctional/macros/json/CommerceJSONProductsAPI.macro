@@ -1269,6 +1269,46 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});
 	}
 
+	macro _patchCommerceVirtualProductSku {
+		Variables.assertDefined(parameterList = ${productSku});
+
+		var baseURL = ${baseURL};
+		var fieldsList = ListUtil.newList();
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(override))) {
+			var override = "true";
+		}
+
+		var sku = '''"sku": "${productSku}"''';
+
+		ListUtil.add(${fieldsList}, ${sku});
+
+		var fieldsList = ListUtil.toString(${fieldsList});
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSku});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					${payload},
+					"skuVirtualSettings": {
+						"override": ${override}
+					}
+				}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});
+	}
+
 	macro _updateCommerceProduct {
 		Variables.assertDefined(parameterList = ${productName});
 

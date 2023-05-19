@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -37,6 +38,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,6 +73,9 @@ public class CETFDSActionProvider implements FDSActionProvider {
 				cetFDSEntry, dropdownItem, httpServletRequest)
 		).add(
 			dropdownItem -> _buildDeleteClientExtensionEntryAction(
+				cetFDSEntry, dropdownItem, httpServletRequest)
+		).add(
+			dropdownItem -> _buildExportClientExtensionEntryAction(
 				cetFDSEntry, dropdownItem, httpServletRequest)
 		).build();
 	}
@@ -123,6 +128,22 @@ public class CETFDSActionProvider implements FDSActionProvider {
 			).buildPortletURL());
 		dropdownItem.setIcon("pencil");
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
+	}
+
+	private void _buildExportClientExtensionEntryAction(
+		CETFDSEntry cetFDSEntry, DropdownItem dropdownItem,
+		HttpServletRequest httpServletRequest) {
+
+		dropdownItem.setHref(
+			ResourceURLBuilder.createResourceURL(
+				_getResourceURL(httpServletRequest)
+			).setParameter(
+				"externalReferenceCode", cetFDSEntry.getExternalReferenceCode()
+			).setResourceID(
+				"/client_extension_admin/export"
+			).buildString());
+		dropdownItem.setIcon("export");
+		dropdownItem.setLabel(_getMessage(httpServletRequest, "export"));
 	}
 
 	private void _buildViewClientExtensionEntryAction(
@@ -182,6 +203,14 @@ public class CETFDSActionProvider implements FDSActionProvider {
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
 		return requestBackedPortletURLFactory.createRenderURL(
+			_getPortletId(httpServletRequest));
+	}
+
+	private ResourceURL _getResourceURL(HttpServletRequest httpServletRequest) {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+
+		return (ResourceURL)requestBackedPortletURLFactory.createResourceURL(
 			_getPortletId(httpServletRequest));
 	}
 

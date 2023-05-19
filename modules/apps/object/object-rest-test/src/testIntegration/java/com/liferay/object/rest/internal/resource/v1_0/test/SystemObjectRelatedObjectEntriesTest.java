@@ -143,7 +143,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testGetManyToManySystemObjectRelatedObjectEntries()
 		throws Exception {
 
-		// Many to many with custom object definition
+		// Many to many relationship
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			_objectDefinition, _userSystemObjectDefinition,
@@ -199,7 +199,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			},
 			Type.MANY_TO_MANY);
 
-		// Many to many with custom object definition (other side)
+		// Many to many relationship (other side)
 
 		objectRelationship = _addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition,
@@ -327,7 +327,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
 
-			// Many to many
+			// Many to many relationship
 
 			ObjectRelationship objectRelationship =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -340,7 +340,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
 				objectRelationship, false);
 
-			// Many to one
+			// Many to one relationship
 
 			objectRelationship =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -353,7 +353,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_testPostSystemObjectEntryWithInvalidNestedCustomObjectEntries(
 				objectRelationship, true);
 
-			// One to many
+			// One to many relationship
 
 			objectRelationship =
 				ObjectRelationshipTestUtil.addObjectRelationship(
@@ -370,7 +370,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testPostSystemObjectEntryWithNestedCustomObjectEntries()
 		throws Exception {
 
-		// Many to many
+		// Many to many relationship
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -383,7 +383,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testPostSystemObjectEntryWithNestedCustomObjectEntries(
 			objectRelationship);
 
-		// One to many
+		// One to many relationship
 
 		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
@@ -467,7 +467,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 	public void testPutSystemObjectEntryWithNestedCustomObjectEntries()
 		throws Exception {
 
-		// Many to many
+		// Many to many relationship
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -480,7 +480,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 		_testPutSystemObjectEntryWithNestedCustomObjectEntries(
 			objectRelationship);
 
-		// One to many
+		// One to many relationship
 
 		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
 			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),

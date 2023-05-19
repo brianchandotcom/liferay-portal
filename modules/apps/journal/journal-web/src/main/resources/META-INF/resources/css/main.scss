@@ -179,13 +179,19 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.contextual-sidebar-content {
-			margin-top: $toolbarHeight;
-
+		.article-content-content {
 			@include media-breakpoint-up(lg) {
 				margin-top: $toolbarDesktopHeight;
 			}
 
+			.ddm-form-builder-app {
+				@include media-breakpoint-down(md) {
+					margin-top: $toolbarHeight;
+				}
+			}
+		}
+
+		.contextual-sidebar-content {
 			@include media-breakpoint-down(md) {
 				> .container-fluid {
 					margin: 0 auto;

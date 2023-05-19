@@ -980,6 +980,40 @@ public class JournalDisplayContext {
 		return _searchContainer;
 	}
 
+	public List<NavigationItem> getSearchNavigationItems() {
+		return NavigationItemListBuilder.add(
+			() -> hasResults(),
+			navigationItem -> {
+				navigationItem.setActive(isWebContentTabSelected());
+				navigationItem.setHref(getPortletURL("web-content"));
+				navigationItem.setLabel(
+					StringUtil.appendParentheticalSuffix(
+						LanguageUtil.get(_httpServletRequest, "web-content"),
+						getTotalItems()));
+			}
+		).add(
+			() -> hasVersionsResults(),
+			navigationItem -> {
+				navigationItem.setActive(isVersionsTabSelected());
+				navigationItem.setHref(getPortletURL("versions"));
+				navigationItem.setLabel(
+					StringUtil.appendParentheticalSuffix(
+						LanguageUtil.get(_httpServletRequest, "versions"),
+						getVersionsTotal()));
+			}
+		).add(
+			() -> hasCommentsResults(),
+			navigationItem -> {
+				navigationItem.setActive(isCommentsTabSelected());
+				navigationItem.setHref(getPortletURL("comments"));
+				navigationItem.setLabel(
+					StringUtil.appendParentheticalSuffix(
+						LanguageUtil.get(_httpServletRequest, "comments"),
+						getCommentsTotal()));
+			}
+		).build();
+	}
+
 	public String getSelectDDMStructureURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);

@@ -21,6 +21,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 %>
 
 <liferay-ui:search-container
+	cssClass='<%= journalDisplayContext.isSearch() ? "pt-0" : StringPool.BLANK %>'
 	emptyResultsMessage="no-web-content-was-found"
 	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
 >

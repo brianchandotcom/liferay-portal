@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:search-container
+	cssClass='<%= journalDisplayContext.isSearch() ? "pt-0" : StringPool.BLANK %>'
 	emptyResultsMessage="no-comment-was-found"
 	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
 >

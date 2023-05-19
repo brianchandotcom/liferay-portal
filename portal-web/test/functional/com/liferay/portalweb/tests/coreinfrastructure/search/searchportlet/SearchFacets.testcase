@@ -20,10 +20,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-172127"
+	@description = "LPS-172127 - The Custom Facet widget supports aggregating on custom object fields"
 	@priority = 3
 	test AggregateCustomObjectFieldsViaCustomFacet {
-		task ("Create a site scoped object and add the following fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
+		task ("Create a site scoped object and add the following custom fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",
@@ -65,7 +65,7 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 		}
 
-		task ("Create three object entries") {
+		task ("Create three object entries that configure the title, siteID, and date fields") {
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldList = "title/Apple Fruit,siteID/1,date/2023-04-01",
 				objectName = "CustomObject");
@@ -79,28 +79,30 @@ definition {
 				objectName = "CustomObject");
 		}
 
-		task ("Add custom facet to the search page and perform a search") {
+		task ("Add a Custom Facet widget to the search page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Search",
 				widgetName = "Custom Facet");
+		}
 
+		task ("Go to the search page and execute a search for the object entries") {
 			Search.openSearchPage(searchTerm = "fruit");
 		}
 
 		task ("Configure the Custom Facet widget to aggregate by the 'title' custom Object field") {
 			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.title.value_keyword");
+
+			Refresh();
 		}
 
 		task ("Assert 'title' facet terms are present and check one") {
-			Refresh();
-
 			Click.clickAtNotVisible(
 				checkboxName = "coconut fruit",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		task ("Assert only search results associated with the checked facet term are returned") {
+		task ("Assert only search results associated with the checked title facet term are returned") {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Coconut Fruit",
 				searchAssetType = "Custom Object");
@@ -116,17 +118,17 @@ definition {
 
 		task ("Configure the Custom Facet widget to aggregate by the 'siteID' custom Object field") {
 			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.siteID.value_integer");
+
+			Refresh();
 		}
 
-		task ("Assert 'siteID' facet terms are present and check '1'") {
-			Refresh();
-
+		task ("Assert 'siteID' facet terms are present and check one") {
 			Click.clickAtNotVisible(
 				checkboxName = 1,
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		task ("Assert only search results associated with the checked facet term are returned") {
+		task ("Assert only search results associated with the checked siteID facet term are returned") {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");
@@ -142,17 +144,17 @@ definition {
 
 		task ("Configure the Custom Facet widget to aggregate by the 'date' custom Object field") {
 			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.date.value_date");
+
+			Refresh();
 		}
 
 		task ("Assert 'date' facet terms are present and check one") {
-			Refresh();
-
 			Click.clickAtNotVisible(
 				checkboxName = 20230401,
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		task ("Assert only search results associated with the checked facet term are returned") {
+		task ("Assert only search results associated with the checked date facet term are returned") {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");

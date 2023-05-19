@@ -30,8 +30,6 @@
 	},
 	{
 		"actionIds": [
-			"ADD_DOCUMENT",
-			"ADD_SUBFOLDER",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
@@ -40,8 +38,6 @@
 	},
 	{
 		"actionIds": [
-			"ADD_DOCUMENT",
-			"ADD_SUBFOLDER",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
@@ -50,8 +46,6 @@
 	},
 	{
 		"actionIds": [
-			"ADD_DOCUMENT",
-			"ADD_SUBFOLDER",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
@@ -120,14 +114,6 @@
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequest$]",
 		"roleName": "Partner Manager (PM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequest$]",
-		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
@@ -139,6 +125,14 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
 		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequest$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
@@ -227,6 +221,17 @@
 	},
 	{
 		"actionIds": [
+			"VIEW",
+			"UPDATE",
+			"DELETE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Activity$]",
@@ -241,17 +246,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
-		"roleName": "Partner Manager (PM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
 		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
@@ -330,14 +324,6 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Budget$]",
-		"roleName": "Partner Marketing User (PMU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"VIEW",
 			"UPDATE",
 			"DELETE"
@@ -345,6 +331,14 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
 		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
@@ -429,14 +423,6 @@
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaim$]",
 		"roleName": "Partner Manager (PM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaim$]",
-		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
@@ -448,6 +434,14 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaim$]",
 		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaim$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
@@ -537,6 +531,17 @@
 	},
 	{
 		"actionIds": [
+			"VIEW",
+			"UPDATE",
+			"DELETE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
@@ -551,17 +556,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
-		"roleName": "Partner Manager (PM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivity$]",
 		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
@@ -641,14 +635,6 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimActivityDocument$]",
-		"roleName": "Partner Marketing User (PMU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
 			"VIEW",
 			"UPDATE",
 			"DELETE"
@@ -656,6 +642,14 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimActivityDocument$]",
 		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimActivityDocument$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
@@ -745,6 +739,17 @@
 	},
 	{
 		"actionIds": [
+			"VIEW",
+			"UPDATE",
+			"DELETE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
@@ -759,17 +764,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
-		"roleName": "Partner Manager (PM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"VIEW",
-			"UPDATE",
-			"DELETE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimBudget$]",
 		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
@@ -841,8 +835,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -851,30 +844,19 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Partner Sales User (PSU)",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ActivitySF$]",
+		"roleName": "Partner Manager (PM)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Account Manager (CAM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},
@@ -892,18 +874,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -912,38 +883,25 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Partner Technical User (PTU)",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ActivitySF$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ActivitySF$]",
 		"roleName": "Channel Marketing Director (CMD)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
-		"roleName": "Channel Finance Manager (CFM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -952,8 +910,16 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -962,71 +928,37 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
-		"roleName": "Partner Sales User (PSU)",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
-		"roleName": "Partner Technical User (PTU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
-		"roleName": "Channel Account Manager (CAM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
 		"roleName": "Channel Marketing Director (CMD)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
 		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
@@ -1044,8 +976,7 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1054,8 +985,16 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1064,72 +1003,29 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
-		"roleName": "Partner Sales User (PSU)",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
+		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
-		"roleName": "Partner Technical User (PTU)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
-		"roleName": "Channel Account Manager (CAM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
 		"roleName": "Channel Marketing Director (CMD)",
-		"scope": 1
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
-		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
 	{
@@ -1156,7 +1052,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"resourceName": "com.liferay.objec.model.ObjectDefinitiont#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
@@ -1164,7 +1060,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Channel Marketing Director (CMD)",
 		"scope": 1
 	},
@@ -1172,7 +1068,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},
@@ -1180,17 +1076,26 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Channel Operations Manager (COM)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW",
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Partner Manager (PM)",
 		"scope": 1
 	},
@@ -1198,15 +1103,13 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Partner Sales User (PSU)",
@@ -1214,9 +1117,18 @@
 	},
 	{
 		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"roleName": "Partner Sales User (PSU)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LeadSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LeadSF$]",
 		"roleName": "Partner Technical User (PTU)",
 		"scope": 1
 	},
@@ -1224,7 +1136,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},
@@ -1232,7 +1144,7 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Channel Marketing Director (CMD)",
 		"scope": 1
 	},
@@ -1240,16 +1152,15 @@
 		"actionIds": [
 			"VIEW"
 		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Partner Manager (PM)",
 		"scope": 1
@@ -1257,10 +1168,27 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"roleName": "Partner Sales User (PSU)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Partner Sales User (PSU)",
 		"scope": 1
 	},
@@ -1269,7 +1197,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
@@ -1278,7 +1206,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Partner Technical User (PTU)",
 		"scope": 1
 	},
@@ -1296,7 +1224,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:OpportunitySF$]",
 		"roleName": "Channel Operations Manager (COM)",
 		"scope": 1
 	},
@@ -1314,9 +1242,7 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
-			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"ADD_OBJECT_ENTRY"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
@@ -1325,17 +1251,34 @@
 	},
 	{
 		"actionIds": [
+			"VIEW",
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"roleName": "Partner Manager (PM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Partner Marketing User (PMU)",
 		"scope": 1
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"roleName": "Partner Sales User (PSU)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW",
-			"ADD_OBJECT_ENTRY",
 			"UPDATE"
 		],
 		"primKey": "0",
@@ -1348,7 +1291,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Partner Technical User (PTU)",
 		"scope": 1
 	},
@@ -1366,7 +1309,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Channel Operations Manager (COM)",
 		"scope": 1
 	},
@@ -1375,7 +1318,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 1
 	},
@@ -1384,7 +1327,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Channel Marketing Director (CMD)",
 		"scope": 1
 	},
@@ -1393,7 +1336,7 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProjectSF$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProjectSF$]",
 		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 1
 	},

@@ -78,14 +78,14 @@ paths:
                         default response
             # @review
             tags: ["Site"]
-    /sites/{siteId}:
+    /sites/{groupId}:
         put:
             description:
                 Adds or update a new site
             operationId: putSite
             parameters:
                 - in: path
-                  name: siteId
+                  name: groupId
                   required: true
                   schema:
                       format: int64

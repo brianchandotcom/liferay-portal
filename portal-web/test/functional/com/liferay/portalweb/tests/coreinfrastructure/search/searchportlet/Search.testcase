@@ -2190,10 +2190,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-172131"
+	@description = "LPS-172131 - The Sort Widget supports sorting on custom object fields"
 	@priority = 3
 	test SortByCustomObjectFields {
-		task ("Create a site scoped object and add the following fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
+		task ("Create a site scoped object and add the following custom fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",
@@ -2235,7 +2235,7 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 		}
 
-		task ("Create three object entries") {
+		task ("Create three object entries that configure the title, siteID, and date fields") {
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldList = "title/Apple Fruit,siteID/3,date/2023-04-02",
 				objectName = "CustomObject");
@@ -2249,44 +2249,42 @@ definition {
 				objectName = "CustomObject");
 		}
 
-		task ("Add sort widget to the search page and perform a search") {
+		task ("Go to the search page and execute a search for the object entries") {
 			Search.openSearchPage(searchTerm = "fruit");
-
-			SearchPortlets.addWidgets(searchPortletList = "Sort");
-
-			Refresh();
 		}
 
-		task ("Open sort widget configuration") {
+		task ("Add the Sort Widget to the search page") {
+			SearchPortlets.addWidgets(searchPortletList = "Sort");
+		}
+
+		task ("Within the Sort Widget configuration, add a sort option to sort by the custom object's 'title' field in ascending order") {
 			Portlet.gotoPortletOptions(
 				portletName = "Sort",
 				portletOption = "Configuration");
 
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-		}
 
-		task ("Add Sort option to sort by 'Object Title' in ascending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Title Asc",
 				indexedField = "nestedFieldArray.title.value_keyword",
 				order = "Ascending");
 		}
 
-		task ("Add Sort option to sort by 'Object Title' in descending order") {
+		task ("Add another sort option to sort by the custom object's 'title' field in descending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Title Desc",
 				indexedField = "nestedFieldArray.title.value_keyword",
 				order = "Descending");
 		}
 
-		task ("Add Sort option to sort by 'Object Site ID' in ascending order") {
+		task ("Add another sort option to sort by the custom object's 'siteID' field in ascending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Site ID",
 				indexedField = "nestedFieldArray.siteID.value_integer",
 				order = "Ascending");
 		}
 
-		task ("Add Sort option to sort by 'Object Date' ascending order") {
+		task ("Add another sort option to sort by the custom object's 'date' field in ascending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Date",
 				indexedField = "nestedFieldArray.date.value_date",

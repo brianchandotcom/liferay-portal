@@ -544,7 +544,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							serviceContext,
 							siteNavigationMenuItemSettingsBuilder));
 
-			_invoke(() -> _enableRestrictedObject(serviceContext));
+
 
 			_invoke(
 				() -> _addOrUpdateNotificationTemplates(
@@ -1380,6 +1380,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			() -> _addOrUpdateObjectFields(
 				listTypeDefinitionIdsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
+
+		_invoke(() -> _enableObjectDefinitionAccountRestriction(serviceContext));
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
 			() -> _addOrUpdateObjectEntries(
@@ -4473,11 +4475,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _enableRestrictedObject(ServiceContext serviceContext)
+	private void _enableObjectDefinitionAccountRestriction(
+		ServiceContext serviceContext)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
-			"/site-initializer/restrict-account-entry.json",
+			"/site-initializer/" +
+			"object-definition-restrict-account-entry.json",
 			_servletContext);
 
 		if (json == null) {
@@ -4489,34 +4493,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			com.liferay.object.model.ObjectDefinition objectDefinition2 =
+			com.liferay.object.model.ObjectDefinition
+				serviceBuildObjectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					serviceContext.getCompanyId(), "C_" +
 					jsonObject.getString("objectDefinitionName"));
 
-			com.liferay.object.model.ObjectField objectField;
-
-			if(Objects.equals(objectDefinition2.getStorageType(),
+			if(Objects.equals(serviceBuildObjectDefinition.getStorageType(),
 				"default")) {
 
 				com.liferay.object.model.ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
 						fetchObjectRelationshipByObjectDefinitionId(
-							objectDefinition2.getObjectDefinitionId(),
-							jsonObject.getString("relationShipName"));
+							serviceBuildObjectDefinition.getObjectDefinitionId(),
+							jsonObject.getString("objectRelationshipName"));
 
-				objectField = _objectFieldLocalService.getObjectField(
-					objectRelationship.getObjectFieldId2());
+				_objectDefinitionLocalService.enableAccountEntryRestricted(
+					objectRelationship);
 			}
 			else {
-				objectField =
+				com.liferay.object.model.ObjectField serviceBuildObjectField =
 					_objectFieldLocalService.fetchObjectField(
-						objectDefinition2.getObjectDefinitionId(),
+						serviceBuildObjectDefinition.getObjectDefinitionId(),
 						jsonObject.getString("objectField"));
-			}
 
-				_objectDefinitionLocalService.enableObjectRestricted(
-					objectDefinition2, objectField);
+				_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
+					serviceBuildObjectDefinition, serviceBuildObjectField);
+			}
 		}
 	}
 

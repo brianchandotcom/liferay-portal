@@ -235,7 +235,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getDefaultPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -302,7 +302,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getDefaultPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		if (${authenticationMethod} == "By Screen Name") {
@@ -332,7 +332,7 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getDefaultPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

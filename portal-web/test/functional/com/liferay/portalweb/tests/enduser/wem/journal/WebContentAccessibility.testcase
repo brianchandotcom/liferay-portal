@@ -95,7 +95,7 @@ definition {
 
 	@description = "This is a test for LPS-182417. No accessibility issue in web content with date-time field structure"
 	@priority = 4
-	test ViewNoAccessibilityIssuesInDateTimeField {
+	test ViewAccessibilityInDateAndTimeField {
 		task ("Given a web content with a date and time field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
 

@@ -231,6 +231,11 @@ public class ServletDataImpl implements ServletData {
 							SXPElementResourceImpl.class,
 							"postSXPElementBatch"));
 					put(
+						"mutation#createSXPElementPreview",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"postSXPElementPreview"));
+					put(
 						"mutation#createSXPElementValidate",
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class,

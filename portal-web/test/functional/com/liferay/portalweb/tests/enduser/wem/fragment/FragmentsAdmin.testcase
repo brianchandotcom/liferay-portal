@@ -960,6 +960,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177286. View error alert and feedback message when failing to Propagate Contributed Fragments Changes During Deploy Process Automatically."
+	@priority = 3
+	test ViewErrorMessageWhenFailToPropagateChanges {
+		property test.name.skip.portal.instance = "FragmentsAdmin#ViewErrorMessageWhenFailToPropagateChanges";
+
+		task ("Given a site administrator unchecks the Propagate Default Fragments Changes During Deploy Process Automatically") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Page Fragments",
+				configurationName = "Page Fragments",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "Propagate Default Fragments Changes During Deploy Process Automatically");
+
+			PortletEntry.save();
+		}
+
+		// Intercept request wait for POSHI-464 implemented
+
+		//task ("When the site administrater fails to manually propagate changes") {
+		//	Button.click(button = "Propagate Changes");
+		//	Click(
+		//		key_text = "Continue",
+		//		locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		//}
+		//task ("Then the site administrater should see error message") {
+		//	Alert.viewErrorMessage();
+		//}
+
+		task ("When the site administrater manually propagates changes") {
+			Button.click(button = "Propagate Changes");
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then the site administrater should see success message") {
+			Alert.viewSuccessMessage();
+
+			AssertNotEditable(
+				key_text = "Propagate Changes",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of basic fragment."
 	@priority = 5
 	test ViewUsagesOfBasicFragment {

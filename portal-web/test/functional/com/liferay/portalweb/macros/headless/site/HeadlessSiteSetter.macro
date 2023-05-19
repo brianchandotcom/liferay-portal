@@ -18,6 +18,9 @@ definition {
 			if (${templateName} == "Liferay OSB Site Initializer Customer Portal") {
 				var templateKey = "com.liferay.osb.site.initializer.customer.portal";
 			}
+			else if (${templateName} == "Liferay Marketplace") {
+				var templateKey = "com.liferay.site.initializer.liferay.marketplace";
+			}
 			else if (${templateName} == "Masterclass") {
 				var templateKey = "com.liferay.site.initializer.masterclass";
 			}

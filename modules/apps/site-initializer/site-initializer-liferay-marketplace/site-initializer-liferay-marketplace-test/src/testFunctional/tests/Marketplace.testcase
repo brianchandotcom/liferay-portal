@@ -18,7 +18,10 @@ definition {
 		}
 
 		task ("Create a new Marketplace Site") {
-			MarketplaceSite.addMarketplaceSite(siteName = ${testSiteName});
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Liferay Marketplace",
+				templateType = "Site Initializer");
 		}
 	}
 

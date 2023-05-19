@@ -26,7 +26,7 @@ definition {
 		}
 
 		task ("Create DXP Site with Commerce") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 	}
 
@@ -45,16 +45,16 @@ definition {
 		else {
 			JSONGroup.tearDownNonDefaultGroups();
 
-			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+			ACUtils.tearDownCommerce();
 		}
 	}
 
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12579 | Test Summary: Can search for channels and sites on assigned property modal"
 	@priority = 4
 	test CanSearchForChannelsAndSitesOnAssignedPropertyModal {
-		var foundChannelName = "Minium Demo Portal";
+		var foundChannelName = "Minium Portal";
 		var notFoundChannelName = "AC Search Channel";
-		var foundSitesName = "Minium Demo";
+		var foundSitesName = "Minium";
 		var notFoundSitesName = "Site Name";
 
 		task ("Create a new channel") {
@@ -194,7 +194,7 @@ definition {
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12578 | Test Summary: Check that the channel list cannot be edited if toggle is disabled"
 	@priority = 5
 	test CheckChannelListCannotEditedIfToggleDisabled {
-		var channelNameList = "Minium Demo Portal,AC Channel Disabled";
+		var channelNameList = "Minium Portal,AC Channel Disabled";
 
 		task ("Create a new channel") {
 			CommerceJSONChannelsAPI._addChannel(
@@ -211,14 +211,14 @@ definition {
 
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
-				channelName = "Minium Demo Portal",
+				channelName = "Minium Portal",
 				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
 			ACDXPSettings.syncSites(
 				propertyName = ${assignedPropertyName},
-				siteName = "Minium Demo");
+				siteName = "Minium");
 		}
 
 		task ("Check that the number of channels and sites matches the selected ones") {
@@ -257,7 +257,7 @@ definition {
 		}
 
 		task ("Go to the sites and assert that the events are being sent") {
-			for (var siteName : list "Site Name,Minium Demo") {
+			for (var siteName : list "Site Name,Minium") {
 				task ("Go to the site page") {
 					ApplicationsMenu.gotoSite(site = ${siteName});
 				}
@@ -289,7 +289,7 @@ definition {
 		}
 
 		task ("Deselect the sites that were selected before") {
-			for (var site : list "Site Name,Minium Demo") {
+			for (var site : list "Site Name,Minium") {
 				ACDXPSettings.syncSites(
 					propertyName = ${assignedPropertyName},
 					siteName = ${site});
@@ -297,7 +297,7 @@ definition {
 		}
 
 		task ("Go to the sites and assert that the events are not being sent") {
-			for (var siteName : list "Site Name,Minium Demo") {
+			for (var siteName : list "Site Name,Minium") {
 				task ("Go to the site page") {
 					ApplicationsMenu.gotoSite(site = ${siteName});
 				}
@@ -343,14 +343,14 @@ definition {
 
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
-				channelName = "Minium Demo Portal",
+				channelName = "Minium Portal",
 				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
 			ACDXPSettings.syncSites(
 				propertyName = ${assignedPropertyName},
-				siteName = "Minium Demo");
+				siteName = "Minium");
 		}
 
 		task ("Create new property and Toggle Commerce On > Assign channels to the property") {
@@ -384,8 +384,8 @@ definition {
 	@priority = 4
 	test CheckSiteAndChannelOnlyBeSelectedForSingleProperty {
 		var newPropertyName = "AC Single Property";
-		var channelName = "Minium Demo Portal";
-		var siteName = "Minium Demo";
+		var channelName = "Minium Portal";
+		var siteName = "Minium";
 
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -449,7 +449,7 @@ definition {
 	@priority = 3
 	test MakePaginationInChannelsAndSitesTabsOnAssignedPropertyModal {
 		var firstChannelsPageList = "AC Sort Channel 1,AC Sort Channel 2,AC Sort Channel 3,AC Sort Channel 4,AC Sort Channel 5";
-		var secondChannelsPageList = "Minium Demo Portal";
+		var secondChannelsPageList = "Minium Portal";
 		var secondSitesPageList = "Site Name";
 
 		task ("Create five new channels") {
@@ -473,7 +473,7 @@ definition {
 			ACDXPSettings.getAssignedPropertyName();
 		}
 
-		var firstSitesPageList = "AC Site 1,AC Site 2,AC Site 3,${assignedPropertyName},Minium Demo";
+		var firstSitesPageList = "AC Site 1,AC Site 2,AC Site 3,${assignedPropertyName},Minium";
 
 		task ("Click on the Assign button") {
 			Check.checkToggleSwitch(
@@ -620,12 +620,12 @@ definition {
 
 		task ("Toggle Commerce On > Assign channels to the property") {
 			ACDXPSettings.syncChannel(
-				channelName = "Minium Demo Portal",
+				channelName = "Minium Portal",
 				propertyName = ${assignedPropertyName});
 		}
 
 		task ("Assign sites to the property") {
-			for (var siteName : list "Site Name, Minium Demo") {
+			for (var siteName : list "Site Name, Minium") {
 				ACDXPSettings.syncSites(
 					propertyName = ${assignedPropertyName},
 					siteName = ${siteName});
@@ -643,8 +643,8 @@ definition {
 	@description = "Story: LRAC-10858 | Automation ID: LRAC-12581 | Test Summary: Check that it is possible to sort by name in the channels and sites tab on assigned property modal"
 	@priority = 3
 	test SortInChannelsAndSitesTabOnAssignedPropertyModal {
-		var channelsPageListUp = "AC Sort Channels,DXP Sort Channels,Minium Demo Portal";
-		var channelsPageListDown = "Minium Demo Portal,DXP Sort Channels,AC Sort Channels";
+		var channelsPageListUp = "AC Sort Channels,DXP Sort Channels,Minium Portal";
+		var channelsPageListDown = "Minium Portal,DXP Sort Channels,AC Sort Channels";
 
 		task ("Create two new channels") {
 			for (var channelName : list "AC Sort Channels,DXP Sort Channels") {
@@ -663,8 +663,8 @@ definition {
 			var propertyNameExtracted = StringUtil.extractFirst(${assignedPropertyName}, "-");
 		}
 
-		var sitesPageListUp = "${propertyNameExtracted},Minium Demo,Site Name";
-		var sitesPageListDown = "Site Name,Minium Demo,${propertyNameExtracted}";
+		var sitesPageListUp = "${propertyNameExtracted},Minium,Site Name";
+		var sitesPageListDown = "Site Name,Minium,${propertyNameExtracted}";
 
 		task ("Toggle Commerce On > Click on the Assign button") {
 			Check.checkToggleSwitch(

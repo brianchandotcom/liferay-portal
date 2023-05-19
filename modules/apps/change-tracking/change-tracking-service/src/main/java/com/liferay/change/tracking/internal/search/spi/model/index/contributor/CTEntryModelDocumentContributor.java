@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.internal.search.spi.model.index.contributor;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
@@ -131,8 +132,14 @@ public class CTEntryModelDocumentContributor
 	private <T extends BaseModel<T>> void _indexModelAttributes(
 		Document document, CTEntry ctEntry) {
 
+		long ctCollectionId = ctEntry.getCtCollectionId();
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+
 		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctEntry.getCtCollectionId(), CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+			ctCollectionId, CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 		Locale[] locales = _getAvailableLocales(

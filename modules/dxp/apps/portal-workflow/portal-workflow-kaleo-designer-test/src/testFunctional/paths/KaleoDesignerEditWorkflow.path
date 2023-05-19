@@ -320,7 +320,7 @@
 </tr>
 <tr>
 	<td>VIEW_FORM_NODE</td>
-	<td>//div[@class='diagram-node-label' and .='${key_nodeNodeLabel}']/../div/div/div</td>
+	<td>//div[contains(@class,'base-node')]//div[contains(@class,'node')]//div[contains(.,'${key_nodeNodeLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

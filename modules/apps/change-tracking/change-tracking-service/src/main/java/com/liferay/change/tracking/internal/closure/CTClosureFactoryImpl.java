@@ -73,16 +73,32 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public CTClosure create(long ctCollectionId) {
+		return create(ctCollectionId, 0);
+	}
+
+	@Override
+	public CTClosure create(long ctCollectionId, long classNameId) {
+		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos;
+
+		if (classNameId > 0) {
+			combinedTableReferenceInfos =
+				_tableReferenceDefinitionManager.getCombinedTableReferenceInfos(
+					classNameId);
+		}
+		else {
+			combinedTableReferenceInfos =
+				_tableReferenceDefinitionManager.
+					getCombinedTableReferenceInfos();
+		}
+
 		return new CTClosureImpl(
 			ctCollectionId,
 			_buildClosureMap(
-				ctCollectionId,
-				_tableReferenceDefinitionManager.
-					getCombinedTableReferenceInfos()));
+				ctCollectionId, classNameId, combinedTableReferenceInfos));
 	}
 
 	private Map<Node, Collection<Node>> _buildClosureMap(
-		long ctCollectionId,
+		long ctCollectionId, long classNameId,
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos) {
 
 		Map<Long, List<Long>> map = new HashMap<>();
@@ -90,6 +106,13 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		for (CTEntry ctEntry :
 				_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId)) {
+
+			if ((classNameId > 0) &&
+				!combinedTableReferenceInfos.containsKey(
+					ctEntry.getModelClassNameId())) {
+
+				continue;
+			}
 
 			List<Long> primaryKeys = map.computeIfAbsent(
 				ctEntry.getModelClassNameId(), key -> new ArrayList<>());
@@ -152,6 +175,10 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 					_tableReferenceDefinitionManager.getClassNameId(
 						entry.getKey());
 
+				if ((classNameId > 0) && !map.containsKey(parentClassNameId)) {
+					continue;
+				}
+
 				TableReferenceInfo<?> parentTableReferenceInfo =
 					combinedTableReferenceInfos.get(parentClassNameId);
 
@@ -172,7 +199,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 					List<Long> newParentPrimaryKeys = _collectParentPrimaryKeys(
 						childClassNameId, batchChildPrimaryKeys, ctCollectionId,
-						entry, edgeMap, nodes, parentClassNameId,
+						entry, edgeMap, nodes, parentClassNameId, classNameId,
 						parentTableReferenceInfo);
 
 					if (newParentPrimaryKeys != null) {
@@ -193,7 +220,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		long childClassNameId, Long[] childPrimaryKeys, long ctCollectionId,
 		Map.Entry<Table<?>, List<TableJoinHolder>> entry,
 		Map<Node, Collection<Edge>> edgeMap, Set<Node> nodes,
-		long parentClassNameId,
+		long parentClassNameId, long classNameId,
 		TableReferenceInfo<?> parentTableReferenceInfo) {
 
 		List<Long> newParentPrimaryKeys = null;
@@ -209,6 +236,11 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			while (resultSet.next()) {
 				Node parentNode = new Node(
 					parentClassNameId, resultSet.getLong(1));
+
+				if ((classNameId > 0) && !nodes.contains(parentNode)) {
+					continue;
+				}
+
 				Node childNode = new Node(
 					childClassNameId, resultSet.getLong(2));
 

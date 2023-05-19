@@ -21,4 +21,6 @@ public interface CTClosureFactory {
 
 	public CTClosure create(long ctCollectionId);
 
+	public CTClosure create(long ctCollectionId, long classNameId);
+
 }

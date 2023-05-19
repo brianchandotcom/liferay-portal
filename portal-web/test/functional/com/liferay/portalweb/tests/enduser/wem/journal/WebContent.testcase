@@ -718,6 +718,8 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "dd-MM-YYYY HH:mm a");
 
+			PageEditor.clickManagementBar();
+
 			PageEditor.waitForAutoSave();
 
 			PageEditor.publish();
@@ -813,6 +815,8 @@ definition {
 				key_fieldLabel = "Custom Format",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "dd-MM-YYYY HH:mm a");
+
+			PageEditor.clickManagementBar();
 
 			PageEditor.waitForAutoSave();
 

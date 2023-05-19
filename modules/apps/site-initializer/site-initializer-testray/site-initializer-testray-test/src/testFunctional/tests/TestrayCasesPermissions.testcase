@@ -83,8 +83,8 @@ definition {
 
 	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create/edit/delete the case"
 	@priority = 4
-	test AnalystRoleCanCreateEditAndDeleteCase {
-		property test.name.skip.portal.instance = "TestrayCasesPermissions#AnalystRoleCanCreateEditAndDeleteCase";
+	test AssertAnalystRoleCanCreateEditAndDeleteCase {
+		property test.name.skip.portal.instance = "TestrayCasesPermissions#AssertAnalystRoleCanCreateEditAndDeleteCase";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -104,7 +104,7 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Cases");
 		}
 
-		task ("When the user created a case") {
+		task ("And the user created a case") {
 			TestrayCases.typeCasesField(
 				caseName = "Case 2",
 				caseTypeId = ${caseType},
@@ -115,13 +115,13 @@ definition {
 				steps = "Auto Test Steps");
 		}
 
-		task ("Then the user can see the case in the table") {
+		task ("And the user can see the case in the table") {
 			AssertElementPresent(
 				key_projectName = "Case 2",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And when the user edit a case") {
+		task ("And the user edit a case") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case 2");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
@@ -136,13 +136,13 @@ definition {
 				steps = "http://test.edit.com");
 		}
 
-		task ("Then the user can see the case in the table") {
+		task ("And the user can see the case in the table") {
 			AssertElementPresent(
 				key_projectName = "Case Edited",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And when the user delete a case") {
+		task ("When the user delete a case") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case Edited");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -159,8 +159,8 @@ definition {
 
 	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create/edit/delete the case"
 	@priority = 4
-	test LeadRoleCanCreateEditAndDeleteCase {
-		property test.name.skip.portal.instance = "TestrayCasesPermissions#LeadRoleCanCreateEditAndDeleteCase";
+	test AssertLeadRoleCanCreateEditAndDeleteCase {
+		property test.name.skip.portal.instance = "TestrayCasesPermissions#AssertLeadRoleCanCreateEditAndDeleteCase";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -180,7 +180,7 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Cases");
 		}
 
-		task ("When the user created a case") {
+		task ("And the user created a case") {
 			TestrayCases.typeCasesField(
 				caseName = "Case 2",
 				caseTypeId = ${caseType},
@@ -191,13 +191,13 @@ definition {
 				steps = "Auto Test Steps");
 		}
 
-		task ("Then the user can see the case in the table") {
+		task ("And the user can see the case in the table") {
 			AssertElementPresent(
 				key_projectName = "Case 2",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And when the user edit a case") {
+		task ("And the user edit a case") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case 2");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
@@ -212,13 +212,13 @@ definition {
 				steps = "http://test.edit.com");
 		}
 
-		task ("Then the user can see the case in the table") {
+		task ("And the user can see the case in the table") {
 			AssertElementPresent(
 				key_projectName = "Case Edited",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And when the user delete a case") {
+		task ("When the user delete a case") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Case Edited");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -235,8 +235,8 @@ definition {
 
 	@description = "Story ID: LPS-178255 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create/edit/delete the case but can view"
 	@priority = 2
-	test UserRoleCanNotCreateEditAndDeleteCase {
-		property test.name.skip.portal.instance = "TestrayCasesPermissions#UserRoleCanNotCreateEditAndDeleteCase";
+	test AssertUserRoleCanNotCreateEditAndDeleteCase {
+		property test.name.skip.portal.instance = "TestrayCasesPermissions#AssertUserRoleCanNotCreateEditAndDeleteCase";
 
 		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
@@ -246,7 +246,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user go to the Cases page") {
+		task ("And the user go to the Cases page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -256,13 +256,13 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Cases");
 		}
 
-		task ("Then can see the case in the table") {
+		task ("And can see the case in the table") {
 			AssertElementPresent(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("And when right click in case") {
+		task ("And right click in case") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 
 			RightClick.rightClick(
@@ -270,7 +270,7 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("Then can not see the Edit and Delete options in right click") {
+		task ("And can not see the Edit and Delete options in right click") {
 			AssertElementNotPresent(
 				item = "Edit",
 				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
@@ -280,7 +280,7 @@ definition {
 				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 
-		task ("And when click kebab in Case") {
+		task ("When click kebab in Case") {
 			Testray.goToProjectPage(projectName = ${caseName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");

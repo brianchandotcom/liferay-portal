@@ -514,16 +514,9 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition enableObjectRestricted(
-		ObjectDefinition objectDefinition2,
-		ObjectField objectField)
+	public ObjectDefinition enableAccountEntryRestricted(
+		ObjectRelationship objectRelationship)
 		throws PortalException {
-
-		if(Objects.equals(objectDefinition2.getStorageType(), "default")) {
-
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.fetchObjectRelationshipByObjectFieldId2(
-					objectField.getObjectFieldId());
 
 			ObjectDefinition objectDefinition1 =
 				objectDefinitionLocalService.getObjectDefinition(
@@ -536,11 +529,15 @@ public class ObjectDefinitionLocalServiceImpl
 					"Custom object definitions can only be restricted by account " +
 					"entry");
 			}
-		}
+		ObjectDefinition objectDefinition2 = getObjectDefinition(
+			objectRelationship.getObjectDefinitionId2());
 
 		if (objectDefinition2.isAccountEntryRestricted()) {
 			return objectDefinition2;
 		}
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
 
 		objectDefinition2.setAccountEntryRestrictedObjectFieldId(
 			objectField.getObjectFieldId());
@@ -548,6 +545,31 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition2.setAccountEntryRestricted(true);
 
 		return objectDefinitionPersistence.update(objectDefinition2);
+	}
+
+	@Override
+	public ObjectDefinition enableSalesForceAccountEntryRestricted(
+		ObjectDefinition objectDefinition, ObjectField objectField)
+		throws PortalException {
+
+		if(!Objects.equals(objectField.getObjectDefinition(),
+			objectDefinition)){
+			throw new ObjectDefinitionAccountEntryRestrictedException(
+				"O objectField deve pertencer ao objectDefinition da " +
+				"restricao");
+		}
+
+		if(!Objects.equals(objectDefinition.getStorageType(),
+			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)){
+			return objectDefinition;
+		}
+
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			objectField.getObjectFieldId());
+
+		objectDefinition.setAccountEntryRestricted(true);
+
+		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
 	@Override

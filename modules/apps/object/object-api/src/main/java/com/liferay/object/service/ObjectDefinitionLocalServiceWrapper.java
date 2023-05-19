@@ -312,13 +312,24 @@ public class ObjectDefinitionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
-	enableObjectRestricted(
-				com.liferay.object.model.ObjectDefinition objectDefinition2,
+			enableAccountEntryRestricted(
+				com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.enableAccountEntryRestricted(
+			objectRelationship);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectDefinition
+			enableSalesForceAccountEntryRestricted(
+				com.liferay.object.model.ObjectDefinition objectDefinition,
 				com.liferay.object.model.ObjectField objectField)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectDefinitionLocalService.enableObjectRestricted(
-			objectDefinition2, objectField);
+		return _objectDefinitionLocalService.
+			enableSalesForceAccountEntryRestricted(
+				objectDefinition, objectField);
 	}
 
 	@Override

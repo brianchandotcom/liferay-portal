@@ -280,12 +280,19 @@ public class ObjectDefinitionLocalServiceUtil {
 	}
 
 	public static ObjectDefinition enableAccountEntryRestricted(
-			ObjectDefinition objectDefinition2,
+			com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		return getService().enableAccountEntryRestricted(objectRelationship);
+	}
+
+	public static ObjectDefinition enableSalesForceAccountEntryRestricted(
+			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectField objectField)
 		throws PortalException {
 
-		return getService().enableObjectRestricted(
-			objectDefinition2, objectField);
+		return getService().enableSalesForceAccountEntryRestricted(
+			objectDefinition, objectField);
 	}
 
 	public static ObjectDefinition fetchObjectDefinition(

@@ -270,9 +270,15 @@ definition {
 
 		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
 
-		ClickNoError(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON");
+		Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
 
-		AssertConfirm(value1 = "Are you sure you want to delete the selected node(s)?");
+		AssertTextEquals.assertPartialText(
+			locator1 = "WorkflowDefinition#DIALOG_BOX_BODY",
+			value1 = "Are you sure you want to delete");
+
+		AssertClickNoError(
+			locator1 = "Button#DELETE",
+			value1 = "Delete");
 
 		WaitForElementNotPresent(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
 

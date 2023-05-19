@@ -216,9 +216,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	public static final String TX_MANAGER = "${entity.getTXManager()}";
 
 	<#if serviceBuilder.isVersionGTE_7_3_0()>
-		<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+		<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn() />
 	<#else>
-		<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+		<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn() />
 	</#if>
 
 	<#if !dependencyInjectorDS>

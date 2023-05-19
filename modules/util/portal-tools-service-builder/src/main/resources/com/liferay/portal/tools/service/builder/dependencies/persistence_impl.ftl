@@ -9,9 +9,9 @@
 </#if>
 
 <#if osgiModule>
-	<#assign ctPersistenceHelper = "ctPersistenceHelper"/>
+	<#assign ctPersistenceHelper = "ctPersistenceHelper" />
 <#else>
-	<#assign ctPersistenceHelper = "CTPersistenceHelperUtil"/>
+	<#assign ctPersistenceHelper = "CTPersistenceHelperUtil" />
 </#if>
 
 <#if serviceBuilder.isVersionGTE_7_3_0() && !entity.isCacheEnabled()>
@@ -257,9 +257,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY + ".List2";
 
 	<#if serviceBuilder.isVersionGTE_7_3_0()>
-		<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+		<#assign columnBitmaskEnabled = (entity.databaseRegularEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn() />
 	<#else>
-		<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
+		<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn() />
 	</#if>
 
 	private FinderPath _finderPathWithPaginationFindAll;

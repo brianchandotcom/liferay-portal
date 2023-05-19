@@ -174,7 +174,7 @@
 					/>
 
 					<#if currentPageURL == navigationEntry.getLayout().getFriendlyURL()>
-						<#assign onPageCSSClass = "on-page"/>
+						<#assign onPageCSSClass = "on-page" />
 					</#if>
 
 					<a class="marketplace-nav-link ${onPageCSSClass}" href="${navigationEntry.getURL()}">

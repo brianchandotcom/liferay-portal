@@ -32,7 +32,7 @@ const HeaderKebab = ({kebabItems = []}) => {
 	return (
 		<Portal
 			className="control-menu-nav-item"
-			container={nav?.lastElementChild}
+			container={nav?.firstElementChild}
 			elementId="headerKebab"
 			position="before"
 		>

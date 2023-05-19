@@ -14,7 +14,6 @@
 
 package com.liferay.layout.internal.exportimport.staged.model.repository;
 
-import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
@@ -28,9 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -46,9 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.layout.set.model.adapter.StagedLayoutSet",
-	service = {
-		StagedLayoutSetStagedModelRepository.class, StagedModelRepository.class
-	}
+	service = StagedModelRepository.class
 )
 public class StagedLayoutSetStagedModelRepository
 	implements StagedModelRepository<StagedLayoutSet> {
@@ -85,46 +80,6 @@ public class StagedLayoutSetStagedModelRepository
 
 		// Not supported for layout sets
 
-	}
-
-	public List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext,
-		StagedLayoutSet stagedLayoutSet) {
-
-		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
-
-		return TransformUtil.transform(
-			_layoutLocalService.getLayouts(
-				stagedLayoutSet.getGroupId(), layoutSet.isPrivateLayout()),
-			layout -> {
-				if (_exportImportHelper.isLayoutRevisionInReview(layout)) {
-					return null;
-				}
-
-				return (StagedModel)layout;
-			});
-	}
-
-	public StagedLayoutSet fetchExistingLayoutSet(
-		long groupId, boolean privateLayout) {
-
-		StagedLayoutSet stagedLayoutSet = null;
-
-		try {
-			stagedLayoutSet = ModelAdapterUtil.adapt(
-				_layoutSetLocalService.getLayoutSet(groupId, privateLayout),
-				LayoutSet.class, StagedLayoutSet.class);
-		}
-		catch (PortalException portalException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return stagedLayoutSet;
 	}
 
 	@Override
@@ -246,12 +201,6 @@ public class StagedLayoutSetStagedModelRepository
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagedLayoutSetStagedModelRepository.class);
-
-	@Reference
-	private ExportImportHelper _exportImportHelper;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

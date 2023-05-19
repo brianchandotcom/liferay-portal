@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -538,6 +539,10 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "pending")
 				));
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174471")) {
+			return jsonArray;
 		}
 
 		Set<Long> conflictPlids =

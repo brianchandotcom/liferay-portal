@@ -22,7 +22,7 @@ definition {
 		}
 
 		task ("Create DXP Site with Commerce") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 	}
 
@@ -50,13 +50,22 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"
 	@priority = 4
 	test CanSearchAccountGroupsInContactsModal {
+		var foundAccountGroup = "Brazilian";
+		var notFoundAccountGroup = "Silver,Copper";
+
+		task ("Create 3 account groups") {
+			for (var accountGroupName : list "${foundAccountGroup},${notFoundAccountGroup}") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
+
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -88,13 +97,13 @@ definition {
 		}
 
 		task ("Search for an account group and assert the result") {
-			ACUtils.searchBar(searchItem = "Gold Accounts");
+			ACUtils.searchBar(searchItem = ${foundAccountGroup});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 
-			ACDXPSettings.viewGenericListItem(itemValueList = "Gold Accounts");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundAccountGroup});
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "European Accounts,North American Accounts");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundAccountGroup});
 		}
 	}
 
@@ -109,8 +118,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -220,8 +229,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -274,8 +283,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -386,8 +395,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -430,8 +439,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -670,13 +679,22 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12669 | Test Summary: Can sync by account groups"
 	@priority = 5
 	test CanSyncByAccountGroups {
+		var syncedAccountGroup = "Brazilian";
+		var notSyncedAccountGroup = "Silver";
+
+		task ("Create 2 account groups") {
+			for (var accountGroupName : list "${syncedAccountGroup},${notSyncedAccountGroup}") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
+
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -698,7 +716,7 @@ definition {
 		}
 
 		task ("Click on sync by account groups") {
-			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
+			ACDXPSettings.syncAccountsData(accountGroup = ${syncedAccountGroup});
 		}
 
 		task ("See that there's one account selected") {
@@ -711,16 +729,22 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12764 | Test Summary: Check that it is possible to sort by account groups name in the account groups list"
 	@priority = 3
 	test CheckCanSortByAccountGroupsName {
-		var accountGroupPageListUp = "brazilian accounts,European Accounts,Gold Accounts,North American Accounts";
-		var accountGroupPageListDown = "North American Accounts,Gold Accounts,European Accounts,brazilian accounts";
+		var accountGroupPageListUp = "brazilian,European,Gold,North American";
+		var accountGroupPageListDown = "North American,Gold,European,brazilian";
+
+		task ("Create 4 account groups") {
+			for (var accountGroupName : list ${accountGroupPageListUp}) {
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
 
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -739,10 +763,6 @@ definition {
 			Click(
 				key_text = "Next",
 				locator1 = "Button#ANY");
-		}
-
-		task ("Create a account groups") {
-			JSONAccountGroup.addAccountGroup(accountGroupName = "brazilian accounts");
 		}
 
 		task ("Click on sync by account groups") {
@@ -829,8 +849,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -939,8 +959,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -1053,8 +1073,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -1171,13 +1191,22 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12668 | Test Summary: Check that it is possible to make pagination in the account groups"
 	@priority = 4
 	test CheckIsPossiblePaginateInAccountGroups {
+		var firstPageList = "Brazilian,Copper,European,Gold,North American";
+		var secondPageList = "Silver";
+
+		task ("Create 6 account groups") {
+			for (var accountGroupName : list "${firstPageList},${secondPageList}") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
+
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}
@@ -1198,12 +1227,6 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-		task ("Create 3 more account groups") {
-			for (var accountGroupName : list "Brazilian Accounts,Silver Accounts,Copper Accounts") {
-				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
-			}
-		}
-
 		task ("Click on sync by account groups") {
 			Click(
 				key_panel = "Select Accounts",
@@ -1219,17 +1242,17 @@ definition {
 		}
 
 		task ("See that there's only 5 account groups present in the list on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "Brazilian Accounts,Copper Accounts,European Accounts,Gold Accounts,North American Accounts");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Silver Accounts");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${secondPageList});
 		}
 
 		task ("Go to the second page and see that there's only one account group in the list") {
 			ACUtils.checkAnyPage(pageNumber = 2);
 
-			ACDXPSettings.viewGenericListItem(itemValueList = "Silver Accounts");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondPageList});
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazilian Accounts,Copper Accounts,European Accounts,Gold Accounts,North American Accounts");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 	}
 
@@ -1241,8 +1264,8 @@ definition {
 		}
 
 		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Demo Portal";
-			var siteName = "Minium Demo";
+			var channelName = "Minium Portal";
+			var siteName = "Minium";
 
 			ACDXPSettings.getAssignedPropertyName();
 		}

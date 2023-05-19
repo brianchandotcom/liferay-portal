@@ -105,6 +105,10 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 			if (rootPortlet != null) {
 				category = rootPortlet.getControlPanelEntryCategory();
+
+				if (category == null) {
+					category = StringPool.BLANK;
+				}
 			}
 		}
 

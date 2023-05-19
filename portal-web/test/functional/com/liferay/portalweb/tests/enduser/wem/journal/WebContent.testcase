@@ -745,10 +745,6 @@ definition {
 				fieldFieldLabel = "Date and Time",
 				fieldName = "Date and Time");
 
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
 			WebContentStructures.saveCP();
 
 			NavItem.gotoWebContent();
@@ -759,10 +755,6 @@ definition {
 				webContentDate = "08/06/2021 10:00 AM",
 				webContentDateFieldLabel = "Date and Time",
 				webContentTitle = "Web Content Title");
-
-			DERenderer.inputDataInTextField(
-				fieldLabel = "Text",
-				value = "Test Text");
 
 			PageEditor.publish();
 		}

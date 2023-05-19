@@ -33,11 +33,12 @@ import org.osgi.service.component.annotations.Component;
 public class CompareRunsServiceImpl extends CompareRunsServiceBaseImpl {
 
 	public int getComparison(
-		long companyId, long testrayRunId1, long testrayRunId2, String testrayDueStatus1,
-		String testrayDueStatus2) {
+		long companyId, long testrayRunId1, long testrayRunId2,
+		String testrayDueStatus1, String testrayDueStatus2) {
 
 		return compareRunsLocalService.getComparison(
-			companyId, testrayRunId1, testrayRunId2, testrayDueStatus1, testrayDueStatus2);
+			companyId, testrayRunId1, testrayRunId2, testrayDueStatus1,
+			testrayDueStatus2);
 	}
 
 }

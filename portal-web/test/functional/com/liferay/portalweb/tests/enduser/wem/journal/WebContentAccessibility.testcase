@@ -116,7 +116,7 @@ definition {
 				fieldFieldLabel = "Date and Time",
 				fieldName = "Date and Time");
 
-			AssertAccessible();
+			AssertElementAccessible(locator1 = "//div[contains(@class,'ddm-field-container')][contains(@data-field-name,'DateTime')]");
 
 			WebContentStructures.saveCP(structureName = ${structureName});
 
@@ -131,7 +131,7 @@ definition {
 				index = 1,
 				value = "08/06/2021 10:00 AM");
 
-			AssertAccessible();
+			AssertElementAccessible(locator1 = "//div[contains(@class,'ddm-field-container')][contains(@data-field-name,'DateTime')]");
 
 			PageEditor.publish();
 		}
@@ -179,7 +179,11 @@ definition {
 
 			PageEditor.waitForAutoSave();
 
-			AssertAccessible();
+			AssertElementAccessible(
+				fragmentName = "",
+				id = "element-date",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
 			PageEditor.publish();
 		}

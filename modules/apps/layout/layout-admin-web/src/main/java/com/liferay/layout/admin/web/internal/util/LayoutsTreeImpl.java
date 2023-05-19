@@ -25,6 +25,7 @@ import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -157,6 +158,10 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private Set<Long> _getConflictPlids(long groupId, boolean privateLayout)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174471")) {
+			return new HashSet<>();
+		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			groupId, privateLayout);

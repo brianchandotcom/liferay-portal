@@ -1,11 +1,11 @@
 definition {
 
-	macro configureBreadcrumb {
+	macro configureBreadcrumb() {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	@prose = "I want to print rows-hash table: ${table}"
-	macro echoRowsHashTable {
+	macro echoRowsHashTable(rawTable,rowsHashTable,table) {
 		var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
 
 		for (var row : table ${rowsHashTable}) {
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@prose = "I assert the ${breadcrumbName}"
-	macro viewPG {
+	macro viewPG(breadcrumbName,allLinksChecked,videoGenerationTimeMaxWaitTime,videoGenerationTimeCounter,check,url) {
 		var key_breadcrumbName = ${breadcrumbName};
 		static var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
 		var integer = 5 + 5;

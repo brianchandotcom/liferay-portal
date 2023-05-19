@@ -306,4 +306,7 @@ public interface CTEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTEntry updateCTEntry(CTEntry ctEntry);
 
+	public CTEntry updateModelMvccVersion(
+		long ctEntryId, long modelMvccVersion);
+
 }

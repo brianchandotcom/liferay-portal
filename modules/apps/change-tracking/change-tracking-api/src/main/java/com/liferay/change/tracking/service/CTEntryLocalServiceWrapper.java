@@ -408,6 +408,14 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTEntry updateModelMvccVersion(
+		long ctEntryId, long modelMvccVersion) {
+
+		return _ctEntryLocalService.updateModelMvccVersion(
+			ctEntryId, modelMvccVersion);
+	}
+
+	@Override
 	public CTEntryLocalService getWrappedService() {
 		return _ctEntryLocalService;
 	}

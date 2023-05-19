@@ -26,4 +26,9 @@ public class FTLSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("MacroTagAttributes.testftl");
 	}
 
+	@Test
+	public void testWhitespace() throws Exception {
+		test("Whitespace.testftl");
+	}
+
 }

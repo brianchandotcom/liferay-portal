@@ -1,9 +1,9 @@
 @import 'cadmin-variables';
 @import 'variables';
 
-@import './download-spreadsheet-button';
-@import './tree';
-@import './vocabularies_selection';
+@import 'DownloadSpreadsheetButton';
+@import 'VocabulariesSelection';
+@import 'SelectFileExtension';
 
 html#{$cadmin-selector} {
 	.cadmin {
@@ -190,7 +190,7 @@ html#{$cadmin-selector} {
 			}
 		}
 
-		@import './manage-collaborators';
+		@import 'ManageCollaborators';
 	}
 
 	.has-control-menu {

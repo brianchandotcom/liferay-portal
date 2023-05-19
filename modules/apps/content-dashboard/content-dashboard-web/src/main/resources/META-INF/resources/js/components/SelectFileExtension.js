@@ -18,7 +18,7 @@ import React from 'react';
 import TreeFilter from './TreeFilter/TreeFilter';
 import {nodeTreeArrayMapper} from './TreeFilter/treeUtils';
 
-import '../../css/tree.scss';
+import '../../css/SelectFileExtension.scss';
 
 const SelectFileExtension = ({
 	fileExtensionGroups,

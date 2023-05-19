@@ -61,7 +61,19 @@ const ListItem = ({item, schema}) => {
 
 	const [menuActive, setMenuActive] = useState(false);
 
-	const {description, image, sticker, symbol, title} = schema;
+	const {description, image, sticker, symbol, title, titleRenderer} = schema;
+
+	const TitleRenderer = titleRenderer;
+
+	const renderTitle = (item) => {
+		if (titleRenderer) {
+			return <TitleRenderer itemData={item} />
+		}
+
+		if (title) {
+			return <ClayList.ItemTitle>{item[title]}</ClayList.ItemTitle>
+		}
+	}
 
 	return (
 		<ClayList.Item
@@ -109,9 +121,7 @@ const ListItem = ({item, schema}) => {
 			)}
 
 			<ClayList.ItemField className="justify-content-center" expand>
-				{title && (
-					<ClayList.ItemTitle>{item[title]}</ClayList.ItemTitle>
-				)}
+				{renderTitle(item)}
 
 				{description && (
 					<ClayList.ItemText>{item[description]}</ClayList.ItemText>

@@ -30,14 +30,17 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,9 +51,11 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.sites.kernel.util.Sites;
 import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -96,7 +101,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			paginationJSON);
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
-			_getAncestorLayouts(httpServletRequest), false, expandedLayoutIds,
+			_getAncestorLayouts(httpServletRequest), false,
+			_getConflictPlids(groupId, privateLayout), expandedLayoutIds,
 			groupId, httpServletRequest, includeActions, incomplete,
 			layoutActionsHelper, loadMore,
 			_isPaginationEnabled(httpServletRequest), paginationJSONObject,
@@ -149,6 +155,28 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		return ancestorLayouts;
 	}
 
+	private Set<Long> _getConflictPlids(long groupId, boolean privateLayout)
+		throws Exception {
+
+		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			groupId, privateLayout);
+
+		Group group = layoutSet.getGroup();
+
+		Set<Long> conflictPlids = new HashSet<>();
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
+			conflictPlids = _sites.getConflictingPlidsOfLayoutSetGroup(
+				group.getGroupId());
+		}
+		else if (group.isLayoutSetPrototype()) {
+			conflictPlids = _sites.getConflictingPlidsOfLayoutSetPrototypeGroup(
+				group.getGroupId());
+		}
+
+		return conflictPlids;
+	}
+
 	private Layout _getDraftLayout(Layout layout) {
 		if (!layout.isTypeContent()) {
 			return null;
@@ -169,7 +197,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONArray _getLayoutsJSONArray(
 			List<Layout> ancestorLayouts, boolean childLayout,
-			Set<Long> expandedLayoutIds, long groupId,
+			Set<Long> conflictPlids, Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			boolean incomplete, LayoutActionsHelper layoutActionsHelper,
 			boolean loadMore, boolean paginationEnabled,
@@ -219,7 +247,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					VirtualLayout virtualLayout = (VirtualLayout)layout;
 
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						ancestorLayouts, true, expandedLayoutIds,
+						ancestorLayouts, true, conflictPlids, expandedLayoutIds,
 						virtualLayout.getSourceGroupId(), httpServletRequest,
 						includeActions, incomplete, layoutActionsHelper,
 						loadMore, paginationEnabled, paginationJSONObject,
@@ -228,8 +256,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				}
 				else {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
-						ancestorLayouts, true, expandedLayoutIds, groupId,
-						httpServletRequest, includeActions, incomplete,
+						ancestorLayouts, true, conflictPlids, expandedLayoutIds,
+						groupId, httpServletRequest, includeActions, incomplete,
 						layoutActionsHelper, loadMore, paginationEnabled,
 						paginationJSONObject, layout.getLayoutId(),
 						layout.isPrivateLayout(), themeDisplay);
@@ -258,8 +286,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					afterDeleteSelectedLayout,
 					_layoutService.getLayoutsCount(
 						groupId, privateLayout, layout.getLayoutId()),
-					childLayoutsJSONArray, httpServletRequest, includeActions,
-					layout, layoutActionsHelper, themeDisplay));
+					childLayoutsJSONArray, conflictPlids, httpServletRequest,
+					includeActions, layout, layoutActionsHelper, themeDisplay));
 
 			if (includeActions) {
 				afterDeleteSelectedLayout = layout;
@@ -339,7 +367,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	private JSONObject _toJSONObject(
 			Layout afterDeleteSelectedLayout, long childLayoutsCount,
-			JSONArray childLayoutsJSONArray,
+			JSONArray childLayoutsJSONArray, Set<Long> conflictPlids,
 			HttpServletRequest httpServletRequest, boolean includeActions,
 			Layout layout, LayoutActionsHelper layoutActionsHelper,
 			ThemeDisplay themeDisplay)
@@ -456,6 +484,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			"title", HtmlUtil.escapeAttribute(layoutName)
 		).put(
 			"type", layout.getType()
+		).put(
+			"urlConflict", conflictPlids.contains(layout.getPlid())
 		);
 
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
@@ -511,7 +541,13 @@ public class LayoutsTreeImpl implements LayoutsTree {
 	private LayoutService _layoutService;
 
 	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Reference
+	private Sites _sites;
 
 	@Reference
 	private Staging _staging;

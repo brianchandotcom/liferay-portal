@@ -19,9 +19,6 @@ package com.liferay.segments.asah.connector.internal.constants;
  */
 public final class SegmentsAsahDestinationNames {
 
-	public static final String INDIVIDUAL_SEGMENTS =
-		"liferay/individual_segments";
-
 	public static final String INTEREST_TERMS = "liferay/interest_terms";
 
 }

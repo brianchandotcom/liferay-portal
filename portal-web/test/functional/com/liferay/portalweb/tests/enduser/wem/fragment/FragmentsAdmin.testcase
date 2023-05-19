@@ -562,6 +562,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177286. Able to enable and disable the propagation of Contributed Fragments on the instance startup."
+	@priority = 4
+	test ManuallyPropagateChanges {
+		property test.name.skip.portal.instance = "FragmentsAdmin#ManuallyPropagateChanges";
+
+		task ("Given a site administrator accesses to the Page Fragments configuration of Instance Settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Page Fragments",
+				configurationName = "Page Fragments",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("When the site administrater unchecks the Propagate Default Fragments Changes During Deploy Process Automatically") {
+			FormFields.disableCheckbox(fieldName = "Propagate Default Fragments Changes During Deploy Process Automatically");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site administrater could cancel manually propagate changes") {
+			Button.click(button = "Propagate Changes");
+
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("When the site administrater manually propagate changes") {
+			Button.click(button = "Propagate Changes");
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the Propagate changes button is disabled") {
+			AssertNotEditable(
+				key_text = "Propagate Changes",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When restart the portal") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Then the Propagate changes button is enabled") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Page Fragments",
+				configurationName = "Page Fragments",
+				configurationScope = "Virtual Instance Scope");
+
+			AssertEditable(
+				key_text = "Propagate Changes",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "This is a test for LPS-118241. The user could propagate the changes of fragment to content page."
 	@priority = 4
 	test PropagateChangesOfFragmentToContentPage {

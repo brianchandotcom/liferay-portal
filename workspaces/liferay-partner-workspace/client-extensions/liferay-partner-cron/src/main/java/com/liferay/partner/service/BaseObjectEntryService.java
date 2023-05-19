@@ -22,6 +22,7 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Mono;
@@ -116,9 +117,9 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
 
-	private final Function<String, T> _toDTOFunction;
-
 	@Autowired
-	private WebClient _webClient;
+	private OAuth2AccessToken _oAuth2AccessToken;
+
+	private final Function<String, T> _toDTOFunction;
 
 }

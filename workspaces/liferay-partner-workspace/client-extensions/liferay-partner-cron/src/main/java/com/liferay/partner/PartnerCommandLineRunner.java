@@ -22,11 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,20 +33,6 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		OAuth2AuthorizedClient oAuth2AuthorizedClient =
-			_authorizedClientServiceOAuth2AuthorizedClientManager.authorize(
-				OAuth2AuthorizeRequest.withClientRegistrationId(
-					"liferay-partner-cron"
-				).principal(
-					"PartnerCommandLineRunner"
-				).build());
-
-		if (oAuth2AuthorizedClient == null) {
-			_log.error("Unable to get OAuth 2 authorized client");
-
-			return;
-		}
-
 		if (_log.isInfoEnabled()) {
 			Page<Activity> activitiesPage = _activityService.getEntriesPage(
 				null, null, null, null);
@@ -64,12 +46,5 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	@Autowired
 	private ActivityService _activityService;
-
-	@Autowired
-	private AuthorizedClientServiceOAuth2AuthorizedClientManager
-		_authorizedClientServiceOAuth2AuthorizedClientManager;
-
-	@Value("${liferay.oauth.application.external.reference.codes}")
-	private String _liferayOAuthApplicationExternalReferenceCodes;
 
 }

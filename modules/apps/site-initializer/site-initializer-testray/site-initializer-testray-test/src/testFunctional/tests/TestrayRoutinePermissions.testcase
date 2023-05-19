@@ -296,4 +296,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the routine"
+	@priority = 3
+	test AssertUserRoleCanNotDeleteRoutine {
+		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertUserRoleCanNotDeleteRoutine";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in routine") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			RightClick.rightClick(
+				key_projectName = ${routineName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not delete the routine") {
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

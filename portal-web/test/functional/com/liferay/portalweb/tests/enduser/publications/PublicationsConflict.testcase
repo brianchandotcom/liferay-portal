@@ -500,9 +500,11 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-		JSONWebcontent.deleteWebContent(
-			groupName = "Guest",
-			title = "WC WebContent Title");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+		WebContent.moveToRecycleBinCP(
+			assetType = "Web Content Article",
+			webContentTitle = "WC WebContent Title");
 
 		JSONPublications.addPublication(publicationName = "Publication 2 Name");
 
@@ -568,14 +570,14 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC WebContent Title 2 Edit",
-			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "WC WebContent Title 2 Edit");
 
 		PublicationsChangeDetails.viewConflictingChangeDetails(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
-			deletionModificationConflict = "true",
+			modificationConflict = "true",
 			publicationName = "Publication 2 Name");
 
 		IFrame.closeFrame();

@@ -389,7 +389,7 @@ public class EmailNotificationType extends BaseNotificationType {
 				NotificationTemplate.class.getName() + StringPool.POUND +
 					notificationTemplate.getNotificationTemplateId(),
 				body),
-			PropsValues.NOTIFICATION_EMAIL_TEMPLATE_RESTRICTED);
+			!PropsValues.NOTIFICATION_EMAIL_TEMPLATE_ENABLED);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

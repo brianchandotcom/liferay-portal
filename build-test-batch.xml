@@ -3600,7 +3600,6 @@ information. Make sure to commit in all format-javadoc results.
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.portal.log.assert="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -3625,7 +3624,6 @@ information. Make sure to commit in all format-javadoc results.
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.portal.log.assert="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -4509,7 +4507,6 @@ information. Make sure to commit in all format-javadoc results.
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.portal.log.assert="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -4534,7 +4531,6 @@ information. Make sure to commit in all format-javadoc results.
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.portal.log.assert="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -4559,7 +4555,6 @@ information. Make sure to commit in all format-javadoc results.
 			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.portal.log.assert="true"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>

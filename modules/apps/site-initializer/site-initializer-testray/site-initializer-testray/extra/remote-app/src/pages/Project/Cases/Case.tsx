@@ -22,15 +22,15 @@ import useIssuesFound from '../../../hooks/data/useIssuesFound';
 import i18n from '../../../i18n';
 import {TestrayCase} from '../../../services/rest';
 import dayjs from '../../../util/date';
+import useCaseResultActions from '../Routines/Builds/Inner/CaseResult/useCaseResultActions';
 import CaseResultHistory from './CaseResultHistory';
-import useCaseActions from './useCaseActions';
 
 type CaseOutlet = {
 	testrayCase: TestrayCase;
 };
 
 const Case = () => {
-	const {actions} = useCaseActions();
+	const {actions} = useCaseResultActions();
 	const {projectId} = useParams();
 	const {testrayCase}: CaseOutlet = useOutletContext();
 	const issues = useIssuesFound({caseId: testrayCase.id});

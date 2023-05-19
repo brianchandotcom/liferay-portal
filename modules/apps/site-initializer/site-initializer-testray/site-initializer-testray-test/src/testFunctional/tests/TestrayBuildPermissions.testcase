@@ -276,4 +276,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the build"
+	@priority = 4
+	test AssertLeadRoleCanDeleteBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertLeadRoleCanDeleteBuild";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user delete a build") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+		}
+
+		task ("Then the build should not appear on the list") {
+			AssertElementNotPresent(
+				key_projectName = ${buildName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -125,9 +125,13 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 						CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
 						httpServletRequest));
 
-				if ((commerceOrder.getCommerceAccountId() ==
-						AccountConstants.ACCOUNT_ENTRY_ID_GUEST) &&
-					!continueAsGuest) {
+				if (commerceOrder.isQuote()) {
+					httpServletResponse.sendRedirect(
+						_getOrderDetailsURL(renderRequest, commerceOrder));
+				}
+				else if ((commerceOrder.getCommerceAccountId() ==
+							AccountConstants.ACCOUNT_ENTRY_ID_GUEST) &&
+						 !continueAsGuest) {
 
 					httpServletResponse.sendRedirect(
 						_getCheckoutURL(renderRequest));

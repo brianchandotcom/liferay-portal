@@ -478,15 +478,16 @@ export default function ObjectFieldFormBase({
 				</AutoComplete>
 			)}
 
-			{values.businessType === 'DateTime' && (
-				<TimeStorage
-					disabled={disabled}
-					objectFieldSettings={
-						values.objectFieldSettings as ObjectFieldSetting[]
-					}
-					setValues={setValues}
-				/>
-			)}
+			{Liferay.FeatureFlags['LPS-143068'] &&
+				values.businessType === 'DateTime' && (
+					<TimeStorage
+						disabled={disabled}
+						objectFieldSettings={
+							values.objectFieldSettings as ObjectFieldSetting[]
+						}
+						setValues={setValues}
+					/>
+				)}
 
 			{children}
 

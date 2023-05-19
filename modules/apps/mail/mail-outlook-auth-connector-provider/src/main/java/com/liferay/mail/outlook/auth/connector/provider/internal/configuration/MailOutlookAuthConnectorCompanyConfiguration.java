@@ -52,7 +52,7 @@ public interface MailOutlookAuthConnectorCompanyConfiguration {
 	)
 	@Meta.AD(
 		description = "outlook-auth-connector-tenant-id-description",
-		name = "tenant-id"
+		name = "tenant-id", required = false
 	)
 	public String tenantId();
 

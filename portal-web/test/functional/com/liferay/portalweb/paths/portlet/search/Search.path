@@ -251,6 +251,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SORT_WIDGET_CONFIGURATION_ORDER_DROPDOWN</td>
+	<td>//div[contains(@class,'form-group')][.//input[@value='${key_displayLabel}']]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_WIDGET_CONFIGURATION_RELEVANCE_DISPLAY_LABEL</td>
 	<td>//input[@id='relevance']</td>
 	<td></td>

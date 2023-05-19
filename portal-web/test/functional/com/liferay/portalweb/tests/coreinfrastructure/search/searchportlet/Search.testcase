@@ -2268,7 +2268,6 @@ definition {
 		task ("Add Sort option to sort by 'Object Title' in ascending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Title Asc",
-				id = 6,
 				indexedField = "nestedFieldArray.title.value_keyword",
 				order = "Ascending");
 		}
@@ -2276,7 +2275,6 @@ definition {
 		task ("Add Sort option to sort by 'Object Title' in descending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Title Desc",
-				id = 7,
 				indexedField = "nestedFieldArray.title.value_keyword",
 				order = "Descending");
 		}
@@ -2284,7 +2282,6 @@ definition {
 		task ("Add Sort option to sort by 'Object Site ID' in ascending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Site ID",
-				id = 8,
 				indexedField = "nestedFieldArray.siteID.value_integer",
 				order = "Ascending");
 		}
@@ -2292,7 +2289,6 @@ definition {
 		task ("Add Sort option to sort by 'Object Date' ascending order") {
 			SearchPortlets.addSortOption(
 				displayLabel = "Object Date",
-				id = 9,
 				indexedField = "nestedFieldArray.date.value_date",
 				order = "Ascending");
 

@@ -16,7 +16,7 @@ package com.liferay.mail.outlook.auth.connector.provider.internal.token.provider
 
 import com.liferay.mail.kernel.auth.token.provider.MailAuthTokenProvider;
 import com.liferay.mail.outlook.auth.connector.provider.internal.configuration.MailOutlookAuthConnectorCompanyConfiguration;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MailOutlookMailAuthTokenProvider implements MailAuthTokenProvider {
 
+	@Override
 	public String getAccessToken(long companyId) {
 		try {
 			MailOutlookAuthConnectorCompanyConfiguration
@@ -80,10 +81,10 @@ public class MailOutlookMailAuthTokenProvider implements MailAuthTokenProvider {
 			return iAuthenticationResult.accessToken();
 		}
 		catch (Exception exception) {
-			_log.error(exception);
-
-			throw new SystemException(exception);
+			_log.error("Unable to acquire access token", exception);
 		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

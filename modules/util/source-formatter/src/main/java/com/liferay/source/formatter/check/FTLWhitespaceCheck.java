@@ -74,6 +74,19 @@ public class FTLWhitespaceCheck extends WhitespaceCheck {
 					line = formatIncorrectSyntax(line, "+[", "+ [", false);
 				}
 
+				if (line.endsWith(">")) {
+					if (line.endsWith("/>")) {
+						if (!trimmedLine.equals("/>") &&
+							!line.endsWith(" />")) {
+
+							line = StringUtil.replaceLast(line, "/>", " />");
+						}
+					}
+					else if (line.endsWith(" >")) {
+						line = StringUtil.replaceLast(line, " >", ">");
+					}
+				}
+
 				sb.append(line);
 				sb.append("\n");
 			}

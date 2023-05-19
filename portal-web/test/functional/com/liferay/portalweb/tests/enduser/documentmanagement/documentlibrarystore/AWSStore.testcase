@@ -1,5 +1,4 @@
 @component-name = "portal-document-library-store"
-@ignore = "true"
 definition {
 
 	property aws.store.enabled = "true";

@@ -8,6 +8,6 @@ author: "Rubén Pulido"
 clientDir: "../headless-site-client/src/main/java"
 compatibilityVersion: 2
 forcePredictableOperationId: true
-generateBatch: false
+generateBatch: true
 generateGraphQL: false
 testDir: "../headless-site-test/src/testIntegration/java"

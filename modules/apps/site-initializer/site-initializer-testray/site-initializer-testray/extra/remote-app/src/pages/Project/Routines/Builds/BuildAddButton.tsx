@@ -41,7 +41,7 @@ const dropDownItems: Dropdown = [
 			},
 			{
 				label: i18n.sub('new-x', 'template'),
-				path: './create/template/true',
+				path: './create?template=true',
 			},
 		],
 		title: i18n.translate('create'),

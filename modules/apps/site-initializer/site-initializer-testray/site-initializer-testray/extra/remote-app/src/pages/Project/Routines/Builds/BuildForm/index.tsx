@@ -16,7 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {useOutletContext, useParams} from 'react-router-dom';
+import {useOutletContext, useParams, useSearchParams} from 'react-router-dom';
 import {withPagePermission} from '~/hoc/withPagePermission';
 import {BuildStatuses} from '~/util/statuses';
 
@@ -51,13 +51,11 @@ type OutletContext = {
 const BuildForm = () => {
 	const [caseIds, setCaseIds] = useState<number[]>([]);
 
-	const {
-		buildId,
-		buildTemplate,
-		buildTemplateId,
-		projectId,
-		routineId,
-	} = useParams();
+	const {buildId, buildTemplateId, projectId, routineId} = useParams();
+
+	const [searchParams] = useSearchParams();
+
+	const buildTemplate = searchParams.get(`template`);
 
 	useEffect(() => {
 		if (buildId) {

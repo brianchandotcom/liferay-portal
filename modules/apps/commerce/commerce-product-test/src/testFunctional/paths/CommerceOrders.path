@@ -191,6 +191,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLACED_ORDERS_LIST_STATUS</td>
+	<td>//div[@class='dnd-tr'][contains(.,'${key_entry}')]/div[@class='dnd-td'][8][contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_PRICES_SEPARETED</td>
 	<td>//dt[contains(text(), '${key_priceName}')]//../following-sibling::dd[1]</td>
 	<td></td>
@@ -253,6 +258,29 @@
 <tr>
 	<td>PLACED_ORDERS_ID</td>
 	<td>//div[@class='table-list-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_ORDERS_VIEW_BUTTON_BY_ID</td>
+	<td>//div[@class='dnd-tr']//div[2][text()='${key_orderId}']/following::div/a[@title='View']</td>
+	<td></td>
+</tr>
+
+<!--STEP_TRACKER-->
+
+<tr>
+	<td>STEP_TRACKER_ACTIVE_STEP</td>
+	<td>//div[@class='rounded step-tracker']/div[@class='step active']/span[text()='${key_stepLabel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STEP_TRACKER_INACTIVE_STEP</td>
+	<td>//div[@class='rounded step-tracker']/div[@class='step inactive']/span[text()='${key_stepLabel}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STEP_TRACKER_COMPLETED_STEP</td>
+	<td>//div[@class='rounded step-tracker']/div[@class='step completed']/span[text()='${key_stepLabel}']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -31,6 +31,8 @@ import {
 	visit,
 } from './treeUtils';
 
+import '../../../css/TreeFilter.scss';
+
 const SEARCH_QUERY_MIN_LENGHT = 2;
 const SEARCH_INPUT_DEBOUNCE = 300;
 

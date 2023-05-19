@@ -1073,6 +1073,12 @@ definition {
 			locator1 = "Form#FIELD_HIDDEN_LABEL");
 	}
 
+	macro viewNoEntryCP {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no forms.");
+	}
+
 	macro viewPageEmptyField {
 		AssertElementPresent(
 			key_pageNumber = ${pageIndex},

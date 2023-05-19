@@ -115,12 +115,10 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			DERenderer.inputDataInDateField(
-				fieldLabel = "Date and Time",
-				index = 1,
-				value = "08/06/2021 10:00 AM");
+			WebContent.addWithStructureCP(
+				webContentDate = "08/06/2021 10:00 AM",
+				webContentDateFieldLabel = "Date and Time",
+				webContentTitle = "Web Content Title");
 
 			AssertElementAccessible(locator1 = "//div[contains(@class,'ddm-field-container')][contains(@data-field-name,'DateTime')]");
 

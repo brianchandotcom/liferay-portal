@@ -668,12 +668,10 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			DERenderer.inputDataInDateField(
-				fieldLabel = "Date and Time",
-				index = 1,
-				value = "08/06/2021 10:00 AM");
+			WebContent.addWithStructureCP(
+				webContentDate = "08/06/2021 10:00 AM",
+				webContentDateFieldLabel = "Date and Time",
+				webContentTitle = "Web Content Title");
 
 			PageEditor.publish();
 		}
@@ -761,12 +759,10 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			DERenderer.inputDataInDateField(
-				fieldLabel = "Date and Time",
-				index = 1,
-				value = "08/06/2021 10:00 AM");
+			WebContent.addWithStructureCP(
+				webContentDate = "08/06/2021 10:00 AM",
+				webContentDateFieldLabel = "Date and Time",
+				webContentTitle = "Web Content Title");
 
 			DERenderer.inputDataInTextField(
 				fieldLabel = "Text",

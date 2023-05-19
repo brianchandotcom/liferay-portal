@@ -14,8 +14,28 @@
 								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/stars.png$]"
 							}
 						},
-						"height": "100vh"
+						"borderWidth": "0"
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"height": ""
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"height": ""
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"height": ""
+							},
+							"id": "tablet"
+						}
+					],
 					"indexed": true,
 					"layout": {
 						"contentDisplay": "FlexColumn",
@@ -35,23 +55,26 @@
 										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/earth.png$]"
 									}
 								},
-								"height": "100vh"
+								"borderWidth": "0"
 							},
 							"fragmentViewports": [
 								{
 									"fragmentViewportStyle": {
+										"height": "",
 										"hidden": false
 									},
 									"id": "landscapeMobile"
 								},
 								{
 									"fragmentViewportStyle": {
+										"height": "",
 										"overflow": ""
 									},
 									"id": "portraitMobile"
 								},
 								{
 									"fragmentViewportStyle": {
+										"height": "",
 										"hidden": false
 									},
 									"id": "tablet"
@@ -68,24 +91,28 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"height": "100vh"
+										"borderWidth": "0",
+										"height": "80vh",
+										"minHeight": "500px"
 									},
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
-												"paddingTop": "200px"
+												"paddingTop": "64px"
 											},
 											"id": "landscapeMobile"
 										},
 										{
 											"fragmentViewportStyle": {
-												"paddingTop": "220px"
+												"paddingTop": "64px"
 											},
 											"id": "portraitMobile"
 										},
 										{
 											"fragmentViewportStyle": {
-												"paddingTop": "160px"
+												"height": "80vh",
+												"minHeight": "600px",
+												"paddingTop": "64px"
 											},
 											"id": "tablet"
 										}
@@ -103,19 +130,7 @@
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
-														"marginTop": "-160px"
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"fragmentViewportStyle": {
-														"marginTop": "-170px"
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"fragmentViewportStyle": {
-														"marginTop": "-150px",
+														"marginTop": "-120px",
 														"overflow": "hidden"
 													},
 													"id": "tablet"
@@ -176,14 +191,22 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"height": "700px",
+																"height": "500px",
 																"marginLeft": "16px",
-																"marginRight": "16px"
+																"marginRight": "16px",
+																"minWidth": "450px"
 															},
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
-																		"height": "400px"
+																		"minWidth": "150px"
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"height": "300px",
+																		"minWidth": "300px"
 																	},
 																	"id": "tablet"
 																}
@@ -191,7 +214,6 @@
 															"indexed": true,
 															"layout": {
 																"contentDisplay": "FlexColumn",
-																"flexWrap": "Wrap",
 																"justify": "Center",
 																"widthType": "Fluid"
 															}
@@ -199,15 +221,19 @@
 														"pageElements": [
 															{
 																"definition": {
-																	"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:200px;\nfont-weight: 900;\n}",
+																	"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:200px;\nfont-weight: 900;\nwhite-space: nowrap;\n}",
 																	"customCSSViewports": [
 																		{
-																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:150px;\nfont-weight: 900;\n}",
+																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:20vw;\nfont-weight: 900;\n}",
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:140px;\nfont-weight: 900;\n}",
+																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:100px;\nfont-weight: 900;\n}",
 																			"id": "portraitMobile"
+																		},
+																		{
+																			"customCSS": ".[$FRAGMENT_CLASS$] h1 {\nfont-size:20vw;\nfont-weight: 900;\n\n}",
+																			"id": "tablet"
 																		}
 																	],
 																	"fragment": {
@@ -234,6 +260,14 @@
 																		"textAlign": "center",
 																		"textColor": "#fff"
 																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"minHeight": ""
+																			},
+																			"id": "tablet"
+																		}
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -293,10 +327,10 @@
 															},
 															{
 																"definition": {
-																	"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor:#A7A9BC;\n}\n\n.[$FRAGMENT_CLASS$] a:hover {\ncolor:white;\n}",
+																	"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor:#A7A9BC;\ntext-decoration: underline;\n}\n\n.[$FRAGMENT_CLASS$] a:hover {\ncolor:white;\n}",
 																	"customCSSViewports": [
 																		{
-																			"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor:#A7A9BC;\n}\n\n.[$FRAGMENT_CLASS$] a:hover {\ncolor:white;\n}",
+																			"customCSS": ".[$FRAGMENT_CLASS$] a {\ncolor:#A7A9BC;\ntext-decoration: underline;\n}\n\n.[$FRAGMENT_CLASS$] a:hover {\ncolor:white;\n}",
 																			"id": "landscapeMobile"
 																		}
 																	],
@@ -332,6 +366,14 @@
 																		"marginTop": "8px",
 																		"textAlign": "center"
 																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginTop": "4px"
+																			},
+																			"id": "landscapeMobile"
+																		}
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -369,7 +411,8 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"height": "700px"
+																"borderWidth": "0",
+																"height": "500px"
 															},
 															"fragmentViewports": [
 																{
@@ -450,6 +493,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0"
+															},
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -460,14 +506,15 @@
 															],
 															"indexed": true,
 															"layout": {
-																"contentDisplay": "FlexColumn",
-																"justify": "Center",
+																"contentDisplay": "FlexRow",
+																"justify": "End",
 																"widthType": "Fluid"
 															}
 														},
 														"pageElements": [
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground-size:contain;\n}",
 																	"fragmentStyle": {
 																		"backgroundFragmentImage": {
 																			"title": {
@@ -477,6 +524,7 @@
 																				"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Provided by Liferay/moon.png$]"
 																			}
 																		},
+																		"borderWidth": "0",
 																		"height": "160px",
 																		"marginRight": "16px",
 																		"marginTop": "16px",
@@ -493,6 +541,7 @@
 																	],
 																	"indexed": true,
 																	"layout": {
+																		"opacity": 100,
 																		"widthType": "Fluid"
 																	}
 																},

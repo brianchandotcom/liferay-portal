@@ -29,6 +29,10 @@ interface DefineAppProfilePageProps {
 	onClickContinue: () => void;
 }
 
+interface VocabDropdownItem extends Categories {
+	checked: boolean;
+}
+
 export function DefineAppProfilePage({
 	onClickBack,
 	onClickContinue,
@@ -45,8 +49,9 @@ export function DefineAppProfilePage({
 		},
 		dispatch,
 	] = useAppContext();
-	const [categories, setCategories] = useState([]);
-	const [tags, setTags] = useState([]);
+	const [categories, setCategories] = useState<VocabDropdownItem[]>([]);
+	const [productType, setProductType] = useState<Categories>();
+	const [tags, setTags] = useState<VocabDropdownItem[]>([]);
 
 	const handleLogoUpload = (files: FileList) => {
 		const file = files[0];
@@ -98,7 +103,11 @@ export function DefineAppProfilePage({
 		}
 		else {
 			response = await createApp({
-				appCategories: [...appCategories, ...appTags],
+				appCategories: [
+					...appCategories,
+					...appTags,
+					productType as Categories,
+				],
 				appDescription,
 				appName,
 				catalogId,
@@ -148,6 +157,7 @@ export function DefineAppProfilePage({
 			const vocabulariesResponse = await getVocabularies();
 
 			let categoryVocabId = 0;
+			let productTypeVocabId = 0;
 			let tagVocabId = 0;
 
 			vocabulariesResponse.items.forEach(
@@ -159,49 +169,63 @@ export function DefineAppProfilePage({
 					if (vocab.name === 'Marketplace App Tags') {
 						tagVocabId = vocab.id;
 					}
+
+					if (vocab.name === 'Marketplace Product Type') {
+						productTypeVocabId = vocab.id;
+					}
 				}
 			);
 
-			let categoriesList = await getCategories({
+			const categoriesList = await getCategories({
 				vocabId: categoryVocabId,
 			});
-			let tagsList = await getCategories({vocabId: tagVocabId});
+			const tagsList = await getCategories({vocabId: tagVocabId});
 
-			categoriesList = categoriesList.items.map(
-				(category: {
-					externalReferenceCode: string;
-					id: number;
-					name: string;
-				}) => {
-					return {
-						checked: false,
-						externalReferenceCode: category.externalReferenceCode,
-						id: category.id,
-						label: category.name,
-						value: category.name,
-					};
-				}
+			const productTypeList = await getCategories({
+				vocabId: productTypeVocabId,
+			});
+
+			const appProductType = productTypeList.find(
+				(productType) => productType.name === 'App'
 			);
 
-			tagsList = tagsList.items.map(
-				(tag: {
-					externalReferenceCode: string;
-					id: number;
-					name: string;
-				}) => {
-					return {
-						checked: false,
-						externalReferenceCode: tag.externalReferenceCode,
-						id: tag.id,
-						label: tag.name,
-						value: tag.name,
-					};
-				}
-			);
+			if (appProductType) {
+				setProductType({
+					externalReferenceCode: appProductType.externalReferenceCode,
+					id: appProductType.id,
+					name: appProductType.name,
+					vocabulary: 'Marketplace Product Type',
+				});
+			}
 
-			setCategories(categoriesList);
-			setTags(tagsList);
+			const categoriesDropdownItems = categoriesList.map((category) => {
+				return {
+					checked: false,
+					externalReferenceCode: category.externalReferenceCode,
+					id: category.id,
+					label: category.name,
+					name: category.name,
+					value: category.name,
+					vocabulary: 'Marketplace App Category',
+				};
+			});
+
+			const tagsDropdownItems = tagsList.map((tag) => {
+				return {
+					checked: false,
+					externalReferenceCode: tag.externalReferenceCode,
+					id: tag.id,
+					label: tag.name,
+					name: tag.name,
+					value: tag.name,
+					vocabulary: 'Marketplace App Tags',
+				};
+			});
+
+			setCategories(categoriesDropdownItems);
+			setTags(tagsDropdownItems);
 		};
+
 		getData();
 	}, []);
 
@@ -300,7 +324,7 @@ export function DefineAppProfilePage({
 							value={appDescription}
 						/>
 
-						<MultiSelect
+						<MultiSelect<VocabDropdownItem>
 							items={categories}
 							label="Categories"
 							onChange={(value) =>
@@ -316,7 +340,7 @@ export function DefineAppProfilePage({
 							tooltip="Choose the Marketplace category that most accurately describes what your app does. Users looking for specific types of apps will often browse categories by searching on a specific category name in the main Marketplace home page. Having your app listed under the appropriate category will help them find your app."
 						/>
 
-						<MultiSelect
+						<MultiSelect<VocabDropdownItem>
 							items={tags}
 							label="Tags"
 							onChange={(value) =>

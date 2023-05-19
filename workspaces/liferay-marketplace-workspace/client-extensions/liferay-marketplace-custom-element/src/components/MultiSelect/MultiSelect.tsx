@@ -7,20 +7,14 @@ import classNames from 'classnames';
 
 import {FieldBase} from '../FieldBase';
 
-type Item = {
-	checked: boolean;
-	label: string;
-	value: string;
-};
-
-interface MultiSelectProps {
+interface MultiSelectProps<T> {
 	className?: string;
 	helpMessage?: string;
 	hideFeedback?: boolean;
-	items: Item[];
+	items: T[];
 	label?: string;
 	localized?: boolean;
-	onChange: (values: Item[]) => void;
+	onChange: (values: T) => void;
 	placeholder?: string;
 	required?: boolean;
 	tooltip?: string;
@@ -49,7 +43,7 @@ const colourStyles: StylesConfig<any, true> = {
 	}),
 };
 
-export function MultiSelect({
+export function MultiSelect<T>({
 	className,
 	helpMessage,
 	hideFeedback,
@@ -60,7 +54,7 @@ export function MultiSelect({
 	placeholder,
 	required,
 	tooltip,
-}: MultiSelectProps) {
+}: MultiSelectProps<T>) {
 	const animatedComponents = makeAnimated();
 
 	return (
@@ -76,9 +70,7 @@ export function MultiSelect({
 			<Select
 				components={animatedComponents}
 				isMulti
-				onChange={(newValue) =>
-					newValue && onChange(newValue as Item[])
-				}
+				onChange={(newValue) => newValue && onChange(newValue as T)}
 				options={items}
 				placeholder={placeholder}
 				styles={colourStyles}

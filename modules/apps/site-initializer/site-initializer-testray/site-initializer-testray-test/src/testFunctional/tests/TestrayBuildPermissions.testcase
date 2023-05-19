@@ -340,4 +340,38 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the build"
+	@priority = 3
+	test AssertUserRoleCanNotEditBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertUserRoleCanNotEditBuild";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in build") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			RightClick.rightClick(
+				key_projectName = ${buildName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the build") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

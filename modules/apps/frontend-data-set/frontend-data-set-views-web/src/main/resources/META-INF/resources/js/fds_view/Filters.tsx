@@ -324,8 +324,8 @@ function AddFDSFilterModalContent({
 										'yyyy-MM-dd'
 									)}
 									years={{
-										end: getYear(new Date()) + 5,
-										start: getYear(new Date()) - 5,
+										end: getYear(new Date()) + 25,
+										start: getYear(new Date()) - 50,
 									}}
 								/>
 
@@ -356,8 +356,8 @@ function AddFDSFilterModalContent({
 										'yyyy-MM-dd'
 									)}
 									years={{
-										end: getYear(new Date()) + 5,
-										start: getYear(new Date()) - 5,
+										end: getYear(new Date()) + 25,
+										start: getYear(new Date()) - 50,
 									}}
 								/>
 							</div>

@@ -314,10 +314,8 @@ public abstract class PoshiElement
 
 		sb.append(blockName);
 
-		String arguments = attributeValue("arguments");
-
-		if (Validator.isNotNull(arguments)) {
-			sb.append("(" + arguments + ")");
+		if (blockName.startsWith("macro")) {
+			sb.append("(" + attributeValue("arguments") + ")");
 		}
 
 		sb.append(" {");

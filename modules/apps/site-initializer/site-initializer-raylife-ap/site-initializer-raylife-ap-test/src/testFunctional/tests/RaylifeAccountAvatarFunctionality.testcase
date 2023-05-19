@@ -29,7 +29,7 @@ definition {
 
 	tearDown {
 		User.firstLoginPG();
-		
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		RaylifeAP.tearDownCP();

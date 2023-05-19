@@ -77,6 +77,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_LABEL_OPTION_N</td>
+	<td>xpath=(//span[contains(text(),'${labelOption}')])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OBJECT_FIELD_LABEL_TEXT</td>
 	<td>//div[@class='form-feedback-item']</td>
 	<td></td>

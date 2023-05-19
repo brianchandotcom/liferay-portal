@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_N</td>
+	<td>xpath=(//a[contains(.,'${key_text}')])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_WITH_ARIA_LABEL</td>
 	<td>//a[@aria-label='${ariaLabel}']</td>
 	<td></td>

@@ -110,10 +110,13 @@ definition {
 	}
 
 	macro createFDSViewViaAPI {
+		for (var key_dataSetViewName : list ${key_dataSetViewNameList}){
+
 		JSONFrontendDatasetEntries._createFDSViewViaAPI(
 			datasetName = ${datasetName},
 			dataSetViewDescription = ${dataSetViewDescription},
-			dataSetViewName = ${dataSetViewName});
+			dataSetViewName = ${key_dataSetViewName});
+		}
 	}
 
 	macro deleteAllDatasetEntries {
@@ -131,7 +134,24 @@ definition {
 	}
 
 	macro deleteAllDatasetViews {
-		JSONFrontendDatasetEntries._deleteFDSViews();
+		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewsIds();
+
+		if (${datasetViewsIdList} != "") {
+			JSONFrontendDatasetEntries._deleteFDSViews();
+		}
+		else {
+			echo("No Datasets Views to be deleted");
+		}
+	}
+
+	macro deleteDataSetViewViaAPI {
+		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewIdByName(datasetViewsNameList = ${datasetViewsNameList});
+
+		echo("${datasetViewsIdList}");
+
+		JSONFrontendDatasetEntries._deleteFDSViews(datasetViewsIdList = ${datasetViewsIdList});
+
+		Refresh();
 	}
 
 	macro deleteDataSet {

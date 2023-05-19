@@ -285,6 +285,8 @@ definition {
 			Picklist.optionsPicklist(
 				menuItem = "Export as JSON",
 				picklistName = "Export Picklist");
+
+			DownloadTempFile();
 		}
 
 		task ("Then Picklist is exported successfully") {

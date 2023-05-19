@@ -130,40 +130,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the build"
-	@priority = 3
-	test AssertAnalystRoleCanNotEditBuild {
-		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertAnalystRoleCanNotEditBuild";
-
-		task ("Given that the user login with the Testray Analyst role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "analyst@testray.com",
-				userLoginFullName = "Analyst User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When the user right click in build") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			RightClick.rightClick(
-				key_projectName = ${buildName},
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Then the user can not edit the build") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
-		}
-	}
-
 	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to delete the build"
 	@priority = 3
 	test AssertAnalystRoleCanNotDeleteBuild {
@@ -194,6 +160,40 @@ definition {
 		task ("Then the user can not delete the build") {
 			AssertElementNotPresent(
 				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the build"
+	@priority = 3
+	test AssertAnalystRoleCanNotEditBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertAnalystRoleCanNotEditBuild";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in build") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			RightClick.rightClick(
+				key_projectName = ${buildName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the build") {
+			AssertElementNotPresent(
+				item = "Edit",
 				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 	}
@@ -231,6 +231,42 @@ definition {
 		task ("Then the user can see the build in the list") {
 			AssertElementPresent(
 				key_projectName = "Build 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the build"
+	@priority = 4
+	test AssertLeadRoleCanDeleteBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertLeadRoleCanDeleteBuild";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user delete a build") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+		}
+
+		task ("Then the build should not appear on the list") {
+			AssertElementNotPresent(
+				key_projectName = ${buildName},
 				locator1 = "Testray#ITEM_NAME");
 		}
 	}
@@ -276,42 +312,6 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the build"
-	@priority = 4
-	test AssertLeadRoleCanDeleteBuild {
-		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertLeadRoleCanDeleteBuild";
-
-		task ("Given that the user login with the Testray Lead role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "lead@testray.com",
-				userLoginFullName = "Lead User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When the user delete a build") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
-		}
-
-		task ("Then the build should not appear on the list") {
-			AssertElementNotPresent(
-				key_projectName = ${buildName},
-				locator1 = "Testray#ITEM_NAME");
-		}
-	}
-
 	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the build"
 	@priority = 3
 	test AssertUserRoleCanNotCreateBuild {
@@ -337,40 +337,6 @@ definition {
 
 		task ("Then the user can not create build") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
-		}
-	}
-
-	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the build"
-	@priority = 3
-	test AssertUserRoleCanNotEditBuild {
-		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertUserRoleCanNotEditBuild";
-
-		task ("Given that the user login with the Testray User role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user@testray.com",
-				userLoginFullName = "User User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When the user right click in build") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			RightClick.rightClick(
-				key_projectName = ${buildName},
-				locator1 = "Testray#ITEM_NAME");
-		}
-
-		task ("Then the user can not edit the build") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 	}
 
@@ -404,6 +370,40 @@ definition {
 		task ("Then the user can not delete the build") {
 			AssertElementNotPresent(
 				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the build"
+	@priority = 3
+	test AssertUserRoleCanNotEditBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertUserRoleCanNotEditBuild";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in build") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			RightClick.rightClick(
+				key_projectName = ${buildName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the build") {
+			AssertElementNotPresent(
+				item = "Edit",
 				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
 		}
 	}

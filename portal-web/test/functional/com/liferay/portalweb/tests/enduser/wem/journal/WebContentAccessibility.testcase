@@ -186,6 +186,12 @@ definition {
 				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
+			PageEditorMapping.gotoEditableFieldMapping(
+				className = "",
+				fragmentName = "Date",
+				id = "element-date");
+
+			AssertElementAccessible(locator1 = "//div[contains(@id,'editableMapping')]");
 		}
 	}
 

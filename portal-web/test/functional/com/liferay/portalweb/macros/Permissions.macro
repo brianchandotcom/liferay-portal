@@ -3,11 +3,14 @@ definition {
 	macro definePermissionsViaJSONAPI {
 		var groupId = JSONPermissionSetter.setGroupId(
 			groupName = ${groupName},
-			noSelenium = "true");
+			noSelenium = "true",
+			specificURL = ${specificURL});
 		var roleType = JSONPermissionSetter.setRoleType(roleType = ${roleType});
 
 		var primKey = JSONPermissionSetter.setPrimKey(roleType = ${roleType});
-		var roleId = JSONPermissionSetter.setRoleId(roleTitle = ${roleTitle});
+		var roleId = JSONPermissionSetter.setRoleId(
+			roleTitle = ${roleTitle},
+			specificURL = ${specificURL});
 		var scope = JSONPermissionSetter.setScope(roleType = ${roleType});
 		var list1 = ListUtil.newListFromString(${resourceNameActionList}, ":");
 
@@ -32,7 +35,8 @@ definition {
 					name = ${name},
 					primKey = ${primKey},
 					roleId = ${roleId},
-					scope = ${scope});
+					scope = ${scope},
+					specificURL = ${specificURL});
 
 				var j = ${j} + 1;
 
@@ -51,7 +55,8 @@ definition {
 			groupName = ${groupName},
 			name = ${resourceName},
 			roleTitle = ${roleTitle},
-			roleType = ${roleType});
+			roleType = ${roleType},
+			specificURL = ${specificURL});
 	}
 
 	macro removePermissionViaAPI {

@@ -5,11 +5,14 @@ definition {
 
 		var groupId = JSONPermissionSetter.setGroupId(
 			groupName = ${groupName},
-			noSelenium = "true");
+			noSelenium = "true",
+			specificURL = ${specificURL});
 		var roleType = JSONPermissionSetter.setRoleType(roleType = ${roleType});
 
 		var primKey = JSONPermissionSetter.setPrimKey(roleType = ${roleType});
-		var roleId = JSONPermissionSetter.setRoleId(roleTitle = ${roleTitle});
+		var roleId = JSONPermissionSetter.setRoleId(
+			roleTitle = ${roleTitle},
+			specificURL = ${specificURL});
 		var scope = JSONPermissionSetter.setScope(roleType = ${roleType});
 
 		JSONPermissionAPI._addResourcePermission(
@@ -18,7 +21,8 @@ definition {
 			name = ${name},
 			primKey = ${primKey},
 			roleId = ${roleId},
-			scope = ${scope});
+			scope = ${scope},
+			specificURL = ${specificURL});
 	}
 
 	macro removePermission {

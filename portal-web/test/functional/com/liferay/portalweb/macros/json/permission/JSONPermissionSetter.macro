@@ -12,7 +12,8 @@ definition {
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
 			noSelenium = ${noSelenium},
-			site = ${site});
+			site = ${site},
+			specificURL = ${specificURL});
 
 		return ${groupId};
 	}
@@ -33,7 +34,9 @@ definition {
 	macro setRoleId {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
-		var roleId = JSONRoleAPI._getRoleIdByName(name = ${roleTitle});
+		var roleId = JSONRoleAPI._getRoleIdByName(
+			name = ${roleTitle},
+			specificURL = ${specificURL});
 
 		return ${roleId};
 	}

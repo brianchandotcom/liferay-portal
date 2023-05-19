@@ -3,9 +3,16 @@ definition {
 	macro _addResourcePermission {
 		Variables.assertDefined(parameterList = "${groupId},${name},${scope},${primKey},${roleId},${actionId}");
 
-		var portalURL = JSONCompany.getPortalURL();
-		var companyId = JSONCompany.getCompanyIdNoSelenium();
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		if (isSet(specificURL)) {
+			var portalURL = ${specificURL};
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${specificURL});
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var companyId = JSONCompany.getCompanyIdNoSelenium(portalInstanceName = ${portalInstanceName});
+		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/resourcepermission/add-resource-permission \

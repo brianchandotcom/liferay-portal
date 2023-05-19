@@ -259,17 +259,19 @@ definition {
 	macro _getGroupIdByName {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
-		if (!(isSet(portalURL))) {
+		if (isSet(specificURL)) {
+			var portalURL = ${specificURL};
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${specificURL});
+		}
+		else if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
 		if (isSet(noSelenium)) {
-			var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = ${portalURL});
+			var companyId = JSONCompany.getCompanyIdNoSelenium(portalInstanceName = ${portalInstanceName});
 		}
 		else {
-			var companyId = JSONCompany.getCompanyId(
-				portalInstanceName = ${portalInstanceName},
-				portalURL = ${portalURL});
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		}
 
 		var parentGroupId = JSONGroupSetter.setParentGroupId(
@@ -277,7 +279,7 @@ definition {
 			parentGroupName = ${parentGroupName},
 			portalInstanceName = ${portalInstanceName},
 			portalURL = ${portalURL});
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \

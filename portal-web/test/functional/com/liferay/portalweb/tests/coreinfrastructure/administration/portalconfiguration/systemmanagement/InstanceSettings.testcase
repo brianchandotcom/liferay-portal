@@ -426,14 +426,14 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		AssertElementPresent(
-			key_text = "Delete",
+			key_text = "Clear Logo",
 			locator1 = "Button#ANY_DISABLED");
 
 		PagesAdmin.uploadLogo(logoFile = "Document_2.png");
 
 		AssertElementPresent(
-			key_text = "Delete",
-			locator1 = "Button#ANY");
+			ariaLabel = "Clear Logo",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		AssertElementNotPresent(
 			key_text = "Delete",
@@ -448,16 +448,15 @@ definition {
 			configurationName = "Appearance",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertClick(
-			key_text = "Delete",
-			locator1 = "Button#ANY",
-			value1 = "Delete");
+		ClickNoError(
+			ariaLabel = "Clear Logo",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		PortletEntry.save();
 
 		AssertElementPresent(
-			key_text = "Delete",
-			locator1 = "Button#ANY_DISABLED");
+			ariaLabel = "Clear Logo",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		Navigator.openURL();
 

@@ -84,4 +84,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the routine"
+	@priority = 3
+	test AssertAnalystRoleCanNotEditRoutine {
+		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertAnalystRoleCanNotEditRoutine";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When The user right click in routine") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			RightClick.rightClick(
+				key_projectName = ${routineName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the routine") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

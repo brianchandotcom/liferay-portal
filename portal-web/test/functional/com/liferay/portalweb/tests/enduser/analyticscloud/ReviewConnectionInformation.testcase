@@ -22,11 +22,11 @@ definition {
 		}
 
 		task ("Create DXP Site with Commerce") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium Demo");
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
 
 		task ("Connect the DXP to AC and finish the setup wizard") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(channelName = "Minium Demo Portal");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(channelName = "Minium Portal");
 		}
 	}
 
@@ -45,13 +45,19 @@ definition {
 		else {
 			JSONGroup.tearDownNonDefaultGroups();
 
-			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+			ACUtils.tearDownCommerce();
 		}
 	}
 
 	@description = "Story: LRAC-11044 | Automation ID: LRAC-12677 | Test Summary: Check that you can modify the sync of contacts in the people review sidebar"
 	@priority = 4
 	test CanModifyContactsSyncInPeopleReviewSidebar {
+		task ("Create 3 account groups") {
+			for (var accountGroupName : list "Brazilian,European,North American") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
+
 		task ("Go to the people page in the sidebar") {
 			ACDXPSettings.navToSyncedContactDataMenu();
 		}
@@ -65,7 +71,7 @@ definition {
 		}
 
 		task ("Sync a account group") {
-			ACDXPSettings.syncAccountsData(accountGroup = "European Accounts");
+			ACDXPSettings.syncAccountsData(accountGroup = "European");
 		}
 
 		task ("Finish the wizard steps") {
@@ -101,7 +107,7 @@ definition {
 		}
 
 		task ("Sync a account group") {
-			ACDXPSettings.syncAccountsData(accountGroup = "North American Accounts");
+			ACDXPSettings.syncAccountsData(accountGroup = "North American");
 		}
 
 		task ("Check selected account group number") {

@@ -60,10 +60,12 @@ public class JavaLocalServiceImplErcUsageCheck extends BaseServiceImplCheck {
 			return javaTerm.getContent();
 		}
 
-		return _formatServiceImpl(entityName, javaTerm);
+		return _formatLocalServiceImpl(entityName, javaTerm);
 	}
 
-	private String _formatServiceImpl(String entityName, JavaTerm javaTerm) {
+	private String _formatLocalServiceImpl(
+		String entityName, JavaTerm javaTerm) {
+
 		String javaTermName = javaTerm.getName();
 
 		JavaSignature javaSignature = javaTerm.getSignature();

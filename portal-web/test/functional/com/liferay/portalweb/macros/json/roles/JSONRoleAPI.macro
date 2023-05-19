@@ -24,8 +24,14 @@ definition {
 	macro _addRole {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
-		var portalURL = JSONCompany.getPortalURL();
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		if (isSet(specificURL)) {
+			var portalURL = ${specificURL};
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/role/add-role \

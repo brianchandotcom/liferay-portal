@@ -41,6 +41,7 @@ definition {
 		JSONRoleAPI._addRole(
 			descriptionMap = ${descriptionMap},
 			name = ${name},
+			specificURL = ${specificURL},
 			titleMap = ${titleMap},
 			type = ${type});
 	}

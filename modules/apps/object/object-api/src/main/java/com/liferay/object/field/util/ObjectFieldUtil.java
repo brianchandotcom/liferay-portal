@@ -89,8 +89,8 @@ public class ObjectFieldUtil {
 		objectField.setLabelMap(LocalizedMapUtil.getLocalizedMap(label));
 		objectField.setName(name);
 		objectField.setObjectFieldSettings(objectFieldSettings);
-		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
-		objectField.setReadOnlyConditionExpression(null);
+		objectField.setReadOnly(readOnly);
+		objectField.setReadOnlyConditionExpression(readOnlyConditionExpression);
 		objectField.setRequired(required);
 		objectField.setSystem(system);
 

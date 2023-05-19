@@ -136,8 +136,10 @@ public class ObjectFieldBuilder {
 		return this;
 	}
 
-	public ObjectFieldBuilder readOnlyConditionExpression(String readOnly) {
-		objectField.setReadOnly(readOnly);
+	public ObjectFieldBuilder readOnlyConditionExpression(
+		String readOnlyConditionExpression) {
+
+		objectField.setReadOnlyConditionExpression(readOnlyConditionExpression);
 
 		return this;
 	}

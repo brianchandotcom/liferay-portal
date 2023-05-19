@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Order Management";
@@ -214,7 +214,6 @@ definition {
 	@description = "COMMERCE-11277. As a Sales Agent, I can create a Quote Request in the Open Order's Details Page by entering a personal message."
 	@priority = 5
 	test CanCreateQuoteRequestAsSalesAgent {
-		property custom.properties = "feature.flag.COMMERCE-11028=true";
 		property portal.acceptance = "true";
 
 		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {

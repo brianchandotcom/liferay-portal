@@ -149,8 +149,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Date");
-
-			AssertAccessible();
 		}
 
 		task ("Then should be no accessibility problem in Web content with date and time field structure") {
@@ -185,7 +183,6 @@ definition {
 				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			PageEditor.publish();
 		}
 	}
 

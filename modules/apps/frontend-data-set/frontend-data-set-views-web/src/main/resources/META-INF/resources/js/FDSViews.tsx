@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
@@ -204,7 +205,7 @@ const FDSViews = ({
 	fdsViewURL,
 	namespace,
 }: IFDSViewsInterface) => {
-	const onViewClick = ({itemData}: {itemData: FDSViewType}) => {
+	const getViewURL = (itemData: FDSViewType) => {
 		const url = new URL(fdsViewURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, fdsEntryId);
@@ -212,7 +213,11 @@ const FDSViews = ({
 		url.searchParams.set(`${namespace}fdsViewId`, itemData.id);
 		url.searchParams.set(`${namespace}fdsViewLabel`, itemData.label);
 
-		navigate(url);
+		return url;
+	};
+
+	const onViewClick = ({itemData}: {itemData: FDSViewType}) => {
+		navigate(getViewURL(itemData));
 	};
 
 	const onDeleteClick = ({
@@ -292,6 +297,16 @@ const FDSViews = ({
 		],
 	};
 
+	const TitleRenderer = ({itemData}: {itemData: FDSViewType}) => {
+		return (
+			<div className="table-list-title">
+				<ClayLink href={getViewURL(itemData).toString()}>
+					{itemData.label}
+				</ClayLink>
+			</div>
+		);
+	};
+
 	const views = [
 		{
 			contentRenderer: 'list',
@@ -300,6 +315,7 @@ const FDSViews = ({
 				description: 'description',
 				symbol: 'symbol',
 				title: 'label',
+				titleRenderer: TitleRenderer,
 			},
 		},
 	];

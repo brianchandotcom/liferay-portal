@@ -1024,6 +1024,27 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/SXPElement"
             tags: ["SXPElement"]
+    /sxp-elements/preview:
+        post:
+            operationId: postSXPElementPreview
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SXPElement"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SXPElement"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SXPElement"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SXPElement"
+            tags: ["SXPElement"]
     /sxp-elements/validate:
         post:
             operationId: postSXPElementValidate

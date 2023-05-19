@@ -216,6 +216,34 @@ definition {
 
 		var datasetViewsIds = JSONCurlUtil.get(${curl}, "$.items[?(@.id!='${siteId}')].id");
 
+		return ${datasetViewsIds};
+	}
+
+	macro _getDatasetViewIdByName {
+		Variables.assertDefined(parameterList = ${datasetViewsNameList});
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/fdsviews \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		var datasetViewsIds = "";
+
+		for (var datasetViewName : list ${datasetViewsNameList}) {
+			var datasetViewId = JSONCurlUtil.get(${curl}, "$.items[?(@.label=='${datasetViewName}')].id");
+
+			var datasetViewsIds = StringUtil.add(${datasetViewsIds}, "${datasetViewId},");
+		}
+
 		if (${datasetViewsIds} == "") {
 			fail("FAIL. No dataset views were found");
 		}

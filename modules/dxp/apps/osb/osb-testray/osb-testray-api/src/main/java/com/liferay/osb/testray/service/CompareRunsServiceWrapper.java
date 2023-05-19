@@ -36,11 +36,12 @@ public class CompareRunsServiceWrapper
 
 	@Override
 	public int getComparison(
-		long companyId, long runIdA, long runIdB, String statusA,
-		String statusB) {
+		long companyId, long testrayRunId1, long testrayRunId2,
+		String testrayDueStatus1, String testrayDueStatus2) {
 
 		return _compareRunsService.getComparison(
-			companyId, runIdA, runIdB, statusA, statusB);
+			companyId, testrayRunId1, testrayRunId2, testrayDueStatus1,
+			testrayDueStatus2);
 	}
 
 	/**

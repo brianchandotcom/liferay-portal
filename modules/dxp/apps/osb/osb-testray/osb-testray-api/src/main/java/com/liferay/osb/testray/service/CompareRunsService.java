@@ -50,8 +50,8 @@ public interface CompareRunsService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getComparison(
-		long companyId, long runIdA, long runIdB, String statusA,
-		String statusB);
+		long companyId, long testrayRunId1, long testrayRunId2,
+		String testrayDueStatus1, String testrayDueStatus2);
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -23,7 +23,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -48,6 +47,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;

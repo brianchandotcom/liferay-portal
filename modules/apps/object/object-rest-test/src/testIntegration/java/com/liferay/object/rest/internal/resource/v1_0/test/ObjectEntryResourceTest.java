@@ -39,7 +39,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
@@ -102,6 +101,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;

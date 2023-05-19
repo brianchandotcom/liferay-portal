@@ -1,5 +1,4 @@
-Bundle-Name: Liferay Portal Vulcan Test Util
+Bundle-Name: Liferay Portal Vulcan Test Utilities
 Bundle-SymbolicName: com.liferay.portal.vulcan.test.util
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.portal.vulcan.test.util
+Export-Package: com.liferay.portal.vulcan.test.util

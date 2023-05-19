@@ -22,7 +22,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.internal.resource.v1_0.test.util.ObjectFieldTestUtil;
@@ -57,6 +56,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
 
 import java.io.Serializable;
 

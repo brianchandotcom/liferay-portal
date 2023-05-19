@@ -19,21 +19,16 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.test.util.HTTPTestUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,20 +65,20 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 	@Test
 	public void testGetGlobalOpenAPI() throws Exception {
 		List<String> globalOpenAPIPaths = _getPaths(
-			HTTPTestUtil.invoke(null, "openapi/openapi.json",
-				Http.Method.GET));
+			HTTPTestUtil.invoke(null, "openapi/openapi.json", Http.Method.GET));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(null, "openapi",
-			Http.Method.GET);
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, "openapi", Http.Method.GET);
 
 		Map<String, Object> map = jsonObject.toMap();
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			for (String openAPIPath : (List<String>)entry.getValue()) {
 				for (String path :
-						_getPaths(HTTPTestUtil.invoke(null,
-							_getOpenAPISubpath(openAPIPath),
-							Http.Method.GET))) {
+						_getPaths(
+							HTTPTestUtil.invoke(
+								null, _getOpenAPISubpath(openAPIPath),
+								Http.Method.GET))) {
 
 					if (path.endsWith("/")) {
 						path = path.substring(0, path.lastIndexOf("/"));

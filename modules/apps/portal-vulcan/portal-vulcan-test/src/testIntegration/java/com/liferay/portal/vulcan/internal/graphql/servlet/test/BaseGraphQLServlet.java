@@ -107,12 +107,14 @@ public class BaseGraphQLServlet {
 	}
 
 	protected JSONObject invoke(GraphQLField graphQLField) throws Exception {
-
 		GraphQLField queryGraphQLField = new GraphQLField(
 			"query", graphQLField);
 
-		return HTTPTestUtil.invoke(JSONUtil.put("query", queryGraphQLField.
-				toString()).toString(), "graphql", Http.Method.POST);
+		return HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"query", queryGraphQLField.toString()
+			).toString(),
+			"graphql", Http.Method.POST);
 	}
 
 	protected class GraphQLField {

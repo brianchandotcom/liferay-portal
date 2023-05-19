@@ -31,7 +31,7 @@ import java.nio.charset.StandardCharsets;
 public class HTTPTestUtil {
 
 	public static JSONObject invoke(
-		String body, String endpoint, Http.Method httpMethod)
+			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 
 		Http.Options options = new Http.Options();
@@ -52,4 +52,5 @@ public class HTTPTestUtil {
 
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
+
 }

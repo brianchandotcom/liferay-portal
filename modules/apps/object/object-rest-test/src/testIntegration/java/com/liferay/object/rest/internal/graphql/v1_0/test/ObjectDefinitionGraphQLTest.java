@@ -454,16 +454,6 @@ public class ObjectDefinitionGraphQLTest {
 				"Object/" + _objectFieldName));
 	}
 
-	private JSONObject _invoke(GraphQLField queryGraphQLField)
-		throws Exception {
-
-		return HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"query", queryGraphQLField.toString()
-			).toString(),
-			"graphql", Http.Method.POST);
-	}
-
 	private void _addListTypeEntry(
 			ListTypeDefinition listTypeDefinition, String key)
 		throws Exception {
@@ -494,6 +484,16 @@ public class ObjectDefinitionGraphQLTest {
 			false, _objectFieldName, false, false, Collections.emptyList());
 
 		return objectDefinition;
+	}
+
+	private JSONObject _invoke(GraphQLField queryGraphQLField)
+		throws Exception {
+
+		return HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"query", queryGraphQLField.toString()
+			).toString(),
+			"graphql", Http.Method.POST);
 	}
 
 	private static final String _RELATIONSHIP_NAME = "parent";

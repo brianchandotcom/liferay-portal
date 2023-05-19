@@ -16,7 +16,6 @@ package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -104,15 +103,14 @@ public class RoleLocalServiceSystemRolesTest {
 				TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 			_auditEventService.getAuditEvents(
-				TestPropsValues.getCompanyId(), _user.getUserId(),
-				CompanyConstants.SYSTEM, _user.getScreenName(), null, null,
-				null, null, null, null, null, null, 0, null, true,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				TestPropsValues.getCompanyId(), 0, _user.getUserId(),
+				_user.getScreenName(), null, null, null, null, null, null, null,
+				null, 0, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			_auditEventService.getAuditEvents(
-				TestPropsValues.getCompanyId(), _user.getUserId(),
-				CompanyConstants.SYSTEM, _user.getScreenName(), null, null,
-				null, null, null, null, null, null, 0, null, true,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				TestPropsValues.getCompanyId(), 0, _user.getUserId(),
+				_user.getScreenName(), null, null, null, null, null, null, null,
+				null, 0, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);

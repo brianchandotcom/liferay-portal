@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.document.library.web.internal.optimizer.test;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
+import com.liferay.adaptive.media.image.counter.AMImageCounter;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -85,6 +86,9 @@ public class DLAMImageOptimizerTest {
 	public void testDLAMImageOptimizerOptimizesEveryAMImageConfigurationEntryInSpecificCompany()
 		throws Exception {
 
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
+
 		_dlAppLocalService.addFileEntry(
 			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -112,12 +116,12 @@ public class DLAMImageOptimizerTest {
 		_amImageOptimizer.optimize(_company1.getCompanyId());
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry1.getUUID()));
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry2.getUUID()));
@@ -136,6 +140,11 @@ public class DLAMImageOptimizerTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		try {
+			int company1Count = _amImageCounter.countExpectedAMImageEntries(
+				_company1.getCompanyId());
+			int company2Count = _amImageCounter.countExpectedAMImageEntries(
+				company2.getCompanyId());
+
 			_dlAppLocalService.addFileEntry(
 				null, _user1.getUserId(), _group1.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -170,7 +179,7 @@ public class DLAMImageOptimizerTest {
 			_amImageOptimizer.optimize(_company1.getCompanyId());
 
 			Assert.assertEquals(
-				_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+				company1Count + 1,
 				_amImageEntryLocalService.getAMImageEntriesCount(
 					_company1.getCompanyId(),
 					amImageConfigurationEntry1.getUUID()));
@@ -183,12 +192,12 @@ public class DLAMImageOptimizerTest {
 			_amImageOptimizer.optimize(company2.getCompanyId());
 
 			Assert.assertEquals(
-				_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+				company1Count + 1,
 				_amImageEntryLocalService.getAMImageEntriesCount(
 					_company1.getCompanyId(),
 					amImageConfigurationEntry1.getUUID()));
 			Assert.assertEquals(
-				_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+				company2Count + 1,
 				_amImageEntryLocalService.getAMImageEntriesCount(
 					company2.getCompanyId(),
 					amImageConfigurationEntry2.getUUID()));
@@ -201,6 +210,9 @@ public class DLAMImageOptimizerTest {
 	@Test
 	public void testDLAMImageOptimizerOptimizesForImagesNotInTrash()
 		throws Exception {
+
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -235,7 +247,7 @@ public class DLAMImageOptimizerTest {
 			_company1.getCompanyId(), amImageConfigurationEntry1.getUUID());
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry1.getUUID()));
@@ -249,7 +261,7 @@ public class DLAMImageOptimizerTest {
 			_company1.getCompanyId(), amImageConfigurationEntry1.getUUID());
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 2,
+			count + 2,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry1.getUUID()));
@@ -258,6 +270,9 @@ public class DLAMImageOptimizerTest {
 	@Test
 	public void testDLAMImageOptimizerOptimizesForSpecificAMImageConfigurationEntry()
 		throws Exception {
+
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
 
 		_dlAppLocalService.addFileEntry(
 			null, _user1.getUserId(), _group1.getGroupId(),
@@ -287,7 +302,7 @@ public class DLAMImageOptimizerTest {
 			_company1.getCompanyId(), amImageConfigurationEntry1.getUUID());
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry1.getUUID()));
@@ -301,12 +316,12 @@ public class DLAMImageOptimizerTest {
 			_company1.getCompanyId(), amImageConfigurationEntry2.getUUID());
 
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry1.getUUID()));
 		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry2.getUUID()));
@@ -315,6 +330,21 @@ public class DLAMImageOptimizerTest {
 	@Test
 	public void testDLAMImageOptimizerOptimizesImagesWithSupportedMimeTypes()
 		throws Exception {
+
+		int count = _amImageCounter.countExpectedAMImageEntries(
+			_company1.getCompanyId());
+
+		AMImageConfigurationEntry amImageConfigurationEntry1 =
+			_addAMImageConfigurationEntry(_company1.getCompanyId());
+
+		Assert.assertEquals(
+			0,
+			_amImageEntryLocalService.getAMImageEntriesCount(
+				_company1.getCompanyId(),
+				amImageConfigurationEntry1.getUUID()));
+
+		_amImageOptimizer.optimize(
+			_company1.getCompanyId(), amImageConfigurationEntry1.getUUID());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -333,20 +363,8 @@ public class DLAMImageOptimizerTest {
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
-		AMImageConfigurationEntry amImageConfigurationEntry1 =
-			_addAMImageConfigurationEntry(_company1.getCompanyId());
-
 		Assert.assertEquals(
-			0,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company1.getCompanyId(),
-				amImageConfigurationEntry1.getUUID()));
-
-		_amImageOptimizer.optimize(
-			_company1.getCompanyId(), amImageConfigurationEntry1.getUUID());
-
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+			count + 1,
 			_amImageEntryLocalService.getAMImageEntriesCount(
 				_company1.getCompanyId(),
 				amImageConfigurationEntry1.getUUID()));
@@ -388,10 +406,14 @@ public class DLAMImageOptimizerTest {
 			DLAMImageOptimizerTest.class, "dependencies/image.jpg");
 	}
 
-	private static final int _WELCOME_SITE_INITIALIZER_IMAGES_COUNT = 6;
-
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
+
+	@Inject(
+		filter = "adaptive.media.key=document-library",
+		type = AMImageCounter.class
+	)
+	private AMImageCounter _amImageCounter;
 
 	@Inject
 	private AMImageEntryLocalService _amImageEntryLocalService;

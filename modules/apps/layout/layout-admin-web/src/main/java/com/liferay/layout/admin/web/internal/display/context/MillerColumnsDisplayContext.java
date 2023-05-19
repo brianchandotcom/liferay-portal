@@ -49,6 +49,7 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -536,6 +537,27 @@ public class MillerColumnsDisplayContext {
 					"id", "pending"
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "pending")
+				));
+		}
+
+		Set<Long> conflictPlids =
+			_layoutsAdminDisplayContext.getConflictPlids();
+
+		if (conflictPlids.contains(layout.getPlid())) {
+			Group group = layout.getGroup();
+
+			jsonArray.put(
+				JSONUtil.put(
+					"helptext",
+					LanguageUtil.get(
+						_httpServletRequest,
+						group.isLayoutSetPrototype() ?
+							"friendly-url-conflict-site-template-page" :
+								"friendly-url-conflict-site-page")
+				).put(
+					"id", "url-conflict"
+				).put(
+					"type", "warning"
 				));
 		}
 

@@ -148,4 +148,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178269 | Test Summary: Verify that the User with the 'Testray Lead' role should not be able to create the routine"
+	@priority = 3
+	test AssertLeadRoleCanNotCreateRoutine {
+		property test.name.skip.portal.instance = "TestrayRoutinePermissions#AssertLeadRoleCanNotCreateRoutine";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the routine page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+		}
+
+		task ("Then the user can not create routine") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

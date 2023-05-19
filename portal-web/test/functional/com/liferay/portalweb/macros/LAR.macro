@@ -376,7 +376,7 @@ definition {
 	}
 
 	macro _selectImportFileWithDeleteApplicationData {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		NavItem.click(navItem = "Import");
 

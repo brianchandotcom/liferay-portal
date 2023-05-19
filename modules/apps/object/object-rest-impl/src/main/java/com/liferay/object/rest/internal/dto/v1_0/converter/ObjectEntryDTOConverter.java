@@ -613,7 +613,9 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getObjectDefinitionId(), false);
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.isLocalized()) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
+				objectField.isLocalized()) {
+
 				map.put(
 					objectField.getI18nObjectFieldName(),
 					values.get(objectField.getI18nObjectFieldName()));

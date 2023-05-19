@@ -982,7 +982,9 @@ public class ObjectEntryLocalServiceImpl
 		_addObjectRelationshipERCFieldValue(
 			objectEntry.getObjectDefinitionId(), values);
 
-		if (dynamicObjectDefinitionLocalizationTable != null) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
+			(dynamicObjectDefinitionLocalizationTable != null)) {
+
 			_addLocalizedObjectFieldValues(
 				dynamicObjectDefinitionLocalizationTable,
 				objectEntry.getObjectEntryId(), values);

@@ -172,10 +172,10 @@ export async function getAppListProductSpecifications(productIds: number[]) {
 	);
 }
 
-export function getAppListProductIds(products: Product[]) {
+export function getAppListProductIds(products: {items: Product[]}) {
 	const productIds: number[] = [];
 
-	products.map((product) => {
+	products.items.map((product) => {
 		productIds.push(product.productId);
 	});
 

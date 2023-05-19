@@ -16,7 +16,6 @@ import {
 	createApp,
 	createImage,
 	getCategories,
-	getChannels,
 	getVocabularies,
 	updateApp,
 } from '../../utils/api';
@@ -281,12 +280,6 @@ export function DefineAppProfilePage({
 					let product;
 					let response;
 
-					const channels = await getChannels();
-
-					const marketplaceChannel = channels.find(
-						(channel) => channel.name === 'Marketplace Channel'
-					);
-
 					if (appERC) {
 						response = await updateApp({
 							appDescription,
@@ -300,18 +293,6 @@ export function DefineAppProfilePage({
 							appDescription,
 							appName,
 							catalogId,
-							productChannels: [
-								{
-									channelId: marketplaceChannel?.id as number,
-									id: marketplaceChannel?.id as number,
-									currencyCode:
-										marketplaceChannel?.currencyCode as string,
-									externalReferenceCode:
-										marketplaceChannel?.externalReferenceCode as string,
-									name: marketplaceChannel?.name as string,
-									type: marketplaceChannel?.type as string,
-								},
-							],
 						});
 					}
 

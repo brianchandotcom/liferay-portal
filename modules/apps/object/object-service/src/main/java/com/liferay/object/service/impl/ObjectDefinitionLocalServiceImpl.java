@@ -515,20 +515,19 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition enableAccountEntryRestricted(
-		ObjectRelationship objectRelationship)
+			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-			ObjectDefinition objectDefinition1 =
-				objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
+		ObjectDefinition objectDefinition1 =
+			objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
 
-			if (!Objects.equals(
-				objectDefinition1.getShortName(),
-				"AccountEntry")) {
-				throw new ObjectDefinitionAccountEntryRestrictedException(
-					"Custom object definitions can only be restricted by account " +
+		if (!Objects.equals(objectDefinition1.getShortName(), "AccountEntry")) {
+			throw new ObjectDefinitionAccountEntryRestrictedException(
+				"Custom object definitions can only be restricted by account " +
 					"entry");
-			}
+		}
+
 		ObjectDefinition objectDefinition2 = getObjectDefinition(
 			objectRelationship.getObjectDefinitionId2());
 
@@ -549,18 +548,23 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Override
 	public ObjectDefinition enableSalesForceAccountEntryRestricted(
-		ObjectDefinition objectDefinition, ObjectField objectField)
+			ObjectField objectField)
 		throws PortalException {
 
-		if(!Objects.equals(objectField.getObjectDefinition(),
-			objectDefinition)){
+		if (!Objects.equals(objectField.getBusinessType(), "Integer") ||
+			!Objects.equals(objectField.getBusinessType(), "LongInteger") ||
+			!Objects.equals(objectField.getBusinessType(), "Text")) {
+
 			throw new ObjectDefinitionAccountEntryRestrictedException(
-				"O objectField deve pertencer ao objectDefinition da " +
-				"restricao");
+				"Custom object definitions can only be restricted by a " +
+					"Integer, Long Integer or Text field");
 		}
 
-		if(!Objects.equals(objectDefinition.getStorageType(),
-			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)){
+		ObjectDefinition objectDefinition = objectField.getObjectDefinition();
+
+		if (objectDefinition.isDefaultStorageType() ||
+			objectDefinition.isAccountEntryRestricted()) {
+
 			return objectDefinition;
 		}
 

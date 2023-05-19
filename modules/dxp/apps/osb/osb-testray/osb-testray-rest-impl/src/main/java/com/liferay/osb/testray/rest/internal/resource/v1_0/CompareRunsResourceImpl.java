@@ -33,22 +33,20 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CompareRunsResourceImpl extends BaseCompareRunsResourceImpl {
 
 	@Override
-	public CompareRuns getCompareRuns(Long idTestrayRunA, Long idTestrayRunB)
+	public CompareRuns getCompareRuns(Long testrayRunId1, Long testrayRunId2)
 		throws Exception {
 
-		String[] dueStatuses = {
+		String[] testrayDueStatuses = {
 			"PASSED", "FAILED", "BLOCKED", "TEST FIX", "DNR"
 		};
 
 		int[][] statusMatrix = new int[5][5];
-		int i;
-		int j;
 
-		for (i = 0; i < dueStatuses.length; i = i + 1) {
-			for (j = 0; j < dueStatuses.length; j = j + 1) {
+		for (int i = 0; i < testrayDueStatuses.length; i++) {
+			for (int j = 0; j < testrayDueStatuses.length; j++) {
 				statusMatrix[i][j] = _compareRunsService.getComparison(
-					contextCompany.getCompanyId(), idTestrayRunA, idTestrayRunB,
-					dueStatuses[i], dueStatuses[j]);
+					contextCompany.getCompanyId(), testrayRunId1, testrayRunId2,
+					testrayDueStatuses[i], testrayDueStatuses[j]);
 			}
 		}
 

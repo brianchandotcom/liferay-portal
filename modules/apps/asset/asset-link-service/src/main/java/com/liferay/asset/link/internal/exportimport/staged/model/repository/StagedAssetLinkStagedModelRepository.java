@@ -46,9 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.adapter.StagedAssetLink",
-	service = {
-		StagedAssetLinkStagedModelRepository.class, StagedModelRepository.class
-	}
+	service = StagedModelRepository.class
 )
 public class StagedAssetLinkStagedModelRepository
 	implements StagedModelRepository<StagedAssetLink> {
@@ -91,8 +89,10 @@ public class StagedAssetLinkStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		StagedAssetLink stagedAssetLink = fetchExistingAssetLink(
-			groupId, _parseAssetEntry1Uuid(uuid), _parseAssetEntry2Uuid(uuid));
+		StagedAssetLink stagedAssetLink =
+			StagedAssetLinkStagedModelRepositoryUtil.fetchExistingAssetLink(
+				groupId, _parseAssetEntry1Uuid(uuid),
+				_parseAssetEntry2Uuid(uuid));
 
 		if (stagedAssetLink != null) {
 			deleteStagedModel(stagedAssetLink);
@@ -105,33 +105,6 @@ public class StagedAssetLinkStagedModelRepository
 
 		_assetLinkLocalService.deleteGroupLinks(
 			portletDataContext.getScopeGroupId());
-	}
-
-	public StagedAssetLink fetchExistingAssetLink(
-			long groupId, String assetEntry1Uuid, String assetEntry2Uuid)
-		throws PortalException {
-
-		AssetEntry assetEntry1 = _stagingAssetEntryHelper.fetchAssetEntry(
-			groupId, assetEntry1Uuid);
-		AssetEntry assetEntry2 = _stagingAssetEntryHelper.fetchAssetEntry(
-			groupId, assetEntry2Uuid);
-
-		if ((assetEntry1 == null) || (assetEntry2 == null)) {
-			return null;
-		}
-
-		DynamicQuery dynamicQuery = _getAssetLinkDynamicQuery(
-			assetEntry1.getEntryId(), assetEntry2.getEntryId());
-
-		List<AssetLink> assetLinks = _assetLinkLocalService.dynamicQuery(
-			dynamicQuery);
-
-		if (ListUtil.isNotEmpty(assetLinks)) {
-			return ModelAdapterUtil.adapt(
-				assetLinks.get(0), AssetLink.class, StagedAssetLink.class);
-		}
-
-		return null;
 	}
 
 	@Override
@@ -202,22 +175,6 @@ public class StagedAssetLinkStagedModelRepository
 
 		return ModelAdapterUtil.adapt(
 			assetLink, AssetLink.class, StagedAssetLink.class);
-	}
-
-	private DynamicQuery _getAssetLinkDynamicQuery(
-		long entryId1, long entryId2) {
-
-		DynamicQuery dynamicQuery = _assetLinkLocalService.dynamicQuery();
-
-		Property entryId1IdProperty = PropertyFactoryUtil.forName("entryId1");
-
-		dynamicQuery.add(entryId1IdProperty.eq(entryId1));
-
-		Property entryId2IdProperty = PropertyFactoryUtil.forName("entryId2");
-
-		dynamicQuery.add(entryId2IdProperty.eq(entryId2));
-
-		return dynamicQuery;
 	}
 
 	private DynamicQuery _getAssetLinkDynamicQuery(

@@ -1070,40 +1070,6 @@ public class ObjectFieldLocalServiceImpl
 		}
 	}
 
-	private void _validateBusinessTypeEncrypted(
-			long objectDefinitionId, String businessType)
-		throws PortalException {
-
-		if (!Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
-
-			return;
-		}
-
-		if (!PropsValues.OBJECT_ENCRYPTION_ENABLED) {
-			throw new ObjectFieldBusinessTypeException(
-				"Business type encrypted is disabled");
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (!objectDefinition.isDefaultStorageType()) {
-			throw new ObjectFieldBusinessTypeException(
-				"Business type encrypted can only be used in object " +
-					"definitions with a default storage type");
-		}
-
-		try {
-			new SecretKeySpec(
-				Base64.decode(PropsValues.OBJECT_ENCRYPTION_KEY),
-				PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
-	}
-
 	private void _setReadOnlyAndReadOnlyConditionExpression(
 			String businessType, ObjectField objectField, String readOnly,
 			String readOnlyConditionExpression)
@@ -1165,6 +1131,40 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		objectField.setReadOnlyConditionExpression(readOnlyConditionExpression);
+	}
+
+	private void _validateBusinessTypeEncrypted(
+			long objectDefinitionId, String businessType)
+		throws PortalException {
+
+		if (!Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_ENCRYPTED)) {
+
+			return;
+		}
+
+		if (!PropsValues.OBJECT_ENCRYPTION_ENABLED) {
+			throw new ObjectFieldBusinessTypeException(
+				"Business type encrypted is disabled");
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (!objectDefinition.isDefaultStorageType()) {
+			throw new ObjectFieldBusinessTypeException(
+				"Business type encrypted can only be used in object " +
+					"definitions with a default storage type");
+		}
+
+		try {
+			new SecretKeySpec(
+				Base64.decode(PropsValues.OBJECT_ENCRYPTION_KEY),
+				PropsValues.OBJECT_ENCRYPTION_ALGORITHM);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
 	}
 
 	private void _validateExternalReferenceCode(

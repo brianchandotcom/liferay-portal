@@ -936,7 +936,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182704. TC-1 and TC3: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process."
+	@description = "This is a use case for LPS-182704. TC-1 and TC-3: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process."
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInPortletImportProgress {
 		task ("Export blank web content and add a new web content entry") {
@@ -967,7 +967,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182704. TC-14 and TC15: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process on virtual instance."
+	@description = "This is a use case for LPS-182704. TC-14 and TC-15: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process on virtual instance."
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressInVirtualInstance {
 		property test.name.skip.portal.instance = "ExportImportPortlet#ViewDeleteApplicationDataPopUpInPortletImportProgressInVirtualInstance";

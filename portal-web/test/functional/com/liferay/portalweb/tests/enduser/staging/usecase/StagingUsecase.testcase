@@ -2317,7 +2317,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182704. TC-7 and TC9: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during Blogs and Forms portlet import process on live site"
+	@description = "This is a use case for LPS-182704. TC-7 and TC-9: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during Blogs and Forms portlet import process on live site"
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInBlogsAndFormsImportProgressOnLiveSite {
 		task ("Export blank Blogs lar from the default site and add a blog entry in staging site") {
@@ -2395,7 +2395,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182704. TC-6 and TC8: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during Blogs and Forms portlet import process on staging site"
+	@description = "This is a use case for LPS-182704. TC-6 and TC-8: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during Blogs and Forms portlet import process on staging site"
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInBlogsAndFormsImportProgressOnStagingSite {
 		task ("Export blank Blogs lar from the default site and add a blog entry in staging site") {
@@ -2463,7 +2463,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182704. TC-5 and TC11: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on live site"
+	@description = "This is a use case for LPS-182704. TC-5 and TC-11: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on live site"
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInWCMImportProgressOnLiveSite {
 		task ("Export web content from the default site and add a new web content entry in staging site") {
@@ -2501,7 +2501,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182704. TC-4 and TC10: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on staging site"
+	@description = "This is a use case for LPS-182704. TC-4 and TC-10: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on staging site"
 	@priority = 5
 	test ViewDeleteApplicationDataPopUpInWCMImportProgressOnStagingSite {
 		task ("Export web content from the default site and add a new web content entry in staging site") {

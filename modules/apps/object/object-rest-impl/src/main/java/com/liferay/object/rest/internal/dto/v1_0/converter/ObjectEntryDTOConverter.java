@@ -613,6 +613,12 @@ public class ObjectEntryDTOConverter
 				objectDefinition.getObjectDefinitionId(), false);
 
 		for (ObjectField objectField : objectFields) {
+			if (objectField.isLocalized()) {
+				map.put(
+					objectField.getI18nObjectFieldName(),
+					values.get(objectField.getI18nObjectFieldName()));
+			}
+
 			String objectFieldName = objectField.getName();
 
 			Serializable serializable = values.get(objectFieldName);

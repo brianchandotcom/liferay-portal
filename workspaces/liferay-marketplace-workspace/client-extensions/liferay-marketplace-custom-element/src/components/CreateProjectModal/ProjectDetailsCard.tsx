@@ -67,8 +67,11 @@ export function ProjectDetailsCard({
 			</span>
 
 			<div className="create-project-modal-project-details-card-info-block-container">
-				{projectDetailsCardValues.map((cardValues) => (
-					<div className="create-project-modal-project-details-card-info-block">
+				{projectDetailsCardValues.map((cardValues, i) => (
+					<div
+						className="create-project-modal-project-details-card-info-block"
+						key={cardValues.title + i}
+					>
 						<div className="create-project-modal-project-details-card-info-block-icon-container">
 							<img src={cardValues.icon} />
 						</div>

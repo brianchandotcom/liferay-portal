@@ -1,6 +1,6 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
@@ -17,7 +17,7 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
-import {showAccountImage} from '../../utils/util';
+import {getProductVersionFromSpecifications, showAccountImage} from '../../utils/util';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {
@@ -39,7 +39,6 @@ import {
 
 import './PublishedAppsDashboardPage.scss';
 import {Liferay} from '../../liferay/liferay';
-import {getProductVersionFromSpecifications} from '../../utils/util';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
@@ -159,7 +158,7 @@ export function PublishedAppsDashboardPage() {
 							appListProductIds
 						);
 
-					let newAppList: AppProps[] = [];
+					const newAppList: AppProps[] = [];
 
 					productsItems.forEach((product, index: number) => {
 						const marketPlaceChannel =
@@ -438,7 +437,7 @@ export function PublishedAppsDashboardPage() {
 						items={[]}
 						tableHeaders={[]}
 					>
-						{(item) => <></>}
+						{() => <></>}
 					</DashboardTable>
 				</DashboardPage>
 			)}

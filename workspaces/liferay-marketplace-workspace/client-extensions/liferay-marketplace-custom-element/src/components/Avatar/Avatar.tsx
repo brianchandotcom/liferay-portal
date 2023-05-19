@@ -10,6 +10,7 @@
  */
 
 import md5 from 'md5';
+
 import {getInitials} from '../../utils/util';
 
 const AVATAR_SIZE_IN_PX = 40;

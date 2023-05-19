@@ -1,11 +1,6 @@
 import './LicensePriceChildren.scss';
 import unitedStatesIcon from '../../assets/icons/united_states_icon.svg';
 
-type Currency = {
-	icon: string;
-	name: string;
-};
-
 type Quantity = {
 	from: string;
 	to: string;

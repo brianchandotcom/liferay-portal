@@ -23,8 +23,8 @@ export type AppProps = {
 
 export type TableHeaders = {
 	iconSymbol?: string;
-	title: string;
 	style?: {width: string};
+	title: string;
 }[];
 
 interface DashboardTableProps<T> {

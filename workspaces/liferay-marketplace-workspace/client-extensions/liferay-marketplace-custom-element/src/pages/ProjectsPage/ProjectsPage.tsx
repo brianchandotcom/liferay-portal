@@ -8,8 +8,10 @@ import {
 	TableHeaders,
 } from '../../components/DashboardTable/DashboardTable';
 import {getChannels, getPlacedOrders} from '../../utils/api';
-import {DashboardListItems} from '../DashBoardPage/DashboardPage';
-import {DashboardPage} from '../DashBoardPage/DashboardPage';
+import {
+	DashboardListItems,
+	DashboardPage,
+} from '../DashBoardPage/DashboardPage';
 import {NextStepPage} from '../NextStepPage/NextStepPage';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
@@ -119,9 +121,9 @@ export function ProjectsPage({
 									);
 									const options: Intl.DateTimeFormatOptions =
 										{
-											year: 'numeric',
-											month: 'short',
 											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
 										};
 									const formattedCreateDate =
 										date.toLocaleDateString(

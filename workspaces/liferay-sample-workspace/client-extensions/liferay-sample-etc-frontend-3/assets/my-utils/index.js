@@ -1,2 +1,2 @@
-export {default as getHello} from './getHello.js';
-export {default as getBye} from './getBye.js';
+export {default as getHello} from './getHello';
+export {default as getBye} from './getBye';

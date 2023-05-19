@@ -1,9 +1,12 @@
-import config from '../config.js';
 import fs from 'fs';
 import path from 'path';
 
+import config from '../config';
+
 async function* walk(dir) {
-	if (fs.existsSync(dir) === false) return;
+	if (fs.existsSync(dir) === false) {
+		return;
+	}
 	for await (const dirent of await fs.promises.opendir(dir, {
 		withFileTypes: true,
 	})) {
@@ -27,6 +30,7 @@ const configTreeMap = async () => {
 		);
 		config[configFileName] = fs.readFileSync(configFile, 'utf-8');
 	}
+
 	return config;
 };
 

@@ -41,9 +41,9 @@ export function StepTracker({
 				{freeApp ? (
 					<span>{steps[0].name}</span>
 				) : (
-					steps.map((step) => {
+					steps.map((step, i) => {
 						return (
-							<div className="get-app-modal-step-item">
+							<div className="get-app-modal-step-item" key={i}>
 								<img
 									className={classNames(
 										'get-app-modal-step-icon',

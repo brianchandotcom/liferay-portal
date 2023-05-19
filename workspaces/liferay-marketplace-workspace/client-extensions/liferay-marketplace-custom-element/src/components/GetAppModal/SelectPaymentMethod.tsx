@@ -32,10 +32,10 @@ export function SelectPaymentMethod({
 	setBillingAddress: (value: BillingAddress) => void;
 	setEmail: (value: string) => void;
 	setEnablePurchaseButton: (value: boolean) => void;
+	setPurchaseOrderNumber: (value: string) => void;
 	setSelectedAddress: (value: string) => void;
 	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
 	setShowNewAddressButton: (value: boolean) => void;
-	setPurchaseOrderNumber: (value: string) => void;
 	showNewAddressButton: boolean;
 }) {
 	return (

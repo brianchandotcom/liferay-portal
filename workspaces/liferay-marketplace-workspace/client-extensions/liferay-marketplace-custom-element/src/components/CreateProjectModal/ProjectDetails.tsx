@@ -24,9 +24,9 @@ export function ProjectDetails({
 				<div className="create-project-modal-inputs-container">
 					<Input
 						label="Project name"
-						onChange={(e) =>
+						onChange={(event) =>
 							onProjectNameChange &&
-							onProjectNameChange(e.target.value)
+							onProjectNameChange(event.target.value)
 						}
 						placeholder="Type your environment name"
 						required
@@ -35,9 +35,9 @@ export function ProjectDetails({
 
 					<Input
 						label="Github username"
-						onChange={(e) =>
+						onChange={(event) =>
 							onGithubUsernameChange &&
-							onGithubUsernameChange(e.target.value)
+							onGithubUsernameChange(event.target.value)
 						}
 						placeholder="Type your github username"
 						required

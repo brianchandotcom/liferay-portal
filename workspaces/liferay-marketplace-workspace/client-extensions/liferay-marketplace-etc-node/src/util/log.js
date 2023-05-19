@@ -1,5 +1,3 @@
-'use strict';
-
 import {createLogger, format, transports} from 'winston';
 
 let logger;

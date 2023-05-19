@@ -60,13 +60,13 @@ interface AppContextProps extends Array<InitialStateProps | Function> {
 const AppContext = createContext({} as AppContextProps);
 
 interface AppContextProviderProps {
-	gravatarAPI: string;
 	children: ReactNode;
+	gravatarAPI: string;
 }
 
 export function AppContextProvider({
-	gravatarAPI,
 	children,
+	gravatarAPI,
 }: AppContextProviderProps) {
 	const [state, dispatch] = useReducer<
 		React.Reducer<InitialStateProps, TAction>

@@ -92,7 +92,7 @@ export function ProvideVersionDetailsPage({
 
 			makeFetch();
 		}
-	}, ['appProductId', 'dispatch', 'optionId', 'productOptionId']);
+	}, [appProductId, dispatch, optionId, productOptionId]);
 
 	return (
 		<div className="provide-version-details-page-container">

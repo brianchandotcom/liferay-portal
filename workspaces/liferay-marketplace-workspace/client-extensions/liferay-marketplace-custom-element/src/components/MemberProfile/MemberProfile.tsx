@@ -6,9 +6,9 @@ import './MemberProfile.scss';
 import catalogIcon from '../../assets/icons/catalog_icon.svg';
 import shieldCheckIcon from '../../assets/icons/shield_check_icon.svg';
 import userIcon from '../../assets/icons/user_icon.svg';
-import {DetailedCard} from '../DetailedCard/DetailedCard';
-import {Avatar} from '../Avatar/Avatar';
 import {useAppContext} from '../../manage-app-state/AppManageState';
+import {Avatar} from '../Avatar/Avatar';
+import {DetailedCard} from '../DetailedCard/DetailedCard';
 
 interface MemberProfileProps {
 	member: MemberProps;

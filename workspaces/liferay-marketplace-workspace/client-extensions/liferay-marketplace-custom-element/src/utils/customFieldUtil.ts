@@ -1,7 +1,7 @@
-export const getCustomFieldValue = (
+export function getCustomFieldValue(
 	customFields: CustomField[],
 	customFieldName: string
-) => {
+) {
 	const customField = customFields?.find(
 		(customField) => customField.name === customFieldName
 	);
@@ -15,4 +15,4 @@ export const getCustomFieldValue = (
 	}
 
 	return '';
-};
+}

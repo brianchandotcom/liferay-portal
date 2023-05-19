@@ -37,6 +37,7 @@ class CustomElement extends HTMLElement {
 const ELEMENT_NAME = 'liferay-sample-custom-element-5';
 
 if (customElements.get(ELEMENT_NAME)) {
+	// eslint-disable-next-line no-console
 	console.log(
 		`Skipping registration for <${ELEMENT_NAME}> (already registered)`
 	);

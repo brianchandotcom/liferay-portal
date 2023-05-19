@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.exportimport.data.handler;
 
-import com.liferay.dynamic.data.mapping.internal.exportimport.staged.model.repository.DDMFormInstanceRecordStagedModelRepository;
+import com.liferay.dynamic.data.mapping.internal.exportimport.staged.model.repository.DDMFormInstanceRecordStagedModelRepositoryUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -149,7 +149,7 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 			!portletDataContext.isDataStrategyMirror()) {
 
 			importedRecord =
-				_ddmFormInstanceRecordStagedModelRepository.addStagedModel(
+				DDMFormInstanceRecordStagedModelRepositoryUtil.addStagedModel(
 					portletDataContext, importedRecord, ddmFormValues);
 		}
 		else {
@@ -158,8 +158,9 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 				existingRecord.getFormInstanceRecordId());
 
 			importedRecord =
-				_ddmFormInstanceRecordStagedModelRepository.updateStagedModel(
-					portletDataContext, importedRecord, ddmFormValues);
+				DDMFormInstanceRecordStagedModelRepositoryUtil.
+					updateStagedModel(
+						portletDataContext, importedRecord, ddmFormValues);
 		}
 
 		portletDataContext.importClassedModel(record, importedRecord);
@@ -265,10 +266,10 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference(
-		service = DDMFormInstanceRecordStagedModelRepository.class,
+		service = StagedModelRepository.class,
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord)"
 	)
-	private DDMFormInstanceRecordStagedModelRepository
+	private StagedModelRepository<DDMFormInstanceRecord>
 		_ddmFormInstanceRecordStagedModelRepository;
 
 	@Reference(

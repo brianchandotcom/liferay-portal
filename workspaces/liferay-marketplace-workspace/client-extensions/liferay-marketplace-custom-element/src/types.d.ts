@@ -14,6 +14,13 @@ type Account = {
   type: string;
 };
 
+type Categories = {
+	externalReferenceCode: string;
+	id: string;
+	name: string;
+	vocabulary: string;
+};
+
 type CustomField = {
   customValue: {
     data: string;
@@ -116,17 +123,17 @@ type Catalog = {
   system: boolean;
 };
 
-type Category = {
-  description: string;
-  externalReferenceCode: string;
-  id: string;
-  name: string;
-  parentTaxonomyVocabulary: {
-    id: number;
-    name: string;
-  };
-  siteId: number;
-  taxonomyVocabularyId: number;
+type Vocabulary = {
+	description: string;
+	externalReferenceCode: string;
+	id: string;
+	name: string;
+	parentTaxonomyVocabulary: {
+		id: number;
+		name: string;
+	};
+	siteId: number;
+	taxonomyVocabularyId: number;
 };
 
 type Channel = {

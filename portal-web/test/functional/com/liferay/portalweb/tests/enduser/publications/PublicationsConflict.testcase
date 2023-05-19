@@ -601,6 +601,13 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.viewCP(
+			assetName = "WC WebContent Title",
+			assetType = "Web Content Article",
+			deleteUser = "Test Test");
 	}
 
 	@description = "Assert the conflict changes disply when adding the same folder Name in two Publications and resolve by editing"

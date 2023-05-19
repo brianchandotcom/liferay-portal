@@ -66,14 +66,6 @@ public class ConfigurationModelToDDMFormConverter {
 	public static final String NUMBER_TYPE_VALUE_VALIDATION_EXPRESSION_NAME =
 		"numberTypeValueValidation";
 
-	public static ConfigurationFieldOptionsProvider
-		getConfigurationFieldOptionsProvider(
-			String configurationPid, String fieldName) {
-
-		return _serviceTrackerMap.getService(
-			_getKey(configurationPid, fieldName));
-	}
-
 	public ConfigurationModelToDDMFormConverter(
 		ConfigurationModel configurationModel, Locale locale,
 		ResourceBundle resourceBundle) {
@@ -134,8 +126,8 @@ public class ConfigurationModelToDDMFormConverter {
 			pid = _configurationModel.getFactoryPid();
 		}
 
-		return getConfigurationFieldOptionsProvider(
-			pid, attributeDefinition.getID());
+		return _serviceTrackerMap.getService(
+			_getKey(pid, attributeDefinition.getID()));
 	}
 
 	protected String getDDMFormFieldDataType(

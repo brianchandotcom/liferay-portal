@@ -14,6 +14,8 @@
 
 package com.liferay.mail.service.impl;
 
+import com.liferay.mail.kernel.auth.token.provider.MailAuthTokenProvider;
+import com.liferay.mail.kernel.auth.token.provider.MailAuthTokenProviderRegistryUtil;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
@@ -157,6 +159,20 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		String storePrefix = "mail." + storeProtocol + ".";
 
 		properties.setProperty(storePrefix + "host", pop3Host);
+
+		MailAuthTokenProvider pop3MailAuthTokenProvider =
+			MailAuthTokenProviderRegistryUtil.getMailAuthTokenProvider(
+				companyId, pop3Host, storeProtocol);
+
+		if (pop3MailAuthTokenProvider != null) {
+			pop3Password = pop3MailAuthTokenProvider.getAccessToken(companyId);
+
+			properties.put(storePrefix + "auth.mechanisms", "XOAUTH2");
+			properties.put(
+				storePrefix + "auth.xoauth2.two.line.authentication.format",
+				"true");
+		}
+
 		properties.setProperty(storePrefix + "password", pop3Password);
 		properties.setProperty(storePrefix + "port", String.valueOf(pop3Port));
 		properties.setProperty(storePrefix + "user", pop3User);
@@ -182,6 +198,20 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		properties.setProperty(
 			transportPrefix + "auth", String.valueOf(smtpAuth));
 		properties.setProperty(transportPrefix + "host", smtpHost);
+
+		MailAuthTokenProvider smtpMailAuthTokenProvider =
+			MailAuthTokenProviderRegistryUtil.getMailAuthTokenProvider(
+				companyId, smtpHost, transportProtocol);
+
+		if (smtpMailAuthTokenProvider != null) {
+			smtpPassword = smtpMailAuthTokenProvider.getAccessToken(companyId);
+
+			properties.put(transportPrefix + "auth.mechanisms", "XOAUTH2");
+			properties.put(
+				transportPrefix + "auth.xoauth2.two.line.authentication.format",
+				"false");
+		}
+
 		properties.setProperty(transportPrefix + "password", smtpPassword);
 		properties.setProperty(
 			transportPrefix + "port", String.valueOf(smtpPort));
@@ -222,7 +252,9 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 						getPasswordAuthentication() {
 
 						return new PasswordAuthentication(
-							smtpUser, smtpPassword);
+							smtpUser,
+							properties.getProperty(
+								transportPrefix + "password"));
 					}
 
 				});

@@ -93,12 +93,11 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			(HttpServletRequest)requestContext.get("request");
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_getLayoutDisplayPageProvider(friendlyURL);
+			getLayoutDisplayPageProvider(friendlyURL, params);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(
-				layoutDisplayPageProvider, groupId, friendlyURL,
-				_getVersion(params));
+			getLayoutDisplayPageObjectProvider(
+				layoutDisplayPageProvider, groupId, friendlyURL, params);
 
 		Object infoItem = _getInfoItem(layoutDisplayPageObjectProvider, params);
 
@@ -130,9 +129,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		}
 
 		Locale locale = portal.getLocale(httpServletRequest);
-		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
-			groupId, layoutDisplayPageObjectProvider,
-			layoutDisplayPageProvider);
+		Layout layout = getLayoutDisplayPageObjectProviderLayout(
+			groupId, layoutDisplayPageObjectProvider, layoutDisplayPageProvider,
+			params);
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
@@ -182,20 +181,19 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_getLayoutDisplayPageProvider(friendlyURL);
+			getLayoutDisplayPageProvider(friendlyURL, params);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(
-				layoutDisplayPageProvider, groupId, friendlyURL,
-				_getVersion(params));
+			getLayoutDisplayPageObjectProvider(
+				layoutDisplayPageProvider, groupId, friendlyURL, params);
 
 		if (layoutDisplayPageObjectProvider == null) {
 			throw new PortalException();
 		}
 
-		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
-			groupId, layoutDisplayPageObjectProvider,
-			layoutDisplayPageProvider);
+		Layout layout = getLayoutDisplayPageObjectProviderLayout(
+			groupId, layoutDisplayPageObjectProvider, layoutDisplayPageProvider,
+			params);
 
 		String originalFriendlyURL = _getOriginalFriendlyURL(friendlyURL);
 
@@ -223,6 +221,34 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
 			groupId, layoutDisplayPageObjectProvider.getClassNameId(),
 			layoutDisplayPageObjectProvider.getClassPK());
+	}
+
+	protected LayoutDisplayPageObjectProvider<?>
+		getLayoutDisplayPageObjectProvider(
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
+			long groupId, String friendlyURL, Map<String, String[]> params) {
+
+		return _getLayoutDisplayPageObjectProvider(
+			layoutDisplayPageProvider, groupId, friendlyURL,
+			_getVersion(params));
+	}
+
+	protected Layout getLayoutDisplayPageObjectProviderLayout(
+		long groupId,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
+		Map<String, String[]> params) {
+
+		return _getLayoutDisplayPageObjectProviderLayout(
+			groupId, layoutDisplayPageObjectProvider,
+			layoutDisplayPageProvider);
+	}
+
+	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
+			String friendlyURL, Map<String, String[]> params)
+		throws PortalException {
+
+		return _getLayoutDisplayPageProvider(friendlyURL);
 	}
 
 	protected Locale getLocale(Map<String, Object> requestContext) {

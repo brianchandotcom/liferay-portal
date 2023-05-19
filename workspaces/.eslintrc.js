@@ -53,7 +53,7 @@ config = {
 		'@liferay/portal/unexecuted-ismounted': 'off',
 		'no-empty': ['error', {allowEmptyCatch: true}],
 		'notice/notice': [
-			'off',
+			'error',
 			{
 				nonMatchingTolerance: 0.7,
 				onNonMatchingHeader: 'replace',

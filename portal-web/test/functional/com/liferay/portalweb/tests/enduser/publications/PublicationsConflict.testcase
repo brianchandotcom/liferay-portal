@@ -545,17 +545,15 @@ definition {
 			publicationName = "Publication 1 Name",
 			publishedPublication = "true");
 
-		// Workaround LPS-134018
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		/*WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");*/
+		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
 		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-		/*WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title 2 Edit");*/
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title 2 Edit");
 
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
 

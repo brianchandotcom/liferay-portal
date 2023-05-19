@@ -539,6 +539,130 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11509. As a sales agent, I want to be able to mark a quote as processed in the store-front"
+	@priority = 5
+	test CanSalesAgentProcessQuote {
+		property portal.acceptance = "true";
+
+		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And a Commerce Account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And that Commerce Account is linked to the Test Organization") {
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Commerce Account",
+				organizationName = "Test Organization");
+		}
+
+		task ("And 2 quotes are requested for 2 orders") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			var firstOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			var secondOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 3);
+
+			for (var orderId : list "${firstOrderId},${secondOrderId}") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+				WaitForElementPresent(
+					key_orderId = ${orderId},
+					locator1 = "CommerceOrders#PENDING_ORDERS_VIEW_BUTTON_BY_ID");
+
+				Click.clickAt(
+					key_orderId = ${orderId},
+					locator1 = "CommerceOrders#PENDING_ORDERS_VIEW_BUTTON_BY_ID");
+
+				CommerceOrders.createQuoteRequest(
+					quoteRequestValue = "I kindly request a quote for this product.",
+					requestAQuoteInOpenOrdersPage = "true");
+			}
+		}
+
+		task ("When the Sales Agent logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "sales.agent@liferay.com");
+		}
+
+		task ("And navigates to the first order's detail page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			Click.clickAt(
+				key_entryName = ${firstOrderId},
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("Then the sales agent is able to mark the quote as processed") {
+			AssertElementPresent(
+				key_text = "Process Quote",
+				locator1 = "Button#ANY_WITH_SPAN");
+
+			AssertElementPresent(
+				key_status = "Quote Requested",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+
+			Click(
+				key_text = "Process Quote",
+				locator1 = "Button#ANY_WITH_SPAN");
+
+			AssertElementPresent(
+				key_status = "Quote Processed",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+
+			AssertElementNotPresent(
+				key_text = "Process Quote",
+				locator1 = "Button#ANY_WITH_SPAN");
+		}
+
+		task ("When the Manage Quotes permission is removed from the Sales Agent role") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "MANAGE_QUOTES",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Sales Agent");
+		}
+
+		task ("Then the Sales Agent user is not able to mark a quote as processed") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			Click.clickAt(
+				key_entryName = ${secondOrderId},
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			AssertElementNotPresent(
+				key_text = "Process Quote",
+				locator1 = "Button#ANY_WITH_SPAN");
+		}
+	}
+
 	@description = "COMMERCE-9871 |  As a Sales Agent, I want to be able to see all the accounts and orders that are present in the organization to which the Sales Agent belongs"
 	@priority = 5
 	test CanViewAccountsAndOrdersAsSalesAgent {

@@ -828,7 +828,7 @@ export async function postTrialProductOption(
 	return id;
 }
 
-export async function updateApp({
+export function updateApp({
 	appDescription,
 	appERC,
 	appName,
@@ -837,7 +837,7 @@ export async function updateApp({
 	appERC: string;
 	appName: string;
 }) {
-	return await fetch(
+	return fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}`,
 		{
 			body: JSON.stringify({

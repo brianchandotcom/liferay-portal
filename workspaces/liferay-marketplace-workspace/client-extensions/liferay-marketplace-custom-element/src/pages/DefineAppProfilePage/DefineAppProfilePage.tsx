@@ -45,8 +45,6 @@ export function DefineAppProfilePage({
 		},
 		dispatch,
 	] = useAppContext();
-	const [categories, setCategories] = useState([]);
-	const [tags, setTags] = useState([]);
 
 	const handleLogoUpload = (files: FileList) => {
 		const file = files[0];
@@ -79,69 +77,8 @@ export function DefineAppProfilePage({
 		});
 	};
 
-	const onContinue = async () => {
-		let product;
-		let response;
-
-		const channels = await getChannels();
-
-		const marketplaceChannel = channels.find(
-			(channel) => channel.name === 'Marketplace Channel'
-		);
-
-		if (appERC) {
-			response = await updateApp({
-				appDescription,
-				appERC,
-				appName,
-			});
-		}
-		else {
-			response = await createApp({
-				appCategories: [...appCategories, ...appTags],
-				appDescription,
-				appName,
-				catalogId,
-				productChannels: [
-					{
-						channelId: marketplaceChannel?.id as number,
-						id: marketplaceChannel?.id as number,
-						currencyCode:
-							marketplaceChannel?.currencyCode as string,
-						externalReferenceCode:
-							marketplaceChannel?.externalReferenceCode as string,
-						name: marketplaceChannel?.name as string,
-						type: marketplaceChannel?.type as string,
-					},
-				],
-			});
-
-			product = await response.json();
-
-			dispatch({
-				payload: {
-					value: {
-						appERC: product.externalReferenceCode,
-						appId: product.id,
-						appProductId: product.productId,
-						appWorkflowStatusInfo: product.workflowStatusInfo,
-					},
-				},
-				type: TYPES.SUBMIT_APP_PROFILE,
-			});
-		}
-
-		if (appLogo) {
-			submitBase64EncodedFile({
-				appERC: product.externalReferenceCode,
-				file: appLogo.file,
-				requestFunction: createImage,
-				title: appLogo.fileName,
-			});
-		}
-
-		onClickContinue();
-	};
+	const [categories, setCategories] = useState([]);
+	const [tags, setTags] = useState([]);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -340,7 +277,72 @@ export function DefineAppProfilePage({
 					!appCategories || !appDescription || !appName || !appTags
 				}
 				onClickBack={() => onClickBack()}
-				onClickContinue={async () => await onContinue()}
+				onClickContinue={async () => {
+					let product;
+					let response;
+
+					const channels = await getChannels();
+
+					const marketplaceChannel = channels.find(
+						(channel) => channel.name === 'Marketplace Channel'
+					);
+
+					if (appERC) {
+						response = await updateApp({
+							appDescription,
+							appERC,
+							appName,
+						});
+					}
+					else {
+						response = await createApp({
+							appCategories: [...appCategories, ...appTags],
+							appDescription,
+							appName,
+							catalogId,
+							productChannels: [
+								{
+									channelId: marketplaceChannel?.id as number,
+									id: marketplaceChannel?.id as number,
+									currencyCode:
+										marketplaceChannel?.currencyCode as string,
+									externalReferenceCode:
+										marketplaceChannel?.externalReferenceCode as string,
+									name: marketplaceChannel?.name as string,
+									type: marketplaceChannel?.type as string,
+								},
+							],
+						});
+					}
+
+					if (!appERC) {
+						product = await response.json();
+
+						dispatch({
+							payload: {
+								value: {
+									appERC: product.externalReferenceCode,
+									appId: product.id,
+									appProductId: product.productId,
+									appWorkflowStatusInfo:
+										product.workflowStatusInfo,
+								},
+							},
+							type: TYPES.SUBMIT_APP_PROFILE,
+						});
+					}
+
+					if (appLogo) {
+						submitBase64EncodedFile({
+							appERC: product.externalReferenceCode,
+							file: appLogo.file,
+							requestFunction: createImage,
+							title: appLogo.fileName,
+						});
+					}
+
+					onClickContinue();
+				}}
 				showBackButton
 			/>
 		</div>

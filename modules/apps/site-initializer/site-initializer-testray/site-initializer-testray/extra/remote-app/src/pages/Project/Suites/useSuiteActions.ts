@@ -37,11 +37,13 @@ const useSuiteActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({id}, mutate) => {
 				deleteResource(`/suites/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
-					.catch(form.onError),
+					.catch(form.onError);
+				isHeaderActions && navigate('../');
+			},
 			icon: 'trash',
 			name: isHeaderActions
 				? i18n.sub('delete-x', 'suite')

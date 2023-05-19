@@ -81,11 +81,13 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({id}, mutate) => {
 				deleteResource(`/builds/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
-					.catch(modal.onError),
+					.catch(modal.onError);
+				isHeaderActions && navigate('../');
+			},
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-build' : 'delete'),
 			permission: 'DELETE',

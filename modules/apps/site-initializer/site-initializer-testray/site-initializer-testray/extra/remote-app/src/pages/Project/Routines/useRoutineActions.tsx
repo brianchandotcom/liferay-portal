@@ -66,11 +66,13 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({id}, mutate) => {
 				deleteResource(`/routines/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
-					.catch(form.onError),
+					.catch(form.onError);
+				isHeaderActions && navigate('../');
+			},
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-routine' : 'delete'),
 			permission: 'DELETE',

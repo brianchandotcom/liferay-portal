@@ -43,11 +43,14 @@ const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			name: i18n.translate('link-requirements'),
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({id}, mutate) => {
 				deleteResource(`/cases/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
-					.catch(form.onError),
+					.catch(form.onError);
+				isHeaderActions && navigate('../');
+			},
+
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-case' : 'delete'),
 			permission: 'DELETE',

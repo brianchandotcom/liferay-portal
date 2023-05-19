@@ -51,11 +51,13 @@ const useRequirementActions = ({
 			permission: 'UPDATE',
 		},
 		{
-			action: ({id}, mutate) =>
+			action: ({id}, mutate) => {
 				deleteResource(`/requirements/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(onSave)
-					.catch(onError),
+					.catch(onError);
+				isHeaderActions && navigate('../');
+			},
 			icon: 'trash',
 			name: i18n.translate(
 				isHeaderActions ? 'delete-requirement' : 'delete'

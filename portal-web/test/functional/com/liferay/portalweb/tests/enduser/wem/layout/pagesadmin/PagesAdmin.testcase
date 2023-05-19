@@ -1929,6 +1929,123 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177031. Page option Copy Page with Permissions works in content page and widget page for available roles to organization site"
+	@priority = 3
+	test ViewCopyPageWithPermissionsForAvailableRolesToOrganizationSite {
+		var organizationName = StringUtil.randomString(8);
+
+		var organizationName = StringUtil.toLowerCase(${organizationName});
+
+		task ("Given a content page and a widget page with view permissions for new organization role and new regular role") {
+			JSONOrganization.addOrganization(
+				organizationName = ${organizationName},
+				organizationSite = "true");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${organizationName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${organizationName});
+
+			PageEditor.publish();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Content Page Name");
+
+			IFrame.selectPermissionsFrame();
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Organization User");
+		}
+
+		task ("When we copy these pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Copy",
+				pageName = "Test Content Page Name");
+
+			DropdownMenuItem.click(menuItem = "Page With Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Copy Content Page Name");
+
+			Button.click(button = "Add");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			PagesAdmin.viewPageStatus(
+				pageName = "Copy Content Page Name",
+				status = "Draft");
+
+			PermissionsInline.gotoPagePG(
+				pageName = "Copy Content Page Name",
+				site = ${organizationName});
+
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				permissionFlagged = "true",
+				roleTitle = "Organization User");
+		}
+
+		task ("Then the permissions must be the same as on the original pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
+
+			JSONLayout.addPublicLayout(
+				groupName = ${organizationName},
+				layoutName = "Test Widget Page Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Widget Page Name");
+
+			IFrame.selectPermissionsFrame();
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Organization User");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Copy",
+				pageName = "Test Widget Page Name");
+
+			DropdownMenuItem.click(menuItem = "Page With Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Copy Widget Page Name");
+
+			Button.click(button = "Add");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			PermissionsInline.gotoPagePG(
+				pageName = "Copy Widget Page Name",
+				site = ${organizationName});
+
+			Role.viewPermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				permissionFlagged = "true",
+				roleTitle = "Organization User");
+		}
+	}
+
 	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
 	@priority = 5
 	test ViewDisplayPageTemplateViaCollectionItems {

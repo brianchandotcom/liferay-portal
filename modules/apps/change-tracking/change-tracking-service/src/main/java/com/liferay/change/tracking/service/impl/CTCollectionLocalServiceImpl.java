@@ -1076,29 +1076,10 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		CTClosure ctClosure = _ctClosureFactory.create(
-			ctCollection.getCtCollectionId());
+			ctCollection.getCtCollectionId(), modelClassNameId);
 
 		Map<Long, Set<Long>> enclosureMap = CTEnclosureUtil.getEnclosureMap(
 			ctClosure, modelClassNameId, modelClassPK);
-
-		for (Map.Entry<Long, Long> entry :
-				CTEnclosureUtil.getEnclosureParentEntries(
-					ctClosure, enclosureMap)) {
-
-			long classNameId = entry.getKey();
-			long classPK = entry.getValue();
-
-			count = _ctEntryPersistence.countByC_MCNI_MCPK(
-				ctCollection.getCtCollectionId(), classNameId, classPK);
-
-			if (count > 0) {
-				throw new CTEnclosureException(
-					StringBundler.concat(
-						"{classNameId=", classNameId, ", classPK=", classPK,
-						", ctCollectionId=", ctCollection.getCtCollectionId(),
-						"}"));
-			}
-		}
 
 		Map<Long, List<CTEntry>> discardCTEntries = new HashMap<>();
 

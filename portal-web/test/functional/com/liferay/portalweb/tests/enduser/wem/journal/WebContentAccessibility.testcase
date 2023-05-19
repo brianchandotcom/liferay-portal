@@ -153,6 +153,7 @@ definition {
 
 		task ("Then should be no accessibility problem in Web content with date and time field structure") {
 			PageEditorMapping.gotoEditableFieldMapping(
+				className = "",
 				fragmentName = "Date",
 				id = "element-date");
 

@@ -304,6 +304,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser);
 
+		dtoConverterContext.setAttribute("groupId", layout.getGroupId());
+
 		return _sitePageDTOConverter.toDTO(dtoConverterContext, layout);
 	}
 

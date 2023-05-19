@@ -2737,9 +2737,9 @@ definition {
 		Blueprints.viewEntriesSpecificOrder(entryList = "Test Blueprint 2,Test Blueprint 3,Test Blueprint 1");
 	}
 
-	@description = "This is a use case for LPS-172131"
+	@description = "LPS-172131 - A user can use Blueprints to sort by custom object fields"
 	test SortByCustomObjectFieldsViaBlueprintsConfig {
-		task ("Create a site scoped object and add the following fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
+		task ("Create a site scoped object and add the following custom fields to it: 'title' as a keyword, 'siteID' as an integer, and 'date' as a date") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object",
 				objectName = "CustomObject",
@@ -2781,7 +2781,7 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
 		}
 
-		task ("Create three object entries") {
+		task ("Create three object entries that configure the title, siteID, and date fields") {
 			JSONObject.addObjectEntryViaJSONAPI(
 				fieldList = "title/Apple Fruit,siteID/3,date/2023-04-02",
 				objectName = "CustomObject");
@@ -2795,7 +2795,7 @@ definition {
 				objectName = "CustomObject");
 		}
 
-		task ("Create a Blueprint") {
+		task ("Create a blueprint") {
 			Blueprints.openBlueprintsAdmin();
 
 			Blueprints.createBlueprint(title = "Test Blueprint");

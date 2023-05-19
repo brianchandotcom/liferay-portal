@@ -1050,6 +1050,7 @@ definition {
 	}
 
 	@description = "Widgets pages run into conflicts in a publication"
+	@priority = 3
 	test WidgetPageChangesCanBeAutomaticallyResolved {
 		JSONGroup.addGroup(groupName = "Test Site");
 

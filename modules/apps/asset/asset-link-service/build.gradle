@@ -5,6 +5,7 @@ dependencies {
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:export-import:export-import-service")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }

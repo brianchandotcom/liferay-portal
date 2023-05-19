@@ -26,6 +26,7 @@ import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -183,6 +184,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		Log4JUtil.shutdownLog4J();
+
+		try {
+			SystemExecutorServiceUtil.shutdown();
+		}
+		catch (InterruptedException interruptedException) {
+			_log.error(interruptedException);
+		}
 	}
 
 	@Override

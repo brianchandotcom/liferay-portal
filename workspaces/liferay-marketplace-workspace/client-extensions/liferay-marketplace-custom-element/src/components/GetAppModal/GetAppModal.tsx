@@ -166,7 +166,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			setSku(selectedSku as SKU);
 		}
-	}, [selectedPaymentMethod]);
+	}, [selectedPaymentMethod, freeApp, skus]);
 
 	useEffect(() => {
 		const getModalInfo = async () => {
@@ -258,7 +258,10 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 							}) => customField.name === 'CatalogId'
 						);
 
-						return catalogIdField?.customValue.data == String(catalogId);
+						return (
+							catalogIdField?.customValue.data ===
+							String(catalogId)
+						);
 					}
 				}
 			);
@@ -421,13 +424,8 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		}
 
 		return;
-	}, [
-		billingAddress,
-		enablePurchaseButton,
-		freeApp,
-		selectedAccount,
-		showSelectAccount,
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [enablePurchaseButton, freeApp, selectedAccount, showSelectAccount]);
 
 	const getButtonText = () => {
 		if (!freeApp) {

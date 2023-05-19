@@ -9,10 +9,10 @@ export const appList: AppProps[] = [];
 
 export const initialAccountState: Account[] = [
 	{
+		description: '',
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
-		description: '',
 		type: '',
 	},
 ];

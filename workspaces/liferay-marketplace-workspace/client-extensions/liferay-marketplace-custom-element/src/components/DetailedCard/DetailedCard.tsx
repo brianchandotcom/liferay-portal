@@ -1,5 +1,3 @@
-import classNames from 'classnames';
-
 import './DetailedCard.scss';
 
 import ClayIcon from '@clayui/icon';
@@ -20,7 +18,6 @@ export function DetailedCard({
 	cardTitle,
 	children,
 	clayIcon,
-	sizing,
 }: DetailedCardProps) {
 	return (
 		<div className="detailed-card-container">

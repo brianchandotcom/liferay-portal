@@ -10,9 +10,10 @@ export function PaymentMethodMode({
 }) {
 	return (
 		<Section className="get-app-modal-section" label="Payment Method">
-			{paymentModes.map((paymentMode) => {
+			{paymentModes.map((paymentMode, i) => {
 				return (
 					<RadioCard
+						key={i}
 						onChange={() => {}}
 						selected={selectedPaymentMethod === 'pay'}
 						small

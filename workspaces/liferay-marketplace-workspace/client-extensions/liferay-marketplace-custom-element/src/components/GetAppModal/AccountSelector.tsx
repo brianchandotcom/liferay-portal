@@ -58,6 +58,7 @@ export function AccountSelector({
 					return (
 						<RadioCard
 							icon={showAccountImage(account.logoURL)}
+							key={account.id}
 							onChange={() => {
 								setSelectedAccount(account);
 							}}

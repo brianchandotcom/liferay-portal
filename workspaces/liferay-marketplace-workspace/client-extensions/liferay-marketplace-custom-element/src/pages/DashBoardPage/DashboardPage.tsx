@@ -6,7 +6,6 @@ import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
 
 import './DashboardPage.scss';
-import {Liferay} from '../../liferay/liferay';
 
 export interface DashboardListItems {
 	itemIcon: string;
@@ -31,8 +30,8 @@ interface DashBoardPageProps {
 		title: string;
 	};
 	onButtonClick?: () => void;
-	setSelectedApp?: (value: AppProps | undefined) => void;
 	selectedApp?: AppProps;
+	setSelectedApp?: (value: AppProps | undefined) => void;
 }
 
 export function DashboardPage({

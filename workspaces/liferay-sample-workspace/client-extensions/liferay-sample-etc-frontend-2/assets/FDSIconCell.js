@@ -1,4 +1,4 @@
-import {upperCase} from './shared-utils.js';
+import {upperCase} from './shared-utils';
 
 const fdsCellRenderer = ({value}) => {
 	const element = document.createElement('div');

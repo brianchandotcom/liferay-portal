@@ -438,8 +438,8 @@ export async function getOrderTypes() {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-order/v1.0/order-types`,
 		{
-			method: 'GET',
 			headers,
+			method: 'GET',
 		}
 	);
 
@@ -747,8 +747,8 @@ export async function postOrder(order: Order) {
 		'/o/headless-commerce-admin-order/v1.0/orders',
 		{
 			body: JSON.stringify(order),
-			method: 'POST',
 			headers,
+			method: 'POST',
 		}
 	);
 

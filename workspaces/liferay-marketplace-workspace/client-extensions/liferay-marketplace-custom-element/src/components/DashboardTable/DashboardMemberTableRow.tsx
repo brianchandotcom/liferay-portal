@@ -2,9 +2,9 @@ import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 
 import './PublishedAppsDashboardTableRow.scss';
+import {useAppContext} from '../../manage-app-state/AppManageState';
 import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 import {Avatar} from '../Avatar/Avatar';
-import {useAppContext} from '../../manage-app-state/AppManageState';
 
 interface DashboardMemberTableRowProps {
 	item: MemberProps;

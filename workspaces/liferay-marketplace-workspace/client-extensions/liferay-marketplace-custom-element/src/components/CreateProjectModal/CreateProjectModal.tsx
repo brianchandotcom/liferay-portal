@@ -28,14 +28,14 @@ interface CreateProjectModalProps {
 
 const multiStepItemsInitialValues = [
 	{
+		completed: false,
 		label: 'Rules & Guidelines',
 		selected: true,
-		completed: false,
 	},
 	{
+		completed: false,
 		label: 'Project Details',
 		selected: false,
-		completed: false,
 	},
 ];
 
@@ -108,13 +108,11 @@ export function CreateProjectModal({
 
 			let newCart: Partial<Cart> = {};
 
-			let cartResponse;
-
 			newCart = {
 				...cart,
 			};
 
-			cartResponse = await postCartByChannelId({
+			const cartResponse = await postCartByChannelId({
 				cartBody: newCart,
 				channelId: currentChannel.id,
 			});
@@ -129,8 +127,8 @@ export function CreateProjectModal({
 
 			const orderCustomFields = {
 				customFields: {
-					'Project Name': projectName,
 					'Github username': githubUsername,
+					'Project Name': projectName,
 				},
 			};
 
@@ -159,8 +157,11 @@ export function CreateProjectModal({
 				<div className="create-project-modal-multi-step-container">
 					<div className="create-project-modal-multi-step-divider" />
 
-					{multiStepItems.map((multiStepItem) => (
-						<div className="create-project-modal-multi-step-item-container">
+					{multiStepItems.map((multiStepItem, i) => (
+						<div
+							className="create-project-modal-multi-step-item-container"
+							key={multiStepItem.label + i}
+						>
 							<img
 								alt="Circle Icon"
 								className={classNames(

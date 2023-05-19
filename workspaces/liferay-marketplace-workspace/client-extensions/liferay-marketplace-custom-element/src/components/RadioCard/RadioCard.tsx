@@ -6,9 +6,6 @@ import radioUnchecked from '../../assets/icons/radio_button_unchecked_icon.svg';
 import paypal from '../../assets/images/paypal.png';
 
 import './RadioCard.scss';
-
-import {useState} from 'react';
-
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface RadioCardProps {

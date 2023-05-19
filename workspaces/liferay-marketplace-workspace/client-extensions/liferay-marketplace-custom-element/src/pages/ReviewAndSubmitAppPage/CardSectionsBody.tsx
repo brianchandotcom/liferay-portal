@@ -138,8 +138,8 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 							}}
 							value={
 								app?.price.toLocaleString('en-US', {
-									style: 'currency',
 									currency: 'USD',
+									style: 'currency',
 								}) as string
 							}
 						/>

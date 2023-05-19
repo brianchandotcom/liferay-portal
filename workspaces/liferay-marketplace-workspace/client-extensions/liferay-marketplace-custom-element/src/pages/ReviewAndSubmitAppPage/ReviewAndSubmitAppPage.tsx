@@ -138,8 +138,8 @@ export function ReviewAndSubmitAppPage({
 				name: productResponse.name['en_US'],
 				price: nonTrialSKU?.price as number,
 				priceModel,
-				supportAndHelp: supportAndHelpCardInfos,
 				storefront: productResponse.images,
+				supportAndHelp: supportAndHelpCardInfos,
 				tags: productTags,
 				thumbnail: productResponse.thumbnail,
 				version,
@@ -238,7 +238,6 @@ export function ReviewAndSubmitAppPage({
 						regarding this app submission until Liferay completes
 						its review process and I agree with the Liferay
 						Marketplace <a href="#">terms</a> and{' '}
-
 						<a href="#">privacy</a>
 					</span>
 				</div>

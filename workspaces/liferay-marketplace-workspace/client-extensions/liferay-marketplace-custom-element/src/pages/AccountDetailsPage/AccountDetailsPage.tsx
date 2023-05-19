@@ -247,8 +247,11 @@ export function AccountDetailsPage({
 						cardTitle="Address"
 					>
 						<table className="account-details-body-table">
-							{selectedAccountAddress?.map((address) => (
-								<tr className="account-details-body-table-row">
+							{selectedAccountAddress?.map((address, i) => (
+								<tr
+									className="account-details-body-table-row"
+									key={i}
+								>
 									<th>Business Address</th>
 
 									<td className="account-details-body-table-description">

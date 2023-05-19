@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
 import radioSelected from '../../assets/icons/radio_button_checked_2_icon.svg';
 import timeline from '../../assets/images/timeline.png';

@@ -1,5 +1,5 @@
-const {globSync} = require('glob');
 const fs = require('fs');
+const {globSync} = require('glob');
 const path = require('path');
 
 const HEADER_REGEXP = /<!--(.*)-->/s;

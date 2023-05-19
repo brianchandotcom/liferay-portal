@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
 import {useEffect, useState} from 'react';

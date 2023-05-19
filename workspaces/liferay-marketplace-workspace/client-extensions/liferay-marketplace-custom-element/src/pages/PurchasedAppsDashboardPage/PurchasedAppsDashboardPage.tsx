@@ -1,6 +1,6 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
@@ -39,8 +39,6 @@ import {
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
-
-import './PurchasedAppsDashboardPage.scss';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -417,7 +415,7 @@ export function PurchasedAppsDashboardPage() {
 						items={solutionsItems}
 						tableHeaders={[]}
 					>
-						{(item) => <></>}
+						{() => <></>}
 					</DashboardTable>
 				</DashboardPage>
 			)}

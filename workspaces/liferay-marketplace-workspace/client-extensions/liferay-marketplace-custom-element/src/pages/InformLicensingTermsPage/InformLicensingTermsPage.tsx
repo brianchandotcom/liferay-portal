@@ -6,8 +6,14 @@ import {Header} from '../../components/Header/Header';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 import {
+	addSkuExpandoValue,
+	createAppSKU,
 	createProductSpecification,
 	createSpecification,
+	deleteTrialSKU,
+	getProductSKU,
+	getSKUById,
+	patchSKUById,
 	updateProductSpecification,
 } from '../../utils/api';
 
@@ -16,14 +22,6 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {
-	addSkuExpandoValue,
-	createAppSKU,
-	deleteTrialSKU,
-	getProductSKU,
-	getSKUById,
-	patchSKUById,
-} from '../../utils/api';
 import {createSkuName} from '../../utils/util';
 
 interface InformLicensingTermsPageProps {

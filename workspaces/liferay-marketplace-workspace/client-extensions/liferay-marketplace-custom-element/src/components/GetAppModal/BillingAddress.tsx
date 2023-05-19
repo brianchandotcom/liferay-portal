@@ -50,18 +50,19 @@ export function BillingAddress({
 		else {
 			setEnablePurchaseButton(false);
 		}
-	}, [billingAddress]);
+	}, [billingAddress, setEnablePurchaseButton]);
 
 	return (
 		<Section className="get-app-modal-section" label="Billing Address">
 			<div className="get-app-modal-section-card-addresses">
-				{addresses.map((address) => {
+				{addresses.map((address, i) => {
 					const {description, title} =
 						getPostalAddressDescription(address);
 
 					return (
 						<RadioCard
 							description={description}
+							key={i}
 							onChange={() => {
 								setSelectedAddress(address.name as string);
 

@@ -1,10 +1,16 @@
 [
 	{
-		"relationShipName": "accountEntryToTestObjectDefinition4",
-		"objectDefinitionName": "AccountEntry"
+		"objectDefinitionName": "TestObjectDefinition4",
+		"relationShipName": "accountEntryToTestObjectDefinition4"
+
 	},
 	{
-		"relationShipName": "accountEntryToTestObjectDefinition5",
-		"objectDefinitionName": "AccountEntry"
+		"objectDefinitionName": "TestObjectDefinition5",
+		"relationShipName": "accountEntryToTestObjectDefinition5"
+
+	},
+	{
+		"objectDefinitionName": "TestObjectDefinition1",
+		"objectField": "field1"
 	}
 ]

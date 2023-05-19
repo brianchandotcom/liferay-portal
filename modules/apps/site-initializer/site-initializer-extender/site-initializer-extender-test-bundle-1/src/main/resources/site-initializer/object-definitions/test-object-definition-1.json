@@ -1,5 +1,4 @@
 {
-	"accountEntryRestricted": false,
 	"label": {
 		"en_US": "Test Object Definition 1"
 	},
@@ -19,5 +18,6 @@
 	"pluralLabel": {
 		"en_US": "Test Object Definitions 1"
 	},
-	"scope": "site"
+	"scope": "site",
+	"storageType": "salesforce"
 }

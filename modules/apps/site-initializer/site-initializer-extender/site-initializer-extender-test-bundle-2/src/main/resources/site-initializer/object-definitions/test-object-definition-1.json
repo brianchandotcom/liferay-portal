@@ -19,5 +19,6 @@
 	"pluralLabel": {
 		"en_US": "Test Object Definitions 1"
 	},
-	"scope": "site"
+	"scope": "site",
+	"storageType": "salesforce"
 }

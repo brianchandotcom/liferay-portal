@@ -279,14 +279,16 @@ public class ObjectFieldLocalServiceImpl
 			return _addObjectField(
 				null, userId, 0, objectDefinitionId, businessType, dbColumnName,
 				dbTableName, dbType, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, false, name, "true", null,
-				required, state, true);
+				indexedLanguageId, labelMap, false, name,
+				ObjectFieldConstants.READ_ONLY_TRUE, null, required, state,
+				true);
 		}
 
 		return _addObjectField(
 			null, userId, 0, objectDefinitionId, businessType, dbColumnName,
 			dbTableName, dbType, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, false, name, "false", null, required, state, true);
+			labelMap, false, name, ObjectFieldConstants.READ_ONLY_FALSE, null,
+			required, state, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

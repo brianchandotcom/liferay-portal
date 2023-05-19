@@ -96,21 +96,12 @@ definition {
 	@description = "This is a test for LPS-182417. No accessibility issue in web content with date-time field structure"
 	@priority = 4
 	test ViewNoAccessibilityIssuesInDateTimeField {
-		var structureName = StringUtil.randomString(8);
-
-		var structureName = StringUtil.toLowerCase(${structureName});
-		var webContentName = StringUtil.randomString(8);
-
-		var webContentName = StringUtil.toLowerCase(${webContentName});
-
 		task ("Given a web content with a date and time field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "${structureName} Description",
-				structureName = ${structureName});
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Date and Time",
@@ -118,13 +109,13 @@ definition {
 
 			AssertElementAccessible(locator1 = "//div[contains(@class,'ddm-field-container')][contains(@data-field-name,'DateTime')]");
 
-			WebContentStructures.saveCP(structureName = ${structureName});
+			WebContentStructures.saveCP();
 
 			NavItem.gotoWebContent();
 
-			WebContentNavigator.gotoAddWithStructureCP(structureName = ${structureName});
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			PortletEntry.inputTitle(title = ${webContentName});
+			PortletEntry.inputTitle(title = "Web Content Title");
 
 			DERenderer.inputDataInDateField(
 				fieldLabel = "Date and Time",
@@ -158,7 +149,7 @@ definition {
 				id = "element-date");
 
 			PageEditorMapping.mapEditableFieldToAsset(
-				entryTitle = ${webContentName},
+				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
 			Select(

@@ -654,15 +654,13 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Date and Time",
 				fieldName = "Date and Time");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 
 			NavItem.gotoWebContent();
 
@@ -741,9 +739,7 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Date and Time",
@@ -753,7 +749,7 @@ definition {
 				fieldFieldLabel = "Text",
 				fieldName = "Text");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 
 			NavItem.gotoWebContent();
 

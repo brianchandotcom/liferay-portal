@@ -5,6 +5,10 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(accountId))) {
+			var accountId = 0;
+		}
+
 		if (!(isSet(catalogCurrency))) {
 			var catalogCurrency = "USD";
 		}
@@ -19,6 +23,7 @@ definition {
 			${portalURL}/api/jsonws/commerce.commercecatalog/add-commerce-catalog \
 				-u ${userLoginInfo} \
 				-d externalReferenceCode='' \
+				-d accountId=${accountId} \
 				-d name=${catalogName} \
 				-d commerceCurrencyCode=${catalogCurrency} \
 				-d catalogDefaultLanguageId=${catalogLanguage}

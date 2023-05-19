@@ -3,13 +3,6 @@ import React, {ReactNode, createContext, useContext, useReducer} from 'react';
 import {UploadedFile} from '../components/FileList/FileList';
 import {TAction, appReducer} from './reducer';
 
-type Categories = {
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-	vocabulary: string;
-};
-
 type Specification = {
 	id: number;
 	value: string;

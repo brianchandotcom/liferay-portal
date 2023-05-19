@@ -6,13 +6,6 @@ const headers = {
 	'X-CSRF-Token': Liferay.authToken,
 };
 
-type Categories = {
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-	vocabulary: string;
-};
-
 export const baseURL =
 	window.location.origin + Liferay.ThemeDisplay.getPathContext();
 
@@ -299,7 +292,9 @@ export async function getCategories({vocabId}: {vocabId: number}) {
 		}
 	);
 
-	return response.json();
+	const {items} = (await response.json()) as {items: Vocabulary[]};
+
+	return items;
 }
 
 export async function getCategoriesRanked() {
@@ -311,7 +306,7 @@ export async function getCategoriesRanked() {
 		}
 	);
 
-	const {items} = (await response.json()) as {items: Category[]};
+	const {items} = (await response.json()) as {items: Vocabulary[]};
 
 	return items;
 }

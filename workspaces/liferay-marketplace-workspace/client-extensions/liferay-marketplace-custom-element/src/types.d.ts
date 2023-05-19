@@ -7,6 +7,13 @@ type Account = {
 	type: string;
 };
 
+type Categories = {
+	externalReferenceCode: string;
+	id: string;
+	name: string;
+	vocabulary: string;
+};
+
 type CustomField = {
 	customValue: {
 		data: string;
@@ -109,7 +116,7 @@ type Catalog = {
 	system: boolean;
 };
 
-type Category = {
+type Vocabulary = {
 	description: string;
 	externalReferenceCode: string;
 	id: string;

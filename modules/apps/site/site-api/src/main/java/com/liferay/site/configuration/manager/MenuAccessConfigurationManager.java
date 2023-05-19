@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.site.configuration;
-
-import org.osgi.annotation.versioning.ProviderType;
+package com.liferay.site.configuration.manager;
 
 /**
  * @author Mikel Lorza
  */
-@ProviderType
 public interface MenuAccessConfigurationManager {
 
 	public String[] getRoleIdsCanAccessControlMenu(long groupId)

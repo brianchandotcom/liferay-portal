@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.internal.configuration;
+package com.liferay.site.internal.configuration.manager;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.site.configuration.MenuAccessConfiguration;
-import com.liferay.site.configuration.MenuAccessConfigurationManager;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

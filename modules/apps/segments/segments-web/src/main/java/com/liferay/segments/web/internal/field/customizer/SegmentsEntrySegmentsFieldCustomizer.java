@@ -15,7 +15,6 @@
 package com.liferay.segments.web.internal.field.customizer;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
+import com.liferay.segments.item.selector.SegmentsEntryItemSelectorReturnType;
 import com.liferay.segments.item.selector.criterion.SegmentsEntryItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -98,7 +98,7 @@ public class SegmentsEntrySegmentsFieldCustomizer
 			segmentsEntryItemSelectorCriterion.
 				setDesiredItemSelectorReturnTypes(
 					Collections.singletonList(
-						new UUIDItemSelectorReturnType()));
+						new SegmentsEntryItemSelectorReturnType()));
 
 			long segmentsEntryId = ParamUtil.getLong(
 				portletRequest, "segmentsEntryId");

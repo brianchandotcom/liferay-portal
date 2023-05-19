@@ -61,5 +61,7 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "org/springframework/orm/hibernate3/SpringSessionSynchronization.java"
+
 	originalLibModuleName = "spring-orm"
 }

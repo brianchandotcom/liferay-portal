@@ -1,0 +1,14 @@
+@default = "assertElementAccessible"
+definition {
+
+	function assertElementAccessible {
+		WaitForSPARefresh();
+
+		selenium.assertElementAccessible();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

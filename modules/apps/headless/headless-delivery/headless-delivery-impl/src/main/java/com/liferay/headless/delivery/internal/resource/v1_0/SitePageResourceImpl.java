@@ -488,13 +488,19 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			assetTagNames = sitePage.getKeywords();
 		}
 
-		return ServiceContextRequestUtil.createServiceContext(
-			transformToArray(
+		Long[] assetCategoryIds = null;
+
+		if (sitePage.getTaxonomyCategoryBriefs() != null) {
+			assetCategoryIds = transformToArray(
 				Arrays.asList(sitePage.getTaxonomyCategoryBriefs()),
 				taxonomyCategoryBrief -> _toAssetCategoryId(
 					groupId, taxonomyCategoryBrief),
-				Long.class),
-			assetTagNames, _getExpandoBridgeAttributes(sitePage), groupId,
+				Long.class);
+		}
+
+		return ServiceContextRequestUtil.createServiceContext(
+			assetCategoryIds, assetTagNames,
+			_getExpandoBridgeAttributes(sitePage), groupId,
 			contextHttpServletRequest, null);
 	}
 

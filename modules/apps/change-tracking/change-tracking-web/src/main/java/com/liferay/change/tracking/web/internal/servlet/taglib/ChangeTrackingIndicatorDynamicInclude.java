@@ -97,32 +97,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = DynamicInclude.class)
 public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
-	public static CTCollectionHistoryProvider getCTCollectionHistoryProvider(
-		long classNameId) {
-
-		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			(CTCollectionHistoryProvider<?>)
-				_ctCollectionHistoryProviderServiceTrackerMap.getService(
-					classNameId);
-
-		if (ctCollectionHistoryProvider == null) {
-			return _defaultCTCollectionHistoryProvider;
-		}
-
-		return ctCollectionHistoryProvider;
-	}
-
-	public static List<CTCollection> getCTCollections(
-			long classNameId, long classPK)
-		throws PortalException {
-
-		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			getCTCollectionHistoryProvider(classNameId);
-
-		return ctCollectionHistoryProvider.getCTCollections(
-			classNameId, classPK);
-	}
-
 	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
@@ -552,8 +526,18 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		if ((className != null) && (classPK != 0)) {
 			long classNameId = _portal.getClassNameId(className);
 
-			List<CTCollection> ctCollections = getCTCollections(
-				classNameId, classPK);
+			CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+				_ctCollectionHistoryProviderServiceTrackerMap.getService(
+					classNameId);
+
+			if (ctCollectionHistoryProvider == null) {
+				ctCollectionHistoryProvider =
+					_defaultCTCollectionHistoryProvider;
+			}
+
+			List<CTCollection> ctCollections =
+				ctCollectionHistoryProvider.getCTCollections(
+					classNameId, classPK);
 
 			CTCollection possibleConflictCollection = null;
 
@@ -629,13 +613,11 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChangeTrackingIndicatorDynamicInclude.class);
 
-	private static ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
-		_ctCollectionHistoryProviderServiceTrackerMap;
-	private static CTCollectionHistoryProvider<?>
-		_defaultCTCollectionHistoryProvider;
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
+		_ctCollectionHistoryProviderServiceTrackerMap;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
@@ -651,6 +633,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
+
+	private CTCollectionHistoryProvider<?> _defaultCTCollectionHistoryProvider;
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;

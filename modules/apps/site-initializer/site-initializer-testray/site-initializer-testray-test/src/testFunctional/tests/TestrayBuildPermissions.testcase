@@ -102,4 +102,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178254 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create the build"
+	@priority = 3
+	test AssertAnalystRoleCanNotCreateBuild {
+		property test.name.skip.portal.instance = "TestrayBuildPermissions#AssertAnalystRoleCanNotCreateBuild";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the build page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
+
+		task ("Then the user can not create build") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

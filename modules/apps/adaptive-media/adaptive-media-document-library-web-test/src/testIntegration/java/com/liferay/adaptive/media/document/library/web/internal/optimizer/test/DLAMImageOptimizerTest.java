@@ -74,20 +74,11 @@ public class DLAMImageOptimizerTest {
 		_group1 = GroupTestUtil.addGroup(
 			_company1.getCompanyId(), _user1.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_company2 = CompanyTestUtil.addCompany();
-
-		_user2 = UserTestUtil.getAdminUser(_company2.getCompanyId());
-
-		_group2 = GroupTestUtil.addGroup(
-			_company2.getCompanyId(), _user2.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_deleteAllAMImageConfigurationEntries(_company1.getCompanyId());
-		_deleteAllAMImageConfigurationEntries(_company2.getCompanyId());
 	}
 
 	@Test
@@ -136,62 +127,75 @@ public class DLAMImageOptimizerTest {
 	public void testDLAMImageOptimizerOptimizesEveryAMImageConfigurationEntryOnlyInSpecificCompany()
 		throws Exception {
 
-		_dlAppLocalService.addFileEntry(
-			null, _user1.getUserId(), _group1.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null,
-			ServiceContextTestUtil.getServiceContext(
-				_group1.getGroupId(), _user1.getUserId()));
-		_dlAppLocalService.addFileEntry(
-			null, _user2.getUserId(), _group2.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), null, null,
-			ServiceContextTestUtil.getServiceContext(
-				_group2.getGroupId(), _user2.getUserId()));
+		Company company2 = CompanyTestUtil.addCompany();
 
-		AMImageConfigurationEntry amImageConfigurationEntry1 =
-			_addAMImageConfigurationEntry(_company1.getCompanyId());
-		AMImageConfigurationEntry amImageConfigurationEntry2 =
-			_addAMImageConfigurationEntry(_company2.getCompanyId());
+		User user2 = UserTestUtil.getAdminUser(company2.getCompanyId());
 
-		Assert.assertEquals(
-			0,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company1.getCompanyId(),
-				amImageConfigurationEntry1.getUUID()));
-		Assert.assertEquals(
-			0,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company2.getCompanyId(),
-				amImageConfigurationEntry2.getUUID()));
+		Group group2 = GroupTestUtil.addGroup(
+			company2.getCompanyId(), user2.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		_amImageOptimizer.optimize(_company1.getCompanyId());
+		try {
+			_dlAppLocalService.addFileEntry(
+				null, _user1.getUserId(), _group1.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+				_getImageBytes(), null, null,
+				ServiceContextTestUtil.getServiceContext(
+					_group1.getGroupId(), _user1.getUserId()));
+			_dlAppLocalService.addFileEntry(
+				null, user2.getUserId(), group2.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+				_getImageBytes(), null, null,
+				ServiceContextTestUtil.getServiceContext(
+					group2.getGroupId(), user2.getUserId()));
 
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company1.getCompanyId(),
-				amImageConfigurationEntry1.getUUID()));
-		Assert.assertEquals(
-			0,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company2.getCompanyId(),
-				amImageConfigurationEntry2.getUUID()));
+			AMImageConfigurationEntry amImageConfigurationEntry1 =
+				_addAMImageConfigurationEntry(_company1.getCompanyId());
+			AMImageConfigurationEntry amImageConfigurationEntry2 =
+				_addAMImageConfigurationEntry(company2.getCompanyId());
 
-		_amImageOptimizer.optimize(_company2.getCompanyId());
+			Assert.assertEquals(
+				0,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					_company1.getCompanyId(),
+					amImageConfigurationEntry1.getUUID()));
+			Assert.assertEquals(
+				0,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					company2.getCompanyId(),
+					amImageConfigurationEntry2.getUUID()));
 
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company1.getCompanyId(),
-				amImageConfigurationEntry1.getUUID()));
-		Assert.assertEquals(
-			_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
-			_amImageEntryLocalService.getAMImageEntriesCount(
-				_company2.getCompanyId(),
-				amImageConfigurationEntry2.getUUID()));
+			_amImageOptimizer.optimize(_company1.getCompanyId());
+
+			Assert.assertEquals(
+				_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					_company1.getCompanyId(),
+					amImageConfigurationEntry1.getUUID()));
+			Assert.assertEquals(
+				0,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					company2.getCompanyId(),
+					amImageConfigurationEntry2.getUUID()));
+
+			_amImageOptimizer.optimize(company2.getCompanyId());
+
+			Assert.assertEquals(
+				_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					_company1.getCompanyId(),
+					amImageConfigurationEntry1.getUUID()));
+			Assert.assertEquals(
+				_WELCOME_SITE_INITIALIZER_IMAGES_COUNT + 1,
+				_amImageEntryLocalService.getAMImageEntriesCount(
+					company2.getCompanyId(),
+					amImageConfigurationEntry2.getUUID()));
+		}
+		finally {
+			_companyLocalService.deleteCompany(company2);
+		}
 	}
 
 	@Test
@@ -401,9 +405,6 @@ public class DLAMImageOptimizerTest {
 	@DeleteAfterTestRun
 	private Company _company1;
 
-	@DeleteAfterTestRun
-	private Company _company2;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -414,8 +415,6 @@ public class DLAMImageOptimizerTest {
 	private DLTrashLocalService _dlTrashLocalService;
 
 	private Group _group1;
-	private Group _group2;
 	private User _user1;
-	private User _user2;
 
 }

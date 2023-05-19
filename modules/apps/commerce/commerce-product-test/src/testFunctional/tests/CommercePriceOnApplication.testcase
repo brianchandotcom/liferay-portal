@@ -29,6 +29,135 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-11507. As an admin user with permission to manage quotes, I want to be able to mark a quote as processed in the order's admin page"
+	@priority = 5
+	test CanAdminUsersWithManageQuotePermissionProcessQuote {
+		property portal.acceptance = "true";
+
+		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Request a Quote",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And an Operations Manager user is created Manage Quotes permission") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "om@liferay.com",
+				userFirstName = "Operations",
+				userLastName = "Manager",
+				userScreenName = "operationsmanager");
+		}
+
+		task ("And the buyer user requests a quote for an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Click(
+				key_orderAuthor = "Buyer User",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			CommerceOrders.createQuoteRequest(
+				quoteRequestValue = "I kindly request a quote for this product.",
+				requestAQuoteInOpenOrdersPage = "true");
+		}
+
+		task ("When the operations manager navigate to the order's admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Quote Requested");
+		}
+
+		task ("Then the user is not able to mark a quote as processed") {
+			AssertElementNotPresent(
+				key_index = "Quote Processed",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("And the step tracker shows 'Quote Requested' as active step") {
+			AssertElementPresent(
+				key_stepLabel = "Quote Requested",
+				locator1 = "CommerceOrders#STEP_TRACKER_ACTIVE_STEP");
+
+			AssertElementPresent(
+				key_stepLabel = "Quote Processed",
+				locator1 = "CommerceOrders#STEP_TRACKER_INACTIVE_STEP");
+		}
+
+		task ("When the Operations Manager role is given the Manage Quotes permission") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_QUOTES",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Operations Manager");
+		}
+
+		task ("Then the user is able to mark a quote as processed") {
+			Refresh();
+
+			AssertElementPresent(
+				key_index = "Quote Processed",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(
+				key_index = "Quote Processed",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("And the step tracker shows 'Quote Processed' as active step") {
+			for (var status : list "Quote Requested,Quote Processed") {
+				AssertElementPresent(
+					key_stepLabel = ${status},
+					locator1 = "CommerceOrders#STEP_TRACKER_COMPLETED_STEP");
+			}
+		}
+
+		task ("And the buyer can see the 'Quote Processed' status on the order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			AssertElementPresent(
+				key_entry = ${orderId},
+				key_status = "Quote Processed",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_STATUS");
+
+			Click(
+				key_orderAuthor = "Buyer User",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+			AssertElementPresent(
+				key_status = "Quote Processed",
+				locator1 = "CommerceOrders#PLACED_ORDERS_DETAILS_STATUS");
+		}
+	}
+
 	@description = "COMMERCE-11030. Verify that the Request a Quote button is visible in the Mini Cart and in the Order's Details Page."
 	@priority = 5
 	test CanAssertRequestAQuoteButtonIsVisible {

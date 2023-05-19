@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Fragments";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -34,12 +26,12 @@ definition {
 	test AddAndDeleteResource {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -69,7 +61,7 @@ definition {
 	@priority = 5
 	test AddFirstFragmentSetWhenCopyContributedFragment {
 		task ("Given a site designer navigates to the Fragments admin of a new site") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("When the site designer copies the Button fragment from Basic Components fragment set") {
@@ -108,12 +100,12 @@ definition {
 		task ("When user is in resources tab") {
 			task ("Add a fragment collection") {
 				JSONFragment.addFragmentCollection(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					name = "Collection Name");
 			}
 
 			task ("Navigate to the fragment collection") {
-				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 			}
@@ -179,7 +171,7 @@ definition {
 			}
 
 			task ("Add a resource to sub folder") {
-				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -223,7 +215,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Add a fragment collection") {
@@ -264,10 +256,10 @@ definition {
 	test AddNewFragmentSetWhenCopyContributedFragment {
 		task ("Given a site designer has a fragment set") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Set Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("When the site designer copies the Button fragment from Basic Components fragment set") {
@@ -314,7 +306,7 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
@@ -322,12 +314,12 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Name");
 		}
 
 		task ("Add a page template collection") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 		}
@@ -345,7 +337,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Navigate to the fragment collection") {
@@ -369,12 +361,12 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Set Name");
 		}
 
 		task ("Navigate to the Fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Copy the Button fragment to new fragment collection") {
@@ -402,19 +394,19 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
 		task ("Add a fragment") {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -426,7 +418,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -444,19 +436,19 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
 		task ("Add a fragment") {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -466,7 +458,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -484,12 +476,12 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
 		task ("Navigate to the fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Delete the fragment collection") {
@@ -497,7 +489,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Assert the fragment collection is not present") {
@@ -513,12 +505,12 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
 		task ("Add a fragment with the Button fragment codes") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -540,7 +532,7 @@ definition {
 		}
 
 		task ("Edit the fragment with the Title fragment codes") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -575,7 +567,7 @@ definition {
 	test PropagateChangesOfFragmentToContentPage {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
@@ -585,14 +577,14 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				html = ${htmlSnippet},
 				name = "Test Fragment Name");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Content Page Name",
 				type = "content");
 		}
@@ -600,7 +592,7 @@ definition {
 		task ("Add a new fragment to the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -619,7 +611,7 @@ definition {
 		task ("View the inline text of new fragment at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "test-fragment-name",
@@ -628,7 +620,7 @@ definition {
 		}
 
 		task ("Edit the new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -660,7 +652,7 @@ definition {
 		task ("View the changes of fragment at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var n : list "1,2") {
 				ContentPages.viewFragmentText(
@@ -673,7 +665,7 @@ definition {
 		task ("View the changes of fragment at edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			for (var n : list "1,2") {
 				PageEditor.viewFragmentEditableText(
@@ -689,7 +681,7 @@ definition {
 	test PropagateChangesOfFragmentToPageTemplates {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
@@ -699,20 +691,20 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				html = ${htmlSnippet},
 				name = "Test Fragment Name");
 		}
 
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection");
 		}
 
 		task ("Add a new content page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutPageTemplateCollectionName = "Page Template Collection",
 				layoutPageTemplateEntryName = "Page Template Name",
 				layoutPageTemplateStatus = "Draft",
@@ -720,7 +712,7 @@ definition {
 		}
 
 		task ("Add the new fragment to content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -744,7 +736,7 @@ definition {
 		}
 
 		task ("Edit the new fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
@@ -770,7 +762,7 @@ definition {
 		}
 
 		task ("View the edited inline text of new fragment at edit mode") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -792,7 +784,7 @@ definition {
 	test RenameFragment {
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
@@ -800,12 +792,12 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -821,7 +813,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -838,7 +830,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("View the Button fragment of Basic Components collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 
@@ -857,18 +849,18 @@ definition {
 	test ViewDropdownMenuIconsInFragmentsAdmin {
 		task ("Given a Fragments creator has a new Fragment Set and custom fragment") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "New Fragment Set Name");
 
 			JSONFragment.addSection(
 				collectionName = "New Fragment Set Name",
 				fragmentStatus = "Approved",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Name");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of custom fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			Click.waitForMenuToggleJSClick(
 				key_card = "Fragment Name",
@@ -915,12 +907,12 @@ definition {
 
 		task ("Given a fragment developer has a fragment set") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Set Name");
 		}
 
 		task ("When the fragment developer adds a new basic fragment") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
 
@@ -939,7 +931,7 @@ definition {
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 0") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -954,13 +946,13 @@ definition {
 
 		task ("When the fragment developer adds a new fragment into page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Fragment Set Name",
@@ -968,7 +960,7 @@ definition {
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 1") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -987,13 +979,13 @@ definition {
 		task ("When the fragment developer publishes the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.publish();
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 2") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -1025,10 +1017,10 @@ definition {
 
 		task ("When the fragment developer adds a new form fragment with Text field") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Set Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
 
@@ -1095,7 +1087,7 @@ if (layoutMode === 'edit') {
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 0") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -1110,13 +1102,13 @@ if (layoutMode === 'edit') {
 
 		task ("When the fragment developer adds a new fragment into a Form Container") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
@@ -1139,7 +1131,7 @@ if (layoutMode === 'edit') {
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 1") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -1158,13 +1150,13 @@ if (layoutMode === 'edit') {
 		task ("When the fragment developer publishes the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.publish();
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 2") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -1179,10 +1171,10 @@ if (layoutMode === 'edit') {
 	test ViewUsagesOfFragmentUsedInFragmentComposition {
 		task ("Given a fragment developer has a fragment composition with a new fragment") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Fragment Set Name");
 
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
 
@@ -1200,13 +1192,13 @@ if (layoutMode === 'edit') {
 			FragmentsEditor.publish();
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 1",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -1226,13 +1218,13 @@ if (layoutMode === 'edit') {
 
 		task ("When the fragment developer add a fragment composition to a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Fragment Set Name",
@@ -1241,7 +1233,7 @@ if (layoutMode === 'edit') {
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 2") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -1251,7 +1243,7 @@ if (layoutMode === 'edit') {
 		task ("When the fragment developer adds the second fragment composition to the same page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Fragment Set Name",
@@ -1261,7 +1253,7 @@ if (layoutMode === 'edit') {
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 3") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",
@@ -1271,13 +1263,13 @@ if (layoutMode === 'edit') {
 		task ("When the fragment developer publishes the page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.publish();
 		}
 
 		task ("Then the fragment developer sees the usages of new fragment is 5") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			LexiconCard.viewCardSubtitle(
 				card = "Fragment Name",

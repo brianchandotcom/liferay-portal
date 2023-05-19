@@ -523,7 +523,9 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			if (value instanceof Date) {
 				Date date = (Date)value;
 
-				jsonObject.put(includeAttributeName, date.getTime());
+				if (date.getTime() > 0) {
+					jsonObject.put(includeAttributeName, date.getTime());
+				}
 			}
 			else {
 				if (includeAttributeName.equals("name")) {

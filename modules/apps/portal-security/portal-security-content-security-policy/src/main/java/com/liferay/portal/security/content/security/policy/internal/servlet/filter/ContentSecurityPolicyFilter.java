@@ -88,57 +88,56 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 		String policy = contentSecurityPolicyConfiguration.policy();
 
-		if (Validator.isNotNull(policy)) {
-			PrintWriter printWriter =
-				httpServletResponse.getWriter();
-
-			ContentSecurityPolicyNonceIncludeServletResponse
-				contentSecurityPolicyNonceIncludeServletResponse =
-					new ContentSecurityPolicyNonceIncludeServletResponse(
-						httpServletResponse);
-
-			filterChain.doFilter(
-				httpServletRequest,
-				contentSecurityPolicyNonceIncludeServletResponse);
-
-			String responseBody =
-				contentSecurityPolicyNonceIncludeServletResponse.
-					getResponseBodyAsString();
-
-			String nonce = _generateNonce();
-
-			responseBody = responseBody.replaceAll(
-				"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
-			responseBody = responseBody.replaceAll(
-				"<(?i)link>", "<link nonce=\"" + nonce + "\">");
-			responseBody = responseBody.replaceAll(
-				"<(?i)script ", "<script nonce=\"" + nonce + "\" ");
-			responseBody = responseBody.replaceAll(
-				"<(?i)script>", "<script nonce=\"" + nonce + "\">");
-			responseBody = responseBody.replaceAll(
-				"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
-			responseBody = responseBody.replaceAll(
-				"<(?i)style>", "<style nonce=\"" + nonce + "\">");
-
-			printWriter.write(responseBody);
-
-			printWriter.close();
-
-			policy = StringUtil.replace(
-				policy,
-				ContentSecurityPolicyConstants.
-					CONTENT_SECURITY_POLICY_NONCE_TOKEN,
-				ContentSecurityPolicyConstants.
-					CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX + nonce);
-
-			httpServletResponse.setContentLength(responseBody.length());
-			httpServletResponse.setHeader(
-				ContentSecurityPolicyConstants.CONTENT_SECURITY_POLICY_HEADER,
-				policy);
-		}
-		else {
+		if (Validator.isNull(policy)) {
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
+
+			return;
 		}
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		ContentSecurityPolicyNonceIncludeServletResponse
+			contentSecurityPolicyNonceIncludeServletResponse =
+				new ContentSecurityPolicyNonceIncludeServletResponse(
+					httpServletResponse);
+
+		filterChain.doFilter(
+			httpServletRequest,
+			contentSecurityPolicyNonceIncludeServletResponse);
+
+		String responseBody =
+			contentSecurityPolicyNonceIncludeServletResponse.
+				getResponseBodyAsString();
+
+		String nonce = _generateNonce();
+
+		responseBody = responseBody.replaceAll(
+			"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
+		responseBody = responseBody.replaceAll(
+			"<(?i)link>", "<link nonce=\"" + nonce + "\">");
+		responseBody = responseBody.replaceAll(
+			"<(?i)script ", "<script nonce=\"" + nonce + "\" ");
+		responseBody = responseBody.replaceAll(
+			"<(?i)script>", "<script nonce=\"" + nonce + "\">");
+		responseBody = responseBody.replaceAll(
+			"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
+		responseBody = responseBody.replaceAll(
+			"<(?i)style>", "<style nonce=\"" + nonce + "\">");
+
+		printWriter.write(responseBody);
+
+		printWriter.close();
+
+		policy = StringUtil.replace(
+			policy,
+			ContentSecurityPolicyConstants.CONTENT_SECURITY_POLICY_NONCE_TOKEN,
+			ContentSecurityPolicyConstants.
+				CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX + nonce);
+
+		httpServletResponse.setContentLength(responseBody.length());
+		httpServletResponse.setHeader(
+			ContentSecurityPolicyConstants.CONTENT_SECURITY_POLICY_HEADER,
+			policy);
 	}
 
 	private String _generateNonce() {

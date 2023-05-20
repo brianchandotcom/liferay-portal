@@ -114,7 +114,7 @@ definition {
 
 			Testray.projectTabNavigator(navTabName = "Suites");
 
-            TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
 
 			RightClick.rightClick(
 				key_projectName = ${caseName},
@@ -186,7 +186,7 @@ definition {
 
 			Testray.projectTabNavigator(navTabName = "Suites");
 
-            TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
 
 			RightClick.rightClick(
 				key_projectName = ${caseName},
@@ -226,7 +226,7 @@ definition {
 
 			Testray.projectTabNavigator(navTabName = "Suites");
 
-            TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
 
 			RightClick.rightClick(
 				key_projectName = ${caseName},

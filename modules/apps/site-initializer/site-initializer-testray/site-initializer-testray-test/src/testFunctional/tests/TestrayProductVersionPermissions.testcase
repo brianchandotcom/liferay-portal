@@ -84,4 +84,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to delete the product version"
+	@priority = 3
+	test AssertAnalystRoleCanNotDeleteProductVersion {
+		property test.name.skip.portal.instance = "TestrayProductVersionPermissions#AssertAnalystRoleCanNotDeleteProductVersion";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in product version") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			RightClick.rightClick(
+				key_projectName = ${projectName},
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+
+			RightClick.rightClick(
+				key_projectName = ${productVersion},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not delete the product version") {
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

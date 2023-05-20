@@ -287,4 +287,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182630 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the suite case"
+	@priority = 3
+	test AssertUserRoleCanNotEditSuiteCase {
+		property test.name.skip.portal.instance = "TestraySuiteCasePermissions#AssertUserRoleCanNotEditSuiteCase";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in suite case") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+
+			RightClick.rightClick(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the suite case") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

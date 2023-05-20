@@ -220,4 +220,43 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the task"
+	@priority = 4
+	test AssertLeadRoleCanCreateTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertLeadRoleCanCreateTask";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user created a task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.addTask(
+				checkCaseType = "Compile",
+				selectBuild = "Build 2",
+				selectProject = ${projectName},
+				selectRoutine = ${routineName},
+				taskName = "Task_2",
+				userName = "Test Test");
+
+			WaitForPageLoad();
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("Then the user can see the Task created") {
+			TestrayTestflow.assertTaskDetails(
+				build = "Build 2",
+				project = ${projectName},
+				routine = ${routineName},
+				status = "In Analysis",
+				taskName = "Task_2");
+		}
+	}
+
 }

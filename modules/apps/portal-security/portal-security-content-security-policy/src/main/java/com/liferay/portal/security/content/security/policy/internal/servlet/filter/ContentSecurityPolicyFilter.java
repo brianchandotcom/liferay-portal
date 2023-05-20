@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
-import com.liferay.portal.security.content.security.policy.internal.constants.ContentSecurityPolicyConstants;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.io.ByteArrayOutputStream;
@@ -128,16 +127,10 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 		printWriter.close();
 
-		policy = StringUtil.replace(
-			policy,
-			ContentSecurityPolicyConstants.CONTENT_SECURITY_POLICY_NONCE_TOKEN,
-			ContentSecurityPolicyConstants.
-				CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX + nonce);
+		policy = StringUtil.replace(policy, "[nonceToken]", "nonce-" + nonce);
 
 		httpServletResponse.setContentLength(responseBody.length());
-		httpServletResponse.setHeader(
-			ContentSecurityPolicyConstants.CONTENT_SECURITY_POLICY_HEADER,
-			policy);
+		httpServletResponse.setHeader("Content-Security-Policy", policy);
 	}
 
 	private String _generateNonce() {

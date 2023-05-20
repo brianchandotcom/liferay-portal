@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.content.security.policy.internal.constants.ContentSecurityPolicyConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -67,9 +66,7 @@ public class ContentSecurityPolicyFilterTest {
 				httpURLConnection.getHeaderFields();
 
 			Assert.assertFalse(
-				headerFields.containsKey(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER));
+				headerFields.containsKey("Content-Security-Policy"));
 		}
 	}
 
@@ -87,9 +84,7 @@ public class ContentSecurityPolicyFilterTest {
 				httpURLConnection.getHeaderFields();
 
 			Assert.assertFalse(
-				headerFields.containsKey(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER));
+				headerFields.containsKey("Content-Security-Policy"));
 		}
 	}
 
@@ -107,9 +102,7 @@ public class ContentSecurityPolicyFilterTest {
 				httpURLConnection.getHeaderFields();
 
 			Assert.assertFalse(
-				headerFields.containsKey(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER));
+				headerFields.containsKey("Content-Security-Policy"));
 
 			String responseBody = _getResponseBody(httpURLConnection);
 
@@ -133,14 +126,10 @@ public class ContentSecurityPolicyFilterTest {
 				httpURLConnection.getHeaderFields();
 
 			Assert.assertTrue(
-				headerFields.containsKey(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER));
+				headerFields.containsKey("Content-Security-Policy"));
 
 			Assert.assertEquals(
-				httpURLConnection.getHeaderField(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER),
+				httpURLConnection.getHeaderField("Content-Security-Policy"),
 				cspPolicy);
 		}
 	}
@@ -163,24 +152,17 @@ public class ContentSecurityPolicyFilterTest {
 				httpURLConnection.getHeaderFields();
 
 			Assert.assertTrue(
-				headerFields.containsKey(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER));
+				headerFields.containsKey("Content-Security-Policy"));
 
 			String contentSecurityPolicyHeaderValue =
-				httpURLConnection.getHeaderField(
-					ContentSecurityPolicyConstants.
-						CONTENT_SECURITY_POLICY_HEADER);
+				httpURLConnection.getHeaderField("Content-Security-Policy");
 
 			Assert.assertNotNull(contentSecurityPolicyHeaderValue);
 
 			int nonceStartPos = contentSecurityPolicyHeaderValue.indexOf(
-				ContentSecurityPolicyConstants.
-					CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX);
+				"nonce-");
 
-			int noncePrefixLength =
-				ContentSecurityPolicyConstants.
-					CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX.length();
+			int noncePrefixLength = "nonce-".length();
 
 			int nonceRandomStartPos = nonceStartPos + noncePrefixLength;
 
@@ -188,11 +170,7 @@ public class ContentSecurityPolicyFilterTest {
 				nonceRandomStartPos, nonceRandomStartPos + 24);
 
 			String substitutedCspPolicy = StringUtil.replace(
-				cspPolicy,
-				ContentSecurityPolicyConstants.
-					CONTENT_SECURITY_POLICY_NONCE_TOKEN,
-				ContentSecurityPolicyConstants.
-					CONTENT_SECURITY_POLICY_NONCE_HEADER_PREFIX + nonce);
+				cspPolicy, "[nonceToken]", "nonce-" + nonce);
 
 			Assert.assertEquals(
 				contentSecurityPolicyHeaderValue, substitutedCspPolicy);

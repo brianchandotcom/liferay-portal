@@ -19,8 +19,8 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -41,8 +41,11 @@ public class ObjectEntryManagerRegistryImpl
 	}
 
 	@Override
-	public List<ObjectEntryManager> getObjectEntryManagers() {
-		return new ArrayList(_serviceTrackerMap.values());
+	public List<ObjectEntryManager> getObjectEntryManagers(long companyId) {
+		return ListUtil.filter(
+			ListUtil.fromCollection(_serviceTrackerMap.values()),
+			objectEntryManager -> objectEntryManager.isAllowedCompany(
+				companyId));
 	}
 
 	@Activate

@@ -23,6 +23,6 @@ public interface ObjectEntryManagerRegistry {
 
 	public ObjectEntryManager getObjectEntryManager(String storageType);
 
-	public List<ObjectEntryManager> getObjectEntryManagers();
+	public List<ObjectEntryManager> getObjectEntryManagers(long companyId);
 
 }

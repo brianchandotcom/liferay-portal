@@ -58,6 +58,10 @@ public interface ObjectEntryManager {
 
 	public String getStorageType();
 
+	public default boolean isAllowedCompany(long companyId) {
+		return true;
+	}
+
 	public ObjectEntry updateObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,

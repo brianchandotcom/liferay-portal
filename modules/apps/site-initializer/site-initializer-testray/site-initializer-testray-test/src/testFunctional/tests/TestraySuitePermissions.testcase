@@ -114,4 +114,38 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182630 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the suite"
+	@priority = 3
+	test AssertAnalystRoleCanNotEditSuite {
+		property test.name.skip.portal.instance = "TestraySuitePermissions#AssertAnalystRoleCanNotEditSuite";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user right click in suite") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			RightClick.rightClick(
+				key_projectName = ${suiteName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the suite") {
+			AssertElementNotPresent(
+				item = "Edit",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

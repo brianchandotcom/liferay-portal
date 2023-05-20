@@ -1,11 +1,10 @@
 definition {
 
 	macro addMarketplaceSite {
-		Site.openSitesAdmin();
-
-		Site.addSiteTemplateCP(
-			siteName = ${siteName},
-			siteTemplateName = "Liferay Marketplace");
+		HeadlessSite.addSite(
+			siteName = ${testSiteName},
+			templateName = "Liferay Marketplace",
+			templateType = "Site Initializer");
 	}
 
 }

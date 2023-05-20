@@ -49,14 +49,11 @@ import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 import java.util.function.Function;
 
 import javax.sql.DataSource;
@@ -101,12 +98,17 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		long ctCollectionId, long classNameId,
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos) {
 
-		Map<Long, List<Long>> map = new HashMap<>();
-		Set<Node> nodes = new HashSet<>();
+		Map<Long, List<Long>> map = new LinkedHashMap<>();
+		List<Node> nodes = new ArrayList<>();
 
-		for (CTEntry ctEntry :
-				_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId)) {
+		List<CTEntry> ctEntries = new ArrayList<>(
+			_ctEntryLocalService.getCTCollectionCTEntries(ctCollectionId));
 
+		ctEntries.sort(
+			(ctEntry1, ctEntry2) ->
+				(int)(ctEntry1.getCtEntryId() - ctEntry2.getCtEntryId()));
+
+		for (CTEntry ctEntry : ctEntries) {
 			if ((classNameId > 0) &&
 				!combinedTableReferenceInfos.containsKey(
 					ctEntry.getModelClassNameId())) {
@@ -219,7 +221,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	private List<Long> _collectParentPrimaryKeys(
 		long childClassNameId, Long[] childPrimaryKeys, long ctCollectionId,
 		Map.Entry<Table<?>, List<TableJoinHolder>> entry,
-		Map<Node, Collection<Edge>> edgeMap, Set<Node> nodes,
+		Map<Node, Collection<Edge>> edgeMap, List<Node> nodes,
 		long parentClassNameId, long classNameId,
 		TableReferenceInfo<?> parentTableReferenceInfo) {
 
@@ -244,7 +246,9 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 				Node childNode = new Node(
 					childClassNameId, resultSet.getLong(2));
 
-				if (nodes.add(parentNode)) {
+				if (!nodes.contains(parentNode)) {
+					nodes.add(parentNode);
+
 					if (newParentPrimaryKeys == null) {
 						newParentPrimaryKeys = new ArrayList<>();
 					}

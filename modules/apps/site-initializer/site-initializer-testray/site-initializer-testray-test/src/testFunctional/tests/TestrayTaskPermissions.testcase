@@ -291,4 +291,37 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the task"
+	@priority = 4
+	test AssertLeadRoleCanEditTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertLeadRoleCanEditTask";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user edit a task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.editTask(taskName = "Task_2");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("Then the user can see the Task edited") {
+			TestrayTestflow.assertTaskDetails(
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName},
+				status = "In Analysis",
+				taskName = "Task_2");
+		}
+	}
+
 }

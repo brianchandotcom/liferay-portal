@@ -256,4 +256,34 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the product version"
+	@priority = 3
+	test AssertUserRoleCanNotCreateProductVersion {
+		property test.name.skip.portal.instance = "TestrayProductVersionPermissions#AssertUserRoleCanNotCreateProductVersion";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the product version page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			RightClick.rightClick(
+				key_projectName = ${projectName},
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
+
+		task ("Then the user can not create product version") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

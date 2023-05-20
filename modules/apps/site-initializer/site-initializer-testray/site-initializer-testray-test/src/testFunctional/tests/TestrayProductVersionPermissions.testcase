@@ -156,4 +156,35 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the product version"
+	@priority = 3
+	test AssertLeadRoleCanCreateProductVersion {
+		property test.name.skip.portal.instance = "TestrayProductVersionPermissions#AssertLeadRoleCanCreateProductVersion";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user create the product version") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayManage.createProductVersion(
+				manageOption = "Manage Product Versions",
+				nameOptions = ${projectName},
+				version = "7.4");
+		}
+
+		task ("Then the user can see the product version created in the table") {
+			AssertElementPresent(
+				key_projectName = "7.4",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

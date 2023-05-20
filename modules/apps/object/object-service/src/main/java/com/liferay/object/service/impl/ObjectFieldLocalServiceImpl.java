@@ -275,20 +275,16 @@ public class ObjectFieldLocalServiceImpl
 			dbColumnName = name;
 		}
 
+		String readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
+
 		if (_readOnlyObjectFieldNames.contains(name)) {
-			return _addObjectField(
-				null, userId, 0, objectDefinitionId, businessType, dbColumnName,
-				dbTableName, dbType, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, false, name,
-				ObjectFieldConstants.READ_ONLY_TRUE, null, required, state,
-				true);
+			readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
 		}
 
 		return _addObjectField(
 			null, userId, 0, objectDefinitionId, businessType, dbColumnName,
 			dbTableName, dbType, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, false, name, ObjectFieldConstants.READ_ONLY_FALSE, null,
-			required, state, true);
+			labelMap, false, name, readOnly, null, required, state, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

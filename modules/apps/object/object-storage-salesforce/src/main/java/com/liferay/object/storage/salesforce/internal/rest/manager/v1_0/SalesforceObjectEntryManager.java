@@ -68,6 +68,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -164,6 +165,12 @@ public class SalesforceObjectEntryManager
 					"sobjects/", objectDefinition.getExternalReferenceCode(),
 					"/", externalReferenceCode)),
 			objectDefinition);
+	}
+
+	@Override
+	public String getStorageLabel(Locale locale) {
+		return language.get(
+			locale, ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE);
 	}
 
 	@Override

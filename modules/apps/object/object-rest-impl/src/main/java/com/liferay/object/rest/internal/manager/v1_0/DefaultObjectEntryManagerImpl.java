@@ -611,6 +611,12 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public String getStorageLabel(Locale locale) {
+		return language.get(
+			locale, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+	}
+
+	@Override
 	public String getStorageType() {
 		return ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT;
 	}

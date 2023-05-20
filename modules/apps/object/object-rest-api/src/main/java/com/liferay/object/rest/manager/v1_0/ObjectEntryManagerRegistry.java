@@ -15,7 +15,6 @@
 package com.liferay.object.rest.manager.v1_0;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Guilherme Camacho
@@ -25,7 +24,5 @@ public interface ObjectEntryManagerRegistry {
 	public ObjectEntryManager getObjectEntryManager(String storageType);
 
 	public List<ObjectEntryManager> getObjectEntryManagers();
-
-	public Set<String> getStorageTypes();
 
 }

@@ -22,6 +22,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Locale;
+
 /**
  * @author Gabriel Albuquerque
  */
@@ -51,6 +53,8 @@ public interface ObjectEntryManager {
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey)
 		throws Exception;
+
+	public String getStorageLabel(Locale locale);
 
 	public String getStorageType();
 

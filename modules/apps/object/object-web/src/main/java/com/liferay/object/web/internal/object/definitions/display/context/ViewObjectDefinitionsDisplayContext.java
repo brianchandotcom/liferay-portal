@@ -18,10 +18,13 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -32,7 +35,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -49,11 +51,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewObjectDefinitionsDisplayContext {
 
 	public ViewObjectDefinitionsDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
 
+		_jsonFactory = jsonFactory;
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -130,16 +133,25 @@ public class ViewObjectDefinitionsDisplayContext {
 			_objectRequestHelper.getLiferayPortletResponse());
 	}
 
-	public List<String> getStorageTypes() {
-		List<String> storageTypes = TransformUtil.transform(
-			_objectEntryManagerRegistry.getStorageTypes(),
-			objectEntryManagerStorageType -> LanguageUtil.get(
-				_objectRequestHelper.getLocale(),
-				objectEntryManagerStorageType));
+	public JSONArray getStoragesJSONArray() {
+		List<ObjectEntryManager> objectEntryManagers =
+			_objectEntryManagerRegistry.getObjectEntryManagers(
+				_objectRequestHelper.getCompanyId());
 
-		Collections.sort(storageTypes);
+		JSONArray storagesJSONArray = _jsonFactory.createJSONArray();
 
-		return storageTypes;
+		for (ObjectEntryManager objectEntryManager : objectEntryManagers) {
+			storagesJSONArray.put(
+				JSONUtil.put(
+					"label",
+					objectEntryManager.getStorageLabel(
+						_objectRequestHelper.getLocale())
+				).put(
+					"type", objectEntryManager.getStorageType()
+				));
+		}
+
+		return storagesJSONArray;
 	}
 
 	private String _getPermissionsURL() throws Exception {
@@ -181,6 +193,7 @@ public class ViewObjectDefinitionsDisplayContext {
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 	}
 
+	private final JSONFactory _jsonFactory;
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;

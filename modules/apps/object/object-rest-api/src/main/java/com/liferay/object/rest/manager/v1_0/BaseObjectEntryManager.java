@@ -18,6 +18,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
@@ -60,6 +61,9 @@ public abstract class BaseObjectEntryManager {
 
 	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected ObjectScopeProviderRegistry objectScopeProviderRegistry;

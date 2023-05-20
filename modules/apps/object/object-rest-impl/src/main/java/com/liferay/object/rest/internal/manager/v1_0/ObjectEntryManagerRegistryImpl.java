@@ -22,7 +22,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -44,11 +43,6 @@ public class ObjectEntryManagerRegistryImpl
 	@Override
 	public List<ObjectEntryManager> getObjectEntryManagers() {
 		return new ArrayList(_serviceTrackerMap.values());
-	}
-
-	@Override
-	public Set<String> getStorageTypes() {
-		return _serviceTrackerMap.keySet();
 	}
 
 	@Activate

@@ -35,7 +35,13 @@ public class PropsUtil {
 	public static String get(String key) {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		return poshiProperties.getProperty(key);
+		String value = poshiProperties.getProperty(key);
+
+		if (Validator.isNull(value)) {
+			value = System.getProperty(key);
+		}
+
+		return value;
 	}
 
 	public static String getEnvironmentVariable(String name) {

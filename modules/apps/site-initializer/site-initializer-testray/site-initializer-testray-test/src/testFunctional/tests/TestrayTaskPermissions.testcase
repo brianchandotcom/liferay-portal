@@ -346,4 +346,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the task"
+	@priority = 3
+	test AssertUserRoleCanNotDeleteTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertUserRoleCanNotDeleteTask";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user cgo to the task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
+
+		task ("Then the user can not delete task") {
+			AssertElementNotPresent(
+				key_text = "Delete",
+				locator1 = "Button#ANY");
+		}
+	}
+
 }

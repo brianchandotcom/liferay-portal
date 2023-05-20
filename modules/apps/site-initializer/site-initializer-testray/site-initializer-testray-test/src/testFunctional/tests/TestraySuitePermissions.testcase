@@ -249,4 +249,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182630 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the suite"
+	@priority = 3
+	test AssertUserRoleCanNotCreateSuite {
+		property test.name.skip.portal.instance = "TestraySuitePermissions#AssertUserRoleCanNotCreateSuite";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the suite page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+		}
+
+		task ("Then the user can not create suite") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

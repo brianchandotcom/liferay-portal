@@ -38,6 +38,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.CPDefinitionSubscriptionLengthException;
+import com.liferay.commerce.product.exception.DuplicateCProductException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -231,6 +232,7 @@ public class CPDefinitionLocalServiceImpl
 		_validate(
 			groupId, ddmStructureKey, metaTitleMap, metaDescriptionMap,
 			metaKeywordsMap, displayDate, expirationDate, productTypeName);
+		_validateCProduct(externalReferenceCode, user.getCompanyId());
 		_validateSubscriptionLength(subscriptionLength, "length");
 		_validateSubscriptionCycles(
 			maxSubscriptionCycles, "subscriptionCycles");
@@ -249,8 +251,8 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionPersistence.create(
 			cpDefinitionId);
 
-		CProduct cProduct = _cProductLocalService.addCProduct(
-			externalReferenceCode, groupId, userId, new ServiceContext());
+		CProduct cProduct = _cProductLocalService.createCProduct(
+			counterLocalService.increment());
 
 		cpDefinition.setGroupId(groupId);
 		cpDefinition.setCompanyId(user.getCompanyId());
@@ -313,6 +315,17 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinition = cpDefinitionPersistence.update(cpDefinition);
+
+		// Commerce product
+
+		cProduct.setExternalReferenceCode(externalReferenceCode);
+		cProduct.setGroupId(groupId);
+		cProduct.setCompanyId(user.getCompanyId());
+		cProduct.setUserId(user.getUserId());
+		cProduct.setUserName(user.getFullName());
+		cProduct.setLatestVersion(1);
+
+		_cProductLocalService.updateCProduct(cProduct);
 
 		// Commerce product definition localization
 
@@ -3205,6 +3218,23 @@ public class CPDefinitionLocalServiceImpl
 
 		if (cpType == null) {
 			throw new CPDefinitionProductTypeNameException();
+		}
+	}
+
+	private void _validateCProduct(String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		CProduct cProduct = _cProductPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (cProduct != null) {
+			throw new DuplicateCProductException(
+				"There is another commerce product with external reference " +
+					"code " + externalReferenceCode);
 		}
 	}
 

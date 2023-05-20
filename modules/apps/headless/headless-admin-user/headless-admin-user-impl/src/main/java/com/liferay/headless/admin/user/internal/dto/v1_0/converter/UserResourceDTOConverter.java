@@ -45,7 +45,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -163,9 +162,7 @@ public class UserResourceDTOConverter
 						dtoConverterContext, organization, user),
 					OrganizationBrief.class);
 				siteBriefs = TransformUtil.transformToArray(
-					_groupLocalService.getGroups(
-						user.getCompanyId(),
-						GroupConstants.DEFAULT_PARENT_GROUP_ID, true),
+					_groupLocalService.getUserSitesGroups(user.getUserId()),
 					group -> _toSiteBrief(dtoConverterContext, group),
 					SiteBrief.class);
 				userAccountContactInformation =

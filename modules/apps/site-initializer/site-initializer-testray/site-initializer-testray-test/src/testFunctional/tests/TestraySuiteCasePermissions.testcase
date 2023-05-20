@@ -164,4 +164,44 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182630 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the suite case"
+	@priority = 4
+	test AssertLeadRoleCanDeleteSuiteCase {
+		property test.name.skip.portal.instance = "TestraySuiteCasePermissions#AssertLeadRoleCanDeleteSuiteCase";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user delete the suite case") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+            TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+
+			RightClick.rightClick(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+		}
+
+		task ("Then the user can not see the suite case in the table") {
+			AssertElementNotPresent(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -58,12 +58,13 @@ public class ObjectDefinitionResourcePermissionUtil {
 		String resourceActionsFileName =
 			"resource-actions/resource-actions.xml.tpl";
 
-		if (StringUtil.equals(
+		if (!StringUtil.equals(
 				objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
 
 			resourceActionsFileName =
-				"resource-actions/resource-actions-salesforce.xml.tpl";
+				"resource-actions/resource-actions-non-default-storage-type." +
+					"xml.tpl";
 		}
 
 		Document document = SAXReaderUtil.read(

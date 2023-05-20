@@ -38,14 +38,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -92,7 +87,7 @@ public class SalesforceObjectEntryManager
 			String scopeKey)
 		throws Exception {
 
-		_checkPortletResourcePermission(
+		checkPortletResourcePermission(
 			objectDefinition, scopeKey, dtoConverterContext.getUser(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
@@ -114,7 +109,7 @@ public class SalesforceObjectEntryManager
 			String scopeKey)
 		throws Exception {
 
-		_checkPortletResourcePermission(
+		checkPortletResourcePermission(
 			objectDefinition, scopeKey, dtoConverterContext.getUser(),
 			ActionKeys.DELETE);
 
@@ -133,7 +128,7 @@ public class SalesforceObjectEntryManager
 			Sort[] sorts)
 		throws Exception {
 
-		_checkPortletResourcePermission(
+		checkPortletResourcePermission(
 			objectDefinition, scopeKey, dtoConverterContext.getUser(),
 			ActionKeys.VIEW);
 
@@ -149,7 +144,7 @@ public class SalesforceObjectEntryManager
 			String scopeKey)
 		throws Exception {
 
-		_checkPortletResourcePermission(
+		checkPortletResourcePermission(
 			objectDefinition, scopeKey, dtoConverterContext.getUser(),
 			ActionKeys.VIEW);
 
@@ -185,7 +180,7 @@ public class SalesforceObjectEntryManager
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {
 
-		_checkPortletResourcePermission(
+		checkPortletResourcePermission(
 			objectDefinition, scopeKey, dtoConverterContext.getUser(),
 			ActionKeys.UPDATE);
 
@@ -199,19 +194,6 @@ public class SalesforceObjectEntryManager
 		return getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
 			objectDefinition, scopeKey);
-	}
-
-	private void _checkPortletResourcePermission(
-			ObjectDefinition objectDefinition, String scopeKey, User user,
-			String actionId)
-		throws Exception {
-
-		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission(objectDefinition);
-
-		portletResourcePermission.check(
-			_permissionCheckerFactory.create(user),
-			getGroupId(objectDefinition, scopeKey), actionId);
 	}
 
 	private String _getAccountRestrictionPredicateString(
@@ -336,17 +318,6 @@ public class SalesforceObjectEntryManager
 		return null;
 	}
 
-	private PortletResourcePermission _getPortletResourcePermission(
-		ObjectDefinition objectDefinition) {
-
-		ModelResourcePermission<com.liferay.object.model.ObjectEntry>
-			modelResourcePermission =
-				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-					objectDefinition.getClassName());
-
-		return modelResourcePermission.getPortletResourcePermission();
-	}
-
 	private String _getSalesforcePagination(Pagination pagination) {
 		return StringBundler.concat(
 			" LIMIT ", pagination.getPageSize(), " OFFSET ",
@@ -443,19 +414,6 @@ public class SalesforceObjectEntryManager
 		);
 	}
 
-	private boolean _hasPortletResourcePermission(
-			ObjectDefinition objectDefinition, String scopeKey, User user,
-			String actionId)
-		throws Exception {
-
-		PortletResourcePermission portletResourcePermission =
-			_getPortletResourcePermission(objectDefinition);
-
-		return portletResourcePermission.contains(
-			_permissionCheckerFactory.create(user),
-			getGroupId(objectDefinition, scopeKey), actionId);
-	}
-
 	private JSONObject _toJSONObject(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
@@ -534,17 +492,9 @@ public class SalesforceObjectEntryManager
 			{
 				actions = HashMapBuilder.put(
 					"delete",
-					() -> {
-						if (!_hasPortletResourcePermission(
-								objectDefinition, scopeKey,
-								dtoConverterContext.getUser(),
-								ActionKeys.DELETE)) {
-
-							return null;
-						}
-
-						return Collections.<String, String>emptyMap();
-					}
+					addDeleteAction(
+						objectDefinition, scopeKey,
+						dtoConverterContext.getUser())
 				).build();
 				creator = CreatorUtil.toCreator(
 					_portal, null,
@@ -667,9 +617,6 @@ public class SalesforceObjectEntryManager
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private Portal _portal;

@@ -16,13 +16,22 @@ package com.liferay.object.rest.manager.v1_0;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Reference;
@@ -31,6 +40,31 @@ import org.osgi.service.component.annotations.Reference;
  * @author Guilherme Camacho
  */
 public abstract class BaseObjectEntryManager {
+
+	protected Map<String, String> addDeleteAction(
+		ObjectDefinition objectDefinition, String scopeKey, User user) {
+
+		if (!_hasPortletResourcePermission(
+				objectDefinition, scopeKey, user, ActionKeys.DELETE)) {
+
+			return null;
+		}
+
+		return Collections.emptyMap();
+	}
+
+	protected void checkPortletResourcePermission(
+			ObjectDefinition objectDefinition, String scopeKey, User user,
+			String actionId)
+		throws Exception {
+
+		PortletResourcePermission portletResourcePermission =
+			getPortletResourcePermission(objectDefinition);
+
+		portletResourcePermission.check(
+			permissionCheckerFactory.create(user),
+			getGroupId(objectDefinition, scopeKey), actionId);
+	}
 
 	protected long getGroupId(
 		ObjectDefinition objectDefinition, String scopeKey) {
@@ -56,6 +90,16 @@ public abstract class BaseObjectEntryManager {
 		return 0;
 	}
 
+	protected PortletResourcePermission getPortletResourcePermission(
+		ObjectDefinition objectDefinition) {
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				objectDefinition.getClassName());
+
+		return modelResourcePermission.getPortletResourcePermission();
+	}
+
 	@Reference
 	protected DepotEntryLocalService depotEntryLocalService;
 
@@ -67,5 +111,20 @@ public abstract class BaseObjectEntryManager {
 
 	@Reference
 	protected ObjectScopeProviderRegistry objectScopeProviderRegistry;
+
+	@Reference
+	protected PermissionCheckerFactory permissionCheckerFactory;
+
+	private boolean _hasPortletResourcePermission(
+		ObjectDefinition objectDefinition, String scopeKey, User user,
+		String actionId) {
+
+		PortletResourcePermission portletResourcePermission =
+			getPortletResourcePermission(objectDefinition);
+
+		return portletResourcePermission.contains(
+			permissionCheckerFactory.create(user),
+			getGroupId(objectDefinition, scopeKey), actionId);
+	}
 
 }

@@ -259,4 +259,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the task"
+	@priority = 4
+	test AssertLeadRoleCanDeleteTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertLeadRoleCanDeleteTask";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user delete a task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+		}
+
+		task ("Then the user can not see the task") {
+			AssertElementNotPresent(
+				key_projectName = "Task_1",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

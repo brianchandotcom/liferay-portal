@@ -14,6 +14,11 @@
 
 package com.liferay.sample;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -140,6 +145,138 @@ public class SampleRestController {
 		return new ResponseEntity<>(json, HttpStatus.CREATED);
 	}
 
+	@PostMapping("/object/entry/manager/1/delete/object/entry")
+	public ResponseEntity<String>
+		postSampleObjectEntryManager1DeleteObjectEntry(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+			_log.info("\n\n" + jsonObject.toString(4) + "\n");
+		}
+
+		_objectEntryJSONObjects.remove(
+			String.valueOf(jsonObject.get("externalReferenceCode")));
+
+		return new ResponseEntity<>(json, HttpStatus.CREATED);
+	}
+
+	@PostMapping("/object/entry/manager/1/get/object/entries")
+	public ResponseEntity<String> postSampleObjectEntryManager1GetObjectEntries(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+
+			try {
+				JSONObject jsonObject = new JSONObject(json);
+
+				_log.info("\n\n" + jsonObject.toString(4) + "\n");
+			}
+			catch (Exception exception) {
+				_log.error("JSON: " + json, exception);
+			}
+		}
+
+		return new ResponseEntity<>(
+			new JSONObject(
+			).put(
+				"items", _objectEntryJSONObjects.values()
+			).put(
+				"totalCount", _objectEntryJSONObjects.size()
+			).toString(),
+			HttpStatus.CREATED);
+	}
+
+	@PostMapping("/object/entry/manager/1/get/object/entry")
+	public ResponseEntity<String> postSampleObjectEntryManager1GetObjectEntry(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+			_log.info("\n\n" + jsonObject.toString(4) + "\n");
+		}
+
+		JSONObject objectEntryJSONObject = _objectEntryJSONObjects.get(
+			String.valueOf(jsonObject.get("externalReferenceCode")));
+
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.CREATED);
+	}
+
+	@PostMapping("/object/entry/manager/1/post/object/entry")
+	public ResponseEntity<String> postSampleObjectEntryManager1PostObjectEntry(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+			_log.info("\n\n" + jsonObject.toString(4) + "\n");
+		}
+
+		JSONObject objectEntryJSONObject = new JSONObject(
+			jsonObject.get(
+				"objectEntry"
+			).toString());
+
+		_objectEntryJSONObjects.put(
+			String.valueOf(jsonObject.get("externalReferenceCode")),
+			objectEntryJSONObject);
+
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.CREATED);
+	}
+
+	@PostMapping("/object/entry/manager/1/put/object/entry")
+	public ResponseEntity<String> postSampleObjectEntryManager1PuttObjectEntry(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("JWT Claims: " + jwt.getClaims());
+			_log.info("JWT ID: " + jwt.getId());
+			_log.info("JWT Subject: " + jwt.getSubject());
+			_log.info("\n\n" + jsonObject.toString(4) + "\n");
+		}
+
+		JSONObject objectEntryJSONObject = new JSONObject(
+			jsonObject.get(
+				"objectEntry"
+			).toString());
+
+		objectEntryJSONObject.put(
+			"creator",
+			HashMapBuilder.put(
+				"name", "Creator Name"
+			).build());
+
+		String externalReferenceCode =
+			"objectEntry" + (_objectEntryJSONObjects.size() + 1);
+
+		objectEntryJSONObject.put(
+			"externalReferenceCode", externalReferenceCode);
+
+		_objectEntryJSONObjects.put(
+			externalReferenceCode, objectEntryJSONObject);
+
+		return new ResponseEntity<>(
+			objectEntryJSONObject.toString(), HttpStatus.CREATED);
+	}
+
 	@PostMapping("/workflow/action/1")
 	public ResponseEntity<String> postSampleWorkflowAction1(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
@@ -205,6 +342,9 @@ public class SampleRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		SampleRestController.class);
+
+	private static final Map<String, JSONObject> _objectEntryJSONObjects =
+		new HashMap<>();
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;

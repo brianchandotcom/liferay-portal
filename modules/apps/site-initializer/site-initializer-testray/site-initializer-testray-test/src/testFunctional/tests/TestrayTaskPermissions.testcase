@@ -140,4 +140,34 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the task"
+	@priority = 4
+	test AssertAnalystRoleCanEditTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertAnalystRoleCanEditTask";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user edit a task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayTestflow.editTask(taskName = "Task_2");
+
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("Then the user can see the task edited") {
+			AssertElementPresent(
+				key_projectName = "Task_2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

@@ -214,4 +214,39 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182630 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the suite"
+	@priority = 4
+	test AssertLeadRoleCanEditSuite {
+		property test.name.skip.portal.instance = "TestraySuitePermissions#AssertLeadRoleCanEditSuite";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user edit the suite") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Suites");
+
+			TestraySuites.editSuite(
+				newDescription = "Suite Description Edited",
+				newName = "Suite Edited",
+				suiteName = ${suiteName});
+		}
+
+		task ("Then the user can see the suite edited in the table") {
+			AssertElementPresent(
+				key_projectName = "Suite Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

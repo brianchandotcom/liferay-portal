@@ -120,14 +120,16 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-183521 | LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
-	@ignore = "true"
+	@description = "LPS-180899 Confirm that when adding several views, pagination is displayed correctly when placing as 4 items"
 	@priority = 5
 	test CanAssertPagination {
 		task ("And Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Test Description",
+			FrontendDataSetAdmin.createFDSViewViaAPI(
+				datasetName = "Dataset Test",
+				dataSetViewDescription = "Test Description",
 				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
+
+			FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = "Dataset Test");
 		}
 
 		task ("And Change the pagination to 4 items") {
@@ -143,9 +145,7 @@ definition {
 		}
 
 		task ("When the user deletes two Views") {
-			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test 1");
-
-			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test 2");
+			FrontendDataSetAdmin.deleteDataSetViewViaAPI(datasetViewsNameList = "View Test 1,View Test 2");
 		}
 
 		task ("Then Confirm that only one page is displayed") {
@@ -157,9 +157,12 @@ definition {
 	@priority = 3
 	test CanAssertPaginationOnFDSViewsPage {
 		task ("When Adding a 6 view called 'View Test 1', 'View Test 2'... and Filling the description field with 'Test Description'") {
-			FrontendDataSetAdmin.createDataSetView(
-				description = "Test Description",
+			FrontendDataSetAdmin.createFDSViewViaAPI(
+				datasetName = "Dataset Test",
+				dataSetViewDescription = "Test Description",
 				key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4,View Test 5,View Test 6");
+
+			FrontendDataSetAdmin.goToDatasetViewAdminPage(datasetName = "Dataset Test");
 		}
 
 		task ("And changing the page to 4 entries.") {
@@ -469,7 +472,7 @@ definition {
 		}
 
 		task ("And the user deletes a View created") {
-			FrontendDataSetAdmin.deleteDataSetView(viewName = "View Test");
+			FrontendDataSetAdmin.deleteDataSetViewViaAPI(datasetViewsNameList = "View Test");
 		}
 
 		task ("And back to the Datasets admin page") {

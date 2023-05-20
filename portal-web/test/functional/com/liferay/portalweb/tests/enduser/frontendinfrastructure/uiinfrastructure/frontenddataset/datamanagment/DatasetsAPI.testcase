@@ -65,7 +65,7 @@ definition {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
 				datasetName = "Dataset Test",
 				dataSetViewDescription = "FDSViewDescription",
-				dataSetViewName = "View Test");
+				key_dataSetViewNameList = "View Test");
 		}
 
 		task ("When access to View page of the dataset created.") {

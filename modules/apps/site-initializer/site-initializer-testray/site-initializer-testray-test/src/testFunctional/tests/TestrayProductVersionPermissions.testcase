@@ -221,4 +221,39 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178264 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the product version"
+	@priority = 3
+	test AssertLeadRoleCanEditProductVersion {
+		property test.name.skip.portal.instance = "TestrayProductVersionPermissions#AssertLeadRoleCanEditProductVersion";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user edit the product version") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+
+			TestrayManage.editProductVersion(
+				caseName = "3.4",
+				itemManage = "Edit",
+				valueName = ${productVersion});
+		}
+
+		task ("Then the user can see the product version edited in the table") {
+			AssertElementPresent(
+				key_projectName = "3.4",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

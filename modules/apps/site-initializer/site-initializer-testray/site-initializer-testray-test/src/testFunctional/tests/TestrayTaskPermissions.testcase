@@ -372,4 +372,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the task"
+	@priority = 3
+	test AssertUserRoleCanNotEditTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertUserRoleCanNotEditTask";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the task") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
+
+		task ("Then the user can not edit a task") {
+			AssertElementNotPresent(
+				key_text = "Edit Task",
+				locator1 = "Button#ANY");
+		}
+	}
+
 }

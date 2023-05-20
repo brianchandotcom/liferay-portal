@@ -110,12 +110,11 @@ definition {
 	}
 
 	macro createFDSViewViaAPI {
-		for (var key_dataSetViewName : list ${key_dataSetViewNameList}){
-
-		JSONFrontendDatasetEntries._createFDSViewViaAPI(
-			datasetName = ${datasetName},
-			dataSetViewDescription = ${dataSetViewDescription},
-			dataSetViewName = ${key_dataSetViewName});
+		for (var key_dataSetViewName : list ${key_dataSetViewNameList}) {
+			JSONFrontendDatasetEntries._createFDSViewViaAPI(
+				datasetName = ${datasetName},
+				dataSetViewDescription = ${dataSetViewDescription},
+				dataSetViewName = ${key_dataSetViewName});
 		}
 	}
 
@@ -144,16 +143,6 @@ definition {
 		}
 	}
 
-	macro deleteDataSetViewViaAPI {
-		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewIdByName(datasetViewsNameList = ${datasetViewsNameList});
-
-		echo("${datasetViewsIdList}");
-
-		JSONFrontendDatasetEntries._deleteFDSViews(datasetViewsIdList = ${datasetViewsIdList});
-
-		Refresh();
-	}
-
 	macro deleteDataSet {
 		Click(
 			key_entry = ${entry},
@@ -180,6 +169,16 @@ definition {
 			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
 
 		Button.clickDelete();
+	}
+
+	macro deleteDataSetViewViaAPI {
+		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewIdByName(datasetViewsNameList = ${datasetViewsNameList});
+
+		echo(${datasetViewsIdList});
+
+		JSONFrontendDatasetEntries._deleteFDSViews(datasetViewsIdList = ${datasetViewsIdList});
+
+		Refresh();
 	}
 
 	macro editView {

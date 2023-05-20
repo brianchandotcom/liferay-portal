@@ -89,7 +89,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		String policy = contentSecurityPolicyConfiguration.policy();
 
 		if (Validator.isNotNull(policy)) {
-			PrintWriter httpServletResponseWriter =
+			PrintWriter printWriter =
 				httpServletResponse.getWriter();
 
 			ContentSecurityPolicyNonceIncludeServletResponse
@@ -120,9 +120,9 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			responseBody = responseBody.replaceAll(
 				"<(?i)style>", "<style nonce=\"" + nonce + "\">");
 
-			httpServletResponseWriter.write(responseBody);
+			printWriter.write(responseBody);
 
-			httpServletResponseWriter.close();
+			printWriter.close();
 
 			policy = StringUtil.replace(
 				policy,

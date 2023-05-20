@@ -170,4 +170,26 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178272 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create the task"
+	@priority = 3
+	test AssertAnalystRoleCanNotCreateTask {
+		property test.name.skip.portal.instance = "TestrayTaskPermissions#AssertAnalystRoleCanNotCreateTask";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the TestFlow") {
+			TestrayTestflow.goToTestflow();
+		}
+
+		task ("Then the user can not create a task") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

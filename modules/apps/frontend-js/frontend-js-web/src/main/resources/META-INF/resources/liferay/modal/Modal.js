@@ -54,12 +54,19 @@ const Modal = ({
 	zIndex,
 }) => {
 	const [loading, setLoading] = useState(true);
-	const [visible, setVisible] = useState(true);
+
+	const {observer, onOpenChange, open} = useModal({
+		onClose: () => processClose(),
+	});
+
+	useEffect(() => {
+		onOpenChange(true);
+	}, [onOpenChange]);
 
 	const eventHandlersRef = useRef([]);
 
 	const processClose = useCallback(() => {
-		setVisible(false);
+		onOpenChange(false);
 
 		document.body.classList.remove('modal-open');
 
@@ -74,11 +81,7 @@ const Modal = ({
 		if (onClose) {
 			onClose();
 		}
-	}, [eventHandlersRef, onClose]);
-
-	const {observer} = useModal({
-		onClose: () => processClose(),
-	});
+	}, [eventHandlersRef, onClose, onOpenChange]);
 
 	const onButtonClick = ({formId, onClick, type}) => {
 		const submitForm = (form) => {
@@ -201,7 +204,7 @@ const Modal = ({
 
 	return (
 		<>
-			{visible && (
+			{open && (
 				<ClayModal
 					center={center}
 					className={classNames('liferay-modal', className)}

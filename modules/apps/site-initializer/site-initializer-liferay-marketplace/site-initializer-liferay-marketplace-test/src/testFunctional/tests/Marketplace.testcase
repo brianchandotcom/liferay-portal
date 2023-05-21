@@ -23,7 +23,6 @@ definition {
 				templateName = "Liferay Marketplace",
 				templateType = "Site Initializer");
 		}
-
 	}
 
 	tearDown {
@@ -35,7 +34,20 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 		}
+	}
 
+	@description = "Story ID: LPS-183566 | Test Summary: Verify that when the Marketplace is created, Accounts Users will be created for it as well"
+	@priority = 3
+	test AccountUsersAreCreatedForMP20 {
+		task ("Given that I go to the Account Users page") {
+			AccountUsers.openAccountUsersAdmin();
+		}
+
+		task ("Then I should be able to assert that Account Users was created") {
+			for (var accountName : list "Steven Acme,Jane Acme,Ryan administrator,Clark Customer,Marie developer,John developer") {
+				LexiconEntry.viewEntryName(rowEntry = ${accountName});
+			}
+		}
 	}
 
 	@description = "Story ID: LPS-183566 | Test Summary: Verify if Liferay Marketplace can be created with Site initializer"

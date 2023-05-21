@@ -146,9 +146,6 @@ function AssetVocabulariesCategoriesSelector({
 			height: '70vh',
 			iframeBodyCssClass: '',
 			multiple: true,
-			onClose: () => {
-				selectButtonRef.current?.focus();
-			},
 			onSelect: (selectedItems) => {
 				if (selectedItems) {
 					const newValues = Object.keys(selectedItems).reduce(

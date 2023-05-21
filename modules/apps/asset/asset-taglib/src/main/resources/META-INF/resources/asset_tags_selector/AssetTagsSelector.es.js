@@ -141,9 +141,6 @@ function AssetTagsSelector({
 			buttonAddLabel: Liferay.Language.get('done'),
 			getSelectedItemsOnly: false,
 			multiple: true,
-			onClose: () => {
-				selectButtonRef.current?.focus();
-			},
 			onSelect: (dialogSelectedItems) => {
 				if (!dialogSelectedItems?.length) {
 					return;

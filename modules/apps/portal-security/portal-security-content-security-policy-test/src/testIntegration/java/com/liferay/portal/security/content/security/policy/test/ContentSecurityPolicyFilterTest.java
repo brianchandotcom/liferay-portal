@@ -139,8 +139,8 @@ public class ContentSecurityPolicyFilterTest {
 		throws Exception {
 
 		String cspPolicy =
-			"default-src 'self'; script-src 'self' '[nonceToken]'; style-src " +
-				"'self' '[nonceToken]'";
+			"default-src 'self'; script-src 'self' '[$NONCE_TOKEN$]'; " +
+				"style-src 'self' '[$NONCE_TOKEN$]'";
 
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper = _configureContentSecurityPolicy(
@@ -170,7 +170,7 @@ public class ContentSecurityPolicyFilterTest {
 				nonceRandomStartPos, nonceRandomStartPos + 24);
 
 			String substitutedCspPolicy = StringUtil.replace(
-				cspPolicy, "[nonceToken]", "nonce-" + nonce);
+				cspPolicy, "[$NONCE_TOKEN$]", "nonce-" + nonce);
 
 			Assert.assertEquals(
 				contentSecurityPolicyHeaderValue, substitutedCspPolicy);

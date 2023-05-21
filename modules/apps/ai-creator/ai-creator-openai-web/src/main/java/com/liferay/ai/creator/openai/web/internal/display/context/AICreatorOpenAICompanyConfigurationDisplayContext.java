@@ -17,9 +17,6 @@ package com.liferay.ai.creator.openai.web.internal.display.context;
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Lourdes Fernández Besada
@@ -28,13 +25,11 @@ public class AICreatorOpenAICompanyConfigurationDisplayContext {
 
 	public AICreatorOpenAICompanyConfigurationDisplayContext(
 		AICreatorOpenAIConfigurationManager aiCreatorOpenAIConfigurationManager,
-		HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay) {
 
 		_aiCreatorOpenAIConfigurationManager =
 			aiCreatorOpenAIConfigurationManager;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_themeDisplay = themeDisplay;
 	}
 
 	public String getApiKey() throws ConfigurationException {

@@ -95,15 +95,19 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 								<li class="nav-item">
 									<a
 										aria-current="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "page" : "false" %>"
-										class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>" href="<%=
-PortletURLBuilder.create(
-									PortletURLUtil.clone(portletURL, liferayPortletResponse)
-								).setParameter(
-									"screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey()
-								).setParameter(
-									"screenNavigationEntryKey", screenNavigationEntry.getEntryKey()
-								).buildPortletURL() %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a
+										class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>"
+										href="<%=
+											PortletURLBuilder.create(
+												PortletURLUtil.clone(portletURL, liferayPortletResponse)
+											).setParameter(
+												"screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey()
+											).setParameter(
+												"screenNavigationEntryKey", screenNavigationEntry.getEntryKey()
+											).buildPortletURL()
+										%>"
 									>
+										<%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %>
+									</a>
 								</li>
 
 							<%

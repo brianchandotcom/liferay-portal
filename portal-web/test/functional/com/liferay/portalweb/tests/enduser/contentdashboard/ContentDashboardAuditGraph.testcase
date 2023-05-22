@@ -443,12 +443,12 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
-				xAxisCategoryName = "Stage 1");
+				xAxisCategoryName = "Audience 1");
 
 			AssertTextEquals(
-				auditGraphTitle = "Content per Stage",
+				auditGraphTitle = "Content per Audience",
 				locator1 = "ContentDashboard#AUDIT_GRAPH_TITLE",
-				value1 = "Content per Stage");
+				value1 = "Content per Audience");
 		}
 	}
 

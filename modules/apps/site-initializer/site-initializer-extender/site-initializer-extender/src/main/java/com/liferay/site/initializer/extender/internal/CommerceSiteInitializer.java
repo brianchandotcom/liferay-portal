@@ -130,7 +130,7 @@ public class CommerceSiteInitializer {
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			servletContext);
 
-		_addOrUpdateCommerceOrderType(serviceContext, servletContext);
+		_addOrUpdateCommerceOrderTypes(serviceContext, servletContext);
 		_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 	}
 
@@ -738,11 +738,11 @@ public class CommerceSiteInitializer {
 		return channel;
 	}
 
-	private void _addOrUpdateCommerceOrderType(
+	private void _addOrUpdateCommerceOrderTypes(
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		String resourcePath = "/site-initializer/commerce-order-type.json";
+		String resourcePath = "/site-initializer/commerce-order-types.json";
 
 		String json = SiteInitializerUtil.read(resourcePath, servletContext);
 

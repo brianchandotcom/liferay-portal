@@ -57,7 +57,7 @@ public class UpgradeJavaAddFolderParameterCheck extends BaseFileCheck {
 				0, methodCall.indexOf(CharPool.PERIOD));
 
 			Pattern variableDeclarationPattern = Pattern.compile(
-				"[A-z]+ " + variable);
+				"[A-Za-z_]+ " + variable);
 
 			Matcher variableDeclarationMatcher =
 				variableDeclarationPattern.matcher(content);
@@ -83,6 +83,6 @@ public class UpgradeJavaAddFolderParameterCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _addFolderPattern = Pattern.compile(
-		"[A-z]+\\.addFolder\\(");
+		"\\w+\\.addFolder\\(");
 
 }

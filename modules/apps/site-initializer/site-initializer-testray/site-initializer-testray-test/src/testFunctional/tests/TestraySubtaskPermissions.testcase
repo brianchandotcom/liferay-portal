@@ -212,4 +212,42 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the subtask"
+	@priority = 4
+	test AssertLeadRoleCanEditTask {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertLeadRoleCanEditTask";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user edit a Subtask") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me and Begin Analysis");
+
+			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+
+			TestrayTestflow.editStatus(selectStatus = "Passed");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the user can see the subtask edited") {
+			TestrayTestflow.assertStatus(
+				label = "Subtasks",
+				status = "Complete");
+		}
+	}
+
 }

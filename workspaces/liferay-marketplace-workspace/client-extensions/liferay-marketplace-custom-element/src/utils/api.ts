@@ -467,6 +467,18 @@ export async function getProduct({
 	return (await response.json()) as Product;
 }
 
+export async function getProductIdCategories({appId}: {appId: string}) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/categories`,
+		{
+			headers,
+			method: 'GET',
+		}
+	);
+
+	return (await response.json()) as {items: Categories[]};
+}
+
 export async function getProductImages({appProductId}: {appProductId: number}) {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/images`,
@@ -664,6 +676,23 @@ export async function patchOrderByERC(erc: string, body: any) {
 	);
 
 	return response;
+}
+
+export async function patchProductIdCategory({
+	body,
+	appId,
+}: {
+	body: any;
+	appId: string;
+}) {
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/categories`,
+		{
+			body: JSON.stringify(body),
+			headers,
+			method: 'PATCH',
+		}
+	);
 }
 
 export async function patchSKUById(skuId: number, body: any) {

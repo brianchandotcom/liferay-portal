@@ -19,6 +19,9 @@ import {
 	createAttachment,
 	createProductSpecification,
 	createSpecification,
+	getProductIdCategories,
+	getVocabularies,
+	patchProductIdCategory,
 	updateProductSpecification,
 } from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
@@ -39,7 +42,16 @@ export function ProvideAppBuildPage({
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [
-		{appBuild, appERC, appId, appProductId, appType, buildZIPFiles},
+		{
+			appBuild,
+			appCategories,
+			appERC,
+			appId,
+			appProductId,
+			appTags,
+			appType,
+			buildZIPFiles,
+		},
 		dispatch,
 	] = useAppContext();
 
@@ -81,6 +93,93 @@ export function ProvideAppBuildPage({
 				files,
 			},
 			type: TYPES.UPLOAD_BUILD_ZIP_FILES,
+		});
+	};
+
+	const updateCloudCompatibility = async () => {
+		const vocabulariesResponse = await getVocabularies();
+
+		const categories = await getProductIdCategories({
+			appId: appProductId.toString(),
+		});
+
+		let newCategories: Categories[] = [];
+
+		if (appType.value === 'cloud') {
+			let liferayPlatformOfferingId = 0;
+			let marketplaceLiferayVersionId = 0;
+			let marketplaceEditionId = 0;
+
+			let liferayPlatformOfferingERC = '';
+			let marketplaceLiferayVersionERC = '';
+			let marketplaceEditionERC = '';
+
+			vocabulariesResponse.items.forEach(
+				(vocab: {
+					externalReferenceCode: string;
+					id: number;
+					name: string;
+				}) => {
+					if (vocab.name === 'Liferay Platform Offering') {
+						liferayPlatformOfferingId = vocab.id + 1;
+						liferayPlatformOfferingERC =
+							vocab.externalReferenceCode;
+					}
+
+					if (vocab.name === 'Marketplace Liferay Version') {
+						marketplaceLiferayVersionId = vocab.id + 1;
+						marketplaceLiferayVersionERC =
+							vocab.externalReferenceCode;
+					}
+
+					if (vocab.name === 'Marketplace Edition') {
+						marketplaceEditionId = vocab.id + 1;
+						marketplaceEditionERC = vocab.externalReferenceCode;
+					}
+				}
+			);
+
+			newCategories = [
+				{
+					externalReferenceCode: liferayPlatformOfferingERC,
+					id: liferayPlatformOfferingId.toString(),
+					name: 'Fully-Managed',
+					vocabulary: 'Liferay Platform Offering',
+				},
+				{
+					externalReferenceCode: marketplaceLiferayVersionERC,
+					id: marketplaceLiferayVersionId.toString(),
+					name: '7.4',
+					vocabulary: 'Marketplace Liferay Version',
+				},
+				{
+					externalReferenceCode: marketplaceEditionERC,
+					id: marketplaceEditionId.toString(),
+					name: 'EE',
+					vocabulary: 'Marketplace Edition',
+				},
+			];
+
+			newCategories = [...categories.items, ...newCategories];
+		}
+		else {
+			newCategories = categories.items.filter((el) => {
+				if (
+					el.vocabulary !== 'marketplace edition' &&
+					el.vocabulary !== 'marketplace liferay version' &&
+					el.vocabulary !== 'liferay platform offering'
+				)
+					return el;
+			});
+		}
+
+		const body = newCategories.map((item) => {
+			return item;
+		});
+
+		await patchProductIdCategory({
+			appId: appProductId.toString(),
+			body,
 		});
 	};
 
@@ -274,6 +373,8 @@ export function ProvideAppBuildPage({
 							});
 						}
 					};
+
+					updateCloudCompatibility();
 
 					submitAppBuildType();
 

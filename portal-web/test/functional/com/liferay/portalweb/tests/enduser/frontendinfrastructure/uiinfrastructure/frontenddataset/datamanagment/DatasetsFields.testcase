@@ -137,12 +137,44 @@ definition {
 	}
 
 	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."
-	@ignore = "true"
 	@priority = 4
 	test CanChangeFieldOrder {
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185229 CanChangeFieldOrder pending implementation
+		task ("And checks id and label fields") {
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+		}
+
+		task ("And clicks on Save button") {
+			Button.clickSave();
+		}
+
+		task ("And clicks on a field drag dots icon related id field ") {
+			Click.clickAt(
+				key_nameField = "id",
+				locator1 = "FrontendDataSetAdmin#FIELDS_DRAG_DOTS_ICON");
+		}
+
+		task ("Then the user can move the id field below the label field") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_nameField = "id",
+				key_position = 2,
+				keyName = "label",
+				locator1 = "FrontendDataSetAdmin#FIELDS_DRAG_DOTS_ICON",
+				locator2 = "FrontendDataSetAdmin#FIELDS_TABLE");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "label");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 2,
+				keyName = "id");
+		}
 	}
 
 	@description = "LPS-179282. Confirm that the user can check and uncheck all the fields"

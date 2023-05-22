@@ -155,4 +155,46 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the requirement"
+	@priority = 3
+	test AnalystRoleCanEditRequirement {
+		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AnalystRoleCanEditRequirement";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+
+            Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+		}
+
+		task ("When the user edited the requirement") {
+			RightClick.rightClick(
+				key_projectName = ${requirementName},
+				locator1 = "Testray#ITEM_NAME");
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+
+			TestrayRequirements.editRequirement(
+				componentId = ${componentName},
+				linkTitle = "The page edited",
+				linkURL = "https://reddit.com",
+				requirementName = "Requirement Edited");
+		}
+
+		task ("Then can see the requirement edited in the table") {
+			AssertElementPresent(
+				key_projectName = "Requirement Edited",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

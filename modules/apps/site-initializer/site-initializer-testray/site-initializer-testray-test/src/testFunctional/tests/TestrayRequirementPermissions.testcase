@@ -341,4 +341,38 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the requirement"
+	@priority = 2
+	test AssertUserRoleCanNotDeleteRequirement {
+		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotDeleteRequirement";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+
+            Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+		}
+
+		task ("When the user right click in requirement") {
+			RightClick.rightClick(
+				key_projectName = ${requirementName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not delete the requirement") {
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

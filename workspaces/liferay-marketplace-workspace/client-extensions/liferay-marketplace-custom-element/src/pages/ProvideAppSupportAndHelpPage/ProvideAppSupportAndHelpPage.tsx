@@ -127,7 +127,8 @@ export function ProvideAppSupportAndHelpPage({
 								id: appInstallationGuideURL?.id,
 								value: target.value,
 							},
-							type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
+							type:
+								TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
 						})
 					}
 					placeholder="http:// Enter app name"
@@ -168,15 +169,14 @@ export function ProvideAppSupportAndHelpPage({
 					}
 
 					if (publisherWebsiteURL?.value) {
-						const publisherWebsiteURLSpecificationId =
-							await saveSpecification(
-								appId,
-								appProductId,
-								publisherWebsiteURL?.id,
-								'publisherWebsiteURL',
-								'Publisher Web site URL',
-								publisherWebsiteURL?.value
-							);
+						const publisherWebsiteURLSpecificationId = await saveSpecification(
+							appId,
+							appProductId,
+							publisherWebsiteURL?.id,
+							'publisherWebsiteURL',
+							'Publisher Web site URL',
+							publisherWebsiteURL?.value
+						);
 
 						if (publisherWebsiteURLSpecificationId !== -1) {
 							dispatch({
@@ -198,15 +198,14 @@ export function ProvideAppSupportAndHelpPage({
 						}
 					}
 					if (appUsageTermsURL?.value) {
-						const appUsageTermsURLSpecificationId =
-							await saveSpecification(
-								appId,
-								appProductId,
-								appUsageTermsURL?.id,
-								'appUsageTermsURL',
-								'App Usage Terms URL',
-								appUsageTermsURL?.value
-							);
+						const appUsageTermsURLSpecificationId = await saveSpecification(
+							appId,
+							appProductId,
+							appUsageTermsURL?.id,
+							'appUsageTermsURL',
+							'App Usage Terms URL',
+							appUsageTermsURL?.value
+						);
 
 						if (appUsageTermsURLSpecificationId !== -1) {
 							dispatch({
@@ -228,15 +227,14 @@ export function ProvideAppSupportAndHelpPage({
 						}
 					}
 					if (appDocumentationURL?.value) {
-						const appDocumentationURLSpecificationId =
-							await saveSpecification(
-								appId,
-								appProductId,
-								appDocumentationURL?.id,
-								'appDocumentationURL',
-								'App Documentation URL',
-								appDocumentationURL?.value
-							);
+						const appDocumentationURLSpecificationId = await saveSpecification(
+							appId,
+							appProductId,
+							appDocumentationURL?.id,
+							'appDocumentationURL',
+							'App Documentation URL',
+							appDocumentationURL?.value
+						);
 
 						if (appDocumentationURLSpecificationId !== -1) {
 							dispatch({
@@ -258,15 +256,14 @@ export function ProvideAppSupportAndHelpPage({
 						}
 					}
 					if (appInstallationGuideURL?.value) {
-						const appInstallationGuideURLSpecificationId =
-							await saveSpecification(
-								appId,
-								appProductId,
-								appInstallationGuideURL?.id,
-								'appInstallationGuideURL',
-								'App Installation Guide URL',
-								appInstallationGuideURL?.value
-							);
+						const appInstallationGuideURLSpecificationId = await saveSpecification(
+							appId,
+							appProductId,
+							appInstallationGuideURL?.id,
+							'appInstallationGuideURL',
+							'App Installation Guide URL',
+							appInstallationGuideURL?.value
+						);
 
 						if (appInstallationGuideURLSpecificationId !== -1) {
 							dispatch({
@@ -274,7 +271,8 @@ export function ProvideAppSupportAndHelpPage({
 									id: appInstallationGuideURLSpecificationId,
 									value: appInstallationGuideURL.value,
 								},
-								type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
+								type:
+									TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
 							});
 						}
 						else {
@@ -283,7 +281,8 @@ export function ProvideAppSupportAndHelpPage({
 									id: appInstallationGuideURL?.id,
 									value: appInstallationGuideURL.value,
 								},
-								type: TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
+								type:
+									TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
 							});
 						}
 					}

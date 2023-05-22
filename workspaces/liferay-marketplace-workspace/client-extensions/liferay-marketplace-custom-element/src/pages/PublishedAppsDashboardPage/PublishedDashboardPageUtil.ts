@@ -118,8 +118,8 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 export const appTableHeaders = [
 	{
 		iconSymbol: 'order-arrow',
-		title: 'Name',
 		style: {width: '2%'},
+		title: 'Name',
 	},
 	{
 		title: 'Version',
@@ -150,10 +150,10 @@ export const memberTableHeaders = [
 
 export const initialAccountsState: Account[] = [
 	{
+		description: '',
 		externalReferenceCode: '',
 		id: 0,
 		name: '',
-		description: '',
 		type: '',
 	},
 ];

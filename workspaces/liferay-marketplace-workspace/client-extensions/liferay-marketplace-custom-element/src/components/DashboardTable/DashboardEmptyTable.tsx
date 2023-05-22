@@ -12,8 +12,6 @@
  * details.
  */
 
-import noApp from '../../assets/images/no_app.png';
-
 import './DashboardEmptyTable.scss';
 
 export function DashboardEmptyTable({

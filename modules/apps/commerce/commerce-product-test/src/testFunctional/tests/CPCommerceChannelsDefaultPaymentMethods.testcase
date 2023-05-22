@@ -80,11 +80,11 @@ definition {
 			AssertTextEquals(
 				key_id = "BillingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 1 to 4 of 11 entries.");
+				value1 = "Showing 1 to 4 of 12 entries.");
 		}
 
-		task ("Then the first 4 items are present in the first page") {
-			for (var channel : list "Test Channel 1,Test Channel 2,Test Channel 3,Test Channel 4") {
+		task ("Then a default and the first 3 items are present in the first page") {
+			for (var channel : list "All Other Channels,Test Channel 1,Test Channel 2,Test Channel 3") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -93,9 +93,9 @@ definition {
 			}
 		}
 
-		task ("And the 5th item is not present in the first page") {
+		task ("And the 4th item is not present in the first page") {
 			AssertElementNotPresent(
-				key_firstColumnValue = "Test Channel 5",
+				key_firstColumnValue = "Test Channel 4",
 				key_secondColumnValue = "",
 				key_table = "BillingCommerceAddresses",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
@@ -109,11 +109,11 @@ definition {
 			AssertTextEquals(
 				key_id = "BillingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 5 to 8 of 11 entries.");
+				value1 = "Showing 5 to 8 of 12 entries.");
 		}
 
-		task ("Then all items from 5th to 8th are shown in the second page") {
-			for (var channel : list "Test Channel 5,Test Channel 6,Test Channel 7,Test Channel 8") {
+		task ("Then all items from 4th to 7th are shown in the second page") {
+			for (var channel : list "Test Channel 4,Test Channel 5,Test Channel 6,Test Channel 7") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -122,8 +122,8 @@ definition {
 			}
 		}
 
-		task ("And the 4th and 9th items are not shown in the second page") {
-			for (var num : list "4,9") {
+		task ("And the 3th and 8th items are not shown in the second page") {
+			for (var num : list "3,8") {
 				AssertElementNotPresent(
 					key_firstColumnValue = "Test Channel ${num}",
 					key_secondColumnValue = "",
@@ -141,11 +141,11 @@ definition {
 			AssertTextEquals(
 				key_id = "BillingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 9 to 11 of 11 entries.");
+				value1 = "Showing 9 to 12 of 12 entries.");
 		}
 
-		task ("Then all items from 9th to 11th are shown in the third page") {
-			for (var channel : list "Test Channel 9,Test Channel 10,Test Channel 11") {
+		task ("Then all items from 8th to 11th are shown in the third page") {
+			for (var channel : list "Test Channel 8,Test Channel 9,Test Channel 10,Test Channel 11") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -154,9 +154,9 @@ definition {
 			}
 		}
 
-		task ("And the 8th item is not shown in the third page") {
+		task ("And the 7th item is not shown in the third page") {
 			AssertElementNotPresent(
-				key_firstColumnValue = "Test Channel 8",
+				key_firstColumnValue = "Test Channel 7",
 				key_secondColumnValue = "",
 				key_table = "BillingCommerceAddresses",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
@@ -170,11 +170,11 @@ definition {
 			AssertTextEquals(
 				key_id = "BillingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 5 to 8 of 11 entries.");
+				value1 = "Showing 5 to 8 of 12 entries.");
 		}
 
-		task ("Then all items from 5th to 8th are shown in the second page") {
-			for (var channel : list "Test Channel 5,Test Channel 6,Test Channel 7,Test Channel 8") {
+		task ("Then all items from 4th to 7th are shown in the second page") {
+			for (var channel : list "Test Channel 4,Test Channel 5,Test Channel 6,Test Channel 7") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -183,8 +183,8 @@ definition {
 			}
 		}
 
-		task ("And the 4th and 9th items are not shown in the second page") {
-			for (var num : list "4,9") {
+		task ("And the 3th and 8th items are not shown in the second page") {
+			for (var num : list "3,8") {
 				AssertElementNotPresent(
 					key_firstColumnValue = "Test Channel ${num}",
 					key_secondColumnValue = "",
@@ -1345,11 +1345,11 @@ definition {
 			AssertTextEquals(
 				key_id = "ShippingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 1 to 4 of 11 entries.");
+				value1 = "Showing 1 to 4 of 12 entries.");
 		}
 
-		task ("Then the first 4 items are present in the first page") {
-			for (var channel : list "Test Channel 1,Test Channel 2,Test Channel 3,Test Channel 4") {
+		task ("Then a default and the first 3 items are present in the first page") {
+			for (var channel : list "All Other Channels,Test Channel 1,Test Channel 2,Test Channel 3") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -1358,9 +1358,9 @@ definition {
 			}
 		}
 
-		task ("And the 5th item is not present in the first page") {
+		task ("And the 4th item is not present in the first page") {
 			AssertElementNotPresent(
-				key_firstColumnValue = "Test Channel 5",
+				key_firstColumnValue = "Test Channel 4",
 				key_secondColumnValue = "",
 				key_table = "ShippingCommerceAddresses",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
@@ -1374,11 +1374,11 @@ definition {
 			AssertTextEquals(
 				key_id = "ShippingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 5 to 8 of 11 entries.");
+				value1 = "Showing 5 to 8 of 12 entries.");
 		}
 
-		task ("Then all items from 5th to 8th are shown in the second page") {
-			for (var channel : list "Test Channel 5,Test Channel 6,Test Channel 7,Test Channel 8") {
+		task ("Then all items from 4th to 7th are shown in the second page") {
+			for (var channel : list "Test Channel 4,Test Channel 5,Test Channel 6,Test Channel 7") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -1387,8 +1387,8 @@ definition {
 			}
 		}
 
-		task ("And the 4th and 9th items are not shown in the second page") {
-			for (var num : list "4,9") {
+		task ("And the 3th and 8th items are not shown in the second page") {
+			for (var num : list "3,8") {
 				AssertElementNotPresent(
 					key_firstColumnValue = "Test Channel ${num}",
 					key_secondColumnValue = "",
@@ -1406,11 +1406,11 @@ definition {
 			AssertTextEquals(
 				key_id = "ShippingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 9 to 11 of 11 entries.");
+				value1 = "Showing 9 to 12 of 12 entries.");
 		}
 
-		task ("Then all items from 9th to 11th are shown in the third page") {
-			for (var channel : list "Test Channel 9,Test Channel 10,Test Channel 11") {
+		task ("Then all items from 8th to 11th are shown in the third page") {
+			for (var channel : list "Test Channel 8,Test Channel 9,Test Channel 10,Test Channel 11") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -1419,9 +1419,9 @@ definition {
 			}
 		}
 
-		task ("And the 8th item is not shown in the third page") {
+		task ("And the 7th item is not shown in the third page") {
 			AssertElementNotPresent(
-				key_firstColumnValue = "Test Channel 8",
+				key_firstColumnValue = "Test Channel 7",
 				key_secondColumnValue = "",
 				key_table = "ShippingCommerceAddresses",
 				locator1 = "CommerceEntry#TABLE_ASSERT_TWO_COLUMNS_ELLIPSIS");
@@ -1435,11 +1435,11 @@ definition {
 			AssertTextEquals(
 				key_id = "ShippingCommerceAddresses",
 				locator1 = "CommerceEntry#PAGINATION_RESULTS_BY_TABLE",
-				value1 = "Showing 5 to 8 of 11 entries.");
+				value1 = "Showing 5 to 8 of 12 entries.");
 		}
 
-		task ("Then all items from 5th to 8th are shown in the second page") {
-			for (var channel : list "Test Channel 5,Test Channel 6,Test Channel 7,Test Channel 8") {
+		task ("Then all items from 4th to 7th are shown in the second page") {
+			for (var channel : list "Test Channel 4,Test Channel 5,Test Channel 6,Test Channel 7") {
 				AssertElementPresent(
 					key_firstColumnValue = ${channel},
 					key_secondColumnValue = "",
@@ -1448,8 +1448,8 @@ definition {
 			}
 		}
 
-		task ("And the 4th and 9th items are not shown in the second page") {
-			for (var num : list "4,9") {
+		task ("And the 3th and 8th items are not shown in the second page") {
+			for (var num : list "3,8") {
 				AssertElementNotPresent(
 					key_firstColumnValue = "Test Channel ${num}",
 					key_secondColumnValue = "",

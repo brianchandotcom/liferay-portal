@@ -196,4 +196,42 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the case result"
+	@priority = 3
+	test AssertLeadRoleCanDeleteCaseResult {
+		property test.name.skip.portal.instance = "TestrayCaseResultPermissions#AssertLeadRoleCanDeleteCaseResult";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to case result page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("When the user delete the case result") {
+			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
+
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
+		}
+
+		task ("Then the Case Results should not be displayed anymore") {
+			AssertElementNotPresent(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

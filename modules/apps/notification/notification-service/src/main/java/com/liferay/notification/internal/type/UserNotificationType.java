@@ -50,6 +50,21 @@ import org.osgi.service.component.annotations.Reference;
 public class UserNotificationType extends BaseNotificationType {
 
 	@Override
+	public NotificationQueueEntry createNotificationQueueEntry(
+		User user, String body, NotificationContext notificationContext,
+		String subject) {
+
+		NotificationQueueEntry notificationQueueEntry =
+			super.createNotificationQueueEntry(
+				user, body, notificationContext, subject);
+
+		notificationQueueEntry.setStatus(
+			NotificationQueueEntryConstants.STATUS_SENT);
+
+		return notificationQueueEntry;
+	}
+
+	@Override
 	public String getRecipientSummary(
 		NotificationQueueEntry notificationQueueEntry) {
 
@@ -139,21 +154,6 @@ public class UserNotificationType extends BaseNotificationType {
 
 		notificationQueueEntryLocalService.addNotificationQueueEntry(
 			notificationContext);
-	}
-
-	@Override
-	protected NotificationQueueEntry createNotificationQueueEntry(
-		User user, String body, NotificationContext notificationContext,
-		String subject) {
-
-		NotificationQueueEntry notificationQueueEntry =
-			super.createNotificationQueueEntry(
-				user, body, notificationContext, subject);
-
-		notificationQueueEntry.setStatus(
-			NotificationQueueEntryConstants.STATUS_SENT);
-
-		return notificationQueueEntry;
 	}
 
 	@Reference

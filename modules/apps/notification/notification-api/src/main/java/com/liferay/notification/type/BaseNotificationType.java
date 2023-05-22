@@ -63,6 +63,35 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseNotificationType implements NotificationType {
 
 	@Override
+	public NotificationQueueEntry createNotificationQueueEntry(
+		User user, String body, NotificationContext notificationContext,
+		String subject) {
+
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationQueueEntryLocalService.createNotificationQueueEntry(0L);
+
+		notificationQueueEntry.setUserId(user.getUserId());
+		notificationQueueEntry.setUserId(user.getUserId());
+		notificationQueueEntry.setUserName(user.getFullName());
+
+		notificationQueueEntry.setNotificationTemplateId(
+			notificationTemplate.getNotificationTemplateId());
+		notificationQueueEntry.setBody(body);
+		notificationQueueEntry.setClassName(notificationContext.getClassName());
+		notificationQueueEntry.setClassPK(notificationContext.getClassPK());
+		notificationQueueEntry.setPriority(0);
+		notificationQueueEntry.setSubject(subject);
+		notificationQueueEntry.setType(getType());
+		notificationQueueEntry.setStatus(
+			NotificationQueueEntryConstants.STATUS_UNSENT);
+
+		return notificationQueueEntry;
+	}
+
+	@Override
 	public List<NotificationRecipientSetting>
 		createNotificationRecipientSettings(
 			long notificationRecipientId, Object[] recipients, User user) {
@@ -188,34 +217,6 @@ public abstract class BaseNotificationType implements NotificationType {
 				throw new NotificationTemplateAttachmentObjectFieldIdException();
 			}
 		}
-	}
-
-	protected NotificationQueueEntry createNotificationQueueEntry(
-		User user, String body, NotificationContext notificationContext,
-		String subject) {
-
-		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
-
-		NotificationQueueEntry notificationQueueEntry =
-			notificationQueueEntryLocalService.createNotificationQueueEntry(0L);
-
-		notificationQueueEntry.setUserId(user.getUserId());
-		notificationQueueEntry.setUserId(user.getUserId());
-		notificationQueueEntry.setUserName(user.getFullName());
-
-		notificationQueueEntry.setNotificationTemplateId(
-			notificationTemplate.getNotificationTemplateId());
-		notificationQueueEntry.setBody(body);
-		notificationQueueEntry.setClassName(notificationContext.getClassName());
-		notificationQueueEntry.setClassPK(notificationContext.getClassPK());
-		notificationQueueEntry.setPriority(0);
-		notificationQueueEntry.setSubject(subject);
-		notificationQueueEntry.setType(getType());
-		notificationQueueEntry.setStatus(
-			NotificationQueueEntryConstants.STATUS_UNSENT);
-
-		return notificationQueueEntry;
 	}
 
 	protected NotificationRecipient createNotificationRecipient(

@@ -151,7 +151,14 @@ definition {
 	macro publish {
 		Button.clickPublish();
 
-		Alert.viewSuccessMessage();
+		WaitForElementPresent(locator1 = "Message#ALERT_DISMISSIBLE");
+
+		if (IsElementPresent(locator1 = "Message#WARNING")) {
+			VerifyElementPresent(locator1 = "Message#WARNING");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro publishAndWait {

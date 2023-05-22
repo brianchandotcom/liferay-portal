@@ -27,6 +27,7 @@ import com.liferay.object.exception.ObjectDefinitionModifiableException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -416,14 +417,21 @@ public class ObjectViewLocalServiceTest {
 			String objectFieldLabel, String objectFieldName)
 		throws Exception {
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(objectFieldLabel), false,
-			objectFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null, true,
-			false, Collections.emptyList());
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(objectFieldLabel)
+			).name(
+				objectFieldName
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		return objectField.getName();
 	}

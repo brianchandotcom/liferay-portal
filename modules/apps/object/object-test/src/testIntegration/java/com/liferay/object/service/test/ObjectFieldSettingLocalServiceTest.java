@@ -15,8 +15,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -58,15 +59,21 @@ public class ObjectFieldSettingLocalServiceTest {
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService);
 
-		_objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
-			null, RandomTestUtil.randomBoolean(), false,
-			Collections.emptyList());
+		_objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				RandomTestUtil.randomBoolean()
+			).build());
 	}
 
 	@AfterClass

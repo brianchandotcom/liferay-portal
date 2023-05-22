@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -414,17 +415,20 @@ public class ObjectDefinitionServiceTest {
 							RandomTestUtil.randomString(),
 							StringUtil.randomId())));
 
-			ObjectField objectField =
-				_objectFieldLocalService.addCustomObjectField(
-					null, ownerUser.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(),
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).userId(
+					ownerUser.getUserId()
+				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					false, StringUtil.randomId(),
-					ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-					Collections.emptyList());
+						RandomTestUtil.randomString())
+				).name(
+					StringUtil.randomId()
+				).objectDefinitionId(
+					objectDefinition.getObjectDefinitionId()
+				).objectFieldSettings(
+					Collections.emptyList()
+				).build());
 
 			objectDefinition =
 				_objectDefinitionService.updateTitleObjectFieldId(

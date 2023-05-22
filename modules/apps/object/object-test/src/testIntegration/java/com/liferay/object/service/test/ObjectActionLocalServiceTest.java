@@ -36,6 +36,7 @@ import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -876,26 +877,41 @@ public class ObjectActionLocalServiceTest {
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), User.class.getName());
 
-		ObjectField objectField1 =
-			_objectFieldLocalService.addCustomObjectField(
-				null, TestPropsValues.getUserId(), 0,
-				userObjectDefinition.getObjectDefinitionId(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, StringUtil.randomId(),
-				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-				Collections.emptyList());
-		ObjectField objectField2 =
-			_objectFieldLocalService.addCustomObjectField(
-				null, TestPropsValues.getUserId(), 0,
-				userObjectDefinition.getObjectDefinitionId(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, StringUtil.randomId(),
-				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-				Collections.emptyList());
+		ObjectField objectField1 = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				userObjectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).build());
+
+		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				userObjectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).build());
 
 		// Add object action to create user after adding an object entry
 

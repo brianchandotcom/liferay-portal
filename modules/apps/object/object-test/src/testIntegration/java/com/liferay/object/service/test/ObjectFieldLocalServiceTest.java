@@ -614,11 +614,25 @@ public class ObjectFieldLocalServiceTest {
 		_assertFailure(
 			ObjectFieldDBTypeException.class, errorMessage,
 			() -> _addUnmodifiableSystemObjectDefinition(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, "en_US",
-					"", 0, "able", Collections.emptyList(),
-					ObjectFieldConstants.READ_ONLY_FALSE, null, false, true)));
+				ObjectFieldUtil.addCustomObjectField(
+					new TextObjectFieldBuilder(
+					).userId(
+						TestPropsValues.getUserId()
+					).indexed(
+						true
+					).indexedAsKeyword(
+						true
+					).indexedLanguageId(
+						"en_US"
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("")
+					).name(
+						"able"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).system(
+						true
+					).build())));
 
 		// Invalid DB type
 

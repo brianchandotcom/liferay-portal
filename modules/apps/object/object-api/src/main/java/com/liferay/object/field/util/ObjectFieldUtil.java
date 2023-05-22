@@ -28,6 +28,23 @@ import java.util.List;
  */
 public class ObjectFieldUtil {
 
+	public static ObjectField addCustomObjectField(ObjectField objectField)
+		throws Exception {
+
+		return ObjectFieldLocalServiceUtil.addCustomObjectField(
+			objectField.getExternalReferenceCode(), objectField.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectField.getObjectFieldSettings());
+	}
+
 	public static ObjectField createObjectField(
 		long listTypeDefinitionId, String businessType, String dbColumnName,
 		String dbType, boolean indexed, boolean indexedAsKeyword,

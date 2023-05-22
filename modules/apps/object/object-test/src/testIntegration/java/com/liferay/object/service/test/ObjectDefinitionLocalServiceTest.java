@@ -240,14 +240,21 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.DB_TYPE_STRING, "Baker", "baker",
 						false)));
 
-		_objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
-			Collections.emptyList());
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Charlie")
+			).name(
+				"charlie"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		// Custom object definition names are automatically prepended with
 		// with "C_"
@@ -294,14 +301,21 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
-		_objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Dog"), false, "dog",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
-			Collections.emptyList());
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Dog")
+			).name(
+				"dog"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		// After publish, database table
 
@@ -846,14 +860,21 @@ public class ObjectDefinitionLocalServiceTest {
 				_objectDefinitionLocalService,
 				Collections.<ObjectField>emptyList());
 
-		_objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
-			Collections.emptyList());
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Able")
+			).name(
+				"able"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		// Database table
 
@@ -1195,14 +1216,21 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
-			null, true, false, Collections.emptyList());
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
@@ -1391,14 +1419,21 @@ public class ObjectDefinitionLocalServiceTest {
 				_objectDefinitionLocalService,
 				Collections.<ObjectField>emptyList());
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Able"), false, "able",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
-			Collections.emptyList());
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Able")
+			).name(
+				"able"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -1435,14 +1470,21 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertNotNull(noSuchObjectFieldException);
 		}
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
-			null, true, false, Collections.emptyList());
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateTitleObjectFieldId(

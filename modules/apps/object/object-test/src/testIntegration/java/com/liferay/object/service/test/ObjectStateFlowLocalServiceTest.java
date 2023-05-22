@@ -21,11 +21,12 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.exception.NoSuchObjectStateException;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -96,28 +97,39 @@ public class ObjectStateFlowLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
-			null, true, true,
-			Arrays.asList(
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
-				).value(
-					_step1ListTypeEntry.getKey()
-				).build(),
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
-				).value(
-					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-				).build()));
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new PicklistObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).indexedAsKeyword(
+				true
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+					).value(
+						_step1ListTypeEntry.getKey()
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+					).build())
+			).required(
+				true
+			).state(
+				true
+			).build());
 
 		_objectStateFlow =
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
@@ -410,14 +422,27 @@ public class ObjectStateFlowLocalServiceTest {
 				).build());
 		}
 
-		return _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), listTypeDefinitionId,
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
-			null, true, state, objectFieldSettings);
+		return ObjectFieldUtil.addCustomObjectField(
+			new PicklistObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				listTypeDefinitionId
+			).indexedAsKeyword(
+				true
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				objectFieldSettings
+			).required(
+				true
+			).state(
+				state
+			).build());
 	}
 
 	private void _assertEquals(

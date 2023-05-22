@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -563,14 +564,25 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	}
 
 	private long _getTitleObjectFieldId() throws Exception {
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-			LocalizedMapUtil.getLocalizedMap("Beta"), false, "beta",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-			Collections.emptyList());
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Beta")
+			).name(
+				"beta"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		return objectField.getObjectFieldId();
 	}

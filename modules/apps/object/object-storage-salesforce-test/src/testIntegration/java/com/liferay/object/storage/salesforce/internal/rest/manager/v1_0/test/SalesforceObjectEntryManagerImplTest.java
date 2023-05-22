@@ -17,6 +17,8 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -122,14 +124,19 @@ public class SalesforceObjectEntryManagerImplTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			null, _user.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Title"), false, "title",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-			Collections.emptyList());
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				_user.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Title")
+			).name(
+				"title"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).build());
 
 		_objectFieldLocalService.updateCustomObjectField(
 			"Title__c", objectField.getObjectFieldId(), 0,

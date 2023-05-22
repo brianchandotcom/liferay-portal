@@ -19,13 +19,14 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -94,15 +95,25 @@ public class ObjectDefinitionGraphQLTest {
 
 		_parentObjectDefinition = _addObjectDefinition();
 
-		ObjectFieldLocalServiceUtil.addCustomObjectField(
-			null, TestPropsValues.getUserId(),
-			listTypeDefinition.getListTypeDefinitionId(),
-			_parentObjectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, _listFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null,
-			true, false, Collections.emptyList());
+		ObjectFieldUtil.addCustomObjectField(
+			new PicklistObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).listTypeDefinitionId(
+				listTypeDefinition.getListTypeDefinitionId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).indexedAsKeyword(
+				true
+			).name(
+				_listFieldName
+			).objectDefinitionId(
+				_parentObjectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).required(
+				true
+			).build());
 
 		_parentObjectDefinitionName = _parentObjectDefinition.getShortName();
 		_parentObjectDefinitionPrimaryKeyName = StringUtil.removeFirst(
@@ -476,14 +487,23 @@ public class ObjectDefinitionGraphQLTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 
-		ObjectFieldLocalServiceUtil.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			false, _objectFieldName, ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false, Collections.emptyList());
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).name(
+				_objectFieldName
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.emptyList()
+			).build());
 
 		return objectDefinition;
 	}

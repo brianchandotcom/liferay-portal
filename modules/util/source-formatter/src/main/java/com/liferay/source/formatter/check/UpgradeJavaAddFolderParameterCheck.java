@@ -32,13 +32,13 @@ public class UpgradeJavaAddFolderParameterCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Matcher matcher1 = _addFolderPattern.matcher(content);
-
 		String newContent = content;
 
-		while (matcher1.find()) {
+		Matcher addFolderMatcher = _addFolderPattern.matcher(content);
+
+		while (addFolderMatcher.find()) {
 			String methodCall = JavaSourceUtil.getMethodCall(
-				content, matcher1.start());
+				content, addFolderMatcher.start());
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				methodCall);
@@ -59,13 +59,14 @@ public class UpgradeJavaAddFolderParameterCheck extends BaseFileCheck {
 			Pattern variableDeclarationPattern = Pattern.compile(
 				"[A-z]+ " + variable);
 
-			Matcher matcher2 = variableDeclarationPattern.matcher(content);
+			Matcher variableDeclarationMatcher =
+				variableDeclarationPattern.matcher(content);
 
-			if (matcher2.find()) {
-				String declaration = matcher2.group();
+			if (variableDeclarationMatcher.find()) {
+				String variableDeclaration = variableDeclarationMatcher.group();
 
-				if (declaration.contains("JournalFolderService") ||
-					declaration.contains("JournalFolderLocalService")) {
+				if (variableDeclaration.contains("JournalFolderService") ||
+					variableDeclaration.contains("JournalFolderLocalService")) {
 
 					newContent = _addParameter(newContent, methodCall);
 				}

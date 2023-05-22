@@ -180,6 +180,14 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
+	public String getSelectAssetCategoriesURL() throws PortletException {
+		return PortletURLBuilder.create(
+			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)
+		).setParameter(
+			"assetCategoryId", (String)null
+		).buildString();
+	}
+
 	public String getSelectAssetTagsURL() throws PortletException {
 		return PortletURLBuilder.create(
 			PortletURLUtil.clone(_getCurrentPortletURL(), _renderResponse)

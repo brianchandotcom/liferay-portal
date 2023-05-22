@@ -85,6 +85,8 @@ definition {
 	@description = "This checks that users can add a comment to a blog entry through the page comment widget when a blog entry is displayed through a DPT."
 	@priority = 5
 	test CanAddCommentToBlogEntryWhenEntryIsDisplayedWithDPT {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONBlog.addEntry(

@@ -1,9 +1,9 @@
 {
 	"deletionType": "prevent",
 	"label": {
-		"en_US": "Payment Confirmation"
+		"en_US": "Financial"
 	},
-	"name": "paymentConfirmation",
+	"name": "financial",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:EVPFinancial$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPPaymentConfirmation$]",
 	"objectDefinitionName2": "EVPPaymentConfirmation",

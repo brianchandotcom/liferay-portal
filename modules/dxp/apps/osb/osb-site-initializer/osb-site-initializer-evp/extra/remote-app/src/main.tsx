@@ -16,6 +16,7 @@ import ClayIconProvider from './common/provider/ClayIconProvider';
 import GenerateReport from './routes/reports/generateReport';
 
 import './style/index.css';
+import GenerateFinancialReport from './routes/reports/generateFinancialReport';
 
 const NoRouteSelected = () => <div className="evp-app">No route selected</div>;
 
@@ -24,6 +25,7 @@ export type EVPComponentType = {
 };
 
 const EVPComponent: EVPComponentType = {
+	'generate-financial-report': <GenerateFinancialReport />,
 	'generate-report': <GenerateReport />,
 	'no-route-selected': <NoRouteSelected />,
 };

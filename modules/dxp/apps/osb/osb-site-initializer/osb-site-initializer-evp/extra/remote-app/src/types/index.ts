@@ -20,6 +20,31 @@ export type RequestFilterType = {
 	requestStatus: string[];
 };
 
+export type FinancialFilterType = {
+	accountNumberCR: string;
+	accountNumberDB: string;
+	accountTypeCR: string;
+	accountTypeDB: string;
+	entityName: string;
+	territoryId: string;
+};
+
+export type PaymentConfirmationFilterType = {
+	accountNumberCR: string;
+	accountNumberDB: string;
+	accountTypeCR: string;
+	accountTypeDB: string;
+	entityName: string;
+	finalPaymentDate: string;
+	initialPaymentDate: string;
+	paymentDate: string;
+	paymentValue: string;
+	r_financial_c_evpFinancial: FinancialFilterType;
+	r_requestId_c_evpRequest: RequestType;
+	r_requestId_c_evpRequestId: number;
+	territoryId: string;
+};
+
 export type OrganizationFilterType = {
 	city: string;
 	contactEmail: string;
@@ -67,8 +92,15 @@ export enum FIELDSREPORT {
 	REQUESTSTATUS = 'requestStatus',
 }
 
+export enum FIELDS_PAYMENT_REPORT {
+	FINALPAYMENTDATE = 'finalPaymentDate',
+	INITIALPAYMENTDATE = 'initialPaymentDate',
+	TERRITORYID = 'territoryId',
+}
+
 export type RequestType = {
 	createDate: string;
+	creator: {name: string};
 	dateCreated: string;
 	dateModified: string;
 	emailAddress: string;

@@ -192,8 +192,8 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Integer",
-			"businessType": "Integer",
+			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -206,7 +206,7 @@
 			"required": false,
 			"state": false,
 			"system": false,
-			"type": "Integer"
+			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

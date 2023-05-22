@@ -229,7 +229,11 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		FormFields.disableCheckbox(fieldName = "Update Auto Tags");
+		Click.javaScriptClick(
+			key_fieldName = "Update Auto Tags",
+			locator1 = "FormFields#CHECKBOX_LABEL");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "Update Auto Tags");
 
 		WebContent.editCP(
 			webContentContentEdit = "Alice's Adventures in Wonderland",

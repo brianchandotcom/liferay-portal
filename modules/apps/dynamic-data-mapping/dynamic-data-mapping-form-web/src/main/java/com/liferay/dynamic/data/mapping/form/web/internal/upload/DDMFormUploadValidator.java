@@ -26,15 +26,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carolina Barbosa
  */
-@Component(service = DDMFormUploadValidator.class)
 public class DDMFormUploadValidator {
 
-	public String[] getGuestUploadFileExtensions() {
+	public static String[] getGuestUploadFileExtensions() {
 		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator =
 			_ddmFormWebConfigurationActivatorSnapshot.get();
 
@@ -45,7 +42,7 @@ public class DDMFormUploadValidator {
 			ddmFormWebConfiguration.guestUploadFileExtensions());
 	}
 
-	public long getGuestUploadMaximumFileSize() {
+	public static long getGuestUploadMaximumFileSize() {
 		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator =
 			_ddmFormWebConfigurationActivatorSnapshot.get();
 
@@ -56,7 +53,7 @@ public class DDMFormUploadValidator {
 			_FILE_LENGTH_MB;
 	}
 
-	public void validateFileExtension(String fileName)
+	public static void validateFileExtension(String fileName)
 		throws FileExtensionException {
 
 		String extension = null;
@@ -78,7 +75,7 @@ public class DDMFormUploadValidator {
 		}
 	}
 
-	public void validateFileSize(File file, String fileName)
+	public static void validateFileSize(File file, String fileName)
 		throws FileSizeException, InvalidFileException {
 
 		if (file == null) {

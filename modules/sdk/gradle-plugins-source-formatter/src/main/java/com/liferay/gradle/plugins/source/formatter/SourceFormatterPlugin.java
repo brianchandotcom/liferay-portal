@@ -116,6 +116,14 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		formatSourceTask.setClasspath(classpath);
 
+		String checkErcUsage = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "check.erc.usage");
+
+		if (Validator.isNotNull(checkErcUsage)) {
+			formatSourceTask.setCheckErcUsage(
+				Boolean.parseBoolean(checkErcUsage));
+		}
+
 		String fileExtensions = GradleUtil.getTaskPrefixedProperty(
 			formatSourceTask, "file.extensions");
 

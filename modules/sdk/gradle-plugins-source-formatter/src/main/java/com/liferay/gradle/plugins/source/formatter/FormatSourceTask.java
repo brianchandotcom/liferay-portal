@@ -101,6 +101,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isAutoFix();
 	}
 
+	public boolean isCheckErcUsage() {
+		return _sourceFormatterArgs.isCheckErcUsage();
+	}
+
 	public boolean isFailOnAutoFix() {
 		return _sourceFormatterArgs.isFailOnAutoFix();
 	}
@@ -157,6 +161,10 @@ public class FormatSourceTask extends JavaExec {
 	public void setCheckCategoryNames(String... checkCategoryNames) {
 		_sourceFormatterArgs.setCheckCategoryNames(
 			CollectionUtils.toList(checkCategoryNames));
+	}
+
+	public void setCheckErcUsage(boolean checkErcUsage) {
+		_sourceFormatterArgs.setCheckErcUsage(checkErcUsage);
 	}
 
 	public void setCheckNames(Iterable<String> checkNames) {
@@ -241,6 +249,7 @@ public class FormatSourceTask extends JavaExec {
 	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
+		args.add("check.erc.usage=" + isCheckErcUsage());
 		args.add("format.current.branch=" + isFormatCurrentBranch());
 		args.add("format.latest.author=" + isFormatLatestAuthor());
 		args.add("format.local.changes=" + isFormatLocalChanges());

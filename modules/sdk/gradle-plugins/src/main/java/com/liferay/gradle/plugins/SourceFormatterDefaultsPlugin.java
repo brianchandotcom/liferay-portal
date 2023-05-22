@@ -230,6 +230,14 @@ public class SourceFormatterDefaultsPlugin
 				checkCategoryNames.split(","));
 		}
 
+		String checkErcUsage = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "check.erc.usage");
+
+		if (Validator.isNotNull(checkErcUsage)) {
+			formatSourceTask.setCheckErcUsage(
+				Boolean.parseBoolean(checkErcUsage));
+		}
+
 		String checkNames = GradleUtil.getProperty(
 			project, "source.check.names", (String)null);
 

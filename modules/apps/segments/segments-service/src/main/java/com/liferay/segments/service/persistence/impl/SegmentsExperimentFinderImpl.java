@@ -44,11 +44,11 @@ public class SegmentsExperimentFinderImpl
 	extends SegmentsExperimentFinderBaseImpl
 	implements SegmentsExperimentFinder {
 
-	public static final String COUNT_BY_S_C_C_S =
-		SegmentsExperimentFinder.class.getName() + ".countByS_C_C_S";
+	public static final String COUNT_BY_S_P_S =
+		SegmentsExperimentFinder.class.getName() + ".countByS_P_S";
 
-	public static final String FIND_BY_S_C_C_S =
-		SegmentsExperimentFinder.class.getName() + ".findByS_C_C_S";
+	public static final String FIND_BY_S_P_S =
+		SegmentsExperimentFinder.class.getName() + ".findByS_P_S";
 
 	@Override
 	public int countByS_C_C_S(
@@ -60,7 +60,7 @@ public class SegmentsExperimentFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), COUNT_BY_S_C_C_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_S_P_S);
 
 			sql = StringUtil.replace(
 				sql, "[$STATUSES$]", getStatusesSQL(statuses));
@@ -106,7 +106,7 @@ public class SegmentsExperimentFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_S_C_C_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_S_P_S);
 
 			sql = StringUtil.replace(
 				sql, "[$STATUSES$]", getStatusesSQL(statuses));

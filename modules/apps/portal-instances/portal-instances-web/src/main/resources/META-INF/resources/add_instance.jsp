@@ -82,9 +82,21 @@
 
 						<aui:input label="password" name="defaultAdminPassword" required="<%= true %>" type="password" />
 
-						<aui:input label="first-name" name="defaultAdminFirstName" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME) %>" />
+						<%
+						FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(locale);
+						%>
 
-						<aui:input label="last-name" name="defaultAdminLastName" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME) %>" />
+						<c:if test='<%= fullNameDefinition.isFieldRequired("first-name") %>'>
+							<aui:input label="first-name" name="defaultAdminFirstName" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_FIRST_NAME) %>" />
+						</c:if>
+
+						<c:if test='<%= fullNameDefinition.isFieldRequired("middle-name") %>'>
+							<aui:input label="middle-name" name="defaultAdminMiddleName" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_MIDDLE_NAME) %>" />
+						</c:if>
+
+						<c:if test='<%= fullNameDefinition.isFieldRequired("last-name") %>'>
+							<aui:input label="last-name" name="defaultAdminLastName" required="<%= true %>" type="text" value="<%= PropsUtil.get(PropsKeys.DEFAULT_ADMIN_LAST_NAME) %>" />
+						</c:if>
 					</liferay-ui:panel>
 				</c:if>
 			</div>

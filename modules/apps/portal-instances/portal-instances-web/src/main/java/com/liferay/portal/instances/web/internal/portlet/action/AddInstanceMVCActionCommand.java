@@ -15,12 +15,12 @@
 package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
+import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,6 +81,27 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (exception instanceof CompanyWebIdException) {
 				errorMessage = "please-enter-a-valid-web-id";
 			}
+			else if (exception instanceof
+						ContactNameException.MustHaveFirstName) {
+
+				errorMessage = "please-enter-a-valid-first-name";
+			}
+			else if (exception instanceof
+						ContactNameException.MustHaveLastName) {
+
+				errorMessage = "please-enter-a-valid-last-name";
+			}
+			else if (exception instanceof
+						ContactNameException.MustHaveMiddleName) {
+
+				errorMessage = "please-enter-a-valid-middle-name";
+			}
+			else if (exception instanceof
+						ContactNameException.MustHaveValidFullName) {
+
+				errorMessage =
+					"please-enter-a-valid-first-middle-and-last-name";
+			}
 			else if (exception instanceof UserEmailAddressException) {
 				errorMessage = "please-enter-a-valid-email-address";
 			}
@@ -105,44 +124,31 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _addInstance(ActionRequest actionRequest) throws Exception {
-		String defaultAdminScreenName = ParamUtil.getString(
-			actionRequest, "defaultAdminScreenName");
-		String defaultAdminEmailAddress = ParamUtil.getString(
-			actionRequest, "defaultAdminEmailAddress");
-		String defaultAdminPassword = ParamUtil.getString(
-			actionRequest, "defaultAdminPassword");
-
-		if (Validator.isNull(PropsValues.DEFAULT_ADMIN_PASSWORD)) {
-			if (Validator.isNull(defaultAdminScreenName)) {
-				throw new UserScreenNameException.MustNotBeNull(
-					defaultAdminScreenName);
-			}
-
-			if (Validator.isNull(defaultAdminEmailAddress)) {
-				throw new UserEmailAddressException.MustValidate(
-					defaultAdminEmailAddress, null);
-			}
-
-			if (Validator.isNull(defaultAdminPassword)) {
-				throw new UserPasswordException.MustNotBeNull(0);
-			}
-		}
-
 		String webId = ParamUtil.getString(actionRequest, "webId");
 		String virtualHostname = ParamUtil.getString(
 			actionRequest, "virtualHostname");
 		String mx = ParamUtil.getString(actionRequest, "mx");
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		String defaultAdminPassword = ParamUtil.getString(
+			actionRequest, "defaultAdminPassword");
+		String defaultAdminScreenName = ParamUtil.getString(
+			actionRequest, "defaultAdminScreenName");
+		String defaultAdminEmailAddress = ParamUtil.getString(
+			actionRequest, "defaultAdminEmailAddress");
 		String defaultAdminFirstName = ParamUtil.getString(
 			actionRequest, "defaultAdminFirstName");
+		String defaultAdminMiddleName = ParamUtil.getString(
+			actionRequest, "defaultAdminMiddleName");
 		String defaultAdminLastName = ParamUtil.getString(
 			actionRequest, "defaultAdminLastName");
 
 		Company company = _companyService.addCompany(
 			webId, virtualHostname, mx, maxUsers, active, defaultAdminPassword,
 			defaultAdminScreenName, defaultAdminEmailAddress,
-			defaultAdminFirstName, StringPool.BLANK, defaultAdminLastName);
+			defaultAdminFirstName, defaultAdminMiddleName,
+			defaultAdminLastName);
 
 		String siteInitializerKey = ParamUtil.getString(
 			actionRequest, "siteInitializerKey");

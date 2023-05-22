@@ -104,6 +104,7 @@ import com.liferay.portal.kernel.service.persistence.VirtualHostPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -2028,40 +2029,28 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			if (_userPersistence.countByCompanyId(company.getCompanyId()) ==
 					0) {
 
-				if (Validator.isNull(defaultAdminEmailAddress)) {
-					defaultAdminEmailAddress =
-						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-							mx;
-				}
-
-				if (Validator.isNull(defaultAdminScreenName)) {
-					defaultAdminScreenName =
-						PropsValues.DEFAULT_ADMIN_SCREEN_NAME;
-				}
-
-				if (Validator.isNull(defaultAdminFirstName)) {
-					defaultAdminFirstName =
-						PropsValues.DEFAULT_ADMIN_FIRST_NAME;
-				}
-
-				if (Validator.isNull(defaultAdminMiddleName)) {
-					defaultAdminMiddleName =
-						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME;
-				}
-
-				if (Validator.isNull(defaultAdminLastName)) {
-					defaultAdminLastName = PropsValues.DEFAULT_ADMIN_LAST_NAME;
-				}
-
-				if (Validator.isNull(defaultAdminPassword)) {
-					defaultAdminPassword = PropsValues.DEFAULT_ADMIN_PASSWORD;
-				}
-
 				_userLocalService.addDefaultAdminUser(
-					company.getCompanyId(), defaultAdminPassword,
-					defaultAdminScreenName, defaultAdminEmailAddress,
-					guestUser.getLocale(), defaultAdminFirstName,
-					defaultAdminMiddleName, defaultAdminLastName);
+					company.getCompanyId(),
+					GetterUtil.getString(
+						defaultAdminPassword,
+						PropsValues.DEFAULT_ADMIN_PASSWORD),
+					GetterUtil.getString(
+						defaultAdminScreenName,
+						PropsValues.DEFAULT_ADMIN_SCREEN_NAME),
+					GetterUtil.getString(
+						defaultAdminEmailAddress,
+						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+							mx),
+					guestUser.getLocale(),
+					GetterUtil.getString(
+						defaultAdminFirstName,
+						PropsValues.DEFAULT_ADMIN_FIRST_NAME),
+					GetterUtil.getString(
+						defaultAdminMiddleName,
+						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME),
+					GetterUtil.getString(
+						defaultAdminLastName,
+						PropsValues.DEFAULT_ADMIN_LAST_NAME));
 			}
 
 			// Default service account

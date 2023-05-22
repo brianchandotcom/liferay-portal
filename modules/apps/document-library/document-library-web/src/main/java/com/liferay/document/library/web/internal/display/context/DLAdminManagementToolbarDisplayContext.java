@@ -18,12 +18,12 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -726,8 +726,10 @@ public class DLAdminManagementToolbarDisplayContext
 						WebKeys.THEME_DISPLAY);
 
 				return StringUtil.merge(
-					AssetVocabularyLocalServiceUtil.getCompanyVocabularies(
-						themeDisplay.getCompanyId()),
+					AssetVocabularyServiceUtil.getGroupsVocabularies(
+						PortalUtil.getCurrentAndAncestorSiteGroupIds(
+							themeDisplay.getScopeGroupId()),
+						DLFileEntryConstants.getClassName()),
 					assetVocabulary -> String.valueOf(
 						assetVocabulary.getVocabularyId()),
 					StringPool.COMMA);

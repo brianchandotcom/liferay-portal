@@ -34,6 +34,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.problem.Problem;
+import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -97,6 +98,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -106,6 +108,22 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SitePageResourceTest extends BaseSitePageResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		SitePageResource.Builder builder = SitePageResource.builder();
+
+		sitePageResource = builder.authentication(
+			"test@liferay.com", "test"
+		).header(
+			"X-Liferay-Accept-All-Languages", "true"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+	}
 
 	@Override
 	@Test

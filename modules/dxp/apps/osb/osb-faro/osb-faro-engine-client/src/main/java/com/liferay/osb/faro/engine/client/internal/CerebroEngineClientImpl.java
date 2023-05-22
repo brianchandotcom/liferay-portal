@@ -19,11 +19,11 @@ import com.liferay.osb.faro.engine.client.http.client.AuthenticationClientHttpRe
 import com.liferay.osb.faro.engine.client.model.GraphQLRequest;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

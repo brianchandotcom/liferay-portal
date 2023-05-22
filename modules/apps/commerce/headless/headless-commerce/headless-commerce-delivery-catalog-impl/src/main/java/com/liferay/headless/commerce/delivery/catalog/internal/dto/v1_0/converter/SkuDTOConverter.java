@@ -312,21 +312,32 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		CommerceMoney unitPromoPriceCommerceMoney =
 			commerceProductPrice.getUnitPromoPrice();
 
-		BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
-
-		BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
+		BigDecimal unitPrice = _getUnitPrice(
+			unitPriceCommerceMoney, unitPromoPriceCommerceMoney);
 
 		Price price = new Price() {
 			{
 				currency = commerceCurrency.getName(locale);
 				price = unitPrice.doubleValue();
-				priceFormatted = unitPriceCommerceMoney.format(locale);
+				priceOnApplication =
+					commerceProductPrice.isPriceOnApplication();
+
+				setPriceFormatted(
+					() -> {
+						if (unitPriceCommerceMoney.isPriceOnApplication()) {
+							return unitPromoPriceCommerceMoney.format(locale);
+						}
+
+						return unitPriceCommerceMoney.format(locale);
+					});
 			}
 		};
 
+		BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
+
 		if ((unitPromoPrice != null) &&
 			(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) < 0)) {
+			(unitPromoPrice.compareTo(unitPrice) < 0)) {
 
 			price.setPromoPrice(unitPromoPrice.doubleValue());
 			price.setPromoPriceFormatted(
@@ -351,6 +362,19 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				_getFormattedDiscountPercentages(
 					discountValue.getPercentages(), locale));
 			price.setFinalPrice(finalPriceCommerceMoney.format(locale));
+		}
+
+		return price;
+	}
+
+	private BigDecimal _getUnitPrice(
+		CommerceMoney unitPriceCommerceMoney,
+		CommerceMoney unitPromoPriceCommerceMoney) {
+
+		BigDecimal price = unitPriceCommerceMoney.getPrice();
+
+		if (unitPriceCommerceMoney.isPriceOnApplication()) {
+			price = unitPromoPriceCommerceMoney.getPrice();
 		}
 
 		return price;

@@ -1,0 +1,1 @@
+[{"creator":{"name":"Test Test"},"customPicklist":{"name":"distance1"},"customAttachment":{"name":"Document_3.png"},"customBoolean":true,"name":"Jessica","customPrecisionDecimal":12.5500000000000000,"customLongText":"This is a custom LongText field"}]

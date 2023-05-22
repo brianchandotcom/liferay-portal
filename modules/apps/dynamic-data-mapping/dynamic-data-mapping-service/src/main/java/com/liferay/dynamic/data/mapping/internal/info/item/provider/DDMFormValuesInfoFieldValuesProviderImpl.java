@@ -366,13 +366,13 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					ServiceContextThreadLocal.getServiceContext();
 
 				if (serviceContext == null) {
-					return layout.getFriendlyURL(locale);
+					return StringPool.BLANK;
 				}
 
 				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 				if (themeDisplay == null) {
-					return layout.getFriendlyURL(locale);
+					return StringPool.BLANK;
 				}
 
 				return _portal.getLayoutFriendlyURL(

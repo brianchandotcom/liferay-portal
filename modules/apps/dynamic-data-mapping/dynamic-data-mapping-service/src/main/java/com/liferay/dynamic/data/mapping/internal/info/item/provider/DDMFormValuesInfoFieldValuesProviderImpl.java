@@ -46,11 +46,15 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DateFormat;
@@ -359,7 +363,21 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 					return StringPool.BLANK;
 				}
 
-				return layout.getFriendlyURL(locale);
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				if (serviceContext == null) {
+					return layout.getFriendlyURL(locale);
+				}
+
+				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+				if (themeDisplay == null) {
+					return layout.getFriendlyURL(locale);
+				}
+
+				return _portal.getLayoutFriendlyURL(
+					layout, themeDisplay, locale);
 			}
 
 			if (Objects.equals(
@@ -425,5 +443,8 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -133,3 +133,10 @@ function getModuleAndSymbolNames(url: string): [string, string] {
 
 	return [moduleName, symbolName];
 }
+
+export interface InternalRenderer extends Renderer {
+	component: React.ComponentType<any>;
+	label: string;
+	name: string;
+	type: 'internal';
+}

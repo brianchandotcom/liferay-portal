@@ -63,17 +63,17 @@ const ListItem = ({item, schema}) => {
 
 	const {description, image, sticker, symbol, title, titleRenderer} = schema;
 
-	const TitleRenderer = titleRenderer;
+	const TitleRendererComponent = titleRenderer.component;
 
 	const renderTitle = (item) => {
 		if (titleRenderer) {
-			return <TitleRenderer itemData={item} />
+			return <TitleRendererComponent itemData={item} />;
 		}
 
 		if (title) {
-			return <ClayList.ItemTitle>{item[title]}</ClayList.ItemTitle>
+			return <ClayList.ItemTitle>{item[title]}</ClayList.ItemTitle>;
 		}
-	}
+	};
 
 	return (
 		<ClayList.Item

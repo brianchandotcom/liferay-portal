@@ -19,6 +19,7 @@ import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServic
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -258,6 +259,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsNull();
 		_testPostSiteSitePageSuccessPagePermissionsRoleNonexisting();
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
+		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull();
 	}
 
 	@Override
@@ -1011,6 +1013,56 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			postSitePage.getTaxonomyCategoryBriefs());
 	}
 
+	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				testGroup.getCreatorUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId()));
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			RandomTestUtil.randomString(), testGroup.getCreatorUserId(),
+			testGroup.getGroupId(), 0, RandomTestUtil.randomLocaleStringMap(),
+			null, assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		TaxonomyCategoryBrief[] expectedTaxonomyCategoryBriefs = {
+			new TaxonomyCategoryBrief() {
+				{
+					taxonomyCategoryId = assetCategory.getCategoryId();
+					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryReference =
+						new TaxonomyCategoryReference() {
+							{
+								externalReferenceCode =
+									assetCategory.getExternalReferenceCode();
+							}
+						};
+				}
+			}
+		};
+
+		TaxonomyCategoryBrief[] inputTaxonomyCategoryBriefs = {
+			new TaxonomyCategoryBrief() {
+				{
+					taxonomyCategoryReference =
+						new TaxonomyCategoryReference() {
+							{
+								externalReferenceCode =
+									assetCategory.getExternalReferenceCode();
+							}
+						};
+				}
+			}
+		};
+
+		_testPostSiteSitePageSuccessTaxonomyCategoryBriefs(
+			expectedTaxonomyCategoryBriefs, inputTaxonomyCategoryBriefs);
+	}
+
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
 		"com.liferay.headless.delivery.internal.resource.v1_0." +
 			"SitePageResourceImpl";
@@ -1027,6 +1079,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

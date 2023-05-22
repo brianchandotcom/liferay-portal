@@ -16,7 +16,7 @@
 	[#assign mdfClaimStatusKey = mdfClaim.mdfClaimStatus.key /]
 
 	[#if mdfClaimStatusKey != 'approved']
-		[#if hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction || hasDirectorReviewAction]
+		[#if hasMarketingReviewAction || hasFinanceReviewAction || hasRequestMoreInfoAction || hasExpireAction || hasRejectAction || hasApproveAction || hasDirectorReviewAction || hasClaimPaidAction]
 		<script>
 			const modalStatusTypes = {
 				canceled: 'Canceled',

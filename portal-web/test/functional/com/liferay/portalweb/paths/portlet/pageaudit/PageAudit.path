@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>FAILING_CHECK_CATEGORY_NAME</td>
-	<td>//button[contains(@class, 'panel-header') and contains(., '${failingCheckCategory}')]/.. //li[contains(.,'${failingCheckName}')]</td>
+	<td>//button[contains(@class, 'panel-header') and contains(., '${failingCheckCategory}')]//following-sibling::div//ul//button[contains(.,'${failingCheckName}')]</td>
 	<td></td>
 </tr>
 <tr>

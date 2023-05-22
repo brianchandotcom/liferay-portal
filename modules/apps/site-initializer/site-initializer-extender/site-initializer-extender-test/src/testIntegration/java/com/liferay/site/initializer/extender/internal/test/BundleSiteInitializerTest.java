@@ -558,14 +558,23 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCommerceCatalogs2() throws Exception {
-		CommerceCatalog commerceCatalog =
+		CommerceCatalog commerceCatalog1 =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG1", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog);
+		Assert.assertNotNull(commerceCatalog1);
 		Assert.assertEquals(
-			"Test Commerce Catalog 1 update", commerceCatalog.getName());
+			"Test Commerce Catalog 1 update", commerceCatalog1.getName());
+
+		CommerceCatalog commerceCatalog2 =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					"TESTCOMMERCECATALOG2", _group.getCompanyId());
+
+		Assert.assertNotNull(commerceCatalog2);
+		Assert.assertEquals(
+			"Test Commerce Catalog 2", commerceCatalog2.getName());
 
 		_assertCPDefinition();
 		_assertCPOption();

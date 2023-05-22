@@ -807,23 +807,25 @@ public class BundleSiteInitializerTest {
 		orderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
 			"TESTCOMMERCEORDERTYPE2");
 
-		orderTypeName = orderType.getName();
-
 		Assert.assertNotNull(orderType);
+
+		orderTypeName = orderType.getName();
 
 		Assert.assertEquals(
 			"Test Commerce Order Type 2 Update", orderTypeName.get("en_US"));
+
 		Assert.assertTrue(orderType.getActive());
 
 		orderType = orderTypeResource.getOrderTypeByExternalReferenceCode(
 			"TESTCOMMERCEORDERTYPE3");
 
-		orderTypeName = orderType.getName();
-
 		Assert.assertNotNull(orderType);
+
+		orderTypeName = orderType.getName();
 
 		Assert.assertEquals(
 			"Test Commerce Order Type 3", orderTypeName.get("en_US"));
+
 		Assert.assertFalse(orderType.getActive());
 	}
 

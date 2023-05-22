@@ -293,4 +293,44 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the run"
+	@priority = 3
+	test AssertUserRoleCanNotDeleteRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertUserRoleCanNotDeleteRun";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to the run page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Testray.projectTabNavigator(navTabName = "Runs");
+		}
+
+		task ("When right click in run") {
+			RightClick.rightClick(
+				key_projectName = ${runName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not delete the run") {
+			AssertElementNotPresent(
+				item = "Delete",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

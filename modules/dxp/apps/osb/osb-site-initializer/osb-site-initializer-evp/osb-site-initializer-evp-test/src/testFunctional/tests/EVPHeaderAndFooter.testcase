@@ -21,7 +21,9 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
-		EVPUtils.gotoEVP();
+		task ("Navigate to EVP Site and Sign In") {
+			EVPUtils.gotoEVP();
+		}
 	}
 
 	tearDown {
@@ -31,15 +33,23 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			JSONGroup.deleteGroupByName(groupName = "EVP");
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
 		}
 	}
 
-	@description = "This is a test for LPS-178427. Verify that there is a Home, Request, Organization and Reports navigation tabs on page header"
-	@priority = 5
+	@description = "This is a test for LPS-161593. Verify that User can navigate around the site by clicking on Top Menu navigation tabs on page header"
+	@priority = 3
 	test CanNavigateToPages {
-		task ("Verify that is possible to navigate in different pages") {
-			EVPNavigator.viewPage(pageList = "Home,Request,Organization,Reports");
+		task ("When I navigate through the pages, then I can assert them") {
+			for (var pageName : list "Home,Request,Organization,Reports") {
+				EVPNavigator.goToNavItem(navItem = ${pageName});
+
+				EVPNavigator.assertActiveBreadcrumb(activeItem = ${pageName});
+
+				var pageName = StringUtil.lowerCase(${pageName});
+
+				AssertLocation.assertPartialLocation(value1 = ${pageName});
+			}
 		}
 	}
 

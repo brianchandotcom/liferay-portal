@@ -79,10 +79,6 @@ public class CPSpecificationOptionsImporter {
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
 				serviceContext.getCompanyId(), key);
 
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
 		long cpOptionCategoryId = 0;
 
 		String categoryKey = jsonObject.getString("categoryKey");
@@ -93,6 +89,8 @@ public class CPSpecificationOptionsImporter {
 					serviceContext.getCompanyId(), categoryKey);
 
 			cpOptionCategoryId = cpOptionCategory.getCPOptionCategoryId();
+
+			cpOptionCategory.setCPOptionCategoryId(cpOptionCategoryId);
 		}
 
 		Locale locale = LocaleUtil.getSiteDefault();
@@ -104,6 +102,14 @@ public class CPSpecificationOptionsImporter {
 			locale, jsonObject.getString("description"));
 
 		boolean facetable = jsonObject.getBoolean("facetable");
+
+		if (cpSpecificationOption != null) {
+			return _cpSpecificationOptionLocalService.
+				updateCPSpecificationOption(
+					cpSpecificationOption.getCPSpecificationOptionId(),
+					cpOptionCategoryId, titleMap, descriptionMap, facetable,
+					key, serviceContext);
+		}
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
 			serviceContext.getUserId(), cpOptionCategoryId, titleMap,

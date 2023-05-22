@@ -120,24 +120,17 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Orange",
 			threadSubject = "Apple");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Orange",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple");
+			dmDocumentTitle = "Apple",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.openURL();
 
@@ -214,9 +207,13 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			widgetName = "Elasticsearch Monitoring");
 
-		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
 		ElasticsearchMonitoring.viewPG();
 	}
@@ -243,9 +240,13 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			widgetName = "Elasticsearch Monitoring");
 
-		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
 		ElasticsearchMonitoring.viewPG();
 	}
@@ -268,22 +269,22 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page");
 
-		PagesAdmin.addPage(
-			pageName = "Elasticsearch Monitoring Page",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			layoutTemplate = "1 Column");
 
-		PagesAdmin.configurePage(
-			columnName = "1 Column",
-			pageName = "Elasticsearch Monitoring Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			widgetName = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
-
-		Portlet.addPG(portletName = "Elasticsearch Monitoring");
 
 		ElasticsearchMonitoring.viewPG();
 
@@ -318,22 +319,22 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page");
 
-		PagesAdmin.addPage(
-			pageName = "Elasticsearch Monitoring Page",
-			sitePageType = "Widget Page");
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			layoutTemplate = "1 Column");
 
-		PagesAdmin.configurePage(
-			columnName = "1 Column",
-			pageName = "Elasticsearch Monitoring Page",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			widgetName = "Elasticsearch Monitoring");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
-
-		Portlet.addPG(portletName = "Elasticsearch Monitoring");
 
 		ElasticsearchMonitoring.viewPG();
 
@@ -362,9 +363,13 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			widgetName = "Elasticsearch Monitoring");
 
-		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
 		ElasticsearchMonitoring.viewPG();
 	}

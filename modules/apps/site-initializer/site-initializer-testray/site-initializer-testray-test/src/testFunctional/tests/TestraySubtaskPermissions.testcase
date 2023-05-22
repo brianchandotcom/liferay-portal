@@ -278,4 +278,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the subtask"
+	@priority = 2
+	test AssertUserRoleCanNotEditSubatsk {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertUserRoleCanNotEditSubatsk";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the subtask") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+		}
+
+		task ("Then the user can not edit the subtask") {
+			AssertElementNotPresent(
+				key_text = "Assign and Begin Analysis",
+				locator1 = "Button#ANY");
+		}
+	}
+
 }

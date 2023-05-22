@@ -39,16 +39,29 @@ definition {
 				locator1 = "Button#BUTTON_ID");
 		}
 		else {
-			ScrollWebElementIntoView(
-				buttonId = ${statusButton},
-				locator1 = "PRMMDFRequest#STATUS_BUTTON");
+			ScrollWebElementIntoView(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
+
+			ClickNoError(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
 
 			ClickNoError(
-				buttonId = ${statusButton},
-				locator1 = "PRMMDFRequest#STATUS_BUTTON");
+				key_statusButton = ${statusButton},
+				locator1 = "PRMMDFRequest#STATUS_OPTION_DROPDOWN");
 		}
 
-		Confirm.acceptAlert();
+		if ((${statusButton} == "Request More Info") || (${statusButton} == "Marketing Director Review") || (${statusButton} == "Reject")) {
+			if (!(isSet(statusChangeMotivation))) {
+				var statusChangeMotivation = "Status Change Motivation";
+			}
+
+			Type(
+				key_fieldId = "descriptionTextArea",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${statusChangeMotivation});
+
+			Button.click(button = ${statusButton});
+
+			SelectFrameTop();
+		}
 	}
 
 	@summary = "Add a new MDF Request filling the goals and activity pages"

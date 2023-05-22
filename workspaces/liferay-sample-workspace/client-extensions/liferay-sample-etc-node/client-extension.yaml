@@ -1,7 +1,7 @@
 assemble:
     - include:
-        - package.json
-        - "**/*.js"
+          - package.json
+          - "**/*.js"
 liferay-sample-node-oauth-application-user-agent:
     .serviceAddress: localhost:3001
     .serviceScheme: http

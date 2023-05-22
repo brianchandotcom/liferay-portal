@@ -918,7 +918,9 @@ public class DLAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(
 					extensionsIsEmpty && (fileEntryTypeId == -1) &&
-					navigation.equals("home") && selectedAssetTagIdsIsEmpty);
+					navigation.equals("home") &&
+					selectedAssetCategoryIdsIsEmpty &&
+					selectedAssetTagIdsIsEmpty);
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(

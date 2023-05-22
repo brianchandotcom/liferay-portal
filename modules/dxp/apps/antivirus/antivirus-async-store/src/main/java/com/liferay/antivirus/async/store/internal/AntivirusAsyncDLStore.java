@@ -376,50 +376,6 @@ public class AntivirusAsyncDLStore implements DLStore {
 	}
 
 	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String fileExtension, boolean validateFileExtension,
-			String versionLabel, String sourceFileName, File file)
-		throws PortalException {
-
-		updateFile(
-			DLStoreRequest.builder(
-				companyId, repositoryId, fileName
-			).fileExtension(
-				fileExtension
-			).validateFileExtension(
-				validateFileExtension
-			).versionLabel(
-				versionLabel
-			).sourceFileName(
-				sourceFileName
-			).build(),
-			file);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String fileExtension, boolean validateFileExtension,
-			String versionLabel, String sourceFileName, InputStream inputStream)
-		throws PortalException {
-
-		updateFile(
-			DLStoreRequest.builder(
-				companyId, repositoryId, fileName
-			).fileExtension(
-				fileExtension
-			).validateFileExtension(
-				validateFileExtension
-			).versionLabel(
-				versionLabel
-			).sourceFileName(
-				sourceFileName
-			).build(),
-			inputStream);
-	}
-
-	@Override
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)

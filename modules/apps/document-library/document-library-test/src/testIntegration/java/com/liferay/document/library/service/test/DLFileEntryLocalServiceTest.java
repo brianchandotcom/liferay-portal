@@ -40,6 +40,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
+import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -755,9 +756,19 @@ public class DLFileEntryLocalServiceTest {
 			dlFolder, ddmFormValuesMap, inputStream, serviceContext);
 
 		DLStoreUtil.updateFile(
-			dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
-			dlFileEntry.getName(), dlFileEntry.getExtension(), false, "2.0",
-			StringUtil.randomString(), inputStream);
+			DLStoreRequest.builder(
+				dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
+				dlFileEntry.getName()
+			).fileExtension(
+				dlFileEntry.getExtension()
+			).validateFileExtension(
+				false
+			).versionLabel(
+				"2.0"
+			).sourceFileName(
+				StringUtil.randomString()
+			).build(),
+			inputStream);
 
 		dlFileEntry = updateAndApproveDLFileEntry(
 			dlFileEntry, inputStream, ddmFormValuesMap, serviceContext);

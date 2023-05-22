@@ -3397,19 +3397,24 @@ public class DLFileEntryLocalServiceImpl
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 					dlFileEntry.getName(), oldStoreFileName);
 
+				DLStoreRequest dlStoreRequest = DLStoreRequest.builder(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName()
+				).fileExtension(
+					dlFileEntry.getExtension()
+				).validateFileExtension(
+					false
+				).versionLabel(
+					updatedFileVersion.getStoreFileName()
+				).sourceFileName(
+					sourceFileName
+				).build();
+
 				if (file != null) {
-					DLStoreUtil.updateFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), dlFileEntry.getExtension(),
-						false, updatedFileVersion.getStoreFileName(),
-						sourceFileName, file);
+					DLStoreUtil.updateFile(dlStoreRequest, file);
 				}
 				else {
-					DLStoreUtil.updateFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), dlFileEntry.getExtension(),
-						false, updatedFileVersion.getStoreFileName(),
-						sourceFileName, inputStream);
+					DLStoreUtil.updateFile(dlStoreRequest, inputStream);
 				}
 			}
 

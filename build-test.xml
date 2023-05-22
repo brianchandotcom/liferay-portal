@@ -10814,21 +10814,44 @@ send_user $expect_out(buffer)]]></echo>
 	</target>
 
 	<target name="move-file">
-		<fail message="Please set the property ${file}." unless="file" />
-		<fail message="Please set the property ${tofile}." unless="tofile" />
-
 		<if>
-			<available file="${file}" />
+			<isset property="file" />
 			<then>
-				<move
-					file="${file}"
-					tofile="${tofile}"
-				/>
+				<fail message="Please set the property ${tofile}." unless="tofile" />
 
-				<echo>Moved file ${file} to ${tofile}.</echo>
+				<if>
+					<available file="${file}" />
+					<then>
+						<move
+							file="${file}"
+							tofile="${tofile}"
+						/>
+
+						<echo>Moved file ${file} to ${tofile}.</echo>
+					</then>
+					<else>
+						<echo>File ${file} does not exist.</echo>
+					</else>
+				</if>
 			</then>
+			<elseif>
+				<isset property="fileRegex" />
+				<then>
+					<fail message="Please set the property ${fromDir}." unless="fromDir" />
+					<fail message="Please set the property ${toDir}." unless="toDir" />
+
+					<move
+						todir="${toDir}"
+					>
+						<fileset
+							dir="${fromDir}"
+							includes="${fileRegex}"
+						/>
+					</move>
+				</then>
+			</elseif>
 			<else>
-				<echo>File ${file} does not exist.</echo>
+				<fail message="Please set the property ${file} or ${fileRegex}." />
 			</else>
 		</if>
 	</target>

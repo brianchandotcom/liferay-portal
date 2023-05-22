@@ -1,0 +1,85 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Deployment";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 3
+	test DeployRestartRequiredLPKG {
+		property skip.start.app.server = "true";
+		property test.name.skip.portal.instance = "LPKG#DeployRestartRequiredLPKG";
+
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if (${testRunEnvironment} == "EE") {
+			var lpkgFileName = "Liferay Foundation - Liferay Gogo Shell - Impl.lpkg";
+		}
+		else {
+			var lpkgFileName = "Liferay CE Foundation - Liferay CE Gogo Shell - Impl.lpkg";
+		}
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var lpkgFileExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${lpkgFileName}");
+
+		if (${lpkgFileExists} == "false") {
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
+		}
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "move-file -DfileRegex=*Gogo*Impl.lpkg -DfromDir=${liferayHome}/osgi/marketplace -DtoDir=${liferayHome}");
+
+		Portlet.startServer(keepCachedAppServerData = "true");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "move-file -DfileRegex=*Gogo*Impl.lpkg -DfromDir=${liferayHome} -DtoDir=${liferayHome}/deploy");
+
+		WaitForConsoleTextPresent(value1 = "Processing ${lpkgFileName}");
+
+		WaitForConsoleTextPresent(value1 = "The portal instance needs to be restarted to complete the installation");
+
+		User.firstLoginPG();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+		AssertElementNotPresent(
+			key_category = "System",
+			key_portlet = "Gogo Shell",
+			locator1 = "ApplicationsMenu#PORTLET");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.firstLoginPG();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
+		AssertElementPresent(
+			key_category = "System",
+			key_portlet = "Gogo Shell",
+			locator1 = "ApplicationsMenu#PORTLET");
+	}
+
+}

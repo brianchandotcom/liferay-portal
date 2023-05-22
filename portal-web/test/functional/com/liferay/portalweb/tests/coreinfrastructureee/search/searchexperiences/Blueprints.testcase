@@ -123,13 +123,17 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Low Level Search Options");
+
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
-
-		SearchPortlets.addWidgets(searchPortletList = "Low Level Search Options");
 
 		var blueprintId = Blueprints.getBlueprintID(title = "Test Blueprint");
 
@@ -147,9 +151,15 @@ definition {
 	test ApplyBlueprintJSONToSearchViaLLSO {
 		property test.name.skip.portal.instance = "Blueprints#ApplyBlueprintJSONToSearchViaLLSO";
 
-		Search.openSearchPage();
+		for (var portlet : list "Search Insights,Low Level Search Options") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search",
+				widgetName = ${portlet});
+		}
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights,Low Level Search Options");
+		Search.openSearchPage();
 
 		var blueprintJson = '''{"configuration":{"generalConfiguration":{"includeResponseString":false}}}''';
 
@@ -878,27 +888,17 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject501");
 
-		ObjectAdmin.openObjectAdmin();
+		JSONObject.updateObject(
+			configKey = "titleObjectFieldName",
+			configValue = "title",
+			objectName = "CustomObject501");
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 501");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject501");
 
-		CreateObject.selectTitleField(fieldLabel = "title");
-
-		ObjectAdmin.publishObjectViaUI();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Custom Objects 501");
-
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "TextInput#TEXT",
-			value1 = "reddish apple");
-
-		PortletEntry.save();
+		JSONObject.addObjectEntryViaJSONAPI(
+			fieldName = "title",
+			fieldValue = "reddish apple",
+			objectName = "CustomObject501");
 
 		JSONWebcontent.addWebContent(
 			content = "",
@@ -3064,9 +3064,11 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
-
-		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Blueprints Options");
 
 		Search.openSearchPage(locale = "es-ES");
 
@@ -4520,9 +4522,13 @@ definition {
 
 		Close.closeAndSelectWindow(locator1 = "View Element - ${siteName}");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Blueprints Options");
 
-		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+		Search.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blueprints Options",

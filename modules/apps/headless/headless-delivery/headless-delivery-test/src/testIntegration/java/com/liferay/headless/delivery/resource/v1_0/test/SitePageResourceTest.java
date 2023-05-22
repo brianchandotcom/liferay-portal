@@ -259,6 +259,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsNull();
 		_testPostSiteSitePageSuccessPagePermissionsRoleNonexisting();
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
+		_testPostSiteSitePageSuccessParentSitePage();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNonnull();
@@ -942,6 +943,40 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageSuccessPagePermissions(
 			expectedPagePermissions, inputPagePermissions);
+	}
+
+	private void _testPostSiteSitePageSuccessParentSitePage() throws Exception {
+		SitePage parentPostSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage());
+
+		SitePage randomSitePage = randomSitePage();
+
+		randomSitePage.setParentSitePage(
+			new ParentSitePage() {
+				{
+					setFriendlyUrlPath(parentPostSitePage.getFriendlyUrlPath());
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		ParentSitePage parentSitePage = postSitePage.getParentSitePage();
+
+		Assert.assertEquals(
+			parentPostSitePage.getFriendlyUrlPath(),
+			parentSitePage.getFriendlyUrlPath());
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		Layout parentLayout = _layoutLocalService.fetchLayout(
+			layout.getParentPlid());
+
+		Assert.assertEquals(
+			parentPostSitePage.getFriendlyUrlPath(),
+			parentLayout.getFriendlyURL());
 	}
 
 	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting()

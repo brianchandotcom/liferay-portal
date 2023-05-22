@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_FILTER_WIDGET_VALUE_INPUT</td>
+	<td>//div[contains(@class,'input-text-wrapper')]//input[contains(@name,'${key_name}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_CLOUD_LAYOUT_ITEM</td>
 	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//ul[contains(@class,'tag-cloud')]//button[contains(.,'${facetValue}')]</td>
 	<td></td>

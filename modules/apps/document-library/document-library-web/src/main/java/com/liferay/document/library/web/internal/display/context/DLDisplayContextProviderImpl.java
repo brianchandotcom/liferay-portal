@@ -33,6 +33,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -47,7 +48,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
@@ -138,6 +138,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
 
 		try {
+			DLMimeTypeDisplayContext dlMimeTypeDisplayContext =
+				_dlMimeTypeDisplayContextSnapshot.get();
+
 			FileVersion fileVersion = fileShortcut.getFileVersion();
 
 			DLPreviewRendererProvider dlPreviewRendererProvider =
@@ -145,7 +148,7 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 			DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 				new DefaultDLViewFileVersionDisplayContext(
-					_dlMimeTypeDisplayContext, dlPreviewRendererProvider,
+					dlMimeTypeDisplayContext, dlPreviewRendererProvider,
 					_dlTrashHelper, _dlURLHelper, fileShortcut,
 					httpServletRequest, _storageEngine, _versioningStrategy);
 
@@ -170,12 +173,15 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext =
+			_dlMimeTypeDisplayContextSnapshot.get();
+
 		DLPreviewRendererProvider dlPreviewRendererProvider =
 			_serviceTrackerMap.getService(fileVersion.getMimeType());
 
 		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
 			new DefaultDLViewFileVersionDisplayContext(
-				_dlMimeTypeDisplayContext, dlPreviewRendererProvider,
+				dlMimeTypeDisplayContext, dlPreviewRendererProvider,
 				_dlTrashHelper, _dlURLHelper, fileVersion, httpServletRequest,
 				_storageEngine, _versioningStrategy);
 
@@ -218,6 +224,11 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		_serviceTrackerMap.close();
 	}
 
+	private static final Snapshot<DLMimeTypeDisplayContext>
+		_dlMimeTypeDisplayContextSnapshot = new Snapshot<>(
+			DLDisplayContextProviderImpl.class, DLMimeTypeDisplayContext.class,
+			null, true);
+
 	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;
 
@@ -226,13 +237,6 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 	private ServiceTrackerList<DLDisplayContextFactory>
 		_dlDisplayContextFactories;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;

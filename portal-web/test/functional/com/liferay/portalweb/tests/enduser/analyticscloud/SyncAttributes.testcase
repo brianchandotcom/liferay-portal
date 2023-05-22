@@ -115,6 +115,8 @@ definition {
         domains,logoId,modifiedDate,parentAccountEntryId,restrictMembership,status,taxExemptionCode,
         taxIdNumber,type_''';
 
+		var nonRequiredAttributesList = ListUtil.newListFromString("${nonRequiredAttributesName}");
+
 		task ("Get the number of attributes currently synced") {
 			var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
 		}
@@ -122,7 +124,7 @@ definition {
 		task ("Deselect the non required attributes for Account") {
 			ACDXPSettings.desyncAttributes(
 				attributeCategory = "Account",
-				attributeNameList = ${nonRequiredAttributesName});
+				attributeNameList = ${nonRequiredAttributesList});
 		}
 
 		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
@@ -158,7 +160,7 @@ definition {
 		task ("Deselect two attributes for People") {
 			ACDXPSettings.desyncAttributes(
 				attributeCategory = "People",
-				attributeNameList = "birthday,male");
+				attributeNameList = "birthday,timeZoneId");
 		}
 
 		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
@@ -309,7 +311,7 @@ definition {
 	@priority = 3
 	test CanPaginationAttributeForPeopleList {
 		var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
-		var lastPageList = "userName,uuid";
+		var lastPageList = "uuid";
 
 		task ("Click to select attribute for people") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
@@ -318,7 +320,7 @@ definition {
 		task ("Change the pagination to 5") {
 			ACUtils.changePagination(itemsPerPage = 5);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 52 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 51 entries.");
 		}
 
 		task ("Check that 5 attributes for people appear on the first page") {
@@ -332,7 +334,7 @@ definition {
 		task ("Click to navigate for the last page") {
 			ACUtils.checkAnyPage(pageNumber = 11);
 
-			ACUtils.viewResultsMessage(results = "Showing 51 to 52 of 52 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 51 to 51 of 51 entries.");
 		}
 
 		task ("Check that 2 attributes for people appear on the last page") {
@@ -620,36 +622,36 @@ definition {
 	@priority = 3
 	test CanSortAttributeForPeopleList {
 		var indexList1 = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50";
-		var indexList2 = "1,2";
+		var indexList2 = "1";
 		var attributesAscendingOrder1 = '''
 			agreedToTermsOfUse,birthday,classNameId,classPK,
 			comments,companyId,companyId,contactId,contactId,createDate,createDate,emailAddress,
 			emailAddress,emailAddressVerified,employeeNumber,employeeStatusId,externalReferenceCode,
 			facebookId,facebookSn,firstName,firstName,googleUserId,greeting,hoursOfOperation,jabberSn,jobClass,
-			jobTitle,languageId,lastName,lastName,ldapServerId,male,middleName,middleName,modifiedDate,modifiedDate,openId,
-			parentContactId,portraitId,prefixListTypeId,screenName,skypeSn,smsSn,status,suffixListTypeId,
-			timeZoneId,type,twitterSn,userId
+			jobTitle,jobTitle,languageId,lastName,lastName,ldapServerId,male,middleName,middleName,modifiedDate,modifiedDate,
+			openId,parentContactId,portraitId,prefixListTypeId,screenName,skypeSn,smsSn,status,suffixListTypeId,
+			timeZoneId,twitterSn,userId,userName
 		''';
-		var attributesAscendingOrder2 = "userName,uuid";
+		var attributesAscendingOrder2 = "uuid";
 		var attributesDescendingOrder1 = '''
-			uuid,userName,userId,twitterSn,type,timeZoneId,
+			uuid,userName,userId,twitterSn,timeZoneId,
 			suffixListTypeId,status,smsSn,skypeSn,screenName,prefixListTypeId,portraitId,
 			parentContactId,openId,modifiedDate,modifiedDate,middleName,middleName,male,ldapServerId,
-			lastName,lastName,languageId,jobTitle,jobClass,jabberSn,hoursOfOperation,greeting,googleUserId,
+			lastName,lastName,languageId,jobTitle,jobTitle,jobClass,jabberSn,hoursOfOperation,greeting,googleUserId,
 			firstName,firstName,facebookSn,facebookId,externalReferenceCode,employeeStatusId,employeeNumber,
 			emailAddressVerified,emailAddress,emailAddress,createDate,createDate,contactId,
-			contactId,companyId,companyId,comments,classPK,classNameId
+			contactId,companyId,companyId,comments,classPK,classNameId,birthday
 		''';
-		var attributesDescendingOrder2 = "birthday,agreedToTermsOfUse";
+		var attributesDescendingOrder2 = "agreedToTermsOfUse";
 		var attributesDataTypeAscending1 = '''
 			male,agreedToTermsOfUse,emailAddressVerified,
-			birthday,createDate,modifiedDate,createDate,modifiedDate,status,type,classNameId,classPK,companyId,contactId,
+			birthday,createDate,modifiedDate,createDate,modifiedDate,status,classNameId,classPK,companyId,contactId,
 			employeeStatusId,parentContactId,prefixListTypeId,suffixListTypeId,companyId,contactId,facebookId,
 			ldapServerId,portraitId,timeZoneId,userId,emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
 			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
-			firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId
+			firstName,googleUserId,greeting,jobTitle,languageId,lastName,middleName,openId,screenName
 		''';
-		var attributesDataTypeAscending2 = "screenName,uuid";
+		var attributesDataTypeAscending2 = "uuid";
 		var attributesDataTypeDescending1 = '''
 			emailAddress,employeeNumber,facebookSn,firstName,hoursOfOperation,
 			jabberSn,jobClass,jobTitle,lastName,middleName,skypeSn,smsSn,twitterSn,userName,comments,emailAddress,externalReferenceCode,
@@ -658,7 +660,7 @@ definition {
 			companyId,contactId,facebookId,ldapServerId,portraitId,timeZoneId,userId,status,birthday,createDate,
 			modifiedDate,createDate,modifiedDate,male,agreedToTermsOfUse
 		''';
-		var attributesDataTypeDescending2 = "agreedToTermsOfUse,emailAddressVerified";
+		var attributesDataTypeDescending2 = "emailAddressVerified";
 
 		task ("Click to configure people attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
@@ -837,16 +839,16 @@ definition {
 			expirationDate,displayDate,description,customFields,currencyCode,createDate,categoryIds,catalogId
 		''';
 		var attributesDataTypeAscending = '''
-			categoryIds,productChannelIds,productOptions,productSpecifications,skus,tags,id,siteId,catalogId,id,
+			categoryIds,productChannelIds,productOptions,productSpecifications,skus,tags,subscriptionEnabled,id,siteId,catalogId,id,
 			productId,status,id,customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,
 			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,externalReferenceCode,
-			modifiedDate,productType,currencyCode,externalReferenceCode,name,type,subscriptionEnabled
+			modifiedDate,productType,currencyCode,externalReferenceCode,name,type
 		''';
 		var attributesDataTypeDescending = '''
-			subscriptionEnabled,externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,
+			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,
 			externalReferenceCode,modifiedDate,productType,currencyCode,externalReferenceCode,name,type,
 			customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,id,siteId,catalogId,
-			id,productId,status,id,categoryIds,productChannelIds,productOptions,productSpecifications,
+			id,productId,status,id,subscriptionEnabled,categoryIds,productChannelIds,productOptions,productSpecifications,
 			skus,tags
 		''';
 
@@ -910,12 +912,14 @@ definition {
 			status,taxExemptionCode,taxIdNumber,type_
         ''';
 
+		var defaultAttributesNameList = ListUtil.newListFromString("${defaultAttributesName}");
+
 		task ("Click to configure account attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
 		}
 
 		task ("See that the all the default attributes are checked") {
-			for (var attribute : list ${defaultAttributesName}) {
+			for (var attribute : list ${defaultAttributesNameList}) {
 				AssertElementPresent(
 					key_attributeName = ${attribute},
 					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
@@ -971,6 +975,8 @@ definition {
 			quantity,sku,status,subscription,total,unitOfMeasure,unitPrice,userId
 			''';
 
+		var requiredAttributesList = ListUtil.newListFromString("${requiredAttributes}");
+
 		task ("Click to configure orders attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
 		}
@@ -978,7 +984,7 @@ definition {
 		task ("See that the required attributes can not be deselected") {
 			ACUtils.changePagination(itemsPerPage = 50);
 
-			for (var attribute : list ${requiredAttributes}) {
+			for (var attribute : list ${requiredAttributesList}) {
 				AssertElementPresent(
 					key_requiredAttribute = ${attribute},
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
@@ -995,6 +1001,8 @@ definition {
 		''';
 		var requiredAttribute = "uuid";
 
+		var requiredAttributesList = ListUtil.newListFromString("${requiredAttributes}");
+
 		task ("Click to configure people attributes") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
 		}
@@ -1002,7 +1010,7 @@ definition {
 		task ("See that the required attributes can not be deselected (the input is disabled)") {
 			ACUtils.changePagination(itemsPerPage = 50);
 
-			for (var attribute : list ${requiredAttributes}) {
+			for (var attribute : list ${requiredAttributesList}) {
 				AssertElementPresent(
 					key_requiredAttribute = ${attribute},
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");

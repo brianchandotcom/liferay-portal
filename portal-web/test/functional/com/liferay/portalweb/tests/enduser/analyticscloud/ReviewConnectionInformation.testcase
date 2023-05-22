@@ -74,16 +74,6 @@ definition {
 			ACDXPSettings.syncAccountsData(accountGroup = "European");
 		}
 
-		task ("Finish the wizard steps") {
-			for (var n : list "1,2") {
-				Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-			}
-		}
-
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
-		}
-
 		task ("Check that only sync contacts toggle is enable") {
 			for (var syncFieldName : list "Sync All Contacts and Accounts,Sync All Accounts") {
 				AssertNotChecked.assertNotCheckedNotVisible(
@@ -97,10 +87,6 @@ definition {
 		}
 
 		task ("Check selected account group number") {
-			Click(
-				key_panel = "Select Accounts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
 			ACDXPSettings.viewSyncNumberPreview(
 				syncFieldName = "Account Groups",
 				syncNumber = "1 Selected");
@@ -137,7 +123,7 @@ definition {
 		task ("Deselect some attributes") {
 			ACDXPSettings.desyncAttributes(
 				attributeCategory = "People",
-				attributeNameList = "agreedToTermsOfUse,companyId");
+				attributeNameList = "birthday,timeZoneId");
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {
@@ -177,7 +163,7 @@ definition {
 		task ("Deselect some attributes") {
 			ACDXPSettings.desyncAttributes(
 				attributeCategory = "Account",
-				attributeNameList = "defaultBillingAddressId,defaultCPaymentMethodKey");
+				attributeNameList = "description,defaultCPaymentMethodKey");
 		}
 
 		task ("Check that the correct amount of attributes appear as selected after editing") {

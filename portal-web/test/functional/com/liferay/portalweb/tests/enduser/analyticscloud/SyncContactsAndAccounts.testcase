@@ -854,7 +854,7 @@ definition {
 		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
 
 		task ("Create 5 organizations") {
-			for (var organizationName : list "${orgNamePageListUp}") {
+			for (var organizationName : list ${orgNamePageListUp}) {
 				JSONOrganization.addOrganization(organizationName = ${organizationName});
 			}
 		}
@@ -1329,7 +1329,7 @@ definition {
 		task ("Go to the second page and see that there's only one organization in the list") {
 			ACUtils.checkAnyPage(pageNumber = 2);
 
-			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${secondPageList});
 
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}

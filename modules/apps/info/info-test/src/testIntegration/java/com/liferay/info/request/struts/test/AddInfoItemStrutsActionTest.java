@@ -319,8 +319,6 @@ public class AddInfoItemStrutsActionTest {
 				"myText"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());

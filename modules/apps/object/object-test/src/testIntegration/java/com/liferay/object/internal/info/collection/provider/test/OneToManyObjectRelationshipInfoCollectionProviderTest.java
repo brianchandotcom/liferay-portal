@@ -47,7 +47,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -79,8 +78,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"childTextObjectFieldName"
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		_childObjectDefinition =
@@ -94,8 +91,6 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"parentTextObjectFieldName"
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		_parentObjectDefinition =

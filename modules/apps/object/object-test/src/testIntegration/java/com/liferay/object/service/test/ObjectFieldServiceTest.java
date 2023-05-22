@@ -200,8 +200,6 @@ public class ObjectFieldServiceTest {
 				StringUtil.randomId()
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -233,8 +231,6 @@ public class ObjectFieldServiceTest {
 					StringUtil.randomId()
 				).objectDefinitionId(
 					objectDefinitionId
-				).objectFieldSettings(
-					Collections.emptyList()
 				).required(
 					true
 				).build());

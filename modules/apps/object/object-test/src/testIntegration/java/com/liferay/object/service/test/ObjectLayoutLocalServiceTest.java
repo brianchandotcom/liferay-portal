@@ -520,8 +520,6 @@ public class ObjectLayoutLocalServiceTest {
 				StringUtil.randomId()
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());

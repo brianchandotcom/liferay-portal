@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class ObjectFieldBuilder {
 
 	public ObjectFieldBuilder() {
 		objectField.setReadOnly(ObjectFieldConstants.READ_ONLY_FALSE);
+		objectField.setObjectFieldSettings(Collections.emptyList());
 	}
 
 	public ObjectField build() {

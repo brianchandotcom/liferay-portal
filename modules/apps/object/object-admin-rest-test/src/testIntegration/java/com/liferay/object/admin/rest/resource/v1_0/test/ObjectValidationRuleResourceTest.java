@@ -69,8 +69,6 @@ public class ObjectValidationRuleResourceTest
 				"able"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());

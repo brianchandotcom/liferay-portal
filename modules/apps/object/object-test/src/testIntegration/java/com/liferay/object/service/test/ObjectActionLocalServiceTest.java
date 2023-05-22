@@ -891,8 +891,6 @@ public class ObjectActionLocalServiceTest {
 				StringUtil.randomId()
 			).objectDefinitionId(
 				userObjectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
@@ -909,8 +907,6 @@ public class ObjectActionLocalServiceTest {
 				StringUtil.randomId()
 			).objectDefinitionId(
 				userObjectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		// Add object action to create user after adding an object entry

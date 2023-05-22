@@ -48,7 +48,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -82,8 +81,6 @@ public class ObjectEntryExtensionProviderTest {
 				"boolean"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new DateObjectFieldBuilder(
@@ -91,8 +88,6 @@ public class ObjectEntryExtensionProviderTest {
 				"date"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -102,8 +97,6 @@ public class ObjectEntryExtensionProviderTest {
 				"decimal"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new PrecisionDecimalObjectFieldBuilder(
@@ -111,8 +104,6 @@ public class ObjectEntryExtensionProviderTest {
 				"precisionDecimal"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());

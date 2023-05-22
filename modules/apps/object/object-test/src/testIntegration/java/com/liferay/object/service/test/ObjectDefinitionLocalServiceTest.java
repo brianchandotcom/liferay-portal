@@ -251,8 +251,6 @@ public class ObjectDefinitionLocalServiceTest {
 				"charlie"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -312,8 +310,6 @@ public class ObjectDefinitionLocalServiceTest {
 				"dog"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -871,8 +867,6 @@ public class ObjectDefinitionLocalServiceTest {
 				"able"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -1227,8 +1221,6 @@ public class ObjectDefinitionLocalServiceTest {
 				StringUtil.randomId()
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -1430,8 +1422,6 @@ public class ObjectDefinitionLocalServiceTest {
 				"able"
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -1481,8 +1471,6 @@ public class ObjectDefinitionLocalServiceTest {
 				StringUtil.randomId()
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());
@@ -1546,8 +1534,6 @@ public class ObjectDefinitionLocalServiceTest {
 						RandomTestUtil.randomString())
 				).name(
 					StringUtil.randomId()
-				).objectFieldSettings(
-					Collections.emptyList()
 				).build()));
 	}
 

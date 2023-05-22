@@ -134,8 +134,6 @@ public class SalesforceObjectEntryManagerImplTest {
 				"title"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		_objectFieldLocalService.updateCustomObjectField(

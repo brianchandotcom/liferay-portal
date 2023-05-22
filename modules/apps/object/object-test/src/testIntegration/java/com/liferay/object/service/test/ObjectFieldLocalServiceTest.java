@@ -321,8 +321,6 @@ public class ObjectFieldLocalServiceTest {
 							RandomTestUtil.randomString())
 					).name(
 						"upload"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build())));
 
 		_assertFailure(
@@ -340,8 +338,6 @@ public class ObjectFieldLocalServiceTest {
 						_listTypeDefinition.getListTypeDefinitionId()
 					).name(
 						"picklist"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).required(
 						true
 					).state(
@@ -627,8 +623,6 @@ public class ObjectFieldLocalServiceTest {
 						LocalizedMapUtil.getLocalizedMap("")
 					).name(
 						"able"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).system(
 						true
 					).build())));
@@ -779,8 +773,6 @@ public class ObjectFieldLocalServiceTest {
 				"able"
 			).objectDefinitionId(
 				customObjectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		Assert.assertFalse(
@@ -807,8 +799,6 @@ public class ObjectFieldLocalServiceTest {
 				"baker"
 			).objectDefinitionId(
 				customObjectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		_assertDeleteObjectField(true, customObjectDefinition, "baker");
@@ -911,8 +901,6 @@ public class ObjectFieldLocalServiceTest {
 				"baker"
 			).objectDefinitionId(
 				systemObjectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		_assertDeleteObjectField(true, systemObjectDefinition, "baker");
@@ -1238,8 +1226,6 @@ public class ObjectFieldLocalServiceTest {
 						LocalizedMapUtil.getLocalizedMap("able")
 					).name(
 						"able"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build()));
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
@@ -1313,8 +1299,6 @@ public class ObjectFieldLocalServiceTest {
 				0
 			).name(
 				"baker"
-			).objectFieldSettings(
-				Collections.emptyList()
 			).state(
 				false
 			).build());
@@ -1338,8 +1322,6 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap("charlie")
 			).name(
 				"charlie"
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
@@ -1425,8 +1407,6 @@ public class ObjectFieldLocalServiceTest {
 					"able"
 				).objectFieldId(
 					relationshipObjectFieldId
-				).objectFieldSettings(
-					Collections.emptyList()
 				).build()));
 
 		_objectRelationshipLocalService.deleteObjectRelationship(

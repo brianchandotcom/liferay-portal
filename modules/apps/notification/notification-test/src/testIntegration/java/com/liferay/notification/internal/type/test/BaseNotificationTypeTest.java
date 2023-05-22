@@ -167,8 +167,6 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"booleanObjectField"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build(),
 					new DateObjectFieldBuilder(
 					).labelMap(
@@ -176,8 +174,6 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"dateObjectField"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build(),
 					new IntegerObjectFieldBuilder(
 					).labelMap(
@@ -185,8 +181,6 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"integerObjectField"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build(),
 					new PicklistObjectFieldBuilder(
 					).labelMap(
@@ -196,8 +190,6 @@ public class BaseNotificationTypeTest {
 						"picklistObjectField"
 					).listTypeDefinitionId(
 						_listTypeDefinition.getListTypeDefinitionId()
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build(),
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -205,8 +197,6 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"textObjectField"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build()));
 
 		objectDefinition =

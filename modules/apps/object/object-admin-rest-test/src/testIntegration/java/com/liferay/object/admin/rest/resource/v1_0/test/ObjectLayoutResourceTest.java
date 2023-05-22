@@ -72,8 +72,6 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 				"able"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());

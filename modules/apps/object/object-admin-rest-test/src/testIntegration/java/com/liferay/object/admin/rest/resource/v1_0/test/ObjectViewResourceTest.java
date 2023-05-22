@@ -74,8 +74,6 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 				"able"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());

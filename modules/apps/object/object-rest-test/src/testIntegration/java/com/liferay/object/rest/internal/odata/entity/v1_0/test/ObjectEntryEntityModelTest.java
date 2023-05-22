@@ -224,8 +224,6 @@ public class ObjectEntryEntityModelTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 		).name(
 			"a" + RandomTestUtil.randomString()
-		).objectFieldSettings(
-			Collections.emptyList()
 		).build();
 	}
 

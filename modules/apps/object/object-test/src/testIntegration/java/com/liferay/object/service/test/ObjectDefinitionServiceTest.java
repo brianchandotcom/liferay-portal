@@ -42,7 +42,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -426,8 +425,6 @@ public class ObjectDefinitionServiceTest {
 					StringUtil.randomId()
 				).objectDefinitionId(
 					objectDefinition.getObjectDefinitionId()
-				).objectFieldSettings(
-					Collections.emptyList()
 				).build());
 
 			objectDefinition =

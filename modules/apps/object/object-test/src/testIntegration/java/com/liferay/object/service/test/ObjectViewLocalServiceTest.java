@@ -427,8 +427,6 @@ public class ObjectViewLocalServiceTest {
 				objectFieldName
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Collections.emptyList()
 			).required(
 				true
 			).build());

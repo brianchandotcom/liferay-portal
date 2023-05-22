@@ -41,7 +41,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -89,8 +88,6 @@ public class ObjectEntryInfoItemFormProviderTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"parentTextObjectFieldName"
-			).objectFieldSettings(
-				Collections.emptyList()
 			).build());
 
 		parentObjectDefinition =

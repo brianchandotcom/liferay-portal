@@ -92,14 +92,14 @@ definition {
 
 		task ("Delete case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = ${caseType});
+				object = "casetypes",
+				objectName = ${caseType});
 
-		    JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 1");
 
-		    JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
@@ -122,9 +122,9 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-        }
+		}
 
-        task ("And the user go to case result page") {
+		task ("And the user go to case result page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -160,7 +160,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-        }
+		}
 
 		task ("And the user go to case result page") {
 			Testray.changePagination(
@@ -173,9 +173,9 @@ definition {
 
 			TestrayBuild.goToBuild(buildName = ${buildName});
 
-            TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
-            Button.click(button = "Assign to Me");
+			Button.click(button = "Assign to Me");
 
 			Button.click(button = "Complete Test");
 		}
@@ -258,9 +258,9 @@ definition {
 
 			TestrayBuild.goToBuild(buildName = ${buildName});
 
-            TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
 
-            Button.click(button = "Assign to Me");
+			Button.click(button = "Assign to Me");
 
 			Button.click(button = "Complete Test");
 		}
@@ -294,7 +294,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-        task ("And the user go to case result page") {
+		task ("And the user go to case result page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);

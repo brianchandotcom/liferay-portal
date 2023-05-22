@@ -66,6 +66,14 @@ public interface NotificationQueueEntryResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
+	public NotificationQueueEntry postNotificationQueueEntry(
+			NotificationQueueEntry notificationQueueEntry)
+		throws Exception;
+
+	public Response postNotificationQueueEntryBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteNotificationQueueEntry(Long notificationQueueEntryId)
 		throws Exception;
 

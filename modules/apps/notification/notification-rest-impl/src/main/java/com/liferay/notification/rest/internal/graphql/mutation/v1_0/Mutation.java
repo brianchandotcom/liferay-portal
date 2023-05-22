@@ -14,6 +14,7 @@
 
 package com.liferay.notification.rest.internal.graphql.mutation.v1_0;
 
+import com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
 import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
@@ -86,6 +87,34 @@ public class Mutation {
 						_sortsBiFunction.apply(
 							notificationQueueEntryResource, sortsString),
 						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public NotificationQueueEntry createNotificationQueueEntry(
+			@GraphQLName("notificationQueueEntry") NotificationQueueEntry
+				notificationQueueEntry)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationQueueEntryResource ->
+				notificationQueueEntryResource.postNotificationQueueEntry(
+					notificationQueueEntry));
+	}
+
+	@GraphQLField
+	public Response createNotificationQueueEntryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationQueueEntryResource ->
+				notificationQueueEntryResource.postNotificationQueueEntryBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField

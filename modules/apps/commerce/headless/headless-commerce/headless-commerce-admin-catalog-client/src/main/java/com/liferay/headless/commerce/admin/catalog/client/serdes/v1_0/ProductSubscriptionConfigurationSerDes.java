@@ -59,6 +59,80 @@ public class ProductSubscriptionConfigurationSerDes {
 
 		sb.append("{");
 
+		if (productSubscriptionConfiguration.getDeliverySubscriptionEnable() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionEnable\": ");
+
+			sb.append(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionEnable());
+		}
+
+		if (productSubscriptionConfiguration.getDeliverySubscriptionLength() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionLength\": ");
+
+			sb.append(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionLength());
+		}
+
+		if (productSubscriptionConfiguration.
+				getDeliverySubscriptionNumberOfLength() != null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionNumberOfLength\": ");
+
+			sb.append(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionNumberOfLength());
+		}
+
+		if (productSubscriptionConfiguration.getDeliverySubscriptionType() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionType\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				productSubscriptionConfiguration.getDeliverySubscriptionType());
+
+			sb.append("\"");
+		}
+
+		if (productSubscriptionConfiguration.
+				getDeliverySubscriptionTypeSettings() != null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionTypeSettings\": ");
+
+			sb.append(
+				_toJSON(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionTypeSettings()));
+		}
+
 		if (productSubscriptionConfiguration.getEnable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -140,6 +214,71 @@ public class ProductSubscriptionConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (productSubscriptionConfiguration.getDeliverySubscriptionEnable() ==
+				null) {
+
+			map.put("deliverySubscriptionEnable", null);
+		}
+		else {
+			map.put(
+				"deliverySubscriptionEnable",
+				String.valueOf(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionEnable()));
+		}
+
+		if (productSubscriptionConfiguration.getDeliverySubscriptionLength() ==
+				null) {
+
+			map.put("deliverySubscriptionLength", null);
+		}
+		else {
+			map.put(
+				"deliverySubscriptionLength",
+				String.valueOf(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionLength()));
+		}
+
+		if (productSubscriptionConfiguration.
+				getDeliverySubscriptionNumberOfLength() == null) {
+
+			map.put("deliverySubscriptionNumberOfLength", null);
+		}
+		else {
+			map.put(
+				"deliverySubscriptionNumberOfLength",
+				String.valueOf(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionNumberOfLength()));
+		}
+
+		if (productSubscriptionConfiguration.getDeliverySubscriptionType() ==
+				null) {
+
+			map.put("deliverySubscriptionType", null);
+		}
+		else {
+			map.put(
+				"deliverySubscriptionType",
+				String.valueOf(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionType()));
+		}
+
+		if (productSubscriptionConfiguration.
+				getDeliverySubscriptionTypeSettings() == null) {
+
+			map.put("deliverySubscriptionTypeSettings", null);
+		}
+		else {
+			map.put(
+				"deliverySubscriptionTypeSettings",
+				String.valueOf(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionTypeSettings()));
+		}
+
 		if (productSubscriptionConfiguration.getEnable() == null) {
 			map.put("enable", null);
 		}
@@ -212,7 +351,57 @@ public class ProductSubscriptionConfigurationSerDes {
 			ProductSubscriptionConfiguration productSubscriptionConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "enable")) {
+			if (Objects.equals(
+					jsonParserFieldName, "deliverySubscriptionEnable")) {
+
+				if (jsonParserFieldValue != null) {
+					productSubscriptionConfiguration.
+						setDeliverySubscriptionEnable(
+							(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "deliverySubscriptionLength")) {
+
+				if (jsonParserFieldValue != null) {
+					productSubscriptionConfiguration.
+						setDeliverySubscriptionLength(
+							Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"deliverySubscriptionNumberOfLength")) {
+
+				if (jsonParserFieldValue != null) {
+					productSubscriptionConfiguration.
+						setDeliverySubscriptionNumberOfLength(
+							Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "deliverySubscriptionType")) {
+
+				if (jsonParserFieldValue != null) {
+					productSubscriptionConfiguration.
+						setDeliverySubscriptionType(
+							ProductSubscriptionConfiguration.
+								DeliverySubscriptionType.create(
+									(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"deliverySubscriptionTypeSettings")) {
+
+				if (jsonParserFieldValue != null) {
+					productSubscriptionConfiguration.
+						setDeliverySubscriptionTypeSettings(
+							(Map)ProductSubscriptionConfigurationSerDes.toMap(
+								(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "enable")) {
 				if (jsonParserFieldValue != null) {
 					productSubscriptionConfiguration.setEnable(
 						(Boolean)jsonParserFieldValue);

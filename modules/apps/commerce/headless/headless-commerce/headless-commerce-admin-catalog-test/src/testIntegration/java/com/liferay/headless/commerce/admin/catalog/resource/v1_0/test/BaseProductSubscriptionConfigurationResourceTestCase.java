@@ -362,6 +362,68 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"deliverySubscriptionEnable", additionalAssertFieldName)) {
+
+				if (productSubscriptionConfiguration.
+						getDeliverySubscriptionEnable() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionLength", additionalAssertFieldName)) {
+
+				if (productSubscriptionConfiguration.
+						getDeliverySubscriptionLength() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionNumberOfLength",
+					additionalAssertFieldName)) {
+
+				if (productSubscriptionConfiguration.
+						getDeliverySubscriptionNumberOfLength() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionType", additionalAssertFieldName)) {
+
+				if (productSubscriptionConfiguration.
+						getDeliverySubscriptionType() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionTypeSettings",
+					additionalAssertFieldName)) {
+
+				if (productSubscriptionConfiguration.
+						getDeliverySubscriptionTypeSettings() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("enable", additionalAssertFieldName)) {
 				if (productSubscriptionConfiguration.getEnable() == null) {
 					valid = false;
@@ -527,6 +589,85 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"deliverySubscriptionEnable", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSubscriptionConfiguration1.
+							getDeliverySubscriptionEnable(),
+						productSubscriptionConfiguration2.
+							getDeliverySubscriptionEnable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionLength", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSubscriptionConfiguration1.
+							getDeliverySubscriptionLength(),
+						productSubscriptionConfiguration2.
+							getDeliverySubscriptionLength())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionNumberOfLength",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSubscriptionConfiguration1.
+							getDeliverySubscriptionNumberOfLength(),
+						productSubscriptionConfiguration2.
+							getDeliverySubscriptionNumberOfLength())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionType", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSubscriptionConfiguration1.
+							getDeliverySubscriptionType(),
+						productSubscriptionConfiguration2.
+							getDeliverySubscriptionType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"deliverySubscriptionTypeSettings",
+					additionalAssertFieldName)) {
+
+				if (!equals(
+						(Map)
+							productSubscriptionConfiguration1.
+								getDeliverySubscriptionTypeSettings(),
+						(Map)
+							productSubscriptionConfiguration2.
+								getDeliverySubscriptionTypeSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("enable", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -697,6 +838,35 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("deliverySubscriptionEnable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("deliverySubscriptionLength")) {
+			sb.append(
+				String.valueOf(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionLength()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("deliverySubscriptionNumberOfLength")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("deliverySubscriptionType")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("deliverySubscriptionTypeSettings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("enable")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -771,6 +941,10 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 
 		return new ProductSubscriptionConfiguration() {
 			{
+				deliverySubscriptionEnable = RandomTestUtil.randomBoolean();
+				deliverySubscriptionLength = RandomTestUtil.randomInt();
+				deliverySubscriptionNumberOfLength =
+					RandomTestUtil.randomLong();
 				enable = RandomTestUtil.randomBoolean();
 				length = RandomTestUtil.randomInt();
 				numberOfLength = RandomTestUtil.randomLong();

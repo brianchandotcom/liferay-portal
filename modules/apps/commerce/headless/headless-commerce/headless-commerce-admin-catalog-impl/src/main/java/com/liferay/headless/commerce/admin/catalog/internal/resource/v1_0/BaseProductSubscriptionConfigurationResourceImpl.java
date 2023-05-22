@@ -93,7 +93,7 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration' -d $'{"enable": ___, "length": ___, "numberOfLength": ___, "subscriptionType": ___, "subscriptionTypeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration' -d $'{"deliverySubscriptionEnable": ___, "deliverySubscriptionLength": ___, "deliverySubscriptionNumberOfLength": ___, "deliverySubscriptionType": ___, "deliverySubscriptionTypeSettings": ___, "enable": ___, "length": ___, "numberOfLength": ___, "subscriptionType": ___, "subscriptionTypeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -170,7 +170,7 @@ public abstract class BaseProductSubscriptionConfigurationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/subscriptionConfiguration' -d $'{"enable": ___, "length": ___, "numberOfLength": ___, "subscriptionType": ___, "subscriptionTypeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/subscriptionConfiguration' -d $'{"deliverySubscriptionEnable": ___, "deliverySubscriptionLength": ___, "deliverySubscriptionNumberOfLength": ___, "deliverySubscriptionType": ___, "deliverySubscriptionTypeSettings": ___, "enable": ___, "length": ___, "numberOfLength": ___, "subscriptionType": ___, "subscriptionTypeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

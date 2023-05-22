@@ -63,6 +63,179 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	}
 
 	@Schema(example = "true")
+	public Boolean getDeliverySubscriptionEnable() {
+		return deliverySubscriptionEnable;
+	}
+
+	public void setDeliverySubscriptionEnable(
+		Boolean deliverySubscriptionEnable) {
+
+		this.deliverySubscriptionEnable = deliverySubscriptionEnable;
+	}
+
+	@JsonIgnore
+	public void setDeliverySubscriptionEnable(
+		UnsafeSupplier<Boolean, Exception>
+			deliverySubscriptionEnableUnsafeSupplier) {
+
+		try {
+			deliverySubscriptionEnable =
+				deliverySubscriptionEnableUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean deliverySubscriptionEnable;
+
+	@Schema(example = "2")
+	public Integer getDeliverySubscriptionLength() {
+		return deliverySubscriptionLength;
+	}
+
+	public void setDeliverySubscriptionLength(
+		Integer deliverySubscriptionLength) {
+
+		this.deliverySubscriptionLength = deliverySubscriptionLength;
+	}
+
+	@JsonIgnore
+	public void setDeliverySubscriptionLength(
+		UnsafeSupplier<Integer, Exception>
+			deliverySubscriptionLengthUnsafeSupplier) {
+
+		try {
+			deliverySubscriptionLength =
+				deliverySubscriptionLengthUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer deliverySubscriptionLength;
+
+	@Schema(example = "12")
+	public Long getDeliverySubscriptionNumberOfLength() {
+		return deliverySubscriptionNumberOfLength;
+	}
+
+	public void setDeliverySubscriptionNumberOfLength(
+		Long deliverySubscriptionNumberOfLength) {
+
+		this.deliverySubscriptionNumberOfLength =
+			deliverySubscriptionNumberOfLength;
+	}
+
+	@JsonIgnore
+	public void setDeliverySubscriptionNumberOfLength(
+		UnsafeSupplier<Long, Exception>
+			deliverySubscriptionNumberOfLengthUnsafeSupplier) {
+
+		try {
+			deliverySubscriptionNumberOfLength =
+				deliverySubscriptionNumberOfLengthUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long deliverySubscriptionNumberOfLength;
+
+	@Schema(example = "monthly")
+	@Valid
+	public DeliverySubscriptionType getDeliverySubscriptionType() {
+		return deliverySubscriptionType;
+	}
+
+	@JsonIgnore
+	public String getDeliverySubscriptionTypeAsString() {
+		if (deliverySubscriptionType == null) {
+			return null;
+		}
+
+		return deliverySubscriptionType.toString();
+	}
+
+	public void setDeliverySubscriptionType(
+		DeliverySubscriptionType deliverySubscriptionType) {
+
+		this.deliverySubscriptionType = deliverySubscriptionType;
+	}
+
+	@JsonIgnore
+	public void setDeliverySubscriptionType(
+		UnsafeSupplier<DeliverySubscriptionType, Exception>
+			deliverySubscriptionTypeUnsafeSupplier) {
+
+		try {
+			deliverySubscriptionType =
+				deliverySubscriptionTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DeliverySubscriptionType deliverySubscriptionType;
+
+	@Schema(example = "{deliveryMonthDay=1, deliveryMonthlyMode=0}")
+	@Valid
+	public Map<String, String> getDeliverySubscriptionTypeSettings() {
+		return deliverySubscriptionTypeSettings;
+	}
+
+	public void setDeliverySubscriptionTypeSettings(
+		Map<String, String> deliverySubscriptionTypeSettings) {
+
+		this.deliverySubscriptionTypeSettings =
+			deliverySubscriptionTypeSettings;
+	}
+
+	@JsonIgnore
+	public void setDeliverySubscriptionTypeSettings(
+		UnsafeSupplier<Map<String, String>, Exception>
+			deliverySubscriptionTypeSettingsUnsafeSupplier) {
+
+		try {
+			deliverySubscriptionTypeSettings =
+				deliverySubscriptionTypeSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, String> deliverySubscriptionTypeSettings;
+
+	@Schema(example = "true")
 	public Boolean getEnable() {
 		return enable;
 	}
@@ -247,6 +420,60 @@ public class ProductSubscriptionConfiguration implements Serializable {
 
 		sb.append("{");
 
+		if (deliverySubscriptionEnable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionEnable\": ");
+
+			sb.append(deliverySubscriptionEnable);
+		}
+
+		if (deliverySubscriptionLength != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionLength\": ");
+
+			sb.append(deliverySubscriptionLength);
+		}
+
+		if (deliverySubscriptionNumberOfLength != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionNumberOfLength\": ");
+
+			sb.append(deliverySubscriptionNumberOfLength);
+		}
+
+		if (deliverySubscriptionType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionType\": ");
+
+			sb.append("\"");
+
+			sb.append(deliverySubscriptionType);
+
+			sb.append("\"");
+		}
+
+		if (deliverySubscriptionTypeSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deliverySubscriptionTypeSettings\": ");
+
+			sb.append(_toJSON(deliverySubscriptionTypeSettings));
+		}
+
 		if (enable != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -312,6 +539,46 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("DeliverySubscriptionType")
+	public static enum DeliverySubscriptionType {
+
+		DAILY("daily"), MONTHLY("monthly"), WEEKLY("weekly"), YEARLY("yearly");
+
+		@JsonCreator
+		public static DeliverySubscriptionType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (DeliverySubscriptionType deliverySubscriptionType : values()) {
+				if (Objects.equals(
+						deliverySubscriptionType.getValue(), value)) {
+
+					return deliverySubscriptionType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private DeliverySubscriptionType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("SubscriptionType")
 	public static enum SubscriptionType {

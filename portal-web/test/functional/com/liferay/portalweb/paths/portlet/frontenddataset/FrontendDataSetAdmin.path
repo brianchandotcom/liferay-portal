@@ -92,8 +92,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_TABLE</td>
+	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_position}]//*[contains(text(),'${keyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_SEARCH</td>
 	<td>//div[contains(@class,'modal')]//*[contains(@class, 'input-group-item')]//*[@placeholder="Search"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELDS_DRAG_DOTS_ICON</td>
+	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row']//td[@class="drag-handle-cell"]//button[@aria-label="Drag ${key_nameField}"]</td>
 	<td></td>
 </tr>
 

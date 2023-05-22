@@ -16,9 +16,11 @@ package com.liferay.notification.rest.internal.resource.v1_0;
 
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.handler.NotificationHandlerTracker;
 import com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry;
+import com.liferay.notification.rest.dto.v1_0.util.NotificationUtil;
 import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.service.NotificationQueueEntryService;
 import com.liferay.notification.type.NotificationType;
@@ -101,6 +103,35 @@ public class NotificationQueueEntryResourceImpl
 	}
 
 	@Override
+	public NotificationQueueEntry postNotificationQueueEntry(
+			NotificationQueueEntry notificationQueueEntry)
+		throws Exception {
+
+		NotificationContext notificationContext = new NotificationContext();
+
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(
+				NotificationConstants.TYPE_EMAIL);
+
+		notificationContext.setNotificationQueueEntry(
+			notificationType.createNotificationQueueEntry(
+				contextUser, notificationQueueEntry.getBody(),
+				notificationContext, notificationQueueEntry.getSubject()));
+
+		notificationContext.setNotificationRecipient(
+			NotificationUtil.toNotificationRecipient(contextUser, 0L));
+		notificationContext.setNotificationRecipientSettings(
+			NotificationUtil.toNotificationRecipientSetting(
+				0L, notificationType, notificationQueueEntry.getRecipients(),
+				contextUser));
+		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
+
+		return _toNotificationQueueEntry(
+			_notificationQueueEntryService.addNotificationQueueEntry(
+				notificationContext));
+	}
+
+	@Override
 	public void putNotificationQueueEntryResend(Long notificationQueueEntryId)
 		throws Exception {
 
@@ -171,7 +202,6 @@ public class NotificationQueueEntryResourceImpl
 				id =
 					serviceBuilderNotificationQueueEntry.
 						getNotificationQueueEntryId();
-				priority = serviceBuilderNotificationQueueEntry.getPriority();
 				recipientsSummary = notificationType.getRecipientSummary(
 					serviceBuilderNotificationQueueEntry);
 				sentDate = serviceBuilderNotificationQueueEntry.getSentDate();

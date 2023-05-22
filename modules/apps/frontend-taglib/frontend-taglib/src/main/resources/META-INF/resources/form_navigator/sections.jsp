@@ -40,7 +40,7 @@ for (FormNavigatorEntry<Object> curFormNavigatorEntry : formNavigatorEntries) {
 	<c:choose>
 		<c:when test="<%= formNavigatorDisplayContext.getType() == FormNavigatorConstants.FormNavigatorType.SHEET_SECTIONS %>">
 			<clay:sheet
-				cssClass="ml-0"
+				cssClass="mb-4 ml-0 mt-4"
 			>
 				<clay:sheet-section>
 					<h3 class="mb-4"><%= label %></h3>

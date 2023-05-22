@@ -174,12 +174,40 @@ definition {
 	}
 
 	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."
-	@ignore = "true"
 	@priority = 5
 	test CannotAddFieldAfterUncheckingIt {
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185228 CannotAddFieldAfterUncheckingIt pending implementation
+		task ("And checks id and label fields") {
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+		}
+
+		task ("And unchecks id field") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "id",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("And clicks on Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then label field should appear on Fields tab page") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "label");
+		}
+
+		task ("And id should not appear on Fields tab page") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "id",
+				locator1 = "FrontendDataSetAdmin#FIELDS_TABLE");
+		}
 	}
 
 	@description = "LPS-179282. Confirm that the search bar returns works as expected"

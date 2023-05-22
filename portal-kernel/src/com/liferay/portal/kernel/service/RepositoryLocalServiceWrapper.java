@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -499,6 +500,11 @@ public class RepositoryLocalServiceWrapper
 
 		return _repositoryLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _repositoryLocalService.getBasePersistence();
 	}
 
 	@Override

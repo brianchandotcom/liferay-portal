@@ -15,6 +15,7 @@
 package com.liferay.notification.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link NotificationQueueEntryAttachmentLocalService}.
@@ -397,6 +398,12 @@ public class NotificationQueueEntryAttachmentLocalServiceWrapper
 		return _notificationQueueEntryAttachmentLocalService.
 			updateNotificationQueueEntryAttachment(
 				notificationQueueEntryAttachment);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _notificationQueueEntryAttachmentLocalService.
+			getBasePersistence();
 	}
 
 	@Override

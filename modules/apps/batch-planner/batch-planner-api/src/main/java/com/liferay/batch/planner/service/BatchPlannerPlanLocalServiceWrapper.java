@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link BatchPlannerPlanLocalService}.
@@ -381,6 +382,11 @@ public class BatchPlannerPlanLocalServiceWrapper
 
 		return _batchPlannerPlanLocalService.updateStatus(
 			batchPlannerPlanId, status);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _batchPlannerPlanLocalService.getBasePersistence();
 	}
 
 	@Override

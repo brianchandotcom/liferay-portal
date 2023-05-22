@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -381,6 +382,11 @@ public class PortletPreferenceValueLocalServiceWrapper
 
 		return _portletPreferenceValueLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _portletPreferenceValueLocalService.getBasePersistence();
 	}
 
 	@Override

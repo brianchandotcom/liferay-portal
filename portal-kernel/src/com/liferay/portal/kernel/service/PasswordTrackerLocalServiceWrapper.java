@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link PasswordTrackerLocalService}.
  *
@@ -265,7 +267,7 @@ public class PasswordTrackerLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _passwordTrackerLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -325,8 +327,7 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public boolean isSameAsCurrentPassword(
-			long userId, java.lang.String newClearTextPwd)
+	public boolean isSameAsCurrentPassword(long userId, String newClearTextPwd)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _passwordTrackerLocalService.isSameAsCurrentPassword(
@@ -334,8 +335,7 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public boolean isValidPassword(
-			long userId, java.lang.String newClearTextPwd)
+	public boolean isValidPassword(long userId, String newClearTextPwd)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _passwordTrackerLocalService.isValidPassword(
@@ -343,7 +343,7 @@ public class PasswordTrackerLocalServiceWrapper
 	}
 
 	@Override
-	public void trackPassword(long userId, java.lang.String encPassword)
+	public void trackPassword(long userId, String encPassword)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_passwordTrackerLocalService.trackPassword(userId, encPassword);
@@ -366,6 +366,11 @@ public class PasswordTrackerLocalServiceWrapper
 
 		return _passwordTrackerLocalService.updatePasswordTracker(
 			passwordTracker);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _passwordTrackerLocalService.getBasePersistence();
 	}
 
 	@Override

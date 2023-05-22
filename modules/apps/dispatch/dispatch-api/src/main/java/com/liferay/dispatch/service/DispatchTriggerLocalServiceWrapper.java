@@ -15,6 +15,7 @@
 package com.liferay.dispatch.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link DispatchTriggerLocalService}.
@@ -536,6 +537,11 @@ public class DispatchTriggerLocalServiceWrapper
 
 		return _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTriggerId, taskSettingsUnicodeProperties, name);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dispatchTriggerLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceTaxMethodLocalService}.
@@ -434,6 +435,11 @@ public class CommerceTaxMethodLocalServiceWrapper
 
 		return _commerceTaxMethodLocalService.updateCommerceTaxMethod(
 			commerceTaxMethodId, nameMap, descriptionMap, percentage, active);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceTaxMethodLocalService.getBasePersistence();
 	}
 
 	@Override

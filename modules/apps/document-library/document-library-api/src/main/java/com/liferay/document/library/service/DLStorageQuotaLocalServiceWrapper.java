@@ -15,6 +15,7 @@
 package com.liferay.document.library.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link DLStorageQuotaLocalService}.
@@ -358,6 +359,11 @@ public class DLStorageQuotaLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_dlStorageQuotaLocalService.validateStorageQuota(companyId, increment);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dlStorageQuotaLocalService.getBasePersistence();
 	}
 
 	@Override

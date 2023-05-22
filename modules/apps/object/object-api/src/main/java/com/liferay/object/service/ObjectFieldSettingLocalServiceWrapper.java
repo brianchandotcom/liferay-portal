@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectFieldSettingLocalService}.
@@ -424,6 +425,11 @@ public class ObjectFieldSettingLocalServiceWrapper
 
 		return _objectFieldSettingLocalService.updateObjectFieldSetting(
 			objectFieldSetting);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectFieldSettingLocalService.getBasePersistence();
 	}
 
 	@Override

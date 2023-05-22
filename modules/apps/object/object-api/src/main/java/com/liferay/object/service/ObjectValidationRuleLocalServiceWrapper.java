@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectValidationRuleLocalService}.
@@ -455,6 +456,11 @@ public class ObjectValidationRuleLocalServiceWrapper
 
 		_objectValidationRuleLocalService.validate(
 			baseModel, objectDefinitionId, payloadJSONObject, userId);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectValidationRuleLocalService.getBasePersistence();
 	}
 
 	@Override

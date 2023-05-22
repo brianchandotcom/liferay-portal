@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link PluginSettingLocalService}.
  *
@@ -53,8 +55,7 @@ public class PluginSettingLocalServiceWrapper
 	}
 
 	@Override
-	public void checkPermission(
-			long userId, java.lang.String pluginId, java.lang.String pluginType)
+	public void checkPermission(long userId, String pluginId, String pluginType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_pluginSettingLocalService.checkPermission(
@@ -269,7 +270,7 @@ public class PluginSettingLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _pluginSettingLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -301,8 +302,7 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
-		long companyId, java.lang.String pluginId,
-		java.lang.String pluginType) {
+		long companyId, String pluginId, String pluginType) {
 
 		return _pluginSettingLocalService.getPluginSetting(
 			companyId, pluginId, pluginType);
@@ -338,7 +338,7 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public boolean hasPermission(
-		long userId, java.lang.String pluginId, java.lang.String pluginType) {
+		long userId, String pluginId, String pluginType) {
 
 		return _pluginSettingLocalService.hasPermission(
 			userId, pluginId, pluginType);
@@ -346,8 +346,8 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		java.lang.String roles, boolean active) {
+		long companyId, String pluginId, String pluginType, String roles,
+		boolean active) {
 
 		return _pluginSettingLocalService.updatePluginSetting(
 			companyId, pluginId, pluginType, roles, active);
@@ -368,6 +368,11 @@ public class PluginSettingLocalServiceWrapper
 		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
 
 		return _pluginSettingLocalService.updatePluginSetting(pluginSetting);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _pluginSettingLocalService.getBasePersistence();
 	}
 
 	@Override

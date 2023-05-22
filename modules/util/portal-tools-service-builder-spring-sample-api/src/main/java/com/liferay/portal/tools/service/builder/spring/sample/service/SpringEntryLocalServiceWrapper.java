@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.spring.sample.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link SpringEntryLocalService}.
@@ -375,6 +376,11 @@ public class SpringEntryLocalServiceWrapper
 					SpringEntry springEntry) {
 
 		return _springEntryLocalService.updateSpringEntry(springEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _springEntryLocalService.getBasePersistence();
 	}
 
 	@Override

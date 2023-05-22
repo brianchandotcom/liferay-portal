@@ -15,6 +15,7 @@
 package com.liferay.osb.faro.contacts.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ContactsCardTemplateLocalService}.
@@ -383,6 +384,11 @@ public class ContactsCardTemplateLocalServiceWrapper
 
 		return _contactsCardTemplateLocalService.updateContactsCardTemplate(
 			contactsCardTemplateId, name, settings, type);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _contactsCardTemplateLocalService.getBasePersistence();
 	}
 
 	@Override

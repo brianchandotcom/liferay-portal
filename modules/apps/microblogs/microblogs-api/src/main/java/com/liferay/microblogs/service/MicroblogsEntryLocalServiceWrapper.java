@@ -15,6 +15,7 @@
 package com.liferay.microblogs.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link MicroblogsEntryLocalService}.
@@ -552,6 +553,11 @@ public class MicroblogsEntryLocalServiceWrapper
 
 		return _microblogsEntryLocalService.updateMicroblogsEntry(
 			microblogsEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _microblogsEntryLocalService.getBasePersistence();
 	}
 
 	@Override

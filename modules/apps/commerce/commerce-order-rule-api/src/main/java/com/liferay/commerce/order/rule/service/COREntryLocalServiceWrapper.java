@@ -15,6 +15,7 @@
 package com.liferay.commerce.order.rule.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link COREntryLocalService}.
@@ -593,6 +594,11 @@ public class COREntryLocalServiceWrapper
 
 		return _corEntryLocalService.updateStatus(
 			userId, corEntryId, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _corEntryLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.calendar.service;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -501,6 +502,11 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 
 		return _calendarNotificationTemplateLocalService.
 			updateWithUnsafeFunction(updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _calendarNotificationTemplateLocalService.getBasePersistence();
 	}
 
 	@Override

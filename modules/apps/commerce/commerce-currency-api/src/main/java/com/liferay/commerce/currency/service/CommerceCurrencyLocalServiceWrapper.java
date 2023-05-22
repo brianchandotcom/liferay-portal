@@ -15,6 +15,7 @@
 package com.liferay.commerce.currency.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceCurrencyLocalService}.
@@ -543,6 +544,11 @@ public class CommerceCurrencyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceCurrencyLocalService.updateExchangeRates();
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceCurrencyLocalService.getBasePersistence();
 	}
 
 	@Override

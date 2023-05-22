@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectFilterLocalService}.
@@ -392,6 +393,11 @@ public class ObjectFilterLocalServiceWrapper
 		com.liferay.object.model.ObjectFilter objectFilter) {
 
 		return _objectFilterLocalService.updateObjectFilter(objectFilter);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectFilterLocalService.getBasePersistence();
 	}
 
 	@Override

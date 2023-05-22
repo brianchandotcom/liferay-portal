@@ -15,6 +15,7 @@
 package com.liferay.notification.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link NotificationRecipientSettingLocalService}.
@@ -422,6 +423,11 @@ public class NotificationRecipientSettingLocalServiceWrapper
 
 		return _notificationRecipientSettingLocalService.
 			updateNotificationRecipientSetting(notificationRecipientSetting);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _notificationRecipientSettingLocalService.getBasePersistence();
 	}
 
 	@Override

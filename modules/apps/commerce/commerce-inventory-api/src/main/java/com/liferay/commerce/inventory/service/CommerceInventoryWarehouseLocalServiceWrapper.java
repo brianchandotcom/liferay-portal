@@ -15,6 +15,7 @@
 package com.liferay.commerce.inventory.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceInventoryWarehouseLocalService}.
@@ -622,6 +623,11 @@ public class CommerceInventoryWarehouseLocalServiceWrapper
 		return _commerceInventoryWarehouseLocalService.
 			updateCommerceInventoryWarehouseExternalReferenceCode(
 				externalReferenceCode, commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceInventoryWarehouseLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.account.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AccountEntryLocalService}.
@@ -680,6 +681,11 @@ public class AccountEntryLocalServiceWrapper
 
 		return _accountEntryLocalService.updateStatus(
 			userId, accountEntryId, status, serviceContext, workflowContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _accountEntryLocalService.getBasePersistence();
 	}
 
 	@Override

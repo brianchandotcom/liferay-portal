@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -3480,6 +3481,11 @@ public class UserLocalServiceWrapper
 		throws E {
 
 		return _userLocalService.updateWithUnsafeFunction(updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _userLocalService.getBasePersistence();
 	}
 
 	@Override

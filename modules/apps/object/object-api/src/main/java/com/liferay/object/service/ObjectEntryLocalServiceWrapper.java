@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectEntryLocalService}.
@@ -724,6 +725,11 @@ public class ObjectEntryLocalServiceWrapper
 
 		return _objectEntryLocalService.updateStatus(
 			userId, objectEntryId, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectEntryLocalService.getBasePersistence();
 	}
 
 	@Override

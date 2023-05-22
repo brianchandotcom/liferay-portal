@@ -15,6 +15,7 @@
 package com.liferay.oauth.client.persistence.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link OAuthClientASLocalMetadataLocalService}.
@@ -442,6 +443,11 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 
 		return _oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(oAuthClientASLocalMetadata);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _oAuthClientASLocalMetadataLocalService.getBasePersistence();
 	}
 
 	@Override

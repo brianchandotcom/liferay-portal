@@ -17,6 +17,7 @@ package com.liferay.asset.list.service;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -573,6 +574,11 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 
 		return _assetListEntrySegmentsEntryRelLocalService.
 			updateWithUnsafeFunction(updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _assetListEntrySegmentsEntryRelLocalService.getBasePersistence();
 	}
 
 	@Override

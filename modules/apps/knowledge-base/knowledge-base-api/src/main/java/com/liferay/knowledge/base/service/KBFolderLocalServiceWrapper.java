@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -541,6 +542,11 @@ public class KBFolderLocalServiceWrapper
 
 		return _kbFolderLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _kbFolderLocalService.getBasePersistence();
 	}
 
 	@Override

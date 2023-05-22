@@ -17,6 +17,7 @@ package com.liferay.asset.kernel.service;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -727,6 +728,11 @@ public class AssetVocabularyLocalServiceWrapper
 
 		return _assetVocabularyLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _assetVocabularyLocalService.getBasePersistence();
 	}
 
 	@Override

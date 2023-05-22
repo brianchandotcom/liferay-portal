@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceDiscountCommerceAccountGroupRelLocalService}.
@@ -490,6 +491,12 @@ public class CommerceDiscountCommerceAccountGroupRelLocalServiceWrapper
 		return _commerceDiscountCommerceAccountGroupRelLocalService.
 			updateCommerceDiscountCommerceAccountGroupRel(
 				commerceDiscountCommerceAccountGroupRel);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceDiscountCommerceAccountGroupRelLocalService.
+			getBasePersistence();
 	}
 
 	@Override

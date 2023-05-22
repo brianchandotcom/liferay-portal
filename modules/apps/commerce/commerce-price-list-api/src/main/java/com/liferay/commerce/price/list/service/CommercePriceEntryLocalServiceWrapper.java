@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.service;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -703,6 +704,11 @@ public class CommercePriceEntryLocalServiceWrapper
 
 		return _commercePriceEntryLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commercePriceEntryLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.ratings.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
@@ -446,6 +447,11 @@ public class RatingsEntryLocalServiceWrapper
 
 		return _ratingsEntryLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ratingsEntryLocalService.getBasePersistence();
 	}
 
 	@Override

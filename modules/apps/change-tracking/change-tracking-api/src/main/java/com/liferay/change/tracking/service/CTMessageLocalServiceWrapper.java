@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CTMessageLocalService}.
@@ -341,6 +342,11 @@ public class CTMessageLocalServiceWrapper
 		com.liferay.change.tracking.model.CTMessage ctMessage) {
 
 		return _ctMessageLocalService.updateCTMessage(ctMessage);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ctMessageLocalService.getBasePersistence();
 	}
 
 	@Override

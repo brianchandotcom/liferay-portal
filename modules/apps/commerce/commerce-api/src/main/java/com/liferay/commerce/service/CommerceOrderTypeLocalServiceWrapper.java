@@ -15,6 +15,7 @@
 package com.liferay.commerce.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceOrderTypeLocalService}.
@@ -511,6 +512,11 @@ public class CommerceOrderTypeLocalServiceWrapper
 		return _commerceOrderTypeLocalService.updateStatus(
 			userId, commerceOrderTypeId, status, serviceContext,
 			workflowContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceOrderTypeLocalService.getBasePersistence();
 	}
 
 	@Override

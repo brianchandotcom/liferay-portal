@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CacheFieldEntryLocalService}.
@@ -343,6 +344,11 @@ public class CacheFieldEntryLocalServiceWrapper
 
 		return _cacheFieldEntryLocalService.updateCacheFieldEntry(
 			cacheFieldEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cacheFieldEntryLocalService.getBasePersistence();
 	}
 
 	@Override

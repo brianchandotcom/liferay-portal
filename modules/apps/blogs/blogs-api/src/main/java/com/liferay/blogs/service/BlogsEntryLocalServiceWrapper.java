@@ -17,6 +17,7 @@ package com.liferay.blogs.service;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -1002,6 +1003,11 @@ public class BlogsEntryLocalServiceWrapper
 
 		return _blogsEntryLocalService.updateWithUnsafeFunction(
 			updateUnsafeFunction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _blogsEntryLocalService.getBasePersistence();
 	}
 
 	@Override

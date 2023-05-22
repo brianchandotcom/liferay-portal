@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectStateFlowLocalService}.
@@ -424,6 +425,11 @@ public class ObjectStateFlowLocalServiceWrapper
 
 		return _objectStateFlowLocalService.updateObjectStateFlow(
 			objectStateFlow);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectStateFlowLocalService.getBasePersistence();
 	}
 
 	@Override

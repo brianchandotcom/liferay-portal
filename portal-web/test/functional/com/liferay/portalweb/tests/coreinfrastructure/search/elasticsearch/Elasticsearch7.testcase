@@ -48,7 +48,11 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page",
+			widgetName = "Asset Publisher");
 
 		var companyId = JSONCompany.getCompanyId();
 		var port = Elasticsearch.getServerPort();
@@ -177,9 +181,13 @@ definition {
 			groupName = "Guest",
 			title = "apple");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Search Insights");
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
+		Search.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -325,24 +333,17 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
 			threadBody = "Orange",
 			threadSubject = "Apple");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Orange",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Apple");
+			dmDocumentTitle = "Apple",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
 		Navigator.openURL();
 
@@ -544,11 +545,17 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
+		for (var portlet : list "Custom Filter,Low Level Search Options,Search Results,Search Bar") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
-
-		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Low Level Search Options,Search Results,Search Bar");
 
 		SearchPortlets.configureCustomFilter(
 			customParameterName = "q",

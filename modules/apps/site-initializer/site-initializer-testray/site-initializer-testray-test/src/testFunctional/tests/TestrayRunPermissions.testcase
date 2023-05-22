@@ -215,4 +215,42 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the run"
+	@priority = 4
+	test AssertLeadRoleCanDeleteRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertLeadRoleCanDeleteRun";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to the run page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Testray.projectTabNavigator(navTabName = "Runs");
+		}
+
+		task ("When the user delete the run") {
+			TestrayRun.deleteRun(runName = ${runName});
+		}
+
+        task ("Then the user can not see the run in the table") {
+			AssertElementNotPresent(
+				key_projectName = ${runName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

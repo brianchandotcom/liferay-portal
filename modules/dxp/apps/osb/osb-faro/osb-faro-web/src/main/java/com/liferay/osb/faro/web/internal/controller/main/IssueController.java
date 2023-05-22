@@ -77,9 +77,9 @@ public class IssueController extends BaseFaroController {
 					"Account Name: ", faroProject.getAccountName(), "\n",
 					"Current URL: ", currentURL, "\n", "Data Center Region: ",
 					faroProject.getServerLocation(), "\n", "Issue Title: ",
-					title, "\n", "Submission Date: ", submissionDate.toString(),
-					"\n", "User Email: ", user.getEmailAddress(), "\n",
-					"User Name: ", user.getFullName(), "\n", "Workspace Name: ",
+					title, "\n", "Submission Date: ", submissionDate, "\n",
+					"User Email: ", user.getEmailAddress(), "\n", "User Name: ",
+					user.getFullName(), "\n", "Workspace Name: ",
 					faroProject.getName(), "\n", "Description: ", description),
 				false));
 	}

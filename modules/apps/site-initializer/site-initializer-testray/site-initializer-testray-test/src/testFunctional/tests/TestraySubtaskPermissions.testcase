@@ -148,8 +148,8 @@ definition {
 
 	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the subtask"
 	@priority = 4
-	test AssertAnalystRoleCanEditTask {
-		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertAnalystRoleCanEditTask";
+	test AssertAnalystRoleCanEditSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertAnalystRoleCanEditSubtask";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -159,13 +159,15 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user edit a Subtask") {
+		task ("And the user go to the Subtask") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+		}
 
+		task ("When the user edit a Subtask") {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me and Begin Analysis");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -186,8 +188,8 @@ definition {
 
 	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to merge the subtask"
 	@priority = 4
-	test AssertAnalystRoleCanMergeTask {
-		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertAnalystRoleCanMergeTask";
+	test AssertAnalystRoleCanMergeSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertAnalystRoleCanMergeSubtask";
 
 		task ("Given that the user login with the Testray Analyst role") {
 			User.logoutAndLoginPG(
@@ -197,11 +199,13 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user merge a Subtask") {
+		task ("And the user go to the subtask") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
+		task ("When the user merge a Subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
 
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -214,8 +218,8 @@ definition {
 
 	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the subtask"
 	@priority = 4
-	test AssertLeadRoleCanEditTask {
-		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertLeadRoleCanEditTask";
+	test AssertLeadRoleCanEditSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertLeadRoleCanEditSubtask";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -225,13 +229,15 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user edit a Subtask") {
+		task ("And the user go to the Subtask") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+		}
 
+		task ("When the user edit a Subtask") {
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me and Begin Analysis");
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
@@ -252,8 +258,8 @@ definition {
 
 	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to merge the subtask"
 	@priority = 4
-	test AssertLeadRoleCanMergeTask {
-		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertLeadRoleCanMergeTask";
+	test AssertLeadRoleCanMergeSubtask {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertLeadRoleCanMergeSubtask";
 
 		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
@@ -263,11 +269,13 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user merge a Subtask") {
+		task ("And the user go to the subtask") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
+		task ("When the user merge a Subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
 
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
@@ -289,13 +297,13 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user go to the subtask") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
+		task ("When the user go to the subtask") {
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
 		}
 
@@ -317,13 +325,13 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user tries merge a Subtask") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
+		task ("When the user tries merge a Subtask") {
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
 
 			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");

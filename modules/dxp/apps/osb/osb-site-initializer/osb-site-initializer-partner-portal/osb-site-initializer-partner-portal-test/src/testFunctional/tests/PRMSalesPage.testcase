@@ -16,16 +16,17 @@ definition {
 		}
 
 		task ("Add a new user") {
-			JSONUser.addUser(
-				userEmailAddress = "partner@liferay.com",
-				userFirstName = "partner",
-				userLastName = "partner",
-				userScreenName = "partner");
+			JSONUser.addUserWithRole(
+				roleTitle = "Partner Sales User (PSU)",
+				userEmailAddress = "psu@liferay.com",
+				userFirstName = "psu",
+				userLastName = "psu",
+				userScreenName = "psu");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "partner@liferay.com");
+				userEmailAddress = "psu@liferay.com");
 		}
 
 		task ("Create a new Partner Portal Site") {
@@ -34,8 +35,8 @@ definition {
 
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "psu@liferay.com",
+				userLoginFullName = "psu");
 
 			PRMUtils.gotoPRM();
 		}

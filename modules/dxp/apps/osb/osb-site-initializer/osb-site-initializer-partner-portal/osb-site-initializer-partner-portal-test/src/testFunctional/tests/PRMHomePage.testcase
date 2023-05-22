@@ -21,7 +21,9 @@ definition {
 			PRMUtils.addSite();
 		}
 
-		PRMUtils.gotoPRM();
+		task ("Go to PRM Site") {
+			PRMUtils.gotoPRM();
+		}
 	}
 
 	tearDown {

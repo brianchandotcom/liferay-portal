@@ -1010,12 +1010,13 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
-	public String getTab() {
+	public String getTab() throws PortalException {
 		if (_tab != null) {
 			return _tab;
 		}
 
-		_tab = ParamUtil.getString(_httpServletRequest, "tab");
+		_tab = ParamUtil.getString(
+			_httpServletRequest, "tab", _getTabDefaultValue());
 
 		return _tab;
 	}
@@ -1058,9 +1059,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isCommentsTabSelected() throws PortalException {
-		if (Objects.equals(getTab(), "comments") ||
-			(hasCommentsResults() && Validator.isNull(getTab()))) {
-
+		if (Objects.equals(getTab(), "comments")) {
 			return true;
 		}
 
@@ -1116,9 +1115,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isVersionsTabSelected() throws PortalException {
-		if (Objects.equals(getTab(), "versions") ||
-			(hasVersionsResults() && Validator.isNull(getTab()))) {
-
+		if (Objects.equals(getTab(), "versions")) {
 			return true;
 		}
 
@@ -1126,9 +1123,7 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isWebContentTabSelected() throws PortalException {
-		if (Objects.equals(getTab(), "web-content") ||
-			(hasResults() && Validator.isNull(getTab()))) {
-
+		if (Objects.equals(getTab(), "web-content")) {
 			return true;
 		}
 
@@ -1468,6 +1463,22 @@ public class JournalDisplayContext {
 		}
 
 		return null;
+	}
+
+	private String _getTabDefaultValue() throws PortalException {
+		if (hasResults()) {
+			return "web-content";
+		}
+
+		if (hasVersionsResults()) {
+			return "versions";
+		}
+
+		if (hasCommentsResults()) {
+			return "comments";
+		}
+
+		return "web-content";
 	}
 
 	private SearchContainer<JournalArticle> _getVersionsSearchContainer()

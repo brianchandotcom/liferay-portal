@@ -14,8 +14,8 @@
 
 package com.liferay.osb.faro.internal.upgrade.v4_0_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Matthew Kong

@@ -54,7 +54,7 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 
 			<liferay-util:include page="/view_asset_entries_title_list.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test="<%= StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX) %>">
+		<c:when test="<%= StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX) %>">
 			<c:if test="<%= Validator.isNotNull(assetEntryResult.getTitle()) %>">
 				<p class="asset-entries-group-label h3"><%= HtmlUtil.escape(assetEntryResult.getTitle()) %></p>
 			</c:if>

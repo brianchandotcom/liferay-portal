@@ -84,7 +84,6 @@ page import="com.liferay.portal.kernel.model.ClassName" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
-page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
@@ -113,6 +112,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.view.count.ViewCountManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 

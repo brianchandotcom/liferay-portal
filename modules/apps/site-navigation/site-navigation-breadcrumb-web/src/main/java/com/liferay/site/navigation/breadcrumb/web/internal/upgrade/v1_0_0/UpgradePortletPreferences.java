@@ -18,11 +18,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.breadcrumb.web.internal.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import javax.portlet.PortletPreferences;
@@ -65,7 +65,7 @@ public class UpgradePortletPreferences
 
 		if (Validator.isNull(displayStyle) ||
 			displayStyle.startsWith(
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX)) {
 
 			return;
 		}
@@ -73,13 +73,13 @@ public class UpgradePortletPreferences
 		if (displayStyle.equals("horizontal") || displayStyle.equals("1")) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX +
 					"breadcrumb-horizontal-ftl");
 		}
 		else if (displayStyle.equals("vertical") || displayStyle.equals("2")) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
+				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX +
 					"breadcrumb-vertical-ftl");
 		}
 		else {

@@ -1,6 +1,20 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
@@ -17,7 +31,10 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
-import {getProductVersionFromSpecifications, showAccountImage} from '../../utils/util';
+import {
+	getProductVersionFromSpecifications,
+	showAccountImage,
+} from '../../utils/util';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {
@@ -38,12 +55,12 @@ import {
 } from './PublishedDashboardPageUtil';
 
 import './PublishedAppsDashboardPage.scss';
-import {Liferay} from '../../liferay/liferay';
-import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
+import {Liferay} from '../../liferay/liferay';
+import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 
 interface PublishedAppTable {
 	items: AppProps[];
@@ -86,17 +103,20 @@ export function PublishedAppsDashboardPage() {
 	const [catalogId, setCatalogId] = useState<number>();
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
 	const [selectedApp, setSelectedApp] = useState<AppProps>();
-	const [showDashboardNavigation, setShowDashboardNavigation] =
-		useState(true);
+	const [showDashboardNavigation, setShowDashboardNavigation] = useState(
+		true
+	);
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
 	);
 	const [page, setPage] = useState(1);
-	const [publishedAppTable, setPublishedAppTable] =
-		useState<PublishedAppTable>({items: [], pageSize: 7, totalCount: 1});
+	const [publishedAppTable, setPublishedAppTable] = useState<
+		PublishedAppTable
+	>({items: [], pageSize: 7, totalCount: 1});
 	const [appsTotalCount, setAppTotalCount] = useState<number>(0);
-	const [selectedNavigationItem, setSelectedNavigationItem] =
-		useState('Apps');
+	const [selectedNavigationItem, setSelectedNavigationItem] = useState(
+		'Apps'
+	);
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
@@ -115,10 +135,9 @@ export function PublishedAppsDashboardPage() {
 
 			const accountsPublisher = accountsResponse.items.filter(
 				(currentAccount) => {
-					const catalogIdCustomField =
-						currentAccount.customFields?.find(
-							(customField) => customField.name === 'CatalogId'
-						);
+					const catalogIdCustomField = currentAccount.customFields?.find(
+						(customField) => customField.name === 'CatalogId'
+					);
 
 					return catalogIdCustomField?.customValue.data !== '';
 				}
@@ -153,10 +172,9 @@ export function PublishedAppsDashboardPage() {
 					const appListProductIds: number[] =
 						getAppListProductIds(productsItems);
 
-					const appListProductSpecifications =
-						await getAppListProductSpecifications(
-							appListProductIds
-						);
+					const appListProductSpecifications = await getAppListProductSpecifications(
+						appListProductIds
+					);
 
 					const newAppList: AppProps[] = [];
 
@@ -198,13 +216,14 @@ export function PublishedAppsDashboardPage() {
 						}
 					});
 
-					const commerceAccountResponse =
-						await getAccountInfoFromCommerce(selectedAccount.id);
+					const commerceAccountResponse = await getAccountInfoFromCommerce(
+						selectedAccount.id
+					);
 
 					setCommerceAccount(commerceAccountResponse);
 
-					const newDashboardNavigationItems =
-						dashboardNavigationItems.map((navigationItems) => {
+					const newDashboardNavigationItems = dashboardNavigationItems.map(
+						(navigationItems) => {
 							if (navigationItems.itemName === 'apps') {
 								return {
 									...navigationItems,
@@ -213,7 +232,8 @@ export function PublishedAppsDashboardPage() {
 							}
 
 							return navigationItems;
-						});
+						}
+					);
 
 					setDashboardNavigationItems(newDashboardNavigationItems);
 					setAppTotalCount(newAppList.length);
@@ -233,7 +253,12 @@ export function PublishedAppsDashboardPage() {
 		};
 
 		makeFetch();
-	}, [page, publishedAppTable.pageSize, selectedAccount]);
+	}, [
+		dashboardNavigationItems,
+		page,
+		publishedAppTable.pageSize,
+		selectedAccount,
+	]);
 
 	useEffect(() => {
 		const clickedNavigationItem =
@@ -262,11 +287,10 @@ export function PublishedAppsDashboardPage() {
 					isPublisherAccount: false,
 				};
 
-				const currentUserAccountBriefs =
-					currentUserAccount.accountBriefs.find(
-						(accountBrief: {id: number}) =>
-							accountBrief.id === selectedAccount.id
-					);
+				const currentUserAccountBriefs = currentUserAccount.accountBriefs.find(
+					(accountBrief: {id: number}) =>
+						accountBrief.id === selectedAccount.id
+				);
 
 				if (currentUserAccountBriefs) {
 					customerRoles.forEach((customerRole) => {

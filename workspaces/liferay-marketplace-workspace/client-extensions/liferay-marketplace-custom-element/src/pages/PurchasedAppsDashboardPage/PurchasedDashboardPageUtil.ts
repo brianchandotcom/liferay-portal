@@ -69,8 +69,8 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 
 export const tableHeaders = [
 	{
-		title: 'Name',
 		style: {width: '2%'},
+		title: 'Name',
 	},
 	{
 		title: 'Purchased By',

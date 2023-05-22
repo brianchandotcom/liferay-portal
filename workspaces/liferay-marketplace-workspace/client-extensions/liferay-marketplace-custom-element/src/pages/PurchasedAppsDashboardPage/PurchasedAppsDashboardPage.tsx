@@ -1,6 +1,20 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
@@ -30,15 +44,15 @@ import {
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
+import solutionsIcon from '../../assets/icons/analytics_icon.svg';
+import appsIcon from '../../assets/icons/apps_fill_icon.svg';
+import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {
 	initialAccountState,
 	initialDashboardNavigationItems,
 	memberTableHeaders,
 	tableHeaders,
 } from './PurchasedDashboardPageUtil';
-import solutionsIcon from '../../assets/icons/analytics_icon.svg';
-import appsIcon from '../../assets/icons/apps_fill_icon.svg';
-import membersIcon from '../../assets/icons/person_fill_icon.svg';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -96,8 +110,9 @@ export function PurchasedAppsDashboardPage() {
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
 		accounts[0]
 	);
-	const [purchasedAppTable, setPurchasedAppTable] =
-		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
+	const [purchasedAppTable, setPurchasedAppTable] = useState<
+		PurchasedAppTable
+	>({items: [], pageSize: 7, totalCount: 1});
 	const [page, setPage] = useState<number>(1);
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
@@ -105,8 +120,9 @@ export function PurchasedAppsDashboardPage() {
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [solutionsItems, setSolutionsItems] = useState<PlacedOrder[]>([]);
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const [selectedNavigationItem, setSelectedNavigationItem] =
-		useState('My Apps');
+	const [selectedNavigationItem, setSelectedNavigationItem] = useState(
+		'My Apps'
+	);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -149,8 +165,9 @@ export function PurchasedAppsDashboardPage() {
 					purchasedAppTable.pageSize
 				);
 
-				const commerceAccountResponse =
-					await getAccountInfoFromCommerce(selectedAccount.id);
+				const commerceAccountResponse = await getAccountInfoFromCommerce(
+					selectedAccount.id
+				);
 
 				setCommerceAccount(commerceAccountResponse);
 
@@ -247,11 +264,10 @@ export function PurchasedAppsDashboardPage() {
 					isPublisherAccount: false,
 				};
 
-				const currentUserAccountBriefs =
-					currentUserAccount.accountBriefs.find(
-						(accountBrief: {id: number}) =>
-							accountBrief.id === selectedAccount.id
-					);
+				const currentUserAccountBriefs = currentUserAccount.accountBriefs.find(
+					(accountBrief: {id: number}) =>
+						accountBrief.id === selectedAccount.id
+				);
 
 				if (currentUserAccountBriefs) {
 					customerRoles.forEach((customerRole) => {

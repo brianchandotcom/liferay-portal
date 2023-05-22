@@ -535,6 +535,18 @@ public class DLAdminManagementToolbarDisplayContext
 				return HtmlUtil.escapeJS(navigation);
 			}
 		).setParameter(
+			"assetCategoryId",
+			() -> {
+				long[] assetCategoryIds = ArrayUtil.toLongArray(
+					_getSelectedAssetCategoryIds(_httpServletRequest));
+
+				if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
+					return ArrayUtil.toStringArray(assetCategoryIds);
+				}
+
+				return null;
+			}
+		).setParameter(
 			"assetTagId",
 			() -> {
 				String[] assetTagIds = ArrayUtil.toStringArray(

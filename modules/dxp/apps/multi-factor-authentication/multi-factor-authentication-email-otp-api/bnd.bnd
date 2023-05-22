@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Multi-Factor Authentication Email OTP API
 Bundle-SymbolicName: com.liferay.multi.factor.authentication.email.otp.api
-Bundle-Version: 3.2.1
+Bundle-Version: 3.3.0
 Export-Package:\
 	com.liferay.multi.factor.authentication.email.otp.configuration,\
 	com.liferay.multi.factor.authentication.email.otp.exception,\

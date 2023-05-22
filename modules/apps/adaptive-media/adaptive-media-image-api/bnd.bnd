@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Image API
 Bundle-SymbolicName: com.liferay.adaptive.media.image.api
-Bundle-Version: 11.2.1
+Bundle-Version: 11.3.0
 Export-Package:\
 	com.liferay.adaptive.media.image.configuration,\
 	com.liferay.adaptive.media.image.counter,\

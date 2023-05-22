@@ -294,7 +294,7 @@ export default function CartQuickAdd() {
 
 	return (
 		<ClayForm.Group
-			className={classNames('p-3', {'has-error': quickAddToCartError})}
+			className={classNames('m-3', {'has-error': quickAddToCartError})}
 		>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>

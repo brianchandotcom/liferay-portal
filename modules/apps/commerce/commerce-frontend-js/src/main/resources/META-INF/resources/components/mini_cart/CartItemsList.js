@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import React, {useContext} from 'react';
 
@@ -19,7 +20,7 @@ import CartQuickAdd from './CartQuickAdd';
 import MiniCartContext from './MiniCartContext';
 import {ADD_PRODUCT} from './util/constants';
 
-export default function CartItemsList() {
+export default function CartItemsList({showPriceOnApplicationInfo = false}) {
 	const {
 		CartViews,
 		cartState,
@@ -36,6 +37,19 @@ export default function CartItemsList() {
 			<CartViews.ItemsListActions />
 
 			{accountId ? <CartQuickAdd /> : null}
+
+			{showPriceOnApplicationInfo && (
+				<div className="price-on-application-info-wrapper">
+					<ClayAlert
+						displayType="info"
+						title={Liferay.Language.get('info')}
+					>
+						{Liferay.Language.get(
+							'in-your-cart-there-are-price-on-application-products-you-need-to-request-a-quote-to-complete-the-checkout'
+						)}
+					</ClayAlert>
+				</div>
+			)}
 
 			{cartItems.length ? (
 				<>

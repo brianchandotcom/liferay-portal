@@ -12,51 +12,38 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import React, {useContext} from 'react';
 
-import {liferayNavigate} from '../../utilities/index';
 import MiniCartContext from './MiniCartContext';
+import {hasPriceOnApplication} from './util/index';
 
 function Wrapper() {
-	const {
-		CartViews,
-		actionURLs,
-		cartState,
-		isOpen,
-		requestQuoteEnabled,
-	} = useContext(MiniCartContext);
+	const {CartViews, cartState, isOpen, requestQuoteEnabled} = useContext(
+		MiniCartContext
+	);
 	const {cartItems = []} = cartState;
-	const {orderDetailURL} = actionURLs;
+	const cartHasPriceOnApplicationItems = hasPriceOnApplication(cartItems);
 
 	return (
 		<div className="mini-cart-wrapper">
 			<CartViews.Header />
 
 			<div className="mini-cart-wrapper-items">
-				{isOpen && <CartViews.ItemsList />}
+				{isOpen && (
+					<CartViews.ItemsList
+						showPriceOnApplicationInfo={
+							cartHasPriceOnApplicationItems
+						}
+					/>
+				)}
 			</div>
 
-			<CartViews.OrderButton />
+			<CartViews.OrderButton
+				disabled={!cartItems.length || cartHasPriceOnApplicationItems}
+			/>
 
-			{requestQuoteEnabled && !!cartItems.length && (
-				<div className="request-quote-wrapper">
-					<ClayButton
-						block={true}
-						className="btn-md request-quote"
-						displayType="secondary"
-						onClick={() => {
-							return liferayNavigate(orderDetailURL);
-						}}
-					>
-						<span className="text-truncate-inline">
-							<span className="text-truncate">
-								{Liferay.Language.get('request-a-quote')}
-							</span>
-						</span>
-					</ClayButton>
-				</div>
-			)}
+			{(requestQuoteEnabled || cartHasPriceOnApplicationItems) &&
+				!!cartItems.length && <CartViews.RequestQuoteButton />}
 		</div>
 	);
 }

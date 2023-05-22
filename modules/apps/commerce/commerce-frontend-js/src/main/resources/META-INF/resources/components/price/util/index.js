@@ -25,6 +25,7 @@ export function adaptLegacyPriceModel(priceModel) {
 		finalPrice,
 		price,
 		priceFormatted,
+		priceOnApplication,
 		promoPrice,
 		promoPriceFormatted,
 	} = priceModel;
@@ -33,6 +34,7 @@ export function adaptLegacyPriceModel(priceModel) {
 		discountPercentage: parseFloat(discountPercentage || 0),
 		finalPriceFormatted: finalPrice || priceFormatted || price,
 		priceFormatted: priceFormatted || price,
+		priceOnApplication: priceOnApplication || false,
 
 		/**
 		 * The following matches numbers in the

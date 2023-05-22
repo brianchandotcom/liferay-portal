@@ -44,6 +44,7 @@ function Price({
 		...discountLevels
 	);
 	const hasPromo = isNonnull(activePrice.promoPrice);
+	const isPriceOnApplication = activePrice.priceOnApplication;
 
 	const updatePrice = ({cpInstance}) =>
 		setActivePrice((currentPrice) => ({
@@ -65,64 +66,82 @@ function Price({
 
 	const Component = (
 		<>
-			<span className="price-label">
-				{Liferay.Language.get('list-price')}
-			</span>
-			<span
-				className={classnames({
-					'price-value': true,
-					'price-value-inactive': hasPromo || hasDiscount,
-				})}
-			>
-				{activePrice.priceFormatted}
-			</span>
-
-			{hasPromo && (
+			{!isPriceOnApplication && (
 				<>
 					<span className="price-label">
-						{Liferay.Language.get('promotion-price')}
+						{Liferay.Language.get('list-price')}
 					</span>
 					<span
-						className={classnames(
-							'price-value price-value-promo',
-							hasDiscount && 'price-value-inactive'
-						)}
+						className={classnames({
+							'price-value': true,
+							'price-value-inactive': hasPromo || hasDiscount,
+						})}
 					>
-						{activePrice.promoPriceFormatted}
+						{activePrice.priceFormatted}
 					</span>
+
+					{hasPromo && (
+						<>
+							<span className="price-label">
+								{Liferay.Language.get('promotion-price')}
+							</span>
+							<span
+								className={classnames(
+									'price-value price-value-promo',
+									hasDiscount && 'price-value-inactive'
+								)}
+							>
+								{activePrice.promoPriceFormatted}
+							</span>
+						</>
+					)}
+
+					{hasDiscount && (
+						<>
+							<span className="price-label">
+								{Liferay.Language.get('discount')}
+							</span>
+							<span className="price-value price-value-discount">
+								{displayDiscountLevels ? (
+									discountLevels.map((level, index) => (
+										<span
+											className="price-value-percentages"
+											key={index}
+										>
+											{level.slice(-2) === '00'
+												? level.slice(
+														0,
+														level.length - 3
+												  )
+												: level}
+										</span>
+									))
+								) : (
+									<span className="price-value-percentage">
+										&ndash;{activePrice.discountPercentage}%
+									</span>
+								)}
+							</span>
+							<span className="price-label">
+								{netPrice
+									? Liferay.Language.get('net-price')
+									: Liferay.Language.get('gross-price')}
+							</span>
+							<span className="price-value price-value-final">
+								{activePrice.finalPriceFormatted}
+							</span>
+						</>
+					)}
 				</>
 			)}
 
-			{hasDiscount && (
+			{isPriceOnApplication && (
 				<>
 					<span className="price-label">
-						{Liferay.Language.get('discount')}
+						{Liferay.Language.get('list-price')}
 					</span>
-					<span className="price-value price-value-discount">
-						{displayDiscountLevels ? (
-							discountLevels.map((level, index) => (
-								<span
-									className="price-value-percentages"
-									key={index}
-								>
-									{level.slice(-2) === '00'
-										? level.slice(0, level.length - 3)
-										: level}
-								</span>
-							))
-						) : (
-							<span className="price-value-percentage">
-								&ndash;{activePrice.discountPercentage}%
-							</span>
-						)}
-					</span>
-					<span className="price-label">
-						{netPrice
-							? Liferay.Language.get('net-price')
-							: Liferay.Language.get('gross-price')}
-					</span>
-					<span className="price-value price-value-final">
-						{activePrice.finalPriceFormatted}
+					<span className="price-on-application price-value">
+						{Liferay.Language.get('price-on-application')}
 					</span>
 				</>
 			)}
@@ -168,6 +187,7 @@ Price.propTypes = {
 		finalPriceFormatted: PropTypes.string,
 		price: PropTypes.number.isRequired,
 		priceFormatted: PropTypes.string.isRequired,
+		priceOnApplication: PropTypes.bool,
 		promoPrice: PropTypes.number,
 		promoPriceFormatted: PropTypes.string,
 	}).isRequired,

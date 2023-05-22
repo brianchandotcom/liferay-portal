@@ -35,6 +35,10 @@
 			}
 		}
 
+		&.price-on-application {
+			color: $info-primary;
+		}
+
 		&-promo {
 			color: $danger-primary;
 		}

@@ -4,6 +4,12 @@
 	height: 100%;
 	overflow: hidden;
 
+	.price-on-application-info-wrapper {
+		.alert {
+			margin: 0 1rem;
+		}
+	}
+
 	.summary-table {
 		border-top: 1px solid $gray-200;
 		box-sizing: border-box;

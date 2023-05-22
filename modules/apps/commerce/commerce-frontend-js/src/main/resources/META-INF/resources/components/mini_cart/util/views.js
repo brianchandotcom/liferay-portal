@@ -20,6 +20,7 @@ import CartItemsListActions from '../CartItemsListActions';
 import Header from '../Header';
 import Opener from '../Opener';
 import OrderButton from '../OrderButton';
+import RequestQuoteButton from '../RequestQuoteButton';
 import Wrapper from '../Wrapper';
 import {
 	CART,
@@ -29,6 +30,7 @@ import {
 	ITEMS_LIST_ACTIONS,
 	OPENER,
 	ORDER_BUTTON,
+	REQUEST_QUOTE_BUTTON,
 	SUMMARY,
 } from './constants';
 
@@ -40,6 +42,7 @@ export const DEFAULT_VIEWS = {
 	[ITEMS_LIST_ACTIONS]: {component: CartItemsListActions},
 	[OPENER]: {component: Opener},
 	[ORDER_BUTTON]: {component: OrderButton},
+	[REQUEST_QUOTE_BUTTON]: {component: RequestQuoteButton},
 	[SUMMARY]: {component: Summary},
 };
 

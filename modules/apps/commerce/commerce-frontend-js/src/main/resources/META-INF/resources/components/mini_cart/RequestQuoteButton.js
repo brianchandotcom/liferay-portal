@@ -17,39 +17,30 @@ import React, {useContext} from 'react';
 
 import {liferayNavigate} from '../../utilities/index';
 import MiniCartContext from './MiniCartContext';
-import {
-	REVIEW_ORDER,
-	SUBMIT_ORDER,
-	WORKFLOW_STATUS_APPROVED,
-} from './util/constants';
-import {hasErrors} from './util/index';
 
-function OrderButton({disabled = false}) {
-	const {actionURLs, cartState, labels} = useContext(MiniCartContext);
+function RequestQuoteButton() {
+	const {actionURLs} = useContext(MiniCartContext);
 
-	const {checkoutURL, orderDetailURL} = actionURLs;
-	const {cartItems = [], workflowStatusInfo = {}} = cartState;
-
-	const {
-		code: workflowStatus = WORKFLOW_STATUS_APPROVED,
-	} = workflowStatusInfo;
-
-	const canSubmit =
-		!hasErrors(cartItems) && workflowStatus === WORKFLOW_STATUS_APPROVED;
+	const {orderDetailURL} = actionURLs;
 
 	return (
-		<div className="mini-cart-submit">
+		<div className="request-quote-wrapper">
 			<ClayButton
-				block
-				disabled={disabled}
+				block={true}
+				className="btn-md request-quote"
+				displayType="secondary"
 				onClick={() => {
-					liferayNavigate(canSubmit ? checkoutURL : orderDetailURL);
+					return liferayNavigate(orderDetailURL);
 				}}
 			>
-				{canSubmit ? labels[SUBMIT_ORDER] : labels[REVIEW_ORDER]}
+				<span className="text-truncate-inline">
+					<span className="text-truncate">
+						{Liferay.Language.get('request-a-quote')}
+					</span>
+				</span>
 			</ClayButton>
 		</div>
 	);
 }
 
-export default OrderButton;
+export default RequestQuoteButton;

@@ -63,6 +63,7 @@ export const ITEMS_LIST = 'ItemsList';
 export const ITEMS_LIST_ACTIONS = 'ItemsListActions';
 export const OPENER = 'Opener';
 export const ORDER_BUTTON = 'OrderButton';
+export const REQUEST_QUOTE_BUTTON = 'RequestQuoteButton';
 export const SUMMARY = 'Summary';
 
 /**

@@ -69,7 +69,7 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-            JSONTestray.addRun(
+			JSONTestray.addRun(
 				buildName = ${buildName},
 				runName = ${runName});
 		}
@@ -84,14 +84,14 @@ definition {
 
 		task ("Delete case type, factor category and project via API, Testray Site and Client Extensions") {
 			JSONTestrayAPI.deleteObjectViaAPI(
-                object = "casetypes",
-                objectName = ${caseType});
+				object = "casetypes",
+				objectName = ${caseType});
 
-		    JSONTestrayAPI.deleteObjectViaAPI(
-                object = "factorcategories",
-                objectName = "Category 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 1");
 
-		    JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
 			Testray.testrayApisTearDown();
 		}
@@ -100,6 +100,38 @@ definition {
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create the run"
+	@priority = 3
+	test AssertAnalystRoleCanNotCreateRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertAnalystRoleCanNotCreateRun";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the run page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Testray.projectTabNavigator(navTabName = "Runs");
+		}
+
+		task ("Then the user can not create run") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 	}
 
@@ -143,7 +175,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the run"
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to edit the run"
 	@priority = 3
 	test AssertAnalystRoleCanNotEditRun {
 		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertAnalystRoleCanNotEditRun";
@@ -183,20 +215,20 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Analyst' role should not be able to create the run"
-	@priority = 3
-	test AssertAnalystRoleCanNotCreateRun {
-		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertAnalystRoleCanNotCreateRun";
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the run"
+	@priority = 4
+	test AssertLeadRoleCanCreateRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertLeadRoleCanCreateRun";
 
-		task ("Given that the user login with the Testray Analyst role") {
+		task ("Given that the user login with the Testray Lead role") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "analyst@testray.com",
-				userLoginFullName = "Analyst User");
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user go to the run page") {
+		task ("And the user go to the run page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -210,8 +242,16 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Runs");
 		}
 
-        task ("Then the user can not create run") {
-			AssertElementNotPresent(locator1 = "Button#PLUS");
+		task ("When the user add a run") {
+			TestrayRun.addRun(
+				categoryField = "Category 1",
+				listOption = ${runName});
+		}
+
+		task ("Then can see the run in the table") {
+			AssertElementPresent(
+				key_projectName = ${runName},
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
@@ -246,27 +286,27 @@ definition {
 			TestrayRun.deleteRun(runName = ${runName});
 		}
 
-        task ("Then the user can not see the run in the table") {
+		task ("Then the user can not see the run in the table") {
 			AssertElementNotPresent(
 				key_projectName = ${runName},
 				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 
-    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the run"
-	@priority = 4
-	test AssertLeadRoleCanCreateRun {
-		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertLeadRoleCanCreateRun";
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the run"
+	@priority = 3
+	test AssertUserRoleCanNotCreateRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertUserRoleCanNotCreateRun";
 
-		task ("Given that the user login with the Testray Lead role") {
+		task ("Given that the user login with the Testray User role") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "lead@testray.com",
-				userLoginFullName = "Lead User");
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("And the user go to the run page") {
+		task ("When the user go to the run page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -280,16 +320,8 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Runs");
 		}
 
-        task ("When the user add a run") {
-            TestrayRun.addRun(
-				categoryField = "Category 1",
-				listOption = ${runName});
-		}
-
-        task ("Then can see the run in the table") {
-			AssertElementPresent(
-				key_projectName = ${runName},
-				locator1 = "Testray#ITEM_NAME");
+		task ("Then the user can not create run") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 	}
 
@@ -333,7 +365,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the run"
+	@description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the run"
 	@priority = 3
 	test AssertUserRoleCanNotEditRun {
 		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertUserRoleCanNotEditRun";
@@ -370,38 +402,6 @@ definition {
 			AssertElementNotPresent(
 				item = "Select Environment Factors",
 				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
-		}
-	}
-
-    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the run"
-	@priority = 3
-	test AssertUserRoleCanNotCreateRun {
-		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertUserRoleCanNotCreateRun";
-
-		task ("Given that the user login with the Testray User role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "user@testray.com",
-				userLoginFullName = "User User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-		}
-
-		task ("When the user go to the run page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.goToBuild(buildName = ${buildName});
-
-			Testray.projectTabNavigator(navTabName = "Runs");
-		}
-
-        task ("Then the user can not create run") {
-			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
 	}
 

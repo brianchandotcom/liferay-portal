@@ -641,11 +641,10 @@ public class ObjectFieldLocalServiceImpl
 			_validateName(objectFieldId, objectDefinition, name, false);
 		}
 
-		_validateState(required, state);
+		_validateReadOnlyAndReadOnlyConditionExpression(
+			businessType, readOnly, readOnlyConditionExpression);
 
-		_setReadOnlyAndReadOnlyConditionExpression(
-			businessType, newObjectField, readOnly,
-			readOnlyConditionExpression);
+		_validateState(required, state);
 
 		newObjectField.setExternalReferenceCode(externalReferenceCode);
 		newObjectField.setIndexed(indexed);
@@ -675,6 +674,10 @@ public class ObjectFieldLocalServiceImpl
 
 		newObjectField.setLocalized(localized);
 		newObjectField.setName(name);
+		newObjectField.setReadOnly(readOnly);
+		newObjectField.setReadOnlyConditionExpression(
+			_getReadOnlyConditionExpression(
+				readOnly, readOnlyConditionExpression));
 		newObjectField.setRequired(required);
 		newObjectField.setState(state);
 
@@ -759,6 +762,8 @@ public class ObjectFieldLocalServiceImpl
 		_validateLabel(labelMap, null);
 		_validateLocalized(businessType, localized, objectDefinition);
 		_validateName(0, objectDefinition, name, system);
+		_validateReadOnlyAndReadOnlyConditionExpression(
+			businessType, readOnly, readOnlyConditionExpression);
 		_validateState(required, state);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -767,8 +772,6 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setExternalReferenceCode(externalReferenceCode);
 
 		_setBusinessTypeAndDBType(businessType, dbType, objectField);
-		_setReadOnlyAndReadOnlyConditionExpression(
-			businessType, objectField, readOnly, readOnlyConditionExpression);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -786,6 +789,10 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setLocalized(localized);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(name);
+		objectField.setReadOnly(readOnly);
+		objectField.setReadOnlyConditionExpression(
+			_getReadOnlyConditionExpression(
+				readOnly, readOnlyConditionExpression));
 		objectField.setRelationshipType(null);
 		objectField.setRequired(required);
 		objectField.setState(state);
@@ -1035,6 +1042,18 @@ public class ObjectFieldLocalServiceImpl
 		return null;
 	}
 
+	private String _getReadOnlyConditionExpression(
+		String readOnly, String readOnlyConditionExpression) {
+
+		if (Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE) ||
+			Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE)) {
+
+			return StringPool.BLANK;
+		}
+
+		return readOnlyConditionExpression;
+	}
+
 	private void _setBusinessTypeAndDBType(
 			String businessType, String dbType, ObjectField objectField)
 		throws PortalException {
@@ -1064,69 +1083,6 @@ public class ObjectFieldLocalServiceImpl
 
 			throw new ObjectFieldDBTypeException("Invalid DB type " + dbType);
 		}
-	}
-
-	private void _setReadOnlyAndReadOnlyConditionExpression(
-			String businessType, ObjectField objectField, String readOnly,
-			String readOnlyConditionExpression)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-			return;
-		}
-
-		if (!(Objects.equals(
-				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
-			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE) ||
-			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE))) {
-
-			throw new ObjectFieldReadOnlyException(
-				"Invalid readOnly value " + readOnly);
-		}
-
-		if ((Objects.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-			 Objects.equals(
-				 businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) &&
-			!Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE)) {
-
-			throw new ObjectFieldReadOnlyException(
-				StringBundler.concat(
-					"Invalid readOnly value ", readOnly, " for businessType ",
-					businessType));
-		}
-
-		objectField.setReadOnly(readOnly);
-
-		if (Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE) ||
-			Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE)) {
-
-			objectField.setReadOnlyConditionExpression(StringPool.BLANK);
-
-			return;
-		}
-
-		if (Validator.isNull(readOnlyConditionExpression)) {
-			throw new ObjectFieldReadOnlyConditionExpressionException(
-				"readOnlyConditionExpression is required");
-		}
-
-		try {
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					readOnlyConditionExpression
-				).build());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			throw new ObjectFieldReadOnlyConditionExpressionException(
-				"syntax-error");
-		}
-
-		objectField.setReadOnlyConditionExpression(readOnlyConditionExpression);
 	}
 
 	private void _validateBusinessTypeEncrypted(
@@ -1349,6 +1305,61 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldRelationshipTypeException(
 				"Object field cannot be required because the relationship " +
 					"deletion type is disassociate");
+		}
+	}
+
+	private void _validateReadOnlyAndReadOnlyConditionExpression(
+			String businessType, String readOnly,
+			String readOnlyConditionExpression)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+			return;
+		}
+
+		if (!(Objects.equals(
+				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
+			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE) ||
+			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE))) {
+
+			throw new ObjectFieldReadOnlyException(
+				"Invalid readOnly value " + readOnly);
+		}
+
+		if ((Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+			 Objects.equals(
+				 businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) &&
+			!Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_TRUE)) {
+
+			throw new ObjectFieldReadOnlyException(
+				StringBundler.concat(
+					"Invalid readOnly value ", readOnly, " for businessType ",
+					businessType));
+		}
+
+		if (Objects.equals(
+				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL)) {
+
+			if (Validator.isNull(readOnlyConditionExpression)) {
+				throw new ObjectFieldReadOnlyConditionExpressionException(
+					"readOnlyConditionExpression is required");
+			}
+
+			try {
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						readOnlyConditionExpression
+					).build());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
+				throw new ObjectFieldReadOnlyConditionExpressionException(
+					"syntax-error");
+			}
 		}
 	}
 

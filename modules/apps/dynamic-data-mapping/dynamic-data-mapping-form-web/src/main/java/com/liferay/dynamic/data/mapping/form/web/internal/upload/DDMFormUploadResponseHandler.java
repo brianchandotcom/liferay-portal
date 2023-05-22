@@ -68,7 +68,7 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-extension-x",
 				StringUtil.merge(
-					_ddmFormUploadValidator.getGuestUploadFileExtensions(),
+					DDMFormUploadValidator.getGuestUploadFileExtensions(),
 					StringPool.COMMA_AND_SPACE));
 		}
 		else if (portalException instanceof FileNameException) {
@@ -79,7 +79,7 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
 				_language.formatStorageSize(
-					_ddmFormUploadValidator.getGuestUploadMaximumFileSize(),
+					DDMFormUploadValidator.getGuestUploadMaximumFileSize(),
 					themeDisplay.getLocale()));
 		}
 		else if (portalException instanceof InvalidFileException) {
@@ -116,9 +116,6 @@ public class DDMFormUploadResponseHandler implements UploadResponseHandler {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormUploadResponseHandler.class);
-
-	@Reference
-	private DDMFormUploadValidator _ddmFormUploadValidator;
 
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;

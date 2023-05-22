@@ -67,7 +67,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 
 			String fileName = uploadPortletRequest.getFileName("file");
 
-			_ddmFormUploadValidator.validateFileSize(file, fileName);
+			DDMFormUploadValidator.validateFileSize(file, fileName);
 
 			long objectFieldId = ParamUtil.getLong(
 				uploadPortletRequest, "objectFieldId");
@@ -76,7 +76,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 				_validateAttachmentObjectField(fileName, objectFieldId);
 			}
 
-			_ddmFormUploadValidator.validateFileExtension(fileName);
+			DDMFormUploadValidator.validateFileExtension(fileName);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)uploadPortletRequest.getAttribute(
@@ -145,9 +145,6 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private DDMFormUploadValidator _ddmFormUploadValidator;
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

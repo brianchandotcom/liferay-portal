@@ -21,9 +21,9 @@
 	<model-resource>
 		<model-name>com.liferay.notification.model.NotificationQueueEntry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationQueueEntryPortlet</portlet-name>
+			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -43,7 +43,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationTemplatesPortlet</portlet-name>
 		</portlet-ref>
-		<weight>1</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -55,6 +55,22 @@
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.notification.queue</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_NOTIFICATION_QUEUE_ENTRY</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>ADD_NOTIFICATION_QUEUE_ENTRY</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

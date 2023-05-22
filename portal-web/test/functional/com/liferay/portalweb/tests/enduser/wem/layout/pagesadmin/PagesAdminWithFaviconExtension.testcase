@@ -48,7 +48,7 @@ definition {
 		task ("When the site designer accesses to the widget page") {
 			Navigator.gotoSitePage(
 				pageName = "Widget Page Name",
-				siteName = "Test Site name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the site designer could view the favicon from theme") {
@@ -82,7 +82,7 @@ definition {
 		task ("Then the site designer could view the new favicon on widget page") {
 			Navigator.gotoSitePage(
 				pageName = "Widget Page Name",
-				siteName = "Test Site name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(
 				imageFileName = "https://www.google.com/favicon.ico",
@@ -179,7 +179,7 @@ definition {
 
 			Navigator.gotoSitePage(
 				pageName = "Widget Page Name",
-				siteName = "Test Site name");
+				siteName = ${randomSiteName});
 
 			AssertElementPresent(
 				imageFileName = "https://www.google.com/favicon.ico",

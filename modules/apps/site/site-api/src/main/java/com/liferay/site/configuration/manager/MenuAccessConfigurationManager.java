@@ -14,13 +14,16 @@
 
 package com.liferay.site.configuration.manager;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.portal.kernel.model.Role;
 
 /**
  * @author Mikel Lorza
  */
-@ProviderType
 public interface MenuAccessConfigurationManager {
+
+	public void addAccessRoleToControlMenu(Role role) throws Exception;
+
+	public void deleteRoleAccessToControlMenu(Role role) throws Exception;
 
 	public String[] getAccessToControlMenuRoleIds(long groupId)
 		throws Exception;

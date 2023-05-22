@@ -69,7 +69,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 			%>
 
 				<div class="mb-3">
-					<aui:input checked='<%= value.equals("true") %>' disabled="<%= true %>" label="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>" labelCssClass="font-weight-normal" name="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>" type="checkbox" />
+					<aui:input checked='<%= value.equals("true") %>' disabled="<%= true %>" label="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>" labelCssClass="font-weight-normal" name="<%= LanguageUtil.get(request, HtmlUtil.escape(name)) %>" type="checkbox" wrapperCssClass="mb-3" />
 				</div>
 
 			<%
@@ -77,6 +77,12 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 			%>
 
 		</c:if>
+
+		<clay:button
+			disabled="true"
+			displayType="secondary"
+			label='<%= LanguageUtil.get(request, "change-current-theme") %>'
+		/>
 	</clay:col>
 </clay:row>
 

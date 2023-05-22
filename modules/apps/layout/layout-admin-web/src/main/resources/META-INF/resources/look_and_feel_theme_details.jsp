@@ -118,7 +118,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 
 				<c:choose>
 					<c:when test='<%= type.equals("checkbox") %>'>
-						<aui:input label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" />
+						<aui:input label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" wrapperCssClass="mb-3" />
 					</c:when>
 					<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
 						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />

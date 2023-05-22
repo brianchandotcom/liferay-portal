@@ -16,6 +16,7 @@ package com.liferay.portal.security.content.security.policy.internal.configurati
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -35,6 +36,7 @@ public interface ContentSecurityPolicyConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
+	@ExtendedAttributeDefinition(descriptionArguments = "[$NONCE_TOKEN$]")
 	@Meta.AD(
 		description = "content-security-policy-help",
 		name = "content-security-policy", required = false

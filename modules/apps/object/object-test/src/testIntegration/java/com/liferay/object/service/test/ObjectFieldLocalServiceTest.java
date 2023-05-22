@@ -1529,12 +1529,10 @@ public class ObjectFieldLocalServiceTest {
 		throws Exception {
 
 		return ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			objectDefinitionName, null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-			_objectDefinitionLocalService, Arrays.asList(objectFields));
+			_objectDefinitionLocalService, RandomTestUtil.randomString(),
+			objectDefinitionName, RandomTestUtil.randomString(),
+			ObjectDefinitionConstants.SCOPE_COMPANY, 1,
+			Arrays.asList(objectFields));
 	}
 
 	private void _assertDeleteObjectField(

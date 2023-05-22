@@ -408,13 +408,6 @@ definition {
 	test AuditGraphNoContentsForStage {
 		property portal.acceptance = "true";
 
-		task ("Delete Stage category") {
-			JSONCategory.deleteCategory(
-				categoryName = "Stage 1",
-				groupName = "Global",
-				vocabularyName = "Stage");
-		}
-
 		task ("Add a Web Content using audience category via JSONWS") {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${audienceId1},

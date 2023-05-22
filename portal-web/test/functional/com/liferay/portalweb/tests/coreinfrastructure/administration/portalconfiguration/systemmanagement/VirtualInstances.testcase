@@ -87,6 +87,75 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-161481. Verify a non-omniadmin user can create a user in a user-limited virtual instance"
+	@priority = 3
+	test NonAdminUserCanCreateUserInUserLimitedVirtualInstance {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "VirtualInstances#NonAdminUserCanCreateUserInUserLimitedVirtualInstance";
+
+		task ("Given a user limited virtual instance") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				maxUserNumber = 4,
+				maxUsers = "true",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("And given a user exists in that instance with permission to create other users") {
+			JSONRole.addRegularRole(
+				roleTitle = "Test Role",
+				specificURL = "http://www.able.com:8080");
+
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com_liferay_users_admin_web_portlet_UsersAdminPortlet,ACCESS_IN_CONTROL_PANEL,VIEW:com.liferay.portal.kernel.model.User,DELETE,UPDATE,VIEW:90,VIEW_CONTROL_PANEL,ADD_USER",
+				roleTitle = "Test Role",
+				roleType = "regular",
+				specificURL = "http://www.able.com:8080");
+
+			JSONUser.addUser(
+				creatorEmailAddress = "test@www.able.com",
+				creatorPassword = "test",
+				portalInstanceName = "www.able.com",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "userea@www.able.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
+
+			User.assignRegularRoleCP(
+				roleTitle = "Test Role",
+				userScreenName = "usersn");
+
+			User.editPassword(newPassword = "test");
+		}
+
+		task ("Then that user can create another user in the instance without error") {
+			User.logoutPG();
+
+			SignIn._signIn(
+				userEmailAddress = "userea@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
+
+			User.addCP(
+				userEmailAddress = "newuser@liferay.com",
+				userFirstName = "new",
+				userLastName = "user",
+				userScreenName = "newuser");
+		}
+	}
+
 	@priority = 4
 	test PermissionCheckPortalInstances {
 		property test.name.skip.portal.instance = "VirtualInstances#PermissionCheckPortalInstances";

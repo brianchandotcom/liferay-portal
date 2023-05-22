@@ -67,18 +67,23 @@ public abstract class BaseNotificationType implements NotificationType {
 		User user, String body, NotificationContext notificationContext,
 		String subject) {
 
-		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
-
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntryLocalService.createNotificationQueueEntry(0L);
 
 		notificationQueueEntry.setUserId(user.getUserId());
-		notificationQueueEntry.setUserId(user.getUserId());
 		notificationQueueEntry.setUserName(user.getFullName());
 
-		notificationQueueEntry.setNotificationTemplateId(
-			notificationTemplate.getNotificationTemplateId());
+		NotificationTemplate notificationTemplate =
+			notificationContext.getNotificationTemplate();
+
+		if (notificationTemplate == null) {
+			notificationQueueEntry.setNotificationTemplateId(0L);
+		}
+		else {
+			notificationQueueEntry.setNotificationTemplateId(
+				notificationTemplate.getNotificationTemplateId());
+		}
+
 		notificationQueueEntry.setBody(body);
 		notificationQueueEntry.setClassName(notificationContext.getClassName());
 		notificationQueueEntry.setClassPK(notificationContext.getClassPK());

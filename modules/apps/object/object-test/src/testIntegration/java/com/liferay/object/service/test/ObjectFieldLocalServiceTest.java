@@ -40,6 +40,7 @@ import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiSelectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -156,9 +157,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
 				_objectDefinitionLocalService,
 				Arrays.asList(
-					new ObjectFieldBuilder(
-					).businessType(
-						ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST
+					new MultiSelectPicklistObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())

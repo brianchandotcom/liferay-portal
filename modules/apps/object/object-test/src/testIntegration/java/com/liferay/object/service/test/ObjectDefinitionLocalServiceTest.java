@@ -29,7 +29,8 @@ import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
-import com.liferay.object.field.builder.ObjectFieldBuilder;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -1675,15 +1676,11 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 
 		_assertSystemObjectFields(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_DATE
+			new DateObjectFieldBuilder(
 			).dbColumnName(
 				objectEntryTable.createDate.getName()
 			).dbTableName(
 				dbTableName
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_DATE
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "create-date"))
@@ -1695,15 +1692,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(iterator.hasNext());
 
 		_assertSystemObjectFields(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			new TextObjectFieldBuilder(
 			).dbColumnName(
 				objectEntryTable.userName.getName()
 			).dbTableName(
 				dbTableName
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_STRING
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "author"))
@@ -1715,15 +1708,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(iterator.hasNext());
 
 		_assertSystemObjectFields(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			new TextObjectFieldBuilder(
 			).dbColumnName(
 				objectEntryTable.externalReferenceCode.getName()
 			).dbTableName(
 				dbTableName
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_STRING
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(
@@ -1736,15 +1725,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(iterator.hasNext());
 
 		_assertSystemObjectFields(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER
+			new LongIntegerObjectFieldBuilder(
 			).dbColumnName(
 				dbColumnName
 			).dbTableName(
 				dbTableName
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_LONG
 			).indexed(
 				Boolean.TRUE
 			).indexedAsKeyword(
@@ -1760,15 +1745,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(iterator.hasNext());
 
 		_assertSystemObjectFields(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_DATE
+			new DateObjectFieldBuilder(
 			).dbColumnName(
 				objectEntryTable.modifiedDate.getName()
 			).dbTableName(
 				dbTableName
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_DATE
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "modified-date"))
@@ -1780,15 +1761,11 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(iterator.hasNext());
 
 		_assertSystemObjectFields(
-			new ObjectFieldBuilder(
-			).businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			new TextObjectFieldBuilder(
 			).dbColumnName(
 				objectEntryTable.status.getName()
 			).dbTableName(
 				dbTableName
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_STRING
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "status"))

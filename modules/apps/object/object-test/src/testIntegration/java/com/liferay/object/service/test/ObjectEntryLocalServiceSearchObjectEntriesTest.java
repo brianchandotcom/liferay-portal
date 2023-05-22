@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -79,10 +80,11 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 	@Test
 	public void testAttachment() throws Exception {
-		ObjectFieldBuilder objectFieldBuilder = new ObjectFieldBuilder();
+		ObjectFieldBuilder attachmentObjectFieldBuilder =
+			new AttachmentObjectFieldBuilder();
 
 		_testAttachment(
-			objectFieldBuilder.businessType(
+			attachmentObjectFieldBuilder.businessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT
 			).dbType(
 				ObjectFieldConstants.DB_TYPE_LONG
@@ -99,11 +101,11 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build());
 		_testAttachment(
-			objectFieldBuilder.indexedAsKeyword(
+			attachmentObjectFieldBuilder.indexedAsKeyword(
 				true
 			).build());
 		_testAttachment(
-			objectFieldBuilder.indexed(
+			attachmentObjectFieldBuilder.indexed(
 				false
 			).build());
 	}

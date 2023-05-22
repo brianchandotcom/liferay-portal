@@ -253,4 +253,44 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the run"
+	@priority = 4
+	test AssertLeadRoleCanCreateRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertLeadRoleCanCreateRun";
+
+		task ("Given that the user login with the Testray Lead role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "lead@testray.com",
+				userLoginFullName = "Lead User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to the run page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Testray.projectTabNavigator(navTabName = "Runs");
+		}
+
+        task ("When the user add a run") {
+            TestrayRun.addRun(
+				categoryField = "Category 1",
+				listOption = ${runName});
+		}
+
+        task ("Then can see the run in the table") {
+			AssertElementPresent(
+				key_projectName = ${runName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

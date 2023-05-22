@@ -78,6 +78,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanSearchForContentInAdmin {
+		property portal.acceptance = "false";
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		JSONBlog.addEntry(

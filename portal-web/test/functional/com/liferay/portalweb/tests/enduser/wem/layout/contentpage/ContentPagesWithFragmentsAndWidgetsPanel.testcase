@@ -197,7 +197,7 @@ definition {
 	@description = "This is a test for LPS-158744. Each user could customize order of fragment sets and widgets categories in Fragments and Widgets panel."
 	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUser {
-		property custom.properties = "feature.flag.LPS-158737=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.release = "false";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
@@ -293,7 +293,7 @@ definition {
 	@description = "This is a test for LPS-158744. Each user could customize order of fragment sets and widgets categories in Fragments and Widgets panel."
 	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUserOnReleaseBundle {
-		property custom.properties = "feature.flag.LPS-158737=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "false";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {

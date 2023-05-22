@@ -20,17 +20,24 @@ import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carolina Barbosa
@@ -43,32 +50,47 @@ public class DDMFormUploadValidatorTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_frameworkUtilMockedStatic.when(
+			() -> FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			_bundleContext.getBundle()
+		);
+
 		_setUpDDMFormWebConfigurationActivator();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Test(expected = InvalidFileException.class)
 	public void testInvalidFileException() throws Exception {
-		_ddmFormUploadValidator.validateFileSize(null, "test.jpg");
+		DDMFormUploadValidator.validateFileSize(null, "test.jpg");
 	}
 
 	@Test(expected = FileExtensionException.class)
 	public void testInvalidFileExtension() throws Exception {
-		_ddmFormUploadValidator.validateFileExtension("test.xml");
+		DDMFormUploadValidator.validateFileExtension("test.xml");
 	}
 
 	@Test(expected = FileSizeException.class)
 	public void testInvalidFileSize() throws Exception {
-		_ddmFormUploadValidator.validateFileSize(_mockFile(26), "test.jpg");
+		DDMFormUploadValidator.validateFileSize(_mockFile(26), "test.jpg");
 	}
 
 	@Test
 	public void testValidFileExtension() throws Exception {
-		_ddmFormUploadValidator.validateFileExtension("test.JpG");
+		DDMFormUploadValidator.validateFileExtension("test.JpG");
 	}
 
 	@Test
 	public void testValidFileSize() throws Exception {
-		_ddmFormUploadValidator.validateFileSize(_mockFile(24), "test.jpg");
+		DDMFormUploadValidator.validateFileSize(_mockFile(24), "test.jpg");
 	}
 
 	private static void _setUpDDMFormWebConfigurationActivator() {
@@ -83,9 +105,9 @@ public class DDMFormUploadValidatorTest {
 			ddmFormWebConfigurationActivator, "_ddmFormWebConfiguration",
 			ddmFormWebConfiguration);
 
-		ReflectionTestUtil.setFieldValue(
-			_ddmFormUploadValidator, "_ddmFormWebConfigurationActivator",
-			ddmFormWebConfigurationActivator);
+		_serviceRegistration = _bundleContext.registerService(
+			DDMFormWebConfigurationActivator.class,
+			ddmFormWebConfigurationActivator, null);
 	}
 
 	private File _mockFile(long length) {
@@ -102,7 +124,11 @@ public class DDMFormUploadValidatorTest {
 
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
 
-	private static final DDMFormUploadValidator _ddmFormUploadValidator =
-		new DDMFormUploadValidator();
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static ServiceRegistration<DDMFormWebConfigurationActivator>
+		_serviceRegistration;
 
 }

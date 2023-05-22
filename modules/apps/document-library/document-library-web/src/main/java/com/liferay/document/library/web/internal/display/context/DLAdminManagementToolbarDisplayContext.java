@@ -883,6 +883,8 @@ public class DLAdminManagementToolbarDisplayContext
 					).setNavigation(
 						"home"
 					).setParameter(
+						"assetCategoryId", (String)null
+					).setParameter(
 						"assetTagId", (String)null
 					).setParameter(
 						"browseBy", (String)null

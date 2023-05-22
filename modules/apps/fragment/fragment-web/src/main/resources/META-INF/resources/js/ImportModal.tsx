@@ -58,94 +58,92 @@ function ImportModal({disposeModal, importURL, portletNamespace}: Props) {
 	};
 
 	return (
-		(
-			<ClayModal observer={observer}>
-				<ClayModal.Header>
-					{Liferay.Language.get('import')}
-				</ClayModal.Header>
+		<ClayModal observer={observer}>
+			<ClayModal.Header>
+				{Liferay.Language.get('import')}
+			</ClayModal.Header>
 
-				<form
-					action={importURL}
-					data-fm-namespace={portletNamespace}
-					encType="multipart/form-data"
-					id={`${portletNamespace}fm`}
-					method="post"
-					name={`${portletNamespace}fm`}
-				>
-					<ClayModal.Body>
-						<p>
-							{Liferay.Language.get(
-								'select-a-zip-file-containing-one-or-multiple-entries'
-							)}
-						</p>
+			<form
+				action={importURL}
+				data-fm-namespace={portletNamespace}
+				encType="multipart/form-data"
+				id={`${portletNamespace}fm`}
+				method="post"
+				name={`${portletNamespace}fm`}
+			>
+				<ClayModal.Body>
+					<p>
+						{Liferay.Language.get(
+							'select-a-zip-file-containing-one-or-multiple-entries'
+						)}
+					</p>
 
-						<ClayForm.Group
-							className={classNames({'has-error': error})}
-						>
-							<label htmlFor={`${portletNamespace}file`}>
-								{Liferay.Language.get('file')}
+					<ClayForm.Group
+						className={classNames({'has-error': error})}
+					>
+						<label htmlFor={`${portletNamespace}file`}>
+							{Liferay.Language.get('file')}
 
-								<ClayIcon
-									className="reference-mark"
-									symbol="asterisk"
-								/>
-							</label>
-
-							<ClayInput
-								data-testid={`${portletNamespace}file`}
-								id={`${portletNamespace}file`}
-								name={`${portletNamespace}file`}
-								onChange={validateFile}
-								required
-								type="file"
+							<ClayIcon
+								className="reference-mark"
+								symbol="asterisk"
 							/>
+						</label>
 
-							{error && (
-								<ClayForm.FeedbackGroup>
-									<ClayForm.FeedbackItem>
-										<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-										{error}
-									</ClayForm.FeedbackItem>
-								</ClayForm.FeedbackGroup>
-							)}
-						</ClayForm.Group>
-
-						<ClayCheckbox
-							checked={overwrite}
-							data-testid={`${portletNamespace}overwrite`}
-							id={`${portletNamespace}overwrite`}
-							label={Liferay.Language.get(
-								'overwrite-existing-entries'
-							)}
-							name={`${portletNamespace}overwrite`}
-							onChange={() => setOverwrite((val) => !val)}
+						<ClayInput
+							data-testid={`${portletNamespace}file`}
+							id={`${portletNamespace}file`}
+							name={`${portletNamespace}file`}
+							onChange={validateFile}
+							required
+							type="file"
 						/>
-					</ClayModal.Body>
 
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									displayType="secondary"
-									onClick={onClose}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
+						{error && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								<ClayButton
-									disabled={!isValidForm}
-									displayType="primary"
-									type="submit"
-								>
-									{Liferay.Language.get('import')}
-								</ClayButton>
-							</ClayButton.Group>
-						}
+									{error}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+					</ClayForm.Group>
+
+					<ClayCheckbox
+						checked={overwrite}
+						data-testid={`${portletNamespace}overwrite`}
+						id={`${portletNamespace}overwrite`}
+						label={Liferay.Language.get(
+							'overwrite-existing-entries'
+						)}
+						name={`${portletNamespace}overwrite`}
+						onChange={() => setOverwrite((val) => !val)}
 					/>
-				</form>
-			</ClayModal>
-		)
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								disabled={!isValidForm}
+								displayType="primary"
+								type="submit"
+							>
+								{Liferay.Language.get('import')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</form>
+		</ClayModal>
 	);
 }
 

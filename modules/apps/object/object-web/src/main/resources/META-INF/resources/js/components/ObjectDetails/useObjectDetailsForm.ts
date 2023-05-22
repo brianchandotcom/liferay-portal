@@ -73,12 +73,16 @@ export function useObjectDetailsForm({
 	const validate = (objectDefinition: Partial<ObjectDefinition>) => {
 		const errors: ObjectDetailsErrors = {};
 
-		if (invalidateLocalizableLabelRequired(objectDefinition.label)) {
-			errors.label = REQUIRED_MSG;
-		}
+		if (!objectDefinition.system) {
+			if (invalidateLocalizableLabelRequired(objectDefinition.label)) {
+				errors.label = REQUIRED_MSG;
+			}
 
-		if (invalidateLocalizableLabelRequired(objectDefinition.pluralLabel)) {
-			errors.pluralLabel = REQUIRED_MSG;
+			if (
+				invalidateLocalizableLabelRequired(objectDefinition.pluralLabel)
+			) {
+				errors.pluralLabel = REQUIRED_MSG;
+			}
 		}
 
 		if (

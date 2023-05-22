@@ -21,6 +21,7 @@ import { InviteMemberModal } from '../../components/InviteMemberModal/InviteMemb
 
 interface MembersPageProps {
   dashboardNavigationItems: DashboardListItems[];
+  icon: string;
   selectedAccount: Account;
   setShowDashboardNavigation: (value: boolean) => void;
 }
@@ -40,6 +41,7 @@ const memberTableHeaders: TableHeaders = [
 
 export function MembersPage({
   dashboardNavigationItems,
+  icon,
   selectedAccount,
 
   setShowDashboardNavigation,
@@ -183,6 +185,7 @@ export function MembersPage({
             <>
               <DashboardTable<MemberProps>
                 emptyStateMessage={memberMessages.emptyStateMessage}
+                icon={icon}
                 items={members}
                 tableHeaders={memberTableHeaders}
               >

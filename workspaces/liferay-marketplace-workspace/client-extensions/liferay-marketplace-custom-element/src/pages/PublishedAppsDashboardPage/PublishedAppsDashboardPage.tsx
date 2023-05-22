@@ -61,6 +61,7 @@ import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
 import {Liferay} from '../../liferay/liferay';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
+import { MembersPage } from '../MembersPage/MembersPage';
 
 interface PublishedAppTable {
 	items: AppProps[];
@@ -474,32 +475,14 @@ export function PublishedAppsDashboardPage() {
 			)}
 
 			{!loading && selectedNavigationItem === 'Members' && (
-				<DashboardPage
+				<MembersPage
 					dashboardNavigationItems={dashboardNavigationItems}
-					messages={memberMessages}
-				>
-					{selectedMember ? (
-						<MemberProfile
-							member={selectedMember}
-							setSelectedMember={setSelectedMember}
-						></MemberProfile>
-					) : (
-						<DashboardTable<MemberProps>
-							emptyStateMessage={memberMessages.emptyStateMessage}
-							icon={membersIcon}
-							items={members}
-							tableHeaders={memberTableHeaders}
-						>
-							{(item) => (
-								<DashboardMemberTableRow
-									item={item}
-									key={item.name}
-									onSelectedMemberChange={setSelectedMember}
-								/>
-							)}
-						</DashboardTable>
-					)}
-				</DashboardPage>
+					icon={membersIcon}
+					selectedAccount={selectedAccount}
+					setShowDashboardNavigation={setShowDashboardNavigation}
+				/>
+					
+				
 			)}
 
 			{!loading && selectedNavigationItem === 'Account' && (

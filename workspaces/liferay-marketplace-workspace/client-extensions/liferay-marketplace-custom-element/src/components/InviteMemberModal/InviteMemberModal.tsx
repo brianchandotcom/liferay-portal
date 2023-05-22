@@ -4,6 +4,7 @@ import ClayModal, { useModal } from '@clayui/modal';
 import ClayForm, { ClayInput, ClayCheckbox } from '@clayui/form';
 import { useEffect, useState } from 'react';
 import { Liferay } from '../../liferay/liferay';
+import './inviteMemberModal.scss'
 
 interface InviteMemberModalProps {
   handleClose: () => void;
@@ -224,8 +225,8 @@ export function InviteMemberModal({
             </div>
 
             <div className="d-flex justify-content-between pb-5">
-              <div className="pr-3 w-50">
-                <label className="pb-1" htmlFor="firstName">
+              <div className="pr-3 w-50 form-group">
+                <label className="pb-1 control-label" htmlFor="firstName">
                   First Name
                 </label>
                 <ClayInput
@@ -237,8 +238,8 @@ export function InviteMemberModal({
                   }}
                 />
               </div>
-              <div className="pl-3 w-50">
-                <label className="pb-1" htmlFor="lastName">
+              <div className="form-group pl-3 w-50">
+                <label className="control-label pb-1" htmlFor="lastName">
                   Last Name
                 </label>
                 <ClayInput
@@ -251,7 +252,8 @@ export function InviteMemberModal({
                 />
               </div>
             </div>
-            <label className="pb-1" htmlFor="emailAddress">
+            <div className='form-group'>
+            <label className="control-label pb-1" htmlFor="emailAddress">
               Email
             </label>
             <ClayInput
@@ -262,12 +264,13 @@ export function InviteMemberModal({
                 setEmail(event.target.value);
               }}
             />
+            </div>
           </ClayForm.Group>
 
           <ClayForm.Group>
             <div className="pt-4">
               <ClayModal.TitleSection>
-                <ClayModal.Title>Role</ClayModal.Title>
+                <ClayModal.Title className='control-label'>Role</ClayModal.Title>
               </ClayModal.TitleSection>
               <hr className="solid"></hr>
             </div>

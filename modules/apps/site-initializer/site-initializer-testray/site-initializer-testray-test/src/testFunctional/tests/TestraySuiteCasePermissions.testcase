@@ -103,9 +103,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in suite case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -115,7 +113,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+		}
 
+		task ("When the user right click in suite case") {
 			RightClick.rightClick(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");
@@ -139,9 +139,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in suite case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -151,7 +149,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+		}
 
+		task ("When the user right click in suite case") {
 			RightClick.rightClick(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");
@@ -177,7 +177,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user delete the suite case") {
+		task ("And the user go to suite case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -187,7 +187,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+		}
 
+		task ("When the user delete the suite case") {
 			RightClick.rightClick(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");
@@ -217,7 +219,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user edit the suite case") {
+		task ("And the user go to suite case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -227,7 +229,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+		}
 
+		task ("When the user edit the suite case") {
 			RightClick.rightClick(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");
@@ -264,7 +268,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user right click in suite case") {
+		task ("And the user go to suite case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -274,7 +278,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+		}
 
+		task ("When the user right click in suite case") {
 			RightClick.rightClick(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");
@@ -300,7 +306,7 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user right click in suite case") {
+		task ("And the user go to suite case") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -310,7 +316,9 @@ definition {
 			Testray.projectTabNavigator(navTabName = "Suites");
 
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+		}
 
+		task ("When the user right click in suite case") {
 			RightClick.rightClick(
 				key_projectName = ${caseName},
 				locator1 = "Testray#ITEM_NAME");

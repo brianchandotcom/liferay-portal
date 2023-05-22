@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.configuration;
+package com.liferay.site.configuration.manager;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -20,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Mikel Lorza
  */
 @ProviderType
-public interface MenuAccessConfigurationProvider {
+public interface MenuAccessConfigurationManager {
 
 	public String[] getAccessToControlMenuRoleIds(long groupId)
 		throws Exception;

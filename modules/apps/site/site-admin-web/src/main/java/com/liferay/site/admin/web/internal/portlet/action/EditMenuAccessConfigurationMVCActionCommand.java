@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.configuration.MenuAccessConfigurationProvider;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class EditMenuAccessConfigurationMVCActionCommand
 			}
 		}
 
-		_menuAccessConfigurationProvider.updateMenuAccessConfiguration(
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
 			themeDisplay.getScopeGroupId(), ArrayUtil.toStringArray(roleIds),
 			ParamUtil.getBoolean(actionRequest, "showControlMenuByRole"));
 	}
@@ -83,7 +83,7 @@ public class EditMenuAccessConfigurationMVCActionCommand
 	private GroupPermission _groupPermission;
 
 	@Reference
-	private MenuAccessConfigurationProvider _menuAccessConfigurationProvider;
+	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

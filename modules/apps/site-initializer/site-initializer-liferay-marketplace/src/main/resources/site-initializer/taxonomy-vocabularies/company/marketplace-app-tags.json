@@ -9,9 +9,9 @@
 	"availableLanguages": [
 		"en-US"
 	],
-	"name": "Marketplace App Tag",
+	"name": "Marketplace App Tags",
 	"name_i18n": {
-		"en_US": "Marketplace App Tag"
+		"en_US": "Marketplace App Tags"
 	},
 	"viewableBy": "Anyone"
 }

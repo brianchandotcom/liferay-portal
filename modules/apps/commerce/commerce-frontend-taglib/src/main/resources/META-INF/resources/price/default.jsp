@@ -28,5 +28,12 @@ if (Validator.isNotNull(priceModel.getDiscount()) || Validator.isNotNull(priceMo
 	<liferay-ui:message key="list-price" />
 </span>
 <span class="price-value<%= inactivePriceCssClass %>">
-	<%= priceModel.getPrice() %>
+	<c:choose>
+		<c:when test="<%= priceModel.isPriceOnApplication() %>">
+			<liferay-ui:message key="price-on-application" />
+		</c:when>
+		<c:otherwise>
+			<%= priceModel.getPrice() %>
+		</c:otherwise>
+	</c:choose>
 </span>

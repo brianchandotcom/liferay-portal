@@ -353,11 +353,10 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					valueString);
 
-				long layoutId = jsonObject.getLong("layoutId");
-
 				Layout layout = _layoutLocalService.fetchLayout(
 					jsonObject.getLong("groupId"),
-					jsonObject.getBoolean("privateLayout"), layoutId);
+					jsonObject.getBoolean("privateLayout"),
+					jsonObject.getLong("layoutId"));
 
 				if (layout == null) {
 					return StringPool.BLANK;

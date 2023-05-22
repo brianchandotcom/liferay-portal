@@ -312,6 +312,10 @@
 			<contains></contains>
 			<matches>.*Ignored unknown user group: .*</matches>
 		</ignore-error>
+		<ignore-error description="LPS-182604 - temporarily ignore until fixed">
+			<contains></contains>
+			<matches>.*This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.*</matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

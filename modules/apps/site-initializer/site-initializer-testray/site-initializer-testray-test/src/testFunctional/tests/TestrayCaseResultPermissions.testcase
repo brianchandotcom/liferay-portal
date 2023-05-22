@@ -149,4 +149,51 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the case result"
+	@priority = 3
+	test AssertAnalystRoleCanEditCaseResult {
+		property test.name.skip.portal.instance = "TestrayCaseResultPermissions#AssertAnalystRoleCanEditCaseResult";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+        }
+
+		task ("And the user go to case result page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+            TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+
+            Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+		}
+
+		task ("When the user edit the case result") {
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-111111",
+				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the user can see Case Results edited with test fix") {
+			TestrayTestflow.assertStatus(
+				label = "Test Details",
+				status = "Test Fix");
+		}
+	}
+
 }

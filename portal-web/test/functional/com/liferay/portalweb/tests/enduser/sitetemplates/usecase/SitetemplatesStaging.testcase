@@ -27,6 +27,8 @@ definition {
 	@description = "User can enable local staging on site which is based on Masterclass site template."
 	@priority = 4
 	test CanEnableLocalStagingOnMasterclassSiteTemplate {
+		property test.name.skip.portal.instance = "SitetemplatesStaging#CanEnableLocalStagingOnMasterclassSiteTemplate";
+
 		task ("Given: Add a new site based on Masterclass site template") {
 			Site.openSitesAdmin();
 
@@ -98,6 +100,8 @@ definition {
 	@description = "User can enable local staging on site which is based on Raylife site template."
 	@priority = 4
 	test CanEnableLocalStagingOnRaylifeSiteTemplate {
+		property test.name.skip.portal.instance = "SitetemplatesStaging#CanEnableLocalStagingOnRaylifeSiteTemplate";
+
 		task ("Given: Add a new site based on Raylife site template") {
 			Site.openSitesAdmin();
 

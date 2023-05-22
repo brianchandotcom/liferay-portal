@@ -10,6 +10,11 @@ interface InviteMemberModalProps {
   selectedAccount: Account;
 }
 
+interface CheckboxRole {
+  roleName: string;
+  isChecked: boolean;
+}
+
 export function InviteMemberModal({
   handleClose,
   selectedAccount,
@@ -21,9 +26,9 @@ export function InviteMemberModal({
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [checkboxRoles, setCheckboxRoles] = useState<
-    { roleName: String; isChecked: boolean }[]
-  >([]);
+  const [checkboxRoles, setCheckboxRoles] = useState<CheckboxRole[]>([]);
+  const [formValid, setFormValid] = useState<boolean>(false);
+
   const [newUser, setNewUser] = useState<any>();
   const [accountRoles, setAccountRoles] = useState<any>();
 
@@ -38,12 +43,6 @@ export function InviteMemberModal({
   }, []);
 
   const jsonBody = () => {
-    const invitedMemberRole = accountRoles.find((x: any) => {
-      if (x.name === 'Invited Member') {
-        return x;
-      }
-    });
-    console.log(invitedMemberRole);
     return {
       alternateName: email.replace('@', '-'),
       emailAddress: email,
@@ -132,7 +131,6 @@ export function InviteMemberModal({
       if (responseFilteredUserList.ok) {
         const data = await responseFilteredUserList.json();
         if (data.items.length > 0) {
-          console.log('getUserByEmail: ' + data);
           return data.items[0];
         }
       }
@@ -147,11 +145,11 @@ export function InviteMemberModal({
     }
   };
 
-  const addAccountRolesToUser = async (user : any) => {
+  const addAccountRolesToUser = async (user: any) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
         const matchingAccountRole = accountRoles.find(
-          (accountRole: any) => accountRole.name == "Invited Member"
+          (accountRole: any) => accountRole.name == 'Invited Member'
         );
         if (matchingAccountRole) {
           await callRolesApi(matchingAccountRole.id, user.id);
@@ -176,24 +174,19 @@ export function InviteMemberModal({
     }
   };
 
-  const handleSubmit = async (event: any) => {
-    let user = '';
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!document.querySelector(':checked')) {
-      console.log('noneChecked');
-    } else {
+    let form = event.target as HTMLFormElement;
+    let user = '';
+    if (formValid) {
       user = await getUserByEmail(email);
       setNewUser(user);
-      console.log(user);
       if (!user) {
-        console.log('after get User: ' + newUser);
         await createNewUserIntoAccount();
       } else {
-        console.log('after get User: ' + newUser);
         await addExistentUserIntoAccount();
       }
       user = await getUserByEmail(email);
-      console.log("pos-method user" + user)
       await addAccountRolesToUser(user);
       setTimeout(() => location.reload(), 200);
     }
@@ -208,6 +201,12 @@ export function InviteMemberModal({
       return role;
     }, []);
     setCheckboxRoles(rolesChecked);
+    validateForm(rolesChecked);
+  };
+
+  const validateForm = (checkboxValues: CheckboxRole[]) => {
+    const isValid = checkboxValues.some((checkbox: CheckboxRole) => checkbox.isChecked);
+    setFormValid(isValid);
   };
 
   return (
@@ -280,6 +279,7 @@ export function InviteMemberModal({
                     checked={checkboxRoles[index]?.isChecked}
                     value={role}
                     onChange={() => handleCheck(role)}
+                    required={!formValid}
                   />
                 );
               })}

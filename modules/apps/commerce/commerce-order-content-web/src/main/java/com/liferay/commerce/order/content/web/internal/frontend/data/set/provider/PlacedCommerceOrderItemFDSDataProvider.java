@@ -289,29 +289,62 @@ public class PlacedCommerceOrderItemFDSDataProvider
 				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 					commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
-			orderItems.add(
-				new OrderItem(
-					commerceOrderItem.getCPInstanceId(),
-					_formatDiscountAmount(commerceOrderItemPrice, locale), null,
-					_commerceOrderItemQuantityFormatter.format(
-						commerceOrderItem, locale),
-					_formatSubscriptionPeriod(commerceOrderItem, locale),
-					commerceOrderItem.getName(locale),
-					_getCommerceOrderOptions(commerceOrderItem, locale),
-					commerceOrderItem.getCommerceOrderId(),
-					commerceOrderItem.getCommerceOrderItemId(),
-					_getChildOrderItems(commerceOrderItem, httpServletRequest),
-					commerceOrderItem.getParentCommerceOrderItemId(),
-					_formatUnitPrice(commerceOrderItemPrice, locale),
-					_formatPromoPrice(commerceOrderItemPrice, locale),
-					commerceOrderItem.getShippedQuantity(),
-					commerceOrderItem.getSku(),
-					_cpInstanceHelper.getCPInstanceThumbnailSrc(
-						CommerceUtil.getCommerceAccountId(
-							(CommerceContext)httpServletRequest.getAttribute(
-								CommerceWebKeys.COMMERCE_CONTEXT)),
-						commerceOrderItem.getCPInstanceId()),
-					_formatFinalPrice(commerceOrderItemPrice, locale)));
+			if ((commerceOrderItemPrice != null) &&
+				commerceOrderItemPrice.isPriceOnApplication()) {
+
+				orderItems.add(
+					new OrderItem(
+						commerceOrderItem.getCPInstanceId(), StringPool.DASH,
+						null,
+						_commerceOrderItemQuantityFormatter.format(
+							commerceOrderItem, locale),
+						_formatSubscriptionPeriod(commerceOrderItem, locale),
+						commerceOrderItem.getName(locale),
+						_getCommerceOrderOptions(commerceOrderItem, locale),
+						commerceOrderItem.getCommerceOrderId(),
+						commerceOrderItem.getCommerceOrderItemId(),
+						_getChildOrderItems(
+							commerceOrderItem, httpServletRequest),
+						commerceOrderItem.getParentCommerceOrderItemId(),
+						_language.get(locale, "price-on-application"),
+						StringPool.DASH, commerceOrderItem.getShippedQuantity(),
+						commerceOrderItem.getSku(),
+						_cpInstanceHelper.getCPInstanceThumbnailSrc(
+							CommerceUtil.getCommerceAccountId(
+								(CommerceContext)
+									httpServletRequest.getAttribute(
+										CommerceWebKeys.COMMERCE_CONTEXT)),
+							commerceOrderItem.getCPInstanceId()),
+						StringPool.DASH));
+			}
+			else {
+				orderItems.add(
+					new OrderItem(
+						commerceOrderItem.getCPInstanceId(),
+						_formatDiscountAmount(commerceOrderItemPrice, locale),
+						null,
+						_commerceOrderItemQuantityFormatter.format(
+							commerceOrderItem, locale),
+						_formatSubscriptionPeriod(commerceOrderItem, locale),
+						commerceOrderItem.getName(locale),
+						_getCommerceOrderOptions(commerceOrderItem, locale),
+						commerceOrderItem.getCommerceOrderId(),
+						commerceOrderItem.getCommerceOrderItemId(),
+						_getChildOrderItems(
+							commerceOrderItem, httpServletRequest),
+						commerceOrderItem.getParentCommerceOrderItemId(),
+						_formatUnitPrice(commerceOrderItemPrice, locale),
+						_formatPromoPrice(commerceOrderItemPrice, locale),
+						commerceOrderItem.getShippedQuantity(),
+						commerceOrderItem.getSku(),
+						_cpInstanceHelper.getCPInstanceThumbnailSrc(
+							CommerceUtil.getCommerceAccountId(
+								(CommerceContext)
+									httpServletRequest.getAttribute(
+										CommerceWebKeys.COMMERCE_CONTEXT)),
+							commerceOrderItem.getCPInstanceId()),
+						_formatFinalPrice(commerceOrderItemPrice, locale)));
+			}
 		}
 
 		return orderItems;

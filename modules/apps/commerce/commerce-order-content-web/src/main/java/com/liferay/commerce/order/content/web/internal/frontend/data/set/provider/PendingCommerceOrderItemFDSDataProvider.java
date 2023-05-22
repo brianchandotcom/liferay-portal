@@ -337,6 +337,35 @@ public class PendingCommerceOrderItemFDSDataProvider
 					_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 						commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
+				if ((commerceOrderItemPrice != null) &&
+					commerceOrderItemPrice.isPriceOnApplication()) {
+
+					return new OrderItem(
+						commerceOrderItem.getCPInstanceId(), StringPool.DASH,
+						_getCommerceOrderErrorMessages(
+							commerceOrderItem,
+							commerceOrderValidatorResultsMap),
+						_commerceOrderItemQuantityFormatter.format(
+							commerceOrderItem, locale),
+						_formatSubscriptionPeriod(commerceOrderItem, locale),
+						commerceOrderItem.getName(locale),
+						_getCommerceOrderOptions(commerceOrderItem, locale),
+						commerceOrderItem.getCommerceOrderId(),
+						commerceOrderItem.getCommerceOrderItemId(),
+						_getChildOrderItems(
+							commerceOrderItem, httpServletRequest),
+						commerceOrderItem.getParentCommerceOrderItemId(),
+						_language.get(locale, "price-on-application"),
+						StringPool.DASH, 0, commerceOrderItem.getSku(),
+						_cpInstanceHelper.getCPInstanceThumbnailSrc(
+							CommerceUtil.getCommerceAccountId(
+								(CommerceContext)
+									httpServletRequest.getAttribute(
+										CommerceWebKeys.COMMERCE_CONTEXT)),
+							commerceOrderItem.getCPInstanceId()),
+						StringPool.DASH);
+				}
+
 				return new OrderItem(
 					commerceOrderItem.getCPInstanceId(),
 					_formatDiscountAmount(commerceOrderItemPrice, locale),

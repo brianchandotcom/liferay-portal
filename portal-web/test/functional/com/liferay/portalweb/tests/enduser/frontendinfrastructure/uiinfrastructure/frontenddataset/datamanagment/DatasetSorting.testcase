@@ -1,0 +1,81 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		FrontendDataSetAdmin.deleteAllDatasetEntries();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185324. Confirm that the new default classification modal is displayed, the field is required."
+	@ignore = "true"
+	@priority = 4
+	test CanAssertFieldIsRequired {
+
+		// TODO LPS-185324 CanAssertFieldIsRequired pending implementation
+
+	}
+
+	@description = "LPS-185325. Confirm that the new default classification modal is displayed, the sorting is required."
+	@ignore = "true"
+	@priority = 4
+	test CanAssertSortingIsRequired {
+
+		// TODO LPS-185325 CanAssertSortingIsRequired pending implementation
+
+	}
+
+	@description = "LPS-185326. Confirm that the Default Sort was created successfully."
+	@ignore = "true"
+	@priority = 3
+	test CanCreateDefaultSort {
+
+		// TODO LPS-185326 CanCreateDefaultSort pending implementation
+
+	}
+
+	@description = "LPS-185328. Confirm that the dataset and view created via the API appears when searched."
+	@ignore = "true"
+	@priority = 4
+	test CanCreateDefaultSortViaAPI {
+
+		// TODO LPS-185328 CanCreateDefaultSortViaAPI pending implementation
+
+	}
+
+	@description = "LPS-185322. Confirm that the new default sorting modal is displayed."
+	@ignore = "true"
+	@priority = 4
+	test CanDisplayedDefaultSort {
+
+		// TODO LPS-185322 CanDisplayedDefaultSort pending implementation
+
+	}
+
+	@description = "LPS-185327. Confirm that the search bar responds when we search for one of the options."
+	@ignore = "true"
+	@priority = 4
+	test CanSearchSortingInSearchBar {
+
+		// TODO LPS-185327 CanSearchSortingInSearchBar pending implementation
+
+	}
+
+}

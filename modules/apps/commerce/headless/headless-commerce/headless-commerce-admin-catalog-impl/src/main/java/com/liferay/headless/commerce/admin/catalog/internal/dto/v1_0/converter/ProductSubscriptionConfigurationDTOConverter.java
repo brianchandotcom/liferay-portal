@@ -48,6 +48,18 @@ public class ProductSubscriptionConfigurationDTOConverter
 
 		return new ProductSubscriptionConfiguration() {
 			{
+				deliverySubscriptionEnable =
+					cpDefinition.isDeliverySubscriptionEnabled();
+				deliverySubscriptionLength =
+					cpDefinition.getDeliverySubscriptionLength();
+				deliverySubscriptionNumberOfLength =
+					cpDefinition.getDeliveryMaxSubscriptionCycles();
+				deliverySubscriptionType =
+					ProductSubscriptionConfiguration.DeliverySubscriptionType.
+						create(cpDefinition.getDeliverySubscriptionType());
+				deliverySubscriptionTypeSettings =
+					cpDefinition.
+						getDeliverySubscriptionTypeSettingsUnicodeProperties();
 				enable = cpDefinition.isSubscriptionEnabled();
 				length = cpDefinition.getSubscriptionLength();
 				numberOfLength = cpDefinition.getMaxSubscriptionCycles();

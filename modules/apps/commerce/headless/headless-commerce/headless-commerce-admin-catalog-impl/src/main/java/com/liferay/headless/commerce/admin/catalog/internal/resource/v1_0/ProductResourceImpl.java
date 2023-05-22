@@ -102,6 +102,7 @@ import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -119,6 +120,8 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -485,7 +488,87 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		ProductShippingConfiguration productShippingConfiguration =
 			_getProductShippingConfiguration(product);
 		ProductSubscriptionConfiguration productSubscriptionConfiguration =
-			_getProductSubscriptionConfiguration(product);
+			product.getSubscriptionConfiguration();
+
+		boolean deliverySubscriptionEnable = false;
+		int deliverySubscriptionLength = 1;
+		long deliverySubscriptionMaxSubscriptionCycles = 0;
+		UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties =
+			null;
+		String deliverySubscriptionTypeValue = StringPool.BLANK;
+
+		boolean subscriptionEnable = false;
+		int subscriptionLength = 1;
+		long subscriptionMaxSubscriptionCycles = 0;
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties = null;
+		String subscriptionTypeValue = StringPool.BLANK;
+
+		if (productSubscriptionConfiguration != null) {
+			deliverySubscriptionEnable = GetterUtil.getBoolean(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionEnable(),
+				deliverySubscriptionEnable);
+			deliverySubscriptionLength = GetterUtil.getInteger(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionLength(),
+				deliverySubscriptionLength);
+			deliverySubscriptionMaxSubscriptionCycles = GetterUtil.getLong(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionNumberOfLength(),
+				deliverySubscriptionMaxSubscriptionCycles);
+
+			if (Validator.isNotNull(
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionTypeSettings())) {
+
+				deliverySubscriptionTypeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.create(
+						productSubscriptionConfiguration.
+							getDeliverySubscriptionTypeSettings(),
+						true
+					).build();
+			}
+
+			ProductSubscriptionConfiguration.DeliverySubscriptionType
+				deliverySubscriptionType =
+					productSubscriptionConfiguration.
+						getDeliverySubscriptionType();
+
+			if (deliverySubscriptionType != null) {
+				deliverySubscriptionTypeValue =
+					deliverySubscriptionType.getValue();
+			}
+
+			subscriptionEnable = GetterUtil.getBoolean(
+				productSubscriptionConfiguration.getEnable(),
+				subscriptionEnable);
+			subscriptionLength = GetterUtil.getInteger(
+				productSubscriptionConfiguration.getLength(),
+				subscriptionLength);
+			subscriptionMaxSubscriptionCycles = GetterUtil.getLong(
+				productSubscriptionConfiguration.getNumberOfLength(),
+				subscriptionMaxSubscriptionCycles);
+
+			if (Validator.isNotNull(
+					productSubscriptionConfiguration.
+						getSubscriptionTypeSettings())) {
+
+				subscriptionTypeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.create(
+						productSubscriptionConfiguration.
+							getSubscriptionTypeSettings(),
+						true
+					).build();
+			}
+
+			ProductSubscriptionConfiguration.SubscriptionType subscriptionType =
+				productSubscriptionConfiguration.getSubscriptionType();
+
+			if (subscriptionType != null) {
+				subscriptionTypeValue = subscriptionType.getValue();
+			}
+		}
+
 		ProductTaxConfiguration productTaxConfiguration =
 			_getProductTaxConfiguration(product);
 
@@ -615,16 +698,13 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.getBoolean(product.getNeverExpire(), true),
-			product.getDefaultSku(),
-			GetterUtil.getBoolean(productSubscriptionConfiguration.getEnable()),
-			GetterUtil.getInteger(
-				productSubscriptionConfiguration.getLength(), 1),
-			GetterUtil.getString(
-				productSubscriptionConfiguration.getSubscriptionTypeAsString()),
-			null,
-			GetterUtil.getLong(
-				productSubscriptionConfiguration.getNumberOfLength()),
-			productStatus, serviceContext);
+			product.getDefaultSku(), subscriptionEnable, subscriptionLength,
+			subscriptionTypeValue, subscriptionTypeSettingsUnicodeProperties,
+			subscriptionMaxSubscriptionCycles, deliverySubscriptionEnable,
+			deliverySubscriptionLength, deliverySubscriptionTypeValue,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliverySubscriptionMaxSubscriptionCycles, productStatus,
+			serviceContext);
 
 		if ((product.getActive() != null) && !product.getActive()) {
 			Map<String, Serializable> workflowContext = new HashMap<>();
@@ -740,19 +820,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		}
 
 		return new ProductShippingConfiguration();
-	}
-
-	private ProductSubscriptionConfiguration
-		_getProductSubscriptionConfiguration(Product product) {
-
-		ProductSubscriptionConfiguration productSubscriptionConfiguration =
-			product.getSubscriptionConfiguration();
-
-		if (productSubscriptionConfiguration != null) {
-			return productSubscriptionConfiguration;
-		}
-
-		return new ProductSubscriptionConfiguration();
 	}
 
 	private ProductTaxConfiguration _getProductTaxConfiguration(

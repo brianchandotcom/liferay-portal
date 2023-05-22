@@ -33,6 +33,16 @@ public class ProductSubscriptionConfigurationUtil {
 			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws PortalException {
 
+		String deliverySubscriptionTypeValue = null;
+
+		ProductSubscriptionConfiguration.DeliverySubscriptionType
+			deliverySubscriptionType =
+				productSubscriptionConfiguration.getDeliverySubscriptionType();
+
+		if (deliverySubscriptionType != null) {
+			deliverySubscriptionTypeValue = deliverySubscriptionType.getValue();
+		}
+
 		String subscriptionTypeValue = null;
 
 		ProductSubscriptionConfiguration.SubscriptionType subscriptionType =
@@ -58,7 +68,24 @@ public class ProductSubscriptionConfigurationUtil {
 			GetterUtil.get(
 				productSubscriptionConfiguration.getNumberOfLength(),
 				cpDefinition.getMaxSubscriptionCycles()),
-			false, 1, null, null, 0);
+			GetterUtil.get(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionEnable(),
+				cpDefinition.isDeliverySubscriptionEnabled()),
+			GetterUtil.get(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionLength(),
+				cpDefinition.getDeliverySubscriptionLength()),
+			deliverySubscriptionTypeValue,
+			UnicodePropertiesBuilder.create(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionTypeSettings(),
+				true
+			).build(),
+			GetterUtil.get(
+				productSubscriptionConfiguration.
+					getDeliverySubscriptionNumberOfLength(),
+				cpDefinition.getDeliveryMaxSubscriptionCycles()));
 	}
 
 }

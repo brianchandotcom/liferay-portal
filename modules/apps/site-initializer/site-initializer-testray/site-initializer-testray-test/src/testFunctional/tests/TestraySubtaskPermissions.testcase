@@ -184,4 +184,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178271 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to merge the subtask"
+	@priority = 4
+	test AssertAnalystRoleCanMergeTask {
+		property test.name.skip.portal.instance = "TestraySubtaskPermissions#AssertAnalystRoleCanMergeTask";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user merge a Subtask") {
+			TestrayTestflow.goToTestflow();
+
+			TestrayTestflow.goToTask(taskName = "Task_1");
+
+			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
+
+			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+		}
+
+		task ("Then the user can see a merged subtask") {
+			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
+		}
+	}
+
 }

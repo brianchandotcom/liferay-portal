@@ -86,7 +86,6 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(_SIMPLE_DATE_FORMA
 			var timePicker = new A.TimePickerNative(
 				{
 					container: '#<%= randomNamespace %>displayTime',
-					mask: '<%= amPm ? "%l:%M %p" : "%H:%M" %>',
 					on: {
 						enterKey: function(event) {
 							var instance = this;
@@ -105,11 +104,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(_SIMPLE_DATE_FORMA
 							instance.updateTime(date);
 						}
 					},
-					popover: {
-						zIndex: Liferay.zIndex.POPOVER
-					},
 					trigger: '#<%= nameId %>',
-					values: <%= _getHoursJSONArray(minuteInterval, locale) %>
 				}
 			);
 
@@ -163,28 +158,6 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(_SIMPLE_DATE_FORMA
 </aui:script>
 
 <%!
-private JSONArray _getHoursJSONArray(int minuteInterval, Locale locale) throws Exception {
-	NumberFormat numberFormat = NumberFormat.getInstance(locale);
-
-	numberFormat.setMinimumIntegerDigits(2);
-
-	JSONArray hoursJSONArray = JSONFactoryUtil.createJSONArray();
-
-	for (int h = 0; h < 24; h++) {
-		for (int m = 0; m < 60; m += minuteInterval) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(numberFormat.format(h));
-			sb.append(StringPool.COLON);
-			sb.append(numberFormat.format(m));
-
-			hoursJSONArray.put(sb.toString());
-		}
-	}
-
-	return hoursJSONArray;
-}
-
 private static final String _SIMPLE_DATE_FORMAT_PATTERN_HTML5 = "HH:mm";
 
 private static final String _PLACEHOLDER_DEFAULT = "h:mm am/pm";

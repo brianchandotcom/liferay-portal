@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.background.task;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -28,9 +29,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -42,7 +40,7 @@ public class BackgroundTaskExecutorConfigurator {
 	protected void activate(BundleContext bundleContext) {
 		BackgroundTaskExecutor reindexPortalBackgroundTaskExecutor =
 			new ReindexPortalBackgroundTaskExecutor(
-				bundleContext, _concurrentReindexManager,
+				bundleContext, _concurrentReindexManagerSnapshot.get(),
 				_portalExecutorManager);
 
 		_registerBackgroundTaskExecutor(
@@ -77,12 +75,10 @@ public class BackgroundTaskExecutorConfigurator {
 		_serviceRegistrations.add(serviceRegistration);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ConcurrentReindexManager _concurrentReindexManager;
+	private static final Snapshot<ConcurrentReindexManager>
+		_concurrentReindexManagerSnapshot = new Snapshot<>(
+			BackgroundTaskExecutorConfigurator.class,
+			ConcurrentReindexManager.class, null, true);
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

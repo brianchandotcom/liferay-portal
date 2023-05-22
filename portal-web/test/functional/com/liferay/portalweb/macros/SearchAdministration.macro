@@ -17,14 +17,6 @@ definition {
 	}
 
 	macro executeReindex {
-		SearchAdministration.openSearchAdmin();
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Search");
-
-		var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
-
 		SearchAdministration.openIndexActions();
 
 		AssertTextEquals(
@@ -56,14 +48,9 @@ definition {
 				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 		}
 
-		if (contains(${searchEngineVendor}, "Elasticsearch")) {
-			var port = Elasticsearch.getServerPort();
-			var portalHostname = PropsUtil.get("portal.hostname");
+		var searchEngineVendor = SearchAdministration.getSearchEngineVendor();
 
-			var curl = "http://${portalHostname}:${port}/_tasks";
-		}
-
-		while ((!(isSet(reindexStartTime)) || (${retryReindex} == "true")) && (maxIterations = "2")) {
+		while ((!(isSet(retryReindex)) || (${retryReindex} == "true")) && (maxIterations = "2")) {
 			if (isSet(action)) {
 				Click(
 					key_action = ${action},
@@ -75,79 +62,20 @@ definition {
 					locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 			}
 
-			var reindexElapsedTime = 0;
-			var reindexStartTime = 0;
+			var retryReindex = SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
+		}
+	}
 
-			if (contains(${searchEngineVendor}, "Elasticsearch")) {
-				while (!(contains(${elasticsearchTasks}, "indices:data/write/bulk")) && (${reindexStartTime} != 60)) {
-					Pause.pauseNoSPARefresh(locator1 = 1000);
+	macro getSearchEngineVendor {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-					var reindexStartTime = ${reindexStartTime} + 1;
+		var solrDirExists = FileUtil.exists("${liferayHome}/solr-8.11.1");
 
-					echo("Current Elasticsearch Tasks:");
-
-					var elasticsearchTasks = JSONCurlUtil.get(${curl});
-				}
-
-				if (${reindexStartTime} == 60) {
-					echo("Elasticsearch failed to receive reindex request after 60 seconds.");
-				}
-				else {
-					echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
-				}
-
-				while (((contains(${elasticsearchTasks}, "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
-					Pause.pauseNoSPARefresh(locator1 = 10000);
-
-					var reindexElapsedTime = ${reindexElapsedTime} + 10;
-
-					echo("Current Elasticsearch Tasks:");
-
-					var elasticsearchTasks = JSONCurlUtil.get(${curl});
-				}
-			}
-			else if (contains(${searchEngineVendor}, "Solr")) {
-				while ((IsElementNotPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && (${reindexStartTime} != 60)) {
-					Pause.pauseNoSPARefresh(locator1 = 1000);
-
-					var reindexStartTime = ${reindexStartTime} + 1;
-				}
-
-				if (${reindexStartTime} == 60) {
-					echo("Solr failed to receive reindex request after 60 seconds.");
-				}
-				else {
-					echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
-				}
-
-				while ((((IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
-					Pause.pauseNoSPARefresh(locator1 = 10000);
-
-					var reindexElapsedTime = ${reindexElapsedTime} + 10;
-				}
-			}
-
-			if (${reindexElapsedTime} == 0) {
-				echo("Elasticsearch failed to receive reindex request.");
-
-				takeScreenshot();
-
-				Refresh();
-
-				var retryReindex = "true";
-			}
-			else if (${reindexElapsedTime} == 240) {
-				echo("Reindex timed out after 240 seconds.");
-
-				takeScreenshot();
-
-				Refresh();
-
-				var retryReindex = "true";
-			}
-			else {
-				echo("Finished reindexing after ${reindexElapsedTime} seconds.");
-			}
+		if (${solrDirExists} == "true") {
+			return "Solr";
+		}
+		else {
+			return "Elasticsearch";
 		}
 	}
 
@@ -177,6 +105,96 @@ definition {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet");
+	}
+
+	macro waitForReindexFinished {
+		var searchEngineVendor = SearchAdministration.getSearchEngineVendor();
+
+		if (contains(${searchEngineVendor}, "Elasticsearch")) {
+			var port = Elasticsearch.getServerPort();
+			var portalHostname = PropsUtil.get("portal.hostname");
+
+			var curl = "http://${portalHostname}:${port}/_tasks";
+		}
+
+		var reindexElapsedTime = 0;
+		var reindexStartTime = 0;
+		var waitForReindexRequest = ${waitForReindexRequest};
+
+		if (contains(${searchEngineVendor}, "Elasticsearch")) {
+			if (${waitForReindexRequest} == "true") {
+				while (!(contains(${elasticsearchTasks}, "indices:data/write/bulk")) && (${reindexStartTime} != 60)) {
+					Pause.pauseNoSPARefresh(locator1 = 1000);
+
+					var reindexStartTime = ${reindexStartTime} + 1;
+
+					echo("Current Elasticsearch Tasks:");
+
+					var elasticsearchTasks = JSONCurlUtil.get(${curl});
+				}
+
+				if (${reindexStartTime} == 60) {
+					echo("Elasticsearch failed to receive reindex request after 60 seconds.");
+				}
+				else {
+					echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
+				}
+			}
+
+			while (((contains(${elasticsearchTasks}, "indices:data/write/bulk") || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
+				Pause.pauseNoSPARefresh(locator1 = 10000);
+
+				var reindexElapsedTime = ${reindexElapsedTime} + 10;
+
+				echo("Current Elasticsearch Tasks:");
+
+				var elasticsearchTasks = JSONCurlUtil.get(${curl});
+			}
+		}
+		else if (contains(${searchEngineVendor}, "Solr")) {
+			while ((IsElementNotPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && (${reindexStartTime} != 60)) {
+				Pause.pauseNoSPARefresh(locator1 = 1000);
+
+				var reindexStartTime = ${reindexStartTime} + 1;
+			}
+
+			if (${reindexStartTime} == 60) {
+				echo("Solr failed to receive reindex request after 60 seconds.");
+			}
+			else {
+				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
+			}
+
+			while ((((IsElementPresent.isElementPresentNoSPARefresh(locator1 = "ControlMenu#RELOAD_TOOLTIP")) || (IsElementPresent.isElementPresentNoSPARefresh(locator1 = "//html[contains(@class,'lfr-spa-loading')]"))) && (${reindexElapsedTime} != 240)) && (maxIterations = "24")) {
+				Pause.pauseNoSPARefresh(locator1 = 10000);
+
+				var reindexElapsedTime = ${reindexElapsedTime} + 10;
+			}
+		}
+
+		if ((${reindexElapsedTime} == 0) && (${waitForReindexRequest} == "true")) {
+			echo("Elasticsearch failed to receive reindex request.");
+
+			takeScreenshot();
+
+			Refresh();
+
+			return "true";
+		}
+		else if (${reindexElapsedTime} == 240) {
+			echo("Reindex timed out after 240 seconds.");
+
+			takeScreenshot();
+
+			Refresh();
+
+			return "true";
+		}
+		else {
+			echo("Finished reindexing after ${reindexElapsedTime} seconds.");
+
+			return "false";
+		}
 	}
 
 }

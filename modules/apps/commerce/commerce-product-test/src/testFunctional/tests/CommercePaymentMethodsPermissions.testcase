@@ -30,6 +30,75 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-9979. The Operations Manager can edit the selected payment method of a placed order without items"
+	@priority = 3
+	test CanOperationsManagerEditEmptyPlacedOrderSelectedPaymentMethod {
+		property portal.acceptance = "false";
+
+		task ("Given a user with the Operations Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "om@liferay.com",
+				userFirstName = "Operations",
+				userLastName = "Manager",
+				userScreenName = "operationsmanager");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Operations Manager");
+		}
+
+		task ("And 2 Payment Methods are enabled(Money Order, PayPal)") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			for (var paymentMethod : list "Money Order,PayPal") {
+				CommerceChannels.editPaymentMethod(
+					active = "true",
+					paymentMethod = ${paymentMethod});
+			}
+		}
+
+		task ("And a placed order without order items is created") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+		}
+
+		task ("When the Operations Manager opens the order from the orders page and goes to the Payment tab") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_menuTab = "Payments",
+				locator1 = "CommerceEntry#MENU_TAB");
+		}
+
+		task ("Then the preset payment method 'Money Order' can be updated to 'Paypal'") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
+				value1 = "Money Order");
+
+			CommerceOrders.editPaymentMethod(
+				eligiblePaymentMethods = "Money Order,PayPal",
+				notEligiblePaymentMethods = "Authorize.Net",
+				paymentMethod = "PayPal");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
+				value1 = "PayPal");
+		}
+	}
+
 	@description = "COMMERCE-9506. As a user of the storefront, I should have access only to payment methods that are assigned to my role"
 	@priority = 5
 	test CanSFUsersSelectPaymentMethodsDuringCheckoutBasedOnViewPermissionForEachPaymentMethod {
@@ -224,7 +293,6 @@ definition {
 				locator1 = "CommerceEntry#MENU_TAB");
 
 			AssertTextEquals.assertPartialText(
-				key_paymentMethod = "PayPal",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
 				value1 = "PayPal");
 		}
@@ -319,7 +387,6 @@ definition {
 				locator1 = "CommerceEntry#MENU_TAB");
 
 			AssertTextEquals.assertPartialText(
-				key_paymentMethod = "Money Order",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
 				value1 = "Money Order");
 
@@ -471,7 +538,6 @@ definition {
 				locator1 = "CommerceEntry#MENU_TAB");
 
 			AssertTextEquals.assertPartialText(
-				key_paymentMethod = "Money Order",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
 				value1 = "Money Order");
 

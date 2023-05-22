@@ -937,7 +937,6 @@ definition {
 				locator1 = "CommerceEntry#MENU_TAB");
 
 			AssertTextEquals.assertPartialText(
-				key_paymentMethod = ${paymentMethod},
 				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
 				value1 = ${paymentMethod});
 		}

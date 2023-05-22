@@ -55,6 +55,7 @@ import de.undercouch.gradle.tasks.download.Download;
 
 import groovy.lang.Closure;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -72,8 +73,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import net.saliman.gradle.plugin.properties.PropertiesPlugin;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -96,6 +100,8 @@ import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
@@ -204,8 +210,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String VERIFY_PRODUCT_TASK_NAME = "verifyProduct";
 
 	/**
-	 * @deprecated As of 1.4.0, replaced by {@link
-	 *             #RootProjectConfigurator(Settings)}
+	 * @deprecated As of 1.4.0, replaced by
+	 *             {@link #RootProjectConfigurator(Settings)}
 	 */
 	@Deprecated
 	public RootProjectConfigurator() {
@@ -223,6 +229,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		_applyPlugins(project);
+
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
@@ -284,6 +292,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			verifyProductTask);
 
 		_addTaskFormatSourceUpgrade(project);
+
+		_configurePropertiesTask(project);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -1737,6 +1747,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return verifyProductTask;
 	}
 
+	private void _applyPlugins(Project project) {
+		if (GradleUtil.getProperty(
+				project,
+				WorkspacePlugin.PROPERTY_PREFIX +
+					"feature.net.saliman.properties.plugin.enabled",
+				true)) {
+
+			project.apply(
+				Collections.singletonMap("plugin", PropertiesPlugin.class));
+		}
+	}
+
 	private void _configureCopySpecExpandTomcatVersion(
 		CopySpec copySpec, WorkspaceExtension workspaceExtension) {
 
@@ -1855,6 +1877,67 @@ public class RootProjectConfigurator implements Plugin<Project> {
 										}
 
 									});
+							}
+
+						});
+				}
+
+			});
+	}
+
+	private void _configurePropertiesTask(Project project) {
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					Task propertiesTask = taskContainer.findByName(
+						"properties");
+
+					if (Objects.isNull(propertiesTask)) {
+						return;
+					}
+
+					propertiesTask.doFirst(
+						new Action<Task>() {
+
+							@Override
+							public void execute(Task task) {
+								File propertiesFile = project.file(
+									"gradle-local.properties");
+
+								if (!propertiesFile.exists()) {
+									return;
+								}
+
+								Properties properties = new Properties();
+
+								try (BufferedReader bufferedReader =
+										Files.newBufferedReader(
+											propertiesFile.toPath())) {
+
+									properties.load(bufferedReader);
+								}
+								catch (Exception exception) {
+									throw new GradleException(
+										"Unable to read gradle-local." +
+											"properties",
+										exception);
+								}
+
+								ExtensionContainer projectExtensions =
+									project.getExtensions();
+
+								ExtraPropertiesExtension
+									extraPropertiesExtension =
+										projectExtensions.getExtraProperties();
+
+								for (Object key : properties.keySet()) {
+									extraPropertiesExtension.set(
+										key.toString(), properties.get(key));
+								}
 							}
 
 						});

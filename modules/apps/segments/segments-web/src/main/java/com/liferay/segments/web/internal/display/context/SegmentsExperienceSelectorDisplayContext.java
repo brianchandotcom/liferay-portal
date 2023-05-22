@@ -199,23 +199,36 @@ public class SegmentsExperienceSelectorDisplayContext {
 	private JSONObject _getSegmentsExperienceSelectedJSONObject()
 		throws PortalException {
 
-		JSONObject segmentsExperienceSelectedJSONObject =
-			_jsonFactory.createJSONObject();
-
 		SegmentsExperience segmentsExperience =
 			_fetchSegmentsExperienceFromRequest();
 
+		long plid = _themeDisplay.getPlid();
+
+		if ((segmentsExperience == null) ||
+			(segmentsExperience.getPlid() != plid)) {
+
+			long defaultSegmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(plid);
+
+			segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					defaultSegmentsExperienceId);
+		}
+
 		if (segmentsExperience != null) {
-			segmentsExperienceSelectedJSONObject =
+			JSONObject segmentsExperienceSelectedJSONObject =
 				_getSegmentsExperienceJSONObject(
 					segmentsExperience.getSegmentsExperienceId());
 
 			segmentsExperienceSelectedJSONObject.put(
 				"segmentsExperienceName",
 				_getSelectedSegmentsExperienceName(segmentsExperience));
+
+			return segmentsExperienceSelectedJSONObject;
 		}
 
-		return segmentsExperienceSelectedJSONObject;
+		return _jsonFactory.createJSONObject();
 	}
 
 	private JSONArray _getSegmentsExperiencesJSONArray()

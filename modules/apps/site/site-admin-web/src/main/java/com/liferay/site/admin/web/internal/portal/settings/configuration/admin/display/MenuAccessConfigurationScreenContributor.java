@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.admin.web.internal.display.context.MenuAccessConfigurationDisplayContext;
-import com.liferay.site.configuration.MenuAccessConfigurationProvider;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -90,7 +90,7 @@ public class MenuAccessConfigurationScreenContributor
 			MenuAccessConfigurationDisplayContext.class.getName(),
 			new MenuAccessConfigurationDisplayContext(
 				httpServletRequest, _itemSelector,
-				_menuAccessConfigurationProvider, _portal, _roleLocalService));
+				_menuAccessConfigurationManager, _portal, _roleLocalService));
 	}
 
 	@Reference
@@ -100,7 +100,7 @@ public class MenuAccessConfigurationScreenContributor
 	private Language _language;
 
 	@Reference
-	private MenuAccessConfigurationProvider _menuAccessConfigurationProvider;
+	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
 
 	@Reference
 	private Portal _portal;

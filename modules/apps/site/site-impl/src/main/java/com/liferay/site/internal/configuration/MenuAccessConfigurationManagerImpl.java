@@ -17,7 +17,7 @@ package com.liferay.site.internal.configuration;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.MenuAccessConfiguration;
-import com.liferay.site.configuration.MenuAccessConfigurationProvider;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,9 +25,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mikel Lorza
  */
-@Component(service = MenuAccessConfigurationProvider.class)
-public class MenuAccessConfigurationProviderImpl
-	implements MenuAccessConfigurationProvider {
+@Component(service = MenuAccessConfigurationManager.class)
+public class MenuAccessConfigurationManagerImpl
+	implements MenuAccessConfigurationManager {
 
 	@Override
 	public String[] getAccessToControlMenuRoleIds(long groupId)

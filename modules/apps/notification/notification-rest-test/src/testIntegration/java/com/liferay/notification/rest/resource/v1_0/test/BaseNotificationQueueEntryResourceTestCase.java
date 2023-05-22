@@ -631,6 +631,28 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 	}
 
 	@Test
+	public void testPostNotificationQueueEntry() throws Exception {
+		NotificationQueueEntry randomNotificationQueueEntry =
+			randomNotificationQueueEntry();
+
+		NotificationQueueEntry postNotificationQueueEntry =
+			testPostNotificationQueueEntry_addNotificationQueueEntry(
+				randomNotificationQueueEntry);
+
+		assertEquals(randomNotificationQueueEntry, postNotificationQueueEntry);
+		assertValid(postNotificationQueueEntry);
+	}
+
+	protected NotificationQueueEntry
+			testPostNotificationQueueEntry_addNotificationQueueEntry(
+				NotificationQueueEntry notificationQueueEntry)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteNotificationQueueEntry() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NotificationQueueEntry notificationQueueEntry =
@@ -937,8 +959,8 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("priority", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getPriority() == null) {
+			if (Objects.equals("recipients", additionalAssertFieldName)) {
+				if (notificationQueueEntry.getRecipients() == null) {
 					valid = false;
 				}
 
@@ -1163,10 +1185,10 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("priority", additionalAssertFieldName)) {
+			if (Objects.equals("recipients", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						notificationQueueEntry1.getPriority(),
-						notificationQueueEntry2.getPriority())) {
+						notificationQueueEntry1.getRecipients(),
+						notificationQueueEntry2.getRecipients())) {
 
 					return false;
 				}
@@ -1383,10 +1405,9 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("priority")) {
-			sb.append(String.valueOf(notificationQueueEntry.getPriority()));
-
-			return sb.toString();
+		if (entityFieldName.equals("recipients")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("recipientsSummary")) {
@@ -1520,7 +1541,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				fromName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				priority = RandomTestUtil.randomDouble();
 				recipientsSummary = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				sentDate = RandomTestUtil.nextDate();

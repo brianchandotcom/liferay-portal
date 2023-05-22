@@ -117,26 +117,26 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 
 	protected Long id;
 
-	public Double getPriority() {
-		return priority;
+	public Object[] getRecipients() {
+		return recipients;
 	}
 
-	public void setPriority(Double priority) {
-		this.priority = priority;
+	public void setRecipients(Object[] recipients) {
+		this.recipients = recipients;
 	}
 
-	public void setPriority(
-		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
+	public void setRecipients(
+		UnsafeSupplier<Object[], Exception> recipientsUnsafeSupplier) {
 
 		try {
-			priority = priorityUnsafeSupplier.get();
+			recipients = recipientsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Double priority;
+	protected Object[] recipients;
 
 	public String getRecipientsSummary() {
 		return recipientsSummary;

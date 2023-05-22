@@ -109,14 +109,30 @@ public class NotificationQueueEntrySerDes {
 			sb.append(notificationQueueEntry.getId());
 		}
 
-		if (notificationQueueEntry.getPriority() != null) {
+		if (notificationQueueEntry.getRecipients() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"priority\": ");
+			sb.append("\"recipients\": ");
 
-			sb.append(notificationQueueEntry.getPriority());
+			sb.append("[");
+
+			for (int i = 0; i < notificationQueueEntry.getRecipients().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(notificationQueueEntry.getRecipients()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < notificationQueueEntry.getRecipients().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (notificationQueueEntry.getRecipientsSummary() != null) {
@@ -270,13 +286,13 @@ public class NotificationQueueEntrySerDes {
 			map.put("id", String.valueOf(notificationQueueEntry.getId()));
 		}
 
-		if (notificationQueueEntry.getPriority() == null) {
-			map.put("priority", null);
+		if (notificationQueueEntry.getRecipients() == null) {
+			map.put("recipients", null);
 		}
 		else {
 			map.put(
-				"priority",
-				String.valueOf(notificationQueueEntry.getPriority()));
+				"recipients",
+				String.valueOf(notificationQueueEntry.getRecipients()));
 		}
 
 		if (notificationQueueEntry.getRecipientsSummary() == null) {
@@ -385,10 +401,10 @@ public class NotificationQueueEntrySerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "priority")) {
+			else if (Objects.equals(jsonParserFieldName, "recipients")) {
 				if (jsonParserFieldValue != null) {
-					notificationQueueEntry.setPriority(
-						Double.valueOf((String)jsonParserFieldValue));
+					notificationQueueEntry.setRecipients(
+						(Object[])jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "recipientsSummary")) {

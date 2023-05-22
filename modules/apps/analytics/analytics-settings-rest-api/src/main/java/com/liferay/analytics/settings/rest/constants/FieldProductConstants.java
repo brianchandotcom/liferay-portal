@@ -53,42 +53,51 @@ public class FieldProductConstants {
 	};
 
 	public static final String[] FIELD_PRODUCT_EXAMPLES = {
-		"30054", "12345, 12346, ...", "2017-07-21",
+		"30054", "12345, 12346, ...", "13.5", "2017-07-21",
 		"key1=value1,key2=value2,...",
 		"Professional hand stainless steel saw for wood. Made to last and " +
 			"saw forever. Made of best steel",
-		"2017-07-21", "2017-08-21", "AB-34098-789-N", "30130",
+		"false", "2017-07-21", "2017-08-21", "2018-08-21", "AB-34098-789-N",
+		"AB-34098-789-N", "30130", "OptionA", "AB-34098-789-N",
 		"Meta description EN", "Meta keyword EN", "Meta title EN", "2017-08-21",
-		"Hand Saw", "12345, 12346, ...", "30000",
-		"ProductOption, ProductOption, ...",
-		"ProductSpecification, ProductSpecification, ...", "simple",
-		"tt12345, tt34556", "0", "false", "tag1, tag2, ...",
-		"product-url-us, ..."
+		"Hand Saw", "12345, 12346, ...", "optiona", "12345, 12346, ...",
+		"30000", "ProductOption, ProductOption, ...",
+		"ProductSpecification, ProductSpecification, ...", "simple", "true",
+		"true", "tt12345", "tt12345, tt34556", "quantity", "0", "false",
+		"tag1, tag2, ...", "product-url-us, ...", "10pz", "Values EN"
 	};
 
 	public static final String[] FIELD_PRODUCT_NAMES = {
-		"catalogId", "categoryIds", "createDate", "customFields", "description",
-		"displayDate", "expirationDate", "externalReferenceCode", "id",
-		"metaDescription", "metaKeyword", "metaTitle", "modifiedDate", "name",
+		"catalogId", "categoryIds", "cost", "createDate", "customFields",
+		"description", "discontinued", "displayDate", "expirationDate",
+		"expirationDate", "externalReferenceCode", "gtin", "id", "key",
+		"manufacturerPartNumber", "metaDescription", "metaKeyword", "metaTitle",
+		"modifiedDate", "name", "optionCategoryId", "optionKey",
 		"productChannelIds", "productId", "productOptions",
-		"productSpecifications", "productType", "skus", "status",
-		"subscriptionEnabled", "tags", "urls"
+		"productSpecifications", "productType", "published", "purchasable",
+		"sku", "skus", "specificationKey", "status", "subscriptionEnabled",
+		"tags", "urls", "value", "values"
 	};
 
 	public static final String[] FIELD_PRODUCT_REQUIRED_NAMES = {
-		"catalogId", "categoryIds", "createDate", "customFields", "description",
-		"displayDate", "expirationDate", "externalReferenceCode", "id",
-		"metaDescription", "metaKeyword", "metaTitle", "modifiedDate", "name",
+		"catalogId", "categoryIds", "cost", "createDate", "customFields",
+		"description", "discontinued", "displayDate", "expirationDate",
+		"expirationDate", "externalReferenceCode", "gtin", "id", "key",
+		"manufacturerPartNumber", "metaDescription", "metaKeyword", "metaTitle",
+		"modifiedDate", "name", "optionCategoryId", "optionKey",
 		"productChannelIds", "productId", "productOptions",
-		"productSpecifications", "productType", "skus", "status",
-		"subscriptionEnabled", "tags", "urls"
+		"productSpecifications", "productType", "published", "purchasable",
+		"sku", "skus", "specificationKey", "status", "subscriptionEnabled",
+		"tags", "urls", "value", "values"
 	};
 
 	public static final String[] FIELD_PRODUCT_TYPES = {
-		"Integer", "Array", "String", "Object", "Object", "String", "String",
-		"String", "Integer", "Object", "Object", "Object", "String", "Object",
-		"Array", "Integer", "Array", "Array", "String", "Array", "Integer",
-		"boolean", "Array", "Object"
+		"Integer", "Array", "Number", "String", "Object", "Object", "Boolean",
+		"String", "String", "String", "String", "String", "Integer", "String",
+		"String", "Object", "Object", "Object", "String", "Object", "Integer",
+		"String", "Array", "Integer", "Array", "Array", "String", "Boolean",
+		"Boolean", "String", "Array", "String", "Integer", "boolean", "Array",
+		"Object", "String", "Object"
 	};
 
 }

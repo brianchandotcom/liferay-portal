@@ -133,20 +133,13 @@ definition {
 		}
 
 		task ("When the manager approves the created Claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "Approved");
+				claimStatus = "Approved",
+				userEmailAddress = "cmm@liferay.com");
 		}
 
 		task ("And the partner goes to the approved claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
@@ -155,20 +148,13 @@ definition {
 		}
 
 		task ("And when the manager moves the claim to Finance Review") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "In Finance Review");
+				claimStatus = "In Finance Review",
+				userEmailAddress = "cmm@liferay.com");
 		}
 
 		task ("And the partner goes to the claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
@@ -177,20 +163,13 @@ definition {
 		}
 
 		task ("And when the manager moves the claim to Claim Paid") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "Claim Paid");
+				claimStatus = "Claim Paid",
+				userEmailAddress = "cmm@liferay.com");
 		}
 
 		task ("And the partner goes to the claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
@@ -218,20 +197,13 @@ definition {
 		}
 
 		task ("And the Manager approves the created Claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "More Info Requested");
+				claimStatus = "More Info Requested",
+				userEmailAddress = "cmm@liferay.com");
 		}
 
 		task ("And the partner goes to edit the approved claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
 			PRMMDFClaimEdit.editButton();
@@ -257,8 +229,8 @@ definition {
 
 		task ("Given that the manager creates a new claim") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
@@ -289,7 +261,8 @@ definition {
 		task ("When the manager changes the claim status to 'Approved' and navigate to it") {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "Approved");
+				claimStatus = "Approved",
+				userEmailAddress = "cmm@liferay.com");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -305,7 +278,8 @@ definition {
 		task ("When the manager changes the claim status to 'In Finance Review' and navigate to it") {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "In Finance Review");
+				claimStatus = "In Finance Review",
+				userEmailAddress = "cmm@liferay.com");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -321,7 +295,8 @@ definition {
 		task ("When the manager changes the claim status to 'Claim Paid' and navigate to it") {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "Claim Paid");
+				claimStatus = "Claim Paid",
+				userEmailAddress = "cmm@liferay.com");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -400,20 +375,13 @@ definition {
 		}
 
 		task ("And the Manager approves the created Claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
-
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
-				claimStatus = "More Info Requested");
+				claimStatus = "More Info Requested",
+				userEmailAddress = "cmm@liferay.com");
 		}
 
 		task ("And the partner goes to edit the approved claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
-
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 
 			PRMMDFClaimEdit.editButton();

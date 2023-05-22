@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("Then: I search for the PRM Roles and assert them") {
-			for (var searchTerm : list "Channel Account Manager,Channel General Manager,Channel Finance Manager,Channel Global Marketing Manager,Channel Regional Marketing Manager") {
+			for (var searchTerm : list "Channel Account Manager (CAM),Channel Enablement Manager (CEM),Channel Finance Manager (CFM),Channel Marketing Director (CMD),Channel Marketing Manager (CMM),Channel Operations Manager (COM),Partner Manager (PM),Partner Marketing User (PMU),Partner Sales User (PSU),Partner Technical User (PTU)") {
 				Search.searchCP(searchTerm = ${searchTerm});
 
 				LexiconEntry.viewEntryName(rowEntry = ${searchTerm});

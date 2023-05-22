@@ -94,8 +94,8 @@ definition {
 	test ManagerCanEditMDFInApprovedStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}
@@ -130,8 +130,8 @@ definition {
 	test ManagerCanEditMDFInCanceledStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}
@@ -166,8 +166,8 @@ definition {
 	test ManagerCanEditMDFInMarketingDirectorReviewStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}
@@ -202,8 +202,8 @@ definition {
 	test ManagerCanEditMDFInPendingMarketingReviewStatus {
 		task ("Given that the manager goes to the submitted MDF, which is as 'Pending Marketing Review'") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}
@@ -234,8 +234,8 @@ definition {
 	test ManagerCanEditMDFInRejectedStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
 		}

@@ -245,7 +245,7 @@ definition {
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
-				userEmailAddress = "partner@liferay.com");
+				userEmailAddress = "pmu@liferay.com");
 		}
 
 		task ("And two MDF's are created with different accounts") {
@@ -313,7 +313,7 @@ definition {
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
-				userEmailAddress = "partner@liferay.com");
+				userEmailAddress = "pmu@liferay.com");
 		}
 
 		task ("And I add two different MDF's") {
@@ -722,8 +722,8 @@ definition {
 
 		task ("When the Manager goes to the MDF Detail page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMUtils.gotoPRM();
 
@@ -1009,14 +1009,14 @@ definition {
 
 		task ("When a manager approves the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMUtils.gotoPRM();
 
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+				buttonText = "MDFs");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
@@ -1041,14 +1041,14 @@ definition {
 
 		task ("When a manager approves the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMUtils.gotoPRM();
 
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+				buttonText = "MDFs");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
@@ -1057,14 +1057,14 @@ definition {
 
 		task ("And a partner makes a claim") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 
 			PRMUtils.gotoPRM();
 
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+				buttonText = "MDFs");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
@@ -1094,14 +1094,14 @@ definition {
 
 		task ("When a manager approves the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMUtils.gotoPRM();
 
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+				buttonText = "MDFs");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
@@ -1110,14 +1110,14 @@ definition {
 
 		task ("And a partner makes two claims") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 
 			PRMUtils.gotoPRM();
 
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "mdf-requests",
-				buttonText = "MDF");
+				buttonText = "MDFs");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 

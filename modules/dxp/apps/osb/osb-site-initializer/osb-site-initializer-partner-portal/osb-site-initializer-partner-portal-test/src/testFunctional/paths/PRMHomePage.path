@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>QUICK_OPTIONS</td>
-	<td>//a[contains(@href,'${key_buttonLink}')][contains(.,'${key_buttonText}')]</td>
+	<td>//*[@*='element-text']//a[contains(@href,'${key_buttonLink}')][contains(.,'${key_buttonText}')]</td>
 	<td></td>
 </tr>
 </tbody>

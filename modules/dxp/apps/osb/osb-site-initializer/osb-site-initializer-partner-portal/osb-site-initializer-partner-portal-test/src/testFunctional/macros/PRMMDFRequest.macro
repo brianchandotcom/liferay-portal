@@ -240,13 +240,6 @@ definition {
 				value1 = ${accountName});
 		}
 
-		if (isSet(countryName)) {
-			Select(
-				key_fieldName = "country",
-				locator1 = "PRMMDFRequest#SELECT",
-				value1 = ${countryName});
-		}
-
 		if (isSet(campaignName)) {
 			Type(
 				key_fieldName = "overallCampaignName",

@@ -68,7 +68,7 @@ definition {
 
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
-		if ((${pageName} == "MDF Requests") || (${pageName} == "MDF Claim")) {
+		if ((${pageName} == "MDF Requests") || (${pageName} == "MDF Claims")) {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}/marketing/${pageNameURL}");
 		}
 		else {

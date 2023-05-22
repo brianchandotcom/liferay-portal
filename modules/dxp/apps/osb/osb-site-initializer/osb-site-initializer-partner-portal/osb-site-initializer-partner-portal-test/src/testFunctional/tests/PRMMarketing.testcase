@@ -21,7 +21,7 @@ definition {
 			PRMUtils.addSite();
 		}
 
-		task ("Go to Partner Portal ") {
+		task ("Go to Partner Portal") {
 			PRMUtils.gotoPRM();
 		}
 

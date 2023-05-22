@@ -99,8 +99,8 @@ definition {
 
 		task ("Given that the Manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -113,8 +113,8 @@ definition {
 
 		task ("And the partner logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -136,10 +136,10 @@ definition {
 
 		task ("When the manager logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
-			PRMNavigator.openSitePage(pageName = "MDF Claim");
+			PRMNavigator.openSitePage(pageName = "MDF Claims");
 		}
 
 		task ("And export all visible Claims") {
@@ -168,11 +168,11 @@ definition {
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
-				userEmailAddress = "partner@liferay.com");
+				userEmailAddress = "pmu@liferay.com");
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
-				userEmailAddress = "manager@liferay.com");
+				userEmailAddress = "cmm@liferay.com");
 		}
 
 		task ("And a new MDF is created with a different account") {
@@ -186,8 +186,8 @@ definition {
 
 		task ("And the Manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -206,8 +206,8 @@ definition {
 
 		task ("And the partner logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -248,10 +248,10 @@ definition {
 
 		task ("And the Manager user is logged in and goes to Claim listing page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
-			PRMNavigator.openSitePage(pageName = "MDF Claim");
+			PRMNavigator.openSitePage(pageName = "MDF Claims");
 		}
 
 		task ("When the manager filters the Claims by account 'Company Name 1'") {
@@ -301,8 +301,8 @@ definition {
 
 		task ("Given that the Manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -315,8 +315,8 @@ definition {
 
 		task ("And the partner logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -338,10 +338,10 @@ definition {
 
 		task ("When the manager logs in and go to Partner Portal") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
-			PRMNavigator.openSitePage(pageName = "MDF Claim");
+			PRMNavigator.openSitePage(pageName = "MDF Claims");
 		}
 
 		task ("And get the Claim IDs") {
@@ -388,8 +388,8 @@ definition {
 
 		task ("Given that the manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -402,8 +402,8 @@ definition {
 
 		task ("And the partner logs in") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 		}
 
 		task ("And go to the approved MDF") {
@@ -435,8 +435,8 @@ definition {
 
 		task ("Given that the manager user is logged in and goes to MDF listing page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
@@ -449,8 +449,8 @@ definition {
 
 		task ("And the partner logs in") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "partner@liferay.com",
-				userLoginFullName = "partner");
+				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginFullName = "pmu");
 		}
 
 		task ("And go to the approved MDF") {
@@ -480,8 +480,8 @@ definition {
 
 		task ("Given that the manager goes to the created MDF and approve it") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "manager");
+				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginFullName = "cmm");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 

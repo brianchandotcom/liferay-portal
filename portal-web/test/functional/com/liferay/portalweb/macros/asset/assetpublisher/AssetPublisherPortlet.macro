@@ -391,8 +391,8 @@ definition {
 
 		if (isSet(fieldValue)) {
 			Type(
-				key_fieldFieldLabel = ${fieldFilter},
-				locator1 = "WCEditWebContent#TEXT_INPUT",
+				key_text = ${fieldFilter},
+				locator1 = "TextInput#ANY",
 				value1 = ${fieldValue});
 		}
 

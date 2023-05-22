@@ -51,6 +51,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-185233. Confirm that composed fields (refrencing another schema) are not available for selection."
+	@ignore = "true"
+	@priority = 4
+	test AssertComposedFieldsNotAvailableForSelection {
+
+		// TODO LPS-185233 AssertComposedFieldsNotAvailableForSelection pending implementation
+
+	}
+
 	@description = "LPS-179282. Confirm that metadata fields are not present for the user "
 	@priority = 3
 	test AssertNotPresentMetadataFields {
@@ -87,6 +96,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-185226. Confirm that the user can add a field"
+	@ignore = "true"
+	@priority = 5
+	test CanAddField {
+
+		// TODO LPS-185226 CanAddField pending implementation
+
+	}
+
+	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."
+	@ignore = "true"
+	@priority = 4
+	test CanCancelAddingOnCancelButton {
+
+		// TODO LPS-185230 CanCancelAddingOnCancelButton pending implementation
+
+	}
+
+	@description = "LPS-185232. Confirm that the user can cancel adding a field by clicking on modal's close (X) button."
+	@ignore = "true"
+	@priority = 4
+	test CanCancelAddingOnCloseButton {
+
+		// TODO LPS-185232 CanCancelAddingOnCloseButton pending implementation
+
+	}
+
+	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."
+	@ignore = "true"
+	@priority = 4
+	test CanChangeFieldOrder {
+
+		// TODO LPS-185229 CanChangeFieldOrder pending implementation
+
+	}
+
 	@description = "LPS-179282. Confirm that the user can check and uncheck all the fields"
 	@priority = 4
 	test CanCheckAndUncheckAllFields {
@@ -115,6 +160,15 @@ definition {
 		}
 	}
 
+	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."
+	@ignore = "true"
+	@priority = 5
+	test CannotAddFieldAfterUncheckingIt {
+
+		// TODO LPS-185228 CannotAddFieldAfterUncheckingIt pending implementation
+
+	}
+
 	@description = "LPS-179282. Confirm that the search bar returns works as expected"
 	@priority = 4
 	test CanSearchField {
@@ -131,6 +185,24 @@ definition {
 				key_name = "name",
 				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
 		}
+	}
+
+	@description = "LPS-185227. Confirm that the user can search a specific field when adding fields."
+	@ignore = "true"
+	@priority = 4
+	test CanSearchFieldOnAddFieldsModal {
+
+		// TODO LPS-185227 CanSearchFieldOnAddFieldsModal pending implementation
+
+	}
+
+	@description = "LPS-185231. Confirm that the user can search a specific field on field's search bar."
+	@ignore = "true"
+	@priority = 4
+	test CanSearchFieldOnFieldsSearchBar {
+
+		// TODO LPS-185231 CanSearchFieldOnFieldsSearchBar pending implementation
+
 	}
 
 	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"

@@ -535,6 +535,22 @@ public class DLAdminDisplayContext {
 		}
 	}
 
+	private Filter _getAssetCategoryIdsFilter(long[] assetCategoryIds) {
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return null;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			booleanFilter.addTerm(
+				Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategoryId),
+				BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
+	}
+
 	private Filter _getAssetTagNamesFilter(String[] assetTagNames) {
 		if (ArrayUtil.isEmpty(assetTagNames)) {
 			return null;
@@ -552,12 +568,18 @@ public class DLAdminDisplayContext {
 	}
 
 	private BooleanClause<Query>[] _getBooleanClauses(
-		String[] assetTagNames, String[] extensions, long fileEntryTypeId,
-		long userId) {
+		long[] assetCategoryIds, String[] assetTagNames, String[] extensions,
+		long fileEntryTypeId, long userId) {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
+			booleanFilter.add(
+				_getAssetCategoryIdsFilter(assetCategoryIds),
+				BooleanClauseOccur.MUST);
+		}
 
 		if (ArrayUtil.isNotEmpty(assetTagNames)) {
 			booleanFilter.add(
@@ -598,6 +620,8 @@ public class DLAdminDisplayContext {
 			_httpServletRequest, "curFolder");
 		String deltaFolder = ParamUtil.getString(
 			_httpServletRequest, "deltaFolder");
+		long[] assetCategoryIds = ParamUtil.getLongValues(
+			_httpServletRequest, "assetCategoryId");
 		long fileEntryTypeId = ParamUtil.getLong(
 			_httpServletRequest, "fileEntryTypeId", -1);
 		String[] extensions = ParamUtil.getStringValues(
@@ -651,7 +675,8 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setOrderByCol(getOrderByCol());
 		dlSearchContainer.setOrderByType(getOrderByType());
 
-		if ((fileEntryTypeId >= 0) || ArrayUtil.isNotEmpty(assetTagIds) ||
+		if (ArrayUtil.isNotEmpty(assetCategoryIds) || (fileEntryTypeId >= 0) ||
+			ArrayUtil.isNotEmpty(assetTagIds) ||
 			ArrayUtil.isNotEmpty(extensions) || navigation.equals("mine") ||
 			navigation.equals("recent")) {
 
@@ -672,7 +697,8 @@ public class DLAdminDisplayContext {
 			searchContext.setAttribute("status", status);
 			searchContext.setBooleanClauses(
 				_getBooleanClauses(
-					assetTagIds, extensions, fileEntryTypeId, userId));
+					assetCategoryIds, assetTagIds, extensions, fileEntryTypeId,
+					userId));
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				searchContext.setFolderIds(new long[] {folderId});

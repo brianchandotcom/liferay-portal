@@ -580,8 +580,12 @@ public class ObjectActionLocalServiceImpl
 				}
 			}
 
-			if ((objectDefinition == null) || !objectDefinition.isActive() ||
-				!objectDefinition.isApproved()) {
+			if ((objectDefinition == null) ||
+				(Objects.equals(
+					objectActionExecutorKey,
+					ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY) &&
+				 (!objectDefinition.isActive() ||
+				  !objectDefinition.isApproved()))) {
 
 				errorMessageKeys.put("objectDefinitionId", "invalid");
 			}

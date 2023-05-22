@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
@@ -20,6 +21,7 @@ import {useForm} from 'react-hook-form';
 import {useLocation, useNavigate, useOutletContext} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import {TestrayContext} from '~/context/TestrayContext';
+import {withPagePermission} from '~/hoc/withPagePermission';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -77,6 +79,7 @@ const UserForm = () => {
 
 	const {mutateUser = () => {}, userAccount} =
 		useOutletContext<OutletContext>() || {};
+
 	const {
 		form: {onClose, onError, onSave, onSubmit, onSuccess},
 	} = useFormActions();
@@ -163,10 +166,6 @@ const UserForm = () => {
 	const hasDeletePermission =
 		myUserAccount?.id !== Number(userAccount?.id) &&
 		userAccount?.actions['delete-user-account'];
-
-	const hasEditPermission =
-		myUserAccount?.id !== Number(userAccount?.id) &&
-		userAccount?.actions['patch-user-account'];
 
 	return (
 		<Container className="container">
@@ -328,7 +327,6 @@ const UserForm = () => {
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{
-						disabled: !hasEditPermission,
 						loading: isSubmitting,
 					}}
 				/>
@@ -337,4 +335,14 @@ const UserForm = () => {
 	);
 };
 
-export default UserForm;
+export default withPagePermission(UserForm, {
+	createPath: 'manage/user/create',
+	deniedChildren: (
+		<ClayAlert displayType="danger">
+			{i18n.translate(
+				'You-do-not-have-permission-to-access-the-requested-resource.'
+			)}
+		</ClayAlert>
+	),
+	restImpl: liferayUserAccountsImpl,
+});

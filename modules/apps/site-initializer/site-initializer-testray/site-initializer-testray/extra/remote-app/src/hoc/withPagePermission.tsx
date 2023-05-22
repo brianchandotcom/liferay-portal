@@ -12,7 +12,7 @@
  * details.
  */
 
-import {Component, useMemo} from 'react';
+import React, {Component, useMemo} from 'react';
 import {Navigate, useMatch, useOutletContext} from 'react-router-dom';
 import Loading from '~/components/Loading/Loading';
 import Rest from '~/core/Rest';
@@ -21,6 +21,7 @@ import {ObjectActionsItems} from '~/services/rest';
 
 type PageProperties = {
 	createPath?: string;
+	deniedChildren?: React.ReactNode | string;
 	redirectTo?: string;
 	restImpl: Rest;
 };
@@ -35,6 +36,7 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 	properties: {
 		createPath = '',
 		restImpl,
+		deniedChildren,
 		redirectTo = `/404?type=permission`,
 	},
 }) => {
@@ -66,6 +68,10 @@ const CheckPermission: React.FC<CheckPermissionProps> = ({
 
 	if (createPermission || updatePermission) {
 		return children;
+	}
+
+	if (deniedChildren) {
+		return deniedChildren;
 	}
 
 	return <Navigate to={redirectTo} />;

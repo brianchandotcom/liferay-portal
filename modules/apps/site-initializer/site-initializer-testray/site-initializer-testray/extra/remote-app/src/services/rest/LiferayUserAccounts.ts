@@ -40,6 +40,14 @@ class LiferayUserAccountsImpl extends Rest<UserForm, UserAccount> {
 			uri: 'user-accounts',
 		});
 	}
+
+	public async getPagePermission() {
+		const response = await this.getAll();
+
+		const actions = response?.actions ?? {};
+
+		return !!(actions as any)['post-user-account'];
+	}
 }
 
 const liferayUserAccountsImpl = new LiferayUserAccountsImpl();

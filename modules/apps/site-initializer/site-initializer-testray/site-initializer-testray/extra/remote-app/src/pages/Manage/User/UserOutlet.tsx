@@ -12,9 +12,10 @@
  * details.
  */
 
-import {useContext} from 'react';
+import {useContext, useId} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import PageRenderer from '~/components/PageRenderer';
 
 import {TestrayContext} from '../../../context/TestrayContext';
 import {useFetch} from '../../../hooks/useFetch';
@@ -23,33 +24,43 @@ import {UserAccount, liferayUserAccountsImpl} from '../../../services/rest';
 
 const UserOutlet = () => {
 	const {userId} = useParams();
+	const id = useId();
 
 	const [{myUserAccount}, , mutateMyUserAccount] = useContext(TestrayContext);
 
-	const {data, mutate} = useFetch(
+	const {data: userAccount, error, isValidating, loading, mutate} = useFetch(
 		liferayUserAccountsImpl.getResource(userId as string),
 		{
+			params: {customParams: {id}},
 			swrConfig: {shouldFetch: !!userId},
 		}
 	);
 
-	const context = {
-		actions: myUserAccount?.actions,
-		mutateUser: userId
-			? userId === Liferay.ThemeDisplay.getUserId()
-				? (response: KeyedMutator<UserAccount>) => {
-						(mutateMyUserAccount as any)(response);
-						mutate(response);
-				  }
-				: mutate
-			: mutateMyUserAccount,
-		userAccount: userId ? data : myUserAccount,
-	};
-
-	if (!context.userAccount) {
-		return null;
-	}
-
-	return <Outlet context={context} />;
+	return (
+		<PageRenderer error={error} loading={isValidating || loading}>
+			<Outlet
+				context={{
+					actions: userAccount?.actions
+						? {
+								...userAccount?.actions,
+								replace:
+									userAccount?.actions['patch-user-account'],
+								update:
+									userAccount?.actions['put-user-account'],
+						  }
+						: null,
+					mutateUser: userId
+						? userId === Liferay.ThemeDisplay.getUserId()
+							? (response: KeyedMutator<UserAccount>) => {
+									(mutateMyUserAccount as any)(response);
+									mutate(response);
+							  }
+							: mutate
+						: mutateMyUserAccount,
+					userAccount: userId ? userAccount : myUserAccount,
+				}}
+			/>
+		</PageRenderer>
+	);
 };
 export default UserOutlet;

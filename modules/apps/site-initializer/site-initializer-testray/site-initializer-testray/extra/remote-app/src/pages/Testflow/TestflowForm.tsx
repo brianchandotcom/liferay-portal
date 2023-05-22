@@ -178,7 +178,8 @@ const TestflowForm = () => {
 			onSuccess();
 
 			navigate(`/testflow/${response.id}`);
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};
@@ -231,7 +232,8 @@ const TestflowForm = () => {
 	const onSelectAll = () => {
 		if (isCheckedAll) {
 			setValue('caseTypes', []);
-		} else {
+		}
+		else {
 			caseTypes.forEach((caseType, index) => {
 				setValue(`caseTypes.${index}`, caseType.id);
 			});

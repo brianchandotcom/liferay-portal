@@ -294,7 +294,9 @@ definition {
 		}
 
 		task ("When the user edit the task") {
-			TestrayTestflow.editTask(taskName = "Task_2");
+			TestrayTestflow.editTask(
+				taskName = "Task_2",
+				userName = "Lead User");
 
 			TestrayTestflow.goToTestflow();
 		}

@@ -151,14 +151,16 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user edit a task") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
-			TestrayTestflow.editTask(taskName = "Task_2");
+		task ("When the user edit a task") {
+			TestrayTestflow.editTask(
+				taskName = "Task_2",
+				userName = "Analyst User");
 
 			TestrayTestflow.goToTestflow();
 		}
@@ -203,13 +205,13 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user complete a task") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
+		task ("When the user complete a task") {
 			Button.click(button = "Complete");
 		}
 
@@ -231,11 +233,11 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
+
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("When the user created a task") {
-			TestrayTestflow.goToTestflow();
-
 			TestrayTestflow.addTask(
 				checkCaseType = "Compile",
 				selectBuild = "Build 2",
@@ -245,11 +247,11 @@ definition {
 				userName = "Test Test");
 
 			WaitForPageLoad();
-
-			TestrayTestflow.goToTestflow();
 		}
 
 		task ("Then the user can see the Task created") {
+			TestrayTestflow.goToTestflow();
+
 			TestrayTestflow.assertTaskDetails(
 				build = "Build 2",
 				project = ${projectName},
@@ -272,13 +274,15 @@ definition {
 			Navigator.openSiteURL(siteName = "Testray 2");
 		}
 
-		task ("When the user delete a task") {
+		task ("And the user complete a task") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+		}
 
+		task ("When the user delete a task") {
 			TestrayContextMenu.clickContextMenuProjects(name = "Task_1");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -302,19 +306,21 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user edit a task") {
 			TestrayTestflow.goToTestflow();
 
 			TestrayTestflow.goToTask(taskName = "Task_1");
+		}
 
-			TestrayTestflow.editTask(taskName = "Task_2");
-
-			TestrayTestflow.goToTestflow();
+		task ("When the user edit a task") {
+			TestrayTestflow.editTask(
+				taskName = "Task_2",
+				userName = "Lead User");
 		}
 
 		task ("Then the user can see the Task edited") {
+			TestrayTestflow.goToTestflow();
+
 			TestrayTestflow.assertTaskDetails(
 				build = ${buildName},
 				project = ${projectName},
@@ -357,11 +363,11 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
+
+			TestrayTestflow.goToTestflow();
 		}
 
-		task ("When the user cgo to the task") {
-			TestrayTestflow.goToTestflow();
-
+		task ("When the user go to the task") {
 			TestrayTestflow.goToTask(taskName = "Task_1");
 		}
 
@@ -383,11 +389,11 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
+
+			TestrayTestflow.goToTestflow();
 		}
 
 		task ("When the user go to the task") {
-			TestrayTestflow.goToTestflow();
-
 			TestrayTestflow.goToTask(taskName = "Task_1");
 		}
 

@@ -780,6 +780,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"Test Commerce Order Type 2", orderTypeName.get("en_US"));
+
 		Assert.assertTrue(orderType.getActive());
 	}
 

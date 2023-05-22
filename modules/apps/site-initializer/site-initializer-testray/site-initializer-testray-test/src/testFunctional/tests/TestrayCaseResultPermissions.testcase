@@ -319,4 +319,42 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178256 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the case result"
+	@priority = 2
+	test AssertUserRoleCanNotEditCaseResult {
+		property test.name.skip.portal.instance = "TestrayCaseResultPermissions#AssertUserRoleCanNotEditCaseResult";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to case result page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+		}
+
+		task ("When the user right click in case result") {
+			RightClick.rightClick(
+				key_projectName = ${caseName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+
+		task ("Then the user can not edit the case result") {
+			AssertElementNotPresent(
+				item = "Assign to Me",
+				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+		}
+	}
+
 }

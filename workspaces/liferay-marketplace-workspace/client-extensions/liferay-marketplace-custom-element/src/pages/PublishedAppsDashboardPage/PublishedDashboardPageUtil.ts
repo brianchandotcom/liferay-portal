@@ -158,7 +158,7 @@ export const initialAccountsState: Account[] = [
 	},
 ];
 
-export const publisherRoles = ['Account Administrator', 'App Editor'];
+export const publisherRoles = ['Account Administrator', 'App Editor', 'Invited Member'];
 
 export function formatDate(date: string) {
 	const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');

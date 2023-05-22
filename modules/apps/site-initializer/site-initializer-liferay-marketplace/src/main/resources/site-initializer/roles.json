@@ -65,5 +65,11 @@
 		],
 		"name": "App Editor",
 		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"name": "Invited Member",
+		"type": 6
 	}
 ]

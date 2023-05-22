@@ -17,6 +17,7 @@ import {
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 import { getMyUserAccount, getUserAccounts } from '../../utils/api';
 import { DashboardMemberTableRow } from '../../components/DashboardTable/DashboardMemberTableRow';
+import { InviteMemberModal } from '../../components/InviteMemberModal/InviteMemberModal';
 
 interface MembersPageProps {
   dashboardNavigationItems: DashboardListItems[];
@@ -168,30 +169,31 @@ export function MembersPage({
     <>
       {!loading ? (
         <DashboardPage
-         buttonMessage='+ New Member'
-         dashboardNavigationItems={dashboardNavigationItems}
-         messages={memberMessages}
-         onButtonClick={() => setVisible(true)}
+          buttonMessage="+ New Member"
+          dashboardNavigationItems={dashboardNavigationItems}
+          messages={memberMessages}
+          onButtonClick={() => setVisible(true)}
         >
           {selectedMember ? (
             <MemberProfile
               member={selectedMember}
               setSelectedMember={setSelectedMember}
             ></MemberProfile>
-          ) : (<>
-            <DashboardTable<MemberProps>
-              emptyStateMessage={memberMessages.emptyStateMessage}
-              items={members}
-              tableHeaders={memberTableHeaders}
-            >
-              {(item) => (
-                <DashboardMemberTableRow
-                  item={item}
-                  key={item.name}
-                  onSelectedMemberChange={setSelectedMember}
-                />
-              )}
-            </DashboardTable>
+          ) : (
+            <>
+              <DashboardTable<MemberProps>
+                emptyStateMessage={memberMessages.emptyStateMessage}
+                items={members}
+                tableHeaders={memberTableHeaders}
+              >
+                {(item) => (
+                  <DashboardMemberTableRow
+                    item={item}
+                    key={item.name}
+                    onSelectedMemberChange={setSelectedMember}
+                  />
+                )}
+              </DashboardTable>
             </>
           )}
         </DashboardPage>
@@ -205,7 +207,10 @@ export function MembersPage({
       )}
 
       {visible && (
-        <>aaaaaa</>
+        <InviteMemberModal
+          handleClose={() => setVisible(false)}
+          selectedAccount={selectedAccount}
+        ></InviteMemberModal>
       )}
     </>
   );

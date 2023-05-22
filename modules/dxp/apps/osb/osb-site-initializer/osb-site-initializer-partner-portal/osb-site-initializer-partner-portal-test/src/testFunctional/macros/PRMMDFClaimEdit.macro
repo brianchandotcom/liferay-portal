@@ -2,16 +2,12 @@ definition {
 
 	@summary = "Verify that the 'Edit' button is not visible"
 	macro buttonIsNotVisible {
-		AssertNotVisible(
-			key_text = "Edit",
-			locator1 = "Button#ANY");
+		AssertElementNotPresent(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
 	@summary = "Verify that the 'Edit' button is visible"
 	macro buttonIsVisible {
-		AssertVisible(
-			key_text = "Edit",
-			locator1 = "Button#ANY");
+		AssertElementPresent(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
 	@summary = "Change informations about claimed activities"

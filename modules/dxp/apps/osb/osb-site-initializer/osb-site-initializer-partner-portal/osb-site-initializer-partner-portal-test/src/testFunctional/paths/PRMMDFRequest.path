@@ -57,7 +57,17 @@
 </tr>
 <tr>
 	<td>STATUS_BUTTON</td>
-	<td>//div[@Class='status-buttons']//button[contains(text(),'${key_statusButton}')]</td>
+	<td>//div[@class='status-buttons']//button[contains(text(),'${key_statusButton}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_DROPDOWN</td>
+	<td>//button[@id='dropdownMDFRequestStatus']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_OPTION_DROPDOWN</td>
+	<td>//button[@id='dropdownMDFRequestStatus']//following-sibling::ul/li[contains(text(),'${key_statusButton}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,7 +117,7 @@
 </tr>
 <tr>
 	<td>EDIT_MDF_BUTTON</td>
-	<td>//div[contains(@class,'edit-button-mdf-request')]//button[@id='edit-button-${key_roleName}']/div[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'edit-button-mdf-claim')]//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

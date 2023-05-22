@@ -831,7 +831,7 @@ definition {
 				jsonPath = "$.['createDate']",
 				productName = "Simple Product");
 
-			var productCreateDate = DateUtil.format(${productCreateDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "M/d/yy hh:mm a");
+			var productCreateDate = DateUtil.format(${productCreateDate}, "yyyy-MM-dd'T'HH:mm:ss'Z'", "M/d/yy h:m a");
 
 			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "false,false,${productCreateDate},0,false,false,1");
 		}

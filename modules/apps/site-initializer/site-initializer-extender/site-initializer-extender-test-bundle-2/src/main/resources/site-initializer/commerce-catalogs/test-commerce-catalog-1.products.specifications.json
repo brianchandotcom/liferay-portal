@@ -1,6 +1,6 @@
 [
 	{
-		"categoryKey": "",
+		"categoryKey": "test-commerce-specification-key-1",
 		"cpDefinitionExternalReferenceCode": "TESTCOMMERCEPRODUCT1",
 		"description": "",
 		"facetable": false,
@@ -8,6 +8,6 @@
 		"productSpecificationValue": {
 			"en_US": "1"
 		},
-		"title": "Test Product Specification 1"
+		"title": "Test Product Specification 1 update"
 	}
 ]

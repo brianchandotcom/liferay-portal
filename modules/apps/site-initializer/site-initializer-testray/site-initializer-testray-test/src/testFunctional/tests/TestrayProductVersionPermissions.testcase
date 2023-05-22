@@ -65,13 +65,13 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user go to the product version page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
+		}
 
+		task ("When the user go to the product version page") {
 			RightClick.rightClick(
 				key_projectName = ${projectName},
 				locator1 = "Testray#ITEM_NAME");
@@ -95,9 +95,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -107,7 +105,9 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
 
+		task ("When the user right click in product version") {
 			RightClick.rightClick(
 				key_projectName = ${productVersion},
 				locator1 = "Testray#ITEM_NAME");
@@ -131,9 +131,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -143,7 +141,9 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
 
+		task ("When the user right click in product version") {
 			RightClick.rightClick(
 				key_projectName = ${productVersion},
 				locator1 = "Testray#ITEM_NAME");
@@ -167,13 +167,13 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user create the product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
+		}
 
+		task ("When the user create the product version") {
 			TestrayManage.createProductVersion(
 				manageOption = "Manage Product Versions",
 				nameOptions = ${projectName},
@@ -198,9 +198,7 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user delete the product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -208,7 +206,9 @@ definition {
 			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
 
+		task ("When the user delete the product version") {
 			TestrayManage.deleteProductVersion(
 				itemManage = "Delete",
 				versionName = ${productVersion});
@@ -232,9 +232,7 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user edit the product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -242,7 +240,9 @@ definition {
 			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
 
+		task ("When the user edit the product version") {
 			TestrayManage.editProductVersion(
 				caseName = "3.4",
 				itemManage = "Edit",
@@ -267,13 +267,13 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user go to the product version page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
+		}
 
+		task ("When the user go to the product version page") {
 			RightClick.rightClick(
 				key_projectName = ${projectName},
 				locator1 = "Testray#ITEM_NAME");
@@ -297,9 +297,7 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -309,7 +307,9 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
 
+		task ("When the user right click in product version") {
 			RightClick.rightClick(
 				key_projectName = ${productVersion},
 				locator1 = "Testray#ITEM_NAME");
@@ -333,9 +333,7 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in product version") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -345,7 +343,9 @@ definition {
 				locator1 = "Testray#ITEM_NAME");
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+		}
 
+		task ("When the user right click in product version") {
 			RightClick.rightClick(
 				key_projectName = ${productVersion},
 				locator1 = "Testray#ITEM_NAME");

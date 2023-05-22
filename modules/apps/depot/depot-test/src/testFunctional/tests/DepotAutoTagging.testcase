@@ -101,6 +101,10 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
+
 		AssetCategorization.viewTag(tagName = "dxp");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
@@ -325,6 +329,10 @@ definition {
 			webContentTitle = "Digital Transformation or Digital Experience");
 
 		Panel.expandPanel(panel = "Categorization");
+
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
 
 		AssetCategorization.viewTag(tagName = "dxp");
 	}

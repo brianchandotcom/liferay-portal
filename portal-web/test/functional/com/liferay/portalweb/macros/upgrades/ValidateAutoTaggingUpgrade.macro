@@ -134,6 +134,10 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
+
 		for (var tagName : list ${wcTagName}) {
 			AssetCategorization.viewTag(tagName = ${tagName});
 		}
@@ -254,6 +258,10 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
+
 		AssetCategorization.viewTag(tagName = ${tagName});
 
 		if (isSet(depotName)) {
@@ -271,6 +279,10 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
+
 		AssetCategorization.removeTag(tagName = ${tagName});
 
 		AssetCategorization.addTag(tagName = "new tag");
@@ -280,6 +292,10 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		Panel.expandPanel(panel = "Categorization");
+
+		ScrollWebElementIntoView(
+			key_panel = "Schedule",
+			locator1 = "Panel#PANEL");
 
 		AssetCategorization.viewNoTag(tagName = ${tagName});
 

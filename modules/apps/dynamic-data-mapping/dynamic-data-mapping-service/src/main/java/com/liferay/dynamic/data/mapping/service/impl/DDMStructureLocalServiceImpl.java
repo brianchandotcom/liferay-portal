@@ -70,6 +70,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -1543,7 +1544,9 @@ public class DDMStructureLocalServiceImpl
 		structure.setUserId(userId);
 		structure.setParentStructureId(parentStructureId);
 
-		if (Validator.isNotNull(structureKey)) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-184255") &&
+			Validator.isNotNull(structureKey)) {
+
 			structureKey = StringUtil.toUpperCase(structureKey.trim());
 
 			_validateStructureKey(

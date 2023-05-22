@@ -2081,7 +2081,7 @@ public class BundleSiteInitializerTest {
 		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
 
 		Assert.assertEquals(
-			privateChildLayouts.toString(), 1, privateChildLayouts.size());
+			privateChildLayouts.toString(), 2, privateChildLayouts.size());
 
 		Layout privateChildLayout = privateChildLayouts.get(0);
 

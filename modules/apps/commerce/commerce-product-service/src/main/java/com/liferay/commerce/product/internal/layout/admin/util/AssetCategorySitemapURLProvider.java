@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.layout.admin.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -82,22 +83,23 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 
 			List<AssetVocabulary> assetVocabularies =
 				_assetVocabularyService.getGroupVocabularies(
-					company.getGroupId(),
-					group.getName(themeDisplay.getLocale()), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+					company.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
 
-			if (assetVocabularies.size() == 1) {
-				AssetVocabulary assetVocabulary = assetVocabularies.get(0);
+			for (AssetVocabulary assetVocabulary : assetVocabularies) {
+				if (assetVocabulary.getVisibilityType() !=
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
 
-				List<AssetCategory> assetCategories =
-					_assetCategoryService.getVocabularyCategories(
-						assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null);
+					List<AssetCategory> assetCategories =
+						_assetCategoryService.getVocabularyCategories(
+							assetVocabulary.getVocabularyId(),
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-				for (AssetCategory assetCategory : assetCategories) {
-					visitLayout(
-						element, layout, assetCategory.getCategoryId(),
-						themeDisplay);
+					for (AssetCategory assetCategory : assetCategories) {
+						visitLayout(
+							element, layout, assetCategory.getCategoryId(),
+							themeDisplay);
+					}
 				}
 			}
 		}

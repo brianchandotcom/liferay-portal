@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -201,9 +200,11 @@ public class NavigationTag extends IncludeTag {
 	}
 
 	protected String getDisplayStyle() {
+		PortletDisplayTemplate portletDisplayTemplate =
+			ServletContextUtil.getPortletDisplayTemplate();
+
 		if (Validator.isNotNull(_ddmTemplateKey)) {
-			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
-				_ddmTemplateKey);
+			return portletDisplayTemplate.getDisplayStyle(_ddmTemplateKey);
 		}
 
 		return StringPool.BLANK;

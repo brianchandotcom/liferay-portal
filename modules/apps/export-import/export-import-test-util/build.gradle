@@ -12,6 +12,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:layout:layout-test-util")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:ratings:ratings-test-util")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-string")

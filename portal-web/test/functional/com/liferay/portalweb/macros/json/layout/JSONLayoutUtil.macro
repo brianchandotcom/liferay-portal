@@ -97,6 +97,9 @@ definition {
 		else if (${widgetName} == "Dynamic Data Lists Display") {
 			var portletId = "com_liferay_dynamic_data_lists_web_portlet_DDLDisplayPortlet";
 		}
+		else if (${widgetName} == "Elasticsearch Monitoring") {
+			var portletId = "com_liferay_portal_search_elasticsearch_monitoring_portlet_MonitoringPortlet";
+		}
 		else if (${widgetName} == "Folder Facet") {
 			var portletId = "com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet";
 		}

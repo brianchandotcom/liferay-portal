@@ -14,6 +14,7 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":apps:portal-template:portal-template-react-renderer-api")
 	testIntegrationCompile project(":apps:product-navigation:product-navigation-control-menu-api")
 	testIntegrationCompile project(":apps:roles:roles-admin-api")
 	testIntegrationCompile project(":apps:segments:segments-api")

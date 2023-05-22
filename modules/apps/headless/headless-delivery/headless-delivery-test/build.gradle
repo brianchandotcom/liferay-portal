@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationCompile project(":apps:asset:asset-entry-rel-api")
 	testIntegrationCompile project(":apps:asset:asset-list-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:depot:depot-api")

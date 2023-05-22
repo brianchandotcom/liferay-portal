@@ -2205,4 +2205,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for Bug LPS-175090. Permissions are copied when a Page is created as a copy of another Page"
+	@priority = 4
+	test ViewPermissionsPersistedInCopyPage {
+		task ("Given a page designer has a page without view permissions for guest") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Permissions",
+				pageName = "Test Content Page Name");
+
+			IFrame.selectPermissionsFrame();
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
+
+			SelectFrame.selectFrameTop();
+
+			IFrame.closeFrame();
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Content Page Name");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer creates a copy of this page with permissions") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Copy",
+				pageName = "Test Content Page Name");
+
+			DropdownMenuItem.click(menuItem = "Page With Permissions");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Copy Content Page Name");
+
+			Button.click(button = "Add");
+
+			SelectFrame.selectFrameTop();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the copy of page should keep the permissions") {
+			PermissionsInline.gotoPagePG(
+				pageName = "Copy Content Page Name",
+				site = ${randomSiteName});
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_roleTitle = "Guest",
+				locator1 = "Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX");
+		}
+	}
+
 }

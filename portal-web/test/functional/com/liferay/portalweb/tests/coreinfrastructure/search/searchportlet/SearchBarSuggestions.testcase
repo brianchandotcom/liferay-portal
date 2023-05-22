@@ -33,9 +33,13 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Suggestions");
 
-		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
+		Search.openSearchPage();
 
 		SearchPortlets.gotoConfigureSuggestionsOptions();
 
@@ -53,17 +57,7 @@ definition {
 
 		Navigator.openURL();
 
-		ContentPages.gotoPageEditor();
-
-		PageEditor.addWidget(
-			portletName = "Language Selector",
-			targetFragmentName = "Container");
-
-		PageEditor.publish();
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "de-DE",
-			textIcon = "deutsch-Deutschland");
+		Search.openSearchPage(locale = "de-DE");
 
 		for (var searchTerm : list "ächten,angreifen,anmarschieren") {
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});

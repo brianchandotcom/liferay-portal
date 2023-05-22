@@ -249,9 +249,8 @@ public class SegmentsExperienceLocalServiceImpl
 		// Segments experiments
 
 		for (SegmentsExperiment segmentsExperiment :
-				_segmentsExperimentPersistence.findByS_C_C(
+				_segmentsExperimentPersistence.findByS_P(
 					segmentsExperience.getSegmentsExperienceId(),
-					_classNameLocalService.getClassNameId(Layout.class),
 					_getPublishedLayoutPlid(segmentsExperience.getPlid()))) {
 
 			_deleteSegmentsExperiment(segmentsExperiment);
@@ -276,9 +275,8 @@ public class SegmentsExperienceLocalServiceImpl
 
 		if (defaultSegmentsExperience != null) {
 			for (SegmentsExperiment segmentsExperiment :
-					_segmentsExperimentPersistence.findByS_C_C(
+					_segmentsExperimentPersistence.findByS_P(
 						defaultSegmentsExperience.getSegmentsExperienceId(),
-						_classNameLocalService.getClassNameId(Layout.class),
 						_getPublishedLayoutPlid(plid))) {
 
 				_deleteSegmentsExperiment(segmentsExperiment);

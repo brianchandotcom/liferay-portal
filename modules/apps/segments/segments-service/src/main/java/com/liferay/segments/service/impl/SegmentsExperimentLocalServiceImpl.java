@@ -81,7 +81,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment addSegmentsExperiment(
-			long segmentsExperienceId, long classNameId, long classPK,
+			long segmentsExperienceId, long plid,
 			String name, String description, String goal, String goalTarget,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -93,7 +93,7 @@ public class SegmentsExperimentLocalServiceImpl
 		int status = SegmentsExperimentConstants.STATUS_DRAFT;
 
 		_validate(
-			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
+			segmentsExperimentId, segmentsExperienceId, plid,
 			name, goal, status, status);
 
 		SegmentsExperiment segmentsExperiment =
@@ -115,8 +115,7 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperiment.setSegmentsExperienceId(segmentsExperienceId);
 		segmentsExperiment.setSegmentsExperimentKey(
 			String.valueOf(counterLocalService.increment()));
-		segmentsExperiment.setClassNameId(classNameId);
-		segmentsExperiment.setClassPK(classPK);
+		segmentsExperiment.setPlid(plid);
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
@@ -197,12 +196,12 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public void deleteSegmentsExperiments(
-			long segmentsExperienceId, long classNameId, long classPK)
+			long segmentsExperienceId, long plid)
 		throws PortalException {
 
 		List<SegmentsExperiment> segmentsExperiments =
-			segmentsExperimentPersistence.findByS_C_C(
-				segmentsExperienceId, classNameId, classPK);
+			segmentsExperimentPersistence.findByS_P(
+				segmentsExperienceId, plid);
 
 		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
 			segmentsExperimentLocalService.deleteSegmentsExperiment(
@@ -212,12 +211,12 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK,
+		long segmentsExperienceId, long plid,
 		int[] statuses) {
 
 		List<SegmentsExperiment> segmentsExperiments =
-			segmentsExperimentFinder.findByS_C_C_S(
-				segmentsExperienceId, classNameId, classPK, statuses, 0, 1,
+			segmentsExperimentFinder.findByS_P_S(
+				segmentsExperienceId, plid, statuses, 0, 1,
 				null);
 
 		if (segmentsExperiments.isEmpty()) {
@@ -256,19 +255,19 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long segmentsExperienceId, long classNameId, long classPK) {
+		long segmentsExperienceId, long plid) {
 
-		return segmentsExperimentPersistence.findByS_C_C(
-			segmentsExperienceId, classNameId, classPK);
+		return segmentsExperimentPersistence.findByS_P(
+			segmentsExperienceId, plid);
 	}
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-		long[] segmentsExperienceIds, long classNameId, long classPK,
+		long[] segmentsExperienceIds, long plid,
 		int[] statuses, int start, int end) {
 
-		return segmentsExperimentPersistence.findByS_C_C_S(
-			segmentsExperienceIds, classNameId, classPK, statuses, start, end);
+		return segmentsExperimentPersistence.findByS_P_S(
+			segmentsExperienceIds, plid, statuses, start, end);
 	}
 
 	@Override
@@ -282,30 +281,30 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long plid) {
 
-		return segmentsExperimentPersistence.findByG_C_C(
-			groupId, classNameId, classPK);
+		return segmentsExperimentPersistence.findByG_P(
+			groupId, plid);
 	}
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long classNameId, long classPK,
+		long segmentsExperienceId, long plid,
 		int[] statuses,
 		OrderByComparator<SegmentsExperiment> orderByComparator) {
 
-		return segmentsExperimentFinder.findByS_C_C_S(
-			segmentsExperienceId, classNameId, classPK, statuses,
+		return segmentsExperimentFinder.findByS_P_S(
+			segmentsExperienceId, plid, statuses,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 	}
 
 	@Override
 	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK,
+		long segmentsExperienceId, long plid,
 		int[] statuses) {
 
-		int count = segmentsExperimentFinder.countByS_C_C_S(
-			segmentsExperienceId, classNameId, classPK, statuses);
+		int count = segmentsExperimentFinder.countByS_P_S(
+			segmentsExperienceId, plid, statuses);
 
 		if (count > 0) {
 			return true;
@@ -496,9 +495,9 @@ public class SegmentsExperimentLocalServiceImpl
 			JSONUtil.put(
 				"classPK", segmentsExperiment.getSegmentsExperimentId()
 			).put(
-				"referrerClassNameId", segmentsExperiment.getClassNameId()
+				"referrerClassNameId", segmentsExperiment.getPlid()
 			).put(
-				"referrerClassPK", segmentsExperiment.getClassPK()
+				"referrerClassPK", segmentsExperiment.getPlid()
 			).put(
 				"segmentsExperimentKey",
 				segmentsExperiment.getSegmentsExperimentKey()
@@ -513,8 +512,7 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
 			segmentsExperiment.getSegmentsExperienceId(),
-			segmentsExperiment.getClassNameId(),
-			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
+			segmentsExperiment.getPlid(), segmentsExperiment.getStatus(),
 			status, winnerSegmentsExperienceId);
 
 		if (winnerSegmentsExperienceId != -1) {
@@ -565,7 +563,7 @@ public class SegmentsExperimentLocalServiceImpl
 		if ((segmentsExperiment.getSegmentsExperienceId() !=
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
-						segmentsExperiment.getClassPK())) &&
+						segmentsExperiment.getPlid())) &&
 			(statusObject == SegmentsExperimentConstants.Status.COMPLETED) &&
 			(winnerSegmentsExperienceId !=
 				segmentsExperiment.getSegmentsExperienceId())) {
@@ -582,14 +580,14 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _validate(
 			long segmentsExperimentId, long segmentsExperienceId,
-			long classNameId, long classPK, String name, String goal,
+			long plid, String name, String goal,
 			int currentStatus, int newStatus)
 		throws PortalException {
 
 		_validateGoal(goal);
 		_validateName(name);
 		_validateStatus(
-			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
+			segmentsExperimentId, segmentsExperienceId, plid,
 			currentStatus, newStatus, -1);
 	}
 
@@ -672,7 +670,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _validateStatus(
 			long segmentsExperimentId, long segmentsExperienceId,
-			long classNameId, long classPK, int status, int newStatus,
+			long plid, int status, int newStatus,
 			long winnerSegmentsExperienceId)
 		throws SegmentsExperimentStatusException {
 
@@ -684,8 +682,8 @@ public class SegmentsExperimentLocalServiceImpl
 
 		if (newStatusObject.isExclusive()) {
 			List<SegmentsExperiment> segmentsExperiments =
-				segmentsExperimentPersistence.findByS_C_C_S(
-					new long[] {segmentsExperienceId}, classNameId, classPK,
+				segmentsExperimentPersistence.findByS_P_S(
+					new long[] {segmentsExperienceId}, plid,
 					SegmentsExperimentConstants.Status.
 						getExclusiveStatusValues());
 

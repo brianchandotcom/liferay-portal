@@ -48,7 +48,7 @@ public class SegmentsExperienceTableReferenceDefinition
 					SegmentsExperimentTable.INSTANCE.segmentsExperienceId
 				).and(
 					SegmentsExperienceTable.INSTANCE.plid.eq(
-						SegmentsExperimentTable.INSTANCE.classPK)
+						SegmentsExperimentTable.INSTANCE.plid)
 				)
 			)
 		).resourcePermissionReference(

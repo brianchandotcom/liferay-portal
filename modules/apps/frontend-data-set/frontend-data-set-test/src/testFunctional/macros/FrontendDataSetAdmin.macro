@@ -40,6 +40,13 @@ definition {
 		}
 	}
 
+	macro assertFieldsOnTable {
+		AssertElementPresent(
+			key_position = ${key_position},
+			keyName = ${keyName},
+			locator1 = "FrontendDataSetAdmin#FIELDS_TABLE");
+	}
+
 	macro changePagination {
 		Click(locator1 = "FrontendDataSetAdmin#ITEMS_PER_PAGE_SELECT");
 

@@ -693,7 +693,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				Layout.class.getName(), layout.getPlid()),
 			AssetTag.NAME_ACCESSOR);
 
-		Assert.assertEquals(tags.toString(), 2, tags.length);
+		Assert.assertEquals(Arrays.toString(tags), 2, tags.length);
 
 		for (String keyword : keywords) {
 			Assert.assertTrue(

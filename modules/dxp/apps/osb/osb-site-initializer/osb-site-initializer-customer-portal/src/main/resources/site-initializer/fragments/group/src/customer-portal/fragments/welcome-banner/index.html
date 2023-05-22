@@ -1,15 +1,16 @@
-[#assign firstName = themeDisplay.getUser().getFirstName()]
-[#assign lastName = themeDisplay.getUser().getLastName()]
-[#assign languageId = themeDisplay.getLanguageId()]
+[#assign firstName = themeDisplay.getUser().getFirstName()] [#assign lastName =
+themeDisplay.getUser().getLastName()] [#assign languageId =
+themeDisplay.getLanguageId()]
 
-<div class="align-items-center customer-portal-welcome-banner d-flex position-relative">
+<div
+	class="align-items-center customer-portal-welcome-banner d-flex position-relative"
+>
 	<div class="customer-portal-text ml-3 pl-5 text-neutral-0">
 		<div class="mb-4 pb-2">
-			${languageUtil.get(locale, "welcome")},
-			[#if languageId == "ja_JP"]
-				<span class="font-weight-bold">${lastName}様!</span>
+			${languageUtil.get(locale, "welcome")}, [#if languageId == "ja_JP"]
+			<span class="font-weight-bold">${lastName}様!</span>
 			[#else]
-				<span class="font-weight-bold">${firstName}!</span>
+			<span class="font-weight-bold">${firstName}!</span>
 			[/#if]
 		</div>
 
@@ -20,8 +21,27 @@
 				${languageUtil.get(locale,
 				"select-a-project-to-see-your-subscriptions-activate-your-products-and-view-team-members")}
 			</div>
+
+			<div class="text-container">
+				<div class="text-description">
+					${languageUtil.get(locale, "not-sure-how-to-start")}
+				</div>
+
+				<a
+					href="https://help.liferay.com/hc/en-us/sections/8712397409421-Customer-Portal"
+					target="_blank"
+				>
+					<button>
+						<img class="mt-2" src="[resources:Icon Left.svg]" />
+						${languageUtil.get(locale, "watch-onboarding-videos")}
+					</button>
+				</a>
+			</div>
 		</div>
 	</div>
 
-	<img class="customer-portal-welcome-img h-100 position-absolute w-100" src="[resources:banner_background_customer_portal.svg]" />
+	<img
+		class="customer-portal-welcome-img h-100 position-absolute w-100"
+		src="[resources:banner_background_customer_portal.svg]"
+	/>
 </div>

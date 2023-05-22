@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>REMOTE_TABLE_ELLIPSIS</td>
-	<td>//button[contains(@class,'component-action')]</td>
+	<td>xpath=(//button[contains(@class,'component-action')])[2]</td>
 	<td></td>
 </tr>
 <tr>

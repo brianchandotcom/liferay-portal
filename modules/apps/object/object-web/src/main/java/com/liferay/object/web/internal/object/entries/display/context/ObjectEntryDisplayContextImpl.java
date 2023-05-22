@@ -76,6 +76,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1193,7 +1194,9 @@ public class ObjectEntryDisplayContextImpl
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(listEntry.getKey()));
 		}
-		else if (value instanceof Map) {
+		else if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
+				 (value instanceof Map)) {
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				(Map<String, String>)value);
 

@@ -259,6 +259,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsNull();
 		_testPostSiteSitePageSuccessPagePermissionsRoleNonexisting();
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
+		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNonnull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage();
@@ -941,6 +942,27 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageSuccessPagePermissions(
 			expectedPagePermissions, inputPagePermissions);
+	}
+
+	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting()
+		throws Exception {
+
+		TaxonomyCategoryBrief[] inputTaxonomyCategoryBriefs = {
+			new TaxonomyCategoryBrief() {
+				{
+					taxonomyCategoryReference =
+						new TaxonomyCategoryReference() {
+							{
+								externalReferenceCode =
+									RandomTestUtil.randomString();
+							}
+						};
+				}
+			}
+		};
+
+		_testPostSiteSitePageSuccessTaxonomyCategoryBriefs(
+			new TaxonomyCategoryBrief[0], inputTaxonomyCategoryBriefs);
 	}
 
 	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage()

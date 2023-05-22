@@ -199,9 +199,13 @@ definition {
 			version = "1.0",
 			webContentTitle = "WebContent Title 1");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Custom Facet");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 

@@ -452,9 +452,13 @@ definition {
 				sourceFileName = "Document_${count}.docx");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "title");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Custom Facet");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPortlets.searchEmbedded(searchTerm = "title");
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -1201,9 +1205,13 @@ definition {
 			mimeType = "image/png",
 			sourceFileName = "Document_1.png");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Custom Facet");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "extension");
 
@@ -1873,9 +1881,13 @@ definition {
 			groupName = "Guest",
 			title = "WebContent Title 1");
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Custom Facet");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
@@ -1986,9 +1998,13 @@ definition {
 
 		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmFieldValueKeyword\"", 1);
 
-		Search.openSearchPage();
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Guest",
+			layoutName = "Search",
+			widgetName = "Custom Facet");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		Search.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
@@ -2051,9 +2067,15 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		Navigator.gotoPage(pageName = "Search Page");
+		for (var portlet : list "Search Bar,Search Results,Category Facet") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results,Category Facet");
+		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.configureCategoryFacet(
 			groupName = "Guest",
@@ -2141,9 +2163,15 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		Navigator.gotoPage(pageName = "Search Page");
+		for (var portlet : list "Search Bar,Search Results,Category Facet,Category Facet") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
 
-		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results,Category Facet,Category Facet");
+		Navigator.gotoPage(pageName = "Search Page");
 
 		SearchPortlets.configureCategoryFacet(
 			groupName = "Guest",

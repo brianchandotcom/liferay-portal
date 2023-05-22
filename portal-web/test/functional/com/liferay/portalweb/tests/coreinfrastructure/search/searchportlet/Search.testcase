@@ -2345,9 +2345,17 @@ definition {
 			serviceContext = ${webContentServiceContext},
 			title = "WC Title");
 
+		for (var portlet : list "Custom Filter,Suggestions,Search Results,Search Bar") {
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Search Page",
+				widgetName = ${portlet});
+		}
+
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Filter,Sort,Suggestions,Search Results,Search Bar");
+		SearchPortlets.addWidgets(searchPortletList = "Sort");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Search Results");
 

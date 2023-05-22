@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -73,13 +73,20 @@ public class GroupItemSelectorProviderImpl
 			).build();
 
 		try {
-			return _filterGroups(
-				_groupLocalService.search(
-					companyId, _classNameIds, keywords, groupParams, start, end,
-					null));
+			List<Group> groups = _groupLocalService.search(
+				companyId, _classNameIds, keywords, groupParams, start, end,
+				null);
+
+			return ListUtil.filter(
+				groups,
+				(startIndex, endIndex) -> _groupLocalService.search(
+					companyId, _classNameIds, keywords, groupParams, startIndex,
+					endIndex, null),
+				() -> getGroupsCount(companyId, groupId, keywords),
+				group -> _hasViewPermission(group), start, end);
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		catch (Exception exception) {
+			_log.error(exception);
 
 			return Collections.emptyList();
 		}
@@ -120,25 +127,26 @@ public class GroupItemSelectorProviderImpl
 		};
 	}
 
-	private List<Group> _filterGroups(List<Group> groups)
-		throws PortalException {
+	private boolean _hasViewPermission(Group group) {
+		try {
+			PermissionChecker permissionChecker =
+				GuestOrUserUtil.getPermissionChecker();
 
-		List<Group> filteredGroups = new ArrayList<>();
-
-		PermissionChecker permissionChecker =
-			GuestOrUserUtil.getPermissionChecker();
-
-		for (Group group : groups) {
 			if (group.isCompany() ||
 				permissionChecker.isGroupAdmin(group.getGroupId()) ||
 				_groupPermission.contains(
 					permissionChecker, group, ActionKeys.VIEW)) {
 
-				filteredGroups.add(group);
+				return true;
 			}
-		}
 
-		return filteredGroups;
+			return false;
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

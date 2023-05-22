@@ -59,7 +59,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,6 +98,21 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				_objectDefinitionLocalService,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						"First Name", "firstName", true)));
+
+		_modifiableSystemObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				_modifiableSystemObjectDefinition.getObjectDefinitionId());
+
 		_objectDefinition1 = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
 			Arrays.asList(
@@ -125,33 +139,8 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
 
-		_modifiableSystemObjectDefinition =
-			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				_objectDefinitionLocalService,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						"First Name", "firstName", true)));
-
-		_modifiableSystemObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_modifiableSystemObjectDefinition.getObjectDefinitionId());
-
 		_systemObjectDefinition2 = _addSystemObjectDefinition(
 			"/o/test-endpoint/entries");
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -270,56 +259,73 @@ public class ObjectRelationshipLocalServiceTest {
 				message.contains("Invalid type for system object definition"));
 		}
 
+		// Many to Many deletion type cascade
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectDefinition1, _systemObjectDefinition2);
+
+		// Many to Many deletion type disassociate
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			_objectDefinition1, _systemObjectDefinition2);
+
+		// Many to Many deletion type prevent
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_objectDefinition1, _systemObjectDefinition2);
+
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_systemObjectDefinition2, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipManyToMany(
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			_systemObjectDefinition2, _objectDefinition1);
+
+		// One to Many
+
 		_testAddObjectRelationshipOneToMany(
 			_modifiableSystemObjectDefinition, _objectDefinition1);
 		_testAddObjectRelationshipOneToMany(
 			_modifiableSystemObjectDefinition, _systemObjectDefinition2);
+
 		_testAddObjectRelationshipOneToMany(
 			_objectDefinition1, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipOneToMany(
 			_objectDefinition1, _systemObjectDefinition2);
+
 		_testAddObjectRelationshipOneToMany(
 			_systemObjectDefinition2, _modifiableSystemObjectDefinition);
 		_testAddObjectRelationshipOneToMany(
@@ -459,13 +465,10 @@ public class ObjectRelationshipLocalServiceTest {
 
 		ObjectDefinition systemObjectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				_objectDefinitionLocalService,
+				_objectDefinitionLocalService, RandomTestUtil.randomString(),
+				"A" + RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

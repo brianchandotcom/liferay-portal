@@ -74,12 +74,10 @@ public class ObjectFieldServiceTest {
 			_objectDefinitionLocalService);
 		_systemObjectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), "Test", null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				_objectDefinitionLocalService,
+				_objectDefinitionLocalService, RandomTestUtil.randomString(),
+				"A" + RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
 				Collections.<ObjectField>emptyList());
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =

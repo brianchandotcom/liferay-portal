@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Guilherme Camacho
@@ -33,19 +31,16 @@ import java.util.Map;
 public class ObjectDefinitionTestUtil {
 
 	public static ObjectDefinition addModifiableSystemObjectDefinition(
-			long userId, String dbTableName, Map<Locale, String> labelMap,
-			String name, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, String titleObjectFieldName, int version,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			List<ObjectField> objectFields)
+			String scope, List<ObjectField> objectFields)
 		throws Exception {
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, null, dbTableName, false, labelMap, true, name, null, null,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			titleObjectFieldName, version, WorkflowConstants.STATUS_DRAFT,
-			objectFields);
+			TestPropsValues.getUserId(), null, null, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			true, "Test", null, null, null, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			scope, null, 1, WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
 	public static ObjectDefinition addObjectDefinition(
@@ -70,20 +65,17 @@ public class ObjectDefinitionTestUtil {
 	}
 
 	public static ObjectDefinition addUnmodifiableSystemObjectDefinition(
-			long userId, String className, String dbTableName,
-			Map<Locale, String> labelMap, String name,
-			String pkObjectFieldDBColumnName, String pkObjectFieldName,
-			Map<Locale, String> pluralLabelMap, String scope,
-			String titleObjectFieldName, int version,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			List<ObjectField> objectFields)
+			String label, String name, String pluralLabel, String scope,
+			int version, List<ObjectField> objectFields)
 		throws Exception {
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			userId, className, dbTableName, false, labelMap, false, name, null,
-			null, pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
-			scope, titleObjectFieldName, version,
-			WorkflowConstants.STATUS_APPROVED, objectFields);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), null,
+			false, LocalizedMapUtil.getLocalizedMap(label), false, name, null,
+			null, null, null, LocalizedMapUtil.getLocalizedMap(pluralLabel),
+			scope, null, version, WorkflowConstants.STATUS_APPROVED,
+			objectFields);
 	}
 
 }

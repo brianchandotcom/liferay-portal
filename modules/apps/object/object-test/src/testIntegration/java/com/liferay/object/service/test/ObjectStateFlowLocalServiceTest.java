@@ -88,95 +88,71 @@ public class ObjectStateFlowLocalServiceTest {
 		_step2ListTypeEntry = _addListTypeEntry("step2");
 		_step3ListTypeEntry = _addListTypeEntry("step3");
 
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList());
-
-		ObjectField objectField = _createPicklistObjectField(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectStateFlow =
-			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				objectField.getObjectFieldId());
-
 		_modifiableSystemObjectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				_objectDefinitionLocalService,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 						"First Name", "firstName", true)));
 
-		objectField = _createPicklistObjectField(
+		_modifiableObjectStateFlow = _getObjectStateFlow(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId());
 
-		_modifiableObjectStateFlow =
-			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
-				objectField.getObjectFieldId());
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService, Collections.emptyList());
+
+		_objectStateFlow = _getObjectStateFlow(
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
 	public void testAddDefaultObjectStateFlow() throws Exception {
 		_testAddDefaultObjectStateFlow(
-			_objectDefinition.getObjectDefinitionId());
-
-		_testAddDefaultObjectStateFlow(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId());
+		_testAddDefaultObjectStateFlow(
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
 	public void testAddListTypeEntry() throws Exception {
-		_testAddListTypeEntry(_objectStateFlow.getObjectStateFlowId());
-
 		_testAddListTypeEntry(
 			_modifiableObjectStateFlow.getObjectStateFlowId());
+		_testAddListTypeEntry(_objectStateFlow.getObjectStateFlowId());
 	}
 
 	@Test
 	public void testDeleteListType() throws Exception {
 		_testDeleteListType(
 			_step1ListTypeEntry.getListTypeEntryId(),
-			_objectStateFlow.getObjectStateFlowId());
+			_modifiableObjectStateFlow.getObjectStateFlowId());
 		_testDeleteListType(
 			_step2ListTypeEntry.getListTypeEntryId(),
-			_modifiableObjectStateFlow.getObjectStateFlowId());
+			_objectStateFlow.getObjectStateFlowId());
 	}
 
 	@Test
 	public void testDeleteObjectFieldObjectStateFlow() throws Exception {
 		_testDeleteObjectFieldObjectStateFlow(
-			_objectDefinition.getObjectDefinitionId());
-
-		_testDeleteObjectFieldObjectStateFlow(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId());
+		_testDeleteObjectFieldObjectStateFlow(
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
 	public void testUpdateDefaultObjectStateFlow() throws Exception {
 		_testUpdateDefaultObjectStateFlow(
-			_objectDefinition.getObjectDefinitionId());
-
-		_testUpdateDefaultObjectStateFlow(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId());
+		_testUpdateDefaultObjectStateFlow(
+			_objectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
 	public void testUpdateObjectStateTransitions() throws Exception {
-		_testUpdateObjectStateTransitions(_objectStateFlow, "step4");
-
-		_testUpdateObjectStateTransitions(_modifiableObjectStateFlow, "step5");
+		_testUpdateObjectStateTransitions(_modifiableObjectStateFlow, "step4");
+		_testUpdateObjectStateTransitions(_objectStateFlow, "step5");
 	}
 
 	private ListTypeEntry _addListTypeEntry(String key) throws Exception {
@@ -186,8 +162,7 @@ public class ObjectStateFlowLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(key));
 	}
 
-	private ObjectField _addObjectField(
-			long objectDefinitionId, long listTypeDefinitionId, boolean state)
+	private ObjectField _addObjectField(long objectDefinitionId, boolean state)
 		throws Exception {
 
 		List<ObjectFieldSetting> objectFieldSettings = Collections.emptyList();
@@ -209,8 +184,9 @@ public class ObjectStateFlowLocalServiceTest {
 		}
 
 		return _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), listTypeDefinitionId,
-			objectDefinitionId, ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
+			null, TestPropsValues.getUserId(),
+			_listTypeDefinition.getListTypeDefinitionId(), objectDefinitionId,
+			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
 			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			false, StringUtil.randomId(), true, state, objectFieldSettings);
@@ -275,10 +251,10 @@ public class ObjectStateFlowLocalServiceTest {
 				ObjectState::getListTypeEntryId));
 	}
 
-	private ObjectField _createPicklistObjectField(long objectDefinitionId)
+	private ObjectStateFlow _getObjectStateFlow(long objectDefinitionId)
 		throws Exception {
 
-		return _objectFieldLocalService.addCustomObjectField(
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), objectDefinitionId,
 			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
@@ -298,6 +274,9 @@ public class ObjectStateFlowLocalServiceTest {
 				).value(
 					ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 				).build()));
+
+		return _objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+			objectField.getObjectFieldId());
 	}
 
 	private void _testAddDefaultObjectStateFlow(long objectDefinitionId)
@@ -305,13 +284,9 @@ public class ObjectStateFlowLocalServiceTest {
 
 		Assert.assertNull(
 			_objectStateFlowLocalService.addDefaultObjectStateFlow(
-				_addObjectField(
-					objectDefinitionId,
-					_listTypeDefinition.getListTypeDefinitionId(), false)));
+				_addObjectField(objectDefinitionId, false)));
 
-		ObjectField objectField = _addObjectField(
-			objectDefinitionId, _listTypeDefinition.getListTypeDefinitionId(),
-			true);
+		ObjectField objectField = _addObjectField(objectDefinitionId, true);
 
 		ObjectStateFlow objectStateFlow =
 			_objectStateFlowLocalService.addDefaultObjectStateFlow(objectField);
@@ -399,9 +374,7 @@ public class ObjectStateFlowLocalServiceTest {
 	private void _testDeleteObjectFieldObjectStateFlow(long objectDefinitionId)
 		throws Exception {
 
-		ObjectField objectField = _addObjectField(
-			objectDefinitionId, _listTypeDefinition.getListTypeDefinitionId(),
-			true);
+		ObjectField objectField = _addObjectField(objectDefinitionId, true);
 
 		ObjectStateFlow objectStateFlow =
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
@@ -442,9 +415,7 @@ public class ObjectStateFlowLocalServiceTest {
 			_objectStateFlowLocalService.updateDefaultObjectStateFlow(
 				objectFieldBuilder.build(), objectFieldBuilder.build()));
 
-		ObjectField objectField1 = _addObjectField(
-			objectDefinitionId, _listTypeDefinition.getListTypeDefinitionId(),
-			true);
+		ObjectField objectField1 = _addObjectField(objectDefinitionId, true);
 
 		Assert.assertNotNull(
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
@@ -458,9 +429,7 @@ public class ObjectStateFlowLocalServiceTest {
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
 				objectField1.getObjectFieldId()));
 
-		ObjectField objectField2 = _addObjectField(
-			objectDefinitionId, _listTypeDefinition.getListTypeDefinitionId(),
-			false);
+		ObjectField objectField2 = _addObjectField(objectDefinitionId, false);
 
 		Assert.assertNull(
 			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(

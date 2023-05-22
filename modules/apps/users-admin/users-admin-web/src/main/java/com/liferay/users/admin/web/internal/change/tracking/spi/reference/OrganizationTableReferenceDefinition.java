@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.spi.reference;
+package com.liferay.users.admin.web.internal.change.tracking.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.CountryTable;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.ListTypeTable;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationTable;
+import com.liferay.portal.kernel.model.PhoneTable;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
@@ -47,6 +49,38 @@ public class OrganizationTableReferenceDefinition
 			childTableReferenceInfoBuilder) {
 
 		childTableReferenceInfoBuilder.referenceInnerJoin(
+			fromStep -> fromStep.from(
+				AddressTable.INSTANCE
+			).innerJoinON(
+				OrganizationTable.INSTANCE,
+				OrganizationTable.INSTANCE.organizationId.eq(
+					AddressTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					AddressTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(
+						Organization.class.getName())
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				EmailAddressTable.INSTANCE
+			).innerJoinON(
+				OrganizationTable.INSTANCE,
+				OrganizationTable.INSTANCE.organizationId.eq(
+					EmailAddressTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					EmailAddressTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(
+						Organization.class.getName())
+				)
+			)
+		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE
 			).innerJoinON(
@@ -76,15 +110,15 @@ public class OrganizationTableReferenceDefinition
 			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
-				EmailAddressTable.INSTANCE
+				PhoneTable.INSTANCE
 			).innerJoinON(
 				OrganizationTable.INSTANCE,
 				OrganizationTable.INSTANCE.organizationId.eq(
-					EmailAddressTable.INSTANCE.classPK)
+					PhoneTable.INSTANCE.classPK)
 			).innerJoinON(
 				ClassNameTable.INSTANCE,
 				ClassNameTable.INSTANCE.classNameId.eq(
-					EmailAddressTable.INSTANCE.classNameId
+					PhoneTable.INSTANCE.classNameId
 				).and(
 					ClassNameTable.INSTANCE.value.eq(
 						Organization.class.getName())

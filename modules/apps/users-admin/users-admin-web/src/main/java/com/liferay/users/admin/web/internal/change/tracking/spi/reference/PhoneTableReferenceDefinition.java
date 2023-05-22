@@ -12,17 +12,12 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.spi.reference;
+package com.liferay.users.admin.web.internal.change.tracking.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ContactTable;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.PhoneTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -52,39 +47,8 @@ public class PhoneTableReferenceDefinition
 		ParentTableReferenceInfoBuilder<PhoneTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.referenceInnerJoin(
-			fromStep -> fromStep.from(
-				ContactTable.INSTANCE
-			).innerJoinON(
-				PhoneTable.INSTANCE,
-				PhoneTable.INSTANCE.classPK.eq(ContactTable.INSTANCE.contactId)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					PhoneTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(Contact.class.getName())
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				OrganizationTable.INSTANCE
-			).innerJoinON(
-				PhoneTable.INSTANCE,
-				PhoneTable.INSTANCE.classPK.eq(
-					OrganizationTable.INSTANCE.organizationId)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					PhoneTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(
-						Organization.class.getName())
-				)
-			)
-		).singleColumnReference(
-			PhoneTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		);
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			PhoneTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

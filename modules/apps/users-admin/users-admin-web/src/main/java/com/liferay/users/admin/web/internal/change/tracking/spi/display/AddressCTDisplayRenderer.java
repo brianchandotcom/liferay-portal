@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.spi.display;
+package com.liferay.users.admin.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
@@ -21,8 +21,16 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,6 +42,30 @@ import org.osgi.service.component.annotations.Reference;
 public class AddressCTDisplayRenderer extends BaseCTDisplayRenderer<Address> {
 
 	@Override
+	public String getEditURL(
+			HttpServletRequest httpServletRequest, Address address)
+		throws PortalException {
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, null, UsersAdminPortletKeys.USERS_ADMIN, 0,
+				0, PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/common/edit_address.jsp"
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setBackURL(
+			ParamUtil.getString(httpServletRequest, "backURL")
+		).setParameter(
+			"className", address.getClassName()
+		).setParameter(
+			"classPK", address.getClassPK()
+		).setParameter(
+			"primaryKey", address.getAddressId()
+		).buildString();
+	}
+
+	@Override
 	public Class<Address> getModelClass() {
 		return Address.class;
 	}
@@ -43,11 +75,6 @@ public class AddressCTDisplayRenderer extends BaseCTDisplayRenderer<Address> {
 		throws PortalException {
 
 		return address.getName();
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return _language.get(locale, "address");
 	}
 
 	@Override
@@ -99,5 +126,8 @@ public class AddressCTDisplayRenderer extends BaseCTDisplayRenderer<Address> {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

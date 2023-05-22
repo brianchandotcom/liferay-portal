@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.closure.CTClosureFactory;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.exception.CTEnclosureException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -136,23 +135,11 @@ public class CTCollectionServiceTest {
 				_ctCollection.getCtCollectionId(), articleClassNameId,
 				article.getPrimaryKey()));
 
-		try {
-			_ctCollectionService.discardCTEntry(
-				_ctCollection.getCtCollectionId(), articleClassNameId,
-				article.getPrimaryKey());
+		_ctCollectionService.discardCTEntry(
+			_ctCollection.getCtCollectionId(), articleClassNameId,
+			article.getPrimaryKey());
 
-			Assert.fail();
-		}
-		catch (CTEnclosureException ctEnclosureException) {
-			Assert.assertEquals(
-				StringBundler.concat(
-					"{classNameId=", folderClassNameId, ", classPK=",
-					folder.getPrimaryKey(), ", ctCollectionId=",
-					_ctCollection.getCtCollectionId(), "}"),
-				ctEnclosureException.getMessage());
-		}
-
-		Assert.assertNotNull(
+		Assert.assertNull(
 			_ctEntryLocalService.fetchCTEntry(
 				_ctCollection.getCtCollectionId(), articleClassNameId,
 				article.getPrimaryKey()));

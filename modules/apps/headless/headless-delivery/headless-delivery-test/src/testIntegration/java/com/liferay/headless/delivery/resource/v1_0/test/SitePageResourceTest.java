@@ -261,6 +261,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNonnull();
+		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage();
 	}
 
 	@Override
@@ -940,6 +941,60 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageSuccessPagePermissions(
 			expectedPagePermissions, inputPagePermissions);
+	}
+
+	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefNonsitePage()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				irrelevantGroup.getCreatorUserId(),
+				irrelevantGroup.getGroupId(), RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					irrelevantGroup.getGroupId()));
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			RandomTestUtil.randomString(), irrelevantGroup.getCreatorUserId(),
+			irrelevantGroup.getGroupId(), 0,
+			RandomTestUtil.randomLocaleStringMap(), null,
+			assetVocabulary.getVocabularyId(), null,
+			ServiceContextTestUtil.getServiceContext(
+				irrelevantGroup.getGroupId()));
+
+		TaxonomyCategoryBrief[] expectedTaxonomyCategoryBriefs = {
+			new TaxonomyCategoryBrief() {
+				{
+					taxonomyCategoryId = assetCategory.getCategoryId();
+					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryReference =
+						new TaxonomyCategoryReference() {
+							{
+								externalReferenceCode =
+									assetCategory.getExternalReferenceCode();
+								siteKey = irrelevantGroup.getGroupKey();
+							}
+						};
+				}
+			}
+		};
+
+		TaxonomyCategoryBrief[] inputTaxonomyCategoryBriefs = {
+			new TaxonomyCategoryBrief() {
+				{
+					taxonomyCategoryReference =
+						new TaxonomyCategoryReference() {
+							{
+								externalReferenceCode =
+									assetCategory.getExternalReferenceCode();
+								siteKey = irrelevantGroup.getGroupKey();
+							}
+						};
+				}
+			}
+		};
+
+		_testPostSiteSitePageSuccessTaxonomyCategoryBriefs(
+			expectedTaxonomyCategoryBriefs, inputTaxonomyCategoryBriefs);
 	}
 
 	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefs(

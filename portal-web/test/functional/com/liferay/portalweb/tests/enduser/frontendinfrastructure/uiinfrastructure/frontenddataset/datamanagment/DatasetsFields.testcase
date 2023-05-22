@@ -97,12 +97,25 @@ definition {
 	}
 
 	@description = "LPS-185226. Confirm that the user can add a field"
-	@ignore = "true"
 	@priority = 5
 	test CanAddField {
+		task ("And clicks on Add Fields button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185226 CanAddField pending implementation
+		task ("And checks id field") {
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
+		}
 
+		task ("And clicks on Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then the added fields are shown on Fields tab page") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "id");
+		}
 	}
 
 	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."

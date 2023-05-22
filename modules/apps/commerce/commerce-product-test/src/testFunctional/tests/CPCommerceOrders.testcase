@@ -914,6 +914,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11386. As admin, I can cancel an order without getting an error in the log."
+	@priority = 5
+	test CanCancelOrder {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site with an account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And an order is placed") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+		}
+
+		task ("When the order is canceled") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Cancel",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Then there is no error in the log") {
+			AssertConsoleTextNotPresent(value1 = "NoSuchInventoryBookedQuantityException");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6210. Shipment cancelled"
 	@ignore = "true"
 	@priority = 3

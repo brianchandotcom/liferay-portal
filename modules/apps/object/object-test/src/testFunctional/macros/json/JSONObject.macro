@@ -118,7 +118,7 @@ definition {
 		if (!(isSet(fieldList))) {
 			Variables.assertDefined(parameterList = "${fieldName},${fieldValue}");
 
-			var entryValues = "{\"${fieldName}\": \"${fieldValue}\"}";
+			var entryValues = "\"${fieldName}\": \"${fieldValue}\"";
 		}
 		else {
 			Variables.assertDefined(parameterList = ${fieldList});

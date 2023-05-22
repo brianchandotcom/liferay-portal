@@ -20,6 +20,7 @@ import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemRegistry;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
+import com.liferay.analytics.reports.web.internal.constants.ProductNavigationControlMenuEntryConstants;
 import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderRegistry;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -59,7 +59,6 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -130,7 +129,11 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 		Map<String, String> values = new HashMap<>();
 
-		if (isPanelStateOpen(httpServletRequest)) {
+		if (isPanelStateOpen(
+				httpServletRequest,
+				ProductNavigationControlMenuEntryConstants.
+					SESSION_CLICKS_KEY)) {
+
 			values.put("cssClass", "active");
 		}
 		else {
@@ -165,17 +168,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
 
 		return true;
-	}
-
-	public boolean isPanelStateOpen(HttpServletRequest httpServletRequest) {
-		String analyticsReportsPanelState = SessionClicks.get(
-			httpServletRequest, _SESSION_CLICKS_KEY, "closed");
-
-		if (Objects.equals(analyticsReportsPanelState, "open")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -237,12 +229,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		}
 
 		return super.isShow(httpServletRequest);
-	}
-
-	public void setPanelState(
-		HttpServletRequest httpServletRequest, String panelState) {
-
-		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
 	}
 
 	@Activate
@@ -336,7 +322,11 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			sb.append("<div class=\"");
 
-			if (isPanelStateOpen(httpServletRequest)) {
+			if (isPanelStateOpen(
+					httpServletRequest,
+					ProductNavigationControlMenuEntryConstants.
+						SESSION_CLICKS_KEY)) {
+
 				sb.append("lfr-has-analytics-reports-panel open-admin-panel ");
 			}
 
@@ -392,7 +382,11 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 						"analyticsReportsDataURL",
 						_getAnalyticsReportsURL(httpServletRequest)
 					).put(
-						"isPanelStateOpen", isPanelStateOpen(httpServletRequest)
+						"isPanelStateOpen",
+						isPanelStateOpen(
+							httpServletRequest,
+							ProductNavigationControlMenuEntryConstants.
+								SESSION_CLICKS_KEY)
 					).build()
 				).put(
 					"portletNamespace", _portletNamespace
@@ -408,9 +402,6 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(
 		AnalyticsReportsProductNavigationControlMenuEntry.class, "icon.tmpl");
-
-	private static final String _SESSION_CLICKS_KEY =
-		"com.liferay.analytics.reports.web_panelState";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsReportsProductNavigationControlMenuEntry.class);

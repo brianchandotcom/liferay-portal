@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.template;
 
+import com.liferay.analytics.reports.web.internal.constants.ProductNavigationControlMenuEntryConstants;
 import com.liferay.analytics.reports.web.internal.product.navigation.control.menu.AnalyticsReportsProductNavigationControlMenuEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -57,7 +58,9 @@ public class AnalyticsReportsTemplateContextContributor
 		}
 
 		if (_analyticsReportsProductNavigationControlMenuEntry.isPanelStateOpen(
-				httpServletRequest)) {
+				httpServletRequest,
+				ProductNavigationControlMenuEntryConstants.
+					SESSION_CLICKS_KEY)) {
 
 			String cssClass = GetterUtil.getString(
 				contextObjects.get("bodyCssClass"));

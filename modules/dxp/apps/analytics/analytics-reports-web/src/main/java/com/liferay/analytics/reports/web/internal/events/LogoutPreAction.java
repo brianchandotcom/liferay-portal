@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.events;
 
+import com.liferay.analytics.reports.web.internal.constants.ProductNavigationControlMenuEntryConstants;
 import com.liferay.analytics.reports.web.internal.product.navigation.control.menu.AnalyticsReportsProductNavigationControlMenuEntry;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
@@ -38,7 +39,9 @@ public class LogoutPreAction extends Action {
 		throws ActionException {
 
 		_analyticsReportsProductNavigationControlMenuEntry.setPanelState(
-			httpServletRequest, "closed");
+			httpServletRequest,
+			ProductNavigationControlMenuEntryConstants.SESSION_CLICKS_KEY,
+			"closed");
 	}
 
 	@Reference

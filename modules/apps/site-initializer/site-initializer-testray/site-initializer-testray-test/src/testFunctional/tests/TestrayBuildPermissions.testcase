@@ -113,15 +113,15 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user go to the build page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = ${projectName});
+		}
 
+		task ("When the user go to the build page") {
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
 		}
 
@@ -141,9 +141,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When The user right click in build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -151,7 +149,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When The user right click in build") {
 			RightClick.rightClick(
 				key_projectName = ${buildName},
 				locator1 = "Testray#ITEM_NAME");
@@ -175,9 +175,7 @@ definition {
 				userLoginFullName = "Analyst User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -185,7 +183,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When the user right click in build") {
 			RightClick.rightClick(
 				key_projectName = ${buildName},
 				locator1 = "Testray#ITEM_NAME");
@@ -209,9 +209,7 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user create a build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -219,7 +217,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When the user create a build") {
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = "Build 2",
 				caseName = ${caseName},
@@ -246,9 +246,7 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user delete a build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -256,7 +254,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When the user delete a build") {
 			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
@@ -282,9 +282,7 @@ definition {
 				userLoginFullName = "Lead User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user edit a build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -292,7 +290,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When the user edit a build") {
 			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
 
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
@@ -323,15 +323,15 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user go to the build page") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
 			Testray.goToProjectPage(projectName = ${projectName});
+		}
 
+		task ("When the user go to the build page") {
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
 		}
 
@@ -351,9 +351,7 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When The user right click in build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -361,7 +359,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When The user right click in build") {
 			RightClick.rightClick(
 				key_projectName = ${buildName},
 				locator1 = "Testray#ITEM_NAME");
@@ -385,9 +385,7 @@ definition {
 				userLoginFullName = "User User");
 
 			Navigator.openSiteURL(siteName = "Testray 2");
-		}
 
-		task ("When the user right click in build") {
 			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
@@ -395,7 +393,9 @@ definition {
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
 
+		task ("When the user right click in build") {
 			RightClick.rightClick(
 				key_projectName = ${buildName},
 				locator1 = "Testray#ITEM_NAME");

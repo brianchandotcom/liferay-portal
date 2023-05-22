@@ -213,7 +213,7 @@ definition {
 
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
 	@priority = 5
-	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSession {
+	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSession {
 		property portal.release = "false";
 
 		task ("When go to edit content page") {
@@ -337,7 +337,7 @@ definition {
 
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session and widget to Highlighted session on content page."
 	@priority = 5
-	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToighlightedSessionOnReleaseBundle {
+	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSessionOnReleaseBundle {
 		property portal.upstream = "false";
 
 		task ("When go to edit content page") {

@@ -110,8 +110,16 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12663 | Test Summary: Can search for groups in the select contacts modal"
 	@priority = 4
 	test CanSearchGroupsInContactsModal {
-		var foundUserGroup = "LXC UserGroup";
-		var notFoundUserGroup = "AC UserGroup,DXP UserGroup";
+		var foundUserGroup = "LXC";
+		var notFoundUserGroup = "AC,DXP";
+
+		task ("Create some user groups") {
+			for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
+				JSONUserGroup.addUserGroup(
+					userGroupDescription = "UserGroup Description",
+					userGroupName = ${userGroupName});
+			}
+		}
 
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
@@ -138,14 +146,6 @@ definition {
 			Click(
 				key_text = "Next",
 				locator1 = "Button#ANY");
-		}
-
-		task ("Create some user groups") {
-			for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
-				JSONUserGroup.addUserGroup(
-					userGroupDescription = "UserGroup Description",
-					userGroupName = ${userGroupName});
-			}
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {
@@ -224,6 +224,15 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
 	@priority = 4
 	test CanSearchOrganizationsInContactsModal {
+		var foundOrganizations = "Minium";
+		var notFoundOrganizations = "Canada,Italy";
+
+		task ("Create 3 organizations") {
+			for (var organizationName : list "${foundOrganizations},${notFoundOrganizations}") {
+				JSONOrganization.addOrganization(organizationName = ${organizationName});
+			}
+		}
+
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
@@ -262,13 +271,13 @@ definition {
 		}
 
 		task ("Search for an organization and assert the result") {
-			ACUtils.searchBar(searchItem = "Minium");
+			ACUtils.searchBar(searchItem = ${foundOrganizations});
 
 			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
 
-			ACDXPSettings.viewGenericListItem(itemValueList = "Minium");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundOrganizations});
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Canada,Italy,United States");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundOrganizations});
 		}
 	}
 
@@ -844,6 +853,12 @@ definition {
 		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
 		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
 
+		task ("Create 5 organizations") {
+			for (var organizationName : list "${orgNamePageListUp}") {
+				JSONOrganization.addOrganization(organizationName = ${organizationName});
+			}
+		}
+
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
@@ -869,10 +884,6 @@ definition {
 			Click(
 				key_text = "Next",
 				locator1 = "Button#ANY");
-		}
-
-		task ("Create an organization") {
-			JSONOrganization.addOrganization(organizationName = "england");
 		}
 
 		task ("Click on sync by organizations") {
@@ -1259,6 +1270,15 @@ definition {
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
 	@priority = 4
 	test CheckIsPossiblePaginateOrganizations {
+		var firstPageList = "Brazil,Canada,France,Italy,Minium";
+		var secondPageList = "United States";
+
+		task ("Create 6 organizations") {
+			for (var organizationName : list "${firstPageList},${secondPageList}") {
+				JSONOrganization.addOrganization(organizationName = ${organizationName});
+			}
+		}
+
 		task ("Connect Commerce and AC") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
@@ -1286,12 +1306,6 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-		task ("Create 2 organizations") {
-			for (var organizationName : list "Brazil,France") {
-				JSONOrganization.addOrganization(organizationName = ${organizationName});
-			}
-		}
-
 		task ("Click on sync by organizations") {
 			Click(
 				key_panel = "Select Contacts",
@@ -1307,17 +1321,17 @@ definition {
 		}
 
 		task ("See that there's only 5 organizations present in the list on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = "Brazil,Canada,France,Italy,Minium");
+			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "United States");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${secondPageList});
 		}
 
 		task ("Go to the second page and see that there's only one organization in the list") {
 			ACUtils.checkAnyPage(pageNumber = 2);
 
-			ACDXPSettings.viewGenericListItem(itemValueList = "United States");
+			ACDXPSettings.viewGenericListItem(itemValueList = "${secondPageList}");
 
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Brazil,Canada,France,Italy,Minium");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 	}
 

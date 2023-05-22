@@ -12,15 +12,16 @@ components:
                 body:
                     type: string
                 fromName:
+                    readOnly: true
                     type: string
                 id:
                     format: int64
                     readOnly: true
                     type: integer
-                priority:
-                    format: double
-                    minimum: 0
-                    type: number
+                recipients:
+                    items:
+                        type: object
+                    type: array
                 recipientsSummary:
                     readOnly: true
                     type: string
@@ -30,13 +31,14 @@ components:
                     type: string
                 status:
                     format: int32
+                    readOnly: true
                     type: integer
                 subject:
                     type: string
                 triggerBy:
+                    readOnly: true
                     type: string
                 type:
-                    readOnly: true
                     type: string
                 typeLabel:
                     readOnly: true
@@ -161,6 +163,26 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/NotificationQueueEntry"
                                 type: array
+            tags: ["NotificationQueueEntry"]
+        post:
+            operationId: postNotificationQueueEntry
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NotificationQueueEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/NotificationQueueEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NotificationQueueEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NotificationQueueEntry"
             tags: ["NotificationQueueEntry"]
     "/notification-queue-entries/{notificationQueueEntryId}":
         delete:

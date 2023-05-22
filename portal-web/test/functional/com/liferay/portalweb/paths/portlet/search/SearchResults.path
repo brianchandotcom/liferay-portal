@@ -207,6 +207,14 @@
 	<td></td>
 </tr>
 
+<!--PREVIEW-->
+
+<tr>
+	<td>PREVIEW_BACK_BUTTON</td>
+	<td>//a[@aria-label='Back']</td>
+	<td></td>
+</tr>
+
 <!--RESULTS_PORTLET-->
 
 <tr>

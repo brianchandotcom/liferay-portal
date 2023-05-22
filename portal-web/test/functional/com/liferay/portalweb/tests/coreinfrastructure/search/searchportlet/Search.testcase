@@ -206,8 +206,8 @@ definition {
 				sourceFileName = "Document_1.pdf");
 		}
 
-		task ("Search for the DOCX and PDF files and Assert 'Download' Button is Present") {
-			SearchPortlets.searchEmbedded(searchTerm = "DOCX File");
+		task ("Search for the DOCX and PDF files and assert 'Download' Button is Present") {
+			SearchPortlets.searchEmbedded(searchTerm = "File");
 
 			Search.gotoResultAssetViaTitle(searchAssetTitle = "DOCX File");
 
@@ -219,7 +219,7 @@ definition {
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.docx");
 
-			SearchPortlets.searchEmbedded(searchTerm = "PDF File");
+			Click(locator1 = "SearchResults#PREVIEW_BACK_BUTTON");
 
 			Search.gotoResultAssetViaTitle(searchAssetTitle = "PDF File");
 

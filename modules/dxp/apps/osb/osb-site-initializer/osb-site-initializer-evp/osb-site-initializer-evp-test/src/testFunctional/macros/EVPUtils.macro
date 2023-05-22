@@ -4,18 +4,13 @@ definition {
 		Site.openSitesAdmin();
 
 		TeamExtranet.addSiteTemplateCP(
-			siteName = "EVP",
+			siteName = "EVP Portal",
 			siteTemplateName = "EVP");
 	}
 
-	macro assertPageTitle {
-		AssertElementPresent(
-			key_tabTitle = ${tabTitle},
-			locator1 = "EVPUtils#TAB_TITLE");
-	}
-
+	@summary = "Navigating to EVP needs an extra click on Sign In which will redirect to Okta"
 	macro gotoEVP {
-		Navigator.openSiteURL(siteName = "EVP");
+		Navigator.openSiteURL(siteName = "EVP Portal");
 
 		if (IsElementPresent(locator1 = "EVPUtils#SIGN_IN")) {
 			Click(locator1 = "EVPUtils#SIGN_IN");

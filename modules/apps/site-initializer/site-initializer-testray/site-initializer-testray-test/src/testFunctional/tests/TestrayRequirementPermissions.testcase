@@ -81,43 +81,7 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create the requirement"
-	@priority = 3
-	test AssertAnalystRoleCanCreateRequirement {
-		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertAnalystRoleCanCreateRequirement";
-
-		task ("Given that the user login with the Testray Analyst role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "analyst@testray.com",
-				userLoginFullName = "Analyst User");
-
-			Navigator.openSiteURL(siteName = "Testray 2");
-
-            Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
-
-			Testray.goToProjectPage(projectName = ${projectName});
-
-			Testray.projectTabNavigator(navTabName = "Requirements");
-		}
-
-		task ("When the user create a requirement") {
-            TestrayRequirements.addRequirement(
-                componentId = ${componentName},
-                linkURL = "https://reddit.com",
-                requirementName = "Requirement 2",
-                linkTitle = "The page edited");
-		}
-
-		task ("Then the user can see the requirement in the table") {
-			AssertElementPresent(
-				key_projectName = "Requirement 2",
-				locator1 = "Testray#ITEM_NAME");
-		}
-	}
-
-    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to delete the requirement"
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to delete the requirement"
 	@priority = 3
 	test AnalystRoleCanDeleteRequirement {
 		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AnalystRoleCanDeleteRequirement";
@@ -129,7 +93,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -155,7 +119,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the requirement"
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to edit the requirement"
 	@priority = 3
 	test AnalystRoleCanEditRequirement {
 		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AnalystRoleCanEditRequirement";
@@ -167,7 +131,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -197,6 +161,42 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create the requirement"
+	@priority = 3
+	test AssertAnalystRoleCanCreateRequirement {
+		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertAnalystRoleCanCreateRequirement";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+		}
+
+		task ("When the user create a requirement") {
+			TestrayRequirements.addRequirement(
+				componentId = ${componentName},
+				linkTitle = "The page edited",
+				linkURL = "https://reddit.com",
+				requirementName = "Requirement 2");
+		}
+
+		task ("Then the user can see the requirement in the table") {
+			AssertElementPresent(
+				key_projectName = "Requirement 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to create the requirement"
 	@priority = 3
 	test AssertLeadRoleCanCreateRequirement {
@@ -209,7 +209,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -219,11 +219,11 @@ definition {
 		}
 
 		task ("When the user create a requirement") {
-            TestrayRequirements.addRequirement(
-                componentId = ${componentName},
-                linkURL = "https://reddit.com",
-                requirementName = "Requirement 2",
-                linkTitle = "The page edited");
+			TestrayRequirements.addRequirement(
+				componentId = ${componentName},
+				linkTitle = "The page edited",
+				linkURL = "https://reddit.com",
+				requirementName = "Requirement 2");
 		}
 
 		task ("Then the user can see the requirement in the table") {
@@ -233,7 +233,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the requirement"
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to delete the requirement"
 	@priority = 3
 	test AssertLeadRoleCanDeleteRequirement {
 		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertLeadRoleCanDeleteRequirement";
@@ -245,7 +245,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -271,7 +271,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the requirement"
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Lead' role should be able to edit the requirement"
 	@priority = 3
 	test AssertLeadRoleCanEditRequirement {
 		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertLeadRoleCanEditRequirement";
@@ -283,7 +283,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -325,7 +325,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -341,7 +341,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the requirement"
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to delete the requirement"
 	@priority = 2
 	test AssertUserRoleCanNotDeleteRequirement {
 		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotDeleteRequirement";
@@ -353,7 +353,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 
@@ -375,7 +375,7 @@ definition {
 		}
 	}
 
-    @description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the requirement"
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to edit the requirement"
 	@priority = 2
 	test AssertUserRoleCanNotEditRequirement {
 		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotEditRequirement";
@@ -387,7 +387,7 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-            Testray.changePagination(
+			Testray.changePagination(
 				numberItems = 20,
 				valuePagination = 150);
 

@@ -56,7 +56,7 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 	<clay:content-col
 		expand="<%= true %>"
 	>
-		<aui:input label="api-key" name="apiKey" type="text" value="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.getApiKey() %>" />
+		<aui:input label="api-key" name="apiKey" type="text" value="<%= aiCreatorOpenAIGroupConfigurationDisplayContext.getAPIKey() %>" />
 	</clay:content-col>
 </clay:content-row>
 

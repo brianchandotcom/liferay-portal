@@ -81,4 +81,40 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray Analyst' role should be able to create the requirement"
+	@priority = 3
+	test AssertAnalystRoleCanCreateRequirement {
+		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertAnalystRoleCanCreateRequirement";
+
+		task ("Given that the user login with the Testray Analyst role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "analyst@testray.com",
+				userLoginFullName = "Analyst User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+
+            Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			Testray.projectTabNavigator(navTabName = "Requirements");
+		}
+
+		task ("When the user create a requirement") {
+            TestrayRequirements.addRequirement(
+                componentId = ${componentName},
+                linkURL = "https://reddit.com",
+                requirementName = "Requirement 2",
+                linkTitle = "The page edited");
+		}
+
+		task ("Then the user can see the requirement in the table") {
+			AssertElementPresent(
+				key_projectName = "Requirement 2",
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

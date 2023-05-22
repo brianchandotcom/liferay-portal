@@ -32,13 +32,16 @@ const useCaseResultActions = (
 	const navigate = useNavigate();
 	const actionsRef = useRef([
 		{
-			action: ({id}, mutate) => {
+			action: ({id}, mutate) =>
 				deleteResource(`/caseresults/${id}`)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSave)
-					.catch(form.onError);
-				isHeaderActions && navigate('../');
-			},
+					.then(() => {
+						if (isHeaderActions) {
+							navigate('../');
+						}
+					})
+					.catch(form.onError),
 			icon: 'trash',
 			name: i18n.translate(
 				isHeaderActions ? 'delete-case-result' : 'delete'

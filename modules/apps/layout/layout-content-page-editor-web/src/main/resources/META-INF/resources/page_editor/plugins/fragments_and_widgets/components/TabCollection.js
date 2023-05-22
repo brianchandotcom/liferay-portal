@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
@@ -35,6 +35,10 @@ export default function TabCollection({
 	const [open, setOpen] = useSessionState(
 		`${config.portletNamespace}_fragment-collection_${collection.collectionId}_open`,
 		initialOpen
+	);
+
+	const [isSearchResultOpen, setIsSearchResultOpen] = useState(
+		isSearchResult
 	);
 
 	const onRemoveHighlighted = (itemIndex) => {
@@ -61,7 +65,9 @@ export default function TabCollection({
 	return (
 		<TabCollectionCollapse
 			collapseRef={collapseRef}
-			open={open || isSearchResult}
+			isSearchResultOpen={isSearchResultOpen}
+			open={open || isSearchResultOpen}
+			setIsSearchResultOpen={setIsSearchResultOpen}
 			setOpen={setOpen}
 			title={collection.label}
 		>
@@ -71,7 +77,7 @@ export default function TabCollection({
 						collection={collection}
 						displayStyle={displayStyle}
 						initialOpen={false}
-						isSearchResult={isSearchResult}
+						isSearchResult={isSearchResultOpen}
 						key={index}
 					/>
 				))}
@@ -137,7 +143,15 @@ TabPortletItems.proptypes = {
 	type: PropTypes.string,
 };
 
-function TabCollectionCollapse({children, collapseRef, open, setOpen, title}) {
+function TabCollectionCollapse({
+	children,
+	collapseRef,
+	isSearchResultOpen,
+	open,
+	setIsSearchResultOpen,
+	setOpen,
+	title,
+}) {
 	const handleOpen = (nextOpen) => {
 		setOpen(nextOpen);
 	};
@@ -165,7 +179,10 @@ function TabCollectionCollapse({children, collapseRef, open, setOpen, title}) {
 						collapsed: !open,
 					}
 				)}
-				onClick={() => setOpen(!open)}
+				onClick={() => {
+					setOpen(!open);
+					setIsSearchResultOpen(!isSearchResultOpen);
+				}}
 				ref={setElement}
 				role="menuitem"
 				tabIndex={isTarget ? 0 : -1}

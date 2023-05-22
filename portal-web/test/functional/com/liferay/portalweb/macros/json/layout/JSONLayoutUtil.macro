@@ -52,6 +52,9 @@ definition {
 		else if (${widgetName} == "Blogs Aggregator") {
 			var portletId = "com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 		}
+		else if (${widgetName} == "Blueprints Options") {
+			var portletId = "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet";
+		}
 		else if (${widgetName} == "Bookmarks") {
 			var portletId = "com_liferay_bookmarks_web_portlet_BookmarksPortlet";
 		}

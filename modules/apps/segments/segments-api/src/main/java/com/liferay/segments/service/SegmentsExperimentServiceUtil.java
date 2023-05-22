@@ -41,14 +41,14 @@ public class SegmentsExperimentServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperimentServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SegmentsExperiment addSegmentsExperiment(
-			long segmentsExperienceId, long classNameId, long classPK,
-			String name, String description, String goal, String goalTarget,
+			long segmentsExperienceId, long plid, String name,
+			String description, String goal, String goalTarget,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, name, description, goal,
-			goalTarget, serviceContext);
+			segmentsExperienceId, plid, name, description, goal, goalTarget,
+			serviceContext);
 	}
 
 	public static SegmentsExperiment deleteSegmentsExperiment(
@@ -66,12 +66,11 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
-			long segmentsExperienceId, long classNameId, long classPK,
-			int[] statuses)
+			long segmentsExperienceId, long plid, int[] statuses)
 		throws PortalException {
 
 		return getService().fetchSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, statuses);
+			segmentsExperienceId, plid, statuses);
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
@@ -93,12 +92,12 @@ public class SegmentsExperimentServiceUtil {
 
 	public static List<SegmentsExperiment>
 			getSegmentsExperienceSegmentsExperiments(
-				long[] segmentsExperienceIds, long classNameId, long classPK,
-				int[] statuses, int start, int end)
+				long[] segmentsExperienceIds, long plid, int[] statuses,
+				int start, int end)
 		throws PortalException {
 
 		return getService().getSegmentsExperienceSegmentsExperiments(
-			segmentsExperienceIds, classNameId, classPK, statuses, start, end);
+			segmentsExperienceIds, plid, statuses, start, end);
 	}
 
 	public static SegmentsExperiment getSegmentsExperiment(
@@ -116,20 +115,17 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long plid) {
 
-		return getService().getSegmentsExperiments(
-			groupId, classNameId, classPK);
+		return getService().getSegmentsExperiments(groupId, plid);
 	}
 
 	public static List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long classNameId, long classPK,
-		int[] statuses,
+		long segmentsExperienceId, long plid, int[] statuses,
 		OrderByComparator<SegmentsExperiment> orderByComparator) {
 
 		return getService().getSegmentsExperiments(
-			segmentsExperienceId, classNameId, classPK, statuses,
-			orderByComparator);
+			segmentsExperienceId, plid, statuses, orderByComparator);
 	}
 
 	public static SegmentsExperiment runSegmentsExperiment(

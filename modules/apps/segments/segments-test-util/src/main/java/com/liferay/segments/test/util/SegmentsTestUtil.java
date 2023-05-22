@@ -161,8 +161,8 @@ public class SegmentsTestUtil {
 		throws PortalException {
 
 		return SegmentsExperimentLocalServiceUtil.addSegmentsExperiment(
-			segmentsExperienceId, plid,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			segmentsExperienceId, plid, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(groupId));

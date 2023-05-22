@@ -15,7 +15,6 @@
 package com.liferay.segments.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -40,9 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsExperimentModel
-	extends AttachedModel, BaseModel<SegmentsExperiment>,
-			CTModel<SegmentsExperiment>, GroupedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<SegmentsExperiment>, CTModel<SegmentsExperiment>,
+			GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -286,46 +284,18 @@ public interface SegmentsExperimentModel
 	public void setSegmentsExperimentKey(String segmentsExperimentKey);
 
 	/**
-	 * Returns the fully qualified class name of this segments experiment.
+	 * Returns the plid of this segments experiment.
 	 *
-	 * @return the fully qualified class name of this segments experiment
+	 * @return the plid of this segments experiment
 	 */
-	@Override
-	public String getClassName();
-
-	public void setClassName(String className);
+	public long getPlid();
 
 	/**
-	 * Returns the class name ID of this segments experiment.
+	 * Sets the plid of this segments experiment.
 	 *
-	 * @return the class name ID of this segments experiment
+	 * @param plid the plid of this segments experiment
 	 */
-	@Override
-	public long getClassNameId();
-
-	/**
-	 * Sets the class name ID of this segments experiment.
-	 *
-	 * @param classNameId the class name ID of this segments experiment
-	 */
-	@Override
-	public void setClassNameId(long classNameId);
-
-	/**
-	 * Returns the class pk of this segments experiment.
-	 *
-	 * @return the class pk of this segments experiment
-	 */
-	@Override
-	public long getClassPK();
-
-	/**
-	 * Sets the class pk of this segments experiment.
-	 *
-	 * @param classPK the class pk of this segments experiment
-	 */
-	@Override
-	public void setClassPK(long classPK);
+	public void setPlid(long plid);
 
 	/**
 	 * Returns the name of this segments experiment.

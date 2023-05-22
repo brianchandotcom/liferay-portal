@@ -53,8 +53,8 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			addSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperienceId,
-				long classNameId, long classPK, String name, String description,
-				String goal, String goalTarget,
+				long plid, String name, String description, String goal,
+				String goalTarget,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -64,8 +64,8 @@ public class SegmentsExperimentServiceHttp {
 				_addSegmentsExperimentParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperienceId, classNameId, classPK, name,
-				description, goal, goalTarget, serviceContext);
+				methodKey, segmentsExperienceId, plid, name, description, goal,
+				goalTarget, serviceContext);
 
 			Object returnObj = null;
 
@@ -180,7 +180,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			fetchSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperienceId,
-				long classNameId, long classPK, int[] statuses)
+				long plid, int[] statuses)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -189,8 +189,7 @@ public class SegmentsExperimentServiceHttp {
 				_fetchSegmentsExperimentParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperienceId, classNameId, classPK,
-				statuses);
+				methodKey, segmentsExperienceId, plid, statuses);
 
 			Object returnObj = null;
 
@@ -265,8 +264,7 @@ public class SegmentsExperimentServiceHttp {
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 			getSegmentsExperienceSegmentsExperiments(
 				HttpPrincipal httpPrincipal, long[] segmentsExperienceIds,
-				long classNameId, long classPK, int[] statuses, int start,
-				int end)
+				long plid, int[] statuses, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -276,8 +274,7 @@ public class SegmentsExperimentServiceHttp {
 				_getSegmentsExperienceSegmentsExperimentsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperienceIds, classNameId, classPK,
-				statuses, start, end);
+				methodKey, segmentsExperienceIds, plid, statuses, start, end);
 
 			Object returnObj = null;
 
@@ -392,8 +389,7 @@ public class SegmentsExperimentServiceHttp {
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 		getSegmentsExperiments(
-			HttpPrincipal httpPrincipal, long groupId, long classNameId,
-			long classPK) {
+			HttpPrincipal httpPrincipal, long groupId, long plid) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -401,7 +397,7 @@ public class SegmentsExperimentServiceHttp {
 				_getSegmentsExperimentsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, classNameId, classPK);
+				methodKey, groupId, plid);
 
 			Object returnObj = null;
 
@@ -427,8 +423,8 @@ public class SegmentsExperimentServiceHttp {
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 		getSegmentsExperiments(
-			HttpPrincipal httpPrincipal, long segmentsExperienceId,
-			long classNameId, long classPK, int[] statuses,
+			HttpPrincipal httpPrincipal, long segmentsExperienceId, long plid,
+			int[] statuses,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.segments.model.SegmentsExperiment>
 					orderByComparator) {
@@ -439,7 +435,7 @@ public class SegmentsExperimentServiceHttp {
 				_getSegmentsExperimentsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperienceId, classNameId, classPK, statuses,
+				methodKey, segmentsExperienceId, plid, statuses,
 				orderByComparator);
 
 			Object returnObj = null;
@@ -774,32 +770,30 @@ public class SegmentsExperimentServiceHttp {
 
 	private static final Class<?>[] _addSegmentsExperimentParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, String.class, String.class,
-			String.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSegmentsExperimentParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteSegmentsExperimentParameterTypes2 =
 		new Class[] {String.class};
 	private static final Class<?>[] _fetchSegmentsExperimentParameterTypes3 =
-		new Class[] {long.class, long.class, long.class, int[].class};
+		new Class[] {long.class, long.class, int[].class};
 	private static final Class<?>[] _fetchSegmentsExperimentParameterTypes4 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
 		_getSegmentsExperienceSegmentsExperimentsParameterTypes5 = new Class[] {
-			long[].class, long.class, long.class, int[].class, int.class,
-			int.class
+			long[].class, long.class, int[].class, int.class, int.class
 		};
 	private static final Class<?>[] _getSegmentsExperimentParameterTypes6 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getSegmentsExperimentParameterTypes7 =
 		new Class[] {String.class};
 	private static final Class<?>[] _getSegmentsExperimentsParameterTypes8 =
-		new Class[] {long.class, long.class, long.class};
+		new Class[] {long.class, long.class};
 	private static final Class<?>[] _getSegmentsExperimentsParameterTypes9 =
 		new Class[] {
-			long.class, long.class, long.class, int[].class,
+			long.class, long.class, int[].class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _runSegmentsExperimentParameterTypes10 =

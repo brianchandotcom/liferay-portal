@@ -51,8 +51,8 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment addSegmentsExperiment(
-			long segmentsExperienceId, long plid,
-			String name, String description, String goal, String goalTarget,
+			long segmentsExperienceId, long plid, String name,
+			String description, String goal, String goalTarget,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -60,8 +60,8 @@ public class SegmentsExperimentServiceImpl
 			getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		return segmentsExperimentLocalService.addSegmentsExperiment(
-			segmentsExperienceId, plid, name, description, goal,
-			goalTarget, serviceContext);
+			segmentsExperienceId, plid, name, description, goal, goalTarget,
+			serviceContext);
 	}
 
 	@Override
@@ -96,8 +96,7 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long segmentsExperienceId, long plid,
-			int[] statuses)
+			long segmentsExperienceId, long plid, int[] statuses)
 		throws PortalException {
 
 		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
@@ -128,8 +127,8 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
-			long[] segmentsExperienceIds, long plid,
-			int[] statuses, int start, int end)
+			long[] segmentsExperienceIds, long plid, int[] statuses, int start,
+			int end)
 		throws PortalException {
 
 		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
@@ -137,8 +136,7 @@ public class SegmentsExperimentServiceImpl
 
 		return segmentsExperimentLocalService.
 			getSegmentsExperienceSegmentsExperiments(
-				segmentsExperienceIds, plid, statuses, start,
-				end);
+				segmentsExperienceIds, plid, statuses, start, end);
 	}
 
 	@Override
@@ -179,13 +177,11 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long plid,
-		int[] statuses,
+		long segmentsExperienceId, long plid, int[] statuses,
 		OrderByComparator<SegmentsExperiment> orderByComparator) {
 
 		return segmentsExperimentLocalService.getSegmentsExperiments(
-			segmentsExperienceId, plid, statuses,
-			orderByComparator);
+			segmentsExperienceId, plid, statuses, orderByComparator);
 	}
 
 	@Override

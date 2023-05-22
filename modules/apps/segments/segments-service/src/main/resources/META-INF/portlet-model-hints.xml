@@ -85,8 +85,7 @@
 		<field name="segmentsEntryId" type="long" />
 		<field name="segmentsExperienceId" type="long" />
 		<field name="segmentsExperimentKey" type="String" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
+		<field name="plid" type="long" />
 		<field name="name" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />

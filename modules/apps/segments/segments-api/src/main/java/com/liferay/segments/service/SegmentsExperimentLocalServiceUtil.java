@@ -46,14 +46,14 @@ public class SegmentsExperimentLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperimentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SegmentsExperiment addSegmentsExperiment(
-			long segmentsExperienceId, long classNameId, long classPK,
-			String name, String description, String goal, String goalTarget,
+			long segmentsExperienceId, long plid, String name,
+			String description, String goal, String goalTarget,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, name, description, goal,
-			goalTarget, serviceContext);
+			segmentsExperienceId, plid, name, description, goal, goalTarget,
+			serviceContext);
 	}
 
 	/**
@@ -148,11 +148,10 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static void deleteSegmentsExperiments(
-			long segmentsExperienceId, long classNameId, long classPK)
+			long segmentsExperienceId, long plid)
 		throws PortalException {
 
-		getService().deleteSegmentsExperiments(
-			segmentsExperienceId, classNameId, classPK);
+		getService().deleteSegmentsExperiments(segmentsExperienceId, plid);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -247,11 +246,10 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK,
-		int[] statuses) {
+		long segmentsExperienceId, long plid, int[] statuses) {
 
 		return getService().fetchSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, statuses);
+			segmentsExperienceId, plid, statuses);
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
@@ -323,19 +321,19 @@ public class SegmentsExperimentLocalServiceUtil {
 
 	public static List<SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
-			long segmentsExperienceId, long classNameId, long classPK) {
+			long segmentsExperienceId, long plid) {
 
 		return getService().getSegmentsExperienceSegmentsExperiments(
-			segmentsExperienceId, classNameId, classPK);
+			segmentsExperienceId, plid);
 	}
 
 	public static List<SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
-			long[] segmentsExperienceIds, long classNameId, long classPK,
-			int[] statuses, int start, int end) {
+			long[] segmentsExperienceIds, long plid, int[] statuses, int start,
+			int end) {
 
 		return getService().getSegmentsExperienceSegmentsExperiments(
-			segmentsExperienceIds, classNameId, classPK, statuses, start, end);
+			segmentsExperienceIds, plid, statuses, start, end);
 	}
 
 	/**
@@ -393,20 +391,17 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static List<SegmentsExperiment> getSegmentsExperiments(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long plid) {
 
-		return getService().getSegmentsExperiments(
-			groupId, classNameId, classPK);
+		return getService().getSegmentsExperiments(groupId, plid);
 	}
 
 	public static List<SegmentsExperiment> getSegmentsExperiments(
-		long segmentsExperienceId, long classNameId, long classPK,
-		int[] statuses,
+		long segmentsExperienceId, long plid, int[] statuses,
 		OrderByComparator<SegmentsExperiment> orderByComparator) {
 
 		return getService().getSegmentsExperiments(
-			segmentsExperienceId, classNameId, classPK, statuses,
-			orderByComparator);
+			segmentsExperienceId, plid, statuses, orderByComparator);
 	}
 
 	/**
@@ -452,11 +447,10 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK,
-		int[] statuses) {
+		long segmentsExperienceId, long plid, int[] statuses) {
 
 		return getService().hasSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, statuses);
+			segmentsExperienceId, plid, statuses);
 	}
 
 	public static SegmentsExperiment runSegmentsExperiment(

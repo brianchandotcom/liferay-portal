@@ -52,8 +52,7 @@ public class SegmentsExperimentFinderImpl
 
 	@Override
 	public int countByS_P_S(
-		long segmentsExperienceId, long plid,
-		int[] statuses) {
+		long segmentsExperienceId, long plid, int[] statuses) {
 
 		Session session = null;
 
@@ -96,9 +95,8 @@ public class SegmentsExperimentFinderImpl
 
 	@Override
 	public List<SegmentsExperiment> findByS_P_S(
-		long segmentsExperienceId, long plid,
-		int[] statuses, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
+		long segmentsExperienceId, long plid, int[] statuses, int start,
+		int end, OrderByComparator<SegmentsExperiment> orderByComparator) {
 
 		Session session = null;
 

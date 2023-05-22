@@ -78,7 +78,7 @@ public class SegmentsExperimentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,10 +106,8 @@ public class SegmentsExperimentCacheModel
 		sb.append(segmentsExperienceId);
 		sb.append(", segmentsExperimentKey=");
 		sb.append(segmentsExperimentKey);
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-		sb.append(", classPK=");
-		sb.append(classPK);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -175,8 +173,7 @@ public class SegmentsExperimentCacheModel
 				segmentsExperimentKey);
 		}
 
-		segmentsExperimentImpl.setClassNameId(classNameId);
-		segmentsExperimentImpl.setClassPK(classPK);
+		segmentsExperimentImpl.setPlid(plid);
 
 		if (name == null) {
 			segmentsExperimentImpl.setName("");
@@ -231,9 +228,7 @@ public class SegmentsExperimentCacheModel
 		segmentsExperienceId = objectInput.readLong();
 		segmentsExperimentKey = objectInput.readUTF();
 
-		classNameId = objectInput.readLong();
-
-		classPK = objectInput.readLong();
+		plid = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		typeSettings = (String)objectInput.readObject();
@@ -283,9 +278,7 @@ public class SegmentsExperimentCacheModel
 			objectOutput.writeUTF(segmentsExperimentKey);
 		}
 
-		objectOutput.writeLong(classNameId);
-
-		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(plid);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -324,8 +317,7 @@ public class SegmentsExperimentCacheModel
 	public long segmentsEntryId;
 	public long segmentsExperienceId;
 	public String segmentsExperimentKey;
-	public long classNameId;
-	public long classPK;
+	public long plid;
 	public String name;
 	public String description;
 	public String typeSettings;

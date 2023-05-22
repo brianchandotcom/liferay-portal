@@ -58,8 +58,7 @@ public class SegmentsExperimentWrapper
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("segmentsExperienceId", getSegmentsExperienceId());
 		attributes.put("segmentsExperimentKey", getSegmentsExperimentKey());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
+		attributes.put("plid", getPlid());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("typeSettings", getTypeSettings());
@@ -151,16 +150,10 @@ public class SegmentsExperimentWrapper
 			setSegmentsExperimentKey(segmentsExperimentKey);
 		}
 
-		Long classNameId = (Long)attributes.get("classNameId");
+		Long plid = (Long)attributes.get("plid");
 
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
+		if (plid != null) {
+			setPlid(plid);
 		}
 
 		String name = (String)attributes.get("name");
@@ -191,36 +184,6 @@ public class SegmentsExperimentWrapper
 	@Override
 	public SegmentsExperiment cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
-	}
-
-	/**
-	 * Returns the fully qualified class name of this segments experiment.
-	 *
-	 * @return the fully qualified class name of this segments experiment
-	 */
-	@Override
-	public String getClassName() {
-		return model.getClassName();
-	}
-
-	/**
-	 * Returns the class name ID of this segments experiment.
-	 *
-	 * @return the class name ID of this segments experiment
-	 */
-	@Override
-	public long getClassNameId() {
-		return model.getClassNameId();
-	}
-
-	/**
-	 * Returns the class pk of this segments experiment.
-	 *
-	 * @return the class pk of this segments experiment
-	 */
-	@Override
-	public long getClassPK() {
-		return model.getClassPK();
 	}
 
 	/**
@@ -316,6 +279,16 @@ public class SegmentsExperimentWrapper
 	@Override
 	public String getName() {
 		return model.getName();
+	}
+
+	/**
+	 * Returns the plid of this segments experiment.
+	 *
+	 * @return the plid of this segments experiment
+	 */
+	@Override
+	public long getPlid() {
+		return model.getPlid();
 	}
 
 	/**
@@ -467,31 +440,6 @@ public class SegmentsExperimentWrapper
 		model.persist();
 	}
 
-	@Override
-	public void setClassName(String className) {
-		model.setClassName(className);
-	}
-
-	/**
-	 * Sets the class name ID of this segments experiment.
-	 *
-	 * @param classNameId the class name ID of this segments experiment
-	 */
-	@Override
-	public void setClassNameId(long classNameId) {
-		model.setClassNameId(classNameId);
-	}
-
-	/**
-	 * Sets the class pk of this segments experiment.
-	 *
-	 * @param classPK the class pk of this segments experiment
-	 */
-	@Override
-	public void setClassPK(long classPK) {
-		model.setClassPK(classPK);
-	}
-
 	/**
 	 * Sets the company ID of this segments experiment.
 	 *
@@ -570,6 +518,16 @@ public class SegmentsExperimentWrapper
 	@Override
 	public void setName(String name) {
 		model.setName(name);
+	}
+
+	/**
+	 * Sets the plid of this segments experiment.
+	 *
+	 * @param plid the plid of this segments experiment
+	 */
+	@Override
+	public void setPlid(long plid) {
+		model.setPlid(plid);
 	}
 
 	/**

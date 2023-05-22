@@ -73,11 +73,8 @@ public class SegmentsExperimentTable
 		createColumn(
 			"segmentsExperimentKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<SegmentsExperimentTable, Long> classNameId =
-		createColumn(
-			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<SegmentsExperimentTable, Long> classPK = createColumn(
-		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<SegmentsExperimentTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SegmentsExperimentTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SegmentsExperimentTable, String> description =

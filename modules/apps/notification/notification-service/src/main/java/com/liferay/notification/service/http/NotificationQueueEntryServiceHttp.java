@@ -51,6 +51,51 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class NotificationQueueEntryServiceHttp {
 
 	public static com.liferay.notification.model.NotificationQueueEntry
+			addNotificationQueueEntry(
+				HttpPrincipal httpPrincipal,
+				com.liferay.notification.context.NotificationContext
+					notificationContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				NotificationQueueEntryServiceUtil.class,
+				"addNotificationQueueEntry",
+				_addNotificationQueueEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, notificationContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.notification.model.NotificationQueueEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.notification.model.NotificationQueueEntry
 			deleteNotificationQueueEntry(
 				HttpPrincipal httpPrincipal, long notificationQueueEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,7 +104,7 @@ public class NotificationQueueEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationQueueEntryServiceUtil.class,
 				"deleteNotificationQueueEntry",
-				_deleteNotificationQueueEntryParameterTypes0);
+				_deleteNotificationQueueEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationQueueEntryId);
@@ -102,7 +147,7 @@ public class NotificationQueueEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationQueueEntryServiceUtil.class,
 				"getNotificationQueueEntry",
-				_getNotificationQueueEntryParameterTypes1);
+				_getNotificationQueueEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationQueueEntryId);
@@ -145,7 +190,7 @@ public class NotificationQueueEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				NotificationQueueEntryServiceUtil.class,
 				"resendNotificationQueueEntry",
-				_resendNotificationQueueEntryParameterTypes2);
+				_resendNotificationQueueEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, notificationQueueEntryId);
@@ -182,11 +227,15 @@ public class NotificationQueueEntryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		NotificationQueueEntryServiceHttp.class);
 
+	private static final Class<?>[] _addNotificationQueueEntryParameterTypes0 =
+		new Class[] {
+			com.liferay.notification.context.NotificationContext.class
+		};
 	private static final Class<?>[]
-		_deleteNotificationQueueEntryParameterTypes0 = new Class[] {long.class};
-	private static final Class<?>[] _getNotificationQueueEntryParameterTypes1 =
+		_deleteNotificationQueueEntryParameterTypes1 = new Class[] {long.class};
+	private static final Class<?>[] _getNotificationQueueEntryParameterTypes2 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_resendNotificationQueueEntryParameterTypes2 = new Class[] {long.class};
+		_resendNotificationQueueEntryParameterTypes3 = new Class[] {long.class};
 
 }

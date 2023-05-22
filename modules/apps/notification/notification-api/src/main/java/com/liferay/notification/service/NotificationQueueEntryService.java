@@ -14,6 +14,7 @@
 
 package com.liferay.notification.service;
 
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -49,6 +50,10 @@ public interface NotificationQueueEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationQueueEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification queue entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationQueueEntryServiceUtil} if injection and service tracking are not available.
 	 */
+	public NotificationQueueEntry addNotificationQueueEntry(
+			NotificationContext notificationContext)
+		throws PortalException;
+
 	public NotificationQueueEntry deleteNotificationQueueEntry(
 			long notificationQueueEntryId)
 		throws PortalException;

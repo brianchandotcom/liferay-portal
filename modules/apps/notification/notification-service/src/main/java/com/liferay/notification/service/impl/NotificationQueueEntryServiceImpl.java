@@ -14,6 +14,9 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.constants.NotificationActionKeys;
+import com.liferay.notification.constants.NotificationConstants;
+import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.base.NotificationQueueEntryServiceBaseImpl;
@@ -21,6 +24,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,6 +41,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class NotificationQueueEntryServiceImpl
 	extends NotificationQueueEntryServiceBaseImpl {
+
+	@Override
+	public NotificationQueueEntry addNotificationQueueEntry(
+			NotificationContext notificationContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			NotificationActionKeys.ADD_NOTIFICATION_QUEUE_ENTRY);
+
+		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
+			notificationContext);
+	}
 
 	@Override
 	public NotificationQueueEntry deleteNotificationQueueEntry(
@@ -85,5 +102,10 @@ public class NotificationQueueEntryServiceImpl
 	)
 	private ModelResourcePermission<NotificationQueueEntry>
 		_notificationQueueEntryModelResourcePermission;
+
+	@Reference(
+		target = "(resource.name=" + NotificationConstants.RESOURCE_NAME_NOTIFICATION_QUEUE + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

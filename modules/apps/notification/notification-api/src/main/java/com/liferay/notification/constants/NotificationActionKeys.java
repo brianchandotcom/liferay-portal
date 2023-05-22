@@ -19,6 +19,9 @@ package com.liferay.notification.constants;
  */
 public class NotificationActionKeys {
 
+	public static final String ADD_NOTIFICATION_QUEUE_ENTRY =
+		"ADD_NOTIFICATION_QUEUE_ENTRY";
+
 	public static final String ADD_NOTIFICATION_TEMPLATE =
 		"ADD_NOTIFICATION_TEMPLATE";
 

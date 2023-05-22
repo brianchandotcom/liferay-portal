@@ -343,6 +343,8 @@ public class DLAdminManagementToolbarDisplayContext
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper =
 			new LabelItemListBuilder.LabelItemListWrapper();
 
+		_addAssetCategoriesFilterLabelItems(labelItemListWrapper);
+
 		_addExtensionFilterLabelItems(labelItemListWrapper);
 
 		_addAssetTagsFilterLabelItems(labelItemListWrapper);
@@ -646,6 +648,49 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		return false;
+	}
+
+	private void _addAssetCategoriesFilterLabelItems(
+		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
+
+		Set<Long> assetCategoryIds = _getSelectedAssetCategoryIds(
+			_httpServletRequest);
+
+		for (Long assetCategoryId : assetCategoryIds) {
+			labelItemListWrapper.add(
+				labelItem -> {
+					labelItem.putData(
+						"removeLabelURL",
+						_getRemoveLabelURL(
+							"assetCategoryId",
+							() -> TransformUtil.transformToArray(
+								assetCategoryIds,
+								curAssetCategoryId -> {
+									if (Objects.equals(
+											assetCategoryId,
+											curAssetCategoryId)) {
+
+										return null;
+									}
+
+									return String.valueOf(curAssetCategoryId);
+								},
+								String.class)));
+					labelItem.setCloseable(true);
+
+					String title = StringPool.BLANK;
+
+					AssetCategory assetCategory =
+						AssetCategoryServiceUtil.fetchCategory(assetCategoryId);
+
+					if (assetCategory != null) {
+						title = assetCategory.getTitle(
+							_httpServletRequest.getLocale());
+					}
+
+					labelItem.setLabel(_getLabel("category", title));
+				});
+		}
 	}
 
 	private void _addAssetTagsFilterLabelItems(

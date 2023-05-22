@@ -2,9 +2,7 @@
 themeDisplay.getUser().getLastName()] [#assign languageId =
 themeDisplay.getLanguageId()]
 
-<div
-	class="align-items-center customer-portal-welcome-banner d-flex position-relative"
->
+<div class="align-items-center customer-portal-welcome-banner d-flex position-relative">
 	<div class="customer-portal-text ml-3 pl-5 text-neutral-0">
 		<div class="mb-4 pb-2">
 			${languageUtil.get(locale, "welcome")}, [#if languageId == "ja_JP"]
@@ -27,10 +25,7 @@ themeDisplay.getLanguageId()]
 					${languageUtil.get(locale, "not-sure-how-to-start")}
 				</div>
 
-				<a
-					href="https://help.liferay.com/hc/en-us/sections/8712397409421-Customer-Portal"
-					target="_blank"
-				>
+			<a href="https://help.liferay.com/hc/en-us/sections/8712397409421-Customer-Portal" target="_blank">
 					<button>
 						<img class="mt-2" src="[resources:Icon Left.svg]" />
 						${languageUtil.get(locale, "watch-onboarding-videos")}
@@ -40,8 +35,5 @@ themeDisplay.getLanguageId()]
 		</div>
 	</div>
 
-	<img
-		class="customer-portal-welcome-img h-100 position-absolute w-100"
-		src="[resources:banner_background_customer_portal.svg]"
-	/>
+<img class="customer-portal-welcome-img h-100 position-absolute w-100" src="[resources:banner_background_customer_portal.svg]" />
 </div>

@@ -32,7 +32,7 @@ public class AICreatorOpenAICompanyConfigurationDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public String getApiKey() throws ConfigurationException {
+	public String getAPIKey() throws ConfigurationException {
 		return _aiCreatorOpenAIConfigurationManager.
 			getAICreatorOpenAICompanyApiKey(_themeDisplay.getCompanyId());
 	}

@@ -32,7 +32,7 @@ public class AICreatorOpenAIGroupConfigurationDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public String getApiKey() throws ConfigurationException {
+	public String getAPIKey() throws ConfigurationException {
 		return _aiCreatorOpenAIConfigurationManager.
 			getAICreatorOpenAIGroupApiKey(_themeDisplay.getScopeGroupId());
 	}

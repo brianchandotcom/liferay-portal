@@ -41,7 +41,7 @@ AICreatorOpenAICompanyConfigurationDisplayContext aiCreatorOpenAICompanyConfigur
 	<clay:content-col
 		expand="<%= true %>"
 	>
-		<aui:input label="api-key" name="apiKey" type="text" value="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.getApiKey() %>" />
+		<aui:input label="api-key" name="apiKey" type="text" value="<%= aiCreatorOpenAICompanyConfigurationDisplayContext.getAPIKey() %>" />
 	</clay:content-col>
 </clay:content-row>
 

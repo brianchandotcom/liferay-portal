@@ -21,7 +21,7 @@ definition {
 				-d '{
 					"name": "${accountName}",
 					"externalReferenceCode": "${externalReferenceCode}",
-					"country": "global",
+					"partnerCountry": "US",
 					"claimPercent": 0.5,
 					"currency": "BRL",
 					"partnerLevel": "gold",
@@ -45,6 +45,10 @@ definition {
 
 		if (!(isSet(accountEntryName))) {
 			var accountEntryName = "Company Name 1";
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "pmu@liferay.com";
 		}
 
 		var accoundId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
@@ -152,6 +156,10 @@ definition {
 			var accountEntryName = "Company Name 1";
 		}
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "pmu@liferay.com";
+		}
+
 		var accoundId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 		var portalURL = JSONCompany.getPortalURL();
 		var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
@@ -253,6 +261,10 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "pmu@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/o/c/budgets \
 				-u test@liferay.com:test \
@@ -277,7 +289,7 @@ definition {
 		Variables.assertDefined(parameterList = ${campaignName});
 
 		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
+			var userEmailAddress = "pmu@liferay.com";
 		}
 
 		if (!(isSet(accountEntryName))) {
@@ -342,7 +354,7 @@ definition {
 		Variables.assertDefined(parameterList = ${campaignName});
 
 		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
+			var userEmailAddress = "pmu@liferay.com";
 		}
 
 		if (!(isSet(accountEntryName))) {
@@ -403,9 +415,13 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "cmm@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/o/c/mdfclaims/${claimId} \
-				-u test@liferay.com:test \
+				-u ${userEmailAddress}:test \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
@@ -426,6 +442,10 @@ definition {
 		Variables.assertDefined(parameterList = ${requestId});
 
 		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "cmm@liferay.com";
+		}
 
 		var curl = '''
 			${portalURL}/o/c/mdfrequests/${requestId} \

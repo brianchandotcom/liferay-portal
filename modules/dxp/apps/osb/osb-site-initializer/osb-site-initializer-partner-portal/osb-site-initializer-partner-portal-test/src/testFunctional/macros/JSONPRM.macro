@@ -16,7 +16,8 @@ definition {
 		JSONPRMAPI.changeClaimStatus(
 			claimId = ${claimId},
 			claimStatus = ${claimStatus},
-			statusKey = ${statusKey});
+			statusKey = ${statusKey},
+			userEmailAddress = ${userEmailAddress});
 	}
 
 	macro changeMDFStatus {
@@ -34,7 +35,7 @@ definition {
 		var totalCostOfExpense = 0;
 
 		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
+			var userEmailAddress = "pmu@liferay.com";
 		}
 
 		if (!(isSet(accountEntryName))) {

@@ -81,6 +81,8 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
+		ACLoading.waitForLoadingComplete();
+
 		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 1);
 	}
 

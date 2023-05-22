@@ -373,4 +373,36 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-178270 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the run"
+	@priority = 3
+	test AssertUserRoleCanNotCreateRun {
+		property test.name.skip.portal.instance = "TestrayRunPermissions#AssertUserRoleCanNotCreateRun";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to the run page") {
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Testray.projectTabNavigator(navTabName = "Runs");
+		}
+
+        task ("Then the user can not create run") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

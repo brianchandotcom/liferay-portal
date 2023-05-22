@@ -14,8 +14,11 @@
 
 package com.liferay.search.experiences.service.impl;
 
+import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -26,16 +29,25 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.exception.SXPBlueprintTitleException;
+import com.liferay.search.experiences.internal.info.collection.provider.SXPBlueprintInfoCollectionProvider;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.base.SXPBlueprintLocalServiceBaseImpl;
 import com.liferay.search.experiences.validator.SXPBlueprintValidator;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,6 +102,8 @@ public class SXPBlueprintLocalServiceImpl
 
 		_resourceLocalService.addModelResources(sxpBlueprint, serviceContext);
 
+		_registerCollectionProvider(sxpBlueprint);
+
 		return sxpBlueprint;
 	}
 
@@ -128,12 +142,27 @@ public class SXPBlueprintLocalServiceImpl
 		_resourceLocalService.deleteResource(
 			sxpBlueprint, ResourceConstants.SCOPE_INDIVIDUAL);
 
+		_unregisterCollectionProvider(sxpBlueprint);
+
 		return sxpBlueprint;
 	}
 
 	@Override
 	public int getSXPBlueprintsCount(long companyId) {
 		return sxpBlueprintPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		super.setAopProxy(aopProxy);
+
+		List<SXPBlueprint> sxpBlueprints =
+			sxpBlueprintLocalService.getSXPBlueprints(
+				0, sxpBlueprintLocalService.getSXPBlueprintsCount());
+
+		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
+			_registerCollectionProvider(sxpBlueprint);
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -158,6 +187,8 @@ public class SXPBlueprintLocalServiceImpl
 		sxpBlueprint.setStatusByUserName(user.getFullName());
 
 		sxpBlueprint.setStatusDate(serviceContext.getModifiedDate(null));
+
+		_registerCollectionProvider(sxpBlueprint);
 
 		return sxpBlueprintPersistence.update(sxpBlueprint);
 	}
@@ -185,7 +216,46 @@ public class SXPBlueprintLocalServiceImpl
 				"%.1f",
 				GetterUtil.getFloat(sxpBlueprint.getVersion(), 0.9F) + 0.1));
 
+		_registerCollectionProvider(sxpBlueprint);
+
 		return updateSXPBlueprint(sxpBlueprint);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private void _registerCollectionProvider(SXPBlueprint sxpBlueprint) {
+		_unregisterCollectionProvider(sxpBlueprint);
+
+		ServiceRegistration<InfoCollectionProvider>
+			infoCollectionProviderServiceRegistration =
+				_bundleContext.registerService(
+					InfoCollectionProvider.class,
+					new SXPBlueprintInfoCollectionProvider(
+						_assetHelper, _searcher, _searchRequestBuilderFactory,
+						sxpBlueprint),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"company.id", sxpBlueprint.getCompanyId()
+					).put(
+						"item.class.name",
+						"com.liferay.asset.kernel.model.AssetEntry"
+					).build());
+
+		_serviceRegistrations.put(
+			sxpBlueprint.getExternalReferenceCode(),
+			infoCollectionProviderServiceRegistration);
+	}
+
+	private void _unregisterCollectionProvider(SXPBlueprint sxpBlueprint) {
+		_serviceRegistrations.computeIfPresent(
+			sxpBlueprint.getExternalReferenceCode(),
+			(key, serviceRegistration) -> {
+				serviceRegistration.unregister();
+
+				return null;
+			});
 	}
 
 	private void _validate(
@@ -205,7 +275,24 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	@Reference
+	private AssetHelper _assetHelper;
+
+	private BundleContext _bundleContext;
+
+	@Reference
+	private Language _language;
+
+	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
+		Collections.synchronizedMap(new LinkedHashMap<>());
 
 	@Reference
 	private SXPBlueprintValidator _sxpBlueprintValidator;

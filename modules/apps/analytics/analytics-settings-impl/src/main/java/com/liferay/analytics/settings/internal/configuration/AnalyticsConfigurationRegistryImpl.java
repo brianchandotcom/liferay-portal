@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -103,7 +104,16 @@ public class AnalyticsConfigurationRegistryImpl
 
 		_unmapPid(pid);
 
-		_disable(companyId);
+		long curCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(companyId);
+
+		try {
+			_disable(companyId);
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(curCompanyId);
+		}
 	}
 
 	@Override
@@ -188,52 +198,18 @@ public class AnalyticsConfigurationRegistryImpl
 	public void updated(String pid, Dictionary<String, ?> dictionary) {
 		_unmapPid(pid);
 
+		long curCompanyId = CompanyThreadLocal.getCompanyId();
+
 		long companyId = GetterUtil.getLong(
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
-		if (companyId != CompanyConstants.SYSTEM) {
-			_analyticsConfigurations.put(
-				companyId,
-				ConfigurableUtil.createConfigurable(
-					AnalyticsConfiguration.class, dictionary));
-			_companyIds.put(pid, companyId);
+		CompanyThreadLocal.setCompanyId(companyId);
+
+		try {
+			_updated(companyId, pid, dictionary);
 		}
-
-		if (!_initializedCompanyIds.contains(companyId)) {
-			_initializedCompanyIds.add(companyId);
-
-			if (Validator.isNotNull(dictionary.get("previousToken"))) {
-				return;
-			}
-		}
-
-		if (Validator.isNull(dictionary.get("token"))) {
-			if (Validator.isNotNull(dictionary.get("previousToken"))) {
-				_disable((Long)dictionary.get("companyId"));
-			}
-		}
-		else {
-			if (Validator.isNull(dictionary.get("previousToken"))) {
-				_enable((Long)dictionary.get("companyId"));
-			}
-
-			AnalyticsConfiguration analyticsConfiguration =
-				getAnalyticsConfiguration(companyId);
-
-			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
-				analyticsConfiguration.wizardMode()) {
-
-				return;
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
-				analyticsConfiguration.firstSync()) {
-
-				_firstSync(companyId);
-			}
-			else {
-				_sync((Long)dictionary.get("companyId"), dictionary);
-			}
+		finally {
+			CompanyThreadLocal.setCompanyId(curCompanyId);
 		}
 	}
 
@@ -960,6 +936,55 @@ public class AnalyticsConfigurationRegistryImpl
 
 		if (companyId != null) {
 			_analyticsConfigurations.remove(companyId);
+		}
+	}
+
+	private void _updated(
+		long companyId, String pid, Dictionary<String, ?> dictionary) {
+
+		if (companyId != CompanyConstants.SYSTEM) {
+			_analyticsConfigurations.put(
+				companyId,
+				ConfigurableUtil.createConfigurable(
+					AnalyticsConfiguration.class, dictionary));
+			_companyIds.put(pid, companyId);
+		}
+
+		if (!_initializedCompanyIds.contains(companyId)) {
+			_initializedCompanyIds.add(companyId);
+
+			if (Validator.isNotNull(dictionary.get("previousToken"))) {
+				return;
+			}
+		}
+
+		if (Validator.isNull(dictionary.get("token"))) {
+			if (Validator.isNotNull(dictionary.get("previousToken"))) {
+				_disable((Long)dictionary.get("companyId"));
+			}
+		}
+		else {
+			if (Validator.isNull(dictionary.get("previousToken"))) {
+				_enable((Long)dictionary.get("companyId"));
+			}
+
+			AnalyticsConfiguration analyticsConfiguration =
+				getAnalyticsConfiguration(companyId);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
+				analyticsConfiguration.wizardMode()) {
+
+				return;
+			}
+
+			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757") &&
+				analyticsConfiguration.firstSync()) {
+
+				_firstSync(companyId);
+			}
+			else {
+				_sync((Long)dictionary.get("companyId"), dictionary);
+			}
 		}
 	}
 

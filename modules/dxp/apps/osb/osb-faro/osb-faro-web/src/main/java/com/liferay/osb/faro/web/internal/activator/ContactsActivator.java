@@ -17,8 +17,8 @@ package com.liferay.osb.faro.web.internal.activator;
 import com.liferay.osb.faro.web.internal.application.AsahApplication;
 import com.liferay.osb.faro.web.internal.application.ContactsApplication;
 import com.liferay.osb.faro.web.internal.application.MainApplication;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

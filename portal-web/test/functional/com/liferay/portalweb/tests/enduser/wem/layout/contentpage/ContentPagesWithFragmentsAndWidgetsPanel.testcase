@@ -160,6 +160,7 @@ definition {
 	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategories {
 		property portal.release = "false";
+		property test.name.skip.portal.instance = "ContentPagesWithFragmentsAndWidgetsPanel#CustomizeOrderOfFragmentSetsAndWidgetCategories";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -199,6 +200,7 @@ definition {
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.release = "false";
+		property test.name.skip.portal.instance = "ContentPagesWithFragmentsAndWidgetsPanel#CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUser";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
 			ContentPagesNavigator.openEditContentPage(
@@ -295,6 +297,7 @@ definition {
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUserOnReleaseBundle {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "false";
+		property test.name.skip.portal.instance = "ContentPagesWithFragmentsAndWidgetsPanel#CustomizeOrderOfFragmentSetsAndWidgetCategoriesByEachUserOnReleaseBundle";
 
 		task ("Given a page creator customizes the order of fragment sets and widget categories in the Fragments and Widgets panel") {
 			ContentPagesNavigator.openEditContentPage(
@@ -390,6 +393,7 @@ definition {
 	@priority = 4
 	test CustomizeOrderOfFragmentSetsAndWidgetCategoriesOnReleaseBundle {
 		property portal.upstream = "false";
+		property test.name.skip.portal.instance = "ContentPagesWithFragmentsAndWidgetsPanel#CustomizeOrderOfFragmentSetsAndWidgetCategoriesOnReleaseBundle";
 
 		task ("Given a page creator navigates to the Fragments and Widgets panel in page editor") {
 			ContentPagesNavigator.openEditContentPage(
@@ -427,6 +431,8 @@ definition {
 	@description = "This is a test for LPS-158744. When move a fragment set to the place of a hidden fragment set, it should be placed bottom of the hidden fragment set in Fragments and Widgets panel."
 	@priority = 4
 	test MoveFragmentSetToThePlaceOfHiddenOne {
+		property test.name.skip.portal.instance = "ContentPagesWithFragmentsAndWidgetsPanel#MoveFragmentSetToThePlaceOfHiddenOne";
+
 		task ("Given a page creator has a content page based on a custom master with disallowed fragment set") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = ${randomSiteName},

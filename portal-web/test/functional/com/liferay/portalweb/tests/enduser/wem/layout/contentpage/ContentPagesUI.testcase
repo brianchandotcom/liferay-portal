@@ -134,6 +134,8 @@ definition {
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {
+		property test.name.skip.portal.instance = "ContentPagesUI#CouldAddAndRemoveFragmentInCardView";
+
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -215,6 +217,7 @@ definition {
 	@priority = 5
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSession {
 		property portal.release = "false";
+		property test.name.skip.portal.instance = "ContentPagesUI#CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSession";
 
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -339,6 +342,7 @@ definition {
 	@priority = 5
 	test CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSessionOnReleaseBundle {
 		property portal.upstream = "false";
+		property test.name.skip.portal.instance = "ContentPagesUI#CouldAddAndRemoveFragmentToFavoritesSessionAndWidgetToHighlightedSessionOnReleaseBundle";
 
 		task ("When go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -689,6 +693,8 @@ definition {
 	@description = "This is a test for LPS-158746. The favorite fragment is hidden if it is not allowed on master page."
 	@priority = 3
 	test ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage {
+		property test.name.skip.portal.instance = "ContentPagesUI#ViewFavoriteFragmentIsHiddenWhenItIsNotAllowedOnMasterPage";
+
 		task ("Given go to edit content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
@@ -810,6 +816,7 @@ definition {
 	@priority = 4
 	test ViewFavoritesListInDifferentUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "ContentPagesUI#ViewFavoritesListInDifferentUsers";
 
 		task ("Given having 2 users") {
 			var userEmailAddress = StringUtil.randomString(8);

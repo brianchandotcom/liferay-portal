@@ -313,4 +313,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-178268 | Test Summary: Verify that the User with the 'Testray User' role should not be able to create the requirement"
+	@priority = 2
+	test AssertUserRoleCanNotCreateRequirement {
+		property test.name.skip.portal.instance = "TestrayRequirementPermissions#AssertUserRoleCanNotCreateRequirement";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+
+            Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+		}
+
+		task ("When the user go to the requirement page") {
+			Testray.projectTabNavigator(navTabName = "Requirements");
+		}
+
+		task ("Then the user can not create the requirement") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+	}
+
 }

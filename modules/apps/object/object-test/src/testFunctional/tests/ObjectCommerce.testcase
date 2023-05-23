@@ -212,7 +212,7 @@ definition {
 			channelName = "Test Channel",
 			channelType = "Site");
 
-		Refresh();
+		WaitForPageLoad();
 
 		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
 

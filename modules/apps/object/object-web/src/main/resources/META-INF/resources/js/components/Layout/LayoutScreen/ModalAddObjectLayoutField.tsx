@@ -173,7 +173,7 @@ export default function ModalAddObjectLayoutField({
 										: Liferay.Language.get('optional')}
 								</ClayLabel>
 
-								{Liferay.FeatureFlags['LPS-159913'] &&
+								{Liferay.FeatureFlags['LPS-170122'] &&
 									(readOnlyField.value === 'true' ||
 										readOnlyField.value ===
 											'conditional') && (
@@ -231,7 +231,7 @@ export default function ModalAddObjectLayoutField({
 											: Liferay.Language.get('optional')}
 									</ClayLabel>
 
-									{Liferay.FeatureFlags['LPS-159913'] &&
+									{Liferay.FeatureFlags['LPS-170122'] &&
 										objectFieldSettings?.find(
 											(
 												fieldSetting: ObjectFieldSetting

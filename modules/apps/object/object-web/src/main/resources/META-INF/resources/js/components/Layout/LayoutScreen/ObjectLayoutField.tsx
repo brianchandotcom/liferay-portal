@@ -92,7 +92,7 @@ export function ObjectLayoutField({
 							: Liferay.Language.get('optional')}
 					</ClayLabel>
 
-					{Liferay.FeatureFlags['LPS-159913'] &&
+					{Liferay.FeatureFlags['LPS-170122'] &&
 						objectField.objectFieldSettings?.find(
 							(fieldSetting: ObjectFieldSetting) =>
 								fieldSetting.value === 'true' ||

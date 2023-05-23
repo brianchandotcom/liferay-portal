@@ -36,7 +36,7 @@ export function AdvancedTab({
 }: AdvancedTabProps) {
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-159913'] && (
+			{Liferay.FeatureFlags['LPS-170122'] && (
 				<ReadOnlyContainer
 					disabled={
 						values.system ||

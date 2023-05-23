@@ -126,7 +126,7 @@ export default function EditObjectField({
 	});
 
 	if (
-		(Liferay.FeatureFlags['LPS-159913'] ||
+		(Liferay.FeatureFlags['LPS-170122'] ||
 			(Liferay.FeatureFlags['LPS-163716'] &&
 				values.businessType === 'Picklist')) &&
 		TABS.length < 2
@@ -186,7 +186,7 @@ export default function EditObjectField({
 					/>
 				</ClayTabs.TabPane>
 
-				{(Liferay.FeatureFlags['LPS-159913'] ||
+				{(Liferay.FeatureFlags['LPS-170122'] ||
 					(Liferay.FeatureFlags['LPS-163716'] &&
 						values.businessType === 'Picklist')) && (
 					<ClayTabs.TabPane>

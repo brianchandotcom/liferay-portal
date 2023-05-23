@@ -10,7 +10,7 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import useSearchTerm from '../../../../../../../../common/hooks/useSearchTerm';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '../../../../../../../../common/services/liferay/graphql/user-accounts';
 import getRaysourceContactRoleName from '../utils/getRaysourceContactRoleName';
@@ -18,14 +18,12 @@ import useDeleteUserAccount from './useDeleteUserAccount';
 import useSupportSeatsCount from './useSupportSeatsCount';
 import useUpdateUserAccount from './useUpdateUserAccount';
 
-const DEFAULT_FILTER = "not (userGroupRoleNames/any(s:s eq 'Provisioning'))";
-
 const getFilter = (searchTerm) => {
 	if (searchTerm) {
-		return `${DEFAULT_FILTER} and (contains(name, '${searchTerm}') or contains(emailAddress, '${searchTerm}') or userGroupRoleNames/any(s:contains(s, '${searchTerm}')))`;
+		return `(contains(name, '${searchTerm}') or contains(emailAddress, '${searchTerm}') or userGroupRoleNames/any(s:contains(s, '${searchTerm}')))`;
 	}
 
-	return DEFAULT_FILTER;
+	return '';
 };
 
 export default function useUserAccountsByAccountExternalReferenceCode(
@@ -35,17 +33,48 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 	const [searching, setSearching] = useState(false);
 
 	const {
-		data,
+		data: userAccountData,
 		networkStatus,
 		refetch,
 	} = useGetUserAccountsByAccountExternalReferenceCode(
 		externalReferenceCode,
 		{
-			filter: DEFAULT_FILTER,
 			notifyOnNetworkStatusChange: true,
 			skip: koroneikiAccountLoading,
 		}
 	);
+
+	const data = useMemo(() => {
+		const items = (
+			userAccountData?.accountUserAccountsByExternalReferenceCode
+				?.items ?? []
+		).filter((account) => {
+			const accountBriefByExternalReferenceCode = account.accountBriefs.find(
+				(accountBrief) =>
+					accountBrief.externalReferenceCode === externalReferenceCode
+			);
+
+			if (
+				accountBriefByExternalReferenceCode &&
+				accountBriefByExternalReferenceCode.roleBriefs.some(
+					(roleBrief) => roleBrief.name === 'Provisioning'
+				)
+			) {
+				return false;
+			}
+
+			return true;
+		});
+
+		return {
+			...userAccountData,
+			accountUserAccountsByExternalReferenceCode: {
+				...userAccountData?.accountUserAccountsByExternalReferenceCode,
+				items,
+				totalCount: items.length,
+			},
+		};
+	}, [userAccountData, externalReferenceCode]);
 
 	const {
 		deleteContactRoles,

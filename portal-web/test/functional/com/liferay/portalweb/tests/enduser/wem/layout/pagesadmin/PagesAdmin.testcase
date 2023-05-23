@@ -1867,8 +1867,6 @@ definition {
 		}
 
 		task ("Then the permissions must be the same as on the original pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
-
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
 				layoutName = "Test Widget Page Name");
@@ -1999,8 +1997,6 @@ definition {
 		}
 
 		task ("Then the permissions must be the same as on the original pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
-
 			JSONLayout.addPublicLayout(
 				groupName = ${organizationName},
 				layoutName = "Test Widget Page Name");

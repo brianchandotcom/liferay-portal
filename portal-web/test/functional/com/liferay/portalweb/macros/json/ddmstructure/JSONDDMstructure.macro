@@ -1,0 +1,11 @@
+definition {
+
+	macro tearDown {
+		var dDMstructureList = JSONDDMstructureAPI._getCustomStructureIds();
+
+		for (var dDMstructure : list ${dDMstructureList}) {
+			JSONDDMstructureAPI._deleteStructure(structureId = ${dDMstructure});
+		}
+	}
+
+}

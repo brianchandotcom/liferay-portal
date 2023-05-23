@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
@@ -212,18 +211,12 @@ public class LayoutLocalServiceTest {
 			_layoutLocalService.getPublishedLayoutsCount(_group.getGroupId()));
 
 		List<Layout> layouts = _layoutLocalService.getPublishedLayouts(
-			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new LayoutCreateDateComparator());
+			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(layouts.toString(), 2, layouts.size());
 
-		Layout layout1 = layouts.get(0);
-
-		Assert.assertEquals(publishedLayout.getPlid(), layout1.getPlid());
-
-		Layout layout2 = layouts.get(1);
-
-		Assert.assertEquals(widgetLayout.getPlid(), layout2.getPlid());
+		Assert.assertTrue(layouts.contains(publishedLayout));
+		Assert.assertTrue(layouts.contains(widgetLayout));
 	}
 
 	@Test

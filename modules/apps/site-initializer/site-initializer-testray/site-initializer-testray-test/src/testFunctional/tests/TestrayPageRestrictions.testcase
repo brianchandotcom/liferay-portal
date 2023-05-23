@@ -151,4 +151,32 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182898 | Test Summary: Verify that can return to the home page when access the page is restricted in project"
+	@priority = 3
+	test AssertCanReturnHomePageWhenAccessPageRestrictionOnRoutine {
+		property test.name.skip.portal.instance = "TestrayPageRestrictions#AssertCanReturnHomePageWhenAccessPageRestrictionOnRoutine";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("And the user go to page restriction via URL") {
+            var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray-2#/${projectName}/routines/create");
+		}
+
+        task ("When the user click in the link to the home page") {
+            Testray.goToLink(text = "Go to homepage");
+		}
+
+		task ("Then the user can return to the home page") {
+            TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+		}
+	}
+
 }

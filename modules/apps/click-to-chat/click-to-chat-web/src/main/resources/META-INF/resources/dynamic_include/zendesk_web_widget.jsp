@@ -25,11 +25,11 @@
 					<%
 					ClickToChatConfiguration clickToChatConfiguration = ClickToChatConfigurationUtil.getClickToChatConfiguration(themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
 
-					String stringKey = clickToChatConfiguration.chatProviderSecretKey();
+					String chatProviderSecretKey = clickToChatConfiguration.chatProviderSecretKey();
 
-					byte[] keyBytes = stringKey.getBytes(StandardCharsets.UTF_8);
+					byte[] bytes = chatProviderSecretKey.getBytes(StandardCharsets.UTF_8);
 
-					String taglibJwt = Jwts.builder(
+					String jwtToken = Jwts.builder(
 					).setHeaderParam(
 						"alg", SignatureAlgorithm.HS256.getValue()
 					).setHeaderParam(
@@ -45,12 +45,12 @@
 					).claim(
 						"external_id", String.valueOf(user.getUserId())
 					).signWith(
-						Keys.hmacShaKeyFor(keyBytes), SignatureAlgorithm.HS256
+						Keys.hmacShaKeyFor(bytes), SignatureAlgorithm.HS256
 					).compact();
 					%>
 
 					zE('messenger', 'loginUser', (callback) => {
-						callback('<%= taglibJwt %>');
+						callback('<%= jwtToken %>');
 					});
 				}
 			}

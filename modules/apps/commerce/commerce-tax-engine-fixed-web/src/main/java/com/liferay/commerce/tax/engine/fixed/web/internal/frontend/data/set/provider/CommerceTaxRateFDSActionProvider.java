@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -118,25 +117,20 @@ public class CommerceTaxRateFDSActionProvider implements FDSActionProvider {
 			HttpServletRequest httpServletRequest, long taxRateId)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceTaxMethod.class.getName(),
 				PortletProvider.Action.EDIT)
 		).setMVCRenderCommandName(
 			"/commerce_tax_methods/edit_commerce_tax_fixed_rate"
-		).buildPortletURL();
-
-		long commerceTaxMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceTaxMethodId");
-
-		portletURL.setParameter(
-			"commerceTaxMethodId", String.valueOf(commerceTaxMethodId));
-
-		portletURL.setParameter(
-			"commerceTaxFixedRateId", String.valueOf(taxRateId));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+		).setParameter(
+			"commerceTaxFixedRateId", taxRateId
+		).setParameter(
+			"commerceTaxMethodId",
+			ParamUtil.getLong(httpServletRequest, "commerceTaxMethodId")
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	@Reference(

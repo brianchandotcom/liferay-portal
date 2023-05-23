@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -105,7 +104,7 @@ public class CommerceShippingFixedOptionFDSActionProvider
 			HttpServletRequest httpServletRequest, long shippingFixedOptionId)
 		throws Exception {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				httpServletRequest, CommerceShippingMethod.class.getName(),
 				PortletProvider.Action.EDIT)
@@ -113,18 +112,12 @@ public class CommerceShippingFixedOptionFDSActionProvider
 			"/commerce_shipping_methods/edit_commerce_shipping_fixed_option"
 		).setParameter(
 			"commerceShippingFixedOptionId", shippingFixedOptionId
-		).buildPortletURL();
-
-		long commerceShippingMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceShippingMethodId");
-
-		portletURL.setParameter(
+		).setParameter(
 			"commerceShippingMethodId",
-			String.valueOf(commerceShippingMethodId));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+			ParamUtil.getLong(httpServletRequest, "commerceShippingMethodId")
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	@Reference

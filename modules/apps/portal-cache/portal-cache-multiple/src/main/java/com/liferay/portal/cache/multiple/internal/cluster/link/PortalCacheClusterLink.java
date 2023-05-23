@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.multiple.internal.cluster.link;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.cache.multiple.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,8 +29,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Shuyang Zhou
@@ -72,6 +71,9 @@ public class PortalCacheClusterLink {
 			_portalCacheClusterChannels.add(portalCacheClusterChannel);
 		}
 
+		_portalCacheClusterChannelSelector =
+			_portalCacheClusterChannelSelectorSnapshot.get();
+
 		if (_portalCacheClusterChannelSelector == null) {
 			_portalCacheClusterChannelSelector =
 				new UniformPortalCacheClusterChannelSelector();
@@ -91,16 +93,16 @@ public class PortalCacheClusterLink {
 		_portalCacheClusterChannels = null;
 	}
 
+	private static final Snapshot<PortalCacheClusterChannelSelector>
+		_portalCacheClusterChannelSelectorSnapshot = new Snapshot<>(
+			PortalCacheClusterLink.class,
+			PortalCacheClusterChannelSelector.class, null, true);
+
 	@Reference
 	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
 
 	private volatile List<PortalCacheClusterChannel>
 		_portalCacheClusterChannels;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC
-	)
 	private volatile PortalCacheClusterChannelSelector
 		_portalCacheClusterChannelSelector;
 

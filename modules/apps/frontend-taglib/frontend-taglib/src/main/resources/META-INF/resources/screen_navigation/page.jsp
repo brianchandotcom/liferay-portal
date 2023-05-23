@@ -24,6 +24,7 @@ String headerContainerCssClass = (String)request.getAttribute("liferay-frontend:
 String id = (String)request.getAttribute("liferay-frontend:screen-navigation:id");
 boolean inverted = (boolean)request.getAttribute("liferay-frontend:screen-navigation:inverted");
 String menubarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:menubarCssClass");
+Object modelContext = (Object)request.getAttribute("liferay-frontend:screen-navigation:modelContext");
 String navCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navCssClass");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:screen-navigation:portletURL");
 ScreenNavigationCategory selectedScreenNavigationCategory = (ScreenNavigationCategory)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationCategory");
@@ -90,12 +91,13 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 
 							<%
 							for (ScreenNavigationEntry<Object> screenNavigationEntry : screenNavigationEntries) {
+								String statusLabel = screenNavigationEntry.getStatusLabel(themeDisplay.getLocale(), modelContext);
 							%>
 
 								<li class="nav-item">
 									<a
 										aria-current="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "page" : "false" %>"
-										class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>"
+										class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(statusLabel) ? "align-items-center d-flex" : StringPool.BLANK %>"
 										href="<%=
 											PortletURLBuilder.create(
 												PortletURLUtil.clone(portletURL, liferayPortletResponse)
@@ -107,6 +109,14 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 										%>"
 									>
 										<%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %>
+
+										<c:if test="<%= Validator.isNotNull(statusLabel) %>">
+											<clay:label
+												cssClass="ml-2"
+												displayType="<%= screenNavigationEntry.getStatusStyle(modelContext) %>"
+												label="<%= statusLabel %>"
+											/>
+										</c:if>
 									</a>
 								</li>
 

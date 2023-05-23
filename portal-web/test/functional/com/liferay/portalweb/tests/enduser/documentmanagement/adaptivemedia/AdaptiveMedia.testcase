@@ -421,7 +421,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Low Resolution");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "7/8");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "8/9");
 	}
 
 	@priority = 5
@@ -463,7 +463,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/6");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/7");
 
 		AdaptiveMedia.editImageResolution(
 			imageName = "High Resolution",
@@ -473,7 +473,7 @@ definition {
 
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "High Resolution Edited");
 
-		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/6");
+		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/7");
 	}
 
 	@priority = 4

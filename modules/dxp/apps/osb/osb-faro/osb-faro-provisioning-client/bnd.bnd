@@ -5,4 +5,9 @@ Export-Package:\
 	com.liferay.osb.faro.provisioning.client,\
 	com.liferay.osb.faro.provisioning.client.constants,\
 	com.liferay.osb.faro.provisioning.client.model
+Import-Package:\
+	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[7.38.0,9999.0.0)",\
+	\
+	*
 -dsannotations-options: inherit

@@ -8,6 +8,9 @@ Import-Package:\
 	\
 	!org.yaml.snakeyaml.*,\
 	\
+	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
+	\
 	*
 -dsannotations-options: inherit
 -includeresource: elasticsearch-snapshot-*.zip

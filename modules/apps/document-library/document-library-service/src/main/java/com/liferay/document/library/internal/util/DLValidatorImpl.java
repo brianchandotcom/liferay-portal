@@ -55,10 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = {
-		"com.liferay.document.library.configuration.DLConfiguration",
-		"com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration"
-	},
+	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
 	service = DLValidator.class
 )
 public final class DLValidatorImpl implements DLValidator {

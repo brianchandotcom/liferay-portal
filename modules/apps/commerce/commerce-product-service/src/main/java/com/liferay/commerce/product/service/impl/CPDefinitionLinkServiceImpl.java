@@ -51,14 +51,23 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId, long cProductId, double priority, String type,
+			long cpDefinitionId, long cProductId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, double priority, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCommerceCatalog(cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(
-			cpDefinitionId, cProductId, priority, type, serviceContext);
+			cpDefinitionId, cProductId, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, priority,
+			type, serviceContext);
 	}
 
 	@Override
@@ -144,6 +153,17 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int status)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId, status);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
 			long cpDefinitionId, int start, int end)
 		throws PortalException {
 
@@ -155,6 +175,17 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int status, int start, int end)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId, status, start, end);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
 			long cpDefinitionId, String type)
 		throws PortalException {
 
@@ -162,6 +193,29 @@ public class CPDefinitionLinkServiceImpl
 
 		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
 			cpDefinitionId, type);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, String type, int status)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId, type, status);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, String type, int status, int start, int end,
+			OrderByComparator<CPDefinitionLink> orderByComparator)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinks(
+			cpDefinitionId, type, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -187,6 +241,16 @@ public class CPDefinitionLinkServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId, int status)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
+			cpDefinitionId, status);
+	}
+
+	@Override
 	public int getCPDefinitionLinksCount(long cpDefinitionId, String type)
 		throws PortalException {
 
@@ -197,8 +261,23 @@ public class CPDefinitionLinkServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionLinksCount(
+			long cpDefinitionId, String type, int status)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
+			cpDefinitionId, type, status);
+	}
+
+	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
-			long cpDefinitionLinkId, double priority,
+			long cpDefinitionLinkId, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, double priority,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -215,7 +294,11 @@ public class CPDefinitionLinkServiceImpl
 			cProduct.getPublishedCPDefinitionId(), ActionKeys.UPDATE);
 
 		return cpDefinitionLinkLocalService.updateCPDefinitionLink(
-			cpDefinitionLinkId, priority, serviceContext);
+			getUserId(), cpDefinitionLinkId, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, priority,
+			serviceContext);
 	}
 
 	@Override

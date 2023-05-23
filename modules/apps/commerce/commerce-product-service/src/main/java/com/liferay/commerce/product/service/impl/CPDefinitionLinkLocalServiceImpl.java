@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.exception.CPDefinitionLinkDisplayDateException;
+import com.liferay.commerce.product.exception.CPDefinitionLinkExpirationDateException;
 import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircularDependencyUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -25,6 +27,8 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
@@ -33,9 +37,20 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
+import java.io.Serializable;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,7 +68,12 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public CPDefinitionLink addCPDefinitionLinkByCProductId(
-			long cpDefinitionId, long cProductId, double priority, String type,
+			long cpDefinitionId, long cProductId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, double priority, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -75,6 +95,29 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
+		Date expirationDate = null;
+		Date date = new Date();
+
+		Date displayDate = _portal.getDate(
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(),
+			CPDefinitionLinkDisplayDateException.class);
+
+		if (!neverExpire) {
+			expirationDate = _portal.getDate(
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, user.getTimeZone(),
+				CPDefinitionLinkExpirationDateException.class);
+		}
+
+		if ((expirationDate != null) &&
+			(expirationDate.before(date) ||
+			 ((displayDate != null) && expirationDate.before(displayDate)))) {
+
+			throw new CPDefinitionLinkExpirationDateException(
+				"Expiration date " + expirationDate + " is in the past");
+		}
+
 		long cpDefinitionLinkId = counterLocalService.increment();
 
 		CPDefinitionLink cpDefinitionLink = cpDefinitionLinkPersistence.create(
@@ -86,6 +129,16 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLink.setUserName(user.getFullName());
 		cpDefinitionLink.setCPDefinitionId(cpDefinition.getCPDefinitionId());
 		cpDefinitionLink.setCProductId(cProductId);
+		cpDefinitionLink.setDisplayDate(displayDate);
+		cpDefinitionLink.setExpirationDate(expirationDate);
+
+		if ((expirationDate == null) || expirationDate.after(date)) {
+			cpDefinitionLink.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+		else {
+			cpDefinitionLink.setStatus(WorkflowConstants.STATUS_EXPIRED);
+		}
+
 		cpDefinitionLink.setPriority(priority);
 		cpDefinitionLink.setType(type);
 		cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
@@ -98,7 +151,16 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		_reindexCPDefinition(cpDefinitionId);
 
-		return cpDefinitionLink;
+		// Workflow
+
+		return _startWorkflowInstance(
+			user.getUserId(), cpDefinitionLink, serviceContext);
+	}
+
+	@Override
+	public void checkCPDefinitionLinks() throws PortalException {
+		_checkCPDefinitionLinksByDisplayDate();
+		_checkCPDefinitionLinksByExpirationDate();
 	}
 
 	@Override
@@ -196,6 +258,13 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, int status) {
+
+		return cpDefinitionLinkPersistence.findByCPD_S(cpDefinitionId, status);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
 		long cpDefinitionId, int start, int end) {
 
 		return cpDefinitionLinkPersistence.findByCPDefinitionId(
@@ -204,9 +273,34 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, int status, int start, int end) {
+
+		return cpDefinitionLinkPersistence.findByCPD_S(
+			cpDefinitionId, status, start, end);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
 		long cpDefinitionId, String type) {
 
 		return cpDefinitionLinkPersistence.findByCPD_T(cpDefinitionId, type);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, String type, int status) {
+
+		return cpDefinitionLinkPersistence.findByCPD_T_S(
+			cpDefinitionId, type, status);
+	}
+
+	@Override
+	public List<CPDefinitionLink> getCPDefinitionLinks(
+		long cpDefinitionId, String type, int status, int start, int end,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
+
+		return cpDefinitionLinkPersistence.findByCPD_T_S(
+			cpDefinitionId, type, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -225,8 +319,21 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId, int status) {
+		return cpDefinitionLinkPersistence.countByCPD_S(cpDefinitionId, status);
+	}
+
+	@Override
 	public int getCPDefinitionLinksCount(long cpDefinitionId, String type) {
 		return cpDefinitionLinkPersistence.countByCPD_T(cpDefinitionId, type);
+	}
+
+	@Override
+	public int getCPDefinitionLinksCount(
+		long cpDefinitionId, String type, int status) {
+
+		return cpDefinitionLinkPersistence.countByCPD_T_S(
+			cpDefinitionId, type, status);
 	}
 
 	@Override
@@ -237,10 +344,24 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionLink> getReverseCPDefinitionLinks(
+		long cProductId, String type, int status) {
+
+		return cpDefinitionLinkPersistence.findByCP_T_S(
+			cProductId, type, status);
+	}
+
+	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
-			long cpDefinitionLinkId, double priority,
-			ServiceContext serviceContext)
+			long userId, long cpDefinitionLinkId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, double priority, ServiceContext serviceContext)
 		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
 
 		CPDefinitionLink cpDefinitionLink =
 			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
@@ -257,6 +378,39 @@ public class CPDefinitionLinkLocalServiceImpl
 				cpDefinitionLink.getCProductId(), cpDefinitionLink.getType());
 		}
 
+		Date expirationDate = null;
+		Date date = new Date();
+
+		Date displayDate = _portal.getDate(
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, user.getTimeZone(),
+			CPDefinitionLinkDisplayDateException.class);
+
+		if (!neverExpire) {
+			expirationDate = _portal.getDate(
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, user.getTimeZone(),
+				CPDefinitionLinkExpirationDateException.class);
+		}
+
+		if ((expirationDate != null) &&
+			(expirationDate.before(date) ||
+			 ((displayDate != null) && expirationDate.before(displayDate)))) {
+
+			throw new CPDefinitionLinkExpirationDateException(
+				"Expiration date " + expirationDate + " is in the past");
+		}
+
+		cpDefinitionLink.setDisplayDate(displayDate);
+		cpDefinitionLink.setExpirationDate(expirationDate);
+
+		if ((expirationDate == null) || expirationDate.after(date)) {
+			cpDefinitionLink.setStatus(WorkflowConstants.STATUS_DRAFT);
+		}
+		else {
+			cpDefinitionLink.setStatus(WorkflowConstants.STATUS_EXPIRED);
+		}
+
 		cpDefinitionLink.setPriority(priority);
 		cpDefinitionLink.setExpandoBridgeAttributes(serviceContext);
 
@@ -269,7 +423,10 @@ public class CPDefinitionLinkLocalServiceImpl
 
 		_reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
 
-		return cpDefinitionLink;
+		// Workflow
+
+		return _startWorkflowInstance(
+			user.getUserId(), cpDefinitionLink, serviceContext);
 	}
 
 	@Override
@@ -297,6 +454,10 @@ public class CPDefinitionLinkLocalServiceImpl
 		CPDefinition cpDefinition = _cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.setTime(new Date());
+
 		for (long cProductId : cProductIds) {
 			if (cpDefinition.getCProductId() != cProductId) {
 				CPDefinitionLink cpDefinitionLink =
@@ -306,8 +467,13 @@ public class CPDefinitionLinkLocalServiceImpl
 				if (cpDefinitionLink == null) {
 					cpDefinitionLinkLocalService.
 						addCPDefinitionLinkByCProductId(
-							cpDefinitionId, cProductId, 0, type,
-							serviceContext);
+							cpDefinitionId, cProductId,
+							calendar.get(Calendar.MONTH),
+							calendar.get(Calendar.DAY_OF_MONTH),
+							calendar.get(Calendar.YEAR),
+							calendar.get(Calendar.HOUR_OF_DAY),
+							calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+							0, type, serviceContext);
 				}
 			}
 
@@ -320,6 +486,106 @@ public class CPDefinitionLinkLocalServiceImpl
 		_reindexCPDefinition(cpDefinitionId);
 	}
 
+	@Override
+	public CPDefinitionLink updateStatus(
+			long userId, long cpDefinitionLinkId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+		Date date = new Date();
+
+		CPDefinitionLink cpDefinitionLink =
+			cpDefinitionLinkPersistence.findByPrimaryKey(cpDefinitionLinkId);
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(cpDefinitionLink.getDisplayDate() != null) &&
+			date.before(cpDefinitionLink.getDisplayDate())) {
+
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
+
+		Date modifiedDate = serviceContext.getModifiedDate(date);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			Date expirationDate = cpDefinitionLink.getExpirationDate();
+
+			if ((expirationDate != null) && expirationDate.before(date)) {
+				cpDefinitionLink.setExpirationDate(null);
+			}
+		}
+
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			cpDefinitionLink.setExpirationDate(date);
+		}
+
+		cpDefinitionLink.setStatus(status);
+		cpDefinitionLink.setStatusByUserId(user.getUserId());
+		cpDefinitionLink.setStatusByUserName(user.getFullName());
+		cpDefinitionLink.setStatusDate(modifiedDate);
+
+		cpDefinitionLink = cpDefinitionLinkPersistence.update(cpDefinitionLink);
+
+		CProduct cProduct = _cProductPersistence.findByPrimaryKey(
+			cpDefinitionLink.getCProductId());
+
+		_reindexCPDefinition(cProduct.getPublishedCPDefinitionId());
+
+		_reindexCPDefinition(cpDefinitionLink.getCPDefinitionId());
+
+		return cpDefinitionLink;
+	}
+
+	private void _checkCPDefinitionLinksByDisplayDate() throws PortalException {
+		for (CPDefinitionLink cpDefinitionLink :
+				cpDefinitionLinkPersistence.findByLtD_S(
+					new Date(), WorkflowConstants.STATUS_SCHEDULED)) {
+
+			long userId = _portal.getValidUserId(
+				cpDefinitionLink.getCompanyId(), cpDefinitionLink.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setScopeGroupId(cpDefinitionLink.getGroupId());
+
+			cpDefinitionLinkLocalService.updateStatus(
+				userId, cpDefinitionLink.getCPDefinitionLinkId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
+		}
+	}
+
+	private void _checkCPDefinitionLinksByExpirationDate()
+		throws PortalException {
+
+		List<CPDefinitionLink> cpDefinitionLinks =
+			cpDefinitionLinkPersistence.findByLtE_S(
+				new Date(), WorkflowConstants.STATUS_APPROVED);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Expiring " + cpDefinitionLinks.size() +
+					" commerce product definition links");
+		}
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			long userId = _portal.getValidUserId(
+				cpDefinitionLink.getCompanyId(), cpDefinitionLink.getUserId());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCommand(Constants.UPDATE);
+			serviceContext.setScopeGroupId(cpDefinitionLink.getGroupId());
+
+			cpDefinitionLinkLocalService.updateStatus(
+				userId, cpDefinitionLink.getCPDefinitionLinkId(),
+				WorkflowConstants.STATUS_EXPIRED, serviceContext,
+				new HashMap<String, Serializable>());
+		}
+	}
+
 	private void _reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
@@ -329,6 +595,23 @@ public class CPDefinitionLinkLocalServiceImpl
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
+	private CPDefinitionLink _startWorkflowInstance(
+			long userId, CPDefinitionLink cpDefinitionLink,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			cpDefinitionLink.getCompanyId(), cpDefinitionLink.getGroupId(),
+			userId, CPDefinitionLink.class.getName(),
+			cpDefinitionLink.getCPDefinitionLinkId(), cpDefinitionLink,
+			serviceContext, workflowContext);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionLinkLocalServiceImpl.class);
+
 	@Reference
 	private CPDefinitionPersistence _cpDefinitionPersistence;
 
@@ -337,6 +620,9 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

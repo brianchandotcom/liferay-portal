@@ -75,10 +75,6 @@ public class CPSpecificationOptionsImporter {
 
 		String key = jsonObject.getString("key");
 
-		CPSpecificationOption cpSpecificationOption =
-			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-				serviceContext.getCompanyId(), key);
-
 		long cpOptionCategoryId = 0;
 
 		String categoryKey = jsonObject.getString("categoryKey");
@@ -89,8 +85,6 @@ public class CPSpecificationOptionsImporter {
 					serviceContext.getCompanyId(), categoryKey);
 
 			cpOptionCategoryId = cpOptionCategory.getCPOptionCategoryId();
-
-			cpOptionCategory.setCPOptionCategoryId(cpOptionCategoryId);
 		}
 
 		Locale locale = LocaleUtil.getSiteDefault();
@@ -102,6 +96,10 @@ public class CPSpecificationOptionsImporter {
 			locale, jsonObject.getString("description"));
 
 		boolean facetable = jsonObject.getBoolean("facetable");
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
+				serviceContext.getCompanyId(), key);
 
 		if (cpSpecificationOption != null) {
 			return _cpSpecificationOptionLocalService.

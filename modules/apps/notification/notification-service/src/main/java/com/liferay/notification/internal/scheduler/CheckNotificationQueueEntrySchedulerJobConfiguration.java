@@ -52,6 +52,9 @@ public class CheckNotificationQueueEntrySchedulerJobConfiguration
 			notificationType.resendNotifications(
 				NotificationQueueEntryConstants.STATUS_FAILED,
 				NotificationConstants.TYPE_EMAIL);
+			notificationType.resendNotifications(
+				NotificationQueueEntryConstants.STATUS_UNSENT,
+				NotificationConstants.TYPE_EMAIL);
 
 			NotificationQueueConfiguration notificationQueueConfiguration =
 				_configurationProvider.getSystemConfiguration(

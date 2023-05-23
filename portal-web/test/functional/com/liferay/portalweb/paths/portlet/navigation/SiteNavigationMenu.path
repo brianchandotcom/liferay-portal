@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ITEM_ENTRY_CLOSE</td>
-	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']/parent::div/following-sibling::div//*[name()='svg'][contains(@class,'circle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEM_ENTRY_DRAG_ICON</td>
 	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_sourceItemName}']]//div[contains(@draggable,'true')]</td>
 	<td></td>

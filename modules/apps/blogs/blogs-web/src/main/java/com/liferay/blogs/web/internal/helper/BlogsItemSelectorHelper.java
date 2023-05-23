@@ -20,14 +20,11 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Roberto Díaz
@@ -39,7 +36,9 @@ public class BlogsItemSelectorHelper {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		ThemeDisplay themeDisplay, String itemSelectedEventName) {
 
-		if (_itemSelector == null) {
+		ItemSelector itemSelector = _itemSelectorSnapshot.get();
+
+		if (itemSelector == null) {
 			return null;
 		}
 
@@ -56,16 +55,13 @@ public class BlogsItemSelectorHelper {
 			new DownloadFileEntryItemSelectorReturnType());
 
 		return String.valueOf(
-			_itemSelector.getItemSelectorURL(
+			itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory, itemSelectedEventName,
 				blogsItemSelectorCriterion, imageItemSelectorCriterion));
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ItemSelector _itemSelector;
+	private static final Snapshot<ItemSelector> _itemSelectorSnapshot =
+		new Snapshot<>(
+			BlogsItemSelectorHelper.class, ItemSelector.class, null, true);
 
 }

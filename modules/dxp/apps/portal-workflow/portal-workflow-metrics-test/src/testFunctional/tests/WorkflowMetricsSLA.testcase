@@ -971,12 +971,16 @@ definition {
 	@description = "LPS-94760 - Verify that the time format is following the system language (Example: 03:34 PM for en_US and 15:34 for pt)"
 	@priority = 3
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
-		property ci.retries.disabled = "true";
-		property portal.acceptance = "quarantine";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		var slaName = "SLAName";
 
 		task ("Given a blog entry with an SLA and the account language is set to English") {
+			WorkflowMetrics.setSLADefinitionsJobInterval(
+				definitionsJobInterval = 1,
+				slaJobInterval = 1);
+
 			WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
 			WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
@@ -1018,6 +1022,10 @@ definition {
 			WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 			var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			while ((IsElementNotPresent(key_status = "check", locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS")) && (maxIterations = "50")) {
+				Refresh();
+			}
 
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 

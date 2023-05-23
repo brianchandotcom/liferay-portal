@@ -93,7 +93,7 @@
 </tr>
 <tr>
 	<td>FIELDS_TABLE</td>
-	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_position}]//*[contains(text(),'${keyName}')]</td>
+	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_position}]//*[contains(.,'${keyName}')]</td>
 	<td></td>
 </tr>
 <tr>

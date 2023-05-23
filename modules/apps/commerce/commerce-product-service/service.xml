@@ -411,8 +411,15 @@
 
 		<column name="CPDefinitionId" type="long" />
 		<column name="CProductId" type="long" />
+		<column name="displayDate" type="Date" />
+		<column name="expirationDate" type="Date" />
 		<column name="priority" type="double" />
 		<column name="type" type="String" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -432,14 +439,40 @@
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="CPD_S" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="CP_T" return-type="Collection">
 			<finder-column name="CProductId" />
 			<finder-column name="type" />
+		</finder>
+		<finder name="CP_S" return-type="Collection">
+			<finder-column name="CProductId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtE_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="expirationDate" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="C_C_T" return-type="CPDefinitionLink" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CProductId" />
 			<finder-column name="type" />
+		</finder>
+		<finder name="CPD_T_S" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="type" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="CP_T_S" return-type="Collection">
+			<finder-column name="CProductId" />
+			<finder-column name="type" />
+			<finder-column name="status" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CPDefinitionOptionRel" remote-service="true" uuid="true">
@@ -1144,6 +1177,8 @@
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPDefinitionIgnoreSKUCombinations</exception>
+		<exception>CPDefinitionLinkDisplayDate</exception>
+		<exception>CPDefinitionLinkExpirationDate</exception>
 		<exception>CPDefinitionMaxSubscriptionCycles</exception>
 		<exception>CPDefinitionMetaDescription</exception>
 		<exception>CPDefinitionMetaKeywords</exception>

@@ -677,12 +677,13 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private List<InfoFieldSetEntry> _getParentsInfoFieldSets(
-			long objectDefinitionId2)
-		throws NoSuchFormVariationException {
+		long objectDefinitionId2) {
 
 		List<InfoFieldSetEntry> infoFieldSetEntries = new ArrayList<>();
 
-		if (objectDefinitionId2 == 0) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
+			(objectDefinitionId2 == 0)) {
+
 			return infoFieldSetEntries;
 		}
 

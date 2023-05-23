@@ -113,9 +113,9 @@ public class RelatedProductResourceTest
 
 		CPDefinitionLink cpDefinitionLink =
 			_cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(
-				cpDefinitionId, relatedProduct.getProductId(),
-				relatedProduct.getPriority(), relatedProduct.getType(),
-				_serviceContext);
+				cpDefinitionId, relatedProduct.getProductId(), 1, 1, 2023, 1, 1,
+				2, 2, 2023, 2, 2, true, relatedProduct.getPriority(),
+				relatedProduct.getType(), _serviceContext);
 
 		_cpDefinitionLink.add(cpDefinitionLink);
 

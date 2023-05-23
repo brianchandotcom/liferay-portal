@@ -63,13 +63,10 @@ exports[`SearchableEntityList should render 1`] = `
       <ul
         class="list-group list-group-root show-quick-actions-on-hover"
       />
-      <div
-        class="spinner-root spinner-overlay"
-      >
-        <span
-          class="loading-animation loading-animation-dotted"
-        />
-      </div>
+      <span
+        aria-hidden="true"
+        class="spinner-overlay spinner-root loading-animation"
+      />
     </div>
   </div>
 </div>

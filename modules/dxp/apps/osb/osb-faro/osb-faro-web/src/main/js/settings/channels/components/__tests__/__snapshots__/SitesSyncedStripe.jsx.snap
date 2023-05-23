@@ -9,13 +9,10 @@ exports[`SitesSyncedStriped should render 1`] = `
       class="title d-flex align-items-center"
     >
       Sites Synced: 
-      <div
-        class="spinner-root"
-      >
-        <span
-          class="loading-animation loading-animation-light loading-animation-dotted loading-animation-sm"
-        />
-      </div>
+      <span
+        aria-hidden="true"
+        class="spinner-root loading-animation loading-animation-light loading-animation-sm"
+      />
     </div>
     <div>
       Manage sites synced to this property by going to 

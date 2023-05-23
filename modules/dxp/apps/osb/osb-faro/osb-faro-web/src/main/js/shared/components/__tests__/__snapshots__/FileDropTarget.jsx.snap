@@ -86,13 +86,10 @@ exports[`FileDropTarget FileItem renders 1`] = `
           <div
             class="status-wrapper"
           >
-            <div
-              class="spinner-root"
-            >
-              <span
-                class="loading-animation loading-animation-dotted loading-animation-sm"
-              />
-            </div>
+            <span
+              aria-hidden="true"
+              class="spinner-root loading-animation loading-animation-sm"
+            />
           </div>
         </div>
       </div>

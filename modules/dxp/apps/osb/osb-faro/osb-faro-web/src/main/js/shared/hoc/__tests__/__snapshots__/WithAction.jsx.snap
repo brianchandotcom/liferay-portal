@@ -48,13 +48,10 @@ exports[`withAction should render loading if the RemoteData is loading and data 
 <div
   class="loading-root"
 >
-  <div
-    class="spinner-root spinner-fade-in"
-  >
-    <span
-      class="loading-animation loading-animation-dotted"
-    />
-  </div>
+  <span
+    aria-hidden="true"
+    class="spinner-root spinner-fade-in loading-animation"
+  />
 </div>
 `;
 

@@ -128,13 +128,10 @@ exports[`SelectItemsModal should render 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"
@@ -270,13 +267,10 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"
@@ -563,13 +557,10 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"
@@ -705,13 +696,10 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"
@@ -1145,13 +1133,10 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"
@@ -1363,13 +1348,10 @@ exports[`SelectItemsModal should render without a toolbar 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"
@@ -1485,13 +1467,10 @@ exports[`SelectItemsModal should render without the sort button 1`] = `
       <div
         class="scroll-container"
       >
-        <div
-          class="spinner-root spinner-spacer"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-spacer loading-animation"
+        />
       </div>
       <div
         class="modal-footer"

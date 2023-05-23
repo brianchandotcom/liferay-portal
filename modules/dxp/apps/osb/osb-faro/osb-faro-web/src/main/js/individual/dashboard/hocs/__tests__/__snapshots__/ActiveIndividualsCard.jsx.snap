@@ -40,25 +40,19 @@ exports[`ActiveIndividualsCard should render 1`] = `
             M
           </button>
         </div>
-        <div
-          class="spinner-root spinner-inline"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-inline loading-animation"
+        />
       </div>
     </div>
     <div
       class="card-body justify-content-center"
     >
-      <div
-        class="spinner-root spinner-center"
-      >
-        <span
-          class="loading-animation loading-animation-dotted"
-        />
-      </div>
+      <span
+        aria-hidden="true"
+        class=" spinner-center spinner-root loading-animation"
+      />
     </div>
   </div>
 </div>

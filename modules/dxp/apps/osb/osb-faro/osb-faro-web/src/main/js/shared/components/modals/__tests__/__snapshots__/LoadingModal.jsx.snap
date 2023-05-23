@@ -13,13 +13,10 @@ exports[`LoadingModal should render 1`] = `
       <div
         class="icon-container"
       >
-        <div
-          class="spinner-root"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root loading-animation"
+        />
       </div>
       <p
         class="message"

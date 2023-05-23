@@ -65,13 +65,10 @@ exports[`ConfigureCSV should render 1`] = `
               " CSV Data
             </h3>
           </div>
-          <div
-            class="spinner-root spinner-spacer"
-          >
-            <span
-              class="loading-animation loading-animation-dotted"
-            />
-          </div>
+          <span
+            aria-hidden="true"
+            class="spinner-root spinner-spacer loading-animation"
+          />
           <div
             class="sheet-footer"
           >

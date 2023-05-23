@@ -142,13 +142,10 @@ exports[`Event Analysis Editor render 1`] = `
             </span>
           </label>
         </div>
-        <div
-          class="spinner-root spinner-inline"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-inline loading-animation"
+        />
       </div>
     </div>
     <div

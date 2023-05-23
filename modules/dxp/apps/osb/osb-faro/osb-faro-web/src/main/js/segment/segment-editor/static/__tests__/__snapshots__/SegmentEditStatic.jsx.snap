@@ -151,13 +151,10 @@ exports[`SegmentEditStatic should render 1`] = `
       <div
         class="loading-root"
       >
-        <div
-          class="spinner-root spinner-fade-in"
-        >
-          <span
-            class="loading-animation loading-animation-dotted"
-          />
-        </div>
+        <span
+          aria-hidden="true"
+          class="spinner-root spinner-fade-in loading-animation"
+        />
       </div>
     </div>
   </div>

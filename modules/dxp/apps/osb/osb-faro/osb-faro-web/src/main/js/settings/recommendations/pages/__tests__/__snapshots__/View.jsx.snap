@@ -110,13 +110,10 @@ exports[`View should render 1`] = `
             <div
               class="card-body"
             >
-              <div
-                class="spinner-root spinner-center spinner-spacer"
-              >
-                <span
-                  class="loading-animation loading-animation-dotted"
-                />
-              </div>
+              <span
+                aria-hidden="true"
+                class="spinner-root spinner-center spinner-spacer loading-animation"
+              />
             </div>
           </div>
           <div
@@ -152,13 +149,10 @@ exports[`View should render 1`] = `
                   </svg>
                 </button>
                 Total Training URLs: 
-                <div
-                  class="spinner-root"
-                >
-                  <span
-                    class="loading-animation loading-animation-dotted loading-animation-sm"
-                  />
-                </div>
+                <span
+                  aria-hidden="true"
+                  class="spinner-root loading-animation loading-animation-sm"
+                />
               </div>
             </div>
           </div>

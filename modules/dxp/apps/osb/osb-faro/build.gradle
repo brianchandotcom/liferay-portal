@@ -10,7 +10,7 @@ buildscript {
 		classpath group: "gradle.plugin.com.liferay", name: "gradle-plugins-app-docker", version: "latest.release"
 	}
 
-    repositories {
+	repositories {
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
@@ -18,8 +18,8 @@ buildscript {
 }
 
 apply plugin: "com.liferay.app.defaults.plugin"
-apply plugin: "com.liferay.yarn.defaults.plugin"
 apply plugin: "com.liferay.app.docker"
+apply plugin: "com.liferay.yarn.defaults.plugin"
 
 task checkDocker(type: DockerWaitHealthyContainer)
 task copyDockerResources(type: Copy)
@@ -149,6 +149,18 @@ stopDocker {
 }
 
 subprojects {
+	afterEvaluate {
+		deploy {
+			doFirst {
+				delete file(liferay.deployDir)
+			}
+
+			liferay {
+				deployDir = new File("${rootDir}/dxp/apps/osb/osb-faro/build/deploy")
+			}
+		}
+	}
+
 	tasks.all {
 		Task task ->
 

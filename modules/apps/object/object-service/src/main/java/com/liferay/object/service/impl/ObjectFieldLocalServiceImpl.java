@@ -422,18 +422,8 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectField> getCustomObjectFields(long objectFieldId) {
-		List<ObjectField> objectFields = objectFieldPersistence.findByODI_S(
-			objectFieldId, false);
-
-		for (ObjectField objectField : objectFields) {
-			objectField.setObjectFieldSettings(
-				_objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId()));
-		}
-
-		return objectFields;
+	public List<ObjectField> getCustomObjectFields(long objectDefinitionId) {
+		return getObjectFields(objectDefinitionId, false);
 	}
 
 	@Override
@@ -524,6 +514,11 @@ public class ObjectFieldLocalServiceImpl
 	public int getObjectFieldsCount(long objectDefinitionId) {
 		return objectFieldPersistence.countByObjectDefinitionId(
 			objectDefinitionId);
+	}
+
+	@Override
+	public int getObjectFieldsCount(long objectDefinitionId, boolean system) {
+		return objectFieldPersistence.countByODI_S(objectDefinitionId, system);
 	}
 
 	@Override

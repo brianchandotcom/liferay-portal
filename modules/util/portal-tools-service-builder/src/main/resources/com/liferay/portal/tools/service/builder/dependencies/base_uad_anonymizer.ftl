@@ -60,8 +60,8 @@ public abstract class Base${entity.name}UADAnonymizer extends DynamicQueryUADAno
 
 					<#if stringUtil.equals(uadUserIdEntityColumn.name, "userId")>
 						if (${entity.variableName}.get${uadUserIdEntityColumn.methodName}() == userId) {
-									${entity.variableName}LocalService.${deleteUADEntityMethodName}(${entity.variableName});
-							}
+							${entity.variableName}LocalService.${deleteUADEntityMethodName}(${entity.variableName});
+						}
 					</#if>
 			</#list>
 		<#else>

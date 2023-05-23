@@ -716,6 +716,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELIGIBILITY_RELATION_FIELD_CLEAR_BUTTON</td>
+	<td>//div[h4[contains(.,'${key_eligibilityCardTitle}')]]//input[@type='text']/..//span[contains(@class,'input-group-inset-item')]//button[contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_ROW_NUMBER</td>
 	<td>//div[@class='dnd-tbody']/div[contains(@class,'dnd-tr')][${key_rowNumber}]//a</td>
 	<td></td>

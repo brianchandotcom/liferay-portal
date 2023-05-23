@@ -98,6 +98,18 @@ public class ObjectDefinitionsFieldsDisplayContext
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
+		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
+			null, "trash", "deleteObjectField",
+			LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
+			"delete", "delete", null);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-179803")) {
+			fdsActionDropdownItem.setHref(
+				"/o/object-admin/v1.0/object-fields/{id}");
+			fdsActionDropdownItem.setId("delete");
+			fdsActionDropdownItem.setTarget("async");
+		}
+
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
@@ -112,10 +124,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 				"view", "view",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
-			new FDSActionDropdownItem(
-				null, "trash", "deleteObjectField",
-				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", null));
+			fdsActionDropdownItem);
 	}
 
 	public String[] getForbiddenLastCharacters() {

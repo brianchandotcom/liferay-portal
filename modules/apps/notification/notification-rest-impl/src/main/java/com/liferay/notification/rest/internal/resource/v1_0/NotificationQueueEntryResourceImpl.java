@@ -17,6 +17,7 @@ package com.liferay.notification.rest.internal.resource.v1_0;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.exception.NotificationQueueEntryTypeException;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.handler.NotificationHandlerTracker;
 import com.liferay.notification.model.NotificationRecipient;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -111,6 +113,14 @@ public class NotificationQueueEntryResourceImpl
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-178816")) {
 			throw new UnsupportedOperationException();
+		}
+
+		if (!StringUtil.equals(
+				notificationQueueEntry.getType(),
+				NotificationConstants.TYPE_EMAIL)) {
+
+			throw new NotificationQueueEntryTypeException(
+				"Type can only be email");
 		}
 
 		NotificationContext notificationContext = new NotificationContext();

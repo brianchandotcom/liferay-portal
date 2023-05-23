@@ -54,6 +54,10 @@ public class CommerceProductDefinitionLinkTableFDSView
 		).add(
 			"order", "order"
 		).add(
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"label")
+		).add(
 			"createDateString", "create-date"
 		).build();
 	}

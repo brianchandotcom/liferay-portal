@@ -900,6 +900,13 @@ public class DLAdminManagementToolbarDisplayContext
 		fileExtensionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		fileExtensionItemSelectorCriterion.setSelectedGroupIds(
+			new long[] {themeDisplay.getScopeGroupId()});
+
 		PortletResponse portletResponse =
 			(PortletResponse)_httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);

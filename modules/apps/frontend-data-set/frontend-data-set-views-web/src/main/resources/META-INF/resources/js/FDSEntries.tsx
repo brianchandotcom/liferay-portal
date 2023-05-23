@@ -17,7 +17,6 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
@@ -799,16 +798,6 @@ const FDSEntries = ({
 		});
 	};
 
-	const NameRenderer = ({itemData}: {itemData: FDSEntryType}) => {
-		return (
-			<div className="table-list-title">
-				<ClayLink href={getViewURL(itemData).toString()}>
-					{itemData.label}
-				</ClayLink>
-			</div>
-		);
-	};
-
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -816,7 +805,8 @@ const FDSEntries = ({
 			schema: {
 				fields: [
 					{
-						contentRenderer: 'name',
+						actionId: 'view',
+						contentRenderer: 'actionLink',
 						fieldName: 'label',
 						label: Liferay.Language.get('name'),
 					},
@@ -853,12 +843,14 @@ const FDSEntries = ({
 				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
 				customDataRenderers={{
-					name: NameRenderer,
 					viewsCount: ViewsCountRenderer,
 				}}
 				id={`${namespace}FDSEntries`}
 				itemsActions={[
 					{
+						data: {
+							id: 'view',
+						},
 						icon: 'view',
 						label: Liferay.Language.get('view'),
 						onClick: onViewClick,

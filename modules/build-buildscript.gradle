@@ -1,7 +1,7 @@
 dependencies {
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "9.0.3"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "2.0.0"
-	classpath group: "de.undercouch", name: "gradle-download-task", version: "5.1.0"
+	classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
 	classpath group: "org.ysb33r.gradle", name: "gradletest", version: "3.0.0-alpha.2"
 
 	if (Boolean.getBoolean("gradle.build.scan.enabled")) {

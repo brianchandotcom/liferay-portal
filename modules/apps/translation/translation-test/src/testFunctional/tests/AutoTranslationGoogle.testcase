@@ -401,13 +401,13 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentSourceHtml = "This is the content of the rich text field",
-				webContentTitle = "これはリッチ テキスト フィールドのタイトルです");
+				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 
 			Translations.translateSpecificField(fieldName = "Rich Text");
 
 			Translations.viewTargetFields(
 				webContentSourceHtml = "これはリッチ テキスト フィールドの内容です",
-				webContentTitle = "これはリッチ テキスト フィールドのタイトルです");
+				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 
 			PortletEntry.publish();
 
@@ -420,7 +420,7 @@ definition {
 
 			Translations.viewTargetFields(
 				webContentSourceHtml = "これはリッチ テキスト フィールドの内容です",
-				webContentTitle = "これはリッチ テキスト フィールドのタイトルです");
+				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");
@@ -455,7 +455,7 @@ definition {
 			fieldType = "Multiple Lines",
 			webContentText = "This is the content of the text box field",
 			webContentTextFieldLabel = "Text Box",
-			webContentTitle = "WC title");
+			webContentTitle = "Web content title");
 
 		PortletEntry.publish();
 
@@ -464,7 +464,7 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
-			webContentTitle = "WC title");
+			webContentTitle = "Web content title");
 
 		// End the test if the Google refresh token limit is exceeded.
 
@@ -473,13 +473,13 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentTextBox = "This is the content of the text box field",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 
 			Translations.translateSpecificField(fieldName = "Text Box");
 
 			Translations.viewTargetFields(
 				webContentTextBox = "これはテキストボックスフィールドの内容です",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 
 			PortletEntry.publish();
 
@@ -488,11 +488,11 @@ definition {
 				siteURLKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
-				webContentTitle = "WC title");
+				webContentTitle = "Web content title");
 
 			Translations.viewTargetFields(
 				webContentTextBox = "これはテキストボックスフィールドの内容です",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");
@@ -524,7 +524,7 @@ definition {
 
 		WebContent.addWithStructureCP(
 			webContentText = "Test text",
-			webContentTitle = "WC title");
+			webContentTitle = "Web content title");
 
 		PortletEntry.publish();
 
@@ -533,7 +533,7 @@ definition {
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
-			webContentTitle = "WC title");
+			webContentTitle = "Web content title");
 
 		// End the test if the Google refresh token limit is exceeded.
 
@@ -542,13 +542,13 @@ definition {
 		if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "Field Translated")) {
 			Translations.viewTargetFields(
 				webContentText = "Test text",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 
 			Translations.translateSpecificField(fieldName = "Text");
 
 			Translations.viewTargetFields(
 				webContentText = "テストテキスト",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 
 			PortletEntry.publish();
 
@@ -557,11 +557,11 @@ definition {
 				siteURLKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
-				webContentTitle = "WC title");
+				webContentTitle = "Web content title");
 
 			Translations.viewTargetFields(
 				webContentText = "テストテキスト",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");
@@ -577,14 +577,14 @@ definition {
 			content = "This is the content of a web article",
 			description = "This is the description of a web article",
 			groupName = "Site Name",
-			title = "WC title");
+			title = "Web content title");
 
 		Translations.openToTranslateEntry(
 			groupName = "Site Name",
 			siteURLKey = "site-name",
 			sourceLanguageId = "en_US",
 			targetLanguageId = "ja_JP",
-			webContentTitle = "WC title");
+			webContentTitle = "Web content title");
 
 		// End the test if the Google refresh token limit is exceeded.
 
@@ -594,7 +594,7 @@ definition {
 			Translations.viewTargetFields(
 				webContentContent = "This is the content of a web article",
 				webContentDescription = "This is the description of a web article",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 
 			PortletEntry.publish();
 
@@ -603,12 +603,12 @@ definition {
 				siteURLKey = "site-name",
 				sourceLanguageId = "en_US",
 				targetLanguageId = "ja_JP",
-				webContentTitle = "WC title");
+				webContentTitle = "Web content title");
 
 			Translations.viewTargetFields(
 				webContentContent = "This is the content of a web article",
 				webContentDescription = "This is the description of a web article",
-				webContentTitle = "WCタイトル");
+				webContentTitle = "ウェブコンテンツのタイトル");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
 			echo("There is a Google network issue. Ending test.");

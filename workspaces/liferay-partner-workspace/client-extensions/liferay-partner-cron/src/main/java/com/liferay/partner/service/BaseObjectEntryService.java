@@ -25,8 +25,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import reactor.core.publisher.Mono;
-
 /**
  * @author Jair Medeiros
  */
@@ -44,50 +42,52 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 			String sortString)
 		throws Exception {
 
-		WebClient.RequestHeadersUriSpec<?> requestHeadersSpec =
-			_webClient.get();
+		return Page.of(
+			WebClient.create(
+				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+			).get(
+			).uri(
+				uriBuilder -> {
+					if (pagination != null) {
+						uriBuilder.queryParam(
+							"page", String.valueOf(pagination.getPage()));
+						uriBuilder.queryParam(
+							"pageSize",
+							String.valueOf(pagination.getPageSize()));
+					}
 
-		requestHeadersSpec.uri(
-			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain,
-			uriBuilder -> {
-				if (pagination != null) {
-					uriBuilder.queryParam(
-						"page", String.valueOf(pagination.getPage()));
-					uriBuilder.queryParam(
-						"pageSize", String.valueOf(pagination.getPageSize()));
+					if (sortString != null) {
+						uriBuilder.queryParam("sort", sortString);
+					}
+
+					if (filterString != null) {
+						uriBuilder.queryParam("filter", filterString);
+					}
+
+					if (search != null) {
+						uriBuilder.queryParam("search", search);
+					}
+
+					return uriBuilder.path(
+						_entityURLPath
+					).build();
 				}
-
-				if (sortString != null) {
-					uriBuilder.queryParam("sort", sortString);
-				}
-
-				if (filterString != null) {
-					uriBuilder.queryParam("filter", filterString);
-				}
-
-				if (search != null) {
-					uriBuilder.queryParam("search", search);
-				}
-
-				return uriBuilder.path(
-					_entityURLPath
-				).build();
-			});
-
-		WebClient.ResponseSpec responseSpec = requestHeadersSpec.retrieve();
-
-		Mono<String> mono = responseSpec.bodyToMono(String.class);
-
-		return Page.of(mono.block(), _toDTOFunction);
+			).header(
+				"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block(),
+			_toDTOFunction);
 	}
 
 	public void putEntryBatch(String callbackURL, Object object)
 		throws Exception {
 
-		WebClient.RequestBodyUriSpec requestBodyUriSpec = _webClient.put();
-
-		WebClient.RequestBodySpec requestBodySpec = requestBodyUriSpec.uri(
-			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain,
+		WebClient.create(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).put(
+		).uri(
 			uriBuilder -> {
 				if (callbackURL != null) {
 					uriBuilder.queryParam(
@@ -97,16 +97,15 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 				return uriBuilder.path(
 					_entityURLPath
 				).build();
-			});
-
-		WebClient.RequestHeadersSpec<?> requestHeadersSpec =
-			requestBodySpec.bodyValue(object.toString());
-
-		WebClient.ResponseSpec responseSpec = requestHeadersSpec.retrieve();
-
-		Mono<Void> mono = responseSpec.bodyToMono(Void.class);
-
-		mono.block();
+			}
+		).header(
+			"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+		).bodyValue(
+			object.toString()
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
 	}
 
 	private final String _entityURLPath;

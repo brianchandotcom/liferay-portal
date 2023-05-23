@@ -102,6 +102,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_TAB_SEARCH</td>
+	<td>//li[contains(@class,'nav-item')]//*[contains(@class, 'input-group-item')]//*[@placeholder="Search"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELDS_DRAG_DOTS_ICON</td>
 	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row']//td[@class="drag-handle-cell"]//button[@aria-label="Drag ${key_nameField}"]</td>
 	<td></td>

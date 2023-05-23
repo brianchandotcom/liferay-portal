@@ -154,14 +154,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro publishAndWait {
-		Button.clickPublish();
-
-		Pause(locator1 = 3000);
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro save {
 		Click(
 			key_text = "Save",

@@ -96,9 +96,14 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 			else if (currentAction.onClick) {
 				event.preventDefault();
 
-				event.target.setAttribute('onClick', currentAction.onClick);
-				event.target.onclick();
-				event.target.removeAttribute('onClick');
+				if (typeof currentAction.onClick === 'function') {
+					currentAction.onClick({itemData});
+				}
+				else {
+					event.target.setAttribute('onClick', currentAction.onClick);
+					event.target.onclick();
+					event.target.removeAttribute('onClick');
+				}
 			}
 		};
 
@@ -170,7 +175,7 @@ ActionLinkRenderer.propTypes = {
 			href: PropTypes.string,
 			icon: PropTypes.string,
 			method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
-			onClick: PropTypes.string,
+			onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 			size: PropTypes.string,
 			target: PropTypes.oneOf([
 				'modal',

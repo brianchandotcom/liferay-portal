@@ -2939,6 +2939,17 @@ include-and-override=portal-liferay-online-limit.properties</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-ms-exchange-configuration">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.mail.outlook.auth.connector.provider.internal.configuration.MailOutlookAuthConnectorCompanyConfiguration.config">
+clientId=&quot;${ms.exchange.client.id}&quot;
+clientSecret=&quot;${ms.exchange.client.secret}&quot;
+pop3ConnectionEnabled=B"true"
+smtpConnectionEnabled=B"true"
+tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-patching-tool">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
@@ -11107,6 +11118,10 @@ ${update.properties}</echo>
 </Configuration>]]></echo>
 	</target>
 
+	<target name="prepare-ms-exchange-configuration">
+		<prepare-ms-exchange-configuration />
+	</target>
+
 	<target name="prepare-osgi-module-configurations">
 		<get-testcase-property property.name="custom.element.client.extension.created" />
 
@@ -11411,6 +11426,45 @@ company.default.web.id=www.able.com</echo>
 			</or>
 			<then>
 				<get-testcase-property property.name="ibm.store.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="ms.exchange.enabled" arg2="" />
+				<not>
+					<isset property="ms.exchange.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="ms.exchange.enabled" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${ms.exchange.enabled}" arg2="true" />
+
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties">
+mail.session.mail=true
+mail.session.mail.pop3.host=outlook.office365.com
+mail.session.mail.pop3.port=995
+mail.session.mail.pop3.user=qa-exchange-pop-test@liferay.onmicrosoft.com
+mail.session.mail.smtp.host=smtp.office365.com
+mail.session.mail.smtp.port=587
+mail.session.mail.smtp.user=qa-exchange-pop-test@liferay.onmicrosoft.com
+mail.session.mail.store.protocol=pop3
+
+pop.server.subdomain=
+pop.server.notifications.enabled=true
+				</echo>
+
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+				>
+					<replacetoken>test@liferay.com</replacetoken>
+					<replacevalue>qa-exchange-pop-test@liferay.onmicrosoft.com</replacevalue>
+				</replace>
 			</then>
 		</if>
 
@@ -15192,6 +15246,15 @@ mail.send.blacklist=</echo>
 				<ant antfile="build-test-openam.xml" target="delete-openam-config" />
 
 				<ant antfile="build-test-openam.xml" target="setup-openam" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="ms.exchange.enabled" />
+
+		<if>
+			<equals arg1="${ms.exchange.enabled}" arg2="true" />
+			<then>
+				<prepare-ms-exchange-configuration />
 			</then>
 		</if>
 

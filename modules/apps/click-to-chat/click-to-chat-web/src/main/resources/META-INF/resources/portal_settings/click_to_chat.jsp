@@ -88,7 +88,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	</div>
 </div>
 
-<div class="form-group hide row" id="<portlet:namespace />extraFieldsForZendesk">
+<div class="form-group hide row" id="<portlet:namespace />zendeskWebWidgetFields">
 	<div class="col-md-6">
 		<aui:input label="chat-provider-key-id" name="chatProviderKeyId" type="text" value="<%= clickToChatConfiguration.chatProviderKeyId() %>" />
 	</div>
@@ -112,8 +112,8 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	});
 
 	function <portlet:namespace />checkExtraFieldsRendering() {
-		var extraFieldsForZendeskDivElement = document.getElementById(
-			'<portlet:namespace />extraFieldsForZendesk'
+		var zendeskWebWidgetFieldsElement = document.getElementById(
+			'<portlet:namespace />zendeskWebWidgetFields'
 		);
 
 		var selectedChat = document.getElementById(
@@ -123,10 +123,10 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 		if (
 			selectedChat.value === '<%= ClickToChatConstants.ZENDESK_WEB_WIDGET %>'
 		) {
-			extraFieldsForZendeskDivElement.classList.remove('hide');
+			zendeskWebWidgetFieldsElement.classList.remove('hide');
 		}
 		else {
-			extraFieldsForZendeskDivElement.classList.add('hide');
+			zendeskWebWidgetFieldsElement.classList.add('hide');
 		}
 	}
 
@@ -166,17 +166,17 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 			'<portlet:namespace />siteSettingsStrategy'
 		);
 
-		var extraFieldsForZendeskDivElement = document.getElementById(
-			'<portlet:namespace />extraFieldsForZendesk'
+		var zendeskWebWidgetFieldsElement = document.getElementById(
+			'<portlet:namespace />zendeskWebWidgetFields'
 		);
 
 		if (clickToChatSiteSettingsStrategyElement.value === 'always-override') {
 			clickToChatChatProvidersElement.classList.add('hide');
-			extraFieldsForZendeskDivElement.classList.add('hide');
+			zendeskWebWidgetFieldsElement.classList.add('hide');
 		}
 		else {
 			clickToChatChatProvidersElement.classList.remove('hide');
-			extraFieldsForZendeskDivElement.classList.remove('hide');
+			zendeskWebWidgetFieldsElement.classList.remove('hide');
 		}
 	}
 

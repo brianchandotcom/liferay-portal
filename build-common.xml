@@ -807,26 +807,6 @@ information.
 				</else>
 			</if>
 
-			<local name="ci.jvmargs" />
-
-			<if>
-				<and>
-					<isset property="env.JENKINS_HOME" />
-					<not>
-						<os family="windows" />
-					</not>
-				</and>
-				<then>
-					<propertyregex
-						defaultValue="${env.ANT_OPTS} -Xmx8g -XX:MetaspaceSize=512m"
-						input="${env.ANT_OPTS}"
-						property="ci.jvmargs"
-						regexp="(.*)(-Xmx[^\s]+)(.*)"
-						select="\1-Xmx8g\3"
-					/>
-				</then>
-			</if>
-
 			<local name="task.available" />
 
 			<if>
@@ -835,7 +815,6 @@ information.
 					<local name="tasks.output" />
 
 					<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
-						<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
 						<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 						<arg if:true="${gradle.profile.enabled}" value="--profile" />
 						<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -847,7 +826,6 @@ information.
 						<arg value="-Dliferay.home=${liferay.home}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
-						<arg if:set="ci.jvmargs" value="-Dorg.gradle.jvmargs=${ci.jvmargs}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 						<arg value="tasks" />
@@ -954,7 +932,6 @@ information.
 
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
-								<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
 								<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 								<arg if:true="${gradle.profile.enabled}" value="--profile" />
 								<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -966,7 +943,6 @@ information.
 								<arg value="-Dliferay.home=${liferay.home}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
-								<arg if:set="ci.jvmargs" value="-Dorg.gradle.jvmargs=${ci.jvmargs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
@@ -990,7 +966,6 @@ information.
 							<echoxml>
 								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 									<args />
-									<arg if:set="env.JENKINS_HOME" value="--max-workers=4" />
 									<arg unless:true="${gradle.build.parallel.enabled}" value="--no-parallel" />
 									<arg if:true="${gradle.profile.enabled}" value="--profile" />
 									<arg if:set="env.JENKINS_HOME" value="--profile" />
@@ -1002,7 +977,6 @@ information.
 									<arg value="-Dliferay.home=${liferay.home}" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=120000" />
 									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=120000" />
-									<arg if:set="ci.jvmargs" value="-Dorg.gradle.jvmargs=${ci.jvmargs}" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />

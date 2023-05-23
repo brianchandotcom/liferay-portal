@@ -140,6 +140,7 @@ page import="com.liferay.journal.web.internal.frontend.taglib.clay.servlet.tagli
 page import="com.liferay.journal.web.internal.frontend.taglib.clay.servlet.taglib.JournalArticleVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.frontend.taglib.clay.servlet.taglib.JournalDDMTemplateVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.frontend.taglib.clay.servlet.taglib.JournalFolderHorizontalCard" %><%@
+page import="com.liferay.journal.web.internal.model.listener.DDMStructureValidationModelListenerException" %><%@
 page import="com.liferay.journal.web.internal.portlet.JournalPortlet" %><%@
 page import="com.liferay.journal.web.internal.security.permission.resource.DDMStructurePermission" %><%@
 page import="com.liferay.journal.web.internal.security.permission.resource.DDMTemplatePermission" %><%@

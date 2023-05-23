@@ -60,7 +60,7 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 			Objects.equals(
 				originalDDMStructure.getStructureKey(), "BASIC-WEB-CONTENT")) {
 
-			throw new ModelListenerException();
+			throw new DDMStructureValidationModelListenerException();
 		}
 	}
 

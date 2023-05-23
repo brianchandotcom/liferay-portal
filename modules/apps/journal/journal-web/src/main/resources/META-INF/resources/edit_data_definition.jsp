@@ -86,6 +86,8 @@ editDDMStructureURL.setParameter("structureKey", String.valueOf(ddmStructureKey)
 			cssClass="container-view"
 		>
 			<div class="contextual-sidebar-mr">
+				<liferay-ui:error exception="<%= DDMStructureValidationModelListenerException.class %>" message="the-structure-key-cannot-be-modified" />
+
 				<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
 					<div class="alert alert-warning">
 						<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />

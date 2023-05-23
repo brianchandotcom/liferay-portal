@@ -79,9 +79,7 @@ public class MockProvisioningClientImpl extends BaseMockProvisioningClientImpl {
 			String userUuid, String[] productEntryIds)
 		throws Exception {
 
-		if (Validator.isNotNull(
-				FaroPropsValues.FARO_MOCK_OSB_ACCOUNT_ENTRY)) {
-
+		if (Validator.isNotNull(FaroPropsValues.FARO_MOCK_OSB_ACCOUNT_ENTRY)) {
 			return Collections.singletonList(_mockOSBAccountEntry);
 		}
 

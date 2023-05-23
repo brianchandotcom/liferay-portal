@@ -15,6 +15,7 @@
 package com.liferay.exportimport.internal.configuration.persistence.listener;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
+import com.liferay.exportimport.configuration.ExportImportServiceConfigurationWhitelistedURLPatternsHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -30,6 +31,7 @@ import java.util.Dictionary;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Bowerman
@@ -40,6 +42,18 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ExportImportServiceConfigurationModelListener
 	implements ConfigurationModelListener {
+
+	@Override
+	public void onAfterDelete(String pid) {
+		_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
+			rebuildURLPatternMapper();
+	}
+
+	@Override
+	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
+		_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
+			rebuildURLPatternMapper();
+	}
 
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
@@ -129,5 +143,9 @@ public class ExportImportServiceConfigurationModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportServiceConfigurationModelListener.class);
+
+	@Reference
+	private ExportImportServiceConfigurationWhitelistedURLPatternsHelper
+		_exportImportServiceConfigurationWhitelistedURLPatternsHelper;
 
 }

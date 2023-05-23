@@ -1,5 +1,18 @@
 definition {
 
+	@summary = "Delete a ddmStructure"
+	macro _deleteStructure {
+		Variables.assertDefined(parameterList = ${structureId});
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmstructure/delete-structure \
+				-u ${userLoginInfo} \
+				-d structureId=${structureId} \
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	@summary = "Get a structureId from ddmStructure"
 	macro _getStructureId {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");

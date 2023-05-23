@@ -942,7 +942,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	private String[] _getReverseCPDefinitionIds(long cProductId, String type) {
 		List<CPDefinitionLink> cpDefinitionLinks =
 			_cpDefinitionLinkLocalService.getReverseCPDefinitionLinks(
-				cProductId, type);
+				cProductId, type, WorkflowConstants.STATUS_APPROVED);
 
 		String[] reverseCPDefinitionIdsArray =
 			new String[cpDefinitionLinks.size()];

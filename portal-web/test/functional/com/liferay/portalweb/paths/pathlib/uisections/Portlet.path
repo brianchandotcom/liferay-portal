@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>MODAL_TITLE</td>
-	<td>//div[contains(@class,'modal-content')]//*[@class='modal-title']</td>
+	<td>//div[contains(@class,'modal-header')][not(contains(@class,'sr-only'))]//*[@class='modal-title']</td>
 	<td></td>
 </tr>
 <tr>

@@ -6,7 +6,6 @@
 package com.liferay.message.boards.uad.anonymizer;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.exception.RequiredThreadException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -16,11 +15,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -29,13 +28,12 @@ import java.util.Map;
 public class MBThreadUADAnonymizer extends BaseMBThreadUADAnonymizer {
 
 	public void delete(MBThread mbThread) throws PortalException {
-		MBMessage message =
-			_mbMessageLocalService.getMessage(mbThread.getRootMessageId());
+		MBMessage message = _mbMessageLocalService.getMessage(
+			mbThread.getRootMessageId());
 
 		if (message.isDiscussion()) {
-			AssetEntry assetEntry =
-				assetEntryLocalService.fetchEntry(
-					message.getClassName(), message.getClassPK());
+			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				message.getClassName(), message.getClassPK());
 
 			if (assetEntry.getUserId() != mbThread.getUserId()) {
 				throw new RequiredThreadException();
@@ -49,7 +47,8 @@ public class MBThreadUADAnonymizer extends BaseMBThreadUADAnonymizer {
 	public Map<Class<?>, String> getExceptionMessageMap(Locale locale) {
 		return HashMapBuilder.<Class<?>, String>put(
 			RequiredThreadException.class,
-			_language.get(locale, "thread-cannot-be-deleted.-anonymize-instead")
+			_language.get(
+				locale, "thread-cannot-be-deleted.-anonymize-it-instead")
 		).build();
 	}
 
@@ -58,4 +57,5 @@ public class MBThreadUADAnonymizer extends BaseMBThreadUADAnonymizer {
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
 }

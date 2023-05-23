@@ -1,0 +1,72 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given creating a Data Set via API") {
+			FrontendDataSetAdmin.goToDatasetAdminPage();
+
+			FrontendDataSetAdmin.createDatasetEntryViaAPI(
+				datasetName = "Dataset Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/",
+				restSchema = "TaxonomyCategory");
+		}
+
+		task ("And a dataset view created via api") {
+			FrontendDataSetAdmin.createFDSViewViaAPI(
+				datasetName = "Dataset Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToSpecificViewPage(
+				datasetName = "Dataset Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When goes to Fields Tab.") {
+			FrontendDataSetAdmin.goToTab(tabName = "Fields");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		FrontendDataSetAdmin.deleteAllDatasetEntries();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185233. Confirm that composed fields (refrencing another schema) are not available for selection."
+	@priority = 4
+	test AssertComposedFieldsNotAvailableForSelection {
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then Composed fields (refrencing another schema), are not available for selection") {
+			AssertElementNotPresent(
+				key_name = "parentTaxonomyCategory",
+				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+
+			AssertElementNotPresent(
+				key_name = "parentTaxonomyVocabulary",
+				locator1 = "FrontendDataSetAdmin#FIELDS_ITEM");
+		}
+	}
+
+}

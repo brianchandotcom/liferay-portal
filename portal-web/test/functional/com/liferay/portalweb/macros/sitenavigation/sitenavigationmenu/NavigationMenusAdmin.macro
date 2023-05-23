@@ -267,12 +267,12 @@ definition {
 
 	macro deleteItem {
 		MouseOver.mouseOverNotVisible(
-			key_itemName = ${itemName},
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+			key_card = ${itemName},
+			locator1 = "Card#CARD_ELLIPSIS");
 
-		Click(
-			key_itemName = ${itemName},
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+		LexiconCard.clickEllipsisItem(
+			card = ${itemName},
+			item = "Delete");
 
 		if (IsElementPresent(locator1 = "Modal#HEADER")) {
 			AssertTextEquals(

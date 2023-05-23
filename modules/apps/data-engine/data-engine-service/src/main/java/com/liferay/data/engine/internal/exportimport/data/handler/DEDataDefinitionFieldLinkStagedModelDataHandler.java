@@ -206,10 +206,10 @@ public class DEDataDefinitionFieldLinkStagedModelDataHandler
 			existingDEDataDefinitionFieldLink =
 				_deDataDefinitionFieldLinkLocalService.
 					fetchDEDataDefinitionFieldLinks(
-						deDataDefinitionFieldLink.getClassNameId(),
-						deDataDefinitionFieldLink.getClassPK(),
-						deDataDefinitionFieldLink.getDdmStructureId(),
-						deDataDefinitionFieldLink.getFieldName());
+						importedDEDataDefinitionFieldLink.getClassNameId(),
+						importedDEDataDefinitionFieldLink.getClassPK(),
+						importedDEDataDefinitionFieldLink.getDdmStructureId(),
+						importedDEDataDefinitionFieldLink.getFieldName());
 		}
 
 		if ((existingDEDataDefinitionFieldLink == null) ||

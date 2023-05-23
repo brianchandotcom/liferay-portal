@@ -65,6 +65,12 @@ definition {
 			value1 = ${paginationItems});
 	}
 
+	macro checkFields {
+		Check.checkNotVisible(
+			checkboxName = ${checkboxName},
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
 	macro createDataSet {
 		if (isSet(key_name)) {
 			var key_datasetNameList = ${key_name};

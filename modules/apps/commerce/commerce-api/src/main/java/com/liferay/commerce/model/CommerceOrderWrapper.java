@@ -1739,6 +1739,11 @@ public class CommerceOrderWrapper
 		return model.isPending();
 	}
 
+	@Override
+	public boolean isQuote() {
+		return model.isQuote();
+	}
+
 	/**
 	 * Returns <code>true</code> if this commerce order is scheduled.
 	 *

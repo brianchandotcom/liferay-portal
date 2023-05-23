@@ -952,9 +952,14 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				new com.paypal.orders.Money();
 
 			unitAmountMoney.currencyCode(commerceCurrency.getCode());
+
+			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+
+			BigDecimal unitAmount = finalPrice.divide(
+				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+
 			unitAmountMoney.value(
-				_getAmountValue(
-					commerceOrderItem.getUnitPrice(), commerceCurrency));
+				_getAmountValue(unitAmount, commerceCurrency));
 
 			item.unitAmount(unitAmountMoney);
 

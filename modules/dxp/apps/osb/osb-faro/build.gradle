@@ -1,1 +1,168 @@
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerRemoveContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
+import com.bmuschko.gradle.docker.tasks.container.DockerStopContainer
+import com.bmuschko.gradle.docker.tasks.container.extras.DockerWaitHealthyContainer
+
+buildscript {
+	dependencies {
+		classpath group: "com.bmuschko", name: "gradle-docker-plugin", version: "3.4.4"
+		classpath group: "gradle.plugin.com.liferay", name: "gradle-plugins-app-docker", version: "latest.release"
+	}
+
+    repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.app.defaults.plugin"
 apply plugin: "com.liferay.yarn.defaults.plugin"
+apply plugin: "com.liferay.app.docker"
+
+task checkDocker(type: DockerWaitHealthyContainer)
+task copyDockerResources(type: Copy)
+task createDocker(type: DockerCreateContainer)
+task removeDocker(type: DockerRemoveContainer)
+task startDocker(type: DockerStartContainer)
+task stopDocker(type: DockerStopContainer)
+
+def dockerContainerId = "faro"
+def dockerImageUser = "liferay"
+def dockerImageId = "com-liferay-osb-faro"
+//def dockerImageId = "liferay/com-liferay-osb-faro"
+
+ext.faroEnvironmentName = System.getenv().get("FARO_ENVIRONMENT_NAME") ?: project.property("com.liferay.osb.faro.environment.name")
+ext.faroImageTag = project.hasProperty("docker.image.tag") ? project.getProperty("docker.image.tag") : "latest"
+
+appDocker {
+	imageName dockerImageId
+	imageUser dockerImageUser
+	imageTags = [faroEnvironmentName.equals("prd") ? "prd-" + new Date().format("yyyyMMdd") : faroImageTag]
+	inputDir "osb-faro-docker/" + faroEnvironmentName
+
+	onlyIf {
+		false
+	}
+}
+
+checkDocker {
+	targetContainerId {
+		dockerContainerId
+	}
+}
+
+copyDockerResources {
+	from "osb-faro-docker/common"
+	into "${buildDir}/docker/common"
+}
+
+createDocker {
+	dependsOn buildAppDockerImage, removeDocker
+
+	containerName = dockerContainerId
+	portBindings = ["8000:8000", "8080:8080", "11311:11311"]
+
+	targetImageId {
+		dockerImageUser + "/" + dockerImageId
+	}
+
+	def envFile = file("${rootDir}/local.env")
+
+	if (envFile.exists()) {
+		def props = new Properties()
+
+		envFile.withInputStream {
+			props.load(it)
+		}
+
+		props.each{
+			withEnvVar(it.key, it.value)
+		}
+	}
+}
+
+buildAppDockerImage {
+	def LABEL_BUILD_DATE = ('git log -1 --format=%cd').execute().text.trim()
+	def LABEL_VCS_REF = ('git rev-parse --short=7 HEAD').execute().text.trim()
+	buildArgs = ['LABEL_BUILD_DATE': LABEL_BUILD_DATE, 'LABEL_VCS_REF': LABEL_VCS_REF]
+}
+
+docker {
+	registryCredentials {
+		password = System.getenv("DOCKER_PASSWORD")
+		username = System.getenv("DOCKER_USERNAME")
+	}
+}
+
+prepareAppDockerImageInputDir {
+	finalizedBy copyDockerResources
+
+	rename {
+		String fileName ->
+
+		if (fileName.endsWith(".jar")) {
+			int pos = fileName.indexOf('-')
+
+			if (pos != -1) {
+				fileName = fileName.substring(0, pos) + ".jar"
+			}
+		}
+
+		fileName
+	}
+}
+
+pushAppDockerImage {
+	enabled = false
+}
+
+removeDocker {
+	force = true
+
+	onError {
+	}
+
+	targetContainerId {
+		dockerContainerId
+	}
+}
+
+startDocker {
+	finalizedBy {
+		checkDocker
+	}
+
+	targetContainerId {
+		dockerContainerId
+	}
+}
+
+stopDocker {
+	onError {
+	}
+
+	targetContainerId {
+		dockerContainerId
+	}
+}
+
+subprojects {
+	tasks.all {
+		Task task ->
+
+		if (task.name == "baseline") {
+			enabled = false
+		}
+		else if (task.name == "deployDependencies") {
+			prepareAppDockerImageInputDir {
+				from task.inputs.files
+			}
+		}
+	}
+
+	tasks.withType(Test) {
+		maxHeapSize = "4096m"
+	}
+}

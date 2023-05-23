@@ -214,7 +214,7 @@ definition {
 
 		Refresh();
 
-		ObjectCommerce.channelsTab(navigatorChannels = "Notification Templates");
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
 
 		LexiconEntry.gotoAdd();
 

@@ -29,15 +29,30 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= objectDefinitionsActionsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= objectDefinitionsActionsDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= objectDefinitionsActionsDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= ObjectDefinitionsFDSNames.OBJECT_ACTIONS %>"
-	propsTransformer="js/components/FDSPropsTransformer/ObjectActionsFDSPropsTransformer"
-	style="fluid"
-/>
+<div>
+	<react:component
+		module="js/components/ObjectAction/Actions"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
+			).put(
+				"creationMenu", objectDefinitionsActionsDisplayContext.getCreationMenu()
+			).put(
+				"formName", "fm"
+			).put(
+				"id", ObjectDefinitionsFDSNames.OBJECT_ACTIONS
+			).put(
+				"items", objectDefinitionsActionsDisplayContext.getFDSActionDropdownItems()
+			).put(
+				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
+			).put(
+				"style", "fluid"
+			).put(
+				"url", objectDefinitionsActionsDisplayContext.getEditObjectActionURL()
+			).build()
+		%>'
+	/>
+</div>
 
 <div>
 	<react:component

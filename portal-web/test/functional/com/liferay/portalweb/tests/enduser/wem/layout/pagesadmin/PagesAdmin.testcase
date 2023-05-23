@@ -2205,7 +2205,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for Bug LPS-175090. Permissions are copied when a Page is created as a copy of another Page"
+	@description = "This is a test for LPS-175090. Permissions are copied when a Page is created as a copy of another Page."
 	@priority = 4
 	test ViewPermissionsPersistedInCopyPage {
 		task ("Given a page designer has a page without view permissions for guest") {

@@ -74,3 +74,16 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		%>'
 	/>
 </div>
+
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
+<div id="<portlet:namespace />deleteObjectField">
+	<react:component
+		module="js/components/ModalDeleteObjectField"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
+			).build()
+		%>'
+	/>
+</div>

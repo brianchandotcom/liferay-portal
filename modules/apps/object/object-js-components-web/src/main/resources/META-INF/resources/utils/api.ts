@@ -115,7 +115,13 @@ async function deleteItem(url: string) {
 		window.location.reload();
 	}
 	else if (!response.ok) {
-		const errorMessage = Liferay.Language.get('an-error-occurred');
+		const {
+			title,
+		}: {
+			title?: string;
+		} = await response.json();
+
+		const errorMessage = title || Liferay.Language.get('an-error-occurred');
 
 		throw new Error(errorMessage);
 	}
@@ -123,6 +129,10 @@ async function deleteItem(url: string) {
 
 export function deleteObjectDefinitions(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
+}
+
+export function deleteObjectField(id: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-fields/${id}`);
 }
 
 export function deleteObjectRelationships(id: number) {

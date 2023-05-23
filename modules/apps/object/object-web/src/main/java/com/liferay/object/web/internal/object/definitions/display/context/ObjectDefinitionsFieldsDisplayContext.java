@@ -113,9 +113,9 @@ public class ObjectDefinitionsFieldsDisplayContext
 				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
-				"/o/object-admin/v1.0/object-fields/{id}", "trash", "delete",
+				null, "trash", "deleteObjectField",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
+				"delete", "delete", null));
 	}
 
 	public String[] getForbiddenLastCharacters() {

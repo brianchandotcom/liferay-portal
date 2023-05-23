@@ -40,5 +40,16 @@ export default function ObjectFieldsFDSPropsTransformer({...otherProps}) {
 		customDataRenderers: {
 			objectFieldSourceDataRenderer: ObjectFieldSourceDataRenderer,
 		},
+		onActionDropdownItemClick({
+			action,
+			itemData,
+		}: {
+			action: {data: {id: string}};
+			itemData: {id: string};
+		}) {
+			if (action.data.id === 'deleteObjectField') {
+				Liferay.fire('deleteObjectField', {itemData});
+			}
+		},
 	};
 }

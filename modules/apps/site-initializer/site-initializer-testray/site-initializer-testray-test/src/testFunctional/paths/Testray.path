@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_WITH_TEXT</td>
+	<td>//a[contains(@href,'#/') and contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEXT_AND_PREVIOUS_PAGE_BUTTON</td>
 	<td>//button[contains(@class, 'page-link') and contains(@aria-label, '${key_pageDirection}')]</td>
 	<td></td>

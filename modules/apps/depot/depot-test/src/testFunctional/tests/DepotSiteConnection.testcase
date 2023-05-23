@@ -43,9 +43,9 @@ definition {
 	test CanConnectMultipleSites {
 		Site.openSitesAdmin();
 
-		JSONGroup.addChildGroup(
-			groupName = "Child Site Name",
-			parentGroupName = "Site Name");
+		HeadlessSite.addSite(
+			parentSiteName = "Site Name",
+			siteName = "Child Site Name");
 
 		HeadlessSite.addSite(
 			membershipType = "Private",

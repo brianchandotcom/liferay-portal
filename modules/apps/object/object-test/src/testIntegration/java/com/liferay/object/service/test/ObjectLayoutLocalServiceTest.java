@@ -634,7 +634,7 @@ public class ObjectLayoutLocalServiceTest {
 	private void _deleteObjectFields() throws Exception {
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
+				_objectDefinition.getObjectDefinitionId(), false);
 
 		for (ObjectField objectField : objectFields) {
 			_objectFieldLocalService.deleteObjectField(objectField);

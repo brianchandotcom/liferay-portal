@@ -116,6 +116,8 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 
 	public boolean isOpen();
 
+	public boolean isQuote();
+
 	public boolean isSubscription();
 
 	public boolean isSubscriptionOrder();

@@ -27,8 +27,6 @@
 
 					String chatProviderSecretKey = clickToChatConfiguration.chatProviderSecretKey();
 
-					byte[] bytes = chatProviderSecretKey.getBytes(StandardCharsets.UTF_8);
-
 					String jwtToken = Jwts.builder(
 					).setHeaderParam(
 						"alg", SignatureAlgorithm.HS256.getValue()
@@ -45,7 +43,7 @@
 					).claim(
 						"external_id", String.valueOf(user.getUserId())
 					).signWith(
-						Keys.hmacShaKeyFor(bytes), SignatureAlgorithm.HS256
+						Keys.hmacShaKeyFor(chatProviderSecretKey.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256
 					).compact();
 					%>
 

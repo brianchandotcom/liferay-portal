@@ -24,6 +24,26 @@
 				</then>
 			</if>
 
+			<if>
+				<contains string="${test.class}" substring="Test.test" />
+				<then>
+					<propertyregex
+						input="${test.class}"
+						property="test.method.name"
+						regexp="([^\.]+$)"
+						select="\1"
+					/>
+
+					<propertyregex
+						input="${test.class}"
+						override="true"
+						property="test.class"
+						regexp=".*(?=\.)"
+						select="\0"
+					/>
+				</then>
+			</if>
+
 			<propertyregex
 				global="true"
 				input="${test.class}"
@@ -50,10 +70,20 @@
 
 			<propertyregex
 				input="${test.class}"
-				property="test.class.name"
+				property="test.class.base.name"
 				regexp="([^\.]+$)"
 				select="\1"
 			/>
+
+			<if>
+				<isset property="test.method.name" />
+				<then>
+					<property name="test.class.name" value="${test.class.base.name}.${test.method.name}" />
+				</then>
+				<else>
+					<property name="test.class.name" value="${test.class.base.name}" />
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

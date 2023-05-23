@@ -35,7 +35,6 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -76,7 +75,6 @@ import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
@@ -174,7 +172,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -546,7 +543,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Catalog 1", commerceCatalog.getName());
 
-		commerceCatalog = _commerceCatalogLocalService.
+		commerceCatalog =
+			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG2", _group.getCompanyId());
 
@@ -568,7 +566,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Catalog 1", commerceCatalog.getName());
 
-		 commerceCatalog = _commerceCatalogLocalService.
+		commerceCatalog =
+			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG2", _group.getCompanyId());
 
@@ -576,9 +575,10 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Catalog 2 Update", commerceCatalog.getName());
 
-		commerceCatalog = _commerceCatalogLocalService.
-			fetchCommerceCatalogByExternalReferenceCode(
-				"TESTCOMMERCECATALOG3", _group.getCompanyId());
+		commerceCatalog =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					"TESTCOMMERCECATALOG3", _group.getCompanyId());
 
 		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
@@ -749,13 +749,6 @@ public class BundleSiteInitializerTest {
 			commerceNotificationTemplate.getName());
 	}
 
-	private void _assertCPDSpecificationOptionValue(CPDefinition cpDefinition, int cpDefinitionValuesCount) throws Exception {
-
-		Assert.assertEquals(
-			cpDefinitionValuesCount,
-			_cpDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValuesCount(cpDefinition.getCPDefinitionId()));
-	}
-
 	private void _assertCommerceSpecificationProducts1() throws Exception {
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
@@ -803,6 +796,17 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"test_commerce_product.png", fileEntry.getFileName());
+	}
+
+	private void _assertCPDSpecificationOptionValue(
+			CPDefinition cpDefinition, int cpDefinitionValuesCount)
+		throws Exception {
+
+		Assert.assertEquals(
+			cpDefinitionValuesCount,
+			_cpDefinitionSpecificationOptionValueLocalService.
+				getCPDefinitionSpecificationOptionValuesCount(
+					cpDefinition.getCPDefinitionId()));
 	}
 
 	private void _assertCPInstanceProperties() throws Exception {
@@ -3033,7 +3037,8 @@ public class BundleSiteInitializerTest {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
-	private CPDefinitionSpecificationOptionValueLocalService _cpDefinitionSpecificationOptionValueLocalService;
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
@@ -3045,7 +3050,8 @@ public class BundleSiteInitializerTest {
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Inject
-	private CPSpecificationOptionLocalService _cpSpecificationOptionLocalService;
+	private CPSpecificationOptionLocalService
+		_cpSpecificationOptionLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

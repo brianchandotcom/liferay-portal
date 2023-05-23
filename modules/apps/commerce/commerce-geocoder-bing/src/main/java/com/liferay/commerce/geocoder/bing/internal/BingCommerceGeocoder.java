@@ -17,6 +17,7 @@ package com.liferay.commerce.geocoder.bing.internal;
 import com.liferay.commerce.exception.CommerceGeocoderException;
 import com.liferay.commerce.geocoder.bing.internal.configuration.BingCommerceGeocoderConfiguration;
 import com.liferay.commerce.model.CommerceGeocoder;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -43,7 +44,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Andrea Di Giorgi
@@ -62,14 +62,20 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 		throws CommerceGeocoderException {
 
 		try {
+			CountryLocalService countryLocalService =
+				_countryLocalServiceSnapshot.get();
+
 			Group group = _groupLocalService.getGroup(groupId);
 
-			Country country = _countryLocalService.getCountryByA2(
+			Country country = countryLocalService.getCountryByA2(
 				group.getCompanyId(), countryA2);
+
+			RegionLocalService regionLocalService =
+				_regionLocalServiceSnapshot.get();
 
 			return _getCoordinates(
 				street, city, zip,
-				_regionLocalService.getRegion(
+				regionLocalService.getRegion(
 					country.getCountryId(), regionCode),
 				country);
 		}
@@ -211,10 +217,14 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 		return sb.toString();
 	}
 
-	private volatile String _apiKey;
+	private static final Snapshot<CountryLocalService>
+		_countryLocalServiceSnapshot = new Snapshot<>(
+			BingCommerceGeocoder.class, CountryLocalService.class);
+	private static final Snapshot<RegionLocalService>
+		_regionLocalServiceSnapshot = new Snapshot<>(
+			BingCommerceGeocoder.class, RegionLocalService.class);
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile CountryLocalService _countryLocalService;
+	private volatile String _apiKey;
 
 	@Reference
 	private volatile GroupLocalService _groupLocalService;
@@ -224,8 +234,5 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile RegionLocalService _regionLocalService;
 
 }

@@ -873,6 +873,21 @@ public class ObjectFieldLocalServiceImpl
 					"relationship type");
 		}
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectField.getObjectDefinitionId());
+
+		int customObjectFieldsCount =
+			objectFieldLocalService.getObjectFieldsCount(
+				objectField.getObjectDefinitionId(), false);
+
+		if (objectDefinition.isApproved() &&
+			!objectDefinition.isUnmodifiableSystemObject() &&
+			(customObjectFieldsCount == 1)) {
+
+			throw new RequiredObjectFieldException();
+		}
+
 		if (Objects.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
@@ -907,10 +922,6 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		objectField = objectFieldPersistence.remove(objectField);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectField.getObjectDefinitionId());
 
 		if (objectDefinition.getAccountEntryRestrictedObjectFieldId() ==
 				objectField.getObjectFieldId()) {

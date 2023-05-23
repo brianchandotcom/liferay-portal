@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
@@ -69,9 +70,6 @@ import org.elasticsearch.common.Strings;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -141,7 +139,7 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 		_waitForYellowStatus();
 
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
-			_crossClusterReplicationHelper;
+			_crossClusterReplicationHelperSnapshot.get();
 
 		if (crossClusterReplicationHelper != null) {
 			crossClusterReplicationHelper.follow(
@@ -164,7 +162,7 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	@Override
 	public void removeCompany(long companyId) {
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
-			_crossClusterReplicationHelper;
+			_crossClusterReplicationHelperSnapshot.get();
 
 		if (crossClusterReplicationHelper != null) {
 			crossClusterReplicationHelper.unfollow(
@@ -403,13 +401,10 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile CrossClusterReplicationHelper
-		_crossClusterReplicationHelper;
+	private static final Snapshot<CrossClusterReplicationHelper>
+		_crossClusterReplicationHelperSnapshot = new Snapshot(
+			ElasticsearchSearchEngine.class,
+			CrossClusterReplicationHelper.class, null, true);
 
 	@Reference
 	private volatile ElasticsearchConfigurationWrapper

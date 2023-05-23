@@ -17,7 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
+import {fetch, navigate, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -67,6 +67,7 @@ function PersonalMenu({
 	itemsURL,
 	label,
 	size,
+	userName,
 	userPortraitURL,
 }) {
 	const [items, setItems] = useState(defaultItems);
@@ -104,7 +105,10 @@ function PersonalMenu({
 					/>
 				) : (
 					<ClayButton
-						aria-label={Liferay.Language.get('user-profile')}
+						aria-label={sub(
+							Liferay.Language.get('x-user-profile'),
+							userName
+						)}
 						className="rounded-circle"
 						displayType="unstyled"
 						onFocus={preloadItems}

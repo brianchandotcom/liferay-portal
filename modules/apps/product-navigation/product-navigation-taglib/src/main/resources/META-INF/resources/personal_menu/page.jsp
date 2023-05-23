@@ -106,6 +106,8 @@ if (size != null) {
 		"label", label
 	).put(
 		"size", size
+	).put(
+		"userName", user2.getFullName()
 	).build();
 
 	if (user2.getPortraitId() > 0) {

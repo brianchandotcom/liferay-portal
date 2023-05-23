@@ -11202,6 +11202,12 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 
+// HikariCP
+
+jdbc.default.connectionTimeout=600000
+jdbc.default.maximumPoolSize=30
+jdbc.default.minimumIdle=0
+
 enterprise.product.notification.enabled=false
 
 company.security.strangers.verify=false
@@ -11232,22 +11238,9 @@ admin.email.from.address=test@liferay.com
 
 announcements.email.to.address=noreply@liferay.com
 
-login.secure.forgot.password=false</echo>
+login.secure.forgot.password=false
 
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-					// HikariCP
-
-					jdbc.default.connectionTimeout=600000
-					jdbc.default.maximumPoolSize=30
-					jdbc.default.minimumIdle=0
-
-					initial.system.check.enabled=true</echo>
-			</then>
-		</if>
+initial.system.check.enabled=true</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

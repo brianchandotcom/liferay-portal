@@ -29,7 +29,6 @@ import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationRecipientSettingValueException;
-import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationRecipient;
@@ -602,18 +601,20 @@ public class EmailNotificationType extends BaseNotificationType {
 		throws PortalException {
 
 		if (Validator.isNull(notificationRecipientSettingsMap.get("from"))) {
-			throw new NotificationTemplateFromException("From is null");
+			throw new NotificationRecipientSettingValueException.
+				FromMustNotBeNull();
 		}
 
 		if (Validator.isNull(
 				notificationRecipientSettingsMap.get("fromName"))) {
 
-			throw new NotificationRecipientSettingValueException(
-				"From name is null");
+			throw new NotificationRecipientSettingValueException.
+				FromNameMustNotBeNull();
 		}
 
 		if (Validator.isNull(notificationRecipientSettingsMap.get("to"))) {
-			throw new NotificationRecipientSettingValueException("To is null");
+			throw new NotificationRecipientSettingValueException.
+				ToMustNotBeNull();
 		}
 	}
 

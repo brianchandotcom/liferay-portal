@@ -41,7 +41,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LINK_WITH_TEXT</td>
+	<td>LINK_TO_HOME</td>
 	<td>//a[contains(@href,'#/') and contains(text(),'${key_text}')]</td>
 	<td></td>
 </tr>

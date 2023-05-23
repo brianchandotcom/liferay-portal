@@ -300,7 +300,7 @@ definition {
 
 		Click.clickAtNotVisible(
 			key_text = ${text},
-			locator1 = "Testray#LINK_WITH_TEXT");
+			locator1 = "Testray#LINK_TO_HOME");
 	}
 
 	@summary = "This macro go to next and previous page."

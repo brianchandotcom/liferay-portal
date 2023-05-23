@@ -263,11 +263,11 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testIndexContributors() throws Exception {
-		CompanyIndexFactoryFixture companyIndexFactoryFixture =
-			new CompanyIndexFactoryFixture(_elasticsearchFixture, "other");
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryFixture, "_indexName", "other");
 
 		ReflectionTestUtil.setFieldValue(
-			companyIndexFactoryFixture.getCompanyIndexFactory(),
+			_companyIndexFactoryFixture.getCompanyIndexFactory(),
 			"_indexContributorServiceTrackerList",
 			ServiceTrackerListFactory.open(
 				_bundleContext, IndexContributor.class, null,
@@ -300,23 +300,23 @@ public class CompanyIndexFactoryTest {
 
 				@Override
 				public void onAfterCreate(String indexName) {
-					companyIndexFactoryFixture.createIndices();
+					_companyIndexFactoryFixture.createIndices();
 				}
 
 				@Override
 				public void onBeforeRemove(String indexName) {
-					companyIndexFactoryFixture.deleteIndices();
+					_companyIndexFactoryFixture.deleteIndices();
 				}
 
 			});
 
 		createIndices();
 
-		_assertHasIndex(companyIndexFactoryFixture.getIndexName());
+		_assertHasIndex(_companyIndexFactoryFixture.getIndexName());
 
 		deleteIndices();
 
-		_assertNoIndex(companyIndexFactoryFixture.getIndexName());
+		_assertNoIndex(_companyIndexFactoryFixture.getIndexName());
 	}
 
 	@Test

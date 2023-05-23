@@ -34,14 +34,18 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.GetIndexResponse;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author André de Oliveira
@@ -51,6 +55,22 @@ public class CompanyIdIndexNameBuilderTest {
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_frameworkUtilMockedStatic.when(
+			() -> FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -193,6 +213,9 @@ public class CompanyIdIndexNameBuilderTest {
 		Assert.assertArrayEquals(
 			new String[] {expectedIndexName}, getIndexResponse.getIndices());
 	}
+
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 	private CompanyIndexFactory _companyIndexFactory;
 	private ElasticsearchFixture _elasticsearchFixture;

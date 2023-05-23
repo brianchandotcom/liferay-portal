@@ -14,13 +14,22 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bryan Engler
@@ -31,6 +40,22 @@ public class ElasticsearchSearchEngineMeetsMinimumVersionRequirementTest {
 	@Rule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_frameworkUtilMockedStatic.when(
+			() -> FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testMeetsRequirement() {
@@ -61,5 +86,8 @@ public class ElasticsearchSearchEngineMeetsMinimumVersionRequirementTest {
 			elasticsearchSearchEngine.meetsMinimumVersionRequirement(
 				Version.parseVersion(minimumVersionString), versionString));
 	}
+
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 }

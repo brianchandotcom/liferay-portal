@@ -29,9 +29,11 @@ import java.util.HashMap;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Adam Brandizzi
@@ -44,6 +46,8 @@ public class CompanyIndexFactoryFixture {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 		_indexName = indexName;
+
+		_frameworkUtilMockedStatic = _createFrameworkUtil();
 
 		_elasticsearchConnectionManager = Mockito.mock(
 			ElasticsearchConnectionManager.class);
@@ -115,6 +119,12 @@ public class CompanyIndexFactoryFixture {
 
 			_companyIndexFactory = null;
 		}
+
+		if (_frameworkUtilMockedStatic != null) {
+			_frameworkUtilMockedStatic.close();
+
+			_frameworkUtilMockedStatic = null;
+		}
 	}
 
 	protected ElasticsearchConfigurationWrapper
@@ -136,10 +146,26 @@ public class CompanyIndexFactoryFixture {
 
 	}
 
+	private MockedStatic<FrameworkUtil> _createFrameworkUtil() {
+		MockedStatic<FrameworkUtil> frameworkUtilMockedStatic =
+			Mockito.mockStatic(FrameworkUtil.class);
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		frameworkUtilMockedStatic.when(
+			() -> FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+
+		return frameworkUtilMockedStatic;
+	}
+
 	private CompanyIndexFactory _companyIndexFactory;
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 	private final ElasticsearchConnectionManager
 		_elasticsearchConnectionManager;
+	private MockedStatic<FrameworkUtil> _frameworkUtilMockedStatic;
 	private final String _indexName;
 
 }

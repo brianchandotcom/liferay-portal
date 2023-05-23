@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
@@ -23,13 +24,19 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author André de Oliveira
@@ -40,6 +47,22 @@ public class ElasticsearchConnectionManagerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_frameworkUtilMockedStatic.when(
+			() -> FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
 
 	@Before
 	public void setUp() {
@@ -743,6 +766,9 @@ public class ElasticsearchConnectionManagerTest {
 	private static final String _REMOTE_2_CONNECTION_ID = "remote 2";
 
 	private static final String _REMOTE_3_CONNECTION_ID = "remote 3";
+
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 	private final ElasticsearchConnection
 		_defaultRemoteElasticsearchConnection = Mockito.mock(

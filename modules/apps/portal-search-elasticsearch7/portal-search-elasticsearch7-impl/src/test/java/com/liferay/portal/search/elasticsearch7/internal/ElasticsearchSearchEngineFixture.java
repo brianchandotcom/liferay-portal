@@ -35,7 +35,11 @@ import com.liferay.portal.search.test.util.search.engine.SearchEngineFixture;
 import java.util.Map;
 import java.util.Objects;
 
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Adam Brandizzi
@@ -73,6 +77,8 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 		CompanyIdIndexNameBuilder indexNameBuilder = _createIndexNameBuilder();
 
+		_frameworkUtilMockedStatic = _createFrameworkUtil();
+
 		ElasticsearchConnectionManager elasticsearchConnectionManager =
 			_createElasticsearchConnectionManager(
 				elasticsearchConnectionFixture);
@@ -98,6 +104,12 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 				_companyIndexFactory, "deactivate", new Class<?>[0]);
 
 			_companyIndexFactory = null;
+		}
+
+		if (_frameworkUtilMockedStatic != null) {
+			_frameworkUtilMockedStatic.close();
+
+			_frameworkUtilMockedStatic = null;
 		}
 	}
 
@@ -180,6 +192,21 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		return elasticsearchSearchEngine;
 	}
 
+	private MockedStatic<FrameworkUtil> _createFrameworkUtil() {
+		MockedStatic<FrameworkUtil> frameworkUtilMockedStatic =
+			Mockito.mockStatic(FrameworkUtil.class);
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		frameworkUtilMockedStatic.when(
+			() -> FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+
+		return frameworkUtilMockedStatic;
+	}
+
 	private CompanyIdIndexNameBuilder _createIndexNameBuilder() {
 		return new CompanyIdIndexNameBuilder() {
 			{
@@ -221,6 +248,7 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 	private ElasticsearchEngineAdapterFixture
 		_elasticsearchEngineAdapterFixture;
 	private ElasticsearchSearchEngine _elasticsearchSearchEngine;
+	private MockedStatic<FrameworkUtil> _frameworkUtilMockedStatic;
 	private IndexNameBuilder _indexNameBuilder;
 
 }

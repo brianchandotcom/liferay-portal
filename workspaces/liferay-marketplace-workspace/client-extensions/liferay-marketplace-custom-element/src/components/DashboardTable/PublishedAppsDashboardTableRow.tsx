@@ -28,15 +28,8 @@ interface PublishedAppsDashboardTableRowProps {
 export function PublishedAppsDashboardTableRow({
 	item,
 }: PublishedAppsDashboardTableRowProps) {
-	const {
-		lastUpdatedBy,
-		name,
-		status,
-		thumbnail,
-		type,
-		updatedDate,
-		version,
-	} = item;
+	const {lastUpdatedBy, name, status, thumbnail, type, updatedDate, version} =
+		item;
 
 	return (
 		<ClayTable.Row>

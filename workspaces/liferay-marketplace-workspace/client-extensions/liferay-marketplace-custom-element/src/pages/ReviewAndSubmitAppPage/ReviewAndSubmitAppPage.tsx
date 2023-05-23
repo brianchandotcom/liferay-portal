@@ -75,11 +75,10 @@ export function ReviewAndSubmitAppPage({
 				appProductId: productId,
 			});
 
-			const productSpecificationsResponse = await getProductSpecifications(
-				{
+			const productSpecificationsResponse =
+				await getProductSpecifications({
 					appProductId: productId,
-				}
-			);
+				});
 
 			const nonTrialSKU = skuResponse.items.find(
 				({skuOptions: [trialOption]}) => trialOption.value === 'no'
@@ -116,9 +115,8 @@ export function ReviewAndSubmitAppPage({
 					specificationKey === 'appdocumentationurl' ||
 					specificationKey === 'appinstallationguideurl'
 				) {
-					const supportAndHelItem = supportAndHelpMap.get(
-						specificationKey
-					);
+					const supportAndHelItem =
+						supportAndHelpMap.get(specificationKey);
 					supportAndHelpCardInfos.push({
 						...(supportAndHelItem as {icon: string; title: string}),
 						link: localizedValue,

@@ -62,6 +62,12 @@ public class NotificationQueueEntryLocalServiceImpl
 		NotificationQueueEntry notificationQueueEntry =
 			notificationContext.getNotificationQueueEntry();
 
+		NotificationType notificationType =
+			_notificationTypeServiceTracker.getNotificationType(
+				notificationQueueEntry.getType());
+
+		notificationType.validateNotificationQueueEntry(notificationContext);
+
 		notificationQueueEntry.setNotificationQueueEntryId(
 			counterLocalService.increment());
 

@@ -16,6 +16,7 @@ package com.liferay.notification.type;
 
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
+import com.liferay.notification.exception.NotificationQueueEntrySubjectException;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateDescriptionException;
 import com.liferay.notification.exception.NotificationTemplateEditorTypeException;
@@ -164,6 +165,19 @@ public abstract class BaseNotificationType implements NotificationType {
 				notificationRecipientSetting.getValue()
 			).build(),
 			Object.class);
+	}
+
+	@Override
+	public void validateNotificationQueueEntry(
+			NotificationContext notificationContext)
+		throws PortalException {
+
+		NotificationQueueEntry notificationQueueEntry =
+			notificationContext.getNotificationQueueEntry();
+
+		if (Validator.isNull(notificationQueueEntry.getSubject())) {
+			throw new NotificationQueueEntrySubjectException("Subject is null");
+		}
 	}
 
 	@Override

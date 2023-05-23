@@ -66,6 +66,10 @@ public interface NotificationType {
 	public Object[] toRecipients(
 		List<NotificationRecipientSetting> notificationRecipientSettings);
 
+	public void validateNotificationQueueEntry(
+			NotificationContext notificationContext)
+		throws PortalException;
+
 	public void validateNotificationTemplate(
 			NotificationContext notificationContext)
 		throws PortalException;

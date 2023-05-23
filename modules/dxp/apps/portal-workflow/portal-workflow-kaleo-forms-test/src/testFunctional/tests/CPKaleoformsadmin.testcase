@@ -28,7 +28,7 @@ definition {
 
 			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "To Do");
 
-			KaleoFormsAdmin.deleteFieldSet();
+			JSONDDMstructure.tearDown();
 
 			Workflow.tearDownSpecificWorkflowDefinition(workflowDefinitionTitle = "Edited Workflow Definition");
 

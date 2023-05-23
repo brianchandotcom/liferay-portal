@@ -32,7 +32,7 @@ definition {
 
 			DDLTemplate.tearDownTemplateCP(ddlDataDefinitionName = "Inventory");
 
-			KaleoFormsAdmin.deleteFieldSet();
+			JSONDDMstructure.tearDown();
 
 			DMDocument.tearDownCP();
 

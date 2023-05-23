@@ -44,7 +44,7 @@ definition {
 
 			KaleoFormsAdmin.tearDownProcess();
 
-			KaleoFormsAdmin.deleteFieldSet();
+			JSONDDMstructure.tearDown();
 
 			PagesAdmin.tearDownCP();
 

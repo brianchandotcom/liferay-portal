@@ -80,7 +80,7 @@ public class CommerceProductDefinitionLinkFDSActionProvider
 						cpDefinitionLink, httpServletRequest));
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "edit"));
-				dropdownItem.setTarget("modal");
+				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
 			() -> CommerceCatalogPermission.contains(

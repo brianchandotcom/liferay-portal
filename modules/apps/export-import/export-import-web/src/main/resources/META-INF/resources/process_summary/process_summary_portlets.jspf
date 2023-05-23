@@ -89,24 +89,34 @@
 
 				String controlClass = control.getClassName();
 
-				if (modelAdditionCounters.containsKey(controlClass)) {
-					LongWrapper modelAdditionCounter = modelAdditionCounters.get(controlClass);
+				if (modelAdditionCounters != null) {
+					if (modelAdditionCounters.containsKey(controlClass)) {
+						LongWrapper modelAdditionCounter = modelAdditionCounters.get(controlClass);
 
-					Long value = modelAdditionCounter.getValue();
+						Long value = modelAdditionCounter.getValue();
 
-					currentAdditions.put(controlLabel, value);
+						currentAdditions.put(controlLabel, value);
 
-					totalAdditions += value;
+						totalAdditions += value;
+					}
+				}
+				else {
+					continue;
 				}
 
-				if (modelDeletionCounters.containsKey(controlClass)) {
-					LongWrapper modelDeletionCounter = modelDeletionCounters.get(controlClass);
+				if (modelDeletionCounters != null) {
+					if (modelDeletionCounters.containsKey(controlClass)) {
+						LongWrapper modelDeletionCounter = modelDeletionCounters.get(controlClass);
 
-					Long value = modelDeletionCounter.getValue();
+						Long value = modelDeletionCounter.getValue();
 
-					currentDeletions.put(controlLabel, value);
+						currentDeletions.put(controlLabel, value);
 
-					totalDeletions += value;
+						totalDeletions += value;
+					}
+				}
+				else {
+					continue;
 				}
 			}
 

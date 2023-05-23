@@ -124,7 +124,7 @@ ProcessListDisplayContext processListDisplayContext = new ProcessListDisplayCont
 					deleteMenu="<%= deleteMenu %>"
 					localPublishing="<%= processListDisplayContext.isLocalPublishing() %>"
 					relaunchMenu="<%= relaunchMenu %>"
-					summaryMenu="<%= summaryMenu && !(backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>"
+					summaryMenu="<%= summaryMenu %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

@@ -1,0 +1,127 @@
+[
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "pm",
+		"emailAddress": "pm@partner.com",
+		"familyName": "pm",
+		"givenName": "pm",
+		"name": "Partner Manager (PM)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "pmu",
+		"emailAddress": "pmu@partner.com",
+		"familyName": "pmu",
+		"givenName": "pmu",
+		"name": "Partner Marketing User (PMU)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "psu",
+		"emailAddress": "psu@partner.com",
+		"familyName": "psu",
+		"givenName": "psu",
+		"name": "Partner Sales User (PSU)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "ptu",
+		"emailAddress": "ptu@partner.com",
+		"familyName": "ptu",
+		"givenName": "ptu",
+		"name": "Partner Technical User (PTU)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "cam",
+		"emailAddress": "cam@liferay.com",
+		"familyName": "cam",
+		"givenName": "cam",
+		"name": "Channel Account Manager (CAM)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "com",
+		"emailAddress": "com@liferay.com",
+		"familyName": "com",
+		"givenName": "com",
+		"name": "Channel Operations Manager (COM)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "cmm",
+		"emailAddress": "cmm@liferay.com",
+		"familyName": "cmm",
+		"givenName": "cmm",
+		"name": "Channel Marketing Manager (CMM)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "cmd",
+		"emailAddress": "cmd@liferay.com",
+		"familyName": "cmd",
+		"givenName": "cmd",
+		"name": "Channel Marketing Director (CMD)",
+		"organizationBriefs": [
+			{
+				"name": "Global"
+			}
+		]
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "cfm",
+		"emailAddress": "cfm@liferay.com",
+		"familyName": "cfm",
+		"givenName": "cfm",
+		"name": "Channel Finance Manager (CFM)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"alternateName": "cem",
+		"emailAddress": "cem@liferay.com",
+		"familyName": "cem",
+		"givenName": "cem",
+		"name": "Channel Enablement Manager (CEM)"
+	}
+]

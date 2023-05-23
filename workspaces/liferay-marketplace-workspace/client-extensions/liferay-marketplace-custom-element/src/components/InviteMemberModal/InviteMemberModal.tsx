@@ -3,8 +3,14 @@ import ClayButton from '@clayui/button';
 import ClayModal, { useModal } from '@clayui/modal';
 import ClayForm, { ClayInput, ClayCheckbox } from '@clayui/form';
 import { useEffect, useState } from 'react';
-import { Liferay } from '../../liferay/liferay';
-import './inviteMemberModal.scss'
+import './inviteMemberModal.scss';
+import {
+  addExistentUserIntoAccount,
+  callRolesApi,
+  createNewUserIntoAccount,
+  getAccountRolesOnAPI,
+  getUserByEmail,
+} from './services';
 
 interface InviteMemberModalProps {
   handleClose: () => void;
@@ -24,154 +30,53 @@ export function InviteMemberModal({
     onClose: () => handleClose(),
   });
 
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [formFields, setFormFields] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
   const [checkboxRoles, setCheckboxRoles] = useState<CheckboxRole[]>([]);
   const [formValid, setFormValid] = useState<boolean>(false);
 
-  const [newUser, setNewUser] = useState<any>();
-  const [accountRoles, setAccountRoles] = useState<any>();
+  const [accountRoles, setAccountRoles] = useState<AccountRole[]>();
 
   const listOfRoles = ['Account Administrator', 'App Editor'];
 
   useEffect(() => {
-    const mapRoles = listOfRoles.map((x) => {
-      return { roleName: x, isChecked: false };
+    const mapRoles = listOfRoles.map((role) => {
+      return { roleName: role, isChecked: false };
     });
     setCheckboxRoles(mapRoles);
-    getAccoutRoles();
+    getAccountRoles();
   }, []);
 
-  const jsonBody = () => {
-    return {
-      alternateName: email.replace('@', '-'),
-      emailAddress: email,
-      familyName: lastName,
-      givenName: firstName,
-    };
+  const jsonBody = {
+    alternateName: formFields.email.replace('@', '-'),
+    emailAddress: formFields.email,
+    familyName: formFields.lastName,
+    givenName: formFields.firstName,
   };
 
-  const getAccoutRoles = async () => {
-    const accountRoles = await fetch(
-      `/o/headless-admin-user/v1.0/accounts/${selectedAccount.id}/account-roles`,
-      {
-        headers: {
-          accept: 'application/json',
-          'x-csrf-token': Liferay.authToken,
-        },
-      }
-    );
-    if (accountRoles.ok) {
-      const data = await accountRoles.json();
-      setAccountRoles(data.items);
-    }
-  };
-
-  async function createNewUserIntoAccount() {
-    try {
-      const response = await fetch(
-        `/o/headless-admin-user/v1.0/accounts/${selectedAccount.id}/user-accounts`,
-        {
-          headers: {
-            accept: 'application/json',
-            'Content-Type': 'application/json',
-            'x-csrf-token': Liferay.authToken,
-          },
-          method: 'POST',
-          body: JSON.stringify(jsonBody()),
-        }
-      );
-    } catch (error) {
-      <ClayAlert.ToastContainer>
-        <ClayAlert
-          autoClose={5000}
-          displayType="danger"
-          title="error"
-        ></ClayAlert>
-      </ClayAlert.ToastContainer>;
-    }
-  }
-
-  async function addExistentUserIntoAccount() {
-    try {
-      const response = await fetch(
-        `/o/headless-admin-user/v1.0/accounts/${selectedAccount.id}/user-accounts/by-email-address/${email}`,
-        {
-          headers: {
-            accept: 'application/json',
-            'x-csrf-token': Liferay.authToken,
-          },
-          method: 'POST',
-          body: JSON.stringify(jsonBody),
-        }
-      );
-    } catch (error) {
-      <ClayAlert.ToastContainer>
-        <ClayAlert
-          autoClose={5000}
-          displayType="danger"
-          title="error"
-        ></ClayAlert>
-      </ClayAlert.ToastContainer>;
-    }
-  }
-
-  const getUserByEmail = async (userEmail: String) => {
-    try {
-      const responseFilteredUserList = await fetch(
-        `/o/headless-admin-user/v1.0/user-accounts?filter=emailAddress eq '${userEmail}'`,
-        {
-          headers: {
-            accept: 'application/json',
-            'x-csrf-token': Liferay.authToken,
-          },
-        }
-      );
-
-      if (responseFilteredUserList.ok) {
-        const data = await responseFilteredUserList.json();
-        if (data.items.length > 0) {
-          return data.items[0];
-        }
-      }
-    } catch (error) {
-      <ClayAlert.ToastContainer>
-        <ClayAlert
-          autoClose={5000}
-          displayType="danger"
-          title="error"
-        ></ClayAlert>
-      </ClayAlert.ToastContainer>;
-    }
+  const getAccountRoles = async () => {
+    const roles = await getAccountRolesOnAPI(selectedAccount.id);
+    setAccountRoles(roles);
   };
 
   const addAccountRolesToUser = async (user: any) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
-        const matchingAccountRole = accountRoles.find(
-          (accountRole: any) => accountRole.name == 'Invited Member'
+        const matchingAccountRole = accountRoles?.find(
+          (accountRole: AccountRole) => accountRole.name == 'Invited Member'
         );
+        console.log(matchingAccountRole);
         if (matchingAccountRole) {
-          await callRolesApi(matchingAccountRole.id, user.id);
+          await callRolesApi(
+            selectedAccount.id,
+            matchingAccountRole.id,
+            user.id
+          );
         }
       }
-    }
-  };
-  const callRolesApi = async (roleId: String, userId: String) => {
-    const response = await fetch(
-      `/o/headless-admin-user/v1.0/accounts/${selectedAccount.id}/account-roles/${roleId}/user-accounts/${userId}`,
-      {
-        headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/json',
-          'x-csrf-token': Liferay.authToken,
-        },
-        method: 'POST',
-      }
-    );
-    if (response.ok) {
-      return;
     }
   };
 
@@ -180,14 +85,17 @@ export function InviteMemberModal({
     let form = event.target as HTMLFormElement;
     let user = '';
     if (formValid) {
-      user = await getUserByEmail(email);
-      setNewUser(user);
+      user = await getUserByEmail(formFields.email);
       if (!user) {
-        await createNewUserIntoAccount();
+        await createNewUserIntoAccount(selectedAccount.id, jsonBody);
       } else {
-        await addExistentUserIntoAccount();
+        await addExistentUserIntoAccount(
+          selectedAccount.id,
+          formFields.email,
+          jsonBody
+        );
       }
-      user = await getUserByEmail(email);
+      user = await getUserByEmail(formFields.email);
       await addAccountRolesToUser(user);
       setTimeout(() => location.reload(), 200);
     }
@@ -206,7 +114,9 @@ export function InviteMemberModal({
   };
 
   const validateForm = (checkboxValues: CheckboxRole[]) => {
-    const isValid = checkboxValues.some((checkbox: CheckboxRole) => checkbox.isChecked);
+    const isValid = checkboxValues.some(
+      (checkbox: CheckboxRole) => checkbox.isChecked
+    );
     setFormValid(isValid);
   };
 
@@ -234,7 +144,10 @@ export function InviteMemberModal({
                   type="text"
                   required={true}
                   onChange={(event) => {
-                    setFirstName(event.target.value);
+                    setFormFields({
+                      ...formFields,
+                      firstName: event.target.value,
+                    });
                   }}
                 />
               </div>
@@ -247,30 +160,38 @@ export function InviteMemberModal({
                   type="text"
                   required={true}
                   onChange={(event) => {
-                    setLastName(event.target.value);
+                    setFormFields({
+                      ...formFields,
+                      lastName: event.target.value,
+                    });
                   }}
                 />
               </div>
             </div>
-            <div className='form-group'>
-            <label className="control-label pb-1" htmlFor="emailAddress">
-              Email
-            </label>
-            <ClayInput
-              id="emailAddress"
-              type="text"
-              required={true}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
-            />
+            <div className="form-group">
+              <label className="control-label pb-1" htmlFor="emailAddress">
+                Email
+              </label>
+              <ClayInput
+                id="emailAddress"
+                type="text"
+                required={true}
+                onChange={(event) => {
+                  setFormFields({
+                    ...formFields,
+                    email: event.target.value,
+                  });
+                }}
+              />
             </div>
           </ClayForm.Group>
 
           <ClayForm.Group>
             <div className="pt-4">
               <ClayModal.TitleSection>
-                <ClayModal.Title className='control-label'>Role</ClayModal.Title>
+                <ClayModal.Title className="control-label">
+                  Role
+                </ClayModal.Title>
               </ClayModal.TitleSection>
               <hr className="solid"></hr>
             </div>

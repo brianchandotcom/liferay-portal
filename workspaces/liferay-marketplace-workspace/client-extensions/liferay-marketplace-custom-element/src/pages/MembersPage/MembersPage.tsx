@@ -46,8 +46,8 @@ export function MembersPage({
 
   setShowDashboardNavigation,
 }: MembersPageProps) {
-  const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
   const [selectedMember, setSelectedMember] = useState<MemberProps>();
 
@@ -68,7 +68,7 @@ export function MembersPage({
       (accountBrief) => accountBrief.id === selectedAccount.id
     );
 
-    accountBrief?.roleBriefs.forEach((role) => {
+    accountBrief?.roleBriefs.forEach((role : RoleBrief) => {
       rolesList.push(role.name);
     });
 
@@ -113,7 +113,7 @@ export function MembersPage({
 
       const accountsListResponse = await getUserAccounts();
 
-      const membersList = accountsListResponse.items.map(
+      const membersList = accountsListResponse?.items.map(
         (member: UserAccountProps) => {
           return {
             accountBriefs: member.accountBriefs,
@@ -189,10 +189,10 @@ export function MembersPage({
                 items={members}
                 tableHeaders={memberTableHeaders}
               >
-                {(item) => (
+                {(member) => (
                   <DashboardMemberTableRow
-                    item={item}
-                    key={item.name}
+                    item={member}
+                    key={member.name}
                     onSelectedMemberChange={setSelectedMember}
                   />
                 )}

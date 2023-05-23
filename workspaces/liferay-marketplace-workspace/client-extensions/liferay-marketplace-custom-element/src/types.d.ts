@@ -86,6 +86,15 @@ type AccountGroup = {
 	name: string;
 };
 
+type AccountRole = {
+	accountId: number,
+	description: string,
+	displayName: string,
+	id: number,
+	name: string,
+	roleId: number
+}
+
 type BillingAddress = {
 	city?: string;
 	country?: string;

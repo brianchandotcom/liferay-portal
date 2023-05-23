@@ -29,7 +29,7 @@ public class AssetSearcherFactoryUtil {
 		return _assetSearcherFactory.createAssetSearcher(assetEntryQuery);
 	}
 
-	private static final AssetSearcherFactory _assetSearcherFactory =
+	private static volatile AssetSearcherFactory _assetSearcherFactory =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			AssetSearcherFactory.class, AssetSearcherFactoryUtil.class,
 			"_assetSearcherFactory", true);

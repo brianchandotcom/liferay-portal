@@ -355,6 +355,14 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new com.liferay.commerce.product.internal.upgrade.v5_0_0.
 				CPTaxCategoryUpgradeProcess());
 
+		registry.register(
+			"5.0.0", "5.1.0",
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionLink", "displayDate DATE null",
+				"expirationDate DATE null", "lastPublishDate DATE null",
+				"status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75) null", "statusDate DATE null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

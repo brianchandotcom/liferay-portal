@@ -114,13 +114,14 @@ public class ContentDashboardFileExtensionItemSelectorView
 				getName(),
 			new ContentDashboardFileExtensionItemSelectorViewDisplayContext(
 				_getContentDashboardFileExtensionGroupsJSONArray(
-					servletRequest),
+					fileExtensionItemSelectorCriterion, servletRequest),
 				itemSelectedEventName));
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private JSONArray _getContentDashboardFileExtensionGroupsJSONArray(
+		FileExtensionItemSelectorCriterion fileExtensionItemSelectorCriterion,
 		ServletRequest servletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
@@ -131,7 +132,7 @@ public class ContentDashboardFileExtensionItemSelectorView
 				_fileExtensionGroupsProvider.getFileExtensionGroups();
 
 		List<String> existingFileExtensions = _getExistingFileExtensions(
-			themeDisplay.getRequest());
+			fileExtensionItemSelectorCriterion, themeDisplay.getRequest());
 
 		Set<String> otherFileExtensions = SetUtil.fromList(
 			ListUtil.filter(
@@ -148,12 +149,21 @@ public class ContentDashboardFileExtensionItemSelectorView
 	}
 
 	private List<String> _getExistingFileExtensions(
+		FileExtensionItemSelectorCriterion fileExtensionItemSelectorCriterion,
 		HttpServletRequest httpServletRequest) {
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			httpServletRequest);
 
-		searchContext.setGroupIds(new long[0]);
+		long[] selectedGroupIds =
+			fileExtensionItemSelectorCriterion.getSelectedGroupIds();
+
+		if (selectedGroupIds != null) {
+			searchContext.setGroupIds(selectedGroupIds);
+		}
+		else {
+			searchContext.setGroupIds(new long[0]);
+		}
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(

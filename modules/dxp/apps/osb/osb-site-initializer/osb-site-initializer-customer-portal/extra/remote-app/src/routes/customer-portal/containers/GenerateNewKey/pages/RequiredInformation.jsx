@@ -53,9 +53,7 @@ const RequiredInformation = ({
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);
 	const [showKeyEmptyError, setShowKeyEmptyError] = useState(false);
-	const [isLoadingUserInvitation, setIsLoadingUserInvitation] = useState(
-		false
-	);
+	const [isLoadingGenerateKey, setIsLoadingGenerateKey] = useState(false);
 	const [availableKeys, setAvailableKeys] = useState(1);
 	const [checkedBoxSubscription, setCheckedBoxSubscription] = useState(false);
 	const navigate = useNavigate();
@@ -182,19 +180,18 @@ const RequiredInformation = ({
 		};
 
 		if (infoSelectedKey.hasNotPermanentLicence) {
-			setIsLoadingUserInvitation(true);
+			setIsLoadingGenerateKey(true);
 
-			const results = await createNewGenerateKey(
+			await createNewGenerateKey(
 				accountKey,
 				provisioningServerAPI,
 				sessionId,
 				licenseKey
 			);
 
-			await saveSubscriptionKey(results[0].items[0].id);
-			setIsLoadingUserInvitation(false);
+			setIsLoadingGenerateKey(false);
 		} else {
-			setIsLoadingUserInvitation(true);
+			setIsLoadingGenerateKey(true);
 
 			const results = await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
@@ -211,8 +208,10 @@ const RequiredInformation = ({
 				})
 			);
 
-			await saveSubscriptionKey(results[0].items[0].id);
-			setIsLoadingUserInvitation(false);
+			if (checkedBoxSubscription) {
+				await saveSubscriptionKey(results[0].items[0].id);
+			}
+			setIsLoadingGenerateKey(false);
 		}
 
 		await client.mutate({
@@ -267,11 +266,10 @@ const RequiredInformation = ({
 
 							<Button
 								disabled={
-									baseButtonDisabled ||
-									isLoadingUserInvitation
+									baseButtonDisabled || isLoadingGenerateKey
 								}
 								displayType="primary"
-								isLoading={isLoadingUserInvitation}
+								isLoading={isLoadingGenerateKey}
 								onClick={() => submitKey()}
 							>
 								{infoSelectedKey.hasNotPermanentLicence

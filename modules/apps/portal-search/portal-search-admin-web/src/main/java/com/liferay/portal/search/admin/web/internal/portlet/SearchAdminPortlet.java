@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,9 +45,6 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -85,7 +83,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 			new SearchAdminDisplayContextBuilder(
 				_language, _portal, renderRequest, renderResponse);
 
-		searchAdminDisplayContextBuilder.setIndexInformation(indexInformation);
+		searchAdminDisplayContextBuilder.setIndexInformation(
+			_indexInformationSnapshot.get());
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
 			_indexReindexerRegistry.getIndexReindexerClassNames());
@@ -109,7 +108,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 					new SearchEngineDisplayContextBuilder();
 
 			searchEngineDisplayContextBuilder.setSearchEngineInformation(
-				searchEngineInformation);
+				_searchEngineInformationSnapshot.get());
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT,
@@ -125,7 +124,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 			fieldMappingsDisplayContextBuilder.setCurrentURL(
 				_portal.getCurrentURL(renderRequest));
 			fieldMappingsDisplayContextBuilder.setIndexInformation(
-				indexInformation);
+				_indexInformationSnapshot.get());
 			fieldMappingsDisplayContextBuilder.setNamespace(
 				renderResponse.getNamespace());
 			fieldMappingsDisplayContextBuilder.setSelectedIndexName(
@@ -150,19 +149,13 @@ public class SearchAdminPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile IndexInformation indexInformation;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchEngineInformation searchEngineInformation;
+	private static final Snapshot<IndexInformation> _indexInformationSnapshot =
+		new Snapshot<>(
+			SearchAdminPortlet.class, IndexInformation.class, null, true);
+	private static final Snapshot<SearchEngineInformation>
+		_searchEngineInformationSnapshot = new Snapshot<>(
+			SearchAdminPortlet.class, SearchEngineInformation.class, null,
+			true);
 
 	@Reference
 	private IndexReindexerRegistry _indexReindexerRegistry;

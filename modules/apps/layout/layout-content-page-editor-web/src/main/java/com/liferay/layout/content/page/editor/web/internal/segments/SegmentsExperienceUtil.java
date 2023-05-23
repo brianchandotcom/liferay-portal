@@ -320,8 +320,7 @@ public class SegmentsExperienceUtil {
 			draftLayout.getClassPK());
 
 		return SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
-			segmentsExperienceId, PortalUtil.getClassNameId(Layout.class),
-			layout.getPlid(),
+			segmentsExperienceId, layout.getPlid(),
 			SegmentsExperimentConstants.Status.getExclusiveStatusValues());
 	}
 

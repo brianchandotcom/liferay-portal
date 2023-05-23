@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -123,8 +122,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		if (segmentsExperienceId != -1) {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
-					segmentsExperienceId, _portal.getClassNameId(Layout.class),
-					plid,
+					segmentsExperienceId, plid,
 					SegmentsExperimentConstants.Status.getSplitStatusValues());
 
 			if (segmentsExperiment != null) {
@@ -159,8 +157,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.
 				getSegmentsExperienceSegmentsExperiments(
-					new long[] {segmentsExperienceId},
-					_portal.getClassNameId(Layout.class), plid,
+					new long[] {segmentsExperienceId}, plid,
 					SegmentsExperimentConstants.Status.getSplitStatusValues(),
 					0, 1);
 

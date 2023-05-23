@@ -107,8 +107,7 @@ public class AddSegmentsExperimentMVCActionCommand
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.addSegmentsExperiment(
 				ParamUtil.getLong(actionRequest, "segmentsExperienceId"),
-				ParamUtil.getLong(actionRequest, "classNameId"),
-				ParamUtil.getLong(actionRequest, "classPK"),
+				ParamUtil.getLong(actionRequest, "plid"),
 				ParamUtil.getString(actionRequest, "name"),
 				ParamUtil.getString(actionRequest, "description"),
 				ParamUtil.getString(actionRequest, "goal"),

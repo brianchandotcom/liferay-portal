@@ -81,9 +81,9 @@ public class ExperimentUtil {
 
 		return toExperiment(
 			companyLocalService, dataSourceId, groupLocalService,
-			layoutLocalService.getLayout(segmentsExperiment.getClassPK()),
-			locale, portal, segmentsEntryLocalService,
-			segmentsExperienceLocalService, segmentsExperiment);
+			layoutLocalService.getLayout(segmentsExperiment.getPlid()), locale,
+			portal, segmentsEntryLocalService, segmentsExperienceLocalService,
+			segmentsExperiment);
 	}
 
 	protected static Experiment toExperiment(

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -495,7 +497,8 @@ public class SegmentsExperimentLocalServiceImpl
 			JSONUtil.put(
 				"classPK", segmentsExperiment.getSegmentsExperimentId()
 			).put(
-				"referrerClassNameId", segmentsExperiment.getPlid()
+				"referrerClassNameId",
+				_portal.getClassNameId(Layout.class.getName())
 			).put(
 				"referrerClassPK", segmentsExperiment.getPlid()
 			).put(
@@ -719,6 +722,9 @@ public class SegmentsExperimentLocalServiceImpl
 					" requires a winner segments experience"));
 		}
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

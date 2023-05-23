@@ -134,8 +134,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		return _segmentsExperimentService.fetchSegmentsExperiment(
-			segmentsExperienceId, _portal.getClassNameId(Layout.class),
-			layout.getPlid(),
+			segmentsExperienceId, layout.getPlid(),
 			SegmentsExperimentConstants.Status.getExclusiveStatusValues());
 	}
 
@@ -230,9 +229,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"page",
 			JSONUtil.put(
-				"classNameId", _portal.getClassNameId(Layout.class.getName())
-			).put(
-				"classPK", layout.getPlid()
+				"plid", layout.getPlid()
 			).put(
 				"type", layout.getType()
 			)
@@ -322,8 +319,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			"historySegmentsExperiments",
 			JSONUtil.toJSONArray(
 				_segmentsExperimentService.getSegmentsExperiments(
-					segmentsExperienceId, _portal.getClassNameId(Layout.class),
-					layout.getPlid(),
+					segmentsExperienceId, layout.getPlid(),
 					SegmentsExperimentConstants.Status.
 						getNonexclusiveStatusValues(),
 					new SegmentsExperimentModifiedDateComparator()),

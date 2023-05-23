@@ -362,8 +362,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.fetchSegmentsExperiment(
-				segmentsExperienceId, _portal.getClassNameId(Layout.class),
-				layout.getPlid(),
+				segmentsExperienceId, layout.getPlid(),
 				SegmentsExperimentConstants.Status.getExclusiveStatusValues());
 
 		if (segmentsExperiment != null) {

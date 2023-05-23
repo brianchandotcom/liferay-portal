@@ -481,6 +481,39 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testPostStructuredContentFolderStructuredContent()
+		throws Exception {
+
+		super.testPostStructuredContentFolderStructuredContent();
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			testGroup.getCreatorUserId(), testGroup.getGroupId(), 0,
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			_ddmStructure.getStructureId(), RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true, 0,
+			0, 0, WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent randomStructuredContent = _randomStructuredContent(
+			locale);
+
+		StructuredContentResource structuredContentResource =
+			_buildStructureContentResource(locale);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContent(
+					_journalFolder.getFolderId(), randomStructuredContent);
+
+		Assert.assertTrue(
+			postStructuredContent.getRenderedContents()[1].
+				getMarkedAsDefault());
+	}
+
+	@Override
+	@Test
 	public void testPutAssetLibraryStructuredContentByExternalReferenceCode()
 		throws Exception {
 

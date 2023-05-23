@@ -16,6 +16,11 @@ package com.liferay.site.initializer.extender.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroup;
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -223,6 +228,9 @@ import java.util.TreeSet;
 public class BundleSiteInitializer implements SiteInitializer {
 
 	public BundleSiteInitializer(
+		AccountEntryLocalService accountEntryLocalService,
+		AccountGroupRelService accountGroupRelService,
+		AccountGroupLocalService accountGroupLocalService,
 		AdminAccountGroupResource.Factory adminAccountGroupResourceFactory,
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
@@ -297,6 +305,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
 
+		_accountEntryLocalService = accountEntryLocalService;
+		_accountGroupRelService = accountGroupRelService;
+		_accountGroupLocalService = accountGroupLocalService;
 		_adminAccountGroupResourceFactory = adminAccountGroupResourceFactory;
 		_accountResourceFactory = accountResourceFactory;
 		_accountRoleLocalService = accountRoleLocalService;
@@ -456,6 +467,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addAccountGroups(serviceContext));
 
 			_invoke(() -> _addAccounts(serviceContext));
+
+			_invoke(() -> _addAccountsOnAccountGroup(serviceContext));
 
 			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues =
 				_invoke(() -> _addOrUpdateDDMStructures(serviceContext));
@@ -643,31 +656,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_servletContext = servletContext;
 	}
 
-	private void _addAccounts(ServiceContext serviceContext) throws Exception {
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/accounts.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		AccountResource.Builder builder = _accountResourceFactory.create();
-
-		AccountResource accountResource = builder.user(
-			serviceContext.fetchUser()
-		).build();
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			Account account = Account.toDTO(
-				String.valueOf(jsonArray.getJSONObject(i)));
-
-			accountResource.putAccountByExternalReferenceCode(
-				account.getExternalReferenceCode(), account);
-		}
-	}
-
 	private void _addAccountGroups(ServiceContext serviceContext)
 		throws Exception {
 
@@ -699,6 +687,86 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			adminAccountGroupResource.postAccountGroup(accountGroup);
+		}
+	}
+
+	private void _addAccounts(ServiceContext serviceContext) throws Exception {
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/accounts.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		AccountResource.Builder builder = _accountResourceFactory.create();
+
+		AccountResource accountResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			Account account = Account.toDTO(
+				String.valueOf(jsonArray.getJSONObject(i)));
+
+			accountResource.putAccountByExternalReferenceCode(
+				account.getExternalReferenceCode(), account);
+		}
+	}
+
+	private void _addAccountsOnAccountGroup(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/AccountGroupAssignment.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray accountsJSONArray = jsonObject.getJSONArray("accounts");
+
+			if (JSONUtil.isEmpty(accountsJSONArray)) {
+				continue;
+			}
+
+			List<AccountEntry> accounts = new ArrayList<>();
+
+			for (int j = 0; j < accountsJSONArray.length(); j++) {
+				accounts.add(
+					_accountEntryLocalService.
+						getAccountEntryByExternalReferenceCode(
+							accountsJSONArray.getString(j),
+							serviceContext.getCompanyId()));
+			}
+
+			if (ListUtil.isNotEmpty(accounts)) {
+				AccountGroup accountGroupLocalService =
+					_accountGroupLocalService.
+						fetchAccountGroupByExternalReferenceCode(
+							jsonObject.getString("externalReferenceCode"),
+							serviceContext.getCompanyId());
+
+				long[] accountIds = new long[accounts.size()];
+
+				for (int k = 0; k < accounts.size(); k++) {
+					AccountEntry accountEntry = accounts.get(k);
+
+					long accountId = accountEntry.getAccountEntryId();
+
+					accountIds[k] = accountId;
+				}
+
+				_accountGroupRelService.addAccountGroupRels(
+					accountGroupLocalService.getAccountGroupId(),
+					AccountEntry.class.getName(), accountIds);
+			}
 		}
 	}
 
@@ -4923,10 +4991,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
-	private final AdminAccountGroupResource.Factory _adminAccountGroupResourceFactory;
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final AccountGroupLocalService _accountGroupLocalService;
+	private final AccountGroupRelService _accountGroupRelService;
 	private final AccountResource.Factory _accountResourceFactory;
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final AccountRoleResource.Factory _accountRoleResourceFactory;
+	private final AdminAccountGroupResource.Factory
+		_adminAccountGroupResourceFactory;
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;

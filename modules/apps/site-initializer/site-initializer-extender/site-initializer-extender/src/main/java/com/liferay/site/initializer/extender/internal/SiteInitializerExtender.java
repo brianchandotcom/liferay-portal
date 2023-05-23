@@ -14,6 +14,9 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -133,7 +136,8 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_adminAccountGroupResourcefactory,
+				_accountEntryLocalService, _accountGroupRelService,
+				_accountGroupLocalService, _adminAccountGroupResourcefactory,
 				_accountResourceFactory, _accountRoleLocalService,
 				_accountRoleResourceFactory, _assetCategoryLocalService,
 				_assetListEntryLocalService, bundle,
@@ -246,7 +250,8 @@ public class SiteInitializerExtender
 
 		SiteInitializerExtension siteInitializerExtension =
 			new SiteInitializerExtension(
-				_adminAccountGroupResourcefactory,
+				_accountEntryLocalService, _accountGroupRelService,
+				_accountGroupLocalService, _adminAccountGroupResourcefactory,
 				_accountResourceFactory, _accountRoleLocalService,
 				_accountRoleResourceFactory, _assetCategoryLocalService,
 				_assetListEntryLocalService,
@@ -303,7 +308,13 @@ public class SiteInitializerExtender
 	}
 
 	@Reference
-	private AdminAccountGroupResource.Factory _adminAccountGroupResourcefactory;
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference
 	private AccountResource.Factory _accountResourceFactory;
@@ -313,6 +324,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private AccountRoleResource.Factory _accountRoleResourceFactory;
+
+	@Reference
+	private AdminAccountGroupResource.Factory _adminAccountGroupResourcefactory;
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

@@ -21,7 +21,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 %>
 
 <c:choose>
-	<c:when test="<%= !cpPriceRangeFacetsDisplayContext.hasCommerceChannel() %>">
+	<c:when test="<%= !cpPriceRangeFacetsDisplayContext.hasCommerceChannel() && !cpPriceRangeFacetsDisplayContext.isStagingEnabled() %>">
 		<div class="alert alert-info mx-auto">
 		<liferay-ui:message key="this-site-does-not-have-a-channel" />
 		</div>

@@ -22,6 +22,7 @@ import com.liferay.commerce.product.content.search.web.internal.configuration.CP
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -151,6 +152,12 @@ public class CPPriceRangeFacetsDisplayContext {
 				fieldName, _renderRequest);
 
 		return parameterValuesOptional.isPresent();
+	}
+
+	public boolean isStagingEnabled() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		return group.isStaged();
 	}
 
 	public boolean showInputRange() {

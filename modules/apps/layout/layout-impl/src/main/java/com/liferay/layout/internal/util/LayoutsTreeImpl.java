@@ -345,6 +345,17 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		boolean finalHasUpdatePermission = hasUpdatePermission;
 
+		String layoutName = layout.getName(themeDisplay.getLocale());
+
+		if (includeActions && (_getDraftLayout(layout) != null) &&
+			(finalHasUpdatePermission || !layout.isPublished() ||
+			 _layoutContentModelResourcePermission.contains(
+				 themeDisplay.getPermissionChecker(), layout.getPlid(),
+				 ActionKeys.UPDATE))) {
+
+			layoutName += StringPool.STAR;
+		}
+
 		JSONObject jsonObject = JSONUtil.put(
 			"actions",
 			() -> {
@@ -389,20 +400,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		).put(
 			"layoutId", layout.getLayoutId()
 		).put(
-			"name",
-			() -> {
-				if (includeActions && (_getDraftLayout(layout) != null) &&
-					(finalHasUpdatePermission || !layout.isPublished() ||
-					 _layoutContentModelResourcePermission.contains(
-						 themeDisplay.getPermissionChecker(), layout.getPlid(),
-						 ActionKeys.UPDATE))) {
-
-					return layout.getName(themeDisplay.getLocale()) +
-						StringPool.STAR;
-				}
-
-				return layout.getName(themeDisplay.getLocale());
-			}
+			"name", layoutName
 		).put(
 			"paginated",
 			() -> {
@@ -443,6 +441,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 				return StringPool.BLANK;
 			}
+		).put(
+			"title", HtmlUtil.escapeAttribute(layoutName)
 		).put(
 			"type", layout.getType()
 		);

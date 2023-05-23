@@ -1716,16 +1716,16 @@ definition {
 				value1 = "16px");
 
 			AssertNotVisible(
-				key_itemName = "Liferay",
-				locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+				key_card = "Liferay",
+				locator1 = "Card#CARD_ELLIPSIS");
 
 			MouseOver.mouseOverNotVisible(
-				key_itemName = "Liferay",
-				locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+				key_card = "Liferay",
+				locator1 = "Card#CARD_ELLIPSIS");
 
 			AssertVisible(
-				key_itemName = "Liferay",
-				locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+				key_card = "Liferay",
+				locator1 = "Card#CARD_ELLIPSIS");
 
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'card-type-asset')][.//p[contains(@class,'card-title')][normalize-space()='Liferay']]",
@@ -1737,8 +1737,8 @@ definition {
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY");
 
 			AssertVisible(
-				key_itemName = "Liferay",
-				locator1 = "SiteNavigationMenu#ITEM_ENTRY_CLOSE");
+				key_card = "Liferay",
+				locator1 = "Card#CARD_ELLIPSIS");
 
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'card-type-asset')][.//p[contains(@class,'card-title')][normalize-space()='Liferay']]",

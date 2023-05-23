@@ -11196,7 +11196,6 @@ ${update.properties}</echo>
 liferay.home=${liferay.home}
 
 jdbc.default.jndi.name=
-
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
@@ -11208,39 +11207,23 @@ jdbc.default.connectionTimeout=600000
 jdbc.default.maximumPoolSize=30
 jdbc.default.minimumIdle=0
 
-enterprise.product.notification.enabled=false
-
-company.security.strangers.verify=false
-
-default.admin.password=test
-
-browser.launcher.url=
-
-setup.wizard.enabled=false
-
-passwords.default.policy.change.required=false
-
-mail.send.blacklist=
-
-mail.session.jndi.name=
-
-memory.scheduler.org.quartz.threadPool.threadCount=1
-
-persisted.scheduler.org.quartz.threadPool.threadCount=1
-
-virtual.hosts.default.site.name=
-
-com.liferay.portal.servlet.filters.strip.StripFilter=true
-
-web.server.http.port=8080
-
 admin.email.from.address=test@liferay.com
-
 announcements.email.to.address=noreply@liferay.com
-
+browser.launcher.url=
+com.liferay.portal.servlet.filters.strip.StripFilter=true
+company.security.strangers.verify=false
+default.admin.password=test
+enterprise.product.notification.enabled=false
+initial.system.check.enabled=true
 login.secure.forgot.password=false
-
-initial.system.check.enabled=true</echo>
+mail.send.blacklist=
+mail.session.jndi.name=
+memory.scheduler.org.quartz.threadPool.threadCount=1
+passwords.default.policy.change.required=false
+persisted.scheduler.org.quartz.threadPool.threadCount=1
+setup.wizard.enabled=false
+virtual.hosts.default.site.name=
+web.server.http.port=8080</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

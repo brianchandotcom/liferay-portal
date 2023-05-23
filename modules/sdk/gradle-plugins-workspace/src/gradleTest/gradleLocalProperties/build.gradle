@@ -1,0 +1,17 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn "properties"
+
+	doLast {
+		String key1Value = null
+
+		try {
+			key1Value = project.property("key1")
+		}
+		catch (Exception exception) {
+		}
+
+		assert key1Value == "test1"
+	}
+}

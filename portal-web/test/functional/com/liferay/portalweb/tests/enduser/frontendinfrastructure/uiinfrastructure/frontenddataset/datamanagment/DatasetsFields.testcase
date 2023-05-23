@@ -185,9 +185,7 @@ definition {
 		}
 
 		task ("And select all the fields.") {
-			Check.checkNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			FrontendDataSetAdmin.checkFields(checkboxName = "");
 		}
 
 		task ("Then Confirm all fields are checked ") {

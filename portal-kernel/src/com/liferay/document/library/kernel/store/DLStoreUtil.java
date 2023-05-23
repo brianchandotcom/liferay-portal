@@ -166,25 +166,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Returns the file as a byte array.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @param  versionLabel the file's version label
-	 * @return Returns the byte array with the file's name
-	 */
-	public static byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		return _store.getFileAsBytes(
-			companyId, repositoryId, fileName, versionLabel);
-	}
-
-	/**
 	 * Returns the file as an {@link InputStream} object.
 	 *
 	 * <p>

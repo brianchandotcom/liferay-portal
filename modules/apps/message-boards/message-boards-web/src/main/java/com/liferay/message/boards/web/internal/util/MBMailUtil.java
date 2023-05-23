@@ -137,7 +137,6 @@ public class MBMailUtil {
 					"the-name-of-the-email-recipient"));
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-182020")) {
 			definitionTerms.put(
 				"[$MESSAGE_PARENT$]",
 				LanguageUtil.get(
@@ -153,7 +152,6 @@ public class MBMailUtil {
 				LanguageUtil.get(
 					themeDisplay.getLocale(),
 					"the-message-body-of-the-original-message"));
-		}
 
 		return definitionTerms;
 	}

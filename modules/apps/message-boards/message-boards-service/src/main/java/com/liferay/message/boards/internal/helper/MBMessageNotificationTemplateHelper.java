@@ -97,7 +97,7 @@ public class MBMessageNotificationTemplateHelper {
 	}
 
 	public String renderMessageParentMessageContent(MBMessage parentMessage) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+		if (
 			(_maxNumberOfParentMessages == 0) ||
 			(parentMessage.getParentMessageId() ==
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
@@ -165,7 +165,7 @@ public class MBMessageNotificationTemplateHelper {
 		int numberOfMessages =
 			_maxNumberOfMessages - numberOfMessagesByParentMessageId;
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+		if (
 			(numberOfMessages == 0)) {
 
 			return StringPool.BLANK;
@@ -211,7 +211,7 @@ public class MBMessageNotificationTemplateHelper {
 	}
 
 	public String renderRootMessage(MBMessage message) throws PortalException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-182020") ||
+		if (
 			(message.getParentMessageId() ==
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
 

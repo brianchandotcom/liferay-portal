@@ -144,6 +144,8 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	}
 
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
+		<portlet:namespace />toggleClickToChatZendeskWebWidgetFields();
+
 		var clickToChatChatProviderIdElement = document.getElementById(
 			'<portlet:namespace />chatProviderId'
 		);

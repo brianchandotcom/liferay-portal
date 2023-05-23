@@ -305,12 +305,35 @@ definition {
 	}
 
 	@description = "LPS-185231. Confirm that the user can search a specific field on field's search bar."
-	@ignore = "true"
 	@priority = 4
 	test CanSearchFieldOnFieldsSearchBar {
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185231 CanSearchFieldOnFieldsSearchBar pending implementation
+		task ("And checks id and label fields") {
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+		}
+
+		task ("And clicks on Save button") {
+			Button.clickSave();
+		}
+
+		task ("And types id on Fields search bar") {
+			FrontendDataSetAdmin.searchField(searchTerm = "id");
+		}
+
+		task ("And clicks on search icon") {
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+		}
+
+		task ("Then only id field should appear on Fields page") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "id");
+		}
 	}
 
 	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"

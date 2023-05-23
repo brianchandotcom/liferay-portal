@@ -35,14 +35,12 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
@@ -116,15 +114,8 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getCoverImageItemSelectorURL() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _getItemSelectorURL(
-			requestBackedPortletURLFactory, themeDisplay,
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			getCoverImageItemSelectorEventName());
 	}
 
@@ -219,15 +210,8 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getSmallImageItemSelectorURL() {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _getItemSelectorURL(
-			requestBackedPortletURLFactory, themeDisplay,
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 			getSmallImageItemSelectorEventName());
 	}
 
@@ -429,7 +413,7 @@ public class BlogsEditEntryDisplayContext {
 
 	private String _getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		ThemeDisplay themeDisplay, String itemSelectedEventName) {
+		String itemSelectedEventName) {
 
 		ItemSelector itemSelector = _itemSelectorSnapshot.get();
 

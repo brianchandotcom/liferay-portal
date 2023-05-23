@@ -49,8 +49,7 @@ public class FragmentEntryLinkCommentEditorConfigContributor
 			requestBackedPortletURLFactory);
 	}
 
-	@Reference
-	private FragmentEntryLinkEditorConfigContributor
-		_fragmentEntryLinkEditorConfigContributor;
+	@Reference(target = "(editor.config.key=fragmenEntryLinkEditor)")
+	private EditorConfigContributor _fragmentEntryLinkEditorConfigContributor;
 
 }

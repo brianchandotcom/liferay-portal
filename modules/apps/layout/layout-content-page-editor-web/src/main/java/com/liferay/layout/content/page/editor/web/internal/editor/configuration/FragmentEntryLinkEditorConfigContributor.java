@@ -45,10 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"editor.config.key=fragmenEntryLinkEditor",
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET
 	},
-	service = {
-		EditorConfigContributor.class,
-		FragmentEntryLinkEditorConfigContributor.class
-	}
+	service = EditorConfigContributor.class
 )
 public class FragmentEntryLinkEditorConfigContributor
 	extends BaseEditorConfigContributor {

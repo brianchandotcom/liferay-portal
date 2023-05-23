@@ -275,10 +275,14 @@ public class ObjectFieldLocalServiceImpl
 			dbColumnName = name;
 		}
 
-		String readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
+		String readOnly = null;
 
-		if (_readOnlyObjectFieldNames.contains(name)) {
-			readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
+		if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+			readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
+
+			if (_readOnlyObjectFieldNames.contains(name)) {
+				readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
+			}
 		}
 
 		return _addObjectField(

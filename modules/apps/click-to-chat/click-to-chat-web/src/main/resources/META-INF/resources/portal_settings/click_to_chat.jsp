@@ -108,10 +108,10 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
-		<portlet:namespace />checkExtraFieldsRendering();
+		<portlet:namespace />toggleClickToChatZendeskWebWidgetFields();
 	});
 
-	function <portlet:namespace />checkExtraFieldsRendering() {
+	function <portlet:namespace />toggleClickToChatZendeskWebWidgetFields() {
 		var zendeskWebWidgetFieldsElement = document.getElementById(
 			'<portlet:namespace />zendeskWebWidgetFields'
 		);
@@ -131,7 +131,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	}
 
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
-		<portlet:namespace />checkExtraFieldsRendering();
+		<portlet:namespace />toggleClickToChatZendeskWebWidgetFields();
 
 		var clickToChatChatProviderIdElement = document.getElementById(
 			'<portlet:namespace />chatProviderId'

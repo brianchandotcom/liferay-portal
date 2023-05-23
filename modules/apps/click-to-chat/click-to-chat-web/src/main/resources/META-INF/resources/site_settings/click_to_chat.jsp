@@ -121,10 +121,10 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
-		<portlet:namespace />checkExtraFieldsRendering();
+		<portlet:namespace />toggleClickToChatZendeskWebWidgetFields();
 	});
 
-	function <portlet:namespace />checkExtraFieldsRendering() {
+	function <portlet:namespace />toggleClickToChatZendeskWebWidgetFields() {
 		var zendeskWebWidgetFieldsElement = document.getElementById(
 			'<portlet:namespace />zendeskWebWidgetFields'
 		);

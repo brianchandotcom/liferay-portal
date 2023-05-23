@@ -84,11 +84,15 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
-
 import java.sql.Connection;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -96,13 +100,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Marco Leo
@@ -609,23 +606,11 @@ public class ObjectFieldLocalServiceTest {
 		_assertFailure(
 			ObjectFieldDBTypeException.class, errorMessage,
 			() -> _addUnmodifiableSystemObjectDefinition(
-				ObjectFieldUtil.addCustomObjectField(
-					new TextObjectFieldBuilder(
-					).userId(
-						TestPropsValues.getUserId()
-					).indexed(
-						true
-					).indexedAsKeyword(
-						true
-					).indexedLanguageId(
-						"en_US"
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap("")
-					).name(
-						"able"
-					).system(
-						true
-					).build())));
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, "en_US",
+					"", 0, "able", Collections.emptyList(),
+					ObjectFieldConstants.READ_ONLY_FALSE, null, false, true)));
 
 		// Invalid DB type
 
@@ -1299,6 +1284,8 @@ public class ObjectFieldLocalServiceTest {
 				0
 			).name(
 				"baker"
+			).objectFieldSettings(
+				Collections.emptyList()
 			).state(
 				false
 			).build());

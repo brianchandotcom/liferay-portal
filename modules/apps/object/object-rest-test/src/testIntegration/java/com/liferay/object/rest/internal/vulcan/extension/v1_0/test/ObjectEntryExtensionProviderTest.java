@@ -40,23 +40,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.io.Serializable;
-
-import java.math.BigDecimal;
-
-import java.sql.Timestamp;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Carolina Barbosa
@@ -77,35 +73,87 @@ public class ObjectEntryExtensionProviderTest {
 
 		ObjectFieldUtil.addCustomObjectField(
 			new BooleanObjectFieldBuilder(
-			).name(
-				"boolean"
+			).userId(
+				TestPropsValues.getUserId()
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
+			).indexed(
+				RandomTestUtil.randomBoolean()
+			).indexedAsKeyword(
+				RandomTestUtil.randomBoolean()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				false
+			).name(
+				"boolean"
+			).required(
+				false
+			).state(
+				false
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new DateObjectFieldBuilder(
-			).name(
-				"date"
+			).userId(
+				TestPropsValues.getUserId()
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
+			).indexed(
+				RandomTestUtil.randomBoolean()
+			).indexedAsKeyword(
+				RandomTestUtil.randomBoolean()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				false
+			).name(
+				"date"
 			).required(
 				true
+			).state(
+				false
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new DecimalObjectFieldBuilder(
-			).name(
-				"decimal"
+			).userId(
+				TestPropsValues.getUserId()
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
+			).indexed(
+				RandomTestUtil.randomBoolean()
+			).indexedAsKeyword(
+				RandomTestUtil.randomBoolean()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				false
+			).name(
+				"decimal"
+			).required(
+				false
+			).state(
+				false
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new PrecisionDecimalObjectFieldBuilder(
-			).name(
-				"precisionDecimal"
+			).userId(
+				TestPropsValues.getUserId()
 			).objectDefinitionId(
 				objectDefinition.getObjectDefinitionId()
+			).indexed(
+				RandomTestUtil.randomBoolean()
+			).indexedAsKeyword(
+				RandomTestUtil.randomBoolean()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				false
+			).name(
+				"precisionDecimal"
 			).required(
 				true
+			).state(
+				false
 			).build());
 
 		_user = UserTestUtil.addUser();

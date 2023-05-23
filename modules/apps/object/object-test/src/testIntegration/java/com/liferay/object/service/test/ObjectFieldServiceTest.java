@@ -17,8 +17,6 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.field.builder.TextObjectFieldBuilder;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -59,7 +57,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Gabriel Albuquerque
  */
-@FeatureFlags("LPS-163716")
+@FeatureFlags({"LPS-163716", "LPS-170122"})
 @RunWith(Arquillian.class)
 public class ObjectFieldServiceTest {
 
@@ -190,19 +188,14 @@ public class ObjectFieldServiceTest {
 	}
 
 	private ObjectField _addObjectField(User user) throws Exception {
-		return ObjectFieldUtil.addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).userId(
-				user.getUserId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				StringUtil.randomId()
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).required(
-				true
-			).build());
+		return _objectFieldLocalService.addCustomObjectField(
+			null, user.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			false, StringUtil.randomId(), ObjectFieldConstants.READ_ONLY_FALSE,
+			null, true, false, Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -220,20 +213,14 @@ public class ObjectFieldServiceTest {
 		try {
 			_setUser(user);
 
-			objectField = ObjectFieldUtil.addCustomObjectField(
-				new TextObjectFieldBuilder(
-				).userId(
-					TestPropsValues.getUserId()
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					StringUtil.randomId()
-				).objectDefinitionId(
-					objectDefinitionId
-				).required(
-					true
-				).build());
+			objectField = _objectFieldService.addCustomObjectField(
+				null, 0, objectDefinitionId,
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, StringUtil.randomId(),
+				ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
+				Collections.emptyList());
 		}
 		finally {
 			if (objectField != null) {

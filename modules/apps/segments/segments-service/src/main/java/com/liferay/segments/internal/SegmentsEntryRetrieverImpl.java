@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,9 +33,6 @@ import com.liferay.segments.simulator.SegmentsEntrySimulator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Cristina González
@@ -78,10 +76,13 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 	private long[] _getSegmentEntryIds(
 		long groupId, long userId, Context context, long[] segmentEntryIds) {
 
-		if ((_segmentsEntrySimulator != null) &&
-			_segmentsEntrySimulator.isSimulationActive(userId)) {
+		SegmentsEntrySimulator segmentsEntrySimulator =
+			_segmentsEntrySimulatorSnapshot.get();
 
-			return _segmentsEntrySimulator.getSimulatedSegmentsEntryIds(userId);
+		if ((segmentsEntrySimulator != null) &&
+			segmentsEntrySimulator.isSimulationActive(userId)) {
+
+			return segmentsEntrySimulator.getSimulatedSegmentsEntryIds(userId);
 		}
 
 		try {
@@ -101,6 +102,11 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRetrieverImpl.class);
 
+	private static final Snapshot<SegmentsEntrySimulator>
+		_segmentsEntrySimulatorSnapshot = new Snapshot<>(
+			SegmentsEntryRetrieverImpl.class, SegmentsEntrySimulator.class,
+			"(model.class.name=com.liferay.portal.kernel.model.User)", true);
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -112,13 +118,5 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
-	private volatile SegmentsEntrySimulator _segmentsEntrySimulator;
 
 }

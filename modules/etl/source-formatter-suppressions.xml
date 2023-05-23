@@ -2,7 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="ChainingCheck" files="talend/talend-definition/src/test/java/com/liferay/talend/OSGiTLiferayInputTestIT\.java" />
 		<suppress checks="JSONNamingCheck" files="talend/talend-common/src/main/java/com/liferay/talend/common/oas/OASExplorer\.java" />
 	</checkstyle>
 	<source-check>

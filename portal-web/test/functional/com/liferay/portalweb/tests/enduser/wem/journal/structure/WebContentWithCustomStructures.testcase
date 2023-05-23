@@ -1347,16 +1347,15 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
 
 			WebContentStructures.saveCP();
 		}
 
 		task ("Add a web content template associated with new structure") {
-			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 			WebContentTemplates.addCP(
-				structureName = "WC Structure Name",
 				templateDescription = "WC Template Description",
 				templateFieldNames = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text",
 				templateName = "WC Template Name");

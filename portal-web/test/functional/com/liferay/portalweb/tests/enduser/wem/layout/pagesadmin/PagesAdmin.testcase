@@ -2226,8 +2226,6 @@ definition {
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 				roleTitle = "Guest");
 
-			SelectFrame.selectFrameTop();
-
 			IFrame.closeFrame();
 
 			PagesAdmin.gotoPageEllipsisMenuItem(

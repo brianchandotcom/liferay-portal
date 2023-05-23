@@ -125,4 +125,30 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-182898 | Test Summary: Verify that role Testray User can see page restriction when tries to access the page of the add case via the URL"
+	@priority = 4
+	test AssertUserRoleSeePageRestrictionWhenAccessViaUrlOnCase {
+		property test.name.skip.portal.instance = "TestrayPageRestrictions#AssertUserRoleSeePageRestrictionWhenAccessViaUrlOnCase";
+
+		task ("Given that the user login with the Testray User role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user@testray.com",
+				userLoginFullName = "User User");
+
+			Navigator.openSiteURL(siteName = "Testray 2");
+		}
+
+		task ("When the user go to page restriction via URL") {
+            var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray-2#/${projectName}/cases/create");
+		}
+
+		task ("Then the user can see page restriction") {
+            AssertElementPresent(
+                key_title = "Sorry, this page does not exist",
+                locator1 = "Header#H1_TITLE");
+		}
+	}
+
 }

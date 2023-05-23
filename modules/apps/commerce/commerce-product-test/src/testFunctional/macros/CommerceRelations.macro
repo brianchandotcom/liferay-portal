@@ -90,6 +90,19 @@ definition {
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
 			value1 = ${searchTerm});
 
+		while ((IsElementNotPresent(key_entryName = ${entryName}, key_title = ${title}, locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT")) && (maxIterations = "5")) {
+			echo("The element is not present, retrying...");
+
+			Click(
+				key_eligibilityCardTitle = ${key_eligibilityCardTitle},
+				locator1 = "CommerceEntry#ELIGIBILITY_RELATION_FIELD_CLEAR_BUTTON");
+
+			Type(
+				key_title = ${title},
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+				value1 = ${searchTerm});
+		}
+
 		WaitForElementPresent(
 			key_entryName = ${entryName},
 			key_title = ${title},

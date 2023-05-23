@@ -106,8 +106,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.BundleCapability;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -821,41 +819,26 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			URL url = bundle.getEntry("/META-INF/taglib-mappings.properties");
 
 			if (url == null) {
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-				List<BundleCapability> bundleCapabilities =
-					bundleWiring.getCapabilities("osgi.extender");
-
-				for (BundleCapability bundleCapability : bundleCapabilities) {
-					Map<String, Object> attributes =
-						bundleCapability.getAttributes();
-
-					Object value = attributes.get("osgi.extender");
-
-					if (value.equals("jsp.taglib")) {
-						return Collections.emptySet();
-					}
-				}
+				return null;
 			}
-			else {
-				try (InputStream inputStream = url.openStream()) {
-					Properties properties = PropertiesUtil.load(
-						inputStream, StringPool.UTF8);
 
-					@SuppressWarnings("unchecked")
-					Map<String, String> map = PropertiesUtil.toMap(properties);
+			try (InputStream inputStream = url.openStream()) {
+				Properties properties = PropertiesUtil.load(
+					inputStream, StringPool.UTF8);
 
-					if (!map.isEmpty()) {
-						_freeMarkerBundleClassloader.addBundle(bundle);
+				@SuppressWarnings("unchecked")
+				Map<String, String> map = PropertiesUtil.toMap(properties);
 
-						_taglibMappings.putAll(map);
-					}
+				if (!map.isEmpty()) {
+					_freeMarkerBundleClassloader.addBundle(bundle);
 
-					return map.keySet();
+					_taglibMappings.putAll(map);
 				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
+
+				return map.keySet();
+			}
+			catch (Exception exception) {
+				_log.error(exception);
 			}
 
 			return null;

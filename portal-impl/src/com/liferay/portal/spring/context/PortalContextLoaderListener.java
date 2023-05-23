@@ -83,6 +83,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
@@ -280,13 +281,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 					return null;
 				});
 
-			Thread springInitThread = new Thread(
-				springInitTask, "Portal Spring Init Thread");
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
 
-			springInitThread.setContextClassLoader(portalClassLoader);
-			springInitThread.setDaemon(true);
-
-			springInitThread.start();
+			executorService.submit(
+				SystemExecutorServiceUtil.renameThread(
+					springInitTask, "Portal Spring Init Thread"));
 		}
 
 		try {

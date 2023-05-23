@@ -17,6 +17,7 @@ package com.liferay.product.navigation.control.menu;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.SessionClicks;
 
 import java.io.IOException;
 
@@ -111,6 +112,20 @@ public abstract class BaseProductNavigationControlMenuEntry
 	}
 
 	@Override
+	public boolean isPanelStateOpen(
+		HttpServletRequest httpServletRequest, String key) {
+
+		String panelState = SessionClicks.get(
+			httpServletRequest, key, "closed");
+
+		if (Objects.equals(panelState, "open")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -120,6 +135,13 @@ public abstract class BaseProductNavigationControlMenuEntry
 	@Override
 	public boolean isUseDialog() {
 		return false;
+	}
+
+	@Override
+	public void setPanelState(
+		HttpServletRequest httpServletRequest, String key, String panelState) {
+
+		SessionClicks.put(httpServletRequest, key, panelState);
 	}
 
 }

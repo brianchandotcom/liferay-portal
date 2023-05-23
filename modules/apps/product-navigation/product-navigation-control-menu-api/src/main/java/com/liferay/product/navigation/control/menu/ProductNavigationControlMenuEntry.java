@@ -170,6 +170,9 @@ public interface ProductNavigationControlMenuEntry {
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
+	public boolean isPanelStateOpen(
+		HttpServletRequest httpServletRequest, String key);
+
 	public default boolean isRelevant(HttpServletRequest httpServletRequest) {
 		return true;
 	}
@@ -196,5 +199,8 @@ public interface ProductNavigationControlMenuEntry {
 	 *         current window
 	 */
 	public boolean isUseDialog();
+
+	public void setPanelState(
+		HttpServletRequest httpServletRequest, String key, String panelState);
 
 }

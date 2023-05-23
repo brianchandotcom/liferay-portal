@@ -59,7 +59,7 @@ public interface CPOptionValueService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPOptionValueServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp option value remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPOptionValueServiceUtil} if injection and service tracking are not available.
 	 */
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> titleMap, double priority,
+			long cpOptionId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -112,7 +112,7 @@ public interface CPOptionValueService extends BaseService {
 		throws PortalException;
 
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
+			long cpOptionValueId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
 		throws PortalException;
 

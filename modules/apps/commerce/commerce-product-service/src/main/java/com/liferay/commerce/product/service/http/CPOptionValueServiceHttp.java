@@ -53,7 +53,7 @@ public class CPOptionValueServiceHttp {
 	public static com.liferay.commerce.product.model.CPOptionValue
 			addCPOptionValue(
 				HttpPrincipal httpPrincipal, long cpOptionId,
-				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> nameMap,
 				double priority, String key,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -64,7 +64,7 @@ public class CPOptionValueServiceHttp {
 				_addCPOptionValueParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionId, titleMap, priority, key, serviceContext);
+				methodKey, cpOptionId, nameMap, priority, key, serviceContext);
 
 			Object returnObj = null;
 
@@ -470,7 +470,7 @@ public class CPOptionValueServiceHttp {
 	public static com.liferay.commerce.product.model.CPOptionValue
 			updateCPOptionValue(
 				HttpPrincipal httpPrincipal, long cpOptionValueId,
-				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> nameMap,
 				double priority, String key,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -481,7 +481,7 @@ public class CPOptionValueServiceHttp {
 				_updateCPOptionValueParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpOptionValueId, titleMap, priority, key,
+				methodKey, cpOptionValueId, nameMap, priority, key,
 				serviceContext);
 
 			Object returnObj = null;

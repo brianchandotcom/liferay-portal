@@ -315,7 +315,6 @@ public class SegmentsExperimentRelLocalServiceTest {
 
 		return SegmentsTestUtil.addSegmentsExperiment(
 			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
-			_classNameLocalService.getClassNameId(Layout.class.getName()),
 			segmentsExperience.getPlid());
 	}
 

@@ -191,15 +191,12 @@ public class SegmentsExperimentServiceTest {
 				role.getRoleId(), ActionKeys.VIEW);
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
-
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			List<SegmentsExperiment> segmentsExperiments =
 				_segmentsExperimentService.getSegmentsExperiments(
-					layout.getGroupId(), classNameId, layout.getPlid());
+					layout.getGroupId(), layout.getPlid());
 
 			Assert.assertEquals(
 				segmentsExperiments.toString(), 2, segmentsExperiments.size());
@@ -222,15 +219,12 @@ public class SegmentsExperimentServiceTest {
 		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
 		SegmentsExperiment segmentsExperiment3 = _addSegmentsExperiment(layout);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
-
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			List<SegmentsExperiment> segmentsExperiments =
 				_segmentsExperimentService.getSegmentsExperiments(
-					layout.getGroupId(), classNameId, layout.getPlid());
+					layout.getGroupId(), layout.getPlid());
 
 			Assert.assertEquals(
 				segmentsExperiments.toString(), 3, segmentsExperiments.size());
@@ -304,7 +298,6 @@ public class SegmentsExperimentServiceTest {
 
 		return _segmentsExperimentService.addSegmentsExperiment(
 			segmentsExperience.getSegmentsExperienceId(),
-			_classNameLocalService.getClassNameId(Layout.class.getName()),
 			segmentsExperience.getPlid(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),

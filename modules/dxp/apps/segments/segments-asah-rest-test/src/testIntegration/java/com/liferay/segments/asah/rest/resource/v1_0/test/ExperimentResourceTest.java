@@ -17,7 +17,6 @@ package com.liferay.segments.asah.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.segments.asah.rest.client.dto.v1_0.Experiment;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -48,8 +47,6 @@ public class ExperimentResourceTest extends BaseExperimentResourceTestCase {
 			SegmentsTestUtil.addSegmentsExperiment(
 				testGroup.getGroupId(),
 				segmentsExperience.getSegmentsExperienceId(),
-				ClassNameLocalServiceUtil.getClassNameId(
-					Layout.class.getName()),
 				segmentsExperience.getPlid()));
 	}
 

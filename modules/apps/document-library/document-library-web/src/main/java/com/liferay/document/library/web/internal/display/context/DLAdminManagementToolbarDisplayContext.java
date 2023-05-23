@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -812,8 +811,8 @@ public class DLAdminManagementToolbarDisplayContext
 						WebKeys.THEME_DISPLAY);
 
 				return StringUtil.merge(
-					GroupLocalServiceUtil.getGroupIds(
-						themeDisplay.getCompanyId(), true),
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						themeDisplay.getScopeGroupId()),
 					StringPool.COMMA);
 			}
 		).setParameter(

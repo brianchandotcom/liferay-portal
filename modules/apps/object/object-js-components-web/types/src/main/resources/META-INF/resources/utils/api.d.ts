@@ -84,6 +84,7 @@ declare type Recipients = {
 	to: LocalizedValue<string>;
 };
 export declare function deleteObjectDefinitions(id: number): Promise<void>;
+export declare function deleteObjectField(id: number): Promise<void>;
 export declare function deleteObjectRelationships(id: number): Promise<void>;
 export declare function deletePickList(pickListId: number): Promise<void>;
 export declare function deletePickListItem(id: number): Promise<void>;

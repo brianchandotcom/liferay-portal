@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.RepositoryUtil;
 
 /**
  * @author Iván Zaera
@@ -180,7 +181,9 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	public boolean isCopyActionAvailable() throws PortalException {
-		if (hasViewPermission() && hasDownloadPermission()) {
+		if (hasViewPermission() && hasDownloadPermission() &&
+			!_isExternalRepository()) {
+
 			return true;
 		}
 
@@ -258,6 +261,16 @@ public class FileEntryDisplayContextHelper {
 		}
 
 		if (_fileEntry.getFileVersionsCount(WorkflowConstants.STATUS_ANY) > 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isExternalRepository() {
+		if ((_fileEntry != null) &&
+			RepositoryUtil.isExternalRepository(_fileEntry.getRepositoryId())) {
+
 			return true;
 		}
 

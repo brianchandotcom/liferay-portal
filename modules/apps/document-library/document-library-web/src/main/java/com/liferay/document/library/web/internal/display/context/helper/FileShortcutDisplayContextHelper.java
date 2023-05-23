@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.util.RepositoryUtil;
 
 /**
  * @author IL (Brian) Kim
@@ -85,7 +86,11 @@ public class FileShortcutDisplayContextHelper {
 	}
 
 	public boolean isCopyActionAvailable() throws PortalException {
-		return hasViewPermission();
+		if (hasViewPermission() && !_isExternalRepository()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isDLFileShortcut() {
@@ -119,6 +124,17 @@ public class FileShortcutDisplayContextHelper {
 
 	public boolean isUpdatable() throws PortalException {
 		return hasUpdatePermission();
+	}
+
+	private boolean _isExternalRepository() {
+		if ((_fileShortcut != null) &&
+			RepositoryUtil.isExternalRepository(
+				_fileShortcut.getRepositoryId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _setValuesForNullFileShortcut() {

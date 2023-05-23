@@ -31,17 +31,17 @@
 					).setHeaderParam(
 						"alg", SignatureAlgorithm.HS256.getValue()
 					).setHeaderParam(
-						"typ", "JWT"
-					).setHeaderParam(
 						"kid", clickToChatConfiguration.chatProviderKeyId()
-					).claim(
-						"scope", "user"
-					).claim(
-						"name", user.getScreenName()
+					).setHeaderParam(
+						"typ", "JWT"
 					).claim(
 						"email", user.getEmailAddress()
 					).claim(
 						"external_id", String.valueOf(user.getUserId())
+					).claim(
+						"name", user.getScreenName()
+					).claim(
+						"scope", "user"
 					).signWith(
 						Keys.hmacShaKeyFor(chatProviderSecretKey.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256
 					).compact();

@@ -46,9 +46,8 @@ export function AccountDetailsPage({
 	totalApps,
 	totalMembers,
 }: AccountDetailsPageProps) {
-	const [selectedAccountAddress, setSelectedAccountAddress] = useState<
-		AccountPostalAddresses[]
-	>();
+	const [selectedAccountAddress, setSelectedAccountAddress] =
+		useState<AccountPostalAddresses[]>();
 
 	const maskDigits = (str: string) => {
 		const first3Digits = str.slice(0, 3);

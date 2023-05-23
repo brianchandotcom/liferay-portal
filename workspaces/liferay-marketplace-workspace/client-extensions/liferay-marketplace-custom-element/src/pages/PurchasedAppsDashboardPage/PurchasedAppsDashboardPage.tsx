@@ -110,9 +110,8 @@ export function PurchasedAppsDashboardPage() {
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
 		accounts[0]
 	);
-	const [purchasedAppTable, setPurchasedAppTable] = useState<
-		PurchasedAppTable
-	>({items: [], pageSize: 7, totalCount: 1});
+	const [purchasedAppTable, setPurchasedAppTable] =
+		useState<PurchasedAppTable>({items: [], pageSize: 7, totalCount: 1});
 	const [page, setPage] = useState<number>(1);
 	const [dashboardNavigationItems, setDashboardNavigationItems] = useState(
 		initialDashboardNavigationItems
@@ -120,9 +119,8 @@ export function PurchasedAppsDashboardPage() {
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [solutionsItems, setSolutionsItems] = useState<PlacedOrder[]>([]);
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const [selectedNavigationItem, setSelectedNavigationItem] = useState(
-		'My Apps'
-	);
+	const [selectedNavigationItem, setSelectedNavigationItem] =
+		useState('My Apps');
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -165,9 +163,8 @@ export function PurchasedAppsDashboardPage() {
 					purchasedAppTable.pageSize
 				);
 
-				const commerceAccountResponse = await getAccountInfoFromCommerce(
-					selectedAccount.id
-				);
+				const commerceAccountResponse =
+					await getAccountInfoFromCommerce(selectedAccount.id);
 
 				setCommerceAccount(commerceAccountResponse);
 
@@ -264,10 +261,11 @@ export function PurchasedAppsDashboardPage() {
 					isPublisherAccount: false,
 				};
 
-				const currentUserAccountBriefs = currentUserAccount.accountBriefs.find(
-					(accountBrief: {id: number}) =>
-						accountBrief.id === selectedAccount.id
-				);
+				const currentUserAccountBriefs =
+					currentUserAccount.accountBriefs.find(
+						(accountBrief: {id: number}) =>
+							accountBrief.id === selectedAccount.id
+					);
 
 				if (currentUserAccountBriefs) {
 					customerRoles.forEach((customerRole) => {

@@ -29,8 +29,8 @@ function DadJoke() {
 			.then((response) => response.text())
 			.then((joke) => {
 				setJoke(joke);
-				// eslint-disable-next-line no-console
 			})
+			// eslint-disable-next-line no-console
 			.catch((error) => console.log(error));
 	}, []);
 

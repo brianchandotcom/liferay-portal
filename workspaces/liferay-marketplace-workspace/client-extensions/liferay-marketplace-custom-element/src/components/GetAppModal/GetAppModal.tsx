@@ -75,9 +75,8 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: handleClose,
 	});
-	const [activeAccounts, setActiveAccounts] = useState<
-		Partial<AccountBrief>[]
-	>();
+	const [activeAccounts, setActiveAccounts] =
+		useState<Partial<AccountBrief>[]>();
 	const [accountPublisher, setAccountPublisher] = useState<Account>();
 	const [accounts, setAccounts] = useState<AccountBrief[]>();
 	const [app, setApp] = useState<App>({
@@ -115,13 +114,11 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		initialBillingAddress
 	);
 
-	const [selectedAccount, setSelectedAccount] = useState<
-		Partial<AccountBrief>
-	>();
+	const [selectedAccount, setSelectedAccount] =
+		useState<Partial<AccountBrief>>();
 
-	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
-		PaymentMethodSelector
-	>('pay');
+	const [selectedPaymentMethod, setSelectedPaymentMethod] =
+		useState<PaymentMethodSelector>('pay');
 
 	const [selectedAddress, setSelectedAddress] = useState('');
 

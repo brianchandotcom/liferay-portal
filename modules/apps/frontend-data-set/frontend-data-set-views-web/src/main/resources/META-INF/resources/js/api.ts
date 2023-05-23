@@ -24,6 +24,11 @@ interface IField {
 	type: string;
 }
 
+export interface IFDSCellRendererCET {
+	erc: string;
+	name: string;
+}
+
 export async function getFields(fdsView: FDSViewType) {
 	const {restApplication, restSchema} = fdsView[
 		OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW

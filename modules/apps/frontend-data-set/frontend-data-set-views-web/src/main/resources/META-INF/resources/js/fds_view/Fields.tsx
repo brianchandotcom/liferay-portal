@@ -13,11 +13,9 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {
-	ClayCheckbox,
-	ClayInput,
-	ClaySelectWithOption,
-} from '@clayui/form';
+import ClayDropDown from '@clayui/drop-down';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
@@ -32,8 +30,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
-import {getFields} from '../api';
+import {IFDSCellRendererCET, getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
+
+import '../../css/FDSEntries.scss';
 
 interface IFDSField {
 	externalReferenceCode: string;
@@ -319,6 +319,7 @@ const SaveFDSFieldsModalContent = ({
 };
 
 interface IEditFDSFieldModalContentProps {
+	cellRendererCETs: IFDSCellRendererCET[];
 	closeModal: Function;
 	fdsField: IFDSField;
 	namespace: string;
@@ -326,6 +327,7 @@ interface IEditFDSFieldModalContentProps {
 }
 
 const EditFDSFieldModalContent = ({
+	cellRendererCETs,
 	closeModal,
 	fdsField,
 	namespace,
@@ -340,10 +342,19 @@ const EditFDSFieldModalContent = ({
 
 	const fdsFieldLabelRef = useRef<HTMLInputElement>(null);
 
+	const fdsInternalCellRendererLabels = FDS_INTERNAL_CELL_RENDERERS.map(
+		(cellRenderer) => cellRenderer.label
+	);
+
+	const clientExtensionField = !fdsInternalCellRendererLabels.includes(
+		selectedFDSFieldRenderer
+	);
+
 	const editFDSField = async () => {
 		const body = {
 			label: fdsFieldLabelRef.current?.value,
 			renderer: selectedFDSFieldRenderer,
+			rendererType: clientExtensionField ? 'clientExtension' : 'default',
 			sortable: fdsFieldSortable,
 		};
 
@@ -386,6 +397,76 @@ const EditFDSFieldModalContent = ({
 	const fdsFieldLabelInputId = `${namespace}fdsFieldLabelInput`;
 	const fdsFieldRendererSelectId = `${namespace}fdsFieldRendererSelectId`;
 
+	const options = FDS_INTERNAL_CELL_RENDERERS.map(
+		(renderer: FDSInternalCellRenderer) => ({
+			label: renderer.label!,
+			value: renderer.name!,
+		})
+	);
+
+	options.push(
+		...cellRendererCETs.map((item) => ({
+			label: item.name,
+			value: item.erc,
+		}))
+	);
+
+	const CellRendererDropdown = ({
+		cellRenderers,
+		namespace,
+		onItemClick,
+	}: {
+		cellRenderers: {
+			label: string;
+			value: string;
+		}[];
+		namespace: string;
+		onItemClick: Function;
+	}) => {
+		const cellRendererERCs = cellRendererCETs.map(
+			(cellRendererCET) => cellRendererCET.erc
+		);
+
+		return (
+			<ClayDropDown
+				menuElementAttrs={{
+					className: 'fds-cell-renderers-dropdown-menu',
+				}}
+				trigger={
+					<ClayButton
+						aria-labelledby={`${namespace}cellRenderersLabel`}
+						className="form-control form-control-select form-control-select-secondary"
+						displayType="secondary"
+						id={fdsFieldRendererSelectId}
+					>
+						{selectedFDSFieldRenderer
+							? selectedFDSFieldRenderer
+							: Liferay.Language.get('choose-an-option')}
+					</ClayButton>
+				}
+			>
+				<ClayDropDown.ItemList items={cellRenderers} role="listbox">
+					{cellRenderers.map((cellRenderer) => (
+						<ClayDropDown.Item
+							className="align-items-center d-flex justify-content-between"
+							key={cellRenderer.value}
+							onClick={() => onItemClick(cellRenderer.label)}
+							roleItem="option"
+						>
+							{cellRenderer.label}
+
+							{cellRendererERCs.includes(cellRenderer.value) && (
+								<ClayLabel displayType="info">
+									{Liferay.Language.get('cell-renderer')}
+								</ClayLabel>
+							)}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		);
+	};
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -423,23 +504,19 @@ const EditFDSFieldModalContent = ({
 				</ClayForm.Group>
 
 				<ClayForm.Group>
-					<label htmlFor={fdsFieldRendererSelectId}>
+					<label
+						htmlFor={fdsFieldRendererSelectId}
+						id={`${namespace}cellRendererLabel`}
+					>
 						{Liferay.Language.get('cell-renderer')}
 					</label>
 
-					<ClaySelectWithOption
-						aria-label={Liferay.Language.get('cell-renderer')}
-						id={fdsFieldRendererSelectId}
-						onChange={(event) => {
-							setSelectedFDSFieldRenderer(event.target.value);
-						}}
-						options={FDS_INTERNAL_CELL_RENDERERS.map(
-							(renderer: FDSInternalCellRenderer) => ({
-								label: renderer.label,
-								value: renderer.name,
-							})
-						)}
-						value={selectedFDSFieldRenderer}
+					<CellRendererDropdown
+						cellRenderers={options}
+						namespace={namespace}
+						onItemClick={(item: string) =>
+							setSelectedFDSFieldRenderer(item)
+						}
 					/>
 				</ClayForm.Group>
 
@@ -475,6 +552,7 @@ const EditFDSFieldModalContent = ({
 };
 
 const Fields = ({
+	cellRendererCETs,
 	fdsView,
 	fdsViewsURL,
 	namespace,
@@ -732,6 +810,7 @@ const Fields = ({
 										closeModal: Function;
 									}) => (
 										<EditFDSFieldModalContent
+											cellRendererCETs={cellRendererCETs}
 											closeModal={closeModal}
 											fdsField={item}
 											namespace={namespace}

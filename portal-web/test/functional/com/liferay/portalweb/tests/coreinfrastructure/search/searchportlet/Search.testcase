@@ -801,11 +801,14 @@ definition {
 		}
 
 		task ("Use the third Custom Filter widget to filter by the DDM field value of the first web content structure article") {
-			SearchPortlets.configureCustomFilter(
-				filterValue = "Apple",
-				portletIndex = 3);
+			Type(
+				key_name = "ddmFieldArray.ddmFieldValueKeyword_en_US",
+				locator1 = "Search#CUSTOM_FILTER_WIDGET_VALUE_INPUT",
+				value1 = "Apple");
 
-			Refresh();
+			Click(
+				key_text = "Apply",
+				locator1 = "Button#ANY_LAST");
 		}
 
 		task ("Assert the first web content structure article appears in the search results and the second one does not") {

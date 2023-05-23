@@ -111,7 +111,7 @@ public class NotificationQueueEntryModelResourcePermission
 		_notificationQueueEntryLocalService;
 
 	@Reference(
-		target = "(resource.name=" + NotificationConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + NotificationConstants.RESOURCE_NAME_NOTIFICATION_QUEUE + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

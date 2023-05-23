@@ -73,7 +73,7 @@ public class NotificationQueueEntryResourceImpl
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getNotificationQueueEntriesPage",
-					NotificationConstants.RESOURCE_NAME,
+					NotificationConstants.RESOURCE_NAME_NOTIFICATION_QUEUE,
 					contextCompany.getCompanyId())
 			).build(),
 			booleanQuery -> {

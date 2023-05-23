@@ -71,6 +71,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		name: '',
 		price: 0,
 		productId: 0,
+		slug: '',
 		urlImage: '',
 	});
 	const [appVersion, setAppVersion] = useState<string>('');

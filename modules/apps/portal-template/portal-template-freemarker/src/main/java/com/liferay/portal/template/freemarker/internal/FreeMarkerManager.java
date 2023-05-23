@@ -829,11 +829,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 				@SuppressWarnings("unchecked")
 				Map<String, String> map = PropertiesUtil.toMap(properties);
 
-				if (!map.isEmpty()) {
-					_freeMarkerBundleClassloader.addBundle(bundle);
-
-					_taglibMappings.putAll(map);
+				if (map.isEmpty()) {
+					return null;
 				}
+
+				_freeMarkerBundleClassloader.addBundle(bundle);
+
+				_taglibMappings.putAll(map);
 
 				return map.keySet();
 			}

@@ -171,11 +171,12 @@
 	</entity>
 	<exceptions>
 		<exception>NotificationQueueEntryStatus</exception>
+		<exception>NotificationQueueEntrySubject</exception>
+		<exception>NotificationQueueEntryType</exception>
 		<exception>NotificationRecipientSettingValue</exception>
 		<exception>NotificationTemplateAttachmentObjectFieldId</exception>
 		<exception>NotificationTemplateDescription</exception>
 		<exception>NotificationTemplateEditorType</exception>
-		<exception>NotificationTemplateFrom</exception>
 		<exception>NotificationTemplateName</exception>
 		<exception>NotificationTemplateObjectDefinitionId</exception>
 		<exception>NotificationTemplateSubject</exception>

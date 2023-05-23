@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.web.internal.util;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -137,21 +136,21 @@ public class MBMailUtil {
 					"the-name-of-the-email-recipient"));
 		}
 
-			definitionTerms.put(
-				"[$MESSAGE_PARENT$]",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-message-body-of-the-parent-message"));
-			definitionTerms.put(
-				"[$MESSAGE_SIBLINGS$]",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-message-thread-of-messages-at-the-same-level"));
-			definitionTerms.put(
-				"[$ROOT_MESSAGE_BODY$]",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-message-body-of-the-original-message"));
+		definitionTerms.put(
+			"[$MESSAGE_PARENT$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-message-body-of-the-parent-message"));
+		definitionTerms.put(
+			"[$MESSAGE_SIBLINGS$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-message-thread-of-messages-at-the-same-level"));
+		definitionTerms.put(
+			"[$ROOT_MESSAGE_BODY$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-message-body-of-the-original-message"));
 
 		return definitionTerms;
 	}

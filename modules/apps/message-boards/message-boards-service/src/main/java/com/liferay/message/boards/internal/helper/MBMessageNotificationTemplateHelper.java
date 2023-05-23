@@ -21,7 +21,6 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
@@ -97,8 +96,7 @@ public class MBMessageNotificationTemplateHelper {
 	}
 
 	public String renderMessageParentMessageContent(MBMessage parentMessage) {
-		if (
-			(_maxNumberOfParentMessages == 0) ||
+		if ((_maxNumberOfParentMessages == 0) ||
 			(parentMessage.getParentMessageId() ==
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
 
@@ -165,9 +163,7 @@ public class MBMessageNotificationTemplateHelper {
 		int numberOfMessages =
 			_maxNumberOfMessages - numberOfMessagesByParentMessageId;
 
-		if (
-			(numberOfMessages == 0)) {
-
+		if (numberOfMessages == 0) {
 			return StringPool.BLANK;
 		}
 
@@ -211,9 +207,8 @@ public class MBMessageNotificationTemplateHelper {
 	}
 
 	public String renderRootMessage(MBMessage message) throws PortalException {
-		if (
-			(message.getParentMessageId() ==
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID)) {
+		if (message.getParentMessageId() ==
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
 			return StringPool.BLANK;
 		}

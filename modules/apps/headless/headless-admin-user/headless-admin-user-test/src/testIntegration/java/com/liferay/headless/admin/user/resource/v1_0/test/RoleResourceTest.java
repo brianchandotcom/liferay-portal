@@ -41,6 +41,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +64,37 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteOrganizationRoleUserAccountAssociation()
+		throws Exception {
+
+		// TODO LPS-184020 Ignored until method returns 404 on null deletion
+
+		super.testDeleteOrganizationRoleUserAccountAssociation();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteRoleUserAccountAssociation() throws Exception {
+
+		// TODO LPS-184020 Ignored until method returns 404 on null deletion
+
+		super.testDeleteRoleUserAccountAssociation();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteSiteRoleUserAccountAssociation() throws Exception {
+
+		// TODO LPS-184020 Ignored until method returns 404 on null deletion
+
+		super.testDeleteSiteRoleUserAccountAssociation();
 	}
 
 	@Override

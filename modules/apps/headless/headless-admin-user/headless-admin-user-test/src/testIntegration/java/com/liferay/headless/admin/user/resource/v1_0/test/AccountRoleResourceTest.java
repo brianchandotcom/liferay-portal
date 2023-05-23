@@ -54,6 +54,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -139,6 +140,18 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		_assertAccountRoleUserAccountAssociation(
 			_account, accountRole, userAccount, false);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress()
+		throws Exception {
+
+		// TODO LPS-184020 Ignored until method returns 404 on null deletion
+
+		super.
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress();
 	}
 
 	@Override

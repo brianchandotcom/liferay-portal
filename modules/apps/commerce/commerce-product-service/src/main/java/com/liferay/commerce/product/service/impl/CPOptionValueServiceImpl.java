@@ -46,7 +46,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> titleMap, double priority,
+			long cpOptionId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -54,7 +54,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionValueLocalService.addCPOptionValue(
-			cpOptionId, titleMap, priority, key, serviceContext);
+			cpOptionId, nameMap, priority, key, serviceContext);
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
+			long cpOptionValueId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -199,7 +199,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			ActionKeys.VIEW);
 
 		return cpOptionValueLocalService.updateCPOptionValue(
-			cpOptionValue.getCPOptionValueId(), titleMap, priority, key,
+			cpOptionValue.getCPOptionValueId(), nameMap, priority, key,
 			serviceContext);
 	}
 

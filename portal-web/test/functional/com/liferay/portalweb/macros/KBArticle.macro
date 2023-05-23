@@ -52,6 +52,8 @@ definition {
 	}
 
 	macro addCP {
+		WaitForVisible(locator1 = "Button#PLUS");
+
 		if (isSet(kbTemplateTitle)) {
 			LexiconEntry.gotoAddMenuItem(menuItem = ${kbTemplateTitle});
 		}

@@ -558,4 +558,28 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-180578. The administrater could see the description of RSS Feed Time."
+	@priority = 3
+	test ViewDescriptionOfRSSCacheFeedTime {
+		property test.name.skip.portal.instance = "RSS#ViewDescriptionOfRSSCacheFeedTime";
+
+		task ("Given administrater goes to System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+		}
+
+		task ("When administrater goes to RSS > Cache") {
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "RSS",
+				configurationName = "Cache",
+				configurationScope = "System Scope");
+		}
+
+		task ("Then there's a description for RSS Feed Time") {
+			SystemSettings.viewSettingsText(settingsText = "Set the time interval (in minutes) to refresh the feed.");
+		}
+	}
+
 }

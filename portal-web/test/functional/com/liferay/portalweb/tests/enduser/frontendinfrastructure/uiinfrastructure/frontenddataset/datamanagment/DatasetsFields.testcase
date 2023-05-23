@@ -119,12 +119,25 @@ definition {
 	}
 
 	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."
-	@ignore = "true"
 	@priority = 4
 	test CanCancelAddingOnCancelButton {
+		task ("And clicks on Add Fields button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185230 CanCancelAddingOnCancelButton pending implementation
+		task ("And checks id field") {
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
+		}
 
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then there's no fields on Fields tab page") {
+			AssertElementPresent(
+				key_text = "Add Fields",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	@description = "LPS-185232. Confirm that the user can cancel adding a field by clicking on modal's close (X) button."

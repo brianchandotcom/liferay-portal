@@ -29,6 +29,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
@@ -846,8 +847,10 @@ public class RenderLayoutStructureTagTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject
-	private EditPageInfoItemCapability _editPageInfoItemCapability;
+	@Inject(
+		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY
+	)
+	private InfoItemCapability _editPageInfoItemCapability;
 
 	@DeleteAfterTestRun
 	private Group _group;

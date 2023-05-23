@@ -471,8 +471,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private DLURLHelper _dlURLHelper;
 
-	@Reference
-	private EditPageInfoItemCapability _editPageInfoItemCapability;
+	@Reference(
+		target = "(info.item.capability.key=" + EditPageInfoItemCapability.KEY + ")"
+	)
+	private InfoItemCapability _editPageInfoItemCapability;
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;

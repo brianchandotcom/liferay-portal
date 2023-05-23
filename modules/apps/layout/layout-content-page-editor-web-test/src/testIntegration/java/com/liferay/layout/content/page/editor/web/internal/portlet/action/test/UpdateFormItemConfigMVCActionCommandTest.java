@@ -31,6 +31,7 @@ import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
 import com.liferay.info.test.util.model.MockObject;
@@ -748,8 +749,10 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject
-	private EditPageInfoItemCapability _editPageInfoItemCapability;
+	@Inject(
+		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY
+	)
+	private InfoItemCapability _editPageInfoItemCapability;
 
 	@Inject
 	private FragmentCollectionContributorRegistry

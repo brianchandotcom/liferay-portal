@@ -25,7 +25,9 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
  */
 public interface EditPageInfoItemCapability extends InfoItemCapability {
 
-	public static final String KEY = EditPageInfoItemCapability.class.getName();
+	public static final String KEY =
+		"com.liferay.layout.page.template.info.item.capability." +
+			"EditPageInfoItemCapability";
 
 	public static final Class<?>[] REQUIRED_INFO_ITEM_SERVICE_CLASSES =
 		new Class<?>[] {

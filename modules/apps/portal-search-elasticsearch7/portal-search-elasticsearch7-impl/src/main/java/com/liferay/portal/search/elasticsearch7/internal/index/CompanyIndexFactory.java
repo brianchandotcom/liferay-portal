@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -67,9 +68,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -236,7 +234,7 @@ public class CompanyIndexFactory
 		IndicesClient indicesClient = restHighLevelClient.indices();
 
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
-			_crossClusterReplicationHelper;
+			_crossClusterReplicationHelperSnapshot.get();
 
 		if (crossClusterReplicationHelper != null) {
 			crossClusterReplicationHelper.unfollow(removeIndex);
@@ -652,18 +650,15 @@ public class CompanyIndexFactory
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
+	private static final Snapshot<CrossClusterReplicationHelper>
+		_crossClusterReplicationHelperSnapshot = new Snapshot(
+			CompanyIndexFactory.class, CrossClusterReplicationHelper.class,
+			null, true);
+
 	private final Set<Long> _companyIds = new HashSet<>();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile CrossClusterReplicationHelper
-		_crossClusterReplicationHelper;
 
 	@Reference
 	private volatile ElasticsearchConfigurationWrapper

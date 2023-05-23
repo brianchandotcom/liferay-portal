@@ -246,6 +246,7 @@ definition {
 	@priority = 4
 	test AssertThatTheUserCanOpenAppDetailsInBoundApplications {
 		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertThatTheUserCanOpenAppDetailsInBoundApplications";
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertThatTheUserCanOpenAppDetailsInBoundApplications";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -261,7 +262,7 @@ definition {
 					product = "Auto",
 					status = "Bound");
 			}
-     
+
 			task ("And assert the Detail view page and go back to 'Test Test' User") {
 				AssertElementPresent(
 					key_tabTitle = "App Details",

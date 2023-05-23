@@ -7,3 +7,9 @@ Export-Package:\
 	com.liferay.osb.faro.contacts.model.constants,\
 	com.liferay.osb.faro.contacts.service,\
 	com.liferay.osb.faro.contacts.service.persistence
+Import-Package:\
+	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.service.persistence;version="[21.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
+	\
+	*

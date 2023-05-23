@@ -1,4 +1,10 @@
 Bundle-Name: Liferay OSB Faro Admin Web
 Bundle-SymbolicName: com.liferay.osb.faro.admin.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
+	\
+	*
 Web-ContextPath: /osb-faro-admin-web

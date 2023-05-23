@@ -67,7 +67,11 @@ dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
 					</div>
 
 					<span class="input-group-item input-group-item-shrink my-auto">
-						<aui:button name="selectFolderButton" value="select" />
+						<clay:button
+							displayType="secondary"
+							id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
+							label="select"
+						/>
 					</span>
 				</div>
 			</div>

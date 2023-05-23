@@ -29,6 +29,8 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 	module="js/FDSView"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"cellRendererCETs", fdsViewsDisplayContext.getCellRendererCETJSONArray()
+		).put(
 			"fdsViewId", ParamUtil.getString(request, "fdsViewId")
 		).put(
 			"fdsViewsURL", fdsViewsURL

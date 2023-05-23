@@ -14,21 +14,32 @@
 
 package com.liferay.frontend.data.set.views.web.internal.display.context;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.type.FDSCellRendererCET;
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marko Cikos
@@ -41,6 +52,44 @@ public class FDSViewsDisplayContext {
 
 		_portletRequest = portletRequest;
 		_serviceTrackerList = serviceTrackerList;
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		_cetManager = (CETManager)httpServletRequest.getAttribute(
+			CETManager.class.getName());
+	}
+
+	public JSONArray getCellRendererCETJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<FDSCellRendererCET> fdsCellRendererCETs = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			fdsCellRendererCETs = (List)_cetManager.getCETs(
+				themeDisplay.getCompanyId(), null,
+				ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get FDS Cell Renderer client extension entries",
+				portalException);
+		}
+
+		for (FDSCellRendererCET fdsCellRenderer : fdsCellRendererCETs) {
+			jsonArray.put(
+				JSONUtil.put(
+					"erc", fdsCellRenderer.getExternalReferenceCode()
+				).put(
+					"name", fdsCellRenderer.getName(themeDisplay.getLocale())
+				));
+		}
+
+		return jsonArray;
 	}
 
 	public String getFDSEntriesURL() {
@@ -116,6 +165,10 @@ public class FDSViewsDisplayContext {
 		return resourceURL.toString();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FDSViewsDisplayContext.class);
+
+	private final CETManager _cetManager;
 	private final PortletRequest _portletRequest;
 	private final ServiceTrackerList<String> _serviceTrackerList;
 

@@ -21,4 +21,15 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class FileExtensionItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
+
+	public long[] getSelectedGroupIds() {
+		return _selectedGroupIds;
+	}
+
+	public void setSelectedGroupIds(long[] selectedGroupIds) {
+		_selectedGroupIds = selectedGroupIds;
+	}
+
+	private long[] _selectedGroupIds;
+
 }

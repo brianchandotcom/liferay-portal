@@ -51,15 +51,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-185233. Confirm that composed fields (refrencing another schema) are not available for selection."
-	@ignore = "true"
-	@priority = 4
-	test AssertComposedFieldsNotAvailableForSelection {
-
-		// TODO LPS-185233 AssertComposedFieldsNotAvailableForSelection pending implementation
-
-	}
-
 	@description = "LPS-179282. Confirm that metadata fields are not present for the user "
 	@priority = 3
 	test AssertNotPresentMetadataFields {

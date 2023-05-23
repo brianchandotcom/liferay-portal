@@ -19,6 +19,7 @@ import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.handler.NotificationHandlerTracker;
+import com.liferay.notification.model.NotificationRecipient;
 import com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.dto.v1_0.util.NotificationUtil;
 import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
@@ -152,10 +153,8 @@ public class NotificationQueueEntryResourceImpl
 				serviceBuilderNotificationQueueEntry)
 		throws PortalException {
 
-		NotificationHandler notificationHandler =
-			_notificationHandlerTracker.getNotificationHandler(
-				_portal.getClassName(
-					serviceBuilderNotificationQueueEntry.getClassNameId()));
+		NotificationRecipient notificationRecipient =
+			serviceBuilderNotificationQueueEntry.getNotificationRecipient();
 		NotificationType notificationType =
 			_notificationTypeServiceTracker.getNotificationType(
 				serviceBuilderNotificationQueueEntry.getType());
@@ -202,6 +201,8 @@ public class NotificationQueueEntryResourceImpl
 				id =
 					serviceBuilderNotificationQueueEntry.
 						getNotificationQueueEntryId();
+				recipients = notificationType.toRecipients(
+					notificationRecipient.getNotificationRecipientSettings());
 				recipientsSummary = notificationType.getRecipientSummary(
 					serviceBuilderNotificationQueueEntry);
 				sentDate = serviceBuilderNotificationQueueEntry.getSentDate();
@@ -213,6 +214,18 @@ public class NotificationQueueEntryResourceImpl
 
 				setTriggerBy(
 					() -> {
+						long classNameId =
+							serviceBuilderNotificationQueueEntry.
+								getClassNameId();
+
+						if (classNameId == 0) {
+							return null;
+						}
+
+						NotificationHandler notificationHandler =
+							_notificationHandlerTracker.getNotificationHandler(
+								_portal.getClassName(classNameId));
+
 						if (notificationHandler != null) {
 							return notificationHandler.getTriggerBy(
 								contextAcceptLanguage.getPreferredLocale());

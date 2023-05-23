@@ -56,7 +56,7 @@ buildscript {
 
 	dependencies {
 		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "2.0.4"
-		classpath group: "de.undercouch", name: "gradle-download-task", version: "3.4.3"
+		classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
 		classpath group: "org.ajoberstar", name: "gradle-git", version: "1.6.0"
 	}
 

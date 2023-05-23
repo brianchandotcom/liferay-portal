@@ -19,7 +19,7 @@ definition {
 			site = "true");
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 
-		var structureId = JSONDDMstructure._getStructureId(
+		var structureId = JSONDDMstructureAPI._getStructureId(
 			classNameId = ${classNameId},
 			groupId = ${globalGroupId},
 			structureName = "Basic Web Content");

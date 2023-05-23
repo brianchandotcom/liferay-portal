@@ -18,13 +18,13 @@ definition {
 		}
 		else if (${itemType} == "Web Content Article") {
 			if (${itemSubtype} == "Basic Web Content") {
-				var classPK = JSONDDMstructure._getStructureId(
+				var classPK = JSONDDMstructureAPI._getStructureId(
 					classNameId = ${classNameId},
 					groupId = ${globalGroupId},
 					structureName = "Basic Web Content");
 			}
 			else {
-				var classPK = JSONDDMstructure._getStructureId(
+				var classPK = JSONDDMstructureAPI._getStructureId(
 					classNameId = ${classNameId},
 					groupId = ${groupId},
 					structureName = ${itemSubtype});

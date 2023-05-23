@@ -176,7 +176,7 @@ definition {
 			groupName = "Global",
 			site = "true");
 
-		var basicWebContentStructureId = JSONDDMstructure._getStructureId(
+		var basicWebContentStructureId = JSONDDMstructureAPI._getStructureId(
 			classNameId = ${classNameId},
 			groupId = ${globalGroupId},
 			structureName = "Basic Web Content");

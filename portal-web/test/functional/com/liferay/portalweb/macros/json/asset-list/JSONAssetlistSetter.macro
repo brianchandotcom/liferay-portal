@@ -108,11 +108,11 @@ definition {
 
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 
-		var basicWebContentClassTypeId = JSONDDMstructure._getStructureId(
+		var basicWebContentClassTypeId = JSONDDMstructureAPI._getStructureId(
 			classNameId = ${classNameId},
 			groupId = ${globalGroupId},
 			structureName = "Basic Web Content");
-		var classTypeIdsDDMStructure = JSONDDMstructure._getStructureIds(
+		var classTypeIdsDDMStructure = JSONDDMstructureAPI._getStructureIds(
 			classNameId = ${classNameId},
 			groupId = ${groupId});
 
@@ -189,7 +189,7 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 					var classTypeId = ${basicWebContentClassTypeId};
 				}
 				else {
-					var classTypeId = JSONDDMstructure._getStructureId(
+					var classTypeId = JSONDDMstructureAPI._getStructureId(
 						classNameId = ${classNameId},
 						groupId = ${groupId},
 						structureName = ${itemSubtype});

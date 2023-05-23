@@ -36,7 +36,7 @@ definition {
 	macro setClassTypeId {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
-		var classTypeId = JSONDDMstructure._getStructureId(
+		var classTypeId = JSONDDMstructureAPI._getStructureId(
 			classNameId = ${classNameId},
 			groupId = ${groupId},
 			structureName = ${structureName});

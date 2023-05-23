@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
@@ -474,7 +475,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			_invoke(() -> _addAccounts(serviceContext));
 
-			_invoke(() -> _addAccountsOnAccountGroup(serviceContext));
+			_invoke(() -> _addAccountGroupAssignments(serviceContext));
 
 			Map<String, String> ddmStructureEntryIdsStringUtilReplaceValues =
 				_invoke(() -> _addOrUpdateDDMStructures(serviceContext));
@@ -662,6 +663,55 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_servletContext = servletContext;
 	}
 
+	private void _addAccountGroupAssignments(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/account-group-assignments.json",
+			_servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray accountsJSONArray = jsonObject.getJSONArray("accounts");
+
+			if (JSONUtil.isEmpty(accountsJSONArray)) {
+				continue;
+			}
+
+			List<AccountEntry> accountEntries = new ArrayList<>();
+
+			for (int j = 0; j < accountsJSONArray.length(); j++) {
+				accountEntries.add(
+					_accountEntryLocalService.
+						getAccountEntryByExternalReferenceCode(
+							accountsJSONArray.getString(j),
+							serviceContext.getCompanyId()));
+			}
+
+			if (ListUtil.isEmpty(accountEntries)) {
+				continue;
+			}
+
+			AccountGroup accountGroup =
+				_accountGroupLocalService.
+					fetchAccountGroupByExternalReferenceCode(
+						jsonObject.getString("externalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			_accountGroupRelService.addAccountGroupRels(
+				accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+				ListUtil.toLongArray(
+					accountEntries, AccountEntryModel::getAccountEntryId));
+		}
+	}
+
 	private void _addAccountGroups(ServiceContext serviceContext)
 		throws Exception {
 
@@ -718,61 +768,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			accountResource.putAccountByExternalReferenceCode(
 				account.getExternalReferenceCode(), account);
-		}
-	}
-
-	private void _addAccountsOnAccountGroup(ServiceContext serviceContext)
-		throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/AccountGroupAssignment.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONArray accountsJSONArray = jsonObject.getJSONArray("accounts");
-
-			if (JSONUtil.isEmpty(accountsJSONArray)) {
-				continue;
-			}
-
-			List<AccountEntry> accounts = new ArrayList<>();
-
-			for (int j = 0; j < accountsJSONArray.length(); j++) {
-				accounts.add(
-					_accountEntryLocalService.
-						getAccountEntryByExternalReferenceCode(
-							accountsJSONArray.getString(j),
-							serviceContext.getCompanyId()));
-			}
-
-			if (ListUtil.isNotEmpty(accounts)) {
-				AccountGroup accountGroupLocalService =
-					_accountGroupLocalService.
-						fetchAccountGroupByExternalReferenceCode(
-							jsonObject.getString("externalReferenceCode"),
-							serviceContext.getCompanyId());
-
-				long[] accountIds = new long[accounts.size()];
-
-				for (int k = 0; k < accounts.size(); k++) {
-					AccountEntry accountEntry = accounts.get(k);
-
-					long accountId = accountEntry.getAccountEntryId();
-
-					accountIds[k] = accountId;
-				}
-
-				_accountGroupRelService.addAccountGroupRels(
-					accountGroupLocalService.getAccountGroupId(),
-					AccountEntry.class.getName(), accountIds);
-			}
 		}
 	}
 

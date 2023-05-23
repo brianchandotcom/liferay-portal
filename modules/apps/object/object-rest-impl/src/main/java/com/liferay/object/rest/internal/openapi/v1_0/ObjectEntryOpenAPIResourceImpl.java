@@ -237,23 +237,24 @@ public class ObjectEntryOpenAPIResourceImpl
 			boolean addRelatedSchemas, String type, UriInfo uriInfo)
 		throws Exception {
 
-		return _openAPIResource.getOpenAPI(
-			new ObjectEntryOpenAPIContributor(
-				addRelatedSchemas, _bundleContext, _dtoConverterRegistry,
-				_objectActionLocalService, _objectDefinition,
-				_objectDefinitionLocalService, this,
-				_objectEntryOpenAPIResourceProvider,
-				_objectRelationshipLocalService, _openAPIResource,
-				_systemObjectDefinitionManagerRegistry),
-			_getOpenAPISchemaFilter(_objectDefinition),
-			new HashSet<Class<?>>() {
-				{
-					add(ObjectEntryRelatedObjectsResourceImpl.class);
-					add(ObjectEntryResourceImpl.class);
-					add(OpenAPIResourceImpl.class);
-				}
-			},
-			type, uriInfo);
+		return _setReadOnly(
+			_openAPIResource.getOpenAPI(
+				new ObjectEntryOpenAPIContributor(
+					addRelatedSchemas, _bundleContext, _dtoConverterRegistry,
+					_objectActionLocalService, _objectDefinition,
+					_objectDefinitionLocalService, this,
+					_objectEntryOpenAPIResourceProvider,
+					_objectRelationshipLocalService, _openAPIResource,
+					_systemObjectDefinitionManagerRegistry),
+				_getOpenAPISchemaFilter(_objectDefinition),
+				new HashSet<Class<?>>() {
+					{
+						add(ObjectEntryRelatedObjectsResourceImpl.class);
+						add(ObjectEntryResourceImpl.class);
+						add(OpenAPIResourceImpl.class);
+					}
+				},
+				type, uriInfo));
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
@@ -367,6 +368,41 @@ public class ObjectEntryOpenAPIResourceImpl
 		}
 
 		return requiredPropertySchemaNames;
+	}
+
+	private Response _setReadOnly(Response response) {
+		OpenAPI openAPI = (OpenAPI)response.getEntity();
+
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		Schema schema = schemas.get(_objectDefinition.getShortName());
+
+		Map<String, Schema> properties = schema.getProperties();
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
+
+			schema = properties.get(objectField.getName());
+
+			if (Objects.equals(
+					objectField.getReadOnly(),
+					ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
+				Objects.equals(
+					objectField.getReadOnly(),
+					ObjectFieldConstants.READ_ONLY_FALSE)) {
+
+				schema.readOnly(false);
+
+				continue;
+			}
+
+			schema.readOnly(true);
+		}
+
+		return response;
 	}
 
 	private final BundleContext _bundleContext;

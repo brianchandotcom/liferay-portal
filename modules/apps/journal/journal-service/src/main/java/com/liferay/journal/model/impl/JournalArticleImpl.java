@@ -279,6 +279,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return DDMStructureLocalServiceUtil.fetchStructure(getDDMStructureId());
 	}
 
+	public String getDDMStructureKey() {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		if (ddmStructure == null) {
+			return StringPool.BLANK;
+		}
+
+		return ddmStructure.getStructureKey();
+	}
+
 	@Override
 	public DDMTemplate getDDMTemplate() {
 		return DDMTemplateLocalServiceUtil.fetchTemplate(

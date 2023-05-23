@@ -337,6 +337,7 @@ public class MiniCartTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(MiniCartTag.class);
 
+	private long _accountEntryId;
 	private String _checkoutURL;
 	private long _commerceChannelGroupId;
 	private long _commerceChannelId;
@@ -353,6 +354,5 @@ public class MiniCartTag extends IncludeTag {
 	private String _siteDefaultURL = StringPool.BLANK;
 	private boolean _toggleable = true;
 	private Map<String, String> _views = new HashMap<>();
-	private long _accountEntryId;
 
 }

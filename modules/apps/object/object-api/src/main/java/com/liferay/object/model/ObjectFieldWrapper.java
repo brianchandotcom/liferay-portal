@@ -595,6 +595,13 @@ public class ObjectFieldWrapper
 		return model.getUuid();
 	}
 
+	@Override
+	public boolean isDeletionAllowed()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.isDeletionAllowed();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object field is indexed.
 	 *

@@ -379,9 +379,10 @@ public class ObjectFieldLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectField>
-		getCustomObjectFields(long objectFieldId) {
+		getCustomObjectFields(long objectDefinitionId) {
 
-		return _objectFieldLocalService.getCustomObjectFields(objectFieldId);
+		return _objectFieldLocalService.getCustomObjectFields(
+			objectDefinitionId);
 	}
 
 	@Override
@@ -506,6 +507,12 @@ public class ObjectFieldLocalServiceWrapper
 	public int getObjectFieldsCount(long objectDefinitionId) {
 		return _objectFieldLocalService.getObjectFieldsCount(
 			objectDefinitionId);
+	}
+
+	@Override
+	public int getObjectFieldsCount(long objectDefinitionId, boolean system) {
+		return _objectFieldLocalService.getObjectFieldsCount(
+			objectDefinitionId, system);
 	}
 
 	@Override

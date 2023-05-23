@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.model;
 
 import com.liferay.commerce.frontend.model.ImageField;
+import com.liferay.commerce.frontend.model.LabelField;
 
 /**
  * @author Alessio Antonio Rendina
@@ -22,15 +23,16 @@ import com.liferay.commerce.frontend.model.ImageField;
 public class ProductLink {
 
 	public ProductLink(
-		long cpDefinitionLinkId, ImageField image, String name, String type,
-		double order, String createDateString) {
+		long cpDefinitionLinkId, String createDateString, ImageField image,
+		String name, double order, String type, LabelField status) {
 
 		_cpDefinitionLinkId = cpDefinitionLinkId;
+		_createDateString = createDateString;
 		_image = image;
 		_name = name;
-		_type = type;
 		_order = order;
-		_createDateString = createDateString;
+		_type = type;
+		_status = status;
 	}
 
 	public long getCPDefinitionLinkId() {
@@ -53,6 +55,10 @@ public class ProductLink {
 		return _order;
 	}
 
+	public LabelField getStatus() {
+		return _status;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -62,6 +68,7 @@ public class ProductLink {
 	private final ImageField _image;
 	private final String _name;
 	private final double _order;
+	private final LabelField _status;
 	private final String _type;
 
 }

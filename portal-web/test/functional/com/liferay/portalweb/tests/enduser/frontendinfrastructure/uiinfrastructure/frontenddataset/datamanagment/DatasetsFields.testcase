@@ -293,17 +293,11 @@ definition {
 		}
 
 		task ("And Check three options (creator,id ,name)") {
-			Check.checkNotVisible(
-				checkboxName = "creator",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			FrontendDataSetAdmin.checkFields(checkboxName = "creator");
 
-			Check.checkNotVisible(
-				checkboxName = "id",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
-			Check.checkNotVisible(
-				checkboxName = "name",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			FrontendDataSetAdmin.checkFields(checkboxName = "name");
 		}
 
 		task ("Then Confirm that the fields are checked ") {

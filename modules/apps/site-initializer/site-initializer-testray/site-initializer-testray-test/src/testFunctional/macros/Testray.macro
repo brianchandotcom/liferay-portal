@@ -294,6 +294,15 @@ definition {
 		Click(locator1 = "Testray#ADD_PROJECT");
 	}
 
+	@summary = "This macro click in the link to the home page."
+	macro goToLink {
+		WaitForPageLoad();
+
+		Click.clickAtNotVisible(
+			key_text = ${text},
+			locator1 = "Testray#LINK_WITH_TEXT");
+	}
+
 	@summary = "This macro go to next and previous page."
 	macro goToNextAndPreviousPage {
 		Click(

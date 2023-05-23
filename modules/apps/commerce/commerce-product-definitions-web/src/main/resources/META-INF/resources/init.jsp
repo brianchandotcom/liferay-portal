@@ -63,6 +63,7 @@ page import="com.liferay.commerce.product.definitions.web.internal.security.perm
 page import="com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException" %><%@
+page import="com.liferay.commerce.product.exception.CPDefinitionLinkExpirationDateException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException" %><%@
 page import="com.liferay.commerce.product.exception.CPDefinitionMetaTitleException" %><%@

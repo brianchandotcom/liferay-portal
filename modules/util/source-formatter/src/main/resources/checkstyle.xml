@@ -253,7 +253,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ChainingCheck">
 			<property name="category" value="Styling" />
-			<property name="description" value="Checks that chaining is only applied on certain types and methods." />
+			<property name="description" value="Checks that method chaining can be used when possible." />
 			<message key="chaining.required" value="Chaining on ''{0}'' is preferred" />
 			<message key="response.unsorted" value="Method calls between ''Response.status'' and ''Response.build'' should be sorted" />
 		</module>

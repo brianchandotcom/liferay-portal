@@ -34,10 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	property = "view=private",
-	service = {ItemSelectorView.class, PrivateLayoutsItemSelectorView.class}
-)
+@Component(property = "view=private", service = ItemSelectorView.class)
 public class PrivateLayoutsItemSelectorView
 	extends BaseLayoutsItemSelectorView {
 

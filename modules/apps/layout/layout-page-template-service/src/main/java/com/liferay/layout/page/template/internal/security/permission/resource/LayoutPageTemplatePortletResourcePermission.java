@@ -36,10 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "resource.name=" + LayoutPageTemplateConstants.RESOURCE_NAME,
-	service = {
-		LayoutPageTemplatePortletResourcePermission.class,
-		PortletResourcePermission.class
-	}
+	service = PortletResourcePermission.class
 )
 public class LayoutPageTemplatePortletResourcePermission
 	implements PortletResourcePermission {

@@ -42,8 +42,8 @@ COPY common/resources/log4j $LIFERAY_HOME/osgi/log4j/
 
 # WAR
 
-COPY *.war $LIFERAY_HOME/osgi/war/
+COPY *osb-faro*.war $LIFERAY_HOME/osgi/modules/
 
 # Modules
 
-COPY *.jar $LIFERAY_HOME/osgi/modules/
+COPY *osb.faro*.jar $LIFERAY_HOME/osgi/modules/

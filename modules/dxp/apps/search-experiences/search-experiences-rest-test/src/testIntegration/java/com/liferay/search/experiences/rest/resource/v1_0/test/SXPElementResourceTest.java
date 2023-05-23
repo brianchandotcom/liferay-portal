@@ -15,15 +15,21 @@
 package com.liferay.search.experiences.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
+import com.liferay.search.experiences.rest.client.serdes.v1_0.ElementDefinitionSerDes;
 
 import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -133,8 +139,44 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostSXPElementPreview() throws Exception {
+		SXPElement randomSXPElement = randomSXPElement();
+
+		randomSXPElement.setTitle(StringPool.BLANK);
+		randomSXPElement.setDescription(StringPool.BLANK);
+		randomSXPElement.setTitle_i18n(
+			Collections.singletonMap(
+				"en_US", "text-match-over-multiple-fields"));
+		randomSXPElement.setDescription_i18n(
+			Collections.singletonMap(
+				"en_US", "text-match-over-multiple-fields-description"));
+
+		randomSXPElement.setElementDefinition(
+			ElementDefinitionSerDes.toDTO(_ELEMENTDEFINITION1));
+
+		SXPElement postSXPElement = testPostSXPElementPreview_addSXPElement(
+			randomSXPElement);
+
+		randomSXPElement.setDescription(
+			_getUSLocalization(randomSXPElement.getDescription_i18n()));
+		randomSXPElement.setElementDefinition(
+			ElementDefinitionSerDes.toDTO(_ELEMENTDEFINITION2));
+		randomSXPElement.setTitle(
+			_getUSLocalization(randomSXPElement.getTitle_i18n()));
+
+		assertEquals(randomSXPElement, postSXPElement);
+		assertValid(postSXPElement);
+	}
+
+	@Override
+	@Test
 	public void testPostSXPElementValidate() throws Exception {
 		sxpElementResource.postSXPElementValidate("{}");
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"elementDefinition"};
 	}
 
 	@Override
@@ -195,6 +237,14 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		return _addSXPElement(sxpElement);
 	}
 
+	@Override
+	protected SXPElement testPostSXPElementPreview_addSXPElement(
+			SXPElement sxpElement)
+		throws Exception {
+
+		return sxpElementResource.postSXPElementPreview(sxpElement);
+	}
+
 	private SXPElement _addSXPElement(SXPElement sxpElement) throws Exception {
 		return sxpElementResource.postSXPElement(sxpElement);
 	}
@@ -212,6 +262,19 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		}
 	}
 
+	private String _getUSLocalization(Map<String, String> localizationMap) {
+		return _language.get(Locale.US, localizationMap.get("en_US"));
+	}
+
+	private static final String _ELEMENTDEFINITION1 =
+		"{\"uiConfiguration\": {\"fieldSets\": [{\"fields\": [{\"helpText\": \"text-to-match-field-help\",\"label\": \"text-to-match\",\"name\": \"keywords\",\"type\": \"keywords\",\"typeOptions\": {\"required\": false}}]}]}}";
+
+	private static final String _ELEMENTDEFINITION2 =
+		"{\"uiConfiguration\": {\"fieldSets\": [{\"fields\": [{\"helpText\": \"text-to-match-field-help\",\"helpTextLocalized\": \"If this is set, the search terms entered in the search bar will be replaced by this value.\",\"label\": \"text-to-match\",\"labelLocalized\": \"Text to Match\",\"name\": \"keywords\",\"type\": \"keywords\",\"typeOptions\": {\"required\": false}}]}]}}";
+
 	private static final String _TITLE_PREFIX = "SXPERT";
+
+	@Inject
+	private Language _language;
 
 }

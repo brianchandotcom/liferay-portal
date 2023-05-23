@@ -8,6 +8,15 @@ Import-Package:\
 	\
 	!org.yaml.snakeyaml.*,\
 	\
+	com.liferay.document.library.kernel.service;version="[11.1.0,9999.0.0)",\
+	com.liferay.expando.kernel.service;version="[1.8.0,9999.0.0)",\
+	com.liferay.oauth2.provider.service;version="[3.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.service;version="[22.0.0,9999.0.0)",\
+	com.liferay.portal.kernel.util;version="[59.0.0,9999.0.0)",\
+	com.liferay.portal.security.service.access.policy.service;version="[1.4.0,9999.0.0)",\
+	com.liferay.portal.util;version="[48.0.0,9999.0.0)",\
+	\
 	*
 Web-ContextPath: /osb-faro-web
 -dsannotations-options: inherit

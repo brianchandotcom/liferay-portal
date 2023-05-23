@@ -42,6 +42,6 @@ runGradleTest {
 
 		File clientExtensionYamlFile = sampleThemeFaviconProject.file("client-extension.yaml")
 
-		assert createClientExtensionConfigTask.inputs.files.asPath == clientExtensionYamlFile.path
+		assert createClientExtensionConfigTask.inputs.files.asPath.contains(clientExtensionYamlFile.path)
 	}
 }

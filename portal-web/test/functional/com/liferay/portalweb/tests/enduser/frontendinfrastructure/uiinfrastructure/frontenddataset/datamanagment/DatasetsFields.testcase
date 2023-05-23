@@ -141,12 +141,27 @@ definition {
 	}
 
 	@description = "LPS-185232. Confirm that the user can cancel adding a field by clicking on modal's close (X) button."
-	@ignore = "true"
 	@priority = 4
 	test CanCancelAddingOnCloseButton {
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185232 CanCancelAddingOnCloseButton pending implementation
+		task ("And checks creator field") {
+			FrontendDataSetAdmin.checkFields(checkboxName = "creator");
+		}
 
+		task ("And clicks on X icon of the modal") {
+			Click(
+				key_modalTitle = "Add Fields",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then the modal is closed / And the changes are not saved") {
+			AssertElementPresent(
+				key_text = "Add Fields",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."

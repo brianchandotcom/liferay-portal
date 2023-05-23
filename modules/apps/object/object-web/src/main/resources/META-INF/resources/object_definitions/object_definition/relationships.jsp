@@ -29,19 +29,30 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= objectDefinitionsRelationshipsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= objectDefinitionsRelationshipsDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= objectDefinitionsRelationshipsDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= ObjectDefinitionsFDSNames.OBJECT_RELATIONSHIPS %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-	propsTransformer="js/components/FDSPropsTransformer/ObjectRelationshipsFDSPropsTransformer"
-	style="fluid"
-/>
+<div>
+	<react:component
+		module="js/components/ObjectRelationship/Relationships"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", objectDefinitionsRelationshipsDisplayContext.getAPIURL()
+			).put(
+				"creationMenu", objectDefinitionsRelationshipsDisplayContext.getCreationMenu()
+			).put(
+				"formName", "fm"
+			).put(
+				"id", ObjectDefinitionsFDSNames.OBJECT_RELATIONSHIPS
+			).put(
+				"items", objectDefinitionsRelationshipsDisplayContext.getFDSActionDropdownItems()
+			).put(
+				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
+			).put(
+				"style", "fluid"
+			).put(
+				"url", objectDefinitionsRelationshipsDisplayContext.getEditObjectRelationshipURL()
+			).build()
+		%>'
+	/>
+</div>
 
 <div>
 	<react:component

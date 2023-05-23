@@ -75,21 +75,24 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
+	public String getEditObjectRelationshipURL() throws Exception {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/object_definitions/edit_object_relationship"
+		).setParameter(
+			"objectRelationshipId", "{id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setMVCRenderCommandName(
-					"/object_definitions/edit_object_relationship"
-				).setParameter(
-					"objectRelationshipId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"view", "view",
+				getEditObjectRelationshipURL(), "view", "view",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(

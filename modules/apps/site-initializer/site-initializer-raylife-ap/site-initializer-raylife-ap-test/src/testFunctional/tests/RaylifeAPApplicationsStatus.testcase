@@ -48,10 +48,105 @@ definition {
 		}
 	}
 
+	@description = "Story ID:LPS-154587 | Test Summary:  Verify that the number in the center of the graph is equal to the total amount of registered status"
+	@priority = 4
+	test AssertNumberInCenterGraphIsEqualNumberOfStatus {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertNumberInCenterGraphIsEqualNumberOfStatus";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given the applications page is open") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
+
+		task ("Then Assert that the number in the center of graph is equals to the value of items in list") {
+			RaylifeAPApplications.getValue(legendItem = "Quoted,Open,Incomplete,Underwriting,Rejected,Reviewed,Bound");
+
+			RaylifeAPApplications.assertGraphValue(number = ${number});
+		}
+	}
+
+	@description = "Story ID: LPS-154592 | Test Summary: Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
+	@priority = 4
+	test AssertStatusOpenAppearsInApplicationsStatus {
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusOpenAppearsInApplicationsStatus";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given the applications page is open") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+		}
+
+		task ("When the user fill in the forms in Raylife D2C") {
+			var open = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Open");
+
+			ApplicationsMenu.gotoSite(site = "Raylife D2C");
+
+			RaylifeHomePage.startFlow();
+
+			RaylifeContactInfo.typeAllBasicsInfoFields();
+
+			Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+			Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
+		}
+
+		task ("Then Assert if the 'open' status has change in the graph") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			var newValue = ${open} + 1;
+
+			AssertTextEquals(
+				key_legendItem = "Open",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
+				value1 = ${newValue});
+		}
+	}
+
+	@description = "Story ID: LPS-154593 | Test Summary:  Check if when making an incomplete flow until the page Quote Comparison in Raylife d2c, the status 'Quoted' appears in the Applications status of Raylife ap"
+	@priority = 4
+	test AssertStatusQuotedAppearsInApplicationsStatus {
+		property solutions.acceptance = "true";
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusQuotedAppearsInApplicationsStatus";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given the applications page is open") {
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			AssertElementNotPresent(
+				key_legendItem = "Quoted",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND");
+		}
+
+		task ("When the user fill in the forms in Raylife D2C") {
+			ApplicationsMenu.gotoSite(site = "Raylife D2C");
+
+			RaylifeHomePage.startFlow();
+
+			Raylife.formsFlow();
+		}
+
+		task ("Then the user go back to RaylifeAp and Assert the 'Quoted' status") {
+			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+
+			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
+
+			var newValue = ${quoted} + 1;
+
+			AssertTextEquals(
+				key_legendItem = "Quoted",
+				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
+				value1 = ${newValue});
+		}
+	}
+
 	@description = "Story ID: LPS-159688 | Test Summary: Verify if the details of the Summary on the Bound application view appears"
 	@priority = 4
 	test AssertThatTheUserCanOpenAppDetailsInBoundApplications {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertCanOpenBoundAppDetails";
+		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertThatTheUserCanOpenAppDetailsInBoundApplications";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
@@ -141,101 +236,6 @@ definition {
 					key_tabTitle = "App Details",
 					locator1 = "RaylifeAP#TAB_TITLE");
 			}
-		}
-	}
-
-	@description = "LPS-154587 - Verify that the number in the center of the graph is equal to the total amount of registered status"
-	@priority = 4
-	test AssertNumberInCenterGraphIsEqualNumberOfStatus {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertNumberInCenterGraphIsEqualNumberOfStatus";
-
-		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given the applications page is open") {
-			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
-		}
-
-		task ("Then Assert that the number in the center of graph is equals to the value of items in list") {
-			RaylifeAPApplications.getValue(legendItem = "Quoted,Open,Incomplete,Underwriting,Rejected,Reviewed,Bound");
-
-			RaylifeAPApplications.assertGraphValue(number = ${number});
-		}
-	}
-
-	@description = "LPS-154592 - Check if when making an incomplete Flow until the section Business in the Raylife d2c, the status 'Open' appears in the Applications status of Raylife ap"
-	@priority = 4
-	test AssertStatusOpenAppearsInApplicationsStatus {
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusOpenAppearsInApplicationsStatus";
-
-		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given the applications page is open") {
-			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
-		}
-
-		task ("When the user fill in the forms in Raylife D2C") {
-			var open = RaylifeAPApplications.getApplicationLegendValue(legendItem = "Open");
-
-			ApplicationsMenu.gotoSite(site = "Raylife D2C");
-
-			RaylifeHomePage.startFlow();
-
-			RaylifeContactInfo.typeAllBasicsInfoFields();
-
-			Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
-
-			Click(locator1 = "RaylifeSaveExit#SEND_LINK_EXIT");
-		}
-
-		task ("Then Assert if the 'open' status has change in the graph") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-
-			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
-
-			var newValue = ${open} + 1;
-
-			AssertTextEquals(
-				key_legendItem = "Open",
-				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-				value1 = ${newValue});
-		}
-	}
-
-	@description = "LPS-154593 - Check if when making an incomplete flow until the page Quote Comparison in Raylife d2c, the status 'Quoted' appears in the Applications status of Raylife ap"
-	@priority = 4
-	test AssertStatusQuotedAppearsInApplicationsStatus {
-		property solutions.acceptance = "true";
-		property test.name.skip.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusQuotedAppearsInApplicationsStatus";
-
-		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given the applications page is open") {
-			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
-
-			AssertElementNotPresent(
-				key_legendItem = "Quoted",
-				locator1 = "RaylifeAPApplications#STATUS_LEGEND");
-		}
-
-		task ("When the user fill in the forms in Raylife D2C") {
-			ApplicationsMenu.gotoSite(site = "Raylife D2C");
-
-			RaylifeHomePage.startFlow();
-
-			Raylife.formsFlow();
-		}
-
-		task ("Then the user go back to RaylifeAp and Assert the 'Quoted' status") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
-
-			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
-
-			var newValue = ${quoted} + 1;
-
-			AssertTextEquals(
-				key_legendItem = "Quoted",
-				locator1 = "RaylifeAPApplications#STATUS_LEGEND",
-				value1 = ${newValue});
 		}
 	}
 

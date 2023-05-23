@@ -22,6 +22,17 @@
 							}
 						},
 						"type": "Widget"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"properties": "route=generate-financial-report"
+								},
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:EVP$]"
+							}
+						},
+						"type": "Widget"
 					}
 				],
 				"type": "Section"

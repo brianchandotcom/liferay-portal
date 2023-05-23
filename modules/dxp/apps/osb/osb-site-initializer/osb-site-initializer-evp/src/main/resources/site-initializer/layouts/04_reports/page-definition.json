@@ -110,7 +110,7 @@
 																},
 																{
 																	"fieldName": "siteKey",
-																	"fieldValue": "EVP"
+																	"fieldValue": "[$GROUP_KEY$]"
 																}
 															]
 														}
@@ -129,7 +129,7 @@
 												"definition": {
 													"fragment": {
 														"key": "evp-card",
-														"siteKey": "EVP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},
@@ -213,7 +213,7 @@
 																},
 																{
 																	"fieldName": "siteKey",
-																	"fieldValue": "EVP"
+																	"fieldValue": "[$GROUP_KEY$]"
 																}
 															]
 														}
@@ -232,7 +232,7 @@
 												"definition": {
 													"fragment": {
 														"key": "evp-card",
-														"siteKey": "EVP"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 													},

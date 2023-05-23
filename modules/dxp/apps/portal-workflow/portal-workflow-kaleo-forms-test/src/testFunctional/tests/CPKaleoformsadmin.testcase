@@ -567,9 +567,7 @@ definition {
 			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addFieldSet(
-			kfFieldSetName = "New Kaleo Field Set",
-			kfProcessName = "Kaleo Forms Process");
+		KaleoFormsAdmin.addFieldSet(kfFieldSetName = "New Kaleo Field Set");
 
 		DynamicDataMapping.addField(
 			field = "Boolean",
@@ -578,11 +576,15 @@ definition {
 
 		KaleoFormsAdmin.saveFieldSet();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Kaleo Forms Admin");
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
+			rowEntry = "New Kaleo Field Set");
 
-		KaleoFormsAdmin.deleteFieldSet();
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		LexiconEntry.viewNoEntry(rowEntry = "New Kaleo Field Set");
 	}
 
 	@priority = 4

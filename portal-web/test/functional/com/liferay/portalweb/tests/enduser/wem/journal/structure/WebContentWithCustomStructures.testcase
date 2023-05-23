@@ -1372,7 +1372,7 @@ definition {
 				templateName = "WC Template Name",
 				webContentTitle = "Web Content Title");
 
-			PortletEntry.publishAndWait();
+			PortletEntry.publish();
 		}
 
 		task ("View web content is shown") {

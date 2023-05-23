@@ -19,6 +19,10 @@ interface IField {
 	name: string;
 	type: string;
 }
+export interface IFDSCellRendererCET {
+	erc: string;
+	name: string;
+}
 export declare function getFields(fdsView: FDSViewType): Promise<IField[]>;
 export interface IPickList {
 	externalReferenceCode: string;

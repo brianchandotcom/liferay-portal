@@ -1,0 +1,116 @@
+@component-name = "core-infrastructure"
+definition {
+
+	property ms.exchange.enabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Portal Configuration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		ServerAdministration.openServerAdmin();
+
+		Navigator.gotoNavItem(navItem = "Mail");
+
+		Check(locator1 = "ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Verify users can view and reply to message board threads via email with Microsoft Exchange Server."
+	@priority = 5
+	test MSExhangeViewMBThreadAndReply {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.name.skip.portal.instance = "MSExchange#MSExhangeViewMBThreadAndReply";
+
+		task ("Given a gmail user with permission to add and post on message boards") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Administrator",
+				userEmailAddress = PropsUtil.get("email.address.3"),
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And given the user creates a message board") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = PropsUtil.get("email.address.3"),
+				userLoginFullName = "userfn userln");
+
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			MessageboardsThread.addCP(
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
+
+		task ("And given a user has replied to the message board") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
+
+			MessageboardsThread.replyCP(
+				threadReplyBody = "Message Boards Body Reply",
+				threadSubject = "MB Thread Message Subject");
+
+			Button.clickPublish();
+		}
+
+		task ("When the owner of the message board logs in to their email account") {
+			Gmail.login(
+				userEmailAddress = PropsUtil.get("email.address.3"),
+				userPassword = PropsUtil.get("email.password.3"));
+
+			WaitForElementPresent(locator1 = "Gmail#INBOX");
+		}
+
+		task ("Then they can view the reply in their inbox") {
+			Gmail.gotoHtmlMode();
+
+			Gmail.viewMail(
+				emailFromUserName = "userfn userln",
+				gmailAssetType = "userln (2)",
+				gmailMessageBody = "Message Boards Body Reply",
+				gmailMessageTitle = " MB Thread Message Subject",
+				viewReply = "true");
+		}
+
+		task ("When the user submits a response via email") {
+			Gmail.replyMail(gmailReplyMessage = "MB Thread Message Subject Reply");
+		}
+
+		task ("Then the response is also added on the message board") {
+
+			// Pausing 30 seconds due to LRQA-80725
+
+			Pause(locator1 = 30000);
+
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
+
+			MessageboardsThread.viewReplyCP(
+				threadBody = "MB Thread Message Subject Reply",
+				threadSubject = "MB Thread Message Subject",
+				userName = "userfn userln");
+		}
+	}
+
+}

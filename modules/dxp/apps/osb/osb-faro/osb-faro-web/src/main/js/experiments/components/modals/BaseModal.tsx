@@ -1,8 +1,8 @@
 import Alert, {AlertTypes} from 'shared/components/Alert';
 import ClayButton from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
-import Spinner from 'shared/components/Spinner';
 import {Observer, Size, Status} from '@clayui/modal/lib/types';
 
 interface IBaseModalProps extends React.HTMLAttributes<HTMLElement> {
@@ -97,7 +97,10 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 						</ClayButton>
 						<ClayButton {...buttonSubmitProps}>
 							{submitting && (
-								<Spinner className='mr-2' size='sm' />
+								<ClayLoadingIndicator
+									className='mr-2 spinner-root'
+									size='sm'
+								/>
 							)}{' '}
 							{submitMessage}
 						</ClayButton>

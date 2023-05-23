@@ -1,7 +1,7 @@
 import BaseEventAnalysisPage from '../components/BaseEventAnalysisPage';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ErrorPage from 'shared/pages/ErrorPage';
 import React, {useMemo} from 'react';
-import Spinner from 'shared/components/Spinner';
 import {Attribute, Breakdown, Filter} from 'event-analysis/utils/types';
 import {AttributesProvider} from '../components/event-analysis-editor/context/attributes';
 import {AttributesState} from '../components/event-analysis-editor/context/attributes';
@@ -96,7 +96,12 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	]);
 
 	if (loading) {
-		return <Spinner alignCenter key='LOADING_DISPLAY' />;
+		return (
+			<ClayLoadingIndicator
+				className='spinner-center spinner-root'
+				key='LOADING_DISPLAY'
+			/>
+		);
 	}
 
 	if (error) {

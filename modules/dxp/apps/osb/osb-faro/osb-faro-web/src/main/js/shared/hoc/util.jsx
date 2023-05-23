@@ -1,9 +1,10 @@
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import ErrorPage from 'shared/pages/ErrorPage';
+import getCN from 'classnames';
 import LoadingPage from 'shared/pages/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
-import Spinner from 'shared/components/Spinner';
 import {compose} from 'redux';
 import {get, omit} from 'lodash';
 import {sub} from 'shared/util/lang';
@@ -80,29 +81,32 @@ export const withEmpty = (options = {}) => Component => ({
  * @returns {Function} Returns the Loading or WrappedComponent.
  */
 export const withLoading = (options = {}) => Component => ({
-	alignCenter = false,
+	alignCenter: initialAlignCenter = false,
 	className,
 	data,
-	fadeIn = true,
-	inline = false,
+	fadeIn: initialFadeIn = true,
+	inline: initialInline = false,
 	loading,
 	pageDisplay = true,
 	...otherProps
 }) => {
+	const page = get(options, 'page', pageDisplay);
+	const fadeIn = get(options, 'fadeIn', initialFadeIn);
+	const alignCenter = get(options, 'alignCenter', initialAlignCenter);
+	const inline = get(options, 'inline', initialInline);
+	const spacer = !get(options, 'inline', initialInline);
+
 	if (loading) {
-		return get(options, 'page', pageDisplay) ? (
-			<LoadingPage
-				className={className}
-				fadeIn={get(options, 'fadeIn', fadeIn)}
-				key='LOADING'
-			/>
+		return page ? (
+			<LoadingPage className={className} fadeIn={fadeIn} key='LOADING' />
 		) : (
-			<Spinner
-				alignCenter={get(options, 'alignCenter', alignCenter)}
-				className={className}
-				inline={get(options, 'inline', inline)}
+			<ClayLoadingIndicator
+				className={getCN(className, 'spinner-root', {
+					['spinner-center']: alignCenter,
+					['spinner-inline']: inline,
+					['spinner-spacer']: spacer
+				})}
 				key='SPINNER'
-				spacer={!get(options, 'inline', inline)}
 			/>
 		);
 	}

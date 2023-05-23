@@ -1,8 +1,8 @@
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import HeaderRow from './HeaderRow';
 import React from 'react';
 import Row from './Row';
-import Spinner from 'shared/components/Spinner';
 import {get, isArray, noop, orderBy} from 'lodash';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
@@ -216,7 +216,9 @@ const Table: React.FC<ITableProps> = ({
 				)}
 			</table>
 
-			{loading && <Spinner overlay />}
+			{loading && (
+				<ClayLoadingIndicator className='spinner-overlay spinner-root' />
+			)}
 		</div>
 	);
 };

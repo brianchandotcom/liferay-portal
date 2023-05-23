@@ -1,6 +1,6 @@
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import React, {FC} from 'react';
-import Spinner from '../components/Spinner';
 
 export interface ILoadingProps extends React.HTMLAttributes<HTMLDivElement> {
 	fadeIn?: boolean;
@@ -19,7 +19,9 @@ const Loading: FC<ILoadingProps> = ({
 		})}
 		{...otherProps}
 	>
-		<Spinner fadeIn={fadeIn} />
+		<ClayLoadingIndicator
+			className={getCN(fadeIn, 'spinner-root', 'spinner-fade-in')}
+		/>
 	</div>
 );
 

@@ -2,9 +2,9 @@ import Alert, {AlertTypes} from 'shared/components/Alert';
 import BaseModal from 'experiments/components/modals/BaseModal';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
-import Spinner from 'shared/components/Spinner';
 import {EXPERIMENT_ESTIMATED_DAYS_DURATION} from 'experiments/queries/ExperimentQuery';
 import {EXPERIMENT_MUTATION} from 'experiments/queries/ExperimentMutation';
 import {makeAllRefetch} from 'experiments/util/experiments';
@@ -325,7 +325,10 @@ const RunExperimentModal = ({dxpVariants, experimentId, observer, onClose}) => {
 						)}
 					</div>
 				) : (
-					<Spinner alignCenter size='sm' />
+					<ClayLoadingIndicator
+						className='spinner-center spinner-root'
+						size='sm'
+					/>
 				)}
 			</div>
 		</BaseModal>

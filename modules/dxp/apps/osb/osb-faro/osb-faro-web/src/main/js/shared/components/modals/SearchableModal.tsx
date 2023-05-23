@@ -7,7 +7,6 @@ import NoResultsDisplay, {
 	getFormattedTitle
 } from 'shared/components/NoResultsDisplay';
 import React, {useEffect, useState} from 'react';
-import Spinner from 'shared/components/Spinner';
 import Toolbar from 'shared/components/toolbar';
 import {sub} from 'shared/util/lang';
 import {useRequest, useStatefulPagination} from 'shared/hooks';
@@ -118,7 +117,9 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 				</div>
 			);
 		} else if (loading) {
-			return <Spinner spacer />;
+			return (
+				<ClayLoadingIndicator className='spinner-root spinner-spacer' />
+			);
 		} else if (!data?.total) {
 			return (
 				<NoResultsDisplay

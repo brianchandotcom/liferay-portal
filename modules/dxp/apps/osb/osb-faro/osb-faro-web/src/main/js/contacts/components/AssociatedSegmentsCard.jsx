@@ -2,6 +2,7 @@ import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import debounce from 'shared/util/debounce-decorator';
 import EntityList from 'shared/components/EntityList';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
@@ -9,7 +10,6 @@ import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import SearchInput from 'shared/components/SearchInput';
-import Spinner from 'shared/components/Spinner';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
 import {hasChanges} from 'shared/util/react';
 import {PropTypes} from 'prop-types';
@@ -98,7 +98,9 @@ export default class AssociatedSegmentsCard extends React.Component {
 				/>
 			);
 		} else if (loading) {
-			return <Spinner overlay />;
+			return (
+				<ClayLoadingIndicator className='spinner-overlay spinner-root' />
+			);
 		} else if (!items.length) {
 			if (searchValue) {
 				return (

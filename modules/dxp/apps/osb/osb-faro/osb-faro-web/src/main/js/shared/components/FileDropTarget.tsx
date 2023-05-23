@@ -1,11 +1,11 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DropTarget, {TYPES} from 'shared/components/DropTarget';
 import FileUploader, {ERROR_TYPES} from '../util/FileUploader';
 import getCN from 'classnames';
 import React from 'react';
-import Spinner from 'shared/components/Spinner';
 import TextTruncate from 'shared/components/TextTruncate';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -74,7 +74,7 @@ const getFileStatusIcon = (file: File) => {
 		);
 	}
 
-	return <Spinner size='sm' />;
+	return <ClayLoadingIndicator className='spinner-root' size='sm' />;
 };
 
 interface IFileItemProps {

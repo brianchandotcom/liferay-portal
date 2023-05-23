@@ -2,11 +2,11 @@ import AddDataSource from './AddDataSource';
 import AddPropertyForm from './AddPropertyForm';
 import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DistributionChart from './DistributionChart';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Promise from 'metal-promise';
 import React from 'react';
-import Spinner from 'shared/components/Spinner';
 import Tabs from './Tabs';
 import {addAlert} from 'shared/actions/alerts';
 import {
@@ -217,7 +217,9 @@ class DistributionCard extends React.Component<
 							/>
 						)}
 
-						{loading && <Spinner overlay />}
+						{loading && (
+							<ClayLoadingIndicator className='spinner-overlay spinner-root' />
+						)}
 
 						{!!tabsCount && !showAddProperty && !loading && (
 							<DistributionChart

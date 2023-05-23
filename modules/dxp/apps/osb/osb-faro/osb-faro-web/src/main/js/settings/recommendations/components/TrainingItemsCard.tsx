@@ -1,11 +1,11 @@
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Constants from 'shared/util/constants';
 import React from 'react';
 import RecommendationPageAssetsQuery from '../queries/RecommendationPageAssetsQuery';
 import RuleItem from './RuleItem';
-import Spinner from 'shared/components/Spinner';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
 import {EXCLUDE, Filter} from '../utils/utils';
@@ -79,7 +79,13 @@ const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 
 	const renderTotalTrainingUrls = () => {
 		if (loading) {
-			return <Spinner key='LOADING_SPINNER' size='sm' />;
+			return (
+				<ClayLoadingIndicator
+					className='spinner-root'
+					key='LOADING_SPINNER'
+					size='sm'
+				/>
+			);
 		}
 
 		return get(data, ['pageAssets', 'total'], 0).toLocaleString();

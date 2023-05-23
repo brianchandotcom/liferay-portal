@@ -1,11 +1,11 @@
 import autobind from 'autobind-decorator';
 import Avatar from './Avatar';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import ListGroup from './list-group';
 import ListView from './ListView';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
-import Spinner from './Spinner';
 import Sticker from './Sticker';
 import TextTruncate from './TextTruncate';
 import {EntityTypes, SegmentTypes} from '../util/constants';
@@ -197,7 +197,9 @@ class EntityList extends React.Component {
 					selectMultiple={selectMultiple}
 				/>
 
-				{loading && <Spinner overlay />}
+				{loading && (
+					<ClayLoadingIndicator className='spinner-overlay spinner-root' />
+				)}
 
 				{!loading && noItems && (
 					<div className='status-overlay'>{noItemsContent}</div>

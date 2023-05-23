@@ -1,11 +1,11 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import Input from './Input';
 import Overlay from './Overlay';
 import Promise from 'metal-promise';
 import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
-import Spinner from './Spinner';
 import {ARROW_DOWN, ARROW_UP, ENTER} from '../util/key-constants';
 import {DocumentNode} from 'graphql';
 import {identity, noop} from 'lodash';
@@ -266,7 +266,10 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 
 					<Input.Inset position='after'>
 						{loading ? (
-							<Spinner size='sm' />
+							<ClayLoadingIndicator
+								className='spinner-root'
+								size='sm'
+							/>
 						) : (
 							<ClayIcon
 								className='icon-root'

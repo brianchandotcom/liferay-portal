@@ -2,10 +2,10 @@ import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Promise from 'metal-promise';
 import React from 'react';
-import Spinner from 'shared/components/Spinner';
 import {ANIMATION_DURATION, AXIS, getTextWidth} from 'shared/util/recharts';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
 import {
@@ -174,7 +174,9 @@ class DistributionChart extends React.Component<
 						/>
 					)}
 
-					{loading && <Spinner spacer />}
+					{loading && (
+						<ClayLoadingIndicator className='spinner-root spinner-spacer' />
+					)}
 
 					{!error && !loading && (
 						<>

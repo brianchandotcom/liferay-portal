@@ -1,10 +1,10 @@
 import autobind from 'autobind-decorator';
 import ClayChart from 'clay-charts-react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
-import Spinner from 'shared/components/Spinner';
 import {defer, get, merge} from 'lodash';
 import {hasChanges} from 'shared/util/react';
 import {PropTypes} from 'prop-types';
@@ -394,7 +394,12 @@ export default class Chart extends React.Component {
 				{this.renderChart()}
 
 				{loading && (
-					<Spinner overlay={!!data.length} spacer={!data.length} />
+					<ClayLoadingIndicator
+						className={getCN('spinner-root', {
+							['spinner-overlay']: !!data.length,
+							['spinner-spacer']: !data.length
+						})}
+					/>
 				)}
 			</div>
 		);

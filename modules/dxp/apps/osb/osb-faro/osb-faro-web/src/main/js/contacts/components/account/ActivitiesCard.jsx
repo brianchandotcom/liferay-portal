@@ -5,10 +5,10 @@ import Card from 'shared/components/Card';
 import ChangeLegend from 'contacts/components/ChangeLegend';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import getCN from 'classnames';
 import React from 'react';
-import Spinner from 'shared/components/Spinner';
 import {Account} from 'shared/util/records';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
 import {buildLegendItems} from 'shared/util/activitiesDeprecated';
@@ -104,7 +104,12 @@ export default class ActivitiesCard extends React.Component {
 		} = this;
 
 		if (loading) {
-			return <Spinner key='LOADING' spacer />;
+			return (
+				<ClayLoadingIndicator
+					className='spinner-root spinner-spacer'
+					key='LOADING'
+				/>
+			);
 		} else if (error) {
 			return (
 				<ErrorDisplay

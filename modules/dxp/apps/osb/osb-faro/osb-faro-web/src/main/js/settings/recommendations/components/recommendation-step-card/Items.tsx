@@ -1,10 +1,10 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Constants from 'shared/util/constants';
 import React, {useEffect} from 'react';
 import RecommendationPageAssetsQuery from '../../queries/RecommendationPageAssetsQuery';
 import RuleItem from '../RuleItem';
-import Spinner from 'shared/components/Spinner';
 import Table from 'shared/components/table';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
@@ -44,7 +44,7 @@ const CountCell: React.FC<{
 	if (loading) {
 		return (
 			<td className={className}>
-				<Spinner size='sm' />
+				<ClayLoadingIndicator className='spinner-root' size='sm' />
 			</td>
 		);
 	}
@@ -107,7 +107,7 @@ const Items: React.FC<IItemsProps> = ({close, groupId, itemFilters, open}) => {
 		if (pagesTotalLoading) {
 			return (
 				<div>
-					<Spinner size='sm' />
+					<ClayLoadingIndicator className='spinner-root' size='sm' />
 				</div>
 			);
 		}

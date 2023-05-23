@@ -22,21 +22,45 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class NotificationRecipientSettingValueException
 	extends PortalException {
 
-	public NotificationRecipientSettingValueException() {
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
-	public NotificationRecipientSettingValueException(String msg) {
-		super(msg);
+	public static class FromMustNotBeNull
+		extends NotificationRecipientSettingValueException {
+
+		public FromMustNotBeNull() {
+			super("From is null", "from-is-required");
+		}
+
 	}
 
-	public NotificationRecipientSettingValueException(
-		String msg, Throwable throwable) {
+	public static class FromNameMustNotBeNull
+		extends NotificationRecipientSettingValueException {
 
-		super(msg, throwable);
+		public FromNameMustNotBeNull() {
+			super("From name is null", "from-name-is-required");
+		}
+
 	}
 
-	public NotificationRecipientSettingValueException(Throwable throwable) {
-		super(throwable);
+	public static class ToMustNotBeNull
+		extends NotificationRecipientSettingValueException {
+
+		public ToMustNotBeNull() {
+			super("To is null", "to-is-required");
+		}
+
 	}
+
+	private NotificationRecipientSettingValueException(
+		String message, String messageKey) {
+
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	private final String _messageKey;
 
 }

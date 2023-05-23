@@ -89,6 +89,8 @@ public class UpdateDataDefinitionMVCActionCommand
 					actionRequest,
 					ddmStructureValidationModelListenerException.getClass(),
 					ddmStructureValidationModelListenerException);
+
+				hideDefaultErrorMessage(actionRequest);
 			}
 			else {
 				throw portletException;

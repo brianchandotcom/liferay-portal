@@ -90,11 +90,11 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <div class="form-group hide row" id="<portlet:namespace />zendeskWebWidgetFields">
 	<div class="col-md-6">
-		<aui:input label="chat-provider-key-id" name="chatProviderKeyId" id="chatProviderKeyId" type="text" value="<%= clickToChatConfiguration.chatProviderKeyId() %>" />
+		<aui:input id="chatProviderKeyId" label="chat-provider-key-id" name="chatProviderKeyId" type="text" value="<%= clickToChatConfiguration.chatProviderKeyId() %>" />
 	</div>
 
 	<div class="col-md-6">
-		<aui:input label="chat-provider-secret-key" name="chatProviderSecretKey" id="chatProviderSecretKey" type="text" value="<%= clickToChatConfiguration.chatProviderSecretKey() %>" />
+		<aui:input id="chatProviderSecretKey" label="chat-provider-secret-key" name="chatProviderSecretKey" type="text" value="<%= clickToChatConfiguration.chatProviderSecretKey() %>" />
 	</div>
 </div>
 

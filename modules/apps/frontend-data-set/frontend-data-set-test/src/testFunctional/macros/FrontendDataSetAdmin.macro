@@ -258,7 +258,7 @@ definition {
 		Click(locator1 = "FrontendDataSetAdmin#VIEW_ENTRY_BUTTON");
 	}
 
-	macro searchField {
+	macro searchFieldInModal {
 		WaitForElementPresent(locator1 = "FrontendDataSetAdmin#MODAL_SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");

@@ -276,7 +276,7 @@ definition {
 		}
 
 		task ("And type Account in the search bar and click enter") {
-			FrontendDataSetAdmin.searchField(searchTerm = "name");
+			FrontendDataSetAdmin.searchFieldInModal(searchTerm = "name");
 		}
 
 		task ("Then the corresponding option is the just displayed") {
@@ -294,7 +294,7 @@ definition {
 		}
 
 		task ("And types 'label' on modal search bar") {
-			FrontendDataSetAdmin.searchField(searchTerm = "label");
+			FrontendDataSetAdmin.searchFieldInModal(searchTerm = "label");
 		}
 
 		task ("Then 'label' field should appear on Add Fields modal") {

@@ -756,7 +756,7 @@ public class PoshiRunnerExecutor {
 
 		for (Element rootVarElement : rootVarElements) {
 			if (Validator.isNotNull(rootVarElement.attributeValue("static"))) {
-				_poshiVariablesContext.pushStaticIntoCommandMap();
+				_poshiVariablesContext.pushStaticVarsIntoCommandMap();
 			}
 
 			runRootVarElement(rootVarElement, true);
@@ -1072,7 +1072,7 @@ public class PoshiRunnerExecutor {
 
 		for (Element rootVarElement : rootVarElements) {
 			if (Validator.isNotNull(rootVarElement.attributeValue("static"))) {
-				_poshiVariablesContext.pushStaticIntoCommandMap();
+				_poshiVariablesContext.pushStaticVarsIntoCommandMap();
 			}
 
 			runRootVarElement(rootVarElement, false);

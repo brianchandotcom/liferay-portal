@@ -133,7 +133,7 @@ public class PoshiVariablesContext {
 		_executeMap = new HashMap<>();
 	}
 
-	public void pushStaticIntoCommandMap() {
+	public void pushStaticVarsIntoCommandMap() {
 		_commandMap.putAll(_staticMap);
 
 		_commandMapStack.push(_commandMap);

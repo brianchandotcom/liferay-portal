@@ -35,6 +35,7 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -42,6 +43,7 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
@@ -535,49 +537,52 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertCommerceCatalogs1() throws Exception {
-		CommerceCatalog commerceCatalog1 =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG1", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog1);
+		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
-			"Test Commerce Catalog 1", commerceCatalog1.getName());
+			"Test Commerce Catalog 1", commerceCatalog.getName());
 
-		CommerceCatalog commerceCatalog2 =
-			_commerceCatalogLocalService.
+		commerceCatalog = _commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG2", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog2);
+		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
-			"Test Commerce Catalog 2", commerceCatalog2.getName());
+			"Test Commerce Catalog 2", commerceCatalog.getName());
 
 		_assertCPDefinition();
 		_assertCPOption();
 	}
 
 	private void _assertCommerceCatalogs2() throws Exception {
-		CommerceCatalog commerceCatalog1 =
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG1", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog1);
+		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
-			"Test Commerce Catalog 1 update", commerceCatalog1.getName());
+			"Test Commerce Catalog 1", commerceCatalog.getName());
 
-		CommerceCatalog commerceCatalog2 =
-			_commerceCatalogLocalService.
+		 commerceCatalog = _commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG2", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog2);
+		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
-			"Test Commerce Catalog 2", commerceCatalog2.getName());
+			"Test Commerce Catalog 2 Update", commerceCatalog.getName());
 
-		_assertCPDefinition();
-		_assertCPOption();
+		commerceCatalog = _commerceCatalogLocalService.
+			fetchCommerceCatalogByExternalReferenceCode(
+				"TESTCOMMERCECATALOG3", _group.getCompanyId());
+
+		Assert.assertNotNull(commerceCatalog);
+		Assert.assertEquals(
+			"Test Commerce Catalog 3", commerceCatalog.getName());
 	}
 
 	private void _assertCommerceChannel1() throws Exception {
@@ -744,6 +749,13 @@ public class BundleSiteInitializerTest {
 			commerceNotificationTemplate.getName());
 	}
 
+	private void _assertCPDSpecificationOptionValue(CPDefinition cpDefinition, int cpDefinitionValuesCount) throws Exception {
+
+		Assert.assertEquals(
+			cpDefinitionValuesCount,
+			_cpDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValuesCount(cpDefinition.getCPDefinitionId()));
+	}
+
 	private void _assertCommerceSpecificationProducts1() throws Exception {
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
@@ -751,71 +763,15 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(cpSpecificationOption);
 		Assert.assertFalse(cpSpecificationOption.getCPOptionCategoryId() > 0);
-
-		CPDefinition cpDefinition1 =
-			_cpDefinitionLocalService.
-				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTCOMMERCEPRODUCT1", _serviceContext.getCompanyId());
-
-		Assert.assertNotNull(cpDefinition1);
-
-		ProductSpecificationResource.Builder
-			productSpecificationResourceBuilder =
-				_productSpecificationResourceFactory.create();
-
-		ProductSpecificationResource productSpecificationResource =
-			productSpecificationResourceBuilder.user(
-				_serviceContext.fetchUser()
-			).build();
-
-		Page<ProductSpecification> productSpecificationPage =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				cpDefinition1.getCProductId(), Pagination.of(1, 10));
-
-		ProductSpecification productSpecification =
-			productSpecificationPage.fetchFirstItem();
-
-		Assert.assertNotNull(productSpecification);
-		Assert.assertEquals(
-			"test-product-specification-1",
-			productSpecification.getSpecificationKey());
 	}
 
 	private void _assertCommerceSpecificationProducts2() throws Exception {
-		CPSpecificationOption cpSpecificationOption2 =
+		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
 				_serviceContext.getCompanyId(), "test-product-specification-1");
 
-		Assert.assertNotNull(cpSpecificationOption2);
-		Assert.assertTrue(cpSpecificationOption2.getCPOptionCategoryId() > 0);
-
-		CPDefinition cpDefinition2 =
-			_cpDefinitionLocalService.
-				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTCOMMERCEPRODUCT1", _serviceContext.getCompanyId());
-
-		Assert.assertNotNull(cpDefinition2);
-
-		ProductSpecificationResource.Builder
-			productSpecificationResourceBuilder =
-				_productSpecificationResourceFactory.create();
-
-		ProductSpecificationResource productSpecificationResource =
-			productSpecificationResourceBuilder.user(
-				_serviceContext.fetchUser()
-			).build();
-
-		Page<ProductSpecification> productSpecificationPage =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				cpDefinition2.getCProductId(), Pagination.of(1, 10));
-
-		ProductSpecification productSpecification =
-			productSpecificationPage.fetchFirstItem();
-
-		Assert.assertNotNull(productSpecification);
-		Assert.assertEquals(
-			"test-product-specification-1",
-			productSpecification.getSpecificationKey());
+		Assert.assertNotNull(cpSpecificationOption);
+		Assert.assertTrue(cpSpecificationOption.getCPOptionCategoryId() > 0);
 	}
 
 	private void _assertCPDefinition() throws Exception {
@@ -826,6 +782,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(cpDefinition);
 		Assert.assertEquals("Test Commerce Product", cpDefinition.getName());
+
+		_assertCPDSpecificationOptionValue(cpDefinition, 1);
 
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
@@ -3075,6 +3033,9 @@ public class BundleSiteInitializerTest {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
+	private CPDefinitionSpecificationOptionValueLocalService _cpDefinitionSpecificationOptionValueLocalService;
+
+	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Inject
@@ -3084,8 +3045,7 @@ public class BundleSiteInitializerTest {
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Inject
-	private CPSpecificationOptionLocalService
-		_cpSpecificationOptionLocalService;
+	private CPSpecificationOptionLocalService _cpSpecificationOptionLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

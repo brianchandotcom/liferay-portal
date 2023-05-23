@@ -1340,7 +1340,6 @@ definition {
 	test EditWebContentTitleWithEmptyFields {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
-		property timeout.explicit.wait = "10";
 
 		task ("Add a web content structure with custom fields") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");

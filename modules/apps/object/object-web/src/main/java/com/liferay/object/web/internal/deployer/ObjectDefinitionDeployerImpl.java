@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
@@ -453,8 +454,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private BundleContext _bundleContext;
 
-	@Reference
-	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
+	@Reference(
+		target = "(info.item.capability.key=" + DisplayPageInfoItemCapability.KEY + ")"
+	)
+	private InfoItemCapability _displayPageInfoItemCapability;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

@@ -39,8 +39,10 @@ public class JournalArticleInfoItemCapabilitiesProvider
 			_displayPageInfoItemCapability, _templatePageInfoItemCapability);
 	}
 
-	@Reference
-	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
+	@Reference(
+		target = "(info.item.capability.key=" + DisplayPageInfoItemCapability.KEY + ")"
+	)
+	private InfoItemCapability _displayPageInfoItemCapability;
 
 	@Reference
 	private TemplateInfoItemCapability _templatePageInfoItemCapability;

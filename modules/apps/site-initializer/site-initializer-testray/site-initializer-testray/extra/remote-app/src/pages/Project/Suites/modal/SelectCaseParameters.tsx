@@ -110,7 +110,10 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 				testrayComponents.map(onMapDefault),
 				state?.testraySubComponents || defaultBox,
 			],
-			testrayTeams: [testrayTeams.map(onMapDefault), defaultBox],
+			testrayTeams: [
+				testrayTeams.map(onMapDefault),
+				state?.testrayTeams || defaultBox,
+			],
 		};
 	}, [casetypes, components, requirements, state, teams]);
 

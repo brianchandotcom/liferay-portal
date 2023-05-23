@@ -108,6 +108,8 @@ public interface JournalArticle
 	public com.liferay.dynamic.data.mapping.model.DDMStructure
 		getDDMStructure();
 
+	public String getDDMStructureKey();
+
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate();
 
 	@com.liferay.portal.kernel.json.JSON

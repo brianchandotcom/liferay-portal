@@ -453,6 +453,11 @@ public class JournalArticleWrapper
 	}
 
 	@Override
+	public String getDDMStructureKey() {
+		return model.getDDMStructureKey();
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate() {
 		return model.getDDMTemplate();
 	}

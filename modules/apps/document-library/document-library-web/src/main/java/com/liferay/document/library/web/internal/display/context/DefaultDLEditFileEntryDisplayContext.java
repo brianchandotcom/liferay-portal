@@ -325,12 +325,8 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isPublishButtonDisabled() {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
 		if (_fileEntryDisplayContextHelper.isCheckedOutByOther() ||
-			(_fileVersionDisplayContextHelper.isPending() &&
-			 dlPortletInstanceSettings.isEnableFileEntryDrafts())) {
+			_fileVersionDisplayContextHelper.isPending()) {
 
 			return true;
 		}

@@ -1,0 +1,35 @@
+{
+	"object-entries": [
+		{
+			"name": "Company Name 1",
+			"externalReferenceCode": "0017i00001MQSGdAAP",
+			"country": "global",
+			"claimPercent": 0.5,
+			"currency": "BRL",
+			"partnerLevel": "gold",
+			"marketingPlan": true,
+			"solutionDeliveryCertification": true,
+			"renewalARR": 0,
+			"newProjectExistingBusiness": 1,
+			"aRRAmount": 85000,
+			"marketingPerformance": 3,
+			"growthARR": 0
+		},
+		{
+			"name": "Company Name 2",
+			"externalReferenceCode": "0017i00001MQSAyAAP",
+			"country": "global",
+			"claimPercent": 0.5,
+			"currency": "BRL",
+			"partnerLevel": "gold",
+			"marketingPlan": true,
+			"solutionDeliveryCertification": true,
+			"renewalARR": 0,
+			"newProjectExistingBusiness": 1,
+			"aRRAmount": 85000,
+			"marketingPerformance": 3,
+			"growthARR": 0
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountEntry$]"
+}

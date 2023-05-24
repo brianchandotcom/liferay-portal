@@ -230,9 +230,7 @@ definition {
 		}
 
 		task ("When Uncheck all the fields.") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "");
 		}
 
 		task ("Then Confirm that all fields are unchecked ") {

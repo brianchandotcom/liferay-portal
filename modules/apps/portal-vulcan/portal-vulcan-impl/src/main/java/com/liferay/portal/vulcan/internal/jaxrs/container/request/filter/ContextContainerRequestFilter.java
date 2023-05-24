@@ -173,6 +173,7 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
 
 				uriBuilder.host(_portal.getForwardedHost(httpServletRequest));
+				uriBuilder.port(_portal.getForwardedPort(httpServletRequest));
 
 				if (_portal.isSecure(httpServletRequest)) {
 					uriBuilder.scheme(Http.HTTPS);

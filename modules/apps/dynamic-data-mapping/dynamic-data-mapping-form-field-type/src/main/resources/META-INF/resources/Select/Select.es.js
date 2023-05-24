@@ -15,6 +15,7 @@
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {useFormState} from 'data-engine-js-components-web';
 import React, {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -287,6 +288,7 @@ const Select = ({
 	defaultSearch,
 	label,
 	multiple,
+	onChange,
 	onCloseButtonClicked,
 	onDropdownItemClicked,
 	onExpand,
@@ -297,6 +299,7 @@ const Select = ({
 	value,
 	...otherProps
 }) => {
+	const {viewMode} = useFormState();
 	const menuElementRef = useRef(null);
 	const triggerElementRef = useRef(null);
 	const [currentValue, setCurrentValue] = useSyncValue(value, false);
@@ -380,6 +383,14 @@ const Select = ({
 		setSelectedLabel('');
 	}, [currentValue, options, value]);
 
+	useEffect(() => {
+		if (viewMode && currentValue.length !== 0) {
+			onChange({target: {value: currentValue}});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<ClayTooltipProvider>
 			<div
@@ -391,6 +402,7 @@ const Select = ({
 			>
 				<Trigger
 					multiple={multiple}
+					onChange={onChange}
 					onCloseButtonClicked={({event, value}) => {
 						const newValue = removeValue({
 							value: currentValue,
@@ -578,6 +590,7 @@ const Main = ({
 				label={label}
 				multiple={multiple}
 				name={`${name}_field`}
+				onChange={onChange}
 				onCloseButtonClicked={({event, value}) =>
 					onChange(event, value)
 				}

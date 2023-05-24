@@ -101,6 +101,12 @@ definition {
 				threadSubject = "MB Thread Message Subject",
 				userName = "userfn userln");
 		}
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "MB Thread Message Subject");
+
+		Navigator.openURL();
 	}
 
 }

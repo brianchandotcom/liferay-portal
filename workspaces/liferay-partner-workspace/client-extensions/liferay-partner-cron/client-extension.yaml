@@ -1,7 +1,7 @@
 assemble:
     - fromTask: bootJar
-liferay-partner-cron:
-    name: Liferay Partner Cron
+liferay-partner-etc-cron-oauth-application-headless-server:
+    name: Liferay Partner Etc Cron Oauth Application Headless Server
     scopes:
         - C_Activity.everything
     type: oAuthApplicationHeadlessServer

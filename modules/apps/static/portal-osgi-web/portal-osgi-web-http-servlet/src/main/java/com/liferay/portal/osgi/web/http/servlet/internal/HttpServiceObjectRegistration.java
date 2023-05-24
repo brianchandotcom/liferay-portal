@@ -6,27 +6,35 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Liferay, Inc. - initial API and implementation and/or initial 
+ *    Liferay, Inc. - initial API and implementation and/or initial
  *                    documentation
  ******************************************************************************/
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
 import com.liferay.portal.osgi.web.http.servlet.internal.context.HttpContextHelperFactory;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceRegistration;
 
+/**
+ * @author Liferay, Inc.
+ */
 public class HttpServiceObjectRegistration {
-	public final Object serviceKey;
-	public final ServiceRegistration<?> registration;
-	public final HttpContextHelperFactory factory;
-	public final Bundle bundle;
+
 	public HttpServiceObjectRegistration(
-		Object serviceKey, ServiceRegistration<?> registration,
+		Object serviceKey, ServiceRegistration<?> serviceRegistration,
 		HttpContextHelperFactory factory, Bundle bundle) {
+
 		this.serviceKey = serviceKey;
-		this.registration = registration;
+		this.serviceRegistration = serviceRegistration;
 		this.factory = factory;
 		this.bundle = bundle;
 	}
+
+	public final Bundle bundle;
+	public final HttpContextHelperFactory factory;
+	public final Object serviceKey;
+	public final ServiceRegistration<?> serviceRegistration;
+
 }

@@ -13,58 +13,69 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import javax.servlet.*;
-import javax.servlet.http.HttpServlet;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.osgi.web.http.servlet.ExtendedHttpService;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ProxyServlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.HttpTuple;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.UMDictionaryMap;
-import org.osgi.framework.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
+import javax.servlet.http.HttpServlet;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class Activator
-	implements BundleActivator, ServiceTrackerCustomizer<HttpServlet, HttpTuple> {
+	implements BundleActivator,
+			   ServiceTrackerCustomizer<HttpServlet, HttpTuple> {
 
-	private static final String DEFAULT_SERVICE_DESCRIPTION = "Equinox Servlet Bridge"; //$NON-NLS-1$
-	private static final String DEFAULT_SERVICE_VENDOR = "Eclipse.org"; //$NON-NLS-1$
-	private static final String PROP_GLOBAL_WHITEBOARD = "equinox.http.global.whiteboard"; //$NON-NLS-1$
-	public static final String UNIQUE_SERVICE_ID = "equinox.http.id"; //$NON-NLS-1$
-	private static final String[] HTTP_SERVICES_CLASSES = new String[] {
-		HttpService.class.getName(), ExtendedHttpService.class.getName()
-	};
-
-	private static volatile BundleContext context;
-	private static ConcurrentMap<ProxyServlet, Object> registrations =
-		new ConcurrentHashMap<ProxyServlet, Object>();
-
-	private ServiceTracker<HttpServlet, HttpTuple> serviceTracker;
+	public static final String UNIQUE_SERVICE_ID = "equinox.http.id";
 
 	public static void addProxyServlet(ProxyServlet proxyServlet) {
-		Object previousRegistration = registrations.putIfAbsent(
+		Object previousRegistration = _registrationsMap.putIfAbsent(
 			proxyServlet, proxyServlet);
 
 		if (!(previousRegistration instanceof ServiceRegistration) &&
-			(context != null)) {
+			(_bundleContext != null)) {
 
 			ServiceRegistration<HttpServlet> serviceRegistration =
-				context.registerService(
-					HttpServlet.class, proxyServlet,
-					new Hashtable<String, Object>());
+				_bundleContext.registerService(
+					HttpServlet.class, proxyServlet, new Hashtable<>());
 
-			registrations.put(proxyServlet, serviceRegistration);
+			_registrationsMap.put(proxyServlet, serviceRegistration);
 		}
 	}
 
 	public static void unregisterHttpService(ProxyServlet proxyServlet) {
-		Object registration = registrations.remove(proxyServlet);
+		Object registration = _registrationsMap.remove(proxyServlet);
 
 		if (registration instanceof ServiceRegistration) {
 			ServiceRegistration<?> serviceRegistration =
@@ -74,127 +85,155 @@ public class Activator
 		}
 	}
 
-	public void start(BundleContext bundleContext) throws Exception {
-		context = bundleContext;
-
-		processRegistrations();
-
-		serviceTracker = new ServiceTracker<HttpServlet, HttpTuple>(
-			context, HttpServlet.class, this);
-
-		serviceTracker.open();
-	}
-
-	public void stop(BundleContext bundleContext) throws Exception {
-		serviceTracker.close();
-		serviceTracker = null;
-		context = null;
-	}
-
+	@Override
 	public HttpTuple addingService(
 		ServiceReference<HttpServlet> serviceReference) {
 
-		HttpServlet httpServlet = context.getService(serviceReference);
+		HttpServlet httpServlet = _bundleContext.getService(serviceReference);
 
 		if (!(httpServlet instanceof ProxyServlet)) {
-			context.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
+
 			return null;
 		}
 
 		ProxyServlet proxyServlet = (ProxyServlet)httpServlet;
 
 		ServletConfig servletConfig = proxyServlet.getServletConfig();
+
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		String[] httpServiceEndpoints = getHttpServiceEndpoints(
+		String[] httpServiceEndpoints = _getHttpServiceEndpoints(
 			servletContext, servletConfig.getServletName());
 
-		Dictionary<String, Object> serviceProperties =
-			new Hashtable<String, Object>(3);
+		Dictionary<String, Object> serviceProperties = new Hashtable<>(3);
 
-		Enumeration<String> initparameterNames =
+		Enumeration<String> initParameterNamesEnumeration =
 			servletConfig.getInitParameterNames();
 
-		while (initparameterNames.hasMoreElements()) {
-			String name = initparameterNames.nextElement();
+		while (initParameterNamesEnumeration.hasMoreElements()) {
+			String name = initParameterNamesEnumeration.nextElement();
 
-			serviceProperties.put(
-				name, servletConfig.getInitParameter(name));
+			serviceProperties.put(name, servletConfig.getInitParameter(name));
 		}
 
 		if (serviceProperties.get(Constants.SERVICE_VENDOR) == null) {
 			serviceProperties.put(
-				Constants.SERVICE_VENDOR, DEFAULT_SERVICE_VENDOR);
+				Constants.SERVICE_VENDOR, _DEFAULT_SERVICE_VENDOR);
 		}
 
 		if (serviceProperties.get(Constants.SERVICE_DESCRIPTION) == null) {
 			serviceProperties.put(
-				Constants.SERVICE_DESCRIPTION, DEFAULT_SERVICE_DESCRIPTION);
+				Constants.SERVICE_DESCRIPTION, _DEFAULT_SERVICE_DESCRIPTION);
 		}
 
-		if (serviceProperties.get(
-				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT) == null) {
+		Object httpServiceEndpointObject = serviceProperties.get(
+			HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT);
 
+		if (httpServiceEndpointObject == null) {
 			serviceProperties.put(
 				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
 				httpServiceEndpoints);
 		}
 
-		// need a unique id for our service to match old HttpService HttpContext
-		serviceProperties.put(UNIQUE_SERVICE_ID, new Random().nextLong());
-		// white board support
-		// determine if the system bundle context should be used:
-		boolean useSystemContext = Boolean.valueOf(context.getProperty(PROP_GLOBAL_WHITEBOARD));
-		BundleContext trackingContext = useSystemContext ? context.getBundle(Constants.SYSTEM_BUNDLE_LOCATION).getBundleContext() : context;
-		HttpServiceRuntimeImpl httpServiceRuntime = new HttpServiceRuntimeImpl(
-			trackingContext, context, servletContext,
-			new UMDictionaryMap<String, Object>(serviceProperties));
+		Random random = new Random();
 
-		proxyServlet.setHttpServiceRuntimeImpl(httpServiceRuntime);
+		serviceProperties.put(UNIQUE_SERVICE_ID, random.nextLong());
 
-		// imperative API support;
-		// the http service must be registered first so we can get its service id
+		boolean useSystemContext = Boolean.parseBoolean(
+			_bundleContext.getProperty(_PROP_GLOBAL_WHITEBOARD));
+
+		Bundle systemBundle = _bundleContext.getBundle(
+			Constants.SYSTEM_BUNDLE_LOCATION);
+
+		BundleContext trackingBundleContext =
+			useSystemContext ? systemBundle.getBundleContext() : _bundleContext;
+
+		HttpServiceRuntimeImpl httpServiceRuntimeImpl =
+			new HttpServiceRuntimeImpl(
+				trackingBundleContext, _bundleContext, servletContext,
+				new UMDictionaryMap<>(serviceProperties));
+
+		proxyServlet.setHttpServiceRuntimeImpl(httpServiceRuntimeImpl);
+
 		HttpServiceFactory httpServiceFactory = new HttpServiceFactory(
-			httpServiceRuntime);
-		ServiceRegistration<?> hsfRegistration = context.registerService(
-			HTTP_SERVICES_CLASSES, httpServiceFactory, serviceProperties);
+			httpServiceRuntimeImpl);
 
-		serviceProperties.put(HttpServiceRuntimeConstants.HTTP_SERVICE_ID, Collections.singletonList(hsfRegistration.getReference().getProperty(Constants.SERVICE_ID)));
-		ServiceRegistration<HttpServiceRuntime> hsrRegistration =
-			context.registerService(
-				HttpServiceRuntime.class, httpServiceRuntime,
-				serviceProperties);
+		ServiceRegistration<?> httpServiceFactoryServiceRegistration =
+			_bundleContext.registerService(
+				_HTTP_SERVICES_CLASSES, httpServiceFactory, serviceProperties);
+
+		ServiceReference<?> httpServiceFactoryServiceReference =
+			httpServiceFactoryServiceRegistration.getReference();
+
+		serviceProperties.put(
+			HttpServiceRuntimeConstants.HTTP_SERVICE_ID,
+			Collections.singletonList(
+				httpServiceFactoryServiceReference.getProperty(
+					Constants.SERVICE_ID)));
+
+		ServiceRegistration<HttpServiceRuntime>
+			httpServiceRuntimeServiceRegistration =
+				_bundleContext.registerService(
+					HttpServiceRuntime.class, httpServiceRuntimeImpl,
+					serviceProperties);
+
 		return new HttpTuple(
-			proxyServlet, httpServiceFactory, hsfRegistration,
-			httpServiceRuntime, hsrRegistration);
+			proxyServlet, httpServiceFactory,
+			httpServiceFactoryServiceRegistration, httpServiceRuntimeImpl,
+			httpServiceRuntimeServiceRegistration);
 	}
 
+	@Override
 	public void modifiedService(
 		ServiceReference<HttpServlet> serviceReference, HttpTuple httpTuple) {
 
 		removedService(serviceReference, httpTuple);
+
 		addingService(serviceReference);
 	}
 
+	@Override
 	public void removedService(
 		ServiceReference<HttpServlet> serviceReference, HttpTuple httpTuple) {
 
-		context.ungetService(serviceReference);
+		_bundleContext.ungetService(serviceReference);
 
 		httpTuple.destroy();
 	}
 
-	private String[] getHttpServiceEndpoints(
+	@Override
+	public void start(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_processRegistrations();
+
+		_serviceTracker = new ServiceTracker<>(
+			_bundleContext, HttpServlet.class, this);
+
+		_serviceTracker.open();
+	}
+
+	@Override
+	public void stop(BundleContext bundleContext) {
+		_serviceTracker.close();
+
+		_serviceTracker = null;
+		_bundleContext = null;
+	}
+
+	private String[] _getHttpServiceEndpoints(
 		ServletContext servletContext, String servletName) {
 
 		int majorVersion = servletContext.getMajorVersion();
 
 		if (majorVersion < 3) {
 			servletContext.log(
-				"The http container does not support servlet 3.0+. " +
-					"Therefore, the value of " +
-						HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT +
-							" cannot be calculated.");
+				StringBundler.concat(
+					"The http container does not support servlet 3.0+. ",
+					"Therefore, the value of ",
+					HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
+					" cannot be calculated."));
 
 			return new String[0];
 		}
@@ -202,10 +241,16 @@ public class Activator
 		String contextPath = servletContext.getContextPath();
 
 		ServletRegistration servletRegistration = null;
+
 		try {
-			servletRegistration = servletContext.getServletRegistration(servletName);
-		} catch (UnsupportedOperationException e) {
-			servletContext.log("Could not find the servlet registration for the servlet: " + servletName, e); //$NON-NLS-1$
+			servletRegistration = servletContext.getServletRegistration(
+				servletName);
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			servletContext.log(
+				"Could not find the servlet registration for the servlet: " +
+					servletName,
+				unsupportedOperationException);
 		}
 
 		if (servletRegistration == null) {
@@ -214,7 +259,7 @@ public class Activator
 
 		Collection<String> mappings = servletRegistration.getMappings();
 
-		List<String> httpServiceEndpoints = new ArrayList<String>();
+		List<String> httpServiceEndpoints = new ArrayList<>();
 
 		for (String mapping : mappings) {
 			if (mapping.indexOf('/') == 0) {
@@ -232,29 +277,43 @@ public class Activator
 			}
 		}
 
-		return httpServiceEndpoints.toArray(
-			new String[httpServiceEndpoints.size()]);
+		return httpServiceEndpoints.toArray(new String[0]);
 	}
 
-	private void processRegistrations() {
-		Iterator<Entry<ProxyServlet, Object>> iterator =
-			registrations.entrySet().iterator();
+	private void _processRegistrations() {
+		for (Map.Entry<ProxyServlet, Object> entry :
+				_registrationsMap.entrySet()) {
 
-		while (iterator.hasNext()) {
-			Entry<ProxyServlet, Object> entry = iterator.next();
-
-			ProxyServlet proxyServlet = entry.getKey();
 			Object value = entry.getValue();
 
-			if (!(value instanceof ServiceRegistration)) {
-				ServiceRegistration<HttpServlet> serviceRegistration =
-					context.registerService(
-						HttpServlet.class, proxyServlet,
-						new Hashtable<String, Object>());
-
-				entry.setValue(serviceRegistration);
+			if (value instanceof ServiceRegistration) {
+				continue;
 			}
+
+			ServiceRegistration<HttpServlet> serviceRegistration =
+				_bundleContext.registerService(
+					HttpServlet.class, entry.getKey(), new Hashtable<>());
+
+			entry.setValue(serviceRegistration);
 		}
 	}
+
+	private static final String _DEFAULT_SERVICE_DESCRIPTION =
+		"Equinox Servlet Bridge";
+
+	private static final String _DEFAULT_SERVICE_VENDOR = "Eclipse.org";
+
+	private static final String[] _HTTP_SERVICES_CLASSES = {
+		HttpService.class.getName(), ExtendedHttpService.class.getName()
+	};
+
+	private static final String _PROP_GLOBAL_WHITEBOARD =
+		"equinox.http.global.whiteboard";
+
+	private static volatile BundleContext _bundleContext;
+	private static final ConcurrentMap<ProxyServlet, Object> _registrationsMap =
+		new ConcurrentHashMap<>();
+
+	private ServiceTracker<HttpServlet, HttpTuple> _serviceTracker;
 
 }

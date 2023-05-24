@@ -13,26 +13,30 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
-import org.osgi.framework.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.ServiceFactory;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.HttpService;
 
-// Factory to create http services. This is because the service needs to be
-// customized for each bundle in order to implement the default resource
-// lookups.
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class HttpServiceFactory implements ServiceFactory<HttpService> {
 
-	private final HttpServiceRuntimeImpl httpServiceRuntime;
-
-	public HttpServiceFactory(HttpServiceRuntimeImpl httpServiceRuntime) {
-		this.httpServiceRuntime = httpServiceRuntime;
+	public HttpServiceFactory(HttpServiceRuntimeImpl httpServiceRuntimeImpl) {
+		_httpServiceRuntimeImpl = httpServiceRuntimeImpl;
 	}
 
+	@Override
 	public HttpService getService(
 		Bundle bundle, ServiceRegistration<HttpService> serviceRegistration) {
 
-		return new HttpServiceImpl(bundle, httpServiceRuntime);
+		return new HttpServiceImpl(bundle, _httpServiceRuntimeImpl);
 	}
 
+	@Override
 	public void ungetService(
 		Bundle bundle, ServiceRegistration<HttpService> serviceRegistration,
 		HttpService httpService) {
@@ -41,5 +45,7 @@ public class HttpServiceFactory implements ServiceFactory<HttpService> {
 
 		httpServiceImpl.shutdown();
 	}
+
+	private final HttpServiceRuntimeImpl _httpServiceRuntimeImpl;
 
 }

@@ -120,4 +120,21 @@ definition {
 				optionName = "DXP License Support");
 		}
 	}
+
+	@description = "Story ID: LPS-183796 | Test Summary: Verify that when the Marketplace is created, Specification Group is also created"
+	@priority = 3
+	test SpecificationGroupAreCreatedForMP20 {
+		task ("Given that I go to the Specifications page") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Specifications");
+		}
+
+		task ("Then I should be able to assert that Specification Groups was created for the Marketplace Site") {
+			CommerceNavigator.gotoCommercePortletNavItem(navItem = "Specification Groups");
+
+			CommerceEntry.viewSpecificationGroupsEntries(specificationGroupsEntries = "Pricing and Licensing Terms,App Support and Help,Product Metadata");
+		}
+	}
+
 }

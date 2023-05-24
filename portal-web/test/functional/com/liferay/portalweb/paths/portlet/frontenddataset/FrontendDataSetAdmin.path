@@ -111,6 +111,11 @@
 	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row']//td[@class="drag-handle-cell"]//button[@aria-label="Drag ${key_nameField}"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS_BY_FIELDS_NAME</td>
+	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(@class,'dropdown-toggle')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 

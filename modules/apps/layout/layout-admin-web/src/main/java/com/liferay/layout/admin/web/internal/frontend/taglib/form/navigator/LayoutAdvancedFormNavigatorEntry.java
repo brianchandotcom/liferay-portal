@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 
@@ -41,11 +42,19 @@ public class LayoutAdvancedFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_LOOK_AND_FEEL;
+		}
+
 		return FormNavigatorConstants.CATEGORY_KEY_LAYOUT_GENERAL;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_DESIGN;
+		}
+
 		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT;
 	}
 

@@ -97,8 +97,12 @@ function AddFDSFilterModalContent({
 	const [from, setFrom] = useState<string>(
 		(filter as IDateFilter)?.from ?? ''
 	);
-	const [include, setInclude] = useState<boolean>(
-		(filter as IDynamicFilter)?.include ?? true
+	const [includeMode, setIncludeMode] = useState<string>(
+		filter
+			? (filter as IDynamicFilter)?.include
+				? 'include'
+				: 'exclude'
+			: 'include'
 	);
 	const [isValidDateRange, setIsValidDateRange] = useState(true);
 	const [multiple, setMultiple] = useState<boolean>(
@@ -183,7 +187,7 @@ function AddFDSFilterModalContent({
 				...body,
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID]:
 					fdsView.id,
-				include,
+				include: includeMode === 'include',
 				listTypeDefinitionId: selectedPicklist?.id,
 				multiple,
 				preselectedValues: preselectedValues.map((item) => item.id),
@@ -558,23 +562,23 @@ function AddFDSFilterModalContent({
 
 										<ClayRadioGroup
 											name={includeModeFormElementId}
-											onChange={(newVal: any) => {
-												setInclude(newVal === 'true');
-											}}
-											value={include ? 'true' : 'false'}
+											onChange={(val: any) =>
+												setIncludeMode(val)
+											}
+											value={includeMode}
 										>
 											<ClayRadio
 												label={Liferay.Language.get(
 													'include'
 												)}
-												value="true"
+												value="include"
 											/>
 
 											<ClayRadio
 												label={Liferay.Language.get(
 													'exclude'
 												)}
-												value="false"
+												value="exclude"
 											/>
 										</ClayRadioGroup>
 									</ClayForm.Group>

@@ -11,29 +11,11 @@ definition {
 	var testSiteURL = "marketplace-site";
 
 	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
-
-			User.firstLoginPG();
-		}
-
-		task ("Create a new Marketplace Site") {
-			HeadlessSite.addSite(
-				siteName = ${testSiteName},
-				templateName = "Liferay Marketplace",
-				templateType = "Site Initializer");
-		}
+		MP2Configuration.marketplaceSetUp();
 	}
 
 	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
-		}
+		MP2Configuration.marketplaceInitializersTearDown(doLogout = "true");
 	}
 
 	@description = "Story ID: LPS-183566 | Test Summary: Verify that when the Marketplace is created, Accounts Users will be created for it as well"

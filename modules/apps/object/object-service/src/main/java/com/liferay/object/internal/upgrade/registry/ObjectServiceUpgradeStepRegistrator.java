@@ -295,6 +295,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"5.1.1", "5.2.0",
 			new com.liferay.object.internal.upgrade.v5_2_0.
 				ObjectRelationshipUpgradeProcess());
+
+		registry.register(
+			"5.2.0", "5.3.0",
+			new com.liferay.object.internal.upgrade.v5_3_0.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

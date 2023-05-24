@@ -88,9 +88,9 @@ definition {
 
 		task ("Then the response is also added on the message board") {
 
-			// Pausing 30 seconds due to LRQA-80725
+			// Pausing 60 seconds due to LRQA-80725
 
-			Pause(locator1 = 30000);
+			Pause(locator1 = 60000);
 
 			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

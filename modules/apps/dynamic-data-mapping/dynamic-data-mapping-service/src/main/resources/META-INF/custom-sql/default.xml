@@ -158,7 +158,7 @@
 				DDMFormInstanceRecord.formInstanceRecordId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DDMStructure.structureId) AS COUNT_VALUE
@@ -173,10 +173,9 @@
 					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(type_ = 0)
-				[$STATUS$]
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D">
 		<![CDATA[
 			SELECT
 				{DDMStructure.*}
@@ -195,7 +194,6 @@
 							(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 						) AND
 						(DDMStructure.type_ = 0)
-						[$STATUS$]
 				)
 				TEMP_TABLE
 			INNER JOIN

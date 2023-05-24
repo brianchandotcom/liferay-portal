@@ -1064,9 +1064,8 @@ public class DDMStructureLocalServiceImpl
 		long companyId, long[] groupIds, long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return ddmStructureFinder.findByC_G_C_S(
-			companyId, groupIds, classNameId, WorkflowConstants.STATUS_ANY,
-			start, end, orderByComparator);
+		return ddmStructureFinder.findByC_G_C(
+			companyId, groupIds, classNameId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -1076,7 +1075,7 @@ public class DDMStructureLocalServiceImpl
 		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.findByKeywords(
-			companyId, groupIds, classNameId, keywords, status, start, end,
+			companyId, groupIds, classNameId, keywords, start, end,
 			orderByComparator);
 	}
 
@@ -1216,7 +1215,7 @@ public class DDMStructureLocalServiceImpl
 		int status) {
 
 		return ddmStructureFinder.countByKeywords(
-			companyId, groupIds, classNameId, keywords, status);
+			companyId, groupIds, classNameId, keywords);
 	}
 
 	/**

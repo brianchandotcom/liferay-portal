@@ -230,13 +230,8 @@ definition {
 		}
 
 		task ("When the user edits the created smart suite") {
-			TestrayDropdown.selectProjectDirectory(project = ${projectName});
-
-			Testray.projectTabNavigator(navTabName = "Suites");
-
 			TestraySuites.editSmartSuite(
 				caseType = "Cucumber",
-				mainComponent = "Component 1",
 				priorityNumber = 5,
 				requirementName = "Requirement Summary",
 				smartSuite = "true",
@@ -249,10 +244,11 @@ definition {
 			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
 
 			TestraySuites.verifyCaseParametersInSuite(
-				caseType = "Cucumber",
+				caseType = "Manual Test, Cucumber",
 				components = "Component 1",
-				priority = 5,
-				requirements = "Requirement Summary");
+				priority = "3, 5",
+				requirements = "Requirement Summary",
+				subComponents = "Component 1");
 		}
 	}
 

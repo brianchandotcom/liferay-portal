@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>VIEW_CASE_PARAMETERS</td>
-	<td>//h5[normalize-space()='Case Parameters']//following::td[normalize-space()='${key_caseType}']//following::td[normalize-space()='${key_components}']//following::td[normalize-space()='${key_priority}']//following::td[contains(text(),'${key_requirements}')]</td>
+	<td>//h5[normalize-space()='Case Parameters']//following::td[normalize-space()='${key_caseType}']//following::td[normalize-space()='${key_components}']//following::td[normalize-space()='${key_subComponents}']//following::td[normalize-space()='${key_priority}']//following::td[contains(text(),'${key_requirements}')]</td>
 	<td></td>
 </tr>
 <tr>

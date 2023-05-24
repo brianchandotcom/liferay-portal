@@ -135,10 +135,6 @@ definition {
 		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
 
 		if (isSet(smartSuite)) {
-			Click.clickAtNotVisible(
-				checkboxName = "Smart Suite",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
 			Click(
 				locator1 = "Button#BUTTON_WITH_VALUE",
 				value = "Select Case Parameters");
@@ -236,6 +232,8 @@ definition {
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
 		}
 
+		Testray.checkSuccessAlertAppearsAndDisappears();
+
 		Button.clickSave();
 	}
 
@@ -278,6 +276,7 @@ definition {
 			key_components = ${components},
 			key_priority = ${priority},
 			key_requirements = ${requirements},
+			key_subComponents = ${subComponents},
 			locator1 = "TestraySuites#VIEW_CASE_PARAMETERS");
 	}
 

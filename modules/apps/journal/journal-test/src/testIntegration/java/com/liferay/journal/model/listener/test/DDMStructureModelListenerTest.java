@@ -101,7 +101,7 @@ public class DDMStructureModelListenerTest {
 	}
 
 	@Test
-	public void testUpdateDataDefinitionStructureKeyChanged() throws Exception {
+	public void testUpdateDataDefinitionNoChanges() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle();
 
 		_updateDataDefinition("dependencies/data_definition.json");

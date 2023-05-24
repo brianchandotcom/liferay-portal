@@ -207,6 +207,10 @@ definition {
 			Click(locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_SHOW_QUOTED_TEXT_LINK");
 		}
 
+		if (isSet(viewReply)) {
+			Refresh();
+		}
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_GREETING",
 			value1 = ${gmailMessageBody});

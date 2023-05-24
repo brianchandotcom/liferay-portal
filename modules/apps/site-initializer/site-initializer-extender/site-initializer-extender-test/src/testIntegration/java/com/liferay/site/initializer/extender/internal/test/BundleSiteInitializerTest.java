@@ -776,7 +776,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(cpDefinition);
 		Assert.assertEquals("Test Commerce Product", cpDefinition.getName());
 
-		_assertCPDSpecificationOptionValue(cpDefinition, 1);
+		_assertCPDefinitionSpecificationOptionValue(cpDefinition, 1);
 
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
@@ -798,7 +798,7 @@ public class BundleSiteInitializerTest {
 			"test_commerce_product.png", fileEntry.getFileName());
 	}
 
-	private void _assertCPDSpecificationOptionValue(
+	private void _assertCPDefinitionSpecificationOptionValue(
 			CPDefinition cpDefinition, int cpDefinitionValuesCount)
 		throws Exception {
 

@@ -120,8 +120,9 @@ public class HttpServiceRuntimeImpl
 		_attributesMap = attributesMap;
 
 		_targetFilter = StringBundler.concat(
-			"(", Activator.UNIQUE_SERVICE_ID, "=",
-			attributesMap.get(Activator.UNIQUE_SERVICE_ID), ")");
+			"(", HttpServletBundleActivator.UNIQUE_SERVICE_ID, "=",
+			attributesMap.get(HttpServletBundleActivator.UNIQUE_SERVICE_ID),
+			")");
 
 		_contextServiceTracker = new ServiceTracker<>(
 			trackingBundleContext, ServletContextHelper.class, this);

@@ -53,7 +53,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author IBM Corporation
  * @author Raymond Augé
  */
-public class Activator
+public class HttpServletBundleActivator
 	implements BundleActivator,
 			   ServiceTrackerCustomizer<HttpServlet, HttpTuple> {
 

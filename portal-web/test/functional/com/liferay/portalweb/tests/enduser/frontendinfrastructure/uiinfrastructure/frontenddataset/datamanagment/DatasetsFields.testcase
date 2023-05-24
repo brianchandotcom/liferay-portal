@@ -110,12 +110,31 @@ definition {
 	}
 
 	@description = "LPS-185498. Confirm that when trying to delete field, modal appears."
-	@ignore = "true"
 	@priority = 4
 	test CanAssertModalWhenDeleteField {
+		task ("And adds two or more fields") {
+			LexiconEntry.gotoAdd();
 
-		// TODO LPS-185498 CanAssertModalWhenDeleteField pending implementation
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+
+			Button.clickSave();
+		}
+
+		task ("When the user selects the Delete option in the 3 dots menu") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+
+		task ("Then confirmation message is displayed") {
+			AssertElementPresent(
+				key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
 	}
 
 	@description = "LPS-185230. Confirm that the user can cancel adding a field by clicking on cancel button."

@@ -19,6 +19,7 @@ import {
 	createAttachment,
 	createProductSpecification,
 	createSpecification,
+	getCategories,
 	getProductIdCategories,
 	getVocabularies,
 	patchProductIdCategory,
@@ -106,59 +107,79 @@ export function ProvideAppBuildPage({
 		let newCategories: Categories[] = [];
 
 		if (appType.value === 'cloud') {
-			let liferayPlatformOfferingId = 0;
+			let marketplaceLiferayPlatformOfferingId = 0;
 			let marketplaceLiferayVersionId = 0;
 			let marketplaceEditionId = 0;
 
-			let liferayPlatformOfferingERC = '';
-			let marketplaceLiferayVersionERC = '';
-			let marketplaceEditionERC = '';
-
 			vocabulariesResponse.items.forEach(
 				(vocab: {
-					externalReferenceCode: string;
 					id: number;
 					name: string;
 				}) => {
-					if (vocab.name === 'Liferay Platform Offering') {
-						liferayPlatformOfferingId = vocab.id + 1;
-						liferayPlatformOfferingERC =
-							vocab.externalReferenceCode;
+					if (vocab.name === 'Marketplace Liferay Platform Offering') {
+						marketplaceLiferayPlatformOfferingId = vocab.id;
 					}
 
 					if (vocab.name === 'Marketplace Liferay Version') {
-						marketplaceLiferayVersionId = vocab.id + 1;
-						marketplaceLiferayVersionERC =
-							vocab.externalReferenceCode;
+						marketplaceLiferayVersionId = vocab.id;
 					}
 
 					if (vocab.name === 'Marketplace Edition') {
-						marketplaceEditionId = vocab.id + 1;
-						marketplaceEditionERC = vocab.externalReferenceCode;
+						marketplaceEditionId = vocab.id;
 					}
 				}
 			);
 
-			newCategories = [
-				{
-					externalReferenceCode: liferayPlatformOfferingERC,
-					id: liferayPlatformOfferingId.toString(),
-					name: 'Fully-Managed',
-					vocabulary: 'Liferay Platform Offering',
-				},
-				{
-					externalReferenceCode: marketplaceLiferayVersionERC,
-					id: marketplaceLiferayVersionId.toString(),
-					name: '7.4',
+			const platformOfferingList = await getCategories({
+				vocabId: marketplaceLiferayPlatformOfferingId,
+			});
+
+			const fullyManagedOption = platformOfferingList.find(
+				(item) => item.name === 'Fully-Managed'
+			);
+
+			if(fullyManagedOption) {
+				newCategories.push({
+					externalReferenceCode: fullyManagedOption?.externalReferenceCode,
+					id: fullyManagedOption.id,
+					name: fullyManagedOption.name,
+					vocabulary: 'Marketplace Liferay Platform Offering',
+				})
+			}
+
+			const liferayVersionList = await getCategories({
+				vocabId: marketplaceLiferayVersionId,
+			});
+
+			const liferayVersionOption = liferayVersionList.find(
+				(item) => item.name === '7.4'
+			);
+
+			if(liferayVersionOption) {
+				newCategories.push({
+					externalReferenceCode: liferayVersionOption?.externalReferenceCode,
+					id: liferayVersionOption.id,
+					name: liferayVersionOption.name,
 					vocabulary: 'Marketplace Liferay Version',
-				},
-				{
-					externalReferenceCode: marketplaceEditionERC,
-					id: marketplaceEditionId.toString(),
-					name: 'EE',
+				})
+			}
+
+			const marketplaceEditionList = await getCategories({
+				vocabId: marketplaceEditionId,
+			});
+
+			const marketplaceEditionOption = marketplaceEditionList.find(
+				(item) => item.name === 'EE'
+			);
+
+			if(marketplaceEditionOption) {
+				newCategories.push({
+					externalReferenceCode: marketplaceEditionOption?.externalReferenceCode,
+					id: marketplaceEditionOption.id,
+					name: marketplaceEditionOption.name,
 					vocabulary: 'Marketplace Edition',
-				},
-			];
+				})
+			}
 
 			newCategories = [...categories.items, ...newCategories];
 		}

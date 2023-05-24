@@ -885,6 +885,10 @@ public class PropsValues {
 	public static final int GZIP_COMPRESSION_LEVEL = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.GZIP_COMPRESSION_LEVEL));
 
+	public static final boolean HEALTH_CHECK_DATASOURCE_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.HEALTH_CHECK_DATASOURCE_ENABLED));
+
 	public static final String HIBERNATE_DIALECT = PropsUtil.get(
 		PropsKeys.HIBERNATE_DIALECT);
 

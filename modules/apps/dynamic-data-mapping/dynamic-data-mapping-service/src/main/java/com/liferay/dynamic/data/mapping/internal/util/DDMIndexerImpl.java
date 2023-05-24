@@ -365,76 +365,93 @@ public class DDMIndexerImpl implements DDMIndexer {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-		for (String key : ddmFormFieldValuesMap.keySet()) {
-			Field field = fields.get(key);
+		int requiredInteractions = -1;
 
-			try {
-				String indexType = ddmStructure.getFieldProperty(
-					field.getName(), "indexType");
+		int valuesInteractionCounter = 0;
 
-				if (Validator.isNull(indexType) || indexType.equals("none")) {
-					continue;
-				}
+		while (requiredInteractions != 0) {
+			for (String key : ddmFormFieldValuesMap.keySet()) {
+				Field field = fields.get(key);
 
-				Serializable value = field.getValue(locale);
+				try {
+					String indexType = ddmStructure.getFieldProperty(
+						field.getName(), "indexType");
 
-				if ((value == null) ||
-					Validator.isBlank(String.valueOf(value))) {
+					if (Validator.isNull(indexType) ||
+						indexType.equals("none")) {
 
-					continue;
-				}
+						continue;
+					}
 
-				if (value instanceof Boolean || value instanceof Number) {
-					sb.append(value);
-				}
-				else if (value instanceof Date) {
-					sb.append(dateFormat.format(value));
-				}
-				else if (value instanceof Date[]) {
-					Date[] dates = (Date[])value;
+					Serializable value = field.getValue(locale);
 
-					for (int i = 0; i < dates.length; i++) {
-						sb.append(dateFormat.format(dates[i]));
+					if ((value == null) ||
+						Validator.isBlank(String.valueOf(value))) {
 
-						if (i < (dates.length - 1)) {
-							sb.append(StringPool.SPACE);
+						continue;
+					}
+
+					if (value instanceof Boolean || value instanceof Number) {
+						sb.append(value);
+					}
+					else if (value instanceof Date) {
+						sb.append(dateFormat.format(value));
+					}
+					else if (value instanceof Date[]) {
+						Date[] dates = (Date[])value;
+
+						for (int i = 0; i < dates.length; i++) {
+							sb.append(dateFormat.format(dates[i]));
+
+							if (i < (dates.length - 1)) {
+								sb.append(StringPool.SPACE);
+							}
 						}
 					}
-				}
-				else if (value instanceof Object[]) {
-					Object[] values = (Object[])value;
+					else if (value instanceof Object[]) {
+						Object[] values = (Object[])value;
 
-					for (int i = 0; i < values.length; i++) {
+						requiredInteractions =
+							values.length - valuesInteractionCounter;
+
+						for (int i = valuesInteractionCounter;
+							 i < values.length; i++) {
+
+							String valueString = _getSortableValue(
+								ddmStructure.getDDMFormField(field.getName()),
+								locale, values[i].toString());
+
+							if (Validator.isBlank(valueString)) {
+								continue;
+							}
+
+							_addFieldValue(sb, field.getType(), valueString);
+
+							if (i < (values.length - 1)) {
+								sb.append(StringPool.SPACE);
+							}
+
+							break;
+						}
+					}
+					else {
 						String valueString = _getSortableValue(
 							ddmStructure.getDDMFormField(field.getName()),
-							locale, values[i].toString());
-
-						if (Validator.isBlank(valueString)) {
-							continue;
-						}
+							locale, value);
 
 						_addFieldValue(sb, field.getType(), valueString);
+					}
 
-						if (i < (values.length - 1)) {
-							sb.append(StringPool.SPACE);
-						}
+					sb.append(StringPool.SPACE);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception);
 					}
 				}
-				else {
-					String valueString = _getSortableValue(
-						ddmStructure.getDDMFormField(field.getName()), locale,
-						value);
-
-					_addFieldValue(sb, field.getType(), valueString);
-				}
-
-				sb.append(StringPool.SPACE);
 			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
-				}
-			}
+
+			valuesInteractionCounter += 1;
 		}
 
 		if (sb.index() > 0) {

@@ -1584,6 +1584,10 @@
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />
 		</check>
+		<check name="UpgradeJavaServiceTrackerListCheck">
+			<category name="Upgrade" />
+			<description name="Replace number of parameters of ServiceTrackerList" />
+		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements" />

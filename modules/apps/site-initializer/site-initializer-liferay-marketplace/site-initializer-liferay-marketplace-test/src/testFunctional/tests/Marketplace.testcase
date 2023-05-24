@@ -137,4 +137,20 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-183796 | Test Summary: Verify that when the Marketplace is created, Specification Label is also created"
+	@priority = 3
+	test SpecificationLabelAreCreatedForMP20 {
+		task ("Given that I go to the Specifications page") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Specifications");
+
+			Pagination.changePagination(itemsPerPage = 40);
+		}
+
+		task ("Then I should be able to assert that Specification Labels was created for the Marketplace Site") {
+			CommerceEntry.viewSpecificationLabelsEntries(specificationLabelsEntries = "Type,App API Reference URL,Latest Version,Source Code URL,License Term,Developer Name,Trial Length,License Type,App Usage Terms URL,Past Versions Work With,Current Requirements,Product Downloads,Publisher Name,Price Model,Lifetime License,App Installation Guide URL,Publisher Web site URL,App Documentation URL,Support URL,Product Notes");
+		}
+	}
+
 }

@@ -109,6 +109,77 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testGetStructuresCountWithoutUserPermission() throws Exception {
+		addStructure(group, _classNameId, StringUtil.randomString());
+		addStructure(group, _classNameId, StringUtil.randomString());
+		addStructure(group, _classNameId, StringUtil.randomString());
+
+		Assert.assertEquals(
+			3,
+			_ddmStructureService.getStructuresCount(
+				group.getCompanyId(), new long[] {group.getGroupId()},
+				_classNameId));
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			Assert.assertEquals(
+				0,
+				_ddmStructureService.getStructuresCount(
+					group.getCompanyId(), new long[] {group.getGroupId()},
+					_classNameId));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetStructuresWithoutUserPermission() throws Exception {
+		addStructure(group, _classNameId, StringUtil.randomString());
+		addStructure(group, _classNameId, StringUtil.randomString());
+		addStructure(group, _classNameId, StringUtil.randomString());
+
+		List<DDMStructure> ddmStructures = _ddmStructureService.getStructures(
+			group.getCompanyId(), new long[] {group.getGroupId()}, _classNameId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(ddmStructures.toString(), 3, ddmStructures.size());
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			ddmStructures = _ddmStructureService.getStructures(
+				group.getCompanyId(), new long[] {group.getGroupId()},
+				_classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				ddmStructures.toString(), 0, ddmStructures.size());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
 	@Transactional
 	public void testGetStructuresWithSiteAdminPermission() throws Throwable {
 		DDMStructure structure1 = addStructure(

@@ -200,8 +200,9 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			if ((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
-				(systemMaxNumberOfPages < maxNumberOfPages)) {
+			if (((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
+				 (systemMaxNumberOfPages < maxNumberOfPages)) ||
+				((systemMaxNumberOfPages != 0) && (maxNumberOfPages == 0))) {
 
 				throw new PDFPreviewException(systemMaxNumberOfPages);
 			}
@@ -211,8 +212,9 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			if ((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
-				(systemMaxNumberOfPages < maxNumberOfPages)) {
+			if (((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
+				 (systemMaxNumberOfPages < maxNumberOfPages)) ||
+				((systemMaxNumberOfPages != 0) && (maxNumberOfPages == 0))) {
 
 				throw new PDFPreviewException(systemMaxNumberOfPages);
 			}
@@ -222,8 +224,9 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
 
-			if ((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
-				(companyMaxNumberOfPages < maxNumberOfPages)) {
+			if (((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
+				 (companyMaxNumberOfPages < maxNumberOfPages)) ||
+				((companyMaxNumberOfPages != 0) && (maxNumberOfPages == 0))) {
 
 				throw new PDFPreviewException(companyMaxNumberOfPages);
 			}

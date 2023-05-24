@@ -16,13 +16,20 @@ import {openModal} from 'frontend-js-web';
 
 export default function openStructureKeyChangesModal({onSave}) {
 	openModal({
-		bodyHTML: `<p>${Liferay.Language.get(
-			'changing-the-structure-key-will-reindex-all-the-web-content-articles-with-this-structure.-this-action-may-take-some-time,-and-the-affected-items-may-not-be-available-during-this-process'
-		)}<p></p>${Liferay.Language.get(
-			'remember-that-all-places-where-the-structure-key-was-changed-manually-must-be-reviewed-to-be-consistent-with-the-new-key,-otherwise,-the-relationship-will-get-lost'
-		)}<p></p>${Liferay.Language.get(
-			'are-you-sure-you-want-to-continue-and-save-the-key'
-		)}</p>`,
+		bodyHTML: `
+			<p class="text-secondary">
+				${Liferay.Language.get(
+					'changing-the-structure-key-will-reindex-all-the-web-content-articles-with-this-structure.-this-action-may-take-some-time,-and-the-affected-items-may-not-be-available-during-this-process'
+				)}
+			</p>
+			<p class="text-secondary">
+				${Liferay.Language.get(
+					'remember-that-all-places-where-the-structure-key-was-changed-manually-must-be-reviewed-to-be-consistent-with-the-new-key,-otherwise,-the-relationship-will-get-lost'
+				)}
+			</p>
+			<p class="text-secondary">
+				${Liferay.Language.get('are-you-sure-you-want-to-continue-and-save-the-key')}
+			</p>`,
 		buttons: [
 			{
 				autoFocus: true,

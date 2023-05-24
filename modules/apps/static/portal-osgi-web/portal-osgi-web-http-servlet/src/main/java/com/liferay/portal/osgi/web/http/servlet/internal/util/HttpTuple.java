@@ -33,7 +33,7 @@ public class HttpTuple {
 	}
 
 	public void destroy() {
-		Activator.unregisterHttpService(proxyServlet);
+		HttpServletBundleActivator.unregisterHttpService(proxyServlet);
 		proxyServlet.setHttpServiceRuntimeImpl(null);
 		hsfRegistration.unregister();
 		hsrRegistration.unregister();

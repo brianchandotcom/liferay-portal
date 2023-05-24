@@ -210,23 +210,41 @@ export function PurchasedAppsDashboardPage() {
 							placeOrderItem.productId
 						);
 
-						const orderThumbnail = attachments.find(
-							async (currentAttachment) => {
-								const attachmentsCustomField =
-									await getCustomFieldExpandoValue({
-										className:
-											'com.liferay.commerce.product.model.CPAttachmentFileEntry',
-										classPK: currentAttachment.id,
-										columnName: 'App Icon',
-										companyId: Number(getCompanyId()),
-										tableName: 'CUSTOM_FIELDS',
-									});
+						let orderThumbnail;
 
-								if (attachmentsCustomField === 'Yes') {
-									return currentAttachment;
-								}
-							}
-						);
+						if (attachments) {
+							orderThumbnail = await (async () => {
+								const promises = attachments.map(
+									async (currentAttachment) => {
+										const attachmentsCustomField =
+											await getCustomFieldExpandoValue({
+												className:
+													'com.liferay.commerce.product.model.CPAttachmentFileEntry',
+												classPK: currentAttachment.id,
+												columnName: 'App Icon',
+												companyId: Number(
+													getCompanyId()
+												),
+												tableName: 'CUSTOM_FIELDS',
+											});
+
+										if (
+											attachmentsCustomField[0] === 'Yes'
+										) {
+											return currentAttachment;
+										}
+										else {
+											return null;
+										}
+									}
+								);
+
+								const results = await Promise.all(promises);
+								return results.find(
+									(attachment) => attachment !== null
+								);
+							})();
+						}
 
 						return {
 							name: placeOrderItem.name,

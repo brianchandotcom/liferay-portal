@@ -39,11 +39,7 @@ import {
 	postCartByChannelId,
 	postCheckoutCart,
 } from '../../utils/api';
-import {
-	getThumbnailByProductAttachment,
-	showAccountImage,
-	showAppImage,
-} from '../../utils/util';
+import {showAccountImage, showAppImage} from '../../utils/util';
 import {AccountSelector} from './AccountSelector';
 
 import './GetAppModal.scss';
@@ -225,14 +221,14 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			setAccounts(userAccounts.accountBriefs);
 			const app = await getDeliveryProduct({
 				accountId,
-				appId: 52098,
+				appId: Liferay.MarketplaceCustomerFlow.appId,
 				channelId: channel.id,
 			});
 
 			setApp(app);
 
 			const skuResponse = await getProductSKU({
-				appProductId: 52098,
+				appProductId: Liferay.MarketplaceCustomerFlow.appId,
 			});
 
 			setSkus(skuResponse.items);
@@ -298,23 +294,31 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				app.productId
 			);
 
-			const orderThumbnail = productAttachments.find(
-				async (currentAttachment) => {
-					const attachmentsCustomField =
-						await getCustomFieldExpandoValue({
-							className:
-								'com.liferay.commerce.product.model.CPAttachmentFileEntry',
-							classPK: currentAttachment.id,
-							columnName: 'App Icon',
-							companyId: Number(getCompanyId()),
-							tableName: 'CUSTOM_FIELDS',
-						});
+			const orderThumbnail = await (async () => {
+				const promises = productAttachments.map(
+					async (currentAttachment) => {
+						const attachmentsCustomField =
+							await getCustomFieldExpandoValue({
+								className:
+									'com.liferay.commerce.product.model.CPAttachmentFileEntry',
+								classPK: currentAttachment.id,
+								columnName: 'App Icon',
+								companyId: Number(getCompanyId()),
+								tableName: 'CUSTOM_FIELDS',
+							});
 
-					if (attachmentsCustomField === 'Yes') {
-						return currentAttachment;
+						if (attachmentsCustomField[0] === 'Yes') {
+							return currentAttachment;
+						}
+						else {
+							return null;
+						}
 					}
-				}
-			);
+				);
+
+				const results = await Promise.all(promises);
+				return results.find((attachment) => attachment !== null);
+			})();
 
 			setThumbnail(orderThumbnail?.src);
 
@@ -429,11 +433,15 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		const nextStepsCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
 			`/p/${app.slug}`,
 			''
-		)}/next-steps?orderId=${cartResponse.id}&logoURL=${
-			selectedAccount?.logoURL
-		}&appLogoURL=${app?.urlImage}&accountName=${
-			selectedAccount?.name
-		}&accountLogo=${selectedAccount?.logoURL}&appName=${app.name}`;
+		)}/next-steps?orderId=${encodeURIComponent(
+			cartResponse.id
+		)}&logoURL=${encodeURIComponent(selectedAccount?.logoURL || '')}
+		  &appLogoURL=${encodeURIComponent(
+				thumbnail as string
+			)}&accountName=${encodeURIComponent(selectedAccount?.name || '')}
+		  &accountLogo=${encodeURIComponent(
+				selectedAccount?.logoURL || ''
+			)}&appName=${encodeURIComponent(app.name as string)}`;
 
 		const paymentMethodURL = await getPaymentMethodURL(
 			cartResponse.id,
@@ -663,14 +671,14 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 					last={
 						<div className="get-app-modal-footer">
 							<ClayButton.Group spaced>
-								<button
+								<ClayButton
 									className="get-app-modal-button-cancel"
 									onClick={onClose}
 								>
 									Cancel
-								</button>
+								</ClayButton>
 
-								<button
+								<ClayButton
 									className={classNames(
 										'get-app-modal-button-get-this-app',
 										{
@@ -689,7 +697,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									onClick={handleClick}
 								>
 									{getButtonText()}
-								</button>
+								</ClayButton>
 							</ClayButton.Group>
 
 							<span>

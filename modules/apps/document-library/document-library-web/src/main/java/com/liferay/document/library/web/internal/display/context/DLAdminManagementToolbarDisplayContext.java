@@ -776,20 +776,14 @@ public class DLAdminManagementToolbarDisplayContext
 			"singleSelect", false
 		).setParameter(
 			"vocabularyIds",
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_liferayPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return StringUtil.merge(
-					AssetVocabularyServiceUtil.getGroupsVocabularies(
-						PortalUtil.getCurrentAndAncestorSiteGroupIds(
-							themeDisplay.getScopeGroupId()),
-						DLFileEntryConstants.getClassName()),
-					assetVocabulary -> String.valueOf(
-						assetVocabulary.getVocabularyId()),
-					StringPool.COMMA);
-			}
+			StringUtil.merge(
+				AssetVocabularyServiceUtil.getGroupsVocabularies(
+					PortalUtil.getCurrentAndAncestorSiteGroupIds(
+						_themeDisplay.getScopeGroupId()),
+					DLFileEntryConstants.getClassName()),
+				assetVocabulary -> String.valueOf(
+					assetVocabulary.getVocabularyId()),
+				StringPool.COMMA)
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -805,16 +799,10 @@ public class DLAdminManagementToolbarDisplayContext
 			_liferayPortletResponse.getNamespace() + "selectedAssetTag"
 		).setParameter(
 			"groupIds",
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_liferayPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return StringUtil.merge(
-					PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						themeDisplay.getScopeGroupId()),
-					StringPool.COMMA);
-			}
+			StringUtil.merge(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					_themeDisplay.getScopeGroupId()),
+				StringPool.COMMA)
 		).setParameter(
 			"selectedTagNames",
 			StringUtil.merge(
@@ -900,12 +888,8 @@ public class DLAdminManagementToolbarDisplayContext
 		fileExtensionItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		fileExtensionItemSelectorCriterion.setSelectedGroupIds(
-			new long[] {themeDisplay.getScopeGroupId()});
+			new long[] {_themeDisplay.getScopeGroupId()});
 
 		PortletResponse portletResponse =
 			(PortletResponse)_httpServletRequest.getAttribute(

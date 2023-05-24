@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.validation.util.DateParameterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 
 /**
@@ -38,9 +40,13 @@ public class FutureDatesFunction
 		LocalDate localDate = DateParameterUtil.getLocalDate(
 			object1.toString());
 
-		if (localDate.isBefore(
-				DateParameterUtil.getLocalDate(object2.toString()))) {
+		SimpleDateFormat formatter = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss.S");
 
+		LocalDate currentDate = DateParameterUtil.getLocalDate(
+			formatter.format(object2));
+
+		if (localDate.isBefore(currentDate)) {
 			return false;
 		}
 

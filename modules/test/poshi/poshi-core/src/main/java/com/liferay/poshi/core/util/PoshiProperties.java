@@ -249,13 +249,13 @@ public class PoshiProperties extends Properties {
 	public static PoshiProperties getPoshiProperties() {
 		Thread thread = Thread.currentThread();
 
-		if (!_poshiProperties.testRunType.equals("parallel") ||
-			!_threadBasedPoshiProperties.containsKey(thread.getName())) {
+		if (_poshiProperties.testRunType.equals("parallel") &&
+			_threadBasedPoshiProperties.containsKey(thread.getName())) {
 
-			return _poshiProperties;
+			return _threadBasedPoshiProperties.get(thread.getName());
 		}
 
-		return _threadBasedPoshiProperties.get(thread.getName());
+		return _poshiProperties;
 	}
 
 	public PoshiProperties() {

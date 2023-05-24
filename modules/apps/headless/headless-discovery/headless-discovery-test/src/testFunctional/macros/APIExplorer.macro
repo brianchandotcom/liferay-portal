@@ -20,6 +20,19 @@ definition {
 		Button.clickSave();
 	}
 
+	macro assertExposedActionsInSchema {
+		Variables.assertDefined(parameterList = "${schema},${property},${method},${objectHref}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		AssertTextEquals(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_PROPERTY",
+			property = ${property},
+			schema = ${schema},
+			value1 = "${property} { method string default: ${method} href string default: ${portalURL}/o/c/${objectHref} }");
+	}
+
 	macro executeAPIMethodWithParameters {
 		Variables.assertDefined(parameterList = "${service},${method},${parameter}");
 

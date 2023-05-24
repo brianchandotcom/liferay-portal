@@ -1,0 +1,126 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-180090=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Student object definition with name created and published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given navigate to o/c/students/openapi.json") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "students");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@priority = 3
+	test IncludeDeleteInActionsForObjectEntitiesSchema {
+		task ("When expand actions.delete in Student schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "delete",
+				schema = "Student");
+		}
+
+		task ("Then I can see get with DELETE and o/c/students/{studentId}") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "DELETE",
+				objectHref = "students/{studentId}",
+				property = "delete",
+				schema = "Student");
+		}
+	}
+
+	@priority = 3
+	test IncludeGetInActionsForObjectEntitiesSchema {
+		task ("When expand actions.get in Student schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "get",
+				schema = "Student");
+		}
+
+		task ("Then I can see get with GET and o/c/students/{studentId}") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "GET",
+				objectHref = "students/{studentId}",
+				property = "get",
+				schema = "Student");
+		}
+	}
+
+	@priority = 4
+	test IncludePermissionsInActionsForObjectEntitiesSchema {
+		property portal.acceptance = "true";
+
+		task ("When expand actions.permissions in Student schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "permissions",
+				schema = "Student");
+		}
+
+		task ("Then I can see permissions with GET and o/c/students/{studentId}/permissions") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "GET",
+				objectHref = "students/{studentId}/permissions",
+				property = "permissions",
+				schema = "Student");
+		}
+	}
+
+	@priority = 3
+	test IncludeReplaceInActionsForObjectEntitiesSchema {
+		task ("When expand actions.replace in Student schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "replace",
+				schema = "Student");
+		}
+
+		task ("Then I can see get with PUT and o/c/students/{studentId}") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "students/{studentId}",
+				property = "replace",
+				schema = "Student");
+		}
+	}
+
+	@priority = 3
+	test IncludeUpdateInActionsForObjectEntitiesSchema {
+		task ("When expand actions.update in Student schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "update",
+				schema = "Student");
+		}
+
+		task ("Then I can see get with PATCH and o/c/students/{studentId}") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PATCH",
+				objectHref = "students/{studentId}",
+				property = "update",
+				schema = "Student");
+		}
+	}
+
+}

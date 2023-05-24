@@ -45,12 +45,11 @@ definition {
 		}
 
 		task ("Then I can see create with POST and /o/c/students/batch") {
-			AssertTextEquals(
-				field = "actions",
-				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+			APIExplorer.assertExposedActionsInSchema(
+				method = "POST",
+				objectHref = "students/batch",
 				property = "createBatch",
-				schema = "PageStudent",
-				value1 = "createBatch { method string default: POST href string default: http://test.com:8080/o/c/students/batch }");
+				schema = "PageStudent");
 		}
 	}
 
@@ -63,12 +62,11 @@ definition {
 		}
 
 		task ("Then I can see create with POST and /o/c/students") {
-			AssertTextEquals(
-				field = "actions",
-				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+			APIExplorer.assertExposedActionsInSchema(
+				method = "POST",
+				objectHref = "students/",
 				property = "create",
-				schema = "PageStudent",
-				value1 = "create { method string default: POST href string default: http://test.com:8080/o/c/students/ }");
+				schema = "PageStudent");
 		}
 	}
 
@@ -81,12 +79,11 @@ definition {
 		}
 
 		task ("Then I can see deleteBatch with DELETE and /o/c/students/batch") {
-			AssertTextEquals(
-				field = "actions",
-				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+			APIExplorer.assertExposedActionsInSchema(
+				method = "DELETE",
+				objectHref = "students/batch",
 				property = "deleteBatch",
-				schema = "PageStudent",
-				value1 = "deleteBatch { method string default: DELETE href string default: http://test.com:8080/o/c/students/batch }");
+				schema = "PageStudent");
 		}
 	}
 
@@ -101,12 +98,11 @@ definition {
 		}
 
 		task ("Then I can see updateBatch with PUT and /o/c/students/batch") {
-			AssertTextEquals(
-				field = "actions",
-				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "students/batch",
 				property = "updateBatch",
-				schema = "PageStudent",
-				value1 = "updateBatch { method string default: PUT href string default: http://test.com:8080/o/c/students/batch }");
+				schema = "PageStudent");
 		}
 	}
 

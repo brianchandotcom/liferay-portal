@@ -21,8 +21,6 @@ import com.liferay.partner.dto.Activity;
 import com.liferay.partner.service.ActivityService;
 import com.liferay.petra.function.transform.TransformUtil;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -42,13 +40,12 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		ZonedDateTime nowZonedDateTime = ZonedDateTime.ofInstant(
-			Instant.now(), ZoneOffset.UTC);
+		ZonedDateTime nowZonedDateTime = ZonedDateTime.now();
 
 		Page<Activity> activitiesPage = _activityService.getEntriesPage(
 			null,
 			"endDate lt " +
-				nowZonedDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+				nowZonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE),
 			Pagination.of(1, -1), null);
 
 		if (activitiesPage.getTotalCount() > 0) {
@@ -67,7 +64,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					return activity;
 				});
 
-			System.out.println(new JSONArray(activities));
+			_activityService.putEntryBatch(null, new JSONArray(activities));
 		}
 	}
 

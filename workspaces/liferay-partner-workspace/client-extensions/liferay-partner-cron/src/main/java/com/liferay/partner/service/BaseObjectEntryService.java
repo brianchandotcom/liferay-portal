@@ -95,7 +95,7 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 				}
 
 				return uriBuilder.path(
-					_entityURLPath
+					_entityURLPath + "/batch"
 				).build();
 			}
 		).header(

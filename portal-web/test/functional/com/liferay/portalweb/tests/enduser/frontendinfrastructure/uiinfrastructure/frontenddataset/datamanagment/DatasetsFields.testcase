@@ -342,12 +342,45 @@ definition {
 	}
 
 	@description = "LPS-185501. Confirm that fields are not updated if proccess is canceled on cancel button."
-	@ignore = "true"
 	@priority = 4
 	test CannotUpdateFieldsIfCancelOnCancelButton {
+		task ("And adds two or more fields") {
+			LexiconEntry.gotoAdd();
 
-		// TODO LPS-185501 CannotUpdateFieldsIfCancelOnCancelButton pending implementation
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+
+			Button.clickSave();
+		}
+
+		task ("When the user selects the 'Plus' Button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And uncheck a selected option") {
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
+		}
+
+		task ("Then the user clicks on the Cancel option") {
+			Button.clickCancel();
+		}
+
+		task ("And the Add field modal is closed") {
+			AssertElementNotPresent(
+				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
+
+		task ("And the changes are not applied") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "id");
+
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 2,
+				keyName = "label");
+		}
 	}
 
 	@description = "LPS-185502. Confirm that fields are not updated if proccess is canceled on close (X) button."

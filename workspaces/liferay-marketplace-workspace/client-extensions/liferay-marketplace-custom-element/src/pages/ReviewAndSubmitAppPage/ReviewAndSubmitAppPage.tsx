@@ -10,7 +10,7 @@ import {
 	getProductSKU,
 	getProductSpecifications,
 } from '../../utils/api';
-import {showAppImage} from '../../utils/util';
+import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {CardSectionsBody} from './CardSectionsBody';
 import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 
@@ -117,24 +117,24 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
-			// Use after LPS-183343
+			const attachment = productResponse.attachments.find(
+				({customFields}) =>
+					customFields?.find(
+						({
+							customValue: {
+								data: [value],
+							},
+							name,
+						}) => name === 'App Icon' && value === 'No'
+					)
+			);
 
-			// const attachment = productResponse.attachments.find(
-			// 	({customFields}) =>
-			// 		customFields?.find(
-			// 			({
-			// 				customValue: {
-			// 					data: [value],
-			// 				},
-			// 				name,
-			// 			}) => name === 'App Icon' && value === 'No'
-			// 		)
-			// );
+			const thumbnail = showAppImage(
+				getThumbnailByProductAttachment(productResponse.attachments)
+			);
 
 			const newApp: App = {
-				attachmentTitle: productResponse.attachments?.[0]?.title[
-					'en_US'
-				] as string,
+				attachmentTitle: attachment?.title['en_US'] as string,
 				categories: productCategories,
 				description: productResponse.description['en_US'],
 				licenseType,
@@ -144,7 +144,7 @@ export function ReviewAndSubmitAppPage({
 				supportAndHelp: supportAndHelpCardInfos,
 				storefront: productResponse.images,
 				tags: productTags,
-				thumbnail: productResponse.thumbnail,
+				thumbnail,
 				version,
 				versionDescription,
 			};

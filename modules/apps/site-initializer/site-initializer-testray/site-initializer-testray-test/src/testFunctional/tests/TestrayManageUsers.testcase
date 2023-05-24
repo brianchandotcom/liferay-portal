@@ -35,11 +35,7 @@ definition {
 	tearDown {
 		JSONUser.deleteUserByEmailAddress(userEmailAddress = "user@liferay.com");
 
-		Testray.tearDownCP();
-
-		ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+		Testray.testrayApisTearDown();
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -53,11 +49,13 @@ definition {
 	test AdminCanAddAndDeleteNewUser {
 		property test.name.skip.portal.instance = "TestrayManageUsers#AdminCanAddAndDeleteNewUser";
 
-		task ("When that the administrator add a user") {
+		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+		}
 
+		task ("When the administrator add a user") {
 			Click(locator1 = "Button#PLUS");
 
 			TestrayManageUser.addUser(
@@ -70,19 +68,19 @@ definition {
 				userScreenNameEdit = "testscreen");
 		}
 
-		task ("Then can see the user created in the list") {
+		task ("Then can see the user created in the table") {
 			AssertElementPresent(
 				key_projectName = "changedfirstname Updateln",
 				locator1 = "Testray#ITEM_NAME");
 		}
 
-		task ("When delete the user") {
-			Testray.goToProjectPage(projectName = "userfirst@liferay.com");
+		task ("And delete the user") {
+			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
 
 			Button.click(button = "Delete User");
 		}
 
-		task ("Then can not see the user in the list") {
+		task ("Then can not see the user in the table") {
 			Refresh();
 
 			AssertElementNotPresent(
@@ -96,11 +94,13 @@ definition {
 	test AdminCanFilterUsersByName {
 		property test.name.skip.portal.instance = "TestrayManageUsers#AdminCanFilterUsersByName";
 
-		task ("Given that there are two users present in the table") {
+		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+		}
 
+		task ("And assert that have two users present in the table") {
 			AssertElementPresent(
 				key_projectName = "userfn userln",
 				locator1 = "Testray#ITEM_NAME");
@@ -118,11 +118,13 @@ definition {
 				value = "userfn userln");
 		}
 
-		task ("Then can see the user named test test in the table and no longer see the userfn userln") {
+		task ("Then can see the user named test test in the table") {
 			AssertElementPresent(
 				key_projectName = "userfn userln",
 				locator1 = "Testray#ITEM_NAME");
+		}
 
+		task ("And can not longer see the userfn userln in the table") {
 			AssertElementNotPresent(
 				key_projectName = "Test Test",
 				locator1 = "Testray#ITEM_NAME");
@@ -134,15 +136,19 @@ definition {
 	test AdminCanNotFilterForNonExistentUsers {
 		property test.name.skip.portal.instance = "TestrayManageUsers#AdminCanNotFilterForNonExistentUsers";
 
-		task ("When filtering a user by his non-existent name") {
+		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+		}
 
+		task ("And assert that the user is present") {
 			AssertElementPresent(
 				key_projectName = "Test Test",
 				locator1 = "Testray#ITEM_NAME");
+		}
 
+		task ("When filtering a user by his non-existent name") {
 			TestrayFilter.clickFilter();
 
 			TestrayFilter.typeFilter(
@@ -150,7 +156,7 @@ definition {
 				value = "Test 2");
 		}
 
-		task ("Then the user is not present in the User table") {
+		task ("Then the user is not present in the table") {
 			AssertElementNotPresent(
 				key_projectName = "Test Test",
 				locator1 = "Testray#ITEM_NAME");
@@ -162,13 +168,15 @@ definition {
 	test CanEditAccountInformation {
 		property test.name.skip.portal.instance = "TestrayManageUsers#CanEditAccountInformation";
 
-		task ("When the user change the account informations") {
+		task ("Given that go to user created") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
 
 			Testray.goToProjectPage(projectName = "user@liferay.com");
+		}
 
+		task ("When the user change the account informations") {
 			TestrayManageUser.editUserInformation(
 				userEmailAddressEdit = "user@liferay.com",
 				userFirstNameEdit = "changedfirstname",
@@ -178,13 +186,11 @@ definition {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
-		task ("Then the account information is displayed in Manage Users") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
-
+		task ("And go to user changed") {
 			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
+		}
 
+		task ("Then can see the new informations to the account") {
 			TestrayManageUser.viewUserInfomation(
 				emailAddress = "user@liferay.com",
 				firstName = "changedfirstname",
@@ -198,19 +204,27 @@ definition {
 	test CanNotSaveRolesWithoutOptions {
 		property test.name.skip.portal.instance = "TestrayManageUsers#CanNotSaveRolesWithoutOptions";
 
-		task ("When the user tries to save roles without options selected") {
-			TestrayLayout.manageAccountSidebar(valueName = "Manage Account");
+		task ("Given that go to manage user") {
+			TestrayLayout.clickManageOnSidebar();
 
+			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+
+			Testray.goToProjectPage(projectName = "test@liferay.com");
+		}
+
+		task ("And the user deselects all roles") {
 			TestrayManageUser.changeRole(roleName = "Administrator");
 
 			TestrayManageUser.changeRole(roleName = "Power User");
 
 			TestrayManageUser.changeRole(roleName = "User");
+		}
 
+		task ("When the user tries to save roles without options selected") {
 			Button.clickSave();
 		}
 
-		task ("Then the error message should appear") {
+		task ("Then the error message appear") {
 			Alert.viewErrorMessage(errorMessage = "Please, select one or more roles.");
 		}
 	}
@@ -220,13 +234,15 @@ definition {
 	test CanViewFieldRequired {
 		property test.name.skip.portal.instance = "TestrayManageUsers#CanViewFieldRequired";
 
-		task ("When the user tries to created account without informations") {
+		task ("Given that go to manage user") {
 			TestrayLayout.clickManageOnSidebar();
 
 			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
 
 			Testray.goToProjectPage(projectName = "user@liferay.com");
+		}
 
+		task ("When the user tries to created account without informations") {
 			TestrayManageUser.editUserInformation(
 				userEmailAddressEdit = "",
 				userFirstNameEdit = "",
@@ -234,7 +250,7 @@ definition {
 				userScreenNameEdit = "");
 		}
 
-		task ("Then a warning message is displayed") {
+		task ("Then a warning message is displayed in the required fields") {
 			Testray.viewErrorMessage(
 				fieldLabel = "First Name",
 				warningMessage = "This field is required.");

@@ -1,5 +1,5 @@
-import {DashboardListItems} from 'liferay-marketplace-custom-element/src/components/DashboardNavigation/DashboardNavigation';
-import {AppProps} from 'liferay-marketplace-custom-element/src/components/DashboardTable/DashboardTable';
+import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
+import {AppProps} from '../../components/DashboardTable/DashboardTable';
 
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
@@ -10,55 +10,55 @@ import {Liferay} from '../../liferay/liferay';
 import {getProductSpecifications} from '../../utils/api';
 
 export type AccountBriefProps = {
-	externalReferenceCode: string;
-	id: number;
-	name: string;
+  externalReferenceCode: string;
+  id: number;
+  name: string;
 };
 
 export type CatalogProps = {
-	externalReferenceCode: string;
-	id: number;
-	name: string;
+  externalReferenceCode: string;
+  id: number;
+  name: string;
 };
 
 export type MemberProps = {
-	accountBriefs: AccountBriefProps[];
-	dateCreated: string;
-	email: string;
-	image: string;
-	isCustomerAccount: boolean;
-	isPublisherAccount: boolean;
-	lastLoginDate: string;
-	name: string;
-	role: string;
-	userId: number;
+  accountBriefs: AccountBriefProps[];
+  dateCreated: string;
+  email: string;
+  image: string;
+  isCustomerAccount: boolean;
+  isPublisherAccount: boolean;
+  lastLoginDate: string;
+  name: string;
+  role: string;
+  userId: number;
 };
 
 export type ProductResponseProps = {
-	catalogId: number;
-	externalReferenceCode: string;
-	lastUpdatedBy: string;
-	modifiedDate: string;
+  catalogId: number;
+  externalReferenceCode: string;
+  lastUpdatedBy: string;
+  modifiedDate: string;
 	name: {en_US: string};
-	productId: number;
-	thumbnail: string;
+  productId: number;
+  thumbnail: string;
 	workflowStatusInfo: {label: string};
 };
 
 export type RoleBriefProps = {
-	id: number;
-	name: string;
+  id: number;
+  name: string;
 };
 
 export type UserAccountProps = {
-	accountBriefs: AccountBrief[];
-	dateCreated: string;
-	emailAddress: string;
-	id: number;
-	image: string;
-	lastLoginDate: string;
-	name: string;
-	roleBriefs: RoleBriefProps[];
+  accountBriefs: AccountBrief[];
+  dateCreated: string;
+  emailAddress: string;
+  id: number;
+  image: string;
+  lastLoginDate: string;
+  name: string;
+  roleBriefs: RoleBriefProps[];
 };
 
 export const customerRoles = [
@@ -68,80 +68,80 @@ export const customerRoles = [
 ];
 
 export const initialDashboardNavigationItems: DashboardListItems[] = [
-	{
-		itemIcon: appsIcon,
+  {
+    itemIcon: appsIcon,
 		itemName: 'apps',
-		itemSelected: true,
+    itemSelected: true,
 		itemTitle: 'Apps',
-		items: [] as AppProps[],
-	},
-	{
-		itemIcon: solutionsIcon,
+    items: [] as AppProps[],
+  },
+  {
+    itemIcon: solutionsIcon,
 		itemName: 'solutions',
-		itemSelected: false,
+    itemSelected: false,
 		itemTitle: 'Solutions',
-	},
-	{
-		itemIcon: projectsIcon,
+  },
+  {
+    itemIcon: projectsIcon,
 		itemName: 'projects',
-		itemSelected: false,
+    itemSelected: false,
 		itemTitle: 'Projects',
-	},
-	{
-		itemIcon: membersIcon,
+  },
+  {
+    itemIcon: membersIcon,
 		itemName: 'members',
-		itemSelected: false,
+    itemSelected: false,
 		itemTitle: 'Members',
-	},
-	{
-		itemIcon: businessIcon,
+  },
+  {
+    itemIcon: businessIcon,
 		itemName: 'account',
-		itemSelected: false,
+    itemSelected: false,
 		itemTitle: 'Account',
-	},
+  },
 ];
 
 export const appTableHeaders = [
-	{
+  {
 		iconSymbol: 'order-arrow',
 		title: 'Name',
 		style: {width: '2%'},
-	},
-	{
+  },
+  {
 		title: 'Version',
-	},
-	{
+  },
+  {
 		title: 'Type',
-	},
-	{
+  },
+  {
 		title: 'Last Updated',
-	},
-	{
+  },
+  {
 		title: 'Status',
-	},
+  },
 ];
 
 export const memberTableHeaders = [
-	{
+  {
 		iconSymbol: 'order-arrow',
 		title: 'Name',
-	},
-	{
+  },
+  {
 		title: 'Email',
-	},
-	{
+  },
+  {
 		title: 'Role',
-	},
+  },
 ];
 
 export const initialAccountsState: Account[] = [
-	{
+  {
 		externalReferenceCode: '',
-		id: 0,
+    id: 0,
 		name: '',
 		description: '',
 		type: '',
-	},
+  },
 ];
 
 export const publisherRoles = ['Account Administrator', 'App Editor'];
@@ -149,27 +149,27 @@ export const publisherRoles = ['Account Administrator', 'App Editor'];
 export function formatDate(date: string) {
 	const locale = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
 
-	const dateOptions: Intl.DateTimeFormatOptions = {
+  const dateOptions: Intl.DateTimeFormatOptions = {
 		day: 'numeric',
 		month: 'short',
 		year: 'numeric',
-	};
+  };
 
-	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
-		new Date(date)
-	);
+  const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
+    new Date(date)
+  );
 
-	return formattedDate;
+  return formattedDate;
 }
 
 export async function getAppListProductSpecifications(productIds: number[]) {
-	return await Promise.all(
-		productIds.map(async (productId) => {
-			return await getProductSpecifications({
-				appProductId: productId,
-			});
-		})
-	);
+  return await Promise.all(
+    productIds.map(async (productId) => {
+      return await getProductSpecifications({
+        appProductId: productId,
+      });
+    })
+  );
 }
 
 export function getAppListProductIds(products: Product[]) {
@@ -179,43 +179,43 @@ export function getAppListProductIds(products: Product[]) {
 		productIds.push(product.productId);
 	});
 
-	return productIds;
+  return productIds;
 }
 
 export function getProductTypeFromSpecifications(
-	specifications: ProductSpecification[]
+  specifications: ProductSpecification[]
 ) {
 	let productType = 'no type';
 
-	specifications.forEach((specification: ProductSpecification) => {
+  specifications.forEach((specification: ProductSpecification) => {
 		if (specification.specificationKey === 'type') {
-			productType = specification.value.en_US;
+      productType = specification.value.en_US;
 
 			if (productType === 'cloud') {
 				productType = 'Cloud';
 			}
 			else if (productType === 'dxp') {
 				productType = 'DXP';
-			}
-		}
-	});
+      }
+    }
+  });
 
-	return productType;
+  return productType;
 }
 
 export function getRolesList(
-	accountBriefs: AccountBrief[],
-	selectedAccountId: number
+  accountBriefs: AccountBrief[],
+  selectedAccountId: number
 ) {
-	const rolesList: string[] = [];
+  const rolesList: string[] = [];
 
-	const accountBrief = accountBriefs.find(
-		(accountBrief) => accountBrief.id === selectedAccountId
-	);
+  const accountBrief = accountBriefs.find(
+    (accountBrief) => accountBrief.id === selectedAccountId
+  );
 
-	accountBrief?.roleBriefs.forEach((role) => {
-		rolesList.push(role.name);
-	});
+  accountBrief?.roleBriefs.forEach((role) => {
+    rolesList.push(role.name);
+  });
 
 	return rolesList.join(', ');
 }

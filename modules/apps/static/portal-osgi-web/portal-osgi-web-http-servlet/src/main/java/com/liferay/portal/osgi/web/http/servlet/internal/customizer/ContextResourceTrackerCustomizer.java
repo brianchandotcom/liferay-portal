@@ -11,13 +11,17 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.customizer;
 
-import java.util.concurrent.atomic.AtomicReference;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.error.HttpWhiteboardFailureException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
-import org.osgi.framework.*;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.runtime.dto.FailedResourceDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
@@ -26,49 +30,60 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * @author Raymond Augé
  */
 public class ContextResourceTrackerCustomizer
-	extends RegistrationServiceTrackerCustomizer<Object, AtomicReference<ResourceRegistration>> {
+	extends RegistrationServiceTrackerCustomizer
+		<Object, AtomicReference<ResourceRegistration>> {
 
 	public ContextResourceTrackerCustomizer(
-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
+		BundleContext bundleContext,
+		HttpServiceRuntimeImpl httpServiceRuntimeImpl,
 		ContextController contextController) {
 
-		super(bundleContext, httpServiceRuntime);
+		super(bundleContext, httpServiceRuntimeImpl);
 
-		this.contextController = contextController;
+		_contextController = contextController;
 	}
 
 	@Override
 	public AtomicReference<ResourceRegistration> addingService(
 		ServiceReference<Object> serviceReference) {
 
-		if ((serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX) == null) &&
-			(serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN) == null)) {
+		Object resourcePrefix = serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
+
+		Object resourcePattern = serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN);
+
+		if (((resourcePrefix == null) && (resourcePattern == null)) ||
+			!_contextController.matches(serviceReference)) {
 
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference)) {
+		if (!httpServiceRuntimeImpl.matches(serviceReference)) {
 			return null;
 		}
 
-		if (!httpServiceRuntime.matches(serviceReference)) {
-			return null;
-		}
-
-		AtomicReference<ResourceRegistration> result = new AtomicReference<ResourceRegistration>();
+		AtomicReference<ResourceRegistration> result = new AtomicReference<>();
 
 		try {
-			result.set(contextController.addResourceRegistration(serviceReference));
+			result.set(
+				_contextController.addResourceRegistration(serviceReference));
 		}
-		catch (HttpWhiteboardFailureException hwfe) {
-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+		catch (HttpWhiteboardFailureException httpWhiteboardFailureException) {
+			httpServiceRuntimeImpl.log(
+				httpWhiteboardFailureException.getMessage(),
+				httpWhiteboardFailureException);
 
-			recordFailedResourceDTO(serviceReference, hwfe.getFailureReason());
+			_recordFailedResourceDTO(
+				serviceReference,
+				httpWhiteboardFailureException.getFailureReason());
 		}
-		catch (Exception e) {
-			httpServiceRuntime.log(e.getMessage(), e);
+		catch (Exception exception) {
+			httpServiceRuntimeImpl.log(exception.getMessage(), exception);
 
-			recordFailedResourceDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
+			_recordFailedResourceDTO(
+				serviceReference,
+				DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -80,7 +95,10 @@ public class ContextResourceTrackerCustomizer
 		AtomicReference<ResourceRegistration> resourceReference) {
 
 		removedService(serviceReference, resourceReference);
-		AtomicReference<ResourceRegistration> added = addingService(serviceReference);
+
+		AtomicReference<ResourceRegistration> added = addingService(
+			serviceReference);
+
 		resourceReference.set(added.get());
 	}
 
@@ -88,30 +106,35 @@ public class ContextResourceTrackerCustomizer
 	public void removedService(
 		ServiceReference<Object> serviceReference,
 		AtomicReference<ResourceRegistration> resourceReference) {
-		ResourceRegistration registration = resourceReference.get();
-		if (registration != null) {
-			// destroy will unget the service object we were using
-			registration.destroy();
+
+		ResourceRegistration resourceRegistration = resourceReference.get();
+
+		if (resourceRegistration != null) {
+			resourceRegistration.destroy();
 		}
 
-		contextController.getHttpServiceRuntime().removeFailedResourceDTO(serviceReference);
+		httpServiceRuntimeImpl.removeFailedResourceDTO(serviceReference);
 	}
 
-	private void recordFailedResourceDTO(
+	private void _recordFailedResourceDTO(
 		ServiceReference<Object> serviceReference, int failureReason) {
 
 		FailedResourceDTO failedResourceDTO = new FailedResourceDTO();
 
 		failedResourceDTO.failureReason = failureReason;
 		failedResourceDTO.patterns = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN)).toArray(new String[0]);
-		failedResourceDTO.prefix = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
-		failedResourceDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedResourceDTO.servletContextId = contextController.getServiceId();
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN));
+		failedResourceDTO.prefix = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
+		failedResourceDTO.serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		failedResourceDTO.servletContextId = _contextController.getServiceId();
 
-		contextController.getHttpServiceRuntime().recordFailedResourceDTO(serviceReference, failedResourceDTO);
+		httpServiceRuntimeImpl.recordFailedResourceDTO(
+			serviceReference, failedResourceDTO);
 	}
 
-	private ContextController contextController;
+	private final ContextController _contextController;
 
 }

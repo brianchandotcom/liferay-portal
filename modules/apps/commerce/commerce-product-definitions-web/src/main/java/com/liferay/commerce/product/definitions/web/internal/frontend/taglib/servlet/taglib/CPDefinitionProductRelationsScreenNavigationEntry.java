@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -96,7 +97,8 @@ public class CPDefinitionProductRelationsScreenNavigationEntry
 		CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 			new CPDefinitionLinkDisplayContext(
 				_actionHelper, httpServletRequest, _cpDefinitionLinkService,
-				_cpDefinitionLinkTypeSettings, _itemSelector);
+				_cpDefinitionLinkTypeSettings, _itemSelector,
+				_workflowDefinitionLinkLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionLinkDisplayContext);
@@ -131,5 +133,9 @@ public class CPDefinitionProductRelationsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

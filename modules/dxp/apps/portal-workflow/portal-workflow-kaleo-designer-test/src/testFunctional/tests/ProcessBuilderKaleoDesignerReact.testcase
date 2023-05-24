@@ -4611,7 +4611,9 @@ definition {
 
 		Button.clickPublish();
 
-		Alert.viewErrorMessage(errorMessage = "The Start node must have an outgoing transition");
+		AssertElementPresent(
+			locator1 = "Message#ERROR",
+			value1 = "The Start node must have an outgoing transition");
 
 		Navigator.gotoBack();
 

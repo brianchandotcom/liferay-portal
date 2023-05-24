@@ -1,0 +1,21 @@
+{
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"helpText": "text-to-match-field-help",
+						"helpTextLocalized": "If this is set, the search terms entered in the search bar will be replaced by this value.",
+						"label": "text-to-match",
+						"labelLocalized": "Text to Match",
+						"name": "keywords",
+						"type": "keywords",
+						"typeOptions": {
+							"required": false
+						}
+					}
+				]
+			}
+		]
+	}
+}

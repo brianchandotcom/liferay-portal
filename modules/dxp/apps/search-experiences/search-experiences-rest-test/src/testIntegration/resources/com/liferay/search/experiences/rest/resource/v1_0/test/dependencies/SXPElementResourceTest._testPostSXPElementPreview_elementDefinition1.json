@@ -1,0 +1,19 @@
+{
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"helpText": "text-to-match-field-help",
+						"label": "text-to-match",
+						"name": "keywords",
+						"type": "keywords",
+						"typeOptions": {
+							"required": false
+						}
+					}
+				]
+			}
+		]
+	}
+}

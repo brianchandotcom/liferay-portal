@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.search.experiences.rest.client.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
@@ -28,8 +29,10 @@ import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
 import com.liferay.search.experiences.rest.client.serdes.v1_0.ElementDefinitionSerDes;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -165,7 +168,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 				"en_US", "text-match-over-multiple-fields-description"));
 
 		randomSXPElement.setElementDefinition(
-			ElementDefinitionSerDes.toDTO(_ELEMENTDEFINITION1));
+			ElementDefinitionSerDes.toDTO(_getElementDefinition("1")));
 
 		SXPElement postSXPElement = testPostSXPElementPreview_addSXPElement(
 			randomSXPElement);
@@ -173,7 +176,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		randomSXPElement.setDescription(
 			_getUSLocalization(randomSXPElement.getDescription_i18n()));
 		randomSXPElement.setElementDefinition(
-			ElementDefinitionSerDes.toDTO(_ELEMENTDEFINITION2));
+			ElementDefinitionSerDes.toDTO(_getElementDefinition("2")));
 		randomSXPElement.setTitle(
 			_getUSLocalization(randomSXPElement.getTitle_i18n()));
 
@@ -185,6 +188,20 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	@Test
 	public void testPostSXPElementValidate() throws Exception {
 		sxpElementResource.postSXPElementValidate("{}");
+	}
+
+	protected static String getResourceAsString(
+		Class<?> clazz, String resourceName) {
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				resourceName)) {
+
+			return StringUtil.read(inputStream);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to load resource: " + resourceName, ioException);
+		}
 	}
 
 	@Override
@@ -276,15 +293,16 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		}
 	}
 
-	private String _getUSLocalization(Map<String, String> localizationMap) {
-		return _language.get(Locale.US, localizationMap.get("en_US"));
+	private String _getElementDefinition(String suffix) {
+		return getResourceAsString(
+			getClass(),
+			"dependencies/SXPElementResourceTest._testPostSXPElementPreview" +
+				"_elementDefinition" + suffix + ".json");
 	}
 
-	private static final String _ELEMENTDEFINITION1 =
-		"{\"uiConfiguration\": {\"fieldSets\": [{\"fields\": [{\"helpText\": \"text-to-match-field-help\",\"label\": \"text-to-match\",\"name\": \"keywords\",\"type\": \"keywords\",\"typeOptions\": {\"required\": false}}]}]}}";
-
-	private static final String _ELEMENTDEFINITION2 =
-		"{\"uiConfiguration\": {\"fieldSets\": [{\"fields\": [{\"helpText\": \"text-to-match-field-help\",\"helpTextLocalized\": \"If this is set, the search terms entered in the search bar will be replaced by this value.\",\"label\": \"text-to-match\",\"labelLocalized\": \"Text to Match\",\"name\": \"keywords\",\"type\": \"keywords\",\"typeOptions\": {\"required\": false}}]}]}}";
+	private String _getUSLocalization(Map<String, String> localizationMap) {
+		return _language.get(LocaleUtil.US, localizationMap.get("en_US"));
+	}
 
 	private static final String _TITLE_PREFIX = "SXPERT";
 

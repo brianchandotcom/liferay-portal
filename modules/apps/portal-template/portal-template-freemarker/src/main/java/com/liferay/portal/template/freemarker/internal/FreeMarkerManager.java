@@ -47,7 +47,6 @@ import com.liferay.portal.template.engine.BaseTemplateManager;
 import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.portal.template.freemarker.internal.helper.FreeMarkerTemplateContextHelper;
-import com.liferay.taglib.TagSupport;
 
 import freemarker.cache.TemplateCache;
 
@@ -104,7 +103,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -258,8 +256,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
-			_bundle, FrameworkUtil.getBundle(TagSupport.class));
+		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(_bundle);
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, new TaglibBundleTrackerCustomizer());

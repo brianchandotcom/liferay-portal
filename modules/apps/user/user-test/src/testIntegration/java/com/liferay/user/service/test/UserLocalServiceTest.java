@@ -18,12 +18,14 @@ import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServic
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -68,11 +70,13 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.audit.AuditMessageProcessor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -84,11 +88,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -101,6 +113,24 @@ public class UserLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_auditMessageProcessor = new TestAuditMessageProcessor();
+
+		_bundleActivator = new UserLocalServiceTestBundleActivator();
+
+		Bundle bundle = FrameworkUtil.getBundle(UserLocalServiceTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+
+		_bundleActivator.start(_bundleContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_bundleActivator.stop(_bundleContext);
+	}
 
 	@Test
 	public void testAuthenticateByEmailAddress() throws Exception {
@@ -151,6 +181,15 @@ public class UserLocalServiceTest {
 			_userLocalService.authenticateByEmailAddress(
 				user.getCompanyId(), user.getEmailAddress(), password, null,
 				null, null));
+	}
+
+	@Test
+	public void testAuthenticationWhenUserDoesNotExist() throws Exception {
+		Assert.assertEquals(
+			Authenticator.DNE,
+			_userLocalService.authenticateByEmailAddress(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, null, null));
 	}
 
 	@Test
@@ -832,9 +871,15 @@ public class UserLocalServiceTest {
 		return userIds;
 	}
 
+	private static final String _LOGIN_DNE = "LOGIN_DNE";
+
 	@Inject
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
+
+	private TestAuditMessageProcessor _auditMessageProcessor;
+	private BundleActivator _bundleActivator;
+	private BundleContext _bundleContext;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -851,6 +896,8 @@ public class UserLocalServiceTest {
 	@Inject
 	private RoleLocalService _roleLocalService;
 
+	private ServiceRegistration<AuditMessageProcessor> _serviceRegistration;
+
 	@Inject
 	private TicketLocalService _ticketLocalService;
 
@@ -863,5 +910,49 @@ public class UserLocalServiceTest {
 	@Inject
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
+	private class TestAuditMessageProcessor implements AuditMessageProcessor {
+
+		@Override
+		public void process(AuditMessage auditMessage) {
+			Assert.assertNotNull(auditMessage);
+
+			Assert.assertEquals(_LOGIN_DNE, auditMessage.getEventType());
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			String reason = String.valueOf(
+				additionalInfoJSONObject.get("reason"));
+
+			Assert.assertEquals(
+				"Failed to authenticate - User Does Not Exist", reason);
+
+			String authType = String.valueOf(
+				additionalInfoJSONObject.get("authType"));
+
+			Assert.assertEquals("emailAddress", authType);
+		}
+
+	}
+
+	private class UserLocalServiceTestBundleActivator
+		implements BundleActivator {
+
+		@Override
+		public void start(BundleContext bundleContext) {
+			_serviceRegistration = _bundleContext.registerService(
+				AuditMessageProcessor.class, _auditMessageProcessor,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"eventTypes", _LOGIN_DNE
+				).build());
+		}
+
+		@Override
+		public void stop(BundleContext bundleContext) {
+			_serviceRegistration.unregister();
+		}
+
+	}
 
 }

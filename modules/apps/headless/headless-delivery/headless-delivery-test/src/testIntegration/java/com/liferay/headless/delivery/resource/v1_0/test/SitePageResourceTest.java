@@ -24,6 +24,11 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
+import com.liferay.headless.delivery.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
 import com.liferay.headless.delivery.client.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentSitePage;
@@ -280,6 +285,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsNull();
 		_testPostSiteSitePageSuccessPagePermissionsRoleNonexisting();
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
+		_testPostSiteSitePageSuccessPageSettingsOpenGraphSettings();
 		_testPostSiteSitePageSuccessPageSettingsSeoSettings();
 		_testPostSiteSitePageSuccessParentSitePage();
 		_testPostSiteSitePageSuccessParentSitePageNonexisting();
@@ -966,6 +972,96 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageSuccessPagePermissions(
 			expectedPagePermissions, inputPagePermissions);
+	}
+
+	private void _testPostSiteSitePageSuccessPageSettingsOpenGraphSettings()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		String randomDescription = RandomTestUtil.randomString();
+		String randomImageAlt = RandomTestUtil.randomString();
+		String randomTitle = RandomTestUtil.randomString();
+
+		OpenGraphSettings randomOpenGraphSettings = new OpenGraphSettings() {
+			{
+				description = randomDescription;
+				description_i18n = HashMapBuilder.put(
+					"en-US", randomDescription
+				).put(
+					"es-ES", RandomTestUtil.randomString()
+				).build();
+				imageAlt = randomImageAlt;
+				imageAlt_i18n = HashMapBuilder.put(
+					"en-US", randomImageAlt
+				).put(
+					"es-ES", RandomTestUtil.randomString()
+				).build();
+				title = randomTitle;
+				title_i18n = HashMapBuilder.put(
+					"en-US", randomTitle
+				).put(
+					"es-ES", RandomTestUtil.randomString()
+				).build();
+
+				setImage(
+					() -> {
+						DLFolder dlFolder = DLTestUtil.addDLFolder(
+							testGroup.getGroupId());
+
+						DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+							dlFolder.getFolderId());
+
+						return new ContentDocument() {
+							{
+								id = dlFileEntry.getPrimaryKey();
+							}
+						};
+					});
+			}
+		};
+
+		randomSitePage.setPageSettings(
+			new PageSettings() {
+				{
+					openGraphSettings = randomOpenGraphSettings;
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		PageSettings postPageSettings = postSitePage.getPageSettings();
+
+		OpenGraphSettings postOpenGraphSettings =
+			postPageSettings.getOpenGraphSettings();
+
+		Assert.assertEquals(
+			randomOpenGraphSettings.getDescription(),
+			postOpenGraphSettings.getDescription());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getDescription_i18n(),
+			postOpenGraphSettings.getDescription_i18n());
+
+		ContentDocument randomContentDocument =
+			randomOpenGraphSettings.getImage();
+		ContentDocument contentDocument = postOpenGraphSettings.getImage();
+
+		Assert.assertEquals(
+			randomContentDocument.getId(), contentDocument.getId());
+
+		Assert.assertEquals(
+			randomOpenGraphSettings.getImageAlt(),
+			postOpenGraphSettings.getImageAlt());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getImageAlt_i18n(),
+			postOpenGraphSettings.getImageAlt_i18n());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getTitle(),
+			postOpenGraphSettings.getTitle());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getTitle_i18n(),
+			postOpenGraphSettings.getTitle_i18n());
 	}
 
 	private void _testPostSiteSitePageSuccessPageSettingsSeoSettings()

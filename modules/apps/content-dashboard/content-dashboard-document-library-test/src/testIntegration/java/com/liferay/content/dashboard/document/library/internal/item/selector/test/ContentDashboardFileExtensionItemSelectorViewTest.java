@@ -81,18 +81,18 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 
 	@Test
 	public void testGetData() throws Exception {
-		_addFileEntry("java");
-		_addFileEntry("liferay");
-		_addFileEntry("mp3");
-		_addFileEntry("mp4");
-		_addFileEntry("pdf");
-		_addFileEntry("png");
-		_addFileEntry("ppt");
-		_addFileEntry("txt");
-		_addFileEntry("xls");
-		_addFileEntry("zip");
+		_addFileEntry(_group, "java");
+		_addFileEntry(_group, "liferay");
+		_addFileEntry(_group, "mp3");
+		_addFileEntry(_group, "mp4");
+		_addFileEntry(_group, "pdf");
+		_addFileEntry(_group, "png");
+		_addFileEntry(_group, "ppt");
+		_addFileEntry(_group, "txt");
+		_addFileEntry(_group, "xls");
+		_addFileEntry(_group, "zip");
 
-		Map<String, Object> data = _getData();
+		Map<String, Object> data = _getData(null);
 
 		JSONArray fileExtensionGroupsJSONArray = (JSONArray)data.get(
 			"fileExtensionGroups");
@@ -133,14 +133,16 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
 	}
 
-	private FileEntry _addFileEntry(String fileExtension) throws Exception {
+	private FileEntry _addFileEntry(Group group, String fileExtension)
+		throws Exception {
+
 		return DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + "." + fileExtension,
 			MimeTypesUtil.getExtensionContentType(fileExtension), new byte[0],
 			null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private void _assertExtensionGroupJSONObject(
@@ -165,7 +167,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			fileExtensionJSONObject.getString("fileExtension"));
 	}
 
-	private Map<String, Object> _getData() throws Exception {
+	private Map<String, Object> _getData(Group group) throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -191,10 +193,18 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		FileExtensionItemSelectorCriterion fileExtensionItemSelectorCriterion =
+			new FileExtensionItemSelectorCriterion();
+
+		if (group != null) {
+			fileExtensionItemSelectorCriterion.setSelectedGroupIds(
+				new long[] {group.getGroupId()});
+		}
+
 		_contentDashboardFileExtensionItemSelectorView.renderHTML(
 			mockHttpServletRequest, new MockHttpServletResponse(),
-			new FileExtensionItemSelectorCriterion(),
-			new MockLiferayPortletURL(), RandomTestUtil.randomString(), true);
+			fileExtensionItemSelectorCriterion, new MockLiferayPortletURL(),
+			RandomTestUtil.randomString(), true);
 
 		Object contentDashboardFileExtensionItemSelectorViewDisplayContext =
 			mockHttpServletRequest.getAttribute(

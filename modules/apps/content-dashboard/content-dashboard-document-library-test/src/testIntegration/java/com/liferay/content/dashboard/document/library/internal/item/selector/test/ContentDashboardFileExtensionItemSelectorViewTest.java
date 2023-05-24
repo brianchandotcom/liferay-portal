@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
@@ -131,6 +132,36 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			fileExtensionGroupsJSONArray.getJSONObject(9));
 
 		Assert.assertNotNull(data.get("itemSelectorSaveEvent"));
+	}
+
+	@Test
+	public void testGetDataSelectedGroup() throws Exception {
+		_addFileEntry(_group, "java");
+		_addFileEntry(_group, "liferay");
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			Map<String, Object> data = _getData(group2);
+
+			JSONArray fileExtensionGroupsJSONArray = (JSONArray)data.get(
+				"fileExtensionGroups");
+
+			Assert.assertEquals(0, fileExtensionGroupsJSONArray.length());
+
+			_addFileEntry(group2, "xls");
+			_addFileEntry(group2, "zip");
+
+			data = _getData(group2);
+
+			fileExtensionGroupsJSONArray = (JSONArray)data.get(
+				"fileExtensionGroups");
+
+			Assert.assertEquals(2, fileExtensionGroupsJSONArray.length());
+		}
+		finally {
+			_groupLocalService.deleteGroup(group2);
+		}
 	}
 
 	private FileEntry _addFileEntry(Group group, String fileExtension)
@@ -240,5 +271,8 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

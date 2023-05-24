@@ -17,7 +17,7 @@ interface IProps {
 }
 
 interface Item {
-	[key: string]: string | undefined;
+	[key: string]: string | undefined | string[];
 }
 const GoalsEntries = ({mdfRequest}: IProps) => (
 	<div>
@@ -55,8 +55,8 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				{
 					columnKey: 'value',
 					label: '',
-					render: (data: any) => (
-						<p style={{whiteSpace: 'pre-wrap'}}>{data}</p>
+					render: (data: string | string[] | undefined) => (
+						<p className="text-wrap">{data}</p>
 					),
 				},
 			]}

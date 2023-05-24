@@ -14,12 +14,21 @@
 
 package com.liferay.partner;
 
+import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.partner.dto.Activity;
 import com.liferay.partner.service.ActivityService;
+import com.liferay.petra.function.transform.TransformUtil;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.Collection;
+
+import org.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -33,16 +42,34 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (_log.isInfoEnabled()) {
-			Page<Activity> activitiesPage = _activityService.getEntriesPage(
-				null, null, null, null);
+		ZonedDateTime nowZonedDateTime = ZonedDateTime.ofInstant(
+			Instant.now(), ZoneOffset.UTC);
 
-			_log.info("Activities: " + activitiesPage);
+		Page<Activity> activitiesPage = _activityService.getEntriesPage(
+			null,
+			"endDate lt " +
+				nowZonedDateTime.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+			Pagination.of(1, -1), null);
+
+		if (activitiesPage.getTotalCount() > 0) {
+			Collection<Activity> activities = TransformUtil.transform(
+				activitiesPage.getItems(),
+				activity -> {
+					ListTypeEntry expiredListTypeEntry = new ListTypeEntry() {
+						{
+							setKey("expired");
+							setName("Expired");
+						}
+					};
+
+					activity.setActivityStatus(expiredListTypeEntry);
+
+					return activity;
+				});
+
+			System.out.println(new JSONArray(activities));
 		}
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		PartnerCommandLineRunner.class);
 
 	@Autowired
 	private ActivityService _activityService;

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -180,6 +181,10 @@ public class FunctionObjectEntryManager
 		checkPortletResourcePermission(
 			objectDefinition, scopeKey, dtoConverterContext.getUser(),
 			ActionKeys.VIEW);
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
 
 		return _toObjectEntry(
 			_launch(

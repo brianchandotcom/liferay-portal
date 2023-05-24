@@ -11458,13 +11458,6 @@ mail.session.mail.store.protocol=pop3s
 pop.server.subdomain=
 pop.server.notifications.enabled=true
 				</echo>
-
-				<replace
-					file="portal-impl/src/portal-ext.properties"
-				>
-					<replacetoken>test@liferay.com</replacetoken>
-					<replacevalue>qa-exchange-pop-test@liferay.onmicrosoft.com</replacevalue>
-				</replace>
 			</then>
 		</if>
 

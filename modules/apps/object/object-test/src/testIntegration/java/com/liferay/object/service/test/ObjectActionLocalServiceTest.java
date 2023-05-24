@@ -323,7 +323,7 @@ public class ObjectActionLocalServiceTest {
 		try {
 			_addObjectAction(
 				RandomTestUtil.randomString(),
-				ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+				ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 				ObjectActionTriggerConstants.KEY_STANDALONE, unicodeProperties);
 
 			Assert.fail();
@@ -338,12 +338,12 @@ public class ObjectActionLocalServiceTest {
 					"objectDefinitionId"));
 		}
 
-		_publishCustomObjectDefinition();
-
 		ObjectAction objectAction5 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_STANDALONE, unicodeProperties);
+
+		_publishCustomObjectDefinition();
 
 		String originalName = PrincipalThreadLocal.getName();
 		PermissionChecker originalPermissionChecker =

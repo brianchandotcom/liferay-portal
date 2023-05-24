@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "MARKETPLACE HELP AND SUPPORT",
+	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
+	"name": "marketplace_help_and_support",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

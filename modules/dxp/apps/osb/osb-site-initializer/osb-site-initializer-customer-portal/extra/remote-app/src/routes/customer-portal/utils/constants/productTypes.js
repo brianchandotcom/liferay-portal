@@ -12,6 +12,7 @@
 export const PRODUCT_TYPES = {
 	analyticsCloud: 'Analytics Cloud',
 	commerce: 'Commerce',
+	commerceCloud: 'Commerce for Cloud',
 	dxp: 'DXP',
 	dxpCloud: 'LXC - SM',
 	enterpriseSearch: 'Enterprise Search',

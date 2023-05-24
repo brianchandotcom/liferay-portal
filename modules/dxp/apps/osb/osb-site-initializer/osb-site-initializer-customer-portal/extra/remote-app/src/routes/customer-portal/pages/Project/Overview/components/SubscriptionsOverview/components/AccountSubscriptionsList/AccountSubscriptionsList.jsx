@@ -84,7 +84,9 @@ const AccountSubscriptionsList = ({
 					{...accountSubscription}
 					key={index}
 					logoPath={
-						LOGO_PATH_TYPES[selectedAccountSubscriptionGroup?.name]
+						LOGO_PATH_TYPES[
+							selectedAccountSubscriptionGroup?.name?.trim()
+						]
 					}
 					onClick={() =>
 						setCurrentAccountSubscription({...accountSubscription})

@@ -285,12 +285,25 @@ definition {
 	}
 
 	@description = "LPS-185499. Confirm that field can be deleted."
-	@ignore = "true"
 	@priority = 4
 	test CanDeleteField {
+		task ("And adds 'id' field") {
+			LexiconEntry.gotoAdd();
 
-		// TODO LPS-185499 CanDeleteField pending implementation
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			Button.clickSave();
+		}
+
+		task ("When the user selects the Delete option in the 3 dots menu / And the user confirms the deletion / Then the field is deleted") {
+			FrontendDataSetAdmin.deleteDataSetViewsFields(fieldName = "id");
+		}
+
+		task ("And assert the field is not present in the fields tab table") {
+			AssertElementPresent(
+				key_text = "Add Fields",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	@description = "LPS-185228. Confirm that a field is not added after checking and unchecking it."

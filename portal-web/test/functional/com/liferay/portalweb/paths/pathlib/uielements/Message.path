@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_ANY</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'${key_alertMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_VALID_CONTENT</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter valid content')]</td>
 	<td></td>

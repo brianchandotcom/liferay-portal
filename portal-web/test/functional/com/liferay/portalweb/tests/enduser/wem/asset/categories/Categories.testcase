@@ -1003,4 +1003,38 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-168430. Remove validation of asset category properties value."
+	@priority = 3
+	test ViewNoValidationForCategoryPropertyValue {
+		task ("Given Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		task ("When Add a property with forbidden characters in category property value") {
+			Category.addPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = '''&'@)}:,=>/<\n({%|+?";*~''',
+				propertyNumber = 0);
+		}
+
+		task ("Then View no validation for that category property value") {
+			AssertElementNotPresent(
+				key_alertMessage = "Error:Please enter a valid property value.",
+				locator1 = "Message#ERROR_ENTER_ANY");
+
+			Category.viewCategoryPropertyCP(
+				categoryName = "Category Name",
+				propertiesKeyField = "Category Property",
+				propertiesValueField = '''&'@)}:,=>/<\n({%|+?";*~''',
+				propertyNumber = 0,
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
 }

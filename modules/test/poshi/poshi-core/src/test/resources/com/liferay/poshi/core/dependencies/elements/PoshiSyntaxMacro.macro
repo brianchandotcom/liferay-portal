@@ -1,5 +1,5 @@
 <definition>
-	<command name="configureBreadcrumb" arguments="">
+	<command name="configureBreadcrumb">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION"/>
 	</command>
 	<command prose="I want to print rows-hash table: ${table}" name="echoRowsHashTable" arguments="rawTable,rowsHashTable,table">

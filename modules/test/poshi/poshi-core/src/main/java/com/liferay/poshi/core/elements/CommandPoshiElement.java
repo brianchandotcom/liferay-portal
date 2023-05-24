@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -36,39 +35,6 @@ import org.dom4j.Node;
  * @author Kenji Heigel
  */
 public class CommandPoshiElement extends PoshiElement {
-
-	public String checkArguments(String blockContent) {
-		Set<String> argumentSet = new HashSet<>();
-		Matcher variableMatcher = _variablePattern.matcher(blockContent);
-
-		while (variableMatcher.find()) {
-			argumentSet.add(variableMatcher.group(1));
-		}
-
-		Matcher declarationMatcher = _declarationVariablePattern.matcher(
-			blockContent);
-
-		while (declarationMatcher.find()) {
-			argumentSet.remove(declarationMatcher.group(1));
-		}
-
-		Iterator<String> iterator = argumentSet.iterator();
-
-		if (argumentSet.isEmpty()) {
-			return "";
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		while (iterator.hasNext()) {
-			sb.append(iterator.next());
-			sb.append(",");
-		}
-
-		String argumentString = sb.toString();
-
-		return argumentString.substring(0, argumentString.length() - 1);
-	}
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -89,6 +55,24 @@ public class CommandPoshiElement extends PoshiElement {
 		}
 
 		return null;
+	}
+
+	public List<String> generateRequiredArguments(String blockContent) {
+		Set<String> argumentSet = new HashSet<>();
+		Matcher variableMatcher = _variablePattern.matcher(blockContent);
+
+		while (variableMatcher.find()) {
+			argumentSet.add(variableMatcher.group(1));
+		}
+
+		Matcher declarationMatcher = _declarationVariablePattern.matcher(
+			blockContent);
+
+		while (declarationMatcher.find()) {
+			argumentSet.remove(declarationMatcher.group(1));
+		}
+
+		return new ArrayList<>(argumentSet);
 	}
 
 	@Override
@@ -166,18 +150,27 @@ public class CommandPoshiElement extends PoshiElement {
 				String arguments = getParentheticalContent(
 					blockNameMatcher.group(4));
 
-				String macroArguments = checkArguments(blockContent);
+				if (Validator.isNull(arguments)) {
+					StringBuilder sb = new StringBuilder();
 
-				if (Validator.isNotNull(arguments)) {
-					if (!arguments.equals(macroArguments)) {
-						arguments = macroArguments;
+					for (String argument :
+							generateRequiredArguments(blockContent)) {
+
+						sb.append(argument);
+						sb.append(" = null,");
+					}
+
+					String newArguments = sb.toString();
+
+					if (!newArguments.isEmpty()){
+					addAttribute(
+						"arguments",
+						newArguments.substring(0, newArguments.length() - 1));
 					}
 				}
 				else {
-					arguments = macroArguments;
+					addAttribute("arguments", arguments);
 				}
-
-				addAttribute("arguments", arguments);
 			}
 		}
 

@@ -187,7 +187,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"/publications/js/components/ChangeTrackingIndicator";
 
 			_reactRenderer.renderReact(
-				new ComponentDescriptor(module, componentId),
+				new ComponentDescriptor(module, componentId, null, true),
 				_getReactData(
 					httpServletRequest, ctCollection, ctPreferences,
 					_ctSettingsConfigurationHelper.isSandboxEnabled(

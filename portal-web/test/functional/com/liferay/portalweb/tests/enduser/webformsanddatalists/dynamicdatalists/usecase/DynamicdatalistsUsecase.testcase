@@ -2415,7 +2415,7 @@ definition {
 			ddlRecordFieldData = "Test Page 10",
 			fieldName = "LinkToPage");
 
-		PortletEntry.publish();
+		Button.click(button = "Publish");
 
 		DDLRecord.viewFirstFieldCP(
 			ddlRecordFieldData = "Test Page 10",

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.layout.prototype;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -41,9 +42,6 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -180,6 +178,9 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	protected void customize(Layout layout) throws Exception {
+		SearchLayoutPrototypeCustomizer searchLayoutPrototypeCustomizer =
+			_searchLayoutPrototypeCustomizerSnapshot.get();
+
 		if (searchLayoutPrototypeCustomizer != null) {
 			searchLayoutPrototypeCustomizer.customize(layout);
 		}
@@ -189,6 +190,9 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	protected String getLayoutTemplateId() {
+		SearchLayoutPrototypeCustomizer searchLayoutPrototypeCustomizer =
+			_searchLayoutPrototypeCustomizerSnapshot.get();
+
 		if (searchLayoutPrototypeCustomizer != null) {
 			return searchLayoutPrototypeCustomizer.getLayoutTemplateId();
 		}
@@ -204,14 +208,6 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Reference
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile SearchLayoutPrototypeCustomizer
-		searchLayoutPrototypeCustomizer;
 
 	@Reference
 	protected UserLocalService userLocalService;
@@ -291,6 +287,11 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchLayoutFactoryImpl.class);
+
+	private static final Snapshot<SearchLayoutPrototypeCustomizer>
+		_searchLayoutPrototypeCustomizerSnapshot = new Snapshot<>(
+			SearchLayoutFactoryImpl.class,
+			SearchLayoutPrototypeCustomizer.class, null, true);
 
 	private final SearchLayoutPrototypeCustomizer
 		_defaultSearchLayoutPrototypeCustomizer =

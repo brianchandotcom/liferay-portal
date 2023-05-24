@@ -1,0 +1,54 @@
+[
+	{
+		"name": "Antwerpen",
+		"regionCode": "VAN"
+	},
+	{
+		"name": "Brabant wallon",
+		"regionCode": "WBR"
+	},
+	{
+		"name": "Brussels-Capital Region",
+		"regionCode": "BRU"
+	},
+	{
+		"name": "Hainaut",
+		"regionCode": "WHT"
+	},
+	{
+		"name": "Limburg",
+		"regionCode": "VLI"
+	},
+	{
+		"name": "Liège",
+		"regionCode": "WLG"
+	},
+	{
+		"name": "Luxembourg",
+		"regionCode": "WLX"
+	},
+	{
+		"name": "Namur",
+		"regionCode": "WNA"
+	},
+	{
+		"name": "Oost-Vlaanderen",
+		"regionCode": "VOV"
+	},
+	{
+		"name": "Vlaams Gewest",
+		"regionCode": "VLG"
+	},
+	{
+		"name": "Vlaams-Brabant",
+		"regionCode": "VBR"
+	},
+	{
+		"name": "Walloon Region",
+		"regionCode": "WAL"
+	},
+	{
+		"name": "West-Vlaanderen",
+		"regionCode": "VWV"
+	}
+]

@@ -485,6 +485,9 @@ public class FragmentsImporterTest {
 			Assert.assertEquals(
 				FragmentsImporterResultEntry.Status.INVALID,
 				fragmentsImporterResultEntry.getStatus());
+			Assert.assertEquals(
+				FragmentsImporterResultEntry.Type.FRAGMENT,
+				fragmentsImporterResultEntry.getType());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

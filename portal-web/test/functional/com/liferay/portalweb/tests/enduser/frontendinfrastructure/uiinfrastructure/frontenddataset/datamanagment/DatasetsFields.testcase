@@ -184,12 +184,39 @@ definition {
 	}
 
 	@description = "LPS-185500. Confirm that can cancel field deletion on cancel button."
-	@ignore = "true"
 	@priority = 4
 	test CanCancelFieldDeletion {
+		task ("And adds 'id' field") {
+			LexiconEntry.gotoAdd();
 
-		// TODO LPS-185500 CanCancelFieldDeletion pending implementation
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			Button.clickSave();
+		}
+
+		task ("When the user selects the Delete option in the 3 dots menu") {
+			Click(
+				key_fieldName = "id",
+				locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+		}
+
+		task ("Then the confirmation message is displayed") {
+			AssertElementPresent(
+				key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
+
+		task ("And the user cancels the confirmation message") {
+			Button.clickCancel();
+		}
+
+		task ("Then the field is not deleted / And assert the field still appears in the Fields tab table") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "id");
+		}
 	}
 
 	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."

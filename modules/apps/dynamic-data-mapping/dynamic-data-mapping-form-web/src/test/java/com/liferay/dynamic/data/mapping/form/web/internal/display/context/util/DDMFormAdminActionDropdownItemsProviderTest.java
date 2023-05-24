@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -43,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.hamcrest.collection.IsMapContaining;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -50,6 +49,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -68,12 +68,17 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 	public static void setUpClass() throws Exception {
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
+		_setUpPortletProviderUtil();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_portletProviderUtilMockedStatic.close();
 	}
 
 	@Before
 	public void setUp() throws Exception {
 		_setUpDDMFormAdminActionDropdownItemsProvider(true);
-		_setUpPortletProviderUtil();
 	}
 
 	@Test
@@ -271,6 +276,20 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 		languageUtil.setLanguage(language);
 	}
 
+	private static void _setUpPortletProviderUtil() throws Exception {
+		_portletProviderUtilMockedStatic = Mockito.mockStatic(
+			PortletProviderUtil.class);
+
+		Mockito.when(
+			PortletProviderUtil.getPortletURL(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.any(String.class),
+				Mockito.eq(PortletProvider.Action.VIEW))
+		).thenReturn(
+			new MockLiferayPortletURL()
+		);
+	}
+
 	private void _assertActionDropdownItemDelete(DropdownItem dropdownItem) {
 		Assert.assertThat(
 			(Map<String, Object>)dropdownItem.get("data"),
@@ -464,33 +483,6 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 				_SHARE_FORM_INSTANCE_URL);
 	}
 
-	private void _setUpPortletProviderUtil() throws Exception {
-		ServiceTrackerMap<String, ? extends PortletProvider> serviceTrackerMap =
-			Mockito.mock(ServiceTrackerMap.class);
-
-		PortletProvider portletProvider = Mockito.mock(PortletProvider.class);
-
-		Mockito.doReturn(
-			portletProvider
-		).when(
-			serviceTrackerMap
-		).getService(
-			Mockito.anyString()
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			PortletProviderUtil.class, "_viewServiceTrackerMap",
-			serviceTrackerMap);
-
-		Mockito.doReturn(
-			new MockLiferayPortletURL()
-		).when(
-			portletProvider
-		).getPortletURL(
-			Mockito.any(HttpServletRequest.class)
-		);
-	}
-
 	private static final String _AUTOCOMPLETE_USER_URL =
 		RandomTestUtil.randomString();
 
@@ -514,6 +506,9 @@ public class DDMFormAdminActionDropdownItemsProviderTest {
 
 	private static final String _SHARE_FORM_INSTANCE_URL =
 		RandomTestUtil.randomString();
+
+	private static MockedStatic<PortletProviderUtil>
+		_portletProviderUtilMockedStatic;
 
 	private DDMFormAdminActionDropdownItemsProvider
 		_ddmFormAdminActionDropdownItemsProvider;

@@ -1,10 +1,10 @@
 [
 	{
-		"name": "Company Name 1",
-		"externalReferenceCode": "0017i00001MQSGdAAP"
+		"externalReferenceCode": "0017i00001MQSGdAAP",
+		"name": "Company Name 1"
 	},
 	{
-		"name": "Company Name 2",
-		"externalReferenceCode": "0017i00001MQSAyAAP"
+		"externalReferenceCode": "0017i00001MQSAyAAP",
+		"name": "Company Name 2"
 	}
 ]

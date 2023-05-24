@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -191,7 +192,8 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_contentDashboardFileExtensionItemSelectorView.renderHTML(
-			mockHttpServletRequest, new MockHttpServletResponse(), null,
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			new FileExtensionItemSelectorCriterion(),
 			new MockLiferayPortletURL(), RandomTestUtil.randomString(), true);
 
 		Object contentDashboardFileExtensionItemSelectorViewDisplayContext =

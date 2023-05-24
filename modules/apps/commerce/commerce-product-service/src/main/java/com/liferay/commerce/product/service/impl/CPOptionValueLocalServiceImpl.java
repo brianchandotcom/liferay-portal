@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
+import com.liferay.commerce.product.exception.CPOptionValueNameException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueLocalServiceBaseImpl;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -98,7 +100,9 @@ public class CPOptionValueLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		_validate(0, cpOptionId, key);
+		_validateKey(0, cpOptionId, key);
+
+		_validateName(nameMap);
 
 		long cpOptionValueId = counterLocalService.increment();
 
@@ -280,9 +284,11 @@ public class CPOptionValueLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		_validate(
+		_validateKey(
 			cpOptionValue.getCPOptionValueId(), cpOptionValue.getCPOptionId(),
 			key);
+
+		_validateName(nameMap);
 
 		cpOptionValue.setNameMap(nameMap);
 		cpOptionValue.setPriority(priority);
@@ -410,8 +416,12 @@ public class CPOptionValueLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
-	private void _validate(long cpOptionValueId, long cpOptionId, String key)
+	private void _validateKey(long cpOptionValueId, long cpOptionId, String key)
 		throws PortalException {
+
+		if (Validator.isBlank(key)) {
+			throw new CPOptionValueKeyException("Key is null");
+		}
 
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_K(
 			cpOptionId, key);
@@ -419,7 +429,18 @@ public class CPOptionValueLocalServiceImpl
 		if ((cpOptionValue != null) &&
 			(cpOptionValue.getCPOptionValueId() != cpOptionValueId)) {
 
-			throw new CPOptionValueKeyException();
+			throw new CPOptionValueKeyException("Duplicate key " + key);
+		}
+	}
+
+	private void _validateName(Map<Locale, String> nameMap)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		if ((nameMap == null) || Validator.isNull(nameMap.get(locale))) {
+			throw new CPOptionValueNameException(
+				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
 

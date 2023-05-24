@@ -3,5 +3,5 @@ assemble:
 liferay-partner-cron:
     name: Liferay Partner Cron
     scopes:
-        - C_Test.everything
+        - C_Activity.everything
     type: oAuthApplicationHeadlessServer

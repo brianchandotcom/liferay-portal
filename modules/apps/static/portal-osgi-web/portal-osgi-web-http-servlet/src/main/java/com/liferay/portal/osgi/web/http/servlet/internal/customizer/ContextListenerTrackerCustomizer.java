@@ -11,14 +11,19 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.customizer;
 
-import java.util.EventListener;
-import java.util.concurrent.atomic.AtomicReference;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.error.HttpWhiteboardFailureException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ListenerRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
-import org.osgi.framework.*;
+
+import java.util.EventListener;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.runtime.dto.FailedListenerDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
@@ -27,63 +32,71 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * @author Raymond Augé
  */
 public class ContextListenerTrackerCustomizer
-	extends RegistrationServiceTrackerCustomizer<EventListener,  AtomicReference<ListenerRegistration>> {
+	extends RegistrationServiceTrackerCustomizer
+		<EventListener, AtomicReference<ListenerRegistration>> {
 
 	public ContextListenerTrackerCustomizer(
-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
+		BundleContext bundleContext,
+		HttpServiceRuntimeImpl httpServiceRuntimeImpl,
 		ContextController contextController) {
 
-		super(bundleContext, httpServiceRuntime);
+		super(bundleContext, httpServiceRuntimeImpl);
 
-		this.contextController = contextController;
+		_contextController = contextController;
 	}
 
 	@Override
 	public AtomicReference<ListenerRegistration> addingService(
 		ServiceReference<EventListener> serviceReference) {
 
-		if (serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER) == null) {
+		Object listenerObject = serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER);
+
+		if ((listenerObject == null) ||
+			!_contextController.matches(serviceReference) ||
+			!httpServiceRuntimeImpl.matches(serviceReference)) {
+
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference)) {
-			return null;
-		}
-
-		if (!httpServiceRuntime.matches(serviceReference)) {
-			return null;
-		}
-
-		AtomicReference<ListenerRegistration> result = new AtomicReference<ListenerRegistration>();
+		AtomicReference<ListenerRegistration> result = new AtomicReference<>();
 
 		try {
-			Object listenerObj = serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER);
-
-			if (!Boolean.class.isInstance(listenerObj) &&
-				!String.class.isInstance(listenerObj)) {
+			if (!(listenerObject instanceof Boolean) &&
+				!(listenerObject instanceof String)) {
 
 				throw new HttpWhiteboardFailureException(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER + "=" + listenerObj + " is not a valid option. Ignoring!", //$NON-NLS-1$ //$NON-NLS-2$
+					StringBundler.concat(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_LISTENER, "=",
+						listenerObject, " is not a valid option. Ignoring!"),
 					DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 			}
 
-			Boolean listener = (listenerObj instanceof Boolean) ? (Boolean)listenerObj : Boolean.parseBoolean((String)listenerObj);
+			boolean listener = Boolean.parseBoolean(
+				String.valueOf(listenerObject));
 
-			if (!listener.booleanValue()) {
+			if (!listener) {
 				return result;
 			}
 
-			result.set(contextController.addListenerRegistration(serviceReference));
+			result.set(
+				_contextController.addListenerRegistration(serviceReference));
 		}
-		catch (HttpWhiteboardFailureException hwfe) {
-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+		catch (HttpWhiteboardFailureException httpWhiteboardFailureException) {
+			httpServiceRuntimeImpl.log(
+				httpWhiteboardFailureException.getMessage(),
+				httpWhiteboardFailureException);
 
-			recordFailedListenerDTO(serviceReference, hwfe.getFailureReason());
+			_recordFailedListenerDTO(
+				serviceReference,
+				httpWhiteboardFailureException.getFailureReason());
 		}
-		catch (Exception e) {
-			httpServiceRuntime.log(e.getMessage(), e);
+		catch (Exception exception) {
+			httpServiceRuntimeImpl.log(exception.getMessage(), exception);
 
-			recordFailedListenerDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
+			_recordFailedListenerDTO(
+				serviceReference,
+				DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -95,6 +108,7 @@ public class ContextListenerTrackerCustomizer
 		AtomicReference<ListenerRegistration> listenerRegistration) {
 
 		removedService(serviceReference, listenerRegistration);
+
 		addingService(serviceReference);
 	}
 
@@ -104,28 +118,30 @@ public class ContextListenerTrackerCustomizer
 		AtomicReference<ListenerRegistration> listenerReference) {
 
 		ListenerRegistration listenerRegistration = listenerReference.get();
+
 		if (listenerRegistration != null) {
-			// Destroy now ungets the object we are using
 			listenerRegistration.destroy();
 		}
 
-		contextController.getHttpServiceRuntime().removeFailedListenerDTO(serviceReference);
+		httpServiceRuntimeImpl.removeFailedListenerDTO(serviceReference);
 	}
 
-	private void recordFailedListenerDTO(
+	private void _recordFailedListenerDTO(
 		ServiceReference<EventListener> serviceReference, int failureReason) {
 
 		FailedListenerDTO failedListenerDTO = new FailedListenerDTO();
 
 		failedListenerDTO.failureReason = failureReason;
-		failedListenerDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedListenerDTO.servletContextId = contextController.getServiceId();
+		failedListenerDTO.serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		failedListenerDTO.servletContextId = _contextController.getServiceId();
 		failedListenerDTO.types = StringPlus.from(
-			serviceReference.getProperty(Constants.OBJECTCLASS)).toArray(new String[0]);
+			serviceReference.getProperty(Constants.OBJECTCLASS));
 
-		contextController.getHttpServiceRuntime().recordFailedListenerDTO(serviceReference, failedListenerDTO);
+		httpServiceRuntimeImpl.recordFailedListenerDTO(
+			serviceReference, failedListenerDTO);
 	}
 
-	private ContextController contextController;
+	private final ContextController _contextController;
 
 }

@@ -11,14 +11,22 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.customizer;
 
-import java.util.concurrent.atomic.AtomicReference;
-import javax.servlet.Servlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.error.HttpWhiteboardFailureException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.*;
-import org.osgi.framework.*;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.BooleanPlus;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
+
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.servlet.Servlet;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.runtime.dto.FailedServletDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
@@ -27,50 +35,65 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * @author Raymond Augé
  */
 public class ContextServletTrackerCustomizer
-	extends RegistrationServiceTrackerCustomizer<Servlet, AtomicReference<ServletRegistration>> {
+	extends RegistrationServiceTrackerCustomizer
+		<Servlet, AtomicReference<ServletRegistration>> {
 
 	public ContextServletTrackerCustomizer(
-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
+		BundleContext bundleContext,
+		HttpServiceRuntimeImpl httpServiceRuntimeImpl,
 		ContextController contextController) {
 
-		super(bundleContext, httpServiceRuntime);
+		super(bundleContext, httpServiceRuntimeImpl);
 
-		this.contextController = contextController;
+		_contextController = contextController;
 	}
 
 	@Override
 	public AtomicReference<ServletRegistration> addingService(
 		ServiceReference<Servlet> serviceReference) {
 
-		if ((serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE) == null) &&
-			(serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME) == null) &&
-			(serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN) == null)) {
+		Object servletErrorPage = serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE);
+
+		Object servletName = serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+
+		Object servletPattern = serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN);
+
+		if ((servletErrorPage == null) && (servletName == null) &&
+			(servletPattern == null)) {
 
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference)) {
+		if (!_contextController.matches(serviceReference) ||
+			!httpServiceRuntimeImpl.matches(serviceReference)) {
+
 			return null;
 		}
 
-		if (!httpServiceRuntime.matches(serviceReference)) {
-			return null;
-		}
-
-		AtomicReference<ServletRegistration> result = new AtomicReference<ServletRegistration>();
+		AtomicReference<ServletRegistration> result = new AtomicReference<>();
 
 		try {
-			result.set(contextController.addServletRegistration(serviceReference));
+			result.set(
+				_contextController.addServletRegistration(serviceReference));
 		}
-		catch (HttpWhiteboardFailureException hwfe) {
-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+		catch (HttpWhiteboardFailureException httpWhiteboardFailureException) {
+			httpServiceRuntimeImpl.log(
+				httpWhiteboardFailureException.getMessage(),
+				httpWhiteboardFailureException);
 
-			recordFailedServletDTO(serviceReference, hwfe.getFailureReason());
+			_recordFailedServletDTO(
+				serviceReference,
+				httpWhiteboardFailureException.getFailureReason());
 		}
-		catch (Exception e) {
-			httpServiceRuntime.log(e.getMessage(), e);
+		catch (Exception exception) {
+			httpServiceRuntimeImpl.log(exception.getMessage(), exception);
 
-			recordFailedServletDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
+			_recordFailedServletDTO(
+				serviceReference,
+				DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -82,7 +105,10 @@ public class ContextServletTrackerCustomizer
 		AtomicReference<ServletRegistration> servletReference) {
 
 		removedService(serviceReference, servletReference);
-		AtomicReference<ServletRegistration> added = addingService(serviceReference);
+
+		AtomicReference<ServletRegistration> added = addingService(
+			serviceReference);
+
 		servletReference.set(added.get());
 	}
 
@@ -90,35 +116,44 @@ public class ContextServletTrackerCustomizer
 	public void removedService(
 		ServiceReference<Servlet> serviceReference,
 		AtomicReference<ServletRegistration> servletReference) {
+
 		ServletRegistration registration = servletReference.get();
+
 		if (registration != null) {
-			// destroy will unget the service object we were using
 			registration.destroy();
 		}
 
-		contextController.getHttpServiceRuntime().removeFailedServletDTOs(serviceReference);
+		httpServiceRuntimeImpl.removeFailedServletDTOs(serviceReference);
 	}
 
-	private void recordFailedServletDTO(
+	private void _recordFailedServletDTO(
 		ServiceReference<Servlet> serviceReference, int failureReason) {
 
 		FailedServletDTO failedServletDTO = new FailedServletDTO();
 
 		failedServletDTO.asyncSupported = BooleanPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED), false);
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED),
+			false);
 		failedServletDTO.failureReason = failureReason;
 		failedServletDTO.initParams = ServiceProperties.parseInitParams(
-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
-		failedServletDTO.name = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
+		failedServletDTO.name = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
 		failedServletDTO.patterns = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)).toArray(new String[0]);
-		failedServletDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedServletDTO.servletContextId = contextController.getServiceId();
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN));
+		failedServletDTO.serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		failedServletDTO.servletContextId = _contextController.getServiceId();
 		failedServletDTO.servletInfo = Const.BLANK;
 
-		contextController.getHttpServiceRuntime().recordFailedServletDTO(serviceReference, failedServletDTO);
+		httpServiceRuntimeImpl.recordFailedServletDTO(
+			serviceReference, failedServletDTO);
 	}
 
-	private ContextController contextController;
+	private final ContextController _contextController;
 
 }

@@ -42,17 +42,17 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent2 Title");
 
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki Page1 Content",
-			wikiPageName = "Wiki Page1 Title");
+		WikiNavigator.openWikiAdmin(siteURLKey = "guest");
 
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
+		WikiNavigator.gotoNode(wikiNodeName = "Main");
+
+		WikiPage.addCP(
+			wikiPageContent = "Wiki Page1 Content",
+			wikiPageTitle = "Wiki Page1 Title");
+
+		WikiPage.addCP(
 			wikiPageContent = "Wiki Page2 AssetContent",
-			wikiPageName = "Wiki Page2 Title");
+			wikiPageTitle = "Wiki Page2 Title");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document AssetContent Description ",
@@ -60,6 +60,8 @@ definition {
 			groupName = "Guest",
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
+
+		Navigator.openURL();
 
 		ClassicSearch.search(searchTerm = '''"AssetContent"''');
 

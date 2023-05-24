@@ -158,26 +158,6 @@
 				DDMFormInstanceRecord.formInstanceRecordId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_C_N_D">
-		<![CDATA[
-			SELECT
-				COUNT(DDMStructure.structureId) AS COUNT_VALUE
-			FROM
-				DDMStructure
-			INNER JOIN
-				DDMStructureLink ON
-					DDMStructure.structureId = DDMStructureLink.structureId
-			WHERE
-				(DDMStructure.companyId = ?) AND
-				[$GROUP_ID$]
-				(DDMStructureLink.classNameId = ?) AND
-				(DDMStructureLink.classPK = ?) AND
-				(
-					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-		]]>
-	</sql>
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
@@ -198,28 +178,6 @@
 				) AND
 				(type_ = ?)
 				[$STATUS$]
-		]]>
-	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_C_N_D">
-		<![CDATA[
-			SELECT
-				{DDMStructure.*}
-			FROM
-				DDMStructure
-			INNER JOIN
-				DDMStructureLink ON
-					DDMStructure.structureId = DDMStructureLink.structureId
-			WHERE
-				(DDMStructure.companyId = ?) AND
-				[$GROUP_ID$]
-				(DDMStructureLink.classNameId = ?) AND
-				(DDMStructureLink.classPK = ?) AND
-				(
-					(LOWER(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
-				)
-			ORDER BY
-				DDMStructure.structureId DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T_S">

@@ -7,8 +7,8 @@
 		],
 		"alternateName": "pm",
 		"emailAddress": "pm@partner.com",
-		"familyName": "pm",
-		"givenName": "pm",
+		"familyName": "Manager",
+		"givenName": "Partner",
 		"name": "Partner Manager (PM)"
 	},
 	{
@@ -19,8 +19,8 @@
 		],
 		"alternateName": "pmu",
 		"emailAddress": "pmu@partner.com",
-		"familyName": "pmu",
-		"givenName": "pmu",
+		"familyName": "User",
+		"givenName": "Partner Marketing",
 		"name": "Partner Marketing User (PMU)"
 	},
 	{
@@ -31,8 +31,8 @@
 		],
 		"alternateName": "psu",
 		"emailAddress": "psu@partner.com",
-		"familyName": "psu",
-		"givenName": "psu",
+		"familyName": "User",
+		"givenName": "Partner Sales",
 		"name": "Partner Sales User (PSU)"
 	},
 	{
@@ -43,8 +43,8 @@
 		],
 		"alternateName": "ptu",
 		"emailAddress": "ptu@partner.com",
-		"familyName": "ptu",
-		"givenName": "ptu",
+		"familyName": "User",
+		"givenName": "Partner Technical",
 		"name": "Partner Technical User (PTU)"
 	},
 	{
@@ -55,8 +55,8 @@
 		],
 		"alternateName": "cam",
 		"emailAddress": "cam@liferay.com",
-		"familyName": "cam",
-		"givenName": "cam",
+		"familyName": "Manager",
+		"givenName": "Channel Account",
 		"name": "Channel Account Manager (CAM)"
 	},
 	{
@@ -67,8 +67,8 @@
 		],
 		"alternateName": "com",
 		"emailAddress": "com@liferay.com",
-		"familyName": "com",
-		"givenName": "com",
+		"familyName": "Manager",
+		"givenName": "Channel Operations",
 		"name": "Channel Operations Manager (COM)"
 	},
 	{
@@ -79,8 +79,8 @@
 		],
 		"alternateName": "cmm",
 		"emailAddress": "cmm@liferay.com",
-		"familyName": "cmm",
-		"givenName": "cmm",
+		"familyName": "Manager",
+		"givenName": "Channel Marketing",
 		"name": "Channel Marketing Manager (CMM)"
 	},
 	{
@@ -91,8 +91,8 @@
 		],
 		"alternateName": "cmd",
 		"emailAddress": "cmd@liferay.com",
-		"familyName": "cmd",
-		"givenName": "cmd",
+		"familyName": "Director",
+		"givenName": "Channel Marketing",
 		"name": "Channel Marketing Director (CMD)",
 		"organizationBriefs": [
 			{
@@ -108,8 +108,8 @@
 		],
 		"alternateName": "cfm",
 		"emailAddress": "cfm@liferay.com",
-		"familyName": "cfm",
-		"givenName": "cfm",
+		"familyName": "Manager",
+		"givenName": "Channel Finance",
 		"name": "Channel Finance Manager (CFM)"
 	},
 	{
@@ -120,8 +120,16 @@
 		],
 		"alternateName": "cem",
 		"emailAddress": "cem@liferay.com",
-		"familyName": "cem",
-		"givenName": "cem",
+		"familyName": "Manager",
+		"givenName": "Channel Enablement",
 		"name": "Channel Enablement Manager (CEM)"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "0017i00001MQSGdAAP"
+			}
+		],
+		"emailAddress": "test@liferay.com"
 	}
 ]

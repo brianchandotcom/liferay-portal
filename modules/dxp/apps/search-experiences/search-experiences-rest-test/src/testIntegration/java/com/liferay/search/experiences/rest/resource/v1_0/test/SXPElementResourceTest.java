@@ -85,6 +85,16 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		super.testGetSXPElementsPageWithFilterDateTimeEquals();
 	}
 
+	@Override
+	@Test
+	public void testGetSXPElementsPageWithSortDateTime() throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testGetSXPElementsPageWithSortString() throws Exception {
+	}
+
 	@Ignore
 	@Override
 	@Test

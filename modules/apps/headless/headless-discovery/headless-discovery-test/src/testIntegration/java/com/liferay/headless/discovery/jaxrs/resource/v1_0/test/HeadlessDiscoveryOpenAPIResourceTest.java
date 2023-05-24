@@ -65,20 +65,20 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 	@Test
 	public void testGetGlobalOpenAPI() throws Exception {
 		List<String> globalOpenAPIPaths = _getPaths(
-			HTTPTestUtil.invoke(null, "openapi/openapi.json",
-				Http.Method.GET));
+			HTTPTestUtil.invoke(null, "openapi/openapi.json", Http.Method.GET));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(null, "openapi",
-			Http.Method.GET);
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, "openapi", Http.Method.GET);
 
 		Map<String, Object> map = jsonObject.toMap();
 
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			for (String openAPIPath : (List<String>)entry.getValue()) {
 				for (String path :
-					_getPaths(HTTPTestUtil.invoke(null,
-						_getOpenAPISubpath(openAPIPath),
-						Http.Method.GET))) {
+						_getPaths(
+							HTTPTestUtil.invoke(
+								null, _getOpenAPISubpath(openAPIPath),
+								Http.Method.GET))) {
 
 					if (path.endsWith("/")) {
 						path = path.substring(0, path.lastIndexOf("/"));

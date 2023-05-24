@@ -96,10 +96,9 @@ public class FileEntryInfoItemFormVariationsProvider
 
 		infoItemFormVariations.add(_getBasicDocumentInfoItemFormVariation());
 
-		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
+		for (DLFileEntryType dlFileEntryType :
+				_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds)) {
 
-		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			infoItemFormVariations.add(
 				new InfoItemFormVariation(
 					dlFileEntryType.getGroupId(),

@@ -20,6 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,9 +41,6 @@ import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Julio Camarero
@@ -159,7 +157,7 @@ public class GroupURLProvider {
 
 		try {
 			DepotEntryLocalService depotEntryLocalService =
-				_depotEntryLocalService;
+				_depotEntryLocalServiceSnapshot.get();
 
 			if (depotEntryLocalService == null) {
 				return null;
@@ -191,12 +189,9 @@ public class GroupURLProvider {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupURLProvider.class);
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DepotEntryLocalService _depotEntryLocalService;
+	private static final Snapshot<DepotEntryLocalService>
+		_depotEntryLocalServiceSnapshot = new Snapshot<>(
+			GroupURLProvider.class, DepotEntryLocalService.class, null, true);
 
 	@Reference
 	private GroupPermission _groupPermission;

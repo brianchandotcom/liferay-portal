@@ -176,7 +176,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"elementDefinition"};
+		return new String[] {"description", "elementDefinition", "title"};
 	}
 
 	@Override

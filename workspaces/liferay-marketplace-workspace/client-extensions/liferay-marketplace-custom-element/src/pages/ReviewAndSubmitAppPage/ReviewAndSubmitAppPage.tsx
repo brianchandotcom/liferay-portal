@@ -133,7 +133,9 @@ export function ReviewAndSubmitAppPage({
 			// );
 
 			const newApp: App = {
-				attachmentTitle: productResponse.attachments?.[0]?.title['en_US'] as string,
+				attachmentTitle: productResponse.attachments?.[0]?.title[
+					'en_US'
+				] as string,
 				categories: productCategories,
 				description: productResponse.description['en_US'],
 				licenseType,

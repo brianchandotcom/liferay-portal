@@ -112,11 +112,10 @@ export function ProvideAppBuildPage({
 			let marketplaceEditionId = 0;
 
 			vocabulariesResponse.items.forEach(
-				(vocab: {
-					id: number;
-					name: string;
-				}) => {
-					if (vocab.name === 'Marketplace Liferay Platform Offering') {
+				(vocab: {id: number; name: string}) => {
+					if (
+						vocab.name === 'Marketplace Liferay Platform Offering'
+					) {
 						marketplaceLiferayPlatformOfferingId = vocab.id;
 					}
 
@@ -138,13 +137,14 @@ export function ProvideAppBuildPage({
 				(item) => item.name === 'Fully-Managed'
 			);
 
-			if(fullyManagedOption) {
+			if (fullyManagedOption) {
 				newCategories.push({
-					externalReferenceCode: fullyManagedOption?.externalReferenceCode,
+					externalReferenceCode:
+						fullyManagedOption?.externalReferenceCode,
 					id: fullyManagedOption.id,
 					name: fullyManagedOption.name,
 					vocabulary: 'Marketplace Liferay Platform Offering',
-				})
+				});
 			}
 
 			const liferayVersionList = await getCategories({
@@ -155,13 +155,14 @@ export function ProvideAppBuildPage({
 				(item) => item.name === '7.4'
 			);
 
-			if(liferayVersionOption) {
+			if (liferayVersionOption) {
 				newCategories.push({
-					externalReferenceCode: liferayVersionOption?.externalReferenceCode,
+					externalReferenceCode:
+						liferayVersionOption?.externalReferenceCode,
 					id: liferayVersionOption.id,
 					name: liferayVersionOption.name,
 					vocabulary: 'Marketplace Liferay Version',
-				})
+				});
 			}
 
 			const marketplaceEditionList = await getCategories({
@@ -172,13 +173,14 @@ export function ProvideAppBuildPage({
 				(item) => item.name === 'EE'
 			);
 
-			if(marketplaceEditionOption) {
+			if (marketplaceEditionOption) {
 				newCategories.push({
-					externalReferenceCode: marketplaceEditionOption?.externalReferenceCode,
+					externalReferenceCode:
+						marketplaceEditionOption?.externalReferenceCode,
 					id: marketplaceEditionOption.id,
 					name: marketplaceEditionOption.name,
 					vocabulary: 'Marketplace Edition',
-				})
+				});
 			}
 
 			newCategories = [...categories.items, ...newCategories];

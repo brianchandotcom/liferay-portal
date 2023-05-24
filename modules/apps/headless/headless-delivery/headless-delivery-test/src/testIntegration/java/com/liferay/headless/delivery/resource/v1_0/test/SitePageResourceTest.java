@@ -25,7 +25,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
+import com.liferay.headless.delivery.client.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentSitePage;
+import com.liferay.headless.delivery.client.dto.v1_0.SEOSettings;
+import com.liferay.headless.delivery.client.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryReference;
@@ -259,6 +262,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsNull();
 		_testPostSiteSitePageSuccessPagePermissionsRoleNonexisting();
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
+		_testPostSiteSitePageSuccessPageSettingsSeoSettings();
 		_testPostSiteSitePageSuccessParentSitePage();
 		_testPostSiteSitePageSuccessParentSitePageNonexisting();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting();
@@ -944,6 +948,86 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPostSiteSitePageSuccessPagePermissions(
 			expectedPagePermissions, inputPagePermissions);
+	}
+
+	private void _testPostSiteSitePageSuccessPageSettingsSeoSettings()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		PageSettings pageSettings = new PageSettings() {
+			{
+				seoSettings = new SEOSettings() {
+					{
+						String randomCustomCanonicalURL =
+							RandomTestUtil.randomString();
+
+						customCanonicalURL = randomCustomCanonicalURL;
+						customCanonicalURL_i18n = HashMapBuilder.put(
+							"en-US", randomCustomCanonicalURL
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+
+						String randomDescription =
+							RandomTestUtil.randomString();
+
+						description = randomDescription;
+						description_i18n = HashMapBuilder.put(
+							"en-US", randomDescription
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+
+						String randomHtmlTitle = RandomTestUtil.randomString();
+
+						htmlTitle = randomHtmlTitle;
+						htmlTitle_i18n = HashMapBuilder.put(
+							"en-US", randomHtmlTitle
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+
+						String randomRobots = RandomTestUtil.randomString();
+
+						robots = randomRobots;
+						robots_i18n = HashMapBuilder.put(
+							"en-US", randomRobots
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+
+						String randomSeoKeywords =
+							RandomTestUtil.randomString();
+
+						seoKeywords = randomSeoKeywords;
+						seoKeywords_i18n = HashMapBuilder.put(
+							"en-US", randomSeoKeywords
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+
+						siteMapSettings = new SiteMapSettings() {
+							{
+								changeFrequency = ChangeFrequency.ALWAYS;
+								include = RandomTestUtil.randomBoolean();
+								pagePriority = RandomTestUtil.randomDouble();
+							}
+						};
+					}
+				};
+			}
+		};
+
+		randomSitePage.setPageSettings(pageSettings);
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		PageSettings postPageSettings = postSitePage.getPageSettings();
+
+		Assert.assertEquals(
+			pageSettings.getSeoSettings(), postPageSettings.getSeoSettings());
 	}
 
 	private void _testPostSiteSitePageSuccessParentSitePage() throws Exception {

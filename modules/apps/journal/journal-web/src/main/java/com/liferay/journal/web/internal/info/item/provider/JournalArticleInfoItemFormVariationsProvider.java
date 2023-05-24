@@ -92,12 +92,11 @@ public class JournalArticleInfoItemFormVariationsProvider
 
 		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
 
-		List<DDMStructure> ddmStructures =
-			_ddmStructureLocalService.getStructures(
-				groupIds,
-				_portal.getClassNameId(JournalArticle.class.getName()));
+		for (DDMStructure ddmStructure :
+				_ddmStructureLocalService.getStructures(
+					groupIds,
+					_portal.getClassNameId(JournalArticle.class.getName()))) {
 
-		for (DDMStructure ddmStructure : ddmStructures) {
 			infoItemFormVariations.add(
 				new InfoItemFormVariation(
 					ddmStructure.getGroupId(),

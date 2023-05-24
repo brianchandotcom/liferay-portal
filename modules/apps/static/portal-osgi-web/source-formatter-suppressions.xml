@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="JavadocCheck" files="portal-osgi-web-http-servlet/src/main/java/.*\.java" />
+		<suppress checks="MissingDeprecatedCheck" files="portal-osgi-web-http-servlet/src/main/java/.*\.java" />
+	</checkstyle>
 	<source-check>
+		<suppress checks="BNDExportsCheck" files="portal-osgi-web-http-servlet/bnd\.bnd" />
+		<suppress checks="CopyrightCheck" files="portal-osgi-web-http-servlet/src/main/java/.*\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="portal-osgi-web-servlet-context-helper-impl/src/main/java/com/liferay/portal/osgi/web/servlet/context/helper/internal/definition/WebXMLDefinitionLoader\.java" />
 	</source-check>
 </suppressions>

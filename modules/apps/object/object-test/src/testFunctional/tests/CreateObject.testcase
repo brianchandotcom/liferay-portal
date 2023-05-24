@@ -1288,6 +1288,50 @@ definition {
 			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
+	@description = "LPS-184370 - Verify the user can delete an inactive custom object"
+	@priority = 3
+	test CanDeleteInactiveCustomObject {
+		task ("Given a custom object with a text field and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 184370",
+				objectName = "CustomObject184370",
+				pluralLabelName = "Custom Objects 184370");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject184370");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject184370");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject184370",
+				value = "Entry Test");
+		}
+
+		task ("When the custom object is deactivated") {
+			ObjectAdmin.openObjectAdmin();
+
+			CreateObject.inactiveCustomObject(objectLabel = "Custom Object 184370");
+		}
+
+		task ("Then the inactive object can be deleted") {
+			Navigator.gotoBack();
+
+			ObjectAdmin.deleteCustomObjectViaUI(
+				labelName = "Custom Object 184370",
+				objectName = "CustomObject184370");
+
+			AssertElementNotPresent(
+				key_labelName = "Custom Object 184370",
+				locator1 = "CreateObject#OBJECT_NAME");
+		}
+	}
+
 	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"
 	@priority = 5
 	test CanDeleteLayout {

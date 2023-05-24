@@ -52,9 +52,9 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			String value)
 		throws PortalException {
 
-		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
-
 		_validate(key, value);
+
+		PLOEntry ploEntry = fetchPLOEntry(companyId, key, languageId);
 
 		if (ploEntry == null) {
 			ploEntry = createPLOEntry(counterLocalService.increment());

@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 public class FaroPropsValues {
 
 	public static final String FARO_DEFAULT_WE_DEPLOY_KEY =
-		GetterUtil.getString(PropsUtil.get("faro.default.we.deploy.key"),
+		GetterUtil.getString(
+			PropsUtil.get("faro.default.we.deploy.key"),
 			System.getenv("FARO_DEFAULT_WE_DEPLOY_KEY"));
 
 	public static final String FARO_DEMO_CREATOR_METHOD = GetterUtil.getString(
@@ -32,8 +33,9 @@ public class FaroPropsValues {
 		System.getenv("FARO_DEMO_CREATOR_METHOD"));
 
 	public static final String FARO_MOCK_OSB_ACCOUNT_ENTRY =
-		GetterUtil.getString(PropsUtil.get("faro.mock.osb.account.entry"),
-				System.getenv("FARO_MOCK_OSB_ACCOUNT_ENTRY"));
+		GetterUtil.getString(
+			PropsUtil.get("faro.mock.osb.account.entry"),
+			System.getenv("FARO_MOCK_OSB_ACCOUNT_ENTRY"));
 
 	public static final String FARO_PROJECT_ID = GetterUtil.getString(
 		PropsUtil.get("faro.project.id"), System.getenv("FARO_PROJECT_ID"));
@@ -70,8 +72,9 @@ public class FaroPropsValues {
 		System.getenv("OSB_ASAH_BACKEND_URL"));
 
 	public static final String OSB_ASAH_LOCAL_CLUSTER_URL =
-		GetterUtil.getString(PropsUtil.get("osb.asah.local.cluster.url"),
-				System.getenv("OSB_ASAH_LOCAL_CLUSTER_URL"));
+		GetterUtil.getString(
+			PropsUtil.get("osb.asah.local.cluster.url"),
+			System.getenv("OSB_ASAH_LOCAL_CLUSTER_URL"));
 
 	public static final String OSB_ASAH_PUBLISHER_URL = GetterUtil.getString(
 		PropsUtil.get("osb.asah.publisher.url"),
@@ -85,7 +88,8 @@ public class FaroPropsValues {
 		PropsUtil.get("osb.asah.token"), System.getenv("OSB_ASAH_TOKEN"));
 
 	public static final boolean OSB_FARO_ANTIVIRUS_ENABLED =
-		GetterUtil.getBoolean(PropsUtil.get("osb.faro.antivirus.enabled"),
+		GetterUtil.getBoolean(
+			PropsUtil.get("osb.faro.antivirus.enabled"),
 			GetterUtil.getBoolean(System.getenv("OSB_FARO_ANTIVIRUS_ENABLED")));
 
 	public static final String OSB_FARO_CLAMAV_HOSTNAME = GetterUtil.getString(

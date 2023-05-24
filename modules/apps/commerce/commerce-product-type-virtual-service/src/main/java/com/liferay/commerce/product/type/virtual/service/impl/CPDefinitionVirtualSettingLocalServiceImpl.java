@@ -22,11 +22,11 @@ import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSe
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingFileEntryIdException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleFileEntryIdException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleUrlException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingSampleURLException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseContentException;
 import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingTermsOfUseException;
-import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException;
+import com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingURLException;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -164,7 +164,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setMaxUsages(maxUsages);
 		cpDefinitionVirtualSetting.setUseSample(useSample);
 		cpDefinitionVirtualSetting.setSampleFileEntryId(sampleFileEntryId);
-		cpDefinitionVirtualSetting.setSampleUrl(sampleURL);
+		cpDefinitionVirtualSetting.setSampleURL(sampleURL);
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
 		cpDefinitionVirtualSetting.setTermsOfUseContentMap(
 			termsOfUseContentMap);
@@ -391,7 +391,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 		cpDefinitionVirtualSetting.setMaxUsages(maxUsages);
 		cpDefinitionVirtualSetting.setUseSample(useSample);
 		cpDefinitionVirtualSetting.setSampleFileEntryId(sampleFileEntryId);
-		cpDefinitionVirtualSetting.setSampleUrl(sampleURL);
+		cpDefinitionVirtualSetting.setSampleURL(sampleURL);
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(termsOfUseRequired);
 		cpDefinitionVirtualSetting.setTermsOfUseContentMap(
 			termsOfUseContentMap);
@@ -449,7 +449,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				new URL(url);
 			}
 			catch (MalformedURLException malformedURLException) {
-				throw new CPDefinitionVirtualSettingUrlException(
+				throw new CPDefinitionVirtualSettingURLException(
 					malformedURLException);
 			}
 		}
@@ -472,7 +472,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 					new URL(sampleURL);
 				}
 				catch (MalformedURLException malformedURLException) {
-					throw new CPDefinitionVirtualSettingSampleUrlException(
+					throw new CPDefinitionVirtualSettingSampleURLException(
 						malformedURLException);
 				}
 			}

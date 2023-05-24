@@ -24,7 +24,7 @@
 		</field>
 		<field name="useSample" type="boolean" />
 		<field name="sampleFileEntryId" type="long" />
-		<field name="sampleUrl" type="String">
+		<field name="sampleURL" type="String">
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="termsOfUseRequired" type="boolean" />

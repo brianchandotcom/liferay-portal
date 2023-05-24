@@ -23,7 +23,7 @@
 
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleException.class %>" message="please-enter-a-valid-sample-url-or-select-an-existing-sample-file" />
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleFileEntryIdException.class %>" message="please-select-an-existing-sample-file" />
-<liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleUrlException.class %>" message="please-enter-a-valid-sample-url" />
+<liferay-ui:error exception="<%= CPDefinitionVirtualSettingSampleURLException.class %>" message="please-enter-a-valid-sample-url" />
 
 <aui:fieldset>
 	<aui:input label="enable-sample" name="useSample" />
@@ -57,7 +57,7 @@
 
 		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-sample-button-row-message"><liferay-ui:message key="or" /></h4>
 
-		<aui:input disabled="<%= useSampleFileEntry %>" label="sample-file-url" name="sampleUrl" />
+		<aui:input disabled="<%= useSampleFileEntry %>" label="sample-file-url" name="sampleURL" />
 	</aui:fieldset>
 </div>
 
@@ -94,12 +94,12 @@
 						sampleFileEntryId.value = value.fileEntryId;
 					}
 
-					const sampleUrl = document.getElementById(
-						'<portlet:namespace />sampleUrl'
+					const sampleURL = document.getElementById(
+						'<portlet:namespace />sampleURL'
 					);
 
-					if (sampleUrl) {
-						sampleUrl.setAttribute('disabled', true);
+					if (sampleURL) {
+						sampleURL.setAttribute('disabled', true);
 					}
 
 					const message = document.getElementById(
@@ -130,12 +130,12 @@
 			);
 
 			if (useSample.checked) {
-				const sampleUrl = document.getElementById(
-					'<portlet:namespace />sampleUrl'
+				const sampleURL = document.getElementById(
+					'<portlet:namespace />sampleURL'
 				);
 
-				if (sampleUrl) {
-					sampleUrl.setAttribute('disabled', false);
+				if (sampleURL) {
+					sampleURL.setAttribute('disabled', false);
 				}
 			}
 
@@ -180,14 +180,14 @@
 		).hasClass('hide');
 
 		if (useSampleCheckbox.attr('checked')) {
-			A.one('#<portlet:namespace />sampleUrl').attr(
+			A.one('#<portlet:namespace />sampleURL').attr(
 				'disabled',
 				isSampleFileSelected
 			);
 			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', false);
 		}
 		else {
-			A.one('#<portlet:namespace />sampleUrl').attr('disabled', true);
+			A.one('#<portlet:namespace />sampleURL').attr('disabled', true);
 			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', true);
 		}
 	}

@@ -193,7 +193,7 @@ public class SkuVirtualSettingsUtil {
 						skuVirtualSettings.getSampleAttachment())) {
 
 					sampleAttachmentURL =
-						cpDefinitionVirtualSetting.getSampleUrl();
+						cpDefinitionVirtualSetting.getSampleURL();
 				}
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(

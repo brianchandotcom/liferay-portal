@@ -181,7 +181,7 @@ public class ProductVirtualSettingsUtil {
 						productVirtualSettings.getSampleAttachment())) {
 
 					sampleAttachmentURL =
-						cpDefinitionVirtualSetting.getSampleUrl();
+						cpDefinitionVirtualSetting.getSampleURL();
 				}
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(

@@ -56,10 +56,10 @@ public class VirtualCPTypeTestUtil {
 			url = "http://www.example.com/download";
 		}
 
-		String sampleUrl = null;
+		String sampleURL = null;
 
 		if (sampleFileEntryId <= 0) {
-			sampleUrl = "http://www.example.com/sample";
+			sampleURL = "http://www.example.com/sample";
 		}
 
 		Map<Locale, String> termsOfUseContentMap = null;
@@ -72,7 +72,7 @@ public class VirtualCPTypeTestUtil {
 			addCPDefinitionVirtualSetting(
 				className, classPK, fileEntryId, url, activationStatus,
 				duration, RandomTestUtil.randomInt(), true, sampleFileEntryId,
-				sampleUrl, true, termsOfUseContentMap,
+				sampleURL, true, termsOfUseContentMap,
 				termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
 

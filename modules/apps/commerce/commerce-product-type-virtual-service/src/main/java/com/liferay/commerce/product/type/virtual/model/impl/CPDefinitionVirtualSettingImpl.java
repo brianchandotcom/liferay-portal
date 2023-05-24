@@ -38,7 +38,7 @@ public class CPDefinitionVirtualSettingImpl
 
 	@Override
 	public FileEntry getSampleFileEntry() throws PortalException {
-		if (isUseSampleUrl()) {
+		if (isUseSampleURL()) {
 			return null;
 		}
 
@@ -56,7 +56,7 @@ public class CPDefinitionVirtualSettingImpl
 	}
 
 	@Override
-	public boolean isUseSampleUrl() {
+	public boolean isUseSampleURL() {
 		if (getSampleFileEntryId() > 0) {
 			return false;
 		}

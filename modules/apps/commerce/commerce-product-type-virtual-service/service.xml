@@ -33,7 +33,7 @@
 		<column name="maxUsages" type="int" />
 		<column name="useSample" type="boolean" />
 		<column name="sampleFileEntryId" type="long" />
-		<column name="sampleUrl" type="String" />
+		<column name="sampleURL" type="String" />
 		<column name="termsOfUseRequired" type="boolean" />
 		<column localized="true" name="termsOfUseContent" type="String" />
 		<column db-name="termsOfUseArticleResourcePK" name="termsOfUseJournalArticleResourcePrimKey" type="long" />
@@ -52,10 +52,10 @@
 		<exception>CPDefinitionVirtualSettingFileEntryId</exception>
 		<exception>CPDefinitionVirtualSettingSample</exception>
 		<exception>CPDefinitionVirtualSettingSampleFileEntryId</exception>
-		<exception>CPDefinitionVirtualSettingSampleUrl</exception>
+		<exception>CPDefinitionVirtualSettingSampleURL</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUse</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUseArticleResourcePK</exception>
 		<exception>CPDefinitionVirtualSettingTermsOfUseContent</exception>
-		<exception>CPDefinitionVirtualSettingUrl</exception>
+		<exception>CPDefinitionVirtualSettingURL</exception>
 	</exceptions>
 </service-builder>

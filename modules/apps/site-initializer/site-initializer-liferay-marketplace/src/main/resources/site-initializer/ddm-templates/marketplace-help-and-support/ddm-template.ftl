@@ -1,0 +1,37 @@
+<#if (_CUSTOM_FIELD_Documentation.getData())?has_content && (_CUSTOM_FIELD_Documentation.getData())?starts_with("https")>
+	<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="${_CUSTOM_FIELD_Documentation.getData()}" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
+		<svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="doc" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="1" width="12" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.673 2.666c0-.733.594-1.333 1.327-1.333h4.78c.353 0 .693.14.94.393l3.22 3.22c.253.247.393.587.393.94v7.447c0 .733-.6 1.333-1.333 1.333H3.993c-.733 0-1.326-.6-1.326-1.333l.006-10.667Zm5.994-.333v3c0 .367.3.667.666.667h3L8.667 2.333Z" fill="#000"/></mask><g mask="url(#doc)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+
+		<span class="copy-text ml-1">${languageUtil.get(locale, "installation-documentation", "Installation Documentation")}</span>
+
+		<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+	</a>
+</#if>
+
+<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="https://www.liferay.com/en/legal/marketplace-terms-of-service" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
+	<svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="terms" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="1" width="14" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.333 1.333h-8C4.6 1.333 4 1.933 4 2.666v8C4 11.4 4.6 12 5.333 12h8c.734 0 1.334-.6 1.334-1.334v-8c0-.733-.6-1.333-1.334-1.333ZM2 4c-.367 0-.667.3-.667.666v8.667c0 .733.6 1.333 1.334 1.333h8.666c.367 0 .667-.3.667-.666 0-.367-.3-.667-.667-.667h-8a.669.669 0 0 1-.666-.667v-8C2.667 4.3 2.367 4 2 4Zm4.667 3.333H12c.367 0 .667-.3.667-.667 0-.366-.3-.666-.667-.666H6.667C6.3 6 6 6.3 6 6.666c0 .367.3.667.667.667ZM9.333 10H6.667A.669.669 0 0 1 6 9.333c0-.367.3-.667.667-.667h2.666c.367 0 .667.3.667.667 0 .367-.3.667-.667.667ZM6.667 4.666H12c.367 0 .667-.3.667-.666 0-.367-.3-.667-.667-.667H6.667C6.3 3.333 6 3.633 6 4c0 .366.3.666.667.666Z" fill="#000"/></mask><g mask="url(#terms)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+
+	<span class="copy-text ml-1">${languageUtil.get(locale, "terms-and-conditions", "Terms & Conditions")}</span>
+
+	<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+</a>
+
+<#if (_CUSTOM_FIELD_Source.getData())?has_content && (_CUSTOM_FIELD_Source.getData())?starts_with("https")>
+	<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="${_CUSTOM_FIELD_Source.getData()}" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
+		<svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="code" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="1" y="4" width="14" height="8"><path fill-rule="evenodd" clip-rule="evenodd" d="m12.8 8-2.6 2.6a.656.656 0 0 0 0 .933c.26.26.673.26.933 0l3.06-3.067c.26-.26.26-.68 0-.94l-3.06-3.06a.656.656 0 0 0-.933 0 .656.656 0 0 0 0 .934L12.8 8ZM3.2 8l2.6 2.6c.26.26.26.673 0 .933a.656.656 0 0 1-.933 0l-3.06-3.067a.664.664 0 0 1 0-.94l3.06-3.06a.656.656 0 0 1 .933 0c.26.26.26.674 0 .934L3.2 8Z" fill="#000"/></mask><g mask="url(#code)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+
+		<span class="copy-text ml-1">${languageUtil.get(locale, "source-code", "Source Code")}</span>
+
+		<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+	</a>
+</#if>
+
+<#if (_CUSTOM_FIELD_Support.getData())?has_content && (_CUSTOM_FIELD_Terms.getData())?starts_with("https")>
+	<a class="bg-whiteColor pb-2 pl-4 pr-4 pt-2" href="${_CUSTOM_FIELD_Terms.getData()}" style="border-color: var(--neutral-9);border-style: solid; border-width: 0 0 2px 0;align-items:center;color:var(--body-color);cursor:pointer;display:flex;justify-content:space-between;text-decoration:none;" target="_blank">
+		<svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="support" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="2" y="1" width="12" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 1.333A5.67 5.67 0 0 0 2.333 7 5.67 5.67 0 0 0 8 12.666h.333v2C11.573 13.106 13.667 10 13.667 7A5.67 5.67 0 0 0 8 1.333ZM7.333 11V9.666h1.334V11H7.333Zm1.58-3.154c.007-.013.014-.026.02-.033.182-.266.435-.488.69-.712.592-.519 1.202-1.053.997-2.188-.193-1.127-1.093-2.053-2.22-2.22a2.668 2.668 0 0 0-2.953 1.86.61.61 0 0 0 .58.78h.133c.273 0 .493-.193.587-.433.213-.594.84-1 1.533-.854.64.134 1.107.767 1.047 1.42-.045.51-.41.79-.813 1.103-.251.195-.519.402-.734.684l-.007-.007c-.011.012-.02.028-.03.044-.007.013-.015.025-.023.036-.01.017-.022.034-.033.05l-.034.05c-.06.094-.106.187-.146.294a.104.104 0 0 1-.017.033.104.104 0 0 0-.017.033c-.006.007-.006.014-.006.02-.08.24-.134.527-.134.867h1.34a1.406 1.406 0 0 1 .12-.593.239.239 0 0 1 .027-.074c.027-.053.06-.106.093-.16Z" fill="#000"/></mask><g mask="url(#support)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+
+		<span class="copy-text ml-1">${languageUtil.get(locale, "support-levels-and-informations", "Support Levels & Information")}</span>
+
+		<svg class="link-arrow" style="margin-left:auto;" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="arrow" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="4" width="6" height="8"><path d="m6 10.584 2.587-2.587L6 5.41a.664.664 0 1 1 .94-.94L10 7.53c.26.26.26.68 0 .94l-3.06 3.06c-.26.26-.68.26-.94 0a.678.678 0 0 1 0-.946Z" fill="#000"/></mask><g mask="url(#arrow)"><path fill="var(--neutral-5)" d="M0 0h16v16H0z"/></g></svg>
+	</a>
+</#if>

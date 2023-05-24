@@ -27,32 +27,30 @@ import java.util.Enumeration;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.framework.Bundle;
-
 /**
  * @author Miguel Pastor
  * @author Raymond Augé
  */
 public class FreeMarkerBundleClassloader extends URLClassLoader {
 
-	public FreeMarkerBundleClassloader(Bundle... bundles) {
+	public FreeMarkerBundleClassloader(ClassLoader... classLoaders) {
 		super(new URL[0]);
 
-		if (bundles.length == 0) {
+		if (classLoaders.length == 0) {
 			throw new IllegalArgumentException("Bundles are empty");
 		}
 
-		Collections.addAll(_bundles, bundles);
+		Collections.addAll(_classLoaders, classLoaders);
 	}
 
-	public void addBundle(Bundle bundle) {
-		_bundles.add(bundle);
+	public void addclassLoader(ClassLoader classLoader) {
+		_classLoaders.add(classLoader);
 	}
 
 	@Override
 	public URL findResource(String name) {
-		for (Bundle bundle : _bundles) {
-			URL url = bundle.getResource(name);
+		for (ClassLoader classLoader : _classLoaders) {
+			URL url = classLoader.getResource(name);
 
 			if (url != null) {
 				return url;
@@ -64,9 +62,9 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 
 	@Override
 	public Enumeration<URL> findResources(String name) {
-		for (Bundle bundle : _bundles) {
+		for (ClassLoader classLoader : _classLoaders) {
 			try {
-				Enumeration<URL> enumeration = bundle.getResources(name);
+				Enumeration<URL> enumeration = classLoader.getResources(name);
 
 				if ((enumeration != null) && enumeration.hasMoreElements()) {
 					return enumeration;
@@ -92,15 +90,15 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return findResources(name);
 	}
 
-	public void removeBundle(Bundle bundle) {
-		_bundles.remove(bundle);
+	public void removeClassLoader(ClassLoader classLoader) {
+		_classLoaders.remove(classLoader);
 	}
 
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
-		for (Bundle bundle : _bundles) {
+		for (ClassLoader classLoader : _classLoaders) {
 			try {
-				return bundle.loadClass(name);
+				return classLoader.loadClass(name);
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
@@ -128,6 +126,7 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerBundleClassloader.class);
 
-	private final Set<Bundle> _bundles = ConcurrentHashMap.newKeySet();
+	private final Set<ClassLoader> _classLoaders =
+		ConcurrentHashMap.newKeySet();
 
 }

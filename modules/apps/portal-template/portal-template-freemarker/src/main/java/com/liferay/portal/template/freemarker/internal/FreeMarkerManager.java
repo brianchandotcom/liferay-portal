@@ -104,6 +104,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -256,7 +257,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(_bundle);
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
+			bundleWiring.getClassLoader());
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, new TaglibBundleTrackerCustomizer());
@@ -821,7 +825,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 					return null;
 				}
 
-				_freeMarkerBundleClassloader.addBundle(bundle);
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+				_freeMarkerBundleClassloader.addclassLoader(
+					bundleWiring.getClassLoader());
 
 				_taglibMappings.putAll(map);
 
@@ -849,7 +856,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 			_templateModels.clear();
 
-			_freeMarkerBundleClassloader.removeBundle(bundle);
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			_freeMarkerBundleClassloader.removeClassLoader(
+				bundleWiring.getClassLoader());
 		}
 
 	}

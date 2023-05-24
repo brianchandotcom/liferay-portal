@@ -263,9 +263,7 @@ definition {
 		}
 
 		task ("And unchecks id field") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "id",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
 		}
 
 		task ("And clicks on Save button") {

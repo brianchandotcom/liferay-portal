@@ -11,27 +11,95 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.customizer.ContextFilterTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.customizer.ContextListenerTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.customizer.ContextResourceTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.customizer.ContextServletTrackerCustomizer;
+import com.liferay.portal.osgi.web.http.servlet.internal.error.IllegalContextNameException;
+import com.liferay.portal.osgi.web.http.servlet.internal.error.IllegalContextPathException;
+import com.liferay.portal.osgi.web.http.servlet.internal.error.RegisteredFilterException;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ListenerRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ResourceRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.FilterConfigImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionAdaptor;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.Match;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResourceServlet;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletConfigImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ServletContextAdaptor;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.DTOUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.EventListeners;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.Path;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.security.AccessController;
-import java.util.*;
-import java.util.concurrent.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.EventListener;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.servlet.*;
+
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
-import javax.servlet.http.*;
-import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
-import com.liferay.portal.osgi.web.http.servlet.internal.customizer.*;
-import com.liferay.portal.osgi.web.http.servlet.internal.error.*;
-import com.liferay.portal.osgi.web.http.servlet.internal.registration.*;
-import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.servlet.*;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.*;
-import org.osgi.framework.*;
+import javax.servlet.FilterConfig;
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextAttributeListener;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequestAttributeListener;
+import javax.servlet.ServletRequestListener;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionIdListener;
+import javax.servlet.http.HttpSessionListener;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceObjects;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.context.ServletContextHelper;
-import org.osgi.service.http.runtime.dto.*;
+import org.osgi.service.http.runtime.dto.DTOConstants;
+import org.osgi.service.http.runtime.dto.ErrorPageDTO;
+import org.osgi.service.http.runtime.dto.FilterDTO;
+import org.osgi.service.http.runtime.dto.ListenerDTO;
+import org.osgi.service.http.runtime.dto.RequestInfoDTO;
+import org.osgi.service.http.runtime.dto.ResourceDTO;
+import org.osgi.service.http.runtime.dto.ServletContextDTO;
+import org.osgi.service.http.runtime.dto.ServletDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -40,628 +108,415 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class ContextController {
 
-	public static final class ServiceHolder<S> implements Comparable<ServiceHolder<?>> {
-		final ServiceObjects<S> serviceObjects;
-		final S service;
-		final Bundle bundle;
-		final long serviceId;
-		final int serviceRanking;
-		public ServiceHolder(ServiceObjects<S> serviceObjects) {
-			this.serviceObjects = serviceObjects;
-			this.bundle = serviceObjects.getServiceReference().getBundle();
-			this.service = serviceObjects.getService();
-			this.serviceId = (Long) serviceObjects.getServiceReference().getProperty(Constants.SERVICE_ID);
-			Integer rankProp = (Integer) serviceObjects.getServiceReference().getProperty(Constants.SERVICE_RANKING);
-			this.serviceRanking = rankProp == null ? 0 : rankProp.intValue();
-		}
-		public ServiceHolder(S service, Bundle bundle, long serviceId, int serviceRanking) {
-			this.service = service;
-			this.bundle = bundle;
-			this.serviceObjects = null;
-			this.serviceId = serviceId;
-			this.serviceRanking = serviceRanking;
-		}
-		public S get() {
-			return service;
+	public static void checkPattern(String pattern) {
+		if (pattern == null) {
+			throw new IllegalArgumentException("Pattern cannot be null");
 		}
 
-		public Bundle getBundle() {
-			return bundle;
-		}
-		public void release() {
-			if (serviceObjects != null && service != null) {
-				try {
-					serviceObjects.ungetService(service);
-				} catch (IllegalStateException e) {
-					// this can happen if the whiteboard bundle is in the process of stopping
-					// and the framework is in the middle of auto-unregistering any services
-					// the bundle forgot to unregister on stop
-				}
-			}
+		if (pattern.indexOf("*.") == 0) {
+			return;
 		}
 
-		public ServiceReference<S> getServiceReference() {
-			return serviceObjects == null ? null : serviceObjects.getServiceReference();
-		}
-		@Override
-		public int compareTo(ServiceHolder<?> o) {
-			final int thisRanking = serviceRanking;
-			final int otherRanking = o.serviceRanking;
-			if (thisRanking != otherRanking) {
-				if (thisRanking < otherRanking) {
-					return 1;
-				}
-				return -1;
-			}
-			final long thisId = this.serviceId;
-			final long otherId = o.serviceId;
-			if (thisId == otherId) {
-				return 0;
-			}
-			if (thisId < otherId) {
-				return -1;
-			}
-			return 1;
+		if (!pattern.startsWith(Const.SLASH) ||
+			(pattern.endsWith(Const.SLASH) && !pattern.equals(Const.SLASH))) {
+
+			throw new IllegalArgumentException(
+				"Invalid pattern '" + pattern + "'");
 		}
 	}
 
 	public ContextController(
-		BundleContext trackingContextParam, BundleContext consumingContext,
-		ServiceReference<ServletContextHelper> servletContextHelperRef,
-		ProxyContext proxyContext, HttpServiceRuntimeImpl httpServiceRuntime,
-		String contextName, String contextPath) {
+		BundleContext trackingBundleContext,
+		BundleContext consumingBundleContext,
+		ServiceReference<ServletContextHelper> serviceReference,
+		ProxyContext proxyContext,
+		HttpServiceRuntimeImpl httpServiceRuntimeImpl, String contextName,
+		String contextPath) {
 
-		validate(contextName, contextPath);
+		_validate(contextName, contextPath);
 
-		this.servletContextHelperRef = servletContextHelperRef;
+		_trackingBundleContext = trackingBundleContext;
+		_consumingBundleContext = consumingBundleContext;
 
-		long serviceId = (Long)servletContextHelperRef.getProperty(Constants.SERVICE_ID);
+		_servletContextHelperServiceReference = serviceReference;
 
-		this.proxyContext = proxyContext;
-		this.httpServiceRuntime = httpServiceRuntime;
-		this.contextName = contextName;
+		long serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+
+		_proxyContext = proxyContext;
+		_httpServiceRuntimeImpl = httpServiceRuntimeImpl;
+		_contextName = contextName;
 
 		if (contextPath.equals(Const.SLASH)) {
 			contextPath = Const.BLANK;
 		}
 
-		this.contextPath = contextPath;
-		this.contextServiceId = serviceId;
+		_contextPath = contextPath;
 
-		this.initParams = ServiceProperties.parseInitParams(
-			servletContextHelperRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX, proxyContext.getServletContext());
+		_contextServiceId = serviceId;
 
-		this.trackingContext = trackingContextParam;
-		this.consumingContext = consumingContext;
+		_initParamsMap = ServiceProperties.parseInitParams(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
+			proxyContext.getServletContext());
 
-		servletContextListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-			trackingContext, ServletContextListener.class.getName(),
+		_servletContextListenerServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext, ServletContextListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		servletContextListenerServiceTracker.open();
+		_servletContextListenerServiceTracker.open();
 
-		servletContextAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-			trackingContext, ServletContextAttributeListener.class.getName(),
+		_servletContextAttributeListenerServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext,
+			ServletContextAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		servletContextAttributeListenerServiceTracker.open();
+		_servletContextAttributeListenerServiceTracker.open();
 
-		servletRequestListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-			trackingContext, ServletRequestListener.class.getName(),
+		_servletRequestListenerServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext, ServletRequestListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		servletRequestListenerServiceTracker.open();
+		_servletRequestListenerServiceTracker.open();
 
-		servletRequestAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-			trackingContext, ServletRequestAttributeListener.class.getName(),
+		_servletRequestAttributeListenerServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext,
+			ServletRequestAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		servletRequestAttributeListenerServiceTracker.open();
+		_servletRequestAttributeListenerServiceTracker.open();
 
-		httpSessionListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-			trackingContext, HttpSessionListener.class.getName(),
+		_httpSessionListenerServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext, HttpSessionListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		httpSessionListenerServiceTracker.open();
+		_httpSessionListenerServiceTracker.open();
 
-		httpSessionAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-			trackingContext, HttpSessionAttributeListener.class.getName(),
+		_httpSessionAttributeListenerServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext,
+			HttpSessionAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		httpSessionAttributeListenerServiceTracker.open();
+		_httpSessionAttributeListenerServiceTracker.open();
 
-		ServletContext servletContext = httpServiceRuntime.getParentServletContext();
+		ServletContext servletContext =
+			httpServiceRuntimeImpl.getParentServletContext();
 
-		if ((servletContext.getMajorVersion() >= 3) && (servletContext.getMinorVersion() > 0)) {
-			httpSessionIdListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
-				trackingContext, HttpSessionIdListener.class.getName(),
+		if ((servletContext.getMajorVersion() >= 3) &&
+			(servletContext.getMinorVersion() > 0)) {
+
+			_httpSessionIdListenerServiceTracker = new ServiceTracker<>(
+				_trackingBundleContext, HttpSessionIdListener.class.getName(),
 				new ContextListenerTrackerCustomizer(
-					trackingContext, httpServiceRuntime, this));
+					_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-			httpSessionIdListenerServiceTracker.open();
+			_httpSessionIdListenerServiceTracker.open();
 		}
 		else {
-			httpSessionIdListenerServiceTracker = null;
+			_httpSessionIdListenerServiceTracker = null;
 		}
 
-		filterServiceTracker = new ServiceTracker<Filter, AtomicReference<FilterRegistration>>(
-			trackingContext, Filter.class,
+		_filterServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext, Filter.class,
 			new ContextFilterTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		filterServiceTracker.open();
+		_filterServiceTracker.open();
 
-		servletServiceTracker =  new ServiceTracker<Servlet, AtomicReference<ServletRegistration>>(
-			trackingContext, Servlet.class,
+		_servletServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext, Servlet.class,
 			new ContextServletTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		servletServiceTracker.open();
+		_servletServiceTracker.open();
 
-		resourceServiceTracker = new ServiceTracker<Object, AtomicReference<ResourceRegistration>>(
-			trackingContext, Object.class,
+		_resourceServiceTracker = new ServiceTracker<>(
+			_trackingBundleContext, Object.class,
 			new ContextResourceTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				_trackingBundleContext, httpServiceRuntimeImpl, this));
 
-		resourceServiceTracker.open();
+		_resourceServiceTracker.open();
 	}
 
-	public FilterRegistration addFilterRegistration(ServiceReference<Filter> filterRef) throws ServletException {
-		checkShutdown();
+	public FilterRegistration addFilterRegistration(
+			ServiceReference<Filter> serviceReference)
+		throws ServletException {
 
-		ServiceHolder<Filter> filterHolder = new ServiceHolder<Filter>(consumingContext.getServiceObjects(filterRef));
+		_checkShutdown();
+
+		ServiceHolder<Filter> filterHolder = new ServiceHolder<>(
+			_consumingBundleContext.getServiceObjects(serviceReference));
+
 		Filter filter = filterHolder.get();
+
 		FilterRegistration registration = null;
 		boolean addedRegisteredObject = false;
+
+		Set<Object> registeredObjects =
+			_httpServiceRuntimeImpl.getRegisteredObjects();
+
 		try {
 			if (filter == null) {
 				throw new IllegalArgumentException("Filter cannot be null");
 			}
-			addedRegisteredObject = httpServiceRuntime.getRegisteredObjects().add(filter);
+
+			addedRegisteredObject = registeredObjects.add(filter);
+
 			if (addedRegisteredObject) {
-				registration = doAddFilterRegistration(filterHolder, filterRef);
+				registration = _addFilterRegistration(
+					filterHolder, serviceReference);
 			}
-		} finally {
+		}
+		finally {
 			if (registration == null) {
 				filterHolder.release();
+
 				if (addedRegisteredObject) {
-					httpServiceRuntime.getRegisteredObjects().remove(filter);
+					registeredObjects.remove(filter);
 				}
 			}
 		}
+
 		return registration;
 	}
 
-	private FilterRegistration doAddFilterRegistration(ServiceHolder<Filter> filterHolder, ServiceReference<Filter> filterRef) throws ServletException {
+	public ListenerRegistration addListenerRegistration(
+		ServiceReference<EventListener> serviceReference) {
 
-		ClassLoader legacyTCCL = (ClassLoader)filterRef.getProperty(Const.EQUINOX_LEGACY_TCCL_PROP);
-		boolean asyncSupported = ServiceProperties.parseBoolean(
-			filterRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
+		_checkShutdown();
 
-		List<String> dispatcherList = StringPlus.from(
-			filterRef.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER));
-		String[] dispatchers = dispatcherList.toArray(
-			new String[dispatcherList.size()]);
-		Long serviceId = (Long)filterRef.getProperty(
-			Constants.SERVICE_ID);
-		if (legacyTCCL != null) {
-			// this is a legacy registration; use a negative id for the DTO
-			serviceId = -serviceId;
-		}
-		Integer filterPriority = (Integer)filterRef.getProperty(
-			Constants.SERVICE_RANKING);
-		if (filterPriority == null) {
-			filterPriority = Integer.valueOf(0);
-		}
-		Map<String, String> filterInitParams = ServiceProperties.parseInitParams(
-			filterRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
-		List<String> patternList = StringPlus.from(
-			filterRef.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN));
-		String[] patterns = patternList.toArray(new String[patternList.size()]);
-		List<String> regexList = StringPlus.from(
-			filterRef.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX));
-		String[] regexs = regexList.toArray(new String[regexList.size()]);
-		List<String> servletList = StringPlus.from(
-			filterRef.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET));
-		String[] servletNames = servletList.toArray(new String[servletList.size()]);
+		ServiceHolder<EventListener> listenerHolder = new ServiceHolder<>(
+			_consumingBundleContext.getServiceObjects(serviceReference));
 
-		String name = ServiceProperties.parseName(filterRef.getProperty(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME), filterHolder.get());
-
-		Filter filter = filterHolder.get();
-
-		if (((patterns == null) || (patterns.length == 0)) &&
-			((regexs == null) || (regexs.length == 0)) &&
-			((servletNames == null) || (servletNames.length == 0))) {
-
-			throw new IllegalArgumentException(
-				"Patterns, regex or servletNames must contain a value.");
-		}
-
-		if (patterns != null) {
-			for (String pattern : patterns) {
-				checkPattern(pattern);
-			}
-		}
-
-		if (filter == null) {
-			throw new IllegalArgumentException("Filter cannot be null");
-		}
-
-		if (name == null) {
-			name = filter.getClass().getName();
-		}
-
-		for (FilterRegistration filterRegistration : filterRegistrations) {
-			if (filterRegistration.getT().equals(filter)) {
-				throw new RegisteredFilterException(filter);
-			}
-		}
-
-		dispatchers = checkDispatcher(dispatchers);
-
-		FilterDTO filterDTO = new FilterDTO();
-
-		filterDTO.asyncSupported = asyncSupported;
-		filterDTO.dispatcher = sort(dispatchers);
-		filterDTO.initParams = filterInitParams;
-		filterDTO.name = name;
-		filterDTO.patterns = sort(patterns);
-		filterDTO.regexs = regexs;
-		filterDTO.serviceId = serviceId;
-		filterDTO.servletContextId = contextServiceId;
-		filterDTO.servletNames = sort(servletNames);
-
-		ServletContextHelper curServletContextHelper = getServletContextHelper(
-			filterHolder.getBundle());
-
-		ServletContext servletContext = createServletContext(
-			filterHolder.getBundle(), curServletContextHelper);
-		FilterRegistration newRegistration  = new FilterRegistration(
-			filterHolder, filterDTO, filterPriority, this, legacyTCCL);
-		FilterConfig filterConfig = new FilterConfigImpl(
-			name, filterInitParams, servletContext);
-
-		newRegistration.init(filterConfig);
-
-		filterRegistrations.add(newRegistration);
-		return newRegistration;
-	}
-
-	public ListenerRegistration addListenerRegistration(ServiceReference<EventListener> listenerRef) throws ServletException {
-
-		checkShutdown();
-
-		ServiceHolder<EventListener> listenerHolder = new ServiceHolder<EventListener>(consumingContext.getServiceObjects(listenerRef));
 		EventListener listener = listenerHolder.get();
+
 		ListenerRegistration registration = null;
+
 		try {
 			if (listener == null) {
-				throw new IllegalArgumentException("EventListener cannot be null");
+				throw new IllegalArgumentException(
+					"EventListener cannot be null");
 			}
-			registration = doAddListenerRegistration(listenerHolder, listenerRef);
-		} finally {
+
+			registration = _addListenerRegistration(
+				listenerHolder, serviceReference);
+		}
+		finally {
 			if (registration == null) {
 				listenerHolder.release();
 			}
 		}
+
 		return registration;
 	}
 
-	private ListenerRegistration doAddListenerRegistration(
-		ServiceHolder<EventListener> listenerHolder,
-		ServiceReference<EventListener> listenerRef) throws ServletException {
+	public ResourceRegistration addResourceRegistration(
+		ServiceReference<?> serviceReference) {
 
+		_checkShutdown();
 
-		EventListener eventListener = listenerHolder.get();
-		List<Class<? extends EventListener>> classes = getListenerClasses(listenerRef);
-
-		if (classes.isEmpty()) {
-			throw new IllegalArgumentException(
-				"EventListener does not implement a supported type.");
-		}
-
-		for (ListenerRegistration listenerRegistration : listenerRegistrations) {
-			if (listenerRegistration.getT().equals(eventListener)) {
-				return null;
-			}
-		}
-
-		ListenerDTO listenerDTO = new ListenerDTO();
-
-		listenerDTO.serviceId = (Long) listenerRef.getProperty(Constants.SERVICE_ID);
-		listenerDTO.servletContextId = contextServiceId;
-		listenerDTO.types = asStringArray(classes);
-
-		ServletContextHelper curServletContextHelper = getServletContextHelper(
-			listenerHolder.getBundle());
-
-		ServletContext servletContext = createServletContext(
-			listenerHolder.getBundle(), curServletContextHelper);
-		ListenerRegistration listenerRegistration = new ListenerRegistration(
-			listenerHolder, classes, listenerDTO, servletContext, this);
-
-		if (classes.contains(ServletContextListener.class)) {
-			ServletContextListener servletContextListener =
-				(ServletContextListener)listenerRegistration.getT();
-
-			servletContextListener.contextInitialized(
-				new ServletContextEvent(servletContext));
-		}
-
-		listenerRegistrations.add(listenerRegistration);
-
-		eventListeners.put(classes, listenerRegistration);
-
-		return listenerRegistration;
-	}
-
-	public ResourceRegistration addResourceRegistration(ServiceReference<?> resourceRef) {
-
-		checkShutdown();
-
-		ClassLoader legacyTCCL = (ClassLoader)resourceRef.getProperty(Const.EQUINOX_LEGACY_TCCL_PROP);
-		Integer rankProp = (Integer) resourceRef.getProperty(Constants.SERVICE_RANKING);
-		int serviceRanking = rankProp == null ? 0 : rankProp.intValue();
-		List<String> patternList = StringPlus.from(
-			resourceRef.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN));
-		String[] patterns = patternList.toArray(new String[patternList.size()]);
-		Long serviceId = (Long)resourceRef.getProperty(
-			Constants.SERVICE_ID);
-		if (legacyTCCL != null) {
-			// this is a legacy registration; use a negative id for the DTO
-			serviceId = -serviceId;
-		}
-		String prefix = (String)resourceRef.getProperty(
+		String prefix = (String)serviceReference.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
 
-		checkPrefix(prefix);
+		_checkPrefix(prefix);
 
-		if ((patterns == null) || (patterns.length < 1)) {
-			throw new IllegalArgumentException(
-				"Patterns must contain a value.");
+		List<String> patternList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN));
+
+		String[] patterns = patternList.toArray(new String[0]);
+
+		if (patterns.length < 1) {
+			throw new IllegalArgumentException("Patterns must contain a value");
 		}
 
 		for (String pattern : patterns) {
 			checkPattern(pattern);
 		}
 
-		Bundle bundle = resourceRef.getBundle();
-		ServletContextHelper curServletContextHelper = getServletContextHelper(
+		Long serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+
+		ClassLoader legacyTCCL = (ClassLoader)serviceReference.getProperty(
+			Const.EQUINOX_LEGACY_TCCL_PROP);
+
+		if (legacyTCCL != null) {
+			serviceId = -serviceId;
+		}
+
+		Integer rankProp = (Integer)serviceReference.getProperty(
+			Constants.SERVICE_RANKING);
+
+		Bundle bundle = serviceReference.getBundle();
+
+		ServletContextHelper curServletContextHelper = _getServletContextHelper(
 			bundle);
+
 		Servlet servlet = new ResourceServlet(
 			prefix, curServletContextHelper, AccessController.getContext());
 
 		ResourceDTO resourceDTO = new ResourceDTO();
 
-		resourceDTO.patterns = sort(patterns);
+		resourceDTO.patterns = _sort(patterns);
 		resourceDTO.prefix = prefix;
 		resourceDTO.serviceId = serviceId;
-		resourceDTO.servletContextId = contextServiceId;
+		resourceDTO.servletContextId = _contextServiceId;
 
-		ServletContext servletContext = createServletContext(
+		ServletContext servletContext = _createServletContext(
 			bundle, curServletContextHelper);
+
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
-			new ServiceHolder<Servlet>(servlet, bundle, serviceId, serviceRanking),
+			new ServiceHolder<>(
+				servlet, bundle, serviceId, (rankProp == null) ? 0 : rankProp),
 			resourceDTO, curServletContextHelper, this, legacyTCCL);
+
 		ServletConfig servletConfig = new ServletConfigImpl(
-			resourceRegistration.getName(), new HashMap<String, String>(),
-			servletContext);
+			resourceRegistration.getName(), new HashMap<>(), servletContext);
 
 		try {
 			resourceRegistration.init(servletConfig);
 		}
-		catch (ServletException e) {
+		catch (ServletException servletException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(servletException);
+			}
+
 			return null;
 		}
 
-		endpointRegistrations.add(resourceRegistration);
+		_endpointRegistrations.add(resourceRegistration);
 
 		return resourceRegistration;
 	}
 
-	public ServletRegistration addServletRegistration(ServiceReference<Servlet> servletRef) throws ServletException {
+	public ServletRegistration addServletRegistration(
+			ServiceReference<Servlet> serviceReference)
+		throws ServletException {
 
-		checkShutdown();
+		_checkShutdown();
 
-		ServiceHolder<Servlet> servletHolder = new ServiceHolder<Servlet>(consumingContext.getServiceObjects(servletRef));
-		Servlet servlet = servletHolder.get();
+		ServiceHolder<Servlet> serviceHolder = new ServiceHolder<>(
+			_consumingBundleContext.getServiceObjects(serviceReference));
+
+		Servlet servlet = serviceHolder.get();
+
 		ServletRegistration registration = null;
 		boolean addedRegisteredObject = false;
+
+		Set<Object> registeredObjects =
+			_httpServiceRuntimeImpl.getRegisteredObjects();
+
 		try {
 			if (servlet == null) {
 				throw new IllegalArgumentException("Servlet cannot be null");
 			}
-			addedRegisteredObject = httpServiceRuntime.getRegisteredObjects().add(servlet);
+
+			addedRegisteredObject = registeredObjects.add(servlet);
+
 			if (addedRegisteredObject) {
-				registration = doAddServletRegistration(servletHolder, servletRef);
+				registration = _addServletRegistration(
+					serviceHolder, serviceReference);
 			}
-		} finally {
+		}
+		finally {
 			if (registration == null) {
-				servletHolder.release();
+				serviceHolder.release();
+
 				if (addedRegisteredObject) {
-					httpServiceRuntime.getRegisteredObjects().remove(servlet);
+					registeredObjects.remove(servlet);
 				}
 			}
 		}
+
 		return registration;
-	}
-
-	private ServletRegistration doAddServletRegistration(ServiceHolder<Servlet> servletHolder, ServiceReference<Servlet> servletRef) throws ServletException {
-
-		boolean asyncSupported = ServiceProperties.parseBoolean(
-			servletRef,	HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED);
-		ClassLoader legacyTCCL = (ClassLoader)servletRef.getProperty(Const.EQUINOX_LEGACY_TCCL_PROP);
-		List<String> errorPageList = StringPlus.from(
-			servletRef.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE));
-		String[] errorPages = errorPageList.toArray(new String[errorPageList.size()]);
-		Map<String, String> servletInitParams = ServiceProperties.parseInitParams(
-			servletRef, HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
-		List<String> patternList = StringPlus.from(
-			servletRef.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN));
-		String[] patterns = patternList.toArray(new String[patternList.size()]);
-		Long serviceId = (Long)servletRef.getProperty(Constants.SERVICE_ID);
-		if (legacyTCCL != null) {
-			// this is a legacy registration; use a negative id for the DTO
-			serviceId = -serviceId;
-		}
-		String servletNameFromProperties = (String)servletRef.getProperty(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
-		String generatedServletName = ServiceProperties.parseName(
-			servletRef.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME), servletHolder.get());
-
-		if (((patterns == null) || (patterns.length == 0)) &&
-			((errorPages == null) || errorPages.length == 0) &&
-			(servletNameFromProperties == null)) {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append("One of the service properties "); //$NON-NLS-1$
-			sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE);
-			sb.append(", "); //$NON-NLS-1$
-			sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
-			sb.append(", "); //$NON-NLS-1$
-			sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN);
-			sb.append(" must contain a value."); //$NON-NLS-1$
-
-			throw new IllegalArgumentException(sb.toString());
-		}
-
-		if (patterns != null) {
-			for (String pattern : patterns) {
-				checkPattern(pattern);
-			}
-		}
-
-		ServletDTO servletDTO = new ServletDTO();
-
-		servletDTO.asyncSupported = asyncSupported;
-		servletDTO.initParams = servletInitParams;
-		servletDTO.name = generatedServletName;
-		servletDTO.patterns = sort(patterns);
-		servletDTO.serviceId = serviceId;
-		servletDTO.servletContextId = contextServiceId;
-		servletDTO.servletInfo = servletHolder.get().getServletInfo();
-
-		ErrorPageDTO errorPageDTO = null;
-
-		if ((errorPages != null) && (errorPages.length > 0)) {
-			errorPageDTO = new ErrorPageDTO();
-
-			errorPageDTO.asyncSupported = asyncSupported;
-			List<String> exceptions = new ArrayList<String>();
-			// Not sure if it is important to maintain order of insertion or natural ordering here.
-			// Using insertion ordering with linked hash set.
-			Set<Long> errorCodeSet = new LinkedHashSet<Long>();
-
-			for(String errorPage : errorPages) {
-				try {
-					if ("4xx".equals(errorPage)) { //$NON-NLS-1$
-						for (long code = 400; code < 500; code++) {
-							errorCodeSet.add(code);
-						}
-					} else if ("5xx".equals(errorPage)) { //$NON-NLS-1$
-						for (long code = 500; code < 600; code++) {
-							errorCodeSet.add(code);
-						}
-					} else {
-						long code = Long.parseLong(errorPage);
-						errorCodeSet.add(code);
-					}
-				}
-				catch (NumberFormatException nfe) {
-					exceptions.add(errorPage);
-				}
-			}
-
-			long[] errorCodes = new long[errorCodeSet.size()];
-			int i = 0;
-			for(Long code : errorCodeSet) {
-				errorCodes[i] = code;
-				i++;
-			}
-			errorPageDTO.errorCodes = errorCodes;
-			errorPageDTO.exceptions = exceptions.toArray(new String[exceptions.size()]);
-			errorPageDTO.initParams = servletInitParams;
-			errorPageDTO.name = generatedServletName;
-			errorPageDTO.serviceId = serviceId;
-			errorPageDTO.servletContextId = contextServiceId;
-			errorPageDTO.servletInfo = servletHolder.get().getServletInfo();
-		}
-
-		ServletContextHelper curServletContextHelper = getServletContextHelper(
-			servletHolder.getBundle());
-
-		ServletContext servletContext = createServletContext(
-			servletHolder.getBundle(), curServletContextHelper);
-		ServletRegistration servletRegistration = new ServletRegistration(
-			servletHolder, servletDTO, errorPageDTO, curServletContextHelper, this,
-			legacyTCCL);
-		ServletConfig servletConfig = new ServletConfigImpl(
-			generatedServletName, servletInitParams, servletContext);
-
-		servletRegistration.init(servletConfig);
-
-		endpointRegistrations.add(servletRegistration);
-
-		return servletRegistration;
-	}
-
-	public void destroy() {
-		flushActiveSessions();
-		resourceServiceTracker.close();
-		servletServiceTracker.close();
-		filterServiceTracker.close();
-
-		if (httpSessionIdListenerServiceTracker != null) {
-			httpSessionIdListenerServiceTracker.close();
-		}
-
-		httpSessionAttributeListenerServiceTracker.close();
-		httpSessionListenerServiceTracker.close();
-		servletRequestAttributeListenerServiceTracker.close();
-		servletRequestListenerServiceTracker.close();
-		servletContextAttributeListenerServiceTracker.close();
-		servletContextListenerServiceTracker.close();
-
-		endpointRegistrations.clear();
-		filterRegistrations.clear();
-		listenerRegistrations.clear();
-		eventListeners.clear();
-		proxyContext.destroy();
-
-		shutdown = true;
 	}
 
 	public void createContextAttributes() {
 		getProxyContext().createContextAttributes(this);
 	}
 
+	public void destroy() {
+		_flushActiveSessions();
+		_resourceServiceTracker.close();
+		_servletServiceTracker.close();
+		_filterServiceTracker.close();
+
+		if (_httpSessionIdListenerServiceTracker != null) {
+			_httpSessionIdListenerServiceTracker.close();
+		}
+
+		_httpSessionAttributeListenerServiceTracker.close();
+		_httpSessionListenerServiceTracker.close();
+		_servletRequestAttributeListenerServiceTracker.close();
+		_servletRequestListenerServiceTracker.close();
+		_servletContextAttributeListenerServiceTracker.close();
+		_servletContextListenerServiceTracker.close();
+
+		_endpointRegistrations.clear();
+		_filterRegistrations.clear();
+		_listenerRegistrations.clear();
+		_eventListeners.clear();
+		_proxyContext.destroy();
+
+		_shutdown = true;
+	}
+
 	public void destroyContextAttributes() {
-		if (shutdown) {
+		if (_shutdown) {
 			return;
 		}
 
-		proxyContext.destroyContextAttributes(this);
+		_proxyContext.destroyContextAttributes(this);
+	}
+
+	public void fireSessionIdChanged(String oldSessionId) {
+		if (_shutdown) {
+			return;
+		}
+
+		ServletContext servletContext = _proxyContext.getServletContext();
+
+		if ((servletContext.getMajorVersion() <= 3) &&
+			(servletContext.getMinorVersion() < 1)) {
+
+			return;
+		}
+
+		List<HttpSessionIdListener> listeners = _eventListeners.get(
+			HttpSessionIdListener.class);
+
+		if (listeners.isEmpty()) {
+			return;
+		}
+
+		for (HttpSessionAdaptor httpSessionAdaptor :
+				_activeSessionsMap.values()) {
+
+			HttpSessionEvent httpSessionEvent = new HttpSessionEvent(
+				httpSessionAdaptor);
+
+			for (HttpSessionIdListener listener : listeners) {
+				listener.sessionIdChanged(httpSessionEvent, oldSessionId);
+			}
+		}
+	}
+
+	public Map<String, HttpSessionAdaptor> getActiveSessions() {
+		return _activeSessionsMap;
 	}
 
 	public String getContextName() {
-		return contextName;
+		return _contextName;
 	}
 
 	public String getContextPath() {
-		return contextPath;
+		return _contextPath;
 	}
 
 	public DispatchTargets getDispatchTargets(
@@ -673,26 +528,32 @@ public class ContextController {
 		String requestURI = path.getRequestURI();
 
 		// perfect match
-		DispatchTargets dispatchTargets = getDispatchTargets(
+
+		DispatchTargets dispatchTargets = _getDispatchTargets(
 			requestURI, null, queryString, Match.EXACT, requestInfoDTO);
 
 		if (dispatchTargets == null) {
+
 			// extension match
 
-			dispatchTargets = getDispatchTargets(
+			dispatchTargets = _getDispatchTargets(
 				requestURI, path.getExtension(), queryString, Match.EXTENSION,
 				requestInfoDTO);
 		}
 
 		if (dispatchTargets == null) {
+
 			// regex match
-			dispatchTargets = getDispatchTargets(
+
+			dispatchTargets = _getDispatchTargets(
 				requestURI, null, queryString, Match.REGEX, requestInfoDTO);
 		}
 
 		if (dispatchTargets == null) {
+
 			// handle '/' aliases
-			dispatchTargets = getDispatchTargets(
+
+			dispatchTargets = _getDispatchTargets(
 				requestURI, null, queryString, Match.DEFAULT_SERVLET,
 				requestInfoDTO);
 		}
@@ -700,59 +561,23 @@ public class ContextController {
 		return dispatchTargets;
 	}
 
-	private DispatchTargets getDispatchTargets(
-		String requestURI, String extension, String queryString, Match match,
-		RequestInfoDTO requestInfoDTO) {
-
-		int pos = requestURI.lastIndexOf('/');
-
-		String servletPath = requestURI;
-		String pathInfo = null;
-
-		if (match == Match.DEFAULT_SERVLET) {
-			pathInfo = servletPath;
-			servletPath = Const.SLASH;
-		}
-
-		do {
-			DispatchTargets dispatchTargets = getDispatchTargets(
-				null, requestURI, servletPath, pathInfo,
-				extension, queryString, match, requestInfoDTO);
-
-			if (dispatchTargets != null) {
-				return dispatchTargets;
-			}
-
-			if (match == Match.EXACT) {
-				break;
-			}
-
-			if (pos > -1) {
-				String newServletPath = requestURI.substring(0, pos);
-				pathInfo = requestURI.substring(pos);
-				servletPath = newServletPath;
-				pos = servletPath.lastIndexOf('/');
-
-				continue;
-			}
-
-			break;
-		}
-		while (true);
-
-		return null;
-	}
-
 	public DispatchTargets getDispatchTargets(
 		String servletName, String requestURI, String servletPath,
 		String pathInfo, String extension, String queryString, Match match,
 		RequestInfoDTO requestInfoDTO) {
 
-		checkShutdown();
+		_checkShutdown();
 
 		EndpointRegistration<?> endpointRegistration = null;
-		for (EndpointRegistration<?> curEndpointRegistration : endpointRegistrations) {
-			if (curEndpointRegistration.match(servletName, servletPath, pathInfo, extension, match) != null) {
+
+		for (EndpointRegistration<?> curEndpointRegistration :
+				_endpointRegistrations) {
+
+			if (Objects.nonNull(
+					curEndpointRegistration.match(
+						servletName, servletPath, pathInfo, extension,
+						match))) {
+
 				endpointRegistration = curEndpointRegistration;
 
 				break;
@@ -768,13 +593,13 @@ public class ContextController {
 			pathInfo = null;
 		}
 
-		addEnpointRegistrationsToRequestInfo(
+		_addEndpointRegistrationsToRequestInfo(
 			endpointRegistration, requestInfoDTO);
 
-		if (filterRegistrations.isEmpty()) {
+		if (_filterRegistrations.isEmpty()) {
 			return new DispatchTargets(
-				this, endpointRegistration, servletName, requestURI, servletPath,
-				pathInfo, queryString);
+				this, endpointRegistration, servletName, requestURI,
+				servletPath, pathInfo, queryString);
 		}
 
 		if (requestURI != null) {
@@ -786,120 +611,152 @@ public class ContextController {
 		}
 
 		List<FilterRegistration> matchingFilterRegistrations =
-			new ArrayList<FilterRegistration>();
+			new ArrayList<>();
 
-		collectFilters(
-			matchingFilterRegistrations, endpointRegistration.getName(), requestURI,
-			servletPath, pathInfo, extension);
+		_collectFilters(
+			matchingFilterRegistrations, endpointRegistration.getName(),
+			requestURI, extension);
 
-		addFilterRegistrationsToRequestInfo(
+		_addFilterRegistrationsToRequestInfo(
 			matchingFilterRegistrations, requestInfoDTO);
 
 		return new DispatchTargets(
-			this, endpointRegistration, matchingFilterRegistrations, servletName,
-			requestURI, servletPath, pathInfo, queryString);
-	}
-
-	private void collectFilters(
-		List<FilterRegistration> matchingFilterRegistrations,
-		String servletName, String requestURI, String servletPath, String pathInfo, String extension) {
-
-		for (FilterRegistration filterRegistration : filterRegistrations) {
-			if ((filterRegistration.match(
-					servletName, requestURI, extension, null) != null) &&
-				!matchingFilterRegistrations.contains(filterRegistration)) {
-
-				matchingFilterRegistrations.add(filterRegistration);
-			}
-		}
-	}
-
-	public Map<String, HttpSessionAdaptor> getActiveSessions() {
-		return activeSessions;
+			this, endpointRegistration, matchingFilterRegistrations,
+			servletName, requestURI, servletPath, pathInfo, queryString);
 	}
 
 	public Set<EndpointRegistration<?>> getEndpointRegistrations() {
-		return endpointRegistrations;
+		return _endpointRegistrations;
 	}
 
 	public EventListeners getEventListeners() {
-		return eventListeners;
+		return _eventListeners;
 	}
 
 	public Set<FilterRegistration> getFilterRegistrations() {
-		return filterRegistrations;
+		return _filterRegistrations;
 	}
 
 	public String getFullContextPath() {
-		List<String> endpoints = httpServiceRuntime.getHttpServiceEndpoints();
+		List<String> endpoints =
+			_httpServiceRuntimeImpl.getHttpServiceEndpoints();
 
 		if (endpoints.isEmpty()) {
-			return proxyContext.getServletPath().concat(contextPath);
+			String servletPath = _proxyContext.getServletPath();
+
+			return servletPath.concat(_contextPath);
 		}
 
 		String defaultEndpoint = endpoints.get(0);
 
-		if ((defaultEndpoint.length() > 0) && defaultEndpoint.endsWith("/")) {
+		if (defaultEndpoint.endsWith("/")) {
 			defaultEndpoint = defaultEndpoint.substring(
 				0, defaultEndpoint.length() - 1);
 		}
 
-		return defaultEndpoint + contextPath;
+		return defaultEndpoint + _contextPath;
 	}
 
 	public HttpServiceRuntimeImpl getHttpServiceRuntime() {
-		return httpServiceRuntime;
+		return _httpServiceRuntimeImpl;
 	}
 
 	public Map<String, String> getInitParams() {
-		return initParams;
+		return _initParamsMap;
 	}
 
 	public Set<ListenerRegistration> getListenerRegistrations() {
-		return listenerRegistrations;
+		return _listenerRegistrations;
 	}
 
 	public ProxyContext getProxyContext() {
-		return proxyContext;
+		return _proxyContext;
 	}
 
 	public long getServiceId() {
-		return contextServiceId;
+		return _contextServiceId;
 	}
 
-	public synchronized ServletContextDTO getServletContextDTO(){
+	public synchronized ServletContextDTO getServletContextDTO() {
 		ServletContextDTO servletContextDTO = new ServletContextDTO();
 
-		ServletContext servletContext = proxyContext.getServletContext();
-
-		servletContextDTO.attributes = getDTOAttributes(servletContext);
+		servletContextDTO.attributes = _getDTOAttributes(
+			_proxyContext.getServletContext());
 		servletContextDTO.contextPath = getContextPath();
-		servletContextDTO.initParams = new HashMap<String, String>(initParams);
+		servletContextDTO.initParams = new HashMap<>(_initParamsMap);
 		servletContextDTO.name = getContextName();
 		servletContextDTO.serviceId = getServiceId();
 
-		collectEndpointDTOs(servletContextDTO);
-		collectFilterDTOs(servletContextDTO);
-		collectListenerDTOs(servletContextDTO);
+		_collectEndpointDTOs(servletContextDTO);
+		_collectFilterDTOs(servletContextDTO);
+		_collectListenerDTOs(servletContextDTO);
 
 		return servletContextDTO;
 	}
 
-	public boolean matches(ServiceReference<?> whiteBoardService) {
-		String contextSelector = (String) whiteBoardService.getProperty(
+	public HttpSessionAdaptor getSessionAdaptor(
+		HttpSession httpSession, ServletContext servletContext) {
+
+		String sessionId = httpSession.getId();
+
+		HttpSessionAdaptor httpSessionAdaptor = _activeSessionsMap.get(
+			sessionId);
+
+		if (httpSessionAdaptor != null) {
+			return httpSessionAdaptor;
+		}
+
+		httpSessionAdaptor = HttpSessionAdaptor.createHttpSessionAdaptor(
+			httpSession, servletContext, this);
+
+		HttpSessionAdaptor previousHttpSessionAdaptor =
+			_activeSessionsMap.putIfAbsent(sessionId, httpSessionAdaptor);
+
+		if (previousHttpSessionAdaptor != null) {
+			return previousHttpSessionAdaptor;
+		}
+
+		List<HttpSessionListener> httpSessionListeners = _eventListeners.get(
+			HttpSessionListener.class);
+
+		if (httpSessionListeners.isEmpty()) {
+			return httpSessionAdaptor;
+		}
+
+		HttpSessionEvent httpSessionEvent = new HttpSessionEvent(
+			httpSessionAdaptor);
+
+		for (HttpSessionListener httpSessionListener : httpSessionListeners) {
+			httpSessionListener.sessionCreated(httpSessionEvent);
+		}
+
+		return httpSessionAdaptor;
+	}
+
+	public boolean matches(org.osgi.framework.Filter targetFilter) {
+		return targetFilter.match(_servletContextHelperServiceReference);
+	}
+
+	public boolean matches(ServiceReference<?> serviceReference) {
+		String contextSelector = (String)serviceReference.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
 
-		// custom equinox behaviour
-		if (contextName.equals(contextSelector)) {
+		if (_contextName.equals(contextSelector)) {
 			return true;
 		}
 
 		if (contextSelector == null) {
-			contextSelector = httpServiceRuntime.getDefaultContextSelectFilter(whiteBoardService);
+			contextSelector =
+				_httpServiceRuntimeImpl.getDefaultContextSelectFilter(
+					serviceReference);
+
 			if (contextSelector == null) {
-				contextSelector = "(" + //$NON-NLS-1$
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" //$NON-NLS-1$
-					+ HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME + ")"; //$NON-NLS-1$
+				contextSelector = StringBundler.concat(
+					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+					"=",
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME,
+					")");
 			}
 		}
 
@@ -909,8 +766,8 @@ public class ContextController {
 			try {
 				targetFilter = FrameworkUtil.createFilter(contextSelector);
 			}
-			catch (InvalidSyntaxException ise) {
-				throw new IllegalArgumentException(ise);
+			catch (InvalidSyntaxException invalidSyntaxException) {
+				throw new IllegalArgumentException(invalidSyntaxException);
 			}
 
 			if (matches(targetFilter)) {
@@ -921,34 +778,123 @@ public class ContextController {
 		return false;
 	}
 
-	private boolean visibleContextHelper(ServiceReference<?> whiteBoardService) {
-		if (consumingContext.getBundle().equals(servletContextHelperRef.getBundle())) {
-			return true;
-		}
-
-		return servletContextHelperRef.isAssignableTo(
-			whiteBoardService.getBundle(),
-			ServletContextHelper.class.getName());
-	}
-
-	public boolean matches(org.osgi.framework.Filter targetFilter) {
-		return targetFilter.match(servletContextHelperRef);
+	public void removeActiveSession(String id) {
+		_activeSessionsMap.remove(id);
 	}
 
 	@Override
 	public String toString() {
-		String value = string;
+		String value = _string;
 
 		if (value == null) {
-			value = SIMPLE_NAME + '[' + contextName + ", " + trackingContext.getBundle() + ']'; //$NON-NLS-1$
+			value = StringBundler.concat(
+				ContextController.class.getSimpleName(), '[', _contextName,
+				", ", _trackingBundleContext.getBundle(), ']');
 
-			string = value;
+			_string = value;
 		}
 
 		return value;
 	}
 
-	private void addEnpointRegistrationsToRequestInfo(
+	public void ungetServletContextHelper(Bundle curBundle) {
+		BundleContext bundleContext = curBundle.getBundleContext();
+
+		try {
+			bundleContext.ungetService(_servletContextHelperServiceReference);
+		}
+		catch (IllegalStateException illegalStateException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalStateException);
+			}
+		}
+	}
+
+	public static final class ServiceHolder<S>
+		implements Comparable<ServiceHolder<?>> {
+
+		public ServiceHolder(
+			S service, Bundle bundle, long serviceId, int serviceRanking) {
+
+			_service = service;
+			_bundle = bundle;
+			_serviceId = serviceId;
+			_serviceRanking = serviceRanking;
+
+			_serviceObjects = null;
+		}
+
+		public ServiceHolder(ServiceObjects<S> serviceObjects) {
+			_serviceObjects = serviceObjects;
+
+			ServiceReference<S> serviceReference =
+				serviceObjects.getServiceReference();
+
+			_service = serviceObjects.getService();
+			_bundle = serviceReference.getBundle();
+			_serviceId = (Long)serviceReference.getProperty(
+				Constants.SERVICE_ID);
+
+			Integer serviceRanking = (Integer)serviceReference.getProperty(
+				Constants.SERVICE_RANKING);
+
+			_serviceRanking = (serviceRanking == null) ? 0 : serviceRanking;
+		}
+
+		@Override
+		public int compareTo(ServiceHolder<?> other) {
+			int thisRanking = _serviceRanking;
+			int otherRanking = other._serviceRanking;
+
+			if (thisRanking != otherRanking) {
+				if (thisRanking < otherRanking) {
+					return 1;
+				}
+
+				return -1;
+			}
+
+			return Long.compare(_serviceId, other._serviceId);
+		}
+
+		public S get() {
+			return _service;
+		}
+
+		public Bundle getBundle() {
+			return _bundle;
+		}
+
+		public ServiceReference<S> getServiceReference() {
+			if (_serviceObjects == null) {
+				return null;
+			}
+
+			return _serviceObjects.getServiceReference();
+		}
+
+		public void release() {
+			if ((_serviceObjects != null) && (_service != null)) {
+				try {
+					_serviceObjects.ungetService(_service);
+				}
+				catch (IllegalStateException illegalStateException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(illegalStateException);
+					}
+				}
+			}
+		}
+
+		private final Bundle _bundle;
+		private final S _service;
+		private final long _serviceId;
+		private final ServiceObjects<S> _serviceObjects;
+		private final int _serviceRanking;
+
+	}
+
+	private void _addEndpointRegistrationsToRequestInfo(
 		EndpointRegistration<?> endpointRegistration,
 		RequestInfoDTO requestInfoDTO) {
 
@@ -963,12 +909,131 @@ public class ContextController {
 				(ResourceDTO)endpointRegistration.getD();
 		}
 		else {
-			requestInfoDTO.servletDTO =
-				(ServletDTO)endpointRegistration.getD();
+			requestInfoDTO.servletDTO = (ServletDTO)endpointRegistration.getD();
 		}
 	}
 
-	private void addFilterRegistrationsToRequestInfo(
+	private FilterRegistration _addFilterRegistration(
+			ServiceHolder<Filter> serviceHolder,
+			ServiceReference<Filter> serviceReference)
+		throws ServletException {
+
+		List<String> patternList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN));
+
+		String[] patterns = patternList.toArray(new String[0]);
+
+		List<String> regexList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX));
+
+		String[] regexes = regexList.toArray(new String[0]);
+
+		List<String> servletList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET));
+
+		String[] servletNames = servletList.toArray(new String[0]);
+
+		if ((patterns.length == 0) && (regexes.length == 0) &&
+			(servletNames.length == 0)) {
+
+			throw new IllegalArgumentException(
+				"Patterns, regex or servletNames must contain a value");
+		}
+
+		for (String pattern : patterns) {
+			checkPattern(pattern);
+		}
+
+		Filter filter = serviceHolder.get();
+
+		if (filter == null) {
+			throw new IllegalArgumentException("Filter cannot be null");
+		}
+
+		String name = ServiceProperties.parseName(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
+			serviceHolder.get());
+
+		if (name == null) {
+			Class<?> clazz = filter.getClass();
+
+			name = clazz.getName();
+		}
+
+		for (FilterRegistration filterRegistration : _filterRegistrations) {
+			if (Objects.equals(filter, filterRegistration.getT())) {
+				throw new RegisteredFilterException(filter);
+			}
+		}
+
+		List<String> dispatcherList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER));
+
+		String[] dispatchers = _checkDispatcher(
+			dispatcherList.toArray(new String[0]));
+
+		Long serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+
+		ClassLoader legacyTCCL = (ClassLoader)serviceReference.getProperty(
+			Const.EQUINOX_LEGACY_TCCL_PROP);
+
+		if (legacyTCCL != null) {
+			serviceId = -serviceId;
+		}
+
+		Map<String, String> filterInitParamsMap =
+			ServiceProperties.parseInitParams(
+				serviceReference,
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
+
+		FilterDTO filterDTO = new FilterDTO();
+
+		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
+		filterDTO.dispatcher = _sort(dispatchers);
+		filterDTO.initParams = filterInitParamsMap;
+		filterDTO.name = name;
+		filterDTO.patterns = _sort(patterns);
+		filterDTO.regexs = regexes;
+		filterDTO.serviceId = serviceId;
+		filterDTO.servletContextId = _contextServiceId;
+		filterDTO.servletNames = _sort(servletNames);
+
+		Integer filterPriority = (Integer)serviceReference.getProperty(
+			Constants.SERVICE_RANKING);
+
+		if (filterPriority == null) {
+			filterPriority = 0;
+		}
+
+		FilterRegistration newFilterRegistration = new FilterRegistration(
+			serviceHolder, filterDTO, filterPriority, this, legacyTCCL);
+
+		ServletContextHelper curServletContextHelper = _getServletContextHelper(
+			serviceHolder.getBundle());
+
+		ServletContext servletContext = _createServletContext(
+			serviceHolder.getBundle(), curServletContextHelper);
+
+		FilterConfig filterConfig = new FilterConfigImpl(
+			name, filterInitParamsMap, servletContext);
+
+		newFilterRegistration.init(filterConfig);
+
+		_filterRegistrations.add(newFilterRegistration);
+
+		return newFilterRegistration;
+	}
+
+	private void _addFilterRegistrationsToRequestInfo(
 		List<FilterRegistration> matchedFilterRegistrations,
 		RequestInfoDTO requestInfoDTO) {
 
@@ -979,7 +1044,7 @@ public class ContextController {
 		FilterDTO[] filterDTOs =
 			new FilterDTO[matchedFilterRegistrations.size()];
 
-		for (int i = 0; i < filterDTOs.length ; i++) {
+		for (int i = 0; i < filterDTOs.length; i++) {
 			FilterRegistration filterRegistration =
 				matchedFilterRegistrations.get(i);
 
@@ -989,13 +1054,220 @@ public class ContextController {
 		requestInfoDTO.filterDTOs = filterDTOs;
 	}
 
-	private String[] asStringArray(
-		List<Class<? extends EventListener>> clazzes) {
+	private ListenerRegistration _addListenerRegistration(
+		ServiceHolder<EventListener> serviceHolder,
+		ServiceReference<EventListener> serviceReference) {
 
-		String[] classesArray = new String[clazzes.size()];
+		List<Class<? extends EventListener>> classes = _getListenerClasses(
+			serviceReference);
+
+		if (classes.isEmpty()) {
+			throw new IllegalArgumentException(
+				"EventListener does not implement a supported type");
+		}
+
+		EventListener eventListener = serviceHolder.get();
+
+		for (ListenerRegistration listenerRegistration :
+				_listenerRegistrations) {
+
+			if (Objects.equals(eventListener, listenerRegistration.getT())) {
+				return null;
+			}
+		}
+
+		ListenerDTO listenerDTO = new ListenerDTO();
+
+		listenerDTO.serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		listenerDTO.servletContextId = _contextServiceId;
+		listenerDTO.types = _asStringArray(classes);
+
+		ServletContextHelper curServletContextHelper = _getServletContextHelper(
+			serviceHolder.getBundle());
+
+		ServletContext servletContext = _createServletContext(
+			serviceHolder.getBundle(), curServletContextHelper);
+
+		ListenerRegistration listenerRegistration = new ListenerRegistration(
+			serviceHolder, classes, listenerDTO, servletContext, this);
+
+		if (classes.contains(ServletContextListener.class)) {
+			ServletContextListener servletContextListener =
+				(ServletContextListener)listenerRegistration.getT();
+
+			servletContextListener.contextInitialized(
+				new ServletContextEvent(servletContext));
+		}
+
+		_listenerRegistrations.add(listenerRegistration);
+
+		_eventListeners.put(classes, listenerRegistration);
+
+		return listenerRegistration;
+	}
+
+	private ServletRegistration _addServletRegistration(
+			ServiceHolder<Servlet> serviceHolder,
+			ServiceReference<Servlet> serviceReference)
+		throws ServletException {
+
+		List<String> errorPageList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE));
+
+		String[] errorPages = errorPageList.toArray(new String[0]);
+
+		List<String> patternList = StringPlus.from(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN));
+
+		String[] patterns = patternList.toArray(new String[0]);
+
+		String servletNameFromProperties = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+
+		if ((patterns.length == 0) && (errorPages.length == 0) &&
+			(servletNameFromProperties == null)) {
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("One of the service properties ");
+			sb.append(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE);
+			sb.append(", ");
+			sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+			sb.append(", ");
+			sb.append(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN);
+			sb.append(" must contain a value.");
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		for (String pattern : patterns) {
+			checkPattern(pattern);
+		}
+
+		boolean asyncSupported = ServiceProperties.parseBoolean(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED);
+
+		Long serviceId = (Long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+
+		ClassLoader legacyTCCL = (ClassLoader)serviceReference.getProperty(
+			Const.EQUINOX_LEGACY_TCCL_PROP);
+
+		if (legacyTCCL != null) {
+			serviceId = -serviceId;
+		}
+
+		Map<String, String> servletInitParamsMap =
+			ServiceProperties.parseInitParams(
+				serviceReference,
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
+
+		Servlet servlet = serviceHolder.get();
+
+		String generatedServletName = ServiceProperties.parseName(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME),
+			servlet);
+
+		ServletDTO servletDTO = new ServletDTO();
+
+		servletDTO.asyncSupported = asyncSupported;
+		servletDTO.initParams = servletInitParamsMap;
+		servletDTO.name = generatedServletName;
+		servletDTO.patterns = _sort(patterns);
+		servletDTO.serviceId = serviceId;
+		servletDTO.servletContextId = _contextServiceId;
+		servletDTO.servletInfo = servlet.getServletInfo();
+
+		ErrorPageDTO errorPageDTO = null;
+
+		if (errorPages.length > 0) {
+			List<String> exceptions = new ArrayList<>();
+
+			Set<Long> errorCodeSet = new LinkedHashSet<>();
+
+			for (String errorPage : errorPages) {
+				try {
+					if (Objects.equals(errorPage, "4xx")) {
+						for (long code = 400; code < 500; code++) {
+							errorCodeSet.add(code);
+						}
+					}
+					else if (Objects.equals(errorPage, "5xx")) {
+						for (long code = 500; code < 600; code++) {
+							errorCodeSet.add(code);
+						}
+					}
+					else {
+						long code = Long.parseLong(errorPage);
+
+						errorCodeSet.add(code);
+					}
+				}
+				catch (NumberFormatException numberFormatException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(numberFormatException);
+					}
+
+					exceptions.add(errorPage);
+				}
+			}
+
+			long[] errorCodes = new long[errorCodeSet.size()];
+			int i = 0;
+
+			for (Long code : errorCodeSet) {
+				errorCodes[i] = code;
+				i++;
+			}
+
+			errorPageDTO = new ErrorPageDTO();
+
+			errorPageDTO.asyncSupported = asyncSupported;
+			errorPageDTO.errorCodes = errorCodes;
+			errorPageDTO.exceptions = exceptions.toArray(new String[0]);
+			errorPageDTO.initParams = servletInitParamsMap;
+			errorPageDTO.name = generatedServletName;
+			errorPageDTO.serviceId = serviceId;
+			errorPageDTO.servletContextId = _contextServiceId;
+			errorPageDTO.servletInfo = servlet.getServletInfo();
+		}
+
+		ServletContextHelper curServletContextHelper = _getServletContextHelper(
+			serviceHolder.getBundle());
+
+		ServletContext servletContext = _createServletContext(
+			serviceHolder.getBundle(), curServletContextHelper);
+
+		ServletRegistration servletRegistration = new ServletRegistration(
+			serviceHolder, servletDTO, errorPageDTO, curServletContextHelper,
+			this, legacyTCCL);
+
+		ServletConfig servletConfig = new ServletConfigImpl(
+			generatedServletName, servletInitParamsMap, servletContext);
+
+		servletRegistration.init(servletConfig);
+
+		_endpointRegistrations.add(servletRegistration);
+
+		return servletRegistration;
+	}
+
+	private String[] _asStringArray(
+		List<Class<? extends EventListener>> classes) {
+
+		String[] classesArray = new String[classes.size()];
 
 		for (int i = 0; i < classesArray.length; i++) {
-			classesArray[i] = clazzes.get(i).getName();
+			Class<?> clazz = classes.get(i);
+
+			classesArray[i] = clazz.getName();
 		}
 
 		Arrays.sort(classesArray);
@@ -1003,86 +1275,65 @@ public class ContextController {
 		return classesArray;
 	}
 
-	private String[] checkDispatcher(String[] dispatcher) {
-		if ((dispatcher == null) || (dispatcher.length == 0)) {
-			return DISPATCHER;
+	private String[] _checkDispatcher(String[] dispatchers) {
+		if ((dispatchers == null) || (dispatchers.length == 0)) {
+			return _DISPATCHER;
 		}
 
-		for (String type : dispatcher) {
+		for (String dispatcher : dispatchers) {
 			try {
-				DispatcherType.valueOf(type);
+				DispatcherType.valueOf(dispatcher);
 			}
-			catch (IllegalArgumentException iae) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				throw new IllegalArgumentException(
-					"Invalid dispatcher '" + type + "'", iae);
+					"Invalid dispatcher '" + dispatcher + "'",
+					illegalArgumentException);
 			}
 		}
 
-		Arrays.sort(dispatcher);
+		Arrays.sort(dispatchers);
 
-		return dispatcher;
+		return dispatchers;
 	}
 
-	public static void checkPattern(String pattern) {
-		if (pattern == null) {
-			throw new IllegalArgumentException("Pattern cannot be null");
-		}
-
-		if (pattern.indexOf("*.") == 0) { //$NON-NLS-1$
-			return;
-		}
-
-		if (!pattern.startsWith(Const.SLASH) ||
-			(pattern.endsWith(Const.SLASH) && !pattern.equals(Const.SLASH))) {
-
-			throw new IllegalArgumentException(
-				"Invalid pattern '" + pattern + "'");
-		}
-	}
-
-	private void checkPrefix(String prefix) {
+	private void _checkPrefix(String prefix) {
 		if (prefix == null) {
 			throw new IllegalArgumentException("Prefix cannot be null");
 		}
 
 		if (prefix.endsWith(Const.SLASH) && !prefix.equals(Const.SLASH)) {
-			throw new IllegalArgumentException("Invalid prefix '" + prefix + "'");
+			throw new IllegalArgumentException(
+				"Invalid prefix '" + prefix + "'");
 		}
 	}
 
-	private void checkShutdown() {
-		if (shutdown) {
-			throw new IllegalStateException(
-				"Context is already shutdown"); //$NON-NLS-1$
+	private void _checkShutdown() {
+		if (_shutdown) {
+			throw new IllegalStateException("Context is already shutdown");
 		}
 	}
 
-	private ServletContext createServletContext(
-		Bundle curBundle, ServletContextHelper curServletContextHelper) {
+	private void _collectEndpointDTOs(ServletContextDTO servletContextDTO) {
+		List<ErrorPageDTO> errorPageDTOs = new ArrayList<>();
+		List<ResourceDTO> resourceDTOs = new ArrayList<>();
+		List<ServletDTO> servletDTOs = new ArrayList<>();
 
-		ServletContextAdaptor adaptor = new ServletContextAdaptor(
-			this, curBundle, curServletContextHelper, eventListeners,
-			AccessController.getContext());
+		for (EndpointRegistration<?> endpointRegistration :
+				_endpointRegistrations) {
 
-		return adaptor.createServletContext();
-	}
-
-	private void collectEndpointDTOs(
-		ServletContextDTO servletContextDTO) {
-
-		List<ErrorPageDTO> errorPageDTOs = new ArrayList<ErrorPageDTO>();
-		List<ResourceDTO> resourceDTOs = new ArrayList<ResourceDTO>();
-		List<ServletDTO> servletDTOs = new ArrayList<ServletDTO>();
-
-		for (EndpointRegistration<?> endpointRegistration : endpointRegistrations) {
 			if (endpointRegistration instanceof ResourceRegistration) {
-				resourceDTOs.add(DTOUtil.clone((ResourceDTO)endpointRegistration.getD()));
+				resourceDTOs.add(
+					DTOUtil.clone((ResourceDTO)endpointRegistration.getD()));
 			}
 			else {
-				ServletRegistration servletRegistration = (ServletRegistration)endpointRegistration;
+				ServletRegistration servletRegistration =
+					(ServletRegistration)endpointRegistration;
+
 				servletDTOs.add(DTOUtil.clone(servletRegistration.getD()));
 
-				ErrorPageDTO errorPageDTO = servletRegistration.getErrorPageDTO();
+				ErrorPageDTO errorPageDTO =
+					servletRegistration.getErrorPageDTO();
+
 				if (errorPageDTO != null) {
 					errorPageDTOs.add(DTOUtil.clone(errorPageDTO));
 				}
@@ -1090,119 +1341,63 @@ public class ContextController {
 		}
 
 		servletContextDTO.errorPageDTOs = errorPageDTOs.toArray(
-			new ErrorPageDTO[errorPageDTOs.size()]);
+			new ErrorPageDTO[0]);
 		servletContextDTO.resourceDTOs = resourceDTOs.toArray(
-			new ResourceDTO[resourceDTOs.size()]);
-		servletContextDTO.servletDTOs = servletDTOs.toArray(
-			new ServletDTO[servletDTOs.size()]);
+			new ResourceDTO[0]);
+		servletContextDTO.servletDTOs = servletDTOs.toArray(new ServletDTO[0]);
 	}
 
-	private void collectFilterDTOs(
-		ServletContextDTO servletContextDTO) {
+	private void _collectFilterDTOs(ServletContextDTO servletContextDTO) {
+		List<FilterDTO> filterDTOs = new ArrayList<>();
 
-		List<FilterDTO> filterDTOs = new ArrayList<FilterDTO>();
-
-		for (FilterRegistration filterRegistration : filterRegistrations) {
+		for (FilterRegistration filterRegistration : _filterRegistrations) {
 			filterDTOs.add(DTOUtil.clone(filterRegistration.getD()));
 		}
 
-		servletContextDTO.filterDTOs = filterDTOs.toArray(
-			new FilterDTO[filterDTOs.size()]);
+		servletContextDTO.filterDTOs = filterDTOs.toArray(new FilterDTO[0]);
 	}
 
-	private void collectListenerDTOs(
-		ServletContextDTO servletContextDTO) {
+	private void _collectFilters(
+		List<FilterRegistration> matchingFilterRegistrations,
+		String servletName, String requestURI, String extension) {
 
-		List<ListenerDTO> listenerDTOs = new ArrayList<ListenerDTO>();
+		for (FilterRegistration filterRegistration : _filterRegistrations) {
+			if (Objects.nonNull(
+					filterRegistration.match(
+						servletName, requestURI, extension, null)) &&
+				!matchingFilterRegistrations.contains(filterRegistration)) {
 
-		for (ListenerRegistration listenerRegistration : listenerRegistrations) {
+				matchingFilterRegistrations.add(filterRegistration);
+			}
+		}
+	}
+
+	private void _collectListenerDTOs(ServletContextDTO servletContextDTO) {
+		List<ListenerDTO> listenerDTOs = new ArrayList<>();
+
+		for (ListenerRegistration listenerRegistration :
+				_listenerRegistrations) {
+
 			listenerDTOs.add(DTOUtil.clone(listenerRegistration.getD()));
 		}
 
 		servletContextDTO.listenerDTOs = listenerDTOs.toArray(
-			new ListenerDTO[listenerDTOs.size()]);
+			new ListenerDTO[0]);
 	}
 
-	private Map<String, Object> getDTOAttributes(ServletContext servletContext) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	private ServletContext _createServletContext(
+		Bundle curBundle, ServletContextHelper curServletContextHelper) {
 
-		for (Enumeration<String> names = servletContext.getAttributeNames();
-				names.hasMoreElements();) {
+		ServletContextAdaptor adaptor = new ServletContextAdaptor(
+			this, curBundle, curServletContextHelper, _eventListeners,
+			AccessController.getContext());
 
-			String name = names.nextElement();
-
-			map.put(name, DTOUtil.mapValue(servletContext.getAttribute(name)));
-		}
-
-		return Collections.unmodifiableMap(map);
+		return adaptor.createServletContext();
 	}
 
-	private List<Class<? extends EventListener>> getListenerClasses(
-		ServiceReference<EventListener> serviceReference) {
-
-		List<String> objectClassList = StringPlus.from(serviceReference.getProperty(Constants.OBJECTCLASS));
-
-		List<Class<? extends EventListener>> classes =
-			new ArrayList<Class<? extends EventListener>>();
-
-		if (objectClassList.contains(ServletContextListener.class.getName())) {
-			classes.add(ServletContextListener.class);
-		}
-		if (objectClassList.contains(ServletContextAttributeListener.class.getName())) {
-			classes.add(ServletContextAttributeListener.class);
-		}
-		if (objectClassList.contains(ServletRequestListener.class.getName())) {
-			classes.add(ServletRequestListener.class);
-		}
-		if (objectClassList.contains(ServletRequestAttributeListener.class.getName())) {
-			classes.add(ServletRequestAttributeListener.class);
-		}
-		if (objectClassList.contains(HttpSessionListener.class.getName())) {
-			classes.add(HttpSessionListener.class);
-		}
-		if (objectClassList.contains(HttpSessionAttributeListener.class.getName())) {
-			classes.add(HttpSessionAttributeListener.class);
-		}
-
-		ServletContext servletContext = proxyContext.getServletContext();
-		if ((servletContext.getMajorVersion() >= 3) && (servletContext.getMinorVersion() > 0)) {
-			if (objectClassList.contains(javax.servlet.http.HttpSessionIdListener.class.getName())) {
-				classes.add(javax.servlet.http.HttpSessionIdListener.class);
-			}
-		}
-
-		return classes;
-	}
-
-	private ServletContextHelper getServletContextHelper(Bundle curBundle) {
-		BundleContext context = curBundle.getBundleContext();
-		return context.getService(servletContextHelperRef);
-	}
-
-	public void ungetServletContextHelper(Bundle curBundle) {
-		BundleContext context = curBundle.getBundleContext();
-		try {
-			context.ungetService(servletContextHelperRef);
-		} catch (IllegalStateException e) {
-			// this can happen if the whiteboard bundle is in the process of stopping
-			// and the framework is in the middle of auto-unregistering any services
-			// the bundle forgot to unregister on stop
-		}
-	}
-
-	private String[] sort(String[] values) {
-		if (values == null) {
-			return null;
-		}
-
-		Arrays.sort(values);
-
-		return values;
-	}
-
-	private void flushActiveSessions() {
+	private void _flushActiveSessions() {
 		Collection<HttpSessionAdaptor> httpSessionAdaptors =
-			activeSessions.values();
+			_activeSessionsMap.values();
 
 		Iterator<HttpSessionAdaptor> iterator = httpSessionAdaptors.iterator();
 
@@ -1215,123 +1410,220 @@ public class ContextController {
 		}
 	}
 
-	public void removeActiveSession(String id) {
-		activeSessions.remove(id);
-	}
+	private DispatchTargets _getDispatchTargets(
+		String requestURI, String extension, String queryString, Match match,
+		RequestInfoDTO requestInfoDTO) {
 
-	public void fireSessionIdChanged(String oldSessionId) {
-		if (shutdown) {
-			return;
+		int pos = requestURI.lastIndexOf('/');
+
+		String servletPath = requestURI;
+		String pathInfo = null;
+
+		if (match == Match.DEFAULT_SERVLET) {
+			pathInfo = servletPath;
+			servletPath = Const.SLASH;
 		}
 
-		ServletContext servletContext = proxyContext.getServletContext();
-		if ((servletContext.getMajorVersion() <= 3) && (servletContext.getMinorVersion() < 1)) {
-			return;
-		}
+		while (true) {
+			DispatchTargets dispatchTargets = getDispatchTargets(
+				null, requestURI, servletPath, pathInfo, extension, queryString,
+				match, requestInfoDTO);
 
-		List<javax.servlet.http.HttpSessionIdListener> listeners = eventListeners.get(javax.servlet.http.HttpSessionIdListener.class);
-
-		if (listeners.isEmpty()) {
-			return;
-		}
-
-		for (HttpSessionAdaptor httpSessionAdaptor : activeSessions.values()) {
-			HttpSessionEvent httpSessionEvent = new HttpSessionEvent(httpSessionAdaptor);
-			for (javax.servlet.http.HttpSessionIdListener listener : listeners) {
-				listener.sessionIdChanged(httpSessionEvent, oldSessionId);
+			if (dispatchTargets != null) {
+				return dispatchTargets;
 			}
+
+			if (match == Match.EXACT) {
+				break;
+			}
+
+			if (pos > -1) {
+				String newServletPath = requestURI.substring(0, pos);
+
+				pathInfo = requestURI.substring(pos);
+
+				servletPath = newServletPath;
+
+				pos = servletPath.lastIndexOf('/');
+
+				continue;
+			}
+
+			break;
 		}
+
+		return null;
 	}
 
-	public HttpSessionAdaptor getSessionAdaptor(
-		HttpSession session, ServletContext servletContext) {
+	private Map<String, Object> _getDTOAttributes(
+		ServletContext servletContext) {
 
-		String sessionId = session.getId();
+		Map<String, Object> map = new HashMap<>();
 
-		HttpSessionAdaptor httpSessionAdaptor = activeSessions.get(sessionId);
+		for (Enumeration<String> attributeNamesEnumeration =
+				servletContext.getAttributeNames();
+			 attributeNamesEnumeration.hasMoreElements();) {
 
-		if (httpSessionAdaptor != null) {
-			return httpSessionAdaptor;
+			String name = attributeNamesEnumeration.nextElement();
+
+			map.put(name, DTOUtil.mapValue(servletContext.getAttribute(name)));
 		}
 
-		httpSessionAdaptor = HttpSessionAdaptor.createHttpSessionAdaptor(
-			session, servletContext, this);
-
-		HttpSessionAdaptor previousHttpSessionAdaptor =
-			activeSessions.putIfAbsent(sessionId, httpSessionAdaptor);
-
-		if (previousHttpSessionAdaptor != null) {
-			return previousHttpSessionAdaptor;
-		}
-
-		List<HttpSessionListener> listeners = eventListeners.get(HttpSessionListener.class);
-
-		if (listeners.isEmpty()) {
-			return httpSessionAdaptor;
-		}
-
-		HttpSessionEvent httpSessionEvent = new HttpSessionEvent(
-			httpSessionAdaptor);
-
-		for (HttpSessionListener listener : listeners) {
-			listener.sessionCreated(httpSessionEvent);
-		}
-
-		return httpSessionAdaptor;
+		return Collections.unmodifiableMap(map);
 	}
 
-	private void validate(String preValidationContextName, String preValidationContextPath) {
-		if (!contextNamePattern.matcher(preValidationContextName).matches()) {
+	private List<Class<? extends EventListener>> _getListenerClasses(
+		ServiceReference<EventListener> serviceReference) {
+
+		List<String> objectClassList = StringPlus.from(
+			serviceReference.getProperty(Constants.OBJECTCLASS));
+
+		List<Class<? extends EventListener>> classes = new ArrayList<>();
+
+		if (objectClassList.contains(ServletContextListener.class.getName())) {
+			classes.add(ServletContextListener.class);
+		}
+
+		if (objectClassList.contains(
+				ServletContextAttributeListener.class.getName())) {
+
+			classes.add(ServletContextAttributeListener.class);
+		}
+
+		if (objectClassList.contains(ServletRequestListener.class.getName())) {
+			classes.add(ServletRequestListener.class);
+		}
+
+		if (objectClassList.contains(
+				ServletRequestAttributeListener.class.getName())) {
+
+			classes.add(ServletRequestAttributeListener.class);
+		}
+
+		if (objectClassList.contains(HttpSessionListener.class.getName())) {
+			classes.add(HttpSessionListener.class);
+		}
+
+		if (objectClassList.contains(
+				HttpSessionAttributeListener.class.getName())) {
+
+			classes.add(HttpSessionAttributeListener.class);
+		}
+
+		ServletContext servletContext = _proxyContext.getServletContext();
+
+		if ((servletContext.getMajorVersion() >= 3) &&
+			(servletContext.getMinorVersion() > 0) &&
+			objectClassList.contains(HttpSessionIdListener.class.getName())) {
+
+			classes.add(HttpSessionIdListener.class);
+		}
+
+		return classes;
+	}
+
+	private ServletContextHelper _getServletContextHelper(Bundle curBundle) {
+		BundleContext bundleContext = curBundle.getBundleContext();
+
+		return bundleContext.getService(_servletContextHelperServiceReference);
+	}
+
+	private String[] _sort(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		Arrays.sort(values);
+
+		return values;
+	}
+
+	private void _validate(
+		String preValidationContextName, String preValidationContextPath) {
+
+		Matcher matcher = _contextNamePattern.matcher(preValidationContextName);
+
+		if (!matcher.matches()) {
 			throw new IllegalContextNameException(
-				"The context name '" + preValidationContextName + "' does not follow Bundle-SymbolicName syntax.", //$NON-NLS-1$ //$NON-NLS-2$
+				"The context name '" + preValidationContextName +
+					"' does not follow Bundle-SymbolicName syntax.",
 				DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 		}
 
 		try {
-			@SuppressWarnings("unused")
-			URI uri = new URI(Const.HTTP, Const.LOCALHOST, preValidationContextPath, null);
+			new URI(
+				Const.HTTP, Const.LOCALHOST, preValidationContextPath, null);
 		}
-		catch (URISyntaxException use) {
-			throw new IllegalContextPathException(
-				"The context path '" + preValidationContextPath + "' is not valid URI path syntax.", //$NON-NLS-1$ //$NON-NLS-2$
-				DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
+		catch (URISyntaxException uriSyntaxException) {
+			IllegalContextPathException illegalContextPathException =
+				new IllegalContextPathException(
+					"The context path '" + preValidationContextPath +
+						"' is not valid URI path syntax.",
+					DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
+
+			illegalContextPathException.addSuppressed(uriSyntaxException);
+
+			throw illegalContextPathException;
 		}
 	}
 
-	private static final String[] DISPATCHER =
-		new String[] {DispatcherType.REQUEST.toString()};
+	private static final String[] _DISPATCHER = {
+		DispatcherType.REQUEST.toString()
+	};
 
-	private static final String SIMPLE_NAME = ContextController.class.getSimpleName();
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContextController.class.getName());
 
-	private static final Pattern contextNamePattern = Pattern.compile("^([a-zA-Z_0-9\\-]+\\.)*[a-zA-Z_0-9\\-]+$"); //$NON-NLS-1$
+	private static final Pattern _contextNamePattern = Pattern.compile(
+		"^([a-zA-Z_0-9\\-]+\\.)*[a-zA-Z_0-9\\-]+$");
 
-	private final Map<String, String> initParams;
-	private final BundleContext trackingContext;
-	private final BundleContext consumingContext;
-	private final String contextName;
-	private final String contextPath;
-	private final long contextServiceId;
-	private final Set<EndpointRegistration<?>> endpointRegistrations = new ConcurrentSkipListSet<EndpointRegistration<?>>();
-	private final EventListeners eventListeners = new EventListeners();
-	private final Set<FilterRegistration> filterRegistrations = new ConcurrentSkipListSet<FilterRegistration>();
-	private final ConcurrentMap<String, HttpSessionAdaptor> activeSessions = new ConcurrentHashMap<String, HttpSessionAdaptor>();
+	private final ConcurrentMap<String, HttpSessionAdaptor> _activeSessionsMap =
+		new ConcurrentHashMap<>();
+	private final BundleContext _consumingBundleContext;
+	private final String _contextName;
+	private final String _contextPath;
+	private final long _contextServiceId;
+	private final Set<EndpointRegistration<?>> _endpointRegistrations =
+		new ConcurrentSkipListSet<>();
+	private final EventListeners _eventListeners = new EventListeners();
+	private final Set<FilterRegistration> _filterRegistrations =
+		new ConcurrentSkipListSet<>();
+	private final ServiceTracker<Filter, AtomicReference<FilterRegistration>>
+		_filterServiceTracker;
+	private final HttpServiceRuntimeImpl _httpServiceRuntimeImpl;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_httpSessionAttributeListenerServiceTracker;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_httpSessionIdListenerServiceTracker;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_httpSessionListenerServiceTracker;
+	private final Map<String, String> _initParamsMap;
+	private final Set<ListenerRegistration> _listenerRegistrations =
+		new HashSet<>();
+	private final ProxyContext _proxyContext;
+	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>>
+		_resourceServiceTracker;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_servletContextAttributeListenerServiceTracker;
+	private final ServiceReference<ServletContextHelper>
+		_servletContextHelperServiceReference;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_servletContextListenerServiceTracker;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_servletRequestAttributeListenerServiceTracker;
+	private final ServiceTracker
+		<EventListener, AtomicReference<ListenerRegistration>>
+			_servletRequestListenerServiceTracker;
+	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>>
+		_servletServiceTracker;
+	private boolean _shutdown;
+	private String _string;
+	private final BundleContext _trackingBundleContext;
 
-	private final HttpServiceRuntimeImpl httpServiceRuntime;
-	private final Set<ListenerRegistration> listenerRegistrations = new HashSet<ListenerRegistration>();
-	private final ProxyContext proxyContext;
-	private final ServiceReference<ServletContextHelper> servletContextHelperRef;
-	private boolean shutdown;
-	private String string;
-
-	private final ServiceTracker<Filter, AtomicReference<FilterRegistration>> filterServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletContextListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletContextAttributeListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletRequestListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletRequestAttributeListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionAttributeListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionIdListenerServiceTracker;
-	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>> servletServiceTracker;
-	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>> resourceServiceTracker;
 }
-/* @generated */

@@ -11,18 +11,38 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
-import java.io.*;
-import java.net.URLDecoder;
-import java.util.*;
-import javax.servlet.*;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.servlet.*;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletRequestWrapperImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletResponseWrapperImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ResponseStateHandler;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.Params;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+
+import java.net.URLDecoder;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Raymond Augé
@@ -31,111 +51,156 @@ public class DispatchTargets {
 
 	public DispatchTargets(
 		ContextController contextController,
-		EndpointRegistration<?> endpointRegistration, String servletName,
-		String requestURI, String servletPath, String pathInfo, String queryString) {
+		EndpointRegistration<?> endpointRegistration,
+		List<FilterRegistration> matchingFilterRegistrations,
+		String servletName, String requestURI, String servletPath,
+		String pathInfo, String queryString) {
 
-		this(
-			contextController, endpointRegistration,
-			Collections.<FilterRegistration>emptyList(), servletName, requestURI,
-			servletPath, pathInfo, queryString);
+		_contextController = contextController;
+		_endpointRegistration = endpointRegistration;
+		_matchingFilterRegistrations = matchingFilterRegistrations;
+		_servletName = servletName;
+		_requestURI = requestURI;
+		_servletPath = (servletPath == null) ? Const.BLANK : servletPath;
+		_pathInfo = pathInfo;
+		_queryString = queryString;
 	}
 
 	public DispatchTargets(
 		ContextController contextController,
-		EndpointRegistration<?> endpointRegistration,
-		List<FilterRegistration> matchingFilterRegistrations, String servletName,
-		String requestURI, String servletPath, String pathInfo, String queryString) {
+		EndpointRegistration<?> endpointRegistration, String servletName,
+		String requestURI, String servletPath, String pathInfo,
+		String queryString) {
 
-		this.contextController = contextController;
-		this.endpointRegistration = endpointRegistration;
-		this.matchingFilterRegistrations = matchingFilterRegistrations;
-		this.servletName = servletName;
-		this.requestURI = requestURI;
-		this.servletPath = (servletPath == null) ? Const.BLANK : servletPath;
-		this.pathInfo = pathInfo;
-		this.queryString = queryString;
+		this(
+			contextController, endpointRegistration, Collections.emptyList(),
+			servletName, requestURI, servletPath, pathInfo, queryString);
 	}
 
-	public void addRequestParameters(HttpServletRequest request) {
-		if (queryString == null) {
-			parameterMap = request.getParameterMap();
-			queryString = request.getQueryString();
+	public void addRequestParameters(HttpServletRequest httpServletRequest) {
+		if (_queryString == null) {
+			_parameterMap = httpServletRequest.getParameterMap();
+			_queryString = httpServletRequest.getQueryString();
 
 			return;
 		}
 
-		Map<String, String[]> parameterMapCopy = queryStringToParameterMap(queryString);
+		Map<String, String[]> parameterMapCopy = _queryStringToParameterMap(
+			_queryString);
 
-		for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			String[] values = parameterMapCopy.get(entry.getKey());
-			values = Params.append(values, entry.getValue());
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String[] values = Params.append(
+				parameterMapCopy.get(entry.getKey()), entry.getValue());
+
 			parameterMapCopy.put(entry.getKey(), values);
 		}
 
-		parameterMap = Collections.unmodifiableMap(parameterMapCopy);
+		_parameterMap = Collections.unmodifiableMap(parameterMapCopy);
 	}
 
 	public boolean doDispatch(
-			HttpServletRequest originalRequest, HttpServletResponse response,
-			String path, DispatcherType requestedDispatcherType)
-		throws ServletException, IOException {
+			HttpServletRequest originalHttpServletRequest,
+			HttpServletResponse httpServletResponse, String path,
+			DispatcherType requestedDispatcherType)
+		throws IOException, ServletException {
 
 		setDispatcherType(requestedDispatcherType);
 
-		RequestAttributeSetter setter = new RequestAttributeSetter(originalRequest);
+		RequestAttributeSetter requestAttributeSetter =
+			new RequestAttributeSetter(originalHttpServletRequest);
 
-		if (dispatcherType == DispatcherType.INCLUDE) {
-			setter.setAttribute(RequestDispatcher.INCLUDE_CONTEXT_PATH, contextController.getFullContextPath());
-			setter.setAttribute(RequestDispatcher.INCLUDE_PATH_INFO, getPathInfo());
-			setter.setAttribute(RequestDispatcher.INCLUDE_QUERY_STRING, getQueryString());
-			setter.setAttribute(RequestDispatcher.INCLUDE_REQUEST_URI, getRequestURI());
-			setter.setAttribute(RequestDispatcher.INCLUDE_SERVLET_PATH, getServletPath());
+		if (_dispatcherType == DispatcherType.INCLUDE) {
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.INCLUDE_CONTEXT_PATH,
+				_contextController.getFullContextPath());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.INCLUDE_PATH_INFO, getPathInfo());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.INCLUDE_QUERY_STRING, getQueryString());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.INCLUDE_REQUEST_URI, getRequestURI());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH, getServletPath());
 		}
-		else if (dispatcherType == DispatcherType.FORWARD) {
-			if (!originalRequest.isAsyncStarted() && !response.isCommitted()) {
-				response.resetBuffer();
+		else if (_dispatcherType == DispatcherType.FORWARD) {
+			if (!originalHttpServletRequest.isAsyncStarted() &&
+				!httpServletResponse.isCommitted()) {
+
+				httpServletResponse.resetBuffer();
 			}
 
-			setter.setAttribute(RequestDispatcher.FORWARD_CONTEXT_PATH, originalRequest.getContextPath());
-			setter.setAttribute(RequestDispatcher.FORWARD_PATH_INFO, originalRequest.getPathInfo());
-			setter.setAttribute(RequestDispatcher.FORWARD_QUERY_STRING, originalRequest.getQueryString());
-			setter.setAttribute(RequestDispatcher.FORWARD_REQUEST_URI, originalRequest.getRequestURI());
-			setter.setAttribute(RequestDispatcher.FORWARD_SERVLET_PATH, originalRequest.getServletPath());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.FORWARD_CONTEXT_PATH,
+				originalHttpServletRequest.getContextPath());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.FORWARD_PATH_INFO,
+				originalHttpServletRequest.getPathInfo());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.FORWARD_QUERY_STRING,
+				originalHttpServletRequest.getQueryString());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.FORWARD_REQUEST_URI,
+				originalHttpServletRequest.getRequestURI());
+			requestAttributeSetter.setAttribute(
+				RequestDispatcher.FORWARD_SERVLET_PATH,
+				originalHttpServletRequest.getServletPath());
 		}
 
-		HttpServletRequest request = originalRequest;
-		HttpServletRequestWrapperImpl httpRuntimeRequest = HttpServletRequestWrapperImpl.findHttpRuntimeRequest(originalRequest);
+		HttpServletRequest httpServletRequest = originalHttpServletRequest;
+
+		HttpServletRequestWrapperImpl httpServletRequestWrapperImpl =
+			HttpServletRequestWrapperImpl.findHttpRuntimeRequest(
+				originalHttpServletRequest);
 
 		try {
-			if (httpRuntimeRequest == null) {
-				httpRuntimeRequest = new HttpServletRequestWrapperImpl(originalRequest);
-				request = httpRuntimeRequest;
-				response = new HttpServletResponseWrapperImpl(response);
+			if (httpServletRequestWrapperImpl == null) {
+				httpServletRequestWrapperImpl =
+					new HttpServletRequestWrapperImpl(
+						originalHttpServletRequest);
+
+				httpServletRequest = httpServletRequestWrapperImpl;
+
+				httpServletResponse = new HttpServletResponseWrapperImpl(
+					httpServletResponse);
 			}
 
-			httpRuntimeRequest.push(this);
+			httpServletRequestWrapperImpl.push(this);
 
-			ResponseStateHandler responseStateHandler = new ResponseStateHandler(request, response, this);
+			ResponseStateHandler responseStateHandler =
+				new ResponseStateHandler(
+					httpServletRequest, httpServletResponse, this);
 
 			responseStateHandler.processRequest();
 
-			if ((dispatcherType == DispatcherType.FORWARD) &&
-				!response.isCommitted() && !request.isAsyncStarted()) {
+			if ((_dispatcherType == DispatcherType.FORWARD) &&
+				!httpServletResponse.isCommitted() &&
+				!httpServletRequest.isAsyncStarted()) {
 
 				try {
-					response.flushBuffer();
-					response.getWriter().close();
+					httpServletResponse.flushBuffer();
+
+					Writer writer = httpServletResponse.getWriter();
+
+					writer.close();
 				}
-				catch (IllegalStateException ise1) {
+				catch (IllegalStateException illegalStateException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(illegalStateException);
+					}
+
 					try {
-						ServletOutputStream outputStream = response.getOutputStream();
-						outputStream.close();
+						ServletOutputStream servletOutputStream =
+							httpServletResponse.getOutputStream();
+
+						servletOutputStream.close();
 					}
-					catch (IllegalStateException ise2) {
-						// ignore
-					}
-					catch (IOException ioe) {
-						// ignore
+					catch (IllegalStateException | IOException exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
 					}
 				}
 			}
@@ -143,95 +208,120 @@ public class DispatchTargets {
 			return true;
 		}
 		finally {
-			httpRuntimeRequest.pop();
+			httpServletRequestWrapperImpl.pop();
 
-			setter.close();
+			requestAttributeSetter.close();
 		}
 	}
 
 	public ContextController getContextController() {
-		return contextController;
+		return _contextController;
 	}
 
 	public DispatcherType getDispatcherType() {
-		return dispatcherType;
+		return _dispatcherType;
 	}
 
 	public List<FilterRegistration> getMatchingFilterRegistrations() {
-		return matchingFilterRegistrations;
+		return _matchingFilterRegistrations;
 	}
 
 	public Map<String, String[]> getParameterMap() {
-		return parameterMap;
+		return _parameterMap;
 	}
 
 	public String getPathInfo() {
-		return pathInfo;
+		return _pathInfo;
 	}
 
 	public String getQueryString() {
-		return queryString;
+		return _queryString;
 	}
 
 	public String getRequestURI() {
-		if (requestURI == null) {
+		if (_requestURI == null) {
 			return null;
 		}
-		return getContextController().getFullContextPath() + requestURI;
+
+		return getContextController().getFullContextPath() + _requestURI;
 	}
 
 	public String getServletName() {
-		return servletName;
+		return _servletName;
 	}
 
 	public String getServletPath() {
-		return servletPath;
+		return _servletPath;
 	}
 
 	public EndpointRegistration<?> getServletRegistration() {
-		return endpointRegistration;
+		return _endpointRegistration;
 	}
 
 	public Map<String, Object> getSpecialOverides() {
-		return specialOverides;
+		return _specialOveridesMap;
 	}
 
 	public void setDispatcherType(DispatcherType dispatcherType) {
-		this.dispatcherType = dispatcherType;
+		_dispatcherType = dispatcherType;
 	}
 
 	@Override
 	public String toString() {
-		String value = string;
+		String value = _string;
 
 		if (value == null) {
-			value = SIMPLE_NAME + '[' + contextController.getFullContextPath() + requestURI + (queryString != null ? '?' + queryString : "") + ", " + endpointRegistration.toString() + ']'; //$NON-NLS-1$
+			value = StringBundler.concat(
+				DispatchTargets.class.getSimpleName(), '[',
+				_contextController.getFullContextPath(), _requestURI,
+				(_queryString != null) ? '?' + _queryString : "", ", ",
+				_endpointRegistration, ']');
 
-			string = value;
+			_string = value;
 		}
 
 		return value;
 	}
 
-	private static Map<String, String[]> queryStringToParameterMap(String queryString) {
+	private Map<String, String[]> _queryStringToParameterMap(
+		String queryString) {
+
 		if ((queryString == null) || (queryString.length() == 0)) {
-			return new HashMap<String, String[]>();
+			return new HashMap<>();
 		}
 
 		try {
-			Map<String, String[]> parameterMap = new LinkedHashMap<String, String[]>();
+			Map<String, String[]> parameterMap = new LinkedHashMap<>();
 			String[] parameters = queryString.split(Const.AMP);
+
 			for (String parameter : parameters) {
 				int index = parameter.indexOf('=');
-				String name = (index > 0) ? URLDecoder.decode(parameter.substring(0, index), Const.UTF8) : parameter;
+
+				String name = null;
+
+				if (index > 0) {
+					name = URLDecoder.decode(
+						parameter.substring(0, index), Const.UTF8);
+				}
+
 				String[] values = parameterMap.get(name);
+
 				if (values == null) {
 					values = new String[0];
 				}
-				String value = ((index > 0) && (parameter.length() > index + 1)) ? URLDecoder.decode(parameter.substring(index + 1), Const.UTF8) : null;
+
+				String value = null;
+
+				if ((index > 0) && (parameter.length() > (index + 1))) {
+					value = URLDecoder.decode(
+						parameter.substring(index + 1), Const.UTF8);
+				}
+
 				values = Params.append(values, value);
+
 				parameterMap.put(name, values);
 			}
+
 			return parameterMap;
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
@@ -239,47 +329,53 @@ public class DispatchTargets {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DispatchTargets.class.getName());
+
+	private final ContextController _contextController;
+	private DispatcherType _dispatcherType;
+	private final EndpointRegistration<?> _endpointRegistration;
+	private final List<FilterRegistration> _matchingFilterRegistrations;
+	private Map<String, String[]> _parameterMap;
+	private final String _pathInfo;
+	private String _queryString;
+	private final String _requestURI;
+	private final String _servletName;
+	private final String _servletPath;
+	private final Map<String, Object> _specialOveridesMap =
+		new ConcurrentHashMap<>();
+	private String _string;
+
 	private static class RequestAttributeSetter implements Closeable {
 
-		private final ServletRequest servletRequest;
-		private final Map<String, Object> oldValues = new HashMap<String, Object>();
-
 		public RequestAttributeSetter(ServletRequest servletRequest) {
-			this.servletRequest = servletRequest;
+			_servletRequest = servletRequest;
 		}
 
-		public void setAttribute(String name, Object value) {
-			oldValues.put(name, servletRequest.getAttribute(name));
-
-			servletRequest.setAttribute(name, value);
-		}
-
+		@Override
 		public void close() {
-			for (Map.Entry<String, Object> oldValue : oldValues.entrySet()) {
+			for (Map.Entry<String, Object> oldValue :
+					_oldValuesMap.entrySet()) {
+
 				if (oldValue.getValue() == null) {
-					servletRequest.removeAttribute(oldValue.getKey());
+					_servletRequest.removeAttribute(oldValue.getKey());
 				}
 				else {
-					servletRequest.setAttribute(oldValue.getKey(), oldValue.getValue());
+					_servletRequest.setAttribute(
+						oldValue.getKey(), oldValue.getValue());
 				}
 			}
 		}
+
+		public void setAttribute(String name, Object value) {
+			_oldValuesMap.put(name, _servletRequest.getAttribute(name));
+
+			_servletRequest.setAttribute(name, value);
+		}
+
+		private final Map<String, Object> _oldValuesMap = new HashMap<>();
+		private final ServletRequest _servletRequest;
+
 	}
-
-	private static final String SIMPLE_NAME =
-		DispatchTargets.class.getSimpleName();
-
-	private final ContextController contextController;
-	private DispatcherType dispatcherType;
-	private final EndpointRegistration<?> endpointRegistration;
-	private final List<FilterRegistration> matchingFilterRegistrations;
-	private final String pathInfo;
-	private Map<String, String[]> parameterMap;
-	private String queryString;
-	private final String requestURI;
-	private final String servletPath;
-	private final String servletName;
-	private final Map<String, Object> specialOverides = new ConcurrentHashMap<String, Object>();
-	private String string;
 
 }

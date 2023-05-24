@@ -22,7 +22,7 @@ import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 public class Activity extends BaseDTO {
 
 	public static String getEntityURLPath() {
-		return "/o/c/tests";
+		return "/o/c/activities";
 	}
 
 	public ListTypeEntry getActivityStatus() {

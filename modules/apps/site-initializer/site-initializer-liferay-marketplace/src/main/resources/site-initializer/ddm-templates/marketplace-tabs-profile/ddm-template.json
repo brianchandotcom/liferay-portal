@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "MARKETPLACE TABS PROFILE",
+	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
+	"name": "marketplace_tabs_profile",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

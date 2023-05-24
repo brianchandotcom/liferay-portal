@@ -77,7 +77,7 @@ export function ReviewAndSubmitAppPage({
 					version = customValue.data;
 				}
 
-				if (name === 'version description') {
+				if (name === 'Version Description') {
 					versionDescription = customValue.data;
 				}
 			});
@@ -118,20 +118,22 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
-			const attachment = productResponse.attachments.find(
-				({customFields}) =>
-					customFields?.find(
-						({
-							customValue: {
-								data: [value],
-							},
-							name,
-						}) => name === 'App Icon' && value === 'No'
-					)
-			);
+			// Use after LPS-183343
+
+			// const attachment = productResponse.attachments.find(
+			// 	({customFields}) =>
+			// 		customFields?.find(
+			// 			({
+			// 				customValue: {
+			// 					data: [value],
+			// 				},
+			// 				name,
+			// 			}) => name === 'App Icon' && value === 'No'
+			// 		)
+			// );
 
 			const newApp: App = {
-				attachmentTitle: attachment?.title['en_US'] as string,
+				attachmentTitle: productResponse.attachments?.[0]?.title['en_US'] as string,
 				categories: productCategories,
 				description: productResponse.description['en_US'],
 				licenseType,

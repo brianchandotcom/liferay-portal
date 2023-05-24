@@ -1541,7 +1541,6 @@ com.liferay.portlet.dynamicdatamapping.service.persistence.DDMContentPersistence
 com.liferay.portlet.dynamicdatamapping.service.persistence.DDMContentUtil=com.liferay.dynamic.data.mapping.service.persistence.DDMContentUtil
 com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStorageLinkPersistence=com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence
 com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStorageLinkUtil=com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkUtil
-com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder=com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder
 com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence=com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence
 com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkUtil=com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil
 com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence=com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence

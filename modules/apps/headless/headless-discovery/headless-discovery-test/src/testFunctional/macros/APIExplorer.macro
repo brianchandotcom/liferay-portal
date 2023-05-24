@@ -80,6 +80,25 @@ definition {
 			value = "Execute Query (Ctrl-Enter)");
 	}
 
+	macro expandPropertyInActionsSchema {
+		Variables.assertDefined(parameterList = "${schema},${property}");
+
+		Click(
+			locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_FIELD_COLLAPSED",
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_PROPERTY_COLLAPSED",
+			property = ${property},
+			schema = ${schema});
+	}
+
 	macro navigateToOpenAPI {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {

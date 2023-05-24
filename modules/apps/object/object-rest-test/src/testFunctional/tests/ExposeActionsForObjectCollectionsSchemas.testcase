@@ -1,0 +1,113 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-180090=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Student object definition with name created and published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given navigate to o/c/students/openapi.json") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "students");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@priority = 3
+	test IncludeCreateBatchInActionsForObjectCollectionSchema {
+		task ("When expand actions.createBatch in PageStudent schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "createBatch",
+				schema = "PageStudent");
+		}
+
+		task ("Then I can see create with POST and /o/c/students/batch") {
+			AssertTextEquals(
+				field = "actions",
+				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+				property = "createBatch",
+				schema = "PageStudent",
+				value1 = "createBatch { method string default: POST href string default: http://test.com:8080/o/c/students/batch }");
+		}
+	}
+
+	@priority = 3
+	test IncludeCreateInActionsForObjectCollectionSchema {
+		task ("When expand actions.create in PageStudent schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "create",
+				schema = "PageStudent");
+		}
+
+		task ("Then I can see create with POST and /o/c/students") {
+			AssertTextEquals(
+				field = "actions",
+				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+				property = "create",
+				schema = "PageStudent",
+				value1 = "create { method string default: POST href string default: http://test.com:8080/o/c/students/ }");
+		}
+	}
+
+	@priority = 3
+	test IncludeDeleteBatchInActionsForObjectCollectionSchema {
+		task ("When expand actions.deleteBatch in PageStudent schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "deleteBatch",
+				schema = "PageStudent");
+		}
+
+		task ("Then I can see deleteBatch with DELETE and /o/c/students/batch") {
+			AssertTextEquals(
+				field = "actions",
+				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+				property = "deleteBatch",
+				schema = "PageStudent",
+				value1 = "deleteBatch { method string default: DELETE href string default: http://test.com:8080/o/c/students/batch }");
+		}
+	}
+
+	@priority = 4
+	test IncludeUpdateBatchInActionsForObjectCollectionSchema {
+		property portal.acceptance = "true";
+
+		task ("When expand actions.updateBatch in PageStudent schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "updateBatch",
+				schema = "PageStudent");
+		}
+
+		task ("Then I can see updateBatch with PUT and /o/c/students/batch") {
+			AssertTextEquals(
+				field = "actions",
+				locator1 = "OpenAPI#SCHEMA_PROPERTY",
+				property = "updateBatch",
+				schema = "PageStudent",
+				value1 = "updateBatch { method string default: PUT href string default: http://test.com:8080/o/c/students/batch }");
+		}
+	}
+
+}

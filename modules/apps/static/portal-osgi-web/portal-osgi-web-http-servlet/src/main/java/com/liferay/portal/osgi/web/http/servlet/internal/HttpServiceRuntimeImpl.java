@@ -35,6 +35,7 @@ import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -336,9 +337,10 @@ public class HttpServiceRuntimeImpl
 	}
 
 	public List<String> getHttpServiceEndpoints() {
-		return StringPlus.from(
-			_attributesMap.get(
-				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
+		return Arrays.asList(
+			StringPlus.from(
+				_attributesMap.get(
+					HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT)));
 	}
 
 	public ServletContext getParentServletContext() {

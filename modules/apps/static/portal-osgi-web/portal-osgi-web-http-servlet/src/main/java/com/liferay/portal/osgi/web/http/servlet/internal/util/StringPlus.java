@@ -11,7 +11,10 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Raymond Augé
@@ -19,24 +22,26 @@ import java.util.*;
 public class StringPlus {
 
 	@SuppressWarnings("unchecked")
-	public static List<String> from(Object object) {
-		if (String.class.isInstance(object)) {
-			return Collections.singletonList((String)object);
+	public static String[] from(Object object) {
+		if (object instanceof String) {
+			return new String[] {(String)object};
 		}
-		else if (String[].class.isInstance(object)) {
-			return Arrays.asList((String[])object);
+		else if (object instanceof String[]) {
+			return (String[])object;
 		}
-		else if (Collection.class.isInstance(object)) {
+		else if (object instanceof Collection) {
 			Collection<?> collection = (Collection<?>)object;
 
-			if (!collection.isEmpty() &&
-				String.class.isInstance(collection.iterator().next())) {
+			Iterator<?> iterator = collection.iterator();
 
-				return new ArrayList<String>((Collection<String>)object);
+			if (!collection.isEmpty() && (iterator.next() instanceof String)) {
+				List<String> list = new ArrayList<>((Collection<String>)object);
+
+				return list.toArray(new String[0]);
 			}
 		}
 
-		return Collections.emptyList();
+		return new String[0];
 	}
 
 }

@@ -1,0 +1,14 @@
+[
+	{
+		"accounts": [
+			"TESTACCOUNT1"
+		],
+		"accountGroupExternalReferenceCode": "TESTACCOUNTGROUP1"
+	},
+	{
+		"accounts": [
+			"TESTACCOUNT2"
+		],
+		"accountGroupExternalReferenceCode": "TESTACCOUNTGROUP2"
+	}
+]

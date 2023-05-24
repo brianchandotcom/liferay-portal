@@ -257,8 +257,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader();
-
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, new TaglibBundleTrackerCustomizer());
 
@@ -287,8 +285,18 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		// Legacy
 
+		FreeMarkerBundleClassloader freeMarkerBundleClassloader =
+			_freeMarkerBundleClassloader;
+
+		if (freeMarkerBundleClassloader == null) {
+			freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
+				_taglibMappings.keySet());
+
+			_freeMarkerBundleClassloader = freeMarkerBundleClassloader;
+		}
+
 		TaglibFactoryWrapper taglibFactoryWrapper = new TaglibFactoryWrapper(
-			servletContext, objectWrapper);
+			servletContext, objectWrapper, freeMarkerBundleClassloader);
 
 		contextObjects.put("PortalJspTagLibs", taglibFactoryWrapper);
 		contextObjects.put("PortletJspTagLibs", taglibFactoryWrapper);
@@ -296,15 +304,19 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		// Contributed
 
-		for (Map.Entry<String, String> entry : _taglibMappings.entrySet()) {
-			try {
-				contextObjects.put(
-					entry.getKey(), taglibFactoryWrapper.get(entry.getValue()));
-			}
-			catch (TemplateModelException templateModelException) {
-				_log.error(
-					"Unable to add taglib " + entry.getKey() + " to context",
-					templateModelException);
+		for (Map<String, String> map : _taglibMappings.values()) {
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				try {
+					contextObjects.put(
+						entry.getKey(),
+						taglibFactoryWrapper.get(entry.getValue()));
+				}
+				catch (TemplateModelException templateModelException) {
+					_log.error(
+						"Unable to add taglib " + entry.getKey() +
+							" to context",
+						templateModelException);
+				}
 			}
 		}
 	}
@@ -552,10 +564,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			ProxyUtil.getProxyProviderFunction(ServletContext.class);
 
 	private Bundle _bundle;
-	private BundleTracker<Set<String>> _bundleTracker;
+	private BundleTracker<ClassLoader> _bundleTracker;
 	private volatile Configuration _configuration;
 	private volatile BeansWrapper _defaultBeansWrapper;
-	private FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
+	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
 		_freeMarkerEngineConfiguration;
 
@@ -570,7 +582,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private volatile BeansWrapper _restrictedBeansWrapper;
 	private volatile ServiceRegistration<PortalExecutorConfig>
 		_serviceRegistration;
-	private final Map<String, String> _taglibMappings =
+	private final Map<ClassLoader, Map<String, String>> _taglibMappings =
 		new ConcurrentHashMap<>();
 
 	@Reference
@@ -799,10 +811,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	private class TaglibBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<Set<String>> {
+		implements BundleTrackerCustomizer<ClassLoader> {
 
 		@Override
-		public Set<String> addingBundle(
+		public ClassLoader addingBundle(
 			Bundle bundle, BundleEvent bundleEvent) {
 
 			URL url = bundle.getEntry("/META-INF/taglib-mappings.properties");
@@ -824,12 +836,11 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-				_freeMarkerBundleClassloader.addclassLoader(
-					bundleWiring.getClassLoader());
+				_taglibMappings.put(bundleWiring.getClassLoader(), map);
 
-				_taglibMappings.putAll(map);
+				_freeMarkerBundleClassloader = null;
 
-				return map.keySet();
+				return bundleWiring.getClassLoader();
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -840,23 +851,18 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Set<String> trackedKeys) {
+			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Set<String> trackedKeys) {
+			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
 
-			for (String key : trackedKeys) {
-				_taglibMappings.remove(key);
-			}
+			_taglibMappings.remove(classLoader);
 
 			_templateModels.clear();
 
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			_freeMarkerBundleClassloader.removeClassLoader(
-				bundleWiring.getClassLoader());
+			_freeMarkerBundleClassloader = null;
 		}
 
 	}
@@ -864,7 +870,10 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private class TaglibFactoryWrapper implements TemplateHashModel {
 
 		public TaglibFactoryWrapper(
-			ServletContext servletContext, ObjectWrapper objectWrapper) {
+			ServletContext servletContext, ObjectWrapper objectWrapper,
+			FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
+
+			_freeMarkerBundleClassloader = freeMarkerBundleClassloader;
 
 			_taglibFactory = new TaglibFactory(
 				_servletContextProxyProviderFunction.apply(
@@ -905,6 +914,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			return false;
 		}
 
+		private final FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 		private final TaglibFactory _taglibFactory;
 
 	}

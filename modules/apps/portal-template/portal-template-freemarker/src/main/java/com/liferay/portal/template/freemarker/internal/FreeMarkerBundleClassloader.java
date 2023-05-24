@@ -24,8 +24,8 @@ import java.net.URLClassLoader;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Miguel Pastor
@@ -33,16 +33,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FreeMarkerBundleClassloader extends URLClassLoader {
 
-	public FreeMarkerBundleClassloader() {
+	public FreeMarkerBundleClassloader(Set<ClassLoader> classLoaders) {
 		super(new URL[0]);
+
+		_classLoaders = new HashSet<>(classLoaders);
 
 		Class<?> clazz = FreeMarkerBundleClassloader.class;
 
 		_classLoaders.add(clazz.getClassLoader());
-	}
-
-	public void addclassLoader(ClassLoader classLoader) {
-		_classLoaders.add(classLoader);
 	}
 
 	@Override
@@ -88,10 +86,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return findResources(name);
 	}
 
-	public void removeClassLoader(ClassLoader classLoader) {
-		_classLoaders.remove(classLoader);
-	}
-
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		for (ClassLoader classLoader : _classLoaders) {
@@ -124,7 +118,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerBundleClassloader.class);
 
-	private final Set<ClassLoader> _classLoaders =
-		ConcurrentHashMap.newKeySet();
+	private final Set<ClassLoader> _classLoaders;
 
 }

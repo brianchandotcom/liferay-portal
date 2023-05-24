@@ -397,17 +397,11 @@ definition {
 		}
 
 		task ("When Check three options (Phone, User Account, and WebURL)") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "creator",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "creator");
 
-			Uncheck.uncheckNotVisible(
-				checkboxName = "id",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
 
-			Uncheck.uncheckNotVisible(
-				checkboxName = "name",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "name");
 		}
 
 		task ("Then Confirm that the fields are unchecked ") {

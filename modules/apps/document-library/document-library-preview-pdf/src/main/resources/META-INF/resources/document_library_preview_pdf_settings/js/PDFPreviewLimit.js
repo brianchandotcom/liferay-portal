@@ -22,11 +22,14 @@ const PDFPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 	const [inputValue, setInputValue] = useState(value);
 
 	const onChange = (event) => {
-		const value = event.target.value;
+		const value = parseInt(event.target.value, 10);
 
 		setInputValue(value);
 
-		setError(maxLimitSize > 0 && value > maxLimitSize);
+		setError(
+			(maxLimitSize > 0 && value > maxLimitSize) ||
+				(maxLimitSize > 0 && value === 0)
+		);
 	};
 
 	return (

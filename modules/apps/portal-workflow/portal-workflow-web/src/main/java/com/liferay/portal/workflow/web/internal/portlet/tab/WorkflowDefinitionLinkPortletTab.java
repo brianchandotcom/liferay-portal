@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.tab;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerVisibleFilter;
@@ -30,9 +31,6 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -68,7 +66,7 @@ public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
 				renderRequest, renderResponse,
 				workflowDefinitionLinkLocalService,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-				_workflowHandlerVisibleFilter);
+				_workflowHandlerVisibleFilterSnapshot.get());
 
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
@@ -84,16 +82,14 @@ public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
 	protected WorkflowDefinitionLinkLocalService
 		workflowDefinitionLinkLocalService;
 
+	private static final Snapshot<WorkflowHandlerVisibleFilter>
+		_workflowHandlerVisibleFilterSnapshot = new Snapshot<>(
+			WorkflowDefinitionLinkPortletTab.class,
+			WorkflowHandlerVisibleFilter.class, null, true);
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile WorkflowHandlerVisibleFilter _workflowHandlerVisibleFilter;
 
 }

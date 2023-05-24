@@ -107,15 +107,11 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		InputStream inputStream = _store.getFileAsStream(
-			companyId, repositoryId, fileName, fromVersionLabel);
-
-		if (inputStream == null) {
-			inputStream = new UnsyncByteArrayInputStream(new byte[0]);
-		}
-
 		_store.addFile(
-			companyId, repositoryId, fileName, toVersionLabel, inputStream);
+			companyId, repositoryId, fileName, toVersionLabel,
+			_getNullSafeInputStream(
+				_store.getFileAsStream(
+					companyId, repositoryId, fileName, fromVersionLabel)));
 	}
 
 	@Override
@@ -311,11 +307,6 @@ public class DLStoreImpl implements DLStore {
 		for (String versionLabel :
 				_store.getFileVersions(companyId, repositoryId, fileName)) {
 
-			_store.addFile(
-				companyId, newRepositoryId, fileName, versionLabel,
-				_store.getFileAsStream(
-					companyId, repositoryId, fileName, versionLabel));
-
 			if (_isStoreAreaSupported()) {
 				_copy(
 					StoreArea.DELETED, companyId, repositoryId, fileName,
@@ -332,15 +323,11 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		InputStream inputStream = _store.getFileAsStream(
-			companyId, repositoryId, fileName, fromVersionLabel);
-
-		if (inputStream == null) {
-			inputStream = new UnsyncByteArrayInputStream(new byte[0]);
-		}
-
 		_store.addFile(
-			companyId, repositoryId, fileName, toVersionLabel, inputStream);
+			companyId, repositoryId, fileName, toVersionLabel,
+			_getNullSafeInputStream(
+				_store.getFileAsStream(
+					companyId, repositoryId, fileName, fromVersionLabel)));
 
 		if (_isStoreAreaSupported()) {
 			_copy(
@@ -510,8 +497,9 @@ public class DLStoreImpl implements DLStore {
 			String fileName, String versionLabel)
 		throws PortalException {
 
-		try (InputStream inputStream = _store.getFileAsStream(
-				companyId, repositoryId, fileName, versionLabel)) {
+		try (InputStream inputStream = _getNullSafeInputStream(
+				_store.getFileAsStream(
+					companyId, repositoryId, fileName, versionLabel))) {
 
 			StoreArea.withStoreArea(
 				storeArea,
@@ -522,6 +510,14 @@ public class DLStoreImpl implements DLStore {
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
 		}
+	}
+
+	private InputStream _getNullSafeInputStream(InputStream inputStream) {
+		if (inputStream == null) {
+			return new UnsyncByteArrayInputStream(new byte[0]);
+		}
+
+		return inputStream;
 	}
 
 	private boolean _isStoreAreaSupported() {

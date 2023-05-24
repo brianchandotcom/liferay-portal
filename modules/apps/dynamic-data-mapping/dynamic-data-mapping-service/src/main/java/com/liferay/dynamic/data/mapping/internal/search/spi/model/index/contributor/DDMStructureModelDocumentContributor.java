@@ -68,18 +68,10 @@ public class DDMStructureModelDocumentContributor
 			}
 		}
 
-		try {
-			document.addKeyword(
-				"resourcePermissionName",
-				_ddmPermissionSupport.getStructureModelResourceName(
-					ddmStructure.getClassNameId()));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
+		document.addKeyword(
+			"resourcePermissionName",
+			_ddmPermissionSupport.getStructureModelResourceName(
+				ddmStructure.getClassNameId()));
 		document.addKeyword(
 			"resourceClassNameId", ddmStructure.getClassNameId());
 		document.addKeyword("structureKey", ddmStructure.getStructureKey());

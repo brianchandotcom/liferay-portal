@@ -88,19 +88,9 @@ public class DDMSearchHelper {
 		searchContext.setAttribute(Field.DESCRIPTION, description);
 		searchContext.setAttribute(Field.NAME, name);
 		searchContext.setAttribute(Field.STATUS, status);
-
-		try {
-			searchContext.setAttribute(
-				"resourcePermissionName",
-				_ddmPermissionSupport.getStructureModelResourceName(
-					classNameId));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
+		searchContext.setAttribute(
+			"resourcePermissionName",
+			_ddmPermissionSupport.getStructureModelResourceName(classNameId));
 		searchContext.setAttribute("storageType", storageType);
 		searchContext.setAttribute("type", type);
 		searchContext.setCompanyId(companyId);

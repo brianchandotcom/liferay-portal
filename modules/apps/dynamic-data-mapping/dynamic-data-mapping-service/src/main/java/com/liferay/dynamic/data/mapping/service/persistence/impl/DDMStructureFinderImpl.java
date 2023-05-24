@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -196,9 +195,6 @@ public class DDMStructureFinderImpl
 
 			return 0;
 		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
 		finally {
 			closeSession(session);
 		}
@@ -260,9 +256,6 @@ public class DDMStructureFinderImpl
 
 			return (List<DDMStructure>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
 		}
 		finally {
 			closeSession(session);

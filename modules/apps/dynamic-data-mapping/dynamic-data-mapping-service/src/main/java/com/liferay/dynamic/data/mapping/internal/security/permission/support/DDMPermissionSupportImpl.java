@@ -149,16 +149,12 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 	}
 
 	@Override
-	public String getStructureModelResourceName(long classNameId)
-		throws PortalException {
-
+	public String getStructureModelResourceName(long classNameId) {
 		return getStructureModelResourceName(_portal.getClassName(classNameId));
 	}
 
 	@Override
-	public String getStructureModelResourceName(String className)
-		throws PortalException {
-
+	public String getStructureModelResourceName(String className) {
 		ServiceWrapper<DDMStructurePermissionSupport>
 			structurePermissionSupportServiceWrapper =
 				_ddmPermissionSupportRegistry.
@@ -287,10 +283,9 @@ public class DDMPermissionSupportImpl implements DDMPermissionSupport {
 	}
 
 	private String _getTemplateModelResourceName(
-			String resourceClassName,
-			ServiceWrapper<DDMTemplatePermissionSupport>
-				templatePermissionSupportServiceWrapper)
-		throws PortalException {
+		String resourceClassName,
+		ServiceWrapper<DDMTemplatePermissionSupport>
+			templatePermissionSupportServiceWrapper) {
 
 		boolean defaultModelResourceName = MapUtil.getBoolean(
 			templatePermissionSupportServiceWrapper.getProperties(),

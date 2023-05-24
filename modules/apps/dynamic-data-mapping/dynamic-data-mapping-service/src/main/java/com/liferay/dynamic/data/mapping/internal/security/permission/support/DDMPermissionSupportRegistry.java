@@ -36,16 +36,14 @@ import org.osgi.service.component.annotations.Reference;
 public class DDMPermissionSupportRegistry {
 
 	public ServiceWrapper<DDMStructurePermissionSupport>
-			getDDMStructurePermissionSupportServiceWrapper(long classNameId)
-		throws PortalException {
+		getDDMStructurePermissionSupportServiceWrapper(long classNameId) {
 
 		return getDDMStructurePermissionSupportServiceWrapper(
 			_portal.getClassName(classNameId));
 	}
 
 	public ServiceWrapper<DDMStructurePermissionSupport>
-			getDDMStructurePermissionSupportServiceWrapper(String className)
-		throws PortalException {
+		getDDMStructurePermissionSupportServiceWrapper(String className) {
 
 		return _ddmStructurePermissionSupportServiceTrackerMap.getService(
 			className);

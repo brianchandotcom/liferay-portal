@@ -52,7 +52,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -150,9 +149,6 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> hasUpdatePermission,
-						_getConfigureDisplayPageActionUnsafeConsumer()
-					).add(
 						() -> LayoutPageTemplateEntryPermission.contains(
 							_themeDisplay.getPermissionChecker(),
 							_layoutPageTemplateEntry, ActionKeys.PERMISSIONS),
@@ -173,27 +169,6 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_getConfigureDisplayPageActionUnsafeConsumer() {
-
-		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
-			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
-
-		return dropdownItem -> {
-			dropdownItem.setHref(
-				editPageURL, "mvcRenderCommandName",
-				"/layout_admin/edit_layout", "redirect",
-				_themeDisplay.getURLCurrent(), "backURL",
-				_themeDisplay.getURLCurrent(), "portletResource",
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
-				"selPlid", _layoutPageTemplateEntry.getPlid());
-			dropdownItem.setIcon("cog");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "configure"));
-		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

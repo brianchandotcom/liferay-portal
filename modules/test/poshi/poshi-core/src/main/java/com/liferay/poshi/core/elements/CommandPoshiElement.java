@@ -162,10 +162,11 @@ public class CommandPoshiElement extends PoshiElement {
 
 					String newArguments = sb.toString();
 
-					if (!newArguments.isEmpty()){
-					addAttribute(
-						"arguments",
-						newArguments.substring(0, newArguments.length() - 1));
+					if (!newArguments.isEmpty()) {
+						addAttribute(
+							"arguments",
+							newArguments.substring(
+								0, newArguments.length() - 1));
 					}
 				}
 				else {

@@ -55,6 +55,9 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				{
 					columnKey: 'value',
 					label: '',
+					render: (data: any) => (
+						<p style={{whiteSpace: 'pre-wrap'}}>{data}</p>
+					),
 				},
 			]}
 			rows={[
@@ -69,13 +72,11 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Liferay business/sales goals',
-					value:
-						mdfRequest.liferayBusinessSalesGoals !== undefined &&
-						mdfRequest.liferayBusinessSalesGoals.includes(
-							'Other - Please describe'
-						)
-							? mdfRequest.liferayBusinessSalesGoalsOther
-							: mdfRequest.liferayBusinessSalesGoals?.join('; '),
+					value: mdfRequest.liferayBusinessSalesGoals?.join('; '),
+				},
+				{
+					title: 'Liferay business/sales goals Other',
+					value: mdfRequest.liferayBusinessSalesGoalsOther,
 				},
 			]}
 		/>

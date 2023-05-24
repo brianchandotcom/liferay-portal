@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -89,7 +92,9 @@ public class DDMStructureModelListenerTest {
 	public void testUpdateDataDefinition() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle();
 
-		_updateDataDefinition("dependencies/updated_data_definition.json");
+		_updateDataDefinition(
+			"dependencies/updated_data_definition.json",
+			_dataDefinition.getDataDefinitionKey());
 
 		JournalArticle updatedJournalArticle =
 			_journalArticleLocalService.getJournalArticle(
@@ -104,13 +109,40 @@ public class DDMStructureModelListenerTest {
 	public void testUpdateDataDefinitionNoChanges() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle();
 
-		_updateDataDefinition("dependencies/data_definition.json");
+		_updateDataDefinition(
+			"dependencies/data_definition.json",
+			_dataDefinition.getDataDefinitionKey());
 
 		journalArticle = _journalArticleLocalService.getJournalArticle(
 			journalArticle.getId());
 
 		_assertDDMFormFieldValuesMap(
 			_expectedFieldValuesMap, journalArticle.getDDMFormValues());
+	}
+
+	@Test
+	public void testUpdateDataDefinitionStructureKeyChanged() throws Exception {
+		JournalArticle journalArticle = _addJournalArticle();
+
+		String modifiedDataDefinitionKey =
+			_dataDefinition.getDataDefinitionKey() + "-MODIFIED";
+
+		_updateDataDefinition(
+			"dependencies/data_definition.json", modifiedDataDefinitionKey);
+
+		journalArticle = _journalArticleLocalService.getJournalArticle(
+			journalArticle.getId());
+
+		_assertDDMFormFieldValuesMap(
+			_expectedFieldValuesMap, journalArticle.getDDMFormValues());
+
+		Indexer<JournalArticle> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+
+		Document document = indexer.getDocument(journalArticle);
+
+		Assert.assertEquals(
+			modifiedDataDefinitionKey, document.get("ddmStructureKey"));
 	}
 
 	@Test
@@ -141,7 +173,8 @@ public class DDMStructureModelListenerTest {
 
 			try {
 				_updateDataDefinition(
-					"dependencies/updated_data_definition.json");
+					"dependencies/updated_data_definition.json",
+					_dataDefinition.getDataDefinitionKey());
 			}
 			catch (Exception exception2) {
 				exception1 = exception2;
@@ -228,7 +261,10 @@ public class DDMStructureModelListenerTest {
 		}
 	}
 
-	private void _updateDataDefinition(String resourceName) throws Exception {
+	private void _updateDataDefinition(
+			String resourceName, String dataDefinitionKey)
+		throws Exception {
+
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 			_dataDefinitionResourceFactory.create();
 
@@ -242,8 +278,7 @@ public class DDMStructureModelListenerTest {
 		DataDefinition updatedDataDefinition = DataDefinition.toDTO(
 			StringUtil.read(clazz.getResourceAsStream(resourceName)));
 
-		updatedDataDefinition.setDataDefinitionKey(
-			_dataDefinition.getDataDefinitionKey());
+		updatedDataDefinition.setDataDefinitionKey(dataDefinitionKey);
 
 		dataDefinitionResource.putDataDefinition(
 			_dataDefinition.getId(), updatedDataDefinition);

@@ -33,14 +33,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FreeMarkerBundleClassloader extends URLClassLoader {
 
-	public FreeMarkerBundleClassloader(ClassLoader... classLoaders) {
+	public FreeMarkerBundleClassloader() {
 		super(new URL[0]);
 
-		if (classLoaders.length == 0) {
-			throw new IllegalArgumentException("Bundles are empty");
-		}
+		Class<?> clazz = FreeMarkerBundleClassloader.class;
 
-		Collections.addAll(_classLoaders, classLoaders);
+		_classLoaders.add(clazz.getClassLoader());
 	}
 
 	public void addclassLoader(ClassLoader classLoader) {

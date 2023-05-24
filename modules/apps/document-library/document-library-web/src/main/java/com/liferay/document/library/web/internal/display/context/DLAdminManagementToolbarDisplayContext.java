@@ -537,7 +537,7 @@ public class DLAdminManagementToolbarDisplayContext
 			"assetCategoryId",
 			() -> {
 				long[] assetCategoryIds = ArrayUtil.toLongArray(
-					_getSelectedAssetCategoryIds(_httpServletRequest));
+					_getSelectedAssetCategoryIds());
 
 				if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
 					return ArrayUtil.toStringArray(assetCategoryIds);
@@ -549,7 +549,7 @@ public class DLAdminManagementToolbarDisplayContext
 			"assetTagId",
 			() -> {
 				String[] assetTagIds = ArrayUtil.toStringArray(
-					_getSelectedAssetTagIds(_httpServletRequest));
+					_getSelectedAssetTagIds());
 
 				if (ArrayUtil.isNotEmpty(assetTagIds)) {
 					return assetTagIds;
@@ -584,7 +584,7 @@ public class DLAdminManagementToolbarDisplayContext
 		).setParameter(
 			"extension",
 			() -> {
-				String[] extensions = _getExtensions(_httpServletRequest);
+				String[] extensions = _getExtensions();
 
 				if (ArrayUtil.isNotEmpty(extensions)) {
 					return extensions;
@@ -664,8 +664,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private void _addAssetCategoriesFilterLabelItems(
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
 
-		Set<Long> assetCategoryIds = _getSelectedAssetCategoryIds(
-			_httpServletRequest);
+		Set<Long> assetCategoryIds = _getSelectedAssetCategoryIds();
 
 		for (Long assetCategoryId : assetCategoryIds) {
 			labelItemListWrapper.add(
@@ -707,7 +706,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private void _addAssetTagsFilterLabelItems(
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
 
-		Set<String> assetTagIds = _getSelectedAssetTagIds(_httpServletRequest);
+		Set<String> assetTagIds = _getSelectedAssetTagIds();
 
 		for (String assetTagId : assetTagIds) {
 			labelItemListWrapper.add(
@@ -737,7 +736,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private void _addExtensionFilterLabelItems(
 		LabelItemListBuilder.LabelItemListWrapper labelItemListWrapper) {
 
-		String[] extensions = _getExtensions(_httpServletRequest);
+		String[] extensions = _getExtensions();
 
 		if (ArrayUtil.isEmpty(extensions)) {
 			return;
@@ -767,9 +766,7 @@ public class DLAdminManagementToolbarDisplayContext
 			_liferayPortletResponse.getNamespace() + "selectedAssetCategory"
 		).setParameter(
 			"selectedCategories",
-			StringUtil.merge(
-				_getSelectedAssetCategoryIds(_httpServletRequest),
-				StringPool.COMMA)
+			StringUtil.merge(_getSelectedAssetCategoryIds(), StringPool.COMMA)
 		).setParameter(
 			"showSelectedCounter", true
 		).setParameter(
@@ -805,8 +802,7 @@ public class DLAdminManagementToolbarDisplayContext
 				StringPool.COMMA)
 		).setParameter(
 			"selectedTagNames",
-			StringUtil.merge(
-				_getSelectedAssetTagIds(_httpServletRequest), StringPool.COMMA)
+			StringUtil.merge(_getSelectedAssetTagIds(), StringPool.COMMA)
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
@@ -839,14 +835,14 @@ public class DLAdminManagementToolbarDisplayContext
 		sortingURL.setParameter(
 			"fileEntryTypeId", String.valueOf(_getFileEntryTypeId()));
 
-		String[] extensions = _getExtensions(_httpServletRequest);
+		String[] extensions = _getExtensions();
 
 		if (ArrayUtil.isNotEmpty(extensions)) {
 			sortingURL.setParameter("extension", extensions);
 		}
 
 		long[] assetCategoryIds = ArrayUtil.toLongArray(
-			_getSelectedAssetCategoryIds(_httpServletRequest));
+			_getSelectedAssetCategoryIds());
 
 		if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
 			sortingURL.setParameter(
@@ -854,7 +850,7 @@ public class DLAdminManagementToolbarDisplayContext
 		}
 
 		String[] assetTagIds = ArrayUtil.toStringArray(
-			_getSelectedAssetTagIds(_httpServletRequest));
+			_getSelectedAssetTagIds());
 
 		if (ArrayUtil.isNotEmpty(assetTagIds)) {
 			sortingURL.setParameter("assetTagId", assetTagIds);
@@ -874,8 +870,8 @@ public class DLAdminManagementToolbarDisplayContext
 		return dlPortletInstanceSettings.getDisplayViews();
 	}
 
-	private String[] _getExtensions(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getStringValues(httpServletRequest, "extension");
+	private String[] _getExtensions() {
+		return ParamUtil.getStringValues(_httpServletRequest, "extension");
 	}
 
 	private String _getExtensionsItemSelectorURL() {
@@ -905,7 +901,7 @@ public class DLAdminManagementToolbarDisplayContext
 				portletResponse.getNamespace() + "selectedFileExtension",
 				fileExtensionItemSelectorCriterion)
 		).setParameter(
-			"checkedFileExtensions", () -> _getExtensions(httpServletRequest)
+			"checkedFileExtensions", () -> _getExtensions()
 		).buildString();
 	}
 
@@ -914,15 +910,14 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
-		boolean extensionsIsEmpty = ArrayUtil.isEmpty(
-			_getExtensions(_httpServletRequest));
+		boolean extensionsIsEmpty = ArrayUtil.isEmpty(_getExtensions());
 		long fileEntryTypeId = _getFileEntryTypeId();
 		String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation", "home");
 		boolean selectedAssetCategoryIdsIsEmpty = SetUtil.isEmpty(
-			_getSelectedAssetCategoryIds(_httpServletRequest));
+			_getSelectedAssetCategoryIds());
 		boolean selectedAssetTagIdsIsEmpty = SetUtil.isEmpty(
-			_getSelectedAssetTagIds(_httpServletRequest));
+			_getSelectedAssetTagIds());
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -1137,28 +1132,24 @@ public class DLAdminManagementToolbarDisplayContext
 		return _dlAdminDisplayContext.getRepositoryId();
 	}
 
-	private Set<Long> _getSelectedAssetCategoryIds(
-		HttpServletRequest httpServletRequest) {
-
+	private Set<Long> _getSelectedAssetCategoryIds() {
 		if (_assetCategoryIds != null) {
 			return _assetCategoryIds;
 		}
 
 		_assetCategoryIds = SetUtil.fromArray(
-			ParamUtil.getLongValues(httpServletRequest, "assetCategoryId"));
+			ParamUtil.getLongValues(_httpServletRequest, "assetCategoryId"));
 
 		return _assetCategoryIds;
 	}
 
-	private Set<String> _getSelectedAssetTagIds(
-		HttpServletRequest httpServletRequest) {
-
+	private Set<String> _getSelectedAssetTagIds() {
 		if (_assetTagIds != null) {
 			return _assetTagIds;
 		}
 
 		_assetTagIds = SetUtil.fromArray(
-			ParamUtil.getStringValues(httpServletRequest, "assetTagId"));
+			ParamUtil.getStringValues(_httpServletRequest, "assetTagId"));
 
 		return _assetTagIds;
 	}

@@ -196,6 +196,21 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+			readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
+
+			if (Objects.equals(
+					businessType,
+					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+				Objects.equals(
+					businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+				readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
+			}
+
+			readOnlyConditionExpression = StringPool.BLANK;
+		}
+
 		ObjectField existingObjectField = null;
 
 		if (objectFieldId > 0) {
@@ -275,14 +290,10 @@ public class ObjectFieldLocalServiceImpl
 			dbColumnName = name;
 		}
 
-		String readOnly = null;
+		String readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-			readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
-
-			if (_readOnlyObjectFieldNames.contains(name)) {
-				readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
-			}
+		if (_readOnlyObjectFieldNames.contains(name)) {
+			readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
 		}
 
 		return _addObjectField(

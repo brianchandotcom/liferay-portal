@@ -152,10 +152,6 @@ public class ObjectFieldResourceImpl
 			throw new ObjectFieldLocalizedException();
 		}
 
-		ObjectFieldUtil.readOnlyFeatureFlag(
-			objectField.getReadOnlyAsString(),
-			objectField.getReadOnlyConditionExpression());
-
 		com.liferay.object.model.ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
@@ -227,10 +223,6 @@ public class ObjectFieldResourceImpl
 
 			throw new UnsupportedOperationException();
 		}
-
-		ObjectFieldUtil.readOnlyFeatureFlag(
-			objectField.getReadOnlyAsString(),
-			objectField.getReadOnlyConditionExpression());
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			_objectFieldService.getObjectField(objectFieldId);

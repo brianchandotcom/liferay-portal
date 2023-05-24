@@ -22,6 +22,7 @@ import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,9 +37,6 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jorge Ferrer
@@ -119,7 +117,8 @@ public class JournalArticleInfoItemFormVariationsProvider
 	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException {
 
-		DepotEntryLocalService depotEntryLocalService = _depotEntryLocalService;
+		DepotEntryLocalService depotEntryLocalService =
+			_depotEntryLocalServiceSnapshot.get();
 
 		if (depotEntryLocalService == null) {
 			return _portal.getCurrentAndAncestorSiteGroupIds(groupId);
@@ -133,15 +132,13 @@ public class JournalArticleInfoItemFormVariationsProvider
 				DepotEntry::getGroupId));
 	}
 
+	private static final Snapshot<DepotEntryLocalService>
+		_depotEntryLocalServiceSnapshot = new Snapshot<>(
+			JournalArticleInfoItemFormVariationsProvider.class,
+			DepotEntryLocalService.class, null, true);
+
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private Portal _portal;

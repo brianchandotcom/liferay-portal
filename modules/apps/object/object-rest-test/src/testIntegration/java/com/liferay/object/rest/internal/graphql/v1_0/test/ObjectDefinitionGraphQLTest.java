@@ -28,22 +28,17 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.log.LogCapture;
@@ -459,6 +454,16 @@ public class ObjectDefinitionGraphQLTest {
 				"Object/" + _objectFieldName));
 	}
 
+	private JSONObject _invoke(GraphQLField queryGraphQLField)
+		throws Exception {
+
+		return HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"query", queryGraphQLField.toString()
+			).toString(),
+			"graphql", Http.Method.POST);
+	}
+
 	private void _addListTypeEntry(
 			ListTypeDefinition listTypeDefinition, String key)
 		throws Exception {
@@ -489,27 +494,6 @@ public class ObjectDefinitionGraphQLTest {
 			false, _objectFieldName, false, false, Collections.emptyList());
 
 		return objectDefinition;
-	}
-
-	private JSONObject _invoke(GraphQLField queryGraphQLField)
-		throws Exception {
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization",
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
-		options.setBody(
-			JSONUtil.put(
-				"query", queryGraphQLField.toString()
-			).toString(),
-			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-		options.setLocation("http://localhost:8080/o/graphql");
-		options.setPost(true);
-
-		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
 
 	private static final String _RELATIONSHIP_NAME = "parent";

@@ -14,15 +14,11 @@
 
 package com.liferay.portal.vulcan.internal.graphql.servlet.test;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -111,28 +107,12 @@ public class BaseGraphQLServlet {
 	}
 
 	protected JSONObject invoke(GraphQLField graphQLField) throws Exception {
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization",
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
 
 		GraphQLField queryGraphQLField = new GraphQLField(
 			"query", graphQLField);
 
-		options.setBody(
-			new Http.Body(
-				JSONUtil.put(
-					"query", queryGraphQLField.toString()
-				).toString(),
-				ContentTypes.APPLICATION_JSON, "UTF-8"));
-
-		options.setLocation("http://localhost:8080/o/graphql");
-		options.setMethod(Http.Method.POST);
-
-		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
+		return HTTPTestUtil.invoke(JSONUtil.put("query", queryGraphQLField.
+				toString()).toString(), "graphql", Http.Method.POST);
 	}
 
 	protected class GraphQLField {

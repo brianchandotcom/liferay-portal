@@ -86,4 +86,38 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-183566 | Test Summary: Verify that when the Marketplace is created, Products Options will also be created for it as well"
+	@ignore = "true"
+	@priority = 3
+	test ProductsOptionsAreCreatedForMP20 {
+		task ("Given that I go to the Product Options page") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Options");
+		}
+
+		task ("Then I should be able to assert that all Product Options were created for the Marketplace Site") {
+			CommerceNavigator.gotoEntry(entryName = "Trial");
+
+			CommerceEntry.viewOptionsEntry(
+				optionDescription = "Specifies if a trial exists for a given app or solution submission.",
+				optionName = "Trial");
+
+			Navigator.gotoBack();
+
+			CommerceNavigator.gotoEntry(entryName = "DXP License Usage Type");
+
+			CommerceEntry.viewOptionsEntry(
+				optionDescription = "Specifies if a acquision of an app.",
+				optionName = "DXP License Usage Type");
+
+			Navigator.gotoBack();
+
+			CommerceNavigator.gotoEntry(entryName = "DXP License Support");
+
+			CommerceEntry.viewOptionsEntry(
+				optionDescription = "Adds on support for DXP Licenses.",
+				optionName = "DXP License Support");
+		}
+	}
 }

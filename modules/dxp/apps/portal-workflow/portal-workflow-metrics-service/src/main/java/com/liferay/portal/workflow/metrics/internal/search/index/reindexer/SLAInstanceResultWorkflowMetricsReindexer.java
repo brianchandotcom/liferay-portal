@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
@@ -37,9 +38,6 @@ import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetric
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rafael Praxedes
@@ -57,7 +55,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 
 		WorkflowMetricsSLAProcessBackgroundTaskHelper
 			workflowMetricsSLAProcessBackgroundTaskHelper =
-				_workflowMetricsSLAProcessBackgroundTaskHelper;
+				_workflowMetricsSLAProcessBackgroundTaskHelperSnapshot.get();
 
 		if (workflowMetricsSLAProcessBackgroundTaskHelper != null) {
 			workflowMetricsSLAProcessBackgroundTaskHelper.addBackgroundTasks(
@@ -136,6 +134,11 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		return indicesExistsIndexResponse.isExists();
 	}
 
+	private static final Snapshot<WorkflowMetricsSLAProcessBackgroundTaskHelper>
+		_workflowMetricsSLAProcessBackgroundTaskHelperSnapshot = new Snapshot<>(
+			SLAInstanceResultWorkflowMetricsReindexer.class,
+			WorkflowMetricsSLAProcessBackgroundTaskHelper.class, null, true);
+
 	@Reference(target = "(workflow.metrics.index.entity.name=process)")
 	private WorkflowMetricsIndexNameBuilder
 		_processWorkflowMetricsIndexNameBuilder;
@@ -149,13 +152,5 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer
 		_slaInstanceResultWorkflowMetricsIndexer;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile WorkflowMetricsSLAProcessBackgroundTaskHelper
-		_workflowMetricsSLAProcessBackgroundTaskHelper;
 
 }

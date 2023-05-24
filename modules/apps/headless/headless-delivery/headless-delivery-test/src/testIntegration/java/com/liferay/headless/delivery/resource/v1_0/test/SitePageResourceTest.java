@@ -1154,6 +1154,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					taxonomyCategoryId = assetCategory.getCategoryId();
 					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryName_i18n = HashMapBuilder.put(
+						"en-US", assetCategory.getName()
+					).build();
 					taxonomyCategoryReference =
 						new TaxonomyCategoryReference() {
 							{
@@ -1278,6 +1281,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					taxonomyCategoryId = assetCategory.getCategoryId();
 					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryName_i18n = HashMapBuilder.put(
+						"en-US", assetCategory.getName()
+					).build();
 					taxonomyCategoryReference =
 						new TaxonomyCategoryReference() {
 							{
@@ -1329,6 +1335,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					taxonomyCategoryId = assetCategory.getCategoryId();
 					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryName_i18n = HashMapBuilder.put(
+						"en-US", assetCategory.getName()
+					).build();
 					taxonomyCategoryReference =
 						new TaxonomyCategoryReference() {
 							{

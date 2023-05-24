@@ -489,15 +489,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		return new ServletContextHashModel(genericServlet, objectWrapper);
 	}
 
-	private ServletContext _getServletContextWrapper(
-		ServletContext servletContext,
-		FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
-
-		return _servletContextProxyProviderFunction.apply(
-			new ServletContextInvocationHandler(
-				servletContext, freeMarkerBundleClassloader));
-	}
-
 	private boolean _hasLibrary(String library) {
 		int index = library.indexOf(CharPool.SPACE);
 
@@ -869,8 +860,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 			ServletContext servletContext, ObjectWrapper objectWrapper) {
 
 			_taglibFactory = new TaglibFactory(
-				_getServletContextWrapper(
-					servletContext, _freeMarkerBundleClassloader));
+				_servletContextProxyProviderFunction.apply(
+					new ServletContextInvocationHandler(
+						servletContext, _freeMarkerBundleClassloader)));
 
 			_taglibFactory.setObjectWrapper(objectWrapper);
 		}

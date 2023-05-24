@@ -105,9 +105,7 @@ public class LoggerTestUtil {
 				"Log " + name + " is not a Log4j logger");
 		}
 
-		Log4JUtil.setLevel(logger.getName(), priority, false);
-
-		Log4JLogCapture log4JLogCapture = new Log4JLogCapture(logger);
+		Log4JLogCapture log4JLogCapture = new Log4JLogCapture(logger, priority);
 
 		log4JLogCapture.start();
 
@@ -233,7 +231,9 @@ public class LoggerTestUtil {
 			return _logEntries;
 		}
 
-		private Log4JLogCapture(org.apache.logging.log4j.core.Logger logger) {
+		private Log4JLogCapture(
+			org.apache.logging.log4j.core.Logger logger, String priority) {
+
 			super(StringUtil.randomString(), null, null, true, null);
 
 			_logger = logger;
@@ -245,6 +245,8 @@ public class LoggerTestUtil {
 			_additive = _loggerConfig.isAdditive();
 
 			_loggerConfig.setAdditive(false);
+
+			Log4JUtil.setLevel(logger.getName(), priority, false);
 		}
 
 		private final boolean _additive;

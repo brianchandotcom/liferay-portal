@@ -1,0 +1,64 @@
+definition {
+
+	@summary = "Delete all product commerce created for the Marketplace"
+	macro commerceTearDown {
+		JSONUser.tearDownNonAdminUsers();
+
+		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
+		CommerceJSONOptionsAPI._deleteAllCommerceOptions();
+
+		CommerceJSONSpecificationGroupsAPI._deleteAllCommerceSpecificationGroups();
+
+		CommerceJSONSpecificationsAPI._deleteAllCommerceSpecifications();
+
+		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+
+		CommerceJSONCatalogsAPI._deleteAllNoSystemCommerceCatalogs();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@summary = "Delete all marketplace initializers"
+	macro marketplaceInitializersTearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				User.logoutPG();
+			}
+
+			User.firstLoginPG();
+
+			MP2Configuration.commerceTearDown();
+
+			if (isSet(doLogout)) {
+				User.logoutPG();
+			}
+		}
+	}
+
+	@summary = "Create the Marketplace Site using the site initializer"
+	macro marketplaceSetUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		HeadlessSite.addSite(
+			siteName = "Marketplace Site",
+			templateName = "Liferay Marketplace",
+			templateType = "Site Initializer");
+
+		ApplicationsMenu.gotoSite(site = "Marketplace Site");
+	}
+
+}

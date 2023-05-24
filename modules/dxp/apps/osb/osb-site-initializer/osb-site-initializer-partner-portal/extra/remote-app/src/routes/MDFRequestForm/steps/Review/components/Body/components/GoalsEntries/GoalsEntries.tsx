@@ -72,11 +72,10 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Liferay business/sales goals',
-					value: mdfRequest.liferayBusinessSalesGoals?.join('; '),
-				},
-				{
-					title: 'Liferay business/sales goals Other',
-					value: mdfRequest.liferayBusinessSalesGoalsOther,
+					value:
+						mdfRequest.liferayBusinessSalesGoals?.join('; ') +
+						'; ' +
+						mdfRequest.liferayBusinessSalesGoalsOther,
 				},
 			]}
 		/>

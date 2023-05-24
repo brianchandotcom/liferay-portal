@@ -49,21 +49,24 @@ public class ObjectDefinitionsLayoutsDisplayContext
 		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 	}
 
+	public String getEditObjectLayoutsURL() throws Exception {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/object_definitions/edit_object_layout"
+		).setParameter(
+			"objectLayoutId", "{id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setMVCRenderCommandName(
-					"/object_definitions/edit_object_layout"
-				).setParameter(
-					"objectLayoutId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString(),
-				"view", "view",
+				getEditObjectLayoutsURL(), "view", "view",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(

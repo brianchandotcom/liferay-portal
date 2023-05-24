@@ -184,6 +184,22 @@ definition {
 		Button.clickDelete();
 	}
 
+	macro deleteDataSetViewsFields {
+		Click(
+			key_fieldName = ${fieldName},
+			locator1 = "FrontendDataSetAdmin#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+		ClickNoError(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
+
+		AssertElementPresent(
+			key_modalText = "Are you sure you want to delete this field? It will be removed immediately. Fragments using it will be affected. This action cannot be undone.",
+			locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+
+		Button.clickDelete();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteDataSetViewViaAPI {
 		var datasetViewsIdList = JSONFrontendDatasetEntries._getDatasetViewIdByName(datasetViewsNameList = ${datasetViewsNameList});
 

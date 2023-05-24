@@ -315,7 +315,13 @@ public abstract class PoshiElement
 		sb.append(blockName);
 
 		if (blockName.startsWith("macro")) {
-			sb.append("(" + attributeValue("arguments") + ")");
+			sb.append("(");
+
+			if (Validator.isNotNull(attributeValue("arguments"))) {
+				sb.append(attributeValue("arguments"));
+			}
+
+			sb.append(")");
 		}
 
 		sb.append(" {");

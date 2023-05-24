@@ -35,32 +35,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects a SKU on the minicart") {
@@ -126,32 +109,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN93016A from the quick add-to-cart search bar") {
@@ -285,32 +251,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects 'MIN55860' on the quick add-to-cart search bar") {
@@ -407,32 +356,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects 'MIN55860' on the quick add-to-cart search bar") {
@@ -507,32 +439,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN93016A using quick add to cart") {
@@ -617,32 +532,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN55860 using quick add to cart") {
@@ -742,32 +640,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects a product with a price list on the quick add to cart (e.g. MIN55861)") {
@@ -818,32 +699,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects a product with a promotion on the quick add to cart (e.g. MIN93017)") {
@@ -897,32 +761,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And searches for a sku on the quick add-to-cart") {
@@ -992,32 +839,15 @@ definition {
 				purchasable = "false");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And searches for MIN93015 on the quick add-to-cart") {
@@ -1048,32 +878,15 @@ definition {
 				purchasable = "true");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And searches for MIN93015 on the quick add-to-cart") {
@@ -1116,32 +929,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN55860 using quick add to cart") {
@@ -1250,32 +1046,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN55860 using quick add to cart") {
@@ -1369,32 +1148,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN55860 using quick add to cart") {
@@ -1463,32 +1225,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects MIN55860 using quick add to cart") {
@@ -1590,32 +1335,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And searches for an invalid sku on the quick add-to-cart") {
@@ -1721,32 +1449,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And types some characters on the quick add-to-cart search bar") {
@@ -1814,22 +1525,7 @@ definition {
 		}
 
 		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
-
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And the buyer selects multiple skus on the quick add-to-cart") {
@@ -1896,32 +1592,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And the buyer selects multiple skus on the quick add-to-cart") {
@@ -1971,32 +1650,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And searches for all Minium skus on the quick add-to-cart") {
@@ -2034,32 +1696,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And types 'ABS' on the quick add-to-cart search bar") {
@@ -2111,32 +1756,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And types 5586 on the quick add-to-cart search bar") {
@@ -2188,32 +1816,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects multiple option SKUs on the minicart") {
@@ -2263,32 +1874,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("Then the user can select the sku by searching it") {
@@ -2336,32 +1930,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And types some characters along with a comma on the quick add-to-cart search bar") {
@@ -2401,32 +1978,15 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And buyer user logs in") {
+		task ("And buyer user opens the minicart after signing in") {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer opens the mini-cart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
 
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And types special characters on the quick add-to-cart search bar") {
@@ -2496,15 +2056,7 @@ definition {
 		}
 
 		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			Button.click(button = "Yes");
 		}
 
 		task ("When the user searches for a SKU on the quick add-to-cart") {
@@ -2564,15 +2116,7 @@ definition {
 		}
 
 		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			Button.click(button = "Yes");
 		}
 
 		task ("When the user searches for a SKU on the quick add-to-cart") {
@@ -2654,22 +2198,7 @@ definition {
 		}
 
 		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
-
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects 'ABS Sensor' on the quick add to cart") {
@@ -2694,22 +2223,7 @@ definition {
 		}
 
 		task ("And the buyer user opens the minicart") {
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-
-			// To be removed when COMMERCE-10472 is fixed
-
 			CommerceNavigator.gotoMiniCart();
-
-			Button.click(button = "Remove All Items");
-
-			// To be removed when COMMERCE-10472 is fixed
-
-			Button.click(button = "Yes");
-
-			// To be removed when COMMERCE-10472 is fixed
-
 		}
 
 		task ("And selects 'ABS Sensor' on the quick add to cart") {

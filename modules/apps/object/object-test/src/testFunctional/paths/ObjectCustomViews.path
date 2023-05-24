@@ -292,7 +292,7 @@
 	</tr>
 	<tr>
 		<td>FIELD_VIEW_FILTER_DATE_INPUT</td>
-		<td>//div[@class='col-lg-6'][${key_dateIndex}]//div[contains(@class, 'input-group-item')]/input[contains(@placeholder,'YYYY-MM-DD')]</td>
+		<td>//div[@class='col-lg-6'][${key_dateIndex}]//div[contains(@class, 'input-group-item')]/input[contains(@placeholder,'__/__/____')]</td>
 		<td></td>
 	</tr>
 </tbody>

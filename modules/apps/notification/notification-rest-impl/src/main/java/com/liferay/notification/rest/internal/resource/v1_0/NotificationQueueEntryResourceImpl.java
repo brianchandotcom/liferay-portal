@@ -14,6 +14,7 @@
 
 package com.liferay.notification.rest.internal.resource.v1_0;
 
+import com.liferay.notification.constants.NotificationActionKeys;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.context.NotificationContext;
@@ -74,6 +75,13 @@ public class NotificationQueueEntryResourceImpl
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
+				"create",
+				addAction(
+					NotificationActionKeys.ADD_NOTIFICATION_QUEUE_ENTRY,
+					"postNotificationQueueEntry",
+					NotificationConstants.RESOURCE_NAME_NOTIFICATION_QUEUE,
+					contextCompany.getCompanyId())
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getNotificationQueueEntriesPage",

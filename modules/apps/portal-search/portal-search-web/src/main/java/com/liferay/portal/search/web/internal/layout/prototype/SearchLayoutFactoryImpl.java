@@ -179,25 +179,16 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	protected void customize(Layout layout) throws Exception {
 		SearchLayoutPrototypeCustomizer searchLayoutPrototypeCustomizer =
-			_searchLayoutPrototypeCustomizerSnapshot.get();
+			_getSearchLayoutPrototypeCustomizer();
 
-		if (searchLayoutPrototypeCustomizer != null) {
-			searchLayoutPrototypeCustomizer.customize(layout);
-		}
-		else {
-			_defaultSearchLayoutPrototypeCustomizer.customize(layout);
-		}
+		searchLayoutPrototypeCustomizer.customize(layout);
 	}
 
 	protected String getLayoutTemplateId() {
 		SearchLayoutPrototypeCustomizer searchLayoutPrototypeCustomizer =
-			_searchLayoutPrototypeCustomizerSnapshot.get();
+			_getSearchLayoutPrototypeCustomizer();
 
-		if (searchLayoutPrototypeCustomizer != null) {
-			return searchLayoutPrototypeCustomizer.getLayoutTemplateId();
-		}
-
-		return _defaultSearchLayoutPrototypeCustomizer.getLayoutTemplateId();
+		return searchLayoutPrototypeCustomizer.getLayoutTemplateId();
 	}
 
 	@Reference
@@ -241,6 +232,19 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	private Map<Locale, String> _getSearchDescriptionLocalizationMap() {
 		return _getLocalizationMap("layout-prototype-search-description");
+	}
+
+	private SearchLayoutPrototypeCustomizer
+		_getSearchLayoutPrototypeCustomizer() {
+
+		SearchLayoutPrototypeCustomizer searchLayoutPrototypeCustomizer =
+			_searchLayoutPrototypeCustomizerSnapshot.get();
+
+		if (searchLayoutPrototypeCustomizer != null) {
+			return searchLayoutPrototypeCustomizer;
+		}
+
+		return _defaultSearchLayoutPrototypeCustomizer;
 	}
 
 	private Map<Locale, String> _getSearchTitleLocalizationMap() {

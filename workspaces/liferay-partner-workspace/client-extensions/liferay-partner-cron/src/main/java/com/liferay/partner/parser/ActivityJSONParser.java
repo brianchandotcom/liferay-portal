@@ -48,7 +48,7 @@ public class ActivityJSONParser extends BaseJSONParser<Activity> {
 		else if (Objects.equals(jsonParserFieldName, "activityStatus")) {
 			if (jsonParserFieldValue != null) {
 				activity.setActivityStatus(
-					ListTypeEntrySerDes.toDTO(jsonParserFieldName));
+					ListTypeEntrySerDes.toDTO((String)jsonParserFieldValue));
 			}
 		}
 	}

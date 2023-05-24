@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.search.experiences.rest.client.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.client.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.client.http.HttpInvoker;
 import com.liferay.search.experiences.rest.client.pagination.Page;
@@ -108,6 +109,8 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 			JSONUtil.put(
 				"description", description
 			).put(
+				"elementDefinition", "{}"
+			).put(
 				"title", title
 			).toString());
 
@@ -185,6 +188,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 
 		sxpElement.setDescription_i18n(
 			Collections.singletonMap("en_US", sxpElement.getDescription()));
+		sxpElement.setElementDefinition(ElementDefinition.toDTO("{}"));
 		sxpElement.setTitle(_TITLE_PREFIX + sxpElement.getTitle());
 		sxpElement.setTitle_i18n(
 			Collections.singletonMap("en_US", sxpElement.getTitle()));

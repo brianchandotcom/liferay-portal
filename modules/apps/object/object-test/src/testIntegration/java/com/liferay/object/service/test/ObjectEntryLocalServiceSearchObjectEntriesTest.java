@@ -48,18 +48,21 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
+
+import java.math.BigDecimal;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Bryan Engler

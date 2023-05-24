@@ -40,19 +40,23 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
+
+import java.math.BigDecimal;
+
+import java.sql.Timestamp;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * @author Carolina Barbosa

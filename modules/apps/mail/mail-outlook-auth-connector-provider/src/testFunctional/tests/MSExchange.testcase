@@ -10,16 +10,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		ServerAdministration.openServerAdmin();
-
-		Navigator.gotoNavItem(navItem = "Mail");
-
-		Check(locator1 = "ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX");
-
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
 	}
 
 	tearDown {

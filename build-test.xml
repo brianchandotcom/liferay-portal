@@ -11453,7 +11453,7 @@ mail.session.mail.pop3.user=qa-exchange-pop-test@liferay.onmicrosoft.com
 mail.session.mail.smtp.host=smtp.office365.com
 mail.session.mail.smtp.port=587
 mail.session.mail.smtp.user=qa-exchange-pop-test@liferay.onmicrosoft.com
-mail.session.mail.store.protocol=pop3
+mail.session.mail.store.protocol=pop3s
 
 pop.server.subdomain=
 pop.server.notifications.enabled=true

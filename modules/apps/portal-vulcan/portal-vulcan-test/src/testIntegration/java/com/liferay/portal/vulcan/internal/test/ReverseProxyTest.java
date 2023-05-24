@@ -18,10 +18,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 
 import java.net.URLConnection;
@@ -51,32 +51,23 @@ public class ReverseProxyTest {
 					"/blog-postings",
 				TestPropsValues.getGroupId()));
 
-		boolean webServerForwardedHostEnabled =
-			PropsValues.WEB_SERVER_FORWARDED_HOST_ENABLED;
-		boolean webServerForwardedProtocolEnabled =
-			PropsValues.WEB_SERVER_FORWARDED_PROTOCOL_ENABLED;
-
-		try {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "WEB_SERVER_FORWARDED_HOST_ENABLED", true);
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "WEB_SERVER_FORWARDED_PROTOCOL_ENABLED",
-				true);
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"WEB_SERVER_FORWARDED_HOST_ENABLED", true);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"WEB_SERVER_FORWARDED_PORT_ENABLED", true);
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"WEB_SERVER_FORWARDED_PROTOCOL_ENABLED", true)) {
 
 			urlConnection.addRequestProperty("X-Forwarded-Host", "myHost");
+			urlConnection.addRequestProperty("X-Forwarded-Port", "12345");
 			urlConnection.addRequestProperty("X-Forwarded-Proto", "https");
 
 			String href = _getHref(urlConnection);
 
-			Assert.assertTrue(href.startsWith("https://myHost:8080"));
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "WEB_SERVER_FORWARDED_HOST_ENABLED",
-				webServerForwardedHostEnabled);
-			ReflectionTestUtil.setFieldValue(
-				PropsValues.class, "WEB_SERVER_FORWARDED_PROTOCOL_ENABLED",
-				webServerForwardedProtocolEnabled);
+			Assert.assertTrue(href, href.startsWith("https://myHost:12345"));
 		}
 	}
 

@@ -32,7 +32,7 @@ if (ddmStructure != null) {
 
 <aui:input name="storageType" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getStorageType() %>" />
 
-<c:if test="<%= journalEditDDMStructuresDisplayContext.showStructureKeyInput() %>">
+<c:if test="<%= journalEditDDMStructuresDisplayContext.isShowStructureKeyInput() %>">
 	<aui:input disabled="<%= journalEditDDMStructuresDisplayContext.isStructureKeyInputDisabled() %>" name="structureKey" />
 </c:if>
 

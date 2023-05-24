@@ -44,4 +44,25 @@ public class StringEntityField extends EntityField {
 			filterableAndSortableFieldNameFunction, String::valueOf);
 	}
 
+	/**
+	 * Creates a new {@code StringEntityField} with a {@code Function} to
+	 * convert the entity field's name to a filterable/sortable field name for a
+	 * locale.
+	 *
+	 * @param  name the entity field's name
+	 * @param  sortableFieldNameFunction the sortable field name {@code
+	 *         Function}
+	 * @param  filterableFieldNameFunction the filterable field name {@code
+	 *         Function}
+	 * @review
+	 */
+	public StringEntityField(
+		String name, Function<Locale, String> sortableFieldNameFunction,
+		Function<Locale, String> filterableFieldNameFunction) {
+
+		super(
+			name, Type.STRING, sortableFieldNameFunction,
+			filterableFieldNameFunction, String::valueOf);
+	}
+
 }

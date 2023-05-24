@@ -14,7 +14,7 @@ AssignAsUsedCheck | [Performance](performance_checks.markdown#performance-checks
 [AvoidNestedBlocksCheck](https://checkstyle.sourceforge.io/config_blocks.html#AvoidNestedBlocks) | [Styling](styling_checks.markdown#styling-checks) | Finds nested blocks (blocks that are used freely in the code). |
 [AvoidStarImportCheck](https://checkstyle.sourceforge.io/config_imports.html#AvoidStarImport) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there are no import statements that use the * notation. |
 [CamelCaseNameCheck](check/camel_case_name_check.markdown#camelcasenamecheck) | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks variable names for correct use of `CamelCase`. |
-[ChainingCheck](check/chaining_check.markdown#chainingcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that chaining is only applied on certain types and methods. |
+ChainingCheck | [Styling](styling_checks.markdown#styling-checks) | Checks that method chaining can be used when possible. |
 [CompanyIterationCheck](check/company_iteration_check.markdown#companyiterationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies |
 CompatClassImportsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that classes are imported from `compat` modules, when possible. |
 ComponentAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on classes with @Component annotation. |

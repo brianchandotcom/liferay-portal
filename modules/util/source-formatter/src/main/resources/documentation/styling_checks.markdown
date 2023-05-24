@@ -16,7 +16,7 @@ BNDWhitespaceCheck | .bnd | Finds missing and unnecessary whitespace in `.bnd` f
 CSSCommentsCheck | .css or .scss | Validates comments in `.css` files. |
 CSSImportsCheck | .css or .scss | Sorts and groups imports in `.css` files. |
 CSSPropertiesOrderCheck | .css or .scss | Sorts properties in `.css` files. |
-[ChainingCheck](check/chaining_check.markdown#chainingcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that chaining is only applied on certain types and methods. |
+ChainingCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that method chaining can be used when possible. |
 CodeownersWhitespaceCheck | CODEOWNERS | Finds missing and unnecessary whitespace in `CODEOWNERS` files. |
 ConfigDefinitionKeysCheck | .cfg or .config | Sorts definition keys in `.config` files. |
 ConfigWhitespaceCheck | .cfg or .config | Finds missing and unnecessary whitespace. |

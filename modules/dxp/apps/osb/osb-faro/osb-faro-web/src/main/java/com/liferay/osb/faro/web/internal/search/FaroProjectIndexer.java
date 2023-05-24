@@ -250,8 +250,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 
 	@Override
 	protected void doReindex(FaroProject faroProject) throws Exception {
-		_indexWriterHelper.updateDocument(
-			faroProject.getFaroProjectId(), getDocument(faroProject));
+		_indexWriterHelper.updateDocument(0L, getDocument(faroProject));
 	}
 
 	@Override

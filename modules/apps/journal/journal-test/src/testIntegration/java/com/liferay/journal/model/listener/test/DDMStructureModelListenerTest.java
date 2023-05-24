@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -120,6 +121,7 @@ public class DDMStructureModelListenerTest {
 			_expectedFieldValuesMap, journalArticle.getDDMFormValues());
 	}
 
+	@FeatureFlags("LPS-184255")
 	@Test
 	public void testUpdateDataDefinitionStructureKeyChanged() throws Exception {
 		JournalArticle journalArticle = _addJournalArticle();

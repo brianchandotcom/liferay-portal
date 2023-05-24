@@ -31,6 +31,7 @@ import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext;
 import com.liferay.change.tracking.web.internal.display.context.ViewChangesDisplayContext;
 import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -55,9 +56,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -117,8 +115,8 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 						_ctPreferencesLocalService,
 						_portal.getHttpServletRequest(renderRequest), _language,
 						renderRequest, renderResponse),
-					_publishScheduler, renderRequest, renderResponse,
-					_userLocalService);
+					_publishSchedulerSnapshot.get(), renderRequest,
+					renderResponse, _userLocalService);
 
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,
@@ -144,6 +142,11 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewChangesMVCRenderCommand.class);
+
+	private static final Snapshot<PublishScheduler> _publishSchedulerSnapshot =
+		new Snapshot<>(
+			ViewChangesMVCRenderCommand.class, PublishScheduler.class, null,
+			true);
 
 	@Reference
 	private BasePersistenceRegistry _basePersistenceRegistry;
@@ -185,13 +188,6 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile PublishScheduler _publishScheduler;
 
 	@Reference
 	private UserLocalService _userLocalService;

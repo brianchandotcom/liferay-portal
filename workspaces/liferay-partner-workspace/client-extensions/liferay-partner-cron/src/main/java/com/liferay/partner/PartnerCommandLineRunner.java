@@ -44,7 +44,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		Page<Activity> activitiesPage = _activityService.getEntriesPage(
 			null,
-			"endDate lt " +
+			"activityStatus eq 'active' and endDate lt " +
 				nowZonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE),
 			Pagination.of(1, -1), null);
 

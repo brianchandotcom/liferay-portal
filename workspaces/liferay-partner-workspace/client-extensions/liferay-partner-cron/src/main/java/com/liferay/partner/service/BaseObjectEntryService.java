@@ -22,6 +22,7 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -72,6 +73,8 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 						_entityURLPath
 					).build();
 				}
+			).accept(
+				MediaType.APPLICATION_JSON
 			).header(
 				"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
 			).retrieve(
@@ -98,6 +101,10 @@ public abstract class BaseObjectEntryService<T extends BaseDTO> {
 					_entityURLPath + "/batch"
 				).build();
 			}
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
 		).header(
 			"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
 		).bodyValue(

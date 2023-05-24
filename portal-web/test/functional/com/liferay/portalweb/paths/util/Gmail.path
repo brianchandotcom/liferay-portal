@@ -29,6 +29,11 @@
 <!--LOGIN-->
 
 <tr>
+	<td>INBOX</td>
+	<td>//body[contains(.,'Inbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOGIN_EMAIL_FIELD</td>
 	<td>//input[contains(@type,'email')]</td>
 	<td></td>

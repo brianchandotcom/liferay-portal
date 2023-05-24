@@ -21,6 +21,7 @@ import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -52,7 +53,7 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 			new CPDefinitionLinkDisplayContext(
 				_actionHelper, _portal.getHttpServletRequest(renderRequest),
 				_cpDefinitionLinkService, _cpDefinitionLinkTypeSettings,
-				_itemSelector);
+				_itemSelector, _workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionLinkDisplayContext);
@@ -74,5 +75,9 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,13 +57,16 @@ public class CPDefinitionLinkDisplayContext
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		CPDefinitionLinkService cpDefinitionLinkService,
 		CPDefinitionLinkTypeSettings cpDefinitionLinkTypeSettings,
-		ItemSelector itemSelector) {
+		ItemSelector itemSelector,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		super(actionHelper, httpServletRequest);
 
 		_cpDefinitionLinkService = cpDefinitionLinkService;
 		_cpDefinitionLinkTypeSettings = cpDefinitionLinkTypeSettings;
 		_itemSelector = itemSelector;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	public CPDefinitionLink getCPDefinitionLink() throws PortalException {
@@ -176,6 +180,12 @@ public class CPDefinitionLinkDisplayContext
 			getCPDefinitionLinkId(), null);
 	}
 
+	public boolean hasWorkflowDefinitionLink() {
+		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+			cpRequestHelper.getCompanyId(), cpRequestHelper.getScopeGroupId(),
+			CPDefinitionLink.class.getName());
+	}
+
 	private long[] _getCheckedCPDefinitionIds(long cpDefinitionId, String type)
 		throws PortalException {
 
@@ -228,5 +238,7 @@ public class CPDefinitionLinkDisplayContext
 	private final CPDefinitionLinkService _cpDefinitionLinkService;
 	private final CPDefinitionLinkTypeSettings _cpDefinitionLinkTypeSettings;
 	private final ItemSelector _itemSelector;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

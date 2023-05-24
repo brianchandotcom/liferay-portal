@@ -60,6 +60,12 @@ public class CommerceProductTypeVirtualServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"1.2.0", "2.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				"CPDefinitionVirtualSetting", "sampleUrl",
+				"sampleURL VARCHAR(255) null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Commerce product type virtual upgrade step registrator " +

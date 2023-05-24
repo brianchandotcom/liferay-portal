@@ -21,10 +21,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -36,14 +34,12 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.util.Sitemap;
 import com.liferay.site.util.SitemapURLProvider;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -151,19 +147,11 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			currentSiteURL + urlSeparator +
 				friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId());
 
-		Map<Locale, String> alternateFriendlyURLs = new HashMap<>();
-
-		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
-					friendlyURLEntry.getFriendlyURLEntryId())) {
-
-			alternateFriendlyURLs.put(
-				LocaleUtil.fromLanguageId(
-					friendlyURLEntryLocalization.getLanguageId()),
-				StringBundler.concat(
-					currentSiteURL, urlSeparator,
-					friendlyURLEntryLocalization.getUrlTitle()));
-		}
+		Map<Locale, String> alternateFriendlyURLs =
+			SitemapURLProviderUtil.getAlternateFriendlyURLs(
+				currentSiteURL, friendlyURLEntry.getFriendlyURLEntryId(),
+				_friendlyURLEntryLocalService, layout.getGroupId(), _language,
+				urlSeparator);
 
 		for (String alternateFriendlyURL : alternateFriendlyURLs.values()) {
 			_sitemap.addURLElement(

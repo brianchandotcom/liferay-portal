@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.product.internal.layout.admin.util;
 
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -23,13 +26,42 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.servlet.I18nServlet;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Brian I. Kim
  */
 public class SitemapURLProviderUtil {
+
+	protected static Map<Locale, String> getAlternateFriendlyURLs(
+		String currentSiteURL, long friendlyURLEntryId,
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService, long groupId,
+		Language language, String urlSeparator) {
+
+		Map<Locale, String> alternateFriendlyURLs = new HashMap<>();
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+					friendlyURLEntryId)) {
+
+			if (_isAvailableLocale(
+					groupId, language,
+					friendlyURLEntryLocalization.getLanguageId())) {
+
+				alternateFriendlyURLs.put(
+					LocaleUtil.fromLanguageId(
+						friendlyURLEntryLocalization.getLanguageId()),
+					StringBundler.concat(
+						currentSiteURL, urlSeparator,
+						friendlyURLEntryLocalization.getUrlTitle()));
+			}
+		}
+
+		return alternateFriendlyURLs;
+	}
 
 	protected static ThemeDisplay updateThemeDisplay(
 		Language language, Locale locale, ThemeDisplay themeDisplay) {
@@ -66,6 +98,21 @@ public class SitemapURLProviderUtil {
 		}
 
 		return StringPool.SLASH + locale.toLanguageTag();
+	}
+
+	private static boolean _isAvailableLocale(
+		long groupId, Language language, String languageId) {
+
+		Set<Locale> siteAvailableLocales = language.getAvailableLocales(
+			groupId);
+
+		if (siteAvailableLocales.contains(
+				LocaleUtil.fromLanguageId(languageId))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

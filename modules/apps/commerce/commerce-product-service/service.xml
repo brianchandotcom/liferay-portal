@@ -1173,6 +1173,7 @@
 		<exception>CPOptionKey</exception>
 		<exception>CPOptionSKUContributor</exception>
 		<exception>CPOptionValueKey</exception>
+		<exception>CPOptionValueName</exception>
 		<exception>CPSpecificationOptionKey</exception>
 		<exception>CPSpecificationOptionTitle</exception>
 		<exception>CPTaxCategoryName</exception>

@@ -200,9 +200,8 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
-			if (((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
-				 (systemMaxNumberOfPages < maxNumberOfPages)) ||
-				((systemMaxNumberOfPages != 0) && (maxNumberOfPages == 0))) {
+			if (_isMaxNumberOfPagesLimitExceeded(
+					systemMaxNumberOfPages, maxNumberOfPages)) {
 
 				throw new PDFPreviewException(systemMaxNumberOfPages);
 			}
@@ -212,9 +211,8 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 		else if (scope.equals(
 					ExtendedObjectClassDefinition.Scope.GROUP.getValue())) {
 
-			if (((systemMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
-				 (systemMaxNumberOfPages < maxNumberOfPages)) ||
-				((systemMaxNumberOfPages != 0) && (maxNumberOfPages == 0))) {
+			if (_isMaxNumberOfPagesLimitExceeded(
+					systemMaxNumberOfPages, maxNumberOfPages)) {
 
 				throw new PDFPreviewException(systemMaxNumberOfPages);
 			}
@@ -224,9 +222,8 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 			int companyMaxNumberOfPages = _getCompanyMaxNumberOfPages(
 				group.getCompanyId());
 
-			if (((companyMaxNumberOfPages != 0) && (maxNumberOfPages != 0) &&
-				 (companyMaxNumberOfPages < maxNumberOfPages)) ||
-				((companyMaxNumberOfPages != 0) && (maxNumberOfPages == 0))) {
+			if (_isMaxNumberOfPagesLimitExceeded(
+					companyMaxNumberOfPages, maxNumberOfPages)) {
 
 				throw new PDFPreviewException(companyMaxNumberOfPages);
 			}
@@ -320,6 +317,16 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 
 	private int _getSystemMaxNumberOfPages() {
 		return _systemPDFPreviewConfiguration.maxNumberOfPages();
+	}
+
+	private boolean _isMaxNumberOfPagesLimitExceeded(int limit, int value) {
+		if (((limit != 0) && (value != 0) && (limit < value)) ||
+			((limit != 0) && (value == 0))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _unmapPid(String pid) {

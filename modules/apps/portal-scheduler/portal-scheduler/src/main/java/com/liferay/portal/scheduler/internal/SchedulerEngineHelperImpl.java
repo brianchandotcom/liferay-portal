@@ -15,6 +15,7 @@
 package com.liferay.portal.scheduler.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
@@ -73,9 +74,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -108,8 +106,10 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	public void auditSchedulerJobs(Message message, TriggerState triggerState)
 		throws SchedulerException {
 
+		AuditRouter auditRouter = _auditRouterSnapshot.get();
+
 		if (!_schedulerEngineHelperConfiguration.auditSchedulerJobEnabled() ||
-			(_auditRouter == null)) {
+			(auditRouter == null)) {
 
 			return;
 		}
@@ -124,7 +124,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			auditMessage.setServerName(InetAddressUtil.getLocalHostName());
 			auditMessage.setServerPort(_portal.getPortalLocalPort(false));
 
-			_auditRouter.route(auditMessage);
+			auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new SchedulerException(exception);
@@ -442,12 +442,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile AuditRouter _auditRouter;
+	private static final Snapshot<AuditRouter> _auditRouterSnapshot =
+		new Snapshot<>(
+			SchedulerEngineHelperImpl.class, AuditRouter.class, null, true);
 
 	private volatile BundleContext _bundleContext;
 

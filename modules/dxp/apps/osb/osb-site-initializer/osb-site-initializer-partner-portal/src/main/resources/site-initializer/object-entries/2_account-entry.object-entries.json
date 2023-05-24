@@ -31,5 +31,5 @@
 			"growthARR": 0
 		}
 	],
-	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountEntry$]"
+	"objectDefinitionName": "AccountEntry"
 }

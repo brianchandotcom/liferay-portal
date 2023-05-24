@@ -133,8 +133,6 @@ export default function DataEngineLayoutBuilderHandler({
 				},
 			});
 
-			structureKeyInput.focus();
-
 			return;
 		}
 

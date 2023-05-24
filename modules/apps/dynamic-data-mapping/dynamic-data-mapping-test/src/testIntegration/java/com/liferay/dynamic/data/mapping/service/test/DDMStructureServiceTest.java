@@ -144,6 +144,43 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testGetStructuresCountWithoutUserPermissionAndWithKeywords()
+		throws Exception {
+
+		addStructure(group, _classNameId, "Basic Structure");
+		addStructure(group, _classNameId, "Blank Structure");
+		addStructure(group, _classNameId, "Sample Structure");
+
+		Assert.assertEquals(
+			3,
+			_ddmStructureService.getStructuresCount(
+				group.getCompanyId(), new long[] {group.getGroupId()},
+				_classNameId, "Structure", WorkflowConstants.STATUS_ANY));
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			Assert.assertEquals(
+				0,
+				_ddmStructureService.getStructuresCount(
+					group.getCompanyId(), new long[] {group.getGroupId()},
+					_classNameId, "Structure", WorkflowConstants.STATUS_ANY));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
 	public void testGetStructuresWithoutUserPermission() throws Exception {
 		addStructure(group, _classNameId, StringUtil.randomString());
 		addStructure(group, _classNameId, StringUtil.randomString());
@@ -167,6 +204,46 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			ddmStructures = _ddmStructureService.getStructures(
 				group.getCompanyId(), new long[] {group.getGroupId()},
 				_classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				ddmStructures.toString(), 0, ddmStructures.size());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetStructuresWithoutUserPermissionAndWithKeywords()
+		throws Exception {
+
+		addStructure(group, _classNameId, "Basic Structure");
+		addStructure(group, _classNameId, "Blank Structure");
+		addStructure(group, _classNameId, "Sample Structure");
+
+		List<DDMStructure> ddmStructures = _ddmStructureService.getStructures(
+			group.getCompanyId(), new long[] {group.getGroupId()}, _classNameId,
+			"Structure", WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(ddmStructures.toString(), 3, ddmStructures.size());
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			ddmStructures = _ddmStructureService.getStructures(
+				group.getCompanyId(), new long[] {group.getGroupId()},
+				_classNameId, "Structure", WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			Assert.assertEquals(
 				ddmStructures.toString(), 0, ddmStructures.size());

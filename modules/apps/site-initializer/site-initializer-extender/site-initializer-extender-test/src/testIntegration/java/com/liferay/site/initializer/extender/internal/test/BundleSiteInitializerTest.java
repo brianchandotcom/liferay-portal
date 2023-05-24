@@ -198,22 +198,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.template.model.TemplateEntry;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-
-import java.math.BigDecimal;
-
-import java.util.Arrays;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import javax.servlet.ServletContext;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -221,16 +205,26 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -375,26 +369,26 @@ public class BundleSiteInitializerTest {
 				_serviceContext.fetchUser()
 			).build();
 
-		AdminAccountGroup accountGroup1 =
+		AdminAccountGroup accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP1");
 
-		Assert.assertNotNull(accountGroup1);
-		Assert.assertEquals("Test Account Group 1", accountGroup1.getName());
+		Assert.assertNotNull(accountGroup);
+		Assert.assertEquals("Test Account Group 1", accountGroup.getName());
 
-		AdminAccountGroup accountGroup2 =
+		accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP2");
 
-		Assert.assertNotNull(accountGroup2);
-		Assert.assertEquals("Test Account Group 2", accountGroup2.getName());
+		Assert.assertNotNull(accountGroup);
+		Assert.assertEquals("Test Account Group 2", accountGroup.getName());
 
-		AdminAccountGroup accountGroup3 =
+		accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP3");
 
-		Assert.assertNotNull(accountGroup3);
-		Assert.assertEquals("Test Account Group 3", accountGroup3.getName());
+		Assert.assertNotNull(accountGroup);
+		Assert.assertEquals("Test Account Group 3", accountGroup.getName());
 	}
 
 	private void _assertAccountGroups2() throws Exception {
@@ -406,34 +400,34 @@ public class BundleSiteInitializerTest {
 				_serviceContext.fetchUser()
 			).build();
 
-		AdminAccountGroup accountGroup1 =
+		AdminAccountGroup accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP1");
 
-		Assert.assertNotNull(accountGroup1);
-		Assert.assertEquals("Test Account Group 1", accountGroup1.getName());
+		Assert.assertNotNull(accountGroup);
+		Assert.assertEquals("Test Account Group 1", accountGroup.getName());
 
-		AdminAccountGroup accountGroup2 =
+		accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP2");
 
-		Assert.assertNotNull(accountGroup2);
+		Assert.assertNotNull(accountGroup);
 		Assert.assertEquals(
-			"Test Account Group 2 Update", accountGroup2.getName());
+			"Test Account Group 2 Update", accountGroup.getName());
 
-		AdminAccountGroup accountGroup3 =
+		accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP3");
 
-		Assert.assertNotNull(accountGroup3);
-		Assert.assertEquals("Test Account Group 3", accountGroup3.getName());
+		Assert.assertNotNull(accountGroup);
+		Assert.assertEquals("Test Account Group 3", accountGroup.getName());
 
-		AdminAccountGroup accountGroup4 =
+		accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP4");
 
-		Assert.assertNotNull(accountGroup4);
-		Assert.assertEquals("Test Account Group 4", accountGroup4.getName());
+		Assert.assertNotNull(accountGroup);
+		Assert.assertEquals("Test Account Group 4", accountGroup.getName());
 	}
 
 	private void _assertAccountGroupsAssignment1() throws Exception {
@@ -453,10 +447,6 @@ public class BundleSiteInitializerTest {
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP1");
 
-		Assert.assertNotNull(account);
-
-		Assert.assertNotNull(accountGroup);
-
 		AccountGroupRel accountGroupRel =
 			_accountGroupRelService.fetchAccountGroupRel(
 				accountGroup.getId(), AccountEntry.class.getName(),
@@ -471,10 +461,6 @@ public class BundleSiteInitializerTest {
 		accountGroup =
 			accountGroupResource.getAccountGroupByExternalReferenceCode(
 				"TESTACCOUNTGROUP2");
-
-		Assert.assertNotNull(account);
-
-		Assert.assertNotNull(accountGroup);
 
 		accountGroupRel = _accountGroupRelService.fetchAccountGroupRel(
 			accountGroup.getId(), AccountEntry.class.getName(),

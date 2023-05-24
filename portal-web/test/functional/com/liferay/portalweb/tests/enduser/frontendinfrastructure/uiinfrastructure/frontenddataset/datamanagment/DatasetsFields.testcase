@@ -496,12 +496,41 @@ definition {
 	}
 
 	@description = "LPS-185503. Confirm that fields are not updated when saving changes."
-	@ignore = "true"
 	@priority = 4
 	test CanUpdateFieldsWhenSave {
+		task ("And adds two or more fields") {
+			LexiconEntry.gotoAdd();
 
-		// TODO LPS-185503 CanUpdateFieldsWhenSave pending implementation
+			FrontendDataSetAdmin.checkFields(checkboxName = "id");
 
+			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+
+			Button.clickSave();
+		}
+
+		task ("When the user selects the 'Plus' Button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And uncheck a selected option") {
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
+		}
+
+		task ("When the user clicks on the Save button") {
+			Button.clickSave();
+		}
+
+		task ("Then the Add field modal is closed") {
+			AssertElementNotPresent(
+				key_modalText = "Deleting a dataset is an action that cannot be reversed. The content will be deleted and some dataset fragments may not be displayed.",
+				locator1 = "FrontendDataSetAdmin#DELETE_DATA_SET_MODAL_BODY");
+		}
+
+		task ("And the changes are applied") {
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "label");
+		}
 	}
 
 	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"

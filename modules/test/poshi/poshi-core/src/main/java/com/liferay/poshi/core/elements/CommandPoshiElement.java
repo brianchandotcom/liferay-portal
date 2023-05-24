@@ -308,7 +308,7 @@ public class CommandPoshiElement extends PoshiElement {
 			"[\\s]*([\\w]*)[\\s]*(\\(.*\\)|)",
 		Pattern.DOTALL);
 	private static final Pattern _declarationVariablePattern = Pattern.compile(
-		"var\\s*(\\S*)\\s*=");
+		"var\\s*(\\S*)\\s*(?>=|:)");
 	private static final Pattern _variablePattern = Pattern.compile(
 		"\\$\\{(\\w*|\\d*)\\}");
 

@@ -1,0 +1,39 @@
+definition {
+
+	macro configureSalesforce {
+		var salesforceLoginURL = PropsUtil.get("object.storage.salesforce.login.url");
+		var salesforceConsumerKey = PropsUtil.get("object.storage.salesforce.consumer.key");
+		var salesforceConsumerSecret = PropsUtil.get("object.storage.salesforce.consumer.secret");
+		var salesforceUsername = PropsUtil.get("object.storage.salesforce.username");
+		var salesforcePassword = PropsUtil.get("object.storage.salesforce.password");
+
+		Type(
+			key_fieldName = "loginURL",
+			locator1 = "PRMUtils#SALESFORCE_FIELD",
+			value1 = ${salesforceLoginURL});
+
+		Type(
+			key_fieldName = "consumerKey",
+			locator1 = "PRMUtils#SALESFORCE_FIELD",
+			value1 = ${salesforceConsumerKey});
+
+		Type(
+			key_fieldName = "consumerSecret",
+			locator1 = "PRMUtils#SALESFORCE_FIELD",
+			value1 = ${salesforceConsumerSecret});
+
+		Type(
+			key_fieldName = "username",
+			locator1 = "PRMUtils#SALESFORCE_FIELD",
+			value1 = ${salesforceUsername});
+
+		Type(
+			locator1 = "PRMUtils#SALESFORCE_PASSWORD_FIELD",
+			value1 = ${salesforcePassword});
+
+		Button.clickSubmitButton();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

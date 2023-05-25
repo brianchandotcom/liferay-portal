@@ -280,9 +280,11 @@ definition {
 			userEmailAddress = ${email},
 			userPassword = ${passwordRaylife});
 
-		Button.click(button = "I Agree");
+		if (IsElementPresent(button = "I Agree", locator1 = "Button#ANY")) {
+			Button.click(button = "I Agree");
 
-		User.answerPasswordReminder();
+			User.answerPasswordReminder();
+		}
 	}
 
 }

@@ -255,6 +255,27 @@ definition {
 		}
 	}
 
+	macro _deleteCommercePriceList {
+		Variables.assertDefined(parameterList = ${priceListName});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${priceListId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
 	macro _getCommerceNoMasterPriceListsAndPromotions {
 		var baseURL = ${baseURL};
 

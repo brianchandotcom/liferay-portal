@@ -567,7 +567,7 @@ definition {
 				title = "Coconut Fruit");
 		}
 
-		task ("Add a Custom Filter to the search page and perform a search") {
+		task ("Add a Custom Filter widget to the search page and perform a search that returns the object entries and web content article") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Search",
@@ -576,7 +576,7 @@ definition {
 			Search.openSearchPage(searchTerm = "fruit");
 		}
 
-		task ("Configure the Custom Filter widget as a parent nested query") {
+		task ("Configure the Custom Filter widget as a parent nested query for the custom object") {
 			SearchPortlets.configureCustomFilter(
 				filterField = "nestedFieldArray",
 				filterQueryType = "Nested",
@@ -586,7 +586,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Assert that only search results associated with the configuration above are returned") {
+		task ("Assert that only the object entries are returned in the search results and not the web content article") {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");
@@ -600,7 +600,7 @@ definition {
 				searchAssetType = "Web Content Article");
 		}
 
-		task ("Add a second Custom Filter widget and configure it as a child query matching the field Name") {
+		task ("Add a second Custom Filter widget and configure it as a child query matching the 'title' field name of the object nested field") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Search",
@@ -617,7 +617,7 @@ definition {
 				portletIndex = 2);
 		}
 
-		task ("Add a third Custom Filter widget and configure it as a child query matching the value keyword") {
+		task ("Add a third Custom Filter widget and configure it as a child query matching the value field name") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Search",
@@ -635,7 +635,7 @@ definition {
 			Refresh();
 		}
 
-		task ("Assert that only search results associated with the configuration above are returned") {
+		task ("Assert that only the object entries are returned in the search results and not the web content article") {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");
@@ -649,7 +649,7 @@ definition {
 				searchAssetType = "Web Content Article");
 		}
 
-		task ("Type 'apple fruit' in the filter input for the third custom filter") {
+		task ("Use the value field name Custom Filter widget to filter for the title of one of the object entries") {
 			Type(
 				key_name = "nestedFieldArray.value_keyword",
 				locator1 = "Search#CUSTOM_FILTER_WIDGET_VALUE_INPUT",
@@ -660,7 +660,7 @@ definition {
 				locator1 = "Button#ANY_LAST");
 		}
 
-		task ("Assert that only search results associated with the configuration above are returned") {
+		task ("Assert only the object entry that matches the filter is returned in the search results") {
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");

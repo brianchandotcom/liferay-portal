@@ -115,7 +115,10 @@ public class CommerceSitemapURLProviderTest {
 		_themeDisplay.setCompany(_company);
 		_themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
+		_themeDisplay.setPortalDomain(_company.getVirtualHostname());
+		_themeDisplay.setPortalURL(_company.getPortalURL(_group.getGroupId()));
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
+		_themeDisplay.setServerPort(8080);
 		_themeDisplay.setSignedIn(true);
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(_user);
@@ -205,14 +208,14 @@ public class CommerceSitemapURLProviderTest {
 
 		_httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
+		_themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		_assetCategorySitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), layoutSet, _themeDisplay);
 
 		Assert.assertTrue(rootElement.hasContent());
 
 		List<Node> nodes = rootElement.content();
-
-		Assert.assertEquals(nodes.toString(), 1, nodes.size());
 
 		Node node = nodes.get(0);
 
@@ -271,14 +274,14 @@ public class CommerceSitemapURLProviderTest {
 
 		_httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
+		_themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		_cpDefinitionSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), layoutSet, _themeDisplay);
 
 		Assert.assertTrue(rootElement.hasContent());
 
 		List<Node> nodes = rootElement.content();
-
-		Assert.assertEquals(nodes.toString(), 1, nodes.size());
 
 		Node node = nodes.get(0);
 

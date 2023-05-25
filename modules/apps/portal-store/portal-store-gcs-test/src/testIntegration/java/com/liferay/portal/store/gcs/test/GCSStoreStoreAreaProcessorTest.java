@@ -224,6 +224,46 @@ public class GCSStoreStoreAreaProcessorTest {
 			});
 	}
 
+	@Test
+	public void testCopy() throws Exception {
+		String fileName = StringUtil.randomString();
+
+		_store.addFile(
+			_group.getCompanyId(), _group.getGroupId(), fileName,
+			Store.VERSION_DEFAULT, new UnsyncByteArrayInputStream(new byte[0]));
+
+		StoreArea.withStoreArea(
+			StoreArea.LIVE,
+			() -> Assert.assertTrue(
+				_store.hasFile(
+					_group.getCompanyId(), _group.getGroupId(), fileName,
+					Store.VERSION_DEFAULT)));
+
+		StoreArea.withStoreArea(
+			StoreArea.DELETED,
+			() -> Assert.assertFalse(
+				_store.hasFile(
+					_group.getCompanyId(), _group.getGroupId(), fileName,
+					Store.VERSION_DEFAULT)));
+
+		StoreAreaProcessor storeAreaProcessor = (StoreAreaProcessor)_store;
+
+		storeAreaProcessor.copy(
+			StoreArea.LIVE.getPath(
+				_group.getCompanyId(), _group.getGroupId(), fileName,
+				Store.VERSION_DEFAULT),
+			StoreArea.DELETED.getPath(
+				_group.getCompanyId(), _group.getGroupId(), fileName,
+				Store.VERSION_DEFAULT));
+
+		StoreArea.withStoreArea(
+			StoreArea.DELETED,
+			() -> Assert.assertTrue(
+				_store.hasFile(
+					_group.getCompanyId(), _group.getGroupId(), fileName,
+					Store.VERSION_DEFAULT)));
+	}
+
 	private static Configuration _configuration;
 
 	@Inject

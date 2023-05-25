@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,20 +23,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.SitesUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -120,12 +116,14 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 	protected String getPortletId(
 		LayoutTypePortlet layoutTypePortlet, String portletId) {
 
-		for (String curPortletId : layoutTypePortlet.getPortletIds()) {
+		for (Portlet curPortlet :
+				layoutTypePortlet.getAllNonembeddedPortlets()) {
+
 			String curRootPortletId = PortletIdCodec.decodePortletName(
-				curPortletId);
+				curPortlet.getPortletId());
 
 			if (portletId.equals(curRootPortletId)) {
-				return curPortletId;
+				return curPortlet.getPortletId();
 			}
 		}
 
@@ -185,31 +183,31 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 
 		Object[] fallbackPlidAndPortletId = null;
 
-		for (String portletId : portletIds) {
-			ObjectValuePair<Long, String> plidAndPortletIdObjectValuePair =
-				_getPlidPortletIdObjectValuePair(groupId, portletId);
-
-			long plid = plidAndPortletIdObjectValuePair.getKey();
+		for (String curPortletId : portletIds) {
+			long plid = PortalUtil.getPlidFromPortletId(groupId, curPortletId);
 
 			if (plid == LayoutConstants.DEFAULT_PLID) {
 				continue;
 			}
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			String portletId = getPortletId(layoutTypePortlet, curPortletId);
 
 			if (!LayoutPermissionUtil.contains(
 					permissionChecker, LayoutLocalServiceUtil.getLayout(plid),
 					ActionKeys.VIEW) &&
 				!permissionChecker.isSignedIn()) {
 
-				fallbackPlidAndPortletId = new Object[] {
-					plid, plidAndPortletIdObjectValuePair.getValue(), true
-				};
+				fallbackPlidAndPortletId = new Object[] {plid, portletId, true};
 
 				continue;
 			}
 
-			return new Object[] {
-				plid, plidAndPortletIdObjectValuePair.getValue(), false
-			};
+			return new Object[] {plid, portletId, false};
 		}
 
 		return fallbackPlidAndPortletId;
@@ -233,91 +231,6 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private ObjectValuePair<Long, String> _getPlidPortletIdObjectValuePair(
-			long groupId, long scopeGroupId, String portletId)
-		throws PortalException {
-
-		for (boolean privateLayout : Arrays.asList(false, true)) {
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout,
-				new String[] {
-					LayoutConstants.TYPE_CONTENT,
-					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-					LayoutConstants.TYPE_PORTLET
-				});
-
-			for (Layout layout : layouts) {
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				String candidatePortletId = getPortletId(
-					layoutTypePortlet, portletId);
-
-				if (Validator.isNotNull(candidatePortletId) &&
-					(_getScopeGroupId(layout, candidatePortletId) ==
-						scopeGroupId)) {
-
-					return new ObjectValuePair<>(
-						layout.getPlid(), candidatePortletId);
-				}
-			}
-		}
-
-		return new ObjectValuePair<>(
-			LayoutConstants.DEFAULT_PLID, StringPool.BLANK);
-	}
-
-	private ObjectValuePair<Long, String> _getPlidPortletIdObjectValuePair(
-			long scopeGroupId, String portletId)
-		throws PortalException {
-
-		Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-		long groupId = group.getGroupId();
-
-		if (group.isLayout()) {
-			Layout scopeLayout = LayoutLocalServiceUtil.getLayout(
-				group.getClassPK());
-
-			groupId = scopeLayout.getGroupId();
-		}
-
-		return _getPlidPortletIdObjectValuePair(
-			groupId, scopeGroupId, portletId);
-	}
-
-	private long _getScopeGroupId(Layout layout, String portletId)
-		throws PortalException {
-
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				layout, portletId);
-
-		String scopeType = GetterUtil.getString(
-			portletSetup.getValue("lfrScopeType", null));
-
-		if (Validator.isNull(scopeType)) {
-			return layout.getGroupId();
-		}
-
-		if (scopeType.equals("company")) {
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-				layout.getCompanyId());
-
-			return companyGroup.getGroupId();
-		}
-
-		String scopeLayoutUuid = GetterUtil.getString(
-			portletSetup.getValue("lfrScopeLayoutUuid", null));
-
-		Layout scopeLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			scopeLayoutUuid, layout.getGroupId(), layout.isPrivateLayout());
-
-		Group scopeGroup = scopeLayout.getScopeGroup();
-
-		return scopeGroup.getGroupId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

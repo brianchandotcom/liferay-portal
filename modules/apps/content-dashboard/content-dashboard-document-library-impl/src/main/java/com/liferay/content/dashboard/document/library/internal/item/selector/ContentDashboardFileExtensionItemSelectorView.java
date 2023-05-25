@@ -22,6 +22,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -63,9 +64,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -143,8 +141,8 @@ public class ContentDashboardFileExtensionItemSelectorView
 			fileExtensionGroup -> fileExtensionGroup.toJSONObject(
 				SetUtil.fromArray(
 					servletRequest.getParameterValues("checkedFileExtensions")),
-				existingFileExtensions, _dlMimeTypeDisplayContext, _language,
-				themeDisplay.getLocale(), otherFileExtensions),
+				existingFileExtensions, _dlMimeTypeDisplayContextSnapshot.get(),
+				_language, themeDisplay.getLocale(), otherFileExtensions),
 			_log);
 	}
 
@@ -196,19 +194,16 @@ public class ContentDashboardFileExtensionItemSelectorView
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentDashboardFileExtensionItemSelectorView.class);
 
+	private static final Snapshot<DLMimeTypeDisplayContext>
+		_dlMimeTypeDisplayContextSnapshot = new Snapshot<>(
+			ContentDashboardFileExtensionItemSelectorView.class,
+			DLMimeTypeDisplayContext.class, null, true);
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
 
 	@Reference
 	private Aggregations _aggregations;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private FileExtensionGroupsProvider _fileExtensionGroupsProvider;

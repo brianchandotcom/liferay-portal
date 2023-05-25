@@ -14,12 +14,21 @@
 
 package com.liferay.multi.factor.authentication.email.otp.web.internal.checker;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Stian Sigvartsen
@@ -30,6 +39,22 @@ public class EmailOTPBrowserMFACheckerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testObfuscateEmailAddress() throws Exception {
@@ -55,5 +80,8 @@ public class EmailOTPBrowserMFACheckerTest {
 			EmailOTPBrowserMFAChecker.obfuscateEmailAddress(
 				"test11@liferay.com"));
 	}
+
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 }

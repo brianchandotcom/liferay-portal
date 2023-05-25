@@ -5,6 +5,7 @@ dependencies {
 	testCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
+	testCompile project(":apps:depot:depot-api")
 	testCompile project(":apps:document-library:document-library-api")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-expression")

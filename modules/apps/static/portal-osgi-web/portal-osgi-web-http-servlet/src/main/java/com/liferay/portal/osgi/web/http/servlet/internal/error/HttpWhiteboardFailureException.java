@@ -16,18 +16,18 @@ package com.liferay.portal.osgi.web.http.servlet.internal.error;
  */
 public class HttpWhiteboardFailureException extends IllegalArgumentException {
 
-	private static final long serialVersionUID = 1944632136470074075L;
-
 	public HttpWhiteboardFailureException(String message, int failureReason) {
 		super(message);
 
-		this.failureReason = failureReason;
+		_failureReason = failureReason;
 	}
 
 	public int getFailureReason() {
-		return failureReason;
+		return _failureReason;
 	}
 
-	private final int failureReason;
+	private static final long serialVersionUID = 1944632136470074075L;
+
+	private final int _failureReason;
 
 }

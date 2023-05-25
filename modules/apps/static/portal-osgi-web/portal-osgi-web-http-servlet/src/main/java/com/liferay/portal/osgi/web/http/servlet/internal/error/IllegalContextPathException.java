@@ -14,12 +14,13 @@ package com.liferay.portal.osgi.web.http.servlet.internal.error;
 /**
  * @author Raymond Augé
  */
-public class IllegalContextPathException extends HttpWhiteboardFailureException {
-
-	private static final long serialVersionUID = 3286236189163243168L;
+public class IllegalContextPathException
+	extends HttpWhiteboardFailureException {
 
 	public IllegalContextPathException(String message, int failureReason) {
 		super(message, failureReason);
 	}
+
+	private static final long serialVersionUID = 3286236189163243168L;
 
 }

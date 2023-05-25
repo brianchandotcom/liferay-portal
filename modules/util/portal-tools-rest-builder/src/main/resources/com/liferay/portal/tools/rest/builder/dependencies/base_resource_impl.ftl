@@ -597,81 +597,81 @@ public abstract class Base${schemaName}ResourceImpl
 							);
 						}
 						catch (NoSuchModelException noSuchModelException) {
-								<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content>
-									${postBatchJavaMethodSignature.methodName}(
-									<@getPOSTBatchJavaMethodParameters
-										javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
-										schemaVarName=schemaVarName
-									/>
-									);
-								</#if>
+							<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content>
+								${postBatchJavaMethodSignature.methodName}(
+								<@getPOSTBatchJavaMethodParameters
+									javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName=schemaVarName
+								/>
+								);
+							</#if>
 
-								<#if postParentBatchJavaMethodSignatures?has_content>
-									<#list postParentBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
-										<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"]/>
+							<#if postParentBatchJavaMethodSignatures?has_content>
+								<#list postParentBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
+									<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"]/>
 
-										if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
-											${parentBatchJavaMethodSignature.methodName}(
-											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName=schemaVarName
-											/>
-											);
-										}
-										<#if parentBatchJavaMethodSignature?has_next>
-											else
-										</#if>
-									</#list>
-
-									<#if postBatchJavaMethodSignature??>
-										else {
-											${postBatchJavaMethodSignature.methodName}(
-											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName=schemaVarName
-											/>
-											);
-										}
-									</#if>
-								</#if>
-
-								<#if postAssetLibraryBatchJavaMethodSignature??>
-									<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"]/>
-
-									<#if postParentBatchJavaMethodSignatures?has_content>
+									if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
+										${parentBatchJavaMethodSignature.methodName}(
+										<@getPOSTBatchJavaMethodParameters
+											javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters
+											schemaVarName=schemaVarName
+										/>
+										);
+									}
+									<#if parentBatchJavaMethodSignature?has_next>
 										else
 									</#if>
+								</#list>
 
-									if (parameters.containsKey("assetLibraryId")) {
-										${postAssetLibraryBatchJavaMethodSignature.methodName}(
+								<#if postBatchJavaMethodSignature??>
+									else {
+										${postBatchJavaMethodSignature.methodName}(
 										<@getPOSTBatchJavaMethodParameters
-											javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+											javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
 											schemaVarName=schemaVarName
 										/>
 										);
 									}
 								</#if>
+							</#if>
 
-								<#if postSiteBatchJavaMethodSignature??>
-									<#if postParentBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
-										else
-									</#if>
+							<#if postAssetLibraryBatchJavaMethodSignature??>
+								<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"]/>
 
-									if (parameters.containsKey("siteId")) {
-										${postSiteBatchJavaMethodSignature.methodName}(
-											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName=schemaVarName
-											/>
-										);
-									}
+								<#if postParentBatchJavaMethodSignatures?has_content>
+									else
 								</#if>
 
-								<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
-									else {
-										throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
-									}
+								if (parameters.containsKey("assetLibraryId")) {
+									${postAssetLibraryBatchJavaMethodSignature.methodName}(
+									<@getPOSTBatchJavaMethodParameters
+										javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+										schemaVarName=schemaVarName
+									/>
+									);
+								}
+							</#if>
+
+							<#if postSiteBatchJavaMethodSignature??>
+								<#if postParentBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
+									else
 								</#if>
+
+								if (parameters.containsKey("siteId")) {
+									${postSiteBatchJavaMethodSignature.methodName}(
+										<@getPOSTBatchJavaMethodParameters
+											javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
+											schemaVarName=schemaVarName
+										/>
+									);
+								}
+							</#if>
+
+							<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
+								else {
+									throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
+								}
+							</#if>
 							}
 						};
 					}

@@ -112,11 +112,16 @@
 					{
 						"layoutColumnId": "column-1",
 						"layoutColumnPos": 0,
-						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet_INSTANCE_minium"
+						"portletName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_minium"
 					},
 					{
 						"layoutColumnId": "column-1",
 						"layoutColumnPos": 1,
+						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet_INSTANCE_minium"
+					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 2,
 						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_product_detail",
 						"portletPreferences": {
 							"cpContentListRendererKey": "list-default",
@@ -131,7 +136,22 @@
 					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": 2,
+						"layoutColumnPos": 3,
+						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet_INSTANCE_product_detail_related_diagrams",
+						"portletPreferences": {
+							"cpContentListRendererKey": "list-default",
+							"dataSource": "csDiagramEntryDataSource",
+							"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+							"paginationDelta": 5,
+							"renderSelection": "custom",
+							"selectionStyle": "dataSource",
+							"simple--cpTypeListEntryRendererKey": "list-entry-default",
+							"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+						}
+					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": 4,
 						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_product_detail"
 					}
 				],
@@ -245,7 +265,7 @@
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": 0,
-				"portletName": "com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet"
+				"portletName": "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet"
 			}
 		],
 		"privateLayout": false

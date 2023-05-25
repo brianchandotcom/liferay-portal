@@ -12,14 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.search.searcher.test;
+package com.liferay.portal.search.test.util;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.test.util.JournalFolderFixture;
-import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -30,9 +24,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
@@ -40,7 +31,6 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -54,14 +44,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
- * @author Wade Cao
+ * @author Joshua Cords
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
-@RunWith(Arquillian.class)
-public class SearchRequestBuilderHighlightTest {
+public abstract class BaseSearchRequestBuilderHighlightTestCase {
 
 	@ClassRule
 	@Rule
@@ -72,18 +60,15 @@ public class SearchRequestBuilderHighlightTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_journalFolderFixture = new JournalFolderFixture(
-			journalFolderLocalService);
+		group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, TestPropsValues.getUserId());
+			group, TestPropsValues.getUserId());
 	}
 
 	@Test
 	public void testSearchWithHighlight() throws Exception {
-		_addJournalArticle(
+		addAssets(
 			"alpha", "alpha beta", "alpha beta alpha",
 			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
 			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
@@ -91,7 +76,7 @@ public class SearchRequestBuilderHighlightTest {
 		Highlight highlight = _highlightBuilderFactory.builder(
 		).addFieldConfig(
 			_fieldConfigBuilderFactory.builder(
-				"title_en_US"
+				getFieldName()
 			).build()
 		).fragmentSize(
 			20
@@ -104,9 +89,9 @@ public class SearchRequestBuilderHighlightTest {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_group.getCompanyId()
+				group.getCompanyId()
 			).groupIds(
-				_group.getGroupId()
+				group.getGroupId()
 			).queryString(
 				"alpha"
 			).highlight(
@@ -121,19 +106,19 @@ public class SearchRequestBuilderHighlightTest {
 					"[/H] zeta...eta [H]alpha[/H] iota",
 				"[H]alpha[/H] beta gamma delta...zeta eta theta iota [H]alpha" +
 					"[/H]"),
-			"title_en_US", searchRequestBuilder);
+			getFieldName(), searchRequestBuilder);
 	}
 
 	@Test
 	public void testSearchWithHighlightEnabled() throws Exception {
-		_addJournalArticle("alpha beta", "alpha beta alpha");
+		addAssets("alpha beta", "alpha beta alpha");
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_group.getCompanyId()
+				group.getCompanyId()
 			).groupIds(
-				_group.getGroupId()
+				group.getGroupId()
 			).queryString(
 				"alpha"
 			).highlightEnabled(
@@ -145,23 +130,23 @@ public class SearchRequestBuilderHighlightTest {
 				"<liferay-hl>alpha</liferay-hl> beta",
 				"<liferay-hl>alpha</liferay-hl> beta " +
 					"<liferay-hl>alpha</liferay-hl>"),
-			"title_en_US", searchRequestBuilder);
+			getFieldName(), searchRequestBuilder);
 	}
 
 	@Test
 	public void testSingleEntryClassSearchWithHighlightEnabled()
 		throws Exception {
 
-		_journalFolderFixture.addFolder(_group.getGroupId(), "alpha beta");
+		addAssets("alpha beta");
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_group.getCompanyId()
+				group.getCompanyId()
 			).entryClassNames(
-				JournalFolder.class.getName()
+				getBaseModelClassName()
 			).groupIds(
-				_group.getGroupId()
+				group.getGroupId()
 			).queryString(
 				"alpha"
 			).highlightEnabled(
@@ -169,28 +154,27 @@ public class SearchRequestBuilderHighlightTest {
 			);
 
 		_assertSearch(
-			Arrays.asList("<liferay-hl>alpha</liferay-hl> beta"), "title_en_US",
-			searchRequestBuilder);
+			Arrays.asList("<liferay-hl>alpha</liferay-hl> beta"),
+			getFieldName(), searchRequestBuilder);
 	}
 
-	@Inject
-	protected JournalFolderLocalService journalFolderLocalService;
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	private void _addJournalArticle(String... titles) throws Exception {
-		for (String title : titles) {
-			JournalTestUtil.addArticle(
-				_group.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, title
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, ""
-				).build(),
-				LocaleUtil.getSiteDefault(), false, true, _serviceContext);
-		}
+	protected abstract void addAssets(String... titles) throws Exception;
+
+	protected abstract Class<?> getBaseModelClass();
+
+	protected String getBaseModelClassName() {
+		Class<?> clazz = getBaseModelClass();
+
+		return clazz.getName();
 	}
+
+	protected abstract String getFieldName();
+
+	@DeleteAfterTestRun
+	protected Group group;
 
 	private void _assertSearch(
 		List<String> expected, String fieldName,
@@ -217,13 +201,8 @@ public class SearchRequestBuilderHighlightTest {
 	@Inject
 	private FieldConfigBuilderFactory _fieldConfigBuilderFactory;
 
-	@DeleteAfterTestRun
-	private Group _group;
-
 	@Inject
 	private HighlightBuilderFactory _highlightBuilderFactory;
-
-	private JournalFolderFixture _journalFolderFixture;
 
 	@Inject
 	private SearchEngine _searchEngine;

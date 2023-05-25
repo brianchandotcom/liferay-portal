@@ -10,19 +10,17 @@
  */
 
 import {Liferay} from '../..';
-import LiferayAccountBrief from '../../../../interfaces/liferayAccountBrief';
+import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
 import MDFRequestActivity from '../../../../interfaces/mdfRequestActivity';
 import getDTOFromMDFRequestActivity from '../../../../utils/dto/mdf-request-activity/getDTOFromMDFRequestActivity';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
 
-export default async function createMDFRequestActivitiesSF(
+export default async function createMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
-	company?: LiferayAccountBrief,
-	mdfRequestId?: number,
-	mdfRequestExternalReferenceCode?: string,
+	mdfRequestDTO: MDFRequestDTO,
 	externalReferenceCode?: string
 ) {
 	return await liferayFetcher.post(
@@ -30,10 +28,9 @@ export default async function createMDFRequestActivitiesSF(
 		Liferay.authToken,
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,
-			company,
-			mdfRequestId,
-			mdfRequestExternalReferenceCode,
-			externalReferenceCode
+			externalReferenceCode,
+			mdfRequestDTO.r_accToMDFReqs_accountEntry,
+			mdfRequestDTO.externalReferenceCode
 		)
 	);
 }

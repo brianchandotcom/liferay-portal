@@ -181,8 +181,14 @@ definition {
 				key_option = "Yes",
 				locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
 		}
+
+		if (isSet(addDriver)) {
+			Click(
+				key_index = 1,
+				locator1 = "RaylifeApplicationModal#ANY_DRIVER_BUTTON");
+		}
 		else {
-			DoubleClick(
+			Click(
 				key_option = "No",
 				locator1 = "RaylifeApplicationModal#CHOOSE_OPTION");
 

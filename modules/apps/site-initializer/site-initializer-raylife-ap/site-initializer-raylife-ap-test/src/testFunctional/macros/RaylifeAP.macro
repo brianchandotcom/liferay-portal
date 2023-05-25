@@ -287,7 +287,7 @@ definition {
 			userEmailAddress = ${email},
 			userPassword = ${passwordRaylife});
 
-		if (IsElementPresent(key_text = "I Agree", locator1 = "Button#ANY")) {
+		if (IsElementPresent(button = "I Agree", locator1 = "Button#ANY")) {
 			Button.click(button = "I Agree");
 
 			User.answerPasswordReminder();

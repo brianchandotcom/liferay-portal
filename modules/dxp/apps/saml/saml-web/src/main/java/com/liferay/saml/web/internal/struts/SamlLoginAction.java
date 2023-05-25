@@ -14,6 +14,7 @@
 
 package com.liferay.saml.web.internal.struts;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,9 +43,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stian Sigvartsen
@@ -133,8 +131,11 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		SamlSpIdpConnection samlSpIdpConnection,
 		HttpServletRequest httpServletRequest) {
 
-		if (_samlSpIdpConnectionsProfile != null) {
-			return _samlSpIdpConnectionsProfile.isEnabled(
+		SamlSpIdpConnectionsProfile samlSpIdpConnectionsProfile =
+			_samlSpIdpConnectionsProfileSnapshot.get();
+
+		if (samlSpIdpConnectionsProfile != null) {
+			return samlSpIdpConnectionsProfile.isEnabled(
 				samlSpIdpConnection, httpServletRequest);
 		}
 
@@ -160,6 +161,11 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		return JSONUtil.put("relevantIdpConnections", jsonArray);
 	}
 
+	private static final Snapshot<SamlSpIdpConnectionsProfile>
+		_samlSpIdpConnectionsProfileSnapshot = new Snapshot<>(
+			SamlLoginAction.class, SamlSpIdpConnectionsProfile.class, null,
+			true);
+
 	@Reference
 	private JSONFactory _jsonFactory;
 
@@ -177,12 +183,5 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile SamlSpIdpConnectionsProfile _samlSpIdpConnectionsProfile;
 
 }

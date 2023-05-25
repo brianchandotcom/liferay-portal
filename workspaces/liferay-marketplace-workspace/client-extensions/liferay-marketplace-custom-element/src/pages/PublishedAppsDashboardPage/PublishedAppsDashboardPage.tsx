@@ -251,12 +251,9 @@ export function PublishedAppsDashboardPage() {
 		};
 
 		makeFetch();
-	}, [
-		dashboardNavigationItems,
-		page,
-		publishedAppTable.pageSize,
-		selectedAccount,
-	]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page, publishedAppTable.pageSize, selectedAccount]);
 
 	useEffect(() => {
 		const clickedNavigationItem =

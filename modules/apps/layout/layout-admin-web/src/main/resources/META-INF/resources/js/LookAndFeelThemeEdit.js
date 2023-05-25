@@ -35,9 +35,9 @@ export default function ({
 
 		openSelectionModal({
 			onSelect: (selectedItem) => {
-				const themeId = selectedItem.themeid;
+				const itemValue = JSON.parse(selectedItem.value);
 
-				if (themeId && selectedThemeId !== themeId) {
+				if (itemValue.themeId && selectedThemeId !== itemValue.themeId) {
 					themeContainer.innerHTML = '';
 
 					const loadingIndicator = document.createElement('div');
@@ -48,7 +48,7 @@ export default function ({
 
 					fetch(lookAndFeelDetailURL, {
 						body: objectToFormData({
-							[`${namespace}themeId`]: themeId,
+							[`${namespace}themeId`]: itemValue.themeId,
 						}),
 						method: 'POST',
 					})
@@ -62,7 +62,7 @@ export default function ({
 							themeContainer.removeChild(loadingIndicator);
 							themeContainer.appendChild(fragment);
 
-							selectedThemeId = themeId;
+							selectedThemeId = itemValue.themeId;
 
 							updateCheckboxNames(namespace, themeContainer);
 						});

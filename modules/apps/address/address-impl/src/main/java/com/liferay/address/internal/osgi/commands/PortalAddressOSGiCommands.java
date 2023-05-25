@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=initializeCompanyCountries",
 		"osgi.command.function=populateCompanyCountries",
+		"osgi.command.function=repopulateCompanyCountries",
 		"osgi.command.scope=address"
 	},
 	service = PortalAddressOSGiCommands.class
@@ -121,6 +124,79 @@ public class PortalAddressOSGiCommands {
 					country, titleMap);
 
 				_processCountryRegions(country);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+		}
+	}
+
+	public void repopulateCompanyCountries(long companyId) throws Exception {
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Reinitializing countries for company " +
+					company.getCompanyId());
+		}
+
+		JSONArray countriesJSONArray = _getJSONArray(
+			"com/liferay/address/dependencies/countries.json");
+
+		for (int i = 0; i < countriesJSONArray.length(); i++) {
+			JSONObject countryJSONObject = countriesJSONArray.getJSONObject(i);
+
+			try {
+				String name = countryJSONObject.getString("name");
+
+				List<Country> countries =
+					_countryLocalService.getCompanyCountries(companyId);
+
+				Stream<Country> countryStream = countries.stream();
+
+				if (countryStream.anyMatch(
+						country -> country.getName(
+						).equals(
+							name
+						))) {
+
+					Country country = _countryLocalService.getCountryByName(
+						companyId, name);
+
+					_processCountryRegions(country);
+				}
+				else {
+					ServiceContext serviceContext = new ServiceContext();
+
+					serviceContext.setCompanyId(company.getCompanyId());
+
+					User guestUser = company.getGuestUser();
+
+					serviceContext.setUserId(guestUser.getUserId());
+
+					Country country = _countryLocalService.addCountry(
+						countryJSONObject.getString("a2"),
+						countryJSONObject.getString("a3"), true, true,
+						countryJSONObject.getString("idd"), name,
+						countryJSONObject.getString("number"), 0, true, false,
+						countryJSONObject.getBoolean("zipRequired"),
+						serviceContext);
+
+					Map<String, String> titleMap = new HashMap<>();
+
+					for (Locale locale :
+							_language.getCompanyAvailableLocales(companyId)) {
+
+						titleMap.put(
+							_language.getLanguageId(locale),
+							country.getName(locale));
+					}
+
+					_countryLocalService.updateCountryLocalizations(
+						country, titleMap);
+
+					_processCountryRegions(country);
+				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);

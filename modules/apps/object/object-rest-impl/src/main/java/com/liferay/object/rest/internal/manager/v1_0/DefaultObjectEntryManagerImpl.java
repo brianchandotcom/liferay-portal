@@ -620,7 +620,7 @@ public class DefaultObjectEntryManagerImpl
 			return null;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172094")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183882")) {
 			SystemObjectDefinitionManager systemObjectDefinitionManager =
 				_systemObjectDefinitionManagerRegistry.
 					getSystemObjectDefinitionManager(

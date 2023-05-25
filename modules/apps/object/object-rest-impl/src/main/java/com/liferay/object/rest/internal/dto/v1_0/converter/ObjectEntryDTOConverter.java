@@ -200,7 +200,7 @@ public class ObjectEntryDTOConverter
 							objectRelationship.getObjectDefinitionId1());
 
 					if (objectDefinition.isUnmodifiableSystemObject()) {
-						if (FeatureFlagManagerUtil.isEnabled("LPS-172094")) {
+						if (FeatureFlagManagerUtil.isEnabled("LPS-183882")) {
 							SystemObjectDefinitionManager
 								systemObjectDefinitionManager =
 									_systemObjectDefinitionManagerRegistry.

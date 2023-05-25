@@ -13,4 +13,8 @@
 	.dialog-footer {
 		position: fixed;
 	}
+
+	.nav-tabs + .tab-content .tab-pane {
+		padding: 1rem;
+	}
 }

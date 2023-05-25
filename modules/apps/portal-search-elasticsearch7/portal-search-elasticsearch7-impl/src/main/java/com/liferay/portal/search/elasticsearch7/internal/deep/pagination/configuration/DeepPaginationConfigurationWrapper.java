@@ -37,7 +37,8 @@ public class DeepPaginationConfigurationWrapper {
 	}
 
 	public int getPointInTimeKeepAliveSeconds() {
-		return _deepPaginationConfiguration.pointInTimeKeepAliveSeconds();
+		return _validatePointInTimeKeepAliveSeconds(
+			_deepPaginationConfiguration.pointInTimeKeepAliveSeconds());
 	}
 
 	@Activate
@@ -45,6 +46,18 @@ public class DeepPaginationConfigurationWrapper {
 	protected void activate(Map<String, Object> map) {
 		_deepPaginationConfiguration = ConfigurableUtil.createConfigurable(
 			DeepPaginationConfiguration.class, map);
+	}
+
+	private int _validatePointInTimeKeepAliveSeconds(
+		int pointInTimeKeepAliveSeconds) {
+
+		if ((pointInTimeKeepAliveSeconds > 0) &&
+			(pointInTimeKeepAliveSeconds < 60)) {
+
+			return pointInTimeKeepAliveSeconds;
+		}
+
+		return 60;
 	}
 
 	private volatile DeepPaginationConfiguration _deepPaginationConfiguration;

@@ -164,14 +164,14 @@ definition {
 		CalendarScheduler.selectSpecificEvent(eventTitle = "Calendar Event Title");
 
 		CalendarScheduler.viewEventTimesViaDialogBox(
-			endDateTime = "7:00pm",
-			startDateTime = "8:00pm");
+			endDateTime = " 7:00am",
+			startDateTime = " 8:00am");
 
 		CalendarScheduler.gotoDetailsViaDialogBox();
 
 		CalendarEvent.viewTimesViaDetails(
-			endDateTime = "7:00 PM",
-			startDateTime = "8:00 PM");
+			endDateTime = "08:00 AM",
+			startDateTime = "07:00 AM");
 	}
 
 	@priority = 4

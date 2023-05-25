@@ -643,6 +643,8 @@ definition {
 	@description = "This is a test for LPS-101248. Display web content with Image field in Content Display."
 	@priority = 3
 	test ViewSelectedWebContentWithImageField {
+		property timeout.explicit.wait = "20";
+
 		task ("Add a web content structure with a Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

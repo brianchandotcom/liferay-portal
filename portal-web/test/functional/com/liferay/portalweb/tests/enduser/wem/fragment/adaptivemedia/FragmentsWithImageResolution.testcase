@@ -345,6 +345,7 @@ definition {
 	@uitest
 	test ViewAutoImageResolutionForImageMappedToWebContent {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "20";
 
 		task ("Add an Image Resolution with 2000px Max Width") {
 			ApplicationsMenu.gotoPortlet(

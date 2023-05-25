@@ -1517,6 +1517,7 @@ definition {
 	@priority = 5
 	test SelectFolderWhenCreateWebContentViaAssetPublisher {
 		property portal.acceptance = "true";
+		property timeout.explicit.wait = "20";
 
 		task ("Add a web content folder") {
 			JSONWebcontent.addFolder(

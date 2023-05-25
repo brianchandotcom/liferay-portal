@@ -180,6 +180,60 @@ definition {
 			value1 = "Non trouvé");
 	}
 
+	@description = "This is a use case for LPS-113225. Verify a group can be updated when available languages differ between instances"
+	@priority = 3
+	test CanUpdateGroupSettingsWithDifferentAvailableLanguages {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "Locale#CanUpdateGroupSettingsWithDifferentAvailableLanguages";
+
+		task ("Given a virtual instance") {
+			User.firstLoginPG();
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("And given available languages differ between instances") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "English (United States)");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ProductMenu.changeDefaultLanguage(defaultPortalLanguage = "English (United States)");
+		}
+
+		task ("Then the user can update the type settings of the default group in the virtual instance from the default instance") {
+			User.firstLoginPG();
+
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+			var script = '''
+				import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+
+				group =  GroupLocalServiceUtil.getGroup(${companyId}, "Guest");
+				groupId = group.getGroupId();
+				typeSettings = group.getTypeSettings();
+
+				GroupLocalServiceUtil.updateGroup(groupId,typeSettings);
+		''';
+
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = ${script});
+		}
+	}
+
 	@priority = 4
 	test ChangesToInstanceTimeZoneDoNotPropagateToExistingUsers {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";

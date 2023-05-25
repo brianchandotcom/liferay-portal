@@ -264,6 +264,32 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
+	protected static void removeDBPartition(long companyId, boolean migrate)
+		throws Exception {
+
+		CurrentConnection defaultCurrentConnection =
+			CurrentConnectionUtil.getCurrentConnection();
+
+		try {
+			CurrentConnection currentConnection = dataSource -> connection;
+
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
+				migrate);
+
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				currentConnection);
+
+			DBPartitionUtil.removeDBPartition(companyId);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				defaultCurrentConnection);
+		}
+	}
+
 	protected static void removeDBPartitions(boolean migrate) throws Exception {
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();

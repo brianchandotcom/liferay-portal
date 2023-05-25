@@ -173,6 +173,13 @@ definition {
 			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
 	}
 
+	@summary = "This macro confirm the section in breadcrumb."
+	macro confirmBreadcrumb {
+		KeyPress.keyPressNoError(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "\ENTER");
+	}
+
 	@summary = "This macro adds a project by dropdown in the sidebar."
 	macro createProjectByDropdown {
 		TestrayLayout.clickManageOnSidebar();
@@ -323,53 +330,11 @@ definition {
 		}
 	}
 
-	@summary = "This macro confirm the section in breadcrumb."
-	macro confirmBreadcrumb {
-		KeyPress.keyPressNoError(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "\ENTER");
-	}
-
 	@summary = "This macro access the breadcrumb."
 	macro gotoBreadcrumb {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "/");
-	}
-
-	@summary = "This macro access next section in breadcrumb."
-	macro nextSectionBreadcrumb {
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${project});
-
-		if (isSet(project)) {
-			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-				value1 = "\TAB");
-		}
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${routine});
-
-		if (isSet(routine)) {
-			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-				value1 = "\TAB");
-		}
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${build});
-
-		if (isSet(build)) {
-			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-				value1 = "\TAB");
-		}
-
-		Testray.confirmBreadcrumb();
 	}
 
 	@summary = "This macro click in the link to the home page."
@@ -407,6 +372,41 @@ definition {
 		Click(
 			key_kebabOption = ${kebabOption},
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+	}
+
+	@summary = "This macro access next section in breadcrumb."
+	macro nextSectionBreadcrumb {
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${project});
+
+		if (isSet(project)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${routine});
+
+		if (isSet(routine)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${build});
+
+		if (isSet(build)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		Testray.confirmBreadcrumb();
 	}
 
 	@summary = "This macro tab navigator."

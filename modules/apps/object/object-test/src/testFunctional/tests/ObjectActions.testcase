@@ -106,6 +106,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify creating a custom object entry triggers an action to add an Account entry"
+	@priority = 5
+	test CanAddAccountEntryAfterCreatingCustomObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object with a custom field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 180082",
+				objectName = "CustomObject180082",
+				pluralLabelName = "Custom Objects 180082");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject180082");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject180082");
+		}
+
+		task ("And given an action to add an Account entry after creating a custom object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 180082");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Account Name,Guest",
+				objectLabel = "Account",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("When the user creates a custom object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject180082",
+				value = "Entry Test");
+		}
+
+		task ("Then the action is triggered and an Account entry is added") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name");
+		}
+	}
+
 	@description = "LPS-180070 - Verify creating a Commerce Product entry triggers an action to add a user"
 	@priority = 5
 	test CanAddUserAfterCreatingCommerceProductEntry {

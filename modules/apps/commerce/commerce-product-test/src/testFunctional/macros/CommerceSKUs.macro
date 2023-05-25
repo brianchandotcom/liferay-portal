@@ -72,6 +72,7 @@ definition {
 		CommerceSKUs.setSkuPricing(
 			basePrice = ${basePrice},
 			cost = ${cost},
+			priceOnApplication = ${priceOnApplication},
 			promoPrice = ${promoPrice});
 
 		Button.clickPublish();
@@ -125,6 +126,19 @@ definition {
 	}
 
 	macro setSkuPricing {
+		if (isSet(priceOnApplication)) {
+			if (${priceOnApplication} == "true") {
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "Price On Application",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "Price On Application",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
 		if (isSet(basePrice)) {
 			Type(
 				key_text = "Base Price",

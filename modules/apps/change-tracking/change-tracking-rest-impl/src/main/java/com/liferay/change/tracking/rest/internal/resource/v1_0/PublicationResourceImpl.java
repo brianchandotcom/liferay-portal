@@ -166,7 +166,8 @@ public class PublicationResourceImpl extends BasePublicationResourceImpl {
 		Date currentDate = new Date(System.currentTimeMillis());
 
 		if (!publishDate.after(currentDate)) {
-			throw new PortalException("the-publish-time-must-be-in-the-future");
+			throw new IllegalArgumentException(
+				"The publish time must be in the future");
 		}
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(

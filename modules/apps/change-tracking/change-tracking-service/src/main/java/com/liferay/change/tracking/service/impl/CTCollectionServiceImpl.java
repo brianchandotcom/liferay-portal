@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.exception.CTCollectionStatusException;
 import com.liferay.change.tracking.model.CTAutoResolutionInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTCollectionTable;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -185,6 +187,14 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 
 		_ctCollectionModelResourcePermission.check(
 			getPermissionChecker(), ctCollectionId, CTActionKeys.PUBLISH);
+
+		CTCollection ctCollection = ctCollectionLocalService.getCTCollection(
+			ctCollectionId);
+
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			throw new CTCollectionStatusException(
+				"CTCollection is already published");
+		}
 
 		_ctProcessLocalService.addCTProcess(userId, ctCollectionId);
 	}

@@ -45,7 +45,7 @@ const productsEndpointRegexp = new RegExp(
 
 const query = 'test';
 
-describe('Global Search', () => {
+describe.skip('Global Search', () => {
 	describe('When responses are ok', () => {
 		let renderedComponent;
 

@@ -86,7 +86,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					<clay:tabs
 						tabsItems="<%= trashDisplayContext.getTabsItems() %>"
 					>
-						<div class="sidebar-body">
+						<clay:tabs-panel>
 							<dl class="sidebar-dl sidebar-section">
 								<dt class="sidebar-dt"><liferay-ui:message key="removed-date" /></dt>
 
@@ -99,7 +99,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 									<%= HtmlUtil.escape(trashEntry.getUserName()) %>
 								</dd>
 							</dl>
-						</div>
+						</clay:tabs-panel>
 					</clay:tabs>
 				</div>
 			</c:when>
@@ -127,7 +127,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					<clay:tabs
 						tabsItems="<%= trashDisplayContext.getTabsItems() %>"
 					>
-						<div class="sidebar-body">
+						<clay:tabs-panel>
 							<dl class="sidebar-dl sidebar-section">
 								<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
@@ -135,7 +135,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 									<%= trashEntries.size() %>
 								</dd>
 							</dl>
-						</div>
+						</clay:tabs-panel>
 					</clay:tabs>
 				</div>
 			</c:otherwise>
@@ -158,7 +158,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 			<clay:tabs
 				tabsItems="<%= trashDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 					<dl class="sidebar-dl sidebar-section">
 						<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
@@ -166,7 +166,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 							<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
 						</dd>
 					</dl>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:otherwise>

@@ -63,7 +63,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 		<clay:tabs
 			tabsItems="<%= trashDisplayContext.getTabsItems() %>"
 		>
-			<div class="sidebar-body">
+			<clay:tabs-panel>
 				<dl class="sidebar-dl sidebar-section">
 					<dt class="sidebar-dt"><liferay-ui:message key="num-of-items" /></dt>
 
@@ -71,7 +71,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 						<%= trashHandler.getTrashModelsCount(classPK) %>
 					</dd>
 				</dl>
-			</div>
+			</clay:tabs-panel>
 		</clay:tabs>
 	</div>
 </c:if>

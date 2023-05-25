@@ -30,7 +30,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<clay:tabs
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 					<h5><liferay-ui:message key="num-of-organizations" /></h5>
 
 					<p>
@@ -45,7 +45,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 						%>
 
 					</p>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:when>
@@ -83,7 +83,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<clay:tabs
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 					<h5><liferay-ui:message key="num-of-users" /></h5>
 
 					<p>
@@ -127,7 +127,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 							<%= country %>
 						</p>
 					</c:if>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:when>
@@ -140,9 +140,9 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<clay:tabs
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 					<h5><liferay-ui:message arguments="<%= organizations.size() %>" key="x-items-are-selected" /></h5>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:when>

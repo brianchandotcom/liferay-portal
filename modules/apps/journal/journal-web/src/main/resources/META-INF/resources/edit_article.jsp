@@ -137,22 +137,22 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 				<clay:tabs
 					tabsItems="<%= journalEditArticleDisplayContext.getTabsItems() %>"
 				>
-					<div>
+					<clay:tabs-panel>
 						<liferay-frontend:form-navigator
 							fieldSetCssClass="panel-group-flush"
 							formModelBean="<%= article %>"
 							id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_JOURNAL %>"
 							showButtons="<%= false %>"
 						/>
-					</div>
+					</clay:tabs-panel>
 
 					<c:if test="<%= (article != null) && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT) %>">
-						<div>
+						<clay:tabs-panel>
 							<liferay-layout:layout-classed-model-usages-view
 								className="<%= JournalArticle.class.getName() %>"
 								classPK="<%= article.getResourcePrimKey() %>"
 							/>
-						</div>
+						</clay:tabs-panel>
 					</c:if>
 				</clay:tabs>
 			</div>

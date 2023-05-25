@@ -55,7 +55,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			<clay:tabs
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 					<h5><liferay-ui:message key="num-of-users" /></h5>
 
 					<%
@@ -69,7 +69,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 					<p>
 						<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, userParams) %>
 					</p>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:when>
@@ -93,7 +93,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			<clay:tabs
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 
 					<%
 					List<String> names = new ArrayList<String>();
@@ -145,7 +145,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 							<%= HtmlUtil.escape(StringUtil.merge(rolesAndTeamsNames, StringPool.COMMA_AND_SPACE)) %>
 						</p>
 					</c:if>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:when>
@@ -158,9 +158,9 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			<clay:tabs
 				tabsItems="<%= siteMembershipsDisplayContext.getTabsItems() %>"
 			>
-				<div class="sidebar-body">
+				<clay:tabs-panel>
 					<h5><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h5>
-				</div>
+				</clay:tabs-panel>
 			</clay:tabs>
 		</div>
 	</c:when>

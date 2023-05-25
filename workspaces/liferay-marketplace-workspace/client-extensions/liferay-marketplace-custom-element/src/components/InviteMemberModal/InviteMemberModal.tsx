@@ -62,13 +62,12 @@ export function InviteMemberModal({
     setAccountRoles(roles);
   };
 
-  const addAccountRolesToUser = async (user: any) => {
+  const addAccountRolesToUser = async (user: UserAccount) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
         const matchingAccountRole = accountRoles?.find(
           (accountRole: AccountRole) => accountRole.name == 'Invited Member'
         );
-        console.log(matchingAccountRole);
         if (matchingAccountRole) {
           await callRolesApi(
             selectedAccount.id,
@@ -83,7 +82,7 @@ export function InviteMemberModal({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     let form = event.target as HTMLFormElement;
-    let user = '';
+    let user : UserAccount;
     if (formValid) {
       user = await getUserByEmail(formFields.email);
       if (!user) {

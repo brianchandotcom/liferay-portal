@@ -109,7 +109,7 @@ export async function getUserByEmail(userEmail: String) {
   }
 }
 
-export async function callRolesApi(accountId: number,roleId: number, userId: string) {
+export async function callRolesApi(accountId: number,roleId: number, userId: number) {
   const response = await fetch(
     `/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
     {

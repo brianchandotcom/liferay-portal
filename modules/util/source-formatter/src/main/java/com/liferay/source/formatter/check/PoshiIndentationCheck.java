@@ -97,6 +97,62 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			}
 		}
 
+		return _fixTableIndentation(content);
+	}
+
+	private String _fixTableIndentation(String content) {
+		Matcher matcher = _tablePattern.matcher(content);
+
+		while (matcher.find()) {
+			String indent = matcher.group(1) + StringPool.TAB;
+			String tableContent = matcher.group(2);
+
+			if (!tableContent.startsWith(StringPool.NEW_LINE)) {
+				return StringUtil.insert(
+					content, StringPool.NEW_LINE + indent, matcher.start(2));
+			}
+
+			if (tableContent.endsWith(StringPool.PIPE)) {
+				return StringUtil.insert(
+					content, StringPool.NEW_LINE + matcher.group(1),
+					matcher.end(2));
+			}
+
+			String[] lines = tableContent.split("\n");
+
+			for (int i = 0; i < lines.length; i++) {
+				if (Validator.isNull(lines[i])) {
+					continue;
+				}
+
+				String trimmedLine = StringUtil.trim(lines[i]);
+
+				if (!trimmedLine.startsWith("|") &&
+					!trimmedLine.endsWith("|")) {
+
+					break;
+				}
+
+				lines[i] = indent + trimmedLine;
+			}
+
+			StringBundler sb = new StringBundler(lines.length);
+
+			for (String line : lines) {
+				sb.append(line);
+				sb.append(CharPool.NEW_LINE);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			String replacement = sb.toString();
+
+			if (!tableContent.equals(replacement)) {
+				return StringUtil.replaceFirst(
+					content, tableContent, replacement, matcher.start());
+			}
+		}
+
 		return content;
 	}
 
@@ -122,5 +178,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 	private static final Pattern _curlPattern = Pattern.compile(
 		"(?<=\n)\t*var \\w*curl = '''(\n.*?\n[ \t]*)''';(?=\n)",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+	private static final Pattern _tablePattern = Pattern.compile(
+		"(?:\n)(\t+)table = '''(.+?)'''", Pattern.DOTALL);
 
 }

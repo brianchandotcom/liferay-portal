@@ -159,7 +159,8 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		Date currentDate = new Date(System.currentTimeMillis());
 
 		if (!publishDate.after(currentDate)) {
-			throw new PortalException("the-publish-time-must-be-in-the-future");
+			throw new IllegalArgumentException(
+				"The publish time must be in the future");
 		}
 
 		com.liferay.change.tracking.model.CTCollection ctCollection =

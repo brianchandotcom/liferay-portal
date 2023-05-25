@@ -34,10 +34,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -138,23 +138,22 @@ public class PortalAddressOSGiCommands {
 		JSONArray countriesJSONArray = _getJSONArray(
 			"com/liferay/address/dependencies/countries.json");
 
+		List<Country> countries = _countryLocalService.getCompanyCountries(
+			companyId);
+
+		HashSet<String> countryNames = new HashSet<>();
+
+		for (Country country : countries) {
+			countryNames.add(country.getName());
+		}
+
 		for (int i = 0; i < countriesJSONArray.length(); i++) {
 			JSONObject countryJSONObject = countriesJSONArray.getJSONObject(i);
 
 			try {
 				String name = countryJSONObject.getString("name");
 
-				List<Country> countries =
-					_countryLocalService.getCompanyCountries(companyId);
-
-				Stream<Country> countryStream = countries.stream();
-
-				if (countryStream.anyMatch(
-						country -> country.getName(
-						).equals(
-							name
-						))) {
-
+				if (countryNames.contains(name)) {
 					Country country = _countryLocalService.getCountryByName(
 						companyId, name);
 

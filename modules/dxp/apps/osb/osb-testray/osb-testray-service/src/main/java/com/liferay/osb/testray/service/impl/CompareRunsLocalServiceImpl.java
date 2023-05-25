@@ -93,7 +93,7 @@ public class CompareRunsLocalServiceImpl
 				testrayDueStatusColumn.eq(testrayDueStatus1)
 			)
 		).as(
-			"table1", tableTemplate
+			"table", tableTemplate
 		);
 
 		Column<?, ?> testrayCaseIdColumn = table.getColumn("c_caseId_");

@@ -127,7 +127,7 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				entryTitleEdit = "Blogs Entry Title Edit");
 
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("View the edited blogs entry title shown in Collection Display") {
@@ -166,7 +166,7 @@ definition {
 		task ("Edit the document title") {
 			DMDocument.editCmd(dmDocumentTitleEdit = "Document Title Edit");
 
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("View the document title shown in Collection Display") {
@@ -219,7 +219,7 @@ definition {
 		task ("Edit the document title") {
 			DMDocument.editCmd(dmDocumentTitleEdit = "Document Title");
 
-			PortletEntry.publish();
+			Button.clickPublish();
 		}
 
 		task ("View the edited title is shown in Page Content panel") {

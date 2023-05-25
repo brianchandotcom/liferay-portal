@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -307,7 +307,7 @@ public class UserResourceDTOConverter
 				id = organization.getOrganizationId();
 				name = organization.getName();
 				roleBriefs = TransformUtil.transformToArray(
-					_roleLocalService.getUserGroupRoles(
+					_roleService.getUserGroupRoles(
 						user.getUserId(), organization.getGroupId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
@@ -363,7 +363,7 @@ public class UserResourceDTOConverter
 					dtoConverterContext.isAcceptAllLanguages(),
 					group.getNameMap());
 				roleBriefs = TransformUtil.transformToArray(
-					_roleLocalService.getUserGroupRoles(
+					_roleService.getUserGroupRoles(
 						user.getUserId(), group.getGroupId()),
 					role -> _toRoleBrief(dtoConverterContext, role),
 					RoleBrief.class);
@@ -401,13 +401,13 @@ public class UserResourceDTOConverter
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private RoleLocalService _roleLocalService;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"
 	)
 	private ModelResourcePermission<Role> _roleModelResourcePermission;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

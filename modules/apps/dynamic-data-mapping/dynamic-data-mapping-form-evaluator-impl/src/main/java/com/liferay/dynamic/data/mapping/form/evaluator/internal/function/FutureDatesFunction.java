@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 
 import java.time.LocalDate;
 
+import java.util.Date;
+
 /**
  * @author Bruno Oliveira
  * @author Carolina Barbosa
@@ -40,13 +42,15 @@ public class FutureDatesFunction
 		LocalDate localDate = DateParameterUtil.getLocalDate(
 			object1.toString());
 
-		SimpleDateFormat formatter = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss.S");
+		String dateString = object2.toString();
 
-		LocalDate currentDate = DateParameterUtil.getLocalDate(
-			formatter.format(object2));
+		if (object2 instanceof Date) {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-		if (localDate.isBefore(currentDate)) {
+			dateString = formatter.format(object2);
+		}
+
+		if (localDate.isBefore(DateParameterUtil.getLocalDate(dateString))) {
 			return false;
 		}
 

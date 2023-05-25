@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.exception.DirectoryNameException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.store.StoreArea;
+import com.liferay.document.library.kernel.store.StoreAreaAwareStoreWrapper;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.petra.io.StreamUtil;
@@ -29,7 +29,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -54,6 +53,9 @@ public class DLStoreImpl implements DLStore {
 
 	public static void setStore(Store store) {
 		_store = store;
+
+		_wrappedStore = new StoreAreaAwareStoreWrapper(
+			() -> _store, () -> _storeAreaProcessor);
 	}
 
 	@Override
@@ -107,10 +109,10 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		_store.addFile(
+		_wrappedStore.addFile(
 			companyId, repositoryId, fileName, toVersionLabel,
 			_getNullSafeInputStream(
-				_store.getFileAsStream(
+				_wrappedStore.getFileAsStream(
 					companyId, repositoryId, fileName, fromVersionLabel)));
 	}
 
@@ -119,22 +121,7 @@ public class DLStoreImpl implements DLStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		if (_isStoreAreaSupported()) {
-			for (String fileName :
-					_store.getFileNames(companyId, repositoryId, dirName)) {
-
-				for (String versionLabel :
-						_store.getFileVersions(
-							companyId, repositoryId, fileName)) {
-
-					_copy(
-						StoreArea.DELETED, companyId, repositoryId, fileName,
-						versionLabel);
-				}
-			}
-		}
-
-		_store.deleteDirectory(companyId, repositoryId, dirName);
+		_wrappedStore.deleteDirectory(companyId, repositoryId, dirName);
 	}
 
 	@Override
@@ -144,15 +131,11 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false);
 
 		for (String versionLabel :
-				_store.getFileVersions(companyId, repositoryId, fileName)) {
+				_wrappedStore.getFileVersions(
+					companyId, repositoryId, fileName)) {
 
-			if (_isStoreAreaSupported()) {
-				_copy(
-					StoreArea.DELETED, companyId, repositoryId, fileName,
-					versionLabel);
-			}
-
-			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+			_wrappedStore.deleteFile(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 	}
 
@@ -165,13 +148,8 @@ public class DLStoreImpl implements DLStore {
 		validate(fileName, false, versionLabel);
 
 		try {
-			if (_isStoreAreaSupported()) {
-				_copy(
-					StoreArea.DELETED, companyId, repositoryId, fileName,
-					versionLabel);
-			}
-
-			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+			_wrappedStore.deleteFile(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (AccessDeniedException accessDeniedException) {
 			throw new PrincipalException(accessDeniedException);
@@ -187,7 +165,7 @@ public class DLStoreImpl implements DLStore {
 
 		try {
 			return StreamUtil.toByteArray(
-				_store.getFileAsStream(
+				_wrappedStore.getFileAsStream(
 					companyId, repositoryId, fileName, StringPool.BLANK));
 		}
 		catch (IOException ioException) {
@@ -202,7 +180,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		return _store.getFileAsStream(
+		return _wrappedStore.getFileAsStream(
 			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
@@ -214,7 +192,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		return _store.getFileAsStream(
+		return _wrappedStore.getFileAsStream(
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
@@ -227,7 +205,7 @@ public class DLStoreImpl implements DLStore {
 			throw new DirectoryNameException(dirName);
 		}
 
-		return _store.getFileNames(companyId, repositoryId, dirName);
+		return _wrappedStore.getFileNames(companyId, repositoryId, dirName);
 	}
 
 	@Override
@@ -236,7 +214,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		return _store.getFileSize(
+		return _wrappedStore.getFileSize(
 			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
@@ -246,7 +224,7 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false);
 
-		return _store.hasFile(
+		return _wrappedStore.hasFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
 	}
 
@@ -258,7 +236,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, false, versionLabel);
 
-		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
+		return _wrappedStore.hasFile(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
@@ -305,15 +284,16 @@ public class DLStoreImpl implements DLStore {
 		throws PortalException {
 
 		for (String versionLabel :
-				_store.getFileVersions(companyId, repositoryId, fileName)) {
+				_wrappedStore.getFileVersions(
+					companyId, repositoryId, fileName)) {
 
-			if (_isStoreAreaSupported()) {
-				_copy(
-					StoreArea.DELETED, companyId, repositoryId, fileName,
-					versionLabel);
-			}
+			_wrappedStore.addFile(
+				companyId, newRepositoryId, fileName, versionLabel,
+				_wrappedStore.getFileAsStream(
+					companyId, repositoryId, fileName, versionLabel));
 
-			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+			_wrappedStore.deleteFile(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 	}
 
@@ -323,19 +303,14 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		_store.addFile(
+		_wrappedStore.addFile(
 			companyId, repositoryId, fileName, toVersionLabel,
 			_getNullSafeInputStream(
-				_store.getFileAsStream(
+				_wrappedStore.getFileAsStream(
 					companyId, repositoryId, fileName, fromVersionLabel)));
 
-		if (_isStoreAreaSupported()) {
-			_copy(
-				StoreArea.DELETED, companyId, repositoryId, fileName,
-				fromVersionLabel);
-		}
-
-		_store.deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
+		_wrappedStore.deleteFile(
+			companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
 	@Override
@@ -475,7 +450,7 @@ public class DLStoreImpl implements DLStore {
 			try (InputStream inputStream =
 					dlStoreFileProvider.getInputStream()) {
 
-				_store.addFile(
+				_wrappedStore.addFile(
 					dlStoreRequest.getCompanyId(),
 					dlStoreRequest.getRepositoryId(),
 					dlStoreRequest.getFileName(),
@@ -492,42 +467,12 @@ public class DLStoreImpl implements DLStore {
 		}
 	}
 
-	private void _copy(
-			StoreArea storeArea, long companyId, long repositoryId,
-			String fileName, String versionLabel)
-		throws PortalException {
-
-		try (InputStream inputStream = _getNullSafeInputStream(
-				_store.getFileAsStream(
-					companyId, repositoryId, fileName, versionLabel))) {
-
-			StoreArea.withStoreArea(
-				storeArea,
-				() -> _store.addFile(
-					companyId, repositoryId, fileName, versionLabel,
-					inputStream));
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-	}
-
 	private InputStream _getNullSafeInputStream(InputStream inputStream) {
 		if (inputStream == null) {
 			return new UnsyncByteArrayInputStream(new byte[0]);
 		}
 
 		return inputStream;
-	}
-
-	private boolean _isStoreAreaSupported() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-174816") &&
-			(_storeAreaProcessor != null)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _validateVersionLabel(String versionLabel)
@@ -543,6 +488,8 @@ public class DLStoreImpl implements DLStore {
 		ServiceProxyFactory.newServiceTrackedInstance(
 			StoreAreaProcessor.class, DLStoreImpl.class, "_storeAreaProcessor",
 			"(default=true)", false, true);
+	private static Store _wrappedStore = new StoreAreaAwareStoreWrapper(
+		() -> _store, () -> _storeAreaProcessor);
 
 	private static class DLStoreFileProvider implements SafeCloseable {
 

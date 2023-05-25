@@ -677,6 +677,10 @@ definition {
 	@description = "This is a test for LPS-94990. It checks that a blog entry can be viewed when using a display page template."
 	@priority = 5
 	test CanViewEntryUsingDisplayPageTemplate {
+		property test.name.skip.portal.instance = "BlogsPage#CanViewEntryUsingDisplayPageTemplate";
+
+		// To avoid interference from other tests about the NPE assertion，skip run it on virtal instance, see LPS-185660.
+
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
 			displayPageTemplateEntryName = "Display Page Template Name",

@@ -1,0 +1,104 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185427 Verify CRUD functionality with an imported custom object using Salesforce as the storage type"
+	@priority = 5
+	test AssertCRUDWithImportedCustomObject {
+		property portal.acceptance = "true";
+
+		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Third Party",
+				configurationName = "Salesforce Integration",
+				configurationScope = "Site Scope");
+
+			ObjectSalesforce.configureSalesforce();
+		}
+
+		task ("And given an imported custom object whose external reference code matches a Salesforce custom object") {
+			ObjectExportImport.importObject(
+				objectFileName = "ImportedCustomObjectWithSalesforceStorageType",
+				objectName = "PoshiTest");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PoshiTest");
+		}
+
+		task ("When the user navigates to the object") {
+			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
+		}
+
+		task ("Then the user is able to read entries") {
+			AssertElementPresent(
+				key_entry = "CanCreateObjectEntry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "CanViewEntryFromSalesforceEdited",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "CanDeleteObjectEntry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to create entries") {
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry");
+
+			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
+
+			AssertElementPresent(
+				key_entry = "New Entry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to update entries") {
+			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+
+			Type(
+				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
+				value1 = "Entry Updated");
+
+			PortletEntry.save();
+
+			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
+
+			AssertElementPresent(
+				key_entry = "Entry Updated",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to delete entries") {
+			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+
+			AssertElementNotPresent(
+				key_entry = "Entry Updated",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+	}
+
+}

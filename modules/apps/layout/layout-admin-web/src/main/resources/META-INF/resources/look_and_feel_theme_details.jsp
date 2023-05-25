@@ -158,11 +158,6 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 			label='<%= LanguageUtil.get(request, "change-current-theme") %>'
 		/>
 
-		<portlet:renderURL var="selectThemeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/select_theme.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
 		<portlet:renderURL copyCurrentRenderParameters="<%= true %>" var="lookAndFeelDetailURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 			<portlet:param name="mvcPath" value="/look_and_feel_theme_details.jsp" />
 		</portlet:renderURL>
@@ -176,7 +171,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 				).put(
 					"lookAndFeelDetailURL", lookAndFeelDetailURL
 				).put(
-					"selectThemeURL", selectThemeURL
+					"selectThemeURL", layoutsAdminDisplayContext.getSelectThemeURL()
 				).put(
 					"themeContainerId", liferayPortletResponse.getNamespace() + "currentThemeContainer"
 				).build()

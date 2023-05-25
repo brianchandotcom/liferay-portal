@@ -216,6 +216,43 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-171576 - The publication template selection is gone for a created publication"
+	@priority = 3
+	test CanSelectAnotherPublicationTemplateAfterEditingPublication {
+		task ("Create Publications Templates and one Publication with template") {
+			PublicationsTemplate.gotoPublicationTemplate();
+
+			for (var order : list "1,2") {
+				PublicationsTemplate.addPublicationTemplate(
+					publicationName = "P${order}",
+					templateName = "Publication Template ${order}");
+			}
+
+			Publications.createNewPublicationWithTemplate(
+				gotoPublicationsAdmin = "true",
+				publicationName = "P1",
+				templateName = "Publication Template 1");
+		}
+
+		task ("Go to edit Publication and select another template") {
+			PublicationsNavigator.openPublicationsAdmin();
+
+			Click(
+				key_templateName = "P1",
+				locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
+
+			MenuItem.click(menuItem = "Edit");
+
+			Select(
+				locator1 = "Publications#TEMPLATE_OPTION",
+				value1 = "Publication Template 2");
+
+			Button.click(button = "Save");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "This is the use case for LPS-176196."
 	@priority = 3
 	test UseDefaultTemplateWhenCreatingNewPublication {

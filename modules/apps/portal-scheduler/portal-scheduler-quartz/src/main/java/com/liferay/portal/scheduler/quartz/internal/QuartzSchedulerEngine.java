@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scheduler.quartz.internal;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -52,9 +53,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 import org.quartz.Calendar;
 import org.quartz.JobBuilder;
@@ -620,11 +618,14 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 					continue;
 				}
 
-				if (_schedulerEngineHelper != null) {
+				SchedulerEngineHelper schedulerEngineHelper =
+					_schedulerEngineHelperSnapshot.get();
+
+				if (schedulerEngineHelper != null) {
 					JobDetail jobDetail = _persistedScheduler.getJobDetail(
 						jobKey);
 
-					_schedulerEngineHelper.auditSchedulerJobs(
+					schedulerEngineHelper.auditSchedulerJobs(
 						getMessage(jobDetail.getJobDataMap()),
 						TriggerState.EXPIRED);
 				}
@@ -871,6 +872,11 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzSchedulerEngine.class);
 
+	private static final Snapshot<SchedulerEngineHelper>
+		_schedulerEngineHelperSnapshot = new Snapshot<>(
+			QuartzSchedulerEngine.class, SchedulerEngineHelper.class, null,
+			true);
+
 	private int _descriptionMaxLength;
 	private int _groupNameMaxLength;
 	private int _jobNameMaxLength;
@@ -894,13 +900,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private Release _release;
 
 	private volatile boolean _schedulerEngineEnabled;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile SchedulerEngineHelper _schedulerEngineHelper;
 
 	private class TriggerListenerSupportImpl extends TriggerListenerSupport {
 
@@ -926,7 +925,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 			try {
-				_schedulerEngineHelper.delete(
+				SchedulerEngineHelper schedulerEngineHelper =
+					_schedulerEngineHelperSnapshot.get();
+
+				schedulerEngineHelper.delete(
 					triggerKey.getName(), triggerKey.getGroup(),
 					StorageType.valueOf(
 						jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
@@ -950,7 +952,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			message.setValues(new HashMap<>(jobDataMap.getWrappedMap()));
 
 			try {
-				_schedulerEngineHelper.auditSchedulerJobs(
+				SchedulerEngineHelper schedulerEngineHelper =
+					_schedulerEngineHelperSnapshot.get();
+
+				schedulerEngineHelper.auditSchedulerJobs(
 					message, TriggerState.NORMAL);
 			}
 			catch (SchedulerException schedulerException) {

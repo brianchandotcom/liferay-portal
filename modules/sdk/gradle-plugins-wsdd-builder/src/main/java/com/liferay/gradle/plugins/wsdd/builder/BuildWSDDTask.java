@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -31,7 +32,9 @@ import org.gradle.api.tasks.PathSensitivity;
 public class BuildWSDDTask extends JavaExec {
 
 	public BuildWSDDTask() {
-		setMain("com.liferay.portal.tools.wsdd.builder.WSDDBuilder");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.portal.tools.wsdd.builder.WSDDBuilder");
 	}
 
 	@Override

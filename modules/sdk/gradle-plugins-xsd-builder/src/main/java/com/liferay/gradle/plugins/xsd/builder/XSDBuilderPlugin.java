@@ -25,6 +25,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
@@ -145,6 +146,14 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 		JavaExec javaExec = GradleUtil.addTask(
 			project, buildXSDTask.getName() + "Generate", JavaExec.class);
 
+		javaExec.setDescription(
+			"Invokes the XMLBeans Schema Compiler in order to generate Java " +
+				"types from XML Schema.");
+
+		Property<String> mainClass = javaExec.getMainClass();
+
+		mainClass.set("org.apache.xmlbeans.impl.tool.SchemaCompiler");
+
 		File tmpSrcDir = new File(
 			project.getBuildDir(), buildXSDTask.getName() + "/src");
 
@@ -164,10 +173,6 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 
 		javaExec.setClasspath(
 			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
-		javaExec.setDescription(
-			"Invokes the XMLBeans Schema Compiler in order to generate Java " +
-				"types from XML Schema.");
-		javaExec.setMain("org.apache.xmlbeans.impl.tool.SchemaCompiler");
 
 		TaskInputs taskInputs = javaExec.getInputs();
 

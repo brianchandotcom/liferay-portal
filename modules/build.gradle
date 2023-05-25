@@ -1,3 +1,5 @@
+import com.liferay.gradle.plugins.node.task.ExecutePackageManagerTask
+import com.liferay.gradle.plugins.node.task.PackageRunTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
@@ -82,6 +84,27 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 	portalYarnInstall {
 		dependsOn ":private:yarnInstall"
 	}
+}
+
+File workspacesYarnLockFile = new File(rootDir.parentFile, "workspaces/yarn.lock")
+
+if (workspacesYarnLockFile.exists()) {
+	task portalWorkspacesYarnFormat(type: PackageRunTask)
+	task portalWorkspacesYarnInstall(type: ExecutePackageManagerTask)
+
+	portalWorkspacesYarnFormat {
+		dependsOn portalWorkspacesYarnInstall
+
+		scriptName = "format"
+		workingDir = new File(rootDir.parentFile, "workspaces")
+	}
+
+	portalWorkspacesYarnInstall {
+		args "install", "--frozen-lockfile", "--ignore-engines"
+		workingDir = new File(rootDir.parentFile, "workspaces")
+	}
+
+	portalYarnFormat.finalizedBy portalWorkspacesYarnFormat
 }
 
 buildDir = new File(rootDir.parentFile, "build")

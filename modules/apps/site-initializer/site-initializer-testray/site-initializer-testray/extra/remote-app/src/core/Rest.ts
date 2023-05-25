@@ -12,6 +12,7 @@
  * details.
  */
 
+import i18n from '~/i18n';
 import fetcher from '~/services/fetcher';
 import {APIResponse} from '~/services/rest/types';
 
@@ -220,6 +221,14 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		await this.beforeRemove(id);
 
 		await fetcher.delete(`/${this.uri}/${id}`);
+	}
+
+	public removeResource(id: number | string) {
+		if (
+			confirm(i18n.translate('are-you-sure-you-want-to-delete-this-item'))
+		) {
+			return this.remove(id);
+		}
 	}
 
 	public async update(

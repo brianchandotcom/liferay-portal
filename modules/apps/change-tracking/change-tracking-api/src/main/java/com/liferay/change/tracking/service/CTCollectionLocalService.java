@@ -284,8 +284,9 @@ public interface CTCollectionLocalService
 	public List<CTMappingTableInfo> getCTMappingTableInfos(long ctCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTEntry> getDiscardCTEntries(
-		long ctCollectionId, long modelClassNameId, long modelClassPK);
+	public Map<Long, List<CTEntry>> getDiscardCTEntries(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getExclusivePublishedCTCollections(

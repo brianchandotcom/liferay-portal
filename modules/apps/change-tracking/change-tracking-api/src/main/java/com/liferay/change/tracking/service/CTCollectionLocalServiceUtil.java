@@ -332,9 +332,10 @@ public class CTCollectionLocalServiceUtil {
 		return getService().getCTMappingTableInfos(ctCollectionId);
 	}
 
-	public static List<com.liferay.change.tracking.model.CTEntry>
-		getDiscardCTEntries(
-			long ctCollectionId, long modelClassNameId, long modelClassPK) {
+	public static Map<Long, List<com.liferay.change.tracking.model.CTEntry>>
+			getDiscardCTEntries(
+				long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException {
 
 		return getService().getDiscardCTEntries(
 			ctCollectionId, modelClassNameId, modelClassPK);

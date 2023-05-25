@@ -688,6 +688,13 @@ public class ObjectActionLocalServiceImpl
 				continue;
 			}
 
+			if (objectField.isLocalized()) {
+				predefinedValuesErrorMessageKeys.put(
+					objectField.getName(),
+					"localized-object-fields-must-not-be-used-in-object-" +
+						"actions");
+			}
+
 			String value = predefinedValueJSONObject.getString("value");
 
 			predefinedValuesMap.put(name, value);

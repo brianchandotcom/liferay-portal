@@ -25,7 +25,6 @@ import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
-import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
@@ -53,6 +52,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -201,150 +201,99 @@ public class ObjectActionLocalServiceTest {
 
 	@Test
 	public void testAddObjectAction() throws Exception {
-		try {
-			_addObjectAction(
+		_assertFailure(
+			ObjectActionErrorMessageException.class,
+			"Error message is null for locale " +
+				LocaleUtil.US.getDisplayName(),
+			() -> _addObjectAction(
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				ObjectActionTriggerConstants.KEY_STANDALONE);
+				ObjectActionTriggerConstants.KEY_STANDALONE));
 
-			Assert.fail();
-		}
-		catch (ObjectActionErrorMessageException
-					objectActionErrorMessageException) {
-
-			Assert.assertEquals(
-				"Error message is null for locale " +
-					LocaleUtil.US.getDisplayName(),
-				objectActionErrorMessageException.getMessage());
-		}
-
-		try {
-			_addObjectAction(
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
-
-			Assert.fail();
-		}
-		catch (ObjectActionLabelException objectActionLabelException) {
-			Assert.assertEquals(
-				"Label is null for locale " + LocaleUtil.US.getDisplayName(),
-				objectActionLabelException.getMessage());
-		}
-
-		try {
-			_addObjectAction(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE);
-
-			Assert.fail();
-		}
-		catch (ObjectActionNameException objectActionNameException) {
-			Assert.assertEquals(
-				"Name is null", objectActionNameException.getMessage());
-		}
-
-		try {
-			_addObjectAction(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(42),
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
-
-			Assert.fail();
-		}
-		catch (ObjectActionNameException objectActionNameException) {
-			Assert.assertEquals(
-				"Name must be less than 41 characters",
-				objectActionNameException.getMessage());
-		}
-
-		try {
-			_addObjectAction(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "Abl e",
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
-
-			Assert.fail();
-		}
-		catch (ObjectActionNameException objectActionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectActionNameException.getMessage());
-		}
-
-		try {
-			_addObjectAction(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "Abl-e",
-				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
-
-			Assert.fail();
-		}
-		catch (ObjectActionNameException objectActionNameException) {
-			Assert.assertEquals(
-				"Name must only contain letters and digits",
-				objectActionNameException.getMessage());
-		}
-
-		ObjectActionExecutor objectActionExecutor =
+		ObjectActionExecutor objectActionExecutor1 =
 			_registerObjectActionExecutor(
 				Collections.singletonList(_userObjectDefinition.getName()),
 				_companyId2, RandomTestUtil.randomString());
 
-		try {
-			_objectActionLocalService.addObjectAction(
+		String objectActionExecutor1Key = objectActionExecutor1.getKey();
+
+		_assertFailure(
+			ObjectActionExecutorKeyException.class,
+			StringBundler.concat(
+				"The object action executor key ",
+				objectActionExecutor1.getKey(), " is not allowed for company ",
+				_companyId1),
+			() -> _objectActionLocalService.addObjectAction(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
+				RandomTestUtil.randomString(), objectActionExecutor1Key,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-				new UnicodeProperties());
+				new UnicodeProperties()));
 
-			Assert.fail();
-		}
-		catch (ObjectActionExecutorKeyException
-					objectActionExecutorKeyException) {
+		ObjectActionExecutor objectActionExecutor2 =
+			_registerObjectActionExecutor(
+				Collections.singletonList(_userObjectDefinition.getName()),
+				_companyId1, RandomTestUtil.randomString());
 
-			Assert.assertEquals(
-				objectActionExecutorKeyException.getMessage(),
-				StringBundler.concat(
-					"The object action executor key ",
-					objectActionExecutor.getKey(),
-					" is not allowed for company ",
-					String.valueOf(_companyId1)));
-		}
+		String objectActionExecutor2Key = objectActionExecutor2.getKey();
 
-		objectActionExecutor = _registerObjectActionExecutor(
-			Collections.singletonList(_userObjectDefinition.getName()),
-			_companyId1, RandomTestUtil.randomString());
-
-		try {
-			_objectActionLocalService.addObjectAction(
+		_assertFailure(
+			ObjectActionExecutorKeyException.class,
+			StringBundler.concat(
+				"The object action executor key ", objectActionExecutor2Key,
+				" is not allowed for object definition ",
+				_objectDefinition.getName()),
+			() -> _objectActionLocalService.addObjectAction(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), objectActionExecutor.getKey(),
+				RandomTestUtil.randomString(), objectActionExecutor2Key,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-				new UnicodeProperties());
+				new UnicodeProperties()));
 
-			Assert.fail();
-		}
-		catch (ObjectActionExecutorKeyException
-					objectActionExecutorKeyException) {
+		_assertFailure(
+			ObjectActionLabelException.class,
+			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
+			() -> _addObjectAction(
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD));
 
-			Assert.assertEquals(
-				objectActionExecutorKeyException.getMessage(),
-				StringBundler.concat(
-					"The object action executor key ",
-					objectActionExecutor.getKey(),
-					" is not allowed for object definition ",
-					_objectDefinition.getName()));
-		}
+		_assertFailure(
+			ObjectActionNameException.class, "Name is null",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE));
+
+		_assertFailure(
+			ObjectActionNameException.class,
+			"Name must be less than 41 characters",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(42),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE));
+
+		_assertFailure(
+			ObjectActionNameException.class,
+			"Name must only contain letters and digits",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "Abl e",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE));
+
+		_assertFailure(
+			ObjectActionNameException.class,
+			"Name must only contain letters and digits",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "Abl-e",
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE));
 
 		String name = RandomTestUtil.randomString();
 
@@ -357,19 +306,12 @@ public class ObjectActionLocalServiceTest {
 				"url", "https://onafteradd.com"
 			).build());
 
-		try {
-			_addObjectAction(
+		_assertFailure(
+			ObjectActionNameException.class, "Duplicate name " + name,
+			() -> _addObjectAction(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), name,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE);
-
-			Assert.fail();
-		}
-		catch (ObjectActionNameException objectActionNameException) {
-			Assert.assertEquals(
-				"Duplicate name " + name,
-				objectActionNameException.getMessage());
-		}
+				ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE));
 
 		ObjectAction objectAction2 = _addObjectAction(
 			RandomTestUtil.randomString(),
@@ -1214,12 +1156,12 @@ public class ObjectActionLocalServiceTest {
 				_objectDefinition.getClassName()));
 	}
 
-	private void _addObjectAction(
+	private ObjectAction _addObjectAction(
 			String errorMessage, String externalReferenceCode, String label,
 			String name, String objectActionTriggerKey)
 		throws Exception {
 
-		_objectActionLocalService.addObjectAction(
+		return _objectActionLocalService.addObjectAction(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
 			RandomTestUtil.randomString(),
@@ -1242,6 +1184,21 @@ public class ObjectActionLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			name, objectActionExecutorKey, objectActionTriggerKey,
 			unicodeProperties);
+	}
+
+	private void _assertFailure(
+		Class<?> clazz, String message,
+		UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+		try {
+			unsafeSupplier.get();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(clazz.isInstance(exception));
+			Assert.assertEquals(message, exception.getMessage());
+		}
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(
@@ -1470,9 +1427,6 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	@Inject
-	private ObjectActionEngine _objectActionEngine;
 
 	@Inject
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;

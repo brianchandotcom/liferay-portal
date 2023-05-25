@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "User to User Additional Info"
+	},
+	"name": "userToUserAddInfo",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+	"objectDefinitionName2": "UserAdditionalInfo",
+	"type": "oneToMany"
+}

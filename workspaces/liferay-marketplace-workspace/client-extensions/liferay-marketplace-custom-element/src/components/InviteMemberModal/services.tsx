@@ -25,6 +25,17 @@ type requestBody = {
   currentPassword: string;
 };
 
+export const getSiteURL = () => {
+	const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+
+	if (layoutRelativeURL.includes('web')) {
+		return layoutRelativeURL.split('/').slice(0, 3).join('/');
+	}
+
+	return '';
+};
+
+
 export async function getAccountRolesOnAPI(accountId: number) {
 	const accountRoles = await fetch(
 		`/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles`,
@@ -153,31 +164,26 @@ export async function callRolesApi(
 
 export async function addAdditionalInfo(
   acceptInviteStatus: boolean,
-  r_userToAdditionalUserInformations_userId: number,
+  r_userToUserAddInfo_userId: number,
   publisherName: string,
   emailOfMember: string,
+  mothersName: string,
   userFirstName: string,
-  inviterName: string
+  inviterName: string,
+  inviteURL: string,
+  roles: string
 ) {
   const additionalInfoBody = {
     acceptInviteStatus: acceptInviteStatus,
-    r_userToAdditionalUserInformations_userId:
-      r_userToAdditionalUserInformations_userId,
+    r_userToUserAddInfo_userId: r_userToUserAddInfo_userId,
+    inviteURL: inviteURL,
     publisherName: publisherName,
     emailOfMember: emailOfMember,
+    mothersName: mothersName,
     userFirstName: userFirstName,
     inviterName: inviterName,
-    roles: [
-      {
-        key: 'appEditor',
-        name: 'App Editor',
-      },
-      {
-        key: 'accountAdministrator',
-        name: 'Account Admininstrator',
-      },
-    ],
-  };
+    roles: roles
+  }
 
   const response = await fetch(`/o/c/useradditionalinfos/`, {
     headers: {

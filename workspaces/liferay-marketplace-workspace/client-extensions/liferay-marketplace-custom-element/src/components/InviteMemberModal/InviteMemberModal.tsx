@@ -24,9 +24,12 @@ import {
 	callRolesApi,
 	createNewUserIntoAccount,
 	getAccountRolesOnAPI,
+  getSiteURL,
 	getUserByEmail,
 } from './services';
 import { getMyUserAccount } from '../../utils/api';
+import { createPassword } from '../../utils/createPassword';
+import { Liferay } from '../../liferay/liferay';
 
 interface InviteMemberModalProps {
 	handleClose: () => void;
@@ -83,15 +86,14 @@ export function InviteMemberModal({
   };
 
   const getCheckedRoles = () => {
+    let checkedRole = ''
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
-        const matchingAccountRole = accountRoles?.find(
-          (accountRole: AccountRole) =>
-            accountRole.name == checkboxRole.roleName
-        );
+        checkedRole = checkedRole + checkboxRole.roleName + '/';
       }
     }
-	};
+    return checkedRole;
+  };
 
 	const addAccountRolesToUser = async (user: UserAccount) => {
 		for (const checkboxRole of checkboxRoles) {
@@ -131,11 +133,14 @@ export function InviteMemberModal({
       await addAccountRolesToUser(user);
       await addAdditionalInfo(
         false,
-        myUser.id,
+        user.id,
         selectedAccount.name,
         formFields.email,
+        createPassword(),
         formFields.firstName,
-        myUser.givenName
+        myUser.givenName,
+        Liferay.ThemeDisplay.getPortalURL()+"/c/login?redirect="+getSiteURL(),
+        getCheckedRoles()
       );
       setTimeout(() => location.reload(), 200);
     }

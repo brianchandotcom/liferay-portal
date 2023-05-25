@@ -159,6 +159,65 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify creating a custom object entry triggers an action to update an Account entry"
+	@priority = 5
+	test CanAddAccountEntryAfterUpdatingCustomObjectEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object and an object entry") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 180083",
+				objectName = "CustomObject180083",
+				pluralLabelName = "Custom Objects 180083");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject180083");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject180083");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject180083",
+				value = "Entry Test");
+		}
+
+		task ("And given an action to add an Account entry after updating a custom object entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 180083");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Account Name, Guest",
+				objectLabel = "Account",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Update");
+		}
+
+		task ("When the user updates a custom object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject180083");
+
+			ObjectPortlet.updateEntry(
+				entry = "Entry Test",
+				updateEntry = "Entry Test Edited");
+		}
+
+		task ("Then the action is triggered and an Account entry is added") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name");
+		}
+	}
+
 	@description = "LPS-180070 - Verify creating a Commerce Product entry triggers an action to add a user"
 	@priority = 5
 	test CanAddUserAfterCreatingCommerceProductEntry {

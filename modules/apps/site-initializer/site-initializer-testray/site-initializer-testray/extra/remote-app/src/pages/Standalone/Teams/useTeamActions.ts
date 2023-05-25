@@ -33,9 +33,8 @@ const useTeamActions = () => {
 		{
 			action: ({id}, mutate) => {
 				testrayTeamImpl
-					.remove(id)
-					.then(() => removeItemFromList(mutate, id))
-					.then(modal.onSave)
+					.removeResource(id)
+					?.then(() => removeItemFromList(mutate, id), modal.onSave)
 					.catch(modal.onError);
 			},
 			icon: 'trash',

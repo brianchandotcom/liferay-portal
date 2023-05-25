@@ -36,7 +36,7 @@ const useProductVersionActions = () => {
 		{
 			action: ({id}, mutate) =>
 				testrayProductVersionImpl
-					.remove(id)
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),

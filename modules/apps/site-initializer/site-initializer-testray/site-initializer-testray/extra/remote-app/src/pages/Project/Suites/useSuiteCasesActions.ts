@@ -17,7 +17,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestraySuiteCase, deleteResource} from '../../../services/rest';
+import {TestraySuiteCase, testraySuiteCaseImpl} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
@@ -41,7 +41,8 @@ const useSuiteCasesActions = ({isSmartSuite}: {isSmartSuite: boolean}) => {
 		},
 		{
 			action: (suiteCase, mutate) =>
-				deleteResource(`/suitescaseses/${suiteCase.id}`)
+				testraySuiteCaseImpl
+					.removeResource(suiteCase.id)
 					?.then(() => removeItemFromList(mutate, suiteCase.id))
 					.then(modal.onSuccess)
 					.catch(modal.onError),

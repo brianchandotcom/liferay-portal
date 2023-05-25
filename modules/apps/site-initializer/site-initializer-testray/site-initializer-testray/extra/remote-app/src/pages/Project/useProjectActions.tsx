@@ -73,7 +73,7 @@ const useProjectActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		{
 			action: ({id}, mutate) =>
 				testrayProjectImpl
-					.remove(id)
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
 					.then(() => navigate('/'))

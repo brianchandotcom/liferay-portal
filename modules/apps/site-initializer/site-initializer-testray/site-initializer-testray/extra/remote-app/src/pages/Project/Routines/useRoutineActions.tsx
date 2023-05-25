@@ -19,7 +19,7 @@ import useFormActions from '../../../hooks/useFormActions';
 import useModalContext from '../../../hooks/useModalContext';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayRoutine, deleteResource} from '../../../services/rest';
+import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../types';
 import EnvironmentFactorsModal from '../../Standalone/EnvironmentFactors/EnviromentFactorsModal';
 
@@ -67,7 +67,8 @@ const useRoutineActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/routines/${id}`)
+				testrayRoutineImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
 					.then(() => {

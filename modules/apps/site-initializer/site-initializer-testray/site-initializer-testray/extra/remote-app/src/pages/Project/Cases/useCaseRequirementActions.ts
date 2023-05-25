@@ -21,7 +21,7 @@ import {
 	TestrayRequirementCase,
 	createRequirementCaseBatch,
 	deleteRequirementCaseBatch,
-	deleteResource,
+	testrayCaseRequirementsImpl,
 } from '../../../services/rest';
 import {Action} from '../../../types';
 import {State} from './CaseRequirementLinkModal';
@@ -76,7 +76,8 @@ const useCaseRequirementActions = ({
 	const actions: Action<TestrayRequirementCase>[] = [
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/requirementscaseses/${id}`)
+				testrayCaseRequirementsImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(() => modal.onSave())
 					.catch(modal.onError),

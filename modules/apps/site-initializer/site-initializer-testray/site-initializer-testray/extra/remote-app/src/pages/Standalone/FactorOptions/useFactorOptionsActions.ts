@@ -15,7 +15,10 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayFactorOption, deleteResource} from '../../../services/rest';
+import {
+	TestrayFactorOption,
+	testrayFactorOptionsImpl,
+} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useFactorOptionsActions = () => {
@@ -32,7 +35,8 @@ const useFactorOptionsActions = () => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/factoroptions/${id}`)
+				testrayFactorOptionsImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),

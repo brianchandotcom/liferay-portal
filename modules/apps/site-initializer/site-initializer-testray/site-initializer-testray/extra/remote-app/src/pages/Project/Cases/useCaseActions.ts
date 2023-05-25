@@ -18,7 +18,7 @@ import {useNavigate} from 'react-router-dom';
 import useFormActions from '../../../hooks/useFormActions';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayCase, deleteResource} from '../../../services/rest';
+import {TestrayCase, testrayCaseImpl} from '../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../types';
 
 const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
@@ -44,7 +44,8 @@ const useCaseActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/cases/${id}`)
+				testrayCaseImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
 					.then(() => {

@@ -308,8 +308,8 @@ const UserForm = () => {
 									displayType="danger"
 									onClick={() =>
 										liferayUserAccountsImpl
-											.remove(userAccount?.id)
-											.then(() => {
+											.removeResource(userAccount?.id)
+											?.then(() => {
 												navigate('/manage/user');
 												onSuccess();
 											})
@@ -340,7 +340,7 @@ export default withPagePermission(UserForm, {
 	deniedChildren: (
 		<ClayAlert displayType="danger">
 			{i18n.translate(
-				'You-do-not-have-permission-to-access-the-requested-resource.'
+				'you-do-not-have-permission-to-access-the-requested-resource.'
 			)}
 		</ClayAlert>
 	),

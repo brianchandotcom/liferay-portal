@@ -55,7 +55,7 @@ const useTestflowActions = () => {
 		},
 		{
 			action: (subtask, mutate) =>
-				testrayTaskImpl.remove(subtask.id).then(() =>
+				testrayTaskImpl.removeResource(subtask.id)?.then(() =>
 					updateItemFromList(
 						mutate,
 						0,

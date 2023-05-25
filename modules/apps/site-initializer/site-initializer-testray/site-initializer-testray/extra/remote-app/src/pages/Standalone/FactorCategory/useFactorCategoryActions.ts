@@ -15,7 +15,10 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayFactorCategory, deleteResource} from '../../../services/rest';
+import {
+	TestrayFactorCategory,
+	testrayFactorCategoryRest,
+} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useFactorCategoryActions = () => {
@@ -32,9 +35,9 @@ const useFactorCategoryActions = () => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/factorcategories/${id}`)
-					?.then(() => removeItemFromList(mutate, id))
-					.then(modal.onSave)
+				testrayFactorCategoryRest
+					.removeResource(id)
+					?.then(() => removeItemFromList(mutate, id), modal.onSave)
 					.catch(modal.onError),
 			icon: 'trash',
 			name: i18n.translate('delete'),

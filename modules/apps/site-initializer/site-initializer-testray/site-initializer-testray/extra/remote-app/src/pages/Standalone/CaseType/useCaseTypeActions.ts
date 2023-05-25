@@ -15,7 +15,7 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayCaseType, deleteResource} from '../../../services/rest';
+import {TestrayCaseType, testrayCaseTypeImpl} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useCaseTypeActions = () => {
@@ -33,7 +33,8 @@ const useCaseTypeActions = () => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/casetypes/${id}`)
+				testrayCaseTypeImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),

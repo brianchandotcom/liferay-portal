@@ -57,8 +57,8 @@ const useBuildTemplateActions = () => {
 		{
 			action: (build, mutate) => {
 				testrayBuildImpl
-					.remove(build.id)
-					.then(() => removeItemFromList(mutate, build.id))
+					.removeResource(build.id)
+					?.then(() => removeItemFromList(mutate, build.id))
 					.then(form.onSuccess)
 					.catch(form.onError);
 			},

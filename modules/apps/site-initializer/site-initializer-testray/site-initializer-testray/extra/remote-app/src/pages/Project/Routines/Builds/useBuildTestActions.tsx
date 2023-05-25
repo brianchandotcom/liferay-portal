@@ -99,8 +99,8 @@ const useBuildTestActions = () => {
 		{
 			action: ({id}, mutate) =>
 				testrayCaseResultImpl
-					.remove(id)
-					.then(() => removeItemFromList(mutate, id))
+					.removeResource(id)
+					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSuccess)
 					.catch(form.onError),
 			icon: 'trash',

@@ -20,7 +20,7 @@ import useMutate from '../../../../../../hooks/useMutate';
 import i18n from '../../../../../../i18n';
 import {
 	TestrayCaseResult,
-	deleteResource,
+	testrayCaseResultImpl,
 } from '../../../../../../services/rest';
 import {Action, ActionsHookParameter} from '../../../../../../types';
 
@@ -33,7 +33,8 @@ const useCaseResultActions = (
 	const actionsRef = useRef([
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/caseresults/${id}`)
+				testrayCaseResultImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(form.onSave)
 					.then(() => {

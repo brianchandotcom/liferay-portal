@@ -15,7 +15,7 @@
 import useFormModal from '../../../hooks/useFormModal';
 import useMutate from '../../../hooks/useMutate';
 import i18n from '../../../i18n';
-import {TestrayComponent, deleteResource} from '../../../services/rest';
+import {TestrayComponent, testrayComponentImpl} from '../../../services/rest';
 import {Action} from '../../../types';
 
 const useComponentActions = () => {
@@ -32,7 +32,8 @@ const useComponentActions = () => {
 		},
 		{
 			action: ({id}, mutate) =>
-				deleteResource(`/components/${id}`)
+				testrayComponentImpl
+					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),

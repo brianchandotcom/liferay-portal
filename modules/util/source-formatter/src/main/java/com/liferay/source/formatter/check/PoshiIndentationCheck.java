@@ -150,14 +150,12 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			sb.append(CharPool.NEW_LINE);
 			sb.append(matcher.group(1));
 
-			String replacement = sb.toString();
+			String replacement = StringUtil.replaceFirst(
+				matcher.group(), tableContent, sb.toString());
 
 			if (!tableContent.equals(replacement)) {
 				matcher.appendReplacement(
-					stringBuffer,
-					Matcher.quoteReplacement(
-						StringUtil.replaceFirst(
-							matcher.group(), tableContent, replacement)));
+					stringBuffer, Matcher.quoteReplacement(replacement));
 			}
 		}
 

@@ -19,6 +19,7 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
@@ -260,6 +261,18 @@ public class FragmentDisplayContext {
 
 		contributedEntries.sort(
 			new FragmentCompositionFragmentEntryNameComparator(true));
+
+		if (isSearch()) {
+			contributedEntries = ListUtil.filter(
+				contributedEntries,
+				contributedEntry -> {
+					String lowerCaseName = StringUtil.toLowerCase(
+						_getName(contributedEntry));
+
+					return lowerCaseName.contains(
+						StringUtil.toLowerCase(_getKeywords()));
+				});
+		}
 
 		contributedEntriesSearchContainer.setResultsAndTotal(
 			contributedEntries);
@@ -750,6 +763,19 @@ public class FragmentDisplayContext {
 		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
+	}
+
+	private String _getName(Object object) {
+		if (object instanceof FragmentComposition) {
+			FragmentComposition fragmentComposition =
+				(FragmentComposition)object;
+
+			return fragmentComposition.getName();
+		}
+
+		FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+		return fragmentEntry.getName();
 	}
 
 	private String _getOrderByCol() {

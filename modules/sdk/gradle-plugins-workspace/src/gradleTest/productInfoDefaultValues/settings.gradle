@@ -4,6 +4,4 @@ buildscript {
 	}
 }
 
-setProperty("liferay.workspace.bundle.url", null)
-
 apply plugin: "com.liferay.workspace"

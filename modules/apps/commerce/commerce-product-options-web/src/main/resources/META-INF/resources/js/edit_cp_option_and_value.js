@@ -18,11 +18,10 @@ import {debounce} from 'frontend-js-web';
 export default function ({namespace}) {
 	const form = document.getElementById(namespace + 'fm');
 	const keyInput = form.querySelector('#' + namespace + 'key');
-	const nameInput = form.querySelector('#' + namespace + 'name');
 
-	const handleOnNameInput = function () {
-		keyInput.value = slugify(nameInput.value);
+	const handleOnKeyInput = function () {
+		keyInput.value = slugify(keyInput.value);
 	};
 
-	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+	keyInput.addEventListener('input', debounce(handleOnKeyInput, 200));
 }

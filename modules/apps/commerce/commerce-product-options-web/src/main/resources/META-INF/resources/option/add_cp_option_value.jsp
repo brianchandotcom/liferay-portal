@@ -41,7 +41,7 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 			HashMapBuilder.<String, Object>put(
 				"cpOptionId", cpOptionId
 			).put(
-				"defaultLanguageId", LanguageUtil.getLanguageId(locale)
+				"defaultLanguageId", LanguageUtil.getLanguageId(LocaleUtil.getDefault())
 			).put(
 				"editOptionURL", editOptionURL
 			).put(

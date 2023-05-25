@@ -235,6 +235,29 @@ public class StructuredContentResourceTest
 			postStructuredContent2, LocaleUtil.toW3cLanguageId(locale));
 		assertEquals(randomLocalizedStructuredContent2, postStructuredContent2);
 		assertValid(postStructuredContent2);
+
+		// Structured content with a priority
+
+		locale = LocaleUtil.getDefault();
+
+		StructuredContent randomStructuredContent = _randomStructuredContent(
+			locale);
+
+		randomStructuredContent.setPriority(Double.valueOf(1));
+
+		com.liferay.headless.admin.content.client.resource.v1_0.
+			StructuredContentResource structuredContentResource =
+				_buildStructureContentResource(locale);
+
+		StructuredContent postStructuredContent3 =
+			structuredContentResource.postSiteStructuredContentDraft(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				randomStructuredContent);
+
+		assertEquals(randomStructuredContent, postStructuredContent3);
+		assertValid(postStructuredContent3);
+		Assert.assertEquals(
+			Double.valueOf(1.0), postStructuredContent3.getPriority());
 	}
 
 	@Override

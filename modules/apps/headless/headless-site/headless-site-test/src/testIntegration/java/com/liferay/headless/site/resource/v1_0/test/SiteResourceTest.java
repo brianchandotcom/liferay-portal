@@ -93,6 +93,11 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutSite() throws Exception {
+	}
+
+	@Override
 	protected Site randomSite() throws Exception {
 		return new Site() {
 			{

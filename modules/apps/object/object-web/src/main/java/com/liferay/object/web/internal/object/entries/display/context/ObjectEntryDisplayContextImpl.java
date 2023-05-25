@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1145,22 +1146,18 @@ public class ObjectEntryDisplayContextImpl
 		Object value = _getValue(ddmFormField, values);
 
 		if (value == null) {
-			String ddmFormFieldType = ddmFormField.getType();
+			LocalizedValue ddmFormFieldPredefinedValue =
+				ddmFormField.getPredefinedValue();
 
-			if (ddmFormFieldType.equals(DDMFormFieldTypeConstants.SELECT) &&
-				!values.containsKey(ddmFormField.getName())) {
-
-				LocalizedValue ddmFormFieldPredefinedValue =
-					ddmFormField.getPredefinedValue();
-
+			if (MapUtil.isEmpty(ddmFormFieldPredefinedValue.getValues())) {
+				ddmFormFieldValue.setValue(
+					new UnlocalizedValue(StringPool.BLANK));
+			}
+			else {
 				ddmFormFieldValue.setValue(
 					new UnlocalizedValue(
 						ddmFormFieldPredefinedValue.getString(
 							_objectRequestHelper.getLocale())));
-			}
-			else {
-				ddmFormFieldValue.setValue(
-					new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
 			}
 		}
 		else if (value instanceof ArrayList) {

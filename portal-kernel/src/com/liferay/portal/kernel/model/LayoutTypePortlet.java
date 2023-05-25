@@ -73,6 +73,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public String getAddedCustomPortletMode();
 
+	public List<Portlet> getAllNonembeddedPortlets();
+
 	public List<Portlet> getAllPortlets();
 
 	public List<Portlet> getAllPortlets(boolean includeSystem);

@@ -542,7 +542,7 @@ public abstract class Base${schemaName}ResourceImpl
 					}
 				</#if>
 
-				<#if updateStrategies?seq_contains("PARTIAL_UPDATE") && getByERCBatchJavaMethodSignature?? && (postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?? || postAssetLibraryBatchJavaMethodSignature?? || postSiteBatchJavaMethodSignature??)>
+				<#if updateStrategies?seq_contains("PARTIAL_UPDATE") && getByERCBatchJavaMethodSignature?? && createStrategies?seq_contains("INSERT")>
 					if("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
 						${schemaVarName}UnsafeConsumer = ${schemaVarName} -> {
 						try {
@@ -597,7 +597,6 @@ public abstract class Base${schemaName}ResourceImpl
 							);
 						}
 						catch (NoSuchModelException noSuchModelException) {
-							<#if createStrategies?seq_contains("INSERT")>
 								<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content>
 									${postBatchJavaMethodSignature.methodName}(
 									<@getPOSTBatchJavaMethodParameters
@@ -673,10 +672,6 @@ public abstract class Base${schemaName}ResourceImpl
 										throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
 									}
 								</#if>
-
-							<#else>
-								throw new NotSupportedException("No valid POST method was found", noSuchModelException);
-							</#if>
 							}
 						};
 					}

@@ -253,7 +253,7 @@ public interface ObjectDefinitionLocalService
 		throws PortalException;
 
 	public ObjectDefinition enableSalesForceAccountEntryRestricted(
-			ObjectDefinition objectDefinition, ObjectField objectField)
+			ObjectField objectField)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

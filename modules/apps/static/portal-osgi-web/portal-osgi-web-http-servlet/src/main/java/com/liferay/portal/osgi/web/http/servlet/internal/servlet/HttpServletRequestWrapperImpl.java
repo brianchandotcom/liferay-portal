@@ -10,190 +10,125 @@
  *     IBM Corporation - bug fixes and enhancements
  *     Raymond Augé <raymond.auge@liferay.com> - Bug 436698
  *******************************************************************************/
+
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.DispatchTargets;
+import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.EventListeners;
+
+import java.util.Collections;
+import java.util.Deque;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequestAttributeEvent;
+import javax.servlet.ServletRequestAttributeListener;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
+
 import org.osgi.service.http.HttpContext;
 
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 
-	private final Deque<DispatchTargets> dispatchTargets = new LinkedList<DispatchTargets>();
-	private final HttpServletRequest request;
-
-	private static final Set<String> dispatcherAttributes =	new HashSet<String>();
-
-	static {
-		dispatcherAttributes.add(RequestDispatcher.ERROR_EXCEPTION);
-		dispatcherAttributes.add(RequestDispatcher.ERROR_EXCEPTION_TYPE);
-		dispatcherAttributes.add(RequestDispatcher.ERROR_MESSAGE);
-		dispatcherAttributes.add(RequestDispatcher.ERROR_REQUEST_URI);
-		dispatcherAttributes.add(RequestDispatcher.ERROR_SERVLET_NAME);
-		dispatcherAttributes.add(RequestDispatcher.ERROR_STATUS_CODE);
-		dispatcherAttributes.add(RequestDispatcher.FORWARD_CONTEXT_PATH);
-		dispatcherAttributes.add(RequestDispatcher.FORWARD_PATH_INFO);
-		dispatcherAttributes.add(RequestDispatcher.FORWARD_QUERY_STRING);
-		dispatcherAttributes.add(RequestDispatcher.FORWARD_REQUEST_URI);
-		dispatcherAttributes.add(RequestDispatcher.FORWARD_SERVLET_PATH);
-		dispatcherAttributes.add(RequestDispatcher.INCLUDE_CONTEXT_PATH);
-		dispatcherAttributes.add(RequestDispatcher.INCLUDE_PATH_INFO);
-		dispatcherAttributes.add(RequestDispatcher.INCLUDE_QUERY_STRING);
-		dispatcherAttributes.add(RequestDispatcher.INCLUDE_REQUEST_URI);
-		dispatcherAttributes.add(RequestDispatcher.INCLUDE_SERVLET_PATH);
-	}
-
-	private static final Object NULL_PLACEHOLDER = new Object();
-
 	public static HttpServletRequestWrapperImpl findHttpRuntimeRequest(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
-		while (request instanceof HttpServletRequestWrapper) {
-			if (request instanceof HttpServletRequestWrapperImpl) {
-				return (HttpServletRequestWrapperImpl)request;
+		while (httpServletRequest instanceof HttpServletRequestWrapper) {
+			if (httpServletRequest instanceof HttpServletRequestWrapperImpl) {
+				return (HttpServletRequestWrapperImpl)httpServletRequest;
 			}
 
-			request = (HttpServletRequest)((HttpServletRequestWrapper)request).getRequest();
+			HttpServletRequestWrapper httpServletRequestWrapper =
+				(HttpServletRequestWrapper)httpServletRequest;
+
+			httpServletRequest =
+				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
 		return null;
 	}
 
-	public HttpServletRequestWrapperImpl(HttpServletRequest request) {
-		super(request);
-		this.request = request;
-	}
+	public static String getDispatchPathInfo(
+		HttpServletRequest httpServletRequest) {
 
-	public String getAuthType() {
-		String authType = (String) this.getAttribute(HttpContext.AUTHENTICATION_TYPE);
-		if (authType != null)
-			return authType;
-
-		return request.getAuthType();
-	}
-
-	public String getRemoteUser() {
-		String remoteUser = (String) this.getAttribute(HttpContext.REMOTE_USER);
-		if (remoteUser != null)
-			return remoteUser;
-
-		return request.getRemoteUser();
-	}
-
-	public String getPathInfo() {
-		DispatchTargets currentDispatchTargets = dispatchTargets.peek();
-
-		if ((currentDispatchTargets.getServletName() != null) ||
-			(currentDispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
-			return this.dispatchTargets.getLast().getPathInfo();
+		if (httpServletRequest.getDispatcherType() == DispatcherType.INCLUDE) {
+			return (String)httpServletRequest.getAttribute(
+				RequestDispatcher.INCLUDE_PATH_INFO);
 		}
-		return currentDispatchTargets.getPathInfo();
+
+		return httpServletRequest.getPathInfo();
 	}
 
-	public DispatcherType getDispatcherType() {
-		return dispatchTargets.peek().getDispatcherType();
-	}
+	public HttpServletRequestWrapperImpl(
+		HttpServletRequest httpServletRequest) {
 
-	public String getParameter(String name) {
-		String[] values = getParameterValues(name);
-		if ((values == null) || (values.length == 0)) {
-			return null;
-		}
-		return values[0];
-	}
+		super(httpServletRequest);
 
-	public Map<String, String[]> getParameterMap() {
-		return dispatchTargets.peek().getParameterMap();
-	}
-
-	public Enumeration<String> getParameterNames() {
-		return Collections.enumeration(getParameterMap().keySet());
-	}
-
-	public String[] getParameterValues(String name) {
-		return getParameterMap().get(name);
+		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
-	public String getQueryString() {
-		DispatchTargets currentDispatchTargets = dispatchTargets.peek();
-
-		if ((currentDispatchTargets.getServletName() != null) ||
-			(currentDispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
-			return request.getQueryString();
-		}
-		return currentDispatchTargets.getQueryString();
-	}
-
-	@Override
-	public String getRequestURI() {
-		DispatchTargets currentDispatchTargets = dispatchTargets.peek();
-
-		if ((currentDispatchTargets.getServletName() != null) ||
-			(currentDispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
-			return request.getRequestURI();
-		}
-		return currentDispatchTargets.getRequestURI();
-	}
-
-	public ServletContext getServletContext() {
-		return dispatchTargets.peek().getServletRegistration().getServletContext();
-	}
-
-	public String getServletPath() {
-		DispatchTargets currentDispatchTargets = dispatchTargets.peek();
-
-		if ((currentDispatchTargets.getServletName() != null) ||
-			(currentDispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
-			return this.dispatchTargets.getLast().getServletPath();
-		}
-		if (currentDispatchTargets.getServletPath().equals(Const.SLASH)) {
-			return Const.BLANK;
-		}
-		return currentDispatchTargets.getServletPath();
-	}
-
-	public String getContextPath() {
-		return dispatchTargets.peek().getContextController().getFullContextPath();
-	}
-
 	public Object getAttribute(String attributeName) {
-		DispatchTargets current = dispatchTargets.peek();
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
 
-		DispatcherType dispatcherType = current.getDispatcherType();
-
-		Map<String, Object> specialOverides = current.getSpecialOverides();
+		DispatcherType dispatcherType = dispatchTargets.getDispatcherType();
 
 		if ((dispatcherType == DispatcherType.ASYNC) ||
 			(dispatcherType == DispatcherType.REQUEST) ||
 			!attributeName.startsWith("javax.servlet.")) {
 
-			return request.getAttribute(attributeName);
+			return _httpServletRequest.getAttribute(attributeName);
 		}
 
-		boolean hasServletName = (current.getServletName() != null);
-		boolean isDispatcherAttribute = dispatcherAttributes.contains(attributeName);
+		Map<String, Object> specialOverridesMap =
+			dispatchTargets.getSpecialOverides();
+
+		boolean hasServletName = false;
+
+		if (dispatchTargets.getServletName() != null) {
+			hasServletName = true;
+		}
+
+		boolean dispatcherAttribute = _dispatcherAttributes.contains(
+			attributeName);
 
 		if (dispatcherType == DispatcherType.ERROR) {
-			if (isDispatcherAttribute &&
-				!attributeName.startsWith("javax.servlet.error.")) { //$NON-NLS-1$
+			if (dispatcherAttribute &&
+				!attributeName.startsWith("javax.servlet.error.")) {
 
 				return null;
 			}
 		}
 		else if (dispatcherType == DispatcherType.INCLUDE) {
-			if (hasServletName && attributeName.startsWith("javax.servlet.include")) {
+			if (hasServletName &&
+				attributeName.startsWith("javax.servlet.include")) {
+
 				return null;
 			}
 
-			if (isDispatcherAttribute) {
-				Object specialOveride = specialOverides.get(attributeName);
+			if (dispatcherAttribute) {
+				Object specialOveride = specialOverridesMap.get(attributeName);
 
-				if (specialOveride == NULL_PLACEHOLDER) {
+				if (specialOveride == _NULL_PLACEHOLDER) {
 					return null;
 				}
 
@@ -205,80 +140,201 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 			}
 
 			if (attributeName.equals(RequestDispatcher.INCLUDE_CONTEXT_PATH)) {
-				return current.getContextController().getContextPath();
+				ContextController contextController =
+					dispatchTargets.getContextController();
+
+				return contextController.getContextPath();
 			}
-			else if (attributeName.equals(RequestDispatcher.INCLUDE_PATH_INFO)) {
-				return current.getPathInfo();
+			else if (attributeName.equals(
+						RequestDispatcher.INCLUDE_PATH_INFO)) {
+
+				return dispatchTargets.getPathInfo();
 			}
-			else if (attributeName.equals(RequestDispatcher.INCLUDE_QUERY_STRING)) {
-				return current.getQueryString();
+			else if (attributeName.equals(
+						RequestDispatcher.INCLUDE_QUERY_STRING)) {
+
+				return dispatchTargets.getQueryString();
 			}
-			else if (attributeName.equals(RequestDispatcher.INCLUDE_REQUEST_URI)) {
-				return current.getRequestURI();
+			else if (attributeName.equals(
+						RequestDispatcher.INCLUDE_REQUEST_URI)) {
+
+				return dispatchTargets.getRequestURI();
 			}
-			else if (attributeName.equals(RequestDispatcher.INCLUDE_SERVLET_PATH)) {
-				return current.getServletPath();
+			else if (attributeName.equals(
+						RequestDispatcher.INCLUDE_SERVLET_PATH)) {
+
+				return dispatchTargets.getServletPath();
 			}
 
-			if (isDispatcherAttribute) {
+			if (dispatcherAttribute) {
 				return null;
 			}
 		}
 		else if (dispatcherType == DispatcherType.FORWARD) {
-			if (hasServletName && attributeName.startsWith("javax.servlet.forward")) {
+			if (hasServletName &&
+				attributeName.startsWith("javax.servlet.forward")) {
+
 				return null;
 			}
 
-			if (isDispatcherAttribute) {
-				Object specialOveride = specialOverides.get(attributeName);
+			if (dispatcherAttribute) {
+				Object specialOverride = specialOverridesMap.get(attributeName);
 
-				if (specialOveride == NULL_PLACEHOLDER) {
+				if (specialOverride == _NULL_PLACEHOLDER) {
 					return null;
 				}
 			}
 
-			DispatchTargets original = dispatchTargets.getLast();
+			DispatchTargets lastDispatchTargets = _dispatchTargets.getLast();
 
 			if (attributeName.equals(RequestDispatcher.FORWARD_CONTEXT_PATH)) {
-				return original.getContextController().getContextPath();
+				ContextController contextController =
+					lastDispatchTargets.getContextController();
+
+				return contextController.getContextPath();
 			}
-			else if (attributeName.equals(RequestDispatcher.FORWARD_PATH_INFO)) {
-				return original.getPathInfo();
+			else if (attributeName.equals(
+						RequestDispatcher.FORWARD_PATH_INFO)) {
+
+				return lastDispatchTargets.getPathInfo();
 			}
-			else if (attributeName.equals(RequestDispatcher.FORWARD_QUERY_STRING)) {
-				return original.getQueryString();
+			else if (attributeName.equals(
+						RequestDispatcher.FORWARD_QUERY_STRING)) {
+
+				return lastDispatchTargets.getQueryString();
 			}
-			else if (attributeName.equals(RequestDispatcher.FORWARD_REQUEST_URI)) {
-				return original.getRequestURI();
+			else if (attributeName.equals(
+						RequestDispatcher.FORWARD_REQUEST_URI)) {
+
+				return lastDispatchTargets.getRequestURI();
 			}
-			else if (attributeName.equals(RequestDispatcher.FORWARD_SERVLET_PATH)) {
-				return original.getServletPath();
+			else if (attributeName.equals(
+						RequestDispatcher.FORWARD_SERVLET_PATH)) {
+
+				return lastDispatchTargets.getServletPath();
 			}
 
-			if (isDispatcherAttribute) {
+			if (dispatcherAttribute) {
 				return null;
 			}
 		}
 
-		return request.getAttribute(attributeName);
+		return _httpServletRequest.getAttribute(attributeName);
 	}
 
-	public RequestDispatcher getRequestDispatcher(String path) {
-		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+	@Override
+	public String getAuthType() {
+		String authType = (String)getAttribute(HttpContext.AUTHENTICATION_TYPE);
+
+		if (authType != null) {
+			return authType;
+		}
+
+		return _httpServletRequest.getAuthType();
+	}
+
+	@Override
+	public String getContextPath() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
 
 		ContextController contextController =
-			currentDispatchTarget.getContextController();
+			dispatchTargets.getContextController();
 
-		// support relative paths
+		return contextController.getFullContextPath();
+	}
+
+	@Override
+	public DispatcherType getDispatcherType() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		return dispatchTargets.getDispatcherType();
+	}
+
+	@Override
+	public String getParameter(String name) {
+		String[] values = getParameterValues(name);
+
+		if ((values == null) || (values.length == 0)) {
+			return null;
+		}
+
+		return values[0];
+	}
+
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		return dispatchTargets.getParameterMap();
+	}
+
+	@Override
+	public Enumeration<String> getParameterNames() {
+		return Collections.enumeration(getParameterMap().keySet());
+	}
+
+	@Override
+	public String[] getParameterValues(String name) {
+		return getParameterMap().get(name);
+	}
+
+	@Override
+	public String getPathInfo() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		if ((dispatchTargets.getServletName() != null) ||
+			(dispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
+
+			DispatchTargets lastDispatchTargets = _dispatchTargets.getLast();
+
+			return lastDispatchTargets.getPathInfo();
+		}
+
+		return dispatchTargets.getPathInfo();
+	}
+
+	@Override
+	public String getQueryString() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		if ((dispatchTargets.getServletName() != null) ||
+			(dispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
+
+			return _httpServletRequest.getQueryString();
+		}
+
+		return dispatchTargets.getQueryString();
+	}
+
+	@Override
+	public String getRemoteUser() {
+		String remoteUser = (String)getAttribute(HttpContext.REMOTE_USER);
+
+		if (remoteUser != null) {
+			return remoteUser;
+		}
+
+		return _httpServletRequest.getRemoteUser();
+	}
+
+	@Override
+	public RequestDispatcher getRequestDispatcher(String path) {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		ContextController contextController =
+			dispatchTargets.getContextController();
+
 		if (!path.startsWith(Const.SLASH)) {
-			path = currentDispatchTarget.getServletPath() + Const.SLASH + path;
+			path = dispatchTargets.getServletPath() + Const.SLASH + path;
 		}
-		// if the path starts with the full context path strip it
 		else if (path.startsWith(contextController.getFullContextPath())) {
-			path = path.substring(contextController.getFullContextPath().length());
+			String fullContextPath = contextController.getFullContextPath();
+
+			path = path.substring(fullContextPath.length());
 		}
 
-		DispatchTargets requestedDispatchTargets = contextController.getDispatchTargets(path, null);
+		DispatchTargets requestedDispatchTargets =
+			contextController.getDispatchTargets(path, null);
 
 		if (requestedDispatchTargets == null) {
 			return null;
@@ -287,97 +343,174 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 		return new RequestDispatcherAdaptor(requestedDispatchTargets, path);
 	}
 
-	public static String getDispatchPathInfo(HttpServletRequest req) {
-		if (req.getDispatcherType() == DispatcherType.INCLUDE)
-			return (String) req.getAttribute(RequestDispatcher.INCLUDE_PATH_INFO);
+	@Override
+	public String getRequestURI() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
 
-		return req.getPathInfo();
+		if ((dispatchTargets.getServletName() != null) ||
+			(dispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
+
+			return _httpServletRequest.getRequestURI();
+		}
+
+		return dispatchTargets.getRequestURI();
 	}
 
+	@Override
+	public ServletContext getServletContext() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		EndpointRegistration<?> endpointRegistration =
+			dispatchTargets.getServletRegistration();
+
+		return endpointRegistration.getServletContext();
+	}
+
+	@Override
+	public String getServletPath() {
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+		if ((dispatchTargets.getServletName() != null) ||
+			(dispatchTargets.getDispatcherType() == DispatcherType.INCLUDE)) {
+
+			DispatchTargets lastDispatchTargets = _dispatchTargets.getLast();
+
+			return lastDispatchTargets.getServletPath();
+		}
+
+		if (Objects.equals(dispatchTargets.getServletPath(), Const.SLASH)) {
+			return Const.BLANK;
+		}
+
+		return dispatchTargets.getServletPath();
+	}
+
+	@Override
 	public HttpSession getSession() {
 		return getSession(true);
 	}
 
+	@Override
 	public HttpSession getSession(boolean create) {
-		HttpSession session = request.getSession(create);
-		if (session != null) {
-			DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+		HttpSession httpSession = _httpServletRequest.getSession(create);
 
-			return currentDispatchTarget.getContextController().getSessionAdaptor(
-				session, currentDispatchTarget.getServletRegistration().getT().getServletConfig().getServletContext());
+		if (httpSession != null) {
+			DispatchTargets dispatchTargets = _dispatchTargets.peek();
+
+			ContextController contextController =
+				dispatchTargets.getContextController();
+
+			EndpointRegistration<?> endpointRegistration =
+				dispatchTargets.getServletRegistration();
+
+			Servlet servlet = endpointRegistration.getT();
+
+			ServletConfig servletConfig = servlet.getServletConfig();
+
+			return contextController.getSessionAdaptor(
+				httpSession, servletConfig.getServletContext());
 		}
 
 		return null;
 	}
 
 	public synchronized void pop() {
-		if (dispatchTargets.size() > 1) {
-			this.dispatchTargets.pop();
+		if (_dispatchTargets.size() > 1) {
+			_dispatchTargets.pop();
 		}
 	}
 
 	public synchronized void push(DispatchTargets toPush) {
-		toPush.addRequestParameters(request);
-		this.dispatchTargets.push(toPush);
+		toPush.addRequestParameters(_httpServletRequest);
+
+		_dispatchTargets.push(toPush);
 	}
 
+	@Override
 	public void removeAttribute(String name) {
-		if (dispatcherAttributes.contains(name)) {
-			DispatchTargets current = dispatchTargets.peek();
+		if (_dispatcherAttributes.contains(name)) {
+			DispatchTargets dispatchTargets = _dispatchTargets.peek();
 
-			current.getSpecialOverides().remove(name);
+			Map<String, Object> specialOverridesMap =
+				dispatchTargets.getSpecialOverides();
+
+			specialOverridesMap.remove(name);
 		}
 
-		request.removeAttribute(name);
+		_httpServletRequest.removeAttribute(name);
 
-		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
 
-		EventListeners eventListeners = currentDispatchTarget.getContextController().getEventListeners();
+		ContextController contextController =
+			dispatchTargets.getContextController();
 
-		List<ServletRequestAttributeListener> listeners = eventListeners.get(
-			ServletRequestAttributeListener.class);
+		EventListeners eventListeners = contextController.getEventListeners();
 
-		if (listeners.isEmpty()) {
+		List<ServletRequestAttributeListener> servletRequestAttributeListeners =
+			eventListeners.get(ServletRequestAttributeListener.class);
+
+		if (servletRequestAttributeListeners.isEmpty()) {
 			return;
 		}
 
+		EndpointRegistration<?> endpointRegistration =
+			dispatchTargets.getServletRegistration();
+
 		ServletRequestAttributeEvent servletRequestAttributeEvent =
 			new ServletRequestAttributeEvent(
-				currentDispatchTarget.getServletRegistration().getServletContext(), this, name, null);
+				endpointRegistration.getServletContext(), this, name, null);
 
-		for (ServletRequestAttributeListener servletRequestAttributeListener : listeners) {
+		for (ServletRequestAttributeListener servletRequestAttributeListener :
+				servletRequestAttributeListeners) {
+
 			servletRequestAttributeListener.attributeRemoved(
 				servletRequestAttributeEvent);
 		}
 	}
 
+	@Override
 	public void setAttribute(String name, Object value) {
-		boolean added = (request.getAttribute(name) == null);
+		boolean added = false;
 
-		if ((value == null) && dispatcherAttributes.contains(name)) {
-			DispatchTargets current = dispatchTargets.peek();
-
-			current.getSpecialOverides().put(name, NULL_PLACEHOLDER);
+		if (_httpServletRequest.getAttribute(name) == null) {
+			added = true;
 		}
 
-		request.setAttribute(name, value);
+		if ((value == null) && _dispatcherAttributes.contains(name)) {
+			DispatchTargets current = _dispatchTargets.peek();
 
-		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+			current.getSpecialOverides(
+			).put(
+				name, _NULL_PLACEHOLDER
+			);
+		}
 
-		EventListeners eventListeners = currentDispatchTarget.getContextController().getEventListeners();
+		_httpServletRequest.setAttribute(name, value);
 
-		List<ServletRequestAttributeListener> listeners = eventListeners.get(
-			ServletRequestAttributeListener.class);
+		DispatchTargets dispatchTargets = _dispatchTargets.peek();
 
-		if (listeners.isEmpty()) {
+		ContextController contextController =
+			dispatchTargets.getContextController();
+
+		EventListeners eventListeners = contextController.getEventListeners();
+
+		List<ServletRequestAttributeListener> servletRequestAttributeListeners =
+			eventListeners.get(ServletRequestAttributeListener.class);
+
+		if (servletRequestAttributeListeners.isEmpty()) {
 			return;
 		}
 
+		EndpointRegistration<?> endpointRegistration =
+			dispatchTargets.getServletRegistration();
+
 		ServletRequestAttributeEvent servletRequestAttributeEvent =
 			new ServletRequestAttributeEvent(
-				currentDispatchTarget.getServletRegistration().getServletContext(), this, name, value);
+				endpointRegistration.getServletContext(), this, name, value);
 
-		for (ServletRequestAttributeListener servletRequestAttributeListener : listeners) {
+		for (ServletRequestAttributeListener servletRequestAttributeListener :
+				servletRequestAttributeListeners) {
+
 			if (added) {
 				servletRequestAttributeListener.attributeAdded(
 					servletRequestAttributeEvent);
@@ -388,5 +521,32 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 			}
 		}
 	}
+
+	private static final Object _NULL_PLACEHOLDER = new Object();
+
+	private static final Set<String> _dispatcherAttributes =
+		new HashSet<String>() {
+			{
+				add(RequestDispatcher.ERROR_EXCEPTION);
+				add(RequestDispatcher.ERROR_EXCEPTION_TYPE);
+				add(RequestDispatcher.ERROR_MESSAGE);
+				add(RequestDispatcher.ERROR_REQUEST_URI);
+				add(RequestDispatcher.ERROR_SERVLET_NAME);
+				add(RequestDispatcher.ERROR_STATUS_CODE);
+				add(RequestDispatcher.FORWARD_CONTEXT_PATH);
+				add(RequestDispatcher.FORWARD_PATH_INFO);
+				add(RequestDispatcher.FORWARD_QUERY_STRING);
+				add(RequestDispatcher.FORWARD_REQUEST_URI);
+				add(RequestDispatcher.FORWARD_SERVLET_PATH);
+				add(RequestDispatcher.INCLUDE_CONTEXT_PATH);
+				add(RequestDispatcher.INCLUDE_PATH_INFO);
+				add(RequestDispatcher.INCLUDE_QUERY_STRING);
+				add(RequestDispatcher.INCLUDE_REQUEST_URI);
+				add(RequestDispatcher.INCLUDE_SERVLET_PATH);
+			}
+		};
+
+	private final Deque<DispatchTargets> _dispatchTargets = new LinkedList<>();
+	private final HttpServletRequest _httpServletRequest;
 
 }

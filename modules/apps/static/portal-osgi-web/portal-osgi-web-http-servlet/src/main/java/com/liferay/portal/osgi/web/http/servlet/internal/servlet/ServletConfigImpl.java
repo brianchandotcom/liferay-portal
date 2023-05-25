@@ -10,47 +10,61 @@
  *     IBM Corporation - bug fixes and enhancements
  *     Raymond Augé <raymond.auge@liferay.com> - Bug 436698
  *******************************************************************************/
+
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Map;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class ServletConfigImpl implements ServletConfig {
 
-	private final Map<String, String> initparams;
-	private final ServletContext servletContext;
-	private final String servletName;
-
 	public ServletConfigImpl(
-		String servletName, Map<String, String> initparams,
+		String servletName, Map<String, String> initParams,
 		ServletContext servletContext) {
 
-		this.servletName = servletName;
+		_servletName = servletName;
 
-		if (initparams != null) {
-			this.initparams = initparams;
+		if (initParams != null) {
+			_initParams = initParams;
 		}
 		else {
-			this.initparams = Collections.emptyMap();
+			_initParams = Collections.emptyMap();
 		}
 
-		this.servletContext = servletContext;
+		_servletContext = servletContext;
 	}
 
-	public String getServletName() {
-		return servletName;
-	}
-
-	public ServletContext getServletContext() {
-		return servletContext;
-	}
-
+	@Override
 	public String getInitParameter(String name) {
-		return initparams.get(name);
+		return _initParams.get(name);
 	}
 
+	@Override
 	public Enumeration<String> getInitParameterNames() {
-		return Collections.enumeration(initparams.keySet());
+		return Collections.enumeration(_initParams.keySet());
 	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public String getServletName() {
+		return _servletName;
+	}
+
+	private final Map<String, String> _initParams;
+	private final ServletContext _servletContext;
+	private final String _servletName;
+
 }

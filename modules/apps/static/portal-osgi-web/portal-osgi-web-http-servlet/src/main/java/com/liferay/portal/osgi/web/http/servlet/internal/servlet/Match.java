@@ -16,6 +16,6 @@ package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
  */
 public enum Match {
 
-	EXACT, EXTENSION, REGEX, DEFAULT_SERVLET
+	DEFAULT_SERVLET, EXACT, EXTENSION, REGEX
 
 }

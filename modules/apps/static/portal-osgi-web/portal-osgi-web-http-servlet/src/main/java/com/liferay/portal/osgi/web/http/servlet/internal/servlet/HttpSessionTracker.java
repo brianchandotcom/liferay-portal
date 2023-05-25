@@ -14,17 +14,51 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import javax.servlet.http.*;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.EventListeners;
+
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 /**
  * @author Shuyang Zhou
  */
 public class HttpSessionTracker {
+
+	public static void addHttpSessionAdaptor(
+		HttpSessionAdaptor httpSessionAdaptor) {
+
+		String sessionId = httpSessionAdaptor.getId();
+
+		Set<HttpSessionAdaptor> httpSessionAdaptors =
+			_httpSessionAdaptorsMap.get(sessionId);
+
+		if (httpSessionAdaptors == null) {
+			httpSessionAdaptors = Collections.newSetFromMap(
+				new ConcurrentHashMap<>());
+
+			Set<HttpSessionAdaptor> previousHttpSessionAdaptors =
+				_httpSessionAdaptorsMap.putIfAbsent(
+					sessionId, httpSessionAdaptors);
+
+			if (previousHttpSessionAdaptors != null) {
+				httpSessionAdaptors = previousHttpSessionAdaptors;
+			}
+		}
+
+		httpSessionAdaptors.add(httpSessionAdaptor);
+	}
 
 	public static void clearHttpSessionAdaptors(String sessionId) {
 		Set<HttpSessionAdaptor> httpSessionAdaptors =
@@ -48,20 +82,23 @@ public class HttpSessionTracker {
 				HttpSessionEvent httpSessionEvent = new HttpSessionEvent(
 					httpSessionAdaptor);
 
-				for (HttpSessionListener listener : httpSessionListeners) {
+				for (HttpSessionListener httpSessionListener :
+						httpSessionListeners) {
+
 					try {
-						listener.sessionDestroyed(httpSessionEvent);
+						httpSessionListener.sessionDestroyed(httpSessionEvent);
 					}
-					catch (IllegalStateException ise) {
-						// outer session is already invalidated
+					catch (IllegalStateException illegalStateException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(illegalStateException);
+						}
 					}
 				}
-			}
 
-			List<HttpSessionAttributeListener> httpSessionAttributeListeners =
-				eventListeners.get(HttpSessionAttributeListener.class);
+				List<HttpSessionAttributeListener>
+					httpSessionAttributeListeners = eventListeners.get(
+						HttpSessionAttributeListener.class);
 
-			if (!httpSessionListeners.isEmpty()) {
 				Enumeration<String> enumeration =
 					httpSessionAdaptor.getAttributeNames();
 
@@ -84,45 +121,23 @@ public class HttpSessionTracker {
 		}
 	}
 
-	public static void addHttpSessionAdaptor(
-		HttpSessionAdaptor httpSessionAdaptor) {
-
-		String sessionId = httpSessionAdaptor.getId();
-
-		Set<HttpSessionAdaptor> httpSessionAdaptors =
-			_httpSessionAdaptorsMap.get(sessionId);
-
-		if (httpSessionAdaptors == null) {
-			httpSessionAdaptors = Collections.newSetFromMap(
-				new ConcurrentHashMap<HttpSessionAdaptor, Boolean>());
-
-			Set<HttpSessionAdaptor> previousHttpSessionAdaptors =
-				_httpSessionAdaptorsMap.putIfAbsent(
-					sessionId, httpSessionAdaptors);
-
-			if (previousHttpSessionAdaptors != null) {
-				httpSessionAdaptors = previousHttpSessionAdaptors;
-			}
-		}
-
-		httpSessionAdaptors.add(httpSessionAdaptor);
-	}
-
-	public static boolean removeHttpSessionAdaptor(
+	public static void removeHttpSessionAdaptor(
 		HttpSessionAdaptor httpSessionAdaptor) {
 
 		Set<HttpSessionAdaptor> httpSessionAdaptors =
 			_httpSessionAdaptorsMap.get(httpSessionAdaptor.getId());
 
 		if (httpSessionAdaptors == null) {
-			return false;
+			return;
 		}
 
-		return httpSessionAdaptors.remove(httpSessionAdaptor);
+		httpSessionAdaptors.remove(httpSessionAdaptor);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		HttpSessionTracker.class.getName());
+
 	private static final ConcurrentMap<String, Set<HttpSessionAdaptor>>
-		_httpSessionAdaptorsMap =
-			new ConcurrentHashMap<String, Set<HttpSessionAdaptor>>();
+		_httpSessionAdaptorsMap = new ConcurrentHashMap<>();
 
 }

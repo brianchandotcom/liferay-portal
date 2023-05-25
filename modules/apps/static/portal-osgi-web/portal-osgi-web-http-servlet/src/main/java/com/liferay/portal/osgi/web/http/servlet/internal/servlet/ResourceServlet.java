@@ -10,179 +10,327 @@
  *     IBM Corporation - bug fixes and enhancements
  *     Raymond Augé <raymond.auge@liferay.com> - Bug 436698
  *******************************************************************************/
+
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
-import java.io.*;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.*;
-import javax.servlet.http.*;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
+
+import java.security.AccessControlContext;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.http.context.ServletContextHelper;
 
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class ResourceServlet extends HttpServlet {
-	private static final long serialVersionUID = 3586876493076122102L;
-	private static final String LAST_MODIFIED = "Last-Modified"; //$NON-NLS-1$
-	private static final String IF_MODIFIED_SINCE = "If-Modified-Since"; //$NON-NLS-1$
-	private static final String IF_NONE_MATCH = "If-None-Match"; //$NON-NLS-1$
-	private static final String ETAG = "ETag"; //$NON-NLS-1$
 
-	private String internalName;
-	private ServletContextHelper servletContextHelper;
-	private AccessControlContext acc;
+	public ResourceServlet(
+		String internalName, ServletContextHelper servletContextHelper,
+		AccessControlContext accessControlContext) {
 
-	public ResourceServlet(String internalName, ServletContextHelper servletContextHelper, AccessControlContext acc) {
-		this.internalName = internalName;
 		if (internalName.equals(Const.SLASH)) {
-			this.internalName = Const.BLANK;
+			_internalName = Const.BLANK;
 		}
-		this.servletContextHelper = servletContextHelper;
-		this.acc = acc;
+		else {
+			_internalName = internalName;
+		}
+
+		_servletContextHelper = servletContextHelper;
+		_accessControlContext = accessControlContext;
 	}
 
-	public void service(HttpServletRequest req, final HttpServletResponse resp) throws IOException {
-		String method = req.getMethod();
-		if (method.equals("GET") || method.equals("POST") || method.equals("HEAD")) { //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-			String pathInfo = HttpServletRequestWrapperImpl.getDispatchPathInfo(req);
-			if (pathInfo == null)
+	@Override
+	public void service(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		String method = httpServletRequest.getMethod();
+
+		if (method.equals("GET") || method.equals("POST") ||
+			method.equals("HEAD")) {
+
+			String pathInfo = HttpServletRequestWrapperImpl.getDispatchPathInfo(
+				httpServletRequest);
+
+			if (pathInfo == null) {
 				pathInfo = Const.BLANK;
-			String resourcePath = internalName + pathInfo;
-			URL resourceURL = servletContextHelper.getResource(resourcePath);
-			if (resourceURL != null)
-				writeResource(req, resp, resourcePath, resourceURL);
-			else
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND, "ProxyServlet: " + req.getRequestURI()); //$NON-NLS-1$
-		} else {
-			resp.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+			}
+
+			String resourcePath = _internalName + pathInfo;
+
+			URL resourceURL = _servletContextHelper.getResource(resourcePath);
+
+			if (resourceURL != null) {
+				_writeResource(
+					httpServletRequest, httpServletResponse, resourcePath,
+					resourceURL);
+			}
+			else {
+				httpServletResponse.sendError(
+					HttpServletResponse.SC_NOT_FOUND,
+					"ProxyServlet: " + httpServletRequest.getRequestURI());
+			}
+		}
+		else {
+			httpServletResponse.setStatus(
+				HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 		}
 	}
 
-	private void writeResource(final HttpServletRequest req, final HttpServletResponse resp, final String resourcePath, final URL resourceURL) throws IOException {
-		try {
-			AccessController.doPrivileged(new PrivilegedExceptionAction<Boolean>() {
+	private void _sendError(HttpServletResponse httpServletResponse)
+		throws IOException {
 
-				public Boolean run() throws Exception {
+		try {
+
+			// we need to reset headers for 302 and 403
+
+			httpServletResponse.reset();
+			httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
+		}
+		catch (IllegalStateException illegalStateException) {
+
+			// this could happen if the response has already been committed
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalStateException);
+			}
+		}
+	}
+
+	private void _writeResource(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String resourcePath,
+			URL resourceURL)
+		throws IOException {
+
+		try {
+			AccessController.doPrivileged(
+				(PrivilegedExceptionAction<Boolean>)() -> {
 					URLConnection connection = resourceURL.openConnection();
+
 					long lastModified = connection.getLastModified();
 					int contentLength = connection.getContentLength();
 
 					String etag = null;
-					if (lastModified != -1 && contentLength != -1)
-						etag = "W/\"" + contentLength + "-" + lastModified + "\""; //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+
+					if ((lastModified != -1) && (contentLength != -1)) {
+						etag = StringBundler.concat(
+							"W/\"", contentLength, "-", lastModified, "\"");
+					}
 
 					// Check for cache revalidation.
-					// We should prefer ETag validation as the guarantees are stronger and all HTTP 1.1 clients should be using it
-					String ifNoneMatch = req.getHeader(IF_NONE_MATCH);
-					if (ifNoneMatch != null && etag != null && ifNoneMatch.indexOf(etag) != -1) {
-						resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+					// We should prefer ETag validation as the guarantees are
+					// stronger and all HTTP 1.1 clients should be using it
+
+					String ifNoneMatch = httpServletRequest.getHeader(
+						_IF_NONE_MATCH);
+
+					if ((ifNoneMatch != null) && (etag != null) &&
+						ifNoneMatch.contains(etag)) {
+
+						httpServletResponse.setStatus(
+							HttpServletResponse.SC_NOT_MODIFIED);
+
 						return Boolean.TRUE;
 					}
 
-					long ifModifiedSince = req.getDateHeader(IF_MODIFIED_SINCE);
-					// for purposes of comparison we add 999 to ifModifiedSince since the fidelity
-					// of the IMS header generally doesn't include milli-seconds
-					if (ifModifiedSince > -1 && lastModified > 0 && lastModified <= (ifModifiedSince + 999)) {
-						resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+					long ifModifiedSince = httpServletRequest.getDateHeader(
+						_IF_MODIFIED_SINCE);
+
+					// for purposes of comparison we add 999 to ifModifiedSince
+					// since the fidelity of the IMS header generally doesn't
+					// include milliseconds
+
+					if ((ifModifiedSince > -1) && (lastModified > 0) &&
+						(lastModified <= (ifModifiedSince + 999))) {
+
+						httpServletResponse.setStatus(
+							HttpServletResponse.SC_NOT_MODIFIED);
+
 						return Boolean.TRUE;
 					}
 
-					// return the full contents regularly
-					if (contentLength != -1)
-						resp.setContentLength(contentLength);
+					if (contentLength != -1) {
+						httpServletResponse.setContentLength(contentLength);
+					}
 
-					String contentType = servletContextHelper.getMimeType(resourcePath);
-					if (contentType == null)
-						contentType = getServletConfig().getServletContext().getMimeType(resourcePath);
+					String contentType = _servletContextHelper.getMimeType(
+						resourcePath);
 
-					if (contentType != null)
-						resp.setContentType(contentType);
+					if (contentType == null) {
+						ServletConfig servletConfig = getServletConfig();
 
-					if (lastModified > 0)
-						resp.setDateHeader(LAST_MODIFIED, lastModified);
+						ServletContext servletContext =
+							servletConfig.getServletContext();
 
-					if (etag != null)
-						resp.setHeader(ETAG, etag);
+						contentType = servletContext.getMimeType(resourcePath);
+					}
 
-					if (contentLength != 0) {
-						// open the input stream
-						InputStream is = null;
+					if (contentType != null) {
+						httpServletResponse.setContentType(contentType);
+					}
+
+					if (lastModified > 0) {
+						httpServletResponse.setDateHeader(
+							_LAST_MODIFIED, lastModified);
+					}
+
+					if (etag != null) {
+						httpServletResponse.setHeader(_ETAG, etag);
+					}
+
+					if (contentLength == 0) {
+						return Boolean.TRUE;
+					}
+
+					try (InputStream inputStream =
+							connection.getInputStream()) {
+
+						// write the resource
+
 						try {
-							is = connection.getInputStream();
-							// write the resource
-							try {
-								OutputStream os = resp.getOutputStream();
-								int writtenContentLength = writeResourceToOutputStream(is, os);
-								if (contentLength == -1 || contentLength != writtenContentLength)
-									resp.setContentLength(writtenContentLength);
-							} catch (IllegalStateException e) { // can occur if the response output is already open as a Writer
-								Writer writer = resp.getWriter();
-								writeResourceToWriter(is, writer);
-								// Since ContentLength is a measure of the number of bytes contained in the body
-								// of a message when we use a Writer we lose control of the exact byte count and
-								// defer the problem to the Servlet Engine's Writer implementation.
+							int writtenContentLength =
+								_writeResourceToOutputStream(
+									inputStream,
+									httpServletResponse.getOutputStream());
+
+							if ((contentLength == -1) ||
+								(contentLength != writtenContentLength)) {
+
+								httpServletResponse.setContentLength(
+									writtenContentLength);
 							}
-						} catch (FileNotFoundException e) {
-							// FileNotFoundException may indicate the following scenarios
-							// - url is a directory
-							// - url is not accessible
-							sendError(resp, HttpServletResponse.SC_FORBIDDEN);
-						} catch (SecurityException e) {
-							// SecurityException may indicate the following scenarios
-							// - url is not accessible
-							sendError(resp, HttpServletResponse.SC_FORBIDDEN);
-						} finally {
-							if (is != null)
-								try {
-									is.close();
-								} catch (IOException e) {
-									// ignore
-								}
+						}
+						catch (IllegalStateException illegalStateException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(illegalStateException);
+							}
+
+							// can occur if the response output is already open
+							// as a Writer
+
+							_writeResourceToWriter(
+								inputStream, httpServletResponse.getWriter());
+
+							// Since ContentLength is a measure of the number of
+							// bytes contained in the body of a message when we
+							// use a Writer we lose control of the exact byte
+							// count and defer the problem to the Servlet
+							// Engine's Writer implementation.
+
 						}
 					}
+					catch (FileNotFoundException fileNotFoundException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(fileNotFoundException);
+						}
+
+						// FileNotFoundException may indicate the following
+						// scenarios
+						// - url is a directory
+						// - url is not accessible
+
+						_sendError(httpServletResponse);
+					}
+					catch (SecurityException securityException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(securityException);
+						}
+
+						// SecurityException may indicate the following
+						// scenarios
+						// - url is not accessible
+
+						_sendError(httpServletResponse);
+					}
+
 					return Boolean.TRUE;
-				}
-			}, acc);
-		} catch (PrivilegedActionException e) {
-			throw (IOException) e.getException();
+				},
+				_accessControlContext);
+		}
+		catch (PrivilegedActionException privilegedActionException) {
+			throw (IOException)privilegedActionException.getException();
 		}
 	}
 
-	void sendError(final HttpServletResponse resp, int sc) throws IOException {
+	private int _writeResourceToOutputStream(
+			InputStream inputStream, OutputStream outputStream)
+		throws IOException {
 
-		try {
-			// we need to reset headers for 302 and 403
-			resp.reset();
-			resp.sendError(sc);
-		} catch (IllegalStateException e) {
-			// this could happen if the response has already been committed
-		}
-	}
-
-	int writeResourceToOutputStream(InputStream is, OutputStream os) throws IOException {
 		byte[] buffer = new byte[8192];
-		int bytesRead = is.read(buffer);
+
+		int bytesRead = inputStream.read(buffer);
+
 		int writtenContentLength = 0;
+
 		while (bytesRead != -1) {
-			os.write(buffer, 0, bytesRead);
+			outputStream.write(buffer, 0, bytesRead);
+
 			writtenContentLength += bytesRead;
-			bytesRead = is.read(buffer);
+
+			bytesRead = inputStream.read(buffer);
 		}
+
 		return writtenContentLength;
 	}
 
-	void writeResourceToWriter(InputStream is, Writer writer) throws IOException {
-		Reader reader = new InputStreamReader(is);
-		try {
+	private void _writeResourceToWriter(InputStream inputStream, Writer writer)
+		throws IOException {
+
+		try (Reader reader = new InputStreamReader(inputStream)) {
 			char[] buffer = new char[8192];
+
 			int charsRead = reader.read(buffer);
+
 			while (charsRead != -1) {
 				writer.write(buffer, 0, charsRead);
+
 				charsRead = reader.read(buffer);
-			}
-		} finally {
-			if (reader != null) {
-				reader.close(); // will also close input stream
 			}
 		}
 	}
+
+	private static final String _ETAG = "ETag";
+
+	private static final String _IF_MODIFIED_SINCE = "If-Modified-Since";
+
+	private static final String _IF_NONE_MATCH = "If-None-Match";
+
+	private static final String _LAST_MODIFIED = "Last-Modified";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ResourceServlet.class.getName());
+
+	private static final long serialVersionUID = 3586876493076122102L;
+
+	private final AccessControlContext _accessControlContext;
+	private final String _internalName;
+	private final ServletContextHelper _servletContextHelper;
+
 }

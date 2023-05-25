@@ -25,6 +25,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.BucketInfo;
+import com.google.cloud.storage.CopyWriter;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
@@ -175,6 +176,26 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		}
 
 		return lastVisitedBlobName;
+	}
+
+	@Override
+	public void copy(String sourceFileName, String destinationFileName) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+			return;
+		}
+
+		CopyWriter copyWriter = _gcsStore.copy(
+			Storage.CopyRequest.newBuilder(
+			).setSource(
+				_gcsStoreConfiguration.bucketName(), sourceFileName
+			).setTarget(
+				BlobId.of(
+					_gcsStoreConfiguration.bucketName(), destinationFileName)
+			).build());
+
+		while (!copyWriter.isDone()) {
+			copyWriter.copyChunk();
+		}
 	}
 
 	@Override

@@ -14,13 +14,9 @@
 
 package com.liferay.document.library.kernel.store;
 
-import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.function.Supplier;
@@ -57,6 +53,9 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		Store store = _storeSupplier.get();
 
 		if (_isStoreAreaSupported()) {
+			StoreAreaProcessor storeAreaProcessor =
+				_storeAreaProcessorSupplier.get();
+
 			for (String fileName :
 					store.getFileNames(companyId, repositoryId, dirName)) {
 
@@ -64,9 +63,11 @@ public class StoreAreaAwareStoreWrapper implements Store {
 						store.getFileVersions(
 							companyId, repositoryId, fileName)) {
 
-					_copy(
-						StoreArea.DELETED, companyId, repositoryId, fileName,
-						versionLabel);
+					storeAreaProcessor.copy(
+						StoreArea.LIVE.getPath(
+							companyId, repositoryId, fileName, versionLabel),
+						StoreArea.DELETED.getPath(
+							companyId, repositoryId, fileName, versionLabel));
 				}
 			}
 		}
@@ -79,13 +80,18 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		Store store = _storeSupplier.get();
-
 		if (_isStoreAreaSupported()) {
-			_copy(
-				StoreArea.DELETED, companyId, repositoryId, fileName,
-				versionLabel);
+			StoreAreaProcessor storeAreaProcessor =
+				_storeAreaProcessorSupplier.get();
+
+			storeAreaProcessor.copy(
+				StoreArea.LIVE.getPath(
+					companyId, repositoryId, fileName, versionLabel),
+				StoreArea.DELETED.getPath(
+					companyId, repositoryId, fileName, versionLabel));
 		}
+
+		Store store = _storeSupplier.get();
 
 		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -140,38 +146,6 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		Store store = _storeSupplier.get();
 
 		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	private void _copy(
-		StoreArea storeArea, long companyId, long repositoryId, String fileName,
-		String versionLabel) {
-
-		Store store = _storeSupplier.get();
-
-		try (InputStream inputStream = _getNullSafeInputStream(
-				store.getFileAsStream(
-					companyId, repositoryId, fileName, versionLabel))) {
-
-			StoreArea.withStoreArea(
-				storeArea,
-				() -> store.addFile(
-					companyId, repositoryId, fileName, versionLabel,
-					inputStream));
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
-	}
-
-	private InputStream _getNullSafeInputStream(InputStream inputStream) {
-		if (inputStream == null) {
-			return new UnsyncByteArrayInputStream(new byte[0]);
-		}
-
-		return inputStream;
 	}
 
 	private boolean _isStoreAreaSupported() {

@@ -5,7 +5,7 @@ definition {
 
 		Click(
 			key_text = "Change Current Theme",
-			locator1 = "Button#ANY");
+			locator1 = "Button#ANY_ENABLED");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

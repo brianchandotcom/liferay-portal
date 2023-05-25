@@ -71,6 +71,20 @@ public class WorkflowInstanceManagerImplTest
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 					StringPool.BLANK, workflowDefinition.getName(), false));
+
+			Assert.assertEquals(
+				0,
+				workflowInstanceManager.searchCount(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, workflowDefinition.getName(), true));
+
+			Assert.assertEquals(
+				1,
+				workflowInstanceManager.searchCount(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, workflowDefinition.getName(), null));
 		}
 	}
 

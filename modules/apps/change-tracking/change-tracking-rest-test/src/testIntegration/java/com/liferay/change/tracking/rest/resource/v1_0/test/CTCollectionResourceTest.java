@@ -15,14 +15,91 @@
 package com.liferay.change.tracking.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.rest.client.dto.v1_0.CTCollection;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author David Truong
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"description", "name"};
+	}
+
+	@Override
+	protected CTCollection testDeleteCTCollection_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testGetCTCollection_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testGetCTCollectionsPage_addCTCollection(
+			CTCollection ctCollection)
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(ctCollection);
+	}
+
+	@Override
+	protected CTCollection testGraphQLCTCollection_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testPatchCTCollection_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testPostCTCollection_addCTCollection(
+			CTCollection ctCollection)
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(ctCollection);
+	}
+
+	@Override
+	protected CTCollection testPostCTCollectionCheckout_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testPostCTCollectionPublish_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testPostCTCollectionSchedulePublish_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection testPutCTCollection_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
 }

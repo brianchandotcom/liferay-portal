@@ -11,16 +11,29 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.servlet;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.DispatchTargets;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.EndpointRegistration;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletResponseWrapperImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.EventListeners;
+
+import java.io.IOException;
+
+import java.util.Collections;
+import java.util.List;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterChain;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+
+import org.osgi.service.http.context.ServletContextHelper;
 
 /**
  * @author Raymond Augé
@@ -28,20 +41,24 @@ import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletResp
 public class ResponseStateHandler {
 
 	public ResponseStateHandler(
-		HttpServletRequest request, HttpServletResponse response,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
 		DispatchTargets dispatchTargets) {
 
-		this.request = request;
-		this.response = response;
-		this.dispatchTargets = dispatchTargets;
+		_httpServletRequest = httpServletRequest;
+		_httpServletResponse = httpServletResponse;
+		_dispatchTargets = dispatchTargets;
 	}
 
 	public void processRequest() throws IOException, ServletException {
-		List<ServletRequestListener> servletRequestListeners = getServletRequestListener();
-		EndpointRegistration<?> endpoint = dispatchTargets.getServletRegistration();
-		List<FilterRegistration> filters = dispatchTargets.getMatchingFilterRegistrations();
+		List<ServletRequestListener> servletRequestListeners =
+			_getServletRequestListener();
+		EndpointRegistration<?> endpointRegistration =
+			_dispatchTargets.getServletRegistration();
+		List<FilterRegistration> filters =
+			_dispatchTargets.getMatchingFilterRegistrations();
 
-		endpoint.addReference();
+		endpointRegistration.addReference();
 
 		for (FilterRegistration filterRegistration : filters) {
 			filterRegistration.addReference();
@@ -50,91 +67,127 @@ public class ResponseStateHandler {
 		ServletRequestEvent servletRequestEvent = null;
 
 		try {
+			if ((_dispatchTargets.getDispatcherType() ==
+					DispatcherType.REQUEST) &&
+				!servletRequestListeners.isEmpty()) {
 
-			if ((dispatchTargets.getDispatcherType() == DispatcherType.REQUEST) && !servletRequestListeners.isEmpty()) {
-				servletRequestEvent = new ServletRequestEvent(endpoint.getServletContext(), request);
-				for (ServletRequestListener servletRequestListener : servletRequestListeners) {
-					servletRequestListener.requestInitialized(servletRequestEvent);
+				servletRequestEvent = new ServletRequestEvent(
+					endpointRegistration.getServletContext(),
+					_httpServletRequest);
+
+				for (ServletRequestListener servletRequestListener :
+						servletRequestListeners) {
+
+					servletRequestListener.requestInitialized(
+						servletRequestEvent);
 				}
 			}
 
-			if (endpoint.getServletContextHelper().handleSecurity(request, response)) {
+			ServletContextHelper servletContextHelper =
+				endpointRegistration.getServletContextHelper();
+
+			if (servletContextHelper.handleSecurity(
+					_httpServletRequest, _httpServletResponse)) {
+
 				if (filters.isEmpty()) {
-					endpoint.service(request, response);
+					endpointRegistration.service(
+						_httpServletRequest, _httpServletResponse);
 				}
 				else {
 					Collections.sort(filters);
 
-					FilterChain chain = new FilterChainImpl(
-						filters, endpoint, dispatchTargets.getDispatcherType());
+					FilterChain filterChain = new FilterChainImpl(
+						filters, endpointRegistration,
+						_dispatchTargets.getDispatcherType());
 
-					chain.doFilter(request, response);
+					filterChain.doFilter(
+						_httpServletRequest, _httpServletResponse);
 				}
 			}
 		}
-		catch (Exception e) {
-			if (!(e instanceof IOException) &&
-				!(e instanceof RuntimeException) &&
-				!(e instanceof ServletException)) {
+		catch (Exception exception) {
+			if (!(exception instanceof IOException) &&
+				!(exception instanceof RuntimeException) &&
+				!(exception instanceof ServletException)) {
 
-				e = new ServletException(e);
+				exception = new ServletException(exception);
 			}
 
-			setException(e);
+			setException(exception);
 
-			if (dispatchTargets.getDispatcherType() != DispatcherType.REQUEST) {
-				throwException(e);
+			if (_dispatchTargets.getDispatcherType() !=
+					DispatcherType.REQUEST) {
+
+				_throwException(exception);
 			}
 		}
 		finally {
-			endpoint.removeReference();
+			endpointRegistration.removeReference();
 
 			for (FilterRegistration filterRegistration : filters) {
 				filterRegistration.removeReference();
 			}
 
-			if (dispatchTargets.getDispatcherType() == DispatcherType.REQUEST) {
-				handleErrors();
+			if (_dispatchTargets.getDispatcherType() ==
+					DispatcherType.REQUEST) {
 
-				for (ServletRequestListener servletRequestListener : servletRequestListeners) {
-					servletRequestListener.requestDestroyed(servletRequestEvent);
+				_handleErrors();
+
+				for (ServletRequestListener servletRequestListener :
+						servletRequestListeners) {
+
+					servletRequestListener.requestDestroyed(
+						servletRequestEvent);
 				}
 			}
 		}
 	}
 
 	public void setException(Exception exception) {
-		this.exception = exception;
+		_exception = exception;
 	}
 
-	private List<ServletRequestListener> getServletRequestListener() {
-		return dispatchTargets.getContextController().getEventListeners().get(ServletRequestListener.class);
+	private List<ServletRequestListener> _getServletRequestListener() {
+		ContextController contextController =
+			_dispatchTargets.getContextController();
+
+		EventListeners eventListeners = contextController.getEventListeners();
+
+		return eventListeners.get(ServletRequestListener.class);
 	}
 
-	private void handleErrors() throws IOException, ServletException {
-		if (exception != null) {
-			handleException();
+	private void _handleErrors() throws IOException, ServletException {
+		if (_exception != null) {
+			_handleException();
 		}
 		else {
-			handleResponseCode();
+			_handleResponseCode();
 		}
 	}
 
-	private void handleException() throws IOException, ServletException {
-		if (!(response instanceof HttpServletResponseWrapper)) {
-			throw new IllegalStateException("Response isn't a wrapper"); //$NON-NLS-1$
+	private void _handleException() throws IOException, ServletException {
+		if (!(_httpServletResponse instanceof HttpServletResponseWrapper)) {
+			throw new IllegalStateException("Response is not a wrapper");
 		}
 
-		HttpServletResponseWrapper wrapper = (HttpServletResponseWrapper)response;
+		HttpServletResponseWrapper httpServletResponseWrapper =
+			(HttpServletResponseWrapper)_httpServletResponse;
 
-		HttpServletResponseWrapperImpl wrapperImpl = null;
+		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl = null;
 
 		while (true) {
-			if (wrapper instanceof HttpServletResponseWrapperImpl) {
-				wrapperImpl = (HttpServletResponseWrapperImpl)wrapper;
+			if (httpServletResponseWrapper instanceof
+					HttpServletResponseWrapperImpl) {
+
+				httpServletResponseWrapperImpl =
+					(HttpServletResponseWrapperImpl)httpServletResponseWrapper;
 			}
-			else if (wrapper.getResponse() instanceof HttpServletResponseWrapper) {
-				wrapper = (HttpServletResponseWrapper)wrapper.getResponse();
+			else if (httpServletResponseWrapper.getResponse() instanceof
+						HttpServletResponseWrapper) {
+
+				httpServletResponseWrapper =
+					(HttpServletResponseWrapper)
+						httpServletResponseWrapper.getResponse();
 
 				continue;
 			}
@@ -142,182 +195,248 @@ public class ResponseStateHandler {
 			break;
 		}
 
-		if (wrapperImpl == null) {
-			throw new IllegalStateException("Can't locate response impl"); //$NON-NLS-1$
+		if (httpServletResponseWrapperImpl == null) {
+			throw new IllegalStateException("Can not locate response impl");
 		}
 
-		HttpServletResponse wrappedResponse = (HttpServletResponse)wrapperImpl.getResponse();
+		HttpServletResponse wrappedHttpServletResponse =
+			(HttpServletResponse)httpServletResponseWrapperImpl.getResponse();
 
-		if (wrappedResponse.isCommitted()) {
-			throwException(exception);
+		if (wrappedHttpServletResponse.isCommitted()) {
+			_throwException(_exception);
 		}
 
-		ContextController contextController = dispatchTargets.getContextController();
-		Class<? extends Exception> clazz = exception.getClass();
+		ContextController contextController =
+			_dispatchTargets.getContextController();
+
+		Class<? extends Exception> clazz = _exception.getClass();
+
 		final String className = clazz.getName();
 
-		final DispatchTargets errorDispatchTargets = contextController.getDispatchTargets(
-			className, null, null, null, null, null, Match.EXACT, null);
+		DispatchTargets errorDispatchTargets =
+			contextController.getDispatchTargets(
+				className, null, null, null, null, null, Match.EXACT, null);
 
 		if (errorDispatchTargets == null) {
-			throwException(exception);
+			_throwException(_exception);
 		}
 
-		HttpServletRequestWrapperImpl httpRuntimeRequest = HttpServletRequestWrapperImpl.findHttpRuntimeRequest(request);
+		HttpServletRequestWrapperImpl httpServletRequestWrapperImpl =
+			HttpServletRequestWrapperImpl.findHttpRuntimeRequest(
+				_httpServletRequest);
 
 		try {
 			errorDispatchTargets.setDispatcherType(DispatcherType.ERROR);
 
-			httpRuntimeRequest.push(errorDispatchTargets);
+			httpServletRequestWrapperImpl.push(errorDispatchTargets);
 
-			HttpServletRequest wrapperRequest = new HttpServletRequestWrapper(request) {
+			HttpServletRequest httpServletRequest =
+				new HttpServletRequestWrapper(_httpServletRequest) {
 
-				@Override
-				public Object getAttribute(String attributeName) {
-					if (getDispatcherType() == DispatcherType.ERROR) {
-						if (attributeName.equals(RequestDispatcher.ERROR_EXCEPTION)) {
-							return exception;
-						} else if (attributeName.equals(RequestDispatcher.ERROR_EXCEPTION_TYPE)) {
-							return className;
-						} else if (attributeName.equals(RequestDispatcher.ERROR_MESSAGE)) {
-							return exception.getMessage();
-						} else if (attributeName.equals(RequestDispatcher.ERROR_REQUEST_URI)) {
-							return request.getRequestURI();
-						} else if (attributeName.equals(RequestDispatcher.ERROR_SERVLET_NAME)) {
-							return dispatchTargets.getServletRegistration().getName();
-						} else if (attributeName.equals(RequestDispatcher.ERROR_STATUS_CODE)) {
-							return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+					@Override
+					public Object getAttribute(String attributeName) {
+						if (getDispatcherType() == DispatcherType.ERROR) {
+							if (attributeName.equals(
+									RequestDispatcher.ERROR_EXCEPTION)) {
+
+								return _exception;
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.
+											ERROR_EXCEPTION_TYPE)) {
+
+								return className;
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_MESSAGE)) {
+
+								return _exception.getMessage();
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_REQUEST_URI)) {
+
+								return _httpServletRequest.getRequestURI();
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_SERVLET_NAME)) {
+
+								EndpointRegistration<?> endpointRegistration =
+									_dispatchTargets.getServletRegistration();
+
+								return endpointRegistration.getName();
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_STATUS_CODE)) {
+
+								return HttpServletResponse.
+									SC_INTERNAL_SERVER_ERROR;
+							}
 						}
+
+						return super.getAttribute(attributeName);
 					}
-					return super.getAttribute(attributeName);
-				}
 
-				@Override
-				public DispatcherType getDispatcherType() {
-					return DispatcherType.ERROR;
-				}
+					@Override
+					public DispatcherType getDispatcherType() {
+						return DispatcherType.ERROR;
+					}
 
-			};
+				};
 
-			HttpServletResponseWrapper wrapperResponse =
-				new HttpServletResponseWrapperImpl(wrappedResponse);
+			HttpServletResponse httpServletResponse =
+				new HttpServletResponseWrapperImpl(wrappedHttpServletResponse);
 
-			ResponseStateHandler responseStateHandler = new ResponseStateHandler(
-				wrapperRequest, wrapperResponse, errorDispatchTargets);
+			ResponseStateHandler responseStateHandler =
+				new ResponseStateHandler(
+					httpServletRequest, httpServletResponse,
+					errorDispatchTargets);
 
 			responseStateHandler.processRequest();
 
-			wrappedResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			wrappedHttpServletResponse.setStatus(
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 		finally {
-			httpRuntimeRequest.pop();
+			httpServletRequestWrapperImpl.pop();
 		}
 	}
 
-	private void handleResponseCode() throws IOException, ServletException {
-		if (!(response instanceof HttpServletResponseWrapper)) {
-			throw new IllegalStateException("Response isn't a wrapper"); //$NON-NLS-1$
+	private void _handleResponseCode() throws IOException, ServletException {
+		if (!(_httpServletResponse instanceof HttpServletResponseWrapper)) {
+			throw new IllegalStateException("Response is not a wrapper");
 		}
 
-		final HttpServletResponseWrapperImpl responseWrapper = HttpServletResponseWrapperImpl.findHttpRuntimeResponse(response);
+		HttpServletResponseWrapperImpl httpServletResponseWrapperImpl =
+			HttpServletResponseWrapperImpl.findHttpRuntimeResponse(
+				_httpServletResponse);
 
-		if (responseWrapper == null) {
-			throw new IllegalStateException("Can't locate response impl"); //$NON-NLS-1$
+		if (httpServletResponseWrapperImpl == null) {
+			throw new IllegalStateException("Can not locate response impl");
 		}
 
-		final int status = responseWrapper.getInternalStatus();
+		int status = httpServletResponseWrapperImpl.getInternalStatus();
 
 		if (status < HttpServletResponse.SC_BAD_REQUEST) {
 			return;
 		}
 
 		if (status == -1) {
+
 			// There's nothing more we can do here.
+
 			return;
 		}
 
-		HttpServletResponse wrappedResponse = (HttpServletResponse)responseWrapper.getResponse();
+		HttpServletResponse wrappedHttpServletResponse =
+			(HttpServletResponse)httpServletResponseWrapperImpl.getResponse();
 
-		if (wrappedResponse.isCommitted()) {
+		if (wrappedHttpServletResponse.isCommitted()) {
+
 			// There's nothing more we can do here.
+
 			return;
 		}
 
-		ContextController contextController = dispatchTargets.getContextController();
+		ContextController contextController =
+			_dispatchTargets.getContextController();
 
-		DispatchTargets errorDispatchTargets = contextController.getDispatchTargets(
-			String.valueOf(status), null, null, null, null, null, Match.EXACT, null);
+		DispatchTargets errorDispatchTargets =
+			contextController.getDispatchTargets(
+				String.valueOf(status), null, null, null, null, null,
+				Match.EXACT, null);
 
 		if (errorDispatchTargets == null) {
-			wrappedResponse.sendError(status, responseWrapper.getMessage());
+			wrappedHttpServletResponse.sendError(
+				status, httpServletResponseWrapperImpl.getMessage());
 
 			return;
 		}
 
-		HttpServletRequestWrapperImpl httpRuntimeRequest = HttpServletRequestWrapperImpl.findHttpRuntimeRequest(request);
+		HttpServletRequestWrapperImpl httpServletRequestWrapperImpl =
+			HttpServletRequestWrapperImpl.findHttpRuntimeRequest(
+				_httpServletRequest);
 
 		try {
 			errorDispatchTargets.setDispatcherType(DispatcherType.ERROR);
 
-			httpRuntimeRequest.push(errorDispatchTargets);
+			httpServletRequestWrapperImpl.push(errorDispatchTargets);
 
-			HttpServletRequest wrapperRequest = new HttpServletRequestWrapper(request) {
+			HttpServletRequest httpServletRequest =
+				new HttpServletRequestWrapper(_httpServletRequest) {
 
-				@Override
-				public Object getAttribute(String attributeName) {
-					if (getDispatcherType() == DispatcherType.ERROR) {
-						if (attributeName.equals(RequestDispatcher.ERROR_MESSAGE)) {
-							return responseWrapper.getMessage();
-						} else if (attributeName.equals(RequestDispatcher.ERROR_REQUEST_URI)) {
-							return request.getRequestURI();
-						} else if (attributeName.equals(RequestDispatcher.ERROR_SERVLET_NAME)) {
-							return dispatchTargets.getServletRegistration().getName();
-						} else if (attributeName.equals(RequestDispatcher.ERROR_STATUS_CODE)) {
-							return status;
+					@Override
+					public Object getAttribute(String attributeName) {
+						if (getDispatcherType() == DispatcherType.ERROR) {
+							if (attributeName.equals(
+									RequestDispatcher.ERROR_MESSAGE)) {
+
+								return httpServletResponseWrapperImpl.
+									getMessage();
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_REQUEST_URI)) {
+
+								return _httpServletRequest.getRequestURI();
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_SERVLET_NAME)) {
+
+								EndpointRegistration<?> endpointRegistration =
+									_dispatchTargets.getServletRegistration();
+
+								return endpointRegistration.getName();
+							}
+							else if (attributeName.equals(
+										RequestDispatcher.ERROR_STATUS_CODE)) {
+
+								return status;
+							}
 						}
+
+						return super.getAttribute(attributeName);
 					}
-					return super.getAttribute(attributeName);
-				}
 
-				@Override
-				public DispatcherType getDispatcherType() {
-					return DispatcherType.ERROR;
-				}
+					@Override
+					public DispatcherType getDispatcherType() {
+						return DispatcherType.ERROR;
+					}
 
-			};
+				};
 
-			HttpServletResponseWrapper wrapperResponse =
-				new HttpServletResponseWrapperImpl(wrappedResponse);
+			HttpServletResponse httpServletResponse =
+				new HttpServletResponseWrapperImpl(wrappedHttpServletResponse);
 
-			ResponseStateHandler responseStateHandler = new ResponseStateHandler(
-				wrapperRequest, wrapperResponse, errorDispatchTargets);
+			ResponseStateHandler responseStateHandler =
+				new ResponseStateHandler(
+					httpServletRequest, httpServletResponse,
+					errorDispatchTargets);
 
-			wrappedResponse.setStatus(status);
+			wrappedHttpServletResponse.setStatus(status);
 
 			responseStateHandler.processRequest();
 		}
 		finally {
-			httpRuntimeRequest.pop();
+			httpServletRequestWrapperImpl.pop();
 		}
 	}
 
-	private void throwException(Exception e)
+	private void _throwException(Exception exception)
 		throws IOException, ServletException {
 
-		if (e instanceof RuntimeException) {
-			throw (RuntimeException)e;
+		if (exception instanceof RuntimeException) {
+			throw (RuntimeException)exception;
 		}
-		else if (e instanceof IOException) {
-			throw (IOException)e;
+		else if (exception instanceof IOException) {
+			throw (IOException)exception;
 		}
-		else if (e instanceof ServletException) {
-			throw (ServletException)e;
+		else if (exception instanceof ServletException) {
+			throw (ServletException)exception;
 		}
 	}
 
-	DispatchTargets dispatchTargets;
-	Exception exception;
-	HttpServletRequest request;
-	HttpServletResponse response;
+	private final DispatchTargets _dispatchTargets;
+	private Exception _exception;
+	private final HttpServletRequest _httpServletRequest;
+	private final HttpServletResponse _httpServletResponse;
 
 }

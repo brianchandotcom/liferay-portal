@@ -39,7 +39,7 @@ public interface DeepPaginationConfiguration {
 	public boolean enableDeepPagination();
 
 	@Meta.AD(
-		deflt = "300", description = "point-in-time-keep-alive-seconds-help",
+		deflt = "60", description = "point-in-time-keep-alive-seconds-help",
 		name = "point-in-time-keep-alive-seconds", required = false
 	)
 	public int pointInTimeKeepAliveSeconds();

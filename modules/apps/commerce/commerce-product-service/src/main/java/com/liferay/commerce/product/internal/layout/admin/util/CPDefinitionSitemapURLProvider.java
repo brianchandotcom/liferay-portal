@@ -30,7 +30,6 @@ import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
@@ -153,10 +152,6 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 			return;
 		}
 
-		themeDisplay = SitemapURLProviderUtil.updateThemeDisplay(
-			_language, _portal.getLocale(themeDisplay.getRequest()),
-			themeDisplay);
-
 		String currentSiteURL = _portal.getGroupFriendlyURL(
 			layout.getLayoutSet(), themeDisplay, false, false);
 		String urlSeparator = _cpFriendlyURL.getProductURLSeparator(
@@ -172,13 +167,14 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 
 		Map<Locale, String> alternateFriendlyURLs =
 			SitemapURLProviderUtil.getAlternateFriendlyURLs(
-				currentSiteURL, friendlyURLEntry.getFriendlyURLEntryId(),
-				_friendlyURLEntryLocalService, layout.getGroupId(), _language,
-				urlSeparator);
+				_portal.getAlternateURLs(
+					currentSiteURL, themeDisplay, layout,
+					_language.getAvailableLocales(layout.getGroupId())),
+				friendlyURLEntry.getFriendlyURLEntryId(),
+				_friendlyURLEntryLocalService, urlSeparator);
 
-		String productFriendlyURL = StringBundler.concat(
-			currentSiteURL, urlSeparator,
-			friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId()));
+		String productFriendlyURL = alternateFriendlyURLs.get(
+			_portal.getLocale(themeDisplay.getRequest()));
 
 		for (String alternateFriendlyURL : alternateFriendlyURLs.values()) {
 			_sitemap.addURLElement(

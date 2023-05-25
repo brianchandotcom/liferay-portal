@@ -12,6 +12,11 @@
 <tbody>
 
 <tr>
+	<td>ANY_DRIVER_BUTTON</td>
+	<td>xpath=(//div[contains(@class, 'bg-neutral-0')]/descendant::button)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CENTER_STATUS</td>
 	<td>//div[contains(@class, 'text-paragraph-sm')]//*[contains(text(), '${key_status}')]</td>
 	<td></td>

@@ -1224,17 +1224,27 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
-		if (Validator.isNotNull(workspaceExtension.getBundleUrl())) {
-			initBundleTask.setFile(
-				new Callable<File>() {
+		project.afterEvaluate(
+			new Action<Project>() {
 
-					@Override
-					public File call() throws Exception {
-						return _getDownloadFile(downloadBundleTask);
+				@Override
+				public void execute(Project project) {
+					if (Validator.isNotNull(
+							workspaceExtension.getBundleUrl())) {
+
+						initBundleTask.setFile(
+							new Callable<File>() {
+
+								@Override
+								public File call() throws Exception {
+									return _getDownloadFile(downloadBundleTask);
+								}
+
+							});
 					}
+				}
 
-				});
-		}
+			});
 
 		initBundleTask.setGroup(BUNDLE_GROUP);
 		initBundleTask.setProvidedModules(osgiModulesConfiguration);

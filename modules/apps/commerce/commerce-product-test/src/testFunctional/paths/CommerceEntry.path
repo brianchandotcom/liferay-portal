@@ -815,6 +815,21 @@
 	<td>//div[@aria-label='${key_targetFragmentName}'][${key_index}]/div[contains(@class,'page-editor__topper__content')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LABEL_TOOLTIP_ICON</td>
+	<td>//label[(contains(.,'${key_label}')) or (contains(@for,'${key_label}'))]//span[contains(@class,'lfr-portal-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LABEL_TOOLTIP_TEXT</td>
+	<td>//label[(contains(.,'${key_label}')) or (contains(@for,'${key_label}'))]//span[(contains(@class,'lfr-portal-tooltip')) and (@data-restore-title='${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_TEXT_INPUT_DISABLED</td>
+	<td>//div[label[contains(.,'${key_text}')]]//input[not(contains(@type,'checkbox'))][@disabled]</td>
+	<td></td>
+</tr>
 
 <!--CATALOGS-->
 

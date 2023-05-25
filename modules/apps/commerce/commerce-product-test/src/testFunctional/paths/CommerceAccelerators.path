@@ -201,6 +201,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_PRICE_ON_APPLICATION</td>
+	<td>//p[@title='${key_productName}']/..//span[(@class='price compact')][normalize-space(text())='Price On Application']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_PRICE_VALUE</td>
 	<td>//p[@title='${key_productName}']/..//span[@class='price-value'][normalize-space(text())='$ ${key_productPrice}']</td>
 	<td></td>

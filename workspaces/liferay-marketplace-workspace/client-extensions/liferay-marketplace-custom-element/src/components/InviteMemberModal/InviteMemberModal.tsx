@@ -5,12 +5,14 @@ import ClayForm, { ClayInput, ClayCheckbox } from '@clayui/form';
 import { useEffect, useState } from 'react';
 import './inviteMemberModal.scss';
 import {
+  addAdditionalInfo,
   addExistentUserIntoAccount,
   callRolesApi,
   createNewUserIntoAccount,
   getAccountRolesOnAPI,
   getUserByEmail,
 } from './services';
+import { getMyUserAccount } from '../../utils/api';
 
 interface InviteMemberModalProps {
   handleClose: () => void;
@@ -55,6 +57,19 @@ export function InviteMemberModal({
     emailAddress: formFields.email,
     familyName: formFields.lastName,
     givenName: formFields.firstName,
+    password: 'test',
+    currentPassword: 'test',
+  };
+
+  const getCheckedRoles = () => {
+    for (const checkboxRole of checkboxRoles) {
+      if (checkboxRole.isChecked) {
+        const matchingAccountRole = accountRoles?.find(
+          (accountRole: AccountRole) =>
+            accountRole.name == checkboxRole.roleName
+        );
+      }
+    }
   };
 
   const getAccountRoles = async () => {
@@ -62,7 +77,7 @@ export function InviteMemberModal({
     setAccountRoles(roles);
   };
 
-  const addAccountRolesToUser = async (user: UserAccount) => {
+  const addAccountRolesToUser = async (user: any) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
         const matchingAccountRole = accountRoles?.find(
@@ -82,7 +97,7 @@ export function InviteMemberModal({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     let form = event.target as HTMLFormElement;
-    let user : UserAccount;
+    let user: UserAccount;
     if (formValid) {
       user = await getUserByEmail(formFields.email);
       if (!user) {
@@ -95,7 +110,16 @@ export function InviteMemberModal({
         );
       }
       user = await getUserByEmail(formFields.email);
+      const myUser = await getMyUserAccount();
       await addAccountRolesToUser(user);
+      await addAdditionalInfo(
+        false,
+        myUser.id,
+        selectedAccount.name,
+        formFields.email,
+        formFields.firstName,
+        myUser.givenName
+      );
       setTimeout(() => location.reload(), 200);
     }
   };

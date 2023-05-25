@@ -54,13 +54,12 @@
         },
         {
             "DBType": "String",
-            "businessType": "MultiselectPicklist",
+            "businessType": "Text",
             "indexed": true,
             "indexedAsKeyword": false,
             "label": {
                 "en_US": "Roles"
             },
-            "listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Roles Option$]",
             "name": "roles",
             "required": false,
             "type": "String"
@@ -76,6 +75,30 @@
             "name": "userFirstName",
             "required": false,
             "type": "String"
+        },
+        {
+            "DBType": "String",
+            "businessType": "Text",
+            "indexed": true,
+            "indexedAsKeyword": false,
+            "label": {
+                "en_US": "Invite URL"
+            },
+            "name": "inviteURL",
+            "required": false,
+            "type": "String"
+        },
+        {
+            "DBType": "String",
+            "businessType": "Text",
+            "indexed": true,
+            "indexedAsKeyword": false,
+            "label": {
+                "en_US": "Mother's Name"
+            },
+            "name": "mothersName",
+            "required": false,
+            "type": "String"
         }
     ],
     "panelCategoryKey": "control_panel.object",
@@ -84,9 +107,3 @@
     },
     "scope": "company"
 }
-
-
-
-
-
-

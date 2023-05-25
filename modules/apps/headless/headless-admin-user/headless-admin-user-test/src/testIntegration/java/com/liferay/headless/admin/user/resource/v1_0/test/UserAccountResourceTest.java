@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -55,8 +56,10 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -71,6 +74,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -146,6 +150,29 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		indexer.reindex(_testUser);
 
 		_accountEntry = _getAccountEntry();
+
+		User otherUser = UserTestUtil.addUser(false);
+
+		otherUser = _userLocalService.updatePassword(
+			otherUser.getUserId(), "test", "test", false, true);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), otherUser);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), User.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
+
+		UserAccountResource.Builder builder = UserAccountResource.builder();
+
+		_otherUserAccountResource = builder.authentication(
+			otherUser.getEmailAddress(), "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@Override
@@ -1347,32 +1374,41 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _accountEntry.getAccountEntryId();
 	}
 
-	private boolean _hasRole(Role role, User user) throws Exception {
-		UserAccount userAccount = userAccountResource.getUserAccount(
-			user.getUserId());
+	private RoleBrief[] _getUserAccountRoleBriefs(UserAccount userAccount) {
+		RoleBrief[] roleBriefs = userAccount.getRoleBriefs();
 
-		for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
+		for (OrganizationBrief organizationBrief :
+				userAccount.getOrganizationBriefs()) {
+
+			roleBriefs = ArrayUtil.append(
+				roleBriefs, organizationBrief.getRoleBriefs());
+		}
+
+		for (SiteBrief siteBrief : userAccount.getSiteBriefs()) {
+			roleBriefs = ArrayUtil.append(
+				roleBriefs, siteBrief.getRoleBriefs());
+		}
+
+		return roleBriefs;
+	}
+
+	private boolean _hasRole(Role role, RoleBrief[] roleBriefs) {
+		for (RoleBrief roleBrief : roleBriefs) {
 			if (Objects.equals(role.getRoleId(), roleBrief.getId())) {
 				return true;
 			}
 		}
 
-		for (OrganizationBrief organizationBrief :
-				userAccount.getOrganizationBriefs()) {
+		return false;
+	}
 
-			for (RoleBrief roleBrief : organizationBrief.getRoleBriefs()) {
-				if (Objects.equals(role.getRoleId(), roleBrief.getId())) {
-					return true;
-				}
-			}
-		}
+	private boolean _hasRole(Role role, User user) throws Exception {
+		if (_hasRole(
+				role,
+				_getUserAccountRoleBriefs(
+					userAccountResource.getUserAccount(user.getUserId())))) {
 
-		for (SiteBrief siteBrief : userAccount.getSiteBriefs()) {
-			for (RoleBrief roleBrief : siteBrief.getRoleBriefs()) {
-				if (Objects.equals(role.getRoleId(), roleBrief.getId())) {
-					return true;
-				}
-			}
+			return true;
 		}
 
 		return false;
@@ -1509,6 +1545,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		Assert.assertTrue(_hasRole(inheritedRole, user));
 
 		if (group.isUserGroup()) {
+			_testGetUserAccountWithRolesWithNoPermission(user, inheritedRole);
+
 			return;
 		}
 
@@ -1526,6 +1564,21 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			user.getUserId(), group.getGroupId(), groupRole.getRoleId());
 
 		Assert.assertTrue(_hasRole(groupRole, user));
+
+		_testGetUserAccountWithRolesWithNoPermission(
+			user, inheritedRole, groupRole);
+	}
+
+	private void _testGetUserAccountWithRolesWithNoPermission(
+			User user, Role... roles)
+		throws Exception {
+
+		RoleBrief[] roleBriefs = _getUserAccountRoleBriefs(
+			_otherUserAccountResource.getUserAccount(user.getUserId()));
+
+		for (Role role : roles) {
+			Assert.assertFalse(_hasRole(role, roleBriefs));
+		}
 	}
 
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)
@@ -1604,9 +1657,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
+	private UserAccountResource _otherUserAccountResource;
 	private UserAccount _regularUserAccount;
 	private String _regularUserAccountCurrentPassword;
 	private UserAccountResource _regularUserAccountResource;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

@@ -65,24 +65,21 @@ public class PortalAddressOSGiCommands {
 	public void populateCompanyCountries(long companyId) throws Exception {
 		Company company = _companyLocalService.getCompany(companyId);
 
-		int count = _countryLocalService.getCompanyCountriesCount(
-			company.getCompanyId());
+		int count = _countryLocalService.getCompanyCountriesCount(companyId);
 
 		if (count > 0) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
 						"Skipping country initialization. Countries are ",
-						"already initialized for company ",
-						company.getCompanyId(), "."));
+						"already initialized for company ", companyId, "."));
 			}
 
 			return;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Initializing countries for company " + company.getCompanyId());
+			_log.debug("Initializing countries for company " + companyId);
 		}
 
 		JSONArray countriesJSONArray = _getJSONArray(
@@ -96,7 +93,7 @@ public class PortalAddressOSGiCommands {
 
 				ServiceContext serviceContext = new ServiceContext();
 
-				serviceContext.setCompanyId(company.getCompanyId());
+				serviceContext.setCompanyId(companyId);
 
 				User guestUser = company.getGuestUser();
 
@@ -135,9 +132,7 @@ public class PortalAddressOSGiCommands {
 		Company company = _companyLocalService.getCompany(companyId);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Reinitializing countries for company " +
-					company.getCompanyId());
+			_log.debug("Reinitializing countries for company " + companyId);
 		}
 
 		JSONArray countriesJSONArray = _getJSONArray(
@@ -168,7 +163,7 @@ public class PortalAddressOSGiCommands {
 				else {
 					ServiceContext serviceContext = new ServiceContext();
 
-					serviceContext.setCompanyId(company.getCompanyId());
+					serviceContext.setCompanyId(companyId);
 
 					User guestUser = company.getGuestUser();
 

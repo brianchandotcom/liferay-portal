@@ -26,5 +26,10 @@ public interface CTEntryConflictHelper {
 
 	public boolean hasModificationConflict(
 		CTEntry ctEntry, long targetCTCollectionId);
+	public default boolean hasModificationConflict(
+		CTEntry ctEntry, long targetCTCollectionId) {
+
+		return false;
+	}
 
 }

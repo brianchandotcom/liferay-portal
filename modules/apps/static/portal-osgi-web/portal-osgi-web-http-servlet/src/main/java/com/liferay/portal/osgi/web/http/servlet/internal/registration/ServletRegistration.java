@@ -10,31 +10,42 @@
  *     IBM Corporation - bug fixes and enhancements
  *     Raymond Augé <raymond.auge@liferay.com> - Bug 436698
  *******************************************************************************/
+
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
-import javax.servlet.Servlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController.ServiceHolder;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.Match;
+
+import java.util.Objects;
+
+import javax.servlet.Servlet;
+
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.ErrorPageDTO;
 import org.osgi.service.http.runtime.dto.ServletDTO;
 
-//This class wraps the servlet object registered in the HttpService.registerServlet call, to manage the context classloader when handleRequests are being asked.
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 
 	public ServletRegistration(
-		ServiceHolder<Servlet> servletHolder, ServletDTO servletDTO, ErrorPageDTO errorPageDTO,
+		ContextController.ServiceHolder<Servlet> serviceHolder,
+		ServletDTO servletDTO, ErrorPageDTO errorPageDTO,
 		ServletContextHelper servletContextHelper,
 		ContextController contextController, ClassLoader legacyTCCL) {
 
-		super(servletHolder, servletDTO, servletContextHelper, contextController, legacyTCCL);
+		super(
+			serviceHolder, servletDTO, servletContextHelper, contextController,
+			legacyTCCL);
 
-		this.errorPageDTO = errorPageDTO;
+		_errorPageDTO = errorPageDTO;
 	}
 
 	public ErrorPageDTO getErrorPageDTO() {
-		return errorPageDTO;
+		return _errorPageDTO;
 	}
 
 	@Override
@@ -57,15 +68,15 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 		String name, String servletPath, String pathInfo, String extension,
 		Match match) {
 
-		if ((errorPageDTO != null) && (name != null)) {
-			for (long errorCode : errorPageDTO.errorCodes) {
-				if (String.valueOf(errorCode).equals(name)) {
+		if ((_errorPageDTO != null) && (name != null)) {
+			for (long errorCode : _errorPageDTO.errorCodes) {
+				if (Objects.equals(name, String.valueOf(errorCode))) {
 					return name;
 				}
 			}
 
-			for (String exception : errorPageDTO.exceptions) {
-				if (exception.equals(name)) {
+			for (String exception : _errorPageDTO.exceptions) {
+				if (name.equals(exception)) {
 					return name;
 				}
 			}
@@ -74,6 +85,6 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 		return super.match(name, servletPath, pathInfo, extension, match);
 	}
 
-	private ErrorPageDTO errorPageDTO;
+	private final ErrorPageDTO _errorPageDTO;
 
 }

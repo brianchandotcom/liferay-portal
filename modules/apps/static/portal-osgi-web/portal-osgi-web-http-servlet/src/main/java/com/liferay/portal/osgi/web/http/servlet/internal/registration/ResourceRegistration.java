@@ -11,29 +11,38 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
-import javax.servlet.Servlet;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController.ServiceHolder;
+
+import javax.servlet.Servlet;
+
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.ResourceDTO;
+
 /**
  * @author Raymond Augé
  */
 public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
 
 	public ResourceRegistration(
-		ServiceHolder<Servlet> servletHolder, ResourceDTO resourceDTO,
-		ServletContextHelper servletContextHelper,
+		ContextController.ServiceHolder<Servlet> serviceHolder,
+		ResourceDTO resourceDTO, ServletContextHelper servletContextHelper,
 		ContextController contextController, ClassLoader legacyTCCL) {
 
-		super(servletHolder, resourceDTO, servletContextHelper, contextController, legacyTCCL);
+		super(
+			serviceHolder, resourceDTO, servletContextHelper, contextController,
+			legacyTCCL);
 
-		name = servletHolder.get().getClass().getName().concat("#").concat(getD().prefix); //$NON-NLS-1$
+		Servlet servlet = serviceHolder.get();
+
+		Class<?> clazz = servlet.getClass();
+
+		_name = StringBundler.concat(clazz.getName(), "#", getD().prefix);
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return _name;
 	}
 
 	@Override
@@ -46,6 +55,6 @@ public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
 		return getD().serviceId;
 	}
 
-	private final String name;
+	private final String _name;
 
 }

@@ -13,6 +13,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.Match;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
+
 import org.osgi.dto.DTO;
 
 /**
@@ -29,27 +30,8 @@ public abstract class MatchableRegistration<T, D extends DTO>
 		String name, String servletPath, String pathInfo, String extension,
 		Match match);
 
-	protected boolean isPathWildcardMatch(
-		String pattern, String servletPath, String pathInfo) {
-
-		int cpl = pattern.length() - 2;
-
-		if (pattern.endsWith(Const.SLASH_STAR) && servletPath.regionMatches(0, pattern, 0, cpl)) {
-			if ((pattern.length() > 2) && !pattern.startsWith(servletPath)) {
-				return false;
-			}
-
-			if (servletPath.length() == cpl) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected boolean doMatch(
-			String pattern, String servletPath, String pathInfo,
-			String extension, Match match)
+			String pattern, String servletPath, String extension, Match match)
 		throws IllegalArgumentException {
 
 		if (match == Match.EXACT) {
@@ -65,8 +47,8 @@ public abstract class MatchableRegistration<T, D extends DTO>
 				return true;
 			}
 
-			if ((match == Match.REGEX) && isPathWildcardMatch(
-					pattern, servletPath, pathInfo)) {
+			if ((match == Match.REGEX) &&
+				isPathWildcardMatch(pattern, servletPath)) {
 
 				return true;
 			}
@@ -80,8 +62,26 @@ public abstract class MatchableRegistration<T, D extends DTO>
 				patterPrefix = pattern.substring(0, index - 1);
 			}
 
-			if ((index != -1) && (servletPath.equals(patterPrefix))) {
+			if ((index != -1) && servletPath.equals(patterPrefix)) {
 				return pattern.endsWith(Const.DOT + extension);
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean isPathWildcardMatch(String pattern, String servletPath) {
+		int cpl = pattern.length() - 2;
+
+		if (pattern.endsWith(Const.SLASH_STAR) &&
+			servletPath.regionMatches(0, pattern, 0, cpl)) {
+
+			if ((pattern.length() > 2) && !pattern.startsWith(servletPath)) {
+				return false;
+			}
+
+			if (servletPath.length() == cpl) {
+				return true;
 			}
 		}
 

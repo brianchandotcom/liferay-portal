@@ -15,14 +15,16 @@ import MDFRequestBudget from '../../../../interfaces/mdfRequestBudget';
 import getDTOFromMDFRequestBudget from '../../../../utils/dto/mdf-request-budget/getDTOFromMDFRequestBudget';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
+import {ResourceName} from '../enum/resourceName';
 
 export default async function updateMDFRequestActivityBudget(
+	apiOption: ResourceName,
 	activityId: number,
 	budget: MDFRequestBudget,
 	company?: LiferayAccountBrief
 ) {
 	return await liferayFetcher.put(
-		`/o/${LiferayAPIs.OBJECT}/budgets/${budget.id}`,
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${budget.externalReferenceCode}`,
 		Liferay.authToken,
 		getDTOFromMDFRequestBudget(budget, activityId, company)
 	);

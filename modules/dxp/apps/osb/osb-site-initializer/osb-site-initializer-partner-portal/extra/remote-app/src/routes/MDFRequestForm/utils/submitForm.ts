@@ -16,9 +16,8 @@ import mdfRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFRequest from '../../../common/interfaces/mdfRequest';
 import {Liferay} from '../../../common/services/liferay';
-import createMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
+import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import deleteMDFRequestActivities from '../../../common/services/liferay/object/activity/deleteMDFRequestActivities';
-import deleteMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/deleteMDFRequestActivitiesSF';
 import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
 import createMDFRequestActivityBudget from '../../../common/services/liferay/object/budgets/createMDFRequestActivityBudgets';
 import deleteMDFRequestActivityBudgets from '../../../common/services/liferay/object/budgets/deleteMDFRequestActivityBudgets';
@@ -57,11 +56,10 @@ export default async function submitForm(
 		if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
 			dtoMDFRequest = await createMDFRequestProxyAPI(values);
 		}
-		else if (values.id) {
+		else if (values.id && values.externalReferenceCode) {
 			dtoMDFRequest = await updateMDFRequest(
 				ResourceName.MDF_REQUEST_DXP,
-				values,
-				values.id
+				values
 			);
 		}
 		else {
@@ -74,47 +72,48 @@ export default async function submitForm(
 		if (values?.activities?.length && dtoMDFRequest?.id) {
 			const dtoMDFRequestActivities = await Promise.all(
 				values?.activities?.map(async (activity) => {
-					if (activity.id && activity.removed) {
-						if (activity.externalReferenceCode) {
-							await deleteMDFRequestActivitiesSF(
+					if (
+						activity.id &&
+						activity.removed &&
+						activity.externalReferenceCode
+					) {
+						if (activity.submitted) {
+							await deleteMDFRequestActivities(
 								ResourceName.ACTIVITY_SALESFORCE,
-								activity.externalReferenceCode as string
+								activity.externalReferenceCode
 							);
 						}
 
 						await deleteMDFRequestActivities(
 							ResourceName.ACTIVITY_DXP,
-							activity.id as number
+							activity.externalReferenceCode
 						);
 
 						return null;
 					}
-					if (values.mdfRequestStatus.key !== Status.DRAFT.key) {
+					if (
+						dtoMDFRequest &&
+						values.mdfRequestStatus.key !== Status.DRAFT.key
+					) {
 						return createMDFRequestActivitiesProxyAPI(
 							activity,
-							values.company,
-							dtoMDFRequest?.id,
-							dtoMDFRequest?.externalReferenceCode
+							dtoMDFRequest
 						);
 					}
 					else {
-						if (activity.id) {
-							await updateMDFRequestActivities(
+						if (activity.id && dtoMDFRequest) {
+							return await updateMDFRequestActivities(
 								ResourceName.ACTIVITY_DXP,
 								activity,
-								values.company,
-								dtoMDFRequest?.id,
-								dtoMDFRequest?.externalReferenceCode,
+								dtoMDFRequest,
 								activity.externalReferenceCode
 							);
 						}
-						else {
-							return await createMDFRequestActivitiesSF(
+						else if (dtoMDFRequest) {
+							return await createMDFRequestActivities(
 								ResourceName.ACTIVITY_DXP,
 								activity,
-								values.company,
-								dtoMDFRequest?.id,
-								dtoMDFRequest?.externalReferenceCode,
+								dtoMDFRequest,
 								activity.externalReferenceCode
 							);
 						}
@@ -128,16 +127,21 @@ export default async function submitForm(
 
 					if (activity.budgets?.length && dtoActivity?.id) {
 						activity.budgets?.map(async (budget) => {
-							if (budget?.id) {
+							if (
+								dtoActivity.id &&
+								budget.id &&
+								budget.externalReferenceCode
+							) {
 								await updateMDFRequestActivityBudget(
-									dtoActivity.id as number,
+									ResourceName.BUDGET,
+									dtoActivity.id,
 									budget,
 									values.company
 								);
 								if (budget.removed) {
 									await deleteMDFRequestActivityBudgets(
 										ResourceName.BUDGET,
-										budget.id as number
+										budget
 									);
 								}
 							}

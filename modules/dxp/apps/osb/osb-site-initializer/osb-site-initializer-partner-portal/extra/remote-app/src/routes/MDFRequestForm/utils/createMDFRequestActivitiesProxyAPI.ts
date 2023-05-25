@@ -10,66 +10,58 @@
  */
 
 import MDFRequestActivityDTO from '../../../common/interfaces/dto/mdfRequestActivityDTO';
-import LiferayAccountBrief from '../../../common/interfaces/liferayAccountBrief';
+import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import MDFRequestActivity from '../../../common/interfaces/mdfRequestActivity';
 import createMDFRequestActivities from '../../../common/services/liferay/object/activity/createMDFRequestActivities';
 import updateMDFRequestActivities from '../../../common/services/liferay/object/activity/updateMDFRequestActivities';
-import updateMDFRequestActivitiesSF from '../../../common/services/liferay/object/activity/updateMDFRequestActivitiesSF';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 
 export default async function createMDFRequestActivitiesProxyAPI(
 	mdfRequestActivity: MDFRequestActivity,
-	company?: LiferayAccountBrief,
-	mdfRequestId?: number,
-	mdFRequestExternalReferenceCode?: string
+	mdfRequestDTO: MDFRequestDTO
 ) {
 	let dtoMDFRequestActivitySFResponse:
 		| MDFRequestActivityDTO
 		| undefined = undefined;
 
 	if (
-		mdfRequestActivity.externalReferenceCode ||
-		mdfRequestActivity.externalReferenceCodeSF
+		mdfRequestActivity.externalReferenceCode &&
+		mdfRequestActivity.submitted
 	) {
-		dtoMDFRequestActivitySFResponse = await updateMDFRequestActivitiesSF(
+		dtoMDFRequestActivitySFResponse = await updateMDFRequestActivities(
 			ResourceName.ACTIVITY_SALESFORCE,
 			mdfRequestActivity,
-			company,
-			mdfRequestId,
-			mdfRequestActivity.externalReferenceCode
+			mdfRequestDTO
 		);
 	}
 	else {
 		dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_SALESFORCE,
 			mdfRequestActivity,
-			company,
-			mdfRequestId,
-			mdFRequestExternalReferenceCode,
-			mdfRequestActivity.externalReferenceCode
+			mdfRequestDTO
 		);
 	}
 
 	let dtoMDFRequestResponse: MDFRequestActivityDTO | undefined = undefined;
 
 	if (dtoMDFRequestActivitySFResponse?.externalReferenceCode) {
-		if (mdfRequestActivity.id) {
+		if (mdfRequestActivity.id && mdfRequestActivity.externalReferenceCode) {
+			mdfRequestActivity.submitted = true;
+
 			dtoMDFRequestResponse = await updateMDFRequestActivities(
 				ResourceName.ACTIVITY_DXP,
 				mdfRequestActivity,
-				company,
-				mdfRequestId,
-				mdFRequestExternalReferenceCode,
+				mdfRequestDTO,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
 		}
 		else {
+			mdfRequestActivity.submitted = true;
+
 			dtoMDFRequestResponse = await createMDFRequestActivities(
 				ResourceName.ACTIVITY_DXP,
 				mdfRequestActivity,
-				company,
-				mdfRequestId,
-				mdFRequestExternalReferenceCode,
+				mdfRequestDTO,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
 		}

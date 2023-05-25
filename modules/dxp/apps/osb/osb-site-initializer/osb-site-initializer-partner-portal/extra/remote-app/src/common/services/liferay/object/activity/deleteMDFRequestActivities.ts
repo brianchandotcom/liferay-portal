@@ -16,10 +16,10 @@ import {ResourceName} from '../enum/resourceName';
 
 export default async function deleteMDFRequestActivities(
 	apiOption: ResourceName,
-	mdfRequestActivityId: number
+	externalReferenceCode: string
 ) {
 	return await liferayFetcher.delete(
-		`/o/${LiferayAPIs.OBJECT}/${apiOption}/${mdfRequestActivityId}`,
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${externalReferenceCode}`,
 		Liferay.authToken
 	);
 }

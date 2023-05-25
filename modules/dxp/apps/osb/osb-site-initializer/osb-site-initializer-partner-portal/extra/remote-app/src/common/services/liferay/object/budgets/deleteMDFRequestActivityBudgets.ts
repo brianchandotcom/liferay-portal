@@ -10,16 +10,17 @@
  */
 
 import {Liferay} from '../..';
+import MDFRequestBudget from '../../../../interfaces/mdfRequestBudget';
 import {LiferayAPIs} from '../../common/enums/apis';
 import liferayFetcher from '../../common/utils/fetcher';
 import {ResourceName} from '../enum/resourceName';
 
 export default async function deleteMDFRequestActivityBudgets(
 	apiOption: ResourceName,
-	mdfRequestActivityBudgetId: number
+	budget: MDFRequestBudget
 ) {
 	return await liferayFetcher.delete(
-		`/o/${LiferayAPIs.OBJECT}/${apiOption}/${mdfRequestActivityBudgetId}`,
+		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${budget.externalReferenceCode}`,
 		Liferay.authToken
 	);
 }

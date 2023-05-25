@@ -5,6 +5,10 @@ definition {
 		selenium.waitForElementPresent();
 	}
 
+	function waitForElementPresentNoException {
+		selenium.waitForElementPresent(${locator1}, "false");
+	}
+
 	function waitForLastScript {
 		selenium.waitForElementPresent("xpath=(//script)[last()]");
 	}

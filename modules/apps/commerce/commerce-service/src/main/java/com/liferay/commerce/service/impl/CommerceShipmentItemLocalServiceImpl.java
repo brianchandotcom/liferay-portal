@@ -103,7 +103,7 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItemPersistence.create(commerceShipmentItemId);
 
 		commerceShipmentItem.setExternalReferenceCode(externalReferenceCode);
-		commerceShipmentItem.setGroupId(serviceContext.getScopeGroupId());
+		commerceShipmentItem.setGroupId(commerceOrderItem.getGroupId());
 		commerceShipmentItem.setCompanyId(user.getCompanyId());
 		commerceShipmentItem.setUserId(user.getUserId());
 		commerceShipmentItem.setUserName(user.getFullName());

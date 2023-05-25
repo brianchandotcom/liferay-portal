@@ -108,7 +108,7 @@ import org.junit.runner.RunWith;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPS-146755", "LPS-163716", "LPS-179803"})
+@FeatureFlags({"LPS-146755", "LPS-163716", "LPS-172017", "LPS-179803"})
 @RunWith(Arquillian.class)
 public class ObjectFieldLocalServiceTest {
 
@@ -181,6 +181,26 @@ public class ObjectFieldLocalServiceTest {
 					).name(
 						"a" + RandomTestUtil.randomString()
 					).localized(
+						true
+					).build())));
+
+		// Localized object fields must not be required
+
+		_assertFailure(
+			ObjectFieldLocalizedException.class,
+			"Localized object fields must not be required",
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).localized(
+						true
+					).required(
 						true
 					).build())));
 

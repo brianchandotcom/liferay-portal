@@ -215,7 +215,18 @@ public class LayoutActionsDisplayContext {
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()
 		).setParameter(
-			"selPlid", layout.getPlid()
+			"selPlid",
+			() -> {
+				if (layout.isTypeAssetDisplay() && !layout.isDraftLayout()) {
+					Layout draftLayout = layout.fetchDraftLayout();
+
+					if (draftLayout != null) {
+						return draftLayout.getPlid();
+					}
+				}
+
+				return layout.getPlid();
+			}
 		).buildPortletURL(
 		).toString();
 	}

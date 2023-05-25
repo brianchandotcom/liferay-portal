@@ -150,14 +150,22 @@ stopDocker {
 
 subprojects {
 	afterEvaluate {
+		task moveToDocker(type: Exec)
+
 		deploy {
 			doFirst {
 				delete file(liferay.deployDir)
 			}
 
+			finalizedBy moveToDocker
+
 			liferay {
 				deployDir = new File("${rootDir}/dxp/apps/osb/osb-faro/build/deploy")
 			}
+		}
+
+		moveToDocker {
+			commandLine "docker", "cp", "-a", liferay.deployDir, dockerContainerId + ":/opt/liferay"
 		}
 	}
 

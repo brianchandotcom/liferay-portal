@@ -229,7 +229,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		long companyId, long repositoryId, String dirName) {
 
 		String prefix =
-			StoreArea.getPath(companyId, repositoryId) + StringPool.SLASH;
+			StoreArea.getCurrentStoreAreaPath(companyId, repositoryId) +
+				StringPool.SLASH;
 
 		return TransformUtil.transform(
 			_getFilePaths(companyId, repositoryId, dirName),
@@ -338,7 +339,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	private String _getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
-		return StoreArea.getPath(companyId, repositoryId, fileName);
+		return StoreArea.getCurrentStoreAreaPath(
+			companyId, repositoryId, fileName);
 	}
 
 	private String[] _getFilePaths(
@@ -372,7 +374,7 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		return StoreArea.getPath(
+		return StoreArea.getCurrentStoreAreaPath(
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
@@ -414,7 +416,7 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private String _getRepositoryKey(long companyId, long repositoryId) {
-		return StoreArea.getPath(companyId, repositoryId);
+		return StoreArea.getCurrentStoreAreaPath(companyId, repositoryId);
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {

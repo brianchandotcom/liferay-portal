@@ -28,26 +28,12 @@ public enum StoreArea {
 
 	DELETED("_deleted"), LIVE(StringPool.BLANK);
 
-	public static String getPath(
+	public static String getCurrentStoreAreaPath(
 		long companyId, long repositoryId, String... path) {
 
 		StoreArea storeArea = _storeAreaThreadLocal.get();
 
-		StringBundler sb = new StringBundler(
-			5 + (ArrayUtil.getLength(path) * 2));
-
-		sb.append(storeArea._namespace);
-		sb.append(StringPool.SLASH);
-		sb.append(String.valueOf(companyId));
-		sb.append(StringPool.SLASH);
-		sb.append(String.valueOf(repositoryId));
-
-		if (ArrayUtil.isNotEmpty(path)) {
-			sb.append(StringPool.SLASH);
-			sb.append(StringUtil.merge(path, StringPool.SLASH));
-		}
-
-		return sb.toString();
+		return storeArea.getPath(companyId, repositoryId, path);
 	}
 
 	public static <T extends Throwable> void withStoreArea(
@@ -69,6 +55,24 @@ public enum StoreArea {
 	public String getPath(long companyId) {
 		return StringBundler.concat(
 			_namespace, StringPool.SLASH, String.valueOf(companyId));
+	}
+
+	public String getPath(long companyId, long repositoryId, String... path) {
+		StringBundler sb = new StringBundler(
+			5 + (ArrayUtil.getLength(path) * 2));
+
+		sb.append(_namespace);
+		sb.append(StringPool.SLASH);
+		sb.append(String.valueOf(companyId));
+		sb.append(StringPool.SLASH);
+		sb.append(String.valueOf(repositoryId));
+
+		if (ArrayUtil.isNotEmpty(path)) {
+			sb.append(StringPool.SLASH);
+			sb.append(StringUtil.merge(path, StringPool.SLASH));
+		}
+
+		return sb.toString();
 	}
 
 	private StoreArea(String namespace) {

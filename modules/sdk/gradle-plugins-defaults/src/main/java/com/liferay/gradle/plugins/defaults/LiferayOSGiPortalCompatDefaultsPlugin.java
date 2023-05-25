@@ -34,6 +34,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -179,13 +180,17 @@ public class LiferayOSGiPortalCompatDefaultsPlugin
 			JavaExec.class);
 
 		javaExec.dependsOn(importFilesTask);
+
+		Property<String> mainClass = javaExec.getMainClass();
+
+		mainClass.set(
+			"com.liferay.portal.tools.portal.compat.bytecode.transformer." +
+				"PortalCompatBytecodeTransformer");
+
 		javaExec.setClasspath(bytecodeTransformerConfiguration);
 		javaExec.setDescription(
 			"Processes imported classes using the Liferay Portal Tools " +
 				"Portal Compat Bytecode Transformer.");
-		javaExec.setMain(
-			"com.liferay.portal.tools.portal.compat.bytecode.transformer." +
-				"PortalCompatBytecodeTransformer");
 
 		javaExec.systemProperty(
 			"classes.dir",

@@ -20,6 +20,7 @@ import java.util.Map;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
@@ -39,7 +40,9 @@ import org.gradle.api.tasks.SkipWhenEmpty;
 public class BuildDeploymentHelperTask extends JavaExec {
 
 	public BuildDeploymentHelperTask() {
-		setMain("com.liferay.deployment.helper.DeploymentHelper");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.deployment.helper.DeploymentHelper");
 	}
 
 	public BuildDeploymentHelperTask deploymentFiles(

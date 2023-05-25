@@ -20,6 +20,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.util.GUtil;
 
@@ -92,12 +93,16 @@ public class TestrayPlugin implements Plugin<Project> {
 		JavaExec javaExec = GradleUtil.addTask(
 			project, IMPORT_TESTRAY_RESULTS_TASK_NAME, JavaExec.class);
 
-		javaExec.setClasspath(_getTestrayClasspath(project));
 		javaExec.setDescription("Import Testray results.");
 		javaExec.setGroup("testray");
-		javaExec.setMain(
+
+		Property<String> mainClass = javaExec.getMainClass();
+
+		mainClass.set(
 			"com.liferay.jenkins.results.parser.testray." +
 				"DXPCloudClientTestrayImporter");
+
+		javaExec.setClasspath(_getTestrayClasspath(project));
 
 		return javaExec;
 	}

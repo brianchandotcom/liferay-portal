@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -33,7 +34,10 @@ import org.gradle.util.CollectionUtils;
 public class BuildDBTask extends JavaExec {
 
 	public BuildDBTask() {
-		setMain("com.liferay.portal.tools.DBBuilder");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.portal.tools.DBBuilder");
+
 		setMaxHeapSize("384m");
 		systemProperty(
 			"external-properties",

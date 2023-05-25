@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -42,11 +43,15 @@ import org.gradle.util.CollectionUtils;
 public class BuildServiceTask extends JavaExec {
 
 	public BuildServiceTask() {
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set(
+			"com.liferay.portal.tools.service.builder.ServiceBuilder");
+
 		modelHintsConfigs((Object[])ServiceBuilderArgs.MODEL_HINTS_CONFIGS);
 		readOnlyPrefixes((Object[])ServiceBuilderArgs.READ_ONLY_PREFIXES);
 		resourceActionsConfigs(
 			(Object[])ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS);
-		setMain("com.liferay.portal.tools.service.builder.ServiceBuilder");
 		springNamespaces("beans");
 		systemProperty("file.encoding", StandardCharsets.UTF_8.name());
 	}

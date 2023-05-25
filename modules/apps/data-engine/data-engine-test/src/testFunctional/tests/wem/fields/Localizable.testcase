@@ -596,8 +596,6 @@ definition {
 	@description = "This is a test for LRQA-66427. This test check it's not possible to translate a field with Localizable property set as Off in a simple field and a Field Group into a Fieldset"
 	@priority = 5
 	test ValidateNotTranslatableOnFieldset {
-		property portal.upstream = "quarantine";
-
 		DataEngine.gotoCreateNewFieldset();
 
 		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");

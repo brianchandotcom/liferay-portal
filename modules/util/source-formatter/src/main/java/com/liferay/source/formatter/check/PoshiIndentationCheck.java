@@ -110,21 +110,17 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 		Matcher matcher = _tablePattern.matcher(content);
 
 		while (matcher.find()) {
-			String indent = matcher.group(1) + StringPool.TAB;
 			String tableContent = matcher.group(2);
 
-			if (!tableContent.startsWith(StringPool.NEW_LINE)) {
-				return StringUtil.insert(
-					content, StringPool.NEW_LINE + indent, matcher.start(2));
+			String trimmedContent = tableContent.trim();
+
+			if (!trimmedContent.startsWith("|") &&
+				!trimmedContent.endsWith("|")) {
+
+				continue;
 			}
 
-			if (tableContent.endsWith(StringPool.PIPE)) {
-				return StringUtil.insert(
-					content, StringPool.NEW_LINE + matcher.group(1),
-					matcher.end(2));
-			}
-
-			String[] lines = tableContent.split("\n");
+			String[] lines = trimmedContent.split("\n");
 
 			for (int i = 0; i < lines.length; i++) {
 				if (Validator.isNull(lines[i])) {
@@ -136,20 +132,21 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 				if (!trimmedLine.startsWith("|") &&
 					!trimmedLine.endsWith("|")) {
 
-					break;
+					return content;
 				}
 
-				lines[i] = indent + trimmedLine;
+				lines[i] = matcher.group(1) + StringPool.TAB + trimmedLine;
 			}
 
-			StringBundler sb = new StringBundler(lines.length);
+			StringBundler sb = new StringBundler((lines.length * 2) + 2);
 
 			for (String line : lines) {
-				sb.append(line);
 				sb.append(CharPool.NEW_LINE);
+				sb.append(line);
 			}
 
-			sb.setIndex(sb.index() - 1);
+			sb.append(CharPool.NEW_LINE);
+			sb.append(matcher.group(1));
 
 			String replacement = sb.toString();
 

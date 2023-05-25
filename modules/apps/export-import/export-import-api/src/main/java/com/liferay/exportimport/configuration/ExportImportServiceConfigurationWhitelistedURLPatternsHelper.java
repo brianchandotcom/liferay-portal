@@ -19,8 +19,10 @@ package com.liferay.exportimport.configuration;
  */
 public interface ExportImportServiceConfigurationWhitelistedURLPatternsHelper {
 
-	public boolean isWhitelistedURL(String url);
+	public boolean isWhitelistedURL(long companyId, String url);
 
-	public void rebuildURLPatternMapper();
+	public void rebuildURLPatternMapper(long companyId) throws Exception;
+
+	public void rebuildURLPatternMappers();
 
 }

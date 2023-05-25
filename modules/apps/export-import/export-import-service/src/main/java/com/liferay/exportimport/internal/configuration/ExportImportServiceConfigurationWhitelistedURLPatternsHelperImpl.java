@@ -16,16 +16,24 @@ package com.liferay.exportimport.internal.configuration;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.configuration.ExportImportServiceConfigurationWhitelistedURLPatternsHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
 import com.liferay.petra.url.pattern.mapper.URLPatternMapperFactory;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Bowerman
@@ -38,12 +46,19 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 	implements ExportImportServiceConfigurationWhitelistedURLPatternsHelper {
 
 	@Override
-	public boolean isWhitelistedURL(String url) {
-		if (_urlPatternMapper == null) {
-			return false;
+	public boolean isWhitelistedURL(long companyId, String url) {
+		URLPatternMapper<Boolean> urlPatternMapper = _urlPatternMappers.get(
+			companyId);
+
+		if (urlPatternMapper == null) {
+			urlPatternMapper = _urlPatternMappers.get(CompanyConstants.SYSTEM);
+
+			if (urlPatternMapper == null) {
+				return false;
+			}
 		}
 
-		Boolean result = _urlPatternMapper.getValue(url);
+		Boolean result = urlPatternMapper.getValue(url);
 
 		if (result == null) {
 			return false;
@@ -53,12 +68,16 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 	}
 
 	@Override
-	public void rebuildURLPatternMapper() {
+	public void rebuildURLPatternMapper(long companyId) throws Exception {
+		ExportImportServiceConfiguration exportImportServiceConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				ExportImportServiceConfiguration.class, companyId);
+
 		String[] whitelistedURLPatterns =
-			_exportImportServiceConfiguration.whitelistedURLPatterns();
+			exportImportServiceConfiguration.whitelistedURLPatterns();
 
 		if (ArrayUtil.isEmpty(whitelistedURLPatterns)) {
-			_urlPatternMapper = null;
+			_urlPatternMappers.remove(companyId);
 
 			return;
 		}
@@ -69,20 +88,51 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 			whitelistedURLPatternsMap.put(whitelistedURLPattern, true);
 		}
 
-		_urlPatternMapper = URLPatternMapperFactory.create(
-			whitelistedURLPatternsMap);
+		_urlPatternMappers.put(
+			companyId,
+			URLPatternMapperFactory.create(whitelistedURLPatternsMap));
+	}
+
+	public void rebuildURLPatternMappers() {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				try {
+					rebuildURLPatternMapper(companyId);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Unable to instantiate URL pattern mapper for ",
+								"company ", companyId),
+							exception);
+					}
+					else {
+						_log.error(
+							StringBundler.concat(
+								"Unable to instantiate URL pattern mapper for ",
+								"company ", companyId, ": ",
+								exception.getMessage()));
+					}
+				}
+			});
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_exportImportServiceConfiguration = ConfigurableUtil.createConfigurable(
-			ExportImportServiceConfiguration.class, properties);
-
-		rebuildURLPatternMapper();
+		rebuildURLPatternMappers();
 	}
 
-	private volatile ExportImportServiceConfiguration
-		_exportImportServiceConfiguration;
-	private URLPatternMapper<Boolean> _urlPatternMapper;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	private final Map<Long, URLPatternMapper<Boolean>> _urlPatternMappers =
+		Collections.synchronizedMap(new LinkedHashMap<>());
 
 }

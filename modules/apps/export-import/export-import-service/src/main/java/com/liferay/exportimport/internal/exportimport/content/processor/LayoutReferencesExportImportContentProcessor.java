@@ -576,7 +576,8 @@ public class LayoutReferencesExportImportContentProcessor
 					 !_exportImportServiceConfiguration.
 						 validateLayoutReferences()) ||
 					_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
-						isWhitelistedURL(url)) {
+						isWhitelistedURL(
+							CompanyThreadLocal.getCompanyId(), url)) {
 
 					continue;
 				}
@@ -1041,7 +1042,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 			if (!url.startsWith(StringPool.SLASH) ||
 				_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
-					isWhitelistedURL(url)) {
+					isWhitelistedURL(companyId, url)) {
 
 				continue;
 			}

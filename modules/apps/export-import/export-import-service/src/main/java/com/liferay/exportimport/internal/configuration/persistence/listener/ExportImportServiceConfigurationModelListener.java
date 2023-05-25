@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,13 +47,23 @@ public class ExportImportServiceConfigurationModelListener
 	@Override
 	public void onAfterDelete(String pid) {
 		_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
-			rebuildURLPatternMapper();
+			rebuildURLPatternMappers();
 	}
 
 	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
-			rebuildURLPatternMapper();
+	public void onAfterSave(String pid, Dictionary<String, Object> properties)
+		throws ConfigurationModelListenerException {
+
+		try {
+			_exportImportServiceConfigurationWhitelistedURLPatternsHelper.
+				rebuildURLPatternMapper(
+					GetterUtil.getLong(properties.get("companyId")));
+		}
+		catch (Exception exception) {
+			throw new ConfigurationModelListenerException(
+				exception, ExportImportServiceConfiguration.class, getClass(),
+				properties);
+		}
 	}
 
 	@Override

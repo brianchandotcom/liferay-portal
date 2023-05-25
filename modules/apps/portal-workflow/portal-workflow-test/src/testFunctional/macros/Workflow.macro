@@ -494,7 +494,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		AssertElementNotPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
+		WaitForElementNotPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
 	}
 
 	macro deleteWorkflowDefinitionExtra {

@@ -51,6 +51,7 @@ const initialFormValues: MDFRequest = {
 	overallCampaignDescription: '',
 	overallCampaignName: '',
 	partnerCountry: {},
+	submitted: false,
 	targetAudienceRoles: [],
 	targetMarkets: [],
 	totalCostOfExpense: 0,
@@ -222,11 +223,13 @@ const MDFRequestForm = () => {
 					formikHelpers,
 					siteURL,
 					Status.PENDING,
-					actions.every(
-						(action) =>
-							action !==
-							PermissionActionType.UPDATE_WO_CHANGE_STATUS
-					)
+					mdfRequestId
+						? actions.every(
+								(action) =>
+									action !==
+									PermissionActionType.UPDATE_WO_CHANGE_STATUS
+						  )
+						: true
 				)
 			}
 		>

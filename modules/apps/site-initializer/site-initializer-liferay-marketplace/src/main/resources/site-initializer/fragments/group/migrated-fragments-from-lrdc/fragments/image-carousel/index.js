@@ -29,7 +29,8 @@ AUI().use('glide', () => {
 					const autoLeft = orderArr[i] * -100;
 					item.style.left =
 						'calc(' + autoLeft + '% + ' + leftSpacing + ')';
-				} else {
+				}
+				else {
 					item.style.left = leftSpacing;
 				}
 				item.style.top = spacerY * i + 'px';
@@ -107,7 +108,8 @@ AUI().use('glide', () => {
 					event.target.classList.contains('glide__slide--active')
 				) {
 					glide.go('>');
-				} else {
+				}
+				else {
 					glide.go('<');
 				}
 			});

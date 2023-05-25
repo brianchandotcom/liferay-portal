@@ -79,7 +79,8 @@ function main() {
 				activeTabPanel(item);
 			}
 		});
-	} else {
+	}
+	else {
 		tabItems.forEach(function (item, i) {
 			activeTab(tabItems[this.tabIndex]);
 			item.addEventListener('click', (event) => {

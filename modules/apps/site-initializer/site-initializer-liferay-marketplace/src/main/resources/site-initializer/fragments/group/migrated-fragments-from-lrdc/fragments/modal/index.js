@@ -30,7 +30,8 @@ window.addEventListener('load', () => {
 				configuration.contentInitEvent,
 				loadModalContent
 			);
-		} else {
+		}
+		else {
 			loadModalContent();
 		}
 	}

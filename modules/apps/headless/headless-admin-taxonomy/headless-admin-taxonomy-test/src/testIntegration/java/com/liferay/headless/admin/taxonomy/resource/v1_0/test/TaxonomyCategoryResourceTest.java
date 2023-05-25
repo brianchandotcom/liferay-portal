@@ -90,13 +90,17 @@ public class TaxonomyCategoryResourceTest
 
 		super.testGetTaxonomyVocabularyTaxonomyCategoriesPage();
 
-		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten();
+		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
+			_assetVocabulary);
 
-		_testGetInternalTaxonomyVocabularyTaxonomyCategoriesPageFlatten();
+		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
+			_depotAssetVocabulary);
 
-		_testGetDepotTaxonomyVocabularyTaxonomyCategoriesPageFlatten();
+		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
+			_globalAssetVocabulary);
 
-		_testGetGlobalTaxonomyVocabularyTaxonomyCategoriesPageFlatten();
+		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
+			_internalAssetVocabulary);
 	}
 
 	@Override
@@ -313,14 +317,14 @@ public class TaxonomyCategoryResourceTest
 		};
 	}
 
-	private void _testGetDepotTaxonomyVocabularyTaxonomyCategoriesPageFlatten()
+	private void _testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
+			AssetVocabulary assetVocabulary)
 		throws Exception {
 
 		AssetVocabulary irrelevantAssetVocabulary = _addAssetVocabulary();
 
 		TaxonomyCategory taxonomyCategory1 =
-			_addTaxonomyCategoryWithParentAssetVocabulary(
-				_depotAssetVocabulary);
+			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary);
 
 		TaxonomyCategory taxonomyCategory2 =
 			_addTaxonomyCategoryWithParentTaxonomyCategory(
@@ -335,282 +339,7 @@ public class TaxonomyCategoryResourceTest
 		Page<TaxonomyCategory> page =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_depotAssetVocabulary.getVocabularyId(), flatten, null,
-					null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyCategory1),
-			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
-
-		flatten = true;
-
-		page =
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_depotAssetVocabulary.getVocabularyId(), flatten, null,
-					null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
-			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
-
-		List<TaxonomyCategory> taxonomyCategories =
-			(List<TaxonomyCategory>)page.getItems();
-
-		TaxonomyCategory getTaxonomyCategory1 = taxonomyCategories.get(0);
-		TaxonomyCategory getTaxonomyCategory2 = taxonomyCategories.get(1);
-
-		ParentTaxonomyCategory parentTaxonomyCategory1 =
-			getTaxonomyCategory1.getParentTaxonomyCategory();
-		ParentTaxonomyCategory parentTaxonomyCategory2 =
-			getTaxonomyCategory2.getParentTaxonomyCategory();
-
-		Assert.assertTrue(
-			((parentTaxonomyCategory1 == null) &&
-			 (parentTaxonomyCategory2 != null)) ||
-			((parentTaxonomyCategory1 != null) &&
-			 (parentTaxonomyCategory2 == null)));
-
-		if (parentTaxonomyCategory1 != null) {
-			Assert.assertEquals(
-				getTaxonomyCategory2.getId(),
-				String.valueOf(parentTaxonomyCategory1.getId()));
-			Assert.assertEquals(
-				getTaxonomyCategory2.getName(),
-				String.valueOf(parentTaxonomyCategory1.getName()));
-		}
-
-		if (parentTaxonomyCategory2 != null) {
-			Assert.assertEquals(
-				getTaxonomyCategory1.getId(),
-				String.valueOf(parentTaxonomyCategory2.getId()));
-			Assert.assertEquals(
-				getTaxonomyCategory1.getName(),
-				String.valueOf(parentTaxonomyCategory2.getName()));
-		}
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			irrelevantTaxonomyCategory.getId());
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			taxonomyCategory2.getId());
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			taxonomyCategory1.getId());
-	}
-
-	private void _testGetGlobalTaxonomyVocabularyTaxonomyCategoriesPageFlatten()
-		throws Exception {
-
-		AssetVocabulary irrelevantAssetVocabulary = _addAssetVocabulary();
-
-		TaxonomyCategory taxonomyCategory1 =
-			_addTaxonomyCategoryWithParentAssetVocabulary(
-				_globalAssetVocabulary);
-
-		TaxonomyCategory taxonomyCategory2 =
-			_addTaxonomyCategoryWithParentTaxonomyCategory(
-				taxonomyCategory1.getId(), randomTaxonomyCategory());
-
-		TaxonomyCategory irrelevantTaxonomyCategory =
-			_addTaxonomyCategoryWithParentAssetVocabulary(
-				irrelevantAssetVocabulary);
-
-		Boolean flatten = false;
-
-		Page<TaxonomyCategory> page =
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_globalAssetVocabulary.getVocabularyId(), flatten, null,
-					null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyCategory1),
-			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
-
-		flatten = true;
-
-		page =
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_globalAssetVocabulary.getVocabularyId(), flatten, null,
-					null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
-			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
-
-		List<TaxonomyCategory> taxonomyCategories =
-			(List<TaxonomyCategory>)page.getItems();
-
-		TaxonomyCategory getTaxonomyCategory1 = taxonomyCategories.get(0);
-		TaxonomyCategory getTaxonomyCategory2 = taxonomyCategories.get(1);
-
-		ParentTaxonomyCategory parentTaxonomyCategory1 =
-			getTaxonomyCategory1.getParentTaxonomyCategory();
-		ParentTaxonomyCategory parentTaxonomyCategory2 =
-			getTaxonomyCategory2.getParentTaxonomyCategory();
-
-		Assert.assertTrue(
-			((parentTaxonomyCategory1 == null) &&
-			 (parentTaxonomyCategory2 != null)) ||
-			((parentTaxonomyCategory1 != null) &&
-			 (parentTaxonomyCategory2 == null)));
-
-		if (parentTaxonomyCategory1 != null) {
-			Assert.assertEquals(
-				getTaxonomyCategory2.getId(),
-				String.valueOf(parentTaxonomyCategory1.getId()));
-			Assert.assertEquals(
-				getTaxonomyCategory2.getName(),
-				String.valueOf(parentTaxonomyCategory1.getName()));
-		}
-
-		if (parentTaxonomyCategory2 != null) {
-			Assert.assertEquals(
-				getTaxonomyCategory1.getId(),
-				String.valueOf(parentTaxonomyCategory2.getId()));
-			Assert.assertEquals(
-				getTaxonomyCategory1.getName(),
-				String.valueOf(parentTaxonomyCategory2.getName()));
-		}
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			irrelevantTaxonomyCategory.getId());
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			taxonomyCategory2.getId());
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			taxonomyCategory1.getId());
-	}
-
-	private void _testGetInternalTaxonomyVocabularyTaxonomyCategoriesPageFlatten()
-		throws Exception {
-
-		AssetVocabulary irrelevantAssetVocabulary = _addAssetVocabulary();
-
-		TaxonomyCategory taxonomyCategory1 =
-			_addTaxonomyCategoryWithParentAssetVocabulary(
-				_internalAssetVocabulary);
-
-		TaxonomyCategory taxonomyCategory2 =
-			_addTaxonomyCategoryWithParentTaxonomyCategory(
-				taxonomyCategory1.getId(), randomTaxonomyCategory());
-
-		TaxonomyCategory irrelevantTaxonomyCategory =
-			_addTaxonomyCategoryWithParentAssetVocabulary(
-				irrelevantAssetVocabulary);
-
-		Boolean flatten = false;
-
-		Page<TaxonomyCategory> page =
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_internalAssetVocabulary.getVocabularyId(), flatten, null,
-					null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyCategory1),
-			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
-
-		flatten = true;
-
-		page =
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_internalAssetVocabulary.getVocabularyId(), flatten, null,
-					null, null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyCategory1, taxonomyCategory2),
-			(List<TaxonomyCategory>)page.getItems());
-		assertValid(page);
-
-		List<TaxonomyCategory> taxonomyCategories =
-			(List<TaxonomyCategory>)page.getItems();
-
-		TaxonomyCategory getTaxonomyCategory1 = taxonomyCategories.get(0);
-		TaxonomyCategory getTaxonomyCategory2 = taxonomyCategories.get(1);
-
-		ParentTaxonomyCategory parentTaxonomyCategory1 =
-			getTaxonomyCategory1.getParentTaxonomyCategory();
-		ParentTaxonomyCategory parentTaxonomyCategory2 =
-			getTaxonomyCategory2.getParentTaxonomyCategory();
-
-		Assert.assertTrue(
-			((parentTaxonomyCategory1 == null) &&
-			 (parentTaxonomyCategory2 != null)) ||
-			((parentTaxonomyCategory1 != null) &&
-			 (parentTaxonomyCategory2 == null)));
-
-		if (parentTaxonomyCategory1 != null) {
-			Assert.assertEquals(
-				getTaxonomyCategory2.getId(),
-				String.valueOf(parentTaxonomyCategory1.getId()));
-			Assert.assertEquals(
-				getTaxonomyCategory2.getName(),
-				String.valueOf(parentTaxonomyCategory1.getName()));
-		}
-
-		if (parentTaxonomyCategory2 != null) {
-			Assert.assertEquals(
-				getTaxonomyCategory1.getId(),
-				String.valueOf(parentTaxonomyCategory2.getId()));
-			Assert.assertEquals(
-				getTaxonomyCategory1.getName(),
-				String.valueOf(parentTaxonomyCategory2.getName()));
-		}
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			irrelevantTaxonomyCategory.getId());
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			taxonomyCategory2.getId());
-
-		taxonomyCategoryResource.deleteTaxonomyCategory(
-			taxonomyCategory1.getId());
-	}
-
-	private void _testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten()
-		throws Exception {
-
-		AssetVocabulary irrelevantAssetVocabulary = _addAssetVocabulary();
-
-		TaxonomyCategory taxonomyCategory1 =
-			_addTaxonomyCategoryWithParentAssetVocabulary(_assetVocabulary);
-
-		TaxonomyCategory taxonomyCategory2 =
-			_addTaxonomyCategoryWithParentTaxonomyCategory(
-				taxonomyCategory1.getId(), randomTaxonomyCategory());
-
-		TaxonomyCategory irrelevantTaxonomyCategory =
-			_addTaxonomyCategoryWithParentAssetVocabulary(
-				irrelevantAssetVocabulary);
-
-		Boolean flatten = false;
-
-		Page<TaxonomyCategory> page =
-			taxonomyCategoryResource.
-				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_assetVocabulary.getVocabularyId(), flatten, null, null,
+					assetVocabulary.getVocabularyId(), flatten, null, null,
 					null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -625,7 +354,7 @@ public class TaxonomyCategoryResourceTest
 		page =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					_assetVocabulary.getVocabularyId(), flatten, null, null,
+					assetVocabulary.getVocabularyId(), flatten, null, null,
 					null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());

@@ -26,6 +26,7 @@ export default interface MDFRequestActivity extends Partial<LiferayObject> {
 	name: string;
 	removed?: boolean;
 	startDate?: string;
+	submitted?: boolean;
 	tactic: LiferayPicklist;
 	totalCostOfExpense: number;
 	typeActivity: LiferayPicklist;

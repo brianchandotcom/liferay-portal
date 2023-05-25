@@ -720,6 +720,18 @@
 			"name": "currency",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "7bf95ecf-5dc4-4c00-9d15-25a628c56ce0",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Submitted"
+			},
+			"name": "submitted",
+			"required": false,
+			"type": "Boolean"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

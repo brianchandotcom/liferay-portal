@@ -389,6 +389,18 @@
 			"name": "currency",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "Boolean",
+			"externalReferenceCode": "69c32410-eae8-42a9-851a-cfceac620505",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Submitted"
+			},
+			"name": "submitted",
+			"required": false,
+			"type": "Boolean"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

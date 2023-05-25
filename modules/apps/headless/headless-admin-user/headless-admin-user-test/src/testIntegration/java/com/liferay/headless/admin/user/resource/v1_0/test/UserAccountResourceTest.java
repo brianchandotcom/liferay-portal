@@ -21,9 +21,11 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
@@ -329,14 +331,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		Group group = GroupTestUtil.addGroup();
 
-		_testGetUserAccountWithInheritedRoles(
+		_testGetUserAccountWithRoles(
 			group,
 			() -> _groupLocalService.addUserGroup(user.getUserId(), group),
 			user);
 
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		_testGetUserAccountWithInheritedRoles(
+		_testGetUserAccountWithRoles(
 			organization.getGroup(),
 			() -> _organizationLocalService.addUserOrganization(
 				user.getUserId(), organization),
@@ -344,7 +346,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		_testGetUserAccountWithInheritedRoles(
+		_testGetUserAccountWithRoles(
 			userGroup.getGroup(),
 			() -> _userGroupLocalService.addUserUserGroup(
 				user.getUserId(), userGroup),
@@ -1355,6 +1357,24 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			}
 		}
 
+		for (OrganizationBrief organizationBrief :
+				userAccount.getOrganizationBriefs()) {
+
+			for (RoleBrief roleBrief : organizationBrief.getRoleBriefs()) {
+				if (Objects.equals(role.getRoleId(), roleBrief.getId())) {
+					return true;
+				}
+			}
+		}
+
+		for (SiteBrief siteBrief : userAccount.getSiteBriefs()) {
+			for (RoleBrief roleBrief : siteBrief.getRoleBriefs()) {
+				if (Objects.equals(role.getRoleId(), roleBrief.getId())) {
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 
@@ -1474,7 +1494,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		}
 	}
 
-	private void _testGetUserAccountWithInheritedRoles(
+	private void _testGetUserAccountWithRoles(
 			Group group, UnsafeRunnable<Exception> unsafeRunnable, User user)
 		throws Exception {
 
@@ -1487,6 +1507,25 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		unsafeRunnable.run();
 
 		Assert.assertTrue(_hasRole(inheritedRole, user));
+
+		if (group.isUserGroup()) {
+			return;
+		}
+
+		int groupRoleType = RoleConstants.TYPE_SITE;
+
+		if (group.isOrganization()) {
+			groupRoleType = RoleConstants.TYPE_ORGANIZATION;
+		}
+
+		Role groupRole = RoleTestUtil.addRole(groupRoleType);
+
+		Assert.assertFalse(_hasRole(groupRole, user));
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRole(
+			user.getUserId(), group.getGroupId(), groupRole.getRoleId());
+
+		Assert.assertTrue(_hasRole(groupRole, user));
 	}
 
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)

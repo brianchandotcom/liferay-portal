@@ -320,9 +320,7 @@ public class PDFPreviewManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private boolean _isMaxNumberOfPagesLimitExceeded(int limit, int value) {
-		if (((limit != 0) && (value != 0) && (limit < value)) ||
-			((limit != 0) && (value == 0))) {
-
+		if ((limit != 0) && ((value == 0) || (limit < value))) {
 			return true;
 		}
 

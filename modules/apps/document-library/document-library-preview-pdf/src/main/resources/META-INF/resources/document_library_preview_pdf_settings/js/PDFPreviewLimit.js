@@ -26,10 +26,7 @@ const PDFPreviewLimit = ({maxLimitSize, namespace, scopeLabel, value}) => {
 
 		setInputValue(value);
 
-		setError(
-			(maxLimitSize > 0 && value > maxLimitSize) ||
-				(maxLimitSize > 0 && value === 0)
-		);
+		setError(maxLimitSize > 0 && (value > maxLimitSize || value === 0));
 	};
 
 	return (

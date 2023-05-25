@@ -50,7 +50,7 @@ public class LayoutOpenGraphScreenNavigationEntry
 				return false;
 			}
 
-			if (layout.isTypeAssetDisplay()) {
+			if (layout.isTypeAssetDisplay() && layout.isDraftLayout()) {
 				return true;
 			}
 

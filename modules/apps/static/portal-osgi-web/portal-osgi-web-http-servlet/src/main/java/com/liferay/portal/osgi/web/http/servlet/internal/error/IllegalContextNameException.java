@@ -14,12 +14,13 @@ package com.liferay.portal.osgi.web.http.servlet.internal.error;
 /**
  * @author Raymond Augé
  */
-public class IllegalContextNameException extends HttpWhiteboardFailureException {
-
-	private static final long serialVersionUID = -8790109985246626513L;
+public class IllegalContextNameException
+	extends HttpWhiteboardFailureException {
 
 	public IllegalContextNameException(String message, int failureReason) {
 		super(message, failureReason);
 	}
+
+	private static final long serialVersionUID = -8790109985246626513L;
 
 }

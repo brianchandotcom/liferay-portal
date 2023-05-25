@@ -18,9 +18,10 @@ import org.osgi.service.http.NamespaceException;
  */
 public class PatternInUseException extends NamespaceException {
 
-	private static final long serialVersionUID = -4196149175131735927L;
-
 	public PatternInUseException(String pattern) {
 		super("Pattern already in use: " + pattern);
 	}
+
+	private static final long serialVersionUID = -4196149175131735927L;
+
 }

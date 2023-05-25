@@ -19,10 +19,10 @@ import javax.servlet.ServletException;
  */
 public class ServletAlreadyRegisteredException extends ServletException {
 
-	private static final long serialVersionUID = 8838939310124336724L;
-
 	public ServletAlreadyRegisteredException(Servlet servlet) {
 		super("Servlet has already been registered: " + servlet);
 	}
+
+	private static final long serialVersionUID = 8838939310124336724L;
 
 }

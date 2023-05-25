@@ -19,9 +19,10 @@ import javax.servlet.ServletException;
  */
 public class RegisteredFilterException extends ServletException {
 
-	private static final long serialVersionUID = 4321327145573490998L;
-
 	public RegisteredFilterException(Filter filter) {
 		super("Filter has already been registered: " + filter);
 	}
+
+	private static final long serialVersionUID = 4321327145573490998L;
+
 }

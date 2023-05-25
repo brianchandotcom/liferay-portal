@@ -124,13 +124,18 @@ public class JournalArticleModelValidator
 				throw localeException;
 			}
 
-			if ((expirationDate != null) &&
-				(expirationDate.before(new Date()) ||
-				 ((displayDate != null) &&
-				  expirationDate.before(displayDate)))) {
-
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
 				throw new ArticleExpirationDateException(
 					"Expiration date " + expirationDate + " is in the past");
+			}
+
+			if ((expirationDate != null) && (displayDate != null) &&
+				expirationDate.before(displayDate)) {
+
+				throw new ArticleExpirationDateException(
+					StringBundler.concat(
+						"Expiration date ", expirationDate,
+						" is prior to display date ", displayDate));
 			}
 		}
 

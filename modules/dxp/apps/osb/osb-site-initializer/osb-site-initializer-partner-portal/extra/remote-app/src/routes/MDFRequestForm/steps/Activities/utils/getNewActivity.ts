@@ -67,6 +67,7 @@ export default function getNewActivity(
 		mdfRequestAmount: 0,
 		name: '',
 		startDate: undefined,
+		submitted: false,
 		tactic: {},
 		totalCostOfExpense: 0,
 		typeActivity: {},

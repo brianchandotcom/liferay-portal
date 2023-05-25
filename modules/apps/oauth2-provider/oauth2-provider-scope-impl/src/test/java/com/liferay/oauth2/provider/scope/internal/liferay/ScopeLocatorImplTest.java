@@ -466,13 +466,9 @@ public class ScopeLocatorImplTest {
 				CompanyAndKeyConfigurator<PrefixHandlerFactory> configurator)
 			throws IllegalAccessException {
 
-			ScopedServiceTrackerMap<PrefixHandlerFactory>
-				prefixHandlerFactoriesScopedServiceTrackerMap =
-					_prepareScopedServiceTrackerMapMock(
-						defaultPrefixHandlerFactory, configurator);
-
 			_scopeLocatorImpl.setPrefixHandlerFactoriesScopedServiceTrackerMap(
-				prefixHandlerFactoriesScopedServiceTrackerMap);
+				_prepareScopedServiceTrackerMapMock(
+					defaultPrefixHandlerFactory, configurator));
 
 			_prefixHandlerFactoriesInitialized = true;
 
@@ -531,14 +527,11 @@ public class ScopeLocatorImplTest {
 					configurator)
 			throws IllegalAccessException {
 
-			ScopedServiceTrackerMap<ScopeLocatorConfigurationProvider>
-				scopeLocatorConfigurationProvidersScopedServiceTrackerMap =
-					_prepareScopedServiceTrackerMapMock(
-						defaultScopeLocatorConfigurationProvider, configurator);
-
 			_scopeLocatorImpl.
 				setScopeLocatorConfigurationProvidersScopedServiceTrackerMap(
-					scopeLocatorConfigurationProvidersScopedServiceTrackerMap);
+					_prepareScopedServiceTrackerMapMock(
+						defaultScopeLocatorConfigurationProvider,
+						configurator));
 
 			_scopeLocatorConfigurationProvidersInitialized = true;
 
@@ -550,13 +543,9 @@ public class ScopeLocatorImplTest {
 				CompanyAndKeyConfigurator<ScopeMapper> configurator)
 			throws IllegalAccessException {
 
-			ScopedServiceTrackerMap<ScopeMapper>
-				scopeMappersScopedServiceTrackerMap =
-					_prepareScopedServiceTrackerMapMock(
-						defaultScopeMapper, configurator);
-
 			_scopeLocatorImpl.setScopeMappersScopedServiceTrackerMap(
-				scopeMappersScopedServiceTrackerMap);
+				_prepareScopedServiceTrackerMapMock(
+					defaultScopeMapper, configurator));
 
 			_scopeMappersInitialized = true;
 

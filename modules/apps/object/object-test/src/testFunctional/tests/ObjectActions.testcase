@@ -275,6 +275,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify deleting a Commerce Product entry triggers an action to add a Commerce Product Group entry"
+	@priority = 5
+	test CanAddCommerceProductGroupEntryAfterDeletingCommerceProductEntry {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site and a Commerce Product") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
+
+		task ("And given an action to add a Commerce Product Group entry after deleting a Commerce Product entry") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Commerce Product");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "customAction",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Value Test",
+				objectLabel = "Commerce Product Group",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Delete");
+		}
+
+		task ("When the user deletes a Commerce Product entry") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchProduct(search = "Simple T-Shirt");
+
+			CommerceProducts.deleteProductsEntry(key_value = "Simple T-Shirt");
+		}
+
+		task ("Then the action is triggered and a Commerce Product Group entry is added") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Product Groups");
+
+			LexiconEntry.viewEntryName(rowEntry = "Value Test");
+		}
+	}
+
 	@description = "LPS-180070 - Verify creating a Commerce Product entry triggers an action to add a user"
 	@priority = 5
 	test CanAddUserAfterCreatingCommerceProductEntry {

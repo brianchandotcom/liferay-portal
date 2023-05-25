@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>LOGIN_SIGN_IN_BUTTON</td>
-	<td>//input[contains(@id,'kc-login') or contains(@id,'okta-signin-submit') or contains(@value,'Sign in')] | //button[contains(text(),'Continue')] | //button[contains(text(),'Sign On')]</td>
+	<td>//input[contains(@id,'kc-login') or contains(@id,'okta-signin-submit') or contains(@value,'Sign in')] | //button[not(contains(../@aria-hidden, "true")) and (contains(text(),'Continue'))] | //button[contains(text(),'Sign On')]</td>
 	<td></td>
 </tr>
 </tbody>

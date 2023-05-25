@@ -16,10 +16,13 @@ package com.liferay.layout.type.controller.embedded.internal.layout.type.control
 
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletContext;
@@ -53,6 +56,26 @@ public class EmbeddedLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
 		return super.includeEditContent(
+			httpServletRequest, httpServletResponse, layout);
+	}
+
+	@Override
+	public boolean includeLayoutContent(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
+		throws Exception {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		if (Validator.isNull(
+				typeSettingsUnicodeProperties.getProperty(
+					"embeddedLayoutURL"))) {
+
+			throw new NoSuchLayoutException();
+		}
+
+		return super.includeLayoutContent(
 			httpServletRequest, httpServletResponse, layout);
 	}
 

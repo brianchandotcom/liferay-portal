@@ -871,14 +871,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Copy copy = GradleUtil.addTask(
 			project, DOCKER_DEPLOY_TASK_NAME, Copy.class);
 
-		copy.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
-
 		copy.setDescription(
 			"Copy the Liferay configs and provided configurations to the " +
 				"docker build directory.");
 		copy.setGroup(DOCKER_GROUP);
 
 		copy.setDestinationDir(workspaceExtension.getDockerDir());
+		copy.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 
 		copy.from(
 			providedModulesConfiguration,

@@ -298,6 +298,80 @@ definition {
 		Click(locator1 = "Testray#ADD_PROJECT");
 	}
 
+	@summary = "This macro back section by breadcrumb."
+	macro gotoBackBreadcrumb {
+		KeyPress(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "\BACK_SPACE");
+
+		KeyPress(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "\BACK_SPACE");
+
+		KeyPress(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "\BACK_SPACE");
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${value});
+
+		if (isSet(value)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\BACK_SPACE");
+		}
+	}
+
+	@summary = "This macro confirm the section in breadcrumb."
+	macro confirmBreadcrumb {
+		KeyPress.keyPressNoError(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = "\ENTER");
+	}
+
+	@summary = "This macro access the breadcrumb."
+	macro gotoBreadcrumb {
+		KeyPress(
+			locator1 = "//body",
+			value1 = "/");
+	}
+
+	@summary = "This macro access next section in breadcrumb."
+	macro nextSectionBreadcrumb {
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${project});
+
+		if (isSet(project)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${routine});
+
+		if (isSet(routine)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		Type(
+			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+			value1 = ${build});
+
+		if (isSet(build)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		Testray.confirmBreadcrumb();
+	}
+
 	@summary = "This macro click in the link to the home page."
 	macro goToLink {
 		WaitForPageLoad();

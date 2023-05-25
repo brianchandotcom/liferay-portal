@@ -285,7 +285,7 @@ public class FragmentEntryLinkDisplayContext {
 				"there-are-no-fragment-usages");
 
 		fragmentEntryLinksSearchContainer.setId(
-			"fragmentEntryLinks" + getFragmentCollectionId());
+			"fragmentEntryLinks" + getNavigation());
 
 		if (FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),

@@ -22,8 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.http.HttpInvoker;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
@@ -44,11 +42,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -111,22 +107,10 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Before
 	public void setUp() throws Exception {
 		irrelevantGroup = GroupTestUtil.addGroup();
-
 		testGroup = GroupTestUtil.addGroup();
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
-
-		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
 
 		_taxonomyCategoryResource.setContextCompany(testCompany);
 
@@ -2680,7 +2664,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
-	protected DepotEntry testDepotEntry;
 
 	protected static class BeanTestUtil {
 

@@ -21,6 +21,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
@@ -30,6 +32,7 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,6 +41,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -57,6 +61,17 @@ public class TaxonomyCategoryResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
 			testGroup.getGroupId(), RandomTestUtil.randomString(),
@@ -64,7 +79,7 @@ public class TaxonomyCategoryResourceTest
 
 		_depotAssetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
 			UserLocalServiceUtil.getGuestUserId(testGroup.getCompanyId()),
-			testDepotEntry.getGroupId(), RandomTestUtil.randomString(),
+			_testDepotEntry.getGroupId(), RandomTestUtil.randomString(),
 			new ServiceContext());
 
 		_globalAssetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
@@ -527,5 +542,6 @@ public class TaxonomyCategoryResourceTest
 	private AssetVocabulary _depotAssetVocabulary;
 	private AssetVocabulary _globalAssetVocabulary;
 	private AssetVocabulary _internalAssetVocabulary;
+	private DepotEntry _testDepotEntry;
 
 }

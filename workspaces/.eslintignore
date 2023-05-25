@@ -1,0 +1,8 @@
+build/*
+dist/**
+tmp/**
+classes/**
+node_modules/**
+types/**/*.d.ts
+yarn-*.js
+zippableResources/**

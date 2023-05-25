@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {useState} from 'react';
 
 import {Footer} from '../../components/Footer/Footer';
@@ -25,7 +39,7 @@ type SetAppFlowListStateProps = {
 };
 
 export function AppCreationFlow() {
-	const [{priceModel, appProductId, appERC}] = useAppContext();
+	const [{appERC, appProductId, priceModel}] = useAppContext();
 	const [appFlowListItems, setAppFlowListItems] =
 		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
@@ -354,8 +368,6 @@ export function AppCreationFlow() {
 
 				{currentFlow === 'submit' && (
 					<ReviewAndSubmitAppPage
-						productERC={appERC}
-						productId={appProductId}
 						onClickBack={() => {
 							setAppFlowListState({
 								checkedItems: [
@@ -394,6 +406,8 @@ export function AppCreationFlow() {
 								'/publisher-dashboard'
 							)}`;
 						}}
+						productERC={appERC}
+						productId={appProductId}
 					/>
 				)}
 			</div>

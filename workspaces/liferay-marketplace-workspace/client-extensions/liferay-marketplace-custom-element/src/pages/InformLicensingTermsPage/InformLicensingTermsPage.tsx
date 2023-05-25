@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import cancelIcon from '../../assets/icons/cancel_icon.svg';
 import pendingActionsIcon from '../../assets/icons/pending_actions_icon.svg';
 import scheduleIcon from '../../assets/icons/schedule_icon.svg';
@@ -6,8 +20,14 @@ import {Header} from '../../components/Header/Header';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 import {
+	addSkuExpandoValue,
+	createAppSKU,
 	createProductSpecification,
 	createSpecification,
+	deleteTrialSKU,
+	getProductSKU,
+	getSKUById,
+	patchSKUById,
 	updateProductSpecification,
 } from '../../utils/api';
 
@@ -16,14 +36,6 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {
-	addSkuExpandoValue,
-	createAppSKU,
-	deleteTrialSKU,
-	getProductSKU,
-	getSKUById,
-	patchSKUById,
-} from '../../utils/api';
 import {createSkuName} from '../../utils/util';
 
 interface InformLicensingTermsPageProps {

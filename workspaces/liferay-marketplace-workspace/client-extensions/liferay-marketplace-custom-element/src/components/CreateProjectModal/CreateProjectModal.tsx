@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
@@ -28,14 +42,14 @@ interface CreateProjectModalProps {
 
 const multiStepItemsInitialValues = [
 	{
+		completed: false,
 		label: 'Rules & Guidelines',
 		selected: true,
-		completed: false,
 	},
 	{
+		completed: false,
 		label: 'Project Details',
 		selected: false,
-		completed: false,
 	},
 ];
 
@@ -108,13 +122,11 @@ export function CreateProjectModal({
 
 			let newCart: Partial<Cart> = {};
 
-			let cartResponse;
-
 			newCart = {
 				...cart,
 			};
 
-			cartResponse = await postCartByChannelId({
+			const cartResponse = await postCartByChannelId({
 				cartBody: newCart,
 				channelId: currentChannel.id,
 			});
@@ -129,8 +141,8 @@ export function CreateProjectModal({
 
 			const orderCustomFields = {
 				customFields: {
-					'Project Name': projectName,
 					'Github username': githubUsername,
+					'Project Name': projectName,
 				},
 			};
 
@@ -159,8 +171,11 @@ export function CreateProjectModal({
 				<div className="create-project-modal-multi-step-container">
 					<div className="create-project-modal-multi-step-divider" />
 
-					{multiStepItems.map((multiStepItem) => (
-						<div className="create-project-modal-multi-step-item-container">
+					{multiStepItems.map((multiStepItem, i) => (
+						<div
+							className="create-project-modal-multi-step-item-container"
+							key={multiStepItem.label + i}
+						>
 							<img
 								alt="Circle Icon"
 								className={classNames(

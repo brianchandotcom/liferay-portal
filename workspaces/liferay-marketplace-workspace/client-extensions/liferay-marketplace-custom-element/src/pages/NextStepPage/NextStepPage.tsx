@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {ReactNode, useState} from 'react';
@@ -18,17 +32,17 @@ import {showAccountImage, showAppImage} from '../../utils/util';
 import './NextStepPage.scss';
 
 interface NextStepPageProps {
-	continueButtonText?: string;
 	children?: ReactNode;
+	continueButtonText?: string;
 	header?: {
 		description?: string;
 		title?: string;
 	};
 	linkText?: string;
 	onClickContinue?: () => void;
-	size?: 'lg';
 	showBackButton?: boolean;
 	showOrderId?: boolean;
+	size?: 'lg';
 }
 
 export function NextStepPage({
@@ -118,11 +132,16 @@ export function NextStepPage({
 					<div className="next-step-page-text">
 						<Header
 							description={
-								header?.description ?? [
-									'Congratulations on the purchase of ',
-									<b>{appName}</b>,
-									'. You will now need to configure the app in the Cloud Console. To access the Cloud Console, click the button below and provide your Order ID when prompted.',
-								]
+								header?.description ?? (
+									<>
+										Congratulations on the purchase of
+										<b>{appName}</b>. You will now need to
+										configure the app in the Cloud Console.
+										To access the Cloud Console, click the
+										button below and provide your Order ID
+										when prompted.
+									</>
+								)
 							}
 							title={header?.title ?? 'Next steps'}
 						/>
@@ -151,9 +170,10 @@ export function NextStepPage({
 						}}
 						onClickContinue={
 							onClickContinue ??
-							(() =>
-								(window.location.href =
-									'https://console.marketplacedemo.liferay.sh/projects'))
+							(() => {
+								window.location.href =
+									'https://console.marketplacedemo.liferay.sh/projects';
+							})
 						}
 						showBackButton={showBackButton}
 					/>

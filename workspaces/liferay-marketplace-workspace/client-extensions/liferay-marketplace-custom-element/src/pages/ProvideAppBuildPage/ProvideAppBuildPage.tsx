@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {filesize} from 'filesize';
 import {uniqueId} from 'lodash';
 import ReactDOMServer from 'react-dom/server';
@@ -43,16 +57,7 @@ export function ProvideAppBuildPage({
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [
-		{
-			appBuild,
-			appCategories,
-			appERC,
-			appId,
-			appProductId,
-			appTags,
-			appType,
-			buildZIPFiles,
-		},
+		{appBuild, appERC, appId, appProductId, appType, buildZIPFiles},
 		dispatch,
 	] = useAppContext();
 
@@ -186,13 +191,14 @@ export function ProvideAppBuildPage({
 			newCategories = [...categories.items, ...newCategories];
 		}
 		else {
-			newCategories = categories.items.filter((el) => {
+			newCategories = categories.items.filter((category) => {
 				if (
-					el.vocabulary !== 'marketplace edition' &&
-					el.vocabulary !== 'marketplace liferay version' &&
-					el.vocabulary !== 'liferay platform offering'
-				)
-					return el;
+					category.vocabulary !== 'marketplace edition' &&
+					category.vocabulary !== 'marketplace liferay version' &&
+					category.vocabulary !== 'liferay platform offering'
+				) {
+					return category;
+				}
 			});
 		}
 

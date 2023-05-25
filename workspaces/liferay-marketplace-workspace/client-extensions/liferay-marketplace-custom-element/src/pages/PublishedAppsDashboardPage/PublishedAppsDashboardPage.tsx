@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
@@ -17,7 +31,10 @@ import {
 	getProducts,
 	getUserAccounts,
 } from '../../utils/api';
-import {showAccountImage} from '../../utils/util';
+import {
+	getProductVersionFromSpecifications,
+	showAccountImage,
+} from '../../utils/util';
 import {AccountDetailsPage} from '../AccountDetailsPage/AccountDetailsPage';
 import {DashboardPage} from '../DashBoardPage/DashboardPage';
 import {
@@ -38,13 +55,12 @@ import {
 } from './PublishedDashboardPageUtil';
 
 import './PublishedAppsDashboardPage.scss';
-import {Liferay} from '../../liferay/liferay';
-import {getProductVersionFromSpecifications} from '../../utils/util';
-import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
+import {Liferay} from '../../liferay/liferay';
+import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
 
 interface PublishedAppTable {
 	items: AppProps[];
@@ -159,7 +175,7 @@ export function PublishedAppsDashboardPage() {
 							appListProductIds
 						);
 
-					let newAppList: AppProps[] = [];
+					const newAppList: AppProps[] = [];
 
 					productsItems.forEach((product, index: number) => {
 						const marketPlaceChannel =
@@ -234,7 +250,12 @@ export function PublishedAppsDashboardPage() {
 		};
 
 		makeFetch();
-	}, [page, publishedAppTable.pageSize, selectedAccount]);
+	}, [
+		dashboardNavigationItems,
+		page,
+		publishedAppTable.pageSize,
+		selectedAccount,
+	]);
 
 	useEffect(() => {
 		const clickedNavigationItem =
@@ -438,7 +459,7 @@ export function PublishedAppsDashboardPage() {
 						items={[]}
 						tableHeaders={[]}
 					>
-						{(item) => <></>}
+						{() => <></>}
 					</DashboardTable>
 				</DashboardPage>
 			)}

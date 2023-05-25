@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {Input} from '../Input/Input';
 import {ProjectDetailsCard} from './ProjectDetailsCard';
 
@@ -24,9 +38,9 @@ export function ProjectDetails({
 				<div className="create-project-modal-inputs-container">
 					<Input
 						label="Project name"
-						onChange={(e) =>
+						onChange={(event) =>
 							onProjectNameChange &&
-							onProjectNameChange(e.target.value)
+							onProjectNameChange(event.target.value)
 						}
 						placeholder="Type your environment name"
 						required
@@ -35,9 +49,9 @@ export function ProjectDetails({
 
 					<Input
 						label="Github username"
-						onChange={(e) =>
+						onChange={(event) =>
 							onGithubUsernameChange &&
-							onGithubUsernameChange(e.target.value)
+							onGithubUsernameChange(event.target.value)
 						}
 						placeholder="Type your github username"
 						required

@@ -18,6 +18,9 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ESNext",
+		"types": [
+			"vite/client"
+		],
 		"useDefineForClassFields": true
 	},
 	"include": [

@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {ReactNode} from 'react';
 
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
@@ -6,7 +20,6 @@ import {Header} from '../../components/Header/Header';
 import {AppDetailsPage} from '../AppDetailsPage/AppDetailsPage';
 
 import './DashboardPage.scss';
-import {Liferay} from '../../liferay/liferay';
 
 export interface DashboardListItems {
 	itemIcon: string;
@@ -31,8 +44,8 @@ interface DashBoardPageProps {
 		title: string;
 	};
 	onButtonClick?: () => void;
-	setSelectedApp?: (value: AppProps | undefined) => void;
 	selectedApp?: AppProps;
+	setSelectedApp?: (value: AppProps | undefined) => void;
 }
 
 export function DashboardPage({

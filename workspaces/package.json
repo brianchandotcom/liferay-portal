@@ -1,0 +1,10 @@
+{
+	"dependencies": {
+		"@liferay/eslint-plugin": "1.4.0",
+		"@liferay/npm-scripts": "47.18.1"
+	},
+	"private": true,
+	"scripts": {
+		"format": "liferay-npm-scripts lint:fix && liferay-npm-scripts format"
+	}
+}

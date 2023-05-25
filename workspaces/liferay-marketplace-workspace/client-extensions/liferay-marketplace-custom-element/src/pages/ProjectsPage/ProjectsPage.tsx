@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 
@@ -8,8 +22,10 @@ import {
 	TableHeaders,
 } from '../../components/DashboardTable/DashboardTable';
 import {getChannels, getPlacedOrders} from '../../utils/api';
-import {DashboardListItems} from '../DashBoardPage/DashboardPage';
-import {DashboardPage} from '../DashBoardPage/DashboardPage';
+import {
+	DashboardListItems,
+	DashboardPage,
+} from '../DashBoardPage/DashboardPage';
 import {NextStepPage} from '../NextStepPage/NextStepPage';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
@@ -119,9 +135,9 @@ export function ProjectsPage({
 									);
 									const options: Intl.DateTimeFormatOptions =
 										{
-											year: 'numeric',
-											month: 'short',
 											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
 										};
 									const formattedCreateDate =
 										date.toLocaleDateString(

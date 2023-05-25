@@ -1,11 +1,24 @@
-'use strict';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
-import config from './configTreePath.js';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import {verify} from 'jsonwebtoken';
 import jwktopem from 'jwk-to-pem';
-import log from './log.js';
+import fetch from 'node-fetch';
+
+import config from './configTreePath';
+import log from './log';
 
 const domains = config['com.liferay.lxc.dxp.domains'];
 const externalReferenceCode =
@@ -23,7 +36,7 @@ const allowList = domains
 	.map((domain) => lxcDXPServerProtocol + '://' + domain);
 
 const corsOptions = {
-	origin: function (origin, callback) {
+	origin(origin, callback) {
 		if (allowList.includes(origin)) {
 			callback(null, true);
 		}
@@ -37,6 +50,7 @@ export async function corsWithReady(req, res, next) {
 	if (req.originalUrl === config.readyPath) {
 		return next();
 	}
+
 	return cors(corsOptions)(req, res, next);
 }
 
@@ -49,6 +63,7 @@ export async function liferayJWT(req, res, next) {
 
 	if (!authorization) {
 		res.status(401).send('No authorization header');
+
 		return;
 	}
 
@@ -80,6 +95,7 @@ export async function liferayJWT(req, res, next) {
 					'JWT token client_id value does not match expected client_id value.'
 				);
 				res.status(401).send('Invalid authorization');
+
 				return;
 			}
 		}
@@ -90,12 +106,14 @@ export async function liferayJWT(req, res, next) {
 				jwksResponse.statusText
 			);
 			res.status(401).send('Invalid authorization header');
+
 			return;
 		}
 	}
-	catch (err) {
-		log.error('Error validating JWT token\n%s', err);
+	catch (error) {
+		log.error('Error validating JWT token\n%s', error);
 		res.status(401).send('Invalid authorization header');
+
 		return;
 	}
 }

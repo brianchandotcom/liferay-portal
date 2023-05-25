@@ -12,13 +12,28 @@
  * details.
  */
 
-import {Component, Input} from '@angular/core';
+/**
+ * We use @liferay/npm-scripts to perform linting in a controlled way, but we
+ * also try to expose its configuration here so it can be picked up by editors.
+ */
+let config = {};
 
-@Component({
-	selector: 'app-root',
-	styleUrls: ['./app.component.css'],
-	templateUrl: './app.component.html',
-})
-export class AppComponent {
-	@Input('title') title = 'liferay-sample-custom-element-3';
+try {
+	config = require('@liferay/npm-scripts/src/config/stylelint.json');
 }
+catch (error) {
+	throw new Error('@liferay/npm-scripts is not installed; please run "yarn"');
+}
+
+module.exports = {
+	...config,
+	rules: {
+		...config.rules,
+		'selector-type-no-unknown': [
+			true,
+			{
+				ignore: 'custom-elements',
+			},
+		],
+	},
+};

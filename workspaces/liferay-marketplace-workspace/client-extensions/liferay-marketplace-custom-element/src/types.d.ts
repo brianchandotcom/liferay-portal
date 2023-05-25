@@ -1,3 +1,16 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 declare module '*.svg' {
 	const content: any;
 	export default content;
@@ -91,11 +104,11 @@ type Cart = {
 	billingAddress: BillingAddress;
 	cartItems: CartItem[];
 	currencyCode: string;
+	orderTypeExternalReferenceCode: string;
+	orderTypeId: number;
 	paymentMethod: string;
 	purchaseOrderNumber?: string;
 	shippingAddress: BillingAddress;
-	orderTypeExternalReferenceCode: string;
-	orderTypeId: number;
 };
 
 type CartItem = {
@@ -148,8 +161,8 @@ type Channel = {
 
 interface CommerceAccount extends Omit<Account, 'description'> {
 	active: boolean;
-	taxId: string;
 	logoURL: string;
+	taxId: string;
 }
 
 type CommerceOption = {
@@ -278,34 +291,34 @@ interface PostCheckoutCartResponse extends PostCartResponse {
 interface Product {
 	active: boolean;
 	attachments: ProductAttachment[];
-	categories: ProductCategories[];
 	catalogId: number;
+	categories: ProductCategories[];
 	description: {[key: string]: string};
-	name: {[key: string]: string};
 	externalReferenceCode: string;
 	id: number;
 	images: ProductImages[];
+	modifiedDate: string;
+	name: {[key: string]: string};
 	productChannels: Channel[];
 	productId: number;
 	productStatus: number;
 	productType: string;
+	thumbnail: string;
 	version: number;
 	workflowStatusInfo: {
 		code: number;
 		label: string;
 		label_i18n: string;
 	};
-	thumbnail: string;
-	modifiedDate: string;
 }
 
 interface ProductAttachment {
 	customFields?: CustomField[];
-	title: {[key: string]: string};
-	src: string;
-	priority: number;
-	id: number;
 	externalReferenceCode: string;
+	id: number;
+	priority: number;
+	src: string;
+	title: {[key: string]: string};
 }
 
 type ProductCategories = {
@@ -330,8 +343,8 @@ type RoleBrief = {
 };
 
 type SKU = {
-	customFields?: CustomField[];
 	cost: number;
+	customFields?: CustomField[];
 	externalReferenceCode: string;
 	id: number;
 	price: number;

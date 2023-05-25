@@ -1,4 +1,16 @@
-/* eslint-disable @liferay/portal/no-global-fetch */
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
 import {Liferay} from '../liferay/liferay';
 const headers = {
@@ -53,9 +65,9 @@ export function createApp({
 			configuration: {allowBackOrder: true, maxOrderQuantity: 1},
 			description: {en_US: appDescription},
 			name: {en_US: appName},
+			productChannels,
 			productStatus: 2,
 			productType: 'virtual',
-			productChannels,
 		}),
 		headers,
 		method: 'POST',
@@ -436,8 +448,8 @@ export async function getOrderTypes() {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-order/v1.0/order-types`,
 		{
-			method: 'GET',
 			headers,
+			method: 'GET',
 		}
 	);
 
@@ -679,13 +691,13 @@ export async function patchOrderByERC(erc: string, body: any) {
 }
 
 export async function patchProductIdCategory({
-	body,
 	appId,
+	body,
 }: {
-	body: any;
 	appId: string;
+	body: any;
 }) {
-	const response = await fetch(
+	await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/categories`,
 		{
 			body: JSON.stringify(body),
@@ -777,8 +789,8 @@ export async function postOrder(order: Order) {
 		'/o/headless-commerce-admin-order/v1.0/orders',
 		{
 			body: JSON.stringify(order),
-			method: 'POST',
 			headers,
+			method: 'POST',
 		}
 	);
 

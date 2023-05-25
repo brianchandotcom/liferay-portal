@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
@@ -30,17 +44,15 @@ import {
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 
 import './PurchasedAppsDashboardPage.scss';
+import solutionsIcon from '../../assets/icons/analytics_icon.svg';
+import appsIcon from '../../assets/icons/apps_fill_icon.svg';
+import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {
 	initialAccountState,
 	initialDashboardNavigationItems,
 	memberTableHeaders,
 	tableHeaders,
 } from './PurchasedDashboardPageUtil';
-import solutionsIcon from '../../assets/icons/analytics_icon.svg';
-import appsIcon from '../../assets/icons/apps_fill_icon.svg';
-import membersIcon from '../../assets/icons/person_fill_icon.svg';
-
-import './PurchasedAppsDashboardPage.scss';
 
 export interface PurchasedAppProps {
 	image: string;
@@ -417,7 +429,7 @@ export function PurchasedAppsDashboardPage() {
 						items={solutionsItems}
 						tableHeaders={[]}
 					>
-						{(item) => <></>}
+						{() => <></>}
 					</DashboardTable>
 				</DashboardPage>
 			)}

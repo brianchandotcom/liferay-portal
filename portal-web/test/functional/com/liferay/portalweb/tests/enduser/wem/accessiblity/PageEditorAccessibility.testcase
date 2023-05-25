@@ -590,17 +590,12 @@ definition {
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "true");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
-
-			KeyPress(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "\TAB");
-
 			TestUtils.assertElementFocused(element = "//button[@aria-label='New Experience']");
 
-			KeyPress(
-				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
-				value1 = "\ENTER");
+			Type.sendKeys(
+				ariaLabel = "New Experience",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "keys=SHIFT,TAB");
 
 			AssertAttributeValue(
 				attribute1 = "aria-expanded",

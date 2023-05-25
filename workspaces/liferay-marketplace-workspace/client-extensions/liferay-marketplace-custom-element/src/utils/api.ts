@@ -65,9 +65,9 @@ export function createApp({
 			configuration: {allowBackOrder: true, maxOrderQuantity: 1},
 			description: {en_US: appDescription},
 			name: {en_US: appName},
+			productChannels,
 			productStatus: 2,
 			productType: 'virtual',
-			productChannels,
 		}),
 		headers,
 		method: 'POST',
@@ -691,13 +691,13 @@ export async function patchOrderByERC(erc: string, body: any) {
 }
 
 export async function patchProductIdCategory({
-	body,
 	appId,
+	body,
 }: {
-	body: any;
 	appId: string;
+	body: any;
 }) {
-	const response = await fetch(
+	await fetch(
 		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appId}/categories`,
 		{
 			body: JSON.stringify(body),

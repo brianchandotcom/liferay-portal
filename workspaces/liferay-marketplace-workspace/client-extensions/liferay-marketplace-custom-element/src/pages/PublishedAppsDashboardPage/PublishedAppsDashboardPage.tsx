@@ -170,9 +170,10 @@ export function PublishedAppsDashboardPage() {
 					const appListProductIds: number[] =
 						getAppListProductIds(productsItems);
 
-					const appListProductSpecifications = await getAppListProductSpecifications(
-						appListProductIds
-					);
+					const appListProductSpecifications =
+						await getAppListProductSpecifications(
+							appListProductIds
+						);
 
 					const newAppList: AppProps[] = [];
 

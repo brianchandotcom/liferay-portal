@@ -57,16 +57,7 @@ export function ProvideAppBuildPage({
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [
-		{
-			appBuild,
-			appCategories,
-			appERC,
-			appId,
-			appProductId,
-			appTags,
-			appType,
-			buildZIPFiles,
-		},
+		{appBuild, appERC, appId, appProductId, appType, buildZIPFiles},
 		dispatch,
 	] = useAppContext();
 
@@ -200,13 +191,14 @@ export function ProvideAppBuildPage({
 			newCategories = [...categories.items, ...newCategories];
 		}
 		else {
-			newCategories = categories.items.filter((el) => {
+			newCategories = categories.items.filter((category) => {
 				if (
-					el.vocabulary !== 'marketplace edition' &&
-					el.vocabulary !== 'marketplace liferay version' &&
-					el.vocabulary !== 'liferay platform offering'
-				)
-					return el;
+					category.vocabulary !== 'marketplace edition' &&
+					category.vocabulary !== 'marketplace liferay version' &&
+					category.vocabulary !== 'liferay platform offering'
+				) {
+					return category;
+				}
 			});
 		}
 

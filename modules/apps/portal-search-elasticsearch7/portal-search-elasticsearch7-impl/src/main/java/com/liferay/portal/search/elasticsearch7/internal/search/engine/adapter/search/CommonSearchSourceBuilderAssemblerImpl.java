@@ -386,8 +386,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			PointInTimeBuilder pointInTimeBuilder = new PointInTimeBuilder(
 				pointInTime.getPointInTimeId());
 
-			if (pointInTime.getKeepAlive() != null) {
-				pointInTimeBuilder.setKeepAlive(pointInTime.getKeepAlive());
+			if (pointInTime.getKeepAlive() != 0) {
+				pointInTimeBuilder.setKeepAlive(
+					TimeValue.timeValueSeconds(pointInTime.getKeepAlive()));
 			}
 
 			searchSourceBuilder.pointInTimeBuilder(pointInTimeBuilder);

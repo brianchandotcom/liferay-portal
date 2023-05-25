@@ -351,11 +351,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		PointInTime pointInTime = new PointInTime(
 			openPointInTimeResponse.pitId());
 
-		int pointInTimeKeepAliveSeconds =
+		pointInTime.setKeepAlive(
 			_deepPaginationConfigurationWrapper.
-				getPointInTimeKeepAliveSeconds();
-
-		pointInTime.setKeepAlive(pointInTimeKeepAliveSeconds + "s");
+				getPointInTimeKeepAliveSeconds());
 
 		return pointInTime;
 	}

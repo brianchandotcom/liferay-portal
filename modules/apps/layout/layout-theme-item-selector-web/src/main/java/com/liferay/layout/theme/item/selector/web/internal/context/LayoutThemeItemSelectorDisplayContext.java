@@ -12,21 +12,16 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.display.context;
+package com.liferay.layout.theme.item.selector.web.internal.context;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.util.comparator.ThemeNameComparator;
+import com.liferay.layout.theme.item.selector.web.internal.comparator.ThemeNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
@@ -35,46 +30,22 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Eudaldo Alonso
+ * @author Stefan Tanasie
  */
-public class SelectThemeDisplayContext {
+public class LayoutThemeItemSelectorDisplayContext {
 
-	public SelectThemeDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+	public LayoutThemeItemSelectorDisplayContext(
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		PortletURL portletURL) {
 
 		_httpServletRequest = httpServletRequest;
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
-	}
-
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			"select-display-style", "icon");
-
-		return _displayStyle;
-	}
-
-	public String getEventName() {
-		if (_eventName != null) {
-			return _eventName;
-		}
-
-		_eventName = ParamUtil.getString(
-			_liferayPortletRequest, "eventName",
-			_liferayPortletResponse.getNamespace() + "selectTheme");
-
-		return _eventName;
+		_renderRequest = renderRequest;
+		_portletURL = portletURL;
 	}
 
 	public String getOrderByCol() {
@@ -101,73 +72,6 @@ public class SelectThemeDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCPath(
-			"/select_theme.jsp"
-		).setRedirect(
-			getRedirect()
-		).setParameter(
-			"displayStyle",
-			() -> {
-				String displayStyle = getDisplayStyle();
-
-				if (Validator.isNotNull(displayStyle)) {
-					return displayStyle;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"eventName", getEventName()
-		).setParameter(
-			"orderByCol",
-			() -> {
-				String orderByCol = getOrderByCol();
-
-				if (Validator.isNotNull(orderByCol)) {
-					return orderByCol;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"orderByType",
-			() -> {
-				String orderByType = getOrderByType();
-
-				if (Validator.isNotNull(orderByType)) {
-					return orderByType;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"themeId", getThemeId()
-		).buildPortletURL();
-	}
-
-	public String getRedirect() {
-		if (_redirect != null) {
-			return _redirect;
-		}
-
-		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		return _redirect;
-	}
-
-	public String getThemeId() {
-		if (_themeId != null) {
-			return _themeId;
-		}
-
-		_themeId = ParamUtil.getString(_liferayPortletRequest, "themeId");
-
-		return _themeId;
-	}
-
 	public SearchContainer<Theme> getThemesSearchContainer() {
 		if (_themesSearchContainer != null) {
 			return _themesSearchContainer;
@@ -178,7 +82,7 @@ public class SelectThemeDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<Theme> themesSearchContainer = new SearchContainer(
-			_liferayPortletRequest, getPortletURL(), null, null);
+			_renderRequest, _portletURL, null, null);
 
 		themesSearchContainer.setOrderByCol(getOrderByCol());
 		themesSearchContainer.setOrderByType(getOrderByType());
@@ -206,15 +110,11 @@ public class SelectThemeDisplayContext {
 		return _themesSearchContainer;
 	}
 
-	private String _displayStyle;
-	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
-	private String _redirect;
-	private String _themeId;
+	private final PortletURL _portletURL;
+	private final RenderRequest _renderRequest;
 	private SearchContainer<Theme> _themesSearchContainer;
 
 }

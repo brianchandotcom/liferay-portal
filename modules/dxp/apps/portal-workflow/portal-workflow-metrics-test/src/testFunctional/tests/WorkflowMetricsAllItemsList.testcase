@@ -3184,6 +3184,8 @@ definition {
 		property ci.retries.disabled = "true";
 
 		task ("Given a Single Approver SLA with a pause") {
+			WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
 			WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 			Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
@@ -3214,13 +3216,19 @@ definition {
 
 			JSONBlog.addEntry(
 				entryContent = "Test Content",
-				entryTitle = "Test Blog");
+				entryTitle = "Blog Entry");
 		}
 
 		task ("Then the SLA status should be related to the moment the pause timer triggered") {
 			WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED")) && (maxIterations = "25")) {
+				Refresh();
+
+				Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+			}
 
 			AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED");
 		}

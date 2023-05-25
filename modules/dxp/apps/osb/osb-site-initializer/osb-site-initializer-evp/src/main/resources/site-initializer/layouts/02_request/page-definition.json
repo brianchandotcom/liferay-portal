@@ -8,16 +8,8 @@
 					},
 					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
 						"marginBottom": 6,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"opacity": 100,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fluid"
 					},
 					"name": "MyEVP Container"
@@ -27,16 +19,7 @@
 						"definition": {
 							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
 								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							},
 							"name": "Breadcrumb container"
@@ -45,7 +28,8 @@
 							{
 								"definition": {
 									"widgetInstance": {
-										"widgetConfig": {},
+										"widgetConfig": {
+										},
 										"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 									}
 								},
@@ -56,13 +40,10 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-								"marginBottom": "4"
-							},
 							"gutters": true,
 							"indexed": true,
-							"modulesPerRow": 2,
-							"numberOfColumns": 2,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1,
 							"reverseOrder": false,
 							"rowViewports": [
 								{
@@ -73,11 +54,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -93,79 +76,28 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
-										{
-											"columnViewportDefinition": {},
-											"id": "tablet"
-										}
-									],
-									"size": 6
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] .input-group .input-group-item .input-group-inset-after.form-control {\n\theight: 100%;\n}\n\n.[$FRAGMENT_CLASS$] .input-group {\n\theight: 48px;\n}",
-											"fragment": {
-												"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-											},
-											"fragmentConfig": {
-												"filterKey": "keywords",
-												"targetCollections": [
-													"collection-evp-grants",
-													"collection-evp-services"
-												]
-											},
-											"fragmentFields": [],
-											"fragmentStyle": {
-												"height": "48px",
-												"maxWidth": "400px"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Column"
-							},
-							{
-								"definition": {
-									"columnViewports": [
 										{
 											"columnViewportDefinition": {
-												"size": 12
 											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
-									"size": 6
+									"size": 12
 								},
 								"pageElements": [
 									{
 										"definition": {
+											"fragmentStyle": {
+											},
 											"indexed": true,
 											"layout": {
-												"borderWidth": 0,
 												"contentDisplay": "FlexRow",
 												"justify": "End",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
 												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											},
 											"name": "Form Button Container"
@@ -177,11 +109,11 @@
 														"key": "DIALECT-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
@@ -233,11 +165,11 @@
 														"key": "DIALECT-dialect-button"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
@@ -299,14 +231,15 @@
 								"key": "BASIC_COMPONENT-tabs"
 							},
 							"fragmentConfig": {
-								"persistSelectedTab": true,
-								"numberOfTabs": 2
+								"numberOfTabs": 2,
+								"persistSelectedTab": true
 							},
 							"fragmentFields": [
 								{
 									"id": "title1",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Grant Requests"
@@ -317,7 +250,8 @@
 								{
 									"id": "title2",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Service Requests"
@@ -328,13 +262,15 @@
 								{
 									"id": "title3",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								},
 								{
 									"id": "title4",
 									"value": {
-										"fragmentLink": {}
+										"fragmentLink": {
+										}
 									}
 								}
 							],
@@ -350,16 +286,7 @@
 										"definition": {
 											"indexed": true,
 											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
 												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											},
 											"name": "Table Container"
@@ -379,17 +306,8 @@
 													"layout": {
 														"align": "Center",
 														"borderColor": "colorNeutral4",
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
 														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "Header Container"
@@ -408,17 +326,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -436,7 +345,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Request Id"
@@ -467,17 +377,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -495,7 +396,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Organization"
@@ -526,17 +428,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -554,7 +447,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Grant Type"
@@ -585,17 +479,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -613,7 +498,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Grant Value"
@@ -644,17 +530,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -672,7 +549,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Status"
@@ -698,7 +576,7 @@
 												"definition": {
 													"collectionConfig": {
 														"collectionReference": {
-															"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_20096_C_EVPRequest"
+															"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_EVPRequest"
 														},
 														"collectionType": "CollectionProvider"
 													},
@@ -710,11 +588,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"collectionViewportDefinition": {},
+															"collectionViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"collectionViewportDefinition": {},
+															"collectionViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -730,7 +610,8 @@
 												"pageElements": [
 													{
 														"definition": {
-															"collectionItemConfig": {}
+															"collectionItemConfig": {
+															}
 														},
 														"pageElements": [
 															{
@@ -747,17 +628,8 @@
 																	"layout": {
 																		"align": "Center",
 																		"borderColor": "colorNeutral4",
-																		"borderWidth": 0,
 																		"contentDisplay": "FlexRow",
-																		"marginBottom": 0,
-																		"marginLeft": 0,
-																		"marginRight": 0,
-																		"marginTop": 0,
 																		"opacity": 100,
-																		"paddingBottom": 0,
-																		"paddingLeft": 0,
-																		"paddingRight": 0,
-																		"paddingTop": 0,
 																		"widthType": "Fluid"
 																	},
 																	"name": "Row Container"
@@ -774,17 +646,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -802,7 +665,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectEntry_objectEntryId",
@@ -831,17 +695,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -859,7 +714,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_r_organization_c_evpOrganizationId",
@@ -888,17 +744,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -916,7 +763,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_grantRequestType",
@@ -945,17 +793,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -973,7 +812,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_grantAmount",
@@ -1003,18 +843,9 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
 																				"flexWrap": "Wrap",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1032,7 +863,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_requestStatus",
@@ -1061,18 +893,9 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
 																				"justify": "End",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1083,8 +906,10 @@
 																						"key": "evp-request-kebab-button",
 																						"siteKey": "EVP"
 																					},
-																					"fragmentConfig": {},
-																					"fragmentFields": [],
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1116,16 +941,7 @@
 										"definition": {
 											"indexed": true,
 											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
 												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
 												"widthType": "Fluid"
 											},
 											"name": "Table Container"
@@ -1145,17 +961,8 @@
 													"layout": {
 														"align": "Center",
 														"borderColor": "colorNeutral4",
-														"borderWidth": 0,
 														"contentDisplay": "FlexRow",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
 														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
 														"widthType": "Fluid"
 													},
 													"name": "Header Container"
@@ -1174,17 +981,7 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
-																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -1202,7 +999,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Request Id"
@@ -1233,17 +1031,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -1261,7 +1050,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Organization"
@@ -1292,17 +1082,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -1320,7 +1101,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Service Hours"
@@ -1351,17 +1133,8 @@
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
-																"borderWidth": 0,
 																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
 																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
 																"widthType": "Fluid"
 															}
 														},
@@ -1379,7 +1152,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Status"
@@ -1405,7 +1179,7 @@
 												"definition": {
 													"collectionConfig": {
 														"collectionReference": {
-															"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_20096_C_EVPRequest"
+															"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_EVPRequest"
 														},
 														"collectionType": "CollectionProvider"
 													},
@@ -1417,11 +1191,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"collectionViewportDefinition": {},
+															"collectionViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"collectionViewportDefinition": {},
+															"collectionViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1437,7 +1213,8 @@
 												"pageElements": [
 													{
 														"definition": {
-															"collectionItemConfig": {}
+															"collectionItemConfig": {
+															}
 														},
 														"pageElements": [
 															{
@@ -1454,17 +1231,8 @@
 																	"layout": {
 																		"align": "Center",
 																		"borderColor": "colorNeutral4",
-																		"borderWidth": 0,
 																		"contentDisplay": "FlexRow",
-																		"marginBottom": 0,
-																		"marginLeft": 0,
-																		"marginRight": 0,
-																		"marginTop": 0,
 																		"opacity": 100,
-																		"paddingBottom": 0,
-																		"paddingLeft": 0,
-																		"paddingRight": 0,
-																		"paddingTop": 0,
 																		"widthType": "Fluid"
 																	},
 																	"name": "Row Container"
@@ -1481,17 +1249,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1509,7 +1268,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectEntry_objectEntryId",
@@ -1538,17 +1298,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1566,7 +1317,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_r_organization_c_evpOrganizationId",
@@ -1595,17 +1347,8 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1623,7 +1366,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_totalHoursRequested",
@@ -1653,18 +1397,9 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
 																				"flexWrap": "Wrap",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1682,7 +1417,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"mapping": {
 																										"fieldKey": "ObjectField_requestStatus",
@@ -1711,18 +1447,9 @@
 																			"indexed": true,
 																			"layout": {
 																				"align": "Center",
-																				"borderWidth": 0,
 																				"contentDisplay": "FlexRow",
 																				"justify": "End",
-																				"marginBottom": 0,
-																				"marginLeft": 0,
-																				"marginRight": 0,
-																				"marginTop": 0,
 																				"opacity": 100,
-																				"paddingBottom": 0,
-																				"paddingLeft": 0,
-																				"paddingRight": 0,
-																				"paddingTop": 0,
 																				"widthType": "Fluid"
 																			}
 																		},
@@ -1733,8 +1460,10 @@
 																						"key": "evp-request-kebab-button",
 																						"siteKey": "EVP"
 																					},
-																					"fragmentConfig": {},
-																					"fragmentFields": [],
+																					"fragmentConfig": {
+																					},
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"

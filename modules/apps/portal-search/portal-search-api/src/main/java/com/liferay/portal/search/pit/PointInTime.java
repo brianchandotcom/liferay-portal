@@ -23,7 +23,7 @@ public class PointInTime {
 		_pointInTimeId = pointInTimeId;
 	}
 
-	public String getKeepAlive() {
+	public long getKeepAlive() {
 		return _keepAlive;
 	}
 
@@ -31,11 +31,11 @@ public class PointInTime {
 		return _pointInTimeId;
 	}
 
-	public void setKeepAlive(String keepAlive) {
+	public void setKeepAlive(long keepAlive) {
 		_keepAlive = keepAlive;
 	}
 
-	private String _keepAlive;
+	private long _keepAlive;
 	private final String _pointInTimeId;
 
 }

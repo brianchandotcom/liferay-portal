@@ -87,6 +87,36 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testGetStructuredContentByVersion() throws Exception {
+		super.testGetStructuredContentByVersion();
+
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent randomStructuredContent = _randomStructuredContent(
+			locale);
+
+		randomStructuredContent.setPriority(Double.valueOf(1));
+
+		com.liferay.headless.admin.content.client.resource.v1_0.
+			StructuredContentResource structuredContentResource =
+				_buildStructureContentResource(locale);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContentDraft(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				randomStructuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent.getId(), 1.0);
+
+		assertEquals(postStructuredContent, getStructuredContent);
+		Assert.assertEquals(
+			Double.valueOf(1.0), getStructuredContent.getPriority());
+	}
+
+	@Override
+	@Test
 	public void testGetStructuredContentsVersionsPage() throws Exception {
 		StructuredContent structuredContent = _postSiteStructuredContent(
 			testGroup.getGroupId(), randomStructuredContent());

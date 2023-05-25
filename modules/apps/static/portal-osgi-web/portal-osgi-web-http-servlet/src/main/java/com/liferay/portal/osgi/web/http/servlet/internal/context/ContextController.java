@@ -1351,7 +1351,7 @@ public class ContextController {
 		for (FilterRegistration filterRegistration : _filterRegistrations) {
 			if (Objects.nonNull(
 					filterRegistration.match(
-						servletName, requestURI, extension, null)) &&
+						servletName, requestURI, extension)) &&
 				!matchingFilterRegistrations.contains(filterRegistration)) {
 
 				matchingFilterRegistrations.add(filterRegistration);

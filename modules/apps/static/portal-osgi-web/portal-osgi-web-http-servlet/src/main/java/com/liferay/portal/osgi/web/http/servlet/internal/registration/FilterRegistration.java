@@ -9,162 +9,233 @@
  *     IBM Corporation - initial API and implementation
  *     Raymond Augé <raymond.auge@liferay.com> - Bug 436698
  *******************************************************************************/
+
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.regex.Pattern;
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController.ServiceHolder;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.FilterChainImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.Match;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
+
+import java.io.IOException;
+
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.runtime.dto.FilterDTO;
 
-//This class wraps the filter object registered in the HttpService.registerFilter call, to manage the context classloader when handleRequests are being asked.
+/**
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public class FilterRegistration
 	extends MatchableRegistration<Filter, FilterDTO>
 	implements Comparable<FilterRegistration> {
 
-	private final ServiceHolder<Filter> filterHolder;
-	private final ClassLoader classLoader;
-	private final int priority;
-	private final ContextController contextController;
-	private final boolean initDestoyWithContextController;
-	private final Pattern[] compiledRegexs;
-
 	public FilterRegistration(
-		ServiceHolder<Filter> filterHolder, FilterDTO filterDTO, int priority,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		ContextController.ServiceHolder<Filter> serviceHolder,
+		FilterDTO filterDTO, int priority, ContextController contextController,
+		ClassLoader legacyTCCL) {
 
-		super(filterHolder.get(), filterDTO);
-		this.filterHolder = filterHolder;
-		this.priority = priority;
-		this.contextController = contextController;
-		this.compiledRegexs = getCompiledRegex(filterDTO);
+		super(serviceHolder.get(), filterDTO);
+
+		_serviceHolder = serviceHolder;
+		_priority = priority;
+		_contextController = contextController;
+
+		_compiledPatterns = _getCompiledRegex(filterDTO);
+
 		if (legacyTCCL != null) {
-			// legacy filter registrations used the current TCCL at registration time
-			classLoader = legacyTCCL;
-		} else {
-			classLoader = filterHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
+			_classLoader = legacyTCCL;
 		}
-		String legacyContextFilter = (String) filterHolder.getServiceReference().getProperty(Const.EQUINOX_LEGACY_CONTEXT_SELECT);
+		else {
+			Bundle bundle = serviceHolder.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			_classLoader = bundleWiring.getClassLoader();
+		}
+
+		ServiceReference<Filter> serviceReference =
+			serviceHolder.getServiceReference();
+
+		String legacyContextFilter = (String)serviceReference.getProperty(
+			Const.EQUINOX_LEGACY_CONTEXT_SELECT);
+
 		if (legacyContextFilter != null) {
-			// This is a legacy Filter registration.
-			// This filter tells us the real context controller,
-			// backed by an HttpContext that should be used to init/destroy this Filter
-			org.osgi.framework.Filter f = null;
+			org.osgi.framework.Filter filter = null;
+
 			try {
-				 f = FrameworkUtil.createFilter(legacyContextFilter);
+				filter = FrameworkUtil.createFilter(legacyContextFilter);
 			}
-			catch (InvalidSyntaxException e) {
-				// nothing
+			catch (InvalidSyntaxException invalidSyntaxException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(invalidSyntaxException);
+				}
 			}
-			initDestoyWithContextController = f == null || contextController.matches(f);
-		} else {
-			initDestoyWithContextController = true;
-		}
-	}
 
-	public int compareTo(FilterRegistration otherFilterRegistration) {
-		int priorityDifference = priority - otherFilterRegistration.priority;
-		if (priorityDifference != 0)
-			return -priorityDifference;
-
-		// Note that we use abs here because the DTO service ID may have been negated for legacy filters.
-		// We always compare with the positive id values and we know the positive values are unique.
-		long thisId = Math.abs(getD().serviceId);
-		long otherId = Math.abs(otherFilterRegistration.getD().serviceId);
-		return (thisId < otherId) ? -1 : ((thisId == otherId) ? 0 : 1);
-	}
-
-	public void destroy() {
-		if (!initDestoyWithContextController) {
-			return;
+			_initDestroyWithContextController =
+				(filter == null) || contextController.matches(filter);
 		}
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
-		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
-			contextController.getHttpServiceRuntime().getRegisteredObjects().remove(this.getT());
-			contextController.getFilterRegistrations().remove(this);
-			contextController.ungetServletContextHelper(filterHolder.getBundle());
-			super.destroy();
-			getT().destroy();
-		}
-		finally {
-			destroyContextAttributes();
-			Thread.currentThread().setContextClassLoader(original);
-			filterHolder.release();
+		else {
+			_initDestroyWithContextController = true;
 		}
 	}
 
 	public boolean appliesTo(FilterChainImpl filterChainImpl) {
-		return (Arrays.binarySearch(
-			getD().dispatcher, filterChainImpl.getDispatcherType().name()) >= 0);
+		DispatcherType dispatcherType = filterChainImpl.getDispatcherType();
+
+		int result = Arrays.binarySearch(
+			getD().dispatcher, dispatcherType.name());
+
+		if (result >= 0) {
+			return true;
+		}
+
+		return false;
 	}
 
-	//Delegate the handling of the request to the actual filter
-	public void doFilter(
-			HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain)
-		throws IOException, ServletException {
+	@Override
+	public int compareTo(FilterRegistration otherFilterRegistration) {
+		int priorityDifference = _priority - otherFilterRegistration._priority;
 
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
+		if (priorityDifference != 0) {
+			return -priorityDifference;
+		}
+
+		FilterDTO otherFilterDTO = otherFilterRegistration.getD();
+
+		return Long.compare(
+			Math.abs(getD().serviceId), Math.abs(otherFilterDTO.serviceId));
+	}
+
+	@Override
+	public void destroy() {
+		if (!_initDestroyWithContextController) {
+			return;
+		}
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
 		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
-			getT().doFilter(request, response, chain);
+			currentThread.setContextClassLoader(_classLoader);
+
+			HttpServiceRuntimeImpl httpServiceRuntimeImpl =
+				_contextController.getHttpServiceRuntime();
+
+			Set<Object> registeredObjects =
+				httpServiceRuntimeImpl.getRegisteredObjects();
+
+			registeredObjects.remove(getT());
+
+			Set<FilterRegistration> filterRegistrations =
+				_contextController.getFilterRegistrations();
+
+			filterRegistrations.remove(this);
+
+			_contextController.ungetServletContextHelper(
+				_serviceHolder.getBundle());
+
+			super.destroy();
+
+			getT().destroy();
 		}
 		finally {
-			Thread.currentThread().setContextClassLoader(original);
+			_contextController.destroyContextAttributes();
+
+			currentThread.setContextClassLoader(contextClassLoader);
+
+			_serviceHolder.release();
+		}
+	}
+
+	public void doFilter(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
+		throws IOException, ServletException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			getT().doFilter(
+				httpServletRequest, httpServletResponse, filterChain);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof FilterRegistration)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof FilterRegistration)) {
 			return false;
 		}
 
-		FilterRegistration filterRegistration = (FilterRegistration)obj;
+		FilterRegistration filterRegistration = (FilterRegistration)object;
 
 		return getT().equals(filterRegistration.getT());
 	}
 
 	@Override
 	public int hashCode() {
-		return Long.valueOf(getD().serviceId).hashCode();
+		return Long.hashCode(getD().serviceId);
 	}
 
-	//Delegate the init call to the actual filter
 	public void init(FilterConfig filterConfig) throws ServletException {
-		if (!initDestoyWithContextController) {
+		if (!_initDestroyWithContextController) {
 			return;
 		}
-		boolean initialized = false;
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
-		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
 
-			createContextAttributes();
+		boolean initialized = false;
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			_contextController.createContextAttributes();
+
 			getT().init(filterConfig);
+
 			initialized = true;
 		}
 		finally {
 			if (!initialized) {
-				destroyContextAttributes();
+				_contextController.destroyContextAttributes();
 			}
-			Thread.currentThread().setContextClassLoader(original);
+
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
-	public String match(
-		String name, String requestURI, String extension, Match match) {
+	public String match(String name, String requestURI, String extension) {
 		if ((name != null) && (getD().servletNames != null)) {
 			for (String servletName : getD().servletNames) {
 				if (servletName.equals(name)) {
@@ -173,7 +244,7 @@ public class FilterRegistration
 			}
 		}
 
-		if (requestURI == null || requestURI.isEmpty()) {
+		if ((requestURI == null) || requestURI.isEmpty()) {
 			return null;
 		}
 
@@ -183,9 +254,11 @@ public class FilterRegistration
 			}
 		}
 
-		for (Pattern regex : compiledRegexs) {
-			if (regex.matcher(requestURI).matches()) {
-				return regex.toString();
+		for (Pattern pattern : _compiledPatterns) {
+			Matcher matcher = pattern.matcher(requestURI);
+
+			if (matcher.matches()) {
+				return pattern.toString();
 			}
 		}
 
@@ -194,69 +267,78 @@ public class FilterRegistration
 
 	@Override
 	public String match(
-		String name, String servletPath, String pathInfo, String extension, Match match) {
-		// TODO need to rework match for filters to remove this method
-		throw new UnsupportedOperationException("Should not be calling this method on FilterRegistration"); //$NON-NLS-1$
+		String name, String servletPath, String pathInfo, String extension,
+		Match match) {
+
+		throw new UnsupportedOperationException(
+			"Should not be calling this method on FilterRegistration");
 	}
 
-	private void createContextAttributes() {
-		contextController.createContextAttributes();
-	}
-
-	private void destroyContextAttributes() {
-		contextController.destroyContextAttributes();
-	}
-
-	protected boolean isPathWildcardMatch(String pattern, String path) {
-		if (path == null) {
-			return false;
-		}
-		// first try wild card matching if the pattern requests it
-		if (pattern.endsWith("/*")) { //$NON-NLS-1$
-			int pathPatternLength = pattern.length() - 2;
-			if (path.regionMatches(0, pattern, 0, pathPatternLength)) {
-				return path.length() <= pathPatternLength || path.charAt(pathPatternLength) == '/';
-			}
-			return false;
-		}
-		// now do exact matching
-		return pattern.equals(path);
-	}
-
-	protected boolean doPatternMatch(String pattern, String path, String extension)
+	protected boolean doPatternMatch(
+			String pattern, String path, String extension)
 		throws IllegalArgumentException {
 
 		if (pattern.indexOf(Const.SLASH_STAR_DOT) == 0) {
 			pattern = pattern.substring(1);
 		}
+
 		int extensionMatchIndex = pattern.indexOf(Const.SLASH_STAR_DOT);
 		String extensionWithPrefixMatch = null;
-		if (extensionMatchIndex >= 0 && pattern.lastIndexOf('/') == extensionMatchIndex) {
-			extensionWithPrefixMatch = pattern.substring(extensionMatchIndex + 3);
+
+		if ((extensionMatchIndex >= 0) &&
+			(pattern.lastIndexOf('/') == extensionMatchIndex)) {
+
+			extensionWithPrefixMatch = pattern.substring(
+				extensionMatchIndex + 3);
+
 			pattern = pattern.substring(0, extensionMatchIndex + 2);
 		}
 
-		// first try prefix path matching; taking into account wild cards if necessary
-		if ((pattern.charAt(0) == '/')) {
+		if (pattern.charAt(0) == '/') {
 			if (isPathWildcardMatch(pattern, path)) {
 				if (extensionWithPrefixMatch != null) {
 					return extensionWithPrefixMatch.equals(extension);
 				}
+
 				return true;
 			}
+
 			return false;
 		}
 
-		// next try extension matching if requested
 		if (pattern.charAt(0) == '*') {
-			return pattern.substring(2).equals(extension);
+			return Objects.equals(pattern.substring(2), extension);
 		}
 
-		// this is really an invalid case that should have gotten caught at registration time
 		return false;
 	}
 
-	private Pattern[] getCompiledRegex(FilterDTO filterDTO) {
+	@Override
+	protected boolean isPathWildcardMatch(String pattern, String path) {
+		if (path == null) {
+			return false;
+		}
+
+		if (pattern.endsWith("/*")) {
+			int pathPatternLength = pattern.length() - 2;
+
+			if (path.regionMatches(0, pattern, 0, pathPatternLength)) {
+				if ((path.length() <= pathPatternLength) ||
+					(path.charAt(pathPatternLength) == '/')) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			return false;
+		}
+
+		return pattern.equals(path);
+	}
+
+	private Pattern[] _getCompiledRegex(FilterDTO filterDTO) {
 		if (filterDTO.regexs == null) {
 			return new Pattern[0];
 		}
@@ -269,5 +351,15 @@ public class FilterRegistration
 
 		return patterns;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FilterRegistration.class.getName());
+
+	private final ClassLoader _classLoader;
+	private final Pattern[] _compiledPatterns;
+	private final ContextController _contextController;
+	private final boolean _initDestroyWithContextController;
+	private final int _priority;
+	private final ContextController.ServiceHolder<Filter> _serviceHolder;
 
 }

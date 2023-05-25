@@ -11,14 +11,25 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
+import com.liferay.portal.osgi.web.http.servlet.internal.servlet.Match;
+
 import java.io.IOException;
-import javax.servlet.*;
+
+import java.util.Objects;
+import java.util.Set;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController.ServiceHolder;
-import com.liferay.portal.osgi.web.http.servlet.internal.servlet.Match;
+
 import org.osgi.dto.DTO;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.context.ServletContextHelper;
 
@@ -26,81 +37,85 @@ import org.osgi.service.http.context.ServletContextHelper;
  * @author Raymond Augé
  */
 public abstract class EndpointRegistration<D extends DTO>
-	extends MatchableRegistration<Servlet, D> implements Comparable<EndpointRegistration<?>>{
-
-	private final ServiceHolder<Servlet> servletHolder;
-	private final ServletContextHelper servletContextHelper; //The context used during the registration of the servlet
-	private final ContextController contextController;
-	private final ClassLoader classLoader;
+	extends MatchableRegistration<Servlet, D>
+	implements Comparable<EndpointRegistration<?>> {
 
 	public EndpointRegistration(
-		ServiceHolder<Servlet> servletHolder, D d, ServletContextHelper servletContextHelper,
+		ContextController.ServiceHolder<Servlet> serviceHolder, D d,
+		ServletContextHelper servletContextHelper,
 		ContextController contextController, ClassLoader legacyTCCL) {
 
-		super(servletHolder.get(), d);
-		this.servletHolder = servletHolder;
-		this.servletContextHelper = servletContextHelper;
-		this.contextController = contextController;
+		super(serviceHolder.get(), d);
+
+		_serviceHolder = serviceHolder;
+		_servletContextHelper = servletContextHelper;
+		_contextController = contextController;
+
 		if (legacyTCCL != null) {
-			// legacy registrations used the current TCCL at registration time
-			classLoader = legacyTCCL;
-		} else {
-			classLoader = servletHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
+			_classLoader = legacyTCCL;
+		}
+		else {
+			Bundle bundle = serviceHolder.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			_classLoader = bundleWiring.getClassLoader();
 		}
 	}
 
-	public void destroy() {
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
-		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
+	@Override
+	public int compareTo(EndpointRegistration<?> other) {
+		return _serviceHolder.compareTo(other._serviceHolder);
+	}
 
-			contextController.getEndpointRegistrations().remove(this);
-			contextController.getHttpServiceRuntime().getRegisteredObjects().remove(this.getT());
-			contextController.ungetServletContextHelper(servletHolder.getBundle());
+	@Override
+	public void destroy() {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			Set<EndpointRegistration<?>> endpointRegistrations =
+				_contextController.getEndpointRegistrations();
+
+			endpointRegistrations.remove(this);
+
+			HttpServiceRuntimeImpl httpServiceRuntimeImpl =
+				_contextController.getHttpServiceRuntime();
+
+			Set<Object> registeredObjects =
+				httpServiceRuntimeImpl.getRegisteredObjects();
+
+			registeredObjects.remove(getT());
+
+			_contextController.ungetServletContextHelper(
+				_serviceHolder.getBundle());
 
 			super.destroy();
+
 			getT().destroy();
 		}
 		finally {
-			destroyContextAttributes();
-			Thread.currentThread().setContextClassLoader(original);
-			servletHolder.release();
+			_contextController.destroyContextAttributes();
+
+			currentThread.setContextClassLoader(contextClassLoader);
+
+			_serviceHolder.release();
 		}
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof EndpointRegistration)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof EndpointRegistration)) {
 			return false;
 		}
 
-		EndpointRegistration<?> endpointRegistration = (EndpointRegistration<?>)obj;
+		EndpointRegistration<?> endpointRegistration =
+			(EndpointRegistration<?>)object;
 
 		return getT().equals(endpointRegistration.getT());
-	}
-
-	@Override
-	public int hashCode() {
-		return Long.valueOf(getServiceId()).hashCode();
-	}
-
-	//Delegate the init call to the actual servlet
-	public void init(ServletConfig servletConfig) throws ServletException {
-		boolean initialized = false;
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
-		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
-
-			createContextAttributes();
-			getT().init(servletConfig);
-			initialized = true;
-		}
-		finally {
-			if (!initialized) {
-				destroyContextAttributes();
-			}
-			Thread.currentThread().setContextClassLoader(original);
-		}
 	}
 
 	public abstract String getName();
@@ -110,11 +125,43 @@ public abstract class EndpointRegistration<D extends DTO>
 	public abstract long getServiceId();
 
 	public ServletContext getServletContext() {
-		return getT().getServletConfig().getServletContext();
+		ServletConfig servletConfig = getT().getServletConfig();
+
+		return servletConfig.getServletContext();
 	}
 
 	public ServletContextHelper getServletContextHelper() {
-		return servletContextHelper;
+		return _servletContextHelper;
+	}
+
+	@Override
+	public int hashCode() {
+		return Long.hashCode(getServiceId());
+	}
+
+	public void init(ServletConfig servletConfig) throws ServletException {
+		boolean initialized = false;
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			_contextController.createContextAttributes();
+
+			getT().init(servletConfig);
+
+			initialized = true;
+		}
+		finally {
+			if (!initialized) {
+				_contextController.destroyContextAttributes();
+			}
+
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override
@@ -123,7 +170,7 @@ public abstract class EndpointRegistration<D extends DTO>
 		Match match) {
 
 		if (name != null) {
-			if (getName().equals(name)) {
+			if (Objects.equals(getName(), name)) {
 				return name;
 			}
 
@@ -137,7 +184,7 @@ public abstract class EndpointRegistration<D extends DTO>
 		}
 
 		for (String pattern : patterns) {
-			if (doMatch(pattern, servletPath, pathInfo, extension, match)) {
+			if (doMatch(pattern, servletPath, extension, match)) {
 				return pattern;
 			}
 		}
@@ -145,28 +192,23 @@ public abstract class EndpointRegistration<D extends DTO>
 		return null;
 	}
 
-	//Delegate the handling of the request to the actual servlet
-	public void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
+	public void service(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException, ServletException {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
 		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
-			getT().service(req, resp);
-		} finally {
-			Thread.currentThread().setContextClassLoader(original);
+			currentThread.setContextClassLoader(_classLoader);
+
+			getT().service(httpServletRequest, httpServletResponse);
 		}
-	}
-
-	private void createContextAttributes() {
-		contextController.createContextAttributes();
-	}
-
-	private void destroyContextAttributes() {
-		contextController.destroyContextAttributes();
-	}
-
-	@Override
-	public int compareTo(EndpointRegistration<?> o) {
-		return servletHolder.compareTo(o.servletHolder);
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override
@@ -174,7 +216,8 @@ public abstract class EndpointRegistration<D extends DTO>
 		String toString = _toString;
 
 		if (toString == null) {
-			toString = SIMPLE_NAME + '[' + getD().toString() + ']';
+			toString = StringBundler.concat(
+				EndpointRegistration.class.getSimpleName(), '[', getD(), ']');
 
 			_toString = toString;
 		}
@@ -182,8 +225,10 @@ public abstract class EndpointRegistration<D extends DTO>
 		return toString;
 	}
 
-	private static final String SIMPLE_NAME =
-		EndpointRegistration.class.getSimpleName();
-
+	private final ClassLoader _classLoader;
+	private final ContextController _contextController;
+	private final ContextController.ServiceHolder<Servlet> _serviceHolder;
+	private final ServletContextHelper _servletContextHelper;
 	private String _toString;
+
 }

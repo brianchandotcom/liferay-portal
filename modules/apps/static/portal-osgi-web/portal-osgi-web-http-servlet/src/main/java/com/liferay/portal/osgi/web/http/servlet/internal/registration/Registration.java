@@ -10,107 +10,130 @@
  *     IBM Corporation - bug fixes and enhancements
  *     Raymond Augé <raymond.auge@liferay.com> - Bug 436698
  *******************************************************************************/
+
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import org.osgi.dto.DTO;
 
+/**
+ * @author Cognos Incorporated
+ * @author IBM Corporation
+ * @author Raymond Augé
+ */
 public abstract class Registration<T, D extends DTO> {
 
-	private final D d;
-	private final T t;
-
-	protected final AtomicInteger referenceCount = new AtomicInteger();
-
 	public Registration(T t, D d) {
-		this.t = t;
-		this.d = d;
+		_t = t;
+		_d = d;
+
+		ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+
+		_readLock = readWriteLock.readLock();
+
+		_writeLock = readWriteLock.writeLock();
+
+		_condition = _writeLock.newCondition();
 	}
 
 	public void addReference() {
-		readLock.lock();
+		_readLock.lock();
 
 		try {
 			referenceCount.incrementAndGet();
 		}
 		finally {
-			readLock.unlock();
-		}
-	}
-
-	public void removeReference() {
-		readLock.lock();
-
-		try {
-			if (referenceCount.decrementAndGet() == 0 && destroyed) {
-				readLock.unlock();
-
-				writeLock.lock();
-
-				try {
-					condition.signalAll();
-				}
-				finally {
-					writeLock.unlock();
-
-					readLock.lock();
-				}
-			}
-		}
-		finally {
-			readLock.unlock();
+			_readLock.unlock();
 		}
 	}
 
 	public void destroy() {
 		boolean interrupted = false;
 
-		writeLock.lock();
+		_writeLock.lock();
 
-		destroyed = true;
+		_destroyed = true;
 
 		try {
 			while (referenceCount.get() != 0) {
 				try {
-					condition.await();
+					_condition.await();
 				}
-				catch (InterruptedException ie) {
+				catch (InterruptedException interruptedException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(interruptedException);
+					}
+
 					interrupted = true;
 				}
 			}
 		}
 		finally {
-			writeLock.unlock();
+			_writeLock.unlock();
 
 			if (interrupted) {
-				Thread.currentThread().interrupt();
+				Thread currentThread = Thread.currentThread();
+
+				currentThread.interrupt();
 			}
 		}
 	}
 
-	private volatile boolean destroyed;
-
-	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-
-	private final Lock readLock = readWriteLock.readLock();
-	private final Lock writeLock = readWriteLock.writeLock();
-	private final Condition condition = writeLock.newCondition();
-
 	public D getD() {
-		return d;
+		return _d;
 	}
 
 	public T getT() {
-		return t;
+		return _t;
+	}
+
+	public void removeReference() {
+		_readLock.lock();
+
+		try {
+			if ((referenceCount.decrementAndGet() == 0) && _destroyed) {
+				_readLock.unlock();
+
+				_writeLock.lock();
+
+				try {
+					_condition.signalAll();
+				}
+				finally {
+					_writeLock.unlock();
+
+					_readLock.lock();
+				}
+			}
+		}
+		finally {
+			_readLock.unlock();
+		}
 	}
 
 	@Override
 	public String toString() {
 		return getD().toString();
 	}
+
+	protected final AtomicInteger referenceCount = new AtomicInteger();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		Registration.class.getName());
+
+	private final Condition _condition;
+	private final D _d;
+	private volatile boolean _destroyed;
+	private final Lock _readLock;
+	private final T _t;
+	private final Lock _writeLock;
 
 }

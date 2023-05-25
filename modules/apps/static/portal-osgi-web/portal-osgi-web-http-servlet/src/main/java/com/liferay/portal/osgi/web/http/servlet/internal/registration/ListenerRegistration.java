@@ -11,144 +11,176 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.registration;
 
-import java.lang.reflect.*;
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
-import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController.ServiceHolder;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpSessionAdaptor;
+import com.liferay.portal.osgi.web.http.servlet.internal.util.EventListeners;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import java.util.EventListener;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.http.HttpSessionAttributeListener;
+import javax.servlet.http.HttpSessionBindingListener;
+import javax.servlet.http.HttpSessionListener;
+
+import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.runtime.dto.ListenerDTO;
 
 /**
  * @author Raymond Augé
  */
-public class ListenerRegistration extends Registration<EventListener, ListenerDTO> {
-
-	private final ServiceHolder<EventListener> listenerHolder;
-	private final List<Class<? extends EventListener>> classes;
-	private final EventListener proxy;
-	private final ServletContext servletContext;
-	private final ContextController contextController;
-	private final ClassLoader classLoader;
+public class ListenerRegistration
+	extends Registration<EventListener, ListenerDTO> {
 
 	public ListenerRegistration(
-		ServiceHolder<EventListener> listenerHolder, List<Class<? extends EventListener>> classes,
-		ListenerDTO listenerDTO, ServletContext servletContext,
-		ContextController contextController) {
+		ContextController.ServiceHolder<EventListener> serviceHolder,
+		List<Class<? extends EventListener>> classes, ListenerDTO listenerDTO,
+		ServletContext servletContext, ContextController contextController) {
 
-		super(listenerHolder.get(), listenerDTO);
-		this.listenerHolder = listenerHolder;
-		this.classes = classes;
-		this.servletContext = servletContext;
-		this.contextController = contextController;
+		super(serviceHolder.get(), listenerDTO);
 
-		classLoader = listenerHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
+		_serviceHolder = serviceHolder;
+		_classes = classes;
+		_servletContext = servletContext;
+		_contextController = contextController;
 
-		createContextAttributes();
+		Bundle bundle = serviceHolder.getBundle();
 
-		proxy = (EventListener)Proxy.newProxyInstance(
-			getClass().getClassLoader(), classes.toArray(new Class[0]),
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		_classLoader = bundleWiring.getClassLoader();
+
+		_contextController.createContextAttributes();
+
+		_eventListenerProxy = (EventListener)ProxyUtil.newProxyInstance(
+			getClass().getClassLoader(), classes.toArray(new Class<?>[0]),
 			new EventListenerInvocationHandler());
 	}
 
 	@Override
 	public synchronized void destroy() {
-		ClassLoader original = Thread.currentThread().getContextClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		try {
-			Thread.currentThread().setContextClassLoader(classLoader);
+			currentThread.setContextClassLoader(_classLoader);
 
-			contextController.getListenerRegistrations().remove(this);
-			contextController.getEventListeners().remove(classes, this);
-			contextController.ungetServletContextHelper(listenerHolder.getBundle());
+			Set<ListenerRegistration> listenerRegistrations =
+				_contextController.getListenerRegistrations();
+
+			listenerRegistrations.remove(this);
+
+			EventListeners eventListeners =
+				_contextController.getEventListeners();
+
+			eventListeners.remove(_classes, this);
+
+			_contextController.ungetServletContextHelper(
+				_serviceHolder.getBundle());
 
 			super.destroy();
 
-			if (classes.contains(HttpSessionBindingListener.class) ||
-				classes.contains(HttpSessionAttributeListener.class) ||
-				classes.contains(HttpSessionListener.class)) {
+			if (_classes.contains(HttpSessionBindingListener.class) ||
+				_classes.contains(HttpSessionAttributeListener.class) ||
+				_classes.contains(HttpSessionListener.class)) {
 
 				Map<String, HttpSessionAdaptor> activeSessions =
-					contextController.getActiveSessions();
+					_contextController.getActiveSessions();
 
 				for (HttpSessionAdaptor adaptor : activeSessions.values()) {
-					adaptor.invokeSessionListeners(classes, super.getT());
+					adaptor.invokeSessionListeners(_classes, super.getT());
 				}
 			}
 
-			if (classes.contains(ServletContextListener.class)) {
+			if (_classes.contains(ServletContextListener.class)) {
 				ServletContextListener servletContextListener =
 					(ServletContextListener)super.getT();
 
 				servletContextListener.contextDestroyed(
-					new ServletContextEvent(servletContext));
+					new ServletContextEvent(_servletContext));
 			}
 		}
 		finally {
-			destroyContextAttributes();
-			Thread.currentThread().setContextClassLoader(original);
-			listenerHolder.release();
+			_contextController.destroyContextAttributes();
+
+			currentThread.setContextClassLoader(contextClassLoader);
+
+			_serviceHolder.release();
 		}
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof ListenerRegistration)) {
+	public boolean equals(Object object) {
+		if (!(object instanceof ListenerRegistration)) {
 			return false;
 		}
 
-		ListenerRegistration listenerRegistration = (ListenerRegistration)obj;
+		ListenerRegistration listenerRegistration =
+			(ListenerRegistration)object;
 
-		return listenerRegistration.getT().equals(super.getT());
-	}
-
-	@Override
-	public int hashCode() {
-		return Long.valueOf(getD().serviceId).hashCode();
+		return Objects.equals(listenerRegistration.getT(), super.getT());
 	}
 
 	public ServletContext getServletContext() {
-		return servletContext;
+		return _servletContext;
 	}
 
 	@Override
 	public EventListener getT() {
-		return proxy;
+		return _eventListenerProxy;
 	}
 
-	private void createContextAttributes() {
-		contextController.createContextAttributes();
+	@Override
+	public int hashCode() {
+		return Long.hashCode(getD().serviceId);
 	}
 
-	private void destroyContextAttributes() {
-		contextController.destroyContextAttributes();
-	}
+	private final List<Class<? extends EventListener>> _classes;
+	private final ClassLoader _classLoader;
+	private final ContextController _contextController;
+	private final EventListener _eventListenerProxy;
+	private final ContextController.ServiceHolder<EventListener> _serviceHolder;
+	private final ServletContext _servletContext;
 
 	private class EventListenerInvocationHandler implements InvocationHandler {
-
-		public EventListenerInvocationHandler() {
-		}
 
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			ClassLoader original = Thread.currentThread().getContextClassLoader();
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
 
 			try {
-				Thread.currentThread().setContextClassLoader(classLoader);
+				currentThread.setContextClassLoader(_classLoader);
+
 				try {
-					return method.invoke(ListenerRegistration.super.getT(), args);
-				} catch (InvocationTargetException e) {
-					throw e.getCause();
+					return method.invoke(
+						ListenerRegistration.super.getT(), args);
+				}
+				catch (InvocationTargetException invocationTargetException) {
+					throw invocationTargetException.getCause();
 				}
 			}
 			finally {
-				Thread.currentThread().setContextClassLoader(original);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
+
 	}
 
 }

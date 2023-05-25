@@ -16,9 +16,7 @@ definition {
 
 		var scriptFilePath = TestCase.getDependenciesDirPath(fileName = ${scriptFile});
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "execute-groovy-script-from-gogo-shell -Dbundle.index=${bundleIndex} -Dscript.file.path=${scriptFilePath}");
+		AntCommands.runCommand("build-test.xml", "execute-groovy-script-from-gogo-shell -Dbundle.index=${bundleIndex} -Dscript.file.path=${scriptFilePath}");
 
 		if (isSet(expectedOutput)) {
 			var outputContent = FileUtil.read("${liferayHome}/gogo-output.txt");

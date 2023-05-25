@@ -209,9 +209,7 @@ definition {
 		task ("Go to http://test.able.com:8080/openam and run ant command") {
 			Navigator.openSpecificURL(url = "http://test.able.com:8080/openam");
 
-			AntCommand(
-				locator1 = "build-test-openam.xml",
-				value1 = "run-openam-tools");
+			AntCommands.runCommand("build-test-openam.xml", "run-openam-tools");
 		}
 
 		task ("Wait for OpenAM setup") {
@@ -331,9 +329,7 @@ definition {
 		}
 
 		task ("Run and command") {
-			AntCommand(
-				locator1 = "build-test-token-based-sso.xml",
-				value1 = "verify-token-based-login -Dportal.url=http://localhost:8080/web/guest -Duser.token=test@liferay.com");
+			AntCommands.runCommand("build-test-token-based-sso.xml", "verify-token-based-login -Dportal.url=http://localhost:8080/web/guest -Duser.token=test@liferay.com");
 		}
 
 		task ("Disable configuration") {
@@ -368,9 +364,7 @@ definition {
 		}
 
 		task ("Run ant command") {
-			AntCommand(
-				locator1 = "build-test-token-based-sso.xml",
-				value1 = "verify-token-based-login -Dportal.url=http://www.able.com:8080/web/guest -Duser.token=test@www.able.com");
+			AntCommands.runCommand("build-test-token-based-sso.xml", "verify-token-based-login -Dportal.url=http://www.able.com:8080/web/guest -Duser.token=test@www.able.com");
 		}
 	}
 

@@ -32,9 +32,7 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

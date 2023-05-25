@@ -137,9 +137,7 @@ definition {
 	macro deployInstanceConfigFile {
 		var companyId = JSONCompany.getCompanyId();
 
-		AntCommand(
-			locator1 = "build-test-multi-factor-authentication.xml",
-			value1 = "prepare-multi-factor-authentication-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+		AntCommands.runCommand("build-test-multi-factor-authentication.xml", "prepare-multi-factor-authentication-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
 	macro emailOTPConfiguration {

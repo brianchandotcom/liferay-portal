@@ -75,9 +75,7 @@ definition {
 
 			var companyId = JSONCompany.getCompanyId();
 
-			AntCommand(
-				locator1 = "build-test-cookies.xml",
-				value1 = "update-cookies-osgi-instance-configuration -DcompanyId=${companyId}");
+			AntCommands.runCommand("build-test-cookies.xml", "update-cookies-osgi-instance-configuration -DcompanyId=${companyId}");
 
 			User.logoutAndLoginPG();
 

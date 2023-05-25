@@ -487,9 +487,7 @@ definition {
 		task ("Shutdown server and execute upgrade again") {
 			Portlet.shutdownServer();
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "upgrade-legacy-database");
+			AntCommands.runCommand("build-test.xml", "upgrade-legacy-database");
 		}
 
 		task ("Look for the upgrade report") {
@@ -748,21 +746,15 @@ definition {
 		property test.name.skip.portal.instance = "UpgradeReport#WarningsLogged";
 
 		task ("Delete indexes.sql file from portal-impl.jar") {
-			AntCommand(
-				locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
-				value1 = "delete-indexes-sql");
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "delete-indexes-sql");
 		}
 
 		task ("Execute upgrade") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "upgrade-legacy-database");
+			AntCommands.runCommand("build-test.xml", "upgrade-legacy-database");
 		}
 
 		task ("Wait for upgrade to complete") {
-			AntCommand(
-				locator1 = "modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml",
-				value1 = "check-passed-upgrade-log");
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-passed-upgrade-log");
 		}
 
 		task ("Given upgrade.report is set When the portal gets upgraded and an warn was captured during the upgrade") {

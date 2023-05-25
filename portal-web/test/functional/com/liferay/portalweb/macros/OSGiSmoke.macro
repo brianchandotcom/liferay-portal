@@ -25,9 +25,7 @@ definition {
 
 		AssertTextPresent.assertTextPresent(value1 = ${appName});
 
-		AntCommand.antCommand(
-			locator1 = "build-test.xml",
-			value1 = "remove-plugin -Dplugin.name=${portletName}");
+		AntCommands.runCommand("build-test.xml", "remove-plugin -Dplugin.name=${portletName}");
 	}
 
 }

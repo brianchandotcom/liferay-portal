@@ -16,9 +16,7 @@ definition {
 
 		var sharepointVmHostName = PropsUtil.get("cmis.repository.vm.host.name");
 
-		AntCommand(
-			locator1 = "build-test-sharepoint.xml",
-			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVmHostName}");
+		AntCommands.runCommand("build-test-sharepoint.xml", "clean-sharepoint-repository -Dssh.host=${sharepointVmHostName}");
 
 		User.firstLoginByScreenNamePG(
 			authenticationMethod = "By Screen Name",

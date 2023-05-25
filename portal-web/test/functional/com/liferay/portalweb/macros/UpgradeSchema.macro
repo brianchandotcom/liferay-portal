@@ -3,9 +3,7 @@ definition {
 	macro validateSchemas {
 		var projectDir = PropsUtil.get("project.dir");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "validate-db-upgrade-schemas");
+		AntCommands.runCommand("build-test.xml", "validate-db-upgrade-schemas");
 
 		var result = FileUtil.read("${projectDir}/validate-db-upgrade-schemas.txt");
 

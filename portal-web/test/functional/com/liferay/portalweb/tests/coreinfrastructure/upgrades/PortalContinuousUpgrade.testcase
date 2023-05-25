@@ -20,15 +20,11 @@ definition {
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "wait-for-license-activation");
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
@@ -55,9 +51,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-original-bundle-test-environment");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -92,15 +86,11 @@ definition {
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "wait-for-license-activation");
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
@@ -135,9 +125,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-original-bundle-test-environment");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -175,15 +163,11 @@ definition {
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "wait-for-license-activation");
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
@@ -214,9 +198,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-original-bundle-test-environment");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

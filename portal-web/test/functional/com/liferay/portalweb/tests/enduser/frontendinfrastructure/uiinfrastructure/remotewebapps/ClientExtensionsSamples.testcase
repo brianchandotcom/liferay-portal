@@ -180,9 +180,7 @@ definition {
 		}
 
 		task ("Assert the Message Board Thread Count of 0") {
-			AntCommand(
-				locator1 = "build-test-liferay-sample-workspace.xml",
-				value1 = "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
 
 			var projectDir = PropsUtil.get("project.dir");
 
@@ -205,9 +203,7 @@ definition {
 		}
 
 		task ("Assert the Message Board Thread Count of 1") {
-			AntCommand(
-				locator1 = "build-test-liferay-sample-workspace.xml",
-				value1 = "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-cron -Doauth2.headless.server.client.secret=${clientSecret}");
 
 			var springBootLogFileContent = FileUtil.read(${springBootLogFile});
 
@@ -237,9 +233,7 @@ definition {
 		}
 
 		task ("When: The Spring-boot is started") {
-			AntCommand(
-				locator1 = "build-test-liferay-sample-workspace.xml",
-				value1 = "start-liferay-sample-etc-spring-boot");
+			AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "start-liferay-sample-etc-spring-boot");
 
 			var projectDir = PropsUtil.get("project.dir");
 

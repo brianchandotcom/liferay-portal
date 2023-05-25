@@ -39,15 +39,11 @@ definition {
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-upgrade-released-bundle-test-environment -Ddowngrade.from.original.bundle=true -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Ddowngrade.from.original.bundle=true -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "wait-for-license-activation");
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
 
 		Navigator.openURL();
 

@@ -3,9 +3,7 @@ definition {
 	macro validateSchemas {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "validate-db-partition-schemas -Dschema.name.prefix=${schemaNamePrefix}");
+		AntCommands.runCommand("build-test.xml", "validate-db-partition-schemas -Dschema.name.prefix=${schemaNamePrefix}");
 
 		var result = FileUtil.read("${liferayHome}/validateoutput.txt");
 

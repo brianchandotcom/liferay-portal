@@ -304,9 +304,7 @@ definition {
 	macro deployInstanceConfigFile {
 		var companyId = JSONCompany.getCompanyId();
 
-		AntCommand(
-			locator1 = "build-test-oauth2.xml",
-			value1 = "prepare-oauth2-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+		AntCommands.runCommand("build-test-oauth2.xml", "prepare-oauth2-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
 	macro editApplication {

@@ -455,9 +455,7 @@ definition {
 	}
 
 	macro closeAllSessions {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "clear-redis");
+		AntCommands.runCommand("build-test.xml", "clear-redis");
 
 		var analyticsCloudAsahCuratorBatchURL = PropsUtil.get("analytics.cloud.asah.curator.batch.url");
 
@@ -906,9 +904,7 @@ definition {
 	macro restartDockerContainer {
 		var containerName = ${containerName};
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "restart-docker-container -Ddocker.container=${containerName}");
+		AntCommands.runCommand("build-test.xml", "restart-docker-container -Ddocker.container=${containerName}");
 	}
 
 	macro saveButton {

@@ -341,9 +341,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.default.locale=es_ES");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.default.locale=es_ES");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -435,9 +433,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=0 -Dupdate.properties.original=locale.prepend.friendly.url.style=3");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=0 -Dupdate.properties.original=locale.prepend.friendly.url.style=3");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -453,9 +449,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=1 -Dupdate.properties.original=locale.prepend.friendly.url.style=0");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=1 -Dupdate.properties.original=locale.prepend.friendly.url.style=0");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -477,9 +471,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=2 -Dupdate.properties.original=locale.prepend.friendly.url.style=1");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=locale.prepend.friendly.url.style=2 -Dupdate.properties.original=locale.prepend.friendly.url.style=1");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

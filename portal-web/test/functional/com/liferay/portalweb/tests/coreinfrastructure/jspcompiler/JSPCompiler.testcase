@@ -33,9 +33,7 @@ definition {
 
 			FileUtil.write("${projectDir}/${moduleBaseDir}/src/main/resources/META-INF/resources/init-ext.jsp", ${customCode});
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=${moduleBaseDir}");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=${moduleBaseDir}");
 
 			WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.blogs.web_");
 		}

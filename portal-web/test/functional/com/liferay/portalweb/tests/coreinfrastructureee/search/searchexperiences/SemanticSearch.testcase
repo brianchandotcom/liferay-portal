@@ -826,9 +826,7 @@ definition {
 
 		Alert.viewWarningSpecific(warningMessage = "Unable to connect to txtai. Connection failed with: java.lang.IllegalArgumentException: Host name may not be null.");
 
-		AntCommand(
-			locator1 = "build-test-semantic-search.xml",
-			value1 = "stop-txtai");
+		AntCommands.runCommand("build-test-semantic-search.xml", "stop-txtai");
 
 		Refresh();
 

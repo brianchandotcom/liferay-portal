@@ -79,9 +79,7 @@ definition {
 
 			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${originalFileDownloadName}");
 		}
 
 		task ("Then the language properties file for en-US displays all translations") {
@@ -115,9 +113,7 @@ this-is-a-language-key=This is a language key''',
 
 			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${originalFileDownloadName}");
 
 			for (var fileName : list "Language_en_US.properties,Language_fr_FR.properties,Language_pt_BR.properties,Language_es_ES.properties") {
 				DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});
@@ -159,9 +155,7 @@ this-is-a-language-key=This is a language key''',
 
 			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "unzip-temp-file -DfileName=${originalFileDownloadName}");
+			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${originalFileDownloadName}");
 		}
 
 		task ("and the overridden translation is removed from portal") {

@@ -71,15 +71,11 @@ definition {
 	}
 
 	macro convertEncryptionCertificate {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-encryption-PCKS12-certificate");
+		AntCommands.runCommand("build-test.xml", "prepare-encryption-PCKS12-certificate");
 	}
 
 	macro convertSingingCertificate {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-signing-PCKS12-certificate");
+		AntCommands.runCommand("build-test.xml", "prepare-signing-PCKS12-certificate");
 	}
 
 	macro createCertificate {

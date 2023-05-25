@@ -3,9 +3,7 @@ definition {
 	macro deployInstanceConfigFile {
 		var companyId = JSONCompany.getCompanyId();
 
-		AntCommand(
-			locator1 = "build-test-content-security-policy.xml",
-			value1 = "prepare-content-security-policy-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
+		AntCommands.runCommand("build-test-content-security-policy.xml", "prepare-content-security-policy-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
 	macro goToContentSecurityPolicyInstanceSettings {

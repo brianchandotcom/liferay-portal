@@ -351,9 +351,7 @@ definition {
 
 			var configDir = "${liferayHome}/osgi/configs/${configName}";
 
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "move-file -Dfile=${configDir}~original.config -Dtofile=${configDir}~new.config");
+			AntCommands.runCommand("build-test.xml", "move-file -Dfile=${configDir}~original.config -Dtofile=${configDir}~new.config");
 		}
 
 		task ("Then the old entry is removed from the database") {

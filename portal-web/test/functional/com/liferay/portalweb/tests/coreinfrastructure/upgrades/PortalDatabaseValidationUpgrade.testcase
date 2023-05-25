@@ -17,21 +17,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}
@@ -44,21 +38,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}
@@ -70,21 +58,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}
@@ -96,21 +78,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}
@@ -123,21 +99,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}
@@ -150,21 +120,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}
@@ -177,21 +141,15 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=upgraded");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 		Portlet.startServer();
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "export-database-schema -Ddatabase.file.prefix=fresh");
+		AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh");
 
 		UpgradeSchema.validateSchemas();
 	}

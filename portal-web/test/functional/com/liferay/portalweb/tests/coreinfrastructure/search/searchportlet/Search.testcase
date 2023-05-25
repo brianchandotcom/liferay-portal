@@ -458,9 +458,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=enterprise.product.enterprise.search.enabled=false");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=enterprise.product.enterprise.search.enabled=false");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 

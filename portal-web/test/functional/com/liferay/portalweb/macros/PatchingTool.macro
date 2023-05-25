@@ -3,9 +3,7 @@ definition {
 	@summary = "Install the following patch onto Liferay Portal. ${patchFileZipURL}"
 	macro installPatch {
 		if (!(contains(${patchFileZipURL}, "dxp-0-"))) {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "install-patch -Dpatch.file.zip.url=${patchFileZipURL}");
+			AntCommands.runCommand("build-test.xml", "install-patch -Dpatch.file.zip.url=${patchFileZipURL}");
 		}
 		else {
 			echo("No previous fix pack available to install");
@@ -19,9 +17,7 @@ definition {
 		var bundleIndex = ${leadingPortNumber} - 8;
 
 		if (!(contains(${patchFileZipURL}, "dxp-0-"))) {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "install-patch -Dinstall.patch.cluster.node.index=${bundleIndex} -Dpatch.file.zip.url=${patchFileZipURL}");
+			AntCommands.runCommand("build-test.xml", "install-patch -Dinstall.patch.cluster.node.index=${bundleIndex} -Dpatch.file.zip.url=${patchFileZipURL}");
 		}
 		else {
 			echo("No previous fix pack available to install");
@@ -30,9 +26,7 @@ definition {
 
 	@summary = "Uninstall all patches from Liferay Portal."
 	macro uninstallPatches {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "uninstall-patches");
+		AntCommands.runCommand("build-test.xml", "uninstall-patches");
 	}
 
 	@summary = "Uninstall the following patch onto Liferay Portal server with port ${nodePort}"
@@ -41,9 +35,7 @@ definition {
 
 		var bundleIndex = ${leadingPortNumber} - 8;
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}");
+		AntCommands.runCommand("build-test.xml", "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}");
 	}
 
 	@summary = "Update the following osgi configuration onto Liferay Portal server with port ${nodePort}: ${updateConfiguration}"
@@ -52,9 +44,7 @@ definition {
 
 		var bundleIndex = ${leadingPortNumber} - 8;
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "update-osgi-module-configuration -Dinstall.patch.cluster.node.index=${bundleIndex} -Dupdate.configuration=\"${updateConfiguration}\"");
+		AntCommands.runCommand("build-test.xml", "update-osgi-module-configuration -Dinstall.patch.cluster.node.index=${bundleIndex} -Dupdate.configuration=\"${updateConfiguration}\"");
 	}
 
 }

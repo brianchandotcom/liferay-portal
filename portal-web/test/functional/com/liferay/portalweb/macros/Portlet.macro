@@ -604,9 +604,7 @@ definition {
 
 	@summary = "Shutdown the current Liferay Portal instance."
 	macro shutdownServer {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "stop-app-server");
+		AntCommands.runCommand("build-test.xml", "stop-app-server");
 	}
 
 	@summary = "Start the current Liferay Portal instance."
@@ -614,29 +612,19 @@ definition {
 		var appServerType = PropsUtil.get("app.server.type");
 
 		if (${deleteLiferayHome} == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Ddelete.liferay.home=false");
+			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false");
 		}
 		else if (${keepCachedAppServerData} == "true") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Dkeep.cached.app.server.data=true");
+			AntCommands.runCommand("build-test.xml", "start-app-server -Dkeep.cached.app.server.data=true");
 		}
 		else if (${keepOsGiState} == "true") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Dkeep.osgi.state=true");
+			AntCommands.runCommand("build-test.xml", "start-app-server -Dkeep.osgi.state=true");
 		}
 		else if (${noLicense} == "true") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Ddelete.liferay.home=false -Dlicense.not.present=true");
+			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false -Dlicense.not.present=true");
 		}
 		else {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server");
+			AntCommands.runCommand("build-test.xml", "start-app-server");
 		}
 
 		if (!(isSet(userEmailAddress))) {

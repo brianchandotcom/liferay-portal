@@ -76,9 +76,7 @@ definition {
 
 		var newProperty = "index.on.startup=true";
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
@@ -533,9 +531,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9201");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9201");
 
 		Navigator.openURL();
 
@@ -604,9 +600,7 @@ definition {
 			categoryLevel = "INFO",
 			categoryName = "com.liferay.portal.search.elasticsearch7.internal.connection");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "start-elasticsearch");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch");
 
 		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
@@ -655,9 +649,7 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "stop-elasticsearch");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "stop-elasticsearch");
 	}
 
 	@description = "This is a use case for LPS-57894."

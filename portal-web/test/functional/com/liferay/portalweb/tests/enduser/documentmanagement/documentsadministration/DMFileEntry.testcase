@@ -3282,9 +3282,7 @@ definition {
 
 		DMFolder.downloadViaEllipsisMenu(dmFolderName = "日本語フォルダ1");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "unzip-temp-file -DfileName=日本語フォルダ1.zip");
+		AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=日本語フォルダ1.zip");
 
 		DMFolder.assertExpectedFileNames(key_fileName = "日本語フォルダ1.zip");
 

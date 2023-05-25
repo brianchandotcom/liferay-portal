@@ -224,9 +224,7 @@ definition {
 			webContentDescription = "Description2",
 			webContentTitle = "WebContentTitle2");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "copy-translation-file -Dtranslation.file.name=WebContentTitle2-en_US-de_DE.xlf -Dtranslation.zip.file.name=WebContentTitle2-en_US");
+		AntCommands.runCommand("build-test-translation.xml", "copy-translation-file -Dtranslation.file.name=WebContentTitle2-en_US-de_DE.xlf -Dtranslation.zip.file.name=WebContentTitle2-en_US");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -782,13 +780,9 @@ definition {
 			webContentDescription = "Description2",
 			webContentTitle = "WebContentTitle2");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "copy-translation-file -Dtranslation.file.name=WebContentTitle2-en_US-ja_JP.xlf -Dtranslation.zip.file.name=WebContentTitle2-en_US");
+		AntCommands.runCommand("build-test-translation.xml", "copy-translation-file -Dtranslation.file.name=WebContentTitle2-en_US-ja_JP.xlf -Dtranslation.zip.file.name=WebContentTitle2-en_US");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "copy-translation-file -Dtranslation.file.name=WebContentTitle2-en_US-zh_CN.xlf -Dtranslation.zip.file.name=WebContentTitle2-en_US");
+		AntCommands.runCommand("build-test-translation.xml", "copy-translation-file -Dtranslation.file.name=WebContentTitle2-en_US-zh_CN.xlf -Dtranslation.zip.file.name=WebContentTitle2-en_US");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 

@@ -38,9 +38,7 @@ definition {
 			groupName = "Test Site Name",
 			site = "true");
 
-		AntCommand(
-			locator1 = "build-test-s3-store.xml",
-			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
+		AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -49,9 +47,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		AntCommand(
-			locator1 = "build-test-s3-store.xml",
-			value1 = "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
+		AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -65,9 +61,7 @@ definition {
 
 		RecycleBin.emptyCP();
 
-		AntCommand(
-			locator1 = "build-test-s3-store.xml",
-			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
+		AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 	}
 
 }

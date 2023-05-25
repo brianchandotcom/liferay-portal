@@ -98,9 +98,7 @@ definition {
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
 		if (${gogoShellLPKGExists} == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
 
 			Portlet.shutdownServer();
 
@@ -226,9 +224,7 @@ definition {
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
 		if (${gogoShellLPKGExists} == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
 
 			Portlet.shutdownServer();
 
@@ -334,9 +330,7 @@ definition {
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
 		if (${gogoShellLPKGExists} == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
 
 			Portlet.shutdownServer();
 
@@ -576,9 +570,7 @@ definition {
 		var gogoShellLPKGExists = FileUtil.exists("${liferayHome}/osgi/marketplace/${symbolicName}.lpkg");
 
 		if (${gogoShellLPKGExists} == "false") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-apps -Dosgi.app.includes=gogo-shell");
 
 			Portlet.shutdownServer();
 

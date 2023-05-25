@@ -200,9 +200,7 @@ definition {
 
 		// Change schema version from 2.1.1 to 2.1.0.
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.1.0 -Dupdate.properties.original=2.1.1");
+		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.1.0 -Dupdate.properties.original=2.1.1");
 
 		Pause(locator1 = 15000);
 
@@ -214,9 +212,7 @@ definition {
 
 		// Change schema version from 2.1.0 to 2.0.0.
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.0.0 -Dupdate.properties.original=2.1.0");
+		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.0.0 -Dupdate.properties.original=2.1.0");
 
 		Pause(locator1 = 15000);
 
@@ -228,9 +224,7 @@ definition {
 
 		// Change schema version from 2.0.0 to 1.0.0.
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=1.0.0 -Dupdate.properties.original=2.0.0");
+		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=1.0.0 -Dupdate.properties.original=2.0.0");
 
 		Pause(locator1 = 15000);
 

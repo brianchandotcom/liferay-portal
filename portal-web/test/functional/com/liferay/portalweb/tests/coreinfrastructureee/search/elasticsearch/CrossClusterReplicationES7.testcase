@@ -577,9 +577,7 @@ definition {
 			searchAssetTitle = "DM Title 1",
 			searchAssetType = "Document");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "stop-elasticsearch -Delasticsearch.bundle.number=1");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "stop-elasticsearch -Delasticsearch.bundle.number=1");
 
 		SearchAdministration.openSearchAdmin();
 
@@ -608,13 +606,9 @@ definition {
 			searchAssetTitle = "DM Title 1",
 			searchAssetType = "Document");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "start-elasticsearch-node -Delasticsearch.bundle.number=1");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch-node -Delasticsearch.bundle.number=1");
 
-		AntCommand(
-			locator1 = "build-test-elasticsearch7.xml",
-			value1 = "stop-elasticsearch -Delasticsearch.bundle.number=2");
+		AntCommands.runCommand("build-test-elasticsearch7.xml", "stop-elasticsearch -Delasticsearch.bundle.number=2");
 
 		SearchAdministration.openSearchAdmin();
 

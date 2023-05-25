@@ -135,9 +135,7 @@ definition {
 
 		FileUtil.write(${symbolicLinkResource}, ${config});
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "create-symbolic-link -Dsymbolic.link=${symbolicLink} -Dsymbolic.link.resource=${symbolicLinkResource}");
+		AntCommands.runCommand("build-test.xml", "create-symbolic-link -Dsymbolic.link=${symbolicLink} -Dsymbolic.link.resource=${symbolicLinkResource}");
 
 		var mysqlStatement = '''
 			SELECT COUNT(*) FROM lportal.Configuration_

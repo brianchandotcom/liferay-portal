@@ -60,9 +60,7 @@ definition {
 
 		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
+		AntCommands.runCommand("build-test-translation.xml", "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
 
 		for (var fileName : list "TranslationContentPage (NewAnyoneExperience1)-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience2)-en_US-es_ES.xlf") {
 			DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});
@@ -102,9 +100,7 @@ definition {
 
 		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
+		AntCommands.runCommand("build-test-translation.xml", "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
 
 		for (var fileName : list "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
 			DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});
@@ -143,9 +139,7 @@ definition {
 
 		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
+		AntCommands.runCommand("build-test-translation.xml", "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
 
 		for (var fileName : list "TranslationContentPage (Default)-en_US-ja_JP.xlf,TranslationContentPage (Default)-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
 			DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});
@@ -1025,9 +1019,7 @@ definition {
 			defaultLanguage = "English (United States)",
 			languageList = "Spanish (Spain)");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "unzip-translation-file -DfileName=TranslationContentPage1-en_US.zip");
+		AntCommands.runCommand("build-test-translation.xml", "unzip-translation-file -DfileName=TranslationContentPage1-en_US.zip");
 
 		Translations.importTranslation(
 			contentPageTranslation = "true",
@@ -1072,9 +1064,7 @@ definition {
 			experienceList = "NewAnyoneExperience",
 			languageList = "Spanish (Spain)");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
+		AntCommands.runCommand("build-test-translation.xml", "unzip-translation-file -DfileName=TranslationContentPage-en_US.zip");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "TranslationContentPage",
@@ -1193,9 +1183,7 @@ definition {
 			translationFileName = "TranslationContentPage3-en_US-es_ES",
 			translationZipFileName = "TranslationContentPage3-en_US");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "copy-translation-file -Dtranslation.file.name=TranslationContentPage3-en_US-es_ES.xlf -Dtranslation.zip.file.name=TranslationContentPage3-en_US");
+		AntCommands.runCommand("build-test-translation.xml", "copy-translation-file -Dtranslation.file.name=TranslationContentPage3-en_US-es_ES.xlf -Dtranslation.zip.file.name=TranslationContentPage3-en_US");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -1635,9 +1623,7 @@ definition {
 
 		var fileName = StringUtil.replace("Page Translations-en_US.zip", " ", "*");
 
-		AntCommand(
-			locator1 = "build-test-translation.xml",
-			value1 = "unzip-translation-file -DfileName=${fileName}");
+		AntCommands.runCommand("build-test-translation.xml", "unzip-translation-file -DfileName=${fileName}");
 
 		for (var fileName : list "TranslationContentPage1-en_US-es_ES.xlf,TranslationContentPage2-en_US-es_ES.xlf") {
 			DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});

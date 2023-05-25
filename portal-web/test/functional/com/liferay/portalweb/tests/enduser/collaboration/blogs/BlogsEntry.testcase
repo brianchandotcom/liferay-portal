@@ -865,13 +865,9 @@ definition {
 
 		SQL.executeMySQLStatement(mysqlStatement = "drop database if exists lportal;");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "start-app-server -Ddelete.liferay.home=false -Dkeep.osgi.state=true");
+		AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false -Dkeep.osgi.state=true");
 
 		if (${testRunEnvironment} == "EE") {
 			License.deployLicenseFile();
@@ -979,13 +975,9 @@ definition {
 
 		SQL.executeMySQLStatement(mysqlStatement = "drop database if exists lportal;");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+		AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dkeep.osgi.state=true -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "start-app-server -Ddelete.liferay.home=false -Dkeep.osgi.state=true");
+		AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false -Dkeep.osgi.state=true");
 
 		if (${testRunEnvironment} == "EE") {
 			License.deployLicenseFile();

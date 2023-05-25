@@ -1,9 +1,7 @@
 definition {
 
 	macro getLogFileContent {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "copy-log-file");
+		AntCommands.runCommand("build-test.xml", "copy-log-file");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

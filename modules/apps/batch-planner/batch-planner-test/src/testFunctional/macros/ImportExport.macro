@@ -316,9 +316,7 @@ definition {
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "Export.zip");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "unzip-temp-file -DfileName=Export.zip");
+		AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=Export.zip");
 	}
 
 	macro gotoExport {
@@ -456,9 +454,7 @@ definition {
 
 		DownloadTempFile();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "unzip-temp-file -DfileName=Export.zip");
+		AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=Export.zip");
 	}
 
 }

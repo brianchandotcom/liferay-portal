@@ -63,16 +63,12 @@ definition {
 
 	@description = "Install openldap util to be able to use ldap commands on command line"
 	macro installLDAPCommandUtil {
-		AntCommand(
-			locator1 = "build-test-apacheds.xml",
-			value1 = "get-apacheds-commands");
+		AntCommands.runCommand("build-test-apacheds.xml", "get-apacheds-commands");
 	}
 
 	@description = "List the contents of the LDAP database"
 	macro searchLDAPDatabaseForUsersAndGroups {
-		AntCommand(
-			locator1 = "build-test-apacheds.xml",
-			value1 = "search-apacheds");
+		AntCommands.runCommand("build-test-apacheds.xml", "search-apacheds");
 	}
 
 	macro setGeneralMethod {
@@ -109,9 +105,7 @@ definition {
 
 	@description = "Update LDAP database through LDIF file"
 	macro updateLDAPDatabaseWithLDIFFile {
-		AntCommand(
-			locator1 = "build-test-apacheds.xml",
-			value1 = "update-apacheds -DldifName=${ldifName}");
+		AntCommands.runCommand("build-test-apacheds.xml", "update-apacheds -DldifName=${ldifName}");
 	}
 
 	@description = "Verify that the group is imported on localhost after LDAP sync"

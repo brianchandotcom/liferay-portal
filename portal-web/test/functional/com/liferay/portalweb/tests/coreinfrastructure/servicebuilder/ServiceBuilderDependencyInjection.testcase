@@ -25,23 +25,15 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "ServiceBuilder#UpgradeSpringModuleToDeclarativeServices";
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "update-service-builder-spring-sample-to-ds");
+		AntCommands.runCommand("build-test.xml", "update-service-builder-spring-sample-to-ds");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "build-service -Dgradle.file.path=/modules/util/portal-tools-service-builder-spring-sample-service");
+		AntCommands.runCommand("build-test.xml", "build-service -Dgradle.file.path=/modules/util/portal-tools-service-builder-spring-sample-service");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-api");
+		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-api");
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-service");
+		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-service");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.spring.sample.service_");
 	}

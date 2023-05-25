@@ -1,0 +1,183 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "Poshi_Test__c",
+	"label": {
+		"en_US": "Poshi Test"
+	},
+	"name": "Poshi Test",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "6e00c686-acbc-5e7a-bea7-1d58576b78fd",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "5a693e81-987d-98fd-c2e5-9ec286458c8d",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "4267752a-63d2-146e-9b8a-1a5e7222258f",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"externalReferenceCode": "d7e1cfaa-b0f8-efd6-3757-f7b6f9e44456",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "7bce2b78-88de-4825-4730-31ca33320123",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "c0d98bc5-0839-d842-caa2-2499167399ce",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "Title__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Title"
+			},
+			"name": "title",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.object",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Poshi Tests"
+	},
+	"portlet": false,
+	"restContextPath": "/o/c/poshi_tests",
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"storageType": "salesforce",
+	"system": false,
+	"titleObjectFieldName": "title"
+}

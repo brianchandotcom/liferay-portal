@@ -32,6 +32,12 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = _fixCurlIndentation(content);
+
+		return _fixTableIndentation(content);
+	}
+
+	private String _fixCurlIndentation(String content) {
 		Matcher matcher = _curlPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -97,7 +103,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			}
 		}
 
-		return _fixTableIndentation(content);
+		return content;
 	}
 
 	private String _fixTableIndentation(String content) {

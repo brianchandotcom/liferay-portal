@@ -1,0 +1,18 @@
+[
+	{
+		"key": "appEditor",
+		"name": "App Editor",
+		"name_i18n": {
+			"en-US": "App Editor"
+		},
+		"type": "string"
+	},
+    {
+		"key": "accountAdministrator",
+		"name": "Account Admininstrator",
+		"name_i18n": {
+			"en-US": "Account Admininstrator"
+		},
+		"type": "string"
+	}
+]

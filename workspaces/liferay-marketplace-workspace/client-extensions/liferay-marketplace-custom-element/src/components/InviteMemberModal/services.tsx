@@ -17,10 +17,12 @@ import ClayAlert from '@clayui/alert';
 import {Liferay} from '../../liferay/liferay';
 
 type requestBody = {
-	alternateName: string;
-	emailAddress: string;
-	familyName: string;
-	givenName: string;
+  alternateName: string;
+  emailAddress: string;
+  familyName: string;
+  givenName: string;
+  password: string;
+  currentPassword: string;
 };
 
 export async function getAccountRolesOnAPI(accountId: number) {
@@ -129,22 +131,61 @@ export async function getUserByEmail(userEmail: String) {
 }
 
 export async function callRolesApi(
-	accountId: number,
-	roleId: number,
-	userId: number
+  accountId: number,
+  roleId: number,
+  userId: number
 ) {
-	const response = await fetch(
-		`/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
-		{
-			headers: {
-				'Content-Type': 'application/json',
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'POST',
-		}
-	);
-	if (response.ok) {
-		return;
-	}
+  const response = await fetch(
+    `/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
+    {
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-csrf-token': Liferay.authToken,
+      },
+      method: 'POST',
+    }
+  );
+  if (response.ok) {
+    return;
+  }
+}
+
+export async function addAdditionalInfo(
+  acceptInviteStatus: boolean,
+  r_userToAdditionalUserInformations_userId: number,
+  publisherName: string,
+  emailOfMember: string,
+  userFirstName: string,
+  inviterName: string
+) {
+  const additionalInfoBody = {
+    acceptInviteStatus: acceptInviteStatus,
+    r_userToAdditionalUserInformations_userId:
+      r_userToAdditionalUserInformations_userId,
+    publisherName: publisherName,
+    emailOfMember: emailOfMember,
+    userFirstName: userFirstName,
+    inviterName: inviterName,
+    roles: [
+      {
+        key: 'appEditor',
+        name: 'App Editor',
+      },
+      {
+        key: 'accountAdministrator',
+        name: 'Account Admininstrator',
+      },
+    ],
+  };
+
+  const response = await fetch(`/o/c/useradditionalinfos/`, {
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+      'x-csrf-token': Liferay.authToken,
+    },
+    method: 'POST',
+    body: JSON.stringify(additionalInfoBody),
+  });
 }

@@ -529,8 +529,11 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			return Collections.emptyMap();
 		}
 
+		boolean portlet = !Validator.isBlank(
+			ParamUtil.getString(actionRequest, "portletResource"));
+
 		return HashMapBuilder.put(
-			"friendlyURLChanged",
+			portlet ? "friendlyURLChangedAssetPublisher" : "friendlyURLChanged",
 			() -> {
 				if (friendlyURLChangedMessages.isEmpty()) {
 					return null;

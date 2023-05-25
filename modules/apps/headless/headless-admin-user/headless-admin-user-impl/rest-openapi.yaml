@@ -786,6 +786,13 @@ components:
                         type: string
                     readOnly: true
                     type: object
+                roleBriefs:
+                    description:
+                        A list of the user's roles.
+                    items:
+                        $ref: "#/components/schemas/RoleBrief"
+                    readOnly: true
+                    type: array
             type: object
         Subscription:
             properties:

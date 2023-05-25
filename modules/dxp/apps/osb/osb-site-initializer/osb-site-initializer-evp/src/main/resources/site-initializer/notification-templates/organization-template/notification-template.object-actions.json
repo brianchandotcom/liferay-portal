@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "organizationStatus == 'rejected' OR organizationStatus == 'verified' OR organizationStatus == 'awaitingMoreInfoFromEmployee'",
+		"externalReferenceCode": "EVP-ORGANIZATION-NOTIFICATION",
+		"label": {
+			"en_US": "EVP Organization Update"
+		},
+		"name": "EVPOrganizationUpdate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPOrganization$]"
+	}
+]

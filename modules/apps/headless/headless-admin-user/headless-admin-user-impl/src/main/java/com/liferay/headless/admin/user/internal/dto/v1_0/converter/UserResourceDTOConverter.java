@@ -163,7 +163,7 @@ public class UserResourceDTOConverter
 					OrganizationBrief.class);
 				siteBriefs = TransformUtil.transformToArray(
 					_groupLocalService.getUserSitesGroups(user.getUserId()),
-					group -> _toSiteBrief(dtoConverterContext, group),
+					group -> _toSiteBrief(dtoConverterContext, group, user),
 					SiteBrief.class);
 				userAccountContactInformation =
 					new UserAccountContactInformation() {
@@ -347,7 +347,7 @@ public class UserResourceDTOConverter
 	}
 
 	private SiteBrief _toSiteBrief(
-			DTOConverterContext dtoConverterContext, Group group)
+			DTOConverterContext dtoConverterContext, Group group, User user)
 		throws Exception {
 
 		return new SiteBrief() {
@@ -362,6 +362,11 @@ public class UserResourceDTOConverter
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					group.getNameMap());
+				roleBriefs = TransformUtil.transformToArray(
+					_roleLocalService.getUserGroupRoles(
+						user.getUserId(), group.getGroupId()),
+					role -> _toRoleBrief(dtoConverterContext, role),
+					RoleBrief.class);
 			}
 		};
 	}

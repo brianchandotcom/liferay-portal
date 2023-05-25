@@ -115,6 +115,17 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@CTAware(onProduction = true)
 	@Override
+	public CTCollection postCTCollection(CTCollection ctCollection)
+		throws Exception {
+
+		return _toCTCollection(
+			_ctCollectionService.addCTCollection(
+				contextCompany.getCompanyId(), contextUser.getUserId(),
+				ctCollection.getName(), ctCollection.getDescription()));
+	}
+
+	@CTAware(onProduction = true)
+	@Override
 	public void postCTCollectionCheckout(Long ctCollectionId)
 		throws PortalException {
 
@@ -125,7 +136,17 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@CTAware(onProduction = true)
 	@Override
-	public void postCTCollectionPublish(Long ctCollectionId, Date publishDate)
+	public void postCTCollectionPublish(Long ctCollectionId)
+		throws PortalException {
+
+		_ctCollectionService.publishCTCollection(
+			contextUser.getUserId(), ctCollectionId);
+	}
+
+	@CTAware(onProduction = true)
+	@Override
+	public void postCTCollectionSchedulePublish(
+			Long ctCollectionId, Date publishDate)
 		throws PortalException {
 
 		if (publishDate == null) {
@@ -158,11 +179,22 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Override
 	public Response postCTCollectionsPageExportBatch(
-			Integer[] status, String search, Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception {
+		Integer[] status, String search, Sort[] sorts, String callbackURL,
+		String contentType, String fieldNames) {
 
 		return null;
+	}
+
+	@CTAware(onProduction = true)
+	@Override
+	public CTCollection putCTCollection(
+			Long ctCollectionId, CTCollection ctCollection)
+		throws Exception {
+
+		return _toCTCollection(
+			_ctCollectionService.updateCTCollection(
+				contextUser.getUserId(), ctCollectionId, ctCollection.getName(),
+				ctCollection.getDescription()));
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(
@@ -183,20 +215,20 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						ActionKeys.UPDATE, "postPublicationCheckout",
+						ActionKeys.UPDATE, "postCTCollectionCheckout",
 						CTCollection.class.getName(),
 						ctCollection.getCtCollectionId());
 				}
 			).put(
 				"delete",
 				() -> addAction(
-					ActionKeys.DELETE, "deletePublication",
+					ActionKeys.DELETE, "deleteCTCollection",
 					CTCollection.class.getName(),
 					ctCollection.getCtCollectionId())
 			).put(
 				"get",
 				addAction(
-					ActionKeys.VIEW, "getPublication",
+					ActionKeys.VIEW, "getCTCollection",
 					CTCollection.class.getName(),
 					ctCollection.getCtCollectionId())
 			).put(
@@ -209,7 +241,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						ActionKeys.PERMISSIONS, "patchPublication",
+						ActionKeys.PERMISSIONS, "patchCTCollection",
 						CTCollection.class.getName(),
 						ctCollection.getCtCollectionId());
 				}
@@ -221,7 +253,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						CTActionKeys.PUBLISH, "postPublicationPublish",
+						CTActionKeys.PUBLISH, "postCTCollectionPublish",
 						CTCollection.class.getName(),
 						ctCollection.getCtCollectionId());
 				}
@@ -235,14 +267,14 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 					}
 
 					return addAction(
-						CTActionKeys.PUBLISH, "postPublicationSchedulePublish",
+						CTActionKeys.PUBLISH, "postCTCollectionSchedulePublish",
 						CTCollection.class.getName(),
 						ctCollection.getCtCollectionId());
 				}
 			).put(
 				"update",
 				() -> addAction(
-					ActionKeys.UPDATE, "putPublication",
+					ActionKeys.UPDATE, "putCTCollection",
 					CTCollection.class.getName(),
 					ctCollection.getCtCollectionId())
 			).build(),
@@ -267,6 +299,17 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		}
 
 		return false;
+	}
+
+	private CTCollection _toCTCollection(
+			com.liferay.change.tracking.model.CTCollection ctCollection)
+		throws Exception {
+
+		if (ctCollection == null) {
+			return null;
+		}
+
+		return _toCTCollection(ctCollection.getCtCollectionId());
 	}
 
 	private CTCollection _toCTCollection(Long ctCollectionId) throws Exception {

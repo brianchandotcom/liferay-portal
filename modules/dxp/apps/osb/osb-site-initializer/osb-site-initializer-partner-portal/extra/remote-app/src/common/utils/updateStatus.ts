@@ -32,6 +32,14 @@ const updateStatus = (
 		}
 
 		if (
+			id &&
+			changeStatus &&
+			currentRequestStatus?.key === Status.DRAFT.key
+		) {
+			status = currentRequestStatus;
+		}
+
+		if (
 			changeStatus &&
 			totalMDFRequestAmount &&
 			totalMDFRequestAmount >= 15000 &&

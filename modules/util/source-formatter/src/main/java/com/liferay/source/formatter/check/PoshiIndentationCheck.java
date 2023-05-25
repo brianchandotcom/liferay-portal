@@ -107,6 +107,8 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 	}
 
 	private String _fixTableIndentation(String content) {
+		StringBuffer stringBuffer = new StringBuffer();
+
 		Matcher matcher = _tablePattern.matcher(content);
 
 		while (matcher.find()) {
@@ -151,9 +153,18 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 			String replacement = sb.toString();
 
 			if (!tableContent.equals(replacement)) {
-				return StringUtil.replaceFirst(
-					content, tableContent, replacement, matcher.start());
+				matcher.appendReplacement(
+					stringBuffer,
+					Matcher.quoteReplacement(
+						StringUtil.replaceFirst(
+							matcher.group(), tableContent, replacement)));
 			}
+		}
+
+		if (stringBuffer.length() > 0) {
+			matcher.appendTail(stringBuffer);
+
+			return stringBuffer.toString();
 		}
 
 		return content;

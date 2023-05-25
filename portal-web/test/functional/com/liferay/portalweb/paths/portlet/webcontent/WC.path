@@ -164,7 +164,7 @@
 
 <tr>
 	<td>SIDEBAR_BODY</td>
-	<td>//div[@class='sidebar-body']//div[contains(@id,'TabsSection')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//div[contains(@id,'tabpanel')]</td>
 	<td></td>
 </tr>
 <tr>

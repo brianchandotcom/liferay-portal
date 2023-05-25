@@ -16,6 +16,7 @@ package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.closure.CTClosure;
 import com.liferay.change.tracking.closure.CTClosureFactory;
+import com.liferay.change.tracking.conflict.CTEntryConflictHelper;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
@@ -213,6 +214,7 @@ public class CTCollectionLocalServiceImpl
 							_classNameLocalService,
 							_constraintResolverServiceTrackerMap,
 							_ctDisplayRendererServiceTrackerMap,
+							_ctEntryConflictHelperServiceTrackerMap,
 							_ctEntryLocalService, ctService, modelClassNameId,
 							fromCTCollectionId,
 							_tableReferenceDefinitionManager, toCTCollectionId);
@@ -933,6 +935,18 @@ public class CTCollectionLocalServiceImpl
 
 					emitter.emit(modelClass.getName());
 				});
+
+		_ctEntryConflictHelperServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, CTEntryConflictHelper.class, null,
+				(serviceReference, emitter) -> {
+					CTEntryConflictHelper ctEntryConflictHelper =
+						bundleContext.getService(serviceReference);
+
+					Class<?> modelClass = ctEntryConflictHelper.getModelClass();
+
+					emitter.emit(modelClass.getName());
+				});
 	}
 
 	@Deactivate
@@ -943,6 +957,8 @@ public class CTCollectionLocalServiceImpl
 		_constraintResolverServiceTrackerMap.close();
 
 		_ctDisplayRendererServiceTrackerMap.close();
+
+		_ctEntryConflictHelperServiceTrackerMap.close();
 	}
 
 	private void _discardCTEntries(
@@ -1291,6 +1307,8 @@ public class CTCollectionLocalServiceImpl
 
 	private ServiceTrackerMap<String, CTDisplayRenderer<?>>
 		_ctDisplayRendererServiceTrackerMap;
+	private ServiceTrackerMap<String, CTEntryConflictHelper>
+		_ctEntryConflictHelperServiceTrackerMap;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.internal.conflict;
 
+import com.liferay.change.tracking.conflict.CTEntryConflictHelper;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.CTRowUtil;
@@ -83,6 +84,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			constraintResolverServiceTrackerMap,
 		ServiceTrackerMap<String, CTDisplayRenderer<?>>
 			ctDisplayRendererServiceTrackerMap,
+		ServiceTrackerMap<String, CTEntryConflictHelper>
+			ctEntryConflictHelperServiceTrackerMap,
 		CTEntryLocalService ctEntryLocalService, CTService<T> ctService,
 		long modelClassNameId, long sourceCTCollectionId,
 		TableReferenceDefinitionManager tableReferenceDefinitionManager,
@@ -93,6 +96,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			constraintResolverServiceTrackerMap;
 		_ctDisplayRendererServiceTrackerMap =
 			ctDisplayRendererServiceTrackerMap;
+		_ctEntryConflictHelperServiceTrackerMap =
+			ctEntryConflictHelperServiceTrackerMap;
 		_ctEntryLocalService = ctEntryLocalService;
 		_ctService = ctService;
 		_modelClassNameId = modelClassNameId;
@@ -111,6 +116,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			_modificationCTEntries.put(ctEntry.getModelClassPK(), ctEntry);
 		}
+
+		_ctEntries.add(ctEntry);
 	}
 
 	public List<ConflictInfo> check() throws PortalException {
@@ -162,6 +169,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 
 		_checkMissingRequirements(connection, ctPersistence, conflictInfos);
+
+		_checkCTEntries(ctPersistence, conflictInfos);
 
 		return conflictInfos;
 	}
@@ -292,6 +301,29 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				new ConstraintResolverConflictInfo(
 					constraintResolver, false, currentPrimaryKeys.getKey(),
 					currentPrimaryKeys.getValue()));
+		}
+	}
+
+	private void _checkCTEntries(
+		CTPersistence<T> ctPersistence, List<ConflictInfo> conflictInfos) {
+
+		Class<?> clazz = ctPersistence.getModelClass();
+
+		CTEntryConflictHelper ctEntryConflictHelper =
+			_ctEntryConflictHelperServiceTrackerMap.getService(clazz.getName());
+
+		if (ctEntryConflictHelper == null) {
+			return;
+		}
+
+		for (CTEntry ctEntry : _ctEntries) {
+			if (ctEntryConflictHelper.hasModificationConflict(
+					ctEntry, _targetCTCollectionId)) {
+
+				conflictInfos.add(
+					new ModificationConflictInfo(
+						ctEntry.getModelClassPK(), false));
+			}
 		}
 	}
 
@@ -953,6 +985,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			_constraintResolverServiceTrackerMap;
 	private final ServiceTrackerMap<String, CTDisplayRenderer<?>>
 		_ctDisplayRendererServiceTrackerMap;
+	private Set<CTEntry> _ctEntries;
+	private final ServiceTrackerMap<String, CTEntryConflictHelper>
+		_ctEntryConflictHelperServiceTrackerMap;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTService<T> _ctService;
 	private final long _modelClassNameId;

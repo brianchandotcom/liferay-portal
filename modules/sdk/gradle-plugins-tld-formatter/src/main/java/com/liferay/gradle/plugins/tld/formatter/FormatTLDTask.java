@@ -8,6 +8,7 @@ package com.liferay.gradle.plugins.tld.formatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
@@ -20,7 +21,9 @@ import org.gradle.api.tasks.JavaExec;
 public class FormatTLDTask extends JavaExec {
 
 	public FormatTLDTask() {
-		setMain("com.liferay.tld.formatter.TLDFormatter");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.tld.formatter.TLDFormatter");
 	}
 
 	@Override

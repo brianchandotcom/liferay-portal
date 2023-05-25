@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
@@ -31,7 +32,9 @@ import org.gradle.api.tasks.PathSensitivity;
 public abstract class BaseDBSupportTask extends JavaExec {
 
 	public BaseDBSupportTask() {
-		setMain("com.liferay.portal.tools.db.support.DBSupport");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.portal.tools.db.support.DBSupport");
 	}
 
 	@Override

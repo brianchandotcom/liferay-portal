@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -37,7 +38,9 @@ import org.gradle.api.tasks.SkipWhenEmpty;
 public class BuildTaglibsTask extends JavaExec {
 
 	public BuildTaglibsTask() {
-		setMain("com.liferay.alloy.tools.tagbuilder.TagBuilder");
+		Property<String> mainClass = getMainClass();
+
+		mainClass.set("com.liferay.alloy.tools.tagbuilder.TagBuilder");
 	}
 
 	public BuildTaglibsTask componentsXmlFiles(Iterable<?> componentsXmlFiles) {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.Highlight;
+import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -62,7 +63,7 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
+		serviceContext = ServiceContextTestUtil.getServiceContext(
 			group, TestPropsValues.getUserId());
 	}
 
@@ -73,18 +74,23 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
 			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
 
-		Highlight highlight = _highlightBuilderFactory.builder(
-		).addFieldConfig(
-			_fieldConfigBuilderFactory.builder(
-				getFieldName()
-			).build()
-		).fragmentSize(
-			20
-		).postTags(
-			"[/H]"
-		).preTags(
-			"[H]"
-		).build();
+		HighlightBuilder highlightBuilder = _highlightBuilderFactory.builder();
+
+		List<String> fieldNames = Arrays.asList(getFieldNames());
+
+		fieldNames.forEach(
+			fieldName -> highlightBuilder.addFieldConfig(
+				_fieldConfigBuilderFactory.builder(
+					fieldName
+				).fragmentSize(
+					20
+				).postTags(
+					"[/H]"
+				).preTags(
+					"[H]"
+				).build()));
+
+		Highlight highlight = highlightBuilder.build();
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
@@ -106,7 +112,7 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 					"[/H] zeta...eta [H]alpha[/H] iota",
 				"[H]alpha[/H] beta gamma delta...zeta eta theta iota [H]alpha" +
 					"[/H]"),
-			getFieldName(), searchRequestBuilder);
+			getFieldNames(), searchRequestBuilder);
 	}
 
 	@Test
@@ -130,7 +136,7 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 				"<liferay-hl>alpha</liferay-hl> beta",
 				"<liferay-hl>alpha</liferay-hl> beta " +
 					"<liferay-hl>alpha</liferay-hl>"),
-			getFieldName(), searchRequestBuilder);
+			getFieldNames(), searchRequestBuilder);
 	}
 
 	@Test
@@ -155,7 +161,7 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 
 		_assertSearch(
 			Arrays.asList("<liferay-hl>alpha</liferay-hl> beta"),
-			getFieldName(), searchRequestBuilder);
+			getFieldNames(), searchRequestBuilder);
 	}
 
 	@Rule
@@ -171,13 +177,15 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 		return clazz.getName();
 	}
 
-	protected abstract String getFieldName();
+	protected abstract String[] getFieldNames();
 
 	@DeleteAfterTestRun
 	protected Group group;
 
+	protected ServiceContext serviceContext;
+
 	private void _assertSearch(
-		List<String> expected, String fieldName,
+		List<String> expected, String[] fieldNames,
 		SearchRequestBuilder searchRequestBuilder) {
 
 		if (!_isElasticsearch()) {
@@ -189,9 +197,11 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 
 		Hits hits = searchResponse.withHitsGet(Function.identity());
 
-		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(), hits.getDocs(),
-			"snippet_" + fieldName, expected);
+		for (String fieldName : fieldNames) {
+			DocumentsAssert.assertValuesIgnoreRelevance(
+				searchResponse.getRequestString(), hits.getDocs(),
+				"snippet_" + fieldName, expected);
+		}
 	}
 
 	private boolean _isElasticsearch() {
@@ -212,7 +222,5 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	private ServiceContext _serviceContext;
 
 }

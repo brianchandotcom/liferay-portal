@@ -90,10 +90,8 @@ public class PublicationResourceImpl extends BasePublicationResourceImpl {
 
 	@Override
 	public Publication getPublication(Long ctCollectionId) throws Exception {
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		return _toPublication(ctCollection);
+		return _toPublication(
+			_ctCollectionLocalService.getCTCollection(ctCollectionId));
 	}
 
 	@Override
@@ -124,6 +122,17 @@ public class PublicationResourceImpl extends BasePublicationResourceImpl {
 
 	@CTAware(onProduction = true)
 	@Override
+	public Publication postPublication(Publication publication)
+		throws Exception {
+
+		return _toPublication(
+			_ctCollectionService.addCTCollection(
+				contextCompany.getCompanyId(), contextUser.getUserId(),
+				publication.getName(), publication.getDescription()));
+	}
+
+	@CTAware(onProduction = true)
+	@Override
 	public void postPublicationCheckout(Long ctCollectionId)
 		throws PortalException {
 
@@ -134,7 +143,17 @@ public class PublicationResourceImpl extends BasePublicationResourceImpl {
 
 	@CTAware(onProduction = true)
 	@Override
-	public void postPublicationPublish(Long ctCollectionId, Date publishDate)
+	public void postPublicationPublish(Long ctCollectionId)
+		throws PortalException {
+
+		_ctCollectionService.publishCTCollection(
+			contextUser.getUserId(), ctCollectionId);
+	}
+
+	@CTAware(onProduction = true)
+	@Override
+	public void postPublicationSchedulePublish(
+			Long ctCollectionId, Date publishDate)
 		throws PortalException {
 
 		if (publishDate == null) {
@@ -172,6 +191,18 @@ public class PublicationResourceImpl extends BasePublicationResourceImpl {
 		throws Exception {
 
 		return null;
+	}
+
+	@CTAware(onProduction = true)
+	@Override
+	public Publication putPublication(
+			Long ctCollectionId, Publication publication)
+		throws Exception {
+
+		return _toPublication(
+			_ctCollectionService.updateCTCollection(
+				contextUser.getUserId(), ctCollectionId, publication.getName(),
+				publication.getDescription()));
 	}
 
 	private Date _getDateScheduled(CTCollection ctCollection) throws Exception {

@@ -16,6 +16,9 @@ package com.liferay.portal.search.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
@@ -70,6 +73,9 @@ public class SearchRequestBuilderHighlightTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_journalFolderFixture = new JournalFolderFixture(
+			journalFolderLocalService);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, TestPropsValues.getUserId());
@@ -142,6 +148,34 @@ public class SearchRequestBuilderHighlightTest {
 			"title_en_US", searchRequestBuilder);
 	}
 
+	@Test
+	public void testSingleEntryClassSearchWithHighlightEnabled()
+		throws Exception {
+
+		_journalFolderFixture.addFolder(_group.getGroupId(), "alpha beta");
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).entryClassNames(
+				JournalFolder.class.getName()
+			).groupIds(
+				_group.getGroupId()
+			).queryString(
+				"alpha"
+			).highlightEnabled(
+				true
+			);
+
+		_assertSearch(
+			Arrays.asList("<liferay-hl>alpha</liferay-hl> beta"), "title_en_US",
+			searchRequestBuilder);
+	}
+
+	@Inject
+	protected JournalFolderLocalService journalFolderLocalService;
+
 	private void _addJournalArticle(String... titles) throws Exception {
 		for (String title : titles) {
 			JournalTestUtil.addArticle(
@@ -188,6 +222,8 @@ public class SearchRequestBuilderHighlightTest {
 
 	@Inject
 	private HighlightBuilderFactory _highlightBuilderFactory;
+
+	private JournalFolderFixture _journalFolderFixture;
 
 	@Inject
 	private SearchEngine _searchEngine;

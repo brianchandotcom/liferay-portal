@@ -137,4 +137,25 @@ definition {
 		}
 	}
 
+    @description = "Story ID: LPS-162255 | Test Summary: Verify that can go to the case results through Breadcrumb Finder"
+	@priority = 3
+	test AssertCanGoToCaseResultsthroughBreadcrumb {
+		property test.name.skip.portal.instance = "TestrayBreadcrumbFinder#AssertCanGoToCaseResultsthroughBreadcrumb";
+
+		task ("Given that the user go to the breadcrumb") {
+            Testray.gotoBreadcrumb();
+		}
+
+		task ("When the user go to next from section build through Breadcrumb") {
+			Testray.nextSectionBreadcrumb(
+				build = ${buildName},
+				project = ${projectName},
+				routine = ${routineName});
+		}
+
+		task ("Then the user can go to the build page") {
+            TestrayHeader.assertBreadcrumbTitle(key_value = ${buildName});
+		}
+	}
+
 }

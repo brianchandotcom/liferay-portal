@@ -21,6 +21,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +39,16 @@ public class JournalArticleCTEntryConflictHelper
 	}
 
 	@Override
-	public boolean hasModificationConflict(
+	public boolean hasDeletionModificationConflict(
 		CTEntry ctEntry, long targetCTCollectionId) {
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.fetchJournalArticle(
 				ctEntry.getModelClassPK());
+
+		if (journalArticle == null) {
+			return false;
+		}
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -54,10 +59,8 @@ public class JournalArticleCTEntryConflictHelper
 					journalArticle.getResourcePrimKey());
 
 			if ((latestJournalArticle != null) &&
-				((journalArticle.getVersion() <=
-					latestJournalArticle.getVersion()) ||
-				 (ctEntry.getMvccVersion() <
-					 latestJournalArticle.getMvccVersion()))) {
+				(latestJournalArticle.getStatus() ==
+					WorkflowConstants.STATUS_IN_TRASH)) {
 
 				return true;
 			}

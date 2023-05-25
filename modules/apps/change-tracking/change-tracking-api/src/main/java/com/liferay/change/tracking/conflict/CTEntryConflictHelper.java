@@ -24,8 +24,12 @@ public interface CTEntryConflictHelper {
 
 	public Class<? extends CTModel<?>> getModelClass();
 
-	public boolean hasModificationConflict(
-		CTEntry ctEntry, long targetCTCollectionId);
+	public default boolean hasDeletionModificationConflict(
+		CTEntry ctEntry, long targetCTCollectionId) {
+
+		return false;
+	}
+
 	public default boolean hasModificationConflict(
 		CTEntry ctEntry, long targetCTCollectionId) {
 

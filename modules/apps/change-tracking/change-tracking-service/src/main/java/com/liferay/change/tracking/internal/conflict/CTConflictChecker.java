@@ -324,6 +324,14 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					new ModificationConflictInfo(
 						ctEntry.getModelClassPK(), false));
 			}
+
+			if (ctEntryConflictHelper.hasDeletionModificationConflict(
+					ctEntry, _targetCTCollectionId)) {
+
+				conflictInfos.add(
+					new DeletionModificationConflictInfo(
+						ctEntry.getModelClassPK()));
+			}
 		}
 	}
 
@@ -985,7 +993,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			_constraintResolverServiceTrackerMap;
 	private final ServiceTrackerMap<String, CTDisplayRenderer<?>>
 		_ctDisplayRendererServiceTrackerMap;
-	private Set<CTEntry> _ctEntries;
+	private final Set<CTEntry> _ctEntries = new HashSet<>();
 	private final ServiceTrackerMap<String, CTEntryConflictHelper>
 		_ctEntryConflictHelperServiceTrackerMap;
 	private final CTEntryLocalService _ctEntryLocalService;

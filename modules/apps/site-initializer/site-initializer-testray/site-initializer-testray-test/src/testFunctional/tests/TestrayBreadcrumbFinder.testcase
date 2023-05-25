@@ -105,4 +105,36 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-162255 | Test Summary: Verify that can back from section project through Breadcrumb Finder"
+	@priority = 3
+	test AssertCanBackSectionByBreadcrumb {
+		property test.name.skip.portal.instance = "TestrayBreadcrumbFinder#AssertCanBackSectionByBreadcrumb";
+
+		task ("Given that the user go to case results") {
+            Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
+
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+		}
+
+        task ("And the user access the Breadcrumb") {
+			Testray.gotoBreadcrumb();
+		}
+
+		task ("When the user back from section project through Breadcrumb") {
+			Testray.gotoBackBreadcrumb(value = "Project 1");
+
+            Testray.confirmBreadcrumb();
+		}
+
+		task ("Then the user can back to the routine page") {
+			AssertElementPresent(
+				key_projectName = ${routineName},
+				locator1 = "Testray#ITEM_NAME");
+		}
+	}
+
 }

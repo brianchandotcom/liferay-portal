@@ -198,7 +198,8 @@ function TreeItem({config, expand, item, load, namespace, selectedLayoutId}) {
 				{(item) => (
 					<ClayTreeView.Item
 						actions={
-							!config.stagingEnabled && (
+							!config.stagingEnabled &&
+							item.actions && (
 								<ClayDropDownWithItems
 									items={normalizeActions(
 										item.actions,

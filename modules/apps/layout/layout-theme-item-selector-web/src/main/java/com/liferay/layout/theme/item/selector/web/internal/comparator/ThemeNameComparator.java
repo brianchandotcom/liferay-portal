@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.util.comparator;
+package com.liferay.layout.theme.item.selector.web.internal.comparator;
 
 import com.liferay.portal.kernel.model.Theme;
 

@@ -220,6 +220,10 @@ public class WorkspaceExtension {
 	}
 
 	public String getAppServerTomcatVersion() {
+		if (Objects.isNull(_appServerTomcatVersion)) {
+			return _getDefaultAppServerVersion();
+		}
+
 		return GradleUtil.toString(_appServerTomcatVersion);
 	}
 
@@ -228,6 +232,10 @@ public class WorkspaceExtension {
 	}
 
 	public String getBundleChecksumMD5() {
+		if (Objects.isNull(_bundleChecksumMD5)) {
+			return getDefaultBundleChecksumMD5();
+		}
+
 		return GradleUtil.toString(_bundleChecksumMD5);
 	}
 
@@ -249,6 +257,10 @@ public class WorkspaceExtension {
 	}
 
 	public String getBundleUrl() {
+		if (Objects.isNull(_bundleUrl)) {
+			return getDefaultBundleUrl();
+		}
+
 		return GradleUtil.toString(_bundleUrl);
 	}
 
@@ -293,6 +305,10 @@ public class WorkspaceExtension {
 	}
 
 	public String getDockerImageLiferay() {
+		if (Objects.isNull(_dockerImageLiferay)) {
+			return _getDefaultDockerImage();
+		}
+
 		return GradleUtil.toString(_dockerImageLiferay);
 	}
 
@@ -341,6 +357,10 @@ public class WorkspaceExtension {
 	}
 
 	public String getTargetPlatformVersion() {
+		if (Objects.isNull(_targetPlatformVersion)) {
+			return _getDefaultTargetplatformVersion();
+		}
+
 		return GradleUtil.toString(_targetPlatformVersion);
 	}
 

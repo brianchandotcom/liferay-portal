@@ -16,10 +16,9 @@ definition {
 					"name": "${name}",
 					"objectActionExecutorKey": "${objectActionExecutorKey}",
 					"objectActionTriggerKey": "${objectActionTriggerKey}",
-					"parameters":{
-						"notificationTemplateExternalReferenceCode": "${notificationTemplateErc}",
-						"type": "${type}",
-						"notificationTemplateId": "${notificationTemplateId}"
+					"parameters":{${parameters}},
+					"errorMessage": {
+						"en_US": "${errorMessage}"
 					}
 				}
 		''';
@@ -27,18 +26,37 @@ definition {
 		return ${curl};
 	}
 
+	macro _setParametersForObjectAction {
+		Variables.assertDefined(parameterList = ${objectActionExecutorKey});
+
+		if (${objectActionExecutorKey} == "notification") {
+			var parameters = '''
+				"notificationTemplateId": "${notificationTemplateId}"
+			''';
+		}
+		else {
+			var parameters = "";
+		}
+
+		return ${parameters};
+	}
+
 	macro createObjectAction {
-		Variables.assertDefined(parameterList = "${objectDefinitionId},${label},${name},${objectActionExecutorKey},${objectActionTriggerKey},${notificationTemplateId},${type},${notificationTemplateErc}");
+		Variables.assertDefined(parameterList = "${objectDefinitionId},${label},${name},${objectActionExecutorKey},${objectActionTriggerKey}");
+
+		var parameters = ObjectActionAPI._setParametersForObjectAction(
+			notificationTemplateId = ${notificationTemplateId},
+			objectActionExecutorKey = ${objectActionExecutorKey},
+			objectDefinitionId = ${objectDefinitionId});
 
 		var curl = ObjectActionAPI._curlCreateObjectAction(
+			errorMessage = ${errorMessage},
 			label = ${label},
 			name = ${name},
-			notificationTemplateErc = ${notificationTemplateErc},
-			notificationTemplateId = ${notificationTemplateId},
 			objectActionExecutorKey = ${objectActionExecutorKey},
 			objectActionTriggerKey = ${objectActionTriggerKey},
 			objectDefinitionId = ${objectDefinitionId},
-			type = ${type});
+			parameters = ${parameters});
 
 		var response = JSONCurlUtil.post(${curl});
 

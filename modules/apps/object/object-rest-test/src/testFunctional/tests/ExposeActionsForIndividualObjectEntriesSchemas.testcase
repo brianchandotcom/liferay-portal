@@ -106,6 +106,43 @@ definition {
 		}
 	}
 
+	@priority = 4
+	test IncludeStandaloneCustomActionForObjectEntitiesSchema {
+		property portal.acceptance = "true";
+
+		task ("And Given myCustomAction action of Standalone trigger created in Student") {
+			var studentObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "Student");
+
+			ObjectActionAPI.createObjectAction(
+				errorMessage = "error message for myCustomAction",
+				label = "myCustomAction",
+				name = "myCustomAction",
+				objectActionExecutorKey = "groovy",
+				objectActionTriggerKey = "standalone",
+				objectDefinitionId = ${studentObjectId});
+		}
+
+		task ("And Given navigate to o/c/students/openapi.json") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "students");
+		}
+
+		task ("When expand actions.myCustomAction in Student schema") {
+			APIExplorer.expandPropertyInActionsSchema(
+				property = "myCustomAction",
+				schema = "Student");
+		}
+
+		task ("Then I can see myCustomAction with PUT and o/c/students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction") {
+			APIExplorer.assertExposedActionsInSchema(
+				method = "PUT",
+				objectHref = "students/by-external-reference-code/{studentExternalReferenceCode}/object-actions/myCustomAction",
+				property = "myCustomAction",
+				schema = "Student");
+		}
+	}
+
 	@priority = 3
 	test IncludeUpdateInActionsForObjectEntitiesSchema {
 		task ("When expand actions.update in Student schema") {

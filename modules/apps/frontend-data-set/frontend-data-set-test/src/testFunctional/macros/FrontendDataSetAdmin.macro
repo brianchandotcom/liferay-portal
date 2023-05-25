@@ -320,4 +320,12 @@ definition {
 			value1 = ${key_type});
 	}
 
+	macro uncheckFields {
+		for (var key_fieldItem : list ${key_fieldList}) {
+			Uncheck.uncheckNotVisible(
+				checkboxName = ${key_fieldItem},
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
 }

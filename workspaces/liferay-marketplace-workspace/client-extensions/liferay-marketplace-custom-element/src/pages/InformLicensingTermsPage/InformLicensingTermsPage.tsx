@@ -38,7 +38,6 @@ import {createSkuName} from '../../utils/util';
 
 import './InformLicensingTermsPage.scss';
 
-
 interface InformLicensingTermsPageProps {
 	onClickBack: () => void;
 	onClickContinue: () => void;

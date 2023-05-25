@@ -317,6 +317,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				);
 
 				const results = await Promise.all(promises);
+
 				return results.find((attachment) => attachment !== null);
 			})();
 

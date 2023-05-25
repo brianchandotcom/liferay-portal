@@ -169,6 +169,7 @@ export function ReviewAndSubmitAppPage({
 		};
 
 		getData();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productERC, productId]);
 

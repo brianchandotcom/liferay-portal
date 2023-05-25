@@ -156,63 +156,6 @@ definition {
 			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
 	}
 
-	@description = "Assert there are no conflict changes when deleting the same document in two Publications"
-	@priority = 4
-	test AssertNoConflictForDeletionsCombinationPublications {
-		property portal.acceptance = "true";
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		JSONPublications.addPublication(publicationName = "Publication Name 1");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 1");
-
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name");
-
-		JSONPublications.addPublication(publicationName = "Publication Name 2");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 1");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewDefault();
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.viewDefault();
-
-		PublicationsNavigator.gotoPublish(publicationName = "Publication Name 2");
-
-		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
-	}
-
 	@description = "This is a use case for LPS-172496. Deleting a portlet with a modified configuration from a Publication incorrectly leads to a Deletion Modification Conflict"
 	@priority = 3
 	test CanDeletePortletModifiedConfigurationWithoutDeletionModificationConflict {

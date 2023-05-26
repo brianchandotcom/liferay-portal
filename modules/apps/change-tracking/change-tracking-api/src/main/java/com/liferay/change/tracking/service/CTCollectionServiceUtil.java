@@ -59,14 +59,6 @@ public class CTCollectionServiceUtil {
 		return getService().deleteCTCollection(ctCollection);
 	}
 
-	public static void discardCTEntries(
-			long ctCollectionId, long modelClassNameId, long modelClassPK)
-		throws PortalException {
-
-		getService().discardCTEntries(
-			ctCollectionId, modelClassNameId, modelClassPK);
-	}
-
 	public static void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws PortalException {

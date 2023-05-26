@@ -604,11 +604,13 @@ definition {
 	@priority = 5
 	test CanCreateActionNotificationUsingOldValueWithOnAfterAddTrigger {
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
@@ -660,22 +662,12 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "CustomObject175197",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175197");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Notification action when entry is added",
-				status = "Success");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 
@@ -683,11 +675,13 @@ definition {
 	@priority = 5
 	test CanCreateActionNotificationUsingOldValueWithOnAfterDeleteTrigger {
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
@@ -743,22 +737,12 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "CustomObject175192",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175192");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Notification action when entry is deleted",
-				status = "Success");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 
@@ -766,17 +750,19 @@ definition {
 	@priority = 5
 	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTrigger {
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
-				fromName = "Test test",
+				fromName = "Test Test",
 				name = "Email Template",
 				notificationType = "Email",
-				subject = "Subject");
+				subject = "Subject Test");
 
 			PortletEntry.save();
 		}
@@ -829,32 +815,25 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "CustomObject175191",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175191");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Notification action when entry is updated",
-				status = "Success");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 
 	@description = "LPS-178410 - Verify if actions works with oldValue function when trigger is On After Update (Notification) in Account System"
 	@priority = 4
 	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTriggerOnAccountObject {
+		property test.smtp.server.enabled = "true";
+
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
@@ -899,32 +878,25 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "AccountEntry",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Account");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Notification action when account is updated",
-				status = "Success");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 
 	@description = "LPS-178415 - Verify if actions works with oldValue function when trigger is On After Update (Notification) in User System Object"
 	@priority = 4
 	test CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTriggerOnUserObject {
+		property test.smtp.server.enabled = "true";
+
 		task ("Given: A notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
@@ -967,22 +939,12 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "User",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "User");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Notification action when first name is edited",
-				status = "Success");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 
@@ -990,17 +952,19 @@ definition {
 	@priority = 5
 	test CanCreateActionNotificationUsingOldValueWithOnOrderStatusUpdateInSystemObject {
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
 				name = "Email Template",
 				notificationType = "Email",
-				subject = "Subject");
+				subject = "Subject Test");
 
 			PortletEntry.save();
 		}
@@ -1061,22 +1025,12 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "CommerceOrder",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Commerce Order");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Notification action when the order is updated",
-				status = "Success");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 
@@ -1084,6 +1038,7 @@ definition {
 	@priority = 5
 	test CanCreateActionNotificationWithOnOrderStatusUpdate {
 		property portal.acceptance = "true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template is created") {
 			Notifications.goToNotificationTemplateAdmin();
@@ -1092,10 +1047,10 @@ definition {
 				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
-				fromName = "Test test",
-				name = "Notification Template",
+				fromName = "Test Test",
+				name = "Email Template",
 				notificationType = "Email",
-				subject = "Subject");
+				subject = "Subject Test");
 
 			PortletEntry.save();
 		}
@@ -1111,7 +1066,7 @@ definition {
 				actionLabel = "Notification action when order status update",
 				active = "true",
 				inputExpression = "orderStatus == 0",
-				notificationName = "Notification Template",
+				notificationName = "Email Template",
 				thenAction = "Notification",
 				whenAction = "On Order Status Update");
 		}
@@ -1165,11 +1120,12 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "CommerceOrder",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 	}
 

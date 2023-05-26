@@ -1370,11 +1370,13 @@ definition {
 	@priority = 4
 	test CanFormulaFieldBeUsedWithEmailNotification {
 		property custom.properties = "feature.flag.LPS-164948=true";
+		property test.smtp.server.enabled = "true";
 
 		task ("Given a notification template related to Custom Object that contains a Notification action") {
 			Notifications.goToNotificationTemplateAdmin();
 
 			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
 				entryTo = "test@liferay.com",
 				fromAddress = "test@liferay.com",
 				fromName = "Test Test",
@@ -1439,11 +1441,12 @@ definition {
 		}
 
 		task ("Then the action is triggered and the notification is sent") {
-			Notifications.goToNotificationQueueAdmin();
-
-			AssertElementPresent(
-				key_objectName = "CustomObject176849",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
+			MockMock.viewMail(
+				asset = "Subject Test",
+				content = "Email Body",
+				recipient = "test@liferay",
+				sender = "Test Test",
+				subject = "Subject Test");
 		}
 
 		task ("And then the status on custom action works successfully") {

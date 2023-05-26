@@ -164,7 +164,7 @@ public class FriendlyURLServletTest {
 
 		layout1.setHidden(true);
 
-		_layoutLocalService.updateLayout(layout1);
+		layout1 = _layoutLocalService.updateLayout(layout1);
 
 		Role guestRole = RoleLocalServiceUtil.getRole(
 			group.getCompanyId(), RoleConstants.GUEST);
@@ -185,7 +185,7 @@ public class FriendlyURLServletTest {
 
 		layout2.setHidden(true);
 
-		_layoutLocalService.updateLayout(layout2);
+		layout2 = _layoutLocalService.updateLayout(layout2);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -532,7 +532,7 @@ public class FriendlyURLServletTest {
 
 		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
-		_layoutLocalService.updateLayout(redirectLayout);
+		redirectLayout = _layoutLocalService.updateLayout(redirectLayout);
 
 		mockHttpServletRequest.setParameter("param", "true");
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
@@ -569,7 +569,7 @@ public class FriendlyURLServletTest {
 
 		redirectLayout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
-		_layoutLocalService.updateLayout(redirectLayout);
+		redirectLayout = _layoutLocalService.updateLayout(redirectLayout);
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 

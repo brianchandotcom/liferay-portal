@@ -217,7 +217,7 @@ public class ClientExtensionJSDynamicIncludeTest {
 
 		layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
-		_layoutLocalService.updateLayout(layout);
+		layout = _layoutLocalService.updateLayout(layout);
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			TestPropsValues.getUserId(), _group.getGroupId(),

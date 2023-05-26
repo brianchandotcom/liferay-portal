@@ -107,7 +107,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		expectedLayout.setFriendlyURL("/test-layout");
 
-		_layoutLocalService.updateLayout(expectedLayout);
+		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
@@ -171,7 +171,7 @@ public class CopyLayoutMVCActionCommandTest {
 
 		expectedLayout.setFriendlyURL("/test-layout-with-permissions");
 
-		_layoutLocalService.updateLayout(expectedLayout);
+		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();

@@ -114,7 +114,7 @@ public class LayoutGetFaviconURLTest {
 
 		_layout.setFaviconFileEntryId(fileEntry.getFileEntryId());
 
-		_layoutLocalService.updateLayout(_layout);
+		_layout = _layoutLocalService.updateLayout(_layout);
 
 		Assert.assertArrayEquals(
 			expectedBytes, _getBytes(_layout.getFaviconURL()));

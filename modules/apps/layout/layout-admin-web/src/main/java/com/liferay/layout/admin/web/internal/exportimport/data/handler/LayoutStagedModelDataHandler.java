@@ -710,7 +710,7 @@ public class LayoutStagedModelDataHandler
 			draftLayout.setClassNameId(_portal.getClassNameId(Layout.class));
 			draftLayout.setClassPK(importedLayout.getPlid());
 
-			_layoutLocalService.updateLayout(draftLayout);
+			draftLayout = _layoutLocalService.updateLayout(draftLayout);
 
 			importedLayout.setPublishDate(draftLayout.getModifiedDate());
 		}

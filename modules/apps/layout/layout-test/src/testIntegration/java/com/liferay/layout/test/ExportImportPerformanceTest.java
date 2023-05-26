@@ -269,7 +269,8 @@ public class ExportImportPerformanceTest {
 
 			layoutPrototypeLayout.setType(layout.getType());
 
-			_layoutLocalService.updateLayout(layoutPrototypeLayout);
+			layoutPrototypeLayout = _layoutLocalService.updateLayout(
+				layoutPrototypeLayout);
 
 			_layoutCopyHelper.copyLayoutContent(layout, layoutPrototypeLayout);
 

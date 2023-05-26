@@ -600,7 +600,7 @@ public class LayoutCTTest {
 
 			layout.setFriendlyURL(ctFriendlyURL);
 
-			_layoutLocalService.updateLayout(layout);
+			layout = _layoutLocalService.updateLayout(layout);
 		}
 
 		layout.setFriendlyURL(newCTFriendlyURL);

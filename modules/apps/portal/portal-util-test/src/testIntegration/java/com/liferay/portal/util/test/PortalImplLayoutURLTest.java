@@ -92,7 +92,7 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 		layout.setType(LayoutConstants.TYPE_URL);
 
-		layoutLocalService.updateLayout(layout);
+		layout = layoutLocalService.updateLayout(layout);
 
 		String virtualHostnameFriendlyURL = portal.getLayoutURL(
 			layout, themeDisplay, true);

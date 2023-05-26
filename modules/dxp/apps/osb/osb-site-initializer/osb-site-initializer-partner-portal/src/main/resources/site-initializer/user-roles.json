@@ -28,37 +28,37 @@
 		]
 	},
 	{
-		"emailAddress": "cam@liferay.com",
+		"emailAddress": "cam@liferaytest.com",
 		"roles": [
 			"Channel Account Manager (CAM)"
 		]
 	},
 	{
-		"emailAddress": "com@liferay.com",
+		"emailAddress": "com@liferaytest.com",
 		"roles": [
 			"Channel Operations Manager (COM)"
 		]
 	},
 	{
-		"emailAddress": "cmm@liferay.com",
+		"emailAddress": "cmm@liferaytest.com",
 		"roles": [
 			"Channel Marketing Manager (CMM)"
 		]
 	},
 	{
-		"emailAddress": "cmd@liferay.com",
+		"emailAddress": "cmd@liferaytest.com",
 		"roles": [
 			"Channel Marketing Director (CMD)"
 		]
 	},
 	{
-		"emailAddress": "cfm@liferay.com",
+		"emailAddress": "cfm@liferaytest.com",
 		"roles": [
 			"Channel Finance Manager (CFM)"
 		]
 	},
 	{
-		"emailAddress": "cem@liferay.com",
+		"emailAddress": "cem@liferaytest.com",
 		"roles": [
 			"Channel Enablement Manager (CEM)"
 		]

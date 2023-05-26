@@ -19,6 +19,7 @@ import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.script.PoshiScriptParserUtil;
 import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.Dom4JUtil;
+import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.PropsUtil;
@@ -1098,6 +1099,51 @@ public class PoshiValidation {
 		}
 	}
 
+	protected static void validateMacroArguments(
+		PoshiElement poshiElement, String macroName) {
+
+		String namespace =
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
+				macroName);
+
+		if (Validator.isNull(namespace)) {
+			namespace = PoshiContext.getNamespaceFromFilePath(
+				_getFilePath(poshiElement));
+		}
+
+		Element commandElement = PoshiContext.getMacroCommandElement(
+			macroName, namespace);
+
+		String requiredArguments = commandElement.attributeValue("arguments");
+
+		if (Validator.isNotNull(requiredArguments)) {
+			List<String> requiredArgumentsList = ListUtil.newListFromString(
+				requiredArguments);
+
+			List<PoshiElement> childElements = poshiElement.toPoshiElements(
+				poshiElement.elements());
+			List<String> executeElementArguments = new ArrayList<>();
+
+			for (PoshiElement childElement : childElements) {
+				executeElementArguments.add(
+					childElement.attributeValue("name"));
+			}
+
+			for (String requiredArgument : requiredArgumentsList) {
+				if (requiredArgument.contains("= null")) {
+					continue;
+				}
+
+				if (!executeElementArguments.contains(requiredArgument)) {
+					_exceptions.add(
+						new PoshiElementException(
+							poshiElement, "Macro missing required variable ",
+							requiredArgument));
+				}
+			}
+		}
+	}
+
 	protected static void validateMacroCommandName(PoshiElement poshiElement) {
 		String attributeName = poshiElement.attributeValue("name");
 
@@ -1112,8 +1158,13 @@ public class PoshiValidation {
 	protected static void validateMacroContext(
 		PoshiElement poshiElement, String macroType) {
 
-		validateNamespacedClassCommandName(
-			poshiElement, poshiElement.attributeValue(macroType), "macro");
+		String macroName = poshiElement.attributeValue(macroType);
+
+		if (PoshiContext.isCommandElement("macro", macroName, "LocalFile")) {
+			validateMacroArguments(poshiElement, macroName);
+		}
+
+		validateNamespacedClassCommandName(poshiElement, macroName, "macro");
 	}
 
 	protected static void validateMacroFile(PoshiElement poshiElement) {

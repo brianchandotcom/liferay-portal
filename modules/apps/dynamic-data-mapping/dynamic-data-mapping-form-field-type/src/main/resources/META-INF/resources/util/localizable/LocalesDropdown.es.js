@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import {PagesVisitor, useFormState} from 'data-engine-js-components-web';
 import React, {useRef, useState} from 'react';
 
-import AvailableLocaleLabel from '../localizable/AvailableLocaleLabel.es';
+import AvailableLocaleLabel from './AvailableLocaleLabel';
 
 const LocalesDropdown = ({
 	availableLocales,

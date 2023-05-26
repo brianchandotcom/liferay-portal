@@ -197,9 +197,19 @@ definition {
 
 			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
 
+			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+
+			TestrayManage.createTeam(teamName = ${teamName});
+
+			TestrayManage.closeModalInOptions();
+
+			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+
 			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
 
-			Testray.addNewComponent(componentName = "Component 1");
+			Testray.addNewComponent(
+				componentName = "Component 1",
+				teamName = ${teamName});
 
 			TestrayManage.closeModalInOptions();
 
@@ -226,7 +236,7 @@ definition {
 				subComponent = "Component 1",
 				suiteDescription = "Suite Description",
 				suiteName = ${suiteName},
-				teamName = "Commerce");
+				teamName = ${teamName});
 		}
 
 		task ("When the user edits the created smart suite") {
@@ -236,8 +246,7 @@ definition {
 				requirementName = "Requirement Summary",
 				smartSuite = "true",
 				suiteDescription = "Suite Description Edited",
-				suiteName = ${suiteName},
-				teamName = "Developer Tools");
+				suiteName = ${suiteName});
 		}
 
 		task ("Then the case parameters are presented with details edited") {

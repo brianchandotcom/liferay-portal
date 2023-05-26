@@ -199,13 +199,13 @@ definition {
 
 	macro viewConflictingChangeDetails {
 		if (${deletionModificationConflict} == "true") {
-			if (IsElementNotPresent(key_displayItem = "Production", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
-				PublicationsChangeDetails.changeDisplayItem(displayItem = "Production");
+			if (IsElementNotPresent(key_displayItem = "Split View", locator1 = "PublicationsChangeDetails#CURRENT_DISPLAY_ITEM")) {
+				PublicationsChangeDetails.changeDisplayItem(displayItem = "Split View");
 			}
 
-			Alert.viewErrorMessage(errorMessage = "This item is missing or is deleted.");
-
-			PublicationsChangeDetails.changeDisplayItem(displayItem = "Publication");
+			Click(
+				key_navItem = "Data",
+				locator1 = "NavBar#NAV_ITEM_LINK");
 
 			if (isSet(columnValueInPublication)) {
 				var key_columnName = ${columnName};

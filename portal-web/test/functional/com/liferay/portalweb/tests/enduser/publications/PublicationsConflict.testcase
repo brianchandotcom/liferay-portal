@@ -511,20 +511,20 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC WebContent Title 2 Edit",
-			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
+			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "WC WebContent Title 2 Edit");
 
 		PublicationsChangeDetails.viewConflictingChangeDetails(
-			columnName = "Title",
+			columnName = "Name",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
-			modificationConflict = "true",
+			deletionModificationConflict = "true",
 			publicationName = "Publication 2 Name");
 
 		IFrame.closeFrame();
 
 		PublicationsChanges.discardChanges(
-			changeCategory = "Asset",
+			changeCategory = "Web Content Article",
 			changeTitle = "WC WebContent Title 2 Edit",
 			conflictingChanges = "true",
 			entryTitle = "WC WebContent Title 2 Edit");

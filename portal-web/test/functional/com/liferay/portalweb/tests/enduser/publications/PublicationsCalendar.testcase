@@ -180,7 +180,7 @@ definition {
 		IFrame.closeFrame();
 
 		PublicationsChanges.discardChanges(
-			changeCategory = "Asset",
+			changeCategory = "Calendar Event",
 			changeTitle = "Publication Calendar Event Title Edit",
 			conflictingChanges = "true",
 			entryTitle = "Publication Calendar Event Title Edit");

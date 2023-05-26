@@ -12,6 +12,11 @@
 <tbody>
 
 <tr>
+	<td>CENTER_STATUS</td>
+	<td>//div[contains(@class, 'text-paragraph-sm')]//*[contains(text(), '${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_OPTION</td>
 	<td>//input[contains(@class, 'custom-control-input')]/following-sibling::span//*[text()='${key_option}']</td>
 	<td></td>

@@ -10,4 +10,58 @@ definition {
 			locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 	}
 
+	macro dateFilterSaveDates {
+		
+		var key_dateNumber1 = ${key_dateNumber1};
+		var key_dateNumber2 = ${key_dateNumber2};
+
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "From");
+
+		Click(locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU",
+			key_dateNumber = ${key_dateNumber1});
+
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "From");
+
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "To");
+
+		Click(locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU",
+			key_dateNumber = ${key_dateNumber2});
+
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "To");
+
+		Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SAVE_BUTTON");
+	}
+
+	macro selectFromFieldDates {
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "From");
+
+		Click(locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU",
+			value1 = ${key_dateNumber});
+
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "From");
+	}
+
+	macro selectToFieldDates {
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "To");
+
+		Click(locator1 = "FrontendDataSetAdmin#CHOOSE_DATE_DATEPICKER_MENU",
+			value1 = ${key_dateNumber});
+
+		Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "To");
+	}
+
+	macro chooseOptionNewFilterDropdown {
+		var key_option = ${key_option};
+
+		Type(locator1 = "FrontendDataSetAdmin#SELECT_DROPDOWN",
+			value1 = ${key_option});
+	}
 }

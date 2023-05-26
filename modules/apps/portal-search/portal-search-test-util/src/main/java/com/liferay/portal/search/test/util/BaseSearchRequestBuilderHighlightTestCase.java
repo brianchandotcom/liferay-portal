@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
-import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -74,9 +73,9 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 			"alpha beta gamma alpha eta theta alpha zeta eta alpha iota",
 			"alpha beta gamma delta epsilon zeta eta theta iota alpha");
 
-		HighlightBuilder highlightBuilder = _highlightBuilderFactory.builder();
-
 		List<String> fieldNames = Arrays.asList(getFieldNames());
+
+		HighlightBuilder highlightBuilder = _highlightBuilderFactory.builder();
 
 		fieldNames.forEach(
 			fieldName -> highlightBuilder.addFieldConfig(
@@ -90,8 +89,6 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 					"[H]"
 				).build()));
 
-		Highlight highlight = highlightBuilder.build();
-
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
@@ -101,7 +98,7 @@ public abstract class BaseSearchRequestBuilderHighlightTestCase {
 			).queryString(
 				"alpha"
 			).highlight(
-				highlight
+				highlightBuilder.build()
 			);
 
 		_assertSearch(

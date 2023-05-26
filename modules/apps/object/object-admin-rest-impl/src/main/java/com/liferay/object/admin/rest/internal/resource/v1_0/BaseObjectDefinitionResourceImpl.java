@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -725,10 +726,37 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			objectDefinitionUnsafeConsumer =
-				objectDefinition -> putObjectDefinitionByExternalReferenceCode(
-					objectDefinition.getExternalReferenceCode(),
-					objectDefinition);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				objectDefinitionUnsafeConsumer =
+					objectDefinition ->
+						putObjectDefinitionByExternalReferenceCode(
+							objectDefinition.getExternalReferenceCode(),
+							objectDefinition);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				objectDefinitionUnsafeConsumer = objectDefinition -> {
+					try {
+						ObjectDefinition getObjectDefinition =
+							getObjectDefinitionByExternalReferenceCode(
+								objectDefinition.getExternalReferenceCode());
+
+						patchObjectDefinition(
+							getObjectDefinition.getId() != null ?
+								getObjectDefinition.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"objectDefinitionId")),
+							objectDefinition);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postObjectDefinition(objectDefinition);
+					}
+				};
+			}
 		}
 
 		if (objectDefinitionUnsafeConsumer == null) {

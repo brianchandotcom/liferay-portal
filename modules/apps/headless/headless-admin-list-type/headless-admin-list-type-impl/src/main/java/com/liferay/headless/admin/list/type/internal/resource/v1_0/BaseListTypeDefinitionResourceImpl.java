@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -614,11 +615,36 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			listTypeDefinitionUnsafeConsumer =
-				listTypeDefinition ->
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				listTypeDefinitionUnsafeConsumer = listTypeDefinition ->
 					putListTypeDefinitionByExternalReferenceCode(
 						listTypeDefinition.getExternalReferenceCode(),
 						listTypeDefinition);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				listTypeDefinitionUnsafeConsumer = listTypeDefinition -> {
+					try {
+						ListTypeDefinition getListTypeDefinition =
+							getListTypeDefinitionByExternalReferenceCode(
+								listTypeDefinition.getExternalReferenceCode());
+
+						patchListTypeDefinition(
+							getListTypeDefinition.getId() != null ?
+								getListTypeDefinition.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"listTypeDefinitionId")),
+							listTypeDefinition);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postListTypeDefinition(listTypeDefinition);
+					}
+				};
+			}
 		}
 
 		if (listTypeDefinitionUnsafeConsumer == null) {

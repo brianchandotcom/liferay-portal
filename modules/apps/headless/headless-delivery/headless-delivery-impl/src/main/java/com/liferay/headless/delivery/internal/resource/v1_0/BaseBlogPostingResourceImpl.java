@@ -23,6 +23,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
@@ -1300,11 +1301,48 @@ public abstract class BaseBlogPostingResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			blogPostingUnsafeConsumer =
-				blogPosting -> putSiteBlogPostingByExternalReferenceCode(
-					blogPosting.getSiteId() != null ? blogPosting.getSiteId() :
-						(Long)parameters.get("siteId"),
-					blogPosting.getExternalReferenceCode(), blogPosting);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				blogPostingUnsafeConsumer =
+					blogPosting -> putSiteBlogPostingByExternalReferenceCode(
+						blogPosting.getSiteId() != null ?
+							blogPosting.getSiteId() :
+								(Long)parameters.get("siteId"),
+						blogPosting.getExternalReferenceCode(), blogPosting);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				blogPostingUnsafeConsumer = blogPosting -> {
+					try {
+						BlogPosting getBlogPosting =
+							getSiteBlogPostingByExternalReferenceCode(
+								blogPosting.getSiteId() != null ?
+									blogPosting.getSiteId() :
+										(Long)parameters.get("siteId"),
+								blogPosting.getExternalReferenceCode());
+
+						patchBlogPosting(
+							getBlogPosting.getId() != null ?
+								getBlogPosting.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"blogPostingId")),
+							blogPosting);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("siteId")) {
+							postSiteBlogPosting(
+								(Long)parameters.get("siteId"), blogPosting);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
+					}
+				};
+			}
 		}
 
 		if (blogPostingUnsafeConsumer == null) {

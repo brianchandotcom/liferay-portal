@@ -21,6 +21,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
@@ -1175,13 +1176,50 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			knowledgeBaseFolderUnsafeConsumer = knowledgeBaseFolder ->
-				putSiteKnowledgeBaseFolderByExternalReferenceCode(
-					knowledgeBaseFolder.getSiteId() != null ?
-						knowledgeBaseFolder.getSiteId() :
-							(Long)parameters.get("siteId"),
-					knowledgeBaseFolder.getExternalReferenceCode(),
-					knowledgeBaseFolder);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				knowledgeBaseFolderUnsafeConsumer = knowledgeBaseFolder ->
+					putSiteKnowledgeBaseFolderByExternalReferenceCode(
+						knowledgeBaseFolder.getSiteId() != null ?
+							knowledgeBaseFolder.getSiteId() :
+								(Long)parameters.get("siteId"),
+						knowledgeBaseFolder.getExternalReferenceCode(),
+						knowledgeBaseFolder);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				knowledgeBaseFolderUnsafeConsumer = knowledgeBaseFolder -> {
+					try {
+						KnowledgeBaseFolder getKnowledgeBaseFolder =
+							getSiteKnowledgeBaseFolderByExternalReferenceCode(
+								knowledgeBaseFolder.getSiteId() != null ?
+									knowledgeBaseFolder.getSiteId() :
+										(Long)parameters.get("siteId"),
+								knowledgeBaseFolder.getExternalReferenceCode());
+
+						patchKnowledgeBaseFolder(
+							getKnowledgeBaseFolder.getId() != null ?
+								getKnowledgeBaseFolder.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"knowledgeBaseFolderId")),
+							knowledgeBaseFolder);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("siteId")) {
+							postSiteKnowledgeBaseFolder(
+								(Long)parameters.get("siteId"),
+								knowledgeBaseFolder);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
+					}
+				};
+			}
 		}
 
 		if (knowledgeBaseFolderUnsafeConsumer == null) {

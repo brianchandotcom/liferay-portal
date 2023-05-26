@@ -21,6 +21,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -1351,9 +1352,33 @@ public abstract class BaseOrganizationResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			organizationUnsafeConsumer =
-				organization -> putOrganizationByExternalReferenceCode(
-					organization.getExternalReferenceCode(), organization);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				organizationUnsafeConsumer =
+					organization -> putOrganizationByExternalReferenceCode(
+						organization.getExternalReferenceCode(), organization);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				organizationUnsafeConsumer = organization -> {
+					try {
+						Organization getOrganization =
+							getOrganizationByExternalReferenceCode(
+								organization.getExternalReferenceCode());
+
+						patchOrganization(
+							getOrganization.getId() != null ?
+								getOrganization.getId() :
+									(String)parameters.get("organizationId"),
+							organization);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postOrganization(organization);
+					}
+				};
+			}
 		}
 
 		if (organizationUnsafeConsumer == null) {

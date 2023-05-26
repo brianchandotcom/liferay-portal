@@ -1014,11 +1014,16 @@ public abstract class BaseWikiNodeResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			wikiNodeUnsafeConsumer =
-				wikiNode -> putSiteWikiNodeByExternalReferenceCode(
-					wikiNode.getSiteId() != null ? wikiNode.getSiteId() :
-						(Long)parameters.get("siteId"),
-					wikiNode.getExternalReferenceCode(), wikiNode);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				wikiNodeUnsafeConsumer =
+					wikiNode -> putSiteWikiNodeByExternalReferenceCode(
+						wikiNode.getSiteId() != null ? wikiNode.getSiteId() :
+							(Long)parameters.get("siteId"),
+						wikiNode.getExternalReferenceCode(), wikiNode);
+			}
 		}
 
 		if (wikiNodeUnsafeConsumer == null) {

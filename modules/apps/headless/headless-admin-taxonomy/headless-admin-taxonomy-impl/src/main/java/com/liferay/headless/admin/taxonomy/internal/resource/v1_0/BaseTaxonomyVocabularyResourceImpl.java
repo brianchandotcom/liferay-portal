@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
@@ -1593,13 +1594,55 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			taxonomyVocabularyUnsafeConsumer = taxonomyVocabulary ->
-				putSiteTaxonomyVocabularyByExternalReferenceCode(
-					taxonomyVocabulary.getSiteId() != null ?
-						taxonomyVocabulary.getSiteId() :
-							(Long)parameters.get("siteId"),
-					taxonomyVocabulary.getExternalReferenceCode(),
-					taxonomyVocabulary);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				taxonomyVocabularyUnsafeConsumer = taxonomyVocabulary ->
+					putSiteTaxonomyVocabularyByExternalReferenceCode(
+						taxonomyVocabulary.getSiteId() != null ?
+							taxonomyVocabulary.getSiteId() :
+								(Long)parameters.get("siteId"),
+						taxonomyVocabulary.getExternalReferenceCode(),
+						taxonomyVocabulary);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				taxonomyVocabularyUnsafeConsumer = taxonomyVocabulary -> {
+					try {
+						TaxonomyVocabulary getTaxonomyVocabulary =
+							getSiteTaxonomyVocabularyByExternalReferenceCode(
+								taxonomyVocabulary.getSiteId() != null ?
+									taxonomyVocabulary.getSiteId() :
+										(Long)parameters.get("siteId"),
+								taxonomyVocabulary.getExternalReferenceCode());
+
+						patchTaxonomyVocabulary(
+							getTaxonomyVocabulary.getId() != null ?
+								getTaxonomyVocabulary.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"taxonomyVocabularyId")),
+							taxonomyVocabulary);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("assetLibraryId")) {
+							postAssetLibraryTaxonomyVocabulary(
+								(Long)parameters.get("assetLibraryId"),
+								taxonomyVocabulary);
+						}
+						else if (parameters.containsKey("siteId")) {
+							postSiteTaxonomyVocabulary(
+								(Long)parameters.get("siteId"),
+								taxonomyVocabulary);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [assetLibraryId, siteId, assetLibraryId]");
+						}
+					}
+				};
+			}
 		}
 
 		if (taxonomyVocabularyUnsafeConsumer == null) {

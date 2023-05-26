@@ -110,7 +110,9 @@ export function ScopeContainer({
 			<ClayPanel.Body>
 				<SingleSelect<LabelValueObject>
 					disabled={
-						isApproved || !hasUpdateObjectDefinitionPermission
+						isApproved ||
+						!hasUpdateObjectDefinitionPermission ||
+						values.storageType === 'salesforce'
 					}
 					error={errors.titleObjectFieldId}
 					label={Liferay.Language.get('scope')}

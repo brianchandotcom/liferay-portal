@@ -43,14 +43,8 @@ public class ThreadLocalScopeContextScopeChecker
 			throw new IllegalArgumentException("Scopes are null");
 		}
 
-		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
-			_oAuth2ScopeGrantLocalServiceSnapshot.get();
-
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants = new ArrayList<>(
-			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
-				_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
-				_bundleSymbolicNameThreadLocal.get(),
-				_accessTokenThreadLocal.get()));
+			_getOAuth2ScopeGrants());
 
 		if (scopes.length > oAuth2ScopeGrants.size()) {
 			return false;
@@ -77,14 +71,8 @@ public class ThreadLocalScopeContextScopeChecker
 			throw new IllegalArgumentException("Scopes are null");
 		}
 
-		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
-			_oAuth2ScopeGrantLocalServiceSnapshot.get();
-
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
-				_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
-				_bundleSymbolicNameThreadLocal.get(),
-				_accessTokenThreadLocal.get());
+			_getOAuth2ScopeGrants();
 
 		for (String scope : scopes) {
 			if (Validator.isNull(scope)) {
@@ -109,16 +97,7 @@ public class ThreadLocalScopeContextScopeChecker
 			throw new IllegalArgumentException("Scope is null");
 		}
 
-		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
-			_oAuth2ScopeGrantLocalServiceSnapshot.get();
-
-		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
-				_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
-				_bundleSymbolicNameThreadLocal.get(),
-				_accessTokenThreadLocal.get());
-
-		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
+		for (OAuth2ScopeGrant oAuth2ScopeGrant : _getOAuth2ScopeGrants()) {
 			if (scope.equals(oAuth2ScopeGrant.getScope())) {
 				return true;
 			}
@@ -167,6 +146,16 @@ public class ThreadLocalScopeContextScopeChecker
 				"ScopeChecker dependency upon OAuth2ScopeGrantLocalService " +
 					"is not satisfied");
 		}
+	}
+
+	private Collection<OAuth2ScopeGrant> _getOAuth2ScopeGrants() {
+		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
+			_oAuth2ScopeGrantLocalServiceSnapshot.get();
+
+		return oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+			_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
+			_bundleSymbolicNameThreadLocal.get(),
+			_accessTokenThreadLocal.get());
 	}
 
 	private static final Snapshot<OAuth2ScopeGrantLocalService>

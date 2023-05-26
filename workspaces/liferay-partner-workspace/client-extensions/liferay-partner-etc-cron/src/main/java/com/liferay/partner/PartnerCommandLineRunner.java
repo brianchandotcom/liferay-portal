@@ -44,8 +44,40 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		Page<Activity> activitiesPage = _activityService.getEntriesPage(
 			null,
-			"activityStatus eq 'active' and endDate lt " +
+			"activityStatus eq 'approved' and startDate le " +
 				nowZonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE),
+			Pagination.of(1, -1), null);
+
+		if (activitiesPage.getTotalCount() > 0) {
+			Collection<Activity> activities = TransformUtil.transform(
+				activitiesPage.getItems(),
+				activity -> {
+					ListTypeEntry expiredListTypeEntry = new ListTypeEntry() {
+						{
+							setKey("active");
+							setName("Active");
+						}
+					};
+
+					activity.setActivityStatus(expiredListTypeEntry);
+
+					return activity;
+				});
+
+			_activityService.putEntryBatch(null, new JSONArray(activities));
+		}
+
+		String formattedNowZonedDateTimeMinus30Days =
+			nowZonedDateTime.minusDays(
+				30
+			).format(
+				DateTimeFormatter.ISO_LOCAL_DATE
+			);
+
+		activitiesPage = _activityService.getEntriesPage(
+			null,
+			"activityStatus eq 'active' and endDate lt " +
+				formattedNowZonedDateTimeMinus30Days,
 			Pagination.of(1, -1), null);
 
 		if (activitiesPage.getTotalCount() > 0) {

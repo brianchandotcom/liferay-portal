@@ -705,6 +705,13 @@ definition {
 		}
 	}
 
+	macro assertFieldInFieldsGroupRepeated {
+		AssertElementPresent(
+			key_fieldName = ${fieldName},
+			key_index = ${index},
+			locator1 = "WCEditWebContent#REPEATED_FIELD_IN_FIELDS_GROUP");
+	}
+
 	macro assertFieldNotPresent {
 		if (isSet(fieldFieldLabel)) {
 			AssertElementNotPresent(

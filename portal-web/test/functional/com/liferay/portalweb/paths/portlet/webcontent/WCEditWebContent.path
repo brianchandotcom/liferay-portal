@@ -220,6 +220,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEATED_FIELD_IN_FIELDS_GROUP</td>
+	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//div[contains(@class,'repeatable')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPEATED_DATE_FIELD</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'date-picker')]//input[@type='text'])[${index}]</td>
 	<td></td>

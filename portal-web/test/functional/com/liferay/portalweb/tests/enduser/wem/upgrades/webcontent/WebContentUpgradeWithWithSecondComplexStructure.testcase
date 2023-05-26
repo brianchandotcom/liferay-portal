@@ -1,0 +1,576 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property ci.retries.disabled = "true";
+	property data.archive.type = "data-archive-web-content-second-complex-fields";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property portal.version = "7.3.10.1";
+	property testray.component.names = "Upgrades WEM,Web Content Administration";
+	property testray.main.component.name = "Upgrades WEM";
+
+	setUp {
+		SignIn.signIn();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=test@liferay.com");
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanAddAndRemoveTranslationToWebContentStructure {
+		task ("Add translation labels") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			PortletEntry.changeLocale(locale = "en-US");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Label UF Comunicado",
+				fieldFieldLabelEdit = "Label UF Release");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Url imagem do banner",
+				fieldFieldLabelEdit = "Url banner image");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			PortletEntry.changeLocale(locale = "en-US");
+
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "Label UF Release");
+
+			WebContent.assertFieldOnWebContent(fieldFieldLabel = "Url banner image");
+		}
+
+		task ("Add new translation") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			WebContentStructures.addLocalization(
+				locale = "zh-CN",
+				localization1Name = "WC Structure zh-CN Name");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "zh-CN",
+				key_portlet = "JournalPortlet",
+				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+				value1 = "Translated");
+		}
+
+		task ("Remove translation") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			WebContentStructures.addLocalization(
+				locale = "zh-CN",
+				localization1Name = "");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
+
+			AssertTextEquals(
+				key_localizedLanguage = "zh-CN",
+				key_portlet = "JournalPortlet",
+				locator1 = "Translation#TRANSLATION_STATUS_TITLE",
+				value1 = "Not Translated");
+		}
+
+		task ("View Translation while Editing article") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			PortletEntry.changeLocale(locale = "en-US");
+
+			AssertVisible(
+				key_fieldFieldLabel = "Label UF Release",
+				key_fieldName = "LabelUFComunicado",
+				locator1 = "DDMField#WEB_CONTENT");
+
+			AssertVisible(
+				key_fieldFieldLabel = "Url banner image",
+				key_fieldName = "UrlImagemBanner",
+				locator1 = "DDMField#WEB_CONTENT");
+		}
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanAddDefaultValueToWebContentStructure {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit Default Values",
+			rowEntry = "WC Structure Name");
+
+		Type(
+			key_fieldFieldLabel = "Label UF Comunicado",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Edited LabelUFComunicado Field");
+
+		Type(
+			key_fieldFieldLabel = "Lista UF Comunicado",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Edited ListaUFComunidado Field");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit Default Values",
+			rowEntry = "WC Structure Name");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Label UF Comunicado",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Edited LabelUFComunicado Field");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Label UF Comunicado",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Edited LabelUFComunicado Field");
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanDisableSearchableInTextField {
+		property data.archive.type = "data-archive-web-content-second-complex-fields";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.editFieldSearchable(
+			fieldFieldLabel = "Label UF Comunicado",
+			searchableType = "Disable");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		Search.searchCP(searchTerm = "text1");
+
+		Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Complex Title 1");
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanDuplicateFieldGroupWithNestedFieldsAndMoveNestedField {
+		task ("Duplicate the last field group with many nested fields, 10 times, and save") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+				Click(
+					key_fieldFieldLabel = "Lista de Países",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+				ScrollWebElementIntoView(
+					key_fieldFieldLabel = "Lista de Países",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+				MouseOver(locator1 = "//div[contains(@data-field-name,'ListaDePaisesFieldSet')]//div[contains(@class,'placeholder')]");
+
+				Click.clickNoWaitForVisible(locator1 = "//div[contains(@data-field-name,'ListaDePaisesFieldSet')]//div[contains(@class,'dropdown-action')]//button[contains(@class,'dropdown-toggle')]");
+
+				MenuItem.clickNoError(menuItem = "Duplicate");
+			}
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Move quad nested field to non-nested and save") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+			DataEngine.moveNestedField(nestedFieldLabel = "Rótulo - Email");
+
+			Click(locator1 = "Sidebar#BACK");
+
+			Click(
+				key_fieldFieldLabel = "Mensagem Dica",
+				key_fieldFieldName = "EmailFieldSet",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY");
+
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_fieldFieldLabel = "Mensagem Dica",
+				key_fieldFieldName = "EmailFieldSet",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY",
+				locator2 = "Form#ADD_FIELD_POSITION_1");
+
+			Click(locator1 = "Sidebar#BACK");
+
+			Click(
+				key_fieldFieldLabel = "Mensagem de erro de máscara",
+				key_fieldFieldName = "EmailFieldSet",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY");
+
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_fieldFieldLabel = "Mensagem de erro de máscara",
+				key_fieldFieldName = "EmailFieldSet",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY",
+				locator2 = "Form#ADD_FIELD_POSITION_1");
+
+			Click(locator1 = "Sidebar#BACK");
+
+			Click(
+				key_fieldFieldLabel = "Mensagem de campo obrigatório",
+				key_fieldFieldName = "EmailFieldSet",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY");
+
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_fieldFieldLabel = "Mensagem de campo obrigatório",
+				key_fieldFieldName = "EmailFieldSet",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY",
+				locator2 = "Form#ADD_FIELD_POSITION_1");
+
+			for (var key_fieldFieldLabel : list "Rótulo - Email,Mensagem Dica,Mensagem de erro de máscara,Mensagem de campo obrigatório") {
+				AssertElementNotPresent(
+					key_fieldFieldName = "EmailFieldSet",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_ANY");
+			}
+
+			WebContentStructures.saveCP();
+		}
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanDuplicateRepeatableFieldsAndRemoveThem {
+		task ("Duplicate all fields that can be duplicated, 1-4 times") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			WaitForVisible(
+				key_fieldFieldLabel = "Estado",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {
+				FormFields.addRepeatableField(
+					fieldName = ${fieldName},
+					index = 1,
+					key_fieldName = ${fieldName},
+					key_repeatableFieldNumber = 1);
+
+				DataEngine.assertFieldInFieldsGroupRepeated(
+					fieldName = ${fieldName},
+					index = 2);
+			}
+
+			PortletEntry.publish();
+		}
+
+		task ("Remove duplicates") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			WaitForVisible(
+				key_fieldFieldLabel = "Estado",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+			Click(
+				key_fieldName = "ItemPais",
+				key_index = 4,
+				locator1 = "DDMField#REMOVE_REPEATED_FIELD_N");
+
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado") {
+				Click(
+					key_fieldName = ${fieldName},
+					key_index = 2,
+					locator1 = "DDMField#REMOVE_REPEATED_FIELD_N");
+			}
+
+			for (var fieldName : list "ItemUFComunicado,ItemDoParagrafoBanner,ListaDDI,ItensDeGenero,Estado,ItemPais") {
+				AssertElementNotPresent(
+					key_fieldName = ${fieldName},
+					locator1 = "DDMField#REMOVE_REPEATED_FIELD");
+			}
+
+			PortletEntry.publish();
+		}
+	}
+
+	@description = "This is a use case for LRQA-61632. Can copy web content and web content structure. Set all fields to Required and check submission."
+	@priority = 3
+	test CanEditWebContentStructureFieldsToReqiredFields {
+		property test.name.skip.portal.instance = "WebContentUpgradeWithWithSecondComplexStructure#CanEditWebContentStructureFieldsToReqiredFields";
+
+		task ("Copy Article successfully") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.copyCP(webContentTitle = "Web Content Complex Title 1");
+		}
+
+		task ("Copy Structure successfully") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.copyCP(
+				structureCopyName = "WC Structure Copy Name",
+				structureName = "WC Structure Name");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Copy Name");
+
+		for (var fieldName : list "Label UF Comunicado,Lista UF Comunicado,Mensagem de erro de timeout,Titulo Mobile,Titulo,Informe Titulo,Informativo Formulario Cadastro,Titulo Programa Milhas,Texo Box Programa Amigo,Informe Programa Milhas,Footer Cadastro,Botao Cadastrar,Footer Cadastro Mobile,Botao Cadastrar Mobile,Informe Programa Amigo,Botao Quero Participar,Botao Quero Participar Mobile,Nacionalidade,Rotulo - Primeiro Nome,Título do banner,Rótulo - Nome do meio,Rótulo - Sobrenome,Rótulo - Email,Rótulo - Confirmação Email,Rótulo - Senha,Rótulo - Confirmação Senha,DDI,CPF,Passaporte,Celular,Data de Nascimento,Gênero,País de residência,UF,CEP,Cidade,Bairro,Endereço,Número,Complemento,Texto Box Amigo,País") {
+			DataEngine.editFieldRequired(fieldFieldLabel = ${fieldName});
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Copy Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Copy Name",
+			webContentTitle = "Web Content Complex Title 2");
+
+		Button.clickPublish();
+
+		for (var fieldName : list "Label UF Comunicado,Lista UF Comunicado,Mensagem de erro de timeout,Titulo Mobile,Titulo,Informativo Formulario Cadastro,Titulo Programa Milhas,Texo Box Programa Amigo,Informe Programa Milhas,Footer Cadastro,Botao Cadastrar,Footer Cadastro Mobile,Botao Cadastrar Mobile,Informe Programa Amigo,Botao Quero Participar,Botao Quero Participar Mobile,Nacionalidade,Rotulo - Primeiro Nome,Título do banner,Rótulo - Nome do meio,Rótulo - Sobrenome,Rótulo - Email,Rótulo - Confirmação Email,Rótulo - Senha,Rótulo - Confirmação Senha,DDI,CPF,Passaporte,Celular,Data de Nascimento,Gênero,País de residência,UF,CEP,Cidade,Bairro,Endereço,Número,Complemento,Texto Box Amigo,País") {
+			AssertTextEquals(
+				key_fieldFieldLabel = ${fieldName},
+				locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
+				value1 = "Este campo é obrigatório.");
+		}
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanMoveWebContentToFolder {
+		property test.name.skip.portal.instance = "WebContentUpgradeWithWithSecondComplexStructure#CanMoveWebContentToFolder";
+
+		JSONWebcontent.addFolder(
+			folderDescription = "WC Folder Description",
+			folderName = "WC Folder Name",
+			groupName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		Search.searchCP(searchTerm = "Web Content Complex Title 1");
+
+		WebContent.moveToFolderCP(
+			folderName = "WC Folder Name",
+			webContentTitle = "Web Content Complex Title 1");
+	}
+
+	@description = "This is a use case for LRQA-61632. Preview fields entered."
+	@priority = 3
+	test CanPreviewWebContent {
+		property test.name.skip.portal.instance = "WebContentUpgradeWithWithSecondComplexStructure#CanPreviewWebContent";
+
+		task ("Select WC Template Name as template, save as draft and publish.") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			WebContent.selectTemplateCP(
+				confirm = "false",
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name");
+
+			Button.clickSaveAsDraft();
+
+			PortletEntry.publish();
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Complex Title 1");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		var i = 1;
+
+		while (${i} != 121) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "//div[@class='portlet-body']/div[contains(@class,'container-fluid-max')]",
+				value1 = "text${i}");
+
+			var i = ${i} + 1;
+		}
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanPulishDraftWebContentAndViewOtherVersions {
+		task ("Save as Draft, and then preview other versions") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			PortletEntry.saveAsDraft();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Complex Title 1",
+				menuItem = "View History");
+
+			LexiconTable.viewTableEntryPartialText(
+				tableEntry = "Web Content Complex Title 1",
+				tableEntryPartialText = "1.0");
+
+			LexiconTable.viewTableEntryPartialText(
+				tableEntry = "Web Content Complex Title 1",
+				tableEntryPartialText = "1.1");
+		}
+
+		task ("Assert can edit article and save web content after publishing draft web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			PortletEntry.publish();
+		}
+	}
+
+	@description = "This is a use case for LRQA-61632."
+	@priority = 3
+	test CanSelectAndViewWebContentInWCD {
+		property test.name.skip.portal.instance = "WebContentUpgradeWithWithSecondComplexStructure#CanSelectAndViewWebContentInWCD";
+
+		task ("Add a widget page and WCD to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Web Content Display Page",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Select WC Template Name as template, save as draft and publish.") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+			WebContent.selectTemplateCP(
+				confirm = "false",
+				structureName = "WC Structure Name",
+				templateName = "WC Template Name");
+
+			Button.clickSaveAsDraft();
+
+			PortletEntry.publish();
+		}
+
+		task ("Display in Web Content Display widget") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Complex Title 1");
+
+			IFrame.closeFrame();
+
+			var i = 1;
+
+			while (${i} != 121) {
+				WebContentDisplayPortlet.viewContent(
+					webContentContent = "text${i}",
+					webContentTitle = "Web Content Complex Title 1");
+
+				var i = ${i} + 1;
+			}
+
+			AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+		}
+	}
+
+	@description = "This is a use case for LRQA-61632. Enable Staging,Publish to live site, assert value entered persists,including images and links."
+	@priority = 3
+	test ViewWebcontentInStaging {
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		Search.searchCP(searchTerm = "Web Content Complex Title 1");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
+
+		WebContent.viewWithStructureCP(
+			skipGotoEditCp = "true",
+			webContentText = "text1",
+			webContentTextFieldLabel = "Label UF Comunicado",
+			webContentTitle = "Web Content Complex Title 1");
+
+		WebContent.viewWithStructureCP(
+			skipGotoEditCp = "true",
+			webContentText = "text2",
+			webContentTextFieldLabel = "Lista UF Comunicado",
+			webContentTitle = "Web Content Complex Title 1");
+
+		WebContent.viewWithStructureCP(
+			skipGotoEditCp = "true",
+			webContentImage = "Document_1.jpg",
+			webContentImageDescription = "image1",
+			webContentImageFieldLabel = "Url imagem",
+			webContentTitle = "Web Content Complex Title 1");
+	}
+
+}

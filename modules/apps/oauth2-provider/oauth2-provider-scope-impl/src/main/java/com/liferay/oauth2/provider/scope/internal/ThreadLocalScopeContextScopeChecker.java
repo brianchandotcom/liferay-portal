@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.ScopeContext;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,10 +27,6 @@ import java.util.Collection;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Carlos Sierra Andrés
@@ -46,8 +43,11 @@ public class ThreadLocalScopeContextScopeChecker
 			throw new IllegalArgumentException("Scopes are null");
 		}
 
+		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
+			_oAuth2ScopeGrantLocalServiceSnapshot.get();
+
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants = new ArrayList<>(
-			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
 				_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
 				_bundleSymbolicNameThreadLocal.get(),
 				_accessTokenThreadLocal.get()));
@@ -77,8 +77,11 @@ public class ThreadLocalScopeContextScopeChecker
 			throw new IllegalArgumentException("Scopes are null");
 		}
 
+		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
+			_oAuth2ScopeGrantLocalServiceSnapshot.get();
+
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
 				_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
 				_bundleSymbolicNameThreadLocal.get(),
 				_accessTokenThreadLocal.get());
@@ -106,8 +109,11 @@ public class ThreadLocalScopeContextScopeChecker
 			throw new IllegalArgumentException("Scope is null");
 		}
 
+		OAuth2ScopeGrantLocalService oAuth2ScopeGrantLocalService =
+			_oAuth2ScopeGrantLocalServiceSnapshot.get();
+
 		Collection<OAuth2ScopeGrant> oAuth2ScopeGrants =
-			_oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
+			oAuth2ScopeGrantLocalService.getOAuth2ScopeGrants(
 				_companyIdThreadLocal.get(), _applicationNameThreadLocal.get(),
 				_bundleSymbolicNameThreadLocal.get(),
 				_accessTokenThreadLocal.get());
@@ -156,12 +162,17 @@ public class ThreadLocalScopeContextScopeChecker
 	}
 
 	private void _checkOAuth2ScopeGrantLocalService() {
-		if (_oAuth2ScopeGrantLocalService == null) {
+		if (_oAuth2ScopeGrantLocalServiceSnapshot.get() == null) {
 			throw new IllegalStateException(
 				"ScopeChecker dependency upon OAuth2ScopeGrantLocalService " +
 					"is not satisfied");
 		}
 	}
+
+	private static final Snapshot<OAuth2ScopeGrantLocalService>
+		_oAuth2ScopeGrantLocalServiceSnapshot = new Snapshot<>(
+			ThreadLocalScopeContextScopeChecker.class,
+			OAuth2ScopeGrantLocalService.class, null, true);
 
 	private final ThreadLocal<String> _accessTokenThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
@@ -171,12 +182,5 @@ public class ThreadLocalScopeContextScopeChecker
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
 	private final ThreadLocal<Long> _companyIdThreadLocal =
 		ThreadLocal.withInitial(() -> 0L);
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 }

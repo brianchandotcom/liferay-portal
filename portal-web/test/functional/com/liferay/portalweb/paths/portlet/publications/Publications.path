@@ -161,6 +161,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_CONFLICT_BUTTON</td>
+	<td>//div[contains(@title,'New changes to this content has been published to production.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_TIMELINE_BUTTON</td>
 	<td>//button[contains(@class,'change-tracking-timeline-button')]</td>
 	<td></td>

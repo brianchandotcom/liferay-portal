@@ -895,6 +895,67 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is use case for LPS-179333. Verify that timline and conflict icon can display for the conflict pulication bar."
+	@priority = 3
+	test TimelineAndConflictIconCanAppearOnConflictPublicationBar {
+		property custom.properties = "feature.flag.LPS-161033=true";
+		property test.assert.warning.exceptions = "true";
+
+		task ("Make change to the Home page on Publication 1 Name") {
+			JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Container");
+
+			PageEditor.publish();
+		}
+
+		task ("Make change to the Home page on Publication 1 Name") {
+			JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Container");
+
+			PageEditor.publish();
+		}
+
+		task ("Publish Publication 2 Name") {
+			JSONPublications.publishPublication(publicationName = "Publication 1 Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+		}
+
+		task ("Access the Home page on Publication 2 Name") {
+			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Guest");
+		}
+
+		task ("Assert Timeline and conflict icon appear on the Publication bar") {
+			Publications.viewPublicationTimeline(publicationName = "Publication 1 Name");
+
+			AssertElementPresent(locator1 = "Publications#PUBLICATION_CONFLICT_BUTTON");
+		}
+	}
+
 	@description = "Verify that changes made across multiple Publications are shown in the history"
 	@priority = 3
 	test ViewChangesAcrossMultiplePublications {

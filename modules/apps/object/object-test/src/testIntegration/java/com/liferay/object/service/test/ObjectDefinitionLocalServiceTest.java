@@ -1205,7 +1205,7 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testEnableSalesForceAccountEntryRestricted() throws Exception {
 
-		//testando a restricao do ObjectDefinition SalesForce com o seu Object Field
+		//Enabling account restriction to a custom sales force object definition
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -1216,7 +1216,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+		ObjectField objectField1 = _objectFieldLocalService.addCustomObjectField(
 			null, TestPropsValues.getUserId(), 0,
 			objectDefinition1.getObjectDefinitionId(),
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -1226,7 +1226,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition1 =
 			_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-				objectDefinition1, objectField);
+				objectField1);
 
 		Assert.assertTrue(objectDefinition1.isAccountEntryRestricted());
 		Assert.assertTrue(objectDefinition1.getAccountEntryRestrictedObjectFieldId() > 0);
@@ -1237,27 +1237,61 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition1);
 
-		//testando com um objectField que nao pertence ao objectDefinition1
+		//Enabling account restriction for default storage object definition
+		//using sales force method
 
 		User user = TestPropsValues.getUser();
 
 		ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.addObjectDefinition(
-				RandomTestUtil.randomString(), user.getUserId());
+		_objectDefinitionLocalService.addObjectDefinition(
+			RandomTestUtil.randomString(), user.getUserId());
 
-		try {
-			_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-				objectDefinition2, objectField);
+		ObjectField objectField2 = _objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition2.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
+			false, Collections.emptyList());
+
+		objectDefinition2 = _objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
+			objectField2);
+
+		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
+
+		// Enabling account restriction using a forbidden type field
+
+		ObjectDefinition objectDefinition3 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Collections.emptyList());
+
+		ObjectField objectField3 = _objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition3.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
+			false, Collections.emptyList());
+
+		try{
+			objectDefinition3 =
+				_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
+					objectField3);
 
 			Assert.fail();
-		}
-		catch (ObjectDefinitionAccountEntryRestrictedException
-			objectDefinitionAccountEntryRestrictedException) {
-
+		}catch (ObjectDefinitionAccountEntryRestrictedException objectDefinitionAccountEntryRestrictedException){
 			Assert.assertEquals(
-				"O objectField deve pertencer ao objectDefinition da " +
-				"restricao",
+				"Custom object definitions can only be restricted by a " +
+				"Integer, Long Integer or Text field",
 				objectDefinitionAccountEntryRestrictedException.getMessage());
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition3);
 		}
 	}
 

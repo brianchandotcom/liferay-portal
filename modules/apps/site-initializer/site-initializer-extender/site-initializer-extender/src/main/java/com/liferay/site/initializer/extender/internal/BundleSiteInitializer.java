@@ -4622,7 +4622,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						jsonObject.getString("objectField"));
 
 				_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-					serviceBuildObjectDefinition, serviceBuildObjectField);
+					serviceBuildObjectField);
 			}
 		}
 	}

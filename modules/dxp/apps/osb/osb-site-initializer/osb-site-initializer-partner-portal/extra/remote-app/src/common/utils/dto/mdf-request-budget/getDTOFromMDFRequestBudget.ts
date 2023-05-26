@@ -15,7 +15,7 @@ import MDFRequestBudget from '../../../interfaces/mdfRequestBudget';
 
 export default function getDTOFromMDFRequestBudget(
 	budget: MDFRequestBudget,
-	activityId: number,
+	activityExternalReferenceCode: string,
 	company?: LiferayAccountBrief
 ): MDFRequestBudgetDTO {
 	const mdfRequestBudget = {...budget};
@@ -27,6 +27,6 @@ export default function getDTOFromMDFRequestBudget(
 	return {
 		...mdfRequestBudget,
 		r_accToBgts_accountEntryId: company?.id,
-		r_actToBgts_c_activityId: activityId,
+		r_actToBgts_c_activityERC: activityExternalReferenceCode,
 	};
 }

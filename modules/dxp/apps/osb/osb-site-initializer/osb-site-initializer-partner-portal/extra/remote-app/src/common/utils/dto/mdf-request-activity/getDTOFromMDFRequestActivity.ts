@@ -15,7 +15,7 @@ import MDFRequestActivity from '../../../interfaces/mdfRequestActivity';
 
 export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
-	externalReferenceCode?: string,
+	externalReferenceCodeFromSF?: string,
 	company?: LiferayAccountBrief,
 	mdfRequestExternalReferenceCode?: string
 ): MDFRequestActivityDTO {
@@ -30,7 +30,7 @@ export default function getDTOFromMDFRequestActivity(
 		activityStatus: mdfRequestActivity.activityStatus,
 		currency: mdfRequestActivity.currency,
 		...newMDFRequestActivity,
-		externalReferenceCode,
+		externalReferenceCode: externalReferenceCodeFromSF,
 		leadFollowUpStrategies: activityDescription?.leadFollowUpStrategies?.join(
 			', '
 		),

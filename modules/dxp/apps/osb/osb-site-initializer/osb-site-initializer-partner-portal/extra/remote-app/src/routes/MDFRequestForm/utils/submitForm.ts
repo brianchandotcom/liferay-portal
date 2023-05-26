@@ -125,17 +125,21 @@ export default async function submitForm(
 				values.activities.map((activity, index) => {
 					const dtoActivity = dtoMDFRequestActivities[index];
 
-					if (activity.budgets?.length && dtoActivity?.id) {
+					if (
+						activity.budgets?.length &&
+						dtoActivity?.id &&
+						dtoActivity.externalReferenceCode
+					) {
 						activity.budgets?.map(async (budget) => {
 							if (
 								dtoActivity.id &&
-								budget.id &&
-								budget.externalReferenceCode
+								dtoActivity.externalReferenceCode &&
+								budget.id
 							) {
 								await updateMDFRequestActivityBudget(
 									ResourceName.BUDGET,
-									dtoActivity.id,
 									budget,
+									dtoActivity.externalReferenceCode,
 									values.company
 								);
 								if (budget.removed) {
@@ -145,10 +149,11 @@ export default async function submitForm(
 									);
 								}
 							}
-							else {
+							else if (dtoActivity.externalReferenceCode) {
 								await createMDFRequestActivityBudget(
-									dtoActivity.id as number,
+									ResourceName.BUDGET,
 									budget,
+									dtoActivity.externalReferenceCode,
 									values.company
 								);
 							}

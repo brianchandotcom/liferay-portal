@@ -21,14 +21,14 @@ export default async function createMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
 	mdfRequestDTO: MDFRequestDTO,
-	externalReferenceCode?: string
+	externalReferenceCodeFromSF?: string
 ) {
 	return await liferayFetcher.post(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}`,
 		Liferay.authToken,
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,
-			externalReferenceCode,
+			externalReferenceCodeFromSF,
 			mdfRequestDTO.r_accToMDFReqs_accountEntry,
 			mdfRequestDTO.externalReferenceCode
 		)

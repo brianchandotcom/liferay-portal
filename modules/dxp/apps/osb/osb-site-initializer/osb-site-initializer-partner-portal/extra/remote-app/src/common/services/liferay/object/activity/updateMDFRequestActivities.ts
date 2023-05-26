@@ -21,11 +21,16 @@ export default async function updateMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
 	mdfRequestDTO: MDFRequestDTO,
-	externalReferenceCode?: string
+	externalReferenceCodeFromSF?: string
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${mdfRequestActivity.externalReferenceCode}`,
 		Liferay.authToken,
-		getDTOFromMDFRequestActivity(mdfRequestActivity, externalReferenceCode)
+		getDTOFromMDFRequestActivity(
+			mdfRequestActivity,
+			externalReferenceCodeFromSF,
+			mdfRequestDTO.r_accToMDFReqs_accountEntry,
+			mdfRequestDTO.externalReferenceCode
+		)
 	);
 }

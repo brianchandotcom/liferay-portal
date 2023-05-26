@@ -19,13 +19,17 @@ import {ResourceName} from '../enum/resourceName';
 
 export default async function updateMDFRequestActivityBudget(
 	apiOption: ResourceName,
-	activityId: number,
 	budget: MDFRequestBudget,
+	activityExternalReferenceCode: string,
 	company?: LiferayAccountBrief
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${budget.externalReferenceCode}`,
 		Liferay.authToken,
-		getDTOFromMDFRequestBudget(budget, activityId, company)
+		getDTOFromMDFRequestBudget(
+			budget,
+			activityExternalReferenceCode,
+			company
+		)
 	);
 }

@@ -4,8 +4,8 @@ jobs:
         steps:
             - name: set up git for checkout
               run: git config --global core.longpaths 260
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v2
+            - uses: actions/checkout@v3.5.2
+            - uses: actions/setup-node@v3.6.0
               with:
                   node-version: 14.x
             - env:
@@ -20,7 +20,7 @@ jobs:
             - name: build package
               run: npx vsce package --target ${{env.target}}
               working-directory: ./modules/test/poshi/poshi-vscode
-            - uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v3.1.2
               with:
                   name: ${{env.target}}
                   path: "./modules/test/poshi/poshi-vscode/*.vsix"

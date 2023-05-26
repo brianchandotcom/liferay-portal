@@ -1434,7 +1434,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				listTypeDefinitionIdsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
-		_invoke(() -> _enableObjectDefinitionAccountRestriction(serviceContext));
+		_invoke(
+			() -> _enableObjectDefinitionAccountEntryRestriction(
+				serviceContext));
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
 			() -> _addOrUpdateObjectEntries(
@@ -4579,13 +4581,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _enableObjectDefinitionAccountRestriction(
-		ServiceContext serviceContext)
+	private void _enableObjectDefinitionAccountEntryRestriction(
+			ServiceContext serviceContext)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
-			"/site-initializer/" +
-			"object-definition-restrict-account-entry.json",
+			"/site-initializer/object-definition-restrict-account-entry.json",
 			_servletContext);
 
 		if (json == null) {
@@ -4599,17 +4600,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			com.liferay.object.model.ObjectDefinition
 				serviceBuildObjectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					serviceContext.getCompanyId(), "C_" +
-					jsonObject.getString("objectDefinitionName"));
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(),
+						"C_" + jsonObject.getString("objectDefinitionName"));
 
-			if(Objects.equals(serviceBuildObjectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+			if (Objects.equals(
+					serviceBuildObjectDefinition.getStorageType(),
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
 
 				com.liferay.object.model.ObjectRelationship objectRelationship =
 					_objectRelationshipLocalService.
 						fetchObjectRelationshipByObjectDefinitionId(
-							serviceBuildObjectDefinition.getObjectDefinitionId(),
+							serviceBuildObjectDefinition.
+								getObjectDefinitionId(),
 							jsonObject.getString("objectRelationshipName"));
 
 				_objectDefinitionLocalService.enableAccountEntryRestricted(
@@ -4621,8 +4624,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 						serviceBuildObjectDefinition.getObjectDefinitionId(),
 						jsonObject.getString("objectField"));
 
-				_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-					serviceBuildObjectField);
+				_objectDefinitionLocalService.
+					enableSalesForceAccountEntryRestricted(
+						serviceBuildObjectField);
 			}
 		}
 	}

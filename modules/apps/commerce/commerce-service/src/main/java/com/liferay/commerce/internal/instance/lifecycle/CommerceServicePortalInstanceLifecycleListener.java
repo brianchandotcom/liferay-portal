@@ -14,51 +14,22 @@
 
 package com.liferay.commerce.internal.instance.lifecycle;
 
-import com.liferay.commerce.constants.CommerceSAPConstants;
 import com.liferay.commerce.helper.CommerceSAPHelper;
-import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
-import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	property = {"osgi.jaxrs.name=Liferay.Commerce", "sap.scope.finder=true"},
-	service = {
-		PortalInstanceLifecycleListener.class, ScopeFinder.class,
-		ScopeMapper.class
-	}
-)
+@Component(service = PortalInstanceLifecycleListener.class)
 public class CommerceServicePortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener
-	implements ScopeFinder, ScopeMapper {
-
-	@Override
-	public Collection<String> findScopes() {
-		return _scopeAliasesList;
-	}
-
-	@Override
-	public Set<String> map(String scope) {
-		return Collections.singleton(scope);
-	}
+	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
@@ -68,18 +39,8 @@ public class CommerceServicePortalInstanceLifecycleListener
 			company.getCompanyId(), user.getUserId());
 	}
 
-	@Activate
-	protected void activate() {
-		_scopeAliasesList = TransformUtil.transformToList(
-			CommerceSAPConstants.SAP_ENTRY_OBJECT_ARRAYS,
-			sapEntryObjectArray -> StringUtil.replaceFirst(
-				sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK));
-	}
-
 	@Reference
 	private CommerceSAPHelper _commerceSAPHelper;
-
-	private List<String> _scopeAliasesList;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -7,7 +7,7 @@ definition {
 
 		ClickNoError(
 			key_menuItem = "Export Audit Events",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
 	}
 
 	@description = "Go to System settings"

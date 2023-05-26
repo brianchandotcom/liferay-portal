@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {PagesVisitor, useFormState} from 'data-engine-js-components-web';
 import React, {useRef, useState} from 'react';
 
 import AvailableLocaleLabel from '../localizable/AvailableLocaleLabel.es';
@@ -26,6 +27,8 @@ const LocalesDropdown = ({
 	fieldName,
 	onLanguageClicked = () => {},
 }) => {
+	const {pages} = useFormState();
+
 	const alignElementRef = useRef(null);
 	const dropdownMenuRef = useRef(null);
 
@@ -71,9 +74,33 @@ const LocalesDropdown = ({
 								className="custom-dropdown-item-row"
 								data-testid={`availableLocalesDropdown${localeId}`}
 								key={localeId}
+								name={fieldName + localeId}
 								onClick={(event) => {
 									onLanguageClicked({event, localeId});
 									setDropdownActive(false);
+
+									if (event.isTrusted) {
+										const visitor = new PagesVisitor(pages);
+
+										visitor.mapFields(
+											(field) => {
+												if (
+													field.localizable &&
+													fieldName !==
+														field.fieldName
+												) {
+													document
+														.getElementsByName(
+															field.fieldName +
+																localeId
+														)[0]
+														.click();
+												}
+											},
+											true,
+											true
+										);
+									}
 								}}
 							>
 								<ClayLayout.ContentRow containerElement="span">

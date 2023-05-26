@@ -16,18 +16,20 @@ package com.liferay.portal.dependency.manager.component.executor.factory.interna
 
 import com.liferay.portal.dependency.manager.component.executor.factory.internal.ComponentExecutorFactoryImpl;
 import com.liferay.portal.dependency.manager.component.executor.factory.internal.DependencyManagerSyncImpl;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSync;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.felix.dm.ComponentExecutorFactory;
 
@@ -43,31 +45,28 @@ public class ComponentExecutorFactoryBundleActivator
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		boolean threadPoolEnabled = false;
+		BlockingQueue<Future<Void>> blockingQueue = new LinkedBlockingQueue<>();
 
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.DEPENDENCY_MANAGER_THREAD_POOL_ENABLED),
 				true) &&
 			!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
 
-			threadPoolEnabled = true;
-		}
-
-		ThreadPoolExecutor threadPoolExecutor = null;
-
-		if (threadPoolEnabled) {
-			threadPoolExecutor = new ThreadPoolExecutor(
-				0, 1, 1, TimeUnit.MINUTES, new LinkedBlockingDeque<>(),
-				new NamedThreadFactory(
-					"Portal Dependency Manager Component Executor-",
-					Thread.NORM_PRIORITY,
-					ComponentExecutorFactory.class.getClassLoader()));
-
-			threadPoolExecutor.allowCoreThreadTimeOut(true);
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
 
 			_serviceRegistration = bundleContext.registerService(
 				ComponentExecutorFactory.class,
-				new ComponentExecutorFactoryImpl(threadPoolExecutor), null);
+				new ComponentExecutorFactoryImpl(
+					runnable -> {
+						FutureTask<Void> futureTask = new FutureTask<>(
+							runnable, null);
+
+						blockingQueue.add(futureTask);
+
+						executorService.submit(futureTask);
+					}),
+				null);
 		}
 
 		long syncTimeout = GetterUtil.getInteger(
@@ -77,7 +76,7 @@ public class ComponentExecutorFactoryBundleActivator
 			bundleContext.registerService(
 				DependencyManagerSync.class,
 				new DependencyManagerSyncImpl(
-					threadPoolExecutor, _serviceRegistration, syncTimeout),
+					blockingQueue, _serviceRegistration, syncTimeout),
 				null);
 	}
 

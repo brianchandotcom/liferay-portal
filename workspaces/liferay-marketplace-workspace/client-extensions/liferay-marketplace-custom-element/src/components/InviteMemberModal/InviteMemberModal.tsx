@@ -8,7 +8,7 @@ import {
   addAdditionalInfo,
   addExistentUserIntoAccount,
   callRolesApi,
-  createNewUserIntoAccount,
+  createNewUser,
   getAccountRolesOnAPI,
   getSiteURL,
   getUserByEmail,
@@ -44,6 +44,7 @@ export function InviteMemberModal({
   const [formValid, setFormValid] = useState<boolean>(false);
 
   const [accountRoles, setAccountRoles] = useState<AccountRole[]>();
+  const [userPassword, setUserPassword] = useState<string>('');
 
   const listOfRoles = ['Account Administrator', 'App Editor'];
 
@@ -53,6 +54,7 @@ export function InviteMemberModal({
     });
     setCheckboxRoles(mapRoles);
     getAccountRoles();
+    setUserPassword(createPassword());
   }, []);
 
   const jsonBody = {
@@ -60,12 +62,11 @@ export function InviteMemberModal({
     emailAddress: formFields.email,
     familyName: formFields.lastName,
     givenName: formFields.firstName,
-    password: 'test',
-    currentPassword: 'test',
+    password: userPassword,
   };
 
   const getCheckedRoles = () => {
-    let checkedRole = ''
+    let checkedRole = '';
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
         checkedRole = checkedRole + checkboxRole.roleName + '/';
@@ -79,7 +80,7 @@ export function InviteMemberModal({
     setAccountRoles(roles);
   };
 
-  const addAccountRolesToUser = async (user: any) => {
+  const addAccountRolesToUser = async (user: UserAccount) => {
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
         const matchingAccountRole = accountRoles?.find(
@@ -103,15 +104,10 @@ export function InviteMemberModal({
     if (formValid) {
       user = await getUserByEmail(formFields.email);
       if (!user) {
-        await createNewUserIntoAccount(selectedAccount.id, jsonBody);
-      } else {
-        await addExistentUserIntoAccount(
-          selectedAccount.id,
-          formFields.email,
-          jsonBody
-        );
+        await createNewUser(jsonBody);
       }
       user = await getUserByEmail(formFields.email);
+      await addExistentUserIntoAccount(selectedAccount.id, formFields.email);
       const myUser = await getMyUserAccount();
       await addAccountRolesToUser(user);
       await addAdditionalInfo(
@@ -119,10 +115,12 @@ export function InviteMemberModal({
         user.id,
         selectedAccount.name,
         formFields.email,
-        createPassword(),
+        userPassword,
         formFields.firstName,
         myUser.givenName,
-        Liferay.ThemeDisplay.getPortalURL()+"/c/login?redirect="+getSiteURL(),
+        Liferay.ThemeDisplay.getPortalURL() +
+          '/c/login?redirect=' +
+          getSiteURL(),
         getCheckedRoles()
       );
       setTimeout(() => location.reload(), 200);

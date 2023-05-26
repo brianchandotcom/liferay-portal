@@ -78,6 +78,7 @@ public class ResolveTask extends DefaultTask {
 		return _distroFileCollection.getSingleFile();
 	}
 
+	@Input
 	public List<String> getRunBundles() {
 		return _runBundles;
 	}
@@ -87,6 +88,7 @@ public class ResolveTask extends DefaultTask {
 		return GradleUtil.toBoolean(_failOnChanges);
 	}
 
+	@Input
 	public boolean isOffline() {
 		return GradleUtil.toBoolean(_offline);
 	}

@@ -196,21 +196,6 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-			readOnly = ObjectFieldConstants.READ_ONLY_FALSE;
-
-			if (Objects.equals(
-					businessType,
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-				Objects.equals(
-					businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
-
-				readOnly = ObjectFieldConstants.READ_ONLY_TRUE;
-			}
-
-			readOnlyConditionExpression = StringPool.BLANK;
-		}
-
 		ObjectField existingObjectField = null;
 
 		if (objectFieldId > 0) {
@@ -689,7 +674,7 @@ public class ObjectFieldLocalServiceImpl
 
 		newObjectField.setLocalized(localized);
 		newObjectField.setName(name);
-		newObjectField.setReadOnly(readOnly);
+		newObjectField.setReadOnly(_getReadOnly(businessType, readOnly, false));
 		newObjectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
 				readOnly, readOnlyConditionExpression));
@@ -803,7 +788,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setLocalized(localized);
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectField.setName(name);
-		objectField.setReadOnly(readOnly);
+		objectField.setReadOnly(_getReadOnly(businessType, readOnly, system));
 		objectField.setReadOnlyConditionExpression(
 			_getReadOnlyConditionExpression(
 				readOnly, readOnlyConditionExpression));
@@ -1054,6 +1039,24 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	private String _getReadOnly(
+		String businessType, String readOnly, boolean system) {
+
+		if (system || FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+			return readOnly;
+		}
+
+		if (Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+			return ObjectFieldConstants.READ_ONLY_TRUE;
+		}
+
+		return ObjectFieldConstants.READ_ONLY_FALSE;
 	}
 
 	private String _getReadOnlyConditionExpression(

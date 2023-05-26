@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -192,7 +193,10 @@ public class CatalogResourceImpl
 			_commerceCatalogService.getCommerceCatalog(id);
 
 		_commerceCatalogService.updateCommerceCatalog(
-			commerceCatalog.getCommerceCatalogId(), catalog.getName(),
+			commerceCatalog.getCommerceCatalogId(),
+			GetterUtil.get(
+				catalog.getAccountId(), commerceCatalog.getAccountEntryId()),
+			catalog.getName(),
 			GetterUtil.get(
 				catalog.getCurrencyCode(),
 				commerceCatalog.getCommerceCurrencyCode()),
@@ -234,13 +238,21 @@ public class CatalogResourceImpl
 
 		if (commerceCatalog == null) {
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
-				catalog.getExternalReferenceCode(), catalog.getName(),
-				catalog.getCurrencyCode(), catalog.getDefaultLanguageId(),
+				catalog.getExternalReferenceCode(),
+				GetterUtil.get(
+					catalog.getAccountId(),
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
+				catalog.getName(), catalog.getCurrencyCode(),
+				catalog.getDefaultLanguageId(),
 				_serviceContextHelper.getServiceContext());
 		}
 		else {
 			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
-				commerceCatalog.getCommerceCatalogId(), catalog.getName(),
+				commerceCatalog.getCommerceCatalogId(),
+				GetterUtil.get(
+					catalog.getAccountId(),
+					commerceCatalog.getAccountEntryId()),
+				catalog.getName(),
 				GetterUtil.get(
 					catalog.getCurrencyCode(),
 					commerceCatalog.getCommerceCurrencyCode()),

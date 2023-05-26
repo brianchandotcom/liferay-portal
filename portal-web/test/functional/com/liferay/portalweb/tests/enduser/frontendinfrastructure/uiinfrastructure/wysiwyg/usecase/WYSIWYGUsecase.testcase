@@ -27,6 +27,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored due to LPS-185764"
+	@ignore = "true"
 	@priority = 4
 	@refactordone
 	test CanAddBlogsEntryWithImageViaBlogsImages {

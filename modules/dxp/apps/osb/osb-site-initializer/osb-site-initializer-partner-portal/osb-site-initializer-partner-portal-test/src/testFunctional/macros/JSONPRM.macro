@@ -219,4 +219,12 @@ definition {
 		return ${requestId};
 	}
 
+	macro updateAccount {
+		if (!(isSet(accountName))) {
+			var accountName = "Company Name 1";
+		}
+
+		JSONPRMAPI.updateAccount(accountName = ${accountName});
+	}
+
 }

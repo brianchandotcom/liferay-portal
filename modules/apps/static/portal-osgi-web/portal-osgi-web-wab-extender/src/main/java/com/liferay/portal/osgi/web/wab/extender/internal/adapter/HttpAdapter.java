@@ -16,6 +16,8 @@ package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.osgi.web.http.servlet.HttpServiceServlet;
+import com.liferay.portal.osgi.web.http.servlet.HttpSessionTrackerUtil;
 import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 
 import java.lang.reflect.InvocationHandler;
@@ -37,9 +39,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-
-import org.eclipse.equinox.http.servlet.HttpServiceServlet;
-import org.eclipse.equinox.http.servlet.HttpSessionTrackerUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;

@@ -120,8 +120,8 @@ public class DirectRequestDispatcherFactoryImpl
 		return new DirectRequestDispatcher(servlet, path, queryString);
 	}
 
-	private static final String _EQUINOX_REQUEST_CLASS_NAME =
-		"org.eclipse.equinox.http.servlet.internal.servlet." +
+	private static final String _REQUEST_CLASS_NAME =
+		"com.liferay.portal.osgi.web.http.servlet.internal.servlet." +
 			"HttpServletRequestWrapperImpl";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -161,7 +161,7 @@ public class DirectRequestDispatcherFactoryImpl
 
 			Class<?> clazz = servletRequest.getClass();
 
-			if (_EQUINOX_REQUEST_CLASS_NAME.equals(clazz.getName())) {
+			if (_REQUEST_CLASS_NAME.equals(clazz.getName())) {
 				HttpServletRequestWrapper wrapper =
 					(HttpServletRequestWrapper)servletRequest;
 
@@ -179,7 +179,7 @@ public class DirectRequestDispatcherFactoryImpl
 
 			Class<?> clazz = servletRequest.getClass();
 
-			if (_EQUINOX_REQUEST_CLASS_NAME.equals(clazz.getName())) {
+			if (_REQUEST_CLASS_NAME.equals(clazz.getName())) {
 				HttpServletRequestWrapper wrapper =
 					(HttpServletRequestWrapper)servletRequest;
 

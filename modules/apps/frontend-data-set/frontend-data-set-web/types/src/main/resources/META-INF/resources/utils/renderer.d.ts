@@ -20,6 +20,8 @@ export interface Renderer {
 	type: 'clientExtension' | 'internal';
 }
 export interface ClientExtensionCellRenderer extends Renderer {
+	label?: string;
+	name?: string;
 	renderer: FDSCellRenderer;
 	type: 'clientExtension';
 }

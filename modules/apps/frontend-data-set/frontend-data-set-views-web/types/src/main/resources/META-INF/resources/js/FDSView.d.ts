@@ -12,25 +12,27 @@
  * details.
  */
 
-import {IFDSCellRendererCET} from './api';
+/// <reference types="react" />
+
+import {IClientExtensionCellRenderer} from './api';
 import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';
 interface IFDSViewSectionInterface {
-	cellRendererCETs: IFDSCellRendererCET[];
+	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
 }
 interface IFDSViewInterface {
-	cellRendererCETs: IFDSCellRendererCET[];
+	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
 }
 declare const FDSView: ({
-	cellRendererCETs,
+	fdsClientExtensionCellRenderers,
 	fdsViewId,
 	fdsViewsURL,
 	namespace,

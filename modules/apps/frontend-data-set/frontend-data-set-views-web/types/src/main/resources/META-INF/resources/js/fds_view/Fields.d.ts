@@ -12,10 +12,12 @@
  * details.
  */
 
+/// <reference types="react" />
+
 import {IFDSViewSectionInterface} from '../FDSView';
 import '../../css/FDSEntries.scss';
 declare const Fields: ({
-	cellRendererCETs,
+	fdsClientExtensionCellRenderers,
 	fdsView,
 	fdsViewsURL,
 	namespace,

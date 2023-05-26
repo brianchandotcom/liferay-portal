@@ -81,6 +81,11 @@
 			"object": "MDF Claim"
 		},
 		{
+			"action": "UPDATE-WO-CHANGE-STATUS",
+			"externalReferenceCode": "MDF-CLAIM-UPDATE-WO-CHANGE-STATUS",
+			"object": "MDF Claim"
+		},
+		{
 			"action": "DELETE",
 			"externalReferenceCode": "MDF-CLAIM-DELETE",
 			"object": "MDF Claim"

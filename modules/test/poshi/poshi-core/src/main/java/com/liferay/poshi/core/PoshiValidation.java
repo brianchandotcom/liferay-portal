@@ -1100,16 +1100,7 @@ public class PoshiValidation {
 	}
 
 	protected static void validateMacroArguments(
-		PoshiElement poshiElement, String macroName) {
-
-		String namespace =
-			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
-				macroName);
-
-		if (Validator.isNull(namespace)) {
-			namespace = PoshiContext.getNamespaceFromFilePath(
-				_getFilePath(poshiElement));
-		}
+		PoshiElement poshiElement, String macroName, String namespace) {
 
 		Element commandElement = PoshiContext.getMacroCommandElement(
 			macroName, namespace);
@@ -1160,8 +1151,17 @@ public class PoshiValidation {
 
 		String macroName = poshiElement.attributeValue(macroType);
 
-		if (PoshiContext.isCommandElement("macro", macroName, "LocalFile")) {
-			validateMacroArguments(poshiElement, macroName);
+		String namespace =
+			PoshiGetterUtil.getNamespaceFromNamespacedClassCommandName(
+				macroName);
+
+		if (Validator.isNull(namespace)) {
+			namespace = PoshiContext.getNamespaceFromFilePath(
+				_getFilePath(poshiElement));
+		}
+
+		if (PoshiContext.isCommandElement("macro", macroName, namespace)) {
+			validateMacroArguments(poshiElement, macroName, namespace);
 		}
 
 		validateNamespacedClassCommandName(poshiElement, macroName, "macro");

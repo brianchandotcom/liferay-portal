@@ -51,7 +51,6 @@ import java.util.Objects;
 
 import javax.portlet.ActionURL;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -355,38 +354,46 @@ public class LayoutActionProvider {
 		return backURL;
 	}
 
-	private String _getConfigureLayoutURL(long plid) throws Exception {
-		PortletURL configureLayoutURL = PortletURLBuilder.create(
+	private String _getConfigureLayoutURL(long plid) {
+		Layout layout = _themeDisplay.getLayout();
+
+		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
-		).buildPortletURL();
+		).setRedirect(
+			() -> {
+				if (layout.isTypeAssetDisplay() ||
+					layout.isTypeControlPanel()) {
 
-		Layout layout = _themeDisplay.getLayout();
+					return ParamUtil.getString(
+						_httpServletRequest, "redirect",
+						_themeDisplay.getURLCurrent());
+				}
 
-		if (layout.isTypeAssetDisplay() || layout.isTypeControlPanel()) {
-			String redirect = ParamUtil.getString(
-				_httpServletRequest, "redirect", _themeDisplay.getURLCurrent());
+				return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+			}
+		).setBackURL(
+			() -> {
+				if (layout.isTypeAssetDisplay() ||
+					layout.isTypeControlPanel()) {
 
-			configureLayoutURL.setParameter("redirect", redirect);
-			configureLayoutURL.setParameter("backURL", redirect);
-		}
-		else {
-			configureLayoutURL.setParameter(
-				"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-			configureLayoutURL.setParameter(
-				"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		}
+					return ParamUtil.getString(
+						_httpServletRequest, "redirect",
+						_themeDisplay.getURLCurrent());
+				}
 
-		configureLayoutURL.setParameter(
-			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		configureLayoutURL.setParameter(
-			"privateLayout", String.valueOf(_isPrivateLayout()));
-		configureLayoutURL.setParameter("selPlid", String.valueOf(plid));
-
-		return configureLayoutURL.toString();
+				return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
+			}
+		).setParameter(
+			"groupId", _themeDisplay.getScopeGroupId()
+		).setParameter(
+			"privateLayout", _isPrivateLayout()
+		).setParameter(
+			"selPlid", plid
+		).buildString();
 	}
 
 	private String _getCopyLayoutRenderURL(Layout layout) {
@@ -528,34 +535,35 @@ public class LayoutActionProvider {
 	}
 
 	private String _getViewCollectionItemsURL(Layout layout) throws Exception {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, AssetListEntry.class.getName(),
-			PortletProvider.Action.BROWSE);
+		return PortletURLBuilder.create(
+			PortletProviderUtil.getPortletURL(
+				_httpServletRequest, AssetListEntry.class.getName(),
+				PortletProvider.Action.BROWSE)
+		).setRedirect(
+			() -> {
+				String redirect = PortalUtil.getLayoutRelativeURL(
+					_themeDisplay.getLayout(), _themeDisplay);
 
-		if (portletURL == null) {
-			return StringPool.BLANK;
-		}
+				Layout curLayout = _themeDisplay.getLayout();
 
-		Layout curLayout = _themeDisplay.getLayout();
+				if (curLayout.isTypeAssetDisplay() ||
+					curLayout.isTypeControlPanel()) {
 
-		String redirect = PortalUtil.getLayoutRelativeURL(
-			_themeDisplay.getLayout(), _themeDisplay);
+					return ParamUtil.getString(
+						_httpServletRequest, "redirect", redirect);
+				}
 
-		if (curLayout.isTypeAssetDisplay() || curLayout.isTypeControlPanel()) {
-			redirect = ParamUtil.getString(
-				_httpServletRequest, "redirect", redirect);
-		}
-
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter(
-			"collectionPK", layout.getTypeSettingsProperty("collectionPK"));
-		portletURL.setParameter(
-			"collectionType", layout.getTypeSettingsProperty("collectionType"));
-		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
+				return redirect;
+			}
+		).setParameter(
+			"collectionPK", layout.getTypeSettingsProperty("collectionPK")
+		).setParameter(
+			"collectionType", layout.getTypeSettingsProperty("collectionType")
+		).setParameter(
+			"showActions", true
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {

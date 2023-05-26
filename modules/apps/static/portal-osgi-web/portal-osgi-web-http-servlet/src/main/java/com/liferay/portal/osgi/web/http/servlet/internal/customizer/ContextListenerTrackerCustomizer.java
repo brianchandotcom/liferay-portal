@@ -12,6 +12,8 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.customizer;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.error.HttpWhiteboardFailureException;
@@ -83,16 +85,14 @@ public class ContextListenerTrackerCustomizer
 				_contextController.addListenerRegistration(serviceReference));
 		}
 		catch (HttpWhiteboardFailureException httpWhiteboardFailureException) {
-			httpServiceRuntimeImpl.log(
-				httpWhiteboardFailureException.getMessage(),
-				httpWhiteboardFailureException);
+			_log.error(httpWhiteboardFailureException);
 
 			_recordFailedListenerDTO(
 				serviceReference,
 				httpWhiteboardFailureException.getFailureReason());
 		}
 		catch (Exception exception) {
-			httpServiceRuntimeImpl.log(exception.getMessage(), exception);
+			_log.error(exception);
 
 			_recordFailedListenerDTO(
 				serviceReference,
@@ -141,6 +141,9 @@ public class ContextListenerTrackerCustomizer
 		httpServiceRuntimeImpl.recordFailedListenerDTO(
 			serviceReference, failedListenerDTO);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContextListenerTrackerCustomizer.class.getName());
 
 	private final ContextController _contextController;
 

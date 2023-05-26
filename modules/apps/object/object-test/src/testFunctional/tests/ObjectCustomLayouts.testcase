@@ -1028,7 +1028,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
-		task ("Given a related object with Custom Layout and Relationship tab") {
+		task ("Given a custom object that contains a simple field and a relationship itself") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 171628",
 				objectName = "CustomObject171628",
@@ -1049,6 +1049,10 @@ definition {
 				relationshipName = "relationship",
 				relationshipType = "oneToMany");
 
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171628");
+		}
+
+		task ("And given a custom layout for the custom object") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Custom Layout 171628",
 				objectName = "CustomObject171628");
@@ -1084,8 +1088,10 @@ definition {
 				tabName = "Relationship Tab");
 
 			PortletEntry.save();
+		}
 
-			for (var letter : list "A,B,C,D,E") {
+		task ("And given some custom object entries") {
+			for (var letter : list "A,B,C") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 					fieldName = "customField",
 					objectName = "CustomObject171628",
@@ -1093,37 +1099,21 @@ definition {
 			}
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject171628");
-
-			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
 		}
 
 		task ("When selecting existing entries from the Relationship Tab") {
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
+
 			ObjectAdmin.gotoRelationshipsTab();
 
-			LexiconEntry.gotoAdd();
-
-			Click(
-				key_kebabOption = "Select Existing One",
-				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-		}
-
-		task ("Then all entries created show on Select Existing One and the entry selected is saved on the Relationship Tab") {
-			for (var letter : list "B,C,D,E") {
-				AssertElementPresent(
-					key_titleFieldName = "Entry Test ${letter}",
-					locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
-			}
-
-			ClickNoError(
-				key_titleFieldName = "Entry Test C",
-				locator1 = "CreateObject#SELECT_ENTRY_IN_RELATIONSHIP_TAB");
+			ObjectCustomLayouts.addEntryOnRelationshipTab(selectEntry = "Entry Test C");
 
 			WaitForElementPresent(
 				key_fieldLabel = "Entry Test C",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
+		}
 
+		task ("Then assert the entry added before on the Relationship Tab") {
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test C",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");

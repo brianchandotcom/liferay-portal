@@ -656,7 +656,7 @@ definition {
 
 		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
 			addOrRemoveViewPermission = "Remove",
-			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX",
 			roleTitle = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -670,7 +670,7 @@ definition {
 		PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
 			addOrRemoveViewPermission = "Remove",
 			permissionsBulkEditing = "true",
-			permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			permissionsKeyList = "INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
 			roleTitle = "Guest");
 
 		User.logoutPG();

@@ -511,6 +511,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_SPECIFIC_LINK_1</td>
+	<td>//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong | //span[contains(@class,'workflow-status')]/span</td>
 	<td></td>

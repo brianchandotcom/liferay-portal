@@ -40,12 +40,21 @@ public class CPDefinitionLinkServiceWrapper
 
 	@Override
 	public CPDefinitionLink addCPDefinitionLink(
-			long cpDefinitionId, long cProductId, double priority, String type,
+			long cpDefinitionId, long cProductId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, double priority, String type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionLinkService.addCPDefinitionLink(
-			cpDefinitionId, cProductId, priority, type, serviceContext);
+			cpDefinitionId, cProductId, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, priority,
+			type, serviceContext);
 	}
 
 	@Override
@@ -89,6 +98,15 @@ public class CPDefinitionLinkServiceWrapper
 
 	@Override
 	public java.util.List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(
+			cpDefinitionId, status);
+	}
+
+	@Override
+	public java.util.List<CPDefinitionLink> getCPDefinitionLinks(
 			long cpDefinitionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -98,11 +116,40 @@ public class CPDefinitionLinkServiceWrapper
 
 	@Override
 	public java.util.List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(
+			cpDefinitionId, status, start, end);
+	}
+
+	@Override
+	public java.util.List<CPDefinitionLink> getCPDefinitionLinks(
 			long cpDefinitionId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionLinkService.getCPDefinitionLinks(
 			cpDefinitionId, type);
+	}
+
+	@Override
+	public java.util.List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, String type, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(
+			cpDefinitionId, type, status);
+	}
+
+	@Override
+	public java.util.List<CPDefinitionLink> getCPDefinitionLinks(
+			long cpDefinitionId, String type, int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinks(
+			cpDefinitionId, type, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -125,11 +172,28 @@ public class CPDefinitionLinkServiceWrapper
 	}
 
 	@Override
+	public int getCPDefinitionLinksCount(long cpDefinitionId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinksCount(
+			cpDefinitionId, status);
+	}
+
+	@Override
 	public int getCPDefinitionLinksCount(long cpDefinitionId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionLinkService.getCPDefinitionLinksCount(
 			cpDefinitionId, type);
+	}
+
+	@Override
+	public int getCPDefinitionLinksCount(
+			long cpDefinitionId, String type, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLinkService.getCPDefinitionLinksCount(
+			cpDefinitionId, type, status);
 	}
 
 	/**
@@ -144,12 +208,20 @@ public class CPDefinitionLinkServiceWrapper
 
 	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
-			long cpDefinitionLinkId, double priority,
+			long cpDefinitionLinkId, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionLinkService.updateCPDefinitionLink(
-			cpDefinitionLinkId, priority, serviceContext);
+			cpDefinitionLinkId, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, priority,
+			serviceContext);
 	}
 
 	@Override

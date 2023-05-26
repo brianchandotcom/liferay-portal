@@ -44,9 +44,15 @@ create unique index IX_EC5B593A on CPDefinition (uuid_[$COLUMN_LENGTH:75$], grou
 
 create unique index IX_3A90EAC9 on CPDefinitionLink (CPDefinitionId, CProductId, type_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_CF092CED on CPDefinitionLink (CPDefinitionId, ctCollectionId);
+create index IX_92CE0D3 on CPDefinitionLink (CPDefinitionId, status, ctCollectionId);
 create index IX_107FF0C4 on CPDefinitionLink (CPDefinitionId, type_[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_1AA9DDAA on CPDefinitionLink (CPDefinitionId, type_[$COLUMN_LENGTH:75$], status, ctCollectionId);
 create index IX_1AF0CD79 on CPDefinitionLink (CProductId, ctCollectionId);
+create index IX_58E1355F on CPDefinitionLink (CProductId, status, ctCollectionId);
 create index IX_6DE8DAB8 on CPDefinitionLink (CProductId, type_[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_2A53939E on CPDefinitionLink (CProductId, type_[$COLUMN_LENGTH:75$], status, ctCollectionId);
+create index IX_2CD24A04 on CPDefinitionLink (displayDate, status, ctCollectionId);
+create index IX_ED078275 on CPDefinitionLink (expirationDate, status, ctCollectionId);
 create index IX_B6CF3752 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_2E0F3112 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_8C9A26D4 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

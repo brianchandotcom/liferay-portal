@@ -672,6 +672,7 @@ const Fields = ({
 
 	const onCreationButtonClick = () =>
 		openModal({
+			className: 'overflow-auto',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<SaveFDSFieldsModalContent
 					closeModal={closeModal}
@@ -726,6 +727,7 @@ const Fields = ({
 							label: Liferay.Language.get('edit'),
 							onClick: ({item}: {item: IFDSField}) => {
 								openModal({
+									className: 'overflow-auto',
 									contentComponent: ({
 										closeModal,
 									}: {

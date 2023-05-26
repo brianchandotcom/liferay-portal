@@ -19,22 +19,16 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.punchout.configuration.PunchOutConfiguration;
 import com.liferay.commerce.punchout.constants.PunchOutConstants;
 import com.liferay.commerce.punchout.web.internal.display.context.CommercePunchOutDisplayContext;
-import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -47,37 +41,16 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jaclyn Ong
  */
 @Component(
-	property = {
-		"screen.navigation.category.order:Integer=" + Integer.MAX_VALUE,
-		"screen.navigation.entry.order:Integer=" + Integer.MAX_VALUE
-	},
-	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
+	property = "screen.navigation.entry.order:Integer=" + Integer.MAX_VALUE,
+	service = ScreenNavigationEntry.class
 )
 public class CommerceChannelPunchOutScreenNavigationEntry
-	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceChannel> {
-
-	@Override
-	public String getCategoryKey() {
-		return "punch-out";
-	}
+	extends CommerceChannelPunchOutScreenNavigationCategory
+	implements ScreenNavigationEntry<CommerceChannel> {
 
 	@Override
 	public String getEntryKey() {
 		return getCategoryKey();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return _language.get(resourceBundle, getCategoryKey());
-	}
-
-	@Override
-	public String getScreenNavigationKey() {
-		return "commerce.channel.general";
 	}
 
 	@Override
@@ -149,9 +122,6 @@ public class CommerceChannelPunchOutScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.punchout.web)"

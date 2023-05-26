@@ -662,7 +662,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		DMDocument.addPG(
+		DMDocument.addCP(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
 

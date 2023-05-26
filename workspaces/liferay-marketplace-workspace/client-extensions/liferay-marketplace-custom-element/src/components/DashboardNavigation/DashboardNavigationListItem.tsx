@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
 
 import './DashboardNavigationListItem.scss';
-import {showAppImage} from '../../utils/util';
+import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {AppProps} from '../DashboardTable/DashboardTable';
 import {DashboardListItems} from './DashboardNavigation';
 interface DashboardNavigationListItem {
@@ -37,7 +37,8 @@ export function DashboardNavigationListItem({
 	onSelectAppChange,
 	setDashboardNavigationItems,
 }: DashboardNavigationListItem) {
-	const {name, selected, status, thumbnail, version} = item;
+	const {attachments, name, selected, status, version} = item;
+	const thumbnail = getThumbnailByProductAttachment(attachments);
 
 	return (
 		<div

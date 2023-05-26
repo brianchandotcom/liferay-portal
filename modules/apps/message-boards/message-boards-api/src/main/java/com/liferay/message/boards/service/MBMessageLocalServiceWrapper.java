@@ -17,6 +17,7 @@ package com.liferay.message.boards.service;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -1184,6 +1185,11 @@ public class MBMessageLocalServiceWrapper
 	@Override
 	public void updateUserName(long userId, String userName) {
 		_mbMessageLocalService.updateUserName(userId, userName);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _mbMessageLocalService.getBasePersistence();
 	}
 
 	@Override

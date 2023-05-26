@@ -15,6 +15,7 @@
 package com.liferay.commerce.notification.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceNotificationQueueEntryLocalService}.
@@ -531,6 +532,11 @@ public class CommerceNotificationQueueEntryLocalServiceWrapper
 
 		return _commerceNotificationQueueEntryLocalService.updateSent(
 			commerceNotificationQueueEntryId, sent);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceNotificationQueueEntryLocalService.getBasePersistence();
 	}
 
 	@Override

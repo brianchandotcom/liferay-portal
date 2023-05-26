@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -387,6 +388,11 @@ public class PhoneLocalServiceWrapper
 	@Override
 	public Phone updatePhone(Phone phone) {
 		return _phoneLocalService.updatePhone(phone);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _phoneLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -25,6 +25,12 @@ public interface ClickToChatWebKeys {
 	public static final String CLICK_TO_CHAT_CHAT_PROVIDER_ID =
 		"CLICK_TO_CHAT_CHAT_PROVIDER_ID";
 
+	public static final String CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID =
+		"CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID";
+
+	public static final String CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY =
+		"CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY";
+
 	public static final String CLICK_TO_CHAT_ENABLED = "CLICK_TO_CHAT_ENABLED";
 
 	public static final String CLICK_TO_CHAT_GUEST_USERS_ALLOWED =

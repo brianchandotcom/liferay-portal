@@ -360,6 +360,7 @@
 		<column name="maxSubscriptionCycles" type="long" />
 		<column localized="true" name="name" type="String" />
 		<column name="priceManuallyAdjusted" type="boolean" />
+		<column name="priceOnApplication" type="boolean" />
 		<column name="printedNote" type="String" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="promoPriceWithTaxAmount" type="BigDecimal" />

@@ -17,6 +17,7 @@ package com.liferay.layout.service;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -462,6 +463,11 @@ public class LayoutLocalizationLocalServiceWrapper
 
 		return _layoutLocalizationLocalService.updateLayoutLocalization(
 			content, languageId, plid, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _layoutLocalizationLocalService.getBasePersistence();
 	}
 
 	@Override

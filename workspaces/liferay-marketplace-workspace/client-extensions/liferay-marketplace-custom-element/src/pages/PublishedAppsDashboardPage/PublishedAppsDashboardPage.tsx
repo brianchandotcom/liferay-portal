@@ -164,7 +164,7 @@ export function PublishedAppsDashboardPage() {
 				if (accountCatalogId && accountCatalogId !== 0) {
 					setCatalogId(accountCatalogId);
 					const {items: productsItems} = await getProducts(
-						'productChannels'
+						'productChannels, attachments'
 					);
 
 					const appListProductIds: number[] =
@@ -194,6 +194,7 @@ export function PublishedAppsDashboardPage() {
 							product.catalogId === accountCatalogId
 						) {
 							newAppList.push({
+								attachments: product.attachments,
 								catalogId: product.catalogId,
 								externalReferenceCode:
 									product.externalReferenceCode,
@@ -250,12 +251,9 @@ export function PublishedAppsDashboardPage() {
 		};
 
 		makeFetch();
-	}, [
-		dashboardNavigationItems,
-		page,
-		publishedAppTable.pageSize,
-		selectedAccount,
-	]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page, publishedAppTable.pageSize, selectedAccount]);
 
 	useEffect(() => {
 		const clickedNavigationItem =

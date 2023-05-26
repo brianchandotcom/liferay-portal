@@ -16,6 +16,7 @@ package com.liferay.trash.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.trash.model.TrashVersion;
 
@@ -349,6 +350,11 @@ public class TrashVersionLocalServiceWrapper
 	@Override
 	public TrashVersion updateTrashVersion(TrashVersion trashVersion) {
 		return _trashVersionLocalService.updateTrashVersion(trashVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _trashVersionLocalService.getBasePersistence();
 	}
 
 	@Override

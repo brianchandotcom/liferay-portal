@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectRelationshipLocalService}.
@@ -593,6 +594,11 @@ public class ObjectRelationshipLocalServiceWrapper
 
 		return _objectRelationshipLocalService.updateObjectRelationship(
 			objectRelationship);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectRelationshipLocalService.getBasePersistence();
 	}
 
 	@Override

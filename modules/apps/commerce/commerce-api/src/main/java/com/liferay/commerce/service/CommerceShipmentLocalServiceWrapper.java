@@ -15,6 +15,7 @@
 package com.liferay.commerce.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceShipmentLocalService}.
@@ -760,6 +761,11 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.updateStatus(
 			commerceShipmentId, status);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceShipmentLocalService.getBasePersistence();
 	}
 
 	@Override

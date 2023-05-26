@@ -15,6 +15,7 @@
 package com.liferay.osb.faro.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link FaroChannelLocalService}.
@@ -423,6 +424,11 @@ public class FaroChannelLocalServiceWrapper
 		com.liferay.osb.faro.model.FaroChannel faroChannel) {
 
 		return _faroChannelLocalService.updateFaroChannel(faroChannel);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _faroChannelLocalService.getBasePersistence();
 	}
 
 	@Override

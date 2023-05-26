@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectViewLocalService}.
@@ -430,6 +431,11 @@ public class ObjectViewLocalServiceWrapper
 		com.liferay.object.model.ObjectView objectView) {
 
 		return _objectViewLocalService.updateObjectView(objectView);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectViewLocalService.getBasePersistence();
 	}
 
 	@Override

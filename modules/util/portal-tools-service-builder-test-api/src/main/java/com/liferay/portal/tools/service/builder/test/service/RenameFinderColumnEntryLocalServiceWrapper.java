@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link RenameFinderColumnEntryLocalService}.
@@ -363,6 +364,11 @@ public class RenameFinderColumnEntryLocalServiceWrapper
 
 		return _renameFinderColumnEntryLocalService.
 			updateRenameFinderColumnEntry(renameFinderColumnEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _renameFinderColumnEntryLocalService.getBasePersistence();
 	}
 
 	@Override

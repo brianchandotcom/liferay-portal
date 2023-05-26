@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -661,6 +662,11 @@ public class TeamLocalServiceWrapper
 	@Override
 	public Team updateTeam(Team team) {
 		return _teamLocalService.updateTeam(team);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _teamLocalService.getBasePersistence();
 	}
 
 	@Override

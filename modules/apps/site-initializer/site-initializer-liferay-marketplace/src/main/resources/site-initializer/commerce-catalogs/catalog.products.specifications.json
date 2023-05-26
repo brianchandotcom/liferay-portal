@@ -1,5 +1,6 @@
 [
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-TYPE",
 		"description": "",
 		"facetable": false,
@@ -7,6 +8,7 @@
 		"title": "Type"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-TRIAL-LENGTH",
 		"description": "Length of the trial",
 		"facetable": false,
@@ -14,6 +16,7 @@
 		"title": "Trial Length"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-LICENSE-TERM",
 		"description": "Length of the trial",
 		"facetable": false,
@@ -21,6 +24,7 @@
 		"title": "License Term"
 	},
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-DEVELOPER-NAME",
 		"description": "Developer Name",
 		"facetable": false,
@@ -28,6 +32,7 @@
 		"title": "Developer Name"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-LICENSE-TYPE",
 		"description": "License Type",
 		"facetable": false,
@@ -35,6 +40,7 @@
 		"title": "License Type"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-APP-API-REFERENCE-URL",
 		"description": "URL for the API Documentation",
 		"facetable": false,
@@ -42,6 +48,7 @@
 		"title": "App API Reference URL"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-LATEST-VERSION",
 		"description": "Latest version for the app or solution.",
 		"facetable": false,
@@ -49,6 +56,7 @@
 		"title": "Latest Version"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-APP-USAGE-TERMS-URL",
 		"description": "",
 		"facetable": false,
@@ -56,6 +64,7 @@
 		"title": "App Usage Terms URL"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-SOURCE-CODE-URL",
 		"description": "URL of source code",
 		"facetable": false,
@@ -63,6 +72,7 @@
 		"title": "Source Code URL"
 	},
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-PUBLISHER-NAME",
 		"description": "Name of the primary app publisher",
 		"facetable": false,
@@ -70,6 +80,7 @@
 		"title": "Publisher Name"
 	},
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-PAST-VERSIONS-WORK-WITH",
 		"description": "Past Versions this product has worked with",
 		"facetable": false,
@@ -77,6 +88,7 @@
 		"title": "Past Versions Work With"
 	},
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-CURRENT-REQUIREMENTS",
 		"description": "Latest Liferay Version Supported",
 		"facetable": false,
@@ -84,6 +96,7 @@
 		"title": "Current Requirements"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-LIFETIME-LICENSE",
 		"description": "Lifetime license offered?",
 		"facetable": false,
@@ -91,6 +104,7 @@
 		"title": "Lifetime License"
 	},
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-PRODUCT-DOWNLOADS",
 		"description": "Total number of downloads for this product",
 		"facetable": false,
@@ -98,6 +112,7 @@
 		"title": "Product Downloads"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-PRICE-MODEL",
 		"description": "Whether the app is Free, Paid or Bundled",
 		"facetable": true,
@@ -105,6 +120,7 @@
 		"title": "Price Model"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-APP-DOCUMENTATION-URL",
 		"description": "",
 		"facetable": false,
@@ -112,6 +128,7 @@
 		"title": "App Documentation URL"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-APP-INSTALLATION-GUIDE-URL",
 		"description": "",
 		"facetable": false,
@@ -119,6 +136,7 @@
 		"title": "App Installation Guide URL"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-PUBLISHER-WEB-SITE-URL",
 		"description": "",
 		"facetable": false,
@@ -126,6 +144,7 @@
 		"title": "Publisher Web site URL"
 	},
 	{
+		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-SUPPORT-URL",
 		"description": "",
 		"facetable": false,
@@ -133,6 +152,7 @@
 		"title": "Support URL"
 	},
 	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-PRODUCT-NOTES",
 		"description": "General notes about the app or solution.",
 		"facetable": false,
@@ -140,6 +160,7 @@
 		"title": "Product Notes"
 	},
 	{
+		"categoryKey": "pricing-licensing-terms",
 		"cpDefinitionExternalReferenceCode": "MKT-LICENCE-DURATION",
 		"description": "Perpetual or non-perpetual license",
 		"facetable": true,

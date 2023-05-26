@@ -26,6 +26,7 @@ import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -82,6 +83,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
@@ -183,6 +185,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		Log4JUtil.shutdownLog4J();
+
+		try {
+			SystemExecutorServiceUtil.shutdown();
+		}
+		catch (InterruptedException interruptedException) {
+			_log.error(interruptedException);
+		}
 	}
 
 	@Override
@@ -272,13 +281,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 					return null;
 				});
 
-			Thread springInitThread = new Thread(
-				springInitTask, "Portal Spring Init Thread");
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
 
-			springInitThread.setContextClassLoader(portalClassLoader);
-			springInitThread.setDaemon(true);
-
-			springInitThread.start();
+			executorService.submit(
+				SystemExecutorServiceUtil.renameThread(
+					springInitTask, "Portal Spring Init Thread"));
 		}
 
 		try {

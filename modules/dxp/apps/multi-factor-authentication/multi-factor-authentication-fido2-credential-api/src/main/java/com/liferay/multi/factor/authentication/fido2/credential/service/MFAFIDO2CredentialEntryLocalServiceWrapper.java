@@ -15,6 +15,7 @@
 package com.liferay.multi.factor.authentication.fido2.credential.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link MFAFIDO2CredentialEntryLocalService}.
@@ -409,6 +410,11 @@ public class MFAFIDO2CredentialEntryLocalServiceWrapper
 
 		return _mfaFIDO2CredentialEntryLocalService.
 			updateMFAFIDO2CredentialEntry(mfaFIDO2CredentialEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _mfaFIDO2CredentialEntryLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -125,8 +125,6 @@ public class CommerceSiteInitializer {
 			bundle, channel.getId(), documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			servletContext);
-
-		_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 	}
 
 	public void addPortletSettings(
@@ -644,6 +642,8 @@ public class CommerceSiteInitializer {
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext, servletContext);
+
+			_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 
 			_addCommerceProductSpecifications(
 				StringUtil.replaceLast(

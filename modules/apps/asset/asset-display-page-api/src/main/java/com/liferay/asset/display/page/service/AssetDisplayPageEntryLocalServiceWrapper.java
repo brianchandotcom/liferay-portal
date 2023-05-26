@@ -17,6 +17,7 @@ package com.liferay.asset.display.page.service;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -530,6 +531,11 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 
 		return _assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 			assetDisplayPageEntryId, layoutPageTemplateEntryId, type);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _assetDisplayPageEntryLocalService.getBasePersistence();
 	}
 
 	@Override

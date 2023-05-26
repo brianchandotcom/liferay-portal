@@ -449,7 +449,7 @@ definition {
 
 		Panel.expandPanel(panel = "Categorization");
 
-		Type(
+		Type.typeNotVisibleNoMouseOverNoError(
 			locator1 = "TextInput#ASSET_PRIORITY",
 			value1 = ${assetPriority});
 

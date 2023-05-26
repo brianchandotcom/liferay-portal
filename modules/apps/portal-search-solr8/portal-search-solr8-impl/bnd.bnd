@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Solr 8 Implementation
 Bundle-SymbolicName: com.liferay.portal.search.solr8.impl
-Bundle-Version: 5.0.9
+Bundle-Version: 5.0.10
 Import-Package:\
 	!com.sun.management.*,\
 	!com.sun.msv.*,\

@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.image.service;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -576,6 +577,11 @@ public class AMImageEntryLocalServiceWrapper
 	@Override
 	public AMImageEntry updateAMImageEntry(AMImageEntry amImageEntry) {
 		return _amImageEntryLocalService.updateAMImageEntry(amImageEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _amImageEntryLocalService.getBasePersistence();
 	}
 
 	@Override

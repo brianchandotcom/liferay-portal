@@ -17,6 +17,7 @@ package com.liferay.expando.kernel.service;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -467,6 +468,11 @@ public class ExpandoTableLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoTableLocalService.updateTable(tableId, name);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _expandoTableLocalService.getBasePersistence();
 	}
 
 	@Override

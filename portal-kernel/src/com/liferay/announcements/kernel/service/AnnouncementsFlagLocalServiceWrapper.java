@@ -15,6 +15,7 @@
 package com.liferay.announcements.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AnnouncementsFlagLocalService}.
@@ -375,6 +376,11 @@ public class AnnouncementsFlagLocalServiceWrapper
 
 		return _announcementsFlagLocalService.updateAnnouncementsFlag(
 			announcementsFlag);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _announcementsFlagLocalService.getBasePersistence();
 	}
 
 	@Override

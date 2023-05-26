@@ -204,6 +204,7 @@ create table CommerceOrderItem (
 	maxSubscriptionCycles LONG,
 	name STRING null,
 	priceManuallyAdjusted BOOLEAN,
+	priceOnApplication BOOLEAN,
 	printedNote STRING null,
 	promoPrice DECIMAL(30, 16) null,
 	promoPriceWithTaxAmount DECIMAL(30, 16) null,

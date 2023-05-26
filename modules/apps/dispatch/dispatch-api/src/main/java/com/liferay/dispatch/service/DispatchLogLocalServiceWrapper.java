@@ -15,6 +15,7 @@
 package com.liferay.dispatch.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link DispatchLogLocalService}.
@@ -396,6 +397,11 @@ public class DispatchLogLocalServiceWrapper
 
 		return _dispatchLogLocalService.updateDispatchLog(
 			dispatchLogId, endDate, error, output, dispatchTaskStatus);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dispatchLogLocalService.getBasePersistence();
 	}
 
 	@Override

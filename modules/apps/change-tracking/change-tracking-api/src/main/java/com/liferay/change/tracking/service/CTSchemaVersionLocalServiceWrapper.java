@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CTSchemaVersionLocalService}.
@@ -366,6 +367,11 @@ public class CTSchemaVersionLocalServiceWrapper
 
 		return _ctSchemaVersionLocalService.updateCTSchemaVersion(
 			ctSchemaVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ctSchemaVersionLocalService.getBasePersistence();
 	}
 
 	@Override

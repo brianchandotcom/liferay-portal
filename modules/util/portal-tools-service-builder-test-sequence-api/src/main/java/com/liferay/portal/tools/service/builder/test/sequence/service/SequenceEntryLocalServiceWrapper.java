@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.sequence.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link SequenceEntryLocalService}.
@@ -378,6 +379,11 @@ public class SequenceEntryLocalServiceWrapper
 					SequenceEntry sequenceEntry) {
 
 		return _sequenceEntryLocalService.updateSequenceEntry(sequenceEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _sequenceEntryLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -24,13 +24,22 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
+import com.liferay.headless.delivery.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.PagePermission;
+import com.liferay.headless.delivery.client.dto.v1_0.PageSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.ParentSitePage;
+import com.liferay.headless.delivery.client.dto.v1_0.SEOSettings;
+import com.liferay.headless.delivery.client.dto.v1_0.SiteMapSettings;
 import com.liferay.headless.delivery.client.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.client.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.problem.Problem;
+import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -94,6 +103,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -103,6 +113,22 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SitePageResourceTest extends BaseSitePageResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		SitePageResource.Builder builder = SitePageResource.builder();
+
+		sitePageResource = builder.authentication(
+			"test@liferay.com", "test"
+		).header(
+			"X-Liferay-Accept-All-Languages", "true"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+	}
 
 	@Override
 	@Test
@@ -259,6 +285,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPostSiteSitePageSuccessPagePermissionsNull();
 		_testPostSiteSitePageSuccessPagePermissionsRoleNonexisting();
 		_testPostSiteSitePageSuccessPagePermissionsRoleOwnerMissing();
+		_testPostSiteSitePageSuccessPageSettingsOpenGraphSettings();
+		_testPostSiteSitePageSuccessPageSettingsSeoSettings();
+		_testPostSiteSitePageSuccessParentSitePage();
+		_testPostSiteSitePageSuccessParentSitePageNonexisting();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNull();
 		_testPostSiteSitePageSuccessTaxonomyCategoryBriefSitePageSiteSiteKeyNonnull();
@@ -669,7 +699,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				Layout.class.getName(), layout.getPlid()),
 			AssetTag.NAME_ACCESSOR);
 
-		Assert.assertEquals(tags.toString(), 2, tags.length);
+		Assert.assertEquals(Arrays.toString(tags), 2, tags.length);
 
 		for (String keyword : keywords) {
 			Assert.assertTrue(
@@ -944,6 +974,226 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			expectedPagePermissions, inputPagePermissions);
 	}
 
+	private void _testPostSiteSitePageSuccessPageSettingsOpenGraphSettings()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		String randomDescription = RandomTestUtil.randomString();
+		String randomImageAlt = RandomTestUtil.randomString();
+		String randomTitle = RandomTestUtil.randomString();
+
+		OpenGraphSettings randomOpenGraphSettings = new OpenGraphSettings() {
+			{
+				description = randomDescription;
+				description_i18n = HashMapBuilder.put(
+					"en-US", randomDescription
+				).put(
+					"es-ES", RandomTestUtil.randomString()
+				).build();
+				imageAlt = randomImageAlt;
+				imageAlt_i18n = HashMapBuilder.put(
+					"en-US", randomImageAlt
+				).put(
+					"es-ES", RandomTestUtil.randomString()
+				).build();
+				title = randomTitle;
+				title_i18n = HashMapBuilder.put(
+					"en-US", randomTitle
+				).put(
+					"es-ES", RandomTestUtil.randomString()
+				).build();
+
+				setImage(
+					() -> {
+						DLFolder dlFolder = DLTestUtil.addDLFolder(
+							testGroup.getGroupId());
+
+						DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+							dlFolder.getFolderId());
+
+						return new ContentDocument() {
+							{
+								id = dlFileEntry.getPrimaryKey();
+							}
+						};
+					});
+			}
+		};
+
+		randomSitePage.setPageSettings(
+			new PageSettings() {
+				{
+					openGraphSettings = randomOpenGraphSettings;
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		PageSettings postPageSettings = postSitePage.getPageSettings();
+
+		OpenGraphSettings postOpenGraphSettings =
+			postPageSettings.getOpenGraphSettings();
+
+		Assert.assertEquals(
+			randomOpenGraphSettings.getDescription(),
+			postOpenGraphSettings.getDescription());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getDescription_i18n(),
+			postOpenGraphSettings.getDescription_i18n());
+
+		ContentDocument randomContentDocument =
+			randomOpenGraphSettings.getImage();
+		ContentDocument contentDocument = postOpenGraphSettings.getImage();
+
+		Assert.assertEquals(
+			randomContentDocument.getId(), contentDocument.getId());
+
+		Assert.assertEquals(
+			randomOpenGraphSettings.getImageAlt(),
+			postOpenGraphSettings.getImageAlt());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getImageAlt_i18n(),
+			postOpenGraphSettings.getImageAlt_i18n());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getTitle(),
+			postOpenGraphSettings.getTitle());
+		Assert.assertEquals(
+			randomOpenGraphSettings.getTitle_i18n(),
+			postOpenGraphSettings.getTitle_i18n());
+	}
+
+	private void _testPostSiteSitePageSuccessPageSettingsSeoSettings()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		String randomCustomCanonicalURL = RandomTestUtil.randomString();
+		String randomDescription = RandomTestUtil.randomString();
+		String randomHtmlTitle = RandomTestUtil.randomString();
+		String randomRobots = RandomTestUtil.randomString();
+		String randomSeoKeywords = RandomTestUtil.randomString();
+
+		PageSettings pageSettings = new PageSettings() {
+			{
+				seoSettings = new SEOSettings() {
+					{
+						customCanonicalURL = randomCustomCanonicalURL;
+						customCanonicalURL_i18n = HashMapBuilder.put(
+							"en-US", randomCustomCanonicalURL
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+						description = randomDescription;
+						description_i18n = HashMapBuilder.put(
+							"en-US", randomDescription
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+						htmlTitle = randomHtmlTitle;
+						htmlTitle_i18n = HashMapBuilder.put(
+							"en-US", randomHtmlTitle
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+						robots = randomRobots;
+						robots_i18n = HashMapBuilder.put(
+							"en-US", randomRobots
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+						seoKeywords = randomSeoKeywords;
+						seoKeywords_i18n = HashMapBuilder.put(
+							"en-US", randomSeoKeywords
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build();
+						siteMapSettings = new SiteMapSettings() {
+							{
+								changeFrequency = ChangeFrequency.ALWAYS;
+								include = RandomTestUtil.randomBoolean();
+								pagePriority = RandomTestUtil.randomDouble();
+							}
+						};
+					}
+				};
+			}
+		};
+
+		randomSitePage.setPageSettings(pageSettings);
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		PageSettings postPageSettings = postSitePage.getPageSettings();
+
+		Assert.assertEquals(
+			pageSettings.getSeoSettings(), postPageSettings.getSeoSettings());
+	}
+
+	private void _testPostSiteSitePageSuccessParentSitePage() throws Exception {
+		SitePage parentPostSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage());
+
+		SitePage randomSitePage = randomSitePage();
+
+		randomSitePage.setParentSitePage(
+			new ParentSitePage() {
+				{
+					setFriendlyUrlPath(parentPostSitePage.getFriendlyUrlPath());
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		ParentSitePage parentSitePage = postSitePage.getParentSitePage();
+
+		Assert.assertEquals(
+			parentPostSitePage.getFriendlyUrlPath(),
+			parentSitePage.getFriendlyUrlPath());
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		Layout parentLayout = _layoutLocalService.fetchLayout(
+			layout.getParentPlid());
+
+		Assert.assertEquals(
+			parentPostSitePage.getFriendlyUrlPath(),
+			parentLayout.getFriendlyURL());
+	}
+
+	private void _testPostSiteSitePageSuccessParentSitePageNonexisting()
+		throws Exception {
+
+		SitePage randomSitePage = randomSitePage();
+
+		randomSitePage.setParentSitePage(
+			new ParentSitePage() {
+				{
+					setFriendlyUrlPath(
+						StringPool.FORWARD_SLASH +
+							RandomTestUtil.randomString());
+				}
+			});
+
+		SitePage postSitePage = testPostSiteSitePage_addSitePage(
+			randomSitePage);
+
+		Assert.assertNull(postSitePage.getParentSitePage());
+
+		Layout layout = _layoutLocalService.fetchLayout(postSitePage.getId());
+
+		Assert.assertNotNull(layout);
+
+		Assert.assertEquals(
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			layout.getParentLayoutId());
+	}
+
 	private void _testPostSiteSitePageSuccessTaxonomyCategoryBriefNonexisting()
 		throws Exception {
 
@@ -988,6 +1238,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					taxonomyCategoryId = assetCategory.getCategoryId();
 					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryName_i18n = HashMapBuilder.put(
+						"en-US", assetCategory.getName()
+					).build();
 					taxonomyCategoryReference =
 						new TaxonomyCategoryReference() {
 							{
@@ -1112,6 +1365,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					taxonomyCategoryId = assetCategory.getCategoryId();
 					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryName_i18n = HashMapBuilder.put(
+						"en-US", assetCategory.getName()
+					).build();
 					taxonomyCategoryReference =
 						new TaxonomyCategoryReference() {
 							{
@@ -1163,6 +1419,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					taxonomyCategoryId = assetCategory.getCategoryId();
 					taxonomyCategoryName = assetCategory.getName();
+					taxonomyCategoryName_i18n = HashMapBuilder.put(
+						"en-US", assetCategory.getName()
+					).build();
 					taxonomyCategoryReference =
 						new TaxonomyCategoryReference() {
 							{

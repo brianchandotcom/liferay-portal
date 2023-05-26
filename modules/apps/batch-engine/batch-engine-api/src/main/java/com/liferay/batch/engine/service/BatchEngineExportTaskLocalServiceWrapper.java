@@ -15,6 +15,7 @@
 package com.liferay.batch.engine.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link BatchEngineExportTaskLocalService}.
@@ -478,6 +479,11 @@ public class BatchEngineExportTaskLocalServiceWrapper
 
 		return _batchEngineExportTaskLocalService.updateBatchEngineExportTask(
 			batchEngineExportTask);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _batchEngineExportTaskLocalService.getBasePersistence();
 	}
 
 	@Override

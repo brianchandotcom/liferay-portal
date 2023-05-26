@@ -17,6 +17,7 @@ package com.liferay.client.extension.service;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -534,6 +535,11 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			updateClientExtensionEntryRel(
 				clientExtensionEntryRelId, classNameId, classPK,
 				cetExternalReferenceCode, type, typeSettings);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _clientExtensionEntryRelLocalService.getBasePersistence();
 	}
 
 	@Override

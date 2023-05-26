@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -591,6 +592,11 @@ public class CPMeasurementUnitLocalServiceWrapper
 		return _cpMeasurementUnitLocalService.updateCPMeasurementUnit(
 			externalReferenceCode, cpMeasurementUnitId, nameMap, key, rate,
 			primary, priority, type, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cpMeasurementUnitLocalService.getBasePersistence();
 	}
 
 	@Override

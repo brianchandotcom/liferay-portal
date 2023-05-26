@@ -152,8 +152,8 @@ export function CustomizeAppStorefrontPage({
 				}
 				onClickBack={() => onClickBack()}
 				onClickContinue={() => {
-					appStorefrontImages?.forEach((image, index) => {
-						submitBase64EncodedFile({
+					appStorefrontImages?.forEach(async (image, index) => {
+						await submitBase64EncodedFile({
 							appERC,
 							file: image.file,
 							index,

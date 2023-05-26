@@ -17,6 +17,7 @@ package com.liferay.layout.seo.service;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -419,6 +420,11 @@ public class LayoutSEOSiteLocalServiceWrapper
 		return _layoutSEOSiteLocalService.updateLayoutSEOSite(
 			userId, groupId, openGraphEnabled, openGraphImageAltMap,
 			openGraphImageFileEntryId, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _layoutSEOSiteLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.calendar.service;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -526,6 +527,11 @@ public class CalendarResourceLocalServiceWrapper
 		return _calendarResourceLocalService.updateCalendarResource(
 			calendarResourceId, nameMap, descriptionMap, active,
 			serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _calendarResourceLocalService.getBasePersistence();
 	}
 
 	@Override

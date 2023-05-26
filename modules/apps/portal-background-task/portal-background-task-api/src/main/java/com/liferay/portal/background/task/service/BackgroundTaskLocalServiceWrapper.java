@@ -15,6 +15,7 @@
 package com.liferay.portal.background.task.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link BackgroundTaskLocalService}.
@@ -796,6 +797,11 @@ public class BackgroundTaskLocalServiceWrapper
 				backgroundTask) {
 
 		return _backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _backgroundTaskLocalService.getBasePersistence();
 	}
 
 	@Override

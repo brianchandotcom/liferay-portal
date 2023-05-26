@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -443,6 +444,11 @@ public class CPOptionCategoryLocalServiceWrapper
 
 		return _cpOptionCategoryLocalService.updateCPOptionCategory(
 			cpOptionCategoryId, titleMap, descriptionMap, priority, key);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cpOptionCategoryLocalService.getBasePersistence();
 	}
 
 	@Override

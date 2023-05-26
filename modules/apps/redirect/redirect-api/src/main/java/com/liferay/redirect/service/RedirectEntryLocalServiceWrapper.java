@@ -15,6 +15,7 @@
 package com.liferay.redirect.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link RedirectEntryLocalService}.
@@ -517,6 +518,11 @@ public class RedirectEntryLocalServiceWrapper
 		com.liferay.redirect.model.RedirectEntry redirectEntry) {
 
 		return _redirectEntryLocalService.updateRedirectEntry(redirectEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _redirectEntryLocalService.getBasePersistence();
 	}
 
 	@Override

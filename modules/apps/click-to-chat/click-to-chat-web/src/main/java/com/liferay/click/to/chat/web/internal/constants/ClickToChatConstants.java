@@ -19,9 +19,13 @@ package com.liferay.click.to.chat.web.internal.constants;
  */
 public interface ClickToChatConstants {
 
+	public static final String CHAT_PROVIDER_ID_ZENDESK_WEB_WIDGET =
+		"zendesk_web_widget";
+
 	public static final String[] CHAT_PROVIDER_IDS = {
 		"chatwoot", "crisp", "hubspot", "jivochat", "livechat", "liveperson",
-		"smartsupp", "tawkto", "tidio", "zendesk"
+		"smartsupp", "tawkto", "tidio", "zendesk_web_widget",
+		"zendesk_web_widget_classic"
 	};
 
 	public static final String[] SITE_SETTINGS_STRATEGIES = {

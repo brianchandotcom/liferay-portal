@@ -15,6 +15,7 @@
 package com.liferay.commerce.machine.learning.forecast.alert.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceMLForecastAlertEntryLocalService}.
@@ -500,6 +501,11 @@ public class CommerceMLForecastAlertEntryLocalServiceWrapper
 
 		return _commerceMLForecastAlertEntryLocalService.updateStatus(
 			userId, commerceMLForecastAlertEntryId, status);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceMLForecastAlertEntryLocalService.getBasePersistence();
 	}
 
 	@Override

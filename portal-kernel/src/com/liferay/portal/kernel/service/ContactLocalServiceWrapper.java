@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link ContactLocalService}.
  *
@@ -51,14 +53,12 @@ public class ContactLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Contact addContact(
-			long userId, java.lang.String className, long classPK,
-			java.lang.String emailAddress, java.lang.String firstName,
-			java.lang.String middleName, java.lang.String lastName,
+			long userId, String className, long classPK, String emailAddress,
+			String firstName, String middleName, String lastName,
 			long prefixListTypeId, long suffixListTypeId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			java.lang.String smsSn, java.lang.String facebookSn,
-			java.lang.String jabberSn, java.lang.String skypeSn,
-			java.lang.String twitterSn, java.lang.String jobTitle)
+			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+			String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactLocalService.addContact(
@@ -335,7 +335,7 @@ public class ContactLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _contactLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -369,14 +369,11 @@ public class ContactLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Contact updateContact(
-			long contactId, java.lang.String emailAddress,
-			java.lang.String firstName, java.lang.String middleName,
-			java.lang.String lastName, long prefixListTypeId,
+			long contactId, String emailAddress, String firstName,
+			String middleName, String lastName, long prefixListTypeId,
 			long suffixListTypeId, boolean male, int birthdayMonth,
-			int birthdayDay, int birthdayYear, java.lang.String smsSn,
-			java.lang.String facebookSn, java.lang.String jabberSn,
-			java.lang.String skypeSn, java.lang.String twitterSn,
-			java.lang.String jobTitle)
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _contactLocalService.updateContact(
@@ -384,6 +381,11 @@ public class ContactLocalServiceWrapper
 			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
 			twitterSn, jobTitle);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _contactLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JSPTaglibVariableCheck" files="src/main/resources/META-INF/resources/dynamic_include/zendesk_web_widget\.jsp" />
+	</source-check>
+</suppressions>

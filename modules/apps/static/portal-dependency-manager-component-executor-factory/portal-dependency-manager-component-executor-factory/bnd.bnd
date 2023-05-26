@@ -1,4 +1,4 @@
 Bundle-Activator: com.liferay.portal.dependency.manager.component.executor.factory.internal.activator.ComponentExecutorFactoryBundleActivator
 Bundle-Name: Liferay Portal Dependencymanager Component Executor Factory
 Bundle-SymbolicName: com.liferay.portal.dependency.manager.component.executor.factory
-Bundle-Version: 3.0.14
+Bundle-Version: 3.0.15

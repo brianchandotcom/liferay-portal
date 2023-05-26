@@ -29,6 +29,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <%
+long accountEntryId = (Long)request.getAttribute("liferay-commerce:cart:accountEntryId");
 Map<String, String> cartViews = (Map<String, String>)request.getAttribute("liferay-commerce:cart:cartViews");
 String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkoutURL");
 long commerceChannelGroupId = (Long)request.getAttribute("liferay-commerce:cart:commerceChannelGroupId");

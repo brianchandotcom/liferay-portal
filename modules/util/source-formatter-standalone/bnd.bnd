@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Source Formatter Standalone
 Bundle-SymbolicName: com.liferay.source.formatter.standalone
-Bundle-Version: 1.0.25
+Bundle-Version: 1.0.26
 Main-Class: com.liferay.source.formatter.SourceFormatter

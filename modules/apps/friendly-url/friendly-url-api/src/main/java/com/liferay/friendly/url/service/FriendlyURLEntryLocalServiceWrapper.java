@@ -17,6 +17,7 @@ package com.liferay.friendly.url.service;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -727,6 +728,11 @@ public class FriendlyURLEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_friendlyURLEntryLocalService.validate(groupId, classNameId, urlTitle);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _friendlyURLEntryLocalService.getBasePersistence();
 	}
 
 	@Override

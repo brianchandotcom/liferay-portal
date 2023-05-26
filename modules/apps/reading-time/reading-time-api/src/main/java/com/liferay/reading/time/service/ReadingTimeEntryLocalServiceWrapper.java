@@ -16,6 +16,7 @@ package com.liferay.reading.time.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
@@ -489,6 +490,11 @@ public class ReadingTimeEntryLocalServiceWrapper
 
 		return _readingTimeEntryLocalService.updateReadingTimeEntry(
 			readingTimeEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _readingTimeEntryLocalService.getBasePersistence();
 	}
 
 	@Override

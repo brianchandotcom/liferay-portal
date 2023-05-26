@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ERCGroupEntryLocalService}.
@@ -427,6 +428,11 @@ public class ERCGroupEntryLocalServiceWrapper
 				ercGroupEntry) {
 
 		return _ercGroupEntryLocalService.updateERCGroupEntry(ercGroupEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ercGroupEntryLocalService.getBasePersistence();
 	}
 
 	@Override

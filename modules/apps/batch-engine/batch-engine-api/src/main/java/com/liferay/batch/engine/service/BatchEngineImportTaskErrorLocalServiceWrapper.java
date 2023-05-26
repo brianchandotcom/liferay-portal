@@ -15,6 +15,7 @@
 package com.liferay.batch.engine.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link BatchEngineImportTaskErrorLocalService}.
@@ -383,6 +384,11 @@ public class BatchEngineImportTaskErrorLocalServiceWrapper
 
 		return _batchEngineImportTaskErrorLocalService.
 			updateBatchEngineImportTaskError(batchEngineImportTaskError);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _batchEngineImportTaskErrorLocalService.getBasePersistence();
 	}
 
 	@Override

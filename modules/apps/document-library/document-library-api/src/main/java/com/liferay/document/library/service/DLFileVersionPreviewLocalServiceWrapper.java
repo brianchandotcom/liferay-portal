@@ -17,6 +17,7 @@ package com.liferay.document.library.service;
 import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -419,6 +420,11 @@ public class DLFileVersionPreviewLocalServiceWrapper
 
 		_dlFileVersionPreviewLocalService.updateDLFileVersionPreview(
 			dlFileVersionPreviewId, previewStatus);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dlFileVersionPreviewLocalService.getBasePersistence();
 	}
 
 	@Override

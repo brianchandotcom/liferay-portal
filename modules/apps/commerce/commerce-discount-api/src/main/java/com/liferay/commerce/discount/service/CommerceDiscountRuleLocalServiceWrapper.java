@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceDiscountRuleLocalService}.
@@ -442,6 +443,11 @@ public class CommerceDiscountRuleLocalServiceWrapper
 
 		return _commerceDiscountRuleLocalService.updateCommerceDiscountRule(
 			commerceDiscountRuleId, name, type, typeSettings);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceDiscountRuleLocalService.getBasePersistence();
 	}
 
 	@Override

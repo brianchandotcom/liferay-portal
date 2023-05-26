@@ -17,6 +17,7 @@ package com.liferay.change.tracking.store.service;
 import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -389,6 +390,11 @@ public class CTSContentLocalServiceWrapper
 	@Override
 	public CTSContent updateCTSContent(CTSContent ctsContent) {
 		return _ctsContentLocalService.updateCTSContent(ctsContent);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ctsContentLocalService.getBasePersistence();
 	}
 
 	@Override

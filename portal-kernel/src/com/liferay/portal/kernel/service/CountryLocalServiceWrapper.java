@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link CountryLocalService}.
  *
@@ -51,10 +53,9 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country addCountry(
-			java.lang.String a2, java.lang.String a3, boolean active,
-			boolean billingAllowed, java.lang.String idd, java.lang.String name,
-			java.lang.String number, double position, boolean shippingAllowed,
-			boolean subjectToVAT, boolean zipRequired,
+			String a2, String a3, boolean active, boolean billingAllowed,
+			String idd, String name, String number, double position,
+			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -252,28 +253,28 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country fetchCountryByA2(
-		long companyId, java.lang.String a2) {
+		long companyId, String a2) {
 
 		return _countryLocalService.fetchCountryByA2(companyId, a2);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Country fetchCountryByA3(
-		long companyId, java.lang.String a3) {
+		long companyId, String a3) {
 
 		return _countryLocalService.fetchCountryByA3(companyId, a3);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Country fetchCountryByName(
-		long companyId, java.lang.String name) {
+		long companyId, String name) {
 
 		return _countryLocalService.fetchCountryByName(companyId, name);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Country fetchCountryByNumber(
-		long companyId, java.lang.String number) {
+		long companyId, String number) {
 
 		return _countryLocalService.fetchCountryByNumber(companyId, number);
 	}
@@ -287,7 +288,7 @@ public class CountryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Country
-		fetchCountryByUuidAndCompanyId(java.lang.String uuid, long companyId) {
+		fetchCountryByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _countryLocalService.fetchCountryByUuidAndCompanyId(
 			uuid, companyId);
@@ -295,7 +296,7 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.CountryLocalization
-		fetchCountryLocalization(long countryId, java.lang.String languageId) {
+		fetchCountryLocalization(long countryId, String languageId) {
 
 		return _countryLocalService.fetchCountryLocalization(
 			countryId, languageId);
@@ -398,7 +399,7 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByA2(
-			long companyId, java.lang.String a2)
+			long companyId, String a2)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByA2(companyId, a2);
@@ -406,7 +407,7 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByA3(
-			long companyId, java.lang.String a3)
+			long companyId, String a3)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByA3(companyId, a3);
@@ -414,7 +415,7 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByName(
-			long companyId, java.lang.String name)
+			long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByName(companyId, name);
@@ -422,7 +423,7 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByNumber(
-			long companyId, java.lang.String number)
+			long companyId, String number)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByNumber(companyId, number);
@@ -438,7 +439,7 @@ public class CountryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Country getCountryByUuidAndCompanyId(
-			java.lang.String uuid, long companyId)
+			String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryByUuidAndCompanyId(
@@ -447,7 +448,7 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.CountryLocalization
-			getCountryLocalization(long countryId, java.lang.String languageId)
+			getCountryLocalization(long countryId, String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.getCountryLocalization(
@@ -484,7 +485,7 @@ public class CountryLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _countryLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -502,8 +503,8 @@ public class CountryLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.portal.kernel.model.Country> searchCountries(
-				long companyId, java.lang.Boolean active,
-				java.lang.String keywords, int start, int end,
+				long companyId, Boolean active, String keywords, int start,
+				int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.kernel.model.Country> orderByComparator)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -539,10 +540,9 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Country updateCountry(
-			long countryId, java.lang.String a2, java.lang.String a3,
-			boolean active, boolean billingAllowed, java.lang.String idd,
-			java.lang.String name, java.lang.String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT)
+			long countryId, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.updateCountry(
@@ -554,7 +554,7 @@ public class CountryLocalServiceWrapper
 	public com.liferay.portal.kernel.model.CountryLocalization
 			updateCountryLocalization(
 				com.liferay.portal.kernel.model.Country country,
-				java.lang.String languageId, java.lang.String title)
+				String languageId, String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.updateCountryLocalization(
@@ -565,7 +565,7 @@ public class CountryLocalServiceWrapper
 	public java.util.List<com.liferay.portal.kernel.model.CountryLocalization>
 			updateCountryLocalizations(
 				com.liferay.portal.kernel.model.Country country,
-				java.util.Map<java.lang.String, java.lang.String> titleMap)
+				java.util.Map<String, String> titleMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.updateCountryLocalizations(
@@ -579,6 +579,11 @@ public class CountryLocalServiceWrapper
 
 		return _countryLocalService.updateGroupFilterEnabled(
 			countryId, groupFilterEnabled);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _countryLocalService.getBasePersistence();
 	}
 
 	@Override

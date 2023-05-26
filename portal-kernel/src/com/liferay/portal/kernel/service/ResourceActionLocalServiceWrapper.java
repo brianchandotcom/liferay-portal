@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link ResourceActionLocalService}.
  *
@@ -54,7 +56,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction addResourceAction(
-		java.lang.String name, java.lang.String actionId, long bitwiseValue) {
+		String name, String actionId, long bitwiseValue) {
 
 		return _resourceActionLocalService.addResourceAction(
 			name, actionId, bitwiseValue);
@@ -67,14 +69,14 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public void checkResourceActions(
-		java.lang.String name, java.util.List<java.lang.String> actionIds) {
+		String name, java.util.List<String> actionIds) {
 
 		_resourceActionLocalService.checkResourceActions(name, actionIds);
 	}
 
 	@Override
 	public void checkResourceActions(
-		java.lang.String name, java.util.List<java.lang.String> actionIds,
+		String name, java.util.List<String> actionIds,
 		boolean addDefaultActions) {
 
 		_resourceActionLocalService.checkResourceActions(
@@ -267,7 +269,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		java.lang.String name, java.lang.String actionId) {
+		String name, String actionId) {
 
 		return _resourceActionLocalService.fetchResourceAction(name, actionId);
 	}
@@ -292,7 +294,7 @@ public class ResourceActionLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _resourceActionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -324,7 +326,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction getResourceAction(
-			java.lang.String name, java.lang.String actionId)
+			String name, String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _resourceActionLocalService.getResourceAction(name, actionId);
@@ -350,7 +352,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ResourceAction>
-		getResourceActions(java.lang.String name) {
+		getResourceActions(String name) {
 
 		return _resourceActionLocalService.getResourceActions(name);
 	}
@@ -366,7 +368,7 @@ public class ResourceActionLocalServiceWrapper
 	}
 
 	@Override
-	public int getResourceActionsCount(java.lang.String name) {
+	public int getResourceActionsCount(String name) {
 		return _resourceActionLocalService.getResourceActionsCount(name);
 	}
 
@@ -385,6 +387,11 @@ public class ResourceActionLocalServiceWrapper
 		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
 
 		return _resourceActionLocalService.updateResourceAction(resourceAction);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _resourceActionLocalService.getBasePersistence();
 	}
 
 	@Override

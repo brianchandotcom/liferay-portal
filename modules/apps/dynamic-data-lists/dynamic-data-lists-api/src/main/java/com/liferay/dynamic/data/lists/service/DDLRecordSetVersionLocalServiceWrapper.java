@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -396,6 +397,11 @@ public class DDLRecordSetVersionLocalServiceWrapper
 
 		return _ddlRecordSetVersionLocalService.updateDDLRecordSetVersion(
 			ddlRecordSetVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ddlRecordSetVersionLocalService.getBasePersistence();
 	}
 
 	@Override

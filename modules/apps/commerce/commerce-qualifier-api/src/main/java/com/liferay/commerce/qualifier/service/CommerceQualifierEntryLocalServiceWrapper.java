@@ -15,6 +15,7 @@
 package com.liferay.commerce.qualifier.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceQualifierEntryLocalService}.
@@ -464,6 +465,11 @@ public class CommerceQualifierEntryLocalServiceWrapper
 
 		return _commerceQualifierEntryLocalService.updateCommerceQualifierEntry(
 			commerceQualifierEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceQualifierEntryLocalService.getBasePersistence();
 	}
 
 	@Override

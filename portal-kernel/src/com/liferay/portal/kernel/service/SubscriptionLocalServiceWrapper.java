@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link SubscriptionLocalService}.
  *
@@ -61,7 +63,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Subscription addSubscription(
-			long userId, long groupId, java.lang.String className, long classPK)
+			long userId, long groupId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _subscriptionLocalService.addSubscription(
@@ -91,8 +93,8 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Subscription addSubscription(
-			long userId, long groupId, java.lang.String className, long classPK,
-			java.lang.String frequency)
+			long userId, long groupId, String className, long classPK,
+			String frequency)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _subscriptionLocalService.addSubscription(
@@ -179,8 +181,7 @@ public class SubscriptionLocalServiceWrapper
 	 * @param classPK the primary key of the entity's instance
 	 */
 	@Override
-	public void deleteSubscription(
-			long userId, java.lang.String className, long classPK)
+	public void deleteSubscription(long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_subscriptionLocalService.deleteSubscription(
@@ -234,7 +235,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public void deleteSubscriptions(
-			long companyId, java.lang.String className, long classPK)
+			long companyId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_subscriptionLocalService.deleteSubscriptions(
@@ -352,7 +353,7 @@ public class SubscriptionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Subscription fetchSubscription(
-		long companyId, long userId, java.lang.String className, long classPK) {
+		long companyId, long userId, String className, long classPK) {
 
 		return _subscriptionLocalService.fetchSubscription(
 			companyId, userId, className, classPK);
@@ -378,7 +379,7 @@ public class SubscriptionLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _subscriptionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -419,8 +420,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Subscription getSubscription(
-			long companyId, long userId, java.lang.String className,
-			long classPK)
+			long companyId, long userId, String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _subscriptionLocalService.getSubscription(
@@ -457,8 +457,7 @@ public class SubscriptionLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Subscription>
 		getSubscriptions(
-			long companyId, long userId, java.lang.String className,
-			long[] classPKs) {
+			long companyId, long userId, String className, long[] classPKs) {
 
 		return _subscriptionLocalService.getSubscriptions(
 			companyId, userId, className, classPKs);
@@ -474,8 +473,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Subscription>
-		getSubscriptions(
-			long companyId, java.lang.String className, long classPK) {
+		getSubscriptions(long companyId, String className, long classPK) {
 
 		return _subscriptionLocalService.getSubscriptions(
 			companyId, className, classPK);
@@ -522,7 +520,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Subscription>
-		getUserSubscriptions(long userId, java.lang.String className) {
+		getUserSubscriptions(long userId, String className) {
 
 		return _subscriptionLocalService.getUserSubscriptions(
 			userId, className);
@@ -551,7 +549,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public boolean isSubscribed(
-		long companyId, long userId, java.lang.String className, long classPK) {
+		long companyId, long userId, String className, long classPK) {
 
 		return _subscriptionLocalService.isSubscribed(
 			companyId, userId, className, classPK);
@@ -570,8 +568,7 @@ public class SubscriptionLocalServiceWrapper
 	 */
 	@Override
 	public boolean isSubscribed(
-		long companyId, long userId, java.lang.String className,
-		long[] classPKs) {
+		long companyId, long userId, String className, long[] classPKs) {
 
 		return _subscriptionLocalService.isSubscribed(
 			companyId, userId, className, classPKs);
@@ -592,6 +589,11 @@ public class SubscriptionLocalServiceWrapper
 		com.liferay.portal.kernel.model.Subscription subscription) {
 
 		return _subscriptionLocalService.updateSubscription(subscription);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _subscriptionLocalService.getBasePersistence();
 	}
 
 	@Override

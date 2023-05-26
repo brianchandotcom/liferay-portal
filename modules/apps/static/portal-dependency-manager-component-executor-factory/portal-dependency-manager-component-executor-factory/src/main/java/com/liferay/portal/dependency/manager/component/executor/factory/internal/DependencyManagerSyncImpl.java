@@ -16,6 +16,7 @@ package com.liferay.portal.dependency.manager.component.executor.factory.interna
 
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.FutureListener;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSync;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,11 +75,12 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			});
 
 		if (!syncFutureTask.isDone()) {
-			Thread thread = new Thread(syncFutureTask, taskName);
+			ExecutorService systemExecutorService =
+				SystemExecutorServiceUtil.getExecutorService();
 
-			thread.setDaemon(true);
-
-			thread.start();
+			systemExecutorService.submit(
+				SystemExecutorServiceUtil.renameThread(
+					syncFutureTask, taskName));
 		}
 	}
 

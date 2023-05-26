@@ -1,0 +1,16 @@
+{
+	"friendlyURL": "/test-url-layout",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test URL Layout Update"
+	},
+	"private": false,
+	"system": false,
+	"type": "url",
+	"typeSettings": [
+		{
+			"key": "url",
+			"value": "/test-public-child-layout"
+		}
+	]
+}

@@ -15,6 +15,7 @@
 package com.liferay.portal.security.audit.storage.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AuditEventLocalService}.
@@ -418,6 +419,11 @@ public class AuditEventLocalServiceWrapper
 				auditEvent) {
 
 		return _auditEventLocalService.updateAuditEvent(auditEvent);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _auditEventLocalService.getBasePersistence();
 	}
 
 	@Override

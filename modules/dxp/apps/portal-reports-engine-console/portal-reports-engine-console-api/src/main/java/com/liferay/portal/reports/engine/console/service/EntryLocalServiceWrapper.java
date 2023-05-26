@@ -15,6 +15,7 @@
 package com.liferay.portal.reports.engine.console.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link EntryLocalService}.
@@ -444,6 +445,11 @@ public class EntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_entryLocalService.updateEntryStatus(entryId, status, errorMessage);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _entryLocalService.getBasePersistence();
 	}
 
 	@Override

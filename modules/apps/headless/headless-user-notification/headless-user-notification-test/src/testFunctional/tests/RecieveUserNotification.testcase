@@ -58,12 +58,10 @@ definition {
 			ObjectActionAPI.createObjectAction(
 				label = "Object Entry Notification",
 				name = "objectEntryNotification",
-				notificationTemplateErc = "test",
 				notificationTemplateId = ${staticNotificationTemplateId},
 				objectActionExecutorKey = "notification",
 				objectActionTriggerKey = "onAfterAdd",
-				objectDefinitionId = ${customObjectDefinitionId},
-				type = "userNotification");
+				objectDefinitionId = ${customObjectDefinitionId});
 		}
 
 		task ("Given student entry created") {

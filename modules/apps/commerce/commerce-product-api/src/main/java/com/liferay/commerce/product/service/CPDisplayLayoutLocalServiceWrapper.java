@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -503,6 +504,11 @@ public class CPDisplayLayoutLocalServiceWrapper
 		return _cpDisplayLayoutLocalService.updateCPDisplayLayout(
 			cpDisplayLayoutId, classPK, layoutPageTemplateEntryUuid,
 			layoutUuid);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cpDisplayLayoutLocalService.getBasePersistence();
 	}
 
 	@Override

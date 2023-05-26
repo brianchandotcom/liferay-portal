@@ -15,6 +15,7 @@
 package com.liferay.osb.faro.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link FaroNotificationLocalService}.
@@ -385,6 +386,11 @@ public class FaroNotificationLocalServiceWrapper
 
 		return _faroNotificationLocalService.updateFaroNotification(
 			faroNotification);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _faroNotificationLocalService.getBasePersistence();
 	}
 
 	@Override

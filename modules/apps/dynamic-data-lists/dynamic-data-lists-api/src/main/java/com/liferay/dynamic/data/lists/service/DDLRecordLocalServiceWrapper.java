@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -870,6 +871,11 @@ public class DDLRecordLocalServiceWrapper
 
 		return _ddlRecordLocalService.updateStatus(
 			userId, recordVersionId, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ddlRecordLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -36,6 +36,14 @@ public interface ScreenNavigationEntry<T> {
 
 	public String getScreenNavigationKey();
 
+	public default String getStatusLabel(Locale locale, T context) {
+		return null;
+	}
+
+	public default String getStatusStyle(T context) {
+		return "secondary";
+	}
+
 	public default boolean isVisible(User user, T context) {
 		return true;
 	}

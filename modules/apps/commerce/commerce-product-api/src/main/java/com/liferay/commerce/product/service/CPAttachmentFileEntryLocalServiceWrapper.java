@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -635,6 +636,11 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 		return _cpAttachmentFileEntryLocalService.updateStatus(
 			userId, cpAttachmentFileEntryId, status, serviceContext,
 			workflowContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cpAttachmentFileEntryLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link ListTypeLocalService}.
  *
@@ -53,7 +55,7 @@ public class ListTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ListType addListType(
-		java.lang.String name, java.lang.String type) {
+		String name, String type) {
 
 		return _listTypeLocalService.addListType(name, type);
 	}
@@ -268,7 +270,7 @@ public class ListTypeLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ListType getListType(
-		java.lang.String name, java.lang.String type) {
+		String name, String type) {
 
 		return _listTypeLocalService.getListType(name, type);
 	}
@@ -293,7 +295,7 @@ public class ListTypeLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ListType>
-		getListTypes(java.lang.String type) {
+		getListTypes(String type) {
 
 		return _listTypeLocalService.getListTypes(type);
 	}
@@ -314,7 +316,7 @@ public class ListTypeLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _listTypeLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -347,18 +349,22 @@ public class ListTypeLocalServiceWrapper
 	}
 
 	@Override
-	public void validate(
-			long listTypeId, long classNameId, java.lang.String type)
+	public void validate(long listTypeId, long classNameId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_listTypeLocalService.validate(listTypeId, classNameId, type);
 	}
 
 	@Override
-	public void validate(long listTypeId, java.lang.String type)
+	public void validate(long listTypeId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_listTypeLocalService.validate(listTypeId, type);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _listTypeLocalService.getBasePersistence();
 	}
 
 	@Override

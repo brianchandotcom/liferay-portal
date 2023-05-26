@@ -37,6 +37,10 @@ public interface ClickToChatConfiguration {
 
 	public String chatProviderAccountId();
 
+	public String chatProviderKeyId();
+
+	public String chatProviderSecretKey();
+
 	public boolean guestUsersAllowed();
 
 	public boolean hideInControlPanel();

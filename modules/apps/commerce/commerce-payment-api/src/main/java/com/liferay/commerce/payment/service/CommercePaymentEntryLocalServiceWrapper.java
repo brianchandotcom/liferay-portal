@@ -15,6 +15,7 @@
 package com.liferay.commerce.payment.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommercePaymentEntryLocalService}.
@@ -416,6 +417,11 @@ public class CommercePaymentEntryLocalServiceWrapper
 
 		return _commercePaymentEntryLocalService.updateCommercePaymentEntry(
 			commercePaymentEntryId, paymentStatus, transactionCode);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commercePaymentEntryLocalService.getBasePersistence();
 	}
 
 	@Override

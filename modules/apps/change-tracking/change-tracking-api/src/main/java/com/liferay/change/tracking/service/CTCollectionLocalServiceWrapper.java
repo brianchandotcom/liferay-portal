@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CTCollectionLocalService}.
@@ -494,6 +495,11 @@ public class CTCollectionLocalServiceWrapper
 
 		return _ctCollectionLocalService.updateCTCollection(
 			userId, ctCollectionId, name, description);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ctCollectionLocalService.getBasePersistence();
 	}
 
 	@Override

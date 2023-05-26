@@ -17,6 +17,7 @@ package com.liferay.data.engine.service;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -562,6 +563,11 @@ public class DEDataDefinitionFieldLinkLocalServiceWrapper
 
 		return _deDataDefinitionFieldLinkLocalService.
 			updateDEDataDefinitionFieldLink(deDataDefinitionFieldLink);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _deDataDefinitionFieldLinkLocalService.getBasePersistence();
 	}
 
 	@Override

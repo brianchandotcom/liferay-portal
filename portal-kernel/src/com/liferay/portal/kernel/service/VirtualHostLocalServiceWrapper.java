@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -392,6 +393,11 @@ public class VirtualHostLocalServiceWrapper
 
 		return _virtualHostLocalService.updateVirtualHosts(
 			companyId, layoutSetId, hostnames);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _virtualHostLocalService.getBasePersistence();
 	}
 
 	@Override

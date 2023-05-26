@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link BatchPlannerPolicyLocalService}.
@@ -405,6 +406,11 @@ public class BatchPlannerPolicyLocalServiceWrapper
 
 		return _batchPlannerPolicyLocalService.updateBatchPlannerPolicy(
 			batchPlannerPlanId, name, value);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _batchPlannerPolicyLocalService.getBasePersistence();
 	}
 
 	@Override

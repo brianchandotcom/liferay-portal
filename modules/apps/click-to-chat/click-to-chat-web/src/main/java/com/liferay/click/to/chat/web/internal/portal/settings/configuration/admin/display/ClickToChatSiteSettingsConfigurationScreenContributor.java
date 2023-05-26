@@ -98,6 +98,12 @@ public class ClickToChatSiteSettingsConfigurationScreenContributor
 			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ID,
 			clickToChatConfiguration.chatProviderId());
 		httpServletRequest.setAttribute(
+			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_KEY_ID,
+			clickToChatConfiguration.chatProviderKeyId());
+		httpServletRequest.setAttribute(
+			ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_SECRET_KEY,
+			clickToChatConfiguration.chatProviderSecretKey());
+		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_ENABLED,
 			clickToChatConfiguration.enabled());
 		httpServletRequest.setAttribute(

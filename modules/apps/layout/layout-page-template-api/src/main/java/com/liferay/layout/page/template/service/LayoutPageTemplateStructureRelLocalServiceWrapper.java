@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -530,6 +531,11 @@ public class LayoutPageTemplateStructureRelLocalServiceWrapper
 		return _layoutPageTemplateStructureRelLocalService.updateStatus(
 			userId, layoutPageTemplateStructureId, segmentsExperienceId, status,
 			serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _layoutPageTemplateStructureRelLocalService.getBasePersistence();
 	}
 
 	@Override

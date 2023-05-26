@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectActionLocalService}.
@@ -464,6 +465,11 @@ public class ObjectActionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectActionLocalService.updateStatus(objectActionId, status);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectActionLocalService.getBasePersistence();
 	}
 
 	@Override

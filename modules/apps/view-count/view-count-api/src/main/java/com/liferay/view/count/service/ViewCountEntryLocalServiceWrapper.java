@@ -15,6 +15,7 @@
 package com.liferay.view.count.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ViewCountEntryLocalService}.
@@ -372,6 +373,11 @@ public class ViewCountEntryLocalServiceWrapper
 		com.liferay.view.count.model.ViewCountEntry viewCountEntry) {
 
 		return _viewCountEntryLocalService.updateViewCountEntry(viewCountEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _viewCountEntryLocalService.getBasePersistence();
 	}
 
 	@Override

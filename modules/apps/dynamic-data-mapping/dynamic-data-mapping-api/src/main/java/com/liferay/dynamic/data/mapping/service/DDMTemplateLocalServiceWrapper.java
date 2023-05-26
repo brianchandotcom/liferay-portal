@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -1518,6 +1519,11 @@ public class DDMTemplateLocalServiceWrapper
 		return _ddmTemplateLocalService.updateTemplate(
 			userId, templateId, classPK, nameMap, descriptionMap, type, mode,
 			language, script, cacheable, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ddmTemplateLocalService.getBasePersistence();
 	}
 
 	@Override

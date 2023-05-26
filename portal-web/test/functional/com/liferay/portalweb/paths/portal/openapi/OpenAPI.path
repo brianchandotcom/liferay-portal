@@ -23,6 +23,26 @@
 	<td>//div[@id='model-${schema}']//td[contains(.,'${field}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SCHEMA_COLLAPSED</td>
+	<td>//div[(@id='model-${schema}')]//span[contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEMA_FIELD_COLLAPSED</td>
+	<td>//div[@id='model-${schema}']//tr[contains(.,'${field}')]//span[contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEMA_PROPERTY_COLLAPSED</td>
+	<td>//div[(@id='model-${schema}')]//tr[contains(.,'${field}')]//tr[contains(.,'${property}')]//span[(@class='model-toggle collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEMA_PROPERTY</td>
+	<td>//div[(@id='model-${schema}')]//tr[contains(.,'${field}')]//tr[contains(.,'${property}')]</td>
+	<td></td>
+</tr>
 
 <!--SWAGGER-->
 

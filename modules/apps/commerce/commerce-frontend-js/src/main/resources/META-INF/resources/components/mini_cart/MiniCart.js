@@ -47,6 +47,7 @@ import {resolveCartViews} from './util/views';
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function MiniCart({
+	accountId,
 	cartActionURLs,
 	cartViews,
 	channel,
@@ -66,6 +67,7 @@ function MiniCart({
 	const [actionURLs, setActionURLs] = useState(cartActionURLs);
 	const [CartViews, setCartViews] = useState({});
 	const [cartState, setCartState] = useState({
+		accountId,
 		channel: {channel},
 		id: orderId,
 		summary: {itemsQuantity},

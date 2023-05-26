@@ -110,6 +110,7 @@ definition {
 	@description = "This is a test for LPS-98076. Verify that a user Can repeat the field when it was set as 'repeatable' (when uploading a Document Type)"
 	@priority = 5
 	test RepeatRichTextOnUpload {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "false";
 
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Rich Text");

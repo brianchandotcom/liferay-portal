@@ -78,3 +78,36 @@ paths:
                         default response
             # @review
             tags: ["Site"]
+    /sites/{groupId}:
+        put:
+            description:
+                Adds or update a new site
+            operationId: putSite
+            parameters:
+                - in: path
+                  name: groupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description:
+                        default response
+            tags: ["Site"]

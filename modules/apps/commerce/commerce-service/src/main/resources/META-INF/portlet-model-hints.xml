@@ -213,6 +213,7 @@
 		<field name="maxSubscriptionCycles" type="long" />
 		<field localized="true" name="name" type="String" />
 		<field name="priceManuallyAdjusted" type="boolean" />
+		<field name="priceOnApplication" type="boolean" />
 		<field name="printedNote" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

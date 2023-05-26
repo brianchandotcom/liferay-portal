@@ -15,6 +15,7 @@
 package com.liferay.commerce.wish.list.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceWishListItemLocalService}.
@@ -454,6 +455,11 @@ public class CommerceWishListItemLocalServiceWrapper
 
 		return _commerceWishListItemLocalService.updateCommerceWishListItem(
 			commerceWishListItem);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceWishListItemLocalService.getBasePersistence();
 	}
 
 	@Override

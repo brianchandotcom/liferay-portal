@@ -581,6 +581,15 @@ definition {
 			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
 	}
 
+	@summary = "View activity status on the MDF request detail page"
+	macro viewActivityStatus {
+		AssertElementPresent(
+			key_activityName = ${activityName},
+			key_statusType = ${statusType},
+			key_statusValue = ${statusValue},
+			locator1 = "PRMMDFRequest#ACTIVITY_STATUS");
+	}
+
 	@summary = "Assert the Total Cost value of the budget, inside the activities page of the MDF Request"
 	macro viewBudgetValue {
 		AssertTextEquals(

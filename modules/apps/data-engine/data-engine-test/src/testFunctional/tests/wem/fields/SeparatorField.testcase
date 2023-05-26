@@ -128,6 +128,8 @@ definition {
 	@description = "This is a test for LPS-98081. Verify Repeatable behavior on Web Content"
 	@priority = 5
 	test RepeatSeparatorOnWebContent {
+		property ci.retries.disabled = "true";
+
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Separator");
 
 		WebContentStructures.saveCP();

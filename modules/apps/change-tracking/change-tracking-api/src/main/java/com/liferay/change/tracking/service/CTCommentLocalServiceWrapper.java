@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CTCommentLocalService}.
@@ -358,6 +359,11 @@ public class CTCommentLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCommentLocalService.updateCTComment(ctCommentId, value);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ctCommentLocalService.getBasePersistence();
 	}
 
 	@Override

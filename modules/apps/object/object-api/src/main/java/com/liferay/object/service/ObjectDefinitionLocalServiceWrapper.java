@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectDefinitionLocalService}.
@@ -641,6 +642,11 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.updateTitleObjectFieldId(
 			objectDefinitionId, titleObjectFieldId);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectDefinitionLocalService.getBasePersistence();
 	}
 
 	@Override

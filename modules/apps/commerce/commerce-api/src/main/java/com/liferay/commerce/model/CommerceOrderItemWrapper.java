@@ -110,6 +110,7 @@ public class CommerceOrderItemWrapper
 		attributes.put("maxSubscriptionCycles", getMaxSubscriptionCycles());
 		attributes.put("name", getName());
 		attributes.put("priceManuallyAdjusted", isPriceManuallyAdjusted());
+		attributes.put("priceOnApplication", isPriceOnApplication());
 		attributes.put("printedNote", getPrintedNote());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("promoPriceWithTaxAmount", getPromoPriceWithTaxAmount());
@@ -431,6 +432,13 @@ public class CommerceOrderItemWrapper
 
 		if (priceManuallyAdjusted != null) {
 			setPriceManuallyAdjusted(priceManuallyAdjusted);
+		}
+
+		Boolean priceOnApplication = (Boolean)attributes.get(
+			"priceOnApplication");
+
+		if (priceOnApplication != null) {
+			setPriceOnApplication(priceOnApplication);
 		}
 
 		String printedNote = (String)attributes.get("printedNote");
@@ -1153,6 +1161,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
+	 * Returns the price on application of this commerce order item.
+	 *
+	 * @return the price on application of this commerce order item
+	 */
+	@Override
+	public boolean getPriceOnApplication() {
+		return model.getPriceOnApplication();
+	}
+
+	/**
 	 * Returns the primary key of this commerce order item.
 	 *
 	 * @return the primary key of this commerce order item
@@ -1486,6 +1504,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public boolean isPriceManuallyAdjusted() {
 		return model.isPriceManuallyAdjusted();
+	}
+
+	/**
+	 * Returns <code>true</code> if this commerce order item is price on application.
+	 *
+	 * @return <code>true</code> if this commerce order item is price on application; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPriceOnApplication() {
+		return model.isPriceOnApplication();
 	}
 
 	/**
@@ -2024,6 +2052,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setPriceManuallyAdjusted(boolean priceManuallyAdjusted) {
 		model.setPriceManuallyAdjusted(priceManuallyAdjusted);
+	}
+
+	/**
+	 * Sets whether this commerce order item is price on application.
+	 *
+	 * @param priceOnApplication the price on application of this commerce order item
+	 */
+	@Override
+	public void setPriceOnApplication(boolean priceOnApplication) {
+		model.setPriceOnApplication(priceOnApplication);
 	}
 
 	/**

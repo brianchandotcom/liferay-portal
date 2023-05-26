@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.service;
 import com.liferay.commerce.price.list.model.CommercePriceListOrderTypeRel;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -458,6 +459,11 @@ public class CommercePriceListOrderTypeRelLocalServiceWrapper
 
 		return _commercePriceListOrderTypeRelLocalService.
 			updateCommercePriceListOrderTypeRel(commercePriceListOrderTypeRel);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commercePriceListOrderTypeRelLocalService.getBasePersistence();
 	}
 
 	@Override

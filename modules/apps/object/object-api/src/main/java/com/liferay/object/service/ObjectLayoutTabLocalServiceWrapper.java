@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectLayoutTabLocalService}.
@@ -424,6 +425,11 @@ public class ObjectLayoutTabLocalServiceWrapper
 
 		return _objectLayoutTabLocalService.updateObjectLayoutTab(
 			objectLayoutTab);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectLayoutTabLocalService.getBasePersistence();
 	}
 
 	@Override

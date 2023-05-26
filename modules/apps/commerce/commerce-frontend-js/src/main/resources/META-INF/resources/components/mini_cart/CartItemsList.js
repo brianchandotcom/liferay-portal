@@ -29,13 +29,13 @@ export default function CartItemsList() {
 		summaryDataMapper,
 	} = useContext(MiniCartContext);
 
-	const {cartItems = [], id, summary = {}} = cartState;
+	const {accountId, cartItems = [], summary = {}} = cartState;
 
 	return (
 		<div className="mini-cart-items-list">
 			<CartViews.ItemsListActions />
 
-			{cartState.accountId && !!id && <CartQuickAdd />}
+			{accountId ? <CartQuickAdd /> : null}
 
 			{cartItems.length ? (
 				<>

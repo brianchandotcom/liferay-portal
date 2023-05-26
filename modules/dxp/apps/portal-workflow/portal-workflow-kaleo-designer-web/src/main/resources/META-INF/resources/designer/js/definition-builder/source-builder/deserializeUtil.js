@@ -41,7 +41,12 @@ DeserializeUtil.prototype = {
 
 		instance.definition.forEachField((_, fieldData) => {
 			fieldData.results.forEach((node) => {
-				nodesNames.push(node.name);
+				if (node.name) {
+					nodesNames.push(node.name);
+				}
+				else if (node.id) {
+					nodesNames.push(node.id);
+				}
 			});
 		});
 

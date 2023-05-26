@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.type.virtual.order.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceVirtualOrderItemLocalService}.
@@ -579,6 +580,11 @@ public class CommerceVirtualOrderItemLocalServiceWrapper
 
 		return _commerceVirtualOrderItemLocalService.
 			updateCommerceVirtualOrderItemDates(commerceVirtualOrderItemId);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceVirtualOrderItemLocalService.getBasePersistence();
 	}
 
 	@Override

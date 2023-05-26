@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link DataLimitEntryLocalService}.
@@ -338,6 +339,11 @@ public class DataLimitEntryLocalServiceWrapper
 				dataLimitEntry) {
 
 		return _dataLimitEntryLocalService.updateDataLimitEntry(dataLimitEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dataLimitEntryLocalService.getBasePersistence();
 	}
 
 	@Override

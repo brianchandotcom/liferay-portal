@@ -17,6 +17,7 @@ package com.liferay.calendar.service;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -931,6 +932,11 @@ public class CalendarBookingLocalServiceWrapper
 
 		return _calendarBookingLocalService.updateStatus(
 			userId, calendarBookingId, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _calendarBookingLocalService.getBasePersistence();
 	}
 
 	@Override

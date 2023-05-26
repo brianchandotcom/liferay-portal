@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link ReleaseLocalService}.
  *
@@ -51,14 +53,14 @@ public class ReleaseLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber) {
+		String servletContextName, int buildNumber) {
 
 		return _releaseLocalService.addRelease(servletContextName, buildNumber);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Release addRelease(
-		java.lang.String servletContextName, java.lang.String schemaVersion) {
+		String servletContextName, String schemaVersion) {
 
 		return _releaseLocalService.addRelease(
 			servletContextName, schemaVersion);
@@ -244,7 +246,7 @@ public class ReleaseLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Release fetchRelease(
-		java.lang.String servletContextName) {
+		String servletContextName) {
 
 		return _releaseLocalService.fetchRelease(servletContextName);
 	}
@@ -269,7 +271,7 @@ public class ReleaseLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _releaseLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -328,7 +330,7 @@ public class ReleaseLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Release updateRelease(
-			long releaseId, java.lang.String schemaVersion, int buildNumber,
+			long releaseId, String schemaVersion, int buildNumber,
 			java.util.Date buildDate, boolean verified)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -355,7 +357,7 @@ public class ReleaseLocalServiceWrapper
 
 	@Override
 	public void updateRelease(
-			java.lang.String servletContextName,
+			String servletContextName,
 			java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
 				upgradeProcesses,
 			int buildNumber, int previousBuildNumber)
@@ -368,11 +370,11 @@ public class ReleaseLocalServiceWrapper
 
 	@Override
 	public void updateRelease(
-			java.lang.String servletContextName,
+			String servletContextName,
 			java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess>
 				upgradeProcesses,
 			java.util.Properties unfilteredPortalProperties)
-		throws java.lang.Exception {
+		throws Exception {
 
 		_releaseLocalService.updateRelease(
 			servletContextName, upgradeProcesses, unfilteredPortalProperties);
@@ -380,11 +382,16 @@ public class ReleaseLocalServiceWrapper
 
 	@Override
 	public void updateRelease(
-		java.lang.String servletContextName, java.lang.String schemaVersion,
-		java.lang.String previousSchemaVersion) {
+		String servletContextName, String schemaVersion,
+		String previousSchemaVersion) {
 
 		_releaseLocalService.updateRelease(
 			servletContextName, schemaVersion, previousSchemaVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _releaseLocalService.getBasePersistence();
 	}
 
 	@Override

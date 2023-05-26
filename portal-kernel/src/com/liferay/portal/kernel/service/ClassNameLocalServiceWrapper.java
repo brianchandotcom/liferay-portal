@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link ClassNameLocalService}.
  *
@@ -53,7 +55,7 @@ public class ClassNameLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName addClassName(
-		java.lang.String value) {
+		String value) {
 
 		return _classNameLocalService.addClassName(value);
 	}
@@ -252,7 +254,7 @@ public class ClassNameLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName fetchClassName(
-		java.lang.String value) {
+		String value) {
 
 		return _classNameLocalService.fetchClassName(value);
 	}
@@ -281,18 +283,18 @@ public class ClassNameLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ClassName getClassName(
-		java.lang.String value) {
+		String value) {
 
 		return _classNameLocalService.getClassName(value);
 	}
 
 	@Override
-	public long getClassNameId(java.lang.Class<?> clazz) {
+	public long getClassNameId(Class<?> clazz) {
 		return _classNameLocalService.getClassNameId(clazz);
 	}
 
 	@Override
-	public long getClassNameId(java.lang.String value) {
+	public long getClassNameId(String value) {
 		return _classNameLocalService.getClassNameId(value);
 	}
 
@@ -337,7 +339,7 @@ public class ClassNameLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _classNameLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -353,7 +355,7 @@ public class ClassNameLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String getRegistryName() {
+	public String getRegistryName() {
 		return _classNameLocalService.getRegistryName();
 	}
 
@@ -377,6 +379,11 @@ public class ClassNameLocalServiceWrapper
 		com.liferay.portal.kernel.model.ClassName className) {
 
 		return _classNameLocalService.updateClassName(className);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _classNameLocalService.getBasePersistence();
 	}
 
 	@Override

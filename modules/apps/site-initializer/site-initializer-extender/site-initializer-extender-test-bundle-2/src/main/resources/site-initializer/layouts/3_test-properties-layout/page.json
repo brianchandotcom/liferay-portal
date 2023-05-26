@@ -1,0 +1,13 @@
+{
+	"friendlyURL": "[$PORTAL_PROPERTY:default.guest.public.layout.friendly.url$]",
+	"hidden": false,
+	"layoutTemplateId": "[$PORTAL_PROPERTY:default.guest.public.layout.template.id$]",
+	"name": "[$PORTAL_PROPERTY:default.guest.public.layout.name$]",
+	"name_i18n": {
+		"es_ES": "[$PORTAL_PROPERTY:default.user.private.layout.name$]"
+	},
+	"priority": "1",
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

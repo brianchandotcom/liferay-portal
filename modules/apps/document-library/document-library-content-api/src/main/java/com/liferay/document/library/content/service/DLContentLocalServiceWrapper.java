@@ -17,6 +17,7 @@ package com.liferay.document.library.content.service;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -461,6 +462,11 @@ public class DLContentLocalServiceWrapper
 
 		_dlContentLocalService.updateDLContent(
 			companyId, oldRepositoryId, newRepositoryId, oldPath, newPath);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dlContentLocalService.getBasePersistence();
 	}
 
 	@Override

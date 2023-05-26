@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/test-public-layout",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test Public Layout Update"
+	},
+	"priority": 0,
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

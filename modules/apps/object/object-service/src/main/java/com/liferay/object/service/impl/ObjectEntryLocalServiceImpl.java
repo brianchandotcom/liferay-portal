@@ -2664,6 +2664,13 @@ public class ObjectEntryLocalServiceImpl
 						objects[i] = _encryptor.decrypt(
 							_getKey(), (String)objects[i]);
 					}
+					catch (IllegalArgumentException illegalArgumentException) {
+						throw new IllegalArgumentException(
+							"Please insert an encryption key or remove the " +
+								"object's encryption field to recover these " +
+									"entries.",
+							illegalArgumentException);
+					}
 					catch (Exception exception) {
 						throw new PortalException(exception);
 					}

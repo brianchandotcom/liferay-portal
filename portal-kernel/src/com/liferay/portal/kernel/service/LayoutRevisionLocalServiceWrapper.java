@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link LayoutRevisionLocalService}.
  *
@@ -56,12 +58,10 @@ public class LayoutRevisionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutRevision addLayoutRevision(
 			long userId, long layoutSetBranchId, long layoutBranchId,
 			long parentLayoutRevisionId, boolean head, long plid,
-			long portletPreferencesPlid, boolean privateLayout,
-			java.lang.String name, java.lang.String title,
-			java.lang.String description, java.lang.String keywords,
-			java.lang.String robots, java.lang.String typeSettings,
-			boolean iconImage, long iconImageId, java.lang.String themeId,
-			java.lang.String colorSchemeId, java.lang.String css,
+			long portletPreferencesPlid, boolean privateLayout, String name,
+			String title, String description, String keywords, String robots,
+			String typeSettings, boolean iconImage, long iconImageId,
+			String themeId, String colorSchemeId, String css,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -526,7 +526,7 @@ public class LayoutRevisionLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _layoutRevisionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -561,11 +561,9 @@ public class LayoutRevisionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutRevision updateLayoutRevision(
 			long userId, long layoutRevisionId, long layoutBranchId,
-			java.lang.String name, java.lang.String title,
-			java.lang.String description, java.lang.String keywords,
-			java.lang.String robots, java.lang.String typeSettings,
-			boolean iconImage, long iconImageId, java.lang.String themeId,
-			java.lang.String colorSchemeId, java.lang.String css,
+			String name, String title, String description, String keywords,
+			String robots, String typeSettings, boolean iconImage,
+			long iconImageId, String themeId, String colorSchemeId, String css,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -583,6 +581,11 @@ public class LayoutRevisionLocalServiceWrapper
 
 		return _layoutRevisionLocalService.updateStatus(
 			userId, layoutRevisionId, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _layoutRevisionLocalService.getBasePersistence();
 	}
 
 	@Override

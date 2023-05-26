@@ -17,6 +17,7 @@ package com.liferay.asset.entry.rel.service;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -486,6 +487,11 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 
 		return _assetEntryAssetCategoryRelLocalService.
 			updateAssetEntryAssetCategoryRel(assetEntryAssetCategoryRel);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _assetEntryAssetCategoryRelLocalService.getBasePersistence();
 	}
 
 	@Override

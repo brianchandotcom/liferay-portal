@@ -17,6 +17,7 @@ package com.liferay.asset.kernel.service;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -940,6 +941,11 @@ public class AssetEntryLocalServiceWrapper
 
 		_assetEntryLocalService.validate(
 			groupId, className, classTypePK, categoryIds, tagNames);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _assetEntryLocalService.getBasePersistence();
 	}
 
 	@Override

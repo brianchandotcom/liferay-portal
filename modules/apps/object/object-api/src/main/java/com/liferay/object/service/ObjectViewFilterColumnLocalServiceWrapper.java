@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ObjectViewFilterColumnLocalService}.
@@ -418,6 +419,11 @@ public class ObjectViewFilterColumnLocalServiceWrapper
 
 		return _objectViewFilterColumnLocalService.updateObjectViewFilterColumn(
 			objectViewFilterColumn);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _objectViewFilterColumnLocalService.getBasePersistence();
 	}
 
 	@Override

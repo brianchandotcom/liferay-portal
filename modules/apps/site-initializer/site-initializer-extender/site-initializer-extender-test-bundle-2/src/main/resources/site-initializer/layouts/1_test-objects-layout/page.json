@@ -1,0 +1,17 @@
+{
+	"friendlyURL": "/test-objects-layout",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test Objects Layout"
+	},
+	"priority": 0,
+	"private": false,
+	"system": false,
+	"type": "Content",
+	"typeSettings": [
+		{
+			"key": "published",
+			"value": "true"
+		}
+	]
+}

@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(
-	service = {InfoItemRenderer.class, OptionSelectorInfoItemRenderer.class}
-)
+@Component(service = InfoItemRenderer.class)
 public class OptionSelectorInfoItemRenderer
 	implements InfoItemRenderer<CPDefinition> {
 

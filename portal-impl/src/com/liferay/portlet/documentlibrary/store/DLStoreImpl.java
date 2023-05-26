@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.exception.DirectoryNameException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.store.StoreArea;
 import com.liferay.document.library.kernel.store.StoreAreaAwareStoreWrapper;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
@@ -109,11 +110,20 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		_wrappedStore.addFile(
-			companyId, repositoryId, fileName, toVersionLabel,
-			_getNullSafeInputStream(
-				_wrappedStore.getFileAsStream(
-					companyId, repositoryId, fileName, fromVersionLabel)));
+		if (_storeAreaProcessor != null) {
+			_storeAreaProcessor.copy(
+				StoreArea.LIVE.getPath(
+					companyId, repositoryId, fileName, fromVersionLabel),
+				StoreArea.LIVE.getPath(
+					companyId, repositoryId, fileName, toVersionLabel));
+		}
+		else {
+			_wrappedStore.addFile(
+				companyId, repositoryId, fileName, toVersionLabel,
+				_getNullSafeInputStream(
+					_wrappedStore.getFileAsStream(
+						companyId, repositoryId, fileName, fromVersionLabel)));
+		}
 	}
 
 	@Override
@@ -287,10 +297,19 @@ public class DLStoreImpl implements DLStore {
 				_wrappedStore.getFileVersions(
 					companyId, repositoryId, fileName)) {
 
-			_wrappedStore.addFile(
-				companyId, newRepositoryId, fileName, versionLabel,
-				_wrappedStore.getFileAsStream(
-					companyId, repositoryId, fileName, versionLabel));
+			if (_storeAreaProcessor != null) {
+				_storeAreaProcessor.copy(
+					StoreArea.LIVE.getPath(
+						companyId, repositoryId, fileName, versionLabel),
+					StoreArea.LIVE.getPath(
+						companyId, newRepositoryId, fileName, versionLabel));
+			}
+			else {
+				_wrappedStore.addFile(
+					companyId, newRepositoryId, fileName, versionLabel,
+					_wrappedStore.getFileAsStream(
+						companyId, repositoryId, fileName, versionLabel));
+			}
 
 			_wrappedStore.deleteFile(
 				companyId, repositoryId, fileName, versionLabel);
@@ -303,11 +322,20 @@ public class DLStoreImpl implements DLStore {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		_wrappedStore.addFile(
-			companyId, repositoryId, fileName, toVersionLabel,
-			_getNullSafeInputStream(
-				_wrappedStore.getFileAsStream(
-					companyId, repositoryId, fileName, fromVersionLabel)));
+		if (_storeAreaProcessor != null) {
+			_storeAreaProcessor.copy(
+				StoreArea.LIVE.getPath(
+					companyId, repositoryId, fileName, fromVersionLabel),
+				StoreArea.LIVE.getPath(
+					companyId, repositoryId, fileName, toVersionLabel));
+		}
+		else {
+			_wrappedStore.addFile(
+				companyId, repositoryId, fileName, toVersionLabel,
+				_getNullSafeInputStream(
+					_wrappedStore.getFileAsStream(
+						companyId, repositoryId, fileName, fromVersionLabel)));
+		}
 
 		_wrappedStore.deleteFile(
 			companyId, repositoryId, fileName, fromVersionLabel);

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {Renderer} from '@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/utils/renderer';
+import {FDSCellRenderer} from '@liferay/js-api/data-set';
 import {fetch, openToast} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';
@@ -22,11 +24,6 @@ interface IField {
 	label: string;
 	name: string;
 	type: string;
-}
-
-export interface IFDSCellRendererCET {
-	erc: string;
-	name: string;
 }
 
 export async function getFields(fdsView: FDSViewType) {
@@ -142,4 +139,15 @@ export async function getAllPicklists(
 	}
 
 	return items;
+}
+
+export interface IClientExtensionRenderer extends Renderer {
+	erc?: string;
+	label?: string;
+	name?: string;
+	type: 'clientExtension';
+}
+
+export interface IClientExtensionCellRenderer extends IClientExtensionRenderer {
+	renderer: FDSCellRenderer;
 }

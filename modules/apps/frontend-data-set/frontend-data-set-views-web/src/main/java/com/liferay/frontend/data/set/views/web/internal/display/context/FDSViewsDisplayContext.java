@@ -39,8 +39,6 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Marko Cikos
  */
@@ -48,25 +46,20 @@ public class FDSViewsDisplayContext {
 
 	public FDSViewsDisplayContext(
 		PortletRequest portletRequest,
-		ServiceTrackerList<String> serviceTrackerList) {
+		ServiceTrackerList<String> serviceTrackerList, CETManager cetManager) {
 
 		_portletRequest = portletRequest;
 		_serviceTrackerList = serviceTrackerList;
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		_cetManager = (CETManager)httpServletRequest.getAttribute(
-			CETManager.class.getName());
+		_cetManager = cetManager;
 	}
 
-	public JSONArray getCellRendererCETJSONArray() {
+	public JSONArray getFDSCellRendererCETsJSONArray() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<FDSCellRendererCET> fdsCellRendererCETs = null;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		try {
 			fdsCellRendererCETs = (List)_cetManager.getCETs(
@@ -78,6 +71,8 @@ public class FDSViewsDisplayContext {
 			_log.error(
 				"Unable to get FDS Cell Renderer client extension entries",
 				portalException);
+
+			return JSONFactoryUtil.createJSONArray();
 		}
 
 		for (FDSCellRendererCET fdsCellRenderer : fdsCellRendererCETs) {

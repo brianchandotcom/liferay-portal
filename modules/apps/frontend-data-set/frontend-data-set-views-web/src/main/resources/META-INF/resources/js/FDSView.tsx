@@ -18,7 +18,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {IFDSCellRendererCET} from './api';
+import {IClientExtensionCellRenderer} from './api';
 
 import '../css/FDSView.scss';
 import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
@@ -53,7 +53,7 @@ const NAVIGATION_BAR_ITEMS = [
 ];
 
 interface IFDSViewSectionInterface {
-	cellRendererCETs: IFDSCellRendererCET[];
+	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -61,7 +61,7 @@ interface IFDSViewSectionInterface {
 }
 
 interface IFDSViewInterface {
-	cellRendererCETs: IFDSCellRendererCET[];
+	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -69,7 +69,7 @@ interface IFDSViewInterface {
 }
 
 const FDSView = ({
-	cellRendererCETs,
+	fdsClientExtensionCellRenderers,
 	fdsViewId,
 	fdsViewsURL,
 	namespace,
@@ -134,7 +134,9 @@ const FDSView = ({
 			) : (
 				fdsView && (
 					<Content
-						cellRendererCETs={cellRendererCETs}
+						fdsClientExtensionCellRenderers={
+							fdsClientExtensionCellRenderers
+						}
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
 						namespace={namespace}

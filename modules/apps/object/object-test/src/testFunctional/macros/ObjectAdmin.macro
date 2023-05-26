@@ -932,9 +932,8 @@ definition {
 			value1 = ${externalReferenceCode});
 
 		Click(
-			key_indexNumber = 2,
-			key_text = "Save",
-			locator1 = "Button#ANY_N");
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
 	macro editObjectAction {

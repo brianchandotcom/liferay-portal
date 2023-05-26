@@ -982,8 +982,6 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
-						objectField.getReadOnly(),
-						objectField.getReadOnlyConditionExpression(),
 						objectField.isRequired(), objectField.isState());
 				}
 				else {

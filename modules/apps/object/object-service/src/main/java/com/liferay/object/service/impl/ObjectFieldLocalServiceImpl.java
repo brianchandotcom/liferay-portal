@@ -253,8 +253,8 @@ public class ObjectFieldLocalServiceImpl
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, String readOnly,
-			String readOnlyConditionExpression, boolean required, boolean state)
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state)
 		throws PortalException {
 
 		ObjectField existingObjectField = objectFieldPersistence.fetchByODI_N(
@@ -721,8 +721,7 @@ public class ObjectFieldLocalServiceImpl
 			return objectFieldLocalService.addOrUpdateSystemObjectField(
 				userId, objectDefinitionId, businessType, dbColumnName,
 				dbTableName, dbType, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, name, readOnly,
-				readOnlyConditionExpression, required, state);
+				indexedLanguageId, labelMap, name, required, state);
 		}
 
 		return objectFieldLocalService.addOrUpdateCustomObjectField(

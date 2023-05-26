@@ -216,6 +216,55 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-182493 TC-6: Verify user could log in via OIDC when password creation is disabled."
+	@priority = 3
+	test CanLoginViaOIDCWithDisablePasswordCreation {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
+		property test.name.skip.portal.instance = "OpenIDConnect#CanLoginViaOIDCWithDisablePasswordCreation";
+
+		var userEmailAddress = PropsUtil.get("openid.provider.okta.test.account.email.address");
+		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
+
+		task ("Given Disable Allow Custom Password At Account Creation in Users add OAuth Client") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Users",
+				configurationName = "Fields",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
+
+			PortletEntry.save();
+
+			Navigator.openURL();
+
+			OAuthClient.openOAuthClientAdmin(navbar = "Clients");
+
+			OAuthClient.addClient(
+				jsonFileName = "okta.json",
+				wellknownURI = "https://dev-5081331.okta.com/.well-known/openid-configuration");
+		}
+
+		task ("When Logout and login with OpenID Connect") {
+			User.logoutPG();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = ${userEmailAddress},
+				userPassword = ${userPassword});
+		}
+
+		task ("Then Verify Logout and login") {
+			User.logoutAndLoginPG();
+		}
+	}
+
 	@description = "This is a use case for LPS-139642 TC6-2: Cannot add OAuth client with empty configuration."
 	@priority = 3
 	test CannotAddOAuthClientWithEmptyConfiguration {

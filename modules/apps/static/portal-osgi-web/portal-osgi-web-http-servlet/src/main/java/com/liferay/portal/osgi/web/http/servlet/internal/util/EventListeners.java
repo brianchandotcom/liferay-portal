@@ -11,44 +11,52 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.util;
 
-import java.util.*;
-import java.util.concurrent.*;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ListenerRegistration;
 
+import java.util.AbstractList;
+import java.util.Collections;
+import java.util.EventListener;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * @author Raymond Augé
+ */
 public class EventListeners {
 
 	public void clear() {
-		map.clear();
+		_map.clear();
 	}
 
 	public <E extends EventListener> List<E> get(Class<E> clazz) {
 		if (clazz == null) {
-			throw new NullPointerException("clazz can't be null");
+			throw new NullPointerException("clazz can not be null");
 		}
 
-		List<ListenerRegistration> list = map.get(clazz);
+		List<ListenerRegistration> listenerRegistrations = _map.get(clazz);
 
-		if (list == null) {
+		if (listenerRegistrations == null) {
 			return Collections.emptyList();
 		}
 
-		return new ListenerList<E>(list) ;
+		return new ListenerList<>(listenerRegistrations);
 	}
 
 	public <E extends EventListener> void put(
 		Class<E> clazz, ListenerRegistration listenerRegistration) {
 
 		if (clazz == null) {
-			throw new NullPointerException("clazz can't be null");
+			throw new NullPointerException("clazz can not be null");
 		}
 
-		List<ListenerRegistration> list = map.get(clazz);
+		List<ListenerRegistration> list = _map.get(clazz);
 
 		if (list == null) {
-			final List<ListenerRegistration> newList =
-				new CopyOnWriteArrayList<ListenerRegistration>();
+			List<ListenerRegistration> newList = new CopyOnWriteArrayList<>();
 
-			list = map.putIfAbsent(clazz, newList);
+			list = _map.putIfAbsent(clazz, newList);
 
 			if (list == null) {
 				list = newList;
@@ -71,10 +79,10 @@ public class EventListeners {
 		Class<E> clazz, ListenerRegistration listenerRegistration) {
 
 		if (clazz == null) {
-			throw new NullPointerException("clazz can't be null");
+			throw new NullPointerException("clazz can not be null");
 		}
 
-		List<ListenerRegistration> list = map.get(clazz);
+		List<ListenerRegistration> list = _map.get(clazz);
 
 		if (list == null) {
 			return;
@@ -92,27 +100,33 @@ public class EventListeners {
 		}
 	}
 
-	private ConcurrentMap<Class<? extends EventListener>, List<ListenerRegistration>> map =
-		new ConcurrentHashMap<Class<? extends EventListener>, List<ListenerRegistration>>();
+	private final ConcurrentMap
+		<Class<? extends EventListener>, List<ListenerRegistration>> _map =
+			new ConcurrentHashMap<>();
 
-	class ListenerList<R extends EventListener> extends AbstractList<R> {
+	private static class ListenerList<R extends EventListener>
+		extends AbstractList<R> {
 
-		ListenerList(List<ListenerRegistration> list) {
-			this.list = list;
+		public ListenerList(List<ListenerRegistration> listenerRegistrations) {
+			_listenerRegistrations = listenerRegistrations;
 		}
 
 		@Override
 		@SuppressWarnings("unchecked")
 		public R get(int index) {
-			return (R)list.get(index).getT();
+			ListenerRegistration listenerRegistration =
+				_listenerRegistrations.get(index);
+
+			return (R)listenerRegistration.getT();
 		}
 
 		@Override
 		public int size() {
-			return list.size();
+			return _listenerRegistrations.size();
 		}
 
-		private List<ListenerRegistration> list;
+		private final List<ListenerRegistration> _listenerRegistrations;
 
 	}
+
 }

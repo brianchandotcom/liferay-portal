@@ -38,20 +38,20 @@ public class Path {
 		}
 	}
 
-	public String getRequestURI() {
-		return _requestURI;
+	public String getExtension() {
+		return _extension;
 	}
 
 	public String getQueryString() {
 		return _queryString;
 	}
 
-	public String getExtension() {
-		return _extension;
+	public String getRequestURI() {
+		return _requestURI;
 	}
 
-	private final String _requestURI;
-	private final String _queryString;
 	private final String _extension;
+	private final String _queryString;
+	private final String _requestURI;
 
 }

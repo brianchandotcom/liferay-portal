@@ -327,11 +327,16 @@ public class FragmentEntryProcessorHelperTest {
 			).toString(),
 			_group.getGroupId(), _journalConverter);
 
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_companyLocalService.getCompany(_group.getCompanyId()), _group,
+			layout);
+
 		try {
-			_pushServiceContext(layout);
+			_pushServiceContext(layout, themeDisplay);
 
 			Assert.assertEquals(
-				layout.getFriendlyURL(),
+				_portal.getLayoutFriendlyURL(
+					layout, themeDisplay, LocaleUtil.SPAIN),
 				_getFieldValue(
 					JSONUtil.put(
 						"className", JournalArticle.class.getName()
@@ -628,7 +633,9 @@ public class FragmentEntryProcessorHelperTest {
 			fragmentEntryProcessorContext);
 	}
 
-	private void _pushServiceContext(Layout layout) throws Exception {
+	private void _pushServiceContext(Layout layout, ThemeDisplay themeDisplay)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -637,10 +644,6 @@ public class FragmentEntryProcessorHelperTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
-			_companyLocalService.getCompany(_group.getCompanyId()), _group,
-			layout);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 

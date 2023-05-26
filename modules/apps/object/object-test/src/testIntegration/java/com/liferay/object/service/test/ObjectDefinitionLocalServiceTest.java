@@ -84,19 +84,21 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.sql.Connection;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Marco Leo
@@ -1164,7 +1166,8 @@ public class ObjectDefinitionLocalServiceTest {
 				objectRelationship);
 
 		Assert.assertTrue(objectDefinition2.isAccountEntryRestricted());
-		Assert.assertTrue(objectDefinition2.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(
+			objectDefinition2.getAccountEntryRestrictedObjectFieldId() > 0);
 		Assert.assertFalse(objectDefinition2.isSystem());
 
 		// Enable account restriction between two custom object definitions
@@ -1205,7 +1208,7 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testEnableSalesForceAccountEntryRestricted() throws Exception {
 
-		//Enabling account restriction to a custom sales force object definition
+		// Enabling account restriction to a custom salesforce object definition
 
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -1216,46 +1219,50 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField1 = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition1.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
-			false, Collections.emptyList());
+		ObjectField objectField1 =
+			_objectFieldLocalService.addCustomObjectField(
+				null, TestPropsValues.getUserId(), 0,
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
+				true, false, Collections.emptyList());
 
 		objectDefinition1 =
-			_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-				objectField1);
+			_objectDefinitionLocalService.
+				enableSalesForceAccountEntryRestricted(objectField1);
 
 		Assert.assertTrue(objectDefinition1.isAccountEntryRestricted());
-		Assert.assertTrue(objectDefinition1.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(
+			objectDefinition1.getAccountEntryRestrictedObjectFieldId() > 0);
 		Assert.assertFalse(objectDefinition1.isSystem());
-		Assert.assertEquals(objectDefinition1.getStorageType(),
+		Assert.assertEquals(
+			objectDefinition1.getStorageType(),
 			ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 
-		//Enabling account restriction for default storage object definition
-		//using sales force method
+		// Enabling account restriction for default storage object definition
+		// using sales force method
 
 		User user = TestPropsValues.getUser();
 
 		ObjectDefinition objectDefinition2 =
-		_objectDefinitionLocalService.addObjectDefinition(
-			RandomTestUtil.randomString(), user.getUserId());
+			_objectDefinitionLocalService.addObjectDefinition(
+				RandomTestUtil.randomString(), user.getUserId());
 
-		ObjectField objectField2 = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition2.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
-			false, Collections.emptyList());
+		ObjectField objectField2 =
+			_objectFieldLocalService.addCustomObjectField(
+				null, TestPropsValues.getUserId(), 0,
+				objectDefinition2.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
+				true, false, Collections.emptyList());
 
-		objectDefinition2 = _objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-			objectField2);
+		objectDefinition2 =
+			_objectDefinitionLocalService.
+				enableSalesForceAccountEntryRestricted(objectField2);
 
 		Assert.assertFalse(objectDefinition2.isAccountEntryRestricted());
 
@@ -1270,24 +1277,28 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 				Collections.emptyList());
 
-		ObjectField objectField3 = _objectFieldLocalService.addCustomObjectField(
-			null, TestPropsValues.getUserId(), 0,
-			objectDefinition3.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
-			LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie", true,
-			false, Collections.emptyList());
+		ObjectField objectField3 =
+			_objectFieldLocalService.addCustomObjectField(
+				null, TestPropsValues.getUserId(), 0,
+				objectDefinition3.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), false, "charlie",
+				true, false, Collections.emptyList());
 
-		try{
+		try {
 			objectDefinition3 =
-				_objectDefinitionLocalService.enableSalesForceAccountEntryRestricted(
-					objectField3);
+				_objectDefinitionLocalService.
+					enableSalesForceAccountEntryRestricted(objectField3);
 
 			Assert.fail();
-		}catch (ObjectDefinitionAccountEntryRestrictedException objectDefinitionAccountEntryRestrictedException){
+		}
+		catch (ObjectDefinitionAccountEntryRestrictedException
+					objectDefinitionAccountEntryRestrictedException) {
+
 			Assert.assertEquals(
 				"Custom object definitions can only be restricted by a " +
-				"Integer, Long Integer or Text field",
+					"Integer, Long Integer or Text field",
 				objectDefinitionAccountEntryRestrictedException.getMessage());
 
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -1295,8 +1306,7 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-
-		@Test
+	@Test
 	public void testSystemObjectFields() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(

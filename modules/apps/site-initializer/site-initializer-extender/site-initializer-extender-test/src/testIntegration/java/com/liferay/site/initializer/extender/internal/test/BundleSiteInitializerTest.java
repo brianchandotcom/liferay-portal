@@ -1898,6 +1898,8 @@ public class BundleSiteInitializerTest {
 				_group.getCompanyId(), "C_TestObjectDefinition1");
 
 		Assert.assertTrue(objectDefinition1.isAccountEntryRestricted());
+		Assert.assertTrue(
+			objectDefinition1.getAccountEntryRestrictedObjectFieldId() > 0);
 		Assert.assertEquals("salesforce", objectDefinition1.getStorageType());
 		Assert.assertFalse(objectDefinition1.isSystem());
 		Assert.assertEquals(
@@ -1947,9 +1949,9 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition4");
 
+		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
 		Assert.assertTrue(
 			objectDefinition4.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertTrue(objectDefinition4.isAccountEntryRestricted());
 		Assert.assertTrue(objectDefinition4.isEnableCategorization());
 		Assert.assertTrue(objectDefinition4.isEnableComments());
 		Assert.assertEquals("default", objectDefinition4.getStorageType());
@@ -1961,9 +1963,9 @@ public class BundleSiteInitializerTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				_group.getCompanyId(), "C_TestObjectDefinition5");
 
+		Assert.assertTrue(objectDefinition5.isAccountEntryRestricted());
 		Assert.assertTrue(
 			objectDefinition5.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertTrue(objectDefinition5.isAccountEntryRestricted());
 		Assert.assertEquals("default", objectDefinition5.getStorageType());
 		Assert.assertFalse(objectDefinition5.isSystem());
 		Assert.assertEquals(

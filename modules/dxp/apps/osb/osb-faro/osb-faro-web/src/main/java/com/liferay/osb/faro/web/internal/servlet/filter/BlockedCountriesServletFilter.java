@@ -16,6 +16,7 @@ package com.liferay.osb.faro.web.internal.servlet.filter;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
@@ -29,8 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Shinn Lok
@@ -55,7 +54,9 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if ((_ipGeocoder != null) && _isBlockedCountry(httpServletRequest)) {
+		IPGeocoder ipGeocoder = _ipGeocoderSnapshot.get();
+
+		if ((ipGeocoder != null) && _isBlockedCountry(httpServletRequest)) {
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_FORBIDDEN,
 				"This content is not available in your country");
@@ -67,7 +68,9 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 	}
 
 	private boolean _isBlockedCountry(HttpServletRequest httpServletRequest) {
-		IPInfo ipInfo = _ipGeocoder.getIPInfo(httpServletRequest);
+		IPGeocoder ipGeocoder = _ipGeocoderSnapshot.get();
+
+		IPInfo ipInfo = ipGeocoder.getIPInfo(httpServletRequest);
 
 		return _blockedCountryCodes.contains(ipInfo.getCountryCode());
 	}
@@ -77,8 +80,7 @@ public class BlockedCountriesServletFilter extends BaseFilter {
 
 	private static final List<String> _blockedCountryCodes = Arrays.asList(
 		"CU", "IR", "KP", "SY");
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private IPGeocoder _ipGeocoder;
+	private static final Snapshot<IPGeocoder> _ipGeocoderSnapshot =
+		new Snapshot<>(BlockedCountriesServletFilter.class, IPGeocoder.class);
 
 }

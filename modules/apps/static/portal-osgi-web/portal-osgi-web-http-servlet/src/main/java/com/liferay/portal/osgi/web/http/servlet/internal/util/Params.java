@@ -11,15 +11,22 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.util;
 
+/**
+ * @author Raymond Augé
+ */
 public class Params {
 
 	public static String[] append(String[] params, String value) {
 		if (params.length == 0) {
 			return new String[] {value};
 		}
+
 		String[] tmp = new String[params.length + 1];
+
 		System.arraycopy(params, 0, tmp, 0, params.length);
+
 		tmp[params.length] = (value == null) ? Const.BLANK : value;
+
 		return tmp;
 	}
 
@@ -27,17 +34,22 @@ public class Params {
 		if (values == null) {
 			values = new String[] {null};
 		}
+
 		String[] tmp = values;
 		int length = 0;
+
 		if (params != null) {
 			length = params.length;
+
 			tmp = new String[params.length + values.length];
+
 			System.arraycopy(params, 0, tmp, 0, params.length);
 		}
+
 		for (int i = 0; i < values.length; i++) {
-			tmp[length + i] =
-				(values[i] == null) ? Const.BLANK : values[i];
+			tmp[length + i] = (values[i] == null) ? Const.BLANK : values[i];
 		}
+
 		return tmp;
 	}
 

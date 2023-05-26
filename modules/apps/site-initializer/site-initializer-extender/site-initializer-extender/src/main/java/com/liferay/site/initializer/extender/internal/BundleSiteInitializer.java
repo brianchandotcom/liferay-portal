@@ -1326,6 +1326,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
+		Map<String, ObjectDefinition> accountEntryRestrictedObjectDefinitions =
+			new HashMap<>();
+
 		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
 			_objectDefinitionResourceFactory.create();
 
@@ -1365,6 +1368,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				objectDefinitionsPage.fetchFirstItem();
 
 			if (existingObjectDefinition == null) {
+				if (GetterUtil.getBoolean(
+						objectDefinition.getAccountEntryRestricted())) {
+
+					accountEntryRestrictedObjectDefinitions.put(
+						objectDefinition.getName(), objectDefinition);
+				}
+
 				objectDefinition =
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
@@ -1434,9 +1444,35 @@ public class BundleSiteInitializer implements SiteInitializer {
 				listTypeDefinitionIdsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
-		_invoke(
-			() -> _enableObjectDefinitionAccountEntryRestriction(
-				serviceContext));
+		for (Map.Entry<String, ObjectDefinition> entry :
+				accountEntryRestrictedObjectDefinitions.entrySet()) {
+
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(), "C_" + entry.getKey());
+
+			com.liferay.object.model.ObjectField serviceBuilderObjectField =
+				_objectFieldLocalService.fetchObjectField(
+					serviceBuilderObjectDefinition.getObjectDefinitionId(),
+					entry.getValue(
+					).getAccountEntryRestrictedObjectFieldName());
+
+			if (Objects.equals(
+					serviceBuilderObjectDefinition.getStorageType(),
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+				_objectDefinitionLocalService.enableAccountEntryRestricted(
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectFieldId2(
+							serviceBuilderObjectField.getObjectFieldId()));
+			}
+			else {
+				_objectDefinitionLocalService.
+					enableSalesForceAccountEntryRestricted(
+						serviceBuilderObjectField);
+			}
+		}
 
 		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
 			() -> _addOrUpdateObjectEntries(
@@ -4578,56 +4614,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 					accountBriefsJSONObject.getString("externalReferenceCode"),
 					accountRole.getId(), emailAddress);
-		}
-	}
-
-	private void _enableObjectDefinitionAccountEntryRestriction(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/object-definition-restrict-account-entry.json",
-			_servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			com.liferay.object.model.ObjectDefinition
-				serviceBuildObjectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						serviceContext.getCompanyId(),
-						"C_" + jsonObject.getString("objectDefinitionName"));
-
-			if (Objects.equals(
-					serviceBuildObjectDefinition.getStorageType(),
-					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
-				com.liferay.object.model.ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.
-						fetchObjectRelationshipByObjectDefinitionId(
-							serviceBuildObjectDefinition.
-								getObjectDefinitionId(),
-							jsonObject.getString("objectRelationshipName"));
-
-				_objectDefinitionLocalService.enableAccountEntryRestricted(
-					objectRelationship);
-			}
-			else {
-				com.liferay.object.model.ObjectField serviceBuildObjectField =
-					_objectFieldLocalService.fetchObjectField(
-						serviceBuildObjectDefinition.getObjectDefinitionId(),
-						jsonObject.getString("objectField"));
-
-				_objectDefinitionLocalService.
-					enableSalesForceAccountEntryRestricted(
-						serviceBuildObjectField);
-			}
 		}
 	}
 

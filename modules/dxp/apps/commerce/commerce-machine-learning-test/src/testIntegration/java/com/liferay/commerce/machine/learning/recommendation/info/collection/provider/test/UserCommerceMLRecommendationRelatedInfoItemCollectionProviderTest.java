@@ -164,7 +164,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 		return StringBundler.concat(
 			"com.liferay.commerce.machine.learning.internal.recommendation.",
 			"info.collection.provider.",
-			"UserCommerceMLRecommendationRelatedInfoItemCollectionProvider");
+			"UserCommerceMLRecommendationInfoItemCollectionProvider");
 	}
 
 	@Override
@@ -244,6 +244,13 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 		return userCommerceMLRecommendations;
 	}
 
+	private String _getRelatedInfoItemCollectionProviderName() {
+		return StringBundler.concat(
+			"com.liferay.commerce.machine.learning.internal.recommendation.",
+			"info.collection.provider.",
+			"UserCommerceMLRecommendationRelatedInfoItemCollectionProvider");
+	}
+
 	private ServiceContext _getServiceContext(long commerceAccountId)
 		throws Exception {
 
@@ -271,7 +278,7 @@ public class UserCommerceMLRecommendationRelatedInfoItemCollectionProviderTest
 			relatedInfoItemCollectionProvider =
 				infoItemServiceRegistry.getInfoItemService(
 					RelatedInfoItemCollectionProvider.class,
-					getInfoItemCollectionProviderName());
+					_getRelatedInfoItemCollectionProviderName());
 
 		Assert.assertNotNull(relatedInfoItemCollectionProvider);
 

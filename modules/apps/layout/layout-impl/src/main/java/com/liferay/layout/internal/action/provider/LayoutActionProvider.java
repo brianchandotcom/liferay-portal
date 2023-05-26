@@ -15,7 +15,6 @@
 package com.liferay.layout.internal.action.provider;
 
 import com.liferay.application.list.GroupProvider;
-import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -41,7 +39,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
@@ -50,7 +47,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.taglib.security.PermissionsURLTag;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionURL;
@@ -104,23 +100,12 @@ public class LayoutActionProvider {
 				));
 		}
 
-		Map<String, String> valuesMap = HashMapBuilder.put(
-			"collectionPK", layout.getTypeSettingsProperty("collectionPK")
-		).put(
-			"collectionType", layout.getTypeSettingsProperty("collectionType")
-		).put(
-			"plid", String.valueOf(layout.getPlid())
-		).build();
-
 		if (!layout.isTypeCollection() &&
-			Validator.isNotNull(_getAddChildURLTemplate())) {
+			Validator.isNotNull(_getAddLayoutURL(layout.getPlid()))) {
 
 			itemsJSONArray.put(
 				JSONUtil.put(
-					"href",
-					StringUtil.replace(
-						_getAddChildURLTemplate(), StringPool.OPEN_CURLY_BRACE,
-						StringPool.CLOSE_CURLY_BRACE, valuesMap)
+					"href", _getAddLayoutURL(layout.getPlid())
 				).put(
 					"id", "add-child-page"
 				).put(
@@ -132,15 +117,11 @@ public class LayoutActionProvider {
 		}
 
 		if (!layout.isTypeCollection() &&
-			Validator.isNotNull(_getAddChildCollectionURLTemplate())) {
+			Validator.isNotNull(_getAddCollectionLayoutURL(layout.getPlid()))) {
 
 			itemsJSONArray.put(
 				JSONUtil.put(
-					"href",
-					StringUtil.replace(
-						_getAddChildCollectionURLTemplate(),
-						StringPool.OPEN_CURLY_BRACE,
-						StringPool.CLOSE_CURLY_BRACE, valuesMap)
+					"href", _getAddCollectionLayoutURL(layout.getPlid())
 				).put(
 					"id", "add-child-collection-page"
 				).put(
@@ -180,11 +161,7 @@ public class LayoutActionProvider {
 			JSONUtil.put("type", "divider")
 		).put(
 			JSONUtil.put(
-				"href",
-				StringUtil.replace(
-					_getConfigureLayoutURLTemplate(),
-					StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE,
-					valuesMap)
+				"href", _getConfigureLayoutURL(layout.getPlid())
 			).put(
 				"id", "configure"
 			).put(
@@ -197,7 +174,7 @@ public class LayoutActionProvider {
 		);
 
 		if (layout.isTypeCollection() &&
-			Validator.isNotNull(_getViewCollectionItemsURL())) {
+			Validator.isNotNull(_getViewCollectionItemsURL(layout))) {
 
 			itemsJSONArray.put(
 				JSONUtil.put(
@@ -208,11 +185,7 @@ public class LayoutActionProvider {
 						"modalTitle",
 						_language.get(_themeDisplay.getLocale(), "view-items")
 					).put(
-						"url",
-						StringUtil.replace(
-							_getViewCollectionItemsURL(),
-							StringPool.OPEN_CURLY_BRACE,
-							StringPool.CLOSE_CURLY_BRACE, valuesMap)
+						"url", _getViewCollectionItemsURL(layout)
 					)
 				).put(
 					"href", StringPool.POUND
@@ -312,31 +285,7 @@ public class LayoutActionProvider {
 			));
 	}
 
-	private String _getAddChildCollectionURLTemplate() throws Exception {
-		PortletURL addChildCollectionURL = _getAddCollectionLayoutURL();
-
-		if (addChildCollectionURL == null) {
-			return StringPool.BLANK;
-		}
-
-		return StringBundler.concat(
-			addChildCollectionURL, StringPool.AMPERSAND,
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
-	}
-
-	private String _getAddChildURLTemplate() throws Exception {
-		PortletURL addLayoutURL = _getAddLayoutURL();
-
-		if (addLayoutURL == null) {
-			return StringPool.BLANK;
-		}
-
-		return StringBundler.concat(
-			addLayoutURL, StringPool.AMPERSAND,
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
-	}
-
-	private PortletURL _getAddCollectionLayoutURL() throws Exception {
+	private String _getAddCollectionLayoutURL(long plid) {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
@@ -357,10 +306,12 @@ public class LayoutActionProvider {
 			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
 			"privateLayout", _isPrivateLayout()
-		).buildPortletURL();
+		).setParameter(
+			"selPlid", plid
+		).buildString();
 	}
 
-	private PortletURL _getAddLayoutURL() throws Exception {
+	private String _getAddLayoutURL(long plid) {
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isStaged() && !scopeGroup.isStagingGroup()) {
@@ -381,7 +332,9 @@ public class LayoutActionProvider {
 			"groupId", _themeDisplay.getSiteGroupId()
 		).setParameter(
 			"privateLayout", _isPrivateLayout()
-		).buildPortletURL();
+		).setParameter(
+			"selPlid", plid
+		).buildString();
 	}
 
 	private String _getBackURL() {
@@ -402,7 +355,7 @@ public class LayoutActionProvider {
 		return backURL;
 	}
 
-	private String _getConfigureLayoutURL() throws Exception {
+	private String _getConfigureLayoutURL(long plid) throws Exception {
 		PortletURL configureLayoutURL = PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
@@ -431,14 +384,9 @@ public class LayoutActionProvider {
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 		configureLayoutURL.setParameter(
 			"privateLayout", String.valueOf(_isPrivateLayout()));
+		configureLayoutURL.setParameter("selPlid", String.valueOf(plid));
 
 		return configureLayoutURL.toString();
-	}
-
-	private String _getConfigureLayoutURLTemplate() throws Exception {
-		return StringBundler.concat(
-			_getConfigureLayoutURL(), StringPool.AMPERSAND,
-			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid={plid}");
 	}
 
 	private String _getCopyLayoutRenderURL(Layout layout) {
@@ -579,7 +527,7 @@ public class LayoutActionProvider {
 		return _redirect;
 	}
 
-	private String _getViewCollectionItemsURL() throws Exception {
+	private String _getViewCollectionItemsURL(Layout layout) throws Exception {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			_httpServletRequest, AssetListEntry.class.getName(),
 			PortletProvider.Action.BROWSE);
@@ -588,27 +536,26 @@ public class LayoutActionProvider {
 			return StringPool.BLANK;
 		}
 
-		Layout layout = _themeDisplay.getLayout();
+		Layout curLayout = _themeDisplay.getLayout();
 
 		String redirect = PortalUtil.getLayoutRelativeURL(
 			_themeDisplay.getLayout(), _themeDisplay);
 
-		if (layout.isTypeAssetDisplay() || layout.isTypeControlPanel()) {
+		if (curLayout.isTypeAssetDisplay() || curLayout.isTypeControlPanel()) {
 			redirect = ParamUtil.getString(
 				_httpServletRequest, "redirect", redirect);
 		}
 
 		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter(
+			"collectionPK", layout.getTypeSettingsProperty("collectionPK"));
+		portletURL.setParameter(
+			"collectionType", layout.getTypeSettingsProperty("collectionType"));
 		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		return StringBundler.concat(
-			portletURL, StringPool.AMPERSAND,
-			PortalUtil.getPortletNamespace(AssetListPortletKeys.ASSET_LIST),
-			"collectionPK={collectionPK}&",
-			PortalUtil.getPortletNamespace(AssetListPortletKeys.ASSET_LIST),
-			"collectionType={collectionType}");
+		return portletURL.toString();
 	}
 
 	private boolean _hasScopeGroup(Layout layout) throws Exception {

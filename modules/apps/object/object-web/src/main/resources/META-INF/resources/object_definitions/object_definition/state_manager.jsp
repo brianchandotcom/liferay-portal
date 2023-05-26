@@ -29,9 +29,27 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= objectDefinitionsStateManagerDisplayContext.getAPIURL() %>"
-	fdsActionDropdownItems="<%= objectDefinitionsStateManagerDisplayContext.getFDSActionDropdownItems() %>"
-	id="<%= ObjectDefinitionsFDSNames.OBJECT_STATE_MANAGER %>"
-	style="fluid"
-/>
+<div>
+	<react:component
+		module="js/components/StateManager/StateManager"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", objectDefinitionsStateManagerDisplayContext.getAPIURL()
+			).put(
+				"creationMenu", objectDefinitionsStateManagerDisplayContext.getCreationMenu()
+			).put(
+				"formName", "fm"
+			).put(
+				"id", ObjectDefinitionsFDSNames.OBJECT_STATE_MANAGER
+			).put(
+				"items", objectDefinitionsStateManagerDisplayContext.getFDSActionDropdownItems()
+			).put(
+				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
+			).put(
+				"style", "fluid"
+			).put(
+				"url", objectDefinitionsStateManagerDisplayContext.getEditObjectValidationURL()
+			).build()
+		%>'
+	/>
+</div>

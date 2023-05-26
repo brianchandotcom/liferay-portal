@@ -1,0 +1,286 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableObjectEntryHistory": false,
+	"externalReferenceCode": "Contact",
+	"label": {
+		"en_US": "Contact"
+	},
+	"name": "Contact",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "7e31a3b3-f8d4-cc40-3b0a-e3ccdb4c036b",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "fbe87fd7-6e8c-7503-7701-cd4b2738b3fa",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "Email",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Email"
+			},
+			"name": "email",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "754f07ee-1209-2154-c97b-f230b513b09f",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "FirstName",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "First Name"
+			},
+			"name": "firstName",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "",
+			"externalReferenceCode": "8eed2d39-57ea-066d-0518-5b7ea1506f62",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "LastName",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Last Name"
+			},
+			"name": "lastName",
+			"objectFieldSettings": [
+			],
+			"required": true,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"defaultValue": "",
+			"externalReferenceCode": "7d5898d3-a29f-2b55-f018-512f4fb6bbcd",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "Phone",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Phone"
+			},
+			"name": "phone",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "",
+			"externalReferenceCode": "dac9dd31-5fcf-4309-228f-b19cbdb9df6f",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Status"
+			},
+			"name": "status",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectViews": [
+		{
+			"defaultObjectView": true,
+			"name": {
+				"en_US": "Contacts view"
+			},
+			"objectDefinitionExternalReferenceCode": "Contact",
+			"objectViewColumns": [
+				{
+					"label": {
+						"en_US": "First Name"
+					},
+					"objectFieldName": "firstName",
+					"priority": 0
+				},
+				{
+					"label": {
+						"en_US": "Last Name"
+					},
+					"objectFieldName": "lastName",
+					"priority": 1
+				},
+				{
+					"label": {
+						"en_US": "Phone"
+					},
+					"objectFieldName": "phone",
+					"priority": 2
+				},
+				{
+					"label": {
+						"en_US": "Email"
+					},
+					"objectFieldName": "email",
+					"priority": 3
+				}
+			],
+			"objectViewFilterColumns": [
+			],
+			"objectViewSortColumns": [
+				{
+					"objectFieldName": "firstName",
+					"priority": 0,
+					"sortOrder": "asc"
+				}
+			]
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Contacts"
+	},
+	"portlet": false,
+	"restContextPath": "/o/c/contacts",
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"storageType": "salesforce",
+	"system": false,
+	"titleObjectFieldName": "id"
+}

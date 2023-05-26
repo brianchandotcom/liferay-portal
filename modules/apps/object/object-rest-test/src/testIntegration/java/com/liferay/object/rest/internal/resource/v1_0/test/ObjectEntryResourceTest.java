@@ -221,6 +221,21 @@ public class ObjectEntryResourceTest {
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3);
 
+		_objectDefinition4 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_4, false),
+				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
+					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
+					null, RandomTestUtil.randomString(),
+					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, false, false)));
+
+		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
+
 		_siteScopedObjectDefinition1 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -272,12 +287,24 @@ public class ObjectEntryResourceTest {
 				_objectRelationship3);
 		}
 
+		if (_objectRelationship4 != null) {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				_objectRelationship4);
+		}
+
+		if (_objectRelationship5 != null) {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				_objectRelationship5);
+		}
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition3);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition4);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_siteScopedObjectDefinition1);
 
@@ -3150,6 +3177,69 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1);
 	}
 
+	@FeatureFlags("LPS-165819")
+	@Test
+	public void testGetNestedFieldAndFieldDetailsInRelationshipsWithSystemObjectDefinition()
+		throws Exception {
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _userSystemObjectDefinition,
+			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
+			_userSystemObjectDefinition, _objectDefinition2,
+			_userAccountJSONObject.getLong("id"), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationship3 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship4 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition3, _userSystemObjectDefinition,
+			_objectEntry3.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationship5 = _addObjectRelationshipAndRelateObjectEntries(
+			_userSystemObjectDefinition, _objectDefinition4,
+			_userAccountJSONObject.getLong("id"), _objectEntry4.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		String fieldName = StringBundler.concat(
+			_objectRelationship1.getName(), ".", _objectRelationship2.getName(),
+			".", _objectRelationship3.getName(), ".",
+			_objectRelationship4.getName(), ".", _objectRelationship5.getName(),
+			".", _OBJECT_FIELD_NAME_4);
+
+		String nestedFieldName = StringBundler.concat(
+			_objectRelationship1.getName(), ",", _objectRelationship2.getName(),
+			",", _objectRelationship3.getName(), ",",
+			_objectRelationship4.getName(), ",",
+			_objectRelationship5.getName());
+
+		String[] expectedFieldNames = {
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_objectRelationship3.getName(), _objectRelationship4.getName(),
+			_objectRelationship5.getName()
+		};
+
+		Type[] types = {
+			Type.ONE_TO_MANY, Type.MANY_TO_MANY, Type.ONE_TO_MANY,
+			Type.MANY_TO_MANY, Type.ONE_TO_MANY
+		};
+
+		String[][] objectFieldNamesAndObjectFieldValues = {
+			{"", ""}, {"", ""}, {"", ""}, {"", ""}, {"", ""},
+			{_OBJECT_FIELD_NAME_4, String.valueOf(_OBJECT_FIELD_VALUE_4)}
+		};
+
+		_testGetNestedFieldAndFieldDetailsInRelationships(
+			expectedFieldNames, fieldName, 5, nestedFieldName,
+			_objectDefinition1, objectFieldNamesAndObjectFieldValues, types);
+	}
+
 	@Test
 	public void testGetNestedFieldDetailsInRelationshipsWithCustomObjectDefinition()
 		throws Exception {
@@ -4921,6 +5011,40 @@ public class ObjectEntryResourceTest {
 			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
 	}
 
+	private void _assertNestedFieldsFieldsInRelationships(
+		int currentDepth, int depth, JSONObject jsonObject,
+		String[] expectedFieldNames,
+		String[][] objectFieldNamesAndObjectFieldValues, Type[] types) {
+
+		if (objectFieldNamesAndObjectFieldValues[currentDepth][0] == null) {
+			Assert.assertNull(jsonObject);
+		}
+		else {
+			Assert.assertEquals(
+				objectFieldNamesAndObjectFieldValues[currentDepth][1],
+				jsonObject.getString(
+					objectFieldNamesAndObjectFieldValues[currentDepth][0]));
+		}
+
+		if ((currentDepth == depth) ||
+			(currentDepth ==
+				PropsValues.OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH)) {
+
+			Assert.assertEquals(
+				Arrays.toString(objectFieldNamesAndObjectFieldValues),
+				currentDepth + 1, objectFieldNamesAndObjectFieldValues.length);
+
+			return;
+		}
+
+		_assertNestedFieldsFieldsInRelationships(
+			currentDepth + 1, depth,
+			_getRelatedJSONObject(
+				jsonObject, expectedFieldNames[currentDepth],
+				types[currentDepth]),
+			expectedFieldNames, objectFieldNamesAndObjectFieldValues, types);
+	}
+
 	private void _assertNestedFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,
 		String nestedFieldName, String[][] objectFieldNamesAndObjectFieldValues,
@@ -4965,6 +5089,7 @@ public class ObjectEntryResourceTest {
 			objectEntryId);
 
 		Assert.assertEquals(
+			"_assertObjectEntryField",
 			MapUtil.getString(objectEntry.getValues(), objectFieldName),
 			objectFieldValue);
 	}
@@ -5128,6 +5253,39 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
 	}
 
+	private void _testGetNestedFieldAndFieldDetailsInRelationships(
+			String[] expectedFieldNames, String fieldName,
+			Integer nestedFieldDepth, String nestedFieldName,
+			ObjectDefinition objectDefinition,
+			String[][] objectFieldNamesAndObjectFieldValues, Type[] types)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			objectDefinition.getRESTContextPath(), "?nestedFields=",
+			nestedFieldName);
+
+		if (nestedFieldDepth != null) {
+			endpoint += "&nestedFieldsDepth=" + nestedFieldDepth;
+		}
+
+		if (fieldName != null) {
+			endpoint += "&fields=" + fieldName;
+		}
+
+		JSONObject jsonObject = HTTPTestUtil.invoke(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		_assertNestedFieldsFieldsInRelationships(
+			0, GetterUtil.getInteger(nestedFieldDepth, 1), itemJSONObject,
+			expectedFieldNames, objectFieldNamesAndObjectFieldValues, types);
+	}
+
 	private void _testGetNestedFieldDetailsInRelationships(
 			String expectedFieldName, Integer nestedFieldDepth,
 			String nestedFieldName, ObjectDefinition objectDefinition,
@@ -5255,6 +5413,9 @@ public class ObjectEntryResourceTest {
 	private static final String _OBJECT_FIELD_NAME_3 =
 		"x" + RandomTestUtil.randomString();
 
+	private static final String _OBJECT_FIELD_NAME_4 =
+		"x" + RandomTestUtil.randomString();
+
 	private static final String _OBJECT_FIELD_NAME_MULTISELECT_PICKLIST =
 		"x" + RandomTestUtil.randomString();
 
@@ -5263,6 +5424,8 @@ public class ObjectEntryResourceTest {
 	private static final int _OBJECT_FIELD_VALUE_2 = RandomTestUtil.randomInt();
 
 	private static final int _OBJECT_FIELD_VALUE_3 = RandomTestUtil.randomInt();
+
+	private static final int _OBJECT_FIELD_VALUE_4 = RandomTestUtil.randomInt();
 
 	private static final String _TAG_1 = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());
@@ -5284,6 +5447,7 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;
 	private ObjectDefinition _objectDefinition3;
+	private ObjectDefinition _objectDefinition4;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -5291,6 +5455,7 @@ public class ObjectEntryResourceTest {
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;
 	private ObjectEntry _objectEntry3;
+	private ObjectEntry _objectEntry4;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
@@ -5298,6 +5463,8 @@ public class ObjectEntryResourceTest {
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
 	private ObjectRelationship _objectRelationship3;
+	private ObjectRelationship _objectRelationship4;
+	private ObjectRelationship _objectRelationship5;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

@@ -515,7 +515,7 @@ public class DLStoreImpl implements DLStore {
 	private static volatile StoreAreaProcessor _storeAreaProcessor =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			StoreAreaProcessor.class, DLStoreImpl.class, "_storeAreaProcessor",
-			"(default=true)", false, true);
+			"(store.type=" + PropsValues.DL_STORE_IMPL + ")", false, true);
 	private static Store _wrappedStore = new StoreAreaAwareStoreWrapper(
 		() -> _store, () -> _storeAreaProcessor);
 

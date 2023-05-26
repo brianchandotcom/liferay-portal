@@ -93,11 +93,8 @@ export function ObjectLayoutField({
 					</ClayLabel>
 
 					{Liferay.FeatureFlags['LPS-170122'] &&
-						objectField.objectFieldSettings?.find(
-							(fieldSetting: ObjectFieldSetting) =>
-								fieldSetting.value === 'true' ||
-								fieldSetting.value === 'conditional'
-						) && (
+						(objectField.readOnly === 'true' ||
+							objectField.readOnly === 'conditional') && (
 							<ClayLabel
 								className="label-inside-custom-select"
 								displayType="secondary"

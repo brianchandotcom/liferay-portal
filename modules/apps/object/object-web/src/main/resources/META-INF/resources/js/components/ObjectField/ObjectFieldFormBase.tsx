@@ -256,14 +256,7 @@ export default function ObjectFieldFormBase({
 			return false;
 		}
 
-		const readOnlySetting = values.objectFieldSettings?.find(
-			(fieldSetting) => fieldSetting.name === 'readOnly'
-		);
-
-		if (
-			readOnlySetting?.value === 'true' ||
-			readOnlySetting?.value === 'conditional'
-		) {
+		if (values.readOnly === 'true' || values.readOnly === 'conditional') {
 			return true;
 		}
 

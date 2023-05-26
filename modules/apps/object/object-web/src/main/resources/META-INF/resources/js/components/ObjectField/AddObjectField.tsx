@@ -63,10 +63,25 @@ function ModalAddObjectField({
 		indexedLanguageId: null,
 		listTypeDefinitionExternalReferenceCode: '',
 		listTypeDefinitionId: 0,
+		readOnly: 'false',
+		readOnlyConditionExpression: '',
 		required: false,
 	};
 
 	const onSubmit = async (field: Partial<ObjectField>) => {
+		if (
+			field.businessType === 'Aggregation' ||
+			field.businessType === 'Formula'
+		) {
+			field.readOnly = 'true';
+			delete field.readOnlyConditionExpression;
+		}
+
+		if (!Liferay.FeatureFlags['LPS-170122']) {
+			delete field.readOnly;
+			delete field.readOnlyConditionExpression;
+		}
+
 		if (field.label) {
 			field = {
 				...field,

@@ -123,24 +123,6 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
-	readOnly?:
-		| string
-		| number
-		| boolean
-		| Partial<Liferay.Language.FullyLocalizedValue<string>>
-		| ObjectFieldPicklistSetting
-		| NameValueObject[]
-		| ObjectFieldFilterSetting[]
-		| undefined;
-	readOnlyScript?:
-		| string
-		| number
-		| boolean
-		| Partial<Liferay.Language.FullyLocalizedValue<string>>
-		| ObjectFieldPicklistSetting
-		| NameValueObject[]
-		| ObjectFieldFilterSetting[]
-		| undefined;
 	script?:
 		| string
 		| number

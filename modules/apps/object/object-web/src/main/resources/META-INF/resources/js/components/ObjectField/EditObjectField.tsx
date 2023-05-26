@@ -60,6 +60,7 @@ const initialValues: Partial<ObjectField> = {
 	listTypeDefinitionId: 0,
 	name: '',
 	objectFieldSettings: [],
+	readOnlyConditionExpression: '',
 	relationshipType: '',
 	required: false,
 	state: false,

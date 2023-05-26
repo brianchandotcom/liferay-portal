@@ -102,14 +102,13 @@ public class ObjectFieldLocalServiceUtil {
 			String dbColumnName, String dbTableName, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			Map<java.util.Locale, String> labelMap, String name,
-			String readOnly, String readOnlyConditionExpression,
 			boolean required, boolean state)
 		throws PortalException {
 
 		return getService().addOrUpdateSystemObjectField(
 			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
 			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-			name, readOnly, readOnlyConditionExpression, required, state);
+			name, required, state);
 	}
 
 	public static ObjectField addSystemObjectField(

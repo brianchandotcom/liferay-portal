@@ -101,14 +101,13 @@ public class ObjectFieldLocalServiceWrapper
 			String dbColumnName, String dbTableName, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
-			String readOnly, String readOnlyConditionExpression,
 			boolean required, boolean state)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addOrUpdateSystemObjectField(
 			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
 			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-			name, readOnly, readOnlyConditionExpression, required, state);
+			name, required, state);
 	}
 
 	@Override

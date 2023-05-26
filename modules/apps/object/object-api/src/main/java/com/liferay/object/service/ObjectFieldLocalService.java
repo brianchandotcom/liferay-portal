@@ -112,8 +112,8 @@ public interface ObjectFieldLocalService
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<Locale, String> labelMap, String name, String readOnly,
-			String readOnlyConditionExpression, boolean required, boolean state)
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean state)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

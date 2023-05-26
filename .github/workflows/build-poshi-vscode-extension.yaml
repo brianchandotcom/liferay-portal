@@ -63,6 +63,16 @@ jobs:
                       npm_config_arch: arm64
                       os: macos-latest
                       platform: darwin
+    release:
+        if: ${{github.event.inputs.release-to-marketplace == 'true'}}
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v3.0.2
+            - env:
+                  VSCE_PAT: ${{secrets.VSCE_PAT}}
+              name: publish to marketplace
+              run: npx @vscode/vsce publish --skip-duplicate --packagePath $(find . -iname *.vsix)
 name: Build Poshi VSCode Extension
 on:
     workflow_dispatch:

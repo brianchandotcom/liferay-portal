@@ -2195,6 +2195,8 @@ definition {
 
 		OpenIDConnect.acceptConditions();
 
+		OpenIDConnect.acceptConditions();
+
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 

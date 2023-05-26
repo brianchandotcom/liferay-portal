@@ -35,7 +35,7 @@ definition {
 		var totalCostOfExpense = 0;
 
 		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "pmu@liferay.com";
+			var userEmailAddress = "pmu@partner.com";
 		}
 
 		if (!(isSet(accountEntryName))) {

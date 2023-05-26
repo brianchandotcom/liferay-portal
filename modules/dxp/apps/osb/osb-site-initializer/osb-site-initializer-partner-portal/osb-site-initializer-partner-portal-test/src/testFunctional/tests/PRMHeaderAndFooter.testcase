@@ -17,28 +17,14 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUserWithRole(
-				roleTitle = "Partner Marketing User (PMU)",
-				userEmailAddress = "pmu@liferay.com",
-				userFirstName = "pmu",
-				userLastName = "pmu",
-				userScreenName = "pmu");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "pmu@liferay.com");
-		}
-
 		task ("Create a new Partner Portal Site") {
 			PRMUtils.addSite();
 		}
 
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
-				userLoginFullName = "pmu");
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
 
 			PRMUtils.gotoPRM();
 		}

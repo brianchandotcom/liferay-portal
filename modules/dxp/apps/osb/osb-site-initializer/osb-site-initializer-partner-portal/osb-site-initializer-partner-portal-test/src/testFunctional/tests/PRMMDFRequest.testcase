@@ -27,8 +27,8 @@ definition {
 
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
-				userLoginFullName = "pmu");
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
 
 			PRMUtils.gotoPRM();
 		}
@@ -209,7 +209,7 @@ definition {
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
-				userEmailAddress = "pmu@liferay.com");
+				userEmailAddress = "pmu@partner.com");
 		}
 
 		task ("And two MDF's are created with different accounts") {
@@ -277,7 +277,7 @@ definition {
 
 			JSONAccountEntryUser.addExistUsertoAccount(
 				accountEntryName = "Company Name 2",
-				userEmailAddress = "pmu@liferay.com");
+				userEmailAddress = "pmu@partner.com");
 		}
 
 		task ("And I add two different MDF's") {
@@ -686,8 +686,8 @@ definition {
 
 		task ("When the Manager goes to the MDF Detail page") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
 			PRMUtils.gotoPRM();
 
@@ -973,8 +973,8 @@ definition {
 
 		task ("When a manager approves the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
 			PRMUtils.gotoPRM();
 
@@ -1005,8 +1005,8 @@ definition {
 
 		task ("When a manager approves the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
 			PRMUtils.gotoPRM();
 
@@ -1021,8 +1021,8 @@ definition {
 
 		task ("And a partner makes a claim") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
-				userLoginFullName = "pmu");
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
 
 			PRMUtils.gotoPRM();
 
@@ -1058,8 +1058,8 @@ definition {
 
 		task ("When a manager approves the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
 			PRMUtils.gotoPRM();
 
@@ -1074,8 +1074,8 @@ definition {
 
 		task ("And a partner makes two claims") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
-				userLoginFullName = "pmu");
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing Manager");
 
 			PRMUtils.gotoPRM();
 

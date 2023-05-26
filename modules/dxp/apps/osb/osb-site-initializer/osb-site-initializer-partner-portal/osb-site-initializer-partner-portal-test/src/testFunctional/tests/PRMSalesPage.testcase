@@ -15,20 +15,6 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a new user") {
-			JSONUser.addUserWithRole(
-				roleTitle = "Partner Sales User (PSU)",
-				userEmailAddress = "psu@liferay.com",
-				userFirstName = "psu",
-				userLastName = "psu",
-				userScreenName = "psu");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "psu@liferay.com");
-		}
-
 		task ("Create a new Partner Portal Site") {
 			PRMUtils.addSite();
 		}

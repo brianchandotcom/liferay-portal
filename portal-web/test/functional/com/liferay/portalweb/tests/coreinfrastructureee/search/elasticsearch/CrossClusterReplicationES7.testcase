@@ -163,6 +163,33 @@ definition {
 			key_untracked = 0);
 	}
 
+	@priority = 4
+	test CanReindexWithConcurrentExecutionMode {
+		property custom.properties = "feature.flag.LPS-177664=true";
+		property search.environment.suite.exclude = "true";
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#CanReindexWithConcurrentExecutionMode";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Guest",
+			title = "WC Title");
+
+		SearchAdministration.executeReindex(concurrentReindex = "true");
+
+		task ("Assert that the web content shows up after the concurrent reindex completes") {
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "WC Title",
+				searchAssetType = "Web Content Article",
+				searchTerm = "WC Title");
+		}
+	}
+
 	@ignore = "true"
 	@priority = 3
 	test CleanAndReindexWorkflowMetricsInstances {

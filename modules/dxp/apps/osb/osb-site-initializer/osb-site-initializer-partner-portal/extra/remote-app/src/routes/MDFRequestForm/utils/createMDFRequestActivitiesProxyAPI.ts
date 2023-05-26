@@ -32,7 +32,8 @@ export default async function createMDFRequestActivitiesProxyAPI(
 			ResourceName.ACTIVITY_SALESFORCE,
 			mdfRequestActivity
 		);
-	} else {
+	}
+	else {
 		dtoMDFRequestActivitySFResponse = await createMDFRequestActivities(
 			ResourceName.ACTIVITY_SALESFORCE,
 			mdfRequestActivity,
@@ -52,7 +53,8 @@ export default async function createMDFRequestActivitiesProxyAPI(
 				mdfRequestDTO,
 				dtoMDFRequestActivitySFResponse.externalReferenceCode
 			);
-		} else {
+		}
+		else {
 			mdfRequestActivity.submitted = true;
 
 			dtoMDFRequestResponse = await createMDFRequestActivities(

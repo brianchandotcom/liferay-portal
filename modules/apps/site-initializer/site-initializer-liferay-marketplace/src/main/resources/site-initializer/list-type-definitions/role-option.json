@@ -1,0 +1,27 @@
+{
+	"externalReferenceCode": "ROLEOPTION",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "ADMINOPTION",
+			"key": "admin",
+			"name": "Admin",
+			"name_i18n": {
+				"en-US": "Admin"
+			},
+			"type": ""
+		},
+		{
+			"externalReferenceCode": "APPEDITOROPTION",
+			"key": "appEditor",
+			"name": "App Editor",
+			"name_i18n": {
+				"en-US": "App Editor"
+			},
+			"type": ""
+		}
+	],
+	"name": "RolesOption",
+	"name_i18n": {
+		"en-US": "RolesOption"
+	}
+}

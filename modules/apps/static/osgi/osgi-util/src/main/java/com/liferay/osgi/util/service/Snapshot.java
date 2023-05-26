@@ -24,8 +24,11 @@ import java.util.function.Supplier;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -107,6 +110,36 @@ public class Snapshot<T> {
 
 					if (serviceReference == null) {
 						return null;
+					}
+
+					try {
+						bundleContext.addServiceListener(
+							new ServiceListener() {
+
+								@Override
+								public void serviceChanged(
+									ServiceEvent serviceEvent) {
+
+									if (serviceEvent.getType() ==
+											ServiceEvent.UNREGISTERING) {
+
+										serviceDCLSingleton.destroy(null);
+
+										bundleContext.removeServiceListener(
+											this);
+									}
+								}
+
+							},
+							StringBundler.concat(
+								"(", Constants.SERVICE_ID, "=",
+								serviceReference.getProperty(
+									Constants.SERVICE_ID),
+								")"));
+					}
+					catch (InvalidSyntaxException invalidSyntaxException) {
+						return ReflectionUtil.throwException(
+							invalidSyntaxException);
 					}
 
 					return bundleContext.getService(serviceReference);

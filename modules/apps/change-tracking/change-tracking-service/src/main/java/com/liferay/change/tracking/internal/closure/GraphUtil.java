@@ -19,7 +19,6 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,7 +28,7 @@ import java.util.Set;
 public class GraphUtil {
 
 	public static Map<Node, Collection<Node>> getNodeMap(
-		List<Node> nodes, Map<Node, Collection<Edge>> edgeMap) {
+		Set<Node> nodes, Map<Node, Collection<Edge>> edgeMap) {
 
 		Deque<Edge> backtraceEdges = new LinkedList<>();
 		Set<Edge> cyclingEdges = new HashSet<>();

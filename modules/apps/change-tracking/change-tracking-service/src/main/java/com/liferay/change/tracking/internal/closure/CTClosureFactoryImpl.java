@@ -49,6 +49,7 @@ import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -215,7 +216,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			}
 		}
 
-		return GraphUtil.getNodeMap(nodes, edgeMap);
+		return GraphUtil.getNodeMap(new HashSet<>(nodes), edgeMap);
 	}
 
 	private List<Long> _collectParentPrimaryKeys(

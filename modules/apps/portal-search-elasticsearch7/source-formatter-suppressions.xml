@@ -3,6 +3,6 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CompanyIterationCheck" files=".*" />
-		<suppress checks="UnprocessedExceptionCheck" files="portal-search-elasticsearch7-impl/src/main/java/com/liferay/portal/search/elasticsearch7/internal/index/CompanyIndexFactory\.java" />
+		<suppress checks="UnprocessedExceptionCheck" files="portal-search-elasticsearch7-impl/src/main/java/com/liferay/portal/search/elasticsearch7/internal/index/CompanyIndexFactoryHelper\.java" />
 	</checkstyle>
 </suppressions>

@@ -86,7 +86,32 @@ definition {
 	@description = "Story ID: LPS-146333 | Test Summary: Verify if the center status No Changes Made change to Unsaved Changes after any part of the form is modified"
 	@ignore = "true"
 	@priority = 3
-	test IfCenterStatusChangeToUnsavedChanges {
+	test AssertStatusChangeToUnsavedChanges {
+		property test.name.skip.portal.instance = "RaylifeAPContactInfo#AssertStatusChangeToUnsavedChanges";
+
+		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
+
+		task ("Given that an user start a new application flow and Contact Info") {
+			RaylifeApplicationModal.openNewApplicationFlow(
+				insurance = "Personal",
+				product = "Auto");
+		}
+
+		task ("Then assert if the center status No Changes Made change to Unsaved Changes after any part of the form is modified") {
+			AssertTextEquals(
+				key_status = "No Changes Made",
+				locator1 = "RaylifeApplicationModal#CENTER_STATUS",
+				value1 = "No Changes Made");
+
+			RaylifeApplicationModal.typeNewApplicationInfoFields(
+				label = "firstName",
+				value = "Testing");
+
+			AssertTextEquals(
+				key_status = "Unsaved Changes",
+				locator1 = "RaylifeApplicationModal#CENTER_STATUS",
+				value1 = "Unsaved Changes");
+		}
 	}
 
 	@description = "Story ID: LPS-146333 | Test Summary: Verify if Date picker works"

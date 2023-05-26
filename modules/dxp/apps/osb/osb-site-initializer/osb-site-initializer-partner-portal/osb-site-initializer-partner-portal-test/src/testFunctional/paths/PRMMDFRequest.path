@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>EDIT_MDF_BUTTON</td>
-	<td>//div[contains(@class,'edit-button-mdf-claim')]//a[contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'edit-button-mdf-request')]//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

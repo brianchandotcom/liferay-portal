@@ -27,12 +27,12 @@ definition {
 
 		task ("Login with the Partner user and create an MDF Request") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
+				userLoginEmailAddress = "pmu@partner.com",
 				userLoginFullName = "pmu");
 
 			var requestId = JSONPRM.createMDFRequest(
 				campaignName = "Campaign Name",
-				userEmailAddress = "pmu@liferay.com");
+				userEmailAddress = "pmu@partner.com");
 		}
 
 		task ("Go to the created MDF Request") {
@@ -58,7 +58,7 @@ definition {
 	test ManagerCanEditMDFInApprovedStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -94,7 +94,7 @@ definition {
 	test ManagerCanEditMDFInCanceledStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -130,7 +130,7 @@ definition {
 	test ManagerCanEditMDFInMarketingDirectorReviewStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -166,7 +166,7 @@ definition {
 	test ManagerCanEditMDFInPendingMarketingReviewStatus {
 		task ("Given that the manager goes to the submitted MDF, which is as 'Pending Marketing Review'") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
@@ -198,7 +198,7 @@ definition {
 	test ManagerCanEditMDFInRejectedStatus {
 		task ("Given that the manager goes to the submitted MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
+				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "cmm");
 
 			PRMNavigator.gotoMDF(requestId = ${staticRequestId});

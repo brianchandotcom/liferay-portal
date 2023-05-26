@@ -27,20 +27,20 @@ definition {
 
 		task ("Login with the Partner user and create an MDF Request") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
-				userLoginFullName = "pmu");
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
 
 			var requestId = JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
 				secondActivityName = "Activity Name 2",
 				secondBudgetValueList = 1000,
-				userEmailAddress = "pmu@liferay.com");
+				userEmailAddress = "pmu@partner.com");
 		}
 
 		task ("Login with the Manager user and approves the created MDF") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
 			JSONPRM.changeMDFStatus(
 				mdfStatus = "Approved",
@@ -49,8 +49,8 @@ definition {
 
 		task ("Login with the Partner user and create an MDF Claim") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "pmu@liferay.com",
-				userLoginFullName = "pmu");
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
 
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
@@ -100,7 +100,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "Approved",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("And the partner goes to the approved claim") {
@@ -115,7 +115,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "In Finance Review",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("And the partner goes to the claim") {
@@ -130,7 +130,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "Claim Paid",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("And the partner goes to the claim") {
@@ -164,7 +164,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "More Info Requested",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("And the partner goes to edit the approved claim") {
@@ -191,11 +191,7 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given that the manager creates a new claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
-
+		task ("Given that the partner creates a new claim") {
 			PRMNavigator.openSitePage(pageName = "MDF Requests");
 
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
@@ -211,6 +207,10 @@ definition {
 		}
 
 		task ("When the manager goes to the created claim in 'Pending Marketing Review' status") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
@@ -226,7 +226,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "Approved",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -243,7 +243,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "In Finance Review",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -260,7 +260,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "Claim Paid",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
@@ -342,7 +342,7 @@ definition {
 			JSONPRM.changeClaimStatus(
 				claimId = ${staticClaimId1},
 				claimStatus = "More Info Requested",
-				userEmailAddress = "cmm@liferay.com");
+				userEmailAddress = "cmm@liferaytest.com");
 		}
 
 		task ("And the partner goes to edit the approved claim") {

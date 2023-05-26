@@ -27,8 +27,8 @@ definition {
 
 		task ("Go to Partner Portal and login with the created user") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferay.com",
-				userLoginFullName = "cmm");
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
 
 			PRMUtils.gotoPRM();
 		}

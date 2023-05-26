@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
+import {usePrevious} from '@liferay/frontend-js-react-web';
 import {addParams, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -259,10 +260,13 @@ const ImagePicker = ({
 };
 
 const Main = ({
+	defaultLanguageId,
 	displayErrors,
 	editingLanguageId,
 	errorMessage,
 	id,
+	localizable,
+	localizedValue = {},
 	inputValue,
 	itemSelectorURL,
 	message,
@@ -276,6 +280,15 @@ const Main = ({
 	value,
 	...otherProps
 }) => {
+	const prevEditingLanguageId = usePrevious(editingLanguageId);
+
+	if (prevEditingLanguageId !== editingLanguageId && localizable) {
+		value =
+			localizedValue[editingLanguageId] !== undefined
+				? localizedValue[editingLanguageId]
+				: localizedValue[defaultLanguageId];
+	}
+
 	const getErrorMessages = (errorMessage, isSignedIn) => {
 		const errorMessages = [errorMessage];
 

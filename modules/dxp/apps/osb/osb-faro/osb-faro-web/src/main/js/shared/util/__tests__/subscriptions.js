@@ -17,6 +17,12 @@ describe('subscriptions', () => {
 
 			expect(planAddOns).toEqual(mockAddOns());
 		});
+
+		it('should not have addons for LXC customers', () => {
+			const planAddOns = getPlanAddOns('lxcSubscriptionEngageSite');
+
+			expect(!!planAddOns.filter(Boolean).length).toBeFalsy();
+		});
 	});
 
 	describe('getPropIcon', () => {

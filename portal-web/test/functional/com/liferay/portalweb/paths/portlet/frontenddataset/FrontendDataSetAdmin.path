@@ -145,6 +145,72 @@
 <tr>
 	<td>SORTING_SELECT</td>
 	<td>//div[label[contains(.,'Sorting')]]/select</td>
+	
+<!-- DATA SET FILTERS -->
+
+<tr>
+	<td>FILTER_BY_DROPDOWN</td>
+	<td>//select[contains(@title, 'Filter By')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_FILTER_NAME</td>
+	<td>//input[contains(@name, 'FDSViewsPortlet_Name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_FILTER_SELECT_OPTION</td>
+	<td>//select[contains(@name, 'FDSViewsPortlet_SelectedField')]//option[contains(@value, '${key_option}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LABEL</td>
+	<td>//label[contains(., '${key_label}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_FIELD_PLACEHOLDER</td>
+	<td>//*[contains(@class, 'form-group-item') and contains(., '${key_dateField}')]//input[contains(@placeholder, '${key_placeholderText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATEPICKER_BUTTON</td>
+	<td>//*[contains(@class, 'form-group-item') and contains(., '${key_dateField}')]//button[contains(@class, 'date-picker-dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATEPICKER_MENU</td>
+	<td>//*[contains(@class, 'date-picker-dropdown-menu show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHOOSE_DATE_DATEPICKER_MENU</td>
+	<td>//*[contains(@class, 'date-picker-dropdown-menu show')]//button[contains(text(), '${key_dateNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_FILTER_SAVE_BUTTON</td>
+	<td>//button[contains(@form, 'FDSViewsPortlet_Form') and contains(text(), 'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_FILTER_CANCEL_BUTTON</td>
+	<td>//*[contains(@class, 'modal-dialog')]//button[contains(text(), 'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_FILTER_BUTTON</td>
+	<td>//button[contains(text(), 'Create Filter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTERS_ENTRY</td>
+	<td>//*[contains(text(), '${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_FILTER_INVALID_DATE</td>
+	<td>//*[contains(text(), 'Date range is invalid. "From" must be before "to"')]</td>
 	<td></td>
 </tr>
 </tbody>

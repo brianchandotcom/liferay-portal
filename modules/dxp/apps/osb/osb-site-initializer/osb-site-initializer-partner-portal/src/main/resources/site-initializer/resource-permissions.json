@@ -239,7 +239,8 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
@@ -258,7 +259,8 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:MDFRequest$]",
@@ -423,7 +425,8 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
@@ -442,7 +445,8 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Activity$]",
@@ -607,7 +611,8 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
@@ -626,7 +631,8 @@
 	{
 		"actionIds": [
 			"VIEW",
-			"UPDATE"
+			"UPDATE",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Budget$]",
@@ -1403,7 +1409,9 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -1412,7 +1420,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -1434,7 +1444,9 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -1443,7 +1455,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ActivitySF$]",
@@ -1453,7 +1467,9 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -1463,7 +1479,9 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -1472,7 +1490,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -1481,7 +1501,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -1490,7 +1512,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFClaimSF$]",
@@ -1512,7 +1536,9 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1522,7 +1548,9 @@
 	{
 		"actionIds": [
 			"ADD_OBJECT_ENTRY",
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1531,7 +1559,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -1540,7 +1570,9 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE"
+			"UPDATE",
+			"VIEW",
+			"DELETE"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:MDFRequestSF$]",
@@ -2161,6 +2193,15 @@
 		"actionIds": [
 			"VIEW"
 		],
+		"primKey": "[$PermissionAction#MDF-REQUEST-APPROVE$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Marketing MAnager (CMM)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
 		"primKey": "[$PermissionAction#MDF-CLAIM-VIEW$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Channel Marketing Manager (CMM)",
@@ -2281,6 +2322,33 @@
 		"primKey": "[$PermissionAction#MDF-CLAIM-UPDATE$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Marketing User (PMU)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$PermissionAction#MDF-CLAIM-UPDATE-WO-CHANGE-STATUS$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Marketing Director (CMD)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$PermissionAction#MDF-CLAIM-UPDATE-WO-CHANGE-STATUS$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Marketing Manager (CMM)",
+		"scope": 4
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$PermissionAction#MDF-CLAIM-UPDATE-WO-CHANGE-STATUS$]",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
+		"roleName": "Channel Finance Manager (CFM)",
 		"scope": 4
 	},
 	{

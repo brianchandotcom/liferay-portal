@@ -218,6 +218,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX_INDETERMINATE</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_DOWNLOAD' and @value='indeterminate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_VIEW_CHECKBOX_INDETERMINATE</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_VIEW' and @value='indeterminate']</td>
 	<td></td>

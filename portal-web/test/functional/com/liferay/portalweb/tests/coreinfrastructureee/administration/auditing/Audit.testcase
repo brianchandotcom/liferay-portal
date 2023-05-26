@@ -187,6 +187,7 @@ definition {
 	@description = "This is a use case for LPS-174421 TC-1. Verify that the user is able to export the filtered audit data as a CSV format file."
 	@priority = 5
 	test CanExportCSVFilteredAuditDataFile {
+		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.name.skip.portal.instance = "Audit#CanExportCSVFilteredAuditDataFile";
@@ -259,6 +260,7 @@ definition {
 	@description = "This is a use case for LPS-174421 TC-2. Verify that the user is able to export the filtered audit data as a CSV format file on virtual instance."
 	@priority = 5
 	test CanExportCSVFilteredAuditDataFileOnVirtualInstance {
+		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.name.skip.portal.instance = "Audit#CanExportCSVFilteredAuditDataFileOnVirtualInstance";

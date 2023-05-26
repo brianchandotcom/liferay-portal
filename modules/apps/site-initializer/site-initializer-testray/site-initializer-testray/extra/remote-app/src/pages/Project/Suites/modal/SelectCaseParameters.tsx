@@ -13,6 +13,8 @@
  */
 
 import React, {useCallback} from 'react';
+import {useParams} from 'react-router-dom';
+import SearchBuilder from '~/core/SearchBuilder';
 
 import DualListBox, {
 	BoxItem,
@@ -52,21 +54,35 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	setState,
 	state,
 }) => {
+	const {projectId} = useParams();
 	const {data: casetypes} = useFetch<APIResponse<TestrayCaseType>>(
 		'/casetypes',
 		{params: {fields: 'id,name', pageSize: 1000}}
 	);
 	const {data: components} = useFetch<APIResponse<TestrayComponent>>(
 		'/components',
-		{params: {fields: 'id,name', pageSize: 1000}}
+		{
+			params: {
+				fields: 'id,name',
+				filter: SearchBuilder.eq('projectId', projectId as string),
+				pageSize: 1000,
+			},
+		}
 	);
 	const {data: requirements} = useFetch<APIResponse<TestrayRequirement>>(
 		'/requirements',
-		{params: {fields: 'key,summary,id', pageSize: 1000}}
+		{
+			params: {
+				fields: 'key,summary,id',
+				filter: SearchBuilder.eq('projectId', projectId as string),
+				pageSize: 1000,
+			},
+		}
 	);
 	const {data: teams} = useFetch<APIResponse<TestrayTeam>>('/teams', {
 		params: {
 			fields: 'id,name',
+			filter: SearchBuilder.eq('projectId', projectId as string),
 			pageSize: 1000,
 		},
 	});

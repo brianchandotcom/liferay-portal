@@ -238,7 +238,7 @@ to version 5.2.6.
 ## 14.0.104 - 2023-04-02
 
 ### Commits
-- [LPS-179403] Update Tomcat version to 9.0.73 (e930025014)
+- [LPS-179403] Update Tomcat version to 9.0.75 (e930025014)
 
 ### Dependencies
 - [LPS-180482] Update the com.liferay.source.formatter dependency to version

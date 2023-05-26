@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -441,6 +442,11 @@ public class ImageLocalServiceWrapper
 
 		return _imageLocalService.updateImage(
 			companyId, imageId, inputStream, cleanUpStream);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _imageLocalService.getBasePersistence();
 	}
 
 	@Override

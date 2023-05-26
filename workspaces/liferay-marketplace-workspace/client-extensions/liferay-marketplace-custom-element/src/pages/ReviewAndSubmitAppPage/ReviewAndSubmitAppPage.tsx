@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 
 import {Checkbox} from '../../components/Checkbox/Checkbox';
@@ -23,13 +24,11 @@ import {
 	getProductSKU,
 	getProductSpecifications,
 } from '../../utils/api';
-import {showAppImage} from '../../utils/util';
+import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {CardSectionsBody} from './CardSectionsBody';
 import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 
 import './ReviewAndSubmitAppPage.scss';
-
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 interface ReviewAndSubmitAppPageProps {
 	onClickBack: () => void;
@@ -88,11 +87,11 @@ export function ReviewAndSubmitAppPage({
 
 			nonTrialSKU?.customFields?.forEach(({customValue, name}) => {
 				if (name === 'version') {
-					version = customValue.data;
+					version = customValue.data as string;
 				}
 
 				if (name === 'Version Description') {
-					versionDescription = customValue.data;
+					versionDescription = customValue.data as string;
 				}
 			});
 
@@ -132,24 +131,24 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
-			// Use after LPS-183343
+			const attachment = productResponse.attachments.find(
+				({customFields}) =>
+					customFields?.find(
+						({
+							customValue: {
+								data: [value],
+							},
+							name,
+						}) => name === 'App Icon' && value === 'No'
+					)
+			);
 
-			// const attachment = productResponse.attachments.find(
-			// 	({customFields}) =>
-			// 		customFields?.find(
-			// 			({
-			// 				customValue: {
-			// 					data: [value],
-			// 				},
-			// 				name,
-			// 			}) => name === 'App Icon' && value === 'No'
-			// 		)
-			// );
+			const thumbnail = showAppImage(
+				getThumbnailByProductAttachment(productResponse.attachments)
+			);
 
 			const newApp: App = {
-				attachmentTitle: productResponse.attachments?.[0]?.title[
-					'en_US'
-				] as string,
+				attachmentTitle: attachment?.title['en_US'] as string,
 				categories: productCategories,
 				description: productResponse.description['en_US'],
 				licenseType,
@@ -159,7 +158,7 @@ export function ReviewAndSubmitAppPage({
 				storefront: productResponse.images,
 				supportAndHelp: supportAndHelpCardInfos,
 				tags: productTags,
-				thumbnail: productResponse.thumbnail,
+				thumbnail,
 				version,
 				versionDescription,
 			};
@@ -170,6 +169,7 @@ export function ReviewAndSubmitAppPage({
 		};
 
 		getData();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productERC, productId]);
 

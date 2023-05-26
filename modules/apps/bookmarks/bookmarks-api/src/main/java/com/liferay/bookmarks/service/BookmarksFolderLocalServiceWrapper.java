@@ -15,6 +15,7 @@
 package com.liferay.bookmarks.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link BookmarksFolderLocalService}.
@@ -691,6 +692,11 @@ public class BookmarksFolderLocalServiceWrapper
 
 		return _bookmarksFolderLocalService.updateStatus(
 			userId, folder, status);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _bookmarksFolderLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -2853,6 +2854,11 @@ public class GroupLocalServiceWrapper
 		_groupLocalService.validateRemote(
 			groupId, remoteAddress, remotePort, remotePathContext,
 			secureConnection, remoteGroupId);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _groupLocalService.getBasePersistence();
 	}
 
 	@Override

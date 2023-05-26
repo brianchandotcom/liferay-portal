@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -437,6 +438,11 @@ public class DDMStorageLinkLocalServiceWrapper
 
 		return _ddmStorageLinkLocalService.updateStorageLink(
 			storageLinkId, classNameId, classPK);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ddmStorageLinkLocalService.getBasePersistence();
 	}
 
 	@Override

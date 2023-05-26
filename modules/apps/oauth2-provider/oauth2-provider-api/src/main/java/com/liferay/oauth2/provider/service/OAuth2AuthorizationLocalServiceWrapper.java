@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link OAuth2AuthorizationLocalService}.
@@ -664,6 +665,11 @@ public class OAuth2AuthorizationLocalServiceWrapper
 
 		return _oAuth2AuthorizationLocalService.updateRememberDeviceContent(
 			refreshTokenContent, rememberDeviceContent);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _oAuth2AuthorizationLocalService.getBasePersistence();
 	}
 
 	@Override

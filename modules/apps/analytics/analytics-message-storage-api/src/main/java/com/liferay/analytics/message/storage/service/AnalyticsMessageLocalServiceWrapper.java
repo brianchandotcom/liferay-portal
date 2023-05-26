@@ -15,6 +15,7 @@
 package com.liferay.analytics.message.storage.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AnalyticsMessageLocalService}.
@@ -398,6 +399,11 @@ public class AnalyticsMessageLocalServiceWrapper
 
 		return _analyticsMessageLocalService.updateAnalyticsMessage(
 			analyticsMessage);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _analyticsMessageLocalService.getBasePersistence();
 	}
 
 	@Override

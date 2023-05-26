@@ -378,6 +378,12 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
 
+		if (canonicalFile.equals(
+				portalGitWorkingDirectory.getWorkingDirectory())) {
+
+			return concatedPQL;
+		}
+
 		File parentFile = canonicalFile.getParentFile();
 
 		if ((parentFile == null) || !parentFile.exists()) {

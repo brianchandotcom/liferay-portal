@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Store GCS
 Bundle-SymbolicName: com.liferay.portal.store.gcs
-Bundle-Version: 3.0.19
+Bundle-Version: 3.0.20
 Import-Package:\
 	!com.google.api.client.json.gson.*,\
 	!com.google.appengine.api.datastore,\

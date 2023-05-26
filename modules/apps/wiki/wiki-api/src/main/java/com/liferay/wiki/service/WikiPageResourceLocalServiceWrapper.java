@@ -16,6 +16,7 @@ package com.liferay.wiki.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.wiki.model.WikiPageResource;
 
@@ -452,6 +453,11 @@ public class WikiPageResourceLocalServiceWrapper
 
 		return _wikiPageResourceLocalService.updateWikiPageResource(
 			wikiPageResource);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _wikiPageResourceLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.asset.category.property.service;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -437,6 +438,11 @@ public class AssetCategoryPropertyLocalServiceWrapper
 
 		return _assetCategoryPropertyLocalService.updateCategoryProperty(
 			categoryPropertyId, key, value);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _assetCategoryPropertyLocalService.getBasePersistence();
 	}
 
 	@Override

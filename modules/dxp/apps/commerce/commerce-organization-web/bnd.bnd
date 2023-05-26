@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Organization Web
 Bundle-SymbolicName: com.liferay.commerce.organization.web
-Bundle-Version: 5.0.49
+Bundle-Version: 5.0.50
 Liferay-JS-Submodules-Bridge: commerce-organization-web
 Web-ContextPath: /commerce-organization-web

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -1109,6 +1110,11 @@ public class UserGroupLocalServiceWrapper
 	@Override
 	public UserGroup updateUserGroup(UserGroup userGroup) {
 		return _userGroupLocalService.updateUserGroup(userGroup);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _userGroupLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -497,6 +498,11 @@ public class AddressLocalServiceWrapper
 		return _addressLocalService.updateAddress(
 			addressId, name, description, street1, street2, street3, city, zip,
 			regionId, countryId, listTypeId, mailing, primary, phoneNumber);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _addressLocalService.getBasePersistence();
 	}
 
 	@Override

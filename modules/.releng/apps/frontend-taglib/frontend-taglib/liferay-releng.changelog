@@ -442,3 +442,8 @@ e0a02008fd2f7d995cfc6deeba5a97f0bcd3e49f^..17d4ad013b4a1d0badad582affd325a3e1f3d
 # Bundle Version 12.1.2
 #
 ed995455b0ba3e3fc8439782467698c74bf0c8f3^..27fdd5b7d7d3769f85cbfa46addafdad5e8bab97=LPS-182763 LPS-184687
+
+#
+# Bundle Version 12.2.0
+#
+27fdd5b7d7d3769f85cbfa46addafdad5e8bab97^..53da6634ea3700b5fc088382f8fbd5b4363180cd=LPS-185244 LPS-185440

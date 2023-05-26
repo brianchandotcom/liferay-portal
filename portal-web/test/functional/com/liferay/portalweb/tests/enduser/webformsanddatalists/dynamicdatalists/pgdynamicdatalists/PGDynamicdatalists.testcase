@@ -784,41 +784,26 @@ definition {
 
 	@priority = 4
 	test SearchDynamicDataListsRecordsAsUserWithNoPermissions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Role.add(roleTitle = "No Permissions Role");
+		JSONRole.addRegularRole(
+			roleKey = "No Permissions Role",
+			roleTitle = "No Permissions Role");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "user@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user@liferay.com");
 
-		User.editPasswordCP(
-			userEmailAddress = "user@liferay.com",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
+		JSONRole.assignRoleToUser(
 			roleTitle = "No Permissions Role",
-			userScreenName = "usersn");
+			userEmailAddress = "user@liferay.com");
 
 		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
@@ -841,9 +826,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.editPermissions(ddlListName = "DDL List Name");
 

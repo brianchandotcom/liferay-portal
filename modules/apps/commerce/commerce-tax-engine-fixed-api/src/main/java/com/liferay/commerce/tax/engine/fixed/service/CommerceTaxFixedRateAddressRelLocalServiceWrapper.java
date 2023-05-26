@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.engine.fixed.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceTaxFixedRateAddressRelLocalService}.
@@ -539,6 +540,11 @@ public class CommerceTaxFixedRateAddressRelLocalServiceWrapper
 			updateCommerceTaxFixedRateAddressRel(
 				commerceTaxFixedRateAddressRelId, countryId, regionId, zip,
 				rate);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceTaxFixedRateAddressRelLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipping.engine.fixed.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceShippingFixedOptionRelLocalService}.
@@ -516,6 +517,11 @@ public class CommerceShippingFixedOptionRelLocalServiceWrapper
 				commerceShippingFixedOptionRelId, commerceInventoryWarehouseId,
 				countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
 				rateUnitWeightPrice, ratePercentage);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceShippingFixedOptionRelLocalService.getBasePersistence();
 	}
 
 	@Override

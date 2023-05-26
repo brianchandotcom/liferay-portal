@@ -1,6 +1,6 @@
 dependencies {
 	compileInclude group: "com.paypal", name: "paypalhttp", version: "1.0.1"
-	compileInclude group: "com.paypal.sdk", name: "checkout-sdk", version: "1.0.3"
+	compileInclude group: "com.paypal.sdk", name: "checkout-sdk", version: "2.0.0"
 	compileInclude group: "com.paypal.sdk", name: "rest-api-sdk", version: "1.14.0"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.6"
 	compileInclude group: "org.json", name: "json", version: "20230227"

@@ -17,6 +17,7 @@ package com.liferay.commerce.pricing.service;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -543,6 +544,11 @@ public class CommercePricingClassLocalServiceWrapper
 		return _commercePricingClassLocalService.
 			updateCommercePricingClassExternalReferenceCode(
 				externalReferenceCode, commercePricingClassId);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commercePricingClassLocalService.getBasePersistence();
 	}
 
 	@Override

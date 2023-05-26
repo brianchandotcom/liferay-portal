@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -31,13 +32,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Leonardo Barros
@@ -51,6 +58,19 @@ public class WorkflowDefinitionsDataProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Mockito.when(
+			FrameworkUtil.getBundle(Mockito.any())
+		).thenReturn(
+			bundleContext.getBundle()
+		);
+
+		_workflowDefinitionManagerServiceRegistration =
+			bundleContext.registerService(
+				WorkflowDefinitionManager.class, _workflowDefinitionManager,
+				null);
+
 		_workflowDefinitionsDataProvider =
 			new WorkflowDefinitionsDataProvider();
 
@@ -62,6 +82,12 @@ public class WorkflowDefinitionsDataProviderTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_workflowDefinitionsDataProvider, "_language", _language);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_frameworkUtilMockedStatic.close();
+		_workflowDefinitionManagerServiceRegistration.unregister();
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -79,9 +105,6 @@ public class WorkflowDefinitionsDataProviderTest {
 		).withCompanyId(
 			1L
 		).build();
-
-		_workflowDefinitionsDataProvider.workflowDefinitionManager =
-			_workflowDefinitionManager;
 
 		WorkflowDefinition workflowDefinition1 = Mockito.mock(
 			WorkflowDefinition.class);
@@ -164,9 +187,6 @@ public class WorkflowDefinitionsDataProviderTest {
 			1L
 		).build();
 
-		_workflowDefinitionsDataProvider.workflowDefinitionManager =
-			_workflowDefinitionManager;
-
 		Mockito.when(
 			_workflowDefinitionManager.getActiveWorkflowDefinitions(
 				1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
@@ -193,13 +213,15 @@ public class WorkflowDefinitionsDataProviderTest {
 		);
 	}
 
+	private static final MockedStatic<FrameworkUtil>
+		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 	private static final Language _language = Mockito.mock(Language.class);
 	private static final Locale _locale = new Locale("en", "US");
-	private static WorkflowDefinitionsDataProvider
-		_workflowDefinitionsDataProvider = Mockito.mock(
-			WorkflowDefinitionsDataProvider.class);
-
-	private final WorkflowDefinitionManager _workflowDefinitionManager =
+	private static final WorkflowDefinitionManager _workflowDefinitionManager =
 		Mockito.mock(WorkflowDefinitionManager.class);
+	private static ServiceRegistration<WorkflowDefinitionManager>
+		_workflowDefinitionManagerServiceRegistration;
+	private static WorkflowDefinitionsDataProvider
+		_workflowDefinitionsDataProvider;
 
 }

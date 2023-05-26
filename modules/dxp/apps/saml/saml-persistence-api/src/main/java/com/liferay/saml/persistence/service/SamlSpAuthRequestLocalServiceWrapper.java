@@ -15,6 +15,7 @@
 package com.liferay.saml.persistence.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link SamlSpAuthRequestLocalService}.
@@ -378,6 +379,11 @@ public class SamlSpAuthRequestLocalServiceWrapper
 
 		return _samlSpAuthRequestLocalService.updateSamlSpAuthRequest(
 			samlSpAuthRequest);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _samlSpAuthRequestLocalService.getBasePersistence();
 	}
 
 	@Override

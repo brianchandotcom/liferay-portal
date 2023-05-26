@@ -261,10 +261,6 @@ definition {
 			fieldLabel = "Boolean 2",
 			fieldName = "Boolean");
 
-		FormFields.viewBooleanField(fieldValue = "Boolean 1");
-
-		FormFields.viewBooleanField(fieldValue = "Boolean 2");
-
 		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
 
 		FormFields.enableSwitch(fieldName = "Show as a Switch");

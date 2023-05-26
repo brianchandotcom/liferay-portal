@@ -15,6 +15,7 @@
 package com.liferay.analytics.message.storage.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AnalyticsDeleteMessageLocalService}.
@@ -394,6 +395,11 @@ public class AnalyticsDeleteMessageLocalServiceWrapper
 
 		return _analyticsDeleteMessageLocalService.updateAnalyticsDeleteMessage(
 			analyticsDeleteMessage);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _analyticsDeleteMessageLocalService.getBasePersistence();
 	}
 
 	@Override

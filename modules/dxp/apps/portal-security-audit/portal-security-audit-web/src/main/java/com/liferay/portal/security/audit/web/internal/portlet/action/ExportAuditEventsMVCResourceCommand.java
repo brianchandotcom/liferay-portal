@@ -200,6 +200,9 @@ public class ExportAuditEventsMVCResourceCommand
 				"create-date",
 				auditEvent -> _formatDate(auditEvent.getCreateDate())
 			).put(
+				"group-id",
+				auditEvent -> String.valueOf(auditEvent.getGroupId())
+			).put(
 				"resource-id", AuditEvent::getClassPK
 			).put(
 				"resource-name", AuditEvent::getClassName

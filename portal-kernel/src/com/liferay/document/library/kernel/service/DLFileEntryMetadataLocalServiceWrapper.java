@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.service;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -491,6 +492,11 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
 			fileEntryTypeId, fileEntryId, fileVersionId, ddmFormValuesMap,
 			serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dlFileEntryMetadataLocalService.getBasePersistence();
 	}
 
 	@Override

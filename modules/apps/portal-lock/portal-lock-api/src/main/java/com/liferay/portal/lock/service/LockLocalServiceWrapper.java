@@ -15,6 +15,7 @@
 package com.liferay.portal.lock.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link LockLocalService}.
@@ -481,6 +482,11 @@ public class LockLocalServiceWrapper
 		com.liferay.portal.lock.model.Lock lock) {
 
 		return _lockLocalService.updateLock(lock);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _lockLocalService.getBasePersistence();
 	}
 
 	@Override

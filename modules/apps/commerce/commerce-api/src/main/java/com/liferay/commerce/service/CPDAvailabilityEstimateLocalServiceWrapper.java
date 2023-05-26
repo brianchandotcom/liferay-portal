@@ -15,6 +15,7 @@
 package com.liferay.commerce.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CPDAvailabilityEstimateLocalService}.
@@ -472,6 +473,11 @@ public class CPDAvailabilityEstimateLocalServiceWrapper
 			updateCPDAvailabilityEstimateByCProductId(
 				cpdAvailabilityEstimateId, cProductId,
 				commerceAvailabilityEstimateId, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cpdAvailabilityEstimateLocalService.getBasePersistence();
 	}
 
 	@Override

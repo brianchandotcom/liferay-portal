@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link WorkflowMetricsSLADefinitionVersionLocalService}.
@@ -525,6 +526,12 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceWrapper
 		return _workflowMetricsSLADefinitionVersionLocalService.
 			updateWorkflowMetricsSLADefinitionVersion(
 				workflowMetricsSLADefinitionVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _workflowMetricsSLADefinitionVersionLocalService.
+			getBasePersistence();
 	}
 
 	@Override

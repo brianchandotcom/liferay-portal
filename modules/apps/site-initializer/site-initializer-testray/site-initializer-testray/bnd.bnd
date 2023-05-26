@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Initializer Testray
 Bundle-SymbolicName: com.liferay.site.initializer.testray
-Bundle-Version: 1.0.41
+Bundle-Version: 1.0.42
 Liferay-Site-Initializer-Feature-Flag: LPS-163118
 Provide-Capability: liferay.site.initializer
 Web-ContextPath: /site-initializer-testray

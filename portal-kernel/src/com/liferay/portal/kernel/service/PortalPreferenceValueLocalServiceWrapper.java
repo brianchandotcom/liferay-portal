@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link PortalPreferenceValueLocalService}.
  *
@@ -266,7 +268,7 @@ public class PortalPreferenceValueLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _portalPreferenceValueLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -356,6 +358,11 @@ public class PortalPreferenceValueLocalServiceWrapper
 
 		return _portalPreferenceValueLocalService.updatePortalPreferenceValue(
 			portalPreferenceValue);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _portalPreferenceValueLocalService.getBasePersistence();
 	}
 
 	@Override

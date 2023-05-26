@@ -15,6 +15,7 @@
 package com.liferay.commerce.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceShippingOptionAccountEntryRelLocalService}.
@@ -451,6 +452,12 @@ public class CommerceShippingOptionAccountEntryRelLocalServiceWrapper
 			updateCommerceShippingOptionAccountEntryRel(
 				commerceShippingOptionAccountEntryRelId,
 				commerceShippingMethodKey, commerceShippingOptionKey);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceShippingOptionAccountEntryRelLocalService.
+			getBasePersistence();
 	}
 
 	@Override

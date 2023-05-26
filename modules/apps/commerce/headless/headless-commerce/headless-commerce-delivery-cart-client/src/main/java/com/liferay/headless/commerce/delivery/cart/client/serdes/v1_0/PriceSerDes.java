@@ -193,6 +193,16 @@ public class PriceSerDes {
 			sb.append("\"");
 		}
 
+		if (price.getPriceOnApplication() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceOnApplication\": ");
+
+			sb.append(price.getPriceOnApplication());
+		}
+
 		if (price.getPromoPrice() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -334,6 +344,15 @@ public class PriceSerDes {
 				"priceFormatted", String.valueOf(price.getPriceFormatted()));
 		}
 
+		if (price.getPriceOnApplication() == null) {
+			map.put("priceOnApplication", null);
+		}
+		else {
+			map.put(
+				"priceOnApplication",
+				String.valueOf(price.getPriceOnApplication()));
+		}
+
 		if (price.getPromoPrice() == null) {
 			map.put("promoPrice", null);
 		}
@@ -447,6 +466,13 @@ public class PriceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priceFormatted")) {
 				if (jsonParserFieldValue != null) {
 					price.setPriceFormatted((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "priceOnApplication")) {
+
+				if (jsonParserFieldValue != null) {
+					price.setPriceOnApplication((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "promoPrice")) {

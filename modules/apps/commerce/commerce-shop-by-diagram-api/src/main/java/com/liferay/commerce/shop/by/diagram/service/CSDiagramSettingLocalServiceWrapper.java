@@ -17,6 +17,7 @@ package com.liferay.commerce.shop.by.diagram.service;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -423,6 +424,11 @@ public class CSDiagramSettingLocalServiceWrapper
 
 		return _csDiagramSettingLocalService.updateCSDiagramSetting(
 			csDiagramSettingId, cpAttachmentFileEntryId, color, radius, type);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _csDiagramSettingLocalService.getBasePersistence();
 	}
 
 	@Override

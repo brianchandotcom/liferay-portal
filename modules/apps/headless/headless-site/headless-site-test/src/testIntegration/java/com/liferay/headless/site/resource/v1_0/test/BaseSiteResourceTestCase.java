@@ -49,6 +49,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.io.File;
+
 import java.lang.reflect.Method;
 
 import java.text.DateFormat;
@@ -212,6 +214,43 @@ public abstract class BaseSiteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPutSite() throws Exception {
+		Site postSite = testPutSite_addSite();
+
+		Site randomSite = randomSite();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Site putSite = siteResource.putSite(
+			testPutSite_getGroupId(), randomSite, multipartFiles);
+
+		assertEquals(randomSite, putSite);
+		assertValid(putSite);
+
+		Site getSite = testPutSite_getSite(testPutSite_getGroupId());
+
+		assertEquals(randomSite, getSite);
+		assertValid(getSite);
+
+		assertValid(getSite, multipartFiles);
+	}
+
+	protected Site testPutSite_getSite(Long groupId) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testPutSite_getGroupId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Site testPutSite_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Site testGraphQLSite_addSite() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -347,6 +386,13 @@ public abstract class BaseSiteResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Site site, Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertValid(Page<Site> page) {
@@ -686,6 +732,11 @@ public abstract class BaseSiteResourceTestCase {
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
+	}
+
+	protected Map<String, File> getMultipartFiles() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String invoke(String query) throws Exception {

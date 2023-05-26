@@ -16,6 +16,7 @@ package com.liferay.subscription.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.subscription.model.Subscription;
 
@@ -608,6 +609,11 @@ public class SubscriptionLocalServiceWrapper
 
 		_subscriptionLocalService.updateSubscriptions(
 			companyId, classNameId, oldClassPK, newClassPK);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _subscriptionLocalService.getBasePersistence();
 	}
 
 	@Override

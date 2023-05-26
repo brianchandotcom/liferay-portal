@@ -15,6 +15,7 @@
 package com.liferay.osb.faro.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link FaroUserLocalService}.
@@ -419,6 +420,11 @@ public class FaroUserLocalServiceWrapper
 		com.liferay.osb.faro.model.FaroUser faroUser) {
 
 		return _faroUserLocalService.updateFaroUser(faroUser);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _faroUserLocalService.getBasePersistence();
 	}
 
 	@Override

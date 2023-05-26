@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CTEntryLocalService}.
@@ -413,6 +414,11 @@ public class CTEntryLocalServiceWrapper
 
 		return _ctEntryLocalService.updateModelMvccVersion(
 			ctEntryId, modelMvccVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ctEntryLocalService.getBasePersistence();
 	}
 
 	@Override

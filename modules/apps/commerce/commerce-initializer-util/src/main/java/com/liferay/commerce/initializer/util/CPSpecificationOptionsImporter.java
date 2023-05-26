@@ -73,16 +73,6 @@ public class CPSpecificationOptionsImporter {
 			JSONObject jsonObject, ServiceContext serviceContext)
 		throws PortalException {
 
-		String key = jsonObject.getString("key");
-
-		CPSpecificationOption cpSpecificationOption =
-			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-				serviceContext.getCompanyId(), key);
-
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption;
-		}
-
 		long cpOptionCategoryId = 0;
 
 		String categoryKey = jsonObject.getString("categoryKey");
@@ -97,6 +87,8 @@ public class CPSpecificationOptionsImporter {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
+		String key = jsonObject.getString("key");
+
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			locale, CommerceInitializerUtil.getValue(jsonObject, "title", key));
 
@@ -104,6 +96,18 @@ public class CPSpecificationOptionsImporter {
 			locale, jsonObject.getString("description"));
 
 		boolean facetable = jsonObject.getBoolean("facetable");
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
+				serviceContext.getCompanyId(), key);
+
+		if (cpSpecificationOption != null) {
+			return _cpSpecificationOptionLocalService.
+				updateCPSpecificationOption(
+					cpSpecificationOption.getCPSpecificationOptionId(),
+					cpOptionCategoryId, titleMap, descriptionMap, facetable,
+					key, serviceContext);
+		}
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
 			serviceContext.getUserId(), cpOptionCategoryId, titleMap,

@@ -58,14 +58,15 @@ export function NextStepPage({
 	const queryString = window.location.search;
 
 	const urlParams = new URLSearchParams(queryString);
+
 	const orderId = urlParams.get('orderId');
 
 	const [accountLogo, setAccountLogo] = useState(urlParams.get('logoURL'));
 	const [accountName, setAccountName] = useState(
 		urlParams.get('accountName')
 	);
-	const [appLogo, setAppLogo] = useState(urlParams.get('appLogoURL'));
 	const [appName, setAppName] = useState(urlParams.get('appName'));
+	const appLogo = urlParams.get('appLogoURL');
 
 	let cart;
 	let cartItems;
@@ -77,7 +78,6 @@ export function NextStepPage({
 
 			const item = cartItems.items[0];
 
-			setAppLogo(item.thumbnail);
 			setAppName(item.name);
 
 			const currentAccountCommerce = await getAccountInfoFromCommerce(

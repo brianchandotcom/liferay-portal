@@ -15,6 +15,7 @@
 package com.liferay.document.library.opener.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link DLOpenerFileEntryReferenceLocalService}.
@@ -517,6 +518,11 @@ public class DLOpenerFileEntryReferenceLocalServiceWrapper
 		return _dlOpenerFileEntryReferenceLocalService.
 			updateDLOpenerFileEntryReference(
 				referenceKey, referenceType, fileEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _dlOpenerFileEntryReferenceLocalService.getBasePersistence();
 	}
 
 	@Override

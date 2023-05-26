@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.service.builder.test.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ManyColumnsEntryLocalService}.
@@ -345,6 +346,11 @@ public class ManyColumnsEntryLocalServiceWrapper
 
 		return _manyColumnsEntryLocalService.updateManyColumnsEntry(
 			manyColumnsEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _manyColumnsEntryLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -133,6 +133,18 @@ definition {
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
 
+			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Second Test Page",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();

@@ -17,6 +17,7 @@ package com.liferay.commerce.service;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -482,6 +483,11 @@ public class CPDefinitionInventoryLocalServiceWrapper
 			lowStockActivity, displayAvailability, displayStockQuantity,
 			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
 			allowedOrderQuantities, multipleOrderQuantity);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _cpDefinitionInventoryLocalService.getBasePersistence();
 	}
 
 	@Override

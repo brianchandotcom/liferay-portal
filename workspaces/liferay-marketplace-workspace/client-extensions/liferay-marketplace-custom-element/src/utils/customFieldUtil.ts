@@ -24,7 +24,7 @@ export function getCustomFieldValue(
 			customValue: {data},
 		} = customField;
 
-		return data;
+		return data as string;
 	}
 
 	return '';

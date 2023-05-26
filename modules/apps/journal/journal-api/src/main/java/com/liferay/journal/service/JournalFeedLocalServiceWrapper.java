@@ -17,6 +17,7 @@ package com.liferay.journal.service;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -557,6 +558,11 @@ public class JournalFeedLocalServiceWrapper
 	@Override
 	public JournalFeed updateJournalFeed(JournalFeed journalFeed) {
 		return _journalFeedLocalService.updateJournalFeed(journalFeed);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _journalFeedLocalService.getBasePersistence();
 	}
 
 	@Override

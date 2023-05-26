@@ -17,6 +17,7 @@ package com.liferay.expando.kernel.service;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -478,6 +479,11 @@ public class ExpandoRowLocalServiceWrapper
 	@Override
 	public ExpandoRow updateExpandoRow(ExpandoRow expandoRow) {
 		return _expandoRowLocalService.updateExpandoRow(expandoRow);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _expandoRowLocalService.getBasePersistence();
 	}
 
 	@Override

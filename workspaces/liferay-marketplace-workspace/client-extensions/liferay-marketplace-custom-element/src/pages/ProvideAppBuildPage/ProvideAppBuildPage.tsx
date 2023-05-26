@@ -30,6 +30,7 @@ import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
+	addExpandoValue,
 	createAttachment,
 	createProductSpecification,
 	createSpecification,
@@ -42,6 +43,7 @@ import {
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './ProvideAppBuildPage.scss';
+import {getCompanyId} from '../../liferay/constants';
 
 interface ProvideAppBuildPageProps {
 	onClickBack: () => void;
@@ -407,12 +409,23 @@ export function ProvideAppBuildPage({
 
 					submitAppBuildType();
 
-					buildZIPFiles.forEach((buildZIPFile) => {
-						submitBase64EncodedFile({
+					buildZIPFiles.forEach(async (buildZIPFile) => {
+						const buildZIPFileId = await submitBase64EncodedFile({
 							appERC,
 							file: buildZIPFile.file,
 							requestFunction: createAttachment,
 							title: buildZIPFile.fileName,
+						});
+
+						addExpandoValue({
+							attributeValues: {
+								'App Icon': 'No',
+							},
+							className:
+								'com.liferay.commerce.product.model.CPAttachmentFileEntry',
+							classPK: buildZIPFileId as number,
+							companyId: Number(getCompanyId()),
+							tableName: 'CUSTOM_FIELDS',
 						});
 					});
 

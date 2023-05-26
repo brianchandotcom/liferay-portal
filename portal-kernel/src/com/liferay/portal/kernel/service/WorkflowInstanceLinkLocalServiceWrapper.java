@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -459,6 +460,11 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 
 		return _workflowInstanceLinkLocalService.updateWorkflowInstanceLink(
 			workflowInstanceLink);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _workflowInstanceLinkLocalService.getBasePersistence();
 	}
 
 	@Override

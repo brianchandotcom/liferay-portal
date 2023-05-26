@@ -16,6 +16,7 @@ package com.liferay.social.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.model.SocialActivityCounter;
 
@@ -778,6 +779,11 @@ public class SocialActivityCounterLocalServiceWrapper
 
 		return _socialActivityCounterLocalService.updateSocialActivityCounter(
 			socialActivityCounter);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _socialActivityCounterLocalService.getBasePersistence();
 	}
 
 	@Override

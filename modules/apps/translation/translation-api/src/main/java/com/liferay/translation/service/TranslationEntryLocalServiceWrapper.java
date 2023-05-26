@@ -16,6 +16,7 @@ package com.liferay.translation.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.translation.model.TranslationEntry;
 
@@ -492,6 +493,11 @@ public class TranslationEntryLocalServiceWrapper
 
 		return _translationEntryLocalService.updateTranslationEntry(
 			translationEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _translationEntryLocalService.getBasePersistence();
 	}
 
 	@Override

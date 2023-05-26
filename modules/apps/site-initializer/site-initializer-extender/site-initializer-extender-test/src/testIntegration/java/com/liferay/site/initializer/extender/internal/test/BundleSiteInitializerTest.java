@@ -42,6 +42,7 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
@@ -74,7 +75,6 @@ import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
@@ -172,7 +172,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -534,27 +533,56 @@ public class BundleSiteInitializerTest {
 			customElementCET.getPortletCategoryName());
 	}
 
-	private void _assertCommerceCatalogs() throws Exception {
-		CommerceCatalog commerceCatalog1 =
+	private void _assertCommerceCatalogs1() throws Exception {
+		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG1", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog1);
+		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
-			"Test Commerce Catalog 1", commerceCatalog1.getName());
+			"Test Commerce Catalog 1", commerceCatalog.getName());
 
-		CommerceCatalog commerceCatalog2 =
+		commerceCatalog =
 			_commerceCatalogLocalService.
 				fetchCommerceCatalogByExternalReferenceCode(
 					"TESTCOMMERCECATALOG2", _group.getCompanyId());
 
-		Assert.assertNotNull(commerceCatalog2);
+		Assert.assertNotNull(commerceCatalog);
 		Assert.assertEquals(
-			"Test Commerce Catalog 2", commerceCatalog2.getName());
+			"Test Commerce Catalog 2", commerceCatalog.getName());
 
 		_assertCPDefinition();
 		_assertCPOption();
+	}
+
+	private void _assertCommerceCatalogs2() throws Exception {
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					"TESTCOMMERCECATALOG1", _group.getCompanyId());
+
+		Assert.assertNotNull(commerceCatalog);
+		Assert.assertEquals(
+			"Test Commerce Catalog 1", commerceCatalog.getName());
+
+		commerceCatalog =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					"TESTCOMMERCECATALOG2", _group.getCompanyId());
+
+		Assert.assertNotNull(commerceCatalog);
+		Assert.assertEquals(
+			"Test Commerce Catalog 2 Update", commerceCatalog.getName());
+
+		commerceCatalog =
+			_commerceCatalogLocalService.
+				fetchCommerceCatalogByExternalReferenceCode(
+					"TESTCOMMERCECATALOG3", _group.getCompanyId());
+
+		Assert.assertNotNull(commerceCatalog);
+		Assert.assertEquals(
+			"Test Commerce Catalog 3", commerceCatalog.getName());
 	}
 
 	private void _assertCommerceChannel1() throws Exception {
@@ -721,40 +749,22 @@ public class BundleSiteInitializerTest {
 			commerceNotificationTemplate.getName());
 	}
 
-	private void _assertCommerceSpecificationProducts() throws Exception {
+	private void _assertCommerceSpecificationProducts1() throws Exception {
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
 				_serviceContext.getCompanyId(), "test-product-specification-1");
 
 		Assert.assertNotNull(cpSpecificationOption);
+		Assert.assertFalse(cpSpecificationOption.getCPOptionCategoryId() > 0);
+	}
 
-		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.
-				fetchCPDefinitionByCProductExternalReferenceCode(
-					"TESTCOMMERCEPRODUCT1", _serviceContext.getCompanyId());
+	private void _assertCommerceSpecificationProducts2() throws Exception {
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
+				_serviceContext.getCompanyId(), "test-product-specification-1");
 
-		Assert.assertNotNull(cpDefinition);
-
-		ProductSpecificationResource.Builder
-			productSpecificationResourceBuilder =
-				_productSpecificationResourceFactory.create();
-
-		ProductSpecificationResource productSpecificationResource =
-			productSpecificationResourceBuilder.user(
-				_serviceContext.fetchUser()
-			).build();
-
-		Page<ProductSpecification> productSpecificationPage =
-			productSpecificationResource.getProductIdProductSpecificationsPage(
-				cpDefinition.getCProductId(), Pagination.of(1, 10));
-
-		ProductSpecification productSpecification =
-			productSpecificationPage.fetchFirstItem();
-
-		Assert.assertNotNull(productSpecification);
-		Assert.assertEquals(
-			"test-product-specification-1",
-			productSpecification.getSpecificationKey());
+		Assert.assertNotNull(cpSpecificationOption);
+		Assert.assertTrue(cpSpecificationOption.getCPOptionCategoryId() > 0);
 	}
 
 	private void _assertCPDefinition() throws Exception {
@@ -765,6 +775,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(cpDefinition);
 		Assert.assertEquals("Test Commerce Product", cpDefinition.getName());
+
+		_assertCPDefinitionSpecificationOptionValue(cpDefinition, 1);
 
 		ExpandoBridge expandoBridge = cpDefinition.getExpandoBridge();
 
@@ -784,6 +796,17 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"test_commerce_product.png", fileEntry.getFileName());
+	}
+
+	private void _assertCPDefinitionSpecificationOptionValue(
+			CPDefinition cpDefinition, int cpDefinitionValuesCount)
+		throws Exception {
+
+		Assert.assertEquals(
+			cpDefinitionValuesCount,
+			_cpDefinitionSpecificationOptionValueLocalService.
+				getCPDefinitionSpecificationOptionValuesCount(
+					cpDefinition.getCPDefinitionId()));
 	}
 
 	private void _assertCPInstanceProperties() throws Exception {
@@ -1303,9 +1326,14 @@ public class BundleSiteInitializerTest {
 			"Test Master Page", layoutPageTemplateEntry.getName());
 	}
 
-	private void _assertLayouts() throws Exception {
-		_assertPrivateLayouts();
-		_assertPublicLayouts();
+	private void _assertLayouts1() throws Exception {
+		_assertPrivateLayouts1();
+		_assertPublicLayouts1();
+	}
+
+	private void _assertLayouts2() throws Exception {
+		_assertPrivateLayouts2();
+		_assertPublicLayouts2();
 	}
 
 	private void _assertLayoutSets() throws Exception {
@@ -2028,7 +2056,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
-	private void _assertPrivateLayouts() {
+	private void _assertPrivateLayouts1() {
 		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
 			_group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -2052,15 +2080,49 @@ public class BundleSiteInitializerTest {
 		Layout privateChildLayout = privateChildLayouts.get(0);
 
 		Assert.assertEquals(
-			"Test Private Child Layout",
+			"Test Private Child Layout 1",
 			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
 	}
 
-	private void _assertPublicLayouts() throws Exception {
+	private void _assertPrivateLayouts2() {
+		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
+			_group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		Assert.assertEquals(
+			privateLayouts.toString(), 1, privateLayouts.size());
+
+		Layout privateLayout = privateLayouts.get(0);
+
+		Assert.assertEquals(
+			"Test Private Layout",
+			privateLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", privateLayout.getType());
+		Assert.assertTrue(privateLayout.isHidden());
+
+		List<Layout> privateChildLayouts = privateLayout.getAllChildren();
+
+		Assert.assertEquals(
+			privateChildLayouts.toString(), 2, privateChildLayouts.size());
+
+		Layout privateChildLayout = privateChildLayouts.get(0);
+
+		Assert.assertEquals(
+			"Test Private Child Layout 1 Update",
+			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+
+		privateChildLayout = privateChildLayouts.get(1);
+
+		Assert.assertEquals(
+			"Test Private Child Layout 2",
+			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+	}
+
+	private void _assertPublicLayouts1() throws Exception {
 		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
 			_group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertEquals(5, publicLayoutsCount);
+		Assert.assertEquals(6, publicLayoutsCount);
 
 		Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-public-layout");
@@ -2173,6 +2235,145 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("url", layout.getType());
 		Assert.assertEquals(
 			"url=/test-public-layout\n", layout.getTypeSettings());
+		Assert.assertFalse(layout.isHidden());
+
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-link-to-layout");
+
+		Assert.assertEquals(
+			"Test Link to Layout", layout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("link_to_layout", layout.getType());
+		Assert.assertFalse(layout.isHidden());
+	}
+
+	private void _assertPublicLayouts2() throws Exception {
+		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
+			_group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		Assert.assertEquals(6, publicLayoutsCount);
+
+		Layout layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-public-layout");
+
+		Assert.assertEquals(
+			"Test Public Layout Update",
+			layout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", layout.getType());
+		Assert.assertFalse(layout.isHidden());
+
+		List<Layout> layouts = layout.getAllChildren();
+
+		Assert.assertEquals(layouts.toString(), 1, layouts.size());
+
+		layout = layouts.get(0);
+
+		Assert.assertEquals(
+			"Test Public Child Layout",
+			layout.getName(LocaleUtil.getSiteDefault()));
+
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-public-permissions-layout");
+
+		Role role = _roleLocalService.getRole(
+			layout.getCompanyId(), RoleConstants.GUEST);
+
+		boolean hasGuestViewPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				layout.getCompanyId(), layout.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.VIEW);
+
+		Assert.assertTrue(hasGuestViewPermission);
+
+		role = _roleLocalService.getRole(
+			layout.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		boolean hasSiteMemberViewPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				layout.getCompanyId(), layout.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.VIEW);
+
+		Assert.assertFalse(hasSiteMemberViewPermission);
+
+		boolean hasSiteMemberUpdateLayoutContentPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				layout.getCompanyId(), layout.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.UPDATE_LAYOUT_CONTENT);
+
+		Assert.assertTrue(hasSiteMemberUpdateLayoutContentPermission);
+
+		role = _roleLocalService.getRole(layout.getCompanyId(), "Test Role 4");
+
+		boolean hasTestRole4ViewPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				layout.getCompanyId(), layout.getModelClassName(),
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(layout.getPlid()), role.getRoleId(),
+				ActionKeys.VIEW);
+
+		Assert.assertTrue(hasTestRole4ViewPermission);
+
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/home");
+
+		Assert.assertEquals(
+			PropsUtil.get("default.guest.public.layout.name"),
+			layout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertNotEquals(
+			PropsUtil.get("default.user.private.layout.name"),
+			layout.getName(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			PropsUtil.get("default.guest.public.layout.friendly.url"),
+			layout.getFriendlyURL(LocaleUtil.getSiteDefault()));
+
+		SitePageResource.Builder sitePageResourceBuilder =
+			_sitePageResourceFactory.create();
+
+		SitePageResource sitePageResource =
+			sitePageResourceBuilder.httpServletRequest(
+				_serviceContext.getRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).user(
+				_serviceContext.fetchUser()
+			).build();
+
+		SitePage sitePage = sitePageResource.getSiteSitePage(
+			_group.getGroupId(), "test-objects-layout");
+
+		String pageDefinitionString = String.valueOf(
+			sitePage.getPageDefinition());
+
+		Assert.assertFalse(
+			pageDefinitionString.contains(
+				"[$TestObjectDefinition3#Test_Object_Entry_1$]"));
+		Assert.assertFalse(
+			pageDefinitionString.contains(
+				"[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"));
+
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-url-layout");
+
+		Assert.assertEquals(
+			"Test URL Layout Update",
+			layout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("url", layout.getType());
+		Assert.assertEquals(
+			"url=/test-public-child-layout\n", layout.getTypeSettings());
+		Assert.assertFalse(layout.isHidden());
+
+		layout = _layoutLocalService.getLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/test-link-to-layout");
+
+		Assert.assertEquals(
+			"Test Link to Layout Update",
+			layout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("link_to_layout", layout.getType());
 		Assert.assertFalse(layout.isHidden());
 	}
 
@@ -2923,10 +3124,10 @@ public class BundleSiteInitializerTest {
 		_assertAssetListEntries();
 		_assertAssetVocabularies();
 		_assertClientExtension();
-		_assertCommerceCatalogs();
+		_assertCommerceCatalogs1();
 		_assertCommerceChannel1();
 		_assertCommerceInventoryWarehouse();
-		_assertCommerceSpecificationProducts();
+		_assertCommerceSpecificationProducts1();
 		_assertCPDefinition();
 		_assertCPInstanceProperties();
 		_assertCPOptionCategory();
@@ -2939,7 +3140,7 @@ public class BundleSiteInitializerTest {
 		_assertKBArticles();
 		_assertLayoutPageTemplateEntries();
 		_assertLayoutSets();
-		_assertLayouts();
+		_assertLayouts1();
 		_assertLayoutUtilityPageEntries();
 		_assertListTypeDefinitions1();
 		_assertNotificationTemplate();
@@ -2963,9 +3164,12 @@ public class BundleSiteInitializerTest {
 		siteInitializer.initialize(_group.getGroupId());
 
 		_assertAccounts2();
+		_assertCommerceCatalogs2();
 		_assertCommerceChannel2();
+		_assertCommerceSpecificationProducts2();
 		_assertDDMTemplate2();
 		_assertExpandoColumns2();
+		_assertLayouts2();
 		_assertListTypeDefinitions2();
 		_assertObjectDefinitions2();
 		_assertOrganizations2();
@@ -3010,6 +3214,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;

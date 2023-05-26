@@ -17,6 +17,7 @@ package com.liferay.calendar.service;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -543,6 +544,11 @@ public class CalendarLocalServiceWrapper
 
 		return _calendarLocalService.updateColor(
 			calendarId, color, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _calendarLocalService.getBasePersistence();
 	}
 
 	@Override

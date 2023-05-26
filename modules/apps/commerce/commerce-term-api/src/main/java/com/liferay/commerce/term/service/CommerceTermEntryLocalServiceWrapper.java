@@ -15,6 +15,7 @@
 package com.liferay.commerce.term.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link CommerceTermEntryLocalService}.
@@ -596,6 +597,11 @@ public class CommerceTermEntryLocalServiceWrapper
 
 		return _commerceTermEntryLocalService.updateStatus(
 			userId, commerceTermEntryId, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _commerceTermEntryLocalService.getBasePersistence();
 	}
 
 	@Override

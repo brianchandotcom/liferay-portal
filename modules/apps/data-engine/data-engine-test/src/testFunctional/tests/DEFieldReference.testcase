@@ -146,6 +146,8 @@ definition {
 	@description = "This is a test for LRQA-68737. This test verifies that the field reference can not be the same for two fields."
 	@priority = 5
 	test CanNotBeTheSameForTwoFields {
+		property ci.retries.disabled = "true";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");

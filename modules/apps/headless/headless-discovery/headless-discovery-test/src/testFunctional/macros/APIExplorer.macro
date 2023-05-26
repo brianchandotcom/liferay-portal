@@ -20,6 +20,19 @@ definition {
 		Button.clickSave();
 	}
 
+	macro assertExposedActionsInSchema {
+		Variables.assertDefined(parameterList = "${schema},${property},${method},${objectHref}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		AssertTextEquals(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_PROPERTY",
+			property = ${property},
+			schema = ${schema},
+			value1 = "${property} { method string default: ${method} href string default: ${portalURL}/o/c/${objectHref} }");
+	}
+
 	macro executeAPIMethodWithParameters {
 		Variables.assertDefined(parameterList = "${service},${method},${parameter}");
 
@@ -78,6 +91,25 @@ definition {
 		Click(
 			locator1 = "Button#BUTTON_WITH_VALUE",
 			value = "Execute Query (Ctrl-Enter)");
+	}
+
+	macro expandPropertyInActionsSchema {
+		Variables.assertDefined(parameterList = "${schema},${property}");
+
+		Click(
+			locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_FIELD_COLLAPSED",
+			schema = ${schema});
+
+		Click(
+			field = "actions",
+			locator1 = "OpenAPI#SCHEMA_PROPERTY_COLLAPSED",
+			property = ${property},
+			schema = ${schema});
 	}
 
 	macro navigateToOpenAPI {

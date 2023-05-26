@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -451,6 +452,11 @@ public class LayoutPrototypeLocalServiceWrapper
 
 		return _layoutPrototypeLocalService.updateLayoutPrototype(
 			layoutPrototypeId, nameMap, descriptionMap, active, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _layoutPrototypeLocalService.getBasePersistence();
 	}
 
 	@Override

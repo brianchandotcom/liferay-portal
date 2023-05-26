@@ -67,7 +67,25 @@ definition {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var tagName : list ${tagNameList}) {
-			AssetCategorization.addTag(tagName = ${tagName});
+			Type.typeNotVisibleNoMouseOverNoError(
+				locator1 = "AssetCategorization#TAGS_FIELD",
+				value1 = ${tagName});
+
+			if (IsElementPresent(key_tagName = ${tagName}, locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC")) {
+				Click.mouseDownMouseUp(
+					key_tagName = ${tagName},
+					locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC");
+			}
+			else {
+				KeyPress(
+					locator1 = "AssetCategorization#TAGS_FIELD",
+					value1 = ",");
+			}
+
+			AssertTextEquals(
+				key_tagName = ${tagName},
+				locator1 = "AssetCategorization#TAG",
+				value1 = ${tagName});
 		}
 
 		PortletEntry.publish();

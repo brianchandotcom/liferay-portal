@@ -254,6 +254,9 @@ public class ScreenNavigationTag extends IncludeTag {
 			"liferay-frontend:screen-navigation:menubarCssClass",
 			_menubarCssClass);
 		httpServletRequest.setAttribute(
+			"liferay-frontend:screen-navigation:modelContext",
+			getModelContext());
+		httpServletRequest.setAttribute(
 			"liferay-frontend:screen-navigation:navCssClass", _navCssClass);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:screen-navigation:portletURL", _portletURL);

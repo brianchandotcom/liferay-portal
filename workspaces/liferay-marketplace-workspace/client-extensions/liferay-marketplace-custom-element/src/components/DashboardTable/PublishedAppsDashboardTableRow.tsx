@@ -16,7 +16,7 @@ import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
-import {showAppImage} from '../../utils/util';
+import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {AppProps} from './DashboardTable';
 
 import './PublishedAppsDashboardTableRow.scss';
@@ -28,8 +28,17 @@ interface PublishedAppsDashboardTableRowProps {
 export function PublishedAppsDashboardTableRow({
 	item,
 }: PublishedAppsDashboardTableRowProps) {
-	const {lastUpdatedBy, name, status, thumbnail, type, updatedDate, version} =
-		item;
+	const {
+		attachments,
+		lastUpdatedBy,
+		name,
+		status,
+		type,
+		updatedDate,
+		version,
+	} = item;
+
+	const appThumbnail = getThumbnailByProductAttachment(attachments);
 
 	return (
 		<ClayTable.Row>
@@ -38,7 +47,7 @@ export function PublishedAppsDashboardTableRow({
 					<img
 						alt="App Image"
 						className="dashboard-table-row-name-logo"
-						src={showAppImage(thumbnail)}
+						src={showAppImage(appThumbnail)}
 					/>
 
 					<span className="dashboard-table-row-name-text">

@@ -1,0 +1,76 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-183797 - Verify after changing the default language, the object definition cannot be saved without filling out the required fields"
+	@priority = 4
+	test CannotSaveObjectWithoutTranslation {
+		task ("Given portal with the default language set to Portuguese") {
+			PortalSettings.openToConfigInInstanceSettings(portletKey = "language");
+
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+		}
+
+		task ("And given a custom object with a text field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addNewObject(
+				fieldLabelName = "Custom Object 183797",
+				pluralLabelName = "Custom Objects 183797");
+
+			CreateObject.saveObject();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 183797");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Custom Field",
+				fieldType = "Text");
+		}
+
+		task ("When the user changes the default language to English") {
+			PortalSettings.openToConfigInInstanceSettings(portletKey = "language");
+
+			PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+
+			ObjectAdmin.openObjectAdmin();
+		}
+
+		task ("Then the custom object cannot be saved without filling the required fields") {
+			Click(locator1 = "ObjectAdmin#VIEW_ICON_OBJECT_ADMIN");
+
+			CreateObject.editLabel(labelName = "Objeto Personalizado 183797");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Objeto Personalizado 183797");
+
+			AssertElementPresent(
+				key_fieldLabel = "Plural Label",
+				locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
+		}
+	}
+
+}

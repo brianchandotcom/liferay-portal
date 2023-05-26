@@ -15,6 +15,7 @@
 package com.liferay.saml.persistence.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link SamlPeerBindingLocalService}.
@@ -393,6 +394,11 @@ public class SamlPeerBindingLocalServiceWrapper
 
 		return _samlPeerBindingLocalService.updateSamlPeerBinding(
 			samlPeerBinding);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _samlPeerBindingLocalService.getBasePersistence();
 	}
 
 	@Override

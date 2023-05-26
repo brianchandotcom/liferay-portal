@@ -61,6 +61,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENTRY_VALUE_BY_POSITION</td>
+		<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class, 'dnd-tr')][${key_order}]//*[contains(text(),'${key_entry}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ENTRY_VALUE_WITH_ELLIPSIS</td>
 		<td>//div[contains(@class,'dnd-tbody')]//span[contains(@class,'text-truncate') and contains(text(),'${key_entry}')]</td>
 		<td></td>

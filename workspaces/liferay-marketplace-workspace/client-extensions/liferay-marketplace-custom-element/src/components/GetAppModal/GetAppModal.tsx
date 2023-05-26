@@ -25,13 +25,14 @@ import {
 	getAccountAddressesFromCommerce,
 	getAccounts,
 	getChannels,
+	getCustomFieldExpandoValue,
 	getDeliveryProduct,
 	getOrderTypes,
 	getPaymentMethodURL,
 	getProduct,
+	getProductAttachments,
 	getProductSKU,
 	getProductSpecifications,
-	getSKUCustomFieldExpandoValue,
 	getUserAccount,
 	getUserAccountsById,
 	patchOrderByERC,
@@ -46,6 +47,7 @@ import {SelectPaymentMethod} from './SelectPaymentMethod';
 import {StepTracker} from './StepTracker';
 
 interface App {
+	attachments: ProductAttachment[];
 	createdBy: string;
 	id: number;
 	name: {en_US: string} | string;
@@ -80,6 +82,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	const [accountPublisher, setAccountPublisher] = useState<Account>();
 	const [accounts, setAccounts] = useState<AccountBrief[]>();
 	const [app, setApp] = useState<App>({
+		attachments: [],
 		createdBy: '',
 		id: 0,
 		name: '',
@@ -98,7 +101,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		siteGroupId: 0,
 		type: '',
 	});
-	const [currentUser, setCurrentUser] = useState<{emailAddress: string}>();
+	const [currentUserAccount, setCurrentUserAccount] = useState<{
+		emailAddress: string;
+	}>();
 	const [sku, setSku] = useState<SKU>({
 		cost: 0,
 		externalReferenceCode: '',
@@ -150,6 +155,8 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		},
 	]);
 
+	const [thumbnail, setThumbnail] = useState<string>();
+
 	useEffect(() => {
 		const getAddresses = async () => {
 			if (selectedAccount?.id) {
@@ -195,9 +202,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 
 			setChannel(channel);
 
-			const currentUser = await getUserAccount();
+			const newCurrentUserAccount = await getUserAccount();
 
-			setCurrentUser(currentUser);
+			setCurrentUserAccount(newCurrentUserAccount);
 
 			const response = await getUserAccountsById();
 
@@ -247,10 +254,12 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				setSelectedPaymentMethod(null);
 			}
 
-			const versionResponse = await getSKUCustomFieldExpandoValue({
+			const versionResponse = await getCustomFieldExpandoValue({
+				className: 'com.liferay.commerce.product.model.CPInstance',
+				classPK: newSku?.id as number,
+				columnName: 'version',
 				companyId: Number(getCompanyId()),
-				customFieldName: 'version',
-				skuId: newSku?.id as number,
+				tableName: 'CUSTOM_FIELDS',
 			});
 
 			if (typeof versionResponse === 'string') {
@@ -264,14 +273,11 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			const catalogId = adminProduct?.catalogId;
 			const accounts = await getAccounts();
 
-			const accountPublisher = accounts.items.find(
+			const newAccountPublisher = accounts.items.find(
 				({customFields}: Account) => {
 					if (customFields) {
 						const catalogIdField = customFields.find(
-							(customField: {
-								customValue: {data: string};
-								name: string;
-							}) => customField.name === 'CatalogId'
+							(customField) => customField.name === 'CatalogId'
 						);
 
 						return (
@@ -282,7 +288,42 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 				}
 			);
 
-			setAccountPublisher(accountPublisher);
+			const productAttachments = await getProductAttachments(
+				newAccountPublisher?.id as number,
+				channel.id,
+				app.productId
+			);
+
+			const orderThumbnail = await (async () => {
+				const promises = productAttachments.map(
+					async (currentAttachment) => {
+						const attachmentsCustomField =
+							await getCustomFieldExpandoValue({
+								className:
+									'com.liferay.commerce.product.model.CPAttachmentFileEntry',
+								classPK: currentAttachment.id,
+								columnName: 'App Icon',
+								companyId: Number(getCompanyId()),
+								tableName: 'CUSTOM_FIELDS',
+							});
+
+						if (attachmentsCustomField[0] === 'Yes') {
+							return currentAttachment;
+						}
+						else {
+							return null;
+						}
+					}
+				);
+
+				const results = await Promise.all(promises);
+
+				return results.find((attachment) => attachment !== null);
+			})();
+
+			setThumbnail(orderThumbnail?.src);
+
+			setAccountPublisher(newAccountPublisher);
 		};
 		getModalInfo();
 	}, []);
@@ -393,11 +434,15 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		const nextStepsCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
 			`/p/${app.slug}`,
 			''
-		)}/next-steps?orderId=${cartResponse.id}&logoURL=${
-			selectedAccount?.logoURL
-		}&appLogoURL=${app?.urlImage}&accountName=${
-			selectedAccount?.name
-		}&accountLogo=${selectedAccount?.logoURL}&appName=${app.name}`;
+		)}/next-steps?orderId=${encodeURIComponent(
+			cartResponse.id
+		)}&logoURL=${encodeURIComponent(selectedAccount?.logoURL || '')}
+		  &appLogoURL=${encodeURIComponent(
+				thumbnail as string
+			)}&accountName=${encodeURIComponent(selectedAccount?.name || '')}
+		  &accountLogo=${encodeURIComponent(
+				selectedAccount?.logoURL || ''
+			)}&appName=${encodeURIComponent(app.name as string)}`;
 
 		const paymentMethodURL = await getPaymentMethodURL(
 			cartResponse.id,
@@ -506,7 +551,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 										</span>
 
 										<span className="get-app-modal-body-card-header-right-content-account-info-email">
-											{currentUser?.emailAddress}
+											{currentUserAccount?.emailAddress}
 										</span>
 									</div>
 
@@ -527,7 +572,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									<img
 										alt="App Image"
 										className="get-app-modal-body-content-image"
-										src={showAppImage(app.urlImage).replace(
+										src={showAppImage(thumbnail).replace(
 											app.urlImage.split('/o')[0],
 											baseURL
 										)}
@@ -590,7 +635,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 							selectedAccount={selectedAccount}
 							setActiveAccounts={setActiveAccounts}
 							setSelectedAccount={setSelectedAccount}
-							userEmail={currentUser?.emailAddress as string}
+							userEmail={
+								currentUserAccount?.emailAddress as string
+							}
 						/>
 					) : (
 						!freeApp && (
@@ -625,14 +672,14 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 					last={
 						<div className="get-app-modal-footer">
 							<ClayButton.Group spaced>
-								<button
+								<ClayButton
 									className="get-app-modal-button-cancel"
 									onClick={onClose}
 								>
 									Cancel
-								</button>
+								</ClayButton>
 
-								<button
+								<ClayButton
 									className={classNames(
 										'get-app-modal-button-get-this-app',
 										{
@@ -651,7 +698,7 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 									onClick={handleClick}
 								>
 									{getButtonText()}
-								</button>
+								</ClayButton>
 							</ClayButton.Group>
 
 							<span>

@@ -17,6 +17,7 @@ package com.liferay.commerce.shop.by.diagram.service;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -354,6 +355,11 @@ public class CSDiagramPinLocalServiceWrapper
 
 		return _csDiagramPinLocalService.updateCSDiagramPin(
 			csDiagramPinId, positionX, positionY, sequence);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _csDiagramPinLocalService.getBasePersistence();
 	}
 
 	@Override

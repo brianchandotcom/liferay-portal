@@ -17,6 +17,7 @@ package com.liferay.layout.utility.page.service;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -564,6 +565,11 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 
 		return _layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
 			layoutUtilityPageEntryId, name);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _layoutUtilityPageEntryLocalService.getBasePersistence();
 	}
 
 	@Override

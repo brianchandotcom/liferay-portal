@@ -27,6 +27,7 @@
 
 		<aui:script require="commerce-frontend-js/components/mini_cart/entry as Cart">
 			var initialProps = {
+				accountId: <%= accountEntryId %>,
 				cartActionURLs: {
 					checkoutURL: '<%= HtmlUtil.escapeJS(checkoutURL) %>',
 					orderDetailURL: '<%= HtmlUtil.escapeJS(orderDetailURL) %>',

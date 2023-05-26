@@ -15,6 +15,7 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AppLocalService}.
@@ -427,6 +428,11 @@ public class AppLocalServiceWrapper
 		return _appLocalService.updateApp(
 			userId, remoteAppId, title, description, category, iconURL, version,
 			required, file);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _appLocalService.getBasePersistence();
 	}
 
 	@Override

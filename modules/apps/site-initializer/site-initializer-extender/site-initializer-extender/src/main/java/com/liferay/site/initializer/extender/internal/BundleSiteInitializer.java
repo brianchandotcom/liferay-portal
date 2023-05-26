@@ -107,6 +107,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -527,7 +528,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
 
-			Map<String, Layout> layouts = _invoke(
+			Map<String, Layout> layoutsMap = _invoke(
 				() -> _addOrUpdateLayouts(serviceContext));
 
 			_invoke(
@@ -567,7 +568,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					assetListEntryIdsStringUtilReplaceValues,
 					clientExtensionEntryIdsStringUtilReplaceValues,
 					ddmStructureEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues, layouts,
+					documentsStringUtilReplaceValues, layoutsMap,
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext,
 					siteNavigationMenuItemSettingsBuilder.build(),
@@ -2278,13 +2279,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, Layout> _addOrUpdateLayout(
+			Map<String, String> layoutIdsStringUtilReplaceValues,
 			long parentLayoutId, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		JSONObject pageJSONObject = _jsonFactory.createJSONObject(
-			SiteInitializerUtil.read(
-				parentResourcePath + "page.json", _servletContext));
+			_replace(
+				SiteInitializerUtil.read(
+					parentResourcePath + "page.json", _servletContext),
+				layoutIdsStringUtilReplaceValues));
 
 		Map<Locale, String> nameMap = new HashMap<>(
 			SiteInitializerUtil.toMap(pageJSONObject.getString("name_i18n")));
@@ -2298,7 +2302,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
 
-		if (Objects.equals(type, "url")) {
+		if (Objects.equals(type, "link_to_layout")) {
+			type = LayoutConstants.TYPE_LINK_TO_LAYOUT;
+		}
+		else if (Objects.equals(type, "url")) {
 			type = LayoutConstants.TYPE_URL;
 		}
 		else if (Objects.equals(type, "widget")) {
@@ -2363,7 +2370,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				layout.getPlid(), pageJSONObject.getInt("priority"));
 		}
 
-		Map<String, Layout> layouts = HashMapBuilder.<String, Layout>put(
+		layoutIdsStringUtilReplaceValues.put(
+			"LAYOUT_ID:" + layout.getName(LocaleUtil.getSiteDefault()),
+			String.valueOf(layout.getLayoutId()));
+
+		Map<String, Layout> layoutsMap = HashMapBuilder.<String, Layout>put(
 			parentResourcePath, layout
 		).build();
 
@@ -2381,7 +2392,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			parentResourcePath);
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return layouts;
+			return layoutsMap;
 		}
 
 		Set<String> sortedResourcePaths = new TreeSet<>(
@@ -2393,13 +2404,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				layouts.putAll(
+				layoutsMap.putAll(
 					_addOrUpdateLayout(
-						layout.getLayoutId(), resourcePath, serviceContext));
+						layoutIdsStringUtilReplaceValues, layout.getLayoutId(),
+						resourcePath, serviceContext));
 			}
 		}
 
-		return layouts;
+		return layoutsMap;
 	}
 
 	private Map<String, Layout> _addOrUpdateLayouts(
@@ -2413,7 +2425,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return new HashMap<>();
 		}
 
-		Map<String, Layout> layouts = new HashMap<>();
+		Map<String, Layout> layoutsMap = new HashMap<>();
+
+		Map<String, String> layoutIdsStringUtilReplaceValues = new HashMap<>();
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			serviceContext.getScopeGroupId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (Layout layout : layouts) {
+			layoutIdsStringUtilReplaceValues.put(
+				"LAYOUT_ID:" + layout.getName(LocaleUtil.getSiteDefault()),
+				String.valueOf(layout.getLayoutId()));
+		}
 
 		Set<String> sortedResourcePaths = new TreeSet<>(
 			new NaturalOrderStringComparator());
@@ -2424,14 +2448,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith("/")) {
-				layouts.putAll(
+				layoutsMap.putAll(
 					_addOrUpdateLayout(
+						layoutIdsStringUtilReplaceValues,
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, resourcePath,
 						serviceContext));
 			}
 		}
 
-		return layouts;
+		return layoutsMap;
 	}
 
 	private Map<String, String> _addOrUpdateListTypeDefinitions(

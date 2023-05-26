@@ -15,6 +15,7 @@
 package com.liferay.notification.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link NotificationTemplateAttachmentLocalService}.
@@ -384,6 +385,11 @@ public class NotificationTemplateAttachmentLocalServiceWrapper
 		return _notificationTemplateAttachmentLocalService.
 			updateNotificationTemplateAttachment(
 				notificationTemplateAttachment);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _notificationTemplateAttachmentLocalService.getBasePersistence();
 	}
 
 	@Override

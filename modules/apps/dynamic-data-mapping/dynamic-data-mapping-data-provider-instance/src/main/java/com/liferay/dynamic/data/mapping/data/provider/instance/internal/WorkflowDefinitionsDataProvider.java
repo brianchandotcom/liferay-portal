@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -32,9 +33,6 @@ import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -60,6 +58,9 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 
 		DDMDataProviderResponse.Builder builder =
 			DDMDataProviderResponse.Builder.newBuilder();
+
+		WorkflowDefinitionManager workflowDefinitionManager =
+			workflowDefinitionManagerSnapshot.get();
 
 		if (workflowDefinitionManager == null) {
 			builder = builder.withOutput("Default-Output", keyValuePairs);
@@ -97,12 +98,10 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 		throw new UnsupportedOperationException();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile WorkflowDefinitionManager workflowDefinitionManager;
+	protected static final Snapshot<WorkflowDefinitionManager>
+		workflowDefinitionManagerSnapshot = new Snapshot<>(
+			WorkflowDefinitionsDataProvider.class,
+			WorkflowDefinitionManager.class, null, true);
 
 	@Reference
 	private Language _language;

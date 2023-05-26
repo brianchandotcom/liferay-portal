@@ -401,6 +401,34 @@ public class Price implements Serializable {
 	protected String priceFormatted;
 
 	@Schema
+	public Boolean getPriceOnApplication() {
+		return priceOnApplication;
+	}
+
+	public void setPriceOnApplication(Boolean priceOnApplication) {
+		this.priceOnApplication = priceOnApplication;
+	}
+
+	@JsonIgnore
+	public void setPriceOnApplication(
+		UnsafeSupplier<Boolean, Exception> priceOnApplicationUnsafeSupplier) {
+
+		try {
+			priceOnApplication = priceOnApplicationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean priceOnApplication;
+
+	@Schema
 	public Double getPromoPrice() {
 		return promoPrice;
 	}
@@ -621,6 +649,16 @@ public class Price implements Serializable {
 			sb.append(_escape(priceFormatted));
 
 			sb.append("\"");
+		}
+
+		if (priceOnApplication != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceOnApplication\": ");
+
+			sb.append(priceOnApplication);
 		}
 
 		if (promoPrice != null) {

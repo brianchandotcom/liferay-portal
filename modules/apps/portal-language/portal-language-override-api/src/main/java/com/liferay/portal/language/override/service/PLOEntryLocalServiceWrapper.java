@@ -15,6 +15,7 @@
 package com.liferay.portal.language.override.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link PLOEntryLocalService}.
@@ -385,6 +386,11 @@ public class PLOEntryLocalServiceWrapper
 		com.liferay.portal.language.override.model.PLOEntry ploEntry) {
 
 		return _ploEntryLocalService.updatePLOEntry(ploEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ploEntryLocalService.getBasePersistence();
 	}
 
 	@Override

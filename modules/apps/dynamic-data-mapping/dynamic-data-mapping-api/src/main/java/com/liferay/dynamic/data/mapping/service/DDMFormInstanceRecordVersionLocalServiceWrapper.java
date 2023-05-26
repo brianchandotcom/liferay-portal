@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -427,6 +428,11 @@ public class DDMFormInstanceRecordVersionLocalServiceWrapper
 
 		return _ddmFormInstanceRecordVersionLocalService.
 			updateDDMFormInstanceRecordVersion(ddmFormInstanceRecordVersion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _ddmFormInstanceRecordVersionLocalService.getBasePersistence();
 	}
 
 	@Override

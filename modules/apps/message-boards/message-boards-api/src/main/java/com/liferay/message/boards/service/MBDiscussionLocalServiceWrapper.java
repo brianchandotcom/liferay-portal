@@ -17,6 +17,7 @@ package com.liferay.message.boards.service;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -472,6 +473,11 @@ public class MBDiscussionLocalServiceWrapper
 	@Override
 	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion) {
 		return _mbDiscussionLocalService.updateMBDiscussion(mbDiscussion);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _mbDiscussionLocalService.getBasePersistence();
 	}
 
 	@Override

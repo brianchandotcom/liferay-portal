@@ -1,0 +1,16 @@
+{
+	"friendlyURL": "/test-link-to-layout",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Test Link to Layout"
+	},
+	"private": false,
+	"system": false,
+	"type": "link_to_layout",
+	"typeSettings": [
+		{
+			"key": "linkToLayoutId",
+			"value": "[$LAYOUT_ID:Test Public Layout$]"
+		}
+	]
+}

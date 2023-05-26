@@ -215,7 +215,7 @@ export function CreateProjectModal({
 					<RulesAndGuidelines />
 				) : (
 					<ProjectDetails
-						githubUsername={githubUsername}
+						githubUsername={githubUsername as string}
 						onGithubUsernameChange={setGithubUsername}
 						onProjectNameChange={setProjectName}
 						projectName={projectName}

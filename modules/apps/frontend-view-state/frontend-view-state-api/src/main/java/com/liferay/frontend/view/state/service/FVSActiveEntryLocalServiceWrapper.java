@@ -15,6 +15,7 @@
 package com.liferay.frontend.view.state.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link FVSActiveEntryLocalService}.
@@ -400,6 +401,11 @@ public class FVSActiveEntryLocalServiceWrapper
 				fvsActiveEntry) {
 
 		return _fvsActiveEntryLocalService.updateFVSActiveEntry(fvsActiveEntry);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _fvsActiveEntryLocalService.getBasePersistence();
 	}
 
 	@Override

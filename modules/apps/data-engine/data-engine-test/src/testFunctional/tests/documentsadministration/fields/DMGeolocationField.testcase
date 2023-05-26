@@ -108,6 +108,7 @@ definition {
 	@description = "Verify if geolocation field can repeat field (clicking on +) when it is set as repeatable."
 	@priority = 4
 	test RepeatableGeolocationOnRenderer {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "false";
 
 		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Geolocation");

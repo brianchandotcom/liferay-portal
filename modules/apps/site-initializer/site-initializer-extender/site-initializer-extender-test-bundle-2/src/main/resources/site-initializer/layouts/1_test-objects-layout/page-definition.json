@@ -1,0 +1,125 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_C_[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"
+						},
+						"collectionType": "CollectionProvider"
+					},
+					"collectionViewports": [
+						{
+							"collectionViewportDefinition": {
+								"numberOfColumns": 1
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "tablet"
+						}
+					],
+					"displayAllItems": false,
+					"displayAllPages": true,
+					"listItemStyle": "",
+					"listStyle": "",
+					"numberOfColumns": 1,
+					"numberOfItems": 5,
+					"numberOfItemsPerPage": 20,
+					"numberOfPages": 5,
+					"paginationType": "Numeric",
+					"showAllItems": false,
+					"templateKey": ""
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionItemConfig": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h1"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"mapping": {
+														"fieldKey": "ObjectField_field1",
+														"itemReference": {
+															"contextSource": "CollectionItem"
+														}
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "CollectionItem"
+					}
+				],
+				"type": "Collection"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "BASIC_COMPONENT-heading"
+					},
+					"fragmentConfig": {
+						"headingLevel": "h1"
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"mapping": {
+										"fieldKey": "ObjectField_field1",
+										"itemReference": {
+											"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]",
+											"classPK": "[$TestObjectDefinition3#TEST_OBJECT_ENTRY_1$]"
+										}
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "test-master-page"
+		}
+	}
+}

@@ -16,6 +16,7 @@ package com.liferay.social.kernel.service;
 
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.model.SocialActivityLimit;
 
@@ -358,6 +359,11 @@ public class SocialActivityLimitLocalServiceWrapper
 
 		return _socialActivityLimitLocalService.updateSocialActivityLimit(
 			socialActivityLimit);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _socialActivityLimitLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -921,6 +922,11 @@ public class KBArticleLocalServiceWrapper
 
 		return _kbArticleLocalService.updateStatus(
 			userId, resourcePrimKey, status, serviceContext);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _kbArticleLocalService.getBasePersistence();
 	}
 
 	@Override

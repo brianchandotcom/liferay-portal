@@ -17,6 +17,7 @@ package com.liferay.message.boards.service;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
@@ -449,6 +450,11 @@ public class MBBanLocalServiceWrapper
 	@Override
 	public MBBan updateMBBan(MBBan mbBan) {
 		return _mbBanLocalService.updateMBBan(mbBan);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _mbBanLocalService.getBasePersistence();
 	}
 
 	@Override

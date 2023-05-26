@@ -15,6 +15,7 @@
 package com.liferay.list.type.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link ListTypeEntryLocalService}.
@@ -461,6 +462,11 @@ public class ListTypeEntryLocalServiceWrapper
 
 		return _listTypeEntryLocalService.updateListTypeEntry(
 			externalReferenceCode, listTypeEntryId, nameMap);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _listTypeEntryLocalService.getBasePersistence();
 	}
 
 	@Override

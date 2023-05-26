@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
+
 /**
  * Provides a wrapper for {@link BrowserTrackerLocalService}.
  *
@@ -312,7 +314,7 @@ public class BrowserTrackerLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
+	public String getOSGiServiceIdentifier() {
 		return _browserTrackerLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -350,6 +352,11 @@ public class BrowserTrackerLocalServiceWrapper
 
 		return _browserTrackerLocalService.updateBrowserTracker(
 			userId, browserKey);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _browserTrackerLocalService.getBasePersistence();
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.account.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
  * Provides a wrapper for {@link AccountRoleLocalService}.
@@ -452,6 +453,11 @@ public class AccountRoleLocalServiceWrapper
 		com.liferay.account.model.AccountRole accountRole) {
 
 		return _accountRoleLocalService.updateAccountRole(accountRole);
+	}
+
+	@Override
+	public BasePersistence<?> getBasePersistence() {
+		return _accountRoleLocalService.getBasePersistence();
 	}
 
 	@Override

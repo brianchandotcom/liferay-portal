@@ -16,7 +16,6 @@ package com.liferay.layout.page.template.internal.upgrade.registry;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.page.template.internal.upgrade.v1_1_0.LayoutPrototypeUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v1_1_1.LayoutPageTemplateEntryUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v1_2_0.LayoutPageTemplateStructureUpgradeProcess;
@@ -174,8 +173,7 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 		registry.register(
 			"3.5.0", "4.0.0",
 			new com.liferay.layout.page.template.internal.upgrade.v4_0_0.
-				LayoutPageTemplateStructureRelUpgradeProcess(
-					_collectionPaginationHelper));
+				LayoutPageTemplateStructureRelUpgradeProcess());
 
 		registry.register(
 			"4.0.0", "5.0.0",
@@ -201,9 +199,6 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.dropColumns(
 				"LayoutPageTemplateStructure", "classNameId"));
 	}
-
-	@Reference
-	private CollectionPaginationHelper _collectionPaginationHelper;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

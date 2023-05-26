@@ -23,7 +23,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
-import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
@@ -41,10 +40,6 @@ import javax.servlet.ServletContext;
  * @author Chema Balsas
  */
 public class ServletContextUtil {
-
-	public static CollectionPaginationHelper getCollectionPaginationHelper() {
-		return _collectionPaginationHelperSnapshot.get();
-	}
 
 	public static FragmentEntryConfigurationParser
 		getFragmentEntryConfigurationParser() {
@@ -140,9 +135,6 @@ public class ServletContextUtil {
 		return _servletContextSnapshot.get();
 	}
 
-	private static final Snapshot<CollectionPaginationHelper>
-		_collectionPaginationHelperSnapshot = new Snapshot<>(
-			ServletContextUtil.class, CollectionPaginationHelper.class);
 	private static final Snapshot<FragmentEntryConfigurationParser>
 		_fragmentEntryConfigurationParserSnapshot = new Snapshot<>(
 			ServletContextUtil.class, FragmentEntryConfigurationParser.class);

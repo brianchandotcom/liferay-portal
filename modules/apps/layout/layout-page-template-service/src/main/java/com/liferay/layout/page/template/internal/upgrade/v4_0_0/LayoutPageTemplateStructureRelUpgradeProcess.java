@@ -38,12 +38,6 @@ import java.util.List;
 public class LayoutPageTemplateStructureRelUpgradeProcess
 	extends UpgradeProcess {
 
-	public LayoutPageTemplateStructureRelUpgradeProcess(
-		CollectionPaginationHelper collectionPaginationHelper) {
-
-		_collectionPaginationHelper = collectionPaginationHelper;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeLayoutPageTemplateStructureRel();
@@ -99,7 +93,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				String paginationType = _getPaginatiopnType(
 					collectionStyledLayoutStructureItem, itemsJSONObject);
 
-				if (_collectionPaginationHelper.isPaginationEnabled(
+				if (CollectionPaginationHelper.isPaginationEnabled(
 						paginationType)) {
 
 					collectionStyledLayoutStructureItem.setDisplayAllPages(
@@ -164,7 +158,5 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateStructureRelUpgradeProcess.class);
-
-	private final CollectionPaginationHelper _collectionPaginationHelper;
 
 }

@@ -313,7 +313,7 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		defaultLayoutListRetrieverContext.setPagination(
-			_collectionPaginationHelper.getPagination(
+			CollectionPaginationHelper.getPagination(
 				activePage, listCount, displayAllPages, displayAllItems,
 				numberOfItems, numberOfItemsPerPage, numberOfPages,
 				paginationType));
@@ -378,7 +378,7 @@ public class GetCollectionFieldMVCResourceCommand
 			"length", listCount
 		).put(
 			"totalNumberOfItems",
-			_collectionPaginationHelper.getTotalNumberOfItems(
+			CollectionPaginationHelper.getTotalNumberOfItems(
 				listCount, displayAllPages, displayAllItems, numberOfItems,
 				numberOfItemsPerPage, numberOfPages, paginationType)
 		);
@@ -569,9 +569,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
-
-	@Reference
-	private CollectionPaginationHelper _collectionPaginationHelper;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

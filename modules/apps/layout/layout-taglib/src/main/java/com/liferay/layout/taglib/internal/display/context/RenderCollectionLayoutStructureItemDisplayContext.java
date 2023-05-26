@@ -125,11 +125,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_getDefaultLayoutListRetrieverContext(
 				layoutListRetriever, listObjectReference);
 
-		CollectionPaginationHelper collectionPaginationHelper =
-			ServletContextUtil.getCollectionPaginationHelper();
-
 		defaultLayoutListRetrieverContext.setPagination(
-			collectionPaginationHelper.getPagination(
+			CollectionPaginationHelper.getPagination(
 				getActivePage(), getCollectionCount(),
 				_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
@@ -245,10 +242,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		CollectionPaginationHelper collectionPaginationHelper =
-			ServletContextUtil.getCollectionPaginationHelper();
-
-		if (collectionPaginationHelper.isPaginationEnabled(
+		if (CollectionPaginationHelper.isPaginationEnabled(
 				_collectionStyledLayoutStructureItem.getPaginationType())) {
 
 			numberOfItemsToDisplay = Math.min(
@@ -281,10 +275,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		CollectionPaginationHelper collectionPaginationHelper =
-			ServletContextUtil.getCollectionPaginationHelper();
-
-		if (collectionPaginationHelper.isPaginationEnabled(
+		if (CollectionPaginationHelper.isPaginationEnabled(
 				_collectionStyledLayoutStructureItem.getPaginationType())) {
 
 			numberOfItemsToDisplay = Math.min(
@@ -313,10 +304,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
-		CollectionPaginationHelper collectionPaginationHelper =
-			ServletContextUtil.getCollectionPaginationHelper();
-
-		return collectionPaginationHelper.getTotalNumberOfItems(
+		return CollectionPaginationHelper.getTotalNumberOfItems(
 			getCollectionCount(),
 			_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 			_collectionStyledLayoutStructureItem.isDisplayAllItems(),

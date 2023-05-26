@@ -162,7 +162,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(
 			key_fieldLabel = "Priority",

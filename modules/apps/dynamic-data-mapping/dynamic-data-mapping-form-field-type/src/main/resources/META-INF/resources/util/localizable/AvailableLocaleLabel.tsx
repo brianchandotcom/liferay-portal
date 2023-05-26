@@ -16,7 +16,24 @@ import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
 
-const AvailableLocaleLabel = ({isDefault, isSubmitLabel, isTranslated}) => {
+interface AvailableLocaleLabelProps {
+	isDefault: boolean;
+	isSubmitLabel: boolean;
+	isTranslated: boolean;
+}
+type DisplayType =
+	| 'danger'
+	| 'info'
+	| 'secondary'
+	| 'success'
+	| 'unstyled'
+	| 'warning';
+
+const AvailableLocaleLabel = ({
+	isDefault,
+	isSubmitLabel,
+	isTranslated,
+}: AvailableLocaleLabelProps) => {
 	let labelText = '';
 
 	if (isSubmitLabel) {
@@ -32,13 +49,15 @@ const AvailableLocaleLabel = ({isDefault, isSubmitLabel, isTranslated}) => {
 
 	return (
 		<ClayLabel
-			displayType={classNames({
-				info: isDefault && !isSubmitLabel,
-				success: isTranslated,
-				warning:
-					(!isDefault && !isTranslated) ||
-					(!isTranslated && isSubmitLabel),
-			})}
+			displayType={
+				classNames({
+					info: isDefault && !isSubmitLabel,
+					success: isTranslated,
+					warning:
+						(!isDefault && !isTranslated) ||
+						(!isTranslated && isSubmitLabel),
+				}) as DisplayType
+			}
 		>
 			{Liferay.Language.get(labelText)}
 		</ClayLabel>

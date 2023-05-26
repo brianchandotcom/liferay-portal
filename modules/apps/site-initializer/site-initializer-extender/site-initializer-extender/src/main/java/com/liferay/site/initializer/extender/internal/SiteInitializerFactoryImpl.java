@@ -125,10 +125,10 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			null);
 
 		BundleSiteInitializer bundleSiteInitializer = new BundleSiteInitializer(
-			_accountEntryLocalService, _accountGroupRelService,
-			_accountGroupLocalService, _adminAccountGroupResourceFactory,
-			_accountResourceFactory, _accountRoleLocalService,
-			_accountRoleResourceFactory, _assetCategoryLocalService,
+			_accountEntryLocalService, _accountGroupLocalService,
+			_accountGroupRelService, _accountResourceFactory,
+			_accountRoleLocalService, _accountRoleResourceFactory,
+			_adminAccountGroupResourceFactory, _assetCategoryLocalService,
 			_assetListEntryLocalService, bundle,
 			_clientExtensionEntryLocalService, _configurationProvider,
 			_ddmStructureLocalService, _ddmTemplateLocalService,

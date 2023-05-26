@@ -102,12 +102,12 @@ public class SiteInitializerExtension {
 
 	public SiteInitializerExtension(
 		AccountEntryLocalService accountEntryLocalService,
-		AccountGroupRelService accountGroupRelService,
 		AccountGroupLocalService accountGroupLocalService,
-		AdminAccountGroupResource.Factory adminAccountGroupResourceFactory,
+		AccountGroupRelService accountGroupRelService,
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
 		AccountRoleResource.Factory accountRoleResourceFactory,
+		AdminAccountGroupResource.Factory adminAccountGroupResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
@@ -183,10 +183,10 @@ public class SiteInitializerExtension {
 		_component = dependencyManager.createComponent();
 
 		BundleSiteInitializer bundleSiteInitializer = new BundleSiteInitializer(
-			accountEntryLocalService, accountGroupRelService,
-			accountGroupLocalService, adminAccountGroupResourceFactory,
-			accountResourceFactory, accountRoleLocalService,
-			accountRoleResourceFactory, assetCategoryLocalService,
+			accountEntryLocalService, accountGroupLocalService,
+			accountGroupRelService, accountResourceFactory,
+			accountRoleLocalService, accountRoleResourceFactory,
+			adminAccountGroupResourceFactory, assetCategoryLocalService,
 			assetListEntryLocalService, bundle,
 			clientExtensionEntryLocalService, configurationProvider,
 			ddmStructureLocalService, ddmTemplateLocalService,

@@ -50,13 +50,13 @@ public interface CPFriendlyURLConfigurationForm {
 	@DDMFormField(
 		label = "%asset-category-url-separator",
 		tip = "%asset-category-url-separator-help",
-		validationExpression = "(assetCategoryURLSeparator != '-') && (assetCategoryURLSeparator != '~') && (assetCategoryURLSeparator != 'b') && (assetCategoryURLSeparator != 'd') && (assetCategoryURLSeparator != 'w')"
+		validationExpression = "isValidURLSeparator(assetCategoryURLSeparator)"
 	)
 	public String assetCategoryURLSeparator();
 
 	@DDMFormField(
 		label = "%product-url-separator", tip = "%product-url-separator-help",
-		validationExpression = "(productURLSeparator != '-') && (productURLSeparator != '~') && (productURLSeparator != 'b') && (productURLSeparator != 'd') && (productURLSeparator != 'w')"
+		validationExpression = "isValidURLSeparator(productURLSeparator)"
 	)
 	public String productURLSeparator();
 

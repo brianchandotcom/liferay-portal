@@ -1,235 +1,157 @@
-.portlet-login {
-	$alert: #f48989;
-	$blue: #0b5fff;
-	$error: #da1414;
-	$errorLight: #feefef;
-	$main: #272833;
-	$secondary: #f7f8f9;
-	$white: #fff;
+@mixin focus {
+	border-color: #80acff;
+	box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.25rem #528eff;
+	outline: 0;
+}
 
-	background: $secondary;
-	bottom: 0;
+body {
+	background-color: #f9f9f9;
 	font-family: 'Source Sans Pro';
-	font-size: 0.875rem;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
+	font-size: 14px;
+}
 
-	.portlet-content-container {
-		margin: 0 auto;
-		max-width: 960px;
+.portlet-layout {
+	margin: auto;
+}
 
-		.portlet-body {
-			align-items: center;
-			display: flex;
-			justify-content: center;
-			min-height: 90vh;
+.portlet-login {
+	background-color: #fff;
+	border-color: #ddd #ddd #d8d8d8;
+	box-shadow: 0 2px 0 hsla(0, 0%, 68.6%, 0.12);
+	margin: 1rem 0;
+	padding: 2rem;
 
-			.login-container {
-				background: $white;
-				border-radius: 2px;
-				box-sizing: border-box;
-				padding: 2rem;
-				width: 350px;
+	&.login-screen {
+		.control-label:after {
+			color: #da1414;
+			content: '*';
+			display: inline-block;
+		}
+	}
 
-				.inline-alert-container {
-					margin: 1rem 0;
+	&:not(&.create_account-screen) {
+		margin: 15vh auto;
+		max-width: 380px;
+	}
 
-					.lfr-alert-wrapper {
-						margin-bottom: 12px;
+	.panel-body {
+		padding: 0;
+	}
 
-						.alert-danger {
-							background-color: $errorLight;
-							border: 1px solid $alert;
-							border-radius: 0.25rem;
-							box-sizing: border-box;
-							color: $error;
-							font-weight: 400;
-							padding: 1rem;
+	.secondary-info {
+		margin-bottom: 1rem;
 
-							.close {
-								display: none;
-							}
+		> span {
+			font-weight: 600;
+		}
+	}
 
-							.lead {
-								vertical-align: middle;
+	.sign-in-heading {
+		font-size: 1.5em;
+		font-weight: 600;
+		padding: 1rem 0;
+	}
 
-								svg {
-									fill: $error;
-									height: 12px;
-									margin-right: 4px;
-									width: 12px;
-								}
-							}
-						}
-					}
+	.form-control {
+		background-color: #f1f2f5;
+		border: 1px solid #e7e7ed;
+		font-size: 0.875rem;
+		height: 2.5rem;
+		line-height: 1.5rem;
+		padding-bottom: 0.4375rem 1rem;
+		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+		width: 100%;
+
+		&:focus {
+			@include focus;
+		}
+
+		&.error-field {
+			background-color: #feefef;
+			border-color: #f48989;
+			box-shadow: 0 0 rgba(0, 0, 0, 0);
+			color: #272833;
+
+			&:focus {
+				@include focus;
+			}
+		}
+	}
+
+	.control-label {
+		font-weight: 600;
+		word-wrap: break-word;
+	}
+
+	.btn-primary {
+		width: 100%;
+
+		&:focus {
+			@include focus;
+		}
+	}
+
+	.navigation li {
+		width: 100%;
+
+		&:first-child {
+			margin-bottom: 1rem;
+
+			a {
+				background-color: #fff;
+				border: 1px solid #88889a;
+				color: #6b6c7e;
+
+				&:hover {
+					background-color: #f7f8f9;
+					border-color: #88889a;
+					color: #272833;
+					text-decoration: none !important;
 				}
-
-				.input-container {
-					border: none;
-					padding: 0;
-
-					.button-holder {
-						margin: 0;
-
-						.btn-primary {
-							background-color: $blue;
-							border: 1px solid $blue;
-							border-radius: 0.25rem;
-							color: $white;
-							cursor: pointer;
-							margin: 1.5rem 0 0.5rem;
-							padding: 0.4375rem 0.9375rem;
-							width: 100%;
-
-							&:hover {
-								background-color: #0053f0;
-								border-color: transparent;
-							}
-
-							.lfr-btn-label {
-								font-size: 0.875rem;
-							}
-						}
-					}
-
-					.fieldset {
-						border: none;
-						margin: 0;
-						padding: 0;
-
-						.form-group {
-							display: flex;
-							flex-direction: column;
-							margin-bottom: 1em;
-							max-width: 500px;
-							padding: 0;
-
-							&.has-error {
-								> .error-field {
-									background-color: $errorLight !important;
-									border-color: $alert;
-									color: $main;
-								}
-
-								.form-validator-stack .required {
-									color: $error;
-									margin-top: 0.25rem;
-									word-wrap: break-word;
-								}
-							}
-
-							.control-label {
-								color: $main;
-								font-weight: 600;
-								margin-bottom: 0.25rem;
-								word-wrap: break-word;
-
-								&:after {
-									color: $error;
-									content: '*';
-									display: inline-block;
-									height: 12px;
-									width: 12px;
-								}
-							}
-
-							.form-control {
-								background-color: #f1f2f5;
-								border: 0.063rem solid #e7e7ed;
-								border-radius: 0.25rem;
-								box-shadow: none;
-								color: $main;
-								font-family: inherit;
-								font-size: 1rem;
-								font-weight: 300;
-								line-height: 1.5;
-								margin: 0;
-								min-width: 0;
-								padding: 0.5rem 1rem;
-								transition: border-color 0.15s ease-in-out,
-									box-shadow 0.15s ease-in-out;
-
-								&:focus {
-									background-color: #f0f5ff;
-									border-color: #80acff;
-									color: $main;
-									outline: 0;
-								}
-							}
-						}
-
-						.input-checkbox-wrapper {
-							align-items: start;
-							margin-top: 4px;
-
-							> label {
-								cursor: pointer;
-								display: flex;
-
-								> input {
-									margin-right: 8px;
-								}
-							}
-						}
-					}
-				}
-
-				.navigation .list-unstyled {
-					display: flex;
-					flex-direction: column;
-					list-style: none;
-					margin: 0;
-					padding: 0;
-
-					> li {
-						display: flex;
-						justify-content: center;
-						margin: 8px 0 0;
-
-						&:first-child a {
-							background-color: $white;
-							border: 1px solid #cdced9;
-							border-radius: 0.25rem;
-							color: #7d8b94;
-							padding: 0.4375rem 0.9375rem;
-							width: 100%;
-
-							&:hover {
-								background-color: $secondary;
-							}
-						}
-
-						&:last-child a {
-							color: $blue;
-							margin-top: 16px;
-							text-align: center;
-						}
-
-						> a {
-							font-weight: 300;
-							text-align: center;
-							text-decoration: none;
-						}
-					}
-				}
-
-				.secondary-info {
-					font-weight: 300;
-					margin-bottom: 4px;
-
-					> span {
-						font-weight: 400;
-					}
-				}
-
-				.sign-in-heading {
-					font-size: 1.5em;
-					font-weight: 600;
-					padding: 0 0 1.5rem;
+				span,
+				span:hover {
+					text-decoration: none !important;
 				}
 			}
 		}
+
+		a {
+			display: block;
+			text-align: center;
+		}
+	}
+
+	.btn,
+	.navigation li a {
+		border-radius: 0.25rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		padding: 0.4375rem 0.75rem;
+
+		&:focus {
+			@include focus;
+		}
+	}
+
+	.alert-danger {
+		background-color: #feefef;
+		border-color: #f48989;
+		color: #da1414;
+	}
+
+	.alert-indicator {
+		font-size: 1rem;
+		line-height: 1;
+		vertical-align: 0;
+
+		+ .lead {
+			font-size: 0.875rem;
+			font-weight: 600;
+		}
+	}
+
+	.reference-mark {
+		color: #da1414 !important;
+		font-size: 5px;
 	}
 }

@@ -32,5 +32,17 @@
 
 		<@liferay_util["include"] page=body_bottom_include />
 	</#if>
+
+	<#if !is_signed_in>
+		<script>
+			const parsedUrl = new URL(window.location.href);
+			const params = new URLSearchParams(parsedUrl.search);
+			const paramName = params.get('_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName')?.replace('/login/', '') ?? null;
+
+			if (paramName) {
+				document.querySelector('.portlet-login').classList.add(paramName + '-screen')
+			}
+		</script>
+	</#if>
 </body>
 </html>

@@ -78,6 +78,8 @@ definition {
 			Testray.goToProjectPage(projectName = "changedfirstname Updateln");
 
 			Button.click(button = "Delete User");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this item?");
 		}
 
 		task ("Then can not see the user in the table") {

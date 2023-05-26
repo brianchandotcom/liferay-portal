@@ -220,6 +220,23 @@ public class ObjectDefinitionLocalServiceTest {
 						RandomTestUtil.randomString(),
 						StringUtil.randomId()))));
 
+		_assertFailure(
+			ObjectDefinitionScopeException.class,
+			"Storage type Salesforce can not be set as site scope",
+			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(),
+						StringUtil.randomId()))));
+
 		// Name, database table, resources, and status
 
 		objectDefinition =

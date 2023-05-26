@@ -11,11 +11,11 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.customizer;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.error.HttpWhiteboardFailureException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.FilterRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.BooleanPlus;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
 
@@ -130,10 +130,10 @@ public class ContextFilterTrackerCustomizer
 
 		FailedFilterDTO failedFilterDTO = new FailedFilterDTO();
 
-		failedFilterDTO.asyncSupported = BooleanPlus.from(
+		failedFilterDTO.asyncSupported = GetterUtil.getBoolean(
 			serviceReference.getProperty(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED),
-			false);
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED));
 		failedFilterDTO.dispatcher = StringPlus.from(
 			serviceReference.getProperty(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER));

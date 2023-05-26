@@ -26,7 +26,7 @@ import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {format, getYear, isBefore} from 'date-fns';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {fetch, navigate, openModal, openToast, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
@@ -243,7 +243,9 @@ function AddFDSFilterModalContent({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Language.get('new-filter')}
+				{filter
+					? sub(Liferay.Language.get('edit-x-filter'), [filter.name])
+					: Liferay.Language.get('new-filter')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

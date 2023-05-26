@@ -48,6 +48,9 @@ definition {
 			else if (${templateName} == "Welcome") {
 				var templateKey = "com.liferay.site.initializer.welcome";
 			}
+			else if (${templateName} == "Partner Portal") {
+				var templateKey = "com.liferay.osb.site.initializer.partner.portal";
+			}
 		}
 
 		return ${templateKey};

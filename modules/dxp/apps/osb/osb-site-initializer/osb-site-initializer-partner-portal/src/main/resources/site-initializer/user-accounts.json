@@ -58,7 +58,7 @@
 			}
 		],
 		"alternateName": "cam",
-		"emailAddress": "cam@liferay.com",
+		"emailAddress": "cam@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Account",
 		"name": "Channel Account Manager (CAM)",
@@ -71,7 +71,7 @@
 			}
 		],
 		"alternateName": "com",
-		"emailAddress": "com@liferay.com",
+		"emailAddress": "com@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Operations",
 		"name": "Channel Operations Manager (COM)",
@@ -84,7 +84,7 @@
 			}
 		],
 		"alternateName": "cmm",
-		"emailAddress": "cmm@liferay.com",
+		"emailAddress": "cmm@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Marketing",
 		"name": "Channel Marketing Manager (CMM)",
@@ -97,7 +97,7 @@
 			}
 		],
 		"alternateName": "cmd",
-		"emailAddress": "cmd@liferay.com",
+		"emailAddress": "cmd@liferaytest.com",
 		"familyName": "Director",
 		"givenName": "Channel Marketing",
 		"name": "Channel Marketing Director (CMD)",
@@ -115,7 +115,7 @@
 			}
 		],
 		"alternateName": "cfm",
-		"emailAddress": "cfm@liferay.com",
+		"emailAddress": "cfm@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Finance",
 		"name": "Channel Finance Manager (CFM)",
@@ -128,7 +128,7 @@
 			}
 		],
 		"alternateName": "cem",
-		"emailAddress": "cem@liferay.com",
+		"emailAddress": "cem@liferaytest.com",
 		"familyName": "Manager",
 		"givenName": "Channel Enablement",
 		"name": "Channel Enablement Manager (CEM)",

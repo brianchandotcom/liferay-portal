@@ -60,7 +60,7 @@ definition {
 	}
 
 	macro _createObjectDefinition {
-		Variables.assertDefined(parameterList = "${en_US_label},${name},${requiredStringFieldName},${en_US_plural_label}");
+		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
@@ -75,6 +75,14 @@ definition {
 
 		if (!(isSet(scope))) {
 			var scope = "company";
+		}
+
+		if (!(isSet(en_US_label))) {
+			var en_US_label = ${name};
+		}
+
+		if (!(isSet(requiredStringFieldName))) {
+			var requiredStringFieldName = "name";
 		}
 
 		var curl = '''
@@ -765,10 +773,14 @@ definition {
 	}
 
 	macro createRelationshipWithObjectDefinitionNames {
-		Variables.assertDefined(parameterList = "${childObjectName},${deletionType},${name},${parentObjectName},${type}");
+		Variables.assertDefined(parameterList = "${childObjectName},${name},${parentObjectName},${type}");
 
 		if (!(isSet(en_US_label))) {
 			var en_US_label = ${name};
+		}
+
+		if (!(isSet(deletionType))) {
+			var deletionType = "cascade";
 		}
 
 		var childObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${childObjectName});

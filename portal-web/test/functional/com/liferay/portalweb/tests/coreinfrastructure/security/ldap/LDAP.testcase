@@ -98,6 +98,70 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-182493 TC-7. Verify user could log in via LDAP when password creation is disabled."
+	@priority = 3
+	test CanLoginViaLDAPWithPasswordCreation {
+		property apacheds.blank.user.password.enabled = "true";
+		property app.server.types = "tomcat";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "false";
+		property test.name.skip.portal.instance = "LDAP#CanLoginViaSAMLWithLDAPPasswordCreation";
+
+		task ("Given Disable Allow Custom Password At Account Creation in Users add LDAP server and test connection configure LDAP settings") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Users",
+				configurationName = "Fields",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
+
+			PortletEntry.save();
+
+			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
+
+			PortalSettings.editLDAPServer(ldapServerName = "ApacheDS Server");
+
+			PortalSettings.testLDAPConnection();
+
+			var enableSettingList = "enabled,ldapImportEnabled,importOnStartup";
+
+			PortalSettings.configureLDAPSetting(enableSettingList = ${enableSettingList});
+
+			PortalSettings.viewEnabledLDAPSetting(enableSettingList = ${enableSettingList});
+		}
+
+		task ("When Shutdown and start server view user information") {
+			Portlet.shutdownServer();
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG();
+
+			SearchAdministration.executeReindex();
+
+			User.openUsersAdmin();
+
+			User.viewCP(
+				userEmailAddress = "ldapuseremail@liferay.com",
+				userFirstName = "ldapusergivenname",
+				userLastName = "ldapusersn",
+				userScreenName = "ldapusercn");
+		}
+
+		task ("Then Verify user could log in via LDAP") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "ldapuseremail@liferay.com",
+				userLoginFullName = "ldapusergivenname ldapusersn");
+		}
+	}
+
 	@description = "This is a use case for LPS-151394. User can be unassigned from groups through LDAP. Blocked by LPS-153043"
 	@priority = 3
 	test CanRemoveUserFromGroupThroughLDAP {

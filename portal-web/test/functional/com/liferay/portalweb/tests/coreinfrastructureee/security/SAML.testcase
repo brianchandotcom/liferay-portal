@@ -1470,6 +1470,94 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-182493 TC-5: Verify user could log in via SAML (Portal to Portal) when password creation is disabled."
+	@priority = 3
+	test CanLoginViaSAMLWithDisablePasswordCreation {
+		property test.name.skip.portal.instance = "SAML#CanLoginViaSAMLWithDisablePasswordCreation";
+
+		task ("Given Add virtual instance able.com setup IDP as localhost:8080 and SP as able.com:8080") {
+			SAML.addVirtualInstances(virtualHosts = "www.able.com");
+
+			SAML.configureLiferaySAMLAsIdP(
+				idpURL = "http://localhost:8080",
+				samlEntityId = "samlidp",
+				userEmailAddress = "test@liferay.com");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			SAML.setupSP(
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "samlidp",
+				idpURL = "http://localhost:8080",
+				keepSPLogin = "true",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				sPUserEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+		}
+
+		task ("When Disable Allow Custom Password At Account Creation password in SP") {
+			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:8080");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Users",
+				configurationName = "Fields",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
+
+			PortletEntry.save();
+
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Then Verify that the user successfully logged in to SP") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			SAML.clickAtWarningEmailLink();
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			SAML.executeSPInitiatedSSO(
+				password = "test",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "userea1@liferay.com");
+
+			User.viewLoggedInPG();
+		}
+	}
+
 	@description = "LPS-128600 TC-3. User can't log in with invalid custom field mapping on SP. Blocked by LPS-142222."
 	@priority = 4
 	test CannotLoginWithInvalidCustomFieldMappingInSAML {

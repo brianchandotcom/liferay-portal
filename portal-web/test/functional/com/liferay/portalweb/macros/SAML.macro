@@ -257,6 +257,16 @@ definition {
 			value1 = "Sign In");
 	}
 
+	macro clickAtWarningEmailLink {
+		AssertClick(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		if (IsElementPresent(locator1 = "Message#WARNING")) {
+			Click(locator1 = "Message#WARNING_SPECIFIC_LINK_1");
+		}
+	}
+
 	@description = "Configures Liferay SAML as the IdP"
 	macro configureLiferaySAMLAsIdP {
 

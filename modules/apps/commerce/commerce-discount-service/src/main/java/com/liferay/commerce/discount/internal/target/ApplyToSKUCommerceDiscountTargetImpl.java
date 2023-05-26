@@ -15,19 +15,8 @@
 package com.liferay.commerce.discount.internal.target;
 
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
-import com.liferay.commerce.discount.model.CommerceDiscount;
-import com.liferay.commerce.discount.model.CommerceDiscountRel;
-import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
-import com.liferay.commerce.discount.target.CommerceDiscountSKUTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -45,23 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_SKUS,
 		"commerce.discount.target.order:Integer=20"
 	},
-	service = {CommerceDiscountSKUTarget.class, CommerceDiscountTarget.class}
+	service = CommerceDiscountTarget.class
 )
 public class ApplyToSKUCommerceDiscountTargetImpl
-	implements CommerceDiscountSKUTarget, CommerceDiscountTarget {
-
-	@Override
-	public void contributeDocument(
-		Document document, CommerceDiscount commerceDiscount) {
-
-		document.addKeyword(
-			"commerce_discount_target_cp_instance_ids",
-			TransformUtil.transformToLongArray(
-				_commerceDiscountRelLocalService.getCommerceDiscountRels(
-					commerceDiscount.getCommerceDiscountId(),
-					CPInstance.class.getName()),
-				CommerceDiscountRel::getClassPK));
-	}
+	implements CommerceDiscountTarget {
 
 	@Override
 	public String getKey() {
@@ -81,34 +57,6 @@ public class ApplyToSKUCommerceDiscountTargetImpl
 	public Type getType() {
 		return Type.APPLY_TO_SKU;
 	}
-
-	@Override
-	public void postProcessContextBooleanFilter(
-		BooleanFilter contextBooleanFilter, CPInstance cpInstance) {
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		booleanFilter.add(
-			new BooleanFilter() {
-				{
-					add(
-						new ExistsFilter(
-							"commerce_discount_target_cp_instance_ids"),
-						BooleanClauseOccur.MUST_NOT);
-				}
-			},
-			BooleanClauseOccur.SHOULD);
-		booleanFilter.add(
-			new TermFilter(
-				"commerce_discount_target_cp_instance_ids",
-				String.valueOf(cpInstance.getCPDefinitionId())),
-			BooleanClauseOccur.SHOULD);
-
-		contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
-	}
-
-	@Reference
-	private CommerceDiscountRelLocalService _commerceDiscountRelLocalService;
 
 	@Reference
 	private Language _language;

@@ -187,6 +187,11 @@ public class FunctionalBatchBuildTestrayCaseResult
 			"com.liferay.poshi.runner.PoshiRunner");
 
 		if (testClassResult == null) {
+			testClassResult = build.getTestClassResult(
+				"com.liferay.poshi.runner.ParallelPoshiRunner");
+		}
+
+		if (testClassResult == null) {
 			return null;
 		}
 

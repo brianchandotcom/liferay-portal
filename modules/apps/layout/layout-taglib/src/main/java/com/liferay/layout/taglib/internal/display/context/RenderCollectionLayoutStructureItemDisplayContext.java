@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -127,7 +126,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		defaultLayoutListRetrieverContext.setPagination(
 			CollectionPaginationUtil.getPagination(
-				getActivePage(), getCollectionCount(),
+				getActivePage(), _getCollectionCount(),
 				_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
 				_collectionStyledLayoutStructureItem.getNumberOfItems(),
@@ -137,29 +136,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		return layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
-	}
-
-	public int getCollectionCount() {
-		if (_collectionCount != null) {
-			return _collectionCount;
-		}
-
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			_getLayoutListRetriever();
-		ListObjectReference listObjectReference = _getListObjectReference();
-
-		if ((layoutListRetriever == null) || (listObjectReference == null) ||
-			!_hasViewPermission(listObjectReference)) {
-
-			return 0;
-		}
-
-		_collectionCount = layoutListRetriever.getListCount(
-			listObjectReference,
-			_getDefaultLayoutListRetrieverContext(
-				layoutListRetriever, listObjectReference));
-
-		return _collectionCount;
 	}
 
 	public String getCollectionItemType() {
@@ -230,7 +206,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		_maxNumberOfItemsPerPage = Math.min(
-			getCollectionCount(), _getNumberOfItemsPerPage());
+			_getCollectionCount(), _getNumberOfItemsPerPage());
 
 		return _maxNumberOfItemsPerPage;
 	}
@@ -289,23 +265,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _numberOfRows;
 	}
 
-	public Map<String, Object> getNumericCollectionPaginationAdditionalProps() {
-		return HashMapBuilder.<String, Object>put(
-			"collectionId", _collectionStyledLayoutStructureItem.getItemId()
-		).build();
-	}
-
-	public Map<String, Object> getSimpleCollectionPaginationContext() {
-		return HashMapBuilder.<String, Object>put(
-			"activePage", getActivePage()
-		).put(
-			"collectionId", _collectionStyledLayoutStructureItem.getItemId()
-		).build();
-	}
-
 	public int getTotalNumberOfItems() {
 		return CollectionPaginationUtil.getTotalNumberOfItems(
-			getCollectionCount(),
+			_getCollectionCount(),
 			_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 			_collectionStyledLayoutStructureItem.isDisplayAllItems(),
 			_collectionStyledLayoutStructureItem.getNumberOfItems(),
@@ -322,6 +284,29 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		}
 
 		return _hasViewPermission(listObjectReference);
+	}
+
+	private int _getCollectionCount() {
+		if (_collectionCount != null) {
+			return _collectionCount;
+		}
+
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			_getLayoutListRetriever();
+		ListObjectReference listObjectReference = _getListObjectReference();
+
+		if ((layoutListRetriever == null) || (listObjectReference == null) ||
+			!_hasViewPermission(listObjectReference)) {
+
+			return 0;
+		}
+
+		_collectionCount = layoutListRetriever.getListCount(
+			listObjectReference,
+			_getDefaultLayoutListRetrieverContext(
+				layoutListRetriever, listObjectReference));
+
+		return _collectionCount;
 	}
 
 	private Map<String, String[]> _getConfiguration() {
@@ -578,17 +563,17 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private int _getNumberOfPages() {
 		int numberOfItemsPerPage = _getNumberOfItemsPerPage();
 
-		int maxNumberOfItems = getCollectionCount();
+		int maxNumberOfItems = _getCollectionCount();
 
 		if (_collectionStyledLayoutStructureItem.getNumberOfPages() > 0) {
 			maxNumberOfItems = Math.min(
-				getCollectionCount(),
+				_getCollectionCount(),
 				_collectionStyledLayoutStructureItem.getNumberOfPages() *
 					numberOfItemsPerPage);
 		}
 
 		if (_collectionStyledLayoutStructureItem.isDisplayAllPages()) {
-			maxNumberOfItems = getCollectionCount();
+			maxNumberOfItems = _getCollectionCount();
 		}
 
 		return (int)Math.ceil((double)maxNumberOfItems / numberOfItemsPerPage);

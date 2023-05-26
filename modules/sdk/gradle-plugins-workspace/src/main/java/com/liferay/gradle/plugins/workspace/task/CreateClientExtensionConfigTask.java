@@ -170,10 +170,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		_createClientExtensionConfigFile(jsonMap);
 	}
 
+	@InputFiles
 	public File getClientExtensionConfigFile() {
 		return GradleUtil.toFile(_project, _clientExtensionConfigFile);
 	}
 
+	@InputFiles
 	public File getDockerFile() {
 		return GradleUtil.toFile(_project, _dockerFile);
 	}
@@ -193,10 +195,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return GradleUtil.toFile(_project, "liferay-plugin-package.properties");
 	}
 
+	@InputFiles
 	public File getLcpJsonFile() {
 		return GradleUtil.toFile(_project, _lcpJsonFile);
 	}
 
+	@InputFiles
 	public File getPluginPackagePropertiesFile() {
 		return GradleUtil.toFile(_project, _pluginPackagePropertiesFile);
 	}

@@ -288,7 +288,7 @@ public interface ReleaseLocalService
 			Properties unfilteredPortalProperties)
 		throws Exception;
 
-	public void updateRelease(
+	public Release updateRelease(
 		String servletContextName, String schemaVersion,
 		String previousSchemaVersion);
 

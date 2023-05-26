@@ -204,7 +204,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void updateRelease(
+	public Release updateRelease(
 		String servletContextName, String schemaVersion,
 		String previousSchemaVersion) {
 
@@ -238,7 +238,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 		release.setSchemaVersion(schemaVersion);
 
-		releasePersistence.update(release);
+		return releasePersistence.update(release);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -335,11 +335,11 @@ public class ReleaseLocalServiceUtil {
 			servletContextName, upgradeProcesses, unfilteredPortalProperties);
 	}
 
-	public static void updateRelease(
+	public static Release updateRelease(
 		String servletContextName, String schemaVersion,
 		String previousSchemaVersion) {
 
-		getService().updateRelease(
+		return getService().updateRelease(
 			servletContextName, schemaVersion, previousSchemaVersion);
 	}
 

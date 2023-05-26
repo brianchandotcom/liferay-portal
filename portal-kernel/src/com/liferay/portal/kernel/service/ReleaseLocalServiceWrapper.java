@@ -381,11 +381,11 @@ public class ReleaseLocalServiceWrapper
 	}
 
 	@Override
-	public void updateRelease(
+	public com.liferay.portal.kernel.model.Release updateRelease(
 		String servletContextName, String schemaVersion,
 		String previousSchemaVersion) {
 
-		_releaseLocalService.updateRelease(
+		return _releaseLocalService.updateRelease(
 			servletContextName, schemaVersion, previousSchemaVersion);
 	}
 

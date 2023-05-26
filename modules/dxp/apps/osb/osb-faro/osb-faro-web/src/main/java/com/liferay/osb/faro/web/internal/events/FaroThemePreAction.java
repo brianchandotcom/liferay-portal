@@ -17,17 +17,19 @@ package com.liferay.osb.faro.web.internal.events;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leilany Ulisses
@@ -44,23 +46,40 @@ public class FaroThemePreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-		
-		Layout layout = themeDisplay.getLayout(); 
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		if (layout.isTypeControlPanel()) {
-			return;
+			if (StringUtil.contains(
+					httpServletRequest.getRequestURI(), "/c/portal/login") &&
+				themeDisplay.isSignedIn()) {
+
+				httpServletResponse.sendRedirect("/");
+
+				return;
+			}
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isTypeControlPanel()) {
+				return;
+			}
+
+			Theme theme = _themeLocalService.getTheme(
+				themeDisplay.getCompanyId(), "osbfarotheme_WAR_osbfarotheme");
+
+			httpServletRequest.setAttribute(WebKeys.THEME, theme);
+
+			themeDisplay.setLookAndFeel(theme, themeDisplay.getColorScheme());
 		}
-
-		Theme theme = _themeLocalService.getTheme(
-			themeDisplay.getCompanyId(), "osbfarotheme_WAR_osbfarotheme");
-
-		httpServletRequest.setAttribute(WebKeys.THEME, theme);
-
-		themeDisplay.setLookAndFeel(theme, themeDisplay.getColorScheme());
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FaroThemePreAction.class);
 
 	@Reference
 	private ThemeLocalService _themeLocalService;

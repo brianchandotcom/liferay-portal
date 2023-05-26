@@ -32,11 +32,20 @@ import com.liferay.headless.admin.content.client.pagination.Page;
 import com.liferay.headless.admin.content.client.serdes.v1_0.StructuredContentSerDes;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -44,6 +53,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Locale;
 import java.util.Map;
@@ -83,6 +94,67 @@ public class StructuredContentResourceTest
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteStructuredContentsPage() throws Exception {
+		super.testGetSiteStructuredContentsPage();
+
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent irrelevantStructuredContent =
+			_randomStructuredContent(locale);
+
+		com.liferay.headless.admin.content.client.resource.v1_0.
+			StructuredContentResource irrelevantStructuredContentResource =
+				_buildStructureContentResource(locale);
+
+		irrelevantStructuredContentResource.postSiteStructuredContentDraft(
+			testGetSiteStructuredContentsPage_getSiteId(),
+			irrelevantStructuredContent);
+
+		StructuredContent structuredContent = _randomStructuredContent(locale);
+
+		structuredContent.setPriority(Double.valueOf(1));
+
+		com.liferay.headless.admin.content.client.resource.v1_0.
+			StructuredContentResource structuredContentResource =
+				_buildStructureContentResource(locale);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContentDraft(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				structuredContent);
+
+		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
+			patchStructuredContent =
+				_structuredContentResource.patchStructuredContent(
+					postStructuredContent.getId(),
+					new com.liferay.headless.delivery.client.dto.v1_0.
+						StructuredContent() {
+
+						{
+							priority = Double.valueOf(3);
+						}
+					});
+
+		JSONObject jsonObject = _invoke(
+			null,
+			StringBundler.concat(
+				"headless-delivery/v1.0/sites/", testGroup.getGroupId(),
+				"/structured-contents?filter=priority%20eq%203.0"),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = (JSONObject)itemsJSONArray.get(0);
+
+		Assert.assertEquals(
+			patchStructuredContent.getTitle(),
+			itemJSONObject.getString("title"));
 	}
 
 	@Override
@@ -408,6 +480,29 @@ public class StructuredContentResourceTest
 				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
+	private JSONObject _invoke(
+			String body, String endpoint, Http.Method httpMethod)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader(
+			"Authorization",
+			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
+		options.setLocation("http://localhost:8080/o/" + endpoint);
+		options.setMethod(httpMethod);
+
+		if (body != null) {
+			options.setBody(
+				body, ContentTypes.APPLICATION_JSON,
+				StandardCharsets.UTF_8.name());
+		}
+
+		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
 
 	private StructuredContent _postSiteStructuredContent(

@@ -16,10 +16,10 @@ package com.liferay.commerce.product.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
@@ -39,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDefinitionLinkModel
-	extends BaseModel<CPDefinitionLink>, CTModel<CPDefinitionLink>,
-			GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<CPDefinitionLink>, CTModel<CPDefinitionLink>, MVCCModel,
+			ShardedModel, StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -269,6 +269,34 @@ public interface CPDefinitionLinkModel
 	public void setCProductId(long CProductId);
 
 	/**
+	 * Returns the display date of this cp definition link.
+	 *
+	 * @return the display date of this cp definition link
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this cp definition link.
+	 *
+	 * @param displayDate the display date of this cp definition link
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
+	 * Returns the expiration date of this cp definition link.
+	 *
+	 * @return the expiration date of this cp definition link
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this cp definition link.
+	 *
+	 * @param expirationDate the expiration date of this cp definition link
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
 	 * Returns the priority of this cp definition link.
 	 *
 	 * @return the priority of this cp definition link
@@ -296,6 +324,167 @@ public interface CPDefinitionLinkModel
 	 * @param type the type of this cp definition link
 	 */
 	public void setType(String type);
+
+	/**
+	 * Returns the last publish date of this cp definition link.
+	 *
+	 * @return the last publish date of this cp definition link
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this cp definition link.
+	 *
+	 * @param lastPublishDate the last publish date of this cp definition link
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the status of this cp definition link.
+	 *
+	 * @return the status of this cp definition link
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this cp definition link.
+	 *
+	 * @param status the status of this cp definition link
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this cp definition link.
+	 *
+	 * @return the status by user ID of this cp definition link
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this cp definition link.
+	 *
+	 * @param statusByUserId the status by user ID of this cp definition link
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this cp definition link.
+	 *
+	 * @return the status by user uuid of this cp definition link
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this cp definition link.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this cp definition link
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this cp definition link.
+	 *
+	 * @return the status by user name of this cp definition link
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this cp definition link.
+	 *
+	 * @param statusByUserName the status by user name of this cp definition link
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this cp definition link.
+	 *
+	 * @return the status date of this cp definition link
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this cp definition link.
+	 *
+	 * @param statusDate the status date of this cp definition link
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is approved.
+	 *
+	 * @return <code>true</code> if this cp definition link is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is denied.
+	 *
+	 * @return <code>true</code> if this cp definition link is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is a draft.
+	 *
+	 * @return <code>true</code> if this cp definition link is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is expired.
+	 *
+	 * @return <code>true</code> if this cp definition link is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is inactive.
+	 *
+	 * @return <code>true</code> if this cp definition link is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is incomplete.
+	 *
+	 * @return <code>true</code> if this cp definition link is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is pending.
+	 *
+	 * @return <code>true</code> if this cp definition link is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this cp definition link is scheduled.
+	 *
+	 * @return <code>true</code> if this cp definition link is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public CPDefinitionLink cloneWithOriginalValues();

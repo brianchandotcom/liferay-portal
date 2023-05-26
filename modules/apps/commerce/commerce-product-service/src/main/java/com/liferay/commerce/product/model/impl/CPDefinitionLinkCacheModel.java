@@ -78,7 +78,7 @@ public class CPDefinitionLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,10 +104,24 @@ public class CPDefinitionLinkCacheModel
 		sb.append(CPDefinitionId);
 		sb.append(", CProductId=");
 		sb.append(CProductId);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -155,6 +169,21 @@ public class CPDefinitionLinkCacheModel
 
 		cpDefinitionLinkImpl.setCPDefinitionId(CPDefinitionId);
 		cpDefinitionLinkImpl.setCProductId(CProductId);
+
+		if (displayDate == Long.MIN_VALUE) {
+			cpDefinitionLinkImpl.setDisplayDate(null);
+		}
+		else {
+			cpDefinitionLinkImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			cpDefinitionLinkImpl.setExpirationDate(null);
+		}
+		else {
+			cpDefinitionLinkImpl.setExpirationDate(new Date(expirationDate));
+		}
+
 		cpDefinitionLinkImpl.setPriority(priority);
 
 		if (type == null) {
@@ -162,6 +191,30 @@ public class CPDefinitionLinkCacheModel
 		}
 		else {
 			cpDefinitionLinkImpl.setType(type);
+		}
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			cpDefinitionLinkImpl.setLastPublishDate(null);
+		}
+		else {
+			cpDefinitionLinkImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
+		cpDefinitionLinkImpl.setStatus(status);
+		cpDefinitionLinkImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			cpDefinitionLinkImpl.setStatusByUserName("");
+		}
+		else {
+			cpDefinitionLinkImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			cpDefinitionLinkImpl.setStatusDate(null);
+		}
+		else {
+			cpDefinitionLinkImpl.setStatusDate(new Date(statusDate));
 		}
 
 		cpDefinitionLinkImpl.resetOriginalValues();
@@ -190,9 +243,18 @@ public class CPDefinitionLinkCacheModel
 		CPDefinitionId = objectInput.readLong();
 
 		CProductId = objectInput.readLong();
+		displayDate = objectInput.readLong();
+		expirationDate = objectInput.readLong();
 
 		priority = objectInput.readDouble();
 		type = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -229,6 +291,8 @@ public class CPDefinitionLinkCacheModel
 		objectOutput.writeLong(CPDefinitionId);
 
 		objectOutput.writeLong(CProductId);
+		objectOutput.writeLong(displayDate);
+		objectOutput.writeLong(expirationDate);
 
 		objectOutput.writeDouble(priority);
 
@@ -238,6 +302,21 @@ public class CPDefinitionLinkCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -252,7 +331,14 @@ public class CPDefinitionLinkCacheModel
 	public long modifiedDate;
 	public long CPDefinitionId;
 	public long CProductId;
+	public long displayDate;
+	public long expirationDate;
 	public double priority;
 	public String type;
+	public long lastPublishDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

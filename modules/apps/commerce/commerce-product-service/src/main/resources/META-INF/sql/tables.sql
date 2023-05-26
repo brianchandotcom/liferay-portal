@@ -133,8 +133,15 @@ create table CPDefinitionLink (
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
 	CProductId LONG,
+	displayDate DATE null,
+	expirationDate DATE null,
 	priority DOUBLE,
 	type_ VARCHAR(75) null,
+	lastPublishDate DATE null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
 	primary key (CPDefinitionLinkId, ctCollectionId)
 );
 

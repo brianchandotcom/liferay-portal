@@ -62,10 +62,30 @@ public class CPDefinitionLinkTable extends BaseTable<CPDefinitionLinkTable> {
 			"CPDefinitionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLinkTable, Long> CProductId = createColumn(
 		"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, Date> displayDate = createColumn(
+		"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, Date> expirationDate =
+		createColumn(
+			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLinkTable, Double> priority = createColumn(
 		"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLinkTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, Date> lastPublishDate =
+		createColumn(
+			"lastPublishDate", Date.class, Types.TIMESTAMP,
+			Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, Long> statusByUserId =
+		createColumn(
+			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, String> statusByUserName =
+		createColumn(
+			"statusByUserName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLinkTable, Date> statusDate = createColumn(
+		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private CPDefinitionLinkTable() {
 		super("CPDefinitionLink", CPDefinitionLinkTable::new);

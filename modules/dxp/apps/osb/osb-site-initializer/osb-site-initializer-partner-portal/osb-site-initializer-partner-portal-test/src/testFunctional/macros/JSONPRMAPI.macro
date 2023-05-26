@@ -503,4 +503,45 @@ definition {
 		}
 	}
 
+	macro updateAccount {
+		Variables.assertDefined(parameterList = ${accountName});
+
+		var portalURL = JSONCompany.getPortalURL();
+		var accoundId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});
+
+		if (${accountName} == "Company Name 1") {
+			var externalReferenceCode = "0017i00001MQSGdAAP";
+		}
+
+		if (${accountName} == "Company Name 2") {
+			var externalReferenceCode = "0017i00001MQSAyAAP";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts/${accoundId} \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name": "${accountName}",
+					"externalReferenceCode": "${externalReferenceCode}",
+					"partnerCountry": "US",
+					"claimPercent": 0.5,
+					"currency": "BRL",
+					"partnerLevel": "gold",
+					"marketingPlan": true,
+					"solutionDeliveryCertification": true,
+					"renewalARR": 0,
+					"newProjectExistingBusiness": 1,
+					"aRRAmount": 85000,
+					"marketingPerformance": 3,
+					"growthARR": 0
+				}'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		echo(${response});
+	}
+
 }

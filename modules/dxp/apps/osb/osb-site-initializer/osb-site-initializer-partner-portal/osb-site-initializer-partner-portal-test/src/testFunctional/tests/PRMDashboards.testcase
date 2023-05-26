@@ -21,40 +21,8 @@ definition {
 			PRMUtils.connectWithSalesforce();
 		}
 
-		task ("Add a partner user") {
-			JSONUser.addUserWithRole(
-				roleTitle = "Partner Marketing User (PMU)",
-				userEmailAddress = "pmu@liferay.com",
-				userFirstName = "pmu",
-				userLastName = "pmu",
-				userScreenName = "pmu");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "pmu@liferay.com");
-		}
-
-		task ("Add a manager user with a Manager role") {
-			JSONUser.addUserWithRole(
-				roleTitle = "Channel Marketing Manager (CMM)",
-				userEmailAddress = "cmm@liferay.com",
-				userFirstName = "cmm",
-				userLastName = "cmm",
-				userScreenName = "cmm");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "cmm@liferay.com");
-		}
-
-		task ("Add a new account and assign the created user to the account") {
-			JSONPRM.addAccount();
-
-			JSONAccountEntryUser.addExistUsertoAccount(
-				accountEntryName = "Company Name 1",
-				userEmailAddress = "pmu@liferay.com");
+		task ("Update the account with Salesforce fields") {
+			JSONPRM.updateAccount();
 		}
 
 		task ("Go to Partner Portal and login with the created user") {

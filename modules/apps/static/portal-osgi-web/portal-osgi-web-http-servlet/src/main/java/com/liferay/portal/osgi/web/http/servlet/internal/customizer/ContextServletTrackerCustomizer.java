@@ -11,11 +11,11 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.customizer;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.error.HttpWhiteboardFailureException;
 import com.liferay.portal.osgi.web.http.servlet.internal.registration.ServletRegistration;
-import com.liferay.portal.osgi.web.http.servlet.internal.util.BooleanPlus;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.Const;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.ServiceProperties;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.StringPlus;
@@ -131,11 +131,10 @@ public class ContextServletTrackerCustomizer
 
 		FailedServletDTO failedServletDTO = new FailedServletDTO();
 
-		failedServletDTO.asyncSupported = BooleanPlus.from(
+		failedServletDTO.asyncSupported = GetterUtil.getBoolean(
 			serviceReference.getProperty(
 				HttpWhiteboardConstants.
-					HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED),
-			false);
+					HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED));
 		failedServletDTO.failureReason = failureReason;
 		failedServletDTO.initParams = ServiceProperties.parseInitParams(
 			serviceReference,

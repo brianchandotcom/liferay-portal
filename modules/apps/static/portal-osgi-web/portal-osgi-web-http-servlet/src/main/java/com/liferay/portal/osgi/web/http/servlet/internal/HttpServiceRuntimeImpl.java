@@ -199,16 +199,14 @@ public class HttpServiceRuntimeImpl
 			result.set(contextController);
 		}
 		catch (HttpWhiteboardFailureException httpWhiteboardFailureException) {
-			_parentServletContext.log(
-				httpWhiteboardFailureException.getMessage(),
-				httpWhiteboardFailureException);
+			_log.error(httpWhiteboardFailureException);
 
 			_recordFailedServletContextDTO(
 				serviceReference, contextName, contextPath,
 				httpWhiteboardFailureException.getFailureReason());
 		}
 		catch (Exception exception) {
-			_parentServletContext.log(exception.getMessage(), exception);
+			_log.error(exception);
 
 			_recordFailedServletContextDTO(
 				serviceReference, contextName, contextPath,
@@ -366,10 +364,6 @@ public class HttpServiceRuntimeImpl
 		runtimeDTO.servletContextDTOs = _getServletContextDTOs();
 
 		return runtimeDTO;
-	}
-
-	public void log(String message, Throwable throwable) {
-		_parentServletContext.log(message, throwable);
 	}
 
 	public boolean matches(ServiceReference<?> serviceReference) {

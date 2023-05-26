@@ -220,9 +220,7 @@ public class ServletContextAdaptor {
 				_accessControlContext);
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			Exception exception = privilegedActionException.getException();
-
-			_servletContext.log(exception.getMessage(), exception);
+			_log.error(privilegedActionException.getException());
 		}
 
 		if (mimeType != null) {
@@ -251,9 +249,7 @@ public class ServletContextAdaptor {
 				_accessControlContext);
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			Exception exception = privilegedActionException.getException();
-
-			_servletContext.log(exception.getMessage(), exception);
+			_log.error(privilegedActionException.getException());
 		}
 
 		return null;
@@ -288,9 +284,7 @@ public class ServletContextAdaptor {
 				_accessControlContext);
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			Exception exception = privilegedActionException.getException();
-
-			_servletContext.log(exception.getMessage(), exception);
+			_log.error(privilegedActionException.getException());
 		}
 
 		return null;
@@ -304,7 +298,7 @@ public class ServletContextAdaptor {
 				return url.openStream();
 			}
 			catch (IOException ioException) {
-				_servletContext.log(ioException.getMessage(), ioException);
+				_log.error(ioException);
 			}
 		}
 
@@ -323,9 +317,7 @@ public class ServletContextAdaptor {
 				_accessControlContext);
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			Exception exception = privilegedActionException.getException();
-
-			_servletContext.log(exception.getMessage(), exception);
+			_log.error(privilegedActionException.getException());
 		}
 
 		return null;

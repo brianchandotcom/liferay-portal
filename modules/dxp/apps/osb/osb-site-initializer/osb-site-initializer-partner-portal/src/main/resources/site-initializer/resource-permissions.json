@@ -30,6 +30,8 @@
 	},
 	{
 		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
@@ -38,6 +40,8 @@
 	},
 	{
 		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
@@ -46,6 +50,8 @@
 	},
 	{
 		"actionIds": [
+			"ADD_DOCUMENT",
+			"ADD_SUBFOLDER",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
@@ -424,6 +430,14 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "Channel Marketing Manager (CMM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW",
 			"UPDATE",
 			"DELETE"
@@ -441,6 +455,14 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 4
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Activity$]",
+		"roleName": "Channel Marketing Director (CMD)",
+		"scope": 1
 	},
 	{
 		"actionIds": [
@@ -610,6 +632,14 @@
 	},
 	{
 		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "Channel Marketing Manager (CMM)",
+		"scope": 1
+	},
+	{
+		"actionIds": [
 			"VIEW",
 			"UPDATE",
 			"DELETE"
@@ -627,6 +657,14 @@
 		"resourceName": "com.liferay.object.model.ObjectDefinition",
 		"roleName": "Channel Marketing Manager (CMM)",
 		"scope": 4
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Budget$]",
+		"roleName": "Channel Marketing Director (CMD)",
+		"scope": 1
 	},
 	{
 		"actionIds": [

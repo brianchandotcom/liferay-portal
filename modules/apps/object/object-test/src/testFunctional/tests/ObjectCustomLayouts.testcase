@@ -124,7 +124,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
-		task ("Given a related object with Custom Layout and Relationship tab (Many to Many)") {
+		task ("Given a custom object that contains a simple field and a relationship itself (Many to Many)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 171597",
 				objectName = "CustomObject171597",
@@ -145,11 +145,13 @@ definition {
 				relationshipName = "relationship",
 				relationshipType = "manyToMany");
 
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171597");
+		}
+
+		task ("And given a custom layout for the custom object") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Custom Layout 171597",
 				objectName = "CustomObject171597");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject171597");
 
 			ObjectAdmin.openObjectAdmin();
 
@@ -184,7 +186,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("When add the entry on Relationship tab") {
+		task ("And given two custom object entries") {
 			for (var letter : list "A,B") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 					fieldName = "customField",
@@ -193,7 +195,9 @@ definition {
 			}
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject171597");
+		}
 
+		task ("When relating the entries") {
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
 
 			Click(
@@ -201,9 +205,13 @@ definition {
 				locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 
 			ObjectCustomLayouts.addEntryOnRelationshipTab(selectEntry = "Entry Test B");
+
+			WaitForElementPresent(
+				key_fieldLabel = "Entry Test B",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 		}
 
-		task ("Then the new entry is saved on the Relationship Tab Parent and the entry is present on Relationship Tab Child") {
+		task ("Then the entry is related as Parent and the other one is related as Child") {
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test B",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");

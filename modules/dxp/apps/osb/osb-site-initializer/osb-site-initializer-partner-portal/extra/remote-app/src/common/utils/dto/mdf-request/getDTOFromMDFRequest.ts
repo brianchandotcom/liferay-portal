@@ -15,7 +15,7 @@ import {Liferay} from '../../../services/liferay';
 
 export function getDTOFromMDFRequest(
 	mdfRequest: MDFRequest,
-	externalReferenceCode?: string
+	externalReferenceCodeFromSF?: string
 ): MDFRequestDTO {
 	return {
 		accountExternalReferenceCode: mdfRequest.accountExternalReferenceCode,
@@ -25,7 +25,7 @@ export function getDTOFromMDFRequest(
 		emailAddress: mdfRequest.id
 			? mdfRequest.emailAddress
 			: Liferay.ThemeDisplay.getUserEmailAddress(),
-		externalReferenceCode,
+		externalReferenceCode: externalReferenceCodeFromSF,
 		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.includes(
 			'Other - Please describe'
 		)

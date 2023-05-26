@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_ITEM_SPECIFIC</td>
+	<td>//ul[contains(@class,'list-unstyled')]//li//*[normalize-space(text())="${key_menuItem}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_FIELD</td>
 	<td>//div[contains(@class,'dropdown-menu show')]//input[.//following-sibling::span//*[name()='svg'][contains(@class,'icon-search')]]</td>
 	<td></td>

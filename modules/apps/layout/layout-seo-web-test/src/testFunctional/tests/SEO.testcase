@@ -40,13 +40,14 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
@@ -63,6 +64,10 @@ definition {
 			mappedField = "description",
 			mappedFieldValue = "Description is Description: ${description:Description}",
 			textType = "TextArea");
+
+		Navigator.gotoBack();
+
+		PageEditor.publish();
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
@@ -104,13 +109,14 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
@@ -138,6 +144,10 @@ definition {
 			mappedField = "description",
 			mappedFieldValue = "Description is MIME Type: ${mimeType:MIME Type}Version: ${version:Version}",
 			textType = "TextArea");
+
+		Navigator.gotoBack();
+
+		PageEditor.publish();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -186,13 +196,14 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
 
 		OpenGraph.viewDefaultMappedField(portlet = "SEO");
 
@@ -220,6 +231,10 @@ definition {
 			mappedField = "description",
 			mappedFieldValue = "Description is Content: ${content:Content}",
 			textType = "TextArea");
+
+		Navigator.gotoBack();
+
+		PageEditor.publish();
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",

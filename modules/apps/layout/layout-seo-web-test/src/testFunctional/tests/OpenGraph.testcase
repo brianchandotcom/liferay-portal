@@ -207,13 +207,12 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -264,6 +263,10 @@ definition {
 			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}Description: ${description:Description}",
 			textType = "TextArea");
 
+		Navigator.gotoBack();
+
+		PageEditor.publish();
+
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
 		Blogs.addWithCustomAbstract(
@@ -302,13 +305,12 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -358,6 +360,10 @@ definition {
 			mappedField = "ImageAlt",
 			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}",
 			textType = "TextArea");
+
+		Navigator.gotoBack();
+
+		PageEditor.publish();
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -418,13 +424,12 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -436,6 +441,10 @@ definition {
 			mappedField = "ImageAlt",
 			mappedFieldValue = "",
 			textType = "TextArea");
+
+		Navigator.gotoBack();
+
+		PageEditor.publish();
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -476,13 +485,12 @@ definition {
 			collectionName = "Content Display",
 			displayPageName = "Display Page Template Name",
 			fragmentName = "Display Page Content",
+			publish = "false",
 			siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-			item = "Configure",
-			pageTemplateName = "Display Page Template Name");
+		SelectWindow.selectPopUp(locator1 = "null");
 
 		Navigator.gotoNavNested(navNested = "Open Graph");
 
@@ -501,6 +509,10 @@ definition {
 			mappedField = "Description",
 			mappedFieldValue = "Description is Description: ${description:Description}",
 			textType = "TextArea");
+
+		Navigator.gotoBack();
+
+		PageEditor.publish();
 
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",

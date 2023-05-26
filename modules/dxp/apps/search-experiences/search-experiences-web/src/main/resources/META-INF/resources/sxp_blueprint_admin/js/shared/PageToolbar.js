@@ -124,8 +124,8 @@ export default function PageToolbar({
 									disabled={disableTitleAndDescriptionModal}
 									displayLocale={displayLocale}
 									fieldFocus={modalFieldFocus}
-									initialDescription={descriptionI18n}
-									initialTitle={titleI18n}
+									initialDescriptionI18n={descriptionI18n}
+									initialTitleI18n={titleI18n}
 									observer={observer}
 									onClose={onClose}
 									onSubmit={_handleSubmit}

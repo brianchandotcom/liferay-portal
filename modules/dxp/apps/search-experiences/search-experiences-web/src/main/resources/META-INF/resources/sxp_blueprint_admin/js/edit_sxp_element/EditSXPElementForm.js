@@ -465,7 +465,10 @@ function EditSXPElementForm({
 	 * Updates `title_i18n`, `description_i18n` inside CodeMirror editor,
 	 * which triggers `_handleJSONEditorValueChange`.
 	 */
-	const _handleTitleAndDescriptionChange = ({description, title}) => {
+	const _handleTitleAndDescriptionChange = ({
+		description_i18n,
+		title_i18n,
+	}) => {
 		if (!isSXPElementJSONInvalid) {
 			const doc = elementJSONEditorRef.current.getDoc();
 
@@ -473,8 +476,8 @@ function EditSXPElementForm({
 				JSON.stringify(
 					reassignTitleAndDescription(
 						sxpElementJSONObject,
-						title,
-						description
+						title_i18n,
+						description_i18n
 					),
 					null,
 					'\t'

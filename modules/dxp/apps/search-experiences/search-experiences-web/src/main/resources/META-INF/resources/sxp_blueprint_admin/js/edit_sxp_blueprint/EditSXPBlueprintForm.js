@@ -597,9 +597,12 @@ function EditSXPBlueprintForm({
 		setTab(tab);
 	};
 
-	const _handleChangeTitleAndDescription = ({description, title}) => {
-		formik.setFieldValue('description_i18n', description);
-		formik.setFieldValue('title_i18n', title);
+	const _handleChangeTitleAndDescription = ({
+		description_i18n,
+		title_i18n,
+	}) => {
+		formik.setFieldValue('description_i18n', description_i18n);
+		formik.setFieldValue('title_i18n', title_i18n);
 	};
 
 	const _handleCloseSidebar = () => {

@@ -38,8 +38,8 @@ export default function EditTitleModal({
 	disabled,
 	displayLocale,
 	fieldFocus,
-	initialDescription,
-	initialTitle,
+	initialDescriptionI18n,
+	initialTitleI18n,
 	observer,
 	onClose,
 	onSubmit,
@@ -61,9 +61,11 @@ export default function EditTitleModal({
 
 	const defaultLocaleBCP47 = formatLocaleWithDashes(defaultLocale);
 
-	const [description, setDescription] = useState(initialDescription);
+	const [description_i18n, setDescription_i18n] = useState(
+		initialDescriptionI18n
+	);
 	const [hasError, setHasError] = useState(false);
-	const [title, setTitle] = useState(initialTitle);
+	const [title_i18n, setTitle_i18n] = useState(initialTitleI18n);
 
 	const descriptionInputRef = useRef();
 	const titleInputRef = useRef();
@@ -73,7 +75,7 @@ export default function EditTitleModal({
 			setHasError(!event.currentTarget.value);
 		}
 		else {
-			setHasError(!title[defaultLocaleBCP47]);
+			setHasError(!title_i18n[defaultLocaleBCP47]);
 		}
 	};
 
@@ -85,13 +87,13 @@ export default function EditTitleModal({
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (!title[defaultLocaleBCP47]) {
+		if (!title_i18n[defaultLocaleBCP47]) {
 			setHasError(true);
 
 			titleInputRef.current.focus();
 		}
 		else {
-			onSubmit({description, title});
+			onSubmit({description_i18n, title_i18n});
 
 			onClose();
 		}
@@ -147,11 +149,11 @@ export default function EditTitleModal({
 							onSelectedLocaleChange={_handleSelectedLocaleChange(
 								titleInputRef
 							)}
-							onTranslationsChange={setTitle}
+							onTranslationsChange={setTitle_i18n}
 							placeholder=""
 							ref={titleInputRef}
 							selectedLocale={selectedLocale}
-							translations={disabled ? {} : title}
+							translations={disabled ? {} : title_i18n}
 						/>
 
 						{hasError && (
@@ -185,11 +187,11 @@ export default function EditTitleModal({
 							onSelectedLocaleChange={_handleSelectedLocaleChange(
 								descriptionInputRef
 							)}
-							onTranslationsChange={setDescription}
+							onTranslationsChange={setDescription_i18n}
 							placeholder=""
 							ref={descriptionInputRef}
 							selectedLocale={selectedLocale}
-							translations={disabled ? {} : description}
+							translations={disabled ? {} : description_i18n}
 						/>
 					</div>
 				</ClayModal.Body>

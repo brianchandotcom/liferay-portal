@@ -11686,6 +11686,20 @@ dl.store.antivirus.enabled=true</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="external.database.enabled" />
+
+		<if>
+			<equals arg1="${external.database.enabled}" arg2="true" />
+			<then>
+				<replace
+					file="portal-impl/src/portal-ext.properties"
+				>
+					<replacetoken>jdbc.default</replacetoken>
+					<replacevalue>jdbc.test</replacevalue>
+				</replace>
+			</then>
+		</if>
+
 		<if>
 			<or>
 				<equals arg1="ibm.store.enabled" arg2="" />

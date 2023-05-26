@@ -79,7 +79,8 @@ public class CommerceCatalogModelImpl
 		{"commerceCatalogId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"commerceCurrencyCode", Types.VARCHAR},
+		{"accountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"commerceCurrencyCode", Types.VARCHAR},
 		{"catalogDefaultLanguageId", Types.VARCHAR}, {"system_", Types.BOOLEAN}
 	};
 
@@ -97,6 +98,7 @@ public class CommerceCatalogModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("catalogDefaultLanguageId", Types.VARCHAR);
@@ -104,7 +106,7 @@ public class CommerceCatalogModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceCatalog (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceCatalogId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,catalogDefaultLanguageId VARCHAR(75) null,system_ BOOLEAN,primary key (commerceCatalogId, ctCollectionId))";
+		"create table CommerceCatalog (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceCatalogId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountEntryId LONG,name VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,catalogDefaultLanguageId VARCHAR(75) null,system_ BOOLEAN,primary key (commerceCatalogId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCatalog";
 
@@ -280,6 +282,8 @@ public class CommerceCatalogModelImpl
 				"createDate", CommerceCatalog::getCreateDate);
 			attributeGetterFunctions.put(
 				"modifiedDate", CommerceCatalog::getModifiedDate);
+			attributeGetterFunctions.put(
+				"accountEntryId", CommerceCatalog::getAccountEntryId);
 			attributeGetterFunctions.put("name", CommerceCatalog::getName);
 			attributeGetterFunctions.put(
 				"commerceCurrencyCode",
@@ -343,6 +347,10 @@ public class CommerceCatalogModelImpl
 				"modifiedDate",
 				(BiConsumer<CommerceCatalog, Date>)
 					CommerceCatalog::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"accountEntryId",
+				(BiConsumer<CommerceCatalog, Long>)
+					CommerceCatalog::setAccountEntryId);
 			attributeSetterBiConsumers.put(
 				"name",
 				(BiConsumer<CommerceCatalog, String>)CommerceCatalog::setName);
@@ -582,6 +590,21 @@ public class CommerceCatalogModelImpl
 
 	@JSON
 	@Override
+	public long getAccountEntryId() {
+		return _accountEntryId;
+	}
+
+	@Override
+	public void setAccountEntryId(long accountEntryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_accountEntryId = accountEntryId;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -744,6 +767,7 @@ public class CommerceCatalogModelImpl
 		commerceCatalogImpl.setUserName(getUserName());
 		commerceCatalogImpl.setCreateDate(getCreateDate());
 		commerceCatalogImpl.setModifiedDate(getModifiedDate());
+		commerceCatalogImpl.setAccountEntryId(getAccountEntryId());
 		commerceCatalogImpl.setName(getName());
 		commerceCatalogImpl.setCommerceCurrencyCode(getCommerceCurrencyCode());
 		commerceCatalogImpl.setCatalogDefaultLanguageId(
@@ -779,6 +803,8 @@ public class CommerceCatalogModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		commerceCatalogImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		commerceCatalogImpl.setAccountEntryId(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
 		commerceCatalogImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		commerceCatalogImpl.setCommerceCurrencyCode(
@@ -922,6 +948,8 @@ public class CommerceCatalogModelImpl
 			commerceCatalogCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commerceCatalogCacheModel.accountEntryId = getAccountEntryId();
+
 		commerceCatalogCacheModel.name = getName();
 
 		String name = commerceCatalogCacheModel.name;
@@ -1028,6 +1056,7 @@ public class CommerceCatalogModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _accountEntryId;
 	private String _name;
 	private String _commerceCurrencyCode;
 	private String _catalogDefaultLanguageId;
@@ -1074,6 +1103,7 @@ public class CommerceCatalogModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("accountEntryId", _accountEntryId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put(
 			"commerceCurrencyCode", _commerceCurrencyCode);
@@ -1124,13 +1154,15 @@ public class CommerceCatalogModelImpl
 
 		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("accountEntryId", 1024L);
 
-		columnBitmasks.put("commerceCurrencyCode", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("catalogDefaultLanguageId", 4096L);
+		columnBitmasks.put("commerceCurrencyCode", 4096L);
 
-		columnBitmasks.put("system_", 8192L);
+		columnBitmasks.put("catalogDefaultLanguageId", 8192L);
+
+		columnBitmasks.put("system_", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.media.constants.CommerceMediaConstants;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
@@ -196,13 +197,13 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 				CommerceCatalog.class.getName(), actionRequest);
 
 			commerceCatalog = _commerceCatalogService.addCommerceCatalog(
-				null, name, commerceCurrencyCode, catalogDefaultLanguageId,
-				serviceContext);
+				null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
+				commerceCurrencyCode, catalogDefaultLanguageId, serviceContext);
 		}
 		else {
 			commerceCatalog = _commerceCatalogService.updateCommerceCatalog(
-				commerceCatalogId, name, commerceCurrencyCode,
-				catalogDefaultLanguageId);
+				commerceCatalogId, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+				name, commerceCurrencyCode, catalogDefaultLanguageId);
 		}
 
 		return commerceCatalog;

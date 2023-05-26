@@ -239,6 +239,20 @@ public interface CommerceCatalogModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the account entry ID of this commerce catalog.
+	 *
+	 * @return the account entry ID of this commerce catalog
+	 */
+	public long getAccountEntryId();
+
+	/**
+	 * Sets the account entry ID of this commerce catalog.
+	 *
+	 * @param accountEntryId the account entry ID of this commerce catalog
+	 */
+	public void setAccountEntryId(long accountEntryId);
+
+	/**
 	 * Returns the name of this commerce catalog.
 	 *
 	 * @return the name of this commerce catalog

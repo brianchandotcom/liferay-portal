@@ -282,7 +282,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
-		return CollectionPaginationUtil.getTotalNumberOfItems(
+		if (_totalNumberOfItems != null) {
+			return _totalNumberOfItems;
+		}
+
+		_totalNumberOfItems = CollectionPaginationUtil.getTotalNumberOfItems(
 			_getCollectionCount(),
 			_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 			_collectionStyledLayoutStructureItem.isDisplayAllItems(),
@@ -290,6 +294,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
 			_collectionStyledLayoutStructureItem.getNumberOfPages(),
 			_collectionStyledLayoutStructureItem.getPaginationType());
+
+		return _totalNumberOfItems;
 	}
 
 	public boolean hasViewPermission() {
@@ -314,7 +320,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		if ((layoutListRetriever == null) || (listObjectReference == null) ||
 			!_hasViewPermission(listObjectReference)) {
 
-			return 0;
+			_collectionCount = 0;
+
+			return _collectionCount;
 		}
 
 		_collectionCount = layoutListRetriever.getListCount(
@@ -326,6 +334,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private Map<String, String[]> _getConfiguration() {
+		if (_configuration != null) {
+			return _configuration;
+		}
+
 		JSONObject collectionJSONObject =
 			_collectionStyledLayoutStructureItem.getCollectionJSONObject();
 
@@ -357,10 +369,16 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			configuration.put(key, values.toArray(new String[0]));
 		}
 
-		return configuration;
+		_configuration = configuration;
+
+		return _configuration;
 	}
 
 	private Object _getContextObject() {
+		if (_contextObject != null) {
+			return _contextObject;
+		}
+
 		Object infoItem = _httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 
@@ -369,7 +387,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
 
 		if (infoItemReference == null) {
-			return infoItem;
+			_contextObject = infoItem;
+
+			return _contextObject;
 		}
 
 		InfoItemIdentifier infoItemIdentifier =
@@ -388,7 +408,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				infoItemIdentifier);
 
 			if (object != null) {
-				return object;
+				_contextObject = object;
+
+				return _contextObject;
 			}
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
@@ -397,7 +419,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			}
 		}
 
-		return infoItem;
+		_contextObject = infoItem;
+
+		return _contextObject;
 	}
 
 	private DefaultLayoutListRetrieverContext
@@ -482,6 +506,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
 		ListObjectReference listObjectReference) {
 
+		if (_infoFilters != null) {
+			return _infoFilters;
+		}
+
 		Map<String, InfoFilter> infoFilters = new HashMap<>();
 
 		InfoItemServiceRegistry infoItemServiceRegistry =
@@ -503,7 +531,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				clazz.getName(), infoFilterProvider.create(filterValues));
 		}
 
-		return infoFilters;
+		_infoFilters = infoFilters;
+
+		return _infoFilters;
 	}
 
 	private LayoutListRetriever<?, ListObjectReference>
@@ -563,6 +593,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private int _getNumberOfItemsPerPage() {
+		if (_numberOfItemsPerPage != null) {
+			return _numberOfItemsPerPage;
+		}
+
 		int numberOfItemsPerPage =
 			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage();
 
@@ -573,7 +607,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 		}
 
-		return numberOfItemsPerPage;
+		_numberOfItemsPerPage = numberOfItemsPerPage;
+
+		return _numberOfItemsPerPage;
 	}
 
 	private long[] _getSegmentsEntryIds() {
@@ -597,8 +633,14 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private boolean _hasViewPermission(
 		ListObjectReference listObjectReference) {
 
+		if (_hasViewPermission != null) {
+			return _hasViewPermission;
+		}
+
+		_hasViewPermission = true;
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-169923")) {
-			return true;
+			return _hasViewPermission;
 		}
 
 		LayoutListPermissionProviderRegistry
@@ -616,12 +658,14 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 							listObjectReferenceClass.getName());
 
 		if (layoutListPermissionProvider == null) {
-			return true;
+			return _hasViewPermission;
 		}
 
-		return layoutListPermissionProvider.hasPermission(
+		_hasViewPermission = layoutListPermissionProvider.hasPermission(
 			_themeDisplay.getPermissionChecker(), listObjectReference,
 			ActionKeys.VIEW);
+
+		return _hasViewPermission;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -632,12 +676,18 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	private String _collectionItemType;
 	private final CollectionStyledLayoutStructureItem
 		_collectionStyledLayoutStructureItem;
+	private Map<String, String[]> _configuration;
+	private Object _contextObject;
+	private Boolean _hasViewPermission;
 	private final HttpServletRequest _httpServletRequest;
+	private Map<String, InfoFilter> _infoFilters;
 	private Integer _maxNumberOfItemsPerPage;
+	private Integer _numberOfItemsPerPage;
 	private Integer _numberOfItemsToDisplay;
 	private Integer _numberOfPages;
 	private Integer _numberOfRows;
 	private long[] _segmentsEntryIds;
 	private final ThemeDisplay _themeDisplay;
+	private Integer _totalNumberOfItems;
 
 }

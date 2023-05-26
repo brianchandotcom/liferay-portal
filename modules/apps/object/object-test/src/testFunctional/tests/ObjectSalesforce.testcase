@@ -21,6 +21,177 @@ definition {
 		}
 	}
 
+	@description = "LPS-185429 Verify CRUD functionality with a created standard object using Salesforce as the storage type"
+	@priority = 5
+	test AssertCRUDWithCreatedStandardObject {
+		property portal.acceptance = "true";
+
+		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Third Party",
+				configurationName = "Salesforce Integration",
+				configurationScope = "Site Scope");
+
+			ObjectSalesforce.configureSalesforce();
+		}
+
+		task ("And given a created custom object with the storage type set to Salesforce") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectWithStorageType(
+				fieldLabelName = "Contact",
+				pluralLabelName = "Contacts",
+				storageType = "Salesforce");
+
+			ObjectPortlet.selectCustomObject(label = "Contact");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Email",
+				fieldName = "email",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Contact");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "First Name",
+				fieldName = "firstName",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Contact");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Last Name",
+				fieldName = "lastName",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "Contact");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Phone",
+				fieldName = "phone",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Contact");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Contact");
+		}
+
+		task ("And given the object's external reference code matches a Salesforce standard object") {
+			ObjectAdmin.editExternalReferenceCode(externalReferenceCode = "Contact");
+		}
+
+		task ("And given several text fields whose external reference codes match fields from the Salesforce standard object") {
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Email");
+
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "Email");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToFieldsDetails(label = "First Name");
+
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "FirstName");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToFieldsDetails(label = "Last Name");
+
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "LastName");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToFieldsDetails(label = "Phone");
+
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "Phone");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When the user navigates to the object") {
+			ObjectAdmin.goToCustomObject(objectName = "Contact");
+		}
+
+		task ("Then the user is able to read entries") {
+			AssertElementPresent(
+				key_entry = "test.user@liferay.com",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "hello.world.edit@gmail.com",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "upgraded.contact@liferay.com",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "a@liferay.com",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to create entries") {
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.inputText(
+				fieldLabel = "Last Name",
+				text = "New Entry");
+
+			CreateObject.saveObject();
+
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				key_entry = "New Entry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to update entries") {
+			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+
+			PortletEntry.inputText(
+				fieldLabel = "Last Name",
+				text = "Entry Updated");
+
+			CreateObject.saveObject();
+
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				key_entry = "Entry Updated",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to delete entries") {
+			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+
+			AssertElementNotPresent(
+				key_entry = "Entry Updated",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+	}
+
 	@description = "LPS-162131 Verify CRUD functionality with a created custom object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithCreatedCustomObject {

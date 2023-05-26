@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -80,200 +81,44 @@ public class LayoutActionProvider {
 		JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		if (_isShowPreviewDraftAction(layout)) {
-			itemsJSONArray.put(
-				JSONUtil.put(
-					"href",
-					PortalUtil.getLayoutFriendlyURL(
-						layout.fetchDraftLayout(), _themeDisplay)
-				).put(
-					"id", "preview-draft"
-				).put(
-					"label",
-					_language.get(_themeDisplay.getLocale(), "preview-draft")
-				).put(
-					"symbolRight", "shortcut"
-				).put(
-					"target", "_blank"
-				).put(
-					"type", "item"
-				));
+			itemsJSONArray.put(() -> _getPreviewDraftActionJSONObject(layout));
 		}
 
 		if (!layout.isTypeCollection() &&
 			Validator.isNotNull(_getAddLayoutURL(layout.getPlid()))) {
 
-			itemsJSONArray.put(
-				JSONUtil.put(
-					"href", _getAddLayoutURL(layout.getPlid())
-				).put(
-					"id", "add-child-page"
-				).put(
-					"label",
-					_language.get(_themeDisplay.getLocale(), "add-child-page")
-				).put(
-					"type", "item"
-				));
+			itemsJSONArray.put(() -> _getAddChildPageJSONObject(layout));
 		}
 
 		if (!layout.isTypeCollection() &&
 			Validator.isNotNull(_getAddCollectionLayoutURL(layout.getPlid()))) {
 
 			itemsJSONArray.put(
-				JSONUtil.put(
-					"href", _getAddCollectionLayoutURL(layout.getPlid())
-				).put(
-					"id", "add-child-collection-page"
-				).put(
-					"label",
-					_language.get(
-						_themeDisplay.getLocale(), "add-child-collection-page")
-				).put(
-					"type", "item"
-				));
+				() -> _getAddChildCollectionPageJSONObject(layout));
 		}
 
 		itemsJSONArray.put(
 			JSONUtil.put("type", "divider")
 		).put(
-			JSONUtil.put(
-				"data",
-				JSONUtil.put(
-					"id", "copy-page"
-				).put(
-					"modalTitle",
-					_language.get(_themeDisplay.getLocale(), "copy-page")
-				).put(
-					"url", _getCopyLayoutRenderURL(layout)
-				)
-			).put(
-				"href", StringPool.POUND
-			).put(
-				"id", "copy-page"
-			).put(
-				"label", _language.get(_themeDisplay.getLocale(), "copy-page")
-			).put(
-				"symbolLeft", "copy"
-			).put(
-				"type", "item"
-			)
+			() -> _getCopyPageJSONObject(layout)
 		).put(
 			JSONUtil.put("type", "divider")
 		).put(
-			JSONUtil.put(
-				"href", _getConfigureLayoutURL(layout.getPlid())
-			).put(
-				"id", "configure"
-			).put(
-				"label", _language.get(_themeDisplay.getLocale(), "configure")
-			).put(
-				"symbolLeft", "cog"
-			).put(
-				"type", "item"
-			)
+			() -> _getConfigureJSONObject(layout)
 		);
 
 		if (layout.isTypeCollection() &&
 			Validator.isNotNull(_getViewCollectionItemsURL(layout))) {
 
-			itemsJSONArray.put(
-				JSONUtil.put(
-					"data",
-					JSONUtil.put(
-						"id", "view-collection-items"
-					).put(
-						"modalTitle",
-						_language.get(_themeDisplay.getLocale(), "view-items")
-					).put(
-						"url", _getViewCollectionItemsURL(layout)
-					)
-				).put(
-					"href", StringPool.POUND
-				).put(
-					"id", "view-collection-items"
-				).put(
-					"label",
-					_language.get(
-						_themeDisplay.getLocale(), "view-collection-items")
-				).put(
-					"target", "_blank"
-				).put(
-					"type", "item"
-				));
+			itemsJSONArray.put(() -> _getViewCollectionItemsJSONObject(layout));
 		}
 
 		itemsJSONArray.put(
-			JSONUtil.put(
-				"data",
-				JSONUtil.put(
-					"id", "permissions"
-				).put(
-					"modalTitle",
-					_language.get(_themeDisplay.getLocale(), "permissions")
-				).put(
-					"url", _getPermissionsURL(layout)
-				)
-			).put(
-				"href", StringPool.POUND
-			).put(
-				"id", "permissions"
-			).put(
-				"label", _language.get(_themeDisplay.getLocale(), "permissions")
-			).put(
-				"symbolLeft", "password-policies"
-			).put(
-				"type", "item"
-			)
+			() -> _getPermissionsJSONObject(layout)
 		).put(
 			JSONUtil.put("type", "divider")
 		).put(
-			JSONUtil.put(
-				"data",
-				HashMapBuilder.put(
-					"message",
-					() -> {
-						String messageKey =
-							"are-you-sure-you-want-to-delete-the-page-x.-it-" +
-								"will-be-removed-immediately";
-
-						if (layout.hasChildren() && _hasScopeGroup(layout)) {
-							messageKey = StringBundler.concat(
-								"are-you-sure-you-want-to-delete-the-page-x.-",
-								"this-page-serves-as-a-scope-for-content-and-",
-								"also-contains-child-pages");
-						}
-						else if (layout.hasChildren()) {
-							messageKey = StringBundler.concat(
-								"are-you-sure-you-want-to-delete-the-page-x.-",
-								"this-page-contains-child-pages-that-will-",
-								"also-be-removed");
-						}
-						else if (_hasScopeGroup(layout)) {
-							messageKey =
-								"are-you-sure-you-want-to-delete-the-page-x.-" +
-									"this-page-serves-as-a-scope-for-content";
-						}
-
-						return _language.format(
-							_httpServletRequest, messageKey,
-							HtmlUtil.escape(
-								layout.getName(_themeDisplay.getLocale())));
-					}
-				).put(
-					"modalTitle",
-					_language.get(_themeDisplay.getLocale(), "delete-page")
-				).put(
-					"url",
-					_getDeleteLayoutURL(layout, afterDeleteSelectedLayout)
-				).build()
-			).put(
-				"id", "delete"
-			).put(
-				"label", _language.get(_themeDisplay.getLocale(), "delete")
-			).put(
-				"symbolLeft", "trash"
-			).put(
-				"type", "item"
-			)
+			() -> _getDeleteJSONObject(afterDeleteSelectedLayout, layout)
 		);
 
 		return JSONUtil.putAll(
@@ -282,6 +127,32 @@ public class LayoutActionProvider {
 			).put(
 				"type", "group"
 			));
+	}
+
+	private JSONObject _getAddChildCollectionPageJSONObject(Layout layout) {
+		return JSONUtil.put(
+			"href", _getAddCollectionLayoutURL(layout.getPlid())
+		).put(
+			"id", "add-child-collection-page"
+		).put(
+			"label",
+			_language.get(
+				_themeDisplay.getLocale(), "add-child-collection-page")
+		).put(
+			"type", "item"
+		);
+	}
+
+	private JSONObject _getAddChildPageJSONObject(Layout layout) {
+		return JSONUtil.put(
+			"href", _getAddLayoutURL(layout.getPlid())
+		).put(
+			"id", "add-child-page"
+		).put(
+			"label", _language.get(_themeDisplay.getLocale(), "add-child-page")
+		).put(
+			"type", "item"
+		);
 	}
 
 	private String _getAddCollectionLayoutURL(long plid) {
@@ -354,6 +225,20 @@ public class LayoutActionProvider {
 		return backURL;
 	}
 
+	private JSONObject _getConfigureJSONObject(Layout layout) {
+		return JSONUtil.put(
+			"href", _getConfigureLayoutURL(layout.getPlid())
+		).put(
+			"id", "configure"
+		).put(
+			"label", _language.get(_themeDisplay.getLocale(), "configure")
+		).put(
+			"symbolLeft", "cog"
+		).put(
+			"type", "item"
+		);
+	}
+
 	private String _getConfigureLayoutURL(long plid) {
 		Layout layout = _themeDisplay.getLayout();
 
@@ -413,6 +298,83 @@ public class LayoutActionProvider {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	private JSONObject _getCopyPageJSONObject(Layout layout) {
+		return JSONUtil.put(
+			"data",
+			JSONUtil.put(
+				"id", "copy-page"
+			).put(
+				"modalTitle",
+				_language.get(_themeDisplay.getLocale(), "copy-page")
+			).put(
+				"url", _getCopyLayoutRenderURL(layout)
+			)
+		).put(
+			"href", StringPool.POUND
+		).put(
+			"id", "copy-page"
+		).put(
+			"label", _language.get(_themeDisplay.getLocale(), "copy-page")
+		).put(
+			"symbolLeft", "copy"
+		).put(
+			"type", "item"
+		);
+	}
+
+	private JSONObject _getDeleteJSONObject(
+			Layout afterDeleteSelectedLayout, Layout layout)
+		throws Exception {
+
+		return JSONUtil.put(
+			"data",
+			HashMapBuilder.put(
+				"message",
+				() -> {
+					String messageKey =
+						"are-you-sure-you-want-to-delete-the-page-x.-it-will-" +
+							"be-removed-immediately";
+
+					if (layout.hasChildren() && _hasScopeGroup(layout)) {
+						messageKey = StringBundler.concat(
+							"are-you-sure-you-want-to-delete-the-page-x.-this-",
+							"page-serves-as-a-scope-for-content-and-also-",
+							"contains-child-pages");
+					}
+					else if (layout.hasChildren()) {
+						messageKey = StringBundler.concat(
+							"are-you-sure-you-want-to-delete-the-page-x.-this-",
+							"page-contains-child-pages-that-will-also-be-",
+							"removed");
+					}
+					else if (_hasScopeGroup(layout)) {
+						messageKey =
+							"are-you-sure-you-want-to-delete-the-page-x.-" +
+								"this-page-serves-as-a-scope-for-content";
+					}
+
+					return _language.format(
+						_httpServletRequest, messageKey,
+						HtmlUtil.escape(
+							layout.getName(_themeDisplay.getLocale())));
+				}
+			).put(
+				"modalTitle",
+				_language.get(_themeDisplay.getLocale(), "delete-page")
+			).put(
+				"url", _getDeleteLayoutURL(layout, afterDeleteSelectedLayout)
+			).build()
+		).put(
+			"id", "delete"
+		).put(
+			"label", _language.get(_themeDisplay.getLocale(), "delete")
+		).put(
+			"symbolLeft", "trash"
+		).put(
+			"type", "item"
+		);
 	}
 
 	private String _getDeleteLayoutURL(
@@ -509,6 +471,32 @@ public class LayoutActionProvider {
 		return _pageTypeSelectedOption;
 	}
 
+	private JSONObject _getPermissionsJSONObject(Layout layout)
+		throws Exception {
+
+		return JSONUtil.put(
+			"data",
+			JSONUtil.put(
+				"id", "permissions"
+			).put(
+				"modalTitle",
+				_language.get(_themeDisplay.getLocale(), "permissions")
+			).put(
+				"url", _getPermissionsURL(layout)
+			)
+		).put(
+			"href", StringPool.POUND
+		).put(
+			"id", "permissions"
+		).put(
+			"label", _language.get(_themeDisplay.getLocale(), "permissions")
+		).put(
+			"symbolLeft", "password-policies"
+		).put(
+			"type", "item"
+		);
+	}
+
 	private String _getPermissionsURL(Layout layout) throws Exception {
 		return PermissionsURLTag.doTag(
 			StringPool.BLANK, Layout.class.getName(),
@@ -516,6 +504,26 @@ public class LayoutActionProvider {
 			String.valueOf(layout.getPlid()),
 			LiferayWindowState.POP_UP.toString(), null,
 			_themeDisplay.getRequest());
+	}
+
+	private JSONObject _getPreviewDraftActionJSONObject(Layout layout)
+		throws Exception {
+
+		return JSONUtil.put(
+			"href",
+			PortalUtil.getLayoutFriendlyURL(
+				layout.fetchDraftLayout(), _themeDisplay)
+		).put(
+			"id", "preview-draft"
+		).put(
+			"label", _language.get(_themeDisplay.getLocale(), "preview-draft")
+		).put(
+			"symbolRight", "shortcut"
+		).put(
+			"target", "_blank"
+		).put(
+			"type", "item"
+		);
 	}
 
 	private String _getRedirect() {
@@ -532,6 +540,33 @@ public class LayoutActionProvider {
 		_redirect = redirect;
 
 		return _redirect;
+	}
+
+	private JSONObject _getViewCollectionItemsJSONObject(Layout layout)
+		throws Exception {
+
+		return JSONUtil.put(
+			"data",
+			JSONUtil.put(
+				"id", "view-collection-items"
+			).put(
+				"modalTitle",
+				_language.get(_themeDisplay.getLocale(), "view-items")
+			).put(
+				"url", _getViewCollectionItemsURL(layout)
+			)
+		).put(
+			"href", StringPool.POUND
+		).put(
+			"id", "view-collection-items"
+		).put(
+			"label",
+			_language.get(_themeDisplay.getLocale(), "view-collection-items")
+		).put(
+			"target", "_blank"
+		).put(
+			"type", "item"
+		);
 	}
 
 	private String _getViewCollectionItemsURL(Layout layout) throws Exception {

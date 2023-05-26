@@ -17,20 +17,6 @@ import javax.servlet.ServletContext;
 import org.osgi.framework.ServiceReference;
 
 public class ServiceProperties {
-	static public boolean parseBoolean(
-		ServiceReference<?> serviceReference, String property) {
-
-		Object value = serviceReference.getProperty(property);
-
-		if (Boolean.class.isInstance(value)) {
-			return ((Boolean)value).booleanValue();
-		}
-		if (String.class.isInstance(value)) {
-			return Boolean.valueOf((String)value);
-		}
-
-		return false;
-	}
 
 	static public Map<String, String> parseInitParams(
 		ServiceReference<?> serviceReference, String prefix, ServletContext parentContext) {

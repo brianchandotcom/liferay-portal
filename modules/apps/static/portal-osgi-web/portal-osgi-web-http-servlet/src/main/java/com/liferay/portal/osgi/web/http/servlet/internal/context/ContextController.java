@@ -14,6 +14,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal.context;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServiceRuntimeImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.customizer.ContextFilterTrackerCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.customizer.ContextListenerTrackerCustomizer;
@@ -986,9 +987,10 @@ public class ContextController {
 
 		FilterDTO filterDTO = new FilterDTO();
 
-		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
-			serviceReference,
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
+		filterDTO.asyncSupported = GetterUtil.getBoolean(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED));
 		filterDTO.dispatcher = _sort(dispatchers);
 		filterDTO.initParams = filterInitParamsMap;
 		filterDTO.name = name;
@@ -1135,9 +1137,10 @@ public class ContextController {
 			checkPattern(pattern);
 		}
 
-		boolean asyncSupported = ServiceProperties.parseBoolean(
-			serviceReference,
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED);
+		boolean asyncSupported = GetterUtil.getBoolean(
+			serviceReference.getProperty(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED));
 
 		Long serviceId = (Long)serviceReference.getProperty(
 			Constants.SERVICE_ID);

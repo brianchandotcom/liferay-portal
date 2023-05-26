@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -286,6 +288,19 @@ public class EntityCacheImpl
 		portalCacheManager.registerPortalCacheManagerListener(this);
 	}
 
+	private FinderCacheImpl _getFinderCacheImpl() {
+		try {
+			return (FinderCacheImpl)_finderCacheSnapshot.get();
+		}
+		catch (IllegalStateException illegalStateException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(illegalStateException);
+			}
+
+			return null;
+		}
+	}
+
 	private boolean _isLocalCacheEnabled() {
 		if (_localCache == null) {
 			return false;
@@ -301,8 +316,7 @@ public class EntityCacheImpl
 				CompanyThreadLocal.setWithSafeCloseable(
 					CompanyThreadLocal.getCompanyId())) {
 
-			FinderCacheImpl finderCacheImpl =
-				(FinderCacheImpl)_finderCacheSnapshot.get();
+			FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
 
 			if (finderCacheImpl == null) {
 				return;
@@ -412,6 +426,9 @@ public class EntityCacheImpl
 
 	private static final String _GROUP_KEY_PREFIX =
 		EntityCache.class.getName() + StringPool.PERIOD;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EntityCacheImpl.class);
 
 	private static final Snapshot<FinderCache> _finderCacheSnapshot =
 		new Snapshot<>(EntityCacheImpl.class, FinderCache.class);

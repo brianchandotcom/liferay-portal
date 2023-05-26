@@ -460,9 +460,16 @@ definition {
 		}
 
 		if (isSet(notificationsBody)) {
-			Type.typeEditor(
-				locator1 = "CKEditor#BODY_FIELD",
-				value1 = ${notificationsBody});
+			if (${configurationName} == "Account Created Notification") {
+				Type.typeEditor(
+					locator1 = "CKEditor#BODY_FIELD_2",
+					value1 = ${notificationsBody});
+			}
+			else {
+				Type.typeEditor(
+					locator1 = "CKEditor#BODY_FIELD",
+					value1 = ${notificationsBody});
+			}
 		}
 
 		PortletEntry.save();

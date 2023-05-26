@@ -1463,125 +1463,175 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that a user can update the password changed notification subject and body. The notification also send when set password via json."
+	@description = "This is a use case for LRQA-68315 and LPS-176074 TC-3. This test asserts that a user can update the password changed notification subject and body. The notification also send when set password via json."
 	@priority = 3
 	test ViewPasswordChangedNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordChangedNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Given: Add the user's first name in the password changed notification template") {
+			var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
+			PortalSettings.viewEmailNotificationsPasswordChangedNotificationCP();
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Email",
-			configurationName = "Email Sender",
-			configurationScope = "Virtual Instance Scope");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Email Sender",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureEmailSender(
-			emailAddress = "test@liferay.com",
-			emailSenderName = "Joe Bloggs");
+			PortalSettings.configureEmailSender(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
 
-		PortalSettings.editConfigurationUsersEmailNotificationsCP(
-			configurationName = "Password Changed Notification",
-			notificationsBody = '''
-				Dear [$TO_NAME$],<br /><br />
+			PortalSettings.editConfigurationUsersEmailNotificationsCP(
+				configurationName = "Password Changed Notification",
+				notificationsBody = '''
+					Dear [$TO_FIRST_NAME$]/[$TO_NAME$],<br /><br />
 
-				This is a new template for user password change test.<br /><br />
+					This is a new template for [$TO_FIRST_NAME$] password change test.<br /><br />
 
-				Your password for [$PORTAL_URL$] has been changed.<br /><br />
+					Your([$TO_FIRST_NAME$]) password for [$PORTAL_URL$] has been changed.<br /><br />
 
-				The request for a new password was made from [$REMOTE_ADDRESS$] / [$REMOTE_HOST$].<br /><br />
+					The request from [$TO_FIRST_NAME$] for a new password was made from [$REMOTE_ADDRESS$] / [$REMOTE_HOST$].<br /><br />
 
-				Sincerely,<br />
-				[$FROM_NAME$]<br />
-				[$FROM_ADDRESS$]<br />
-				[$PORTAL_URL$]
-			''',
-			notificationsSubject = "[$PORTAL_URL$]: Dear user, your Password Has Been Changed");
+					Sincerely,<br />
+					[$FROM_NAME$]<br />
+					[$FROM_ADDRESS$]<br />
+					[$PORTAL_URL$]
+				''',
+				notificationsSubject = "[$PORTAL_URL$]: Dear [$TO_FIRST_NAME$], your Password Has Been Changed");
+		}
 
-		User.openUsersAdmin();
+		task ("When: Add a new user and change password") {
+			User.openUsersAdmin();
 
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			User.addCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		User.openUsersAdmin();
+			User.openUsersAdmin();
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+			User.editPasswordCP(
+				userEmailAddress = "userea@liferay.com",
+				userScreenName = "usersn");
+		}
 
-		MockMock.viewMail(
-			asset = "${portalURL}: Dear user, your Password Has Been Changed",
-			content = "This is a new template for user password change test.",
-			recipient = "userfn userln",
-			sender = "Joe Bloggs",
-			subject = "${portalURL}: Dear user, your Password Has Been Changed");
+		task ("Then: Assert the subject, salutation and each paragraph in the body of the Password Changed Notification are include user's first name") {
+			MockMock.viewMail(
+				asset = "${portalURL}: Dear userfn, your Password Has Been Changed",
+				content = "This is a new template for userfn password change test.",
+				recipient = "userfn userln",
+				sender = "Joe Bloggs",
+				subject = "${portalURL}: Dear userfn, your Password Has Been Changed");
+
+			MockMock._gotoMailMessage(
+				asset = "${portalURL}: Dear userfn, your Password Has Been Changed",
+				recipient = "userfn userln");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Dear userfn, your Password Has Been Changed",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "Dear userfn/userfn userln,");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Dear userfn, your Password Has Been Changed",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "Your(userfn) password for ${portalURL} has been changed.");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Dear userfn, your Password Has Been Changed",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "The request from userfn for a new password");
+		}
 	}
 
-	@description = "This test asserts that a user can update the password reset notification subject and body. The notification also send when set password via json."
+	@description = "This is a use case for LRQA-68316 and LPS-176074 TC-4. This test asserts that a user can update the password reset notification subject and body. The notification also send when set password via json."
 	@priority = 3
 	test ViewPasswordResetNotificationTemplateUpdated {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.name.skip.portal.instance = "InstanceSettings#ViewPasswordResetNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Given: Add a new user and add the user's first name in the password reset notification template") {
+			var portalURL = PropsUtil.get("portal.url");
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Email",
-			configurationName = "Email Sender",
-			configurationScope = "Virtual Instance Scope");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Email Sender",
+				configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.configureEmailSender(
-			emailAddress = "test@liferay.com",
-			emailSenderName = "Joe Bloggs");
+			PortalSettings.configureEmailSender(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
 
-		PortalSettings.editConfigurationUsersEmailNotificationsCP(
-			configurationName = "Password Reset Notification",
-			notificationsBody = '''
-				Dear [$TO_NAME$],<br /><br />
+			PortalSettings.editConfigurationUsersEmailNotificationsCP(
+				configurationName = "Password Reset Notification",
+				notificationsBody = '''
+					Dear [$TO_FIRST_NAME$]/[$TO_NAME$],<br /><br />
 
-				This is a new template for user password reset test.<br /><br />
+					This is a new template for [$TO_FIRST_NAME$] password reset test.<br /><br />
 
-				You can reset your password for [$PORTAL_URL$] at [$PASSWORD_RESET_URL$].<br /><br />
+					You([$TO_FIRST_NAME$]) can reset your password for [$PORTAL_URL$] at [$PASSWORD_RESET_URL$].<br /><br />
 
-				The request for a new password was made from [$REMOTE_ADDRESS$] / [$REMOTE_HOST$].<br /><br />
+					The request from [$TO_FIRST_NAME$] for a new password was made from [$REMOTE_ADDRESS$] / [$REMOTE_HOST$].<br /><br />
 
-				Sincerely,<br />
-				[$FROM_NAME$]<br />
-				[$FROM_ADDRESS$]<br />
-				[$PORTAL_URL$]<br />
-			''',
-			notificationsSubject = "[$PORTAL_URL$]: Dear user, please reset Your Password");
+					Sincerely,<br />
+					[$FROM_NAME$]<br />
+					[$FROM_ADDRESS$]<br />
+					[$PORTAL_URL$]<br />
+				''',
+				notificationsSubject = "[$PORTAL_URL$]: Dear [$TO_FIRST_NAME$], please reset Your Password");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			User.addCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		User.logoutPG();
+			User.logoutPG();
+		}
 
-		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+		task ("When: Navigate to the forget password screen") {
+			User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+		}
 
-		MockMock.viewMail(
-			asset = "${portalURL}: Dear user, please reset Your Password",
-			content = "This is a new template for user password reset test.",
-			recipient = "userfn userln",
-			sender = "Joe Bloggs",
-			subject = "${portalURL}: Dear user, please reset Your Password");
+		task ("Then: Assert the subject, salutation and each paragraph in the body of the Password Reset Notification are include user's first name") {
+			MockMock.viewMail(
+				asset = "${portalURL}: Dear userfn, please reset Your Password",
+				content = "This is a new template for userfn password reset test.",
+				recipient = "userfn userln",
+				sender = "Joe Bloggs",
+				subject = "${portalURL}: Dear userfn, please reset Your Password");
+
+			MockMock._gotoMailMessage(
+				asset = "${portalURL}: Dear userfn, please reset Your Password",
+				recipient = "userfn userln");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Dear userfn, please reset Your Password",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "Dear userfn/userfn userln,");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Dear userfn, please reset Your Password",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "You(userfn) can reset your password for");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Dear userfn, please reset Your Password",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "The request from userfn for a new password");
+		}
 	}
 
 	@description = "This is a use case for LPS-97907."

@@ -2547,40 +2547,171 @@ definition {
 		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
 	}
 
-	@description = "This is a use case for LPS-85534"
-	@priority = 4
-	test ViewEmailWithPasswordSetupLinkSendToNewUser {
-		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+	@description = "This is a use case for LPS-176074. TC-2: Email verification notification template could be set to include user's first name."
+	@priority = 3
+	test ViewEmailVerificationNotificationTemplateUpdated {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.name.skip.portal.instance = "UsersAdmin#ViewEmailVerificationNotificationTemplateUpdated";
 		property test.smtp.server.enabled = "true";
 
-		var portalURL = PropsUtil.get("portal.url");
+		task ("Given: Add a new user and add the user's first name in the email verification notification template") {
+			var portalURL = PropsUtil.get("portal.url");
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Email",
-			configurationName = "Email Sender",
-			configurationScope = "Virtual Instance Scope");
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-		PortalSettings.configureEmailSender(
-			emailAddress = "test@liferay.com",
-			emailSenderName = "Joe Bloggs");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			FormFields.viewCheckboxChecked(fieldName = "strangers-verify");
 
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Email Sender",
+				configurationScope = "Virtual Instance Scope");
 
-		MockMock.viewMail(
-			asset = "${portalURL}: Your New Account",
-			content = "You can set up your password here: ${portalURL}/c/portal/update_password?",
-			recipient = "userfn userln",
-			sender = "Joe Bloggs",
-			subject = "${portalURL}: Your New Account");
+			PortalSettings.configureEmailSender(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
+
+			PortalSettings.editConfigurationUsersEmailNotificationsCP(
+				configurationName = "Email Verification Notification",
+				notificationsBody = '''
+					Dear [$TO_FIRST_NAME$],<br /><br />
+
+					Please verify your([$TO_FIRST_NAME$]) email address for [$PORTAL_URL$] at [$EMAIL_VERIFICATION_URL$].<br /><br />
+
+					Your([$TO_FIRST_NAME$]) verification code is [$EMAIL_VERIFICATION_CODE$]<br /><br />
+
+					Sincerely,<br />
+					[$FROM_NAME$]<br />
+					[$FROM_ADDRESS$]<br />
+					[$PORTAL_URL$]<br />
+				''',
+				notificationsSubject = "[$PORTAL_URL$]: Email Address Verification For [$TO_FIRST_NAME$]");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			UserBar.signOut();
+		}
+
+		task ("When: Log in as new user and send the verification code") {
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
+
+			Button.click(button = "Send New Verification Code");
+		}
+
+		task ("Then: Assert the subject, salutation and each paragraph in the body of the Email Address Verification are include user's first name") {
+			MockMock.viewMail(
+				asset = "${portalURL}: Email Address Verification For userfn",
+				content = "Your(userfn) verification code is",
+				recipient = "userfn userln",
+				sender = "Joe Bloggs",
+				subject = "${portalURL}: Email Address Verification For userfn");
+
+			MockMock._gotoMailMessage(
+				asset = "${portalURL}: Email Address Verification For userfn",
+				recipient = "userfn userln");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Email Address Verification For userfn",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "Dear userfn,");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Email Address Verification For userfn",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "Please verify your(userfn) email address");
+		}
+	}
+
+	@description = "This is a use case for LPS-85534 and LPS-176074 TC-1. Account created notification template could be set to include user's first name."
+	@priority = 4
+	test ViewEmailWithPasswordSetupLinkSendToNewUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.name.skip.portal.instance = "UsersAdmin#ViewEmailWithPasswordSetupLinkSendToNewUser";
+		property test.smtp.server.enabled = "true";
+
+		task ("Given: Add the user's first name in the account created notification template") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Email Sender",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.configureEmailSender(
+				emailAddress = "test@liferay.com",
+				emailSenderName = "Joe Bloggs");
+
+			PortalSettings.editConfigurationUsersEmailNotificationsCP(
+				configurationName = "Account Created Notification",
+				notificationsBody = '''
+					Dear [$TO_FIRST_NAME$],<br /><br />
+
+					Welcome! You recently created an account named [$TO_FIRST_NAME$] at [$PORTAL_URL$].<br /><br />
+
+					You([$TO_FIRST_NAME$]) can set up your password here: [$PASSWORD_SETUP_URL$]<br /><br />
+
+					Sincerely,<br />
+					[$FROM_NAME$]<br />
+					[$FROM_ADDRESS$]<br />
+					[$PORTAL_URL$]<br />
+				''',
+				notificationsSubject = "[$PORTAL_URL$]: Your New Account [$TO_FIRST_NAME$]");
+		}
+
+		task ("When: Add a new user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.addCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then: Assert the subject, salutation and each paragraph in the body of the Account Created Notification are include user's first name") {
+			MockMock.viewMail(
+				asset = "${portalURL}: Your New Account userfn",
+				content = "You(userfn) can set up your password here: ${portalURL}/c/portal/update_password?",
+				recipient = "userfn userln",
+				sender = "Joe Bloggs",
+				subject = "${portalURL}: Your New Account userfn");
+
+			MockMock._gotoMailMessage(
+				asset = "${portalURL}: Your New Account userfn",
+				recipient = "userfn userln");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Your New Account userfn",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "Dear userfn,");
+
+			AssertTextEquals.assertPartialText(
+				key_asset = "${portalURL}: Your New Account userfn",
+				locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
+				value1 = "You recently created an account named userfn");
+		}
 	}
 
 	@priority = 4

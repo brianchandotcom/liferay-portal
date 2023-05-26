@@ -372,6 +372,20 @@ definition {
 			userPassword = ${userPassword});
 	}
 
+	macro addObjectWithStorageType {
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = ${fieldLabelName},
+			pluralLabelName = ${pluralLabelName});
+
+		Click.clickNoMouseOver(
+			key_storageOption = ${storageType},
+			locator1 = "CreateObject#STORAGE_TYPE_OPTION");
+
+		PortletEntry.save();
+	}
+
 	macro addTabFieldsOnLayout {
 		LexiconEntry.gotoAddNoSelectFrame();
 

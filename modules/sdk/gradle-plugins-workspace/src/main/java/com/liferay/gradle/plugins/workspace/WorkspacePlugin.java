@@ -85,6 +85,8 @@ public class WorkspacePlugin implements Plugin<Settings> {
 					Plugin<Project> plugin = null;
 
 					if (project.getParent() == null) {
+						_applyPlugins(project);
+
 						for (ProjectConfigurator projectConfigurator :
 								workspaceExtension.getProjectConfigurators()) {
 
@@ -94,8 +96,6 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 						plugin =
 							workspaceExtension.getRootProjectConfigurator();
-
-						_applyPlugins(project);
 					}
 					else {
 						plugin = _projectConfiguratorsMap.get(

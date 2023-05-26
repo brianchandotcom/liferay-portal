@@ -15,10 +15,13 @@
 package com.liferay.osgi.util.service;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Dictionary;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -190,6 +193,27 @@ public class SnapshotTest {
 				exception.getMessage());
 		}
 
+		Dictionary<String, Object> dictionary =
+			ReflectionTestUtil.getFieldValue(serviceRegistration, "properties");
+
+		dictionary.put(Constants.SERVICE_ID, "(1");
+
+		snapshot = new Snapshot<>(
+			SnapshotTest.class, Snapshot.cast(TestService.class));
+
+		try {
+			snapshot.get();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertSame(
+				InvalidSyntaxException.class, exception.getClass());
+
+			Assert.assertEquals(
+				"Unknown operator: : (service.id=(1)", exception.getMessage());
+		}
+
 		serviceRegistration.unregister();
 	}
 
@@ -228,10 +252,14 @@ public class SnapshotTest {
 		Assert.assertSame(testService1, snapshot2.get());
 
 		serviceRegistration1.unregister();
-		serviceRegistration2.unregister();
 
 		Assert.assertSame(testService2, snapshot1.get());
-		Assert.assertSame(testService1, snapshot2.get());
+		Assert.assertNull(snapshot2.get());
+
+		serviceRegistration2.unregister();
+
+		Assert.assertNull(snapshot1.get());
+		Assert.assertNull(snapshot2.get());
 	}
 
 	@Test
@@ -266,10 +294,14 @@ public class SnapshotTest {
 		Assert.assertSame(testService2, snapshot2.get());
 
 		serviceRegistration1.unregister();
+
+		Assert.assertSame(testService2, snapshot1.get());
+		Assert.assertSame(testService2, snapshot2.get());
+
 		serviceRegistration2.unregister();
 
-		Assert.assertSame(testService1, snapshot1.get());
-		Assert.assertSame(testService2, snapshot2.get());
+		Assert.assertNull(snapshot1.get());
+		Assert.assertNull(snapshot2.get());
 	}
 
 	private static final MockedStatic<FrameworkUtil>

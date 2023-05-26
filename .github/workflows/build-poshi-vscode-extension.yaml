@@ -66,5 +66,10 @@ jobs:
 name: Build Poshi VSCode Extension
 on:
     workflow_dispatch:
+        inputs:
+            release-to-marketplace:
+                description:
+                    Release to Marketplace
+                type: boolean
 permissions:
     contents: read

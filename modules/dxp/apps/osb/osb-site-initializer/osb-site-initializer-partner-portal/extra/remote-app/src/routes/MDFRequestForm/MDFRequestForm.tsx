@@ -10,10 +10,12 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FormikHelpers, setNestedObjectValues} from 'formik';
 import {useMemo, useState} from 'react';
 
+import PRMForm from '../../common/components/PRMForm/PRMForm';
 import PRMFormik from '../../common/components/PRMFormik';
 import {ObjectActionName} from '../../common/enums/objectActionName';
 import {PermissionActionType} from '../../common/enums/permissionActionType';
@@ -181,9 +183,29 @@ const MDFRequestForm = () => {
 
 	if (!hasPermissionShowForm) {
 		return (
-			<ClayAlert className="m-0 w-100" displayType="info" title="Info:">
-				You don&apos;t have permission
-			</ClayAlert>
+			<PRMForm name="" title="MDF Claim">
+				<div className="d-flex justify-content-center mt-4">
+					<ClayAlert
+						className="m-0 w-100"
+						displayType="info"
+						title="Info:"
+					>
+						This MDF Request can not be edited.
+					</ClayAlert>
+				</div>
+
+				<PRMForm.Footer>
+					<div className="d-flex mr-auto">
+						<ClayButton
+							className="mr-4"
+							displayType="secondary"
+							onClick={() => onCancel()}
+						>
+							Cancel
+						</ClayButton>
+					</div>
+				</PRMForm.Footer>
+			</PRMForm>
 		);
 	}
 

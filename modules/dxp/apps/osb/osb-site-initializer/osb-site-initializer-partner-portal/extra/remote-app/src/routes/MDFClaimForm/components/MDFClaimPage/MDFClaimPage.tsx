@@ -76,38 +76,6 @@ const MDFClaimPage = ({
 			return <ClayLoadingIndicator />;
 		}
 
-		if (
-			values.id &&
-			values.mdfClaimStatus?.key !== 'draft' &&
-			values.mdfClaimStatus?.key !== 'moreInfoRequested'
-		) {
-			return (
-				<PRMForm name="" title="MDF Claim">
-					<div className="d-flex justify-content-center mt-4">
-						<ClayAlert
-							className="m-0 w-100"
-							displayType="info"
-							title="Info:"
-						>
-							This MDF Claim can not be edited.
-						</ClayAlert>
-					</div>
-
-					<PRMForm.Footer>
-						<div className="d-flex mr-auto">
-							<ClayButton
-								className="mr-4"
-								displayType="secondary"
-								onClick={() => onCancel()}
-							>
-								Cancel
-							</ClayButton>
-						</div>
-					</PRMForm.Footer>
-				</PRMForm>
-			);
-		}
-
 		if (claimsFiltered && claimsFiltered >= 2 && !values.id) {
 			return (
 				<PRMForm name="New" title="Reimbursement Claim">

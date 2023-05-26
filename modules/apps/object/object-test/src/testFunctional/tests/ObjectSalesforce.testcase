@@ -21,6 +21,119 @@ definition {
 		}
 	}
 
+	@description = "LPS-162131 Verify CRUD functionality with a created custom object using Salesforce as the storage type"
+	@priority = 5
+	test AssertCRUDWithCreatedCustomObject {
+		property portal.acceptance = "true";
+
+		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Third Party",
+				configurationName = "Salesforce Integration",
+				configurationScope = "Site Scope");
+
+			ObjectSalesforce.configureSalesforce();
+		}
+
+		task ("And given a created custom object with the storage type set to Salesforce") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectWithStorageType(
+				fieldLabelName = "Poshi Test",
+				pluralLabelName = "Poshi Tests",
+				storageType = "Salesforce");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Title",
+				fieldName = "title",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PoshiTest");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PoshiTest");
+		}
+
+		task ("And given the object's external reference code matches a Salesforce custom object") {
+			ObjectPortlet.selectCustomObject(label = "Poshi Test");
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.editExternalReferenceCode(externalReferenceCode = "Poshi_Test__c");
+		}
+
+		task ("And given a text field whose external reference code matches a custom field from the Salesforce custom object") {
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Title");
+
+			PortletEntry.inputText(
+				fieldLabel = "External Reference Code",
+				text = "Title__c");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When user navigates to the object") {
+			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
+		}
+
+		task ("Then the user is able to read entries") {
+			AssertElementPresent(
+				key_entry = "CanCreateObjectEntry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "CanViewEntryFromSalesforceEdited",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+
+			AssertElementPresent(
+				key_entry = "CanDeleteObjectEntry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to create entries") {
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry");
+
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				key_entry = "New Entry",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to update entries") {
+			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+
+			Type(
+				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
+				value1 = "Entry Updated");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			AssertElementPresent(
+				key_entry = "Entry Updated",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+
+		task ("And then the user is able to delete entries") {
+			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+
+			AssertElementNotPresent(
+				key_entry = "Entry Updated",
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
+		}
+	}
+
 	@description = "LPS-185427 Verify CRUD functionality with an imported custom object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithImportedCustomObject {

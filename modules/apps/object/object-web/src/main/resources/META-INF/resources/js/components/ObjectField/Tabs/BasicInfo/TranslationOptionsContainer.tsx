@@ -65,9 +65,10 @@ export function TranslationOptionsContainer({
 						!objectDefinition.enableLocalization
 					}
 					label={Liferay.Language.get('enable-entry-translations')}
-					onToggle={() =>
+					onToggle={(localized) =>
 						setValues({
-							localized: !values.localized,
+							localized,
+							required: Liferay.FeatureFlags['LPS-172017'] ? !localized && values.required : values.required
 						})
 					}
 					toggled={values.localized}

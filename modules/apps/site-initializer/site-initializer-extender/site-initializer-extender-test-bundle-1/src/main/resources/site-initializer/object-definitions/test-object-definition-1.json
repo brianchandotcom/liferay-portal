@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "field1",
 	"label": {
 		"en_US": "Test Object Definition 1"
 	},

@@ -2163,7 +2163,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectRelationships#CanSeeRelatedEntriesOnTab";
 
-		task ("Given an object related to itself, in a Many-to-Many relationship and a custom entry") {
+		task ("Given a custom object that contains a simple field and a relationship itself (Many to Many)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 163657",
 				objectName = "CustomObject163657",
@@ -2184,6 +2184,10 @@ definition {
 				relationshipName = "relationship",
 				relationshipType = "manyToMany");
 
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163657");
+		}
+
+		task ("And given a custom layout for the custom object") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout Name",
 				objectName = "CustomObject163657");
@@ -2219,31 +2223,33 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject163657");
 		}
 
-		task ("When the user relates the entry to another entry") {
+		task ("And given two custom object entries") {
 			for (var fieldEntry : list "A,B") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 					fieldName = "customObjectField",
 					objectName = "CustomObject163657",
-					value = "Entry ${fieldEntry}");
+					value = "Entry Test ${fieldEntry}");
 			}
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject163657");
+		}
 
-			ObjectPortlet.viewEntryDetails(entry = "Entry A");
+		task ("When selecting existing entries from the Relationship Tab") {
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
 
 			ObjectPortlet.gotoRelationshipTab();
 
-			CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry B");
+			ObjectCustomLayouts.addEntryOnRelationshipTab(selectEntry = "Entry Test B");
+
+			WaitForElementPresent(
+				key_fieldLabel = "Entry Test B",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 		}
 
-		task ("Then all related entries to the entry must be displayed on the relationship tab") {
-			WaitForVisible(
-				key_entry = "Entry B",
-				locator1 = "ObjectPortlet#ENTRY_VALUE");
-
+		task ("Then assert the entry created before on the Relationship Tab") {
 			AssertElementPresent(
-				key_relatedObject = "Entry B",
-				locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
+				key_fieldLabel = "Entry Test B",
+				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 		}
 	}
 

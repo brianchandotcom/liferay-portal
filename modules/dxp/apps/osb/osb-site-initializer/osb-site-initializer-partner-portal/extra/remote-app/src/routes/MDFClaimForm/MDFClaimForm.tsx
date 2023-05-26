@@ -12,7 +12,10 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import PRMFormik from '../../common/components/PRMFormik';
+import {ObjectActionName} from '../../common/enums/objectActionName';
+import {PermissionActionType} from '../../common/enums/permissionActionType';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
+import usePermissionActions from '../../common/hooks/usePermissionActions';
 import MDFClaimDTO from '../../common/interfaces/dto/mdfClaimDTO';
 import {Liferay} from '../../common/services/liferay';
 import useGetDocumentFolder from '../../common/services/liferay/headless-delivery/useGetDocumentFolders';
@@ -49,6 +52,7 @@ const MDFClaimForm = () => {
 		data: mdfClaimDTO,
 		isValidating: isValidatingMDFClaimById,
 	} = useGetMDFClaimById(Number(mdfClaimId));
+	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);
 
 	const siteURL = useLiferayNavigate();
 
@@ -66,7 +70,8 @@ const MDFClaimForm = () => {
 		isValidatingMDFRequestById ||
 		(mdfClaimId && isValidatingMDFClaimById) ||
 		isValidatingClaimFolder ||
-		!claimParentFolderId
+		!claimParentFolderId ||
+		!actions
 	) {
 		return <ClayLoadingIndicator />;
 	}
@@ -86,7 +91,15 @@ const MDFClaimForm = () => {
 					formikHelpers,
 					mdfRequest,
 					claimParentFolderId,
-					siteURL
+					siteURL,
+					Status.PENDING,
+					mdfClaimId
+						? actions.every(
+								(action) =>
+									action !==
+									PermissionActionType.UPDATE_WO_CHANGE_STATUS
+						  )
+						: true
 				)
 			}
 		>
@@ -100,7 +113,14 @@ const MDFClaimForm = () => {
 						mdfRequest,
 						claimParentFolderId,
 						siteURL,
-						Status.DRAFT
+						Status.DRAFT,
+						mdfClaimId
+							? actions.every(
+									(action) =>
+										action !==
+										PermissionActionType.UPDATE_WO_CHANGE_STATUS
+							  )
+							: true
 					)
 				}
 				validationSchema={claimSchema}

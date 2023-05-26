@@ -37,7 +37,8 @@ export default async function submitForm(
 	mdfRequest: MDFRequestDTO,
 	claimParentFolderId: number,
 	siteURL: string,
-	currentClaimStatus?: LiferayPicklist
+	currentClaimStatus?: LiferayPicklist,
+	changeStatus?: boolean
 ) {
 	formikHelpers.setSubmitting(true);
 	formikHelpers.setStatus(true);
@@ -47,7 +48,7 @@ export default async function submitForm(
 	const updatedStatus = updateStatus(
 		submitValues.mdfClaimStatus,
 		currentClaimStatus,
-		false,
+		changeStatus,
 		submitValues.id
 	);
 

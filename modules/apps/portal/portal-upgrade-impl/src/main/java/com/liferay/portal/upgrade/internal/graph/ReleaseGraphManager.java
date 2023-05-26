@@ -34,6 +34,10 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 public class ReleaseGraphManager {
 
 	public ReleaseGraphManager(List<UpgradeInfo> upgradeInfos) {
+		if (upgradeInfos == null) {
+			upgradeInfos = new ArrayList<>();
+		}
+
 		_directedGraph = new DefaultDirectedGraph<>(
 			new UpgradeProcessEdgeFactory(upgradeInfos));
 

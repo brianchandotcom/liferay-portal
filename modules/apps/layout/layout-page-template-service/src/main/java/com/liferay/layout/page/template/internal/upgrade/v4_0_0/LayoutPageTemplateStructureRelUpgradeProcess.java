@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v4_0_0;
 
-import com.liferay.layout.helper.CollectionPaginationHelper;
+import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -93,7 +93,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				String paginationType = _getPaginatiopnType(
 					collectionStyledLayoutStructureItem, itemsJSONObject);
 
-				if (CollectionPaginationHelper.isPaginationEnabled(
+				if (CollectionPaginationUtil.isPaginationEnabled(
 						paginationType)) {
 
 					collectionStyledLayoutStructureItem.setDisplayAllPages(
@@ -115,7 +115,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 				}
 				else {
 					paginationType =
-						CollectionPaginationHelper.PAGINATION_TYPE_NONE;
+						CollectionPaginationUtil.PAGINATION_TYPE_NONE;
 				}
 
 				collectionStyledLayoutStructureItem.setPaginationType(

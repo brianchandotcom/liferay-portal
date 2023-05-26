@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.helper;
+package com.liferay.layout.util;
 
 import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.util.PropsValues;
@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * @author Eudaldo Alonso
  */
-public class CollectionPaginationHelper {
+public class CollectionPaginationUtil {
 
 	public static final String PAGINATION_TYPE_NONE = "none";
 
@@ -97,13 +97,13 @@ public class CollectionPaginationHelper {
 	public static boolean isPaginationEnabled(String paginationType) {
 		if (Objects.equals(
 				paginationType,
-				CollectionPaginationHelper.PAGINATION_TYPE_NUMERIC) ||
+				CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC) ||
 			Objects.equals(
 				paginationType,
-				CollectionPaginationHelper.PAGINATION_TYPE_REGULAR) ||
+				CollectionPaginationUtil.PAGINATION_TYPE_REGULAR) ||
 			Objects.equals(
 				paginationType,
-				CollectionPaginationHelper.PAGINATION_TYPE_SIMPLE)) {
+				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE)) {
 
 			return true;
 		}

@@ -43,7 +43,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
-import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
@@ -53,6 +52,7 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
+import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -313,7 +313,7 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		defaultLayoutListRetrieverContext.setPagination(
-			CollectionPaginationHelper.getPagination(
+			CollectionPaginationUtil.getPagination(
 				activePage, listCount, displayAllPages, displayAllItems,
 				numberOfItems, numberOfItemsPerPage, numberOfPages,
 				paginationType));
@@ -378,7 +378,7 @@ public class GetCollectionFieldMVCResourceCommand
 			"length", listCount
 		).put(
 			"totalNumberOfItems",
-			CollectionPaginationHelper.getTotalNumberOfItems(
+			CollectionPaginationUtil.getTotalNumberOfItems(
 				listCount, displayAllPages, displayAllItems, numberOfItems,
 				numberOfItemsPerPage, numberOfPages, paginationType)
 		);

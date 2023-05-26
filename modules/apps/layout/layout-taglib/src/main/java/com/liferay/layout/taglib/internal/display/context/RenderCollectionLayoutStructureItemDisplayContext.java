@@ -32,7 +32,6 @@ import com.liferay.info.list.renderer.InfoListRendererRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistryUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
-import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProvider;
 import com.liferay.layout.list.permission.provider.LayoutListPermissionProviderRegistry;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
@@ -42,6 +41,7 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -126,7 +126,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				layoutListRetriever, listObjectReference);
 
 		defaultLayoutListRetrieverContext.setPagination(
-			CollectionPaginationHelper.getPagination(
+			CollectionPaginationUtil.getPagination(
 				getActivePage(), getCollectionCount(),
 				_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 				_collectionStyledLayoutStructureItem.isDisplayAllItems(),
@@ -242,7 +242,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		if (CollectionPaginationHelper.isPaginationEnabled(
+		if (CollectionPaginationUtil.isPaginationEnabled(
 				_collectionStyledLayoutStructureItem.getPaginationType())) {
 
 			numberOfItemsToDisplay = Math.min(
@@ -275,7 +275,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		int numberOfItemsToDisplay = getTotalNumberOfItems();
 
-		if (CollectionPaginationHelper.isPaginationEnabled(
+		if (CollectionPaginationUtil.isPaginationEnabled(
 				_collectionStyledLayoutStructureItem.getPaginationType())) {
 
 			numberOfItemsToDisplay = Math.min(
@@ -304,7 +304,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	public int getTotalNumberOfItems() {
-		return CollectionPaginationHelper.getTotalNumberOfItems(
+		return CollectionPaginationUtil.getTotalNumberOfItems(
 			getCollectionCount(),
 			_collectionStyledLayoutStructureItem.isDisplayAllPages(),
 			_collectionStyledLayoutStructureItem.isDisplayAllItems(),

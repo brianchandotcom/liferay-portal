@@ -14,8 +14,8 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.responsive.ViewportSize;
+import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.lang.HashUtil;
@@ -493,7 +493,7 @@ public class CollectionStyledLayoutStructureItem
 	private int _numberOfItemsPerPage = 20;
 	private int _numberOfPages = 5;
 	private String _paginationType =
-		CollectionPaginationHelper.PAGINATION_TYPE_NUMERIC;
+		CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC;
 	private boolean _showAllItems;
 	private String _templateKey;
 	private String _verticalAlignment = "start";

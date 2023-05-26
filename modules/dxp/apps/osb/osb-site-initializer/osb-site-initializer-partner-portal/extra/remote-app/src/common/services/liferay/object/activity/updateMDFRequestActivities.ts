@@ -20,7 +20,7 @@ import {ResourceName} from '../enum/resourceName';
 export default async function updateMDFRequestActivities(
 	apiOption: ResourceName,
 	mdfRequestActivity: MDFRequestActivity,
-	mdfRequestDTO: MDFRequestDTO,
+	mdfRequestDTO?: MDFRequestDTO,
 	externalReferenceCodeFromSF?: string
 ) {
 	return await liferayFetcher.put(
@@ -29,8 +29,8 @@ export default async function updateMDFRequestActivities(
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,
 			externalReferenceCodeFromSF,
-			mdfRequestDTO.r_accToMDFReqs_accountEntry,
-			mdfRequestDTO.externalReferenceCode
+			mdfRequestDTO?.r_accToMDFReqs_accountEntry,
+			mdfRequestDTO?.externalReferenceCode
 		)
 	);
 }

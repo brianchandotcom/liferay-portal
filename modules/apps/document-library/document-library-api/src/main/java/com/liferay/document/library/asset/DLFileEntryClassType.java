@@ -16,9 +16,9 @@ package com.liferay.document.library.asset;
 
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.model.DDMStructureClassType;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.document.library.util.DLFileEntryTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
@@ -39,11 +39,9 @@ public class DLFileEntryClassType extends DDMStructureClassType {
 	public List<ClassTypeField> getClassTypeFields() throws PortalException {
 		List<ClassTypeField> classTypeFields = new ArrayList<>();
 
-		DLFileEntryType dlFileEntryType =
+		List<DDMStructure> ddmStructures = DLFileEntryTypeUtil.getDDMStructures(
 			DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(
-				getClassTypeId());
-
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+				getClassTypeId()));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			classTypeFields.addAll(

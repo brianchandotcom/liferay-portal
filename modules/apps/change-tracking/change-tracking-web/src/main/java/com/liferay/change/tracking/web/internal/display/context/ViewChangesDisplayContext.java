@@ -657,6 +657,8 @@ public class ViewChangesDisplayContext {
 				).buildString();
 			}
 		).put(
+			"showAllItemsEnabled", _ctConfiguration.showAllItemsEnabled()
+		).put(
 			"showHideableFromURL", showHideable
 		).put(
 			"siteNames",

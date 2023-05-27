@@ -37,4 +37,7 @@ public interface CTConfiguration {
 	)
 	public int contextViewLimitCount();
 
+	@Meta.AD(deflt = "true", name = "show-all-items-enabled", required = false)
+	public boolean showAllItemsEnabled();
+
 }

@@ -127,6 +127,7 @@ export default function ChangeTrackingChangesView({
 	rescheduleURL,
 	revertURL,
 	scheduleURL,
+	showAllItemsEnabled,
 	showHideableFromURL,
 	siteNames,
 	sitesFromURL,
@@ -2165,7 +2166,9 @@ export default function ChangeTrackingChangesView({
 
 								<ManagementToolbar.Item className="simple-toggle-switch-reverse">
 									<ClayToggle
-										disabled={!total}
+										disabled={
+											!total || !showAllItemsEnabled
+										}
 										label={Liferay.Language.get(
 											'show-all-items'
 										)}

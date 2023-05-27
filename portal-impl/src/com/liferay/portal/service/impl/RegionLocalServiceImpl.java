@@ -68,7 +68,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 		_validate(-1, countryId, name, regionCode);
 
-		long regionId = counterLocalService.increment();
+		long regionId = _getSafeId();
 
 		Region region = regionPersistence.create(regionId);
 
@@ -316,6 +316,16 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 					return null;
 				}
 			));
+	}
+
+	private long _getSafeId() {
+		while (true) {
+			long regionId = counterLocalService.increment();
+
+			if (regionPersistence.fetchByPrimaryKey(regionId) == null) {
+				return regionId;
+			}
+		}
 	}
 
 	private void _validate(

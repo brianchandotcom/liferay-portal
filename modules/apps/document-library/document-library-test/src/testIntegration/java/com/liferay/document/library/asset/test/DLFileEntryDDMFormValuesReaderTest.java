@@ -16,6 +16,7 @@ package com.liferay.document.library.asset.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
+import com.liferay.document.library.asset.DLFileEntryDDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryDDMFormValuesReader;
 
 import java.io.ByteArrayInputStream;
 

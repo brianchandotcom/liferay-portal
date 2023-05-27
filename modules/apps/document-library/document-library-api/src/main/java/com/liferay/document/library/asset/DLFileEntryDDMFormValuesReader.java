@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.asset;
+package com.liferay.document.library.asset;
 
 import com.liferay.asset.kernel.model.BaseDDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;

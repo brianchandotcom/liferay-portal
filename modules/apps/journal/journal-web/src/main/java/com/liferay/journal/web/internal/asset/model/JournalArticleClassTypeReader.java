@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
-import com.liferay.asset.kernel.model.DDMStructureClassType;
+import com.liferay.asset.model.DDMStructureClassType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.constants.JournalPortletKeys;

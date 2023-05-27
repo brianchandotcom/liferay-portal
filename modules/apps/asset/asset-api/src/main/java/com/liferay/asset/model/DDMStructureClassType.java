@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.kernel.model;
+package com.liferay.asset.model;
 
 import com.liferay.asset.kernel.NoSuchClassTypeFieldException;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;

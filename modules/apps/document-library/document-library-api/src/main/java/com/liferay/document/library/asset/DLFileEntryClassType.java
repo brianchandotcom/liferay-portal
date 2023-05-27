@@ -15,7 +15,7 @@
 package com.liferay.document.library.asset;
 
 import com.liferay.asset.kernel.model.ClassTypeField;
-import com.liferay.asset.kernel.model.DDMStructureClassType;
+import com.liferay.asset.model.DDMStructureClassType;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;

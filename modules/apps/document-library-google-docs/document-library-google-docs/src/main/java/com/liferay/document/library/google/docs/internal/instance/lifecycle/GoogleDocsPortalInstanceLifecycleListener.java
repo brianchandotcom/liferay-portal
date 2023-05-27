@@ -17,12 +17,9 @@ package com.liferay.document.library.google.docs.internal.instance.lifecycle;
 import com.liferay.document.library.google.docs.internal.helper.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -31,9 +28,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
-import java.lang.reflect.Field;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,22 +56,11 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		}
 	}
 
-	@Activate
-	protected void activate() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMStructureManagerUtil.class, "_ddmStructureManager");
-
-		field.set(null, _ddmStructureManager);
-	}
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
-	private DDMStructureManager _ddmStructureManager;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata)"

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.template;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.template.DDMTemplateResource;
@@ -93,8 +93,7 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 					companyGroup.getGroupId(), classNameId, ddmTemplateKey);
 
 				if (ddmTemplate == null) {
-					classNameId = _portal.getClassNameId(
-						DDMStructureManagerUtil.getDDMStructureModelClass());
+					classNameId = _portal.getClassNameId(DDMStructure.class);
 
 					ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 						groupId, classNameId, ddmTemplateKey);

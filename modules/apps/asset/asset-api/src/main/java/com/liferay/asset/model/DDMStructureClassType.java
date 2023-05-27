@@ -17,10 +17,10 @@ package com.liferay.asset.model;
 import com.liferay.asset.kernel.NoSuchClassTypeFieldException;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -89,8 +89,8 @@ public class DDMStructureClassType implements ClassType {
 
 		List<ClassTypeField> classTypeFields = new ArrayList<>();
 
-		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
-			ddmStructureId);
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
 
 		List<DDMFormField> ddmFormFields = ddmStructure.getDDMFormFields(false);
 

@@ -18,9 +18,9 @@ import com.liferay.asset.kernel.model.BaseDDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -54,7 +54,7 @@ public class DLFileEntryDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 	protected DLFileEntryMetadata getDLFileEntryMetadata() {
 		List<DDMStructure> ddmStructures =
-			DDMStructureManagerUtil.getClassStructures(
+			DDMStructureLocalServiceUtil.getClassStructures(
 				_fileEntry.getCompanyId(),
 				PortalUtil.getClassNameId(DLFileEntryMetadata.class));
 

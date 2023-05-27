@@ -28,11 +28,10 @@ import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -685,8 +683,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				TestPropsValues.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
 
-			com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-				addDDMStructure(group);
+			DDMStructure ddmStructure = addDDMStructure(group);
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
@@ -776,8 +773,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				TestPropsValues.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getFolderName());
 
-			com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-				addDDMStructure(group);
+			DDMStructure ddmStructure = addDDMStructure(group);
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
@@ -847,10 +843,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		return ddmForm;
 	}
 
-	protected com.liferay.dynamic.data.mapping.kernel.DDMStructure
-			addDDMStructure(Group group)
-		throws Exception {
-
+	protected DDMStructure addDDMStructure(Group group) throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
 		DDMFormField ddmFormField = createLocalizableTextDDMFormField("Text");
@@ -859,22 +852,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			ddmForm.getDefaultLocale(), "Test Structure"
-		).build();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		return DDMStructureManagerUtil.addStructure(
-			TestPropsValues.getUserId(), group.getGroupId(), null,
-			PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()),
-			null, nameMap, null, ddmForm,
-			DDMStorageEngineManager.STORAGE_TYPE_DEFAULT,
-			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
+		return DDMStructureTestUtil.addStructure(
+			group.getGroupId(), DLFileEntryMetadata.class.getName(),
+			DDMBeanTranslatorUtil.translate(ddmForm));
 	}
 
 	protected DDMFormField createLocalizableTextDDMFormField(String name) {

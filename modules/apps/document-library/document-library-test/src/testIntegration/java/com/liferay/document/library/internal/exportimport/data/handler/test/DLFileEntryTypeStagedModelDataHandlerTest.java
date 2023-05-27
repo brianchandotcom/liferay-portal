@@ -19,8 +19,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,8 +65,7 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		addDependentStagedModel(
-			dependentStagedModelsMap,
-			DDMStructureManagerUtil.getDDMStructureModelClass(), ddmStructure);
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		return dependentStagedModelsMap;
 	}
@@ -77,11 +76,8 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		Class<?> ddmStructureClass =
-			DDMStructureManagerUtil.getDDMStructureModelClass();
-
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			ddmStructureClass.getSimpleName());
+			DDMStructure.class.getSimpleName());
 
 		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
 
@@ -93,9 +89,10 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 				ServiceContextTestUtil.getServiceContext(
 					group.getGroupId(), TestPropsValues.getUserId()));
 
-		DDMStructureManagerUtil.updateStructureKey(
-			ddmStructure.getStructureId(),
+		ddmStructure.setStructureKey(
 			DLUtil.getDDMStructureKey(dlFileEntryType));
+
+		DDMStructureLocalServiceUtil.updateDDMStructure(ddmStructure);
 
 		return dlFileEntryType;
 	}
@@ -119,18 +116,15 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
-		Class<?> ddmStructureClass =
-			DDMStructureManagerUtil.getDDMStructureModelClass();
-
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			ddmStructureClass.getSimpleName());
+			DDMStructure.class.getSimpleName());
 
 		Assert.assertEquals(
 			dependentStagedModels.toString(), 1, dependentStagedModels.size());
 
 		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
 
-		DDMStructureManagerUtil.getStructureByUuidAndGroupId(
+		DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
 			ddmStructure.getUuid(), group.getGroupId());
 	}
 

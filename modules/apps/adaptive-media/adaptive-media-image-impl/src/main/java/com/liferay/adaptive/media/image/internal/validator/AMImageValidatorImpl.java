@@ -24,12 +24,13 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -144,10 +145,10 @@ public class AMImageValidatorImpl implements AMImageValidator {
 		FileVersion fileVersion) {
 
 		List<DDMStructure> ddmStructures =
-			_ddmStructureManager.getClassStructures(
+			_ddmStructureLocalService.getClassStructures(
 				fileVersion.getCompanyId(),
 				_portal.getClassNameId(RawMetadataProcessor.class),
-				DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
+				StructureStructureKeyComparator.INSTANCE_DESCENDING);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			DLFileEntryMetadata fileEntryMetadata =
@@ -277,7 +278,7 @@ public class AMImageValidatorImpl implements AMImageValidator {
 	private AMImageSizeProvider _amImageSizeProvider;
 
 	@Reference
-	private DDMStructureManager _ddmStructureManager;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

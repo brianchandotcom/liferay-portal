@@ -17,8 +17,8 @@ package com.liferay.journal.web.internal.asset.model;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.model.DDMStructureClassType;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,7 +46,7 @@ public class JournalArticleClassTypeReader implements ClassTypeReader {
 		List<ClassType> classTypes = new ArrayList<>();
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureManagerUtil.getStructures(
+			DDMStructureLocalServiceUtil.getStructures(
 				_replaceGroupIds(groupIds),
 				PortalUtil.getClassNameId(_className));
 
@@ -64,7 +64,7 @@ public class JournalArticleClassTypeReader implements ClassTypeReader {
 	public ClassType getClassType(long classTypeId, Locale locale)
 		throws PortalException {
 
-		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			classTypeId);
 
 		return new DDMStructureClassType(

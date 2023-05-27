@@ -218,6 +218,7 @@ public class JournalTransformer {
 
 		PortletRequest originalPortletRequest = null;
 		PortletResponse originalPortletResponse = null;
+		String originalLifecyclePhase = null;
 
 		HttpServletRequest httpServletRequest = null;
 
@@ -231,6 +232,9 @@ public class JournalTransformer {
 				originalPortletResponse =
 					(PortletResponse)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
+				originalLifecyclePhase =
+					(String)httpServletRequest.getAttribute(
+						PortletRequest.LIFECYCLE_PHASE);
 
 				httpServletRequest.setAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST,
@@ -347,6 +351,8 @@ public class JournalTransformer {
 				httpServletRequest.setAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE,
 					originalPortletResponse);
+				httpServletRequest.setAttribute(
+					PortletRequest.LIFECYCLE_PHASE, originalLifecyclePhase);
 			}
 		}
 

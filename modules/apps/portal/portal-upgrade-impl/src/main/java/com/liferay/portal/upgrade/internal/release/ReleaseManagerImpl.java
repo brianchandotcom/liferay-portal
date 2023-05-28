@@ -24,7 +24,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -206,44 +205,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 				new PropertyServiceReferenceComparator<>(
 					"upgrade.from.schema.version")),
 			new UpgradeInfoServiceTrackerMapListener());
-
-		synchronized (this) {
-			Set<String> bundleSymbolicNames = null;
-
-			if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-				bundleSymbolicNames = new HashSet<>();
-
-				for (Release release :
-						_releaseLocalService.getReleases(
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-					bundleSymbolicNames.add(release.getBundleSymbolicName());
-				}
-			}
-
-			for (String bundleSymbolicName : _serviceTrackerMap.keySet()) {
-				if ((bundleSymbolicNames != null) &&
-					bundleSymbolicNames.contains(bundleSymbolicName)) {
-
-					continue;
-				}
-
-				List<UpgradeInfo> upgradeSteps = _serviceTrackerMap.getService(
-					bundleSymbolicName);
-
-				try {
-					_upgradeExecutor.execute(bundleSymbolicName, upgradeSteps);
-				}
-				catch (Throwable throwable) {
-					_log.error(
-						"Failed upgrade process for module " +
-							bundleSymbolicName,
-						throwable);
-				}
-			}
-
-			_activated = true;
-		}
 	}
 
 	@Deactivate
@@ -471,7 +432,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseManagerImpl.class);
 
-	private boolean _activated;
 	private ServiceTrackerMap<String, Release>
 		_initialUpgradeStepServiceTrackerMap;
 
@@ -603,14 +563,10 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			String key, UpgradeInfo upgradeInfo,
 			List<UpgradeInfo> upgradeInfos) {
 
-			synchronized (ReleaseManagerImpl.this) {
-				if (_activated &&
-					UpgradeStepRegistratorThreadLocal.isEnabled() &&
-					(PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
-					 (_releaseLocalService.fetchRelease(key) == null))) {
+			if (UpgradeStepRegistratorThreadLocal.isEnabled() &&
+				PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
 
-					_upgradeExecutor.execute(key, upgradeInfos);
-				}
+				_upgradeExecutor.execute(key, upgradeInfos);
 			}
 		}
 

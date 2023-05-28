@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,8 +141,7 @@ public class RawMetadataProcessorImpl
 		List<DDMStructure> ddmStructures =
 			DDMStructureManagerUtil.getClassStructures(
 				fileVersion.getCompanyId(),
-				PortalUtil.getClassNameId(RawMetadataProcessor.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				PortalUtil.getClassNameId(RawMetadataProcessor.class));
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -1,5 +1,5 @@
 # DB Partition Virtual Instance Migration Tool
-This tool allows to migrate a virtual instance to a new database partition in a database partitioned environment. Before starting the migration, it validates that all the needed conditions for a successful migration are met.
+This tool allows to migrate a virtual instance to a new partition in a database partitioned environment. Before starting the migration, it validates that all the needed conditions for a successful migration are met.
 
 ## Requirements:
     - MySQL
@@ -7,12 +7,12 @@ This tool allows to migrate a virtual instance to a new database partition in a 
 
 ## Usage
     usage: Liferay Portal DB Partition Virtual Instance Migration
-    -d,--destination-jdbc-url <arg> Set the JDBC url for the destination database.
+    -d,--destination-jdbc-url <arg> Set the JDBC url for the default partition in the destination database.
     -dp,--destination-password <arg> Set the destination database user password.
-    -dsp,--destination-schema-prefix <arg> Set the schema prefix for nondefault databases in destination database.
+    -dsp,--destination-schema-prefix <arg> Set the schema prefix for nondefault partitions in destination database.
     -du,--destination-user <arg> Set the destination database user name.
     -h,--help Print help message.
-    -s,--source-jdbc-url <arg> Set the JDBC url for the source database.
+    -s,--source-jdbc-url <arg> Set the JDBC url for the schema in the source database.
     -sp,--source-password <arg> Set the source database user password.
     -su,--source-user <arg> Set the source database user name.
 

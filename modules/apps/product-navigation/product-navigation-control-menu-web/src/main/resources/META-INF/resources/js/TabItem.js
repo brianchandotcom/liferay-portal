@@ -24,7 +24,9 @@ import {LAYOUT_DATA_ITEM_TYPES} from './constants/layoutDataItemTypes';
 import {useDragSymbol} from './useDragAndDrop';
 
 const addItem = ({item, plid, setWidgets, widgets}) => {
-	const targetItem = document.querySelector('.portlet-dropzone');
+	const targetItem = document.querySelector(
+		'.portlet-dropzone:not(.portlet-dropzone-disabled)'
+	);
 
 	addPortlet({item, plid, targetItem});
 

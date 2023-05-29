@@ -13,7 +13,13 @@
  * It generates a set of functions used to produce
  * internationalized date related content.
  */
-export function generateDateFormatters(key) {
+interface OptionsI {
+	day: 'numeric' | '2-digit' | undefined;
+	month: 'numeric' | '2-digit' | 'short' | 'long' | 'narrow' | undefined;
+	year: 'numeric' | '2-digit' | undefined;
+}
+
+export function generateDateFormatters(key: string) {
 
 	/**
 	 * Given 2 date objects it produces a user friendly date interval
@@ -21,13 +27,13 @@ export function generateDateFormatters(key) {
 	 * For 'en-US'
 	 * [Date, Date] => '16 - Jun 21, 2020'
 	 */
-	function formatChartTitle([initialDate, finalDate]) {
+	function formatChartTitle([initialDate, finalDate]: Date[]) {
 		const singleDayDateRange =
-			finalDate - initialDate <= 1000 * 60 * 60 * 24;
+			finalDate.getTime() - initialDate.getTime() <= 1000 * 60 * 60 * 24;
 
 		const dateFormatter = (
-			date,
-			options = {
+			date: Date,
+			options: OptionsI = {
 				day: 'numeric',
 				month: 'short',
 				year: 'numeric',
@@ -35,9 +41,9 @@ export function generateDateFormatters(key) {
 		) => Intl.DateTimeFormat([key], options).format(date);
 
 		const equalMonth = initialDate.getMonth() === finalDate.getMonth();
-		const equalYear = initialDate.getYear() === finalDate.getYear();
+		const equalYear = initialDate.getFullYear() === finalDate.getFullYear();
 
-		const initialDateOptions = {
+		const initialDateOptions: OptionsI = {
 			day: 'numeric',
 			month: equalMonth && equalYear ? undefined : 'short',
 			year: equalYear ? undefined : 'numeric',
@@ -59,7 +65,7 @@ export function generateDateFormatters(key) {
 	 * For 'en-US'
 	 * String => '06/17/2020'
 	 */
-	function formatLongDate(value) {
+	function formatLongDate(value: string) {
 		return Intl.DateTimeFormat([key]).format(new Date(value));
 	}
 
@@ -69,7 +75,7 @@ export function generateDateFormatters(key) {
 	 * For 'en-US'
 	 * String => '16'
 	 */
-	function formatNumericDay(value) {
+	function formatNumericDay(value: string) {
 		return Intl.DateTimeFormat([key], {
 			day: 'numeric',
 		}).format(new Date(value));
@@ -81,7 +87,7 @@ export function generateDateFormatters(key) {
 	 * For 'en-US'
 	 * String => '04 AM'
 	 */
-	function formatNumericHour(value) {
+	function formatNumericHour(value: string) {
 		return Intl.DateTimeFormat([key], {
 			hour: 'numeric',
 		}).format(new Date(value));

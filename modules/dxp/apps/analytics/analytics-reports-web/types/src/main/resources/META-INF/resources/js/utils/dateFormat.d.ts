@@ -9,22 +9,11 @@
  * distribution rights of the Software.
  */
 
-/**
- * Example:
- * en-US: `123456` => `123,456`
- * es-ES: `123456` => `123.456`
- */
-
-const DEFAULT_COMPACT_THRESHOLD = 10000;
-
-export function numberFormat(languageTag, number, options = {}) {
-	const {compactThreshold = DEFAULT_COMPACT_THRESHOLD, useCompact} = options;
-
-	const formatOptions = {};
-
-	if (useCompact && number >= compactThreshold) {
-		formatOptions.notation = 'compact';
-	}
-
-	return Intl.NumberFormat(languageTag, formatOptions).format(number);
-}
+export declare function generateDateFormatters(
+	key: string
+): {
+	formatChartTitle: ([initialDate, finalDate]: Date[]) => string;
+	formatLongDate: (value: string) => string;
+	formatNumericDay: (value: string) => string;
+	formatNumericHour: (value: string) => string;
+};

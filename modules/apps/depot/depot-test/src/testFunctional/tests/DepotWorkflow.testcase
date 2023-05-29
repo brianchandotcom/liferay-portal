@@ -501,11 +501,19 @@ definition {
 
 		Workflow.gotoPreviewEdit();
 
+		Button.clickCheckOut();
+
+		Workflow.gotoPreviewEdit();
+
 		DMDocument.editDocument(
 			dmDocumentFile = "Document_2.jpg",
 			dmDocumentTitle = "Document_2.jpg");
 
-		Button.clickSubmitForWorkflow();
+		AssertClick(
+			locator1 = "Button#SAVE_AND_CHECKIN",
+			value1 = "Save and Check In");
+
+		PortletEntry.save();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

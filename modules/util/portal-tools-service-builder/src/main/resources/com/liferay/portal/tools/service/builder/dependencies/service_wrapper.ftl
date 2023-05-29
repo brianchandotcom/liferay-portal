@@ -92,7 +92,9 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 	</#list>
 
 	<#if entity.hasPersistence() && stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns()>
-		@Override
+		<#if serviceBuilder.isVersionGTE_7_4_0()>
+			@Override
+		</#if>
 		public BasePersistence<?> getBasePersistence() {
 			return _${entity.variableName}LocalService.getBasePersistence();
 		}

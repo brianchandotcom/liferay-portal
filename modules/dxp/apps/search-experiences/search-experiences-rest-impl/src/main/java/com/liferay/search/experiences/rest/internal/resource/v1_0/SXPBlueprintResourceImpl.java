@@ -90,6 +90,22 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 	}
 
 	@Override
+	public SXPBlueprint getSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _sxpBlueprintDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				externalReferenceCode,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			_sxpBlueprintService.getSXPBlueprintByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode));
+	}
+
+	@Override
 	public Response getSXPBlueprintExport(Long sxpBlueprintId)
 		throws Exception {
 

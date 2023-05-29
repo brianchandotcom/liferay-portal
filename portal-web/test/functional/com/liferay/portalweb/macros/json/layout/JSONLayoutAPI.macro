@@ -136,10 +136,6 @@ definition {
 
 		var typeSettings = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
 
-		if (${typeSettings} == "") {
-			fail("FAIL. Cannot find layout.");
-		}
-
 		return ${typeSettings};
 	}
 

@@ -131,6 +131,7 @@ public class StructuredContentResourceTest
 			irrelevantGroup.getGroupId(), RandomTestUtil.randomString());
 		_journalFolder = JournalTestUtil.addFolder(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
+
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
@@ -372,6 +373,8 @@ public class StructuredContentResourceTest
 			_userLocalService.deleteUser(regularUser);
 			_userLocalService.deleteUser(ownerUser);
 		}
+
+		_testGetStructuredContentAssetLibrary();
 	}
 
 	@Override
@@ -1408,6 +1411,32 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			externalReferenceCode,
 			putStructuredContent2.getExternalReferenceCode());
+	}
+
+	private void _testGetStructuredContentAssetLibrary() throws Exception {
+
+		// Get structured content inside folder in Asset Library
+
+		JournalFolder journalFolder = JournalTestUtil.addFolder(
+			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContent(
+					journalFolder.getFolderId(), structuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertEquals(
+			journalFolder.getFolderId(),
+			(long)getStructuredContent.getStructuredContentFolderId());
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {

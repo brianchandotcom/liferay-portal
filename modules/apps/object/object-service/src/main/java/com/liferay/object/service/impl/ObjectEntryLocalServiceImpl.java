@@ -1562,13 +1562,10 @@ public class ObjectEntryLocalServiceImpl
 		sb.append(dynamicObjectDefinitionLocalizationTable.getName());
 		sb.append(" (");
 		sb.append(
-			dynamicObjectDefinitionLocalizationTable.getPrimaryKeyColumnName());
-		sb.append(", ");
-		sb.append(
 			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
 		sb.append(", languageId");
 
-		int count = 3;
+		int count = 2;
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isRequired() &&
@@ -2931,9 +2928,6 @@ public class ObjectEntryLocalServiceImpl
 
 			int index = 1;
 
-			_setColumn(
-				preparedStatement, index++, Types.BIGINT,
-				counterLocalService.increment());
 			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
 			_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
 

@@ -210,9 +210,15 @@ public class CommerceProductPriceCalculationV2Impl
 			_isPriceOnApplication(commercePriceListId, cpInstanceId));
 		commerceProductPriceImpl.setQuantity(quantity);
 
-		if (unitPriceCommerceMoney.isPriceOnApplication()) {
-			commerceProductPriceImpl.setUnitPrice(
-				commerceMoneyFactory.priceOnApplicationCommerceMoney());
+		if (unitPriceCommerceMoney.isEmpty()) {
+			if (unitPriceCommerceMoney.isPriceOnApplication()) {
+				commerceProductPriceImpl.setUnitPrice(
+					commerceMoneyFactory.priceOnApplicationCommerceMoney());
+			}
+			else {
+				commerceProductPriceImpl.setUnitPrice(
+					commerceMoneyFactory.emptyCommerceMoney());
+			}
 		}
 		else {
 			commerceProductPriceImpl.setUnitPrice(
@@ -220,9 +226,15 @@ public class CommerceProductPriceCalculationV2Impl
 					commerceContext.getCommerceCurrency(), updatedPrices[0]));
 		}
 
-		if (promoPriceCommerceMoney.isPriceOnApplication()) {
-			commerceProductPriceImpl.setUnitPromoPrice(
-				commerceMoneyFactory.priceOnApplicationCommerceMoney());
+		if (promoPriceCommerceMoney.isEmpty()) {
+			if (promoPriceCommerceMoney.isPriceOnApplication()) {
+				commerceProductPriceImpl.setUnitPromoPrice(
+					commerceMoneyFactory.priceOnApplicationCommerceMoney());
+			}
+			else {
+				commerceProductPriceImpl.setUnitPromoPrice(
+					commerceMoneyFactory.emptyCommerceMoney());
+			}
 		}
 		else {
 			commerceProductPriceImpl.setUnitPromoPrice(

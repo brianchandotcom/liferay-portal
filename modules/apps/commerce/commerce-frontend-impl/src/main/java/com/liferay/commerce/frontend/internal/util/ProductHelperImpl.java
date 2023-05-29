@@ -219,16 +219,18 @@ public class ProductHelperImpl implements ProductHelper {
 		PriceModel priceModel = new PriceModel(
 			unitPriceCommerceMoney.format(locale));
 
+		if (unitPriceCommerceMoney.isPriceOnApplication()) {
+			priceModel.setPrice(unitPromoPriceCommerceMoney.format(locale));
+		}
+
 		priceModel.setPriceOnApplication(priceOnApplication);
 
 		if (!unitPromoPriceCommerceMoney.isEmpty() && !priceOnApplication) {
+			BigDecimal unitPrice = unitPriceCommerceMoney.getPrice();
 			BigDecimal unitPromoPrice = unitPromoPriceCommerceMoney.getPrice();
 
 			if ((unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-				(unitPriceCommerceMoney.isPriceOnApplication() ||
-				 (unitPriceCommerceMoney.getPrice() == null) ||
-				 (unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) <
-					 0))) {
+				(unitPromoPrice.compareTo(unitPrice) < 0)) {
 
 				priceModel.setPromoPrice(
 					unitPromoPriceCommerceMoney.format(locale));

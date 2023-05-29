@@ -626,7 +626,7 @@ public abstract class BaseCommerceProductPriceCalculation
 		CommerceMoney unitPriceCommerceMoney,
 		CommerceMoney promoPriceCommerceMoney, BigDecimal finalPrice) {
 
-		BigDecimal[] prices = new BigDecimal[3];
+		BigDecimal[] prices = {BigDecimal.ZERO, BigDecimal.ZERO, finalPrice};
 
 		if (!unitPriceCommerceMoney.isEmpty()) {
 			prices[0] = unitPriceCommerceMoney.getPrice();
@@ -635,8 +635,6 @@ public abstract class BaseCommerceProductPriceCalculation
 		if (!promoPriceCommerceMoney.isEmpty()) {
 			prices[1] = promoPriceCommerceMoney.getPrice();
 		}
-
-		prices[2] = finalPrice;
 
 		return prices;
 	}

@@ -14,6 +14,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.osgi.web.http.servlet.context.ContextPathCustomizer;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.DispatchTargets;
@@ -43,7 +44,6 @@ import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -139,21 +139,22 @@ public class HttpServiceRuntimeImpl
 
 		_contextServiceTracker.open();
 
-		Hashtable<String, Object> defaultContextProps = new Hashtable<>();
-
-		defaultContextProps.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME);
-		defaultContextProps.put(Constants.SERVICE_RANKING, Integer.MIN_VALUE);
-		defaultContextProps.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, Const.SLASH);
-		defaultContextProps.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, _targetFilter);
-
 		_defaultContextServiceRegistration =
 			consumingBundleContext.registerService(
 				ServletContextHelper.class,
-				new DefaultServletContextHelperFactory(), defaultContextProps);
+				new DefaultServletContextHelperFactory(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					Constants.SERVICE_RANKING, Integer.MIN_VALUE
+				).put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME
+				).put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+					Const.SLASH
+				).put(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
+					_targetFilter
+				).build());
 	}
 
 	@Override
@@ -498,35 +499,36 @@ public class HttpServiceRuntimeImpl
 			ServiceRegistration<Filter> serviceRegistration = null;
 
 			try {
-				Dictionary<String, Object> props = new Hashtable<>();
+				Dictionary<String, Object> dictionary =
+					HashMapDictionaryBuilder.<String, Object>put(
+						Const.EQUINOX_LEGACY_CONTEXT_SELECT,
+						httpContextHelperFactory.getFilter()
+					).put(
+						Const.EQUINOX_LEGACY_TCCL_PROP,
+						() -> {
+							Thread currentThread = Thread.currentThread();
 
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
-					_targetFilter);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
-					alias);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-					filterName);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					"(" + Const.EQUINOX_LEGACY_CONTEXT_HELPER + "=true)");
-				props.put(
-					Const.EQUINOX_LEGACY_CONTEXT_SELECT,
-					httpContextHelperFactory.getFilter());
-
-				Thread currentThread = Thread.currentThread();
-
-				props.put(
-					Const.EQUINOX_LEGACY_TCCL_PROP,
-					currentThread.getContextClassLoader());
-
-				props.put(
-					Constants.SERVICE_RANKING, _findFilterPriority(initParams));
+							return currentThread.getContextClassLoader();
+						}
+					).put(
+						Constants.SERVICE_RANKING,
+						_findFilterPriority(initParams)
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+						"(" + Const.EQUINOX_LEGACY_CONTEXT_HELPER + "=true)"
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
+						filterName
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
+						alias
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
+						_targetFilter
+					).build();
 
 				_fillInitParams(
-					props, initParams,
+					dictionary, initParams,
 					HttpWhiteboardConstants.
 						HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
 
@@ -536,7 +538,7 @@ public class HttpServiceRuntimeImpl
 				BundleContext bundleContext = bundle.getBundleContext();
 
 				serviceRegistration = bundleContext.registerService(
-					Filter.class, legacyFilterFactory, props);
+					Filter.class, legacyFilterFactory, dictionary);
 
 				// check that init got called and did not throw an exception
 
@@ -614,33 +616,36 @@ public class HttpServiceRuntimeImpl
 					throw new PatternInUseException(alias);
 				}
 
-				Dictionary<String, Object> props = new Hashtable<>();
-
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
-					_targetFilter);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN,
-					pattern);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX,
-					name);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					httpContextHelperFactory.getFilter());
-				props.put(Constants.SERVICE_RANKING, Integer.MAX_VALUE);
-
-				Thread currentThread = Thread.currentThread();
-
-				props.put(
-					Const.EQUINOX_LEGACY_TCCL_PROP,
-					currentThread.getContextClassLoader());
-
 				BundleContext bundleContext = bundle.getBundleContext();
 
 				ServiceRegistration<?> serviceRegistration =
 					bundleContext.registerService(
-						Object.class, "resource", props);
+						Object.class, "resource",
+						HashMapDictionaryBuilder.<String, Object>put(
+							Const.EQUINOX_LEGACY_TCCL_PROP,
+							() -> {
+								Thread currentThread = Thread.currentThread();
+
+								return currentThread.getContextClassLoader();
+							}
+						).put(
+							Constants.SERVICE_RANKING, Integer.MAX_VALUE
+						).put(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_CONTEXT_SELECT,
+							httpContextHelperFactory.getFilter()
+						).put(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_RESOURCE_PATTERN,
+							pattern
+						).put(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_RESOURCE_PREFIX,
+							name
+						).put(
+							HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
+							_targetFilter
+						).build());
 
 				httpServiceObjectRegistration =
 					new HttpServiceObjectRegistration(
@@ -736,37 +741,39 @@ public class HttpServiceRuntimeImpl
 					servletName = initParams.get(Const.SERVLET_NAME);
 				}
 
-				Dictionary<String, Object> props = new Hashtable<>();
+				Dictionary<String, Object> dictionary =
+					HashMapDictionaryBuilder.<String, Object>put(
+						Const.EQUINOX_LEGACY_TCCL_PROP,
+						() -> {
+							Thread currentThread = Thread.currentThread();
 
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
-					_targetFilter);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
-					pattern);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-					servletName);
-				props.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-					httpContextHelperFactory.getFilter());
-				props.put(Constants.SERVICE_RANKING, Integer.MAX_VALUE);
-
-				Thread currentThread = Thread.currentThread();
-
-				props.put(
-					Const.EQUINOX_LEGACY_TCCL_PROP,
-					currentThread.getContextClassLoader());
+							return currentThread.getContextClassLoader();
+						}
+					).put(
+						Constants.SERVICE_RANKING, Integer.MAX_VALUE
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+						httpContextHelperFactory.getFilter()
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+						servletName
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+						pattern
+					).put(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
+						_targetFilter
+					).build();
 
 				_fillInitParams(
-					props, initParams,
+					dictionary, initParams,
 					HttpWhiteboardConstants.
 						HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
 
 				BundleContext bundleContext = bundle.getBundleContext();
 
 				serviceRegistration = bundleContext.registerService(
-					Servlet.class, legacyServlet, props);
+					Servlet.class, legacyServlet, dictionary);
 
 				legacyServlet.checkForError();
 
@@ -1303,33 +1310,35 @@ public class HttpServiceRuntimeImpl
 				httpContextHelperFactory = new HttpContextHelperFactory(
 					httpContext);
 
-				Dictionary<String, Object> dictionary = new Hashtable<>();
-
-				Class<?> clazz = httpContext.getClass();
-
-				String className = clazz.getName();
-
-				dictionary.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-					StringBundler.concat(
-						className.replaceAll("[^a-zA-Z_0-9\\-]", "_"), "-",
-						_generateLegacyId()));
-
-				dictionary.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH, "/");
-				dictionary.put(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
-					_targetFilter);
-				dictionary.put(
-					Const.EQUINOX_LEGACY_CONTEXT_HELPER, Boolean.TRUE);
-				dictionary.put(
-					Const.EQUINOX_LEGACY_HTTP_CONTEXT_INITIATING_ID,
-					initiatingBundle.getBundleId());
-
 				httpContextHelperFactory.setRegistration(
 					_consumingBundleContext.registerService(
 						ServletContextHelper.class, httpContextHelperFactory,
-						dictionary));
+						HashMapDictionaryBuilder.<String, Object>put(
+							Const.EQUINOX_LEGACY_CONTEXT_HELPER, Boolean.TRUE
+						).put(
+							Const.EQUINOX_LEGACY_HTTP_CONTEXT_INITIATING_ID,
+							initiatingBundle.getBundleId()
+						).put(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_CONTEXT_NAME,
+							() -> {
+								Class<?> clazz = httpContext.getClass();
+
+								String className = clazz.getName();
+
+								return StringBundler.concat(
+									className.replaceAll(
+										"[^a-zA-Z_0-9\\-]", "_"),
+									"-", _generateLegacyId());
+							}
+						).put(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_CONTEXT_PATH,
+							"/"
+						).put(
+							HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET,
+							_targetFilter
+						).build()));
 
 				_httpContextHelperFactoriesMap.put(
 					httpContext, httpContextHelperFactory);

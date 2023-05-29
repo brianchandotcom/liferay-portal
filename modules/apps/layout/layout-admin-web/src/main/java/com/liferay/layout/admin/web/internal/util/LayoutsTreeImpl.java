@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.layout.internal.util;
+package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.layout.internal.action.provider.LayoutActionProvider;
+import com.liferay.layout.admin.web.internal.action.provider.LayoutActionProvider;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.LayoutsTree;
 import com.liferay.petra.string.StringBundler;

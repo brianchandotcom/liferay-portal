@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.action.provider;
+package com.liferay.layout.admin.web.internal.action.provider;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.list.model.AssetListEntry;

@@ -377,6 +377,10 @@ public class AssetListDisplayContext {
 	public String getEditURL(AssetListEntry assetListEntry)
 		throws PortalException {
 
+		if (isLiveGroup()) {
+			return StringPool.BLANK;
+		}
+
 		if (AssetListEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), assetListEntry,
 				ActionKeys.UPDATE) ||

@@ -1,0 +1,108 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Site";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "Test Account LXC - SM";
+	var testProduct = "LXC - SM";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		CP2Utils.tearDownForCloudEntries(status = "Active");
+
+		CustomerPortal.customerPortalApisTearDown();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		}
+	}
+
+	@description = "Story ID: LPS-153497 | Test Summary: Verify that when the user activate the LXC-SM, the status change to active."
+	@priority = 4
+	test AssertThatLXCCardChangeToActive {
+		task ("Give the user has Admin role in the project") {
+			JSONAccountRole.associateUser(
+				accountEntryName = ${testAccount},
+				accountRole = "Account Administrator",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And the user go to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+		}
+
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
+			task ("And pass through onboarding") {
+				CP2Utils.onboardingFlow();
+			}
+		}
+
+		task ("And Go to the product activation page and Finish Activation") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = 001);
+
+			CustomerPortal.clickAtButton(text = "Submit");
+		}
+
+		task ("And Have the role Changed to Provissioning") {
+			JSONAccountRole.associateUser(
+				accountEntryName = ${testAccount},
+				accountRole = "Provisioning",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("When Change the activation card status to Active") {
+			CustomerPortal.activeStatusViaDropdown(
+				dropdownItem = "Set to Active",
+				value = 001);
+		}
+
+		task ("Then Assert that the card status has changed to 'Active'") {
+			CP2DXPCloudSetup.assertCardStatusChanged(status = "Active");
+		}
+	}
+
+}

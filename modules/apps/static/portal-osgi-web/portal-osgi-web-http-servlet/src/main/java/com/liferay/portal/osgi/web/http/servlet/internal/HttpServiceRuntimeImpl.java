@@ -275,12 +275,6 @@ public class HttpServiceRuntimeImpl
 			httpServletRequest.getDispatcherType());
 	}
 
-	public void fireSessionIdChanged(String oldSessionId) {
-		for (ContextController contextController : _controllersMap.values()) {
-			contextController.fireSessionIdChanged(oldSessionId);
-		}
-	}
-
 	public String getDefaultContextSelectFilter(
 		ServiceReference<?> serviceReference) {
 
@@ -1635,9 +1629,6 @@ public class HttpServiceRuntimeImpl
 			return _servlet.hashCode();
 		}
 
-		/**
-		 *
-		 */
 		@Override
 		public void init(ServletConfig config) {
 			try {

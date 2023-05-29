@@ -32,7 +32,6 @@ public class HttpTuple {
 			httpServiceRuntimeServiceRegistration) {
 
 		_proxyServlet = proxyServlet;
-		_httpServiceFactory = httpServiceFactory;
 		_httpServiceFactoryServiceRegistration =
 			httpServiceFactoryServiceRegistration;
 		_httpServiceRuntimeImpl = httpServiceRuntimeImpl;
@@ -50,7 +49,6 @@ public class HttpTuple {
 		_httpServiceRuntimeImpl.destroy();
 	}
 
-	private final HttpServiceFactory _httpServiceFactory;
 	private final ServiceRegistration<?> _httpServiceFactoryServiceRegistration;
 	private final HttpServiceRuntimeImpl _httpServiceRuntimeImpl;
 	private final ServiceRegistration<HttpServiceRuntime>

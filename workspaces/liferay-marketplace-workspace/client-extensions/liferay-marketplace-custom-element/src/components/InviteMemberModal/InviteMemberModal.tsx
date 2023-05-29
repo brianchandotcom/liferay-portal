@@ -114,6 +114,7 @@ export function InviteMemberModal({
         false,
         user.id,
         selectedAccount.name,
+        selectedAccount.id,
         formFields.email,
         userPassword,
         formFields.firstName,

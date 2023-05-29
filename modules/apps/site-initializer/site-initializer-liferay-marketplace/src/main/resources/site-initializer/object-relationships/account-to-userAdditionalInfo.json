@@ -1,0 +1,9 @@
+{
+	"label": {"en_US": "Account to User Additional Info"},
+	"type": "oneToMany",
+	"name": "accountToUserAdditionalInfos",
+	"deletionType": "cascade",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
+	"objectDefinitionName2": "UserAdditionalInfo"
+}

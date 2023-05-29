@@ -130,6 +130,13 @@ public class CommerceOrderSystemObjectDefinitionManager
 				"Integer", "Integer", "order-status", "orderStatus", true,
 				true),
 			createObjectField(
+				"Text", "orderTypeExternalReferenceCode", "String",
+				"orderTypeExternalReferenceCode",
+				"orderTypeExternalReferenceCode", false, true),
+			createObjectField(
+				"LongInteger", "orderTypeId", "Long", "order-type-id",
+				"orderTypeId", false, true),
+			createObjectField(
 				"PrecisionDecimal", "BigDecimal", "shipping-amount",
 				"shippingAmount", true, true));
 	}
@@ -156,7 +163,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 
 	@Override
 	public int getVersion() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -194,6 +201,9 @@ public class CommerceOrderSystemObjectDefinitionManager
 				externalReferenceCode = GetterUtil.getString(
 					values.get("externalReferenceCode"));
 				orderStatus = GetterUtil.getInteger(values.get("orderStatus"));
+				orderTypeExternalReferenceCode = GetterUtil.getString(
+					values.get("orderTypeExternalReferenceCode"));
+				orderTypeId = GetterUtil.getLong(values.get("orderTypeId"));
 
 				setShippingAmount(
 					() -> {

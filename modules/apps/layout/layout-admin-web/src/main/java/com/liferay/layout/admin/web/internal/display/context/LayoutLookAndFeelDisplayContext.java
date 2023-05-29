@@ -390,6 +390,34 @@ public class LayoutLookAndFeelDisplayContext {
 		return _hasMasterLayout;
 	}
 
+	public boolean isIconSelectorVisible() {
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		if (selLayout.isTypeAssetDisplay()) {
+			return false;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(selLayout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryLocalServiceUtil.
+					fetchLayoutPageTemplateEntryByPlid(selLayout.getClassPK());
+		}
+
+		if ((layoutPageTemplateEntry != null) &&
+			Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private JSONObject _getCETJSONObject(
 		ClientExtensionEntryRel clientExtensionEntryRel, boolean inherited,
 		String inheritedLabel) {

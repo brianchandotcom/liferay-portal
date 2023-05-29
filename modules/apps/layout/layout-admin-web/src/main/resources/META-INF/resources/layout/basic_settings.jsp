@@ -23,6 +23,8 @@
 
 <aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayout() %>" model="<%= Layout.class %>" />
 
+<liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
+
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
@@ -34,7 +36,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	/>
 </div>
 
-<div class="d-flex">
+<div class="d-flex mb-4">
 	<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
 		<div class="c-mr-4 flex-grow-1">
 			<react:component
@@ -51,3 +53,18 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 		/>
 	</div>
 </div>
+
+<c:if test="<%= layoutLookAndFeelDisplayContext.isIconSelectorVisible() %>">
+
+	<%
+	Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+	%>
+
+	<liferay-frontend:logo-selector
+		currentLogoURL='<%= (selLayout.getIconImageId() == 0) ? themeDisplay.getPathThemeImages() + "/spacer.png" : themeDisplay.getPathImage() + "/logo?img_id=" + selLayout.getIconImageId() + "&t=" + WebServerServletTokenUtil.getToken(selLayout.getIconImageId()) %>'
+		defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/spacer.png" %>'
+		description='<%= LanguageUtil.get(request, "this-icon-will-be-shown-in-the-navigation-menu") %>'
+		disabled="<%= layoutsAdminDisplayContext.isReadOnly() %>"
+		label='<%= LanguageUtil.get(request, "icon") %>'
+	/>
+</c:if>

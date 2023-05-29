@@ -124,7 +124,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
-		task ("Given a custom object that contains a simple field and a relationship itself (Many to Many)") {
+		task ("Given a custom object that contains a text field and a relationship with itself (Many to Many)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 171597",
 				objectName = "CustomObject171597",
@@ -211,7 +211,7 @@ definition {
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 		}
 
-		task ("Then the entry is related as Parent and the other one is related as Child") {
+		task ("Then one entry is related as the Parent and the other entry is related as the Child") {
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test B",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
@@ -1028,7 +1028,7 @@ definition {
 		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
-		task ("Given a custom object that contains a simple field and a relationship itself") {
+		task ("Given a custom object that contains a text field and a relationship with itself") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 171628",
 				objectName = "CustomObject171628",
@@ -1090,7 +1090,7 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("And given some custom object entries") {
+		task ("And given several object entries") {
 			for (var letter : list "A,B,C") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 					fieldName = "customField",
@@ -1101,7 +1101,7 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject171628");
 		}
 
-		task ("When selecting existing entries from the Relationship Tab") {
+		task ("When an entry is added on the Relationship Tab") {
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
 
 			ObjectAdmin.gotoRelationshipsTab();
@@ -1113,7 +1113,7 @@ definition {
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 		}
 
-		task ("Then assert the entry added before on the Relationship Tab") {
+		task ("Then the related entry is present on the Relationship Tab") {
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test C",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");

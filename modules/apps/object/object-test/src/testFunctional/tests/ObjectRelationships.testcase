@@ -2163,7 +2163,7 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ObjectRelationships#CanSeeRelatedEntriesOnTab";
 
-		task ("Given a custom object that contains a simple field and a relationship itself (Many to Many)") {
+		task ("Given a custom object that contains a text field and a relationship with itself (Many to Many)") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 163657",
 				objectName = "CustomObject163657",
@@ -2234,7 +2234,7 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject163657");
 		}
 
-		task ("When selecting existing entries from the Relationship Tab") {
+		task ("When an entry is added on the Relationship Tab") {
 			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
 
 			ObjectPortlet.gotoRelationshipTab();
@@ -2246,7 +2246,7 @@ definition {
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 		}
 
-		task ("Then assert the entry created before on the Relationship Tab") {
+		task ("Then the related entry is present on the Relationship Tab") {
 			AssertElementPresent(
 				key_fieldLabel = "Entry Test B",
 				locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");

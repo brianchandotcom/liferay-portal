@@ -61,7 +61,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlags("LPS-135430")
 @RunWith(Arquillian.class)
-public class SalesforceObjectEntryManagerTest {
+public class SalesforceObjectEntryManagerImplTest {
 
 	@ClassRule
 	@Rule

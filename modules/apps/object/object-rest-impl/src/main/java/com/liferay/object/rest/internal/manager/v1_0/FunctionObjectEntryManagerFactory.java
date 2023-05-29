@@ -64,7 +64,7 @@ public class FunctionObjectEntryManagerFactory {
 	}
 
 	@Reference(
-		target = "(component.factory=com.liferay.object.rest.internal.manager.v1_0.FunctionObjectEntryManager)"
+		target = "(component.factory=com.liferay.object.rest.internal.manager.v1_0.FunctionObjectEntryManagerImpl)"
 	)
 	private ComponentFactory _componentFactory;
 

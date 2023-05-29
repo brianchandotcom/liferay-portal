@@ -53,10 +53,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.object.rest.internal.configuration.FunctionObjectEntryManagerConfiguration",
-	factory = "com.liferay.object.rest.internal.manager.v1_0.FunctionObjectEntryManager",
+	factory = "com.liferay.object.rest.internal.manager.v1_0.FunctionObjectEntryManagerImpl",
 	service = ObjectEntryManager.class
 )
-public class FunctionObjectEntryManager
+public class FunctionObjectEntryManagerImpl
 	extends BaseObjectEntryManager implements ObjectEntryManager {
 
 	@Override

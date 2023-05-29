@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 	service = ObjectEntryManager.class
 )
-public class SalesforceObjectEntryManager
+public class SalesforceObjectEntryManagerImpl
 	extends BaseObjectEntryManager implements ObjectEntryManager {
 
 	@Override

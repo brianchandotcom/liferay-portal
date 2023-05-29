@@ -44,7 +44,6 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
@@ -346,17 +345,21 @@ public class BaseNotificationTypeTest {
 		return objectField.getName();
 	}
 
-	protected String getRelationshipTermName(String partialTermName) {
-		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-			ObjectRelationshipUtil.getNotificationTermNamePrefix(
-				parentObjectDefinition, objectRelationship),
-			partialTermName);
+	protected String getTermName(String objectFieldName) {
+		return getTermName(objectFieldName, false);
 	}
 
-	protected String getTermName(String objectFieldName) {
-		return StringBundler.concat(
-			"[%", StringUtil.upperCase(objectDefinition.getShortName()), "_",
-			StringUtil.upperCase(objectFieldName), "%]");
+	protected String getTermName(String objectFieldName, boolean parent) {
+		String partialTermName = childObjectDefinition.getShortName();
+
+		if (parent) {
+			partialTermName =
+				ObjectRelationshipUtil.getNotificationTermNamePrefix(
+					parentObjectDefinition, objectRelationship);
+		}
+
+		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+			partialTermName, objectFieldName);
 	}
 
 	protected List<String> getTermNames() {
@@ -369,8 +372,8 @@ public class BaseNotificationTypeTest {
 				getTermName("integerObjectField"),
 				getTermName("picklistObjectField"),
 				getTermName("textObjectField"),
-				getRelationshipTermName("textObjectField"),
-				getRelationshipTermName("AUTHOR_FIRST_NAME")));
+				getTermName("textObjectField", true),
+				getTermName("AUTHOR_FIRST_NAME", true)));
 	}
 
 	protected List<Object> getTermValues() {

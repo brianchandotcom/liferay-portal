@@ -1752,6 +1752,10 @@ public class LayoutsAdminDisplayContext {
 		return _privateLayoutsEnabled;
 	}
 
+	public boolean isReadOnly() {
+		return true;
+	}
+
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;

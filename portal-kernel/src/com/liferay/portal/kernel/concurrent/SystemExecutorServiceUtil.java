@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -95,13 +95,17 @@ public class SystemExecutorServiceUtil {
 		long keepAliveTime = GetterUtil.getLong(
 			SystemProperties.get("system.executor.service.keepalivetime"), 60);
 
-		_executorService = new ThreadPoolExecutor(
-			0, maxPoolSize, keepAliveTime, TimeUnit.SECONDS,
-			new SynchronousQueue<>(),
+		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+			maxPoolSize, maxPoolSize, keepAliveTime, TimeUnit.SECONDS,
+			new LinkedBlockingQueue<>(),
 			new NamedThreadFactory(
 				SystemExecutorServiceUtil.class.getSimpleName(),
 				Thread.NORM_PRIORITY, null),
 			new ThreadPoolExecutor.CallerRunsPolicy());
+
+		threadPoolExecutor.allowCoreThreadTimeOut(true);
+
+		_executorService = threadPoolExecutor;
 	}
 
 }

@@ -99,37 +99,50 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 		const testrayRequirements = requirements.items || [];
 		const testrayTeams = teams?.items || [];
 
+		const getMatrixWithoutDuplications = (
+			boxLeftItems: BoxItem[],
+			boxRightItems: BoxItem[]
+		): [BoxItem[], BoxItem[]] => [
+			boxLeftItems.filter(
+				(boxLeft) =>
+					!boxRightItems.some(
+						(boxRight) => boxRight.value === boxLeft.value
+					)
+			),
+			boxRightItems,
+		];
+
 		return {
-			testrayCaseTypes: [
+			testrayCaseTypes: getMatrixWithoutDuplications(
 				testrayCaseTypes.map(onMapDefault),
-				state?.testrayCaseTypes || defaultBox,
-			],
-			testrayComponents: [
+				state?.testrayCaseTypes || defaultBox
+			),
+			testrayComponents: getMatrixWithoutDuplications(
 				testrayComponents.map(onMapDefault),
-				state?.testrayComponents || defaultBox,
-			],
-			testrayPriorities: [
+				state?.testrayComponents || defaultBox
+			),
+			testrayPriorities: getMatrixWithoutDuplications(
 				[...new Array(5)].map((_, index) => ({
 					label: String(index + 1),
 					value: String(index + 1),
 				})),
-				state?.testrayPriorities || defaultBox,
-			],
-			testrayRequirements: [
+				state?.testrayPriorities || defaultBox
+			),
+			testrayRequirements: getMatrixWithoutDuplications(
 				testrayRequirements.map(({id, key, summary}) => ({
 					label: `${key} (${summary})`,
 					value: id.toString(),
 				})),
-				state?.testrayRequirements || defaultBox,
-			],
-			testraySubComponents: [
+				state?.testrayRequirements || defaultBox
+			),
+			testraySubComponents: getMatrixWithoutDuplications(
 				testrayComponents.map(onMapDefault),
-				state?.testraySubComponents || defaultBox,
-			],
-			testrayTeams: [
+				state?.testraySubComponents || defaultBox
+			),
+			testrayTeams: getMatrixWithoutDuplications(
 				testrayTeams.map(onMapDefault),
-				state?.testrayTeams || defaultBox,
-			],
+				state?.testrayTeams || defaultBox
+			),
 		};
 	}, [casetypes, components, requirements, state, teams]);
 

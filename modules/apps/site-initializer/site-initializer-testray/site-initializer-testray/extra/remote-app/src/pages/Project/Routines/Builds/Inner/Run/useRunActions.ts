@@ -36,7 +36,7 @@ const useRunActions = () => {
 			action: ({id}, mutate) =>
 				testrayRunImpl
 					.removeResource(id)
-					.then(() => removeItemFromList(mutate, id))
+					?.then(() => removeItemFromList(mutate, id))
 					.then(modal.onSave)
 					.catch(modal.onError),
 			icon: 'trash',

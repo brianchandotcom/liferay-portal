@@ -253,6 +253,247 @@ html#{$cadmin-selector} {
 			display: none;
 		}
 
+		// CKEditor
+
+		.cke_chrome {
+			border: 1px solid $cadmin-gray-300;
+
+			.cke_bottom {
+				padding: 6px 8px 2px;
+			}
+
+			span.cke_top {
+				padding: 6px 7px;
+			}
+
+			.cke_contents {
+				border: 1px solid #e7e7e7;
+				margin: 0 -1px;
+			}
+
+			&.cke_focus .cke_contents {
+				border-color: $cadmin-primary-l1;
+			}
+
+			.cke_reset_all,
+			.cke_reset_all a,
+			.cke_reset_all textarea {
+				font: 12px sans-serif;
+				text-decoration: none;
+			}
+
+			a.cke_button {
+				border: 2px solid transparent;
+				margin: 0 1px;
+				padding: 6px;
+
+				.cke_button_icon {
+					height: 16px;
+					width: 16px;
+				}
+
+				.cke_button_label {
+					color: $cadmin-gray-600;
+					font-weight: 600;
+					margin-top: 1px;
+					padding-left: 3px;
+				}
+			}
+
+			.cke_combo_on a.cke_combo_button,
+			.cke_combo_off a.cke_combo_button:hover,
+			.cke_combo_off a.cke_combo_button:active,
+			a.cke_button_off:hover,
+			a.cke_button_off:active {
+				background-color: rgba(39, 40, 51, 0.04);
+			}
+
+			a.cke_button_on {
+				background-color: rgba(39, 40, 51, 0.06);
+			}
+
+			a.cke_button__source.cke_button_off
+				+ a.cke_button__expand.cke_button_disabled {
+				display: none;
+			}
+
+			a.cke_combo_button {
+				border: 2px solid transparent;
+				margin: 0 4px;
+				padding: 6px 18px;
+
+				.cke_combo_arrow {
+					border-left: 4px solid transparent;
+					border-right: 4px solid transparent;
+					border-top: 4px solid $cadmin-gray-600;
+				}
+
+				.cke_combo_open {
+					margin: 1px 1px 1px 10px;
+				}
+
+				.cke_combo_text {
+					color: $cadmin-gray-600;
+					font-weight: 600;
+				}
+			}
+
+			.cke_resizer {
+				border-width: 8px 8px 0 0;
+				height: 0;
+				margin: 6px -4px 2px;
+			}
+
+			.cke_toolgroup {
+				margin: 1px 4px 6px 0;
+				padding-right: 3px;
+			}
+
+			.CodeMirror {
+				font-family: monospace;
+
+				.CodeMirror-gutters {
+					background-color: #f7f7f7;
+					border-right: 1px solid #ddd;
+				}
+
+				.CodeMirror-linenumber {
+					color: #999;
+					padding: 0 3px 0 5px;
+					text-align: right;
+				}
+
+				.CodeMirror-cursor {
+					border-left: 1px solid $cadmin-black;
+				}
+
+				.CodeMirror-scroll {
+					height: 100%;
+					margin-bottom: -50px;
+					margin-right: -50px;
+					overflow: scroll;
+					padding-bottom: 50px;
+				}
+
+				pre.CodeMirror-line,
+				pre.CodeMirror-line-like {
+					font-family: inherit;
+					margin: 0;
+				}
+
+				.CodeMirror-scroll,
+				.CodeMirror-sizer,
+				.CodeMirror-gutter,
+				.CodeMirror-gutters,
+				.CodeMirror-linenumber {
+					box-sizing: content-box;
+				}
+
+				.CodeMirror-measure {
+					visibility: hidden;
+				}
+
+				.CodeMirror-selected {
+					background: #d9d9d9;
+				}
+
+				&.CodeMirror-wrap pre.CodeMirror-line,
+				&.CodeMirror-wrap pre.CodeMirror-line-like {
+					white-space: pre-wrap;
+					word-break: normal;
+					word-wrap: break-word;
+				}
+
+				&.CodeMirror-focused .CodeMirror-selected {
+					background: #d7d4f0;
+				}
+
+				&.cm-s-default {
+					.cm-header {
+						color: blue;
+					}
+					.cm-quote {
+						color: #090;
+					}
+					.cm-keyword {
+						color: #708;
+					}
+					.cm-atom {
+						color: #219;
+					}
+					.cm-number {
+						color: #164;
+					}
+					.cm-def {
+						color: #00f;
+					}
+					.cm-variable-3,
+					.cm-type {
+						color: #085;
+					}
+					.cm-comment {
+						color: #a50;
+					}
+					.cm-string {
+						color: #a11;
+					}
+					.cm-string-2 {
+						color: #f50;
+					}
+					.cm-qualifier,
+					.cm-meta {
+						color: #555;
+					}
+					.cm-builtin {
+						color: #30a;
+					}
+					.cm-bracket {
+						color: #997;
+					}
+					.cm-tag {
+						color: #170;
+					}
+					.cm-link,
+					.cm-attribute {
+						color: #00c;
+					}
+					.cm-hr {
+						color: #999;
+					}
+				}
+
+				.cm-negative {
+					color: #d44;
+				}
+
+				.cm-positive {
+					color: #292;
+				}
+
+				.cm-header,
+				.cm-strong {
+					font-weight: bold;
+				}
+
+				.cm-em {
+					font-style: italic;
+				}
+
+				.cm-link {
+					text-decoration: underline;
+				}
+
+				.cm-strikethrough {
+					text-decoration: line-through;
+				}
+
+				.cm-s-default .cm-error,
+				.cm-invalidchar {
+					color: #f00;
+				}
+			}
+		}
+
 		// Taglib Portlet Preview
 
 		.taglib-portlet-preview {

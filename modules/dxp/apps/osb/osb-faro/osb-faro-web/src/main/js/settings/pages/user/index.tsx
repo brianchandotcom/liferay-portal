@@ -3,9 +3,10 @@ import BasePage from 'settings/components/BasePage';
 import BundleRouter from 'route-middleware/BundleRouter';
 import Card from 'shared/components/Card';
 import ClayBadge from '@clayui/badge';
+import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import getCN from 'classnames';
 import Loading from 'shared/pages/Loading';
-import Nav from 'shared/components/Nav';
 import React, {lazy, Suspense, useState} from 'react';
 import {compose, withCurrentUser} from 'shared/hoc';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
@@ -75,19 +76,21 @@ export const User: React.FC<IUserProps> = ({
 		>
 			<Card key='cardContainer' pageDisplay>
 				{currentUser.isAdmin() && (
-					<Nav className='page-subnav mx-4 my-3' display='underline'>
+					<ClayNavigationBar
+						className='page-subnav mx-4 my-3'
+						triggerLabel={matchedRoute}
+					>
 						{NAV_ITEMS.map(({label, route}) => (
-							<Nav.Item
+							<ClayNavigationBar.Item
 								active={matchedRoute === route}
-								href={toRoute(route, {groupId})}
 								key={route}
 							>
-								<div className='mb-2'>
-									<b>{label}</b>
-								</div>
-							</Nav.Item>
+								<ClayLink href={toRoute(route, {groupId})}>
+									{label}
+								</ClayLink>
+							</ClayNavigationBar.Item>
 						))}
-					</Nav>
+					</ClayNavigationBar>
 				)}
 
 				<Suspense fallback={<Loading />}>

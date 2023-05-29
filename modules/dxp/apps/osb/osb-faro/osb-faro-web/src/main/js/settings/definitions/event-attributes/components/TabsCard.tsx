@@ -1,7 +1,8 @@
 import BundleRouter from 'route-middleware/BundleRouter';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import Loading from 'shared/pages/Loading';
-import Nav from 'shared/components/Nav';
 import React, {lazy, Suspense} from 'react';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch} from 'react-router';
@@ -39,21 +40,21 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 
 	return (
 		<Card key='cardContainer' pageDisplay>
-			<div className='d-flex justify-content-between'>
-				<Nav className='page-subnav mx-4 my-3' display='underline'>
-					{NAV_ITEMS.map(({label, route}) => (
-						<Nav.Item
-							active={matchedRoute === route}
-							href={toRoute(route, {groupId})}
-							key={route}
-						>
-							<div className='mb-2'>
-								<b>{label}</b>
-							</div>
-						</Nav.Item>
-					))}
-				</Nav>
-			</div>
+			<ClayNavigationBar
+				className='page-subnav mx-4 my-3'
+				triggerLabel={matchedRoute}
+			>
+				{NAV_ITEMS.map(({label, route}) => (
+					<ClayNavigationBar.Item
+						active={matchedRoute === route}
+						key={route}
+					>
+						<ClayLink href={toRoute(route, {groupId})}>
+							{label}
+						</ClayLink>
+					</ClayNavigationBar.Item>
+				))}
+			</ClayNavigationBar>
 
 			<Suspense fallback={<Loading />}>
 				<Switch>

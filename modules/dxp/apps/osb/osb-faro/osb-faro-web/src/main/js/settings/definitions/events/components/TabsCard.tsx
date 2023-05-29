@@ -2,8 +2,8 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import Loading from 'shared/pages/Loading';
-import Nav from 'shared/components/Nav';
 import React, {lazy, Suspense} from 'react';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch} from 'react-router';
@@ -41,44 +41,36 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 
 	return (
 		<Card key='cardContainer' pageDisplay>
-			<div className='d-flex justify-content-between'>
-				<Nav className='page-subnav mx-4 my-3' display='underline'>
-					{NAV_ITEMS.map(({label, route}) => (
-						<Nav.Item
-							active={matchedRoute === route}
-							href={toRoute(route, {groupId})}
-							key={route}
-						>
-							<div className='mb-2'>
-								<b>{label}</b>
-							</div>
-						</Nav.Item>
-					))}
-				</Nav>
-
-				{customEventTab && (
-					<div className='d-flex align-items-center mx-4'>
-						<ClayLink
-							borderless
-							button
-							className='button-root'
-							displayType='secondary'
-							href={toRoute(
-								Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
-								{groupId}
-							)}
-							small
-						>
-							<ClayIcon
-								className='icon-root mr-2'
-								symbol='ac-block'
-							/>
-
-							{Liferay.Language.get('block-list')}
+			<ClayNavigationBar className='my-3' triggerLabel={matchedRoute}>
+				{NAV_ITEMS.map(({label, route}) => (
+					<ClayNavigationBar.Item
+						active={matchedRoute === route}
+						key={route}
+					>
+						<ClayLink href={toRoute(route, {groupId})}>
+							{label}
 						</ClayLink>
-					</div>
-				)}
-			</div>
+					</ClayNavigationBar.Item>
+				))}
+			</ClayNavigationBar>
+
+			{customEventTab && (
+				<ClayLink
+					borderless
+					button
+					className='block-list-button button-root m-3'
+					displayType='secondary'
+					href={toRoute(
+						Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
+						{groupId}
+					)}
+					small
+				>
+					<ClayIcon className='icon-root mr-2' symbol='ac-block' />
+
+					{Liferay.Language.get('block-list')}
+				</ClayLink>
+			)}
 
 			<Suspense fallback={<Loading />}>
 				<Switch>

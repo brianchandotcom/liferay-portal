@@ -475,7 +475,7 @@ public class HttpServiceRuntimeImpl
 		}
 
 		synchronized (_legacyMappingsMap) {
-			if (getRegisteredObjects().contains(filter) ||
+			if (_registeredObjects.contains(filter) ||
 				_legacyMappingsMap.containsKey(filter)) {
 
 				throw new RegisteredFilterException(filter);
@@ -708,7 +708,7 @@ public class HttpServiceRuntimeImpl
 		synchronized (_legacyMappingsMap) {
 			LegacyServlet legacyServlet = new LegacyServlet(servlet);
 
-			if (getRegisteredObjects().contains(legacyServlet)) {
+			if (_registeredObjects.contains(legacyServlet)) {
 				throw new ServletAlreadyRegisteredException(servlet);
 			}
 
@@ -722,10 +722,7 @@ public class HttpServiceRuntimeImpl
 				String fullAlias = _getFullAlias(
 					alias, httpContextHelperFactory);
 
-				HttpServiceObjectRegistration existing = _legacyMappingsMap.get(
-					fullAlias);
-
-				if (existing != null) {
+				if (_legacyMappingsMap.containsKey(fullAlias)) {
 					throw new PatternInUseException(alias);
 				}
 
@@ -1198,11 +1195,9 @@ public class HttpServiceRuntimeImpl
 			}
 
 			if (pos > -1) {
-				String newServletPath = requestURI.substring(0, pos);
+				servletPath = requestURI.substring(0, pos);
 
 				pathInfo = requestURI.substring(pos);
-
-				servletPath = newServletPath;
 
 				pos = servletPath.lastIndexOf('/');
 
@@ -1349,15 +1344,13 @@ public class HttpServiceRuntimeImpl
 	private ServiceReferenceDTO _getServiceDTO() {
 		Bundle bundle = _consumingBundleContext.getBundle();
 
-		ServiceReferenceDTO[] serviceReferenceDTOS = bundle.adapt(
-			ServiceReferenceDTO[].class);
+		for (ServiceReferenceDTO serviceReferenceDTO :
+				bundle.adapt(ServiceReferenceDTO[].class)) {
 
-		for (ServiceReferenceDTO serviceReferenceDTO : serviceReferenceDTOS) {
-			String[] serviceTypes =
-				(String[])serviceReferenceDTO.properties.get(
-					Constants.OBJECTCLASS);
+			for (String type :
+					(String[])serviceReferenceDTO.properties.get(
+						Constants.OBJECTCLASS)) {
 
-			for (String type : serviceTypes) {
 				if (Objects.equals(HttpServiceRuntime.class.getName(), type)) {
 					return serviceReferenceDTO;
 				}

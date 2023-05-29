@@ -69,9 +69,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
@@ -141,9 +139,6 @@ public class ContextController {
 
 		_servletContextHelperServiceReference = serviceReference;
 
-		long serviceId = (Long)serviceReference.getProperty(
-			Constants.SERVICE_ID);
-
 		_proxyContext = proxyContext;
 		_httpServiceRuntimeImpl = httpServiceRuntimeImpl;
 		_contextName = contextName;
@@ -154,7 +149,8 @@ public class ContextController {
 
 		_contextPath = contextPath;
 
-		_contextServiceId = serviceId;
+		_contextServiceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
 
 		_initParamsMap = ServiceProperties.parseInitParams(
 			serviceReference,
@@ -349,16 +345,10 @@ public class ContextController {
 			serviceId = -serviceId;
 		}
 
-		Integer rankProp = (Integer)serviceReference.getProperty(
-			Constants.SERVICE_RANKING);
-
 		Bundle bundle = serviceReference.getBundle();
 
 		ServletContextHelper curServletContextHelper = _getServletContextHelper(
 			bundle);
-
-		Servlet servlet = new ResourceServlet(
-			prefix, curServletContextHelper, AccessController.getContext());
 
 		ResourceDTO resourceDTO = new ResourceDTO();
 
@@ -367,19 +357,21 @@ public class ContextController {
 		resourceDTO.serviceId = serviceId;
 		resourceDTO.servletContextId = _contextServiceId;
 
-		ServletContext servletContext = _createServletContext(
-			bundle, curServletContextHelper);
-
 		ResourceRegistration resourceRegistration = new ResourceRegistration(
 			new ServiceHolder<>(
-				servlet, bundle, serviceId, (rankProp == null) ? 0 : rankProp),
+				new ResourceServlet(
+					prefix, curServletContextHelper,
+					AccessController.getContext()),
+				bundle, serviceId,
+				GetterUtil.getInteger(
+					serviceReference.getProperty(Constants.SERVICE_RANKING))),
 			resourceDTO, curServletContextHelper, this, legacyTCCL);
 
-		ServletConfig servletConfig = new ServletConfigImpl(
-			resourceRegistration.getName(), new HashMap<>(), servletContext);
-
 		try {
-			resourceRegistration.init(servletConfig);
+			resourceRegistration.init(
+				new ServletConfigImpl(
+					resourceRegistration.getName(), new HashMap<>(),
+					_createServletContext(bundle, curServletContextHelper)));
 		}
 		catch (ServletException servletException) {
 			if (_log.isDebugEnabled()) {
@@ -834,19 +826,14 @@ public class ContextController {
 			_serviceId = (Long)serviceReference.getProperty(
 				Constants.SERVICE_ID);
 
-			Integer serviceRanking = (Integer)serviceReference.getProperty(
-				Constants.SERVICE_RANKING);
-
-			_serviceRanking = (serviceRanking == null) ? 0 : serviceRanking;
+			_serviceRanking = GetterUtil.getInteger(
+				serviceReference.getProperty(Constants.SERVICE_RANKING));
 		}
 
 		@Override
 		public int compareTo(ServiceHolder<?> other) {
-			int thisRanking = _serviceRanking;
-			int otherRanking = other._serviceRanking;
-
-			if (thisRanking != otherRanking) {
-				if (thisRanking < otherRanking) {
+			if (_serviceRanking != other._serviceRanking) {
+				if (_serviceRanking < other._serviceRanking) {
 					return 1;
 				}
 
@@ -963,12 +950,6 @@ public class ContextController {
 			}
 		}
 
-		String[] dispatchers = _checkDispatcher(
-			StringPlus.from(
-				serviceReference.getProperty(
-					HttpWhiteboardConstants.
-						HTTP_WHITEBOARD_FILTER_DISPATCHER)));
-
 		Long serviceId = (Long)serviceReference.getProperty(
 			Constants.SERVICE_ID);
 
@@ -991,7 +972,12 @@ public class ContextController {
 			serviceReference.getProperty(
 				HttpWhiteboardConstants.
 					HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED));
-		filterDTO.dispatcher = _sort(dispatchers);
+		filterDTO.dispatcher = _sort(
+			_checkDispatcher(
+				StringPlus.from(
+					serviceReference.getProperty(
+						HttpWhiteboardConstants.
+							HTTP_WHITEBOARD_FILTER_DISPATCHER))));
 		filterDTO.initParams = filterInitParamsMap;
 		filterDTO.name = name;
 		filterDTO.patterns = _sort(patterns);
@@ -1010,16 +996,12 @@ public class ContextController {
 		FilterRegistration newFilterRegistration = new FilterRegistration(
 			serviceHolder, filterDTO, filterPriority, this, legacyTCCL);
 
-		ServletContextHelper curServletContextHelper = _getServletContextHelper(
-			serviceHolder.getBundle());
-
-		ServletContext servletContext = _createServletContext(
-			serviceHolder.getBundle(), curServletContextHelper);
-
-		FilterConfig filterConfig = new FilterConfigImpl(
-			name, filterInitParamsMap, servletContext);
-
-		newFilterRegistration.init(filterConfig);
+		newFilterRegistration.init(
+			new FilterConfigImpl(
+				name, filterInitParamsMap,
+				_createServletContext(
+					serviceHolder.getBundle(),
+					_getServletContextHelper(serviceHolder.getBundle()))));
 
 		_filterRegistrations.add(newFilterRegistration);
 
@@ -1076,11 +1058,9 @@ public class ContextController {
 		listenerDTO.servletContextId = _contextServiceId;
 		listenerDTO.types = _asStringArray(classes);
 
-		ServletContextHelper curServletContextHelper = _getServletContextHelper(
-			serviceHolder.getBundle());
-
 		ServletContext servletContext = _createServletContext(
-			serviceHolder.getBundle(), curServletContextHelper);
+			serviceHolder.getBundle(),
+			_getServletContextHelper(serviceHolder.getBundle()));
 
 		ListenerRegistration listenerRegistration = new ListenerRegistration(
 			serviceHolder, classes, listenerDTO, servletContext, this);
@@ -1232,17 +1212,15 @@ public class ContextController {
 		ServletContextHelper curServletContextHelper = _getServletContextHelper(
 			serviceHolder.getBundle());
 
-		ServletContext servletContext = _createServletContext(
-			serviceHolder.getBundle(), curServletContextHelper);
-
 		ServletRegistration servletRegistration = new ServletRegistration(
 			serviceHolder, servletDTO, errorPageDTO, curServletContextHelper,
 			this, legacyTCCL);
 
-		ServletConfig servletConfig = new ServletConfigImpl(
-			generatedServletName, servletInitParamsMap, servletContext);
-
-		servletRegistration.init(servletConfig);
+		servletRegistration.init(
+			new ServletConfigImpl(
+				generatedServletName, servletInitParamsMap,
+				_createServletContext(
+					serviceHolder.getBundle(), curServletContextHelper)));
 
 		_endpointRegistrations.add(servletRegistration);
 
@@ -1428,11 +1406,9 @@ public class ContextController {
 			}
 
 			if (pos > -1) {
-				String newServletPath = requestURI.substring(0, pos);
+				servletPath = requestURI.substring(0, pos);
 
 				pathInfo = requestURI.substring(pos);
-
-				servletPath = newServletPath;
 
 				pos = servletPath.lastIndexOf('/');
 

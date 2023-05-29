@@ -140,12 +140,9 @@ public class ServletContextAdaptor {
 	public ServletContext createServletContext() {
 		Class<?> clazz = getClass();
 
-		ClassLoader curClassLoader = clazz.getClassLoader();
-
-		Class<?>[] interfaces = new Class<?>[] {ServletContext.class};
-
 		return (ServletContext)ProxyUtil.newProxyInstance(
-			curClassLoader, interfaces, new AdaptorInvocationHandler());
+			clazz.getClassLoader(), new Class<?>[] {ServletContext.class},
+			new AdaptorInvocationHandler());
 	}
 
 	public void declareRoles(String... arg1) {
@@ -342,12 +339,10 @@ public class ServletContextAdaptor {
 
 		Dictionary<String, Object> attributes = _getContextAttributes();
 
-		Object attributeValue = attributes.remove(attributeName);
-
 		ServletContextAttributeEvent servletContextAttributeEvent =
 			new ServletContextAttributeEvent(
 				_servletContextThreadLocal.get(), attributeName,
-				attributeValue);
+				attributes.remove(attributeName));
 
 		for (ServletContextAttributeListener servletContextAttributeListener :
 				servletContextAttributeListeners) {
@@ -415,47 +410,6 @@ public class ServletContextAdaptor {
 		return value;
 	}
 
-	private static Map<Method, Method> _createContextToHandlerMethods() {
-		Map<Method, Method> methods = new HashMap<>();
-
-		Method[] handlerMethods =
-			ServletContextAdaptor.class.getDeclaredMethods();
-
-		for (Method handlerMethod : handlerMethods) {
-			Class<?>[] parameterTypes = handlerMethod.getParameterTypes();
-
-			try {
-				methods.put(
-					ServletContext.class.getMethod(
-						handlerMethod.getName(), parameterTypes),
-					handlerMethod);
-			}
-			catch (NoSuchMethodException noSuchMethodException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchMethodException);
-				}
-			}
-		}
-
-		try {
-			methods.put(
-				Object.class.getMethod("equals", Object.class),
-				ServletContextAdaptor.class.getMethod("equals", Object.class));
-
-			methods.put(
-				Object.class.getMethod("hashCode", (Class<?>[])null),
-				ServletContextAdaptor.class.getMethod(
-					"hashCode", (Class<?>[])null));
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchMethodException);
-			}
-		}
-
-		return methods;
-	}
-
 	private Dictionary<String, Object> _getContextAttributes() {
 		return _proxyContext.getContextAttributes(_contextController);
 	}
@@ -504,7 +458,42 @@ public class ServletContextAdaptor {
 		_servletContextThreadLocal = new ThreadLocal<>();
 
 	static {
-		_contextToHandlerMethods = _createContextToHandlerMethods();
+		_contextToHandlerMethods = new HashMap<>();
+
+		Method[] handlerMethods =
+			ServletContextAdaptor.class.getDeclaredMethods();
+
+		for (Method handlerMethod : handlerMethods) {
+			Class<?>[] parameterTypes = handlerMethod.getParameterTypes();
+
+			try {
+				_contextToHandlerMethods.put(
+					ServletContext.class.getMethod(
+						handlerMethod.getName(), parameterTypes),
+					handlerMethod);
+			}
+			catch (NoSuchMethodException noSuchMethodException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchMethodException);
+				}
+			}
+		}
+
+		try {
+			_contextToHandlerMethods.put(
+				Object.class.getMethod("equals", Object.class),
+				ServletContextAdaptor.class.getMethod("equals", Object.class));
+
+			_contextToHandlerMethods.put(
+				Object.class.getMethod("hashCode", (Class<?>[])null),
+				ServletContextAdaptor.class.getMethod(
+					"hashCode", (Class<?>[])null));
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchMethodException);
+			}
+		}
 	}
 
 	private final AccessControlContext _accessControlContext;

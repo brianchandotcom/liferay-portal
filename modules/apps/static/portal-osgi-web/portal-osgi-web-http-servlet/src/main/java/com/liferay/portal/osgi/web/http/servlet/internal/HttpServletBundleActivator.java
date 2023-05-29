@@ -22,7 +22,6 @@ import com.liferay.portal.osgi.web.http.servlet.internal.util.HttpTuple;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.UMDictionaryMap;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -68,11 +67,10 @@ public class HttpServletBundleActivator
 		if (!(previousRegistration instanceof ServiceRegistration) &&
 			(_bundleContext != null)) {
 
-			ServiceRegistration<HttpServlet> serviceRegistration =
+			_registrationsMap.put(
+				proxyServlet,
 				_bundleContext.registerService(
-					HttpServlet.class, proxyServlet, new Hashtable<>());
-
-			_registrationsMap.put(proxyServlet, serviceRegistration);
+					HttpServlet.class, proxyServlet, new Hashtable<>()));
 		}
 	}
 
@@ -105,9 +103,6 @@ public class HttpServletBundleActivator
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		String[] httpServiceEndpoints = _getHttpServiceEndpoints(
-			servletContext, servletConfig.getServletName());
-
 		Dictionary<String, Object> serviceProperties = new Hashtable<>(3);
 
 		Enumeration<String> initParameterNamesEnumeration =
@@ -135,21 +130,24 @@ public class HttpServletBundleActivator
 		if (httpServiceEndpointObject == null) {
 			serviceProperties.put(
 				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
-				httpServiceEndpoints);
+				_getHttpServiceEndpoints(
+					servletContext, servletConfig.getServletName()));
 		}
 
 		Random random = new Random();
 
 		serviceProperties.put(UNIQUE_SERVICE_ID, random.nextLong());
 
-		boolean useSystemContext = Boolean.parseBoolean(
-			_bundleContext.getProperty(_PROP_GLOBAL_WHITEBOARD));
+		BundleContext trackingBundleContext = _bundleContext;
 
-		Bundle systemBundle = _bundleContext.getBundle(
-			Constants.SYSTEM_BUNDLE_LOCATION);
+		if (Boolean.parseBoolean(
+				_bundleContext.getProperty(_PROP_GLOBAL_WHITEBOARD))) {
 
-		BundleContext trackingBundleContext =
-			useSystemContext ? systemBundle.getBundleContext() : _bundleContext;
+			Bundle systemBundle = _bundleContext.getBundle(
+				Constants.SYSTEM_BUNDLE_LOCATION);
+
+			trackingBundleContext = systemBundle.getBundleContext();
+		}
 
 		HttpServiceRuntimeImpl httpServiceRuntimeImpl =
 			new HttpServiceRuntimeImpl(
@@ -257,13 +255,9 @@ public class HttpServletBundleActivator
 			return new String[0];
 		}
 
-		String contextPath = servletContext.getContextPath();
-
-		Collection<String> mappings = servletRegistration.getMappings();
-
 		List<String> httpServiceEndpoints = new ArrayList<>();
 
-		for (String mapping : mappings) {
+		for (String mapping : servletRegistration.getMappings()) {
 			if (mapping.indexOf('/') == 0) {
 				if (mapping.charAt(mapping.length() - 1) == '*') {
 					mapping = mapping.substring(0, mapping.length() - 2);
@@ -275,7 +269,8 @@ public class HttpServletBundleActivator
 					}
 				}
 
-				httpServiceEndpoints.add(contextPath + mapping);
+				httpServiceEndpoints.add(
+					servletContext.getContextPath() + mapping);
 			}
 		}
 

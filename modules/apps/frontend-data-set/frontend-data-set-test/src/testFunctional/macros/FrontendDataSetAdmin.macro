@@ -66,9 +66,11 @@ definition {
 	}
 
 	macro checkFields {
-		Check.checkNotVisible(
-			checkboxName = ${checkboxName},
-			locator1 = "Checkbox#ANY_CHECKBOX");
+		for (var key_fieldItem : list ${key_fieldList}) {
+			Check.checkNotVisible(
+				checkboxName = ${key_fieldItem},
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 	}
 
 	macro createDataSet {

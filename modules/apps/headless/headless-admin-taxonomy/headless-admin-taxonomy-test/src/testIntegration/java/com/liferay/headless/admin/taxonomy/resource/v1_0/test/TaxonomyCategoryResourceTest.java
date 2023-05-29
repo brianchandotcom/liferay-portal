@@ -29,27 +29,19 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyCategorySerDes;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -320,29 +312,6 @@ public class TaxonomyCategoryResourceTest
 			parentTaxonomyCategoryId, taxonomyCategory);
 	}
 
-	private JSONObject _invoke(
-			String body, String endpoint, Http.Method httpMethod)
-		throws Exception {
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-		options.addHeader(
-			"Authorization",
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
-		options.setLocation("http://localhost:8080/o/" + endpoint);
-		options.setMethod(httpMethod);
-
-		if (body != null) {
-			options.setBody(
-				body, ContentTypes.APPLICATION_JSON,
-				StandardCharsets.UTF_8.name());
-		}
-
-		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
-	}
-
 	private TaxonomyVocabulary _randomTaxonomyVocabulary() {
 		return new TaxonomyVocabulary() {
 			{
@@ -475,31 +444,39 @@ public class TaxonomyCategoryResourceTest
 			_addTaxonomyCategoryWithParentAssetVocabulary(
 				irrelevantAssetVocabulary);
 
-		JSONObject jsonObject = _invoke(
-			null,
-			StringBundler.concat(
-				"headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
-				String.valueOf(assetVocabulary.getVocabularyId()),
-				"/taxonomy-categories?fields=name&flatten=true"),
-			Http.Method.GET);
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyVocabularyTaxonomyCategories",
+			HashMapBuilder.<String, Object>put(
+				"flatten", true
+			).put(
+				"taxonomyVocabularyId", assetVocabulary.getVocabularyId()
+			).build(),
+			new GraphQLField("items", new GraphQLField("name")),
+			new GraphQLField("totalCount"));
 
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(2, itemsJSONArray.length());
-
-		JSONObject itemJSONObject1 = (JSONObject)itemsJSONArray.get(0);
-
-		JSONObject itemJSONObject2 = (JSONObject)itemsJSONArray.get(1);
-
-		Assert.assertEquals(1, itemJSONObject1.length());
-
-		Assert.assertEquals(1, itemJSONObject2.length());
+		JSONObject taxonomyCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/taxonomyVocabularyTaxonomyCategories");
 
 		Assert.assertEquals(
-			taxonomyCategory1.getName(), itemJSONObject1.getString("name"));
+			2, taxonomyCategoriesJSONObject.getLong("totalCount"));
 
-		Assert.assertEquals(
-			taxonomyCategory2.getName(), itemJSONObject2.getString("name"));
+		TaxonomyCategory getTaxonomyCategory1 = new TaxonomyCategory() {
+			{
+				name = taxonomyCategory1.getName();
+			}
+		};
+		TaxonomyCategory getTaxonomyCategory2 = new TaxonomyCategory() {
+			{
+				name = taxonomyCategory2.getName();
+			}
+		};
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(getTaxonomyCategory1, getTaxonomyCategory2),
+			Arrays.asList(
+				TaxonomyCategorySerDes.toDTOs(
+					taxonomyCategoriesJSONObject.getString("items"))));
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			irrelevantTaxonomyCategory.getId());

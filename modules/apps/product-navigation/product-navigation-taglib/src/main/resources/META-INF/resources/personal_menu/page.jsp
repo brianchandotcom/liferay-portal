@@ -107,7 +107,7 @@ if (size != null) {
 	).put(
 		"size", size
 	).put(
-		"userName", user2.getFullName()
+		"userName", HtmlUtil.escape(user2.getFullName())
 	).build();
 
 	if (user2.getPortraitId() > 0) {

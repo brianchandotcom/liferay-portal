@@ -66,6 +66,7 @@ import StructureTreeNodeActions from './StructureTreeNodeActions';
 import VisibilityButton from './VisibilityButton';
 
 const EDITABLE_LABEL = {
+	[EDITABLE_TYPES.action]: Liferay.Language.get('action'),
 	[EDITABLE_TYPES.backgroundImage]: Liferay.Language.get('background-image'),
 	[EDITABLE_TYPES.html]: Liferay.Language.get('html'),
 	[EDITABLE_TYPES.image]: Liferay.Language.get('image'),
@@ -75,6 +76,7 @@ const EDITABLE_LABEL = {
 };
 
 const EDITABLE_TYPE_ICONS = {
+	[EDITABLE_TYPES.action]: 'cursor',
 	[EDITABLE_TYPES.backgroundImage]: 'picture',
 	[EDITABLE_TYPES.html]: 'code',
 	[EDITABLE_TYPES.image]: 'picture',

@@ -16,6 +16,7 @@
  * Available editable types
  */
 export const EDITABLE_TYPES = {
+	'action': 'action',
 	'backgroundImage': 'background-image',
 	'date-time': 'date-time',
 	'html': 'html',

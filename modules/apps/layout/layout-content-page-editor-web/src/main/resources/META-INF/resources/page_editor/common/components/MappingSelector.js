@@ -64,6 +64,9 @@ function filterFields(fields, fieldType, filterLinkTypes) {
 			) {
 				return field.type === EDITABLE_TYPES.image;
 			}
+			else if (fieldType === EDITABLE_TYPES.action) {
+				return field.type === EDITABLE_TYPES.action;
+			}
 			else {
 				return field.type !== EDITABLE_TYPES.image;
 			}

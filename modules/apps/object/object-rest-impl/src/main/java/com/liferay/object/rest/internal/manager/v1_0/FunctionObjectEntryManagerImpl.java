@@ -144,8 +144,6 @@ public class FunctionObjectEntryManagerImpl
 					_companyId
 				).aggregation(
 					aggregation
-				).companyId(
-					companyId
 				).filterString(
 					filterString
 				).locale(

@@ -266,8 +266,9 @@ definition {
 
 		task ("Then the notification is no longer present on the page") {
 			AssertElementNotPresent(
-				key_objectName = "CustomObject161922",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
+				key_entryLabel = "CustomObject161922",
+				key_entryStatus = "Sent",
+				locator1 = "ObjectNotifications#VIEW_NOTIFICATION_ENTRIES");
 		}
 	}
 

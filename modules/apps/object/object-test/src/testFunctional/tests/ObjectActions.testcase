@@ -1475,8 +1475,9 @@ definition {
 			Notifications.goToNotificationQueueAdmin();
 
 			AssertElementPresent(
-				key_objectName = "CommerceOrder",
-				locator1 = "ObjectNotifications#OBJECT_QUEUE_NAME");
+				key_entryLabel = "CommerceOrder",
+				key_entryStatus = "Sent",
+				locator1 = "ObjectNotifications#VIEW_NOTIFICATION_ENTRIES");
 		}
 	}
 

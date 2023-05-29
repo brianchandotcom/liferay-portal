@@ -48,8 +48,8 @@ public class ValidatorRecorderTest {
 
 		recorder.printMessages();
 
-		Assert.assertFalse(recorder.hasRegisteredWarnings());
-		Assert.assertTrue(recorder.hasRegisteredErrors());
+		Assert.assertFalse(recorder.hasWarnings());
+		Assert.assertTrue(recorder.hasErrors());
 
 		Assert.assertEquals(
 			"ERROR: A simple message\n",
@@ -66,8 +66,8 @@ public class ValidatorRecorderTest {
 
 		recorder.printMessages();
 
-		Assert.assertFalse(recorder.hasRegisteredWarnings());
-		Assert.assertTrue(recorder.hasRegisteredErrors());
+		Assert.assertFalse(recorder.hasWarnings());
+		Assert.assertTrue(recorder.hasErrors());
 
 		String outputString = _testOutByteArrayOutputStream.toString();
 
@@ -88,8 +88,8 @@ public class ValidatorRecorderTest {
 
 		recorder.printMessages();
 
-		Assert.assertTrue(recorder.hasRegisteredWarnings());
-		Assert.assertFalse(recorder.hasRegisteredErrors());
+		Assert.assertTrue(recorder.hasWarnings());
+		Assert.assertFalse(recorder.hasErrors());
 
 		String outputString = _testOutByteArrayOutputStream.toString();
 
@@ -108,8 +108,8 @@ public class ValidatorRecorderTest {
 		recorder.registerError("A simple error message");
 		recorder.printMessages();
 
-		Assert.assertTrue(recorder.hasRegisteredWarnings());
-		Assert.assertTrue(recorder.hasRegisteredErrors());
+		Assert.assertTrue(recorder.hasWarnings());
+		Assert.assertTrue(recorder.hasErrors());
 
 		String outputString = _testOutByteArrayOutputStream.toString();
 
@@ -129,8 +129,8 @@ public class ValidatorRecorderTest {
 		recorder.registerWarning("A simple message");
 		recorder.printMessages();
 
-		Assert.assertTrue(recorder.hasRegisteredWarnings());
-		Assert.assertFalse(recorder.hasRegisteredErrors());
+		Assert.assertTrue(recorder.hasWarnings());
+		Assert.assertFalse(recorder.hasErrors());
 
 		Assert.assertEquals(
 			"WARNING: A simple message\n",

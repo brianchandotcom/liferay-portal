@@ -228,8 +228,8 @@ public class ValidatorTest {
 		ValidatorRecorder recorder = Validator.validateDatabases(
 			_sourceConnection, _destinationConnection);
 
-		Assert.assertEquals(hasErrors, recorder.hasRegisteredErrors());
-		Assert.assertEquals(hasWarnings, recorder.hasRegisteredWarnings());
+		Assert.assertEquals(hasErrors, recorder.hasErrors());
+		Assert.assertEquals(hasWarnings, recorder.hasWarnings());
 
 		recorder.printMessages();
 

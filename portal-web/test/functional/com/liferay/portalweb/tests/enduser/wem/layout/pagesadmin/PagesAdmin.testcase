@@ -1206,6 +1206,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-183218. Can save with display page template in site template."
+	@priority = 4
+	test SaveConfigurationOfDisplayPageTemplateInSiteTemplate {
+		var siteTemplateName = StringUtil.randomString(8);
+
+		task ("Given a user has a display page template in a site template") {
+			JSONSiteTemplate.addSiteTemplate(
+				active = "Yes",
+				description = "Site description",
+				siteTemplateName = ${siteTemplateName});
+		}
+
+		task ("When the user makes some changes on configuration of display page template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage",
+				rowEntry = ${siteTemplateName});
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the user could save changes") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			PortletEntry.save();
+		}
+	}
+
 	@description = "This is a test for LPS-163801. The page designer could save page changes after changing the site default language."
 	@priority = 3
 	test SavePageChangesAfterChangingSiteDefaultLanguage {

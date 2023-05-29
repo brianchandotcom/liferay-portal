@@ -66,7 +66,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 		.put("dataSourceTypes", DataSourceConstants.getTypes())
 		.put("documentationURLs", DocumentationConstants.getURLs())
 		.put("entityTypes", FaroConstants.getTypes())
-		.put("faroURL", FaroPropsValues.OSB_FARO_URL)
+		.put("faroURL", FaroPropsValues.FARO_URL)
 		.put("fieldContexts", FieldMappingConstants.getContexts())
 		.put("fieldOwnerTypes", FieldMappingConstants.getOwnerTypes())
 		.put("fieldTypes", FieldMappingConstants.getFieldTypes())

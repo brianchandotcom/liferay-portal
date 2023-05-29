@@ -27,6 +27,7 @@ import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext;
+import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -198,18 +200,23 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutUtilityPageThumbnailConfiguration.class.getName(),
 				_layoutUtilityPageThumbnailConfiguration);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
+				_layoutConverterRegistry, themeDisplay, _translationPermission);
+
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
-					_itemSelector, _layoutConverterRegistry, _layoutCopyHelper,
+					_itemSelector, layoutActionsHelper, _layoutCopyHelper,
 					_portal.getLiferayPortletRequest(renderRequest),
-					_portal.getLiferayPortletResponse(renderResponse),
-					_stagingGroupHelper);
+					_portal.getLiferayPortletResponse(renderResponse));
 
 			LayoutActionDropdownItemsProvider
 				layoutActionDropdownItemsProvider =
 					new LayoutActionDropdownItemsProvider(
 						_portal.getHttpServletRequest(renderRequest),
-						layoutsAdminDisplayContext, _translationPermission,
+						layoutActionsHelper, layoutsAdminDisplayContext,
 						_translationURLProvider);
 
 			renderRequest.setAttribute(

@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
+import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
@@ -27,8 +28,10 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
@@ -56,18 +59,23 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
+			_layoutConverterRegistry, themeDisplay, _translationPermission);
+
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
-				_itemSelector, _layoutConverterRegistry, _layoutCopyHelper,
+				_itemSelector, layoutActionsHelper, _layoutCopyHelper,
 				_portal.getLiferayPortletRequest(actionRequest),
-				_portal.getLiferayPortletResponse(actionResponse),
-				_stagingGroupHelper);
+				_portal.getLiferayPortletResponse(actionResponse));
 
 		MillerColumnsDisplayContext millerColumnsDisplayContext =
 			new MillerColumnsDisplayContext(
 				new LayoutActionDropdownItemsProvider(
 					_portal.getHttpServletRequest(actionRequest),
-					layoutsAdminDisplayContext, _translationPermission,
+					layoutActionsHelper, layoutsAdminDisplayContext,
 					_translationURLProvider),
 				layoutsAdminDisplayContext,
 				_portal.getLiferayPortletRequest(actionRequest),

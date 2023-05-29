@@ -38,6 +38,36 @@ import java.util.function.Predicate;
 public class ObjectCodeEditorUtil {
 
 	public static List<Map<String, Object>> getCodeEditorElements(
+		Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,
+		Locale locale, long objectDefinitionId,
+		Predicate<ObjectField> objectFieldPredicate) {
+
+		ObjectFieldLocalService objectFieldLocalService =
+			_objectFieldLocalServiceSnapshot.get();
+
+		return ListUtil.fromArray(
+			_createCodeEditorElement(
+				TransformUtil.transform(
+					ListUtil.filter(
+						objectFieldLocalService.getObjectFields(
+							objectDefinitionId),
+						objectFieldPredicate),
+					objectField -> HashMapBuilder.put(
+						"content", objectField.getName()
+					).put(
+						"helpText", StringPool.BLANK
+					).put(
+						"label", objectField.getLabel(locale)
+					).build()),
+				"fields", locale),
+			_createCodeEditorElement(
+				DDMExpressionOperator.getItems(
+					ddmExpressionOperatorPredicate, locale),
+				"operators", locale));
+	}
+
+	public static List<Map<String, Object>> getCodeEditorElements(
+		String excludedDDMExpressionFunctionKey,
 		boolean includeDDMExpressionBuilderElements,
 		boolean includeGeneralVariables, Locale locale, long objectDefinitionId,
 		Predicate<ObjectField> objectFieldPredicate) {
@@ -84,40 +114,12 @@ public class ObjectCodeEditorUtil {
 					DDMExpressionOperator.getItems(locale), "operators",
 					locale),
 				_createCodeEditorElement(
-					DDMExpressionFunction.getItems(locale), "functions",
-					locale));
+					DDMExpressionFunction.getItems(
+						excludedDDMExpressionFunctionKey, locale),
+					"functions", locale));
 		}
 
 		return codeEditorElements;
-	}
-
-	public static List<Map<String, Object>> getCodeEditorElements(
-		Predicate<DDMExpressionOperator> ddmExpressionOperatorPredicate,
-		Locale locale, long objectDefinitionId,
-		Predicate<ObjectField> objectFieldPredicate) {
-
-		ObjectFieldLocalService objectFieldLocalService =
-			_objectFieldLocalServiceSnapshot.get();
-
-		return ListUtil.fromArray(
-			_createCodeEditorElement(
-				TransformUtil.transform(
-					ListUtil.filter(
-						objectFieldLocalService.getObjectFields(
-							objectDefinitionId),
-						objectFieldPredicate),
-					objectField -> HashMapBuilder.put(
-						"content", objectField.getName()
-					).put(
-						"helpText", StringPool.BLANK
-					).put(
-						"label", objectField.getLabel(locale)
-					).build()),
-				"fields", locale),
-			_createCodeEditorElement(
-				DDMExpressionOperator.getItems(
-					ddmExpressionOperatorPredicate, locale),
-				"operators", locale));
 	}
 
 	public enum DDMExpressionOperator {
@@ -314,12 +316,17 @@ public class ObjectCodeEditorUtil {
 				"that-can-be-used-with-other-validation-functions",
 			"sum");
 
-		public static List<Map<String, String>> getItems(Locale locale) {
+		public static List<Map<String, String>> getItems(
+			String excludedDDMExpressionFunctionKey, Locale locale) {
+
 			List<Map<String, String>> values = new ArrayList<>();
 
 			for (DDMExpressionFunction ddmExpressionFunction : values()) {
-				if (StringUtil.equals(ddmExpressionFunction._key, "power") &&
-					!FeatureFlagManagerUtil.isEnabled("LPS-164948")) {
+				if ((StringUtil.equals(ddmExpressionFunction._key, "power") &&
+					 !FeatureFlagManagerUtil.isEnabled("LPS-164948")) ||
+					StringUtil.equals(
+						ddmExpressionFunction._key,
+						excludedDDMExpressionFunctionKey)) {
 
 					continue;
 				}

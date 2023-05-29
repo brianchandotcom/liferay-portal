@@ -1,5 +1,17 @@
 definition {
 
+	macro addFields {
+		LexiconEntry.gotoAdd();
+
+		for (var key_fieldItem : list ${key_fieldList}) {
+			Check.checkNotVisible(
+				checkboxName = ${key_fieldItem},
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Button.clickSave();
+	}
+
 	macro assertDataSetEntry {
 		for (var key_dataSetName : list ${key_dataSetNameList}) {
 			AssertElementPresent(

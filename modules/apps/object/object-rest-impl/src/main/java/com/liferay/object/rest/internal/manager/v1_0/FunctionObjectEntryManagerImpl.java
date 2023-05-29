@@ -88,7 +88,8 @@ public class FunctionObjectEntryManagerImpl
 				).userId(
 					dtoConverterContext.getUserId()
 				).buildJSONObject(),
-				_functionObjectEntryManagerConfiguration.postResourcePath(),
+				_functionObjectEntryManagerConfiguration.
+					postObjectEntryResourcePath(),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());
 	}
@@ -121,7 +122,8 @@ public class FunctionObjectEntryManagerImpl
 			).userId(
 				dtoConverterContext.getUserId()
 			).buildJSONObject(),
-			_functionObjectEntryManagerConfiguration.deleteResourcePath(),
+			_functionObjectEntryManagerConfiguration.
+				deleteObjectEntryResourcePath(),
 			dtoConverterContext.getUserId());
 	}
 
@@ -163,7 +165,8 @@ public class FunctionObjectEntryManagerImpl
 				).userId(
 					dtoConverterContext.getUserId()
 				).buildJSONObject(),
-				_functionObjectEntryManagerConfiguration.getResourcePath(),
+				_functionObjectEntryManagerConfiguration.
+					getObjectEntriesResourcePath(),
 				dtoConverterContext.getUserId()),
 			objectDefinition, pagination, scopeKey,
 			dtoConverterContext.getUser());
@@ -202,7 +205,8 @@ public class FunctionObjectEntryManagerImpl
 				).userId(
 					dtoConverterContext.getUserId()
 				).buildJSONObject(),
-				_functionObjectEntryManagerConfiguration.getOneResourcePath(),
+				_functionObjectEntryManagerConfiguration.
+					getObjectEntryResourcePath(),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());
 	}
@@ -257,7 +261,8 @@ public class FunctionObjectEntryManagerImpl
 				).userId(
 					dtoConverterContext.getUserId()
 				).buildJSONObject(),
-				_functionObjectEntryManagerConfiguration.patchResourcePath(),
+				_functionObjectEntryManagerConfiguration.
+					putObjectEntryResourcePath(),
 				dtoConverterContext.getUserId()),
 			objectDefinition, scopeKey, dtoConverterContext.getUser());
 	}

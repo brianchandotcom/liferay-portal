@@ -166,25 +166,24 @@ export function MembersPage({
 
 			let filteredMembersList: MemberProps[] = [];
 
-			filteredMembersList = membersList.filter((member: MemberProps) => {
-				if (
-					member.accountBriefs.find(
-						(accountBrief: AccountBriefProps) =>
-							accountBrief.externalReferenceCode ===
-							selectedAccount.externalReferenceCode
-					) &&
-					member.isPublisherAccount
-				) {
-					return true;
-				}
+      filteredMembersList = membersList.filter((member: MemberProps) => {
+        if (
+          member.accountBriefs.find(
+            (accountBrief: AccountBriefProps) =>
+              accountBrief.externalReferenceCode ===
+              selectedAccount.externalReferenceCode
+          ) &&
+          member.isPublisherAccount
+        ) {
+          return true;
+        }
+        
+        return false;
+      });
 
-				return false;
-			});
-
-			setMembers(filteredMembersList);
-		})();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedAccount]);
+      setMembers(filteredMembersList);
+    })();
+  }, [visible,selectedAccount]);
 
 	return (
 		<>

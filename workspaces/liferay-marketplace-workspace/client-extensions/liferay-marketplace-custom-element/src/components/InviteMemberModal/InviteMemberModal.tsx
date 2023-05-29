@@ -138,7 +138,7 @@ export function InviteMemberModal({
           getSiteURL(),
         getCheckedRoles()
       );
-      setTimeout(() => location.reload(), 200);
+      onClose()
     }
   };
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util;
+package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -15,8 +15,8 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.Release;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.Database;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.Version;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.DatabaseUtil;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -44,7 +44,7 @@ public class ValidatorTest {
 	@Before
 	public void setUp() {
 		System.setOut(new PrintStream(_testOutByteArrayOutputStream));
-		_databaseMockedStatic = Mockito.mockStatic(Database.class);
+		_databaseMockedStatic = Mockito.mockStatic(DatabaseUtil.class);
 
 		_sourceConnection = Mockito.mock(Connection.class);
 		_destinationConnection = Mockito.mock(Connection.class);
@@ -256,13 +256,14 @@ public class ValidatorTest {
 		List<String> destinationFailedServletContextNames) {
 
 		_databaseMockedStatic.when(
-			() -> Database.getFailedServletContextNames(_sourceConnection)
+			() -> DatabaseUtil.getFailedServletContextNames(_sourceConnection)
 		).thenReturn(
 			sourceFailedServletContextNames
 		);
 
 		_databaseMockedStatic.when(
-			() -> Database.getFailedServletContextNames(_destinationConnection)
+			() -> DatabaseUtil.getFailedServletContextNames(
+				_destinationConnection)
 		).thenReturn(
 			destinationFailedServletContextNames
 		);
@@ -272,7 +273,7 @@ public class ValidatorTest {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
-			() -> Database.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
 		).thenReturn(
 			releases
 		);
@@ -282,7 +283,7 @@ public class ValidatorTest {
 
 			if (!servletContextName.equals(module)) {
 				_databaseMockedStatic.when(
-					() -> Database.getReleaseEntry(
+					() -> DatabaseUtil.getReleaseEntry(
 						_destinationConnection, servletContextName)
 				).thenReturn(
 					release
@@ -295,13 +296,13 @@ public class ValidatorTest {
 		List<String> sourceTables, List<String> destinationTables) {
 
 		_databaseMockedStatic.when(
-			() -> Database.getTables(_sourceConnection)
+			() -> DatabaseUtil.getTables(_sourceConnection)
 		).thenReturn(
 			sourceTables
 		);
 
 		_databaseMockedStatic.when(
-			() -> Database.getTables(_destinationConnection)
+			() -> DatabaseUtil.getTables(_destinationConnection)
 		).thenReturn(
 			destinationTables
 		);
@@ -311,7 +312,7 @@ public class ValidatorTest {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
-			() -> Database.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
 		).thenReturn(
 			releases
 		);
@@ -326,7 +327,7 @@ public class ValidatorTest {
 			}
 
 			_databaseMockedStatic.when(
-				() -> Database.getReleaseEntry(
+				() -> DatabaseUtil.getReleaseEntry(
 					_destinationConnection, servletContextName)
 			).thenReturn(
 				release
@@ -338,7 +339,7 @@ public class ValidatorTest {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
-			() -> Database.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
 		).thenReturn(
 			releases
 		);
@@ -352,7 +353,7 @@ public class ValidatorTest {
 			}
 
 			_databaseMockedStatic.when(
-				() -> Database.getReleaseEntry(
+				() -> DatabaseUtil.getReleaseEntry(
 					_destinationConnection, servletContextName)
 			).thenReturn(
 				release
@@ -362,13 +363,13 @@ public class ValidatorTest {
 
 	private void _mockWebIds(boolean valid) {
 		_databaseMockedStatic.when(
-			() -> Database.getWebId(_sourceConnection)
+			() -> DatabaseUtil.getWebId(_sourceConnection)
 		).thenReturn(
 			_TEST_WEB_ID
 		);
 
 		_databaseMockedStatic.when(
-			() -> Database.hasWebId(_destinationConnection, _TEST_WEB_ID)
+			() -> DatabaseUtil.hasWebId(_destinationConnection, _TEST_WEB_ID)
 		).thenReturn(
 			!valid
 		);
@@ -376,7 +377,7 @@ public class ValidatorTest {
 
 	private static final String _TEST_WEB_ID = "www.able.com";
 
-	private MockedStatic<Database> _databaseMockedStatic;
+	private MockedStatic<DatabaseUtil> _databaseMockedStatic;
 	private Connection _destinationConnection;
 	private final PrintStream _originalOut = System.out;
 	private Connection _sourceConnection;

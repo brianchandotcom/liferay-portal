@@ -15,7 +15,7 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migration;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.error.ErrorCodes;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.Database;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation.Validator;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation.ValidatorRecorder;
 
@@ -99,12 +99,12 @@ public class VirtualInstanceMigration {
 				}
 
 				if (commandLine.hasOption("destination-schema-prefix")) {
-					Database.setSchemaPrefix(
+					DatabaseUtil.setSchemaPrefix(
 						commandLine.getOptionValue(
 							"destination-schema-prefix"));
 				}
 
-				if (!Database.isSingleVirtualInstance(_sourceConnection)) {
+				if (!DatabaseUtil.isSingleVirtualInstance(_sourceConnection)) {
 					System.err.println(
 						"ERROR: Source database has several instances. That " +
 							"is not supported by the tool");
@@ -112,7 +112,7 @@ public class VirtualInstanceMigration {
 					_exitWithCode(ErrorCodes.SOURCE_MULTI_INSTANCES);
 				}
 
-				if (!Database.isDefaultPartition(_destinationConnection)) {
+				if (!DatabaseUtil.isDefaultPartition(_destinationConnection)) {
 					System.err.println(
 						"ERROR: Destination database is not the default " +
 							"partition");

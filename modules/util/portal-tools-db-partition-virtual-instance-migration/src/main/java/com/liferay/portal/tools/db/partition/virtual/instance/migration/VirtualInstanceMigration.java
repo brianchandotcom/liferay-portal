@@ -45,7 +45,8 @@ public class VirtualInstanceMigration {
 				HelpFormatter helpFormatter = new HelpFormatter();
 
 				helpFormatter.printHelp(
-					"Liferay Portal Tools DB Partition Virtual Instance Migration",
+					"Liferay Portal Tools DB Partition Virtual Instance " +
+						"Migration",
 					options);
 
 				return;
@@ -76,8 +77,8 @@ public class VirtualInstanceMigration {
 				}
 				catch (SQLException sqlException) {
 					System.err.println(
-						"ERROR: Not possible to get source database " +
-							"connection with specified parameters:");
+						"ERROR: Unable to get source database connection " +
+							"with the specified parameters:");
 					sqlException.printStackTrace();
 
 					_exitWithCode(ErrorCodes.BAD_SOURCE_PARAMETERS);
@@ -90,8 +91,8 @@ public class VirtualInstanceMigration {
 				}
 				catch (SQLException sqlException) {
 					System.err.println(
-						"ERROR: Not possible to get destination database " +
-							"connection with specified parameters:");
+						"ERROR: Unable to get destination database " +
+							"connection with the specified parameters:");
 					sqlException.printStackTrace();
 
 					_exitWithCode(ErrorCodes.BAD_DESTINATION_PARAMETERS);
@@ -122,9 +123,7 @@ public class VirtualInstanceMigration {
 				ValidatorRecorder recorder = Validator.validateDatabases(
 					_sourceConnection, _destinationConnection);
 
-				if (recorder.hasRegisteredErrors() ||
-					recorder.hasRegisteredWarnings()) {
-
+				if (recorder.hasErrors() || recorder.hasWarnings()) {
 					recorder.printMessages();
 					_exitWithCode(ErrorCodes.VALIDATION_ERROR);
 				}
@@ -140,7 +139,8 @@ public class VirtualInstanceMigration {
 				HelpFormatter helpFormatter = new HelpFormatter();
 
 				helpFormatter.printHelp(
-					"Liferay Portal Tools DB Partition Virtual Instance Migration",
+					"Liferay Portal Tools DB Partition Virtual Instance " +
+						"Migration",
 					options);
 
 				_exitWithCode(ErrorCodes.BAD_INPUT_ARGUMENTS);
@@ -185,7 +185,7 @@ public class VirtualInstanceMigration {
 			"Set the destination database user password.");
 		options.addOption(
 			"dsp", "destination-schema-prefix", true,
-			"Set the schema prefix for nondefault databases in destination " +
+			"Set the schema prefix for non-default databases in destination " +
 				"database.");
 		options.addRequiredOption(
 			"du", "destination-user", true,

@@ -162,17 +162,6 @@ public class ViewAccountRoleAssigneesManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected String getNavigation() {
-		return ParamUtil.getString(
-			liferayPortletRequest, getNavigationParam(), "all");
-	}
-
-	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
-	}
-
-	@Override
 	protected String getOrderByCol() {
 		return ParamUtil.getString(
 			liferayPortletRequest, getOrderByColParam(), "last-name");

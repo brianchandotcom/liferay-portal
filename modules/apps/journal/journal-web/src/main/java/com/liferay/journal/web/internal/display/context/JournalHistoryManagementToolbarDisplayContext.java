@@ -165,11 +165,6 @@ public class JournalHistoryManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"version", "display-date", "modified-date"};
 	}

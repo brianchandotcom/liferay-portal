@@ -98,15 +98,6 @@ public class SitesItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected String[] getNavigationKeys() {
-		if (_sitesItemSelectorViewDisplayContext.isShowSortFilter()) {
-			return new String[] {"all"};
-		}
-
-		return null;
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		if (_sitesItemSelectorViewDisplayContext.isShowSortFilter()) {
 			return new String[] {"name", "type"};

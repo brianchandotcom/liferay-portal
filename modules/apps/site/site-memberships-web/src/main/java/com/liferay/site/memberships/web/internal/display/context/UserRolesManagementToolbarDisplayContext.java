@@ -78,11 +78,6 @@ public class UserRolesManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"title"};
 	}

@@ -96,11 +96,6 @@ public class JournalSelectArticleTranslationsManagementToolbarDisplayContext
 		return new String[] {"list"};
 	}
 
-	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalSelectArticleTranslationsManagementToolbarDisplayContext.class);
 

@@ -70,11 +70,6 @@ public class UserItemSelectorViewManagementToolbarDisplayContext
 	}
 
 	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
-	}
-
-	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "last-name", "screen-name"};
 	}

@@ -77,11 +77,6 @@ public class TrashContainerManagementToolbarDisplayContext
 		return new String[] {"list", "descriptive", "icon"};
 	}
 
-	@Override
-	protected String[] getNavigationKeys() {
-		return new String[] {"all"};
-	}
-
 	private final TrashDisplayContext _trashDisplayContext;
 
 }

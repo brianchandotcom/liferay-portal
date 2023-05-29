@@ -228,4 +228,38 @@ definition {
 			typeSettings = ${typeSettings});
 	}
 
+	macro updateTypeSettings {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (!(isSet(privateLayout))) {
+			var privateLayout = "false";
+		}
+
+		var groupId = JSONLayoutSetter.setGroupId(
+			groupName = ${groupName},
+			site = ${site});
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			privateLayout = ${privateLayout});
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
+			column = ${column},
+			embeddedLayoutURL = ${embeddedLayoutURL},
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			layoutTemplate = ${layoutTemplate},
+			privateLayout = ${privateLayout});
+
+		JSONLayoutAPI._updateTypeSettings(
+			groupId = ${groupId},
+			layoutId = ${layoutId},
+			privateLayout = ${privateLayout},
+			typeSettings = ${typeSettings});
+	}
+
 }

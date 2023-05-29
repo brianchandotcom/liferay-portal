@@ -30,6 +30,20 @@ definition {
 		return ${typeSettings};
 	}
 
+	macro _embeddedLayoutURL {
+		if (!(isSet(embeddedLayoutURL))) {
+			fail("embeddedLayoutURL not set.");
+		}
+
+		if (!(isSet(typeSettings))) {
+			fail("layoutTemplateId not set.");
+		}
+
+		var typeSettings = StringUtil.add(${typeSettings}, "embeddedLayoutURL=${embeddedLayoutURL}", "");
+
+		return ${typeSettings};
+	}
+
 	@summary = "Generates a Widget to be used in typeSettings"
 	macro _generateWidget {
 		Variables.assertDefined(parameterList = ${widgetName});

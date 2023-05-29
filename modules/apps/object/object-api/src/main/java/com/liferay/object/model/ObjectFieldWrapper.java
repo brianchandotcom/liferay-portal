@@ -317,6 +317,11 @@ public class ObjectFieldWrapper
 		return model.getExternalReferenceCode();
 	}
 
+	@Override
+	public String getI18nObjectFieldName() {
+		return model.getI18nObjectFieldName();
+	}
+
 	/**
 	 * Returns the indexed of this object field.
 	 *

@@ -433,6 +433,11 @@ definition {
 			JSONLayout.publishLayout(
 				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2");
+
+			JSONLayout.updateTypeSettings(
+				embeddedLayoutURL = "http://www.liferay.com",
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name 3");
 		}
 
 		task ("Navigate to pages in page tree") {

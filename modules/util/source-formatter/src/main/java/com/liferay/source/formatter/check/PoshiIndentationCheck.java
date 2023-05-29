@@ -111,6 +111,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 		Matcher matcher = _tablePattern.matcher(content);
 
+		outerLoop:
 		while (matcher.find()) {
 			String tableContent = matcher.group(2);
 
@@ -134,7 +135,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 				if (!trimmedLine.startsWith("|") &&
 					!trimmedLine.endsWith("|")) {
 
-					return content;
+					continue outerLoop;
 				}
 
 				lines[i] = matcher.group(1) + StringPool.TAB + trimmedLine;

@@ -22,11 +22,11 @@ import java.util.List;
  */
 public class ValidatorRecorder {
 
-	public boolean hasRegisteredErrors() {
+	public boolean hasErrors() {
 		return !_errors.isEmpty();
 	}
 
-	public boolean hasRegisteredWarnings() {
+	public boolean hasWarnings() {
 		return !_warnings.isEmpty();
 	}
 

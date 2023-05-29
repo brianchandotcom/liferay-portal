@@ -102,12 +102,12 @@ public class ClickToChatBottomJSPDynamicInclude extends BaseJSPDynamicInclude {
 			return;
 		}
 
-		if ((themeDisplay.isSignedIn() &&
+		if (themeDisplay.isSignedIn() &&
 			 (clickToChatConfiguration.chatProviderId() ==
 				 ClickToChatConstants.CHAT_PROVIDER_ID_ZENDESK_WEB_WIDGET) &&
-			 Validator.isNull(clickToChatConfiguration.chatProviderKeyId())) ||
+			 (Validator.isNull(clickToChatConfiguration.chatProviderKeyId()) ||
 			Validator.isNull(
-				clickToChatConfiguration.chatProviderSecretKey())) {
+				clickToChatConfiguration.chatProviderSecretKey()))) {
 
 			return;
 		}

@@ -752,9 +752,14 @@ public abstract class BaseOrderItemResourceImpl
 			"createStrategy", "INSERT");
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			orderItemUnsafeConsumer =
-				orderItem -> putOrderItemByExternalReferenceCode(
-					orderItem.getExternalReferenceCode(), orderItem);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				orderItemUnsafeConsumer =
+					orderItem -> putOrderItemByExternalReferenceCode(
+						orderItem.getExternalReferenceCode(), orderItem);
+			}
 		}
 
 		if (orderItemUnsafeConsumer == null) {

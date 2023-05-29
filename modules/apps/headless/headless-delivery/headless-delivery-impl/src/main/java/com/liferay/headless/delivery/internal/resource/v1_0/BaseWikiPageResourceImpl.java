@@ -970,11 +970,16 @@ public abstract class BaseWikiPageResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			wikiPageUnsafeConsumer =
-				wikiPage -> putSiteWikiPageByExternalReferenceCode(
-					wikiPage.getSiteId() != null ? wikiPage.getSiteId() :
-						(Long)parameters.get("siteId"),
-					wikiPage.getExternalReferenceCode(), wikiPage);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				wikiPageUnsafeConsumer =
+					wikiPage -> putSiteWikiPageByExternalReferenceCode(
+						wikiPage.getSiteId() != null ? wikiPage.getSiteId() :
+							(Long)parameters.get("siteId"),
+						wikiPage.getExternalReferenceCode(), wikiPage);
+			}
 		}
 
 		if (wikiPageUnsafeConsumer == null) {

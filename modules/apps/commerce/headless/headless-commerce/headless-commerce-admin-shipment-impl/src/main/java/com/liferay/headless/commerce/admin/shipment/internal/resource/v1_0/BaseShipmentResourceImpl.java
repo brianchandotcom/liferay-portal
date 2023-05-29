@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -781,9 +782,27 @@ public abstract class BaseShipmentResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			shipmentUnsafeConsumer =
-				shipment -> putShipmentByExternalReferenceCode(
-					shipment.getExternalReferenceCode(), shipment);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				shipmentUnsafeConsumer = shipment -> {
+					try {
+						Shipment getShipment =
+							getShipmentByExternalReferenceCode(
+								shipment.getExternalReferenceCode());
+
+						patchShipment(
+							getShipment.getId() != null ? getShipment.getId() :
+								_parseLong(
+									(String)parameters.get("shipmentId")),
+							shipment);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postShipment(shipment);
+					}
+				};
+			}
 		}
 
 		if (shipmentUnsafeConsumer == null) {

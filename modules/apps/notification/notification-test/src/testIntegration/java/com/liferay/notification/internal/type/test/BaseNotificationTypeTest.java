@@ -163,7 +163,7 @@ public class BaseNotificationTypeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		objectDefinition =
+		childObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -210,9 +210,10 @@ public class BaseNotificationTypeTest {
 						"textObjectField"
 					).build()));
 
-		objectDefinition =
+		childObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				user1.getUserId(), objectDefinition.getObjectDefinitionId());
+				user1.getUserId(),
+				childObjectDefinition.getObjectDefinitionId());
 
 		parentObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -242,7 +243,7 @@ public class BaseNotificationTypeTest {
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				parentObjectDefinition.getObjectDefinitionId(),
-				objectDefinition.getObjectDefinitionId(), 0,
+				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
@@ -280,7 +281,8 @@ public class BaseNotificationTypeTest {
 		).build();
 
 		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), objectDefinition.getResourceName(),
+			TestPropsValues.getCompanyId(),
+			childObjectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
@@ -385,15 +387,15 @@ public class BaseNotificationTypeTest {
 			ListUtil.fromString(user2.getFirstName()));
 	}
 
+	@DeleteAfterTestRun
+	protected static ObjectDefinition childObjectDefinition;
+
 	protected static LinkedHashMap<String, Object> childObjectEntryValues;
 	protected static DTOConverterContext dtoConverterContext =
 		new DefaultDTOConverterContext(
 			false, Collections.emptyMap(),
 			BaseNotificationTypeTest._dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, BaseNotificationTypeTest.user1);
-
-	@DeleteAfterTestRun
-	protected static ObjectDefinition objectDefinition;
 
 	@DeleteAfterTestRun
 	protected static ObjectRelationship objectRelationship;

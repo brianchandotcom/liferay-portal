@@ -101,8 +101,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
-			RandomTestUtil.randomString(),
+			childObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
@@ -123,7 +123,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		objectEntryManager.addObjectEntry(
-			dtoConverterContext, objectDefinition,
+			dtoConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
 					setProperties(

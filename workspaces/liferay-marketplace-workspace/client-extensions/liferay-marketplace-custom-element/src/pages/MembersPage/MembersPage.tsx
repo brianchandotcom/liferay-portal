@@ -159,13 +159,13 @@ export function MembersPage({
         ) {
           return true;
         }
-
+        
         return false;
       });
 
       setMembers(filteredMembersList);
     })();
-  }, [selectedAccount]);
+  }, [visible,selectedAccount]);
 
   return (
     <>

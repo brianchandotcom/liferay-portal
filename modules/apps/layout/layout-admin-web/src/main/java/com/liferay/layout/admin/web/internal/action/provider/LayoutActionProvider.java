@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.action.provider;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,8 +32,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ActionURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -62,12 +61,13 @@ public class LayoutActionProvider {
 
 	public LayoutActionProvider(
 		GroupProvider groupProvider, HttpServletRequest httpServletRequest,
-		Language language,
+		Language language, LayoutActionsHelper layoutActionsHelper,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
 
 		_groupProvider = groupProvider;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_layoutActionsHelper = layoutActionsHelper;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -80,7 +80,7 @@ public class LayoutActionProvider {
 
 		JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (_isShowPreviewDraftAction(layout)) {
+		if (_layoutActionsHelper.isShowPreviewDraftActions(layout)) {
 			itemsJSONArray.put(() -> _getPreviewDraftActionJSONObject(layout));
 		}
 
@@ -635,28 +635,6 @@ public class LayoutActionProvider {
 			_getPageTypeSelectedOption());
 	}
 
-	private boolean _isShowPreviewDraftAction(Layout layout) throws Exception {
-		if (!layout.isTypeContent() ||
-			!LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE)) {
-
-			return false;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout == null) {
-			return false;
-		}
-
-		if (draftLayout.isDraft() || !layout.isPublished()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isValidPageTypeSelectedOption(
 		String pageTypeSelectedOption) {
 
@@ -684,6 +662,7 @@ public class LayoutActionProvider {
 	private final GroupProvider _groupProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final LayoutActionsHelper _layoutActionsHelper;
 	private String _pageTypeSelectedOption;
 	private String _redirect;
 	private final SiteNavigationMenuLocalService

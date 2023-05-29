@@ -18,8 +18,10 @@ import com.liferay.application.list.GroupProvider;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.action.provider.LayoutActionProvider;
+import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.LayoutsTree;
+import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -83,6 +86,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			treeId, StringPool.COLON, groupId, StringPool.COLON, privateLayout,
 			":Pagination");
 
+		LayoutActionsHelper layoutActionsHelper = new LayoutActionsHelper(
+			_layoutConverterRegistry, themeDisplay, _translationPermission);
+
 		String paginationJSON = SessionClicks.get(
 			httpServletRequest.getSession(), key, _jsonFactory.getNullJSON());
 
@@ -91,7 +97,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
 			_getAncestorLayouts(httpServletRequest), false, expandedLayoutIds,
-			groupId, httpServletRequest, includeActions, incomplete, loadMore,
+			groupId, httpServletRequest, includeActions, incomplete,
+			layoutActionsHelper, loadMore,
 			_isPaginationEnabled(httpServletRequest), paginationJSONObject,
 			parentLayoutId, privateLayout, themeDisplay);
 
@@ -164,7 +171,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			List<Layout> ancestorLayouts, boolean childLayout,
 			Set<Long> expandedLayoutIds, long groupId,
 			HttpServletRequest httpServletRequest, boolean includeActions,
-			boolean incomplete, boolean loadMore, boolean paginationEnabled,
+			boolean incomplete, LayoutActionsHelper layoutActionsHelper,
+			boolean loadMore, boolean paginationEnabled,
 			JSONObject paginationJSONObject, long parentLayoutId,
 			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -213,17 +221,18 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
 						ancestorLayouts, true, expandedLayoutIds,
 						virtualLayout.getSourceGroupId(), httpServletRequest,
-						includeActions, incomplete, loadMore, paginationEnabled,
-						paginationJSONObject, virtualLayout.getLayoutId(),
+						includeActions, incomplete, layoutActionsHelper,
+						loadMore, paginationEnabled, paginationJSONObject,
+						virtualLayout.getLayoutId(),
 						virtualLayout.isPrivateLayout(), themeDisplay);
 				}
 				else {
 					childLayoutsJSONArray = _getLayoutsJSONArray(
 						ancestorLayouts, true, expandedLayoutIds, groupId,
 						httpServletRequest, includeActions, incomplete,
-						loadMore, paginationEnabled, paginationJSONObject,
-						layout.getLayoutId(), layout.isPrivateLayout(),
-						themeDisplay);
+						layoutActionsHelper, loadMore, paginationEnabled,
+						paginationJSONObject, layout.getLayoutId(),
+						layout.isPrivateLayout(), themeDisplay);
 				}
 			}
 			else {
@@ -250,7 +259,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					_layoutService.getLayoutsCount(
 						groupId, privateLayout, layout.getLayoutId()),
 					childLayoutsJSONArray, httpServletRequest, includeActions,
-					layout, themeDisplay));
+					layout, layoutActionsHelper, themeDisplay));
 
 			if (includeActions) {
 				afterDeleteSelectedLayout = layout;
@@ -332,7 +341,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			Layout afterDeleteSelectedLayout, long childLayoutsCount,
 			JSONArray childLayoutsJSONArray,
 			HttpServletRequest httpServletRequest, boolean includeActions,
-			Layout layout, ThemeDisplay themeDisplay)
+			Layout layout, LayoutActionsHelper layoutActionsHelper,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
 		boolean hasUpdatePermission = true;
@@ -363,6 +373,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					LayoutActionProvider layoutActionProvider =
 						new LayoutActionProvider(
 							_groupProvider, httpServletRequest, _language,
+							layoutActionsHelper,
 							_siteNavigationMenuLocalService);
 
 					return layoutActionProvider.getActionsJSONArray(
@@ -488,6 +499,9 @@ public class LayoutsTreeImpl implements LayoutsTree {
 		_layoutContentModelResourcePermission;
 
 	@Reference
+	private LayoutConverterRegistry _layoutConverterRegistry;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -501,5 +515,8 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private TranslationPermission _translationPermission;
 
 }

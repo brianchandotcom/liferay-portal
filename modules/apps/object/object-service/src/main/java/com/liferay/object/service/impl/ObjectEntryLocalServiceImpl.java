@@ -106,6 +106,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.encryptor.Encryptor;
@@ -1716,56 +1717,6 @@ public class ObjectEntryLocalServiceImpl
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
 	}
 
-	private void _executeInsertIntoLocalizationTable(
-		Connection connection,
-		DynamicObjectDefinitionLocalizationTable
-			dynamicObjectDefinitionLocalizationTable,
-		String insertIntoStatement, Map<String, Serializable> values,
-		Locale locale, long objectEntryId, List<ObjectField> objectFields) {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				insertIntoStatement)) {
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			int index = 1;
-
-			_setColumn(
-				preparedStatement, index++, Types.BIGINT,
-				counterLocalService.increment());
-			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
-			_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
-
-			for (ObjectField objectField : objectFields) {
-				Column<?, ?> column =
-					dynamicObjectDefinitionLocalizationTable.getColumn(
-						objectField.getDBColumnName());
-
-				Map<String, String> localizedValues =
-					(Map<String, String>)values.get(
-						objectField.getI18nObjectFieldName());
-
-				String value = StringPool.BLANK;
-
-				if (localizedValues != null) {
-					value = Objects.toString(
-						localizedValues.get(languageId), StringPool.BLANK);
-				}
-
-				_setColumn(
-					preparedStatement, index++, column.getSQLType(), value);
-			}
-
-			preparedStatement.executeUpdate();
-
-			FinderCacheUtil.clearDSLQueryCache(
-				dynamicObjectDefinitionLocalizationTable.getTableName());
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-	}
-
 	private void _fillDefaultValue(
 		List<ObjectField> objectFields, Map<String, Serializable> values) {
 
@@ -2967,6 +2918,56 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _insertIntoLocalizationTable(
+		Connection connection,
+		DynamicObjectDefinitionLocalizationTable
+			dynamicObjectDefinitionLocalizationTable,
+		String insertIntoStatement, Map<String, Serializable> values,
+		Locale locale, long objectEntryId, List<ObjectField> objectFields) {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				insertIntoStatement)) {
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			int index = 1;
+
+			_setColumn(
+				preparedStatement, index++, Types.BIGINT,
+				counterLocalService.increment());
+			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
+			_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
+
+			for (ObjectField objectField : objectFields) {
+				Column<?, ?> column =
+					dynamicObjectDefinitionLocalizationTable.getColumn(
+						objectField.getDBColumnName());
+
+				Map<String, String> localizedValues =
+					(Map<String, String>)values.get(
+						objectField.getI18nObjectFieldName());
+
+				String value = StringPool.BLANK;
+
+				if (localizedValues != null) {
+					value = Objects.toString(
+						localizedValues.get(languageId), StringPool.BLANK);
+				}
+
+				_setColumn(
+					preparedStatement, index++, column.getSQLType(), value);
+			}
+
+			preparedStatement.executeUpdate();
+
+			FinderCacheUtil.clearDSLQueryCache(
+				dynamicObjectDefinitionLocalizationTable.getTableName());
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
+	private void _insertIntoLocalizationTable(
 			ObjectDefinition objectDefinition, long objectEntryId,
 			Map<String, Serializable> values)
 		throws PortalException {
@@ -3016,7 +3017,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryPersistence.getDataSource());
 
 		for (Locale locale : locales) {
-			_executeInsertIntoLocalizationTable(
+			_insertIntoLocalizationTable(
 				connection, dynamicObjectDefinitionLocalizationTable,
 				insertIntoLocalizationTableStatement, values, locale,
 				objectEntryId,
@@ -3330,9 +3331,7 @@ public class ObjectEntryLocalServiceImpl
 			else {
 				DB db = DBManagerUtil.getDB();
 
-				if (db.getDBType() ==
-						com.liferay.portal.kernel.dao.db.DBType.POSTGRESQL) {
-
+				if (db.getDBType() == DBType.POSTGRESQL) {
 					values.put(name, (String)object);
 				}
 				else {
@@ -3484,9 +3483,7 @@ public class ObjectEntryLocalServiceImpl
 		else if (sqlType == Types.CLOB) {
 			DB db = DBManagerUtil.getDB();
 
-			if (db.getDBType() ==
-					com.liferay.portal.kernel.dao.db.DBType.POSTGRESQL) {
-
+			if (db.getDBType() == DBType.POSTGRESQL) {
 				preparedStatement.setString(index, String.valueOf(value));
 			}
 			else {

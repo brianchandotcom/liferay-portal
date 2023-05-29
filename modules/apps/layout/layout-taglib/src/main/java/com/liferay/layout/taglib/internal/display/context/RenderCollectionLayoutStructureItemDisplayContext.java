@@ -40,6 +40,7 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
+import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -63,6 +64,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -308,6 +311,41 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _hasViewPermission(listObjectReference);
 	}
 
+	private long[] _filterSegmentsEntryIds(
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
+		ListObjectReference listObjectReference, long[] segmentsEntryIds) {
+
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				ParamUtil.getLong(
+					_httpServletRequest, "segmentsExperienceId", -1));
+
+		if (segmentsExperience == null) {
+			return segmentsEntryIds;
+		}
+
+		if (layoutListRetriever instanceof SegmentsEntryLayoutListRetriever) {
+			SegmentsEntryLayoutListRetriever<?, ListObjectReference>
+				segmentsEntryLayoutListRetriever =
+					(SegmentsEntryLayoutListRetriever<?, ListObjectReference>)
+						layoutListRetriever;
+
+			if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
+					listObjectReference,
+					segmentsExperience.getSegmentsEntryId())) {
+
+				return new long[] {segmentsExperience.getSegmentsEntryId()};
+			}
+
+			return new long[] {
+				segmentsEntryLayoutListRetriever.
+					getDefaultVariationSegmentsEntryId(listObjectReference)
+			};
+		}
+
+		return segmentsEntryIds;
+	}
+
 	private int _getCollectionCount() {
 		if (_collectionCount != null) {
 			return _collectionCount;
@@ -437,7 +475,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		defaultLayoutListRetrieverContext.setInfoFilters(
 			_getInfoFilters(layoutListRetriever, listObjectReference));
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
-			_getSegmentsEntryIds());
+			_getSegmentsEntryIds(layoutListRetriever, listObjectReference));
 
 		return defaultLayoutListRetrieverContext;
 	}
@@ -612,7 +650,10 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		return _numberOfItemsPerPage;
 	}
 
-	private long[] _getSegmentsEntryIds() {
+	private long[] _getSegmentsEntryIds(
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
+		ListObjectReference listObjectReference) {
+
 		if (_segmentsEntryIds != null) {
 			return _segmentsEntryIds;
 		}
@@ -626,6 +667,11 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		_segmentsEntryIds = segmentsEntryRetriever.getSegmentsEntryIds(
 			_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
 			requestContextMapper.map(_httpServletRequest));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183723")) {
+			_segmentsEntryIds = _filterSegmentsEntryIds(
+				layoutListRetriever, listObjectReference, _segmentsEntryIds);
+		}
 
 		return _segmentsEntryIds;
 	}

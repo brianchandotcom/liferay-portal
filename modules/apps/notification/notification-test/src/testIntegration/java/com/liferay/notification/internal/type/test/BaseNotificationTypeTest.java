@@ -347,21 +347,21 @@ public class BaseNotificationTypeTest {
 		return objectField.getName();
 	}
 
-	protected String getTermName(String objectFieldName) {
-		return getTermName(objectFieldName, false);
-	}
-
-	protected String getTermName(String objectFieldName, boolean parent) {
-		String partialTermName = childObjectDefinition.getShortName();
+	protected String getTermName(boolean parent, String termNameSuffix) {
+		String termNamePrefix = childObjectDefinition.getShortName();
 
 		if (parent) {
-			partialTermName =
+			termNamePrefix =
 				ObjectRelationshipUtil.getNotificationTermNamePrefix(
 					parentObjectDefinition, objectRelationship);
 		}
 
 		return ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-			partialTermName, objectFieldName);
+			termNamePrefix, termNameSuffix);
+	}
+
+	protected String getTermName(String termNameSuffix) {
+		return getTermName(false, termNameSuffix);
 	}
 
 	protected List<String> getTermNames() {
@@ -374,8 +374,8 @@ public class BaseNotificationTypeTest {
 				getTermName("integerObjectField"),
 				getTermName("picklistObjectField"),
 				getTermName("textObjectField"),
-				getTermName("textObjectField", true),
-				getTermName("AUTHOR_FIRST_NAME", true)));
+				getTermName(true, "textObjectField"),
+				getTermName(true, "AUTHOR_FIRST_NAME")));
 	}
 
 	protected List<Object> getTermValues() {

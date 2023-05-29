@@ -87,7 +87,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		_testSendNotification(
 			Arrays.asList(
 				createNotificationRecipientSetting(
-					"term", getTermName("AUTHOR_ID", true)),
+					"term", getTermName(true, "AUTHOR_ID")),
 				createNotificationRecipientSetting(
 					"term", user1.getScreenName())),
 			NotificationRecipientConstants.TYPE_TERM);

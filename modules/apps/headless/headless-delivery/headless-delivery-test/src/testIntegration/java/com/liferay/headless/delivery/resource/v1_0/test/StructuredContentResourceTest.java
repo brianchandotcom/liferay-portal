@@ -1457,6 +1457,26 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			journalFolder2.getFolderId(),
 			(long)getStructuredContent2.getStructuredContentFolderId());
+
+		// Get structured content inside current subfolder in Asset Library
+
+		JournalFolder journalFolder3 = JournalTestUtil.addFolder(
+			testDepotEntry.getGroupId(), journalFolder2.getFolderId(),
+			RandomTestUtil.randomString());
+
+		_journalArticleLocalService.moveArticle(
+			testDepotEntry.getGroupId(), postStructuredContent.getKey(),
+			journalFolder3.getFolderId(),
+			ServiceContextTestUtil.getServiceContext(
+				testDepotEntry.getGroupId()));
+
+		StructuredContent getStructuredContent3 =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertEquals(
+			journalFolder3.getFolderId(),
+			(long)getStructuredContent3.getStructuredContentFolderId());
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {

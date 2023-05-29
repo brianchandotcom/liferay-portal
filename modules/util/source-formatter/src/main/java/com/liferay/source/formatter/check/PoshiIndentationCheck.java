@@ -32,141 +32,101 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _fixCurlIndentation(content);
-
-		return _fixTableIndentation(content);
+		return _fixTripleQuotesIndentation(content);
 	}
 
-	private String _fixCurlIndentation(String content) {
-		Matcher matcher = _curlPattern.matcher(content);
+	private String _fixCurlIndentation(
+		String tripleQuotesContent, String indent) {
 
-		while (matcher.find()) {
-			if (StringUtil.contains(matcher.group(1), "'''")) {
-				continue;
-			}
+		String trimmedContent = tripleQuotesContent.trim();
 
-			String match = matcher.group();
+		String[] lines = trimmedContent.split("\n");
 
-			String[] lines = match.split("\n");
+		if (lines.length < 2) {
+			return tripleQuotesContent;
+		}
 
-			int leadingTabCount = getLeadingTabCount(lines[0]);
+		int leadingTabCount = indent.length();
 
-			lines[1] = _fixTabs(leadingTabCount + 1, lines[1]);
-			lines[lines.length - 1] = _fixTabs(
-				leadingTabCount, lines[lines.length - 1]);
+		lines[0] = _fixTabs(leadingTabCount + 1, lines[0]);
 
-			int level = leadingTabCount + 2;
+		int level = leadingTabCount + 2;
 
-			for (int i = 2; i < (lines.length - 1); i++) {
-				String trimmedLine = StringUtil.trim(lines[i]);
+		for (int i = 1; i < lines.length; i++) {
+			String trimmedLine = StringUtil.trim(lines[i]);
 
-				lines[i] = _fixTabs(level, trimmedLine);
+			lines[i] = _fixTabs(level, trimmedLine);
 
-				trimmedLine = trimmedLine.replaceAll(
-					"(.*?)\\$\\{.*?\\}(.*)", "$1$2");
+			trimmedLine = trimmedLine.replaceAll(
+				"(.*?)\\$\\{.*?\\}(.*)", "$1$2");
 
-				level += getLevel(trimmedLine, "[{", "}]");
+			level += getLevel(trimmedLine, "[{", "}]");
 
-				trimmedLine = StringUtil.removeSubstrings(
-					trimmedLine, "[{", "}]");
+			trimmedLine = StringUtil.removeSubstrings(trimmedLine, "[{", "}]");
 
-				level += getLevel(
-					trimmedLine,
-					new String[] {
-						StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE
-					},
-					new String[] {
-						StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE
-					});
+			level += getLevel(
+				trimmedLine,
+				new String[] {
+					StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE
+				},
+				new String[] {
+					StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE
+				});
 
-				if (trimmedLine.endsWith("'{")) {
-					level++;
-				}
-			}
-
-			StringBundler sb = new StringBundler(lines.length * 2);
-
-			for (String line : lines) {
-				if (Validator.isNotNull(line.trim())) {
-					sb.append(line);
-					sb.append(CharPool.NEW_LINE);
-				}
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			String replacement = sb.toString();
-
-			if (!match.equals(replacement)) {
-				return StringUtil.replaceFirst(
-					content, match, replacement, matcher.start());
+			if (trimmedLine.endsWith("'{")) {
+				level++;
 			}
 		}
 
-		return content;
-	}
+		StringBundler sb = new StringBundler((lines.length * 2) + 2);
 
-	private String _fixTableIndentation(String content) {
-		StringBuffer stringBuffer = new StringBuffer();
-
-		Matcher matcher = _tablePattern.matcher(content);
-
-		outerLoop:
-		while (matcher.find()) {
-			String tableContent = matcher.group(2);
-
-			String trimmedContent = tableContent.trim();
-
-			if (!trimmedContent.startsWith("|") &&
-				!trimmedContent.endsWith("|")) {
-
-				continue;
-			}
-
-			String[] lines = trimmedContent.split("\n");
-
-			for (int i = 0; i < lines.length; i++) {
-				if (Validator.isNull(lines[i])) {
-					continue;
-				}
-
-				String trimmedLine = StringUtil.trim(lines[i]);
-
-				if (!trimmedLine.startsWith("|") &&
-					!trimmedLine.endsWith("|")) {
-
-					continue outerLoop;
-				}
-
-				lines[i] = matcher.group(1) + StringPool.TAB + trimmedLine;
-			}
-
-			StringBundler sb = new StringBundler((lines.length * 2) + 2);
-
-			for (String line : lines) {
-				sb.append(CharPool.NEW_LINE);
-				sb.append(line);
-			}
-
+		for (String line : lines) {
 			sb.append(CharPool.NEW_LINE);
-			sb.append(matcher.group(1));
+			sb.append(line);
+		}
 
-			String replacement = StringUtil.replaceFirst(
-				matcher.group(), tableContent, sb.toString());
+		sb.append(CharPool.NEW_LINE);
+		sb.append(indent);
 
-			if (!tableContent.equals(replacement)) {
-				matcher.appendReplacement(
-					stringBuffer, Matcher.quoteReplacement(replacement));
+		return sb.toString();
+	}
+
+	private String _fixTableIndentation(
+		String tripleQuotesContent, String indent) {
+
+		String trimmedContent = tripleQuotesContent.trim();
+
+		if (!trimmedContent.startsWith("|") && !trimmedContent.endsWith("|")) {
+			return tripleQuotesContent;
+		}
+
+		String[] lines = trimmedContent.split("\n");
+
+		for (int i = 0; i < lines.length; i++) {
+			if (Validator.isNull(lines[i])) {
+				continue;
 			}
+
+			String trimmedLine = StringUtil.trim(lines[i]);
+
+			if (!trimmedLine.startsWith("|") && !trimmedLine.endsWith("|")) {
+				return tripleQuotesContent;
+			}
+
+			lines[i] = indent + StringPool.TAB + trimmedLine;
 		}
 
-		if (stringBuffer.length() > 0) {
-			matcher.appendTail(stringBuffer);
+		StringBundler sb = new StringBundler((lines.length * 2) + 2);
 
-			return stringBuffer.toString();
+		for (String line : lines) {
+			sb.append(CharPool.NEW_LINE);
+			sb.append(line);
 		}
 
-		return content;
+		sb.append(CharPool.NEW_LINE);
+		sb.append(indent);
+
+		return sb.toString();
 	}
 
 	private String _fixTabs(int expectedTabCount, String line) {
@@ -188,10 +148,43 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private static final Pattern _curlPattern = Pattern.compile(
-		"(?<=\n)\t*var \\w*curl = '''(\n.*?\n[ \t]*)''';(?=\n)",
-		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-	private static final Pattern _tablePattern = Pattern.compile(
-		"(?:\n)(\t+)table = '''(.+?)'''[,;)]", Pattern.DOTALL);
+	private String _fixTripleQuotesIndentation(String content) {
+		StringBuffer sb = new StringBuffer();
+
+		Matcher matcher = _tripleQuotesPattern.matcher(content);
+
+		while (matcher.find()) {
+			String replacement = null;
+			String variableName = matcher.group(3);
+
+			if (variableName.matches("(?i)\\w*curl")) {
+				replacement = _fixCurlIndentation(
+					matcher.group(4), matcher.group(1));
+			}
+			else if (variableName.equals("table")) {
+				replacement = _fixTableIndentation(
+					matcher.group(4), matcher.group(1));
+			}
+
+			if (!StringUtil.equals(matcher.group(4), replacement)) {
+				matcher.appendReplacement(
+					sb,
+					Matcher.quoteReplacement(
+						StringUtil.replaceFirst(
+							matcher.group(), matcher.group(4), replacement)));
+			}
+		}
+
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
+
+			return sb.toString();
+		}
+
+		return content;
+	}
+
+	private static final Pattern _tripleQuotesPattern = Pattern.compile(
+		"(?:\n)(\t+)(var )?(\\w+) = '''(.+?)'''[,;)]", Pattern.DOTALL);
 
 }

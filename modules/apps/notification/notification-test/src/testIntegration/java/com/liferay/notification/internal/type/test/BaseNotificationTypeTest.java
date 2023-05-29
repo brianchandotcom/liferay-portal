@@ -337,7 +337,9 @@ public class BaseNotificationTypeTest {
 		return notificationRecipientSetting;
 	}
 
-	protected String getObjectField2Name() throws PortalException {
+	protected String getObjectRelationshipObjectField2Name()
+		throws PortalException {
+
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 

@@ -130,7 +130,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 						HashMapBuilder.putAll(
 							childObjectEntryValues
 						).put(
-							getObjectField2Name(), objectEntry.getId()
+							getObjectRelationshipObjectField2Name(),
+							objectEntry.getId()
 						).build());
 				}
 			},

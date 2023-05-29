@@ -180,17 +180,18 @@ public class NotificationTemplateResourceImpl
 				_notificationTemplateService.getNotificationTemplate(
 					notificationTemplateId);
 
+		notificationTemplate.setUuid(null);
+		notificationTemplate.setExternalReferenceCode(null);
+		notificationTemplate.setUserId(contextUser.getUserId());
+		notificationTemplate.setUserName(contextUser.getFullName());
+
 		Date createDate = new Date();
 
 		notificationTemplate.setCreateDate(createDate);
 
-		notificationTemplate.setExternalReferenceCode(null);
 		notificationTemplate.setName(
 			StringUtil.appendParentheticalSuffix(
 				notificationTemplate.getName(), "copy"));
-		notificationTemplate.setUserId(contextUser.getUserId());
-		notificationTemplate.setUserName(contextUser.getFullName());
-		notificationTemplate.setUuid(null);
 
 		NotificationRecipient notificationRecipient =
 			notificationTemplate.getNotificationRecipient();
@@ -208,10 +209,10 @@ public class NotificationTemplateResourceImpl
 		for (NotificationRecipientSetting notificationRecipientSetting :
 				notificationRecipient.getNotificationRecipientSettings()) {
 
-			notificationRecipientSetting.setCreateDate(createDate);
+			notificationRecipientSetting.setUuid(null);
 			notificationRecipientSetting.setUserId(contextUser.getUserId());
 			notificationRecipientSetting.setUserName(contextUser.getFullName());
-			notificationRecipientSetting.setUuid(null);
+			notificationRecipientSetting.setCreateDate(createDate);
 
 			notificationRecipientSettings.add(notificationRecipientSetting);
 		}

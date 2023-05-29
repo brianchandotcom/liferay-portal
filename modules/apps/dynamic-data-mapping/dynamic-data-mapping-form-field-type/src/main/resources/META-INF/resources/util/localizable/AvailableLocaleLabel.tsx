@@ -17,9 +17,9 @@ import classNames from 'classnames';
 import React from 'react';
 
 interface AvailableLocaleLabelProps {
-	isDefault: boolean;
+	isDefault?: boolean;
 	isSubmitLabel: boolean;
-	isTranslated: boolean;
+	isTranslated?: boolean;
 }
 type DisplayType =
 	| 'danger'

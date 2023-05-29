@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.sql.Types;
 
@@ -43,20 +42,9 @@ public class DynamicObjectDefinitionLocalizationTable
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
 
-		String primaryKeyColumnName = TextFormatter.format(
-			objectDefinition.getShortName() + "_l10nId", TextFormatter.I);
-
-		_primaryKeyColumnName = "c_" + primaryKeyColumnName;
-
-		_foreignKeyColumnName = objectDefinition.getPKObjectFieldDBColumnName();
-
 		createColumn(
-			_foreignKeyColumnName, Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
-
-		createColumn(
-			_primaryKeyColumnName, Long.class, Types.BIGINT,
-			Column.FLAG_PRIMARY);
+			objectDefinition.getPKObjectFieldDBColumnName(), Long.class,
+			Types.BIGINT, Column.FLAG_DEFAULT);
 
 		createColumn(
 			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -75,8 +63,7 @@ public class DynamicObjectDefinitionLocalizationTable
 			new ArrayList<>(getColumns()),
 			column -> {
 				if (column.equals(getForeignKeyColumn()) ||
-					column.equals(getLanguageIdColumn()) ||
-					column.equals(_getPrimaryKeyColumn())) {
+					column.equals(getLanguageIdColumn())) {
 
 					return false;
 				}
@@ -91,9 +78,7 @@ public class DynamicObjectDefinitionLocalizationTable
 		sb.append("create table ");
 		sb.append(_objectDefinition.getLocalizationDBTableName());
 		sb.append(" (");
-		sb.append(_primaryKeyColumnName);
-		sb.append(" LONG not null primary key, ");
-		sb.append(_foreignKeyColumnName);
+		sb.append(_objectDefinition.getPKObjectFieldDBColumnName());
 		sb.append(" LONG not null, languageId VARCHAR(10) not null");
 
 		for (ObjectField objectField : _objectFields) {
@@ -105,7 +90,9 @@ public class DynamicObjectDefinitionLocalizationTable
 					objectField.getDBType()));
 		}
 
-		sb.append(")");
+		sb.append(", primary key (");
+		sb.append(_objectDefinition.getPKObjectFieldDBColumnName());
+		sb.append(", languageId))");
 
 		String sql = sb.toString();
 
@@ -120,7 +107,7 @@ public class DynamicObjectDefinitionLocalizationTable
 		getForeignKeyColumn() {
 
 		return (Column<DynamicObjectDefinitionLocalizationTable, Long>)
-			getColumn(_foreignKeyColumnName);
+			getColumn(_objectDefinition.getPKObjectFieldDBColumnName());
 	}
 
 	public String getForeignKeyColumnName() {
@@ -151,28 +138,12 @@ public class DynamicObjectDefinitionLocalizationTable
 		return _objectFields;
 	}
 
-	public String getPrimaryKeyColumnName() {
-		Column<DynamicObjectDefinitionLocalizationTable, Long>
-			primaryKeyColumn = _getPrimaryKeyColumn();
-
-		return primaryKeyColumn.getName();
-	}
-
-	private Column<DynamicObjectDefinitionLocalizationTable, Long>
-		_getPrimaryKeyColumn() {
-
-		return (Column<DynamicObjectDefinitionLocalizationTable, Long>)
-			getColumn(_primaryKeyColumnName);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicObjectDefinitionLocalizationTable.class);
 
-	private final String _foreignKeyColumnName;
 	private final ObjectDefinition _objectDefinition;
 	private final List<Column<DynamicObjectDefinitionLocalizationTable, ?>>
 		_objectFieldColumns;
 	private final List<ObjectField> _objectFields;
-	private final String _primaryKeyColumnName;
 
 }

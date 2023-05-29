@@ -110,11 +110,7 @@ public class BaseNotificationTypeTest {
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				Collections.singletonList(listTypeEntry));
 
-		parentObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
-			"textObjectField", RandomTestUtil.randomString()
-		).build();
-
-		randomObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
+		childObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"booleanObjectField", RandomTestUtil.randomBoolean()
 		).put(
 			"dateObjectField",
@@ -135,6 +131,10 @@ public class BaseNotificationTypeTest {
 				}
 			}
 		).put(
+			"textObjectField", RandomTestUtil.randomString()
+		).build();
+
+		parentObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"textObjectField", RandomTestUtil.randomString()
 		).build();
 
@@ -375,11 +375,12 @@ public class BaseNotificationTypeTest {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_authorTermValues),
 			ListUtil.fromMapValues(_currentUserTermValues),
-			ListUtil.fromMapValues(randomObjectEntryValues),
+			ListUtil.fromMapValues(childObjectEntryValues),
 			ListUtil.fromMapValues(parentObjectEntryValues),
 			ListUtil.fromString(user2.getFirstName()));
 	}
 
+	protected static LinkedHashMap<String, Object> childObjectEntryValues;
 	protected static DTOConverterContext dtoConverterContext =
 		new DefaultDTOConverterContext(
 			false, Collections.emptyMap(),
@@ -396,7 +397,6 @@ public class BaseNotificationTypeTest {
 	protected static ObjectDefinition parentObjectDefinition;
 
 	protected static LinkedHashMap<String, Object> parentObjectEntryValues;
-	protected static LinkedHashMap<String, Object> randomObjectEntryValues;
 	protected static Role role;
 	protected static User user1;
 	protected static User user2;

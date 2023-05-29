@@ -221,7 +221,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				{
 					setProperties(
 						HashMapBuilder.putAll(
-							randomObjectEntryValues
+							childObjectEntryValues
 						).put(
 							getObjectField2Name(), objectEntry.getId()
 						).build());

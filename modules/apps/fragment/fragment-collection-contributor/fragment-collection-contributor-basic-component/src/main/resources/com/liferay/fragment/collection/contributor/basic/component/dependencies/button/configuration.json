@@ -4,8 +4,25 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "primary",
+					"defaultValue": "link",
 					"label": "type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "link"
+							},
+							{
+								"value": "action"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "style",
 					"name": "buttonType",
 					"type": "select",
 					"typeOptions": {

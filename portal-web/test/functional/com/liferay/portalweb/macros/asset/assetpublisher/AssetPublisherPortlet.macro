@@ -250,8 +250,6 @@ definition {
 
 		Panel.expandPanel(panel = "Select Collection");
 
-		Alert.closeMessage(messageType = "SUCCESS");
-
 		Button.clickSelect();
 
 		WaitForElementPresent(locator1 = "IFrame#ASSET_LIST_DIALOG");

@@ -16,11 +16,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_QUEUE_NAME</td>
-		<td>//div[@class='dnd-td'][contains(.,'${key_objectName}')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>DATA_SOURCE_ATTACHMENTS</td>
 		<td>//div[@tabindex='0']//span[contains(.,'${key_dataSource}')]</td>
 		<td></td>

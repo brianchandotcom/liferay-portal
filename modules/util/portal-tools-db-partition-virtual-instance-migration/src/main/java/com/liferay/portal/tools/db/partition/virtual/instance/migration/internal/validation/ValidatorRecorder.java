@@ -51,8 +51,10 @@ public class ValidatorRecorder {
 		_errors.add(message);
 	}
 
-	public void registerErrors(List<String> modules, String message) {
-		for (String module : modules) {
+	public void registerErrors(
+		List<String> servletContextNames, String message) {
+
+		for (String module : servletContextNames) {
 			_errors.add("Module " + module + " " + message);
 		}
 	}
@@ -61,8 +63,10 @@ public class ValidatorRecorder {
 		_warnings.add(message);
 	}
 
-	public void registerWarnings(List<String> modules, String message) {
-		for (String module : modules) {
+	public void registerWarnings(
+		List<String> servletContextNames, String message) {
+
+		for (String module : servletContextNames) {
 			_warnings.add("Module " + module + " " + message);
 		}
 	}

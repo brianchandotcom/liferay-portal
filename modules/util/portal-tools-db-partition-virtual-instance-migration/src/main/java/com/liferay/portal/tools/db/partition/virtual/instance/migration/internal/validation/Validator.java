@@ -23,6 +23,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luis Ortiz
@@ -35,11 +36,7 @@ public class Validator {
 
 		ValidatorRecorder recorder = new ValidatorRecorder();
 
-		_validateReleaseState(
-			sourceConnection, destinationConnection, recorder);
-
-		_validateReleaseTableModules(
-			sourceConnection, destinationConnection, recorder);
+		_validateRelease(sourceConnection, destinationConnection, recorder);
 
 		_checkTables(sourceConnection, destinationConnection, recorder);
 
@@ -92,6 +89,101 @@ public class Validator {
 		}
 	}
 
+	private static void _validateRelease(
+			Connection sourceConnection, Connection destinationConnection,
+			ValidatorRecorder recorder)
+		throws SQLException {
+
+		_validateReleaseState(
+			sourceConnection, destinationConnection, recorder);
+
+		Map<String, Release> destinationReleaseMap = DatabaseUtil.getReleaseMap(
+			sourceConnection);
+
+		List<Release> sourceReleaseEntries = DatabaseUtil.getReleaseEntries(
+			sourceConnection);
+
+		List<String> missingDestinationModules = new ArrayList<>();
+		List<String> missingDestinationServiceModules = new ArrayList<>();
+
+		List<String> missingSourceModules = new ArrayList<>();
+		List<String> lowerVersionModules = new ArrayList<>();
+		List<String> higherVersionModules = new ArrayList<>();
+		List<String> unverifiedSourceModules = new ArrayList<>();
+		List<String> unverifiedDestinationModules = new ArrayList<>();
+
+		for (Release sourceRelease : sourceReleaseEntries) {
+			String sourceServletContextName =
+				sourceRelease.getServletContextName();
+
+			Release destinationRelease = destinationReleaseMap.remove(
+				sourceServletContextName);
+
+			if (destinationRelease == null) {
+				missingSourceModules.add(sourceServletContextName);
+
+				continue;
+			}
+
+			Version sourceVersion = sourceRelease.getSchemaVersion();
+			Version destinationVersion = destinationRelease.getSchemaVersion();
+
+			if (sourceVersion.compareTo(destinationVersion) < 0) {
+				lowerVersionModules.add(sourceServletContextName);
+			}
+			else if (sourceVersion.compareTo(destinationVersion) > 0) {
+				higherVersionModules.add(sourceServletContextName);
+			}
+
+			if (sourceRelease.getVerified() &&
+				!destinationRelease.getVerified()) {
+
+				unverifiedDestinationModules.add(sourceServletContextName);
+			}
+			else if (!sourceRelease.getVerified() &&
+					 destinationRelease.getVerified()) {
+
+				unverifiedSourceModules.add(sourceServletContextName);
+			}
+		}
+
+		for (Release destionationRelease : destinationReleaseMap.values()) {
+			String destinationServletContextName =
+				destionationRelease.getServletContextName();
+
+			if (destinationServletContextName.endsWith(".service")) {
+				missingDestinationServiceModules.add(
+					destinationServletContextName);
+			}
+			else {
+				missingDestinationModules.add(destinationServletContextName);
+			}
+		}
+
+		recorder.registerErrors(
+			missingDestinationServiceModules,
+			"needs to be installed in the source database before the " +
+				"migration");
+		recorder.registerErrors(
+			lowerVersionModules,
+			"needs to be upgraded in source database before the migration");
+		recorder.registerErrors(
+			higherVersionModules,
+			"needs to be upgraded in destination database before the " +
+				"migration");
+		recorder.registerErrors(
+			unverifiedSourceModules,
+			"needs to be verified in the source database before the migration");
+		recorder.registerErrors(
+			unverifiedDestinationModules,
+			"needs to be verified in the destination database before the " +
+				"migration");
+		recorder.registerWarnings(
+			missingSourceModules, "is not present in the destination database");
+		recorder.registerWarnings(
+			missingSourceModules, "is not present in the destination database");
+	}
+
 	private static void _validateReleaseState(
 			Connection sourceConnection, Connection destinationConnection,
 			ValidatorRecorder recorder)
@@ -117,79 +209,6 @@ public class Validator {
 			recorder.registerError(
 				"Destination " + message + failedServletContextNames);
 		}
-	}
-
-	private static void _validateReleaseTableModules(
-			Connection sourceConnection, Connection destinationConnection,
-			ValidatorRecorder recorder)
-		throws SQLException {
-
-		List<Release> sourceReleaseEntries = DatabaseUtil.getReleaseEntries(
-			sourceConnection);
-
-		List<String> missingModules = new ArrayList<>();
-		List<String> missingServiceModules = new ArrayList<>();
-		List<String> lowerVersionModules = new ArrayList<>();
-		List<String> higherVersionModules = new ArrayList<>();
-		List<String> sourceUnverifiedModules = new ArrayList<>();
-		List<String> destinationUnverifiedModules = new ArrayList<>();
-
-		for (Release sourceRelease : sourceReleaseEntries) {
-			String sourceServletContextName =
-				sourceRelease.getServletContextName();
-
-			Release destinationRelease = DatabaseUtil.getReleaseEntry(
-				destinationConnection, sourceServletContextName);
-
-			if (destinationRelease == null) {
-				if (sourceServletContextName.endsWith(".service")) {
-					missingServiceModules.add(sourceServletContextName);
-				}
-				else {
-					missingModules.add(sourceServletContextName);
-				}
-
-				continue;
-			}
-
-			Version sourceVersion = sourceRelease.getSchemaVersion();
-			Version destinationVersion = destinationRelease.getSchemaVersion();
-
-			if (sourceVersion.compareTo(destinationVersion) < 0) {
-				lowerVersionModules.add(sourceServletContextName);
-			}
-			else if (sourceVersion.compareTo(destinationVersion) > 0) {
-				higherVersionModules.add(sourceServletContextName);
-			}
-
-			if (sourceRelease.getVerified() &&
-				!destinationRelease.getVerified()) {
-
-				destinationUnverifiedModules.add(sourceServletContextName);
-			}
-			else if (!sourceRelease.getVerified() &&
-					 destinationRelease.getVerified()) {
-
-				sourceUnverifiedModules.add(sourceServletContextName);
-			}
-		}
-
-		recorder.registerErrors(
-			missingServiceModules, "will not be available in the destination");
-		recorder.registerErrors(
-			lowerVersionModules,
-			"needs to be upgraded in source database before the migration");
-		recorder.registerErrors(
-			higherVersionModules,
-			"is in a lower version in destination database");
-		recorder.registerErrors(
-			sourceUnverifiedModules,
-			"needs to be verified in the source before the migration");
-		recorder.registerErrors(
-			destinationUnverifiedModules,
-			"needs to be verified in the destination before the migration");
-		recorder.registerWarnings(
-			missingModules, "will not be available in the destination");
 	}
 
 }

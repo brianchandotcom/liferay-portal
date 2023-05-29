@@ -1,0 +1,374 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Lima Headless";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+
+		task ("Given with postSiteKnowledgeBaseArticle and siteId to create a knowledge base article with externalReferenceCode") {
+			KnowledgeBaseArticleAPI.setUpGlobalKnowledgeBaseArticleIdAndErc(
+				articleBody = "KB Article Content",
+				externalReferenceCode = "KBAErc",
+				title = "KB Article Title");
+		}
+
+		task ("And Given with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to knowledge base article") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpeg");
+
+			KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "KBAtErc",
+				knowledgeBaseArticleId = ${staticKBArticleId});
+		}
+
+		task ("And Given with postKnowledgeBaseArticleKnowledgeBaseArticle and parentKnowledgeBaseArticleId to create a child knowledge base article") {
+			KnowledgeBaseArticleAPI.setUpGlobalKnowledgeBaseArticleIdAndErc(
+				articleBody = "Sub-KB Article Content",
+				parentKnowledgeBaseArticleId = ${staticKBArticleId},
+				title = "Sub-KB Article Title");
+		}
+
+		task ("And Given with postSiteKnowledgeBaseFolder and siteId to create a knowledgeBaseFolder") {
+			KnowledgeBaseFolderAPI.setUpGlobalKnowledgeBaseFolderId(name = "KB Folder Name");
+		}
+
+		task ("And Given with postKnowledgeBaseFolderKnowledgeBaseFolder and parentKnowledgeBaseFolderId to create a folder inside parent folder") {
+			KnowledgeBaseFolderAPI.setUpGlobalKnowledgeBaseFolderId(
+				name = "Sub-KB Folder Name",
+				parentKnowledgeBaseFolderId = ${staticKBFolderId});
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+		else {
+			KnowledgeBaseArticleAPI.deleteKnowledgeBaseArticleById(knowledgeBaseArticleId = ${staticKBArticleId});
+
+			KnowledgeBaseFolderAPI.deleteKnowledgeBaseFolderById(knowledgeBaseFolderId = ${staticKBFolderId});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateAttachmentWithDefaultExternalReferenceCodeForKnowledgeBaseArticle {
+		property portal.acceptance = "true";
+
+		task ("When with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment to knowledge base article") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+
+			var responseFromPost = KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				knowledgeBaseArticleId = ${staticKBArticleId});
+		}
+
+		task ("Then the knowledgeBaseAttachment with externalReferenceCode is created") {
+			var kBAttachmentId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+			var kBAttachmentErc = JSONPathUtil.getErcValue(response = ${responseFromPost});
+			var responseFromGet = KnowledgeBaseAttachmentAPI.getKBAttachmentById(kBAttachmentId = ${kBAttachmentId});
+
+			var actualValue = JSONPathUtil.getErcValue(response = ${responseFromGet});
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = ${kBAttachmentErc});
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateAttachmentWithExternalReferenceCodeForChildKnowledgeBaseArticle {
+		property portal.acceptance = "true";
+
+		task ("When with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with custom externalReferenceCode to the child knowledge base article") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+
+			var responseFromPost = KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "SubKBAtErc",
+				knowledgeBaseArticleId = ${staticSubKBArticleId});
+		}
+
+		task ("Then the knowledgeBaseAttachment with custom externalReferenceCode is created") {
+			var kBAttachmentId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			var responseFromGet = KnowledgeBaseAttachmentAPI.getKBAttachmentById(kBAttachmentId = ${kBAttachmentId});
+
+			var actualValue = JSONPathUtil.getErcValue(response = ${responseFromGet});
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "SubKBAtErc");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateAttachmentWithExternalReferenceCodeForKnowledgeBaseArticleInChildFolder {
+		property portal.acceptance = "true";
+
+		task ("And Given with postKnowledgeBaseFolderKnowledgeBaseArticle and knowledgeBaseFolderId to create a knowledge base article with externalReferenceCode inside child folder") {
+			var responseFromPost = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
+				articleBody = "KBF_1 Article Content",
+				externalReferenceCode = "KBF_1AErc",
+				knowledgeBaseFolderId = ${staticSubKBFolderId},
+				title = "KBF_1 Article Title");
+		}
+
+		task ("When with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to knowledge base article") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+			var knowledgeBaseArticleId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			var responseFromPost = KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "KBF_1AtErc",
+				knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+		}
+
+		task ("Then the knowledgeBaseAttachment with custom externalReferenceCode is created") {
+			var kBAttachmentId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			var responseFromGet = KnowledgeBaseAttachmentAPI.getKBAttachmentById(kBAttachmentId = ${kBAttachmentId});
+
+			var actualValue = JSONPathUtil.getErcValue(response = ${responseFromGet});
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "KBF_1AtErc");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanCreateAttachmentWithExternalReferenceCodeForKnowledgeBaseArticleInFolder {
+		property portal.acceptance = "true";
+
+		task ("And Given with postKnowledgeBaseFolderKnowledgeBaseArticle and knowledgeBaseFolderId to create a knowledge base article with externalReferenceCode") {
+			var responseFromPost = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
+				articleBody = "KBF Article Content",
+				externalReferenceCode = "KBFAErc",
+				knowledgeBaseFolderId = ${staticKBFolderId},
+				title = "KBF Article Title");
+		}
+
+		task ("When with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to knowledge base article") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+			var knowledgeBaseArticleId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			var responseFromPost = KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "KBFAtErc",
+				knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+		}
+
+		task ("Then the knowledgeBaseAttachment with custom externalReferenceCode is created") {
+			var kBAttachmentId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			var responseFromGet = KnowledgeBaseAttachmentAPI.getKBAttachmentById(kBAttachmentId = ${kBAttachmentId});
+
+			var actualValue = JSONPathUtil.getErcValue(response = ${responseFromGet});
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "KBFAtErc");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CanDeleteAttachementForKnowledgeBaseArticleByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When with deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and siteId and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to delete the knwoledgeBaseAttachment") {
+			KnowledgeBaseAttachmentAPI.deleteKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBAErc",
+				kBAttachmentErc = "KBAtErc");
+		}
+
+		task ("Then the knowledgeBaseAttachment is deleted") {
+			var response = KnowledgeBaseAttachmentAPI.getKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBAErc",
+				kBAttachmentErc = "KBAtErc");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
+
+			TestUtils.assertPartialEquals(
+				actual = ${actualValue},
+				expected = "No DLFileEntry exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanDeleteAttachmentForKnowledgeBaseArticleInFolderByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("And Given with postKnowledgeBaseFolderKnowledgeBaseArticle and knowledgeBaseFolderId to create a knowledge base article with externalReferenceCode") {
+			var responseFromPost = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
+				articleBody = "KBF Article Content",
+				externalReferenceCode = "KBFAErc",
+				knowledgeBaseFolderId = ${staticKBFolderId},
+				title = "KBF Article Title");
+		}
+
+		task ("And Given with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to knowledge base article in folder") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+			var knowledgeBaseArticleId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "KBFAtErc",
+				knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+		}
+
+		task ("When with deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and siteId and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to delete the attachment for knowledgeBaseArticle in folder") {
+			KnowledgeBaseAttachmentAPI.deleteKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBFAErc",
+				kBAttachmentErc = "KBFAtErc");
+		}
+
+		task ("Then the knowledgeBaseAttachment in folder is deleted") {
+			var response = KnowledgeBaseAttachmentAPI.getKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBFAErc",
+				kBAttachmentErc = "KBFAtErc");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.title");
+
+			TestUtils.assertPartialEquals(
+				actual = ${actualValue},
+				expected = "No DLFileEntry exists with the key");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetAttachmentForChildKnowledgeBaseArticleByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("And Given with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to the child knowledge base article") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+
+			KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "SubKBAtErc",
+				knowledgeBaseArticleId = ${staticSubKBArticleId});
+		}
+
+		task ("When with getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to retrieve the attachment for child knowledgeBaseArticle") {
+			var response = KnowledgeBaseAttachmentAPI.getKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = ${staticSubKBArticleErc},
+				kBAttachmentErc = "SubKBAtErc");
+		}
+
+		task ("Then I can see details of the knowledgeBaseAttachment") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.externalReferenceCode=='SubKBAtErc')].title");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Document_2.jpeg");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetAttachmentForKnowledgeBaseArticleByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("When with getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to retrieve the knwoledgeBaseAttachment") {
+			var response = KnowledgeBaseAttachmentAPI.getKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBAErc",
+				kBAttachmentErc = "KBAtErc");
+		}
+
+		task ("Then I can see details of the knowledgeBaseAttachment") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.externalReferenceCode=='KBAtErc')].title");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Document_1.jpeg");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetAttachmentForKnowledgeBaseArticleInChildFolderByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("And Given with postKnowledgeBaseFolderKnowledgeBaseArticle and knowledgeBaseFolderId to create a knowledge base article with externalReferenceCode inside child folder") {
+			var responseFromPost = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
+				articleBody = "KBF_1 Article Content",
+				externalReferenceCode = "KBF_1AErc",
+				knowledgeBaseFolderId = ${staticSubKBFolderId},
+				title = "KBF_1 Article Title");
+		}
+
+		task ("And Given with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to knowledge base article inside child folder") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+			var knowledgeBaseArticleId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "KBF_1AtErc",
+				knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+		}
+
+		task ("When with getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to retrieve the attachment for knowledgeBaseArticle inside child folder") {
+			var response = KnowledgeBaseAttachmentAPI.getKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBF_1AErc",
+				kBAttachmentErc = "KBF_1AtErc");
+		}
+
+		task ("Then I can see details of the knowledgeBaseAttachment") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.externalReferenceCode=='KBF_1AtErc')].title");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Document_2.jpeg");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetAttachmentForKnowledgeBaseArticleInFolderByExternalReferenceCode {
+		property portal.acceptance = "true";
+
+		task ("And Given with postKnowledgeBaseFolderKnowledgeBaseArticle and knowledgeBaseFolderId to create a knowledge base article with externalReferenceCode") {
+			var responseFromPost = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
+				articleBody = "KBF Article Content",
+				externalReferenceCode = "KBFAErc",
+				knowledgeBaseFolderId = ${staticKBFolderId},
+				title = "KBF Article Title");
+		}
+
+		task ("And Given with postKnowledgeBaseArticleKnowledgeBaseAttachment and knowledgeBaseArticleId to upload an attachment with externalReferenceCode to knowledge base article in folder") {
+			var attachmentPath = TestCase.getDependenciesDirPath(fileName = "Document_2.jpeg");
+			var knowledgeBaseArticleId = JSONPathUtil.getIdValue(response = ${responseFromPost});
+
+			KnowledgeBaseAttachmentAPI.createKnowledgeBaseAttachment(
+				attachmentPath = ${attachmentPath},
+				externalReferenceCode = "KBFAtErc",
+				knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+		}
+
+		task ("When with getSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to retrieve the attachment for knowledgeBaseArticle in folder") {
+			var response = KnowledgeBaseAttachmentAPI.getKBAttachmentByKBArticleErcAndKBAttachmentErc(
+				kBArticleErc = "KBFAErc",
+				kBAttachmentErc = "KBFAtErc");
+		}
+
+		task ("Then I can see details of the knowledgeBaseAttachment") {
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.[?(@.externalReferenceCode=='KBFAtErc')].title");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "Document_2.jpeg");
+		}
+	}
+
+}

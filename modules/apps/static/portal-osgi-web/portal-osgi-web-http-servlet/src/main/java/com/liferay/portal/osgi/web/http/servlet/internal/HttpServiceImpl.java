@@ -13,6 +13,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.osgi.web.http.servlet.ExtendedHttpService;
 
 import java.net.URL;
@@ -71,7 +72,8 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 				});
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			unchecked(privilegedActionException.getException());
+			ReflectionUtil.throwException(
+				privilegedActionException.getException());
 		}
 	}
 
@@ -92,7 +94,8 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 				});
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			unchecked(privilegedActionException.getException());
+			ReflectionUtil.throwException(
+				privilegedActionException.getException());
 		}
 	}
 
@@ -114,7 +117,8 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 				});
 		}
 		catch (PrivilegedActionException privilegedActionException) {
-			unchecked(privilegedActionException.getException());
+			ReflectionUtil.throwException(
+				privilegedActionException.getException());
 		}
 	}
 
@@ -132,21 +136,10 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 		_httpServiceRuntimeImpl.unregisterHttpServiceFilter(_bundle, filter);
 	}
 
-	protected static <T> void unchecked(Exception exception) {
-		HttpServiceImpl.<T, RuntimeException>_unchecked(exception);
-	}
-
 	protected synchronized void shutdown() {
 		_httpServiceRuntimeImpl.unregisterHttpServiceObjects(_bundle);
 
 		_shutdown = true;
-	}
-
-	@SuppressWarnings("unchecked")
-	private static <T, E extends Exception> void _unchecked(Exception exception)
-		throws E {
-
-		throw (E)exception;
 	}
 
 	private void _checkShutdown() {

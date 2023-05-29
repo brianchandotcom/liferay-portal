@@ -2334,6 +2334,8 @@ definition {
 	@description = "This is a use case for LPS-120825."
 	@priority = 4
 	test UpdateUserInformation {
+		property test.name.skip.portal.instance = "UsersAdmin#UpdateUserInformation";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

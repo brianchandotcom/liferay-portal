@@ -283,6 +283,8 @@ definition {
 	@description = "This is a use case for LPS-120825."
 	@priority = 4
 	test UpdateUserInformation {
+		property test.name.skip.portal.instance = "Personalmenu#UpdateUserInformation";
+
 		UserBar.viewUserDefaultIcon();
 
 		Navigator.gotoAccountSettings();

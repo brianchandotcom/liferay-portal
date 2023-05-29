@@ -34,6 +34,8 @@ class LogServiceSupport
 
     private final Bundle bundle;
 
+	private final InternalLogger defaultLogger;
+
     private static boolean checkForLoggerFactory(Class<?> clazz)
     {
         while ( clazz != null )
@@ -60,23 +62,24 @@ class LogServiceSupport
         this.logService = (LogService) logService;
         this.bundle = bundle;
         this.r7Enabled = checkForLoggerFactory(this.logService.getClass());
+
+		if ( r7Enabled )
+        {
+            defaultLogger = new R7LogServiceLogger(this.bundle, this.logService, null);
+        }
+		else {
+			defaultLogger = new R6LogServiceLogger(this.logService);
+		}
     }
 
     InternalLogger getLogger()
     {
-        if ( r7Enabled )
-        {
-            return new R7LogServiceLogger(this.bundle, this.logService, null);
-        }
-        return new R6LogServiceLogger(this.logService);
+        return defaultLogger;
     }
 
     InternalLogger getLogger(final String className)
     {
-        if ( r7Enabled )
-        {
-            return new R7LogServiceLogger(this.bundle, this.logService, className);
-        }
-        return new R6LogServiceLogger(this.logService);
+        return defaultLogger;
     }
 }
+/* @generated */

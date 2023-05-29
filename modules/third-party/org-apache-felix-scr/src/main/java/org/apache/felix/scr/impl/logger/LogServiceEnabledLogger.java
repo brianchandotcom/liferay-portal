@@ -37,10 +37,6 @@ abstract class LogServiceEnabledLogger extends AbstractLogger
     // the log service to log messages to
     protected final ServiceTracker<Object, Object> logServiceTracker;
 
-    private volatile InternalLogger currentLogger;
-
-    protected volatile int trackingCount = -2;
-
     public LogServiceEnabledLogger(final ScrConfiguration config, final BundleContext bundleContext)
     {
         super(config, getBundleIdentifier(bundleContext.getBundle()));
@@ -94,21 +90,15 @@ abstract class LogServiceEnabledLogger extends AbstractLogger
     @Override
     InternalLogger getLogger()
     {
-        if ( this.trackingCount < this.logServiceTracker.getTrackingCount() )
-        {
-            final Object logServiceSupport = this.logServiceTracker.getService();
-            if ( logServiceSupport == null )
-            {
-                this.currentLogger = this.getDefaultLogger();
-            }
-            else
-            {
-                this.currentLogger = ((LogServiceSupport)logServiceSupport).getLogger();
-            }
-            this.trackingCount = this.logServiceTracker.getTrackingCount();
-        }
-        return currentLogger;
+		LogServiceSupport logServiceSupport = (LogServiceSupport)logServiceTracker.getService();
+
+		if (logServiceSupport == null) {
+			return getDefaultLogger();
+		}
+
+		return logServiceSupport.getLogger();
     }
 
     abstract InternalLogger getDefaultLogger();
 }
+/* @generated */

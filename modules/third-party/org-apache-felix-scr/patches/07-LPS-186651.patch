@@ -1,0 +1,156 @@
+diff --git a/org/apache/felix/scr/impl/logger/BundleLogger.java b/org/apache/felix/scr/impl/logger/BundleLogger.java
+index 915fe8a4b7c2..8325720158eb 100755
+--- a/org/apache/felix/scr/impl/logger/BundleLogger.java
++++ b/org/apache/felix/scr/impl/logger/BundleLogger.java
+@@ -59,11 +59,6 @@ public class BundleLogger extends LogServiceEnabledLogger
+         };
+     }
+ 
+-    int getTrackingCount()
+-    {
+-        return trackingCount;
+-    }
+-
+     InternalLogger getLogger(final String className)
+     {
+         if ( className != null )
+@@ -95,3 +90,4 @@ public class BundleLogger extends LogServiceEnabledLogger
+         return false;
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/felix/scr/impl/logger/ComponentLogger.java b/org/apache/felix/scr/impl/logger/ComponentLogger.java
+index 7f85b48505ce..c0b0f20422ee 100755
+--- a/org/apache/felix/scr/impl/logger/ComponentLogger.java
++++ b/org/apache/felix/scr/impl/logger/ComponentLogger.java
+@@ -33,10 +33,6 @@ public class ComponentLogger extends AbstractLogger
+ 
+     private final BundleLogger parent;
+ 
+-    private volatile int trackingCount = -3;
+-
+-    private volatile InternalLogger currentLogger;
+-
+     public ComponentLogger(final ComponentMetadata metadata, final BundleLogger parent)
+     {
+         super(parent.getConfiguration(), ""); // we set the prefix later
+@@ -83,12 +79,7 @@ public class ComponentLogger extends AbstractLogger
+     @Override
+     InternalLogger getLogger()
+     {
+-        if ( this.trackingCount < this.parent.getTrackingCount() )
+-        {
+-            this.currentLogger = this.parent.getLogger(this.className);
+-            this.trackingCount = this.parent.getTrackingCount();
+-        }
+-        return currentLogger;
++        return this.parent.getLogger(this.className);
+     }
+ 
+     @Override
+@@ -109,3 +100,4 @@ public class ComponentLogger extends AbstractLogger
+         return false;
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java b/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java
+index 26ad9b1144d1..7324f8e1b45b 100755
+--- a/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java
++++ b/org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java
+@@ -37,10 +37,6 @@ abstract class LogServiceEnabledLogger extends AbstractLogger
+     // the log service to log messages to
+     protected final ServiceTracker<Object, Object> logServiceTracker;
+ 
+-    private volatile InternalLogger currentLogger;
+-
+-    protected volatile int trackingCount = -2;
+-
+     public LogServiceEnabledLogger(final ScrConfiguration config, final BundleContext bundleContext)
+     {
+         super(config, getBundleIdentifier(bundleContext.getBundle()));
+@@ -94,21 +90,15 @@ abstract class LogServiceEnabledLogger extends AbstractLogger
+     @Override
+     InternalLogger getLogger()
+     {
+-        if ( this.trackingCount < this.logServiceTracker.getTrackingCount() )
+-        {
+-            final Object logServiceSupport = this.logServiceTracker.getService();
+-            if ( logServiceSupport == null )
+-            {
+-                this.currentLogger = this.getDefaultLogger();
+-            }
+-            else
+-            {
+-                this.currentLogger = ((LogServiceSupport)logServiceSupport).getLogger();
+-            }
+-            this.trackingCount = this.logServiceTracker.getTrackingCount();
+-        }
+-        return currentLogger;
++		LogServiceSupport logServiceSupport = (LogServiceSupport)logServiceTracker.getService();
++
++		if (logServiceSupport == null) {
++			return getDefaultLogger();
++		}
++
++		return logServiceSupport.getLogger();
+     }
+ 
+     abstract InternalLogger getDefaultLogger();
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/felix/scr/impl/logger/LogServiceSupport.java b/org/apache/felix/scr/impl/logger/LogServiceSupport.java
+index 90e3f71ba0ff..97b8987501ba 100755
+--- a/org/apache/felix/scr/impl/logger/LogServiceSupport.java
++++ b/org/apache/felix/scr/impl/logger/LogServiceSupport.java
+@@ -34,6 +34,8 @@ class LogServiceSupport
+ 
+     private final Bundle bundle;
+ 
++	private final InternalLogger defaultLogger;
++
+     private static boolean checkForLoggerFactory(Class<?> clazz)
+     {
+         while ( clazz != null )
+@@ -60,23 +62,24 @@ class LogServiceSupport
+         this.logService = (LogService) logService;
+         this.bundle = bundle;
+         this.r7Enabled = checkForLoggerFactory(this.logService.getClass());
++
++		if ( r7Enabled )
++        {
++            defaultLogger = new R7LogServiceLogger(this.bundle, this.logService, null);
++        }
++		else {
++			defaultLogger = new R6LogServiceLogger(this.logService);
++		}
+     }
+ 
+     InternalLogger getLogger()
+     {
+-        if ( r7Enabled )
+-        {
+-            return new R7LogServiceLogger(this.bundle, this.logService, null);
+-        }
+-        return new R6LogServiceLogger(this.logService);
++        return defaultLogger;
+     }
+ 
+     InternalLogger getLogger(final String className)
+     {
+-        if ( r7Enabled )
+-        {
+-            return new R7LogServiceLogger(this.bundle, this.logService, className);
+-        }
+-        return new R6LogServiceLogger(this.logService);
++        return defaultLogger;
+     }
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file

@@ -16,7 +16,7 @@
 
 <div class="icon-sites <%= (childPanelCategoriesSize == 1) ? "" : "collapsible-icon" %>">
 	<clay:button
-		aria-label='<%= LanguageUtil.get(request, "go-to-other-site-or-library") %>'
+		aria-label='<%= LanguageUtil.get(request, "go-to-other-site") %>'
 		borderless="<%= true %>"
 		cssClass="lfr-portal-tooltip text-white"
 		displayType="secondary"
@@ -24,7 +24,7 @@
 		id='<%= liferayPortletResponse.getNamespace() + "manageSitesLink" %>'
 		monospaced="<%= true %>"
 		small="<%= true %>"
-		title='<%= LanguageUtil.get(request, "go-to-other-site-or-library") %>'
+		title='<%= LanguageUtil.get(request, "go-to-other-site") %>'
 	/>
 </div>
 

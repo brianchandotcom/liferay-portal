@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.Release;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -33,7 +34,7 @@ import org.mockito.Mockito;
 /**
  * @author Luis Ortiz
  */
-public class DatabaseTest {
+public class DatabaseUtilTest {
 
 	@Test
 	public void testGetReleaseEntries() throws SQLException {
@@ -93,7 +94,8 @@ public class DatabaseTest {
 			module2Release.getVerified()
 		);
 
-		List<Release> releaseEntries = Database.getReleaseEntries(_connection);
+		List<Release> releaseEntries = DatabaseUtil.getReleaseEntries(
+			_connection);
 
 		Assert.assertTrue(releaseEntries.size() == 2);
 
@@ -113,7 +115,7 @@ public class DatabaseTest {
 
 		_mockGetReleaseEntry(testRelease, true);
 
-		Release release = Database.getReleaseEntry(_connection, "module");
+		Release release = DatabaseUtil.getReleaseEntry(_connection, "module");
 
 		Assert.assertNotNull(release);
 
@@ -138,7 +140,7 @@ public class DatabaseTest {
 
 		_mockGetReleaseEntry(testRelease, false);
 
-		Release release = Database.getReleaseEntry(_connection, "module");
+		Release release = DatabaseUtil.getReleaseEntry(_connection, "module");
 
 		Assert.assertNull(release);
 
@@ -264,7 +266,7 @@ public class DatabaseTest {
 			true
 		);
 
-		List<String> tables = Database.getTables(_connection);
+		List<String> tables = DatabaseUtil.getTables(_connection);
 
 		Assert.assertTrue(tables.size() == 2);
 
@@ -278,7 +280,7 @@ public class DatabaseTest {
 	public void testHasNotWebId() throws SQLException {
 		_mockWebId(false);
 
-		Assert.assertFalse(Database.hasWebId(_connection, "portlet2"));
+		Assert.assertFalse(DatabaseUtil.hasWebId(_connection, "portlet2"));
 
 		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
 			String.class);
@@ -295,7 +297,7 @@ public class DatabaseTest {
 	public void testHasWebId() throws SQLException {
 		_mockWebId(true);
 
-		Assert.assertTrue(Database.hasWebId(_connection, "portlet1"));
+		Assert.assertTrue(DatabaseUtil.hasWebId(_connection, "portlet1"));
 
 		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
 			String.class);
@@ -313,7 +315,7 @@ public class DatabaseTest {
 		_mockReleaseState(false);
 
 		List<String> failedServletContextNames =
-			Database.getFailedServletContextNames(_connection);
+			DatabaseUtil.getFailedServletContextNames(_connection);
 
 		Assert.assertTrue(failedServletContextNames.size() == 2);
 
@@ -325,7 +327,7 @@ public class DatabaseTest {
 	public void testIsDefaultPartition() throws SQLException {
 		_mockDefaultPartition(true);
 
-		Assert.assertTrue(Database.isDefaultPartition(_connection));
+		Assert.assertTrue(DatabaseUtil.isDefaultPartition(_connection));
 
 		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
 			String.class);
@@ -348,7 +350,7 @@ public class DatabaseTest {
 	public void testIsNotDefaultPartition() throws SQLException {
 		_mockDefaultPartition(false);
 
-		Assert.assertFalse(Database.isDefaultPartition(_connection));
+		Assert.assertFalse(DatabaseUtil.isDefaultPartition(_connection));
 
 		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
 			String.class);
@@ -370,14 +372,14 @@ public class DatabaseTest {
 	public void testIsNotSingleVirtualInstance() throws SQLException {
 		_mockSingleVirtualInstance(false);
 
-		Assert.assertFalse(Database.isSingleVirtualInstance(_connection));
+		Assert.assertFalse(DatabaseUtil.isSingleVirtualInstance(_connection));
 	}
 
 	@Test
 	public void testIsSingleVirtualInstance() throws SQLException {
 		_mockSingleVirtualInstance(true);
 
-		Assert.assertTrue(Database.isSingleVirtualInstance(_connection));
+		Assert.assertTrue(DatabaseUtil.isSingleVirtualInstance(_connection));
 	}
 
 	@Test
@@ -385,7 +387,7 @@ public class DatabaseTest {
 		_mockReleaseState(true);
 
 		List<String> failedServletContextNames =
-			Database.getFailedServletContextNames(_connection);
+			DatabaseUtil.getFailedServletContextNames(_connection);
 
 		Assert.assertTrue(failedServletContextNames.isEmpty());
 	}

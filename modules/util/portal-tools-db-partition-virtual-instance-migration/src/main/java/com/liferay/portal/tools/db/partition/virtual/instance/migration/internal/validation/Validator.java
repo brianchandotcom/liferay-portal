@@ -15,8 +15,8 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.Release;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.Database;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.Version;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.DatabaseUtil;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -53,8 +53,8 @@ public class Validator {
 			ValidatorRecorder recorder)
 		throws SQLException {
 
-		List<String> sourceTables = Database.getTables(sourceConnection);
-		List<String> destinationTables = Database.getTables(
+		List<String> sourceTables = DatabaseUtil.getTables(sourceConnection);
+		List<String> destinationTables = DatabaseUtil.getTables(
 			destinationConnection);
 
 		for (String tableName : sourceTables) {
@@ -83,9 +83,9 @@ public class Validator {
 			ValidatorRecorder recorder)
 		throws SQLException {
 
-		String sourceWebId = Database.getWebId(sourceConnection);
+		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);
 
-		if (Database.hasWebId(destinationConnection, sourceWebId)) {
+		if (DatabaseUtil.hasWebId(destinationConnection, sourceWebId)) {
 			recorder.registerWarning(
 				"webId " + sourceWebId +
 					" already exists in destination database");
@@ -102,7 +102,7 @@ public class Validator {
 				"failed state: ";
 
 		String failedServletContextNames = String.join(
-			", ", Database.getFailedServletContextNames(sourceConnection));
+			", ", DatabaseUtil.getFailedServletContextNames(sourceConnection));
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerError(
@@ -110,7 +110,8 @@ public class Validator {
 		}
 
 		failedServletContextNames = String.join(
-			", ", Database.getFailedServletContextNames(destinationConnection));
+			", ",
+			DatabaseUtil.getFailedServletContextNames(destinationConnection));
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerError(
@@ -123,7 +124,7 @@ public class Validator {
 			ValidatorRecorder recorder)
 		throws SQLException {
 
-		List<Release> sourceReleaseEntries = Database.getReleaseEntries(
+		List<Release> sourceReleaseEntries = DatabaseUtil.getReleaseEntries(
 			sourceConnection);
 
 		List<String> missingModules = new ArrayList<>();
@@ -137,7 +138,7 @@ public class Validator {
 			String sourceServletContextName =
 				sourceRelease.getServletContextName();
 
-			Release destinationRelease = Database.getReleaseEntry(
+			Release destinationRelease = DatabaseUtil.getReleaseEntry(
 				destinationConnection, sourceServletContextName);
 
 			if (destinationRelease == null) {

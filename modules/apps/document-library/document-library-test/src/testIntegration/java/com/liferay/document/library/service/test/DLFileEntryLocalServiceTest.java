@@ -761,12 +761,12 @@ public class DLFileEntryLocalServiceTest {
 				dlFileEntry.getName()
 			).fileExtension(
 				dlFileEntry.getExtension()
+			).sourceFileName(
+				StringUtil.randomString()
 			).validateFileExtension(
 				false
 			).versionLabel(
 				"2.0"
-			).sourceFileName(
-				StringUtil.randomString()
 			).build(),
 			inputStream);
 

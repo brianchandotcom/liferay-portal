@@ -3402,12 +3402,12 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.getName()
 				).fileExtension(
 					dlFileEntry.getExtension()
+				).sourceFileName(
+					sourceFileName
 				).validateFileExtension(
 					false
 				).versionLabel(
 					updatedFileVersion.getStoreFileName()
-				).sourceFileName(
-					sourceFileName
 				).build();
 
 				if (file != null) {

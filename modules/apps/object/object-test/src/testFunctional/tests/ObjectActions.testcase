@@ -216,7 +216,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-173537 - Verify creating a custom object entry triggers an action to update an Account entry"
+	@description = "LPS-173537 - Verify updating a custom object entry triggers an action to add an Account entry"
 	@priority = 5
 	test CanAddAccountEntryAfterUpdatingCustomObjectEntry {
 		property portal.acceptance = "true";

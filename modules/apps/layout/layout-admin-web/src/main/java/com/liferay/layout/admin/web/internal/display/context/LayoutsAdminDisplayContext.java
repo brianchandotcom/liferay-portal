@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -667,16 +666,6 @@ public class LayoutsAdminDisplayContext {
 
 	public UnicodeProperties getGroupTypeSettingsUnicodeProperties() {
 		return _groupDisplayContextHelper.getGroupTypeSettings();
-	}
-
-	public LayoutSet getGuestGroupLayoutSet(long companyId)
-		throws PortalException {
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		return LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), isPrivateLayout());
 	}
 
 	public String getKeywords() {

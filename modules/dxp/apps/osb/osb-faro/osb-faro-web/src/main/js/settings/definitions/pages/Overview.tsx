@@ -1,10 +1,10 @@
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
+import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import React from 'react';
 import {ACCOUNTS, Routes, toRoute} from 'shared/util/router';
 import {DEVELOPER_MODE} from 'shared/util/constants';
-import {Link} from 'react-router-dom';
 import {withCurrentUser} from 'shared/hoc';
 
 interface IOverviewProps {
@@ -124,14 +124,18 @@ export const Overview: React.FC<IOverviewProps> = ({groupId}) => (
 											}) => (
 												<ClayList.Item key={title}>
 													<ClayList.ItemTitle>
-														<Link
-															to={toRoute(route, {
-																groupId,
-																...routeParams
-															})}
+														<ClayLink
+															decoration='none'
+															href={toRoute(
+																route,
+																{
+																	groupId,
+																	...routeParams
+																}
+															)}
 														>
 															{title}
-														</Link>
+														</ClayLink>
 													</ClayList.ItemTitle>
 
 													<ClayList.ItemText>

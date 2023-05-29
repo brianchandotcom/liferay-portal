@@ -245,7 +245,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 			<Nav.Item>
 				<ClayLink
 					button
-					className='button-root nav-btn'
+					className='button-root'
 					displayType='primary'
 					href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
 						groupId
@@ -257,6 +257,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 							{ip: '0'}
 						);
 					}}
+					small
 				>
 					{Liferay.Language.get('add-data-source')}
 				</ClayLink>

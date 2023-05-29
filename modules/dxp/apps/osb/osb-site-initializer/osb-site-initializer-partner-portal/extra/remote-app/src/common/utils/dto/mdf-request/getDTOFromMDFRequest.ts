@@ -28,9 +28,13 @@ export function getDTOFromMDFRequest(
 			: Liferay.ThemeDisplay.getUserEmailAddress(),
 		externalReferenceCode,
 		externalReferenceCodeSF,
-		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.join(
-			'; '
-		),
+		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoals?.includes(
+			'Other - Please describe'
+		)
+			? mdfRequest.liferayBusinessSalesGoals
+					?.filter((item) => item !== 'Other - Please describe')
+					.join('; ')
+			: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 		liferayBusinessSalesGoalsOther:
 			mdfRequest?.liferayBusinessSalesGoalsOther,
 		liferaysUserIdSF: mdfRequest.id

@@ -72,10 +72,17 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Liferay business/sales goals',
-					value:
-						mdfRequest.liferayBusinessSalesGoals?.join('; ') +
-						'; ' +
-						mdfRequest.liferayBusinessSalesGoalsOther,
+					value: mdfRequest.liferayBusinessSalesGoals?.includes(
+						'Other - Please describe'
+					)
+						? mdfRequest.liferayBusinessSalesGoals
+								?.filter(
+									(item) => item !== 'Other - Please describe'
+								)
+								.join('; ') +
+						  '; ' +
+						  mdfRequest.liferayBusinessSalesGoalsOther
+						: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 				},
 			]}
 		/>

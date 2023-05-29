@@ -4,9 +4,6 @@ apply plugin: "com.liferay.patcher"
 
 task patch(type: PatchTask)
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
 dependencies {
 	compileOnly group: "org.eclipse.platform", name: "org.eclipse.osgi", transitive: false, version: "3.13.0"
 }

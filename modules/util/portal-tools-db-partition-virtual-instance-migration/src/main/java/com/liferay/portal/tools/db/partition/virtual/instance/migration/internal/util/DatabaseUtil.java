@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.Release;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -32,7 +33,7 @@ import java.util.Set;
 /**
  * @author Luis Ortiz
  */
-public class Database {
+public class DatabaseUtil {
 
 	public static List<String> getFailedServletContextNames(
 			Connection connection)

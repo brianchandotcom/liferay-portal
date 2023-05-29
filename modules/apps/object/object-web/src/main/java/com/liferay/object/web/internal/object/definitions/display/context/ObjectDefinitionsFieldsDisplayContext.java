@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -164,6 +165,14 @@ public class ObjectDefinitionsFieldsDisplayContext
 					 includeRelationshipObjectFieldBusinessType)));
 	}
 
+	public List<Map<String, Object>> getObjectFieldCodeEditorElements() {
+		return ObjectCodeEditorUtil.getCodeEditorElements(
+			"old-value", true, true, objectRequestHelper.getLocale(),
+			getObjectDefinitionId(),
+			objectField -> !objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));
+	}
+
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements(
 		String businessType) {
 
@@ -181,7 +190,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 		}
 
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			true, false, objectRequestHelper.getLocale(),
+			StringPool.BLANK, true, false, objectRequestHelper.getLocale(),
 			getObjectDefinitionId(), objectField -> !objectField.isSystem());
 	}
 

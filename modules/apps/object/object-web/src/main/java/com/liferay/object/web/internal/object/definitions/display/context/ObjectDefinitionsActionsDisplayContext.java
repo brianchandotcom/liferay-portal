@@ -117,7 +117,7 @@ public class ObjectDefinitionsActionsDisplayContext
 
 	public List<Map<String, Object>> getObjectActionCodeEditorElements() {
 		return ObjectCodeEditorUtil.getCodeEditorElements(
-			true, true, objectRequestHelper.getLocale(),
+			StringPool.BLANK, true, true, objectRequestHelper.getLocale(),
 			getObjectDefinitionId(),
 			objectField -> !objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION));

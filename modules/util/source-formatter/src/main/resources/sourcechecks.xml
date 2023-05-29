@@ -1588,6 +1588,10 @@
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />
 		</check>
+		<check name="UpgradeJavaExtractTextCheck">
+			<category name="Upgrade" />
+			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
+		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements" />

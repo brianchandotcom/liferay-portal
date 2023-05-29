@@ -52,6 +52,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"readOnly", !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
+			"readOnlySidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements()
+		).put(
 			"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements(objectField.getBusinessType())
 		).put(
 			"workflowStatusJSONArray", LocalizedJSONArrayUtil.getWorkflowStatusJSONArray(locale)

@@ -152,14 +152,6 @@ const SelectSubscription = ({
 		[generateFormValues?.subscriptionTerms, selectedProductKey]
 	);
 
-	const subscriptionTermEndDateByKeyType = (subscriptionTerm) =>
-		getDateCustomFormat(
-			hasNotPermanentLicence
-				? subscriptionTerm.licenseKeyEndDate
-				: subscriptionTerm.endDate,
-			FORMAT_DATE_TYPES.day2DMonthSYearN
-		);
-
 	const getCustomAlert = (subscriptionTerm) =>
 		hasNotPermanentLicence || doesNotAllowPermanentLicense ? (
 			<ClayAlert className="px-4 py-3" displayType="info">
@@ -169,7 +161,10 @@ const SelectSubscription = ({
 							subscriptionTerm.startDate,
 							FORMAT_DATE_TYPES.day2DMonthSYearN
 						),
-						subscriptionTermEndDateByKeyType(subscriptionTerm),
+						getDateCustomFormat(
+							subscriptionTerm.endDate,
+							FORMAT_DATE_TYPES.day2DMonthSYearN
+						),
 					])}
 				</span>
 			</ClayAlert>
@@ -341,8 +336,9 @@ const SelectSubscription = ({
 							const currentStartAndEndDate = `${getDateCustomFormat(
 								subscriptionTerm.startDate,
 								FORMAT_DATE_TYPES.day2DMonthSYearN
-							)} - ${subscriptionTermEndDateByKeyType(
-								subscriptionTerm
+							)} - ${getDateCustomFormat(
+								subscriptionTerm.endDate,
+								FORMAT_DATE_TYPES.day2DMonthSYearN
 							)}`;
 
 							const infoSelectedKey = {

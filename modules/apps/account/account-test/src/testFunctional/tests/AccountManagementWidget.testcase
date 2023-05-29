@@ -81,7 +81,7 @@ definition {
 		}
 
 		task ("When a new site with an Account Management widget is created") {
-			JSONGroup.addGroup(groupName = "Site Name");
+			HeadlessSite.addSite(siteName = "Site Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",

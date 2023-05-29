@@ -59,11 +59,6 @@ public class BundleLogger extends LogServiceEnabledLogger
         };
     }
 
-    int getTrackingCount()
-    {
-        return trackingCount;
-    }
-
     InternalLogger getLogger(final String className)
     {
         if ( className != null )
@@ -95,3 +90,4 @@ public class BundleLogger extends LogServiceEnabledLogger
         return false;
     }
 }
+/* @generated */

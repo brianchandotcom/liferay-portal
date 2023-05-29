@@ -33,10 +33,6 @@ public class ComponentLogger extends AbstractLogger
 
     private final BundleLogger parent;
 
-    private volatile int trackingCount = -3;
-
-    private volatile InternalLogger currentLogger;
-
     public ComponentLogger(final ComponentMetadata metadata, final BundleLogger parent)
     {
         super(parent.getConfiguration(), ""); // we set the prefix later
@@ -83,12 +79,7 @@ public class ComponentLogger extends AbstractLogger
     @Override
     InternalLogger getLogger()
     {
-        if ( this.trackingCount < this.parent.getTrackingCount() )
-        {
-            this.currentLogger = this.parent.getLogger(this.className);
-            this.trackingCount = this.parent.getTrackingCount();
-        }
-        return currentLogger;
+        return this.parent.getLogger(this.className);
     }
 
     @Override
@@ -109,3 +100,4 @@ public class ComponentLogger extends AbstractLogger
         return false;
     }
 }
+/* @generated */

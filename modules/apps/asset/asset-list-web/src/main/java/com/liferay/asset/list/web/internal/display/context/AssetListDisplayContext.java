@@ -162,7 +162,7 @@ public class AssetListDisplayContext {
 		}
 
 		SearchContainer<AssetListEntry> assetListEntriesSearchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
@@ -310,7 +310,7 @@ public class AssetListDisplayContext {
 	}
 
 	public String getClassName(AssetRendererFactory<?> assetRendererFactory) {
-		Class<? extends AssetRendererFactory> clazz =
+		Class<? extends AssetRendererFactory<?>> clazz =
 			_assetRendererFactoryClassProvider.getClass(assetRendererFactory);
 
 		String className = clazz.getName();

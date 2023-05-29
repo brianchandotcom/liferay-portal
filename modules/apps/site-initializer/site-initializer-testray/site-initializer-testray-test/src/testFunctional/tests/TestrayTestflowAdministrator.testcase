@@ -467,27 +467,32 @@ definition {
 				userName = "Test Test");
 
 			Alert.viewSuccessMessage();
+		}
 
-			TestrayTestflow.goToTestflow();
+		task ("And go to the analyzed task") {
+			TestrayLayout.clickResultsOnSidebar();
 
-			TestrayTestflow.assertTaskDetails(
-				build = ${buildName},
-				project = ${projectName},
-				routine = ${routineName},
-				status = "In Analysis",
-				taskName = "Task_1");
+			Testray.changePagination(
+				numberItems = 20,
+				valuePagination = 150);
 
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.goToProjectPage(projectName = ${projectName});
+
+			TestrayRoutines.goToRoutine(routineName = ${routineName});
+
+			TestrayBuild.goToBuild(buildName = ${buildName});
+
+			Button.click(button = "View Task");
 		}
 
 		task ("When the user update task status to complete") {
 			Button.click(button = "Complete");
-
-			TestrayTestflow.goToTestflow();
 		}
 
 		task ("Then the task should appear on the list with the status complete") {
-			Testray.assertItemName(key_name = "Complete");
+			TestrayTestflow.assertStatus(
+				label = "Task Details",
+				status = "Complete");
 		}
 	}
 

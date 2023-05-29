@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.http.servlet.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.osgi.web.http.servlet.ExtendedHttpService;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.ProxyServlet;
 import com.liferay.portal.osgi.web.http.servlet.internal.util.HttpTuple;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -70,7 +70,8 @@ public class HttpServletBundleActivator
 			_registrationsMap.put(
 				proxyServlet,
 				_bundleContext.registerService(
-					HttpServlet.class, proxyServlet, new Hashtable<>()));
+					HttpServlet.class, proxyServlet,
+					new HashMapDictionary<>()));
 		}
 	}
 
@@ -103,7 +104,7 @@ public class HttpServletBundleActivator
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		Dictionary<String, Object> serviceProperties = new Hashtable<>(3);
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		Enumeration<String> initParameterNamesEnumeration =
 			servletConfig.getInitParameterNames();
@@ -111,24 +112,23 @@ public class HttpServletBundleActivator
 		while (initParameterNamesEnumeration.hasMoreElements()) {
 			String name = initParameterNamesEnumeration.nextElement();
 
-			serviceProperties.put(name, servletConfig.getInitParameter(name));
+			dictionary.put(name, servletConfig.getInitParameter(name));
 		}
 
-		if (serviceProperties.get(Constants.SERVICE_VENDOR) == null) {
-			serviceProperties.put(
-				Constants.SERVICE_VENDOR, _DEFAULT_SERVICE_VENDOR);
+		if (dictionary.get(Constants.SERVICE_VENDOR) == null) {
+			dictionary.put(Constants.SERVICE_VENDOR, _DEFAULT_SERVICE_VENDOR);
 		}
 
-		if (serviceProperties.get(Constants.SERVICE_DESCRIPTION) == null) {
-			serviceProperties.put(
+		if (dictionary.get(Constants.SERVICE_DESCRIPTION) == null) {
+			dictionary.put(
 				Constants.SERVICE_DESCRIPTION, _DEFAULT_SERVICE_DESCRIPTION);
 		}
 
-		Object httpServiceEndpointObject = serviceProperties.get(
+		Object httpServiceEndpointObject = dictionary.get(
 			HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT);
 
 		if (httpServiceEndpointObject == null) {
-			serviceProperties.put(
+			dictionary.put(
 				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT,
 				_getHttpServiceEndpoints(
 					servletContext, servletConfig.getServletName()));
@@ -136,7 +136,7 @@ public class HttpServletBundleActivator
 
 		Random random = new Random();
 
-		serviceProperties.put(UNIQUE_SERVICE_ID, random.nextLong());
+		dictionary.put(UNIQUE_SERVICE_ID, random.nextLong());
 
 		BundleContext trackingBundleContext = _bundleContext;
 
@@ -152,7 +152,7 @@ public class HttpServletBundleActivator
 		HttpServiceRuntimeImpl httpServiceRuntimeImpl =
 			new HttpServiceRuntimeImpl(
 				trackingBundleContext, _bundleContext, servletContext,
-				new UMDictionaryMap<>(serviceProperties));
+				new UMDictionaryMap<>(dictionary));
 
 		proxyServlet.setHttpServiceRuntimeImpl(httpServiceRuntimeImpl);
 
@@ -161,12 +161,12 @@ public class HttpServletBundleActivator
 
 		ServiceRegistration<?> httpServiceFactoryServiceRegistration =
 			_bundleContext.registerService(
-				_HTTP_SERVICES_CLASSES, httpServiceFactory, serviceProperties);
+				_HTTP_SERVICES_CLASSES, httpServiceFactory, dictionary);
 
 		ServiceReference<?> httpServiceFactoryServiceReference =
 			httpServiceFactoryServiceRegistration.getReference();
 
-		serviceProperties.put(
+		dictionary.put(
 			HttpServiceRuntimeConstants.HTTP_SERVICE_ID,
 			Collections.singletonList(
 				httpServiceFactoryServiceReference.getProperty(
@@ -176,7 +176,7 @@ public class HttpServletBundleActivator
 			httpServiceRuntimeServiceRegistration =
 				_bundleContext.registerService(
 					HttpServiceRuntime.class, httpServiceRuntimeImpl,
-					serviceProperties);
+					dictionary);
 
 		return new HttpTuple(
 			proxyServlet, httpServiceFactory,
@@ -289,7 +289,8 @@ public class HttpServletBundleActivator
 
 			ServiceRegistration<HttpServlet> serviceRegistration =
 				_bundleContext.registerService(
-					HttpServlet.class, entry.getKey(), new Hashtable<>());
+					HttpServlet.class, entry.getKey(),
+					new HashMapDictionary<>());
 
 			entry.setValue(serviceRegistration);
 		}

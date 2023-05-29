@@ -22,15 +22,17 @@ definition {
 	var testSiteName = "Testray 2";
 
 	setUp {
-		task ("Login and create a Testray Site") {
+		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
+		}
 
+		task ("Create a new Testray Site") {
 			Testray.addTestraySite(siteName = ${testSiteName});
 		}
 
-		task ("create all objects: projects, routine, teams, components, cases, case type, enviroment factors, product version, build, category, options, run and case results") {
+		task ("create all objects: projects, routine, teams, components, cases, case type, enviroment factors, product version, build, category, options, run and case results via API") {
 			JSONTestray.addProject(
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
@@ -135,37 +137,39 @@ definition {
 	}
 
 	tearDown {
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "productversions",
-			objectName = "1.2");
+		task ("Delete product version, routine, case type, factor category and project via API, Testray Site and Client Extensions") {
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "productversions",
+				objectName = "1.2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "productversions",
-			objectName = "7.0");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "productversions",
+				objectName = "7.0");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = "Routine 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = "Routine 1");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "routines",
-			objectName = "Routine 2");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "routines",
+				objectName = "Routine 2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = "Case Type 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = "Case Type 1");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "casetypes",
-			objectName = "Case Type 2");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "casetypes",
+				objectName = "Case Type 2");
 
-		JSONTestrayAPI.deleteObjectViaAPI(
-			object = "factorcategories",
-			objectName = "Category 1");
+			JSONTestrayAPI.deleteObjectViaAPI(
+				object = "factorcategories",
+				objectName = "Category 1");
 
-		JSONTestrayAPI.deleteProject(projectName = ${projectName});
+			JSONTestrayAPI.deleteProject(projectName = ${projectName});
 
-		Testray.testrayApisTearDown();
+			Testray.testrayApisTearDown();
+		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
@@ -214,6 +218,46 @@ definition {
 			TestrayTestflow.userAvatarPresent(
 				label = "Dates",
 				status = "Test Test");
+		}
+	}
+
+	@description = "Story ID: LPS-173525 | Test Summary: Verify if as an Administrator I should be able to filter case results by issues"
+	@priority = 3
+	test AdminCanFilterByIssue {
+		property test.name.skip.portal.instance = "TestrayFiltersCasesHistoryAdministrator#AdminCanFilterByIssue";
+
+		task ("Given that the user add a issue in the case result") {
+			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+
+			Button.click(button = "Assign to Me");
+
+			Button.click(button = "Complete Test");
+
+			TestrayTestflow.editStatus(
+				comment = "button does not work",
+				issues = "LPS-123456",
+				selectStatus = "Test Fix");
+
+			WaitForPageLoad();
+
+			Testray.projectTabNavigator(navTabName = "History");
+		}
+
+		task ("When the user filter a issue") {
+			TestrayFilter.clickFilter();
+
+			Type(
+				key_text = "issues",
+				locator1 = "TextArea#ANY",
+				value1 = "LPS-123456");
+
+			Button.click(button = "Apply");
+		}
+
+		task ("Then the user can see the issue in the table") {
+			AssertElementPresent(
+				key_projectName = "LPS-123456",
+				locator1 = "Testray#ITEM_NAME");
 		}
 	}
 

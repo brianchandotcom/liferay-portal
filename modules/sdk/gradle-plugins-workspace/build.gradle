@@ -64,6 +64,8 @@ copyDistBundleZipPluginsSdk {
 
 	includeEmptyDirs = false
 	into "src/gradleTest/distBundleZip/plugins-sdk"
+
+	finalizedBy gradleTestGenerator
 }
 
 copyHotFixZip {
@@ -78,6 +80,8 @@ copyHotFixZip {
 	}
 
 	into "src/gradleTest/startDockerContainerWithPatch/configs/common/patching"
+
+	finalizedBy gradleTestGenerator
 }
 
 copyGradleTestDependencies {
@@ -113,6 +117,8 @@ copyGradleTestProjects {
 	}
 
 	into "src/gradleTest/excludePatterns"
+
+	finalizedBy gradleTestGenerator
 }
 
 copyRepo {

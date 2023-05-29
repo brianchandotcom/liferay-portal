@@ -191,15 +191,19 @@ public class FriendlyURLServlet extends HttpServlet {
 					String friendlyURL =
 						layoutFriendlyURLSeparatorComposite.getFriendlyURL();
 
-					String redirectURL = StringBundler.concat(
-						PortalUtil.getPathContext(),
-						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-						path.substring(0, pos), friendlyURL);
+					String redirectURL = null;
 
 					if (friendlyURLPos > 0) {
 						redirectURL =
 							requestURL.substring(0, friendlyURLPos) +
 								friendlyURL;
+					}
+					else {
+						redirectURL = StringBundler.concat(
+							PortalUtil.getPathContext(),
+							PropsValues.
+								LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+							path.substring(0, pos), friendlyURL);
 					}
 
 					String queryString = HttpComponentsUtil.getQueryString(

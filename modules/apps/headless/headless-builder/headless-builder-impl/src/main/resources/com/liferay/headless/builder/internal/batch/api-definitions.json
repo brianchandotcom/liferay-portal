@@ -1,0 +1,695 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"active": true,
+			"enableCategorization": true,
+			"externalReferenceCode": "MSOD_SORT_ENTRY",
+			"label": {
+				"en_US": "Sort"
+			},
+			"modifiable": false,
+			"name": "Sort",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "ascending",
+					"externalReferenceCode": "MSOD_SORT_ORDER_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Order"
+					},
+					"listTypeDefinitionExternalReferenceCode": "MSOD_SORT_ORDER_PICKLIST",
+					"name": "order",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "ascending",
+										"objectStateTransitions": [
+											{
+												"key": "descending"
+											}
+										]
+									},
+									{
+										"key": "descending",
+										"objectStateTransitions": [
+											{
+												"key": "ascending"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_SORT_OBJECT_FIELD_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Object Field ERC"
+					},
+					"name": "objectFieldERC",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"pluralLabel": {
+				"en_US": "Sorts"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"active": true,
+			"enableCategorization": true,
+			"externalReferenceCode": "MSOD_FILTER_ENTRY",
+			"label": {
+				"en_US": "Filter"
+			},
+			"modifiable": false,
+			"name": "Filter",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_FILTER_OBJECT_FIELD_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Object Field ERC"
+					},
+					"name": "objectFieldERC",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_FILTER_ODATA_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "OData Filter"
+					},
+					"name": "oDataFilter",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"pluralLabel": {
+				"en_US": "Sorts"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"active": true,
+			"enableCategorization": true,
+			"externalReferenceCode": "MSOD_ENDPOINT_ENTRY",
+			"label": {
+				"en_US": "Endpoint"
+			},
+			"modifiable": false,
+			"name": "Endpoint",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_ENDPOINT_DESCRIPTION_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "get",
+					"externalReferenceCode": "MSOD_ENDPOINT_HTTP_METHOD_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "HTTPMethod"
+					},
+					"listTypeDefinitionExternalReferenceCode": "MSOD_ENDPOINT_HTTP_METHOD_PICKLIST",
+					"name": "hTTPMethod",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "get",
+										"objectStateTransitions": [
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_ENDPOINT_NAME_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_ENDPOINT_PATH_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Path"
+					},
+					"name": "path",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "instance",
+					"externalReferenceCode": "MSOD_ENDPOINT_SCOPE_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Scope"
+					},
+					"listTypeDefinitionExternalReferenceCode": "MSOD_ENDPOINT_SCOPE_PICKLIST",
+					"name": "scope",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "group",
+										"objectStateTransitions": [
+											{
+												"key": "instance"
+											}
+										]
+									},
+									{
+										"key": "instance",
+										"objectStateTransitions": [
+											{
+												"key": "group"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Endpoint filters"
+					},
+					"name": "endpointFilters",
+					"objectDefinitionExternalReferenceCode1": "MSOD_ENDPOINT_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_FILTER_ENTRY",
+					"objectDefinitionName2": "Filter",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Endpoint sorts"
+					},
+					"name": "endpointSorts",
+					"objectDefinitionExternalReferenceCode1": "MSOD_ENDPOINT_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_SORT_ENTRY",
+					"objectDefinitionName2": "Sort",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Endpoints"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"active": true,
+			"enableCategorization": true,
+			"enableComments": false,
+			"externalReferenceCode": "MSOD_PROPERTY_ENTRY",
+			"label": {
+				"en_US": "Property"
+			},
+			"modifiable": false,
+			"name": "Property",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_PROPERTY_DESCRIPTION_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_PROPERTY_OBJECT_FIELD_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Object Field ERC"
+					},
+					"name": "objectFieldERC",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_PROPERTY_NAME_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_PROPERTY_OBJECT_RELATIONSHIP_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Object Relationship ID List"
+					},
+					"name": "objectRelationshipIDList",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_PROPERTY_PARENT_PROPERTY_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Parent Property ERC"
+					},
+					"name": "parentPropertyERC",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Properties"
+					},
+					"name": "properties",
+					"objectDefinitionExternalReferenceCode1": "MSOD_PROPERTY_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_PROPERTY_ENTRY",
+					"objectDefinitionName2": "Property",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Properties"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"active": true,
+			"enableCategorization": true,
+			"externalReferenceCode": "MSOD_SCHEMA_ENTRY",
+			"label": {
+				"en_US": "Schema"
+			},
+			"modifiable": false,
+			"name": "Schema",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_SCHEMA_DESCRIPTION_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_SCHEMA_OBJECT_DEFINITION_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Main Object Definition ERC"
+					},
+					"name": "mainObjectDefinitionERC",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_SCHEMA_NAME_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Schema Properties"
+					},
+					"name": "schemaProperties",
+					"objectDefinitionExternalReferenceCode1": "MSOD_SCHEMA_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_PROPERTY_ENTRY",
+					"objectDefinitionName2": "Property",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "manyToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Endpoint Response"
+					},
+					"name": "endpointResponse",
+					"objectDefinitionExternalReferenceCode1": "MSOD_SCHEMA_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_ENDPOINT_ENTRY",
+					"objectDefinitionName2": "Endpoint",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Schemas"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"active": true,
+			"enableCategorization": true,
+			"externalReferenceCode": "MSOD_APPLICATION_ENTRY",
+			"label": {
+				"en_US": "API Application"
+			},
+			"modifiable": false,
+			"name": "APIApplication",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "draft",
+					"externalReferenceCode": "MSOD_APPLICATION_STATUS_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Application status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "MSOD_APPLICATION_STATUS_PICKLIST",
+					"name": "applicationStatus",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "draft",
+										"objectStateTransitions": [
+											{
+												"key": "published"
+											}
+										]
+									},
+									{
+										"key": "published",
+										"objectStateTransitions": [
+											{
+												"key": "draft"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_APPLICATION_BASE_URL_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Base URL"
+					},
+					"name": "baseURL",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_APPLICATION_DESCRIPTION_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_APPLICATION_NAME_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"name": "title",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "MSOD_APPLICATION_VERSION_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Version"
+					},
+					"name": "version",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Application Schemas"
+					},
+					"name": "applicationSchemas",
+					"objectDefinitionExternalReferenceCode1": "MSOD_APPLICATION_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_SCHEMA_ENTRY",
+					"objectDefinitionName2": "Schema",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "Application Endpoints"
+					},
+					"name": "applicationEndpoints",
+					"objectDefinitionExternalReferenceCode1": "MSOD_APPLICATION_ENTRY",
+					"objectDefinitionExternalReferenceCode2": "MSOD_ENDPOINT_ENTRY",
+					"objectDefinitionName2": "Endpoint",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Api Applications"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		}
+	]
+}

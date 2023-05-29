@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -182,20 +183,18 @@ public class FriendlyURLServlet extends HttpServlet {
 					layoutFriendlyURLSeparatorComposite.getURLSeparator());
 
 				if (pos != 1) {
-					HttpServletRequest originalHttpServletRequest =
-						portal.getOriginalServletRequest(httpServletRequest);
-
-					String requestURL = HttpComponentsUtil.getRequestURL(
-						originalHttpServletRequest);
+					String requestURL = PortalUtil.getCurrentCompleteURL(
+						httpServletRequest);
 
 					int friendlyURLPos = requestURL.indexOf(layoutFriendlyURL);
 
 					String friendlyURL =
 						layoutFriendlyURLSeparatorComposite.getFriendlyURL();
 
-					String redirectURL =
-						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-							path.substring(0, pos) + friendlyURL;
+					String redirectURL = StringBundler.concat(
+						PortalUtil.getPathContext(),
+						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+						path.substring(0, pos), friendlyURL);
 
 					if (friendlyURLPos > 0) {
 						redirectURL =
@@ -204,7 +203,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					}
 
 					String queryString = HttpComponentsUtil.getQueryString(
-						originalHttpServletRequest);
+						portal.getOriginalServletRequest(httpServletRequest));
 
 					if (Validator.isNotNull(queryString)) {
 						redirectURL += StringPool.QUESTION + queryString;

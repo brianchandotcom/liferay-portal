@@ -1,0 +1,91 @@
+definition {
+
+	macro _curlKnowledgeBaseAttachment {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(knowledgeBaseArticleId)) {
+			var api = "knowledge-base-articles/${knowledgeBaseArticleId}/knowledge-base-attachments";
+		}
+		else if (isSet(knowledgeBaseAttachmentId)) {
+			var api = "knowledge-base-attachments/${knowledgeBaseAttachmentId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			var api = "sites/${siteId}/knowledge-base-articles/by-external-reference-code/${knowledgeBaseArticleExternalReferenceCode}/knowledge-base-attachments/by-external-reference-code/${externalReferenceCode}";
+		}
+
+		if (isSet(attachmentPath)) {
+			if (!(isSet(externalReferenceCode))) {
+				var externalReferenceCode = "";
+			}
+
+			var body = '''
+				-u test@liferay.com:test \
+				-H Content-Type: multipart/form-data \
+				-F file=@${attachmentPath} \
+				-F knowledgeBaseAttachment={"externalReferenceCode": "${externalReferenceCode}"}
+			''';
+
+			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api} \"", ${body}, "");
+		}
+		else {
+			var body = '''
+				-u test@liferay.com:test \
+				-H accept: application/json
+			''';
+
+			var curl = StringUtil.add("${portalURL}/o/headless-delivery/v1.0/${api} \"", ${body}, "");
+		}
+
+		return ${curl};
+	}
+
+	macro createKnowledgeBaseAttachment {
+		Variables.assertDefined(parameterList = "${attachmentPath},${knowledgeBaseArticleId}");
+
+		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(
+			attachmentPath = ${attachmentPath},
+			externalReferenceCode = ${externalReferenceCode},
+			knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro deleteKBAttachmentByKBArticleErcAndKBAttachmentErc {
+		Variables.assertDefined(parameterList = "${kBAttachmentErc},${kBArticleErc}");
+
+		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(
+			externalReferenceCode = ${kBAttachmentErc},
+			knowledgeBaseArticleExternalReferenceCode = ${kBArticleErc});
+
+		var response = JSONCurlUtil.delete(${curl});
+	}
+
+	macro getKBAttachmentById {
+		Variables.assertDefined(parameterList = ${kBAttachmentId});
+
+		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(knowledgeBaseAttachmentId = ${kBAttachmentId});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro getKBAttachmentByKBArticleErcAndKBAttachmentErc {
+		Variables.assertDefined(parameterList = "${kBAttachmentErc},${kBArticleErc}");
+
+		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(
+			externalReferenceCode = ${kBAttachmentErc},
+			knowledgeBaseArticleExternalReferenceCode = ${kBArticleErc});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+}

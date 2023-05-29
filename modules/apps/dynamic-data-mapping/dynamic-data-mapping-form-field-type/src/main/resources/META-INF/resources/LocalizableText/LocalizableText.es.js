@@ -16,7 +16,7 @@ import {ClayInput} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
-import LocalesDropdown from '../util/localizable/LocalesDropdown.es';
+import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertValueToJSON,
 	getEditingValue,
@@ -175,7 +175,7 @@ const LocalizableText = ({
 					availableLocales={currentAvailableLocales}
 					editingLocale={currentEditingLocale}
 					fieldName={fieldName}
-					onLanguageClicked={({localeId}) => {
+					onLanguageClicked={(localeId) => {
 						const newEditingLocale = currentAvailableLocales.find(
 							(availableLocale) =>
 								availableLocale.localeId === localeId

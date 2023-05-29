@@ -180,7 +180,7 @@ interface DataDefinitionCustomProperties {
 	[key: string]: unknown;
 }
 
-interface Field<T = unknown> {
+export interface Field<T = unknown> {
 	fieldName: string;
 	localizable?: boolean;
 	localizedValue?: LocalizedValue<T>;

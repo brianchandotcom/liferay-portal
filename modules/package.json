@@ -14,7 +14,8 @@
 		"fetch-mock": "^5.13.1",
 		"jsdoc": "3.6.3",
 		"liferay-frontend-common-css": "1.0.4",
-		"metal-jest-serializer": "2.0.0"
+		"metal-jest-serializer": "2.0.0",
+		"resize-observer-polyfill": "^1.5.1"
 	},
 	"private": true,
 	"resolutions": {

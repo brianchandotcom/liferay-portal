@@ -24,10 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.blogs.model.BlogsEntry",
-		"service.ranking:Integer=100"
-	},
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = EditPortletProvider.class
 )
 public class BlogsEditPortletProvider

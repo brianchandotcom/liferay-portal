@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.message.boards.model.MBCategory",
 		"model.class.name=com.liferay.message.boards.model.MBDiscussion",
 		"model.class.name=com.liferay.message.boards.model.MBMessage",
-		"model.class.name=com.liferay.message.boards.model.MBThread",
-		"service.ranking:Integer=100"
+		"model.class.name=com.liferay.message.boards.model.MBThread"
 	},
 	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )

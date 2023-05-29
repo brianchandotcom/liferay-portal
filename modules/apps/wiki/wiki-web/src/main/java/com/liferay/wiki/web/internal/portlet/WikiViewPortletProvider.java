@@ -35,10 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.wiki.model.WikiPage",
-		"service.ranking:Integer=100"
-	},
+	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = ViewPortletProvider.class
 )
 public class WikiViewPortletProvider

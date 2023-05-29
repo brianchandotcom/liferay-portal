@@ -14,10 +14,7 @@ import org.osgi.service.component.annotations.Component;
  * @author ${author}
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.asset.kernel.model.AssetEntry",
-		"service.ranking:Integer=" + Integer.MAX_VALUE
-	},
+	property = "model.class.name=com.liferay.asset.kernel.model.AssetEntry",
 	service = AddPortletProvider.class
 )
 public class ${className}AddPortletProvider

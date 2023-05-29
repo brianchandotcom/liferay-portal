@@ -309,16 +309,16 @@ public class DatabaseTest {
 	}
 
 	@Test
-	public void testInvalidStateServlets() throws SQLException {
-		_mockServletState(false);
+	public void testInvalidReleaseState() throws SQLException {
+		_mockReleaseState(false);
 
-		List<String> releaseEntries = Database.getInvalidStateServlets(
-			_connection);
+		List<String> failedServletContextNames =
+			Database.getFailedServletContextNames(_connection);
 
-		Assert.assertTrue(releaseEntries.size() == 2);
+		Assert.assertTrue(failedServletContextNames.size() == 2);
 
-		Assert.assertTrue(releaseEntries.contains("module1"));
-		Assert.assertTrue(releaseEntries.contains("module2"));
+		Assert.assertTrue(failedServletContextNames.contains("module1"));
+		Assert.assertTrue(failedServletContextNames.contains("module2"));
 	}
 
 	@Test
@@ -381,13 +381,13 @@ public class DatabaseTest {
 	}
 
 	@Test
-	public void testNoInvalidStateServlets() throws SQLException {
-		_mockServletState(true);
+	public void testValidReleaseState() throws SQLException {
+		_mockReleaseState(true);
 
-		List<String> releaseEntries = Database.getInvalidStateServlets(
-			_connection);
+		List<String> failedServletContextNames =
+			Database.getFailedServletContextNames(_connection);
 
-		Assert.assertTrue(releaseEntries.isEmpty());
+		Assert.assertTrue(failedServletContextNames.isEmpty());
 	}
 
 	private void _mockDefaultPartition(boolean defaultPartition)
@@ -475,7 +475,7 @@ public class DatabaseTest {
 		}
 	}
 
-	private void _mockServletState(boolean servletsOK) throws SQLException {
+	private void _mockReleaseState(boolean stateGood) throws SQLException {
 		Mockito.when(
 			_connection.prepareStatement(
 				"select servletContextName from Release_ where state_ != 0;")
@@ -489,7 +489,7 @@ public class DatabaseTest {
 			_resultSet
 		);
 
-		if (servletsOK) {
+		if (stateGood) {
 			Mockito.when(
 				_resultSet.next()
 			).thenReturn(

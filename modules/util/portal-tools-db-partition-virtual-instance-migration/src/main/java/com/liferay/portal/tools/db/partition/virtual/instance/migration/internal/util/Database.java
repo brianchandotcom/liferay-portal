@@ -34,21 +34,22 @@ import java.util.Set;
  */
 public class Database {
 
-	public static List<String> getInvalidStateServlets(Connection connection)
+	public static List<String> getFailedServletContextNames(
+			Connection connection)
 		throws SQLException {
 
-		List<String> releaseEntries = new ArrayList<>();
+		List<String> failedServletContextNames = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select servletContextName from Release_ where state_ != 0;");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				releaseEntries.add(resultSet.getString(1));
+				failedServletContextNames.add(resultSet.getString(1));
 			}
 		}
 
-		return releaseEntries;
+		return failedServletContextNames;
 	}
 
 	public static List<Release> getReleaseEntries(Connection connection)

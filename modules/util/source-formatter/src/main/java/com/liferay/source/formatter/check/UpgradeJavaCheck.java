@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -23,6 +24,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,15 +51,40 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 		throws Exception {
 
 		Map<String, String> importsMap = _getImportsMap();
+		ArrayList<String> oldVariablesList = new ArrayList<>();
+		ArrayList<String> newVariablesList = new ArrayList<>();
 
 		for (String importName : javaClass.getImportNames()) {
 			String newImportName = importsMap.get(importName);
 
 			if (newImportName != null) {
 				content = StringUtil.replace(
-					content, StringBundler.concat("import ", importName, ";"),
-					StringBundler.concat("import ", newImportName, ";"));
+					content,
+					StringBundler.concat(
+						"import ", importName, StringPool.SEMICOLON),
+					StringBundler.concat(
+						"import ", newImportName, StringPool.SEMICOLON));
+
+				String className = SourceFormatterUtil.getSimpleName(
+					importName);
+				String newClassName = SourceFormatterUtil.getSimpleName(
+					newImportName);
+
+				if (!className.equals(newClassName)) {
+					oldVariablesList.add(className);
+					oldVariablesList.add(
+						StringUtil.lowerCaseFirstLetter(className));
+					newVariablesList.add(newClassName);
+					newVariablesList.add(
+						StringUtil.lowerCaseFirstLetter(newClassName));
+				}
 			}
+		}
+
+		if (newVariablesList != null) {
+			content = StringUtil.replace(
+				content, oldVariablesList.toArray(new String[0]),
+				newVariablesList.toArray(new String[0]));
 		}
 
 		return content;
@@ -87,7 +114,7 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 		String[] lines = StringUtil.splitLines(FileUtil.read(importsFile));
 
 		for (String line : lines) {
-			int separatorIndex = line.indexOf("=");
+			int separatorIndex = line.indexOf(StringPool.EQUAL);
 
 			map.put(
 				line.substring(0, separatorIndex),

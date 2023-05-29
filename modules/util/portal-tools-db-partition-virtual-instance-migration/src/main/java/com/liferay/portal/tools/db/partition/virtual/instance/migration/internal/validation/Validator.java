@@ -35,17 +35,8 @@ public class Validator {
 
 		ValidatorRecorder recorder = new ValidatorRecorder();
 
-		if (!_validateReleaseTableState(sourceConnection)) {
-			recorder.registerError(
-				"Source database Release_ table has records with an invalid " +
-					"state_");
-		}
-
-		if (!_validateReleaseTableState(destinationConnection)) {
-			recorder.registerError(
-				"Destination database Release_ table has records with an " +
-					"invalid state_");
-		}
+		_validateReleaseState(
+			sourceConnection, destinationConnection, recorder);
 
 		_validateReleaseTableModules(
 			sourceConnection, destinationConnection, recorder);
@@ -98,6 +89,32 @@ public class Validator {
 			recorder.registerWarning(
 				"webId " + sourceWebId +
 					" already exists in destination database");
+		}
+	}
+
+	private static void _validateReleaseState(
+			Connection sourceConnection, Connection destinationConnection,
+			ValidatorRecorder recorder)
+		throws SQLException {
+
+		String message =
+			"Release_ table has the following servlet context names with a " +
+				"failed state: ";
+
+		String failedServletContextNames = String.join(
+			", ", Database.getFailedServletContextNames(sourceConnection));
+
+		if (!failedServletContextNames.isEmpty()) {
+			recorder.registerError(
+				"Source " + message + failedServletContextNames);
+		}
+
+		failedServletContextNames = String.join(
+			", ", Database.getFailedServletContextNames(destinationConnection));
+
+		if (!failedServletContextNames.isEmpty()) {
+			recorder.registerError(
+				"Destination " + message + failedServletContextNames);
 		}
 	}
 
@@ -172,19 +189,6 @@ public class Validator {
 			"needs to be verified in the destination before the migration");
 		recorder.registerWarnings(
 			missingModules, "will not be available in the destination");
-	}
-
-	private static boolean _validateReleaseTableState(Connection connection)
-		throws SQLException {
-
-		List<String> releaseEntries = Database.getInvalidStateServlets(
-			connection);
-
-		if (!releaseEntries.isEmpty()) {
-			return false;
-		}
-
-		return true;
 	}
 
 }

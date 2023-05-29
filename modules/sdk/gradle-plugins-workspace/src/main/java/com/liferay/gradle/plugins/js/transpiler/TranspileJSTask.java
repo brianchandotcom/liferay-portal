@@ -93,7 +93,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toString(_modules);
 	}
 
-	@Input
+	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);

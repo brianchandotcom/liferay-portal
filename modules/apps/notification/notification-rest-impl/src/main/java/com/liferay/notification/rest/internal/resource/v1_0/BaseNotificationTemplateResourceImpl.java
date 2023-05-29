@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -736,10 +737,37 @@ public abstract class BaseNotificationTemplateResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			notificationTemplateUnsafeConsumer = notificationTemplate ->
-				putNotificationTemplateByExternalReferenceCode(
-					notificationTemplate.getExternalReferenceCode(),
-					notificationTemplate);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				notificationTemplateUnsafeConsumer = notificationTemplate ->
+					putNotificationTemplateByExternalReferenceCode(
+						notificationTemplate.getExternalReferenceCode(),
+						notificationTemplate);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				notificationTemplateUnsafeConsumer = notificationTemplate -> {
+					try {
+						NotificationTemplate getNotificationTemplate =
+							getNotificationTemplateByExternalReferenceCode(
+								notificationTemplate.
+									getExternalReferenceCode());
+
+						patchNotificationTemplate(
+							getNotificationTemplate.getId() != null ?
+								getNotificationTemplate.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"notificationTemplateId")),
+							notificationTemplate);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postNotificationTemplate(notificationTemplate);
+					}
+				};
+			}
 		}
 
 		if (notificationTemplateUnsafeConsumer == null) {

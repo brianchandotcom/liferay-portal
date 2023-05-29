@@ -23,6 +23,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
@@ -2561,13 +2562,64 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			structuredContentUnsafeConsumer = structuredContent ->
-				putSiteStructuredContentByExternalReferenceCode(
-					structuredContent.getSiteId() != null ?
-						structuredContent.getSiteId() :
-							(Long)parameters.get("siteId"),
-					structuredContent.getExternalReferenceCode(),
-					structuredContent);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				structuredContentUnsafeConsumer = structuredContent ->
+					putSiteStructuredContentByExternalReferenceCode(
+						structuredContent.getSiteId() != null ?
+							structuredContent.getSiteId() :
+								(Long)parameters.get("siteId"),
+						structuredContent.getExternalReferenceCode(),
+						structuredContent);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				structuredContentUnsafeConsumer = structuredContent -> {
+					try {
+						StructuredContent getStructuredContent =
+							getSiteStructuredContentByExternalReferenceCode(
+								structuredContent.getSiteId() != null ?
+									structuredContent.getSiteId() :
+										(Long)parameters.get("siteId"),
+								structuredContent.getExternalReferenceCode());
+
+						patchStructuredContent(
+							getStructuredContent.getId() != null ?
+								getStructuredContent.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"structuredContentId")),
+							structuredContent);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey(
+								"structuredContentFolderId")) {
+
+							postStructuredContentFolderStructuredContent(
+								_parseLong(
+									(String)parameters.get(
+										"structuredContentFolderId")),
+								structuredContent);
+						}
+						else if (parameters.containsKey("assetLibraryId")) {
+							postAssetLibraryStructuredContent(
+								(Long)parameters.get("assetLibraryId"),
+								structuredContent);
+						}
+						else if (parameters.containsKey("siteId")) {
+							postSiteStructuredContent(
+								(Long)parameters.get("siteId"),
+								structuredContent);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId, siteId, structuredContentFolderId, assetLibraryId]");
+						}
+					}
+				};
+			}
 		}
 
 		if (structuredContentUnsafeConsumer == null) {

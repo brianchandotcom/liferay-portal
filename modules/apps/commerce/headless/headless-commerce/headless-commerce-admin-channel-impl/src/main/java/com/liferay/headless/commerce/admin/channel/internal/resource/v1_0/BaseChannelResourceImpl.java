@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -681,9 +682,31 @@ public abstract class BaseChannelResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			channelUnsafeConsumer =
-				channel -> putChannelByExternalReferenceCode(
-					channel.getExternalReferenceCode(), channel);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				channelUnsafeConsumer =
+					channel -> putChannelByExternalReferenceCode(
+						channel.getExternalReferenceCode(), channel);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				channelUnsafeConsumer = channel -> {
+					try {
+						Channel getChannel = getChannelByExternalReferenceCode(
+							channel.getExternalReferenceCode());
+
+						patchChannel(
+							getChannel.getId() != null ? getChannel.getId() :
+								_parseLong((String)parameters.get("channelId")),
+							channel);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postChannel(channel);
+					}
+				};
+			}
 		}
 
 		if (channelUnsafeConsumer == null) {

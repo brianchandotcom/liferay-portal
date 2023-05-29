@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -750,9 +751,34 @@ public abstract class BaseUserGroupResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			userGroupUnsafeConsumer =
-				userGroup -> putUserGroupByExternalReferenceCode(
-					userGroup.getExternalReferenceCode(), userGroup);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				userGroupUnsafeConsumer =
+					userGroup -> putUserGroupByExternalReferenceCode(
+						userGroup.getExternalReferenceCode(), userGroup);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				userGroupUnsafeConsumer = userGroup -> {
+					try {
+						UserGroup getUserGroup =
+							getUserGroupByExternalReferenceCode(
+								userGroup.getExternalReferenceCode());
+
+						patchUserGroup(
+							getUserGroup.getId() != null ?
+								getUserGroup.getId() :
+									_parseLong(
+										(String)parameters.get("userGroupId")),
+							userGroup);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						postUserGroup(userGroup);
+					}
+				};
+			}
 		}
 
 		if (userGroupUnsafeConsumer == null) {

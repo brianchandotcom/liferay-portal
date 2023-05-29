@@ -22,6 +22,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
@@ -1768,13 +1769,52 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			messageBoardMessageUnsafeConsumer = messageBoardMessage ->
-				putSiteMessageBoardMessageByExternalReferenceCode(
-					messageBoardMessage.getSiteId() != null ?
-						messageBoardMessage.getSiteId() :
-							(Long)parameters.get("siteId"),
-					messageBoardMessage.getExternalReferenceCode(),
-					messageBoardMessage);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				messageBoardMessageUnsafeConsumer = messageBoardMessage ->
+					putSiteMessageBoardMessageByExternalReferenceCode(
+						messageBoardMessage.getSiteId() != null ?
+							messageBoardMessage.getSiteId() :
+								(Long)parameters.get("siteId"),
+						messageBoardMessage.getExternalReferenceCode(),
+						messageBoardMessage);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				messageBoardMessageUnsafeConsumer = messageBoardMessage -> {
+					try {
+						MessageBoardMessage getMessageBoardMessage =
+							getSiteMessageBoardMessageByExternalReferenceCode(
+								messageBoardMessage.getSiteId() != null ?
+									messageBoardMessage.getSiteId() :
+										(Long)parameters.get("siteId"),
+								messageBoardMessage.getExternalReferenceCode());
+
+						patchMessageBoardMessage(
+							getMessageBoardMessage.getId() != null ?
+								getMessageBoardMessage.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"messageBoardMessageId")),
+							messageBoardMessage);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("messageBoardThreadId")) {
+							postMessageBoardThreadMessageBoardMessage(
+								_parseLong(
+									(String)parameters.get(
+										"messageBoardThreadId")),
+								messageBoardMessage);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [messageBoardThreadId, messageBoardThreadId]");
+						}
+					}
+				};
+			}
 		}
 
 		if (messageBoardMessageUnsafeConsumer == null) {

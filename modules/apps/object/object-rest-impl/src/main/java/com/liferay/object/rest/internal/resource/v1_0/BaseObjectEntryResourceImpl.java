@@ -1227,9 +1227,8 @@ public abstract class BaseObjectEntryResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			objectEntryUnsafeConsumer =
-				objectEntry -> putByExternalReferenceCode(
-					objectEntry.getExternalReferenceCode(), objectEntry);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
 		}
 
 		if (objectEntryUnsafeConsumer == null) {

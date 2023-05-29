@@ -20,6 +20,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Resource;
@@ -1114,14 +1115,57 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		}
 
 		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
-			taxonomyCategoryUnsafeConsumer = taxonomyCategory ->
-				putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
-					taxonomyCategory.getTaxonomyVocabularyId() != null ?
-						taxonomyCategory.getTaxonomyVocabularyId() :
-							_parseLong(
-								(String)parameters.get("taxonomyVocabularyId")),
-					taxonomyCategory.getExternalReferenceCode(),
-					taxonomyCategory);
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+				taxonomyCategoryUnsafeConsumer = taxonomyCategory ->
+					putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+						taxonomyCategory.getTaxonomyVocabularyId() != null ?
+							taxonomyCategory.getTaxonomyVocabularyId() :
+								_parseLong(
+									(String)parameters.get(
+										"taxonomyVocabularyId")),
+						taxonomyCategory.getExternalReferenceCode(),
+						taxonomyCategory);
+			}
+
+			if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+				taxonomyCategoryUnsafeConsumer = taxonomyCategory -> {
+					try {
+						TaxonomyCategory getTaxonomyCategory =
+							getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+								taxonomyCategory.getTaxonomyVocabularyId() !=
+									null ?
+										taxonomyCategory.
+											getTaxonomyVocabularyId() :
+												_parseLong(
+													(String)parameters.get(
+														"taxonomyVocabularyId")),
+								taxonomyCategory.getExternalReferenceCode());
+
+						patchTaxonomyCategory(
+							getTaxonomyCategory.getId() != null ?
+								getTaxonomyCategory.getId() :
+									(String)parameters.get(
+										"taxonomyCategoryId"),
+							taxonomyCategory);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("taxonomyVocabularyId")) {
+							postTaxonomyVocabularyTaxonomyCategory(
+								_parseLong(
+									(String)parameters.get(
+										"taxonomyVocabularyId")),
+								taxonomyCategory);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [taxonomyVocabularyId, taxonomyVocabularyId]");
+						}
+					}
+				};
+			}
 		}
 
 		if (taxonomyCategoryUnsafeConsumer == null) {

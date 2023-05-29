@@ -37,6 +37,10 @@ patch {
 	fileNames "org/apache/felix/scr/impl/ComponentRegistry.java"
 	fileNames "org/apache/felix/scr/impl/config/ScrMetaTypeProvider.java"
 	fileNames "org/apache/felix/scr/impl/inject/methods/ActivateMethod.java"
+	fileNames "org/apache/felix/scr/impl/logger/BundleLogger.java"
+	fileNames "org/apache/felix/scr/impl/logger/ComponentLogger.java"
+	fileNames "org/apache/felix/scr/impl/logger/LogServiceEnabledLogger.java"
+	fileNames "org/apache/felix/scr/impl/logger/LogServiceSupport.java"
 	fileNames "org/apache/felix/scr/impl/manager/AbstractComponentManager.java"
 	fileNames "org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java"
 

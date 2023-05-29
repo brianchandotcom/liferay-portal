@@ -86,27 +86,33 @@ public class ValidatorTest {
 	}
 
 	@Test
-	public void testInvalidDestinationReleaseEntries() throws SQLException {
-		_mockInvalidReleaseEntries(
-			new ArrayList<>(), Arrays.asList("module1", "module2"));
+	public void testInvalidDestinationReleaseState() throws SQLException {
+		List<String> failedServletContextNames = Arrays.asList(
+			"module1", "module2");
+
+		_mockFailedServletContextNames(
+			new ArrayList<>(), failedServletContextNames);
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Destination database Release_ table has records with " +
-					"an invalid state_"));
+				"ERROR: Destination Release_ table has the following servlet " +
+					"context names with a failed state: module1, module2"));
 	}
 
 	@Test
-	public void testInvalidSourceReleaseEntries() throws SQLException {
-		_mockInvalidReleaseEntries(
-			Arrays.asList("module1", "module2"), new ArrayList<>());
+	public void testInvalidSourceReleaseState() throws SQLException {
+		List<String> failedServletContextNames = Arrays.asList(
+			"module1", "module2");
+
+		_mockFailedServletContextNames(
+			failedServletContextNames, new ArrayList<>());
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Source database Release_ table has records with an " +
-					"invalid state_"));
+				"ERROR: Source Release_ table has the following servlet " +
+					"context names with a failed state: module1, module2"));
 	}
 
 	@Test
@@ -245,20 +251,20 @@ public class ValidatorTest {
 		}
 	}
 
-	private void _mockInvalidReleaseEntries(
-		List<String> sourceInvalidServlets,
-		List<String> destinationInvalidServlets) {
+	private void _mockFailedServletContextNames(
+		List<String> sourceFailedServletContextNames,
+		List<String> destinationFailedServletContextNames) {
 
 		_databaseMockedStatic.when(
-			() -> Database.getInvalidStateServlets(_sourceConnection)
+			() -> Database.getFailedServletContextNames(_sourceConnection)
 		).thenReturn(
-			sourceInvalidServlets
+			sourceFailedServletContextNames
 		);
 
 		_databaseMockedStatic.when(
-			() -> Database.getInvalidStateServlets(_destinationConnection)
+			() -> Database.getFailedServletContextNames(_destinationConnection)
 		).thenReturn(
-			destinationInvalidServlets
+			destinationFailedServletContextNames
 		);
 	}
 

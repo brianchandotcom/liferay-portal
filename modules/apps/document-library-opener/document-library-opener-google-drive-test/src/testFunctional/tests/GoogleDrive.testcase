@@ -622,7 +622,7 @@ definition {
 			value1 = ${dmDocumentTitle});
 	}
 
-	@description = "This test covers LPS-107165. It ensures that Google doc can be Edited when enabling Workflow."
+	@description = "This test covers LPS-107165 and LPS-184221. It ensures that Google doc can be Edited when enabling Workflow."
 	@priority = 4
 	test EditGoogleDocWithWorkflow {
 		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDocWithWorkflow";
@@ -652,6 +652,20 @@ definition {
 
 		GoogleDoc.saveAndExit();
 
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Untitled",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Untitled",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
@@ -670,20 +684,6 @@ definition {
 			key_dmDocumentTitle = "Edited Google Document With Workflow",
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS",
 			value1 = "Pending");
-
-		GoogleDoc.gotoEdit(
-			dmDocumentTitle = "Edited Google Document With Workflow",
-			dmDocumentTypeName = "Google Docs");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
-
-		AssertTextEquals(
-			locator1 = "GoogleDoc#TITLE",
-			value1 = "Edited Google Document With Workflow");
-
-		SelectFrameTop();
-
-		GoogleDoc.discardChanges();
 
 		Navigator.openURL();
 

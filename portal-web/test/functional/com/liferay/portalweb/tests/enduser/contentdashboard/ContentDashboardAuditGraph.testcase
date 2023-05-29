@@ -275,6 +275,7 @@ definition {
 	@description = "When the user clicks on the Flip axes button, the vocabularies will be exchanged, the vocabulary represented in the X (the first in the list in the "In use" box) is sent to the Y, and the other way around"
 	@priority = 5
 	test AuditGraphFlipAxes {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Add a Web Content using categories via JSONWS") {

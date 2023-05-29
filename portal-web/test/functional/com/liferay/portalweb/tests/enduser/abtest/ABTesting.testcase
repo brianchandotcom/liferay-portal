@@ -704,6 +704,8 @@ definition {
 	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
 	@priority = 3
 	test CheckElementIdWithVariant {
+		property ci.retries.disabled = "true";
+
 		task ("Create a page with a button fragment") {
 			ContentPages.gotoPageEditor();
 

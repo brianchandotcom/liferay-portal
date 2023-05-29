@@ -585,6 +585,7 @@ definition {
 	@description = "This is a test for LPS-125985. The Page Creater can perform actions on collection displayed in Collection Display via General panel."
 	@priority = 5
 	test PerformActionsOnDisplayedCollectionInCollectionDisplayViaGeneralPanel {
+		property ci.retries.disabled = "true";
 		property portal.acceptance = "true";
 
 		task ("Add a vocabulary") {

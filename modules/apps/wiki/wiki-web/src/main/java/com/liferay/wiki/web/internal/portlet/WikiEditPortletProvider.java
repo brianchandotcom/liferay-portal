@@ -24,10 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.wiki.model.WikiPage",
-		"service.ranking:Integer=100"
-	},
+	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = EditPortletProvider.class
 )
 public class WikiEditPortletProvider

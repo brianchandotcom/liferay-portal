@@ -16,9 +16,7 @@ package com.liferay.document.library.web.internal.portlet;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,14 +30,10 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut",
 		"model.class.name=com.liferay.portal.kernel.repository.model.Folder"
 	},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = ManagePortletProvider.class
 )
 public class DLAdminEditPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+	extends BasePortletProvider implements ManagePortletProvider {
 
 	@Override
 	public String getPortletName() {

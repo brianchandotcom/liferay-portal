@@ -40,6 +40,7 @@ import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResou
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -1417,7 +1418,7 @@ public class StructuredContentResourceTest
 
 		// Get structured content inside folder in Asset Library
 
-		JournalFolder journalFolder = JournalTestUtil.addFolder(
+		JournalFolder journalFolder1 = JournalTestUtil.addFolder(
 			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
 
 		StructuredContent structuredContent = randomStructuredContent();
@@ -1428,15 +1429,34 @@ public class StructuredContentResourceTest
 		StructuredContent postStructuredContent =
 			structuredContentResource.
 				postStructuredContentFolderStructuredContent(
-					journalFolder.getFolderId(), structuredContent);
+					journalFolder1.getFolderId(), structuredContent);
 
-		StructuredContent getStructuredContent =
+		StructuredContent getStructuredContent1 =
 			structuredContentResource.getStructuredContent(
 				postStructuredContent.getId());
 
 		Assert.assertEquals(
-			journalFolder.getFolderId(),
-			(long)getStructuredContent.getStructuredContentFolderId());
+			journalFolder1.getFolderId(),
+			(long)getStructuredContent1.getStructuredContentFolderId());
+
+		// Get structured content inside current folder in Asset Library
+
+		JournalFolder journalFolder2 = JournalTestUtil.addFolder(
+			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		_journalArticleLocalService.moveArticle(
+			testDepotEntry.getGroupId(), postStructuredContent.getKey(),
+			journalFolder2.getFolderId(),
+			ServiceContextTestUtil.getServiceContext(
+				testDepotEntry.getGroupId()));
+
+		StructuredContent getStructuredContent2 =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertEquals(
+			journalFolder2.getFolderId(),
+			(long)getStructuredContent2.getStructuredContentFolderId());
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {
@@ -1453,6 +1473,10 @@ public class StructuredContentResourceTest
 	private DLFileEntry _dlFileEntry;
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	private JournalFolder _journalFolder;
 	private Layout _layout;
 

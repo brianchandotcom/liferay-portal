@@ -90,16 +90,8 @@ definition {
 	@description = "LPS-185226. Confirm that the user can add a field"
 	@priority = 5
 	test CanAddField {
-		task ("And clicks on Add Fields button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And checks id field") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-		}
-
-		task ("And clicks on Save button") {
-			Button.clickSave();
+		task ("And clicks on Add Fields button/And checks id field/And clicks on Save button") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id");
 		}
 
 		task ("Then the added fields are shown on Fields tab page") {
@@ -113,13 +105,7 @@ definition {
 	@priority = 4
 	test CanAssertModalWhenDeleteField {
 		task ("And adds two or more fields") {
-			LexiconEntry.gotoAdd();
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
-
-			Button.clickSave();
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("When the user selects the Delete option in the 3 dots menu") {
@@ -145,7 +131,7 @@ definition {
 		}
 
 		task ("And checks id field") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
+			FrontendDataSetAdmin.checkFields(key_fieldList = "id");
 		}
 
 		task ("And clicks on Cancel button") {
@@ -167,7 +153,7 @@ definition {
 		}
 
 		task ("And checks creator field") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "creator");
+			FrontendDataSetAdmin.checkFields(key_fieldList = "creator");
 		}
 
 		task ("And clicks on X icon of the modal") {
@@ -187,11 +173,7 @@ definition {
 	@priority = 4
 	test CanCancelFieldDeletion {
 		task ("And adds 'id' field") {
-			LexiconEntry.gotoAdd();
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			Button.clickSave();
+			FrontendDataSetAdmin.addFields(key_fieldList = "id");
 		}
 
 		task ("When the user selects the Delete option in the 3 dots menu") {
@@ -222,18 +204,8 @@ definition {
 	@description = "LPS-185229. Confirm that the user can change the field's order on Fields tab page."
 	@priority = 4
 	test CanChangeFieldOrder {
-		task ("And clicks on plus button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And checks id and label fields") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
-		}
-
-		task ("And clicks on Save button") {
-			Button.clickSave();
+		task ("And clicks on plus button/And checks id and label fields/And clicks on Save button") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("And clicks on a field drag dots icon related id field ") {
@@ -268,7 +240,7 @@ definition {
 		}
 
 		task ("And select all the fields.") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "");
+			FrontendDataSetAdmin.checkFields(key_fieldList = "");
 		}
 
 		task ("Then Confirm all fields are checked ") {
@@ -276,7 +248,7 @@ definition {
 		}
 
 		task ("When Uncheck all the fields.") {
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "");
+			FrontendDataSetAdmin.uncheckFields(key_fieldList = "");
 		}
 
 		task ("Then Confirm that all fields are unchecked ") {
@@ -288,11 +260,7 @@ definition {
 	@priority = 4
 	test CanDeleteField {
 		task ("And adds 'id' field") {
-			LexiconEntry.gotoAdd();
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			Button.clickSave();
+			FrontendDataSetAdmin.addFields(key_fieldList = "id");
 		}
 
 		task ("When the user selects the Delete option in the 3 dots menu / And the user confirms the deletion / Then the field is deleted") {
@@ -314,13 +282,11 @@ definition {
 		}
 
 		task ("And checks id and label fields") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
+			FrontendDataSetAdmin.checkFields(key_fieldList = "id,label");
 		}
 
 		task ("And unchecks id field") {
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
+			FrontendDataSetAdmin.uncheckFields(key_fieldList = "id");
 		}
 
 		task ("And clicks on Save button") {
@@ -345,13 +311,7 @@ definition {
 	@priority = 4
 	test CannotUpdateFieldsIfCancelOnCancelButton {
 		task ("And adds two or more fields") {
-			LexiconEntry.gotoAdd();
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
-
-			Button.clickSave();
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("When the user selects the 'Plus' Button") {
@@ -359,7 +319,7 @@ definition {
 		}
 
 		task ("And uncheck a selected option") {
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
+			FrontendDataSetAdmin.uncheckFields(key_fieldList = "id");
 		}
 
 		task ("Then the user clicks on the Cancel option") {
@@ -387,13 +347,7 @@ definition {
 	@priority = 4
 	test CannotUpdateFieldsIfCancelOnCloseButton {
 		task ("And adds two or more fields") {
-			LexiconEntry.gotoAdd();
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
-
-			Button.clickSave();
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("When the user selects the 'Plus' Button") {
@@ -401,7 +355,7 @@ definition {
 		}
 
 		task ("And uncheck a selected option") {
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
+			FrontendDataSetAdmin.uncheckFields(key_fieldList = "id");
 		}
 
 		task ("Then the user clicks on the Close button") {
@@ -466,18 +420,8 @@ definition {
 	@description = "LPS-185231. Confirm that the user can search a specific field on field's search bar."
 	@priority = 4
 	test CanSearchFieldOnFieldsSearchBar {
-		task ("And clicks on plus button") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("And checks id and label fields") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
-		}
-
-		task ("And clicks on Save button") {
-			Button.clickSave();
+		task ("And clicks on plus button/And checks id and label fields/And clicks on Save button") {
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("And types id on Fields search bar") {
@@ -499,13 +443,7 @@ definition {
 	@priority = 4
 	test CanUpdateFieldsWhenSave {
 		task ("And adds two or more fields") {
-			LexiconEntry.gotoAdd();
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "label");
-
-			Button.clickSave();
+			FrontendDataSetAdmin.addFields(key_fieldList = "id,label");
 		}
 
 		task ("When the user selects the 'Plus' Button") {
@@ -513,11 +451,13 @@ definition {
 		}
 
 		task ("And uncheck a selected option") {
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
+			FrontendDataSetAdmin.uncheckFields(key_fieldList = "id");
 		}
 
 		task ("When the user clicks on the Save button") {
-			Button.clickSave();
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
 		}
 
 		task ("Then the Add field modal is closed") {
@@ -541,11 +481,7 @@ definition {
 		}
 
 		task ("And Check three options (creator,id ,name)") {
-			FrontendDataSetAdmin.checkFields(checkboxName = "creator");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "id");
-
-			FrontendDataSetAdmin.checkFields(checkboxName = "name");
+			FrontendDataSetAdmin.checkFields(key_fieldList = "creator,id,name");
 		}
 
 		task ("Then Confirm that the fields are checked ") {
@@ -553,11 +489,7 @@ definition {
 		}
 
 		task ("When Check three options (Phone, User Account, and WebURL)") {
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "creator");
-
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "id");
-
-			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "name");
+			FrontendDataSetAdmin.uncheckFields(key_fieldList = "creator,id,name");
 		}
 
 		task ("Then Confirm that the fields are unchecked ") {

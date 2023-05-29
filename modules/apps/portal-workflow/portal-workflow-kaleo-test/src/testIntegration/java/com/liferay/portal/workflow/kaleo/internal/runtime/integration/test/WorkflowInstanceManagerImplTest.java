@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.util.List;
 
@@ -65,26 +66,53 @@ public class WorkflowInstanceManagerImplTest
 				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
 				clazz.getName(), 1, null, new ServiceContext());
 
-			Assert.assertEquals(
-				1,
-				workflowInstanceManager.searchCount(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-					StringPool.BLANK, workflowDefinition.getName(), false));
+			WorkflowInstanceLink workflowInstanceLink =
+				workflowInstanceLinkLocalService.getWorkflowInstanceLink(
+					TestPropsValues.getCompanyId(), 0, clazz.getName(), 1);
 
-			Assert.assertEquals(
-				0,
-				workflowInstanceManager.searchCount(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-					StringPool.BLANK, workflowDefinition.getName(), true));
+			WorkflowInstance workflowInstance =
+				workflowInstanceManager.getWorkflowInstance(
+					workflowInstanceLink.getCompanyId(),
+					workflowInstanceLink.getWorkflowInstanceId());
 
-			Assert.assertEquals(
-				1,
-				workflowInstanceManager.searchCount(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-					StringPool.BLANK, workflowDefinition.getName(), null));
+			_kaleoInstanceLocalService.completeKaleoInstance(
+				workflowInstance.getWorkflowInstanceId());
+
+			try {
+				WorkflowHandlerRegistryUtil.startWorkflowInstance(
+					TestPropsValues.getCompanyId(), 0,
+					TestPropsValues.getUserId(), clazz.getName(), 2, null,
+					new ServiceContext());
+
+				Assert.assertEquals(
+					1,
+					workflowInstanceManager.searchCount(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), null, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						workflowDefinition.getName(), false));
+
+				Assert.assertEquals(
+					1,
+					workflowInstanceManager.searchCount(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), null, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						workflowDefinition.getName(), true));
+
+				Assert.assertEquals(
+					2,
+					workflowInstanceManager.searchCount(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), null, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						workflowDefinition.getName(), null));
+			}
+			finally {
+				workflowInstanceManager.updateActive(
+					TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+					workflowInstance.getWorkflowInstanceId(), false);
+			}
 		}
 	}
 
@@ -300,6 +328,9 @@ public class WorkflowInstanceManagerImplTest
 			Assert.assertFalse(workflowInstance.isActive());
 		}
 	}
+
+	@Inject
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

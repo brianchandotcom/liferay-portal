@@ -24,7 +24,6 @@ import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
 import com.liferay.notification.service.NotificationTemplateLocalService;
-import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -279,6 +278,21 @@ public class BaseNotificationTypeTest {
 		).put(
 			"[%CURRENT_USER_SUFFIX%]", _getListType("SUFFIX", user2)
 		).build();
+		_parentAuthorTermValues = HashMapBuilder.<String, Object>put(
+			getTermName(true, "AUTHOR_EMAIL_ADDRESS"), user2.getEmailAddress()
+		).put(
+			getTermName(true, "AUTHOR_FIRST_NAME"), user2.getFirstName()
+		).put(
+			getTermName(true, "AUTHOR_ID"), user2.getUserId()
+		).put(
+			getTermName(true, "AUTHOR_LAST_NAME"), user2.getLastName()
+		).put(
+			getTermName(true, "AUTHOR_MIDDLE_NAME"), user2.getMiddleName()
+		).put(
+			getTermName(true, "AUTHOR_PREFIX"), _getListType("PREFIX", user2)
+		).put(
+			getTermName(true, "AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
+		).build();
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
@@ -368,23 +382,23 @@ public class BaseNotificationTypeTest {
 		return ListUtil.concat(
 			ListUtil.fromMapKeys(_childAuthorTermValues),
 			ListUtil.fromMapKeys(_currentUserTermValues),
+			ListUtil.fromMapKeys(_parentAuthorTermValues),
 			Arrays.asList(
 				getTermName("booleanObjectField"),
 				getTermName("dateObjectField"),
 				getTermName("integerObjectField"),
 				getTermName("picklistObjectField"),
 				getTermName("textObjectField"),
-				getTermName(true, "textObjectField"),
-				getTermName(true, "AUTHOR_FIRST_NAME")));
+				getTermName(true, "textObjectField")));
 	}
 
 	protected List<Object> getTermValues() {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_childAuthorTermValues),
 			ListUtil.fromMapValues(_currentUserTermValues),
+			ListUtil.fromMapValues(_parentAuthorTermValues),
 			ListUtil.fromMapValues(childObjectEntryValues),
-			ListUtil.fromMapValues(parentObjectEntryValues),
-			ListUtil.fromString(user2.getFirstName()));
+			ListUtil.fromMapValues(parentObjectEntryValues));
 	}
 
 	@DeleteAfterTestRun
@@ -484,8 +498,7 @@ public class BaseNotificationTypeTest {
 	private NotificationRecipientSettingLocalService
 		_notificationRecipientSettingLocalService;
 
-	@Inject
-	private NotificationTypeServiceTracker _notificationTypeServiceTracker;
+	private Map<String, Object> _parentAuthorTermValues;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

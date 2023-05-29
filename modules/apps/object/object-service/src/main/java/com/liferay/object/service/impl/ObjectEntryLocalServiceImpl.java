@@ -1536,7 +1536,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private String _createInsertIntoLocalizationTableStatement(
+	private String _createInsertIntoLocalizationTableSQL(
 			DynamicObjectDefinitionLocalizationTable
 				dynamicObjectDefinitionLocalizationTable,
 			Map<String, Serializable> values)
@@ -1598,7 +1598,7 @@ public class ObjectEntryLocalServiceImpl
 		return insertIntoStatement;
 	}
 
-	private String _createUpdateLocalizationTableStatement(
+	private String _createUpdateLocalizationTableSQL(
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
 		long objectEntryId, List<ObjectField> objectFields,
@@ -2974,11 +2974,11 @@ public class ObjectEntryLocalServiceImpl
 				DynamicObjectDefinitionLocalizationTableFactory.create(
 					objectDefinition, _objectFieldLocalService);
 
-		String insertIntoLocalizationTableStatement =
-			_createInsertIntoLocalizationTableStatement(
+		String insertIntoLocalizationTableSQL =
+			_createInsertIntoLocalizationTableSQL(
 				dynamicObjectDefinitionLocalizationTable, values);
 
-		if (insertIntoLocalizationTableStatement == null) {
+		if (insertIntoLocalizationTableSQL == null) {
 			return;
 		}
 
@@ -3016,8 +3016,7 @@ public class ObjectEntryLocalServiceImpl
 		for (Locale locale : locales) {
 			_insertIntoLocalizationTable(
 				connection, dynamicObjectDefinitionLocalizationTable,
-				insertIntoLocalizationTableStatement, values, locale,
-				objectEntryId,
+				insertIntoLocalizationTableSQL, values, locale, objectEntryId,
 				dynamicObjectDefinitionLocalizationTable.getObjectFields());
 		}
 	}
@@ -3587,23 +3586,23 @@ public class ObjectEntryLocalServiceImpl
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionLocalizationTable.getObjectFields();
 
-		String updateStatement = _createUpdateLocalizationTableStatement(
+		String updateSQL = _createUpdateLocalizationTableSQL(
 			dynamicObjectDefinitionLocalizationTable, objectEntryId,
 			objectFields, values);
 
-		if (updateStatement == null) {
+		if (updateSQL == null) {
 			return;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + updateStatement);
+			_log.debug("SQL: " + updateSQL);
 		}
 
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				updateStatement)) {
+				updateSQL)) {
 
 			int index = 1;
 

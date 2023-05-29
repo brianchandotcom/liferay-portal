@@ -14,11 +14,19 @@
 
 package com.liferay.object.petra.sql.dsl;
 
-import com.liferay.object.field.util.DBType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.math.BigDecimal;
+
+import java.sql.Blob;
+import java.sql.Types;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -34,7 +42,7 @@ public class DynamicObjectDefinitionTableUtil {
 
 		String sql = StringBundler.concat(
 			"alter table ", tableName, " add ", columnName, StringPool.SPACE,
-			DBType.getDataType(dbType), getSQLColumnNull(dbType));
+			getDataType(dbType), getSQLColumnNull(dbType));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("SQL: " + sql);
@@ -43,25 +51,94 @@ public class DynamicObjectDefinitionTableUtil {
 		return sql;
 	}
 
-	public static String getSQLColumnNull(String dbTypeString) {
-		DBType dbType = DBType.getDBType(dbTypeString);
+	public static String getDataType(String dbType) {
+		return _dataTypes.get(dbType);
+	}
 
-		if (dbType.equals(DBType.BIG_DECIMAL) || dbType.equals(DBType.DOUBLE) ||
-			dbType.equals(DBType.INTEGER) || dbType.equals(DBType.LONG)) {
+	public static Class<?> getJavaClass(String dbType) {
+		return _javaClasses.get(dbType);
+	}
+
+	public static String getSQLColumnNull(String dbType) {
+		if (dbType.equals("BigDecimal") || dbType.equals("Double") ||
+			dbType.equals("Integer") || dbType.equals("Long")) {
 
 			return " default 0";
 		}
-		else if (dbType.equals(DBType.BOOLEAN)) {
+		else if (dbType.equals("Boolean")) {
 			return " default FALSE";
 		}
-		else if (dbType.equals(DBType.DATE)) {
+		else if (dbType.equals("Date")) {
 			return " null";
 		}
 
 		return StringPool.BLANK;
 	}
 
+	public static Integer getSQLType(String dbType) {
+		return _sqlTypes.get(dbType);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicObjectDefinitionTableUtil.class);
+
+	private static final Map<String, String> _dataTypes = HashMapBuilder.put(
+		"BigDecimal", "DECIMAL(30, 16)"
+	).put(
+		"Blob", "BLOB"
+	).put(
+		"Boolean", "BOOLEAN"
+	).put(
+		"Clob", "TEXT"
+	).put(
+		"Date", "DATE"
+	).put(
+		"Double", "DOUBLE"
+	).put(
+		"Integer", "INTEGER"
+	).put(
+		"Long", "LONG"
+	).put(
+		"String", "VARCHAR(280)"
+	).build();
+	private static final Map<String, Class<?>> _javaClasses =
+		HashMapBuilder.<String, Class<?>>put(
+			"BigDecimal", BigDecimal.class
+		).put(
+			"Blob", Blob.class
+		).put(
+			"Boolean", Boolean.class
+		).put(
+			"Clob", String.class
+		).put(
+			"Date", Date.class
+		).put(
+			"Double", Double.class
+		).put(
+			"Integer", Integer.class
+		).put(
+			"Long", Long.class
+		).put(
+			"String", String.class
+		).build();
+	private static final Map<String, Integer> _sqlTypes = HashMapBuilder.put(
+		"BigDecimal", Types.DECIMAL
+	).put(
+		"Blob", Types.BLOB
+	).put(
+		"Boolean", Types.BOOLEAN
+	).put(
+		"Clob", Types.CLOB
+	).put(
+		"Date", Types.DATE
+	).put(
+		"Double", Types.DOUBLE
+	).put(
+		"Integer", Types.INTEGER
+	).put(
+		"Long", Types.BIGINT
+	).put(
+		"String", Types.VARCHAR
+	).build();
 
 }

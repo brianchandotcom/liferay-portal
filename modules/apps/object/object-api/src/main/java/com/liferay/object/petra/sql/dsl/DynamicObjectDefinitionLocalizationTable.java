@@ -43,8 +43,6 @@ public class DynamicObjectDefinitionLocalizationTable
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
 
-		_tableName = objectDefinition.getLocalizationDBTableName();
-
 		String primaryKeyColumnName = TextFormatter.format(
 			objectDefinition.getShortName() + "_l10nId", TextFormatter.I);
 
@@ -91,7 +89,7 @@ public class DynamicObjectDefinitionLocalizationTable
 		StringBundler sb = new StringBundler();
 
 		sb.append("create table ");
-		sb.append(_tableName);
+		sb.append(_objectDefinition.getLocalizationDBTableName());
 		sb.append(" (");
 		sb.append(_primaryKeyColumnName);
 		sb.append(" LONG not null primary key, ");
@@ -176,6 +174,5 @@ public class DynamicObjectDefinitionLocalizationTable
 		_objectFieldColumns;
 	private final List<ObjectField> _objectFields;
 	private final String _primaryKeyColumnName;
-	private final String _tableName;
 
 }

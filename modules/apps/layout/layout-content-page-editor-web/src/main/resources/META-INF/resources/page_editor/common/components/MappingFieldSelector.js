@@ -29,6 +29,7 @@ const UNMAPPED_OPTION = {
 export default function MappingFieldSelector({
 	fieldType,
 	fields,
+	label = Liferay.Language.get('field'),
 	onValueSelect,
 	value,
 }) {
@@ -43,9 +44,7 @@ export default function MappingFieldSelector({
 			className={classNames('mb-2 mt-3', {'has-warning': hasWarnings})}
 			small
 		>
-			<label htmlFor={mappingSelectorFieldSelectId}>
-				{Liferay.Language.get('field')}
-			</label>
+			<label htmlFor={mappingSelectorFieldSelectId}>{label}</label>
 
 			<ClaySelect
 				disabled={!(fields && !!fields.length)}

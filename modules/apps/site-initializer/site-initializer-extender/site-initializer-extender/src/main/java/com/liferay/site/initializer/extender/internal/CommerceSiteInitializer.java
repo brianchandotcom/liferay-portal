@@ -129,9 +129,7 @@ public class CommerceSiteInitializer {
 			bundle, channel.getId(), documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			servletContext);
-
 		_addOrUpdateCommerceOrderTypes(serviceContext, servletContext);
-		_addOrUpdateCPOptionCategories(serviceContext, servletContext);
 	}
 
 	public void addPortletSettings(

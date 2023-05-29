@@ -5,6 +5,13 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.osgi.web.http.servlet,\
 	com.liferay.portal.osgi.web.http.servlet.context
+Import-Package:\
+	javax.servlet.annotation;resolution:=optional,\
+	javax.servlet.descriptor;resolution:=optional,\
+	\
+	org.osgi.service.http.whiteboard,\
+	\
+	*
 Provide-Capability:\
 	osgi.implementation;\
 		osgi.implementation="osgi.http";\

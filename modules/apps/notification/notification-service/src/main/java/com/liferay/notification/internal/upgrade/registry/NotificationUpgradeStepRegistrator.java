@@ -19,6 +19,7 @@ import com.liferay.notification.internal.upgrade.v1_1_0.util.NotificationTemplat
 import com.liferay.notification.internal.upgrade.v1_2_0.NotificationQueueEntryUpgradeProcess;
 import com.liferay.notification.internal.upgrade.v2_1_0.NotificationTemplateUpgradeProcess;
 import com.liferay.notification.internal.upgrade.v3_4_0.NotificationRecipientUpgradeProcess;
+import com.liferay.notification.internal.upgrade.v3_7_0.ResourcePermissionUpgradeProcess;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
@@ -112,6 +113,9 @@ public class NotificationUpgradeStepRegistrator
 			new com.liferay.notification.internal.upgrade.v3_6_0.
 				NotificationQueueEntryUpgradeProcess(
 					_classNameLocalService, _resourceLocalService));
+
+		registry.register(
+			"3.6.0", "3.7.0", new ResourcePermissionUpgradeProcess());
 	}
 
 	@Reference

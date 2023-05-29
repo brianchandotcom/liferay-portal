@@ -19,10 +19,11 @@ package com.liferay.notification.constants;
  */
 public class NotificationConstants {
 
-	public static final String RESOURCE_NAME = "com.liferay.notification";
-
 	public static final String RESOURCE_NAME_NOTIFICATION_QUEUE =
 		"com.liferay.notification.queue";
+
+	public static final String RESOURCE_NAME_NOTIFICATION_TEMPLATE =
+		"com.liferay.notification.template";
 
 	public static final String TYPE_EMAIL = "email";
 

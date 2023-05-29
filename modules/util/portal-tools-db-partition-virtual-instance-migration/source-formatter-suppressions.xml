@@ -6,5 +6,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="StringMethodsCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/internal/util/Database\.java" />
+		<suppress checks="StringMethodsCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/internal/validation/Validator\.java" />
 	</source-check>
 </suppressions>

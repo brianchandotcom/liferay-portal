@@ -1154,6 +1154,16 @@ public class CommerceOrderItemModelImpl
 		_customerCommerceOrderItemId = customerCommerceOrderItemId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCustomerCommerceOrderItemId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("customerCommerceOrderItemId"));
+	}
+
 	@JSON
 	@Override
 	public long getParentCommerceOrderItemId() {

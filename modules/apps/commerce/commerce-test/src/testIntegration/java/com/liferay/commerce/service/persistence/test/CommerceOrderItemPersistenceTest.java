@@ -583,6 +583,14 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCustomerCommerceOrderItemId() throws Exception {
+		_persistence.countByCustomerCommerceOrderItemId(
+			RandomTestUtil.nextLong());
+
+		_persistence.countByCustomerCommerceOrderItemId(0L);
+	}
+
+	@Test
 	public void testCountByParentCommerceOrderItemId() throws Exception {
 		_persistence.countByParentCommerceOrderItemId(
 			RandomTestUtil.nextLong());

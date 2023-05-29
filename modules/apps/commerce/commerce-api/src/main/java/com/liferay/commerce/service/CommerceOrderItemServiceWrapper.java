@@ -227,6 +227,16 @@ public class CommerceOrderItemServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+			getSupplierCommerceOrderItems(
+				long customerCommerceOrderItemId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.getSupplierCommerceOrderItems(
+			customerCommerceOrderItemId, start, end);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrderItem importCommerceOrderItem(
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,

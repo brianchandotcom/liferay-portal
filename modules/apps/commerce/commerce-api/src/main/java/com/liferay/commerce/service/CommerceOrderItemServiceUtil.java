@@ -198,6 +198,14 @@ public class CommerceOrderItemServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static List<CommerceOrderItem> getSupplierCommerceOrderItems(
+			long customerCommerceOrderItemId, int start, int end)
+		throws PortalException {
+
+		return getService().getSupplierCommerceOrderItems(
+			customerCommerceOrderItemId, start, end);
+	}
+
 	public static CommerceOrderItem importCommerceOrderItem(
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,

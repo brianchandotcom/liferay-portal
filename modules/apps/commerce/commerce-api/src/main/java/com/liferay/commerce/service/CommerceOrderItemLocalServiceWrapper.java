@@ -692,6 +692,15 @@ public class CommerceOrderItemLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem>
+		getSupplierCommerceOrderItems(
+			long customerCommerceOrderItemId, int start, int end) {
+
+		return _commerceOrderItemLocalService.getSupplierCommerceOrderItems(
+			customerCommerceOrderItemId, start, end);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrderItem importCommerceOrderItem(
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,

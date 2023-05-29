@@ -37,6 +37,7 @@ create index IX_2D8339EE on CommerceOrderItem (bookedQuantityId);
 create index IX_415AF3E3 on CommerceOrderItem (commerceOrderId, CPInstanceId);
 create index IX_15B37023 on CommerceOrderItem (commerceOrderId, subscription);
 create unique index IX_12257E21 on CommerceOrderItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_F0E98FC7 on CommerceOrderItem (customerCommerceOrderItemId);
 create index IX_8E1472FB on CommerceOrderItem (parentCommerceOrderItemId);
 create index IX_F7C1DC00 on CommerceOrderItem (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F0116282 on CommerceOrderItem (uuid_[$COLUMN_LENGTH:75$], groupId);

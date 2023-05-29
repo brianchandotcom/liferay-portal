@@ -587,6 +587,13 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getSupplierCommerceOrderIdsCount(commerceOrderId);
 	}
 
+	public static List<CommerceOrderItem> getSupplierCommerceOrderItems(
+		long customerCommerceOrderItemId, int start, int end) {
+
+		return getService().getSupplierCommerceOrderItems(
+			customerCommerceOrderItemId, start, end);
+	}
+
 	public static CommerceOrderItem importCommerceOrderItem(
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,

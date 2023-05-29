@@ -451,6 +451,10 @@ public interface CommerceOrderItemLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSupplierCommerceOrderIdsCount(long commerceOrderId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getSupplierCommerceOrderItems(
+		long customerCommerceOrderItemId, int start, int end);
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem importCommerceOrderItem(
 			long userId, String externalReferenceCode, long commerceOrderItemId,

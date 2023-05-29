@@ -96,8 +96,8 @@ public class DDMStructureModelListenerTest {
 		JournalArticle journalArticle = _addJournalArticle();
 
 		_updateDataDefinition(
-			"dependencies/updated_data_definition.json",
-			_dataDefinition.getDataDefinitionKey());
+			_dataDefinition.getDataDefinitionKey(),
+			"dependencies/updated_data_definition.json");
 
 		JournalArticle updatedJournalArticle =
 			_journalArticleLocalService.getJournalArticle(
@@ -113,8 +113,8 @@ public class DDMStructureModelListenerTest {
 		JournalArticle journalArticle = _addJournalArticle();
 
 		_updateDataDefinition(
-			"dependencies/data_definition.json",
-			_dataDefinition.getDataDefinitionKey());
+			_dataDefinition.getDataDefinitionKey(),
+			"dependencies/data_definition.json");
 
 		journalArticle = _journalArticleLocalService.getJournalArticle(
 			journalArticle.getId());
@@ -140,7 +140,7 @@ public class DDMStructureModelListenerTest {
 					).build())) {
 
 			_updateDataDefinition(
-				"dependencies/data_definition.json", modifiedDataDefinitionKey);
+				modifiedDataDefinitionKey, "dependencies/data_definition.json");
 
 			journalArticle = _journalArticleLocalService.getJournalArticle(
 				journalArticle.getId());
@@ -186,8 +186,8 @@ public class DDMStructureModelListenerTest {
 
 			try {
 				_updateDataDefinition(
-					"dependencies/updated_data_definition.json",
-					_dataDefinition.getDataDefinitionKey());
+					_dataDefinition.getDataDefinitionKey(),
+					"dependencies/updated_data_definition.json");
 			}
 			catch (Exception exception2) {
 				exception1 = exception2;
@@ -275,7 +275,7 @@ public class DDMStructureModelListenerTest {
 	}
 
 	private void _updateDataDefinition(
-			String resourceName, String dataDefinitionKey)
+			String dataDefinitionKey, String resourceName)
 		throws Exception {
 
 		DataDefinitionResource.Builder dataDefinitionResourcedBuilder =

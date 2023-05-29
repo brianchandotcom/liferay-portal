@@ -115,13 +115,13 @@ public class NotificationTemplateResourceImpl
 				addAction(
 					NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE,
 					"postNotificationTemplate",
-					NotificationConstants.RESOURCE_NAME,
+					NotificationConstants.RESOURCE_NAME_NOTIFICATION_TEMPLATE,
 					contextCompany.getCompanyId())
 			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getNotificationTemplatesPage",
-					NotificationConstants.RESOURCE_NAME,
+					NotificationConstants.RESOURCE_NAME_NOTIFICATION_TEMPLATE,
 					contextCompany.getCompanyId())
 			).build(),
 			booleanQuery -> {

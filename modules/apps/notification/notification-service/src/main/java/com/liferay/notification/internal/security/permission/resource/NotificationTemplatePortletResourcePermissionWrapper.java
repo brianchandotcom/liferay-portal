@@ -26,18 +26,19 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Gustavo Lima
+ * @author Murilo Stodolni
  */
 @Component(
-	property = "resource.name=" + NotificationConstants.RESOURCE_NAME,
+	property = "resource.name=" + NotificationConstants.RESOURCE_NAME_NOTIFICATION_TEMPLATE,
 	service = PortletResourcePermission.class
 )
-public class NotificationPortletResourcePermissionWrapper
+public class NotificationTemplatePortletResourcePermissionWrapper
 	extends BasePortletResourcePermissionWrapper {
 
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {
 		return PortletResourcePermissionFactory.create(
-			NotificationConstants.RESOURCE_NAME,
+			NotificationConstants.RESOURCE_NAME_NOTIFICATION_TEMPLATE,
 			new NotificationPortletResourcePermissionLogic());
 	}
 

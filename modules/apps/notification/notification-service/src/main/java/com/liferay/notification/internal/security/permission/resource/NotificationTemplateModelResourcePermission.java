@@ -110,7 +110,7 @@ public class NotificationTemplateModelResourcePermission
 	private NotificationTemplateLocalService _notificationTemplateLocalService;
 
 	@Reference(
-		target = "(resource.name=" + NotificationConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + NotificationConstants.RESOURCE_NAME_NOTIFICATION_TEMPLATE + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

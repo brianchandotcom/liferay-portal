@@ -34,7 +34,7 @@ public class NotificationQueueConfigurationPidMapping
 
 	@Override
 	public String getConfigurationPid() {
-		return NotificationConstants.RESOURCE_NAME;
+		return NotificationConstants.RESOURCE_NAME_NOTIFICATION_QUEUE;
 	}
 
 }

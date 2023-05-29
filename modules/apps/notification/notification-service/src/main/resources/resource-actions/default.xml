@@ -3,22 +3,6 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.notification</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationTemplatesPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_NOTIFICATION_TEMPLATE</action-key>
-			</supports>
-			<guest-unsupported>
-				<action-key>ADD_NOTIFICATION_TEMPLATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
 		<model-name>com.liferay.notification.model.NotificationQueueEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet</portlet-name>
@@ -71,6 +55,22 @@
 			</supports>
 			<guest-unsupported>
 				<action-key>ADD_NOTIFICATION_QUEUE_ENTRY</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.notification.template</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_notification_web_internal_portlet_NotificationTemplatesPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_NOTIFICATION_TEMPLATE</action-key>
+			</supports>
+			<guest-unsupported>
+				<action-key>ADD_NOTIFICATION_TEMPLATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

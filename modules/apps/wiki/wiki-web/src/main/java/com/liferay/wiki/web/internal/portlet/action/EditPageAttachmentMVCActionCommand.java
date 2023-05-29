@@ -28,7 +28,6 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
-import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -270,7 +269,6 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 				 exception instanceof LiferayFileItemException ||
 				 exception instanceof NoSuchFolderException ||
 				 exception instanceof SourceFileNameException ||
-				 exception instanceof StorageFieldRequiredException ||
 				 exception instanceof UploadRequestSizeException) {
 
 			if (!cmd.equals(Constants.ADD_DYNAMIC) &&

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -75,27 +76,27 @@ public class DatabaseUtil {
 		return releaseEntries;
 	}
 
-	public static Release getReleaseEntry(
-			Connection connection, String servletContextName)
+	public static Map<String, Release> getReleaseMap(Connection connection)
 		throws SQLException {
+
+		Map<String, Release> releaseMap = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select servletContextName, schemaVersion, verified from " +
-					"Release_ where servletContextName = ?")) {
+					"Release_");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			preparedStatement.setString(1, servletContextName);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return new Release(
+			while (resultSet.next()) {
+				releaseMap.put(
+					resultSet.getString(1),
+					new Release(
 						resultSet.getString(1),
 						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getBoolean(3));
-				}
+						resultSet.getBoolean(3)));
 			}
 		}
 
-		return null;
+		return releaseMap;
 	}
 
 	public static List<String> getTables(Connection connection)

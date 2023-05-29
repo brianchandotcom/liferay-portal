@@ -14,7 +14,6 @@
 
 package com.liferay.object.petra.sql.dsl;
 
-import com.liferay.object.field.util.DBType;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.sql.dsl.Column;
@@ -67,8 +66,10 @@ public class DynamicObjectDefinitionLocalizationTable
 		for (ObjectField objectField : objectFields) {
 			createColumn(
 				objectField.getDBColumnName(),
-				DBType.getJavaClass(objectField.getDBType()),
-				DBType.getSQLType(objectField.getDBType()),
+				DynamicObjectDefinitionTableUtil.getJavaClass(
+					objectField.getDBType()),
+				DynamicObjectDefinitionTableUtil.getSQLType(
+					objectField.getDBType()),
 				Column.FLAG_DEFAULT);
 		}
 
@@ -101,7 +102,9 @@ public class DynamicObjectDefinitionLocalizationTable
 			sb.append(", ");
 			sb.append(objectField.getDBColumnName());
 			sb.append(" ");
-			sb.append(DBType.getDataType(objectField.getDBType()));
+			sb.append(
+				DynamicObjectDefinitionTableUtil.getDataType(
+					objectField.getDBType()));
 		}
 
 		sb.append(")");

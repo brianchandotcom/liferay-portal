@@ -74,10 +74,7 @@ public class ContextListenerTrackerCustomizer
 					DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 			}
 
-			boolean listener = Boolean.parseBoolean(
-				String.valueOf(listenerObject));
-
-			if (!listener) {
+			if (!Boolean.parseBoolean(String.valueOf(listenerObject))) {
 				return result;
 			}
 

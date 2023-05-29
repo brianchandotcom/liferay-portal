@@ -292,9 +292,8 @@ public class DispatchTargets {
 
 		try {
 			Map<String, String[]> parameterMap = new LinkedHashMap<>();
-			String[] parameters = queryString.split(Const.AMP);
 
-			for (String parameter : parameters) {
+			for (String parameter : queryString.split(Const.AMP)) {
 				int index = parameter.indexOf('=');
 
 				String name = null;

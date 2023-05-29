@@ -60,14 +60,12 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 
 		_checkShutdown();
 
-		HttpContext finalHttpContext =
-			(httpContext == null) ? createDefaultHttpContext() : httpContext;
-
 		try {
 			AccessController.doPrivileged(
 				(PrivilegedExceptionAction<Void>)() -> {
 					_httpServiceRuntimeImpl.registerHttpServiceFilter(
-						_bundle, alias, filter, initParams, finalHttpContext);
+						_bundle, alias, filter, initParams,
+						_getOrCreateHttpContext(httpContext));
 
 					return null;
 				});
@@ -83,14 +81,12 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 
 		_checkShutdown();
 
-		HttpContext finalHttpContext =
-			(httpContext == null) ? createDefaultHttpContext() : httpContext;
-
 		try {
 			AccessController.doPrivileged(
 				(PrivilegedExceptionAction<Void>)() -> {
 					_httpServiceRuntimeImpl.registerHttpServiceResources(
-						_bundle, alias, name, finalHttpContext);
+						_bundle, alias, name,
+						_getOrCreateHttpContext(httpContext));
 
 					return null;
 				});
@@ -107,14 +103,12 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 
 		_checkShutdown();
 
-		HttpContext finalHttpContext =
-			(httpContext == null) ? createDefaultHttpContext() : httpContext;
-
 		try {
 			AccessController.doPrivileged(
 				(PrivilegedExceptionAction<Void>)() -> {
 					_httpServiceRuntimeImpl.registerHttpServiceServlet(
-						_bundle, alias, servlet, initParams, finalHttpContext);
+						_bundle, alias, servlet, initParams,
+						_getOrCreateHttpContext(httpContext));
 
 					return null;
 				});
@@ -160,6 +154,14 @@ public class HttpServiceImpl implements ExtendedHttpService, HttpService {
 			throw new IllegalStateException(
 				"Service instance is already shutdown");
 		}
+	}
+
+	private HttpContext _getOrCreateHttpContext(HttpContext httpContext) {
+		if (httpContext == null) {
+			return createDefaultHttpContext();
+		}
+
+		return httpContext;
 	}
 
 	private final Bundle _bundle;

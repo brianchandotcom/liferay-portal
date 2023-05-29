@@ -434,10 +434,6 @@ public class AssetListDisplayContext {
 		).build();
 	}
 
-	public String getOrderByCol() {
-		return _getOrderByCol();
-	}
-
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;

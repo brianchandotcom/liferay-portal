@@ -1,0 +1,91 @@
+definition {
+
+	macro _curlKnowledgeBaseArticle {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(knowledgeBaseFolderId)) {
+			var api = "knowledge-base-folders/${knowledgeBaseFolderId}/knowledge-base-articles";
+		}
+		else if (isSet(knowledgeBaseArticleId)) {
+			var api = "knowledge-base-articles/${knowledgeBaseArticleId}";
+		}
+		else if (isSet(parentKnowledgeBaseArticleId)) {
+			var api = "knowledge-base-articles/${parentKnowledgeBaseArticleId}/knowledge-base-articles";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			var api = "sites/${siteId}/knowledge-base-articles";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+		''';
+		var body = '''"articleBody": "${articleBody}","externalReferenceCode": "${externalReferenceCode}","title": "${title}"''';
+
+		if (isSet(title)) {
+			var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
+		}
+
+		return ${curl};
+	}
+
+	macro createKnowledgeBaseArticle {
+		Variables.assertDefined(parameterList = "${articleBody},${title}");
+
+		var curl = KnowledgeBaseArticleAPI._curlKnowledgeBaseArticle(
+			articleBody = ${articleBody},
+			externalReferenceCode = ${externalReferenceCode},
+			knowledgeBaseFolderId = ${knowledgeBaseFolderId},
+			parentKnowledgeBaseArticleId = ${parentKnowledgeBaseArticleId},
+			title = ${title});
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro deleteKnowledgeBaseArticleById {
+		Variables.assertDefined(parameterList = ${knowledgeBaseArticleId});
+
+		var curl = KnowledgeBaseArticleAPI._curlKnowledgeBaseArticle(knowledgeBaseArticleId = ${knowledgeBaseArticleId});
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro setUpGlobalKnowledgeBaseArticleIdAndErc {
+		var response = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
+			articleBody = ${articleBody},
+			externalReferenceCode = ${externalReferenceCode},
+			knowledgeBaseFolderId = ${knowledgeBaseFolderId},
+			parentKnowledgeBaseArticleId = ${parentKnowledgeBaseArticleId},
+			title = ${title});
+
+		if (isSet(parentKnowledgeBaseArticleId)) {
+			var subKBArticleId = JSONPathUtil.getIdValue(response = ${response});
+			var subKBArticleErc = JSONPathUtil.getErcValue(response = ${response});
+			static var staticSubKBArticleId = ${subKBArticleId};
+			static var staticSubKBArticleErc = ${subKBArticleErc};
+
+			return ${staticSubKBArticleId};
+
+			return ${staticSubKBArticleErc};
+		}
+		else {
+			var kBArticleId = JSONPathUtil.getIdValue(response = ${response});
+
+			static var staticKBArticleId = ${kBArticleId};
+
+			return ${staticKBArticleId};
+		}
+	}
+
+}

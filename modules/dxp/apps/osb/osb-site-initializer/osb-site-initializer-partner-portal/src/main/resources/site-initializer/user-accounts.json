@@ -133,13 +133,5 @@
 		"givenName": "Channel Enablement",
 		"name": "Channel Enablement Manager (CEM)",
 		"password": "test"
-	},
-	{
-		"accountBriefs": [
-			{
-				"externalReferenceCode": "0017i00001MQSGdAAP"
-			}
-		],
-		"emailAddress": "test@liferay.com"
 	}
 ]

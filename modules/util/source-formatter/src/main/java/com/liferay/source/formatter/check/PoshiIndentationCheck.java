@@ -166,7 +166,9 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 					matcher.group(4), matcher.group(1));
 			}
 
-			if (!StringUtil.equals(matcher.group(4), replacement)) {
+			if ((replacement != null) &&
+				!StringUtil.equals(matcher.group(4), replacement)) {
+
 				matcher.appendReplacement(
 					sb,
 					Matcher.quoteReplacement(

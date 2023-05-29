@@ -9,7 +9,7 @@ This tool allows to migrate a virtual instance to a new partition in a database 
     usage: Liferay Portal DB Partition Virtual Instance Migration
     -d,--destination-jdbc-url <arg> Set the JDBC url for the default partition in the destination database.
     -dp,--destination-password <arg> Set the destination database user password.
-    -dsp,--destination-schema-prefix <arg> Set the schema prefix for nondefault partitions in destination database.
+    -dsp,--destination-schema-prefix <arg> Set the schema prefix for non-default partitions in destination database.
     -du,--destination-user <arg> Set the destination database user name.
     -h,--help Print help message.
     -s,--source-jdbc-url <arg> Set the JDBC url for the schema in the source database.

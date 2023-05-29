@@ -1,0 +1,81 @@
+definition {
+
+	macro _curlKnowledgeBaseFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(parentKnowledgeBaseFolderId)) {
+			var api = "knowledge-base-folders/${parentKnowledgeBaseFolderId}/knowledge-base-folders";
+		}
+		else if (isSet(knowledgeBaseFolderId)) {
+			var api = "knowledge-base-folders/${knowledgeBaseFolderId}";
+		}
+		else {
+			var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+				groupName = "Guest",
+				site = "true");
+
+			var api = "sites/${siteId}/knowledge-base-folders";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+		''';
+		var body = '''"externalReferenceCode": "${externalReferenceCode}","name": "${name}"''';
+
+		if (isSet(name)) {
+			var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
+		}
+
+		return ${curl};
+	}
+
+	macro createKnowledgeBaseFolder {
+		Variables.assertDefined(parameterList = ${name});
+
+		var curl = KnowledgeBaseFolderAPI._curlKnowledgeBaseFolder(
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			parentKnowledgeBaseFolderId = ${parentKnowledgeBaseFolderId});
+
+		var response = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${response};
+	}
+
+	macro deleteKnowledgeBaseFolderById {
+		Variables.assertDefined(parameterList = ${knowledgeBaseFolderId});
+
+		var curl = KnowledgeBaseFolderAPI._curlKnowledgeBaseFolder(knowledgeBaseFolderId = ${knowledgeBaseFolderId});
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro setUpGlobalKnowledgeBaseFolderId {
+		var response = KnowledgeBaseFolderAPI.createKnowledgeBaseFolder(
+			externalReferenceCode = ${externalReferenceCode},
+			name = ${name},
+			parentKnowledgeBaseFolderId = ${parentKnowledgeBaseFolderId});
+
+		if (isSet(parentKnowledgeBaseFolderId)) {
+			var subKBFolderId = ${response};
+
+			static var staticSubKBFolderId = ${subKBFolderId};
+
+			return ${staticSubKBFolderId};
+		}
+		else {
+			var kBFolderId = ${response};
+
+			static var staticKBFolderId = ${kBFolderId};
+
+			return ${staticKBFolderId};
+		}
+	}
+
+}

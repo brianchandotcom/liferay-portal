@@ -602,6 +602,38 @@ components:
                     example: cross-sell
                     type: string
             type: object
+        ReplacementSku:
+            properties:
+                price:
+                    $ref: "#/components/schemas/Price"
+                    readOnly: true
+                productConfiguration:
+                    $ref: "#/components/schemas/ProductConfiguration"
+                    readOnly: true
+                sku:
+                    readOnly: true
+                    type: string
+                skuId:
+                    example: 33135
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                skuOptions:
+                    items:
+                        $ref: "#/components/schemas/SkuOption"
+                    readOnly: true
+                    type: array
+                urls:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: product-url-us
+                        hr_HR: product-url-hr
+                        hu_HU: product-url-hu
+                    readOnly: true
+                    type: object
+            type: object
         Sku:
             properties:
                 DDMOptions:
@@ -679,6 +711,9 @@ components:
                 purchasable:
                     example: true
                     type: boolean
+                replacementSku:
+                    $ref: "#/components/schemas/ReplacementSku"
+                    readOnly: true
                 replacementSkuExternalReferenceCode:
                     example: SKU0111
                     type: string

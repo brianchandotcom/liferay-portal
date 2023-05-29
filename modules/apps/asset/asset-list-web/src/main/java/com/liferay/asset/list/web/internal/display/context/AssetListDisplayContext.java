@@ -482,19 +482,7 @@ public class AssetListDisplayContext {
 	}
 
 	public boolean isShowAddAssetListEntryAction() {
-		Group group = _themeDisplay.getScopeGroup();
-
-		if (group.isLayout()) {
-			group = group.getParentGroup();
-		}
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (stagingGroupHelper.isLiveGroup(group) &&
-			stagingGroupHelper.isStagedPortlet(
-				group, AssetListPortletKeys.ASSET_LIST)) {
-
+		if (isLiveGroup()) {
 			return false;
 		}
 

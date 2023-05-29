@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -34,6 +33,7 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTa
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -170,16 +170,8 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 			@Override
 			public UriBuilder getBaseUriBuilder() {
-				UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
-
-				uriBuilder.host(_portal.getForwardedHost(httpServletRequest));
-				uriBuilder.port(_portal.getForwardedPort(httpServletRequest));
-
-				if (_portal.isSecure(httpServletRequest)) {
-					uriBuilder.scheme(Http.HTTPS);
-				}
-
-				return uriBuilder;
+				return UriInfoUtil.getBaseUriBuilder(
+					httpServletRequest, uriInfo);
 			}
 
 			@Override

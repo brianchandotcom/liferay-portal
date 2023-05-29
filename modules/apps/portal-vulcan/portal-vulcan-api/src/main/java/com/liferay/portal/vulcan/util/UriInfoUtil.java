@@ -25,6 +25,8 @@ import java.lang.reflect.Field;
 
 import java.net.URI;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
@@ -39,6 +41,21 @@ public class UriInfoUtil {
 			getBaseUriBuilder(
 				uriInfo
 			).build());
+	}
+
+	public static UriBuilder getBaseUriBuilder(
+		HttpServletRequest httpServletRequest, UriInfo uriInfo) {
+
+		UriBuilder uriBuilder = getBaseUriBuilder(uriInfo);
+
+		uriBuilder.host(PortalUtil.getForwardedHost(httpServletRequest));
+		uriBuilder.port(PortalUtil.getForwardedPort(httpServletRequest));
+
+		if (PortalUtil.isSecure(httpServletRequest)) {
+			uriBuilder.scheme(Http.HTTPS);
+		}
+
+		return uriBuilder;
 	}
 
 	public static UriBuilder getBaseUriBuilder(UriInfo uriInfo) {

@@ -25,10 +25,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -539,13 +537,8 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 			return UriInfoUtil.getBasePath(uriInfo);
 		}
 
-		UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(uriInfo);
-
-		uriBuilder.host(_portal.getForwardedHost(httpServletRequest));
-
-		if (_portal.isSecure(httpServletRequest)) {
-			uriBuilder.scheme(Http.HTTPS);
-		}
+		UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
+			httpServletRequest, uriInfo);
 
 		return String.valueOf(uriBuilder.build());
 	}
@@ -1424,9 +1417,6 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
-
-	@Reference
-	private Portal _portal;
 
 	private ServiceTrackerList<OpenAPIContributor> _trackedOpenAPIContributors;
 

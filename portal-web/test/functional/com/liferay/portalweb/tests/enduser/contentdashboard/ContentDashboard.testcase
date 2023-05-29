@@ -2565,6 +2565,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-138908. Type filter in Content Dashboard does work when deselecting previously selected types"
+	@priority = 4
+	test DeselectTypeFilter {
+		task ("Given a user has a Content Dashboard filtered by a type") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "WC Content");
+
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByType(typeName = "Web Content Article");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "WC Content");
+
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "tree.png");
+		}
+
+		task ("When the user deselects the type filter") {
+			ContentDashboard.openFilterModal(filterOption = "Type");
+
+			Uncheck.uncheckNotVisible(
+				key_nodeName = "Web Content Article",
+				locator1 = "Treeview#NODE_CHECKBOX_2");
+
+			ContentDashboard.applySelectedFilter();
+		}
+
+		task ("Then the user sees all assets") {
+			LexiconTable.viewTableEntryTitle(tableEntry = "WC Content");
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "tree.png");
+		}
+	}
+
 	@description = "LPS-119966 Given a document created in an Asset Library When the user goes to the content dashboard Then the user can see the document listed"
 	@priority = 5
 	test DocumentFromAssetLibraryIsListed {

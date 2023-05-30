@@ -372,6 +372,19 @@ public class ObjectServiceUpgradeStepRegistrator
 			"8.6.1", "8.7.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectEntry", "rootObjectEntryId LONG"));
+
+		registry.register(
+			"8.7.0", "8.8.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"ObjectRelationship", "objectRelationshipId"}
+					};
+				}
+
+			});
 	}
 
 	@Reference

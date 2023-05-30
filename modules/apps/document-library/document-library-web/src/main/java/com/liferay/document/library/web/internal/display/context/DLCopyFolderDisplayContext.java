@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -41,10 +42,21 @@ import javax.servlet.http.HttpServletRequest;
 public class DLCopyFolderDisplayContext {
 
 	public DLCopyFolderDisplayContext(
-		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		ThemeDisplay themeDisplay) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_themeDisplay = themeDisplay;
+	}
+
+	public String getActionURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/document_library/copy_folder"
+		).buildString();
 	}
 
 	public String getRedirect() {
@@ -160,6 +172,7 @@ public class DLCopyFolderDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private long _sourceFolderId = -1;
 	private String _sourceFolderName;

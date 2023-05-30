@@ -18,11 +18,20 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,21 +58,62 @@ public class CopyFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileShortcut.class.getName(), actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			_copyFileShortcut(
+				actionRequest, actionResponse, serviceContext, themeDisplay);
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			throw new PortalException(ioException);
+		}
+	}
+
+	private void _copyFileShortcut(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws IOException {
+
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
 		long destinationFolderId = ParamUtil.getLong(
 			actionRequest, "destinationFolderId");
 		long destinationRepositoryId = ParamUtil.getLong(
 			actionRequest, "destinationRepositoryId");
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileShortcut.class.getName(), actionRequest);
 
-		_dlAppService.copyFileShortcut(
-			fileShortcutId, destinationFolderId, destinationRepositoryId,
-			serviceContext);
+		try {
+			_dlAppService.copyFileShortcut(
+				fileShortcutId, destinationFolderId, destinationRepositoryId,
+				serviceContext);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, _jsonFactory.createJSONObject());
+		}
+		catch (PortalException portalException) {
+			String errorMessage = themeDisplay.translate(
+				portalException.getMessage());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("errorMessage", errorMessage));
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CopyFileShortcutMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

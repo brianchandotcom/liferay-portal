@@ -18,11 +18,20 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,6 +58,28 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFolder.class.getName(), actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			_copyFolder(
+				actionRequest, actionResponse, serviceContext, themeDisplay);
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			throw new PortalException(ioException);
+		}
+	}
+
+	private void _copyFolder(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
+		throws IOException {
+
 		long sourceRepositoryId = ParamUtil.getLong(
 			actionRequest, "sourceRepositoryId");
 		long sourceFolderId = ParamUtil.getLong(
@@ -58,15 +89,33 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		long destinationParentFolderId = ParamUtil.getLong(
 			actionRequest, "destinationParentFolderId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFolder.class.getName(), actionRequest);
+		try {
+			_dlAppService.copyFolder(
+				sourceRepositoryId, sourceFolderId, destinationRepositoryId,
+				destinationParentFolderId, serviceContext);
 
-		_dlAppService.copyFolder(
-			sourceRepositoryId, sourceFolderId, destinationRepositoryId,
-			destinationParentFolderId, serviceContext);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, _jsonFactory.createJSONObject());
+		}
+		catch (PortalException portalException) {
+			String errorMessage = themeDisplay.translate(
+				portalException.getMessage());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("errorMessage", errorMessage));
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CopyFolderMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

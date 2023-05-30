@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -109,51 +110,33 @@ public class DatabaseUtilTest {
 	}
 
 	@Test
-	public void testGetReleaseEntryFound() throws SQLException {
+	public void testGetReleaseMapEntry() throws SQLException {
 		Release testRelease = new Release(
 			"module", Version.parseVersion("14.2.4"), true);
 
-		_mockGetReleaseEntry(testRelease, true);
+		_mockGetReleaseMap(testRelease, true);
 
-		Release release = DatabaseUtil.getReleaseEntry(_connection, "module");
+		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
+			_connection);
+
+		Release release = releaseMap.get("module");
 
 		Assert.assertNotNull(release);
 
 		Assert.assertTrue(release.equals(testRelease));
-
-		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
-			String.class);
-
-		Mockito.verify(
-			_preparedStatement
-		).setString(
-			Mockito.eq(1), valueCapture.capture()
-		);
-
-		Assert.assertEquals("module", valueCapture.getValue());
 	}
 
 	@Test
-	public void testGetReleaseEntryNotFound() throws SQLException {
+	public void testGetReleaseMapNotFoundEntry() throws SQLException {
 		Release testRelease = new Release(
 			"module", Version.parseVersion("14.2.4"), true);
 
-		_mockGetReleaseEntry(testRelease, false);
+		_mockGetReleaseMap(testRelease, false);
 
-		Release release = DatabaseUtil.getReleaseEntry(_connection, "module");
+		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
+			_connection);
 
-		Assert.assertNull(release);
-
-		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
-			String.class);
-
-		Mockito.verify(
-			_preparedStatement
-		).setString(
-			Mockito.eq(1), valueCapture.capture()
-		);
-
-		Assert.assertEquals("module", valueCapture.getValue());
+		Assert.assertNull(releaseMap.get("module"));
 	}
 
 	@Test
@@ -422,13 +405,13 @@ public class DatabaseUtilTest {
 		);
 	}
 
-	private void _mockGetReleaseEntry(Release release, boolean found)
+	private void _mockGetReleaseMap(Release release, boolean found)
 		throws SQLException {
 
 		Mockito.when(
 			_connection.prepareStatement(
 				"select servletContextName, schemaVersion, verified from " +
-					"Release_ where servletContextName = ?")
+					"Release_")
 		).thenReturn(
 			_preparedStatement
 		);

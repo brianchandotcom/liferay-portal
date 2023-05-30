@@ -68,6 +68,7 @@ export default function PageToolbar({
 	description,
 	descriptionI18n,
 	disableTitleAndDescriptionModal = false,
+	edited,
 	isSubmitting,
 	onCancel,
 	onChangeTab,
@@ -83,7 +84,6 @@ export default function PageToolbar({
 		ThemeContext
 	);
 
-	const [edited, setEdited] = useState(false);
 	const [modalFieldFocus, setModalFieldFocus] = useState('title');
 	const [modalVisible, setModalVisible] = useState(false);
 
@@ -104,12 +104,6 @@ export default function PageToolbar({
 		setModalVisible(true);
 	};
 
-	const _handleSubmit = (value) => {
-		setEdited(true);
-
-		onTitleAndDescriptionChange(value);
-	};
-
 	return (
 		<div className="page-toolbar-root">
 			<ClayToolbar
@@ -128,7 +122,7 @@ export default function PageToolbar({
 									initialTitleI18n={titleI18n}
 									observer={observer}
 									onClose={onClose}
-									onSubmit={_handleSubmit}
+									onSubmit={onTitleAndDescriptionChange}
 								/>
 							)}
 
@@ -306,6 +300,7 @@ PageToolbar.propTypes = {
 	description: PropTypes.string,
 	descriptionI18n: PropTypes.object,
 	disableTitleAndDescriptionModal: PropTypes.bool,
+	edited: PropTypes.bool,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,

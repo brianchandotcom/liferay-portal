@@ -25,6 +25,7 @@ import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_elem
 
 export default function PreviewSXPElement({
 	isSXPElementJSONInvalid,
+	onTitleAndDescriptionChange,
 	sxpElementJSONObject,
 }) {
 	const [loading, setLoading] = useState(false);
@@ -59,10 +60,14 @@ export default function PreviewSXPElement({
 		})
 			.then((response) => response.json())
 			.then((jsonObject) => {
+				const {description, title} = jsonObject;
+
 				setPreview({
 					sxpElementJSONObject: jsonObject,
 					uiConfigurationValues: getUIConfigurationValues(jsonObject),
 				});
+
+				onTitleAndDescriptionChange({description, title});
 			})
 			.catch(() => {
 				setPreview({

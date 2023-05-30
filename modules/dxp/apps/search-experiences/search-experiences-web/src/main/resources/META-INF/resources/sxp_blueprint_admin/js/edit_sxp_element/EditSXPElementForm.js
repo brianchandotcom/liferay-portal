@@ -49,6 +49,24 @@ import PreviewSXPElement from './PreviewSXPElement';
 import SidebarPanel from './SidebarPanel';
 
 /**
+ * Checks whether any of the properties inside sxpElementJSONObject had changed,
+ * by comparing between the old and new sxpElementJSONObjects.
+ * @param {Object} sxpElementJSONObjectNew
+ * @param {Object} sxpElementJSONObjectOld
+ * @param {Object} properties
+ */
+const didPropertiesChange = (
+	sxpElementJSONObjectNew,
+	sxpElementJSONObjectOld,
+	properties
+) =>
+	properties.some(
+		(property) =>
+			JSON.stringify(sxpElementJSONObjectNew[property]) !==
+			JSON.stringify(sxpElementJSONObjectOld[property])
+	);
+
+/**
  * Checks that property of object is a valid non-Array object. Prevents errors
  * in displaying title and description for the preview and toolbar.
  * @param {*} sxpElementJSONObject The SXP element as an object
@@ -180,10 +198,13 @@ function EditSXPElementForm({
 
 	const [errors, setErrors] = useState([]);
 	const [expandAllVariables, setExpandAllVariables] = useState(false);
+	const [description, setDescription] = useState(initialDescription);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isTitleEdited, setIsTitleEdited] = useState(false);
 	const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [showVariablesSidebar, setShowVariablesSidebar] = useState(false);
+	const [title, setTitle] = useState(initialTitle);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
 		initialElementJSONEditorValueString
 	);
@@ -254,6 +275,7 @@ function EditSXPElementForm({
 		const updatedState = {
 			isInvalid: false,
 			sxpElementJSONObjectNew: sxpElementJSONObject,
+			sxpElementJSONObjectOld: sxpElementJSONObject,
 		};
 
 		try {
@@ -286,12 +308,26 @@ function EditSXPElementForm({
 	 * Parses CodeMirror text after user types into it or submits changes
 	 * on title and description modal. Validates `title_i18n` and
 	 * `description_i18n` and updates `sxpElementJSONObject` if parsing
-	 * succeeds.
+	 * succeeds. Also updates `isTitleEdited` if the `title_i18n` or
+	 * `description_i18n` changed.
 	 */
 	const _handleJSONEditorValueChange = (value) => {
 		setElementJSONEditorValue(value);
 
-		_validateAndUpdateSXPElementJSONObject(value);
+		const {
+			sxpElementJSONObjectNew,
+			sxpElementJSONObjectOld,
+		} = _validateAndUpdateSXPElementJSONObject(value);
+
+		if (
+			didPropertiesChange(
+				sxpElementJSONObjectNew,
+				sxpElementJSONObjectOld,
+				['title_i18n', 'description_i18n']
+			)
+		) {
+			setIsTitleEdited(true);
+		}
 	};
 
 	const [handleJSONEditorValueChangeDebounced] = useDebounceCallback(
@@ -463,7 +499,8 @@ function EditSXPElementForm({
 	/**
 	 * Called after clicking 'Done' in title and description edit modal.
 	 * Updates `title_i18n`, `description_i18n` inside CodeMirror editor,
-	 * which triggers `_handleJSONEditorValueChange`.
+	 * which triggers `_handleJSONEditorValueChange`. Sets `isTitleEdited`
+	 * to true.
 	 */
 	const _handleTitleAndDescriptionChange = ({
 		description_i18n,
@@ -483,6 +520,23 @@ function EditSXPElementForm({
 					'\t'
 				)
 			);
+
+			setIsTitleEdited(true);
+		}
+	};
+
+	/**
+	 * Called after clicking 'Preview' in the toolbar. Updates the
+	 * `title` and `description` with the new translations, as long as the
+	 * title is not empty. Also resets the `isTitleEdited` in order for
+	 * them to show on the toolbar.
+	 */
+	const _handleTitleAndDescriptionPreview = ({description, title}) => {
+		if (title) {
+			setDescription(description);
+			setTitle(title);
+
+			setIsTitleEdited(false);
 		}
 	};
 
@@ -508,12 +562,13 @@ function EditSXPElementForm({
 				/>
 
 				<PageToolbar
-					description={initialDescription}
+					description={description}
 					descriptionI18n={renameKeys(
 						sxpElementJSONObject.description_i18n,
 						formatLocaleWithDashes
 					)}
 					disableTitleAndDescriptionModal={isSXPElementJSONInvalid}
+					edited={isTitleEdited}
 					isSubmitting={isSubmitting}
 					onCancel={redirectURL}
 					onSubmit={_handleSubmit}
@@ -521,7 +576,7 @@ function EditSXPElementForm({
 						_handleTitleAndDescriptionChange
 					}
 					readOnly={readOnly}
-					title={initialTitle}
+					title={title}
 					titleI18n={renameKeys(
 						sxpElementJSONObject.title_i18n,
 						formatLocaleWithDashes
@@ -541,6 +596,9 @@ function EditSXPElementForm({
 					<ClayToolbar.Item>
 						<PreviewSXPElement
 							isSXPElementJSONInvalid={isSXPElementJSONInvalid}
+							onTitleAndDescriptionChange={
+								_handleTitleAndDescriptionPreview
+							}
 							sxpElementJSONObject={sxpElementJSONObject}
 						/>
 					</ClayToolbar.Item>

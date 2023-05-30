@@ -102,6 +102,7 @@ function EditSXPBlueprintForm({
 	const controllerRef = useRef();
 
 	const [errors, setErrors] = useState([]);
+	const [isTitleEdited, setIsTitleEdited] = useState(false);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
 		loading: false,
 		results: {},
@@ -603,6 +604,8 @@ function EditSXPBlueprintForm({
 	}) => {
 		formik.setFieldValue('description_i18n', description_i18n);
 		formik.setFieldValue('title_i18n', title_i18n);
+
+		setIsTitleEdited(true);
 	};
 
 	const _handleCloseSidebar = () => {
@@ -1027,6 +1030,7 @@ function EditSXPBlueprintForm({
 			<PageToolbar
 				description={initialDescription}
 				descriptionI18n={formik.values.description_i18n}
+				edited={isTitleEdited}
 				isSubmitting={formik.isSubmitting}
 				onCancel={redirectURL}
 				onChangeTab={_handleChangeTab}

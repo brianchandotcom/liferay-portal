@@ -766,6 +766,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE</td>
+	<td>//div[(@class="dnd-td") and contains(string(), '${key_cellName1}')]//..//div[(@class="dnd-td") and contains(string(), '${key_cellName2}')]//..//div[(@class="dnd-td")][${key_columnNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_DELETE_BUTTON</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/*[contains(.,'Delete')] | //div[contains(.,'${key_table}')]//div[@class='dnd-tr'][contains(.,'${key_entryName}')]//*[contains(text(),'Delete')]</td>
 	<td></td>

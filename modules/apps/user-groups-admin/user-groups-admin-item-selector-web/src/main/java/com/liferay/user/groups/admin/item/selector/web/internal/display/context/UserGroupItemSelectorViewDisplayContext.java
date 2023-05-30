@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -97,8 +96,6 @@ public class UserGroupItemSelectorViewDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		UserGroupDisplayTerms searchTerms =
 			(UserGroupDisplayTerms)_searchContainer.getSearchTerms();
 
@@ -116,10 +113,11 @@ public class UserGroupItemSelectorViewDisplayContext {
 		else {
 			_searchContainer.setResultsAndTotal(
 				() -> _userGroupLocalService.search(
-					companyId, keywords, null, _searchContainer.getStart(),
-					_searchContainer.getEnd(),
+					_themeDisplay.getCompanyId(), keywords, null,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
 					_searchContainer.getOrderByComparator()),
-				_userGroupLocalService.searchCount(companyId, keywords, null));
+				_userGroupLocalService.searchCount(
+					_themeDisplay.getCompanyId(), keywords, null));
 		}
 
 		_searchContainer.setRowChecker(

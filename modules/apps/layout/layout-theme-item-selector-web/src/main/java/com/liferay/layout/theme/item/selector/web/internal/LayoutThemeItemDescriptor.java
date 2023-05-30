@@ -16,7 +16,7 @@ package com.liferay.layout.theme.item.selector.web.internal;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.layout.theme.item.selector.web.internal.taglib.SelectThemeVerticalCard;
+import com.liferay.layout.theme.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.SelectThemeVerticalCard;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;

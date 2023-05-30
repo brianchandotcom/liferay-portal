@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.theme.item.selector.web.internal.taglib;
+package com.liferay.layout.theme.item.selector.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.petra.string.StringPool;

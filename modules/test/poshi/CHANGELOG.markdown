@@ -1,5 +1,27 @@
 # Poshi Runner Change Log
 
+## 1.0.430
+
+### Core
+
+* [POSHI-535](https://issues.liferay.com/browse/POSHI-535) - Refactor PropsValues and PropsUtil so that instances of properties can be stored per thread
+
+### Other
+
+* [LPS-182243](https://issues.liferay.com/browse/LPS-182243) - regen changelogs in modules/sdk
+* [LPS-182545](https://issues.liferay.com/browse/LPS-182545) - Use of library with known vulnerability: JSON-java 20220320
+* [LRQA-80462](https://issues.liferay.com/browse/LRQA-80462) - Deprecated methods for Copy/Paste should be replaced
+
+### Runner
+
+* [POSHI-510](https://issues.liferay.com/browse/POSHI-510) - When running Poshi tests in parallel, the output should be written to a log file
+* [POSHI-529](https://issues.liferay.com/browse/POSHI-529) - Namespace context is not stored when using poshi resources
+* [POSHI-538](https://issues.liferay.com/browse/POSHI-538) - Fix bug when reading in supported dirs with reappearing paths
+
+### WebDriver
+
+* [POSHI-532](https://issues.liferay.com/browse/POSHI-532) - Global variable returns null when invoke StringUtil method
+
 ## 1.0.426
 
 ### Gradle

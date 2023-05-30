@@ -315,6 +315,12 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
 		ListObjectReference listObjectReference, long[] segmentsEntryIds) {
 
+		if (!(layoutListRetriever instanceof
+				SegmentsEntryLayoutListRetriever)) {
+
+			return segmentsEntryIds;
+		}
+
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
 				ParamUtil.getLong(
@@ -324,26 +330,21 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return segmentsEntryIds;
 		}
 
-		if (layoutListRetriever instanceof SegmentsEntryLayoutListRetriever) {
-			SegmentsEntryLayoutListRetriever<?, ListObjectReference>
-				segmentsEntryLayoutListRetriever =
-					(SegmentsEntryLayoutListRetriever<?, ListObjectReference>)
-						layoutListRetriever;
+		SegmentsEntryLayoutListRetriever<?, ListObjectReference>
+			segmentsEntryLayoutListRetriever =
+				(SegmentsEntryLayoutListRetriever<?, ListObjectReference>)
+					layoutListRetriever;
 
-			if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-					listObjectReference,
-					segmentsExperience.getSegmentsEntryId())) {
+		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
+				listObjectReference, segmentsExperience.getSegmentsEntryId())) {
 
-				return new long[] {segmentsExperience.getSegmentsEntryId()};
-			}
-
-			return new long[] {
-				segmentsEntryLayoutListRetriever.
-					getDefaultVariationSegmentsEntryId(listObjectReference)
-			};
+			return new long[] {segmentsExperience.getSegmentsEntryId()};
 		}
 
-		return segmentsEntryIds;
+		return new long[] {
+			segmentsEntryLayoutListRetriever.getDefaultVariationSegmentsEntryId(
+				listObjectReference)
+		};
 	}
 
 	private int _getCollectionCount() {

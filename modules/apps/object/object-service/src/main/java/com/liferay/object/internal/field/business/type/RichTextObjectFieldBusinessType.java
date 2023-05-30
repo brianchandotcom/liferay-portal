@@ -73,7 +73,8 @@ public class RichTextObjectFieldBusinessType
 	}
 
 	@Override
-	public Object getValue(ObjectField objectField, Map<String, Object> values)
+	public Object getValue(
+			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition = objectField.getObjectDefinition();
@@ -83,7 +84,8 @@ public class RichTextObjectFieldBusinessType
 			objectDefinition.getClassName(), 0, ContentTypes.TEXT_HTML,
 			Sanitizer.MODE_ALL,
 			String.valueOf(
-				ObjectFieldBusinessType.super.getValue(objectField, values)),
+				ObjectFieldBusinessType.super.getValue(
+					objectField, userId, values)),
 			null);
 	}
 

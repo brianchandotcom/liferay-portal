@@ -2027,10 +2027,6 @@ definition {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
 	}
 
-	macro viewTranslationDropdownNotPresent {
-		AssertElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
-	}
-
 	macro viewTranslationLanguageOptionNotPresent {
 		Click(
 			key_translationOptionSelected = ${currentTranslationOption},

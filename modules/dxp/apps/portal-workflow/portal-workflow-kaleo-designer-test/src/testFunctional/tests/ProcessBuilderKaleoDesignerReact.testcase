@@ -1595,7 +1595,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
+		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 
 		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
 
@@ -4821,8 +4821,9 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
 =======
@@ -4830,8 +4831,13 @@ definition {
 			key_locale = "en_US",
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 >>>>>>> Stashed changes
+=======
+		Click(
+			key_translationOption = "en_US",
+			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_LANGUAGE_MENU_ITEM");
+>>>>>>> b555e72 (LPS-185947 Change tests accordingly)
 
-		ProcessBuilderKaleoDesignerReact.viewTranslationDropdownNotPresent();
+		AssertElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
 	}
 
 	@description = "Verify that the date and time format in Details tab is following the system language (Example: Apr 07, 2022, 1:34 PM for en_US and 07 Abr, 2022, 13:34 for pt)"

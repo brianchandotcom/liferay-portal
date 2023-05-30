@@ -90,6 +90,19 @@
 	<td></td>
 </tr>
 <tr>
+<<<<<<< HEAD
+=======
+	<td>TRANSLATION_COUNTRY_LABEL_TEXT</td>
+	<td>//*[@role='menuitem'][@class='dropdown-item'][.//div[contains(.,'${key_translationOption}')]] //*[contains(@class,'label-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_LANGUAGE_MENU_ITEM</td>
+	<td>//*[@role='menuitem'][@class='dropdown-item'][.//div[contains(.,'${key_translationOption}')]]</td>
+	<td></td>
+</tr>
+<tr>
+>>>>>>> b555e72 (LPS-185947 Change tests accordingly)
 	<td>TRANSLATION_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']</td>
 	<td></td>
@@ -412,6 +425,11 @@
 <tr>
 	<td>DEFAULT_TOGGLE_SWITCH</td>
 	<td>//input[contains(@class,'toggle-switch-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIMERS_BUTTON_CHOOSE_SCRIPT_LANGUAGE</td>
+	<td>//div[@class='form-group']//select[@id='type']//option[contains(text(),'${key_selectType}')]</td>
 	<td></td>
 </tr>
 <tr>

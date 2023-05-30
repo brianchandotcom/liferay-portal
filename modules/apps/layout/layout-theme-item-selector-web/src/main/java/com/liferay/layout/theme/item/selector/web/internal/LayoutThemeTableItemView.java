@@ -71,18 +71,16 @@ public class LayoutThemeTableItemView implements TableItemView {
 	}
 
 	private String _getAuthor() {
-		String author = StringPool.DASH;
-
 		PluginPackage selPluginPackage = _theme.getPluginPackage();
 
 		if ((selPluginPackage != null) &&
 			Validator.isNotNull(selPluginPackage.getAuthor())) {
 
-			author = LanguageUtil.format(
+			return LanguageUtil.format(
 				_httpServletRequest, "by-x", selPluginPackage.getAuthor());
 		}
 
-		return author;
+		return StringPool.DASH;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

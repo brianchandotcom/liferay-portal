@@ -56,16 +56,16 @@ public class Snapshot<T> {
 		Class<?> holderClass, Class<T> serviceClass, String filterString,
 		boolean dynamic) {
 
-		Bundle bundle = FrameworkUtil.getBundle(holderClass);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
 		if (dynamic) {
 			DCLSingleton<ServiceTracker<T, T>> serviceTrackerDCLSingleton =
 				new DCLSingleton<>();
 
 			Supplier<ServiceTracker<T, T>> serviceTrackerSupplier = () -> {
 				ServiceTracker<T, T> serviceTracker = null;
+
+				Bundle bundle = FrameworkUtil.getBundle(holderClass);
+
+				BundleContext bundleContext = bundle.getBundleContext();
 
 				if (filterString == null) {
 					serviceTracker = new ServiceTracker<>(
@@ -105,6 +105,10 @@ public class Snapshot<T> {
 
 			_serivceSupplier = () -> serviceDCLSingleton.getSingleton(
 				() -> {
+					Bundle bundle = FrameworkUtil.getBundle(holderClass);
+
+					BundleContext bundleContext = bundle.getBundleContext();
+
 					ServiceReference<T> serviceReference = _getServiceReference(
 						bundleContext, serviceClass, filterString);
 

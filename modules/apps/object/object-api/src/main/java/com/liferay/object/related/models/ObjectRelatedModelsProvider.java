@@ -44,12 +44,13 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 	public String getObjectRelationshipType();
 
 	public List<T> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			long groupId, long objectRelationshipId, long primaryKey,
+			String search, int start, int end)
 		throws PortalException;
 
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			long groupId, long objectRelationshipId, long primaryKey,
+			String search)
 		throws PortalException;
 
 	public default List<T> getUnrelatedModels(

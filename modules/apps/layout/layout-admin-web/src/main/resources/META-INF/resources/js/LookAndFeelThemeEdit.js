@@ -37,7 +37,10 @@ export default function ({
 			onSelect: (selectedItem) => {
 				const itemValue = JSON.parse(selectedItem.value);
 
-				if (itemValue.themeId && selectedThemeId !== itemValue.themeId) {
+				if (
+					itemValue.themeId &&
+					selectedThemeId !== itemValue.themeId
+				) {
 					themeContainer.innerHTML = '';
 
 					const loadingIndicator = document.createElement('div');

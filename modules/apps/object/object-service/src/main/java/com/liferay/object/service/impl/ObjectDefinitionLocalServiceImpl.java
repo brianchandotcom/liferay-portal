@@ -1079,7 +1079,7 @@ public class ObjectDefinitionLocalServiceImpl
 			"status", false, false);
 	}
 
-	private void _createLocalizedTable(ObjectDefinition objectDefinition) {
+	private void _createLocalizationTable(ObjectDefinition objectDefinition) {
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizedTable =
 				DynamicObjectDefinitionLocalizationTableFactory.create(
@@ -1282,7 +1282,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
-		_createLocalizedTable(objectDefinition);
+		_createLocalizationTable(objectDefinition);
 		_createTable(objectDefinition.getDBTableName(), objectDefinition);
 		_createTable(
 			objectDefinition.getExtensionDBTableName(), objectDefinition);

@@ -34,11 +34,15 @@ definition {
 		}
 
 		task ("Add a new MDF Request") {
-			JSONPRM.createMDFRequest(
+			var requestId = JSONPRM.createMDFRequest(
 				accountEntryName = "Company Name 1",
 				secondActivityName = "Activity Name 2",
 				secondBudgetValueList = 1000,
 				userEmailAddress = "pmu@partner.com");
+
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "Approved",
+				requestId = ${requestId});
 		}
 	}
 

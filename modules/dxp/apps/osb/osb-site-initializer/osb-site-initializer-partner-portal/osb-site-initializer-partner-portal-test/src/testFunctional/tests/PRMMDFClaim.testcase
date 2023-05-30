@@ -442,6 +442,7 @@ definition {
 	@description = "This is a test for LPS-185927. Verify that when the MDF Claim is 'In Finance Review' status, the CFM can change to 'Claim Paid' status"
 	@priority = 5
 	test CFMCanChangeStatusToClaimPaid {
+		property solutions.acceptance = "true";
 		property test.name.skip.portal.instance = "PRMMDFClaim#CFMCanChangeStatusToClaimPaid";
 
 		task ("Given that a new claim is created and approved") {

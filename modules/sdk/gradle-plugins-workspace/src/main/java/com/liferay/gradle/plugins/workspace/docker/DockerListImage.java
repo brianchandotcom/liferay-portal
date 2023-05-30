@@ -19,6 +19,7 @@ import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 
 /**
  * @author Seiphon Wang
@@ -47,7 +48,7 @@ public class DockerListImage extends AbstractDockerRemoteApiTask {
 		onNext(action);
 	}
 
-	@Input
+	@Internal
 	public String getImageId() {
 		return _imageIdProperty.get();
 	}

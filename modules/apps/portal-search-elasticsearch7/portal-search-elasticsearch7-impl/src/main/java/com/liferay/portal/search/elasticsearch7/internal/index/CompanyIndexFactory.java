@@ -235,8 +235,11 @@ public class CompanyIndexFactory
 
 		IndicesClient indicesClient = restHighLevelClient.indices();
 
-		if (_crossClusterReplicationHelper != null) {
-			_crossClusterReplicationHelper.unfollow(removeIndex);
+		CrossClusterReplicationHelper crossClusterReplicationHelper =
+			_crossClusterReplicationHelper;
+
+		if (crossClusterReplicationHelper != null) {
+			crossClusterReplicationHelper.unfollow(removeIndex);
 		}
 
 		indicesClient.updateAliases(
@@ -244,8 +247,8 @@ public class CompanyIndexFactory
 
 		_companyLocalService.updateIndexNames(companyId, indexNameNext, null);
 
-		if (_crossClusterReplicationHelper != null) {
-			_crossClusterReplicationHelper.follow(indexNameNext);
+		if (crossClusterReplicationHelper != null) {
+			crossClusterReplicationHelper.follow(indexNameNext);
 		}
 	}
 

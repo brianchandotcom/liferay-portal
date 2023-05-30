@@ -108,3 +108,46 @@ definition {
 			key_dateField = "To");
 		}
 	}
+
+	@description = "LPS-185348 - Confirms the Clay datepicker can be opened when creating a new date filter."
+	@priority = 5
+	test AssertDateFieldsClayDatePicker {
+		task("And click on the 'Create Filter' button") {
+			Button.click(button = "Create Filter");
+		}
+		
+		task("When the user adds a name") {
+			Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				value1 = "Test");
+		}
+
+		task("And adds 'dateCreated' to the filter") {
+			Type(locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+				value1 = "dateCreated");
+		}
+
+		task("And clicks on From field datepicker"){
+			Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "From");
+		}
+
+		task("Then the Clay Date picker is open"){
+			AssertVisible(locator1 = "FrontendDataSetAdmin#DATEPICKER_MENU");
+
+			Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "From");
+		}
+
+		task("When the user clicks on To field datepicker"){
+			Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "To");
+		}
+
+		task("Then the Clay Date picker is open"){
+			AssertVisible(locator1 = "FrontendDataSetAdmin#DATEPICKER_MENU");
+
+			Click(locator1= "FrontendDataSetAdmin#DATEPICKER_BUTTON",
+			key_dateField = "To");
+		}
+
+	}

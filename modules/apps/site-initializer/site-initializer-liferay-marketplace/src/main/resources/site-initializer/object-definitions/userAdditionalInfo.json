@@ -1,109 +1,107 @@
-
 {
-    "label": {
-        "en_US": "User Additional Info"
-    },
-    "name": "UserAdditionalInfo",
-    "objectFields": [
-        {
-            "DBType": "Boolean",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Accept Invite Status"
-            },
-            "name": "acceptInviteStatus",
-            "required": false,
-            "type": "Boolean"
-        },
-        {
-            "DBType": "String",
-            "businessType": "Text",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Inviter Name"
-            },
-            "name": "inviterName",
-            "required": false,
-            "type": "String"
-        },
-        {
-            "DBType": "String",
-            "businessType": "Text",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Email of Member"
-            },
-            "name": "emailOfMember",
-            "required": false,
-            "type": "String"
-        },
-        {
-            "DBType": "String",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Publisher Name"
-            },
-            "name": "publisherName",
-            "required": false,
-            "type": "String"
-
-        },
-        {
-            "DBType": "String",
-            "businessType": "Text",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Roles"
-            },
-            "name": "roles",
-            "required": false,
-            "type": "String"
-        },
-        {
-            "DBType": "String",
-            "businessType": "Text",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "User First Name"
-            },
-            "name": "userFirstName",
-            "required": false,
-            "type": "String"
-        },
-        {
-            "DBType": "String",
-            "businessType": "Text",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Invite URL"
-            },
-            "name": "inviteURL",
-            "required": false,
-            "type": "String"
-        },
-        {
-            "DBType": "String",
-            "businessType": "Text",
-            "indexed": true,
-            "indexedAsKeyword": false,
-            "label": {
-                "en_US": "Mother's Name"
-            },
-            "name": "mothersName",
-            "required": false,
-            "type": "String"
-        }
-    ],
-    "panelCategoryKey": "control_panel.object",
-    "pluralLabel": {
-        "en_US": "User Additional Infos"
-    },
-    "scope": "company"
+	"label": {
+		"en_US": "User Additional Info"
+	},
+	"name": "UserAdditionalInfo",
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Accept Invite Status"
+			},
+			"name": "acceptInviteStatus",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Inviter Name"
+			},
+			"name": "inviterName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email of Member"
+			},
+			"name": "emailOfMember",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Publisher Name"
+			},
+			"name": "publisherName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Roles"
+			},
+			"name": "roles",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "User First Name"
+			},
+			"name": "userFirstName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Invite URL"
+			},
+			"name": "inviteURL",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Mother's Name"
+			},
+			"name": "mothersName",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "User Additional Infos"
+	},
+	"scope": "company"
 }

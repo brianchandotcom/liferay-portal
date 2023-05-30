@@ -618,7 +618,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 									<#if postParentBatchJavaMethodSignatures?has_content>
 										<#list postParentBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
-											<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"]/>
+											<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
 
 											if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
 												${parentBatchJavaMethodSignature.methodName}(
@@ -650,7 +650,7 @@ public abstract class Base${schemaName}ResourceImpl
 									</#if>
 
 									<#if postAssetLibraryBatchJavaMethodSignature??>
-										<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"]/>
+										<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
 
 										<#if postParentBatchJavaMethodSignatures?has_content>
 											else

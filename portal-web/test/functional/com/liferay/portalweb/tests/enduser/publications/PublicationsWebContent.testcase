@@ -25,6 +25,92 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-184580 - StaleObjectExcpetion when changing a web content portlet's displayed article in a publication."
+	@priority = 4
+	test CanChangeWebContentWidgetDisplayedArticleInPublication {
+		property test.assert.warning.exceptions = "true";
+
+		task ("Create two Web Contents and two Content Pages") {
+			for (var order : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC${order} content",
+					groupName = "Guest",
+					title = "WC${order}");
+
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "Test${order}",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Guest",
+					layoutName = "Test${order}");
+			}
+		}
+
+		task ("Add Web Content widget to each page and configure it to display WC1") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test1",
+				siteName = "Guest");
+
+			PageEditor.addWidget(
+				collectionName = "Content Management",
+				portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC1");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test2",
+				siteName = "Guest");
+
+			PageEditor.addWidget(
+				collectionName = "Content Management",
+				portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC1");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+		}
+
+		task ("Create a Publication, replace each page to display WC2 and view the web content test2 displays correctly") {
+			JSONPublications.addPublication(publicationName = "P1");
+
+			JSONPublications.selectPublication(publicationName = "P1");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test1",
+				siteName = "Guest");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC2");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test2",
+				siteName = "Guest");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC2");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+
+			Navigator.openSitePage(
+				pageName = "Test2",
+				siteName = "Guest");
+
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC2 content");
+		}
+	}
+
 	@description = "This is the use case for LPS-165437."
 	@priority = 3
 	test CanPublishPublicationWithDeletedWCFolder {

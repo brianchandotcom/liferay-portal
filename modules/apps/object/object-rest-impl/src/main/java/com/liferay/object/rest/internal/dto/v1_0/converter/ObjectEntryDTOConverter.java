@@ -346,7 +346,7 @@ public class ObjectEntryDTOConverter
 				List<?> relatedModels =
 					objectRelatedModelsProvider.getRelatedModels(
 						groupId, objectRelationship.getObjectRelationshipId(),
-						primaryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 					if (!FeatureFlagManagerUtil.isEnabled("LPS-165819")) {

@@ -67,11 +67,17 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 			}) || [],
 		additionalOption: mdfRequest.additionalOption,
 		company: mdfRequest.r_accToMDFReqs_accountEntry,
-		liferayBusinessSalesGoals: mdfRequest.liferayBusinessSalesGoalsOther !== '' ? ("Other - Please describe; " + mdfRequest.liferayBusinessSalesGoals)
-            ?.split('; ')
-            .filter((request) => request !== '') : mdfRequest.liferayBusinessSalesGoals
-            ?.split('; ')
-            .filter((request) => request !== ''),
+		liferayBusinessSalesGoals:
+			mdfRequest.liferayBusinessSalesGoalsOther !== ''
+				? (
+						'Other - Please describe; ' +
+						mdfRequest.liferayBusinessSalesGoals
+				  )
+						?.split('; ')
+						.filter((request) => request !== '')
+				: mdfRequest.liferayBusinessSalesGoals
+						?.split('; ')
+						.filter((request) => request !== ''),
 		liferayBusinessSalesGoalsOther:
 			mdfRequest.liferayBusinessSalesGoalsOther,
 		mdfRequestStatus: mdfRequest.mdfRequestStatus,

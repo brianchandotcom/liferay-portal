@@ -138,6 +138,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
@@ -159,7 +160,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -213,6 +213,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -1999,16 +2000,41 @@ public class ObjectEntryLocalServiceImpl
 			return null;
 		}
 
+		User user = GuestOrUserUtil.getGuestOrUser();
+
 		return dynamicObjectDefinitionLocalizationTable.getForeignKeyColumn(
 		).eq(
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 		).and(
 			dynamicObjectDefinitionLocalizationTable.getLanguageIdColumn(
 			).eq(
-				LocaleUtil.toLanguageId(
-					LocaleThreadLocal.getThemeDisplayLocale())
+				LocaleUtil.toLanguageId(user.getLocale())
 			)
 		);
+	}
+
+	private Set<Locale> _getLocales(
+		long companyId, List<ObjectField> objectFields,
+		Map<String, Serializable> values) {
+
+		Set<Locale> locales = new HashSet<>();
+
+		for (ObjectField objectField : objectFields) {
+			Map<String, String> localizedValues =
+				(Map<String, String>)values.get(
+					objectField.getI18nObjectFieldName());
+
+			if ((localizedValues == null) || localizedValues.isEmpty()) {
+				continue;
+			}
+
+			for (String languageId : localizedValues.keySet()) {
+				locales.add(LocaleUtil.fromLanguageId(languageId));
+			}
+		}
+
+		return SetUtil.intersect(
+			locales, _language.getCompanyAvailableLocales(companyId));
 	}
 
 	private GroupByStep _getManyToManyObjectEntriesGroupByStep(
@@ -2863,33 +2889,8 @@ public class ObjectEntryLocalServiceImpl
 			_log.debug("SQL: " + sql);
 		}
 
-		Set<Locale> locales = new HashSet<>();
-
-		for (ObjectField objectField :
-				dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
-
-			Map<String, String> localizedValues =
-				(Map<String, String>)values.get(
-					objectField.getI18nObjectFieldName());
-
-			if ((localizedValues == null) || localizedValues.isEmpty()) {
-				if (objectField.isRequired()) {
-					throw new ObjectEntryValuesException.Required(
-						objectField.getName());
-				}
-
-				continue;
-			}
-
-			for (String languageId : localizedValues.keySet()) {
-				locales.add(LocaleUtil.fromLanguageId(languageId));
-			}
-		}
-
-		locales = SetUtil.intersect(
-			locales,
-			_language.getCompanyAvailableLocales(
-				objectDefinition.getCompanyId()));
+		Set<Locale> locales = _getLocales(
+			objectDefinition.getCompanyId(), objectFields, values);
 
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
@@ -2907,10 +2908,7 @@ public class ObjectEntryLocalServiceImpl
 				_setColumn(
 					preparedStatement, index++, Types.VARCHAR, languageId);
 
-				for (ObjectField objectField :
-						dynamicObjectDefinitionLocalizationTable.
-							getObjectFields()) {
-
+				for (ObjectField objectField : objectFields) {
 					Column<?, ?> column =
 						dynamicObjectDefinitionLocalizationTable.getColumn(
 							objectField.getDBColumnName());
@@ -2987,21 +2985,7 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getI18nObjectFieldName());
 
 			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
-				if (languageIds.contains(entry.getKey())) {
-					updateValues.put(
-						entry.getKey(),
-						HashMapBuilder.<String, Serializable>put(
-							objectField.getI18nObjectFieldName(),
-							HashMapBuilder.put(
-								entry.getKey(), entry.getValue()
-							).build()
-						).build());
-
-					continue;
-				}
-
-				insertValues.compute(
-					objectField.getI18nObjectFieldName(),
+				BiFunction<String, Serializable, Serializable> biFunction =
 					(key, value) -> {
 						if (value == null) {
 							return HashMapBuilder.put(
@@ -3016,7 +3000,17 @@ public class ObjectEntryLocalServiceImpl
 							(Map<String, String>)value);
 
 						return (Serializable)value;
-					});
+					};
+
+				if (languageIds.contains(entry.getKey())) {
+					updateValues.compute(
+						objectField.getI18nObjectFieldName(), biFunction);
+
+					continue;
+				}
+
+				insertValues.compute(
+					objectField.getI18nObjectFieldName(), biFunction);
 			}
 		}
 
@@ -3027,6 +3021,7 @@ public class ObjectEntryLocalServiceImpl
 		_insertIntoLocalizationTable(
 			objectDefinition, objectEntryId, insertValues);
 		_updateLocalizationTable(
+			objectDefinition.getCompanyId(),
 			dynamicObjectDefinitionLocalizationTable, objectEntryId,
 			updateValues);
 	}
@@ -3510,10 +3505,10 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _updateLocalizationTable(
+		long companyId,
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
-		String languageId, long objectEntryId,
-		Map<String, Serializable> values) {
+		long objectEntryId, Map<String, Serializable> values) {
 
 		StringBundler sb = new StringBundler();
 
@@ -3562,42 +3557,53 @@ public class ObjectEntryLocalServiceImpl
 			_log.debug("SQL: " + sql);
 		}
 
+		Set<Locale> locales = _getLocales(companyId, objectFields, values);
+
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
-			int index = 1;
+			for (Locale locale : locales) {
+				String languageId = LocaleUtil.toLanguageId(locale);
 
-			for (ObjectField objectField : objectFields) {
-				if (!values.containsKey(objectField.getI18nObjectFieldName())) {
-					continue;
-				}
+				int index = 1;
 
-				Column<?, ?> column =
-					dynamicObjectDefinitionLocalizationTable.getColumn(
-						objectField.getDBColumnName());
+				for (ObjectField objectField : objectFields) {
+					if (!values.containsKey(
+							objectField.getI18nObjectFieldName())) {
 
-				Map<String, String> localizedValues =
-					(Map<String, String>)values.get(
-						objectField.getI18nObjectFieldName());
+						continue;
+					}
 
-				String localizedValue = localizedValues.get(languageId);
+					Column<?, ?> column =
+						dynamicObjectDefinitionLocalizationTable.getColumn(
+							objectField.getDBColumnName());
 
-				if (localizedValue == null) {
-					localizedValue = StringPool.BLANK;
+					Map<String, String> localizedValues =
+						(Map<String, String>)values.get(
+							objectField.getI18nObjectFieldName());
+
+					String localizedValue = localizedValues.get(languageId);
+
+					if (localizedValue == null) {
+						localizedValue = StringPool.BLANK;
+					}
+
+					_setColumn(
+						preparedStatement, index++, column.getSQLType(),
+						localizedValue);
 				}
 
 				_setColumn(
-					preparedStatement, index++, column.getSQLType(),
-					localizedValue);
+					preparedStatement, index++, Types.BIGINT, objectEntryId);
+				_setColumn(preparedStatement, index, Types.VARCHAR, languageId);
+
+				preparedStatement.addBatch();
 			}
 
-			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
-			_setColumn(preparedStatement, index, Types.VARCHAR, languageId);
-
-			preparedStatement.executeUpdate();
+			preparedStatement.executeBatch();
 
 			FinderCacheUtil.clearDSLQueryCache(
 				dynamicObjectDefinitionLocalizationTable.getTableName());

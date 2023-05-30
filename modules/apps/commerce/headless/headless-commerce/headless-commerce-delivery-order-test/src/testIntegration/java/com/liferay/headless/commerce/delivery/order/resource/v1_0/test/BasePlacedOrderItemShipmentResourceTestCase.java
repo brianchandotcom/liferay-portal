@@ -525,6 +525,14 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("supplierShipment", additionalAssertFieldName)) {
+				if (placedOrderItemShipment.getSupplierShipment() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("trackingNumber", additionalAssertFieldName)) {
 				if (placedOrderItemShipment.getTrackingNumber() == null) {
 					valid = false;
@@ -804,6 +812,17 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 				if (!Objects.deepEquals(
 						placedOrderItemShipment1.getStatus(),
 						placedOrderItemShipment2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("supplierShipment", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrderItemShipment1.getSupplierShipment(),
+						placedOrderItemShipment2.getSupplierShipment())) {
 
 					return false;
 				}
@@ -1134,6 +1153,11 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("supplierShipment")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("trackingNumber")) {
 			sb.append("'");
 			sb.append(
@@ -1203,6 +1227,7 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 				shippingMethodId = RandomTestUtil.randomLong();
 				shippingOptionName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				supplierShipment = RandomTestUtil.randomBoolean();
 				trackingNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

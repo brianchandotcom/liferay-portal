@@ -239,6 +239,16 @@ public class PlacedOrderItemShipmentSerDes {
 			sb.append(String.valueOf(placedOrderItemShipment.getStatus()));
 		}
 
+		if (placedOrderItemShipment.getSupplierShipment() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"supplierShipment\": ");
+
+			sb.append(placedOrderItemShipment.getSupplierShipment());
+		}
+
 		if (placedOrderItemShipment.getTrackingNumber() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -404,6 +414,15 @@ public class PlacedOrderItemShipmentSerDes {
 				"status", String.valueOf(placedOrderItemShipment.getStatus()));
 		}
 
+		if (placedOrderItemShipment.getSupplierShipment() == null) {
+			map.put("supplierShipment", null);
+		}
+		else {
+			map.put(
+				"supplierShipment",
+				String.valueOf(placedOrderItemShipment.getSupplierShipment()));
+		}
+
 		if (placedOrderItemShipment.getTrackingNumber() == null) {
 			map.put("trackingNumber", null);
 		}
@@ -522,6 +541,12 @@ public class PlacedOrderItemShipmentSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrderItemShipment.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "supplierShipment")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItemShipment.setSupplierShipment(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "trackingNumber")) {

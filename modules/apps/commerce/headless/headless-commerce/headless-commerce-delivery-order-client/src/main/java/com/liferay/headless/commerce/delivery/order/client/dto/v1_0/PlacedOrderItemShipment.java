@@ -327,6 +327,27 @@ public class PlacedOrderItemShipment implements Cloneable, Serializable {
 
 	protected Status status;
 
+	public Boolean getSupplierShipment() {
+		return supplierShipment;
+	}
+
+	public void setSupplierShipment(Boolean supplierShipment) {
+		this.supplierShipment = supplierShipment;
+	}
+
+	public void setSupplierShipment(
+		UnsafeSupplier<Boolean, Exception> supplierShipmentUnsafeSupplier) {
+
+		try {
+			supplierShipment = supplierShipmentUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean supplierShipment;
+
 	public String getTrackingNumber() {
 		return trackingNumber;
 	}

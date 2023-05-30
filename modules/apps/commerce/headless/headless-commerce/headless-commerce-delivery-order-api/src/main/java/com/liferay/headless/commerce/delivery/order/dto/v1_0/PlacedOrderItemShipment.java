@@ -460,6 +460,34 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
+	@Schema
+	public Boolean getSupplierShipment() {
+		return supplierShipment;
+	}
+
+	public void setSupplierShipment(Boolean supplierShipment) {
+		this.supplierShipment = supplierShipment;
+	}
+
+	@JsonIgnore
+	public void setSupplierShipment(
+		UnsafeSupplier<Boolean, Exception> supplierShipmentUnsafeSupplier) {
+
+		try {
+			supplierShipment = supplierShipmentUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean supplierShipment;
+
 	@Schema(example = "123AD-asd")
 	public String getTrackingNumber() {
 		return trackingNumber;
@@ -685,6 +713,16 @@ public class PlacedOrderItemShipment implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append(String.valueOf(status));
+		}
+
+		if (supplierShipment != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"supplierShipment\": ");
+
+			sb.append(supplierShipment);
 		}
 
 		if (trackingNumber != null) {

@@ -256,6 +256,35 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
+		if (isSet(outstandingQuantity)) {
+			var productSkusList = ListUtil.newListFromString(${productSkus});
+			var orderIdsList = ListUtil.newListFromString(${orderIds});
+			var outstandingQuantitiesList = ListUtil.newListFromString(${outstandingQuantities});
+			var size = ListUtil.size(${productSkusList});
+			var count = 0;
+
+			var isLessThanSize = MathUtil.isLessThan(${count}, ${size});
+
+			while ((${isLessThanSize} == "true")) {
+				var sku = ListUtil.get(${productSkusList}, ${count});
+				var orderId = ListUtil.get(${orderIdsList}, ${count});
+				var outstandingQuantity = ListUtil.get(${outstandingQuantitiesList}, ${count});
+
+				AssertTextEquals(
+					key_cellName1 = ${sku},
+					key_cellName2 = ${orderId},
+					key_columnNumber = 3,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = ${outstandingQuantity});
+
+				var count = ${count} + 1;
+
+				var count = StringUtil.valueOf(${count});
+
+				var isLessThanSize = MathUtil.isLessThan(${count}, ${size});
+			}
+		}
+
 		if (isSet(orderId)) {
 			Check.checkToggleSwitch(
 				key_orderId = ${orderId},

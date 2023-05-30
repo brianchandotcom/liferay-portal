@@ -448,6 +448,14 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testPostAssetLibraryStructuredContent() throws Exception {
+		super.testPostAssetLibraryStructuredContent();
+
+		_testPostAssetLibraryStructuredContentWithDefaultERCAndUUID();
+	}
+
+	@Override
+	@Test
 	public void testPostSiteStructuredContent() throws Exception {
 		super.testPostSiteStructuredContent();
 
@@ -1306,6 +1314,27 @@ public class StructuredContentResourceTest
 			postStructuredContent2.getId());
 		structuredContentResource.deleteStructuredContent(
 			postStructuredContent3.getId());
+	}
+
+	private void _testPostAssetLibraryStructuredContentWithDefaultERCAndUUID()
+		throws Exception {
+
+		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		randomStructuredContent.setExternalReferenceCode("");
+
+		randomStructuredContent.setUuid("");
+
+		StructuredContent postStructuredContent =
+			testPostAssetLibraryStructuredContent_addStructuredContent(
+				randomStructuredContent);
+
+		Assert.assertNotNull(postStructuredContent.getExternalReferenceCode());
+		Assert.assertNotNull(postStructuredContent.getUuid());
+		Assert.assertEquals(
+			postStructuredContent.getExternalReferenceCode(),
+			postStructuredContent.getUuid());
+		assertValid(postStructuredContent);
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {

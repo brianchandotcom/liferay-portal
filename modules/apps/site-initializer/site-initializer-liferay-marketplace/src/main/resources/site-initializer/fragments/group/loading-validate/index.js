@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @liferay/portal/no-global-fetch */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -19,6 +18,10 @@ const userSessionId = Liferay.ThemeDisplay.getUserId();
 let userRoles = [];
 let userAdditionalInfosId = '';
 let sendingRole = false;
+const userAccountData = {
+	accountName: '',
+	userName: Liferay.ThemeDisplay.getUserName(),
+};
 
 const getUserAccountsById = async () => {
 	try {
@@ -73,8 +76,9 @@ const getMyUserAccount = async (userAdditional) => {
 			const myUser = await response.json();
 			myUser?.accountBriefs?.map((userAccountBriefs) => {
 				userAccount.textContent = userAccountBriefs?.name;
+				userAccountData.accountName = userAccountBriefs?.name;
 				if (
-					userAdditional.r_accountToUserAdditionalInfos_accountEntryId ===
+					userAdditional?.r_accountToUserAdditionalInfos_accountEntryId ===
 					userAccountBriefs.id
 				) {
 					accountId = userAccountBriefs.id;
@@ -83,7 +87,10 @@ const getMyUserAccount = async (userAdditional) => {
 					});
 				}
 			});
-			deleteRoleFromUser(accountId, roleId, myUser.id);
+
+			if (accountId && roleId && myUser.id) {
+				deleteRoleFromUser(accountId, roleId, myUser.id);
+			}
 		} else {
 			console.error('Failed to fetch user data:', response.status);
 		}
@@ -111,7 +118,6 @@ const deleteRoleFromUser = async (accountId, roleId, myUserId) => {
 			getRolesId(accountId, myUserId);
 		} else {
 			console.error('Failed to fetch user data:', response.status);
-			
 		}
 	} catch (error) {
 		console.error('An error occurred:', error);
@@ -132,16 +138,19 @@ const getRolesId = async (accountId, myUserId) => {
 		);
 
 		if (response.ok) {
-			
 			const userAccountRole = await response.json();
 			userAccountRole?.items?.map((accountRoles) => {
 				if (userRoles.includes(accountRoles.name)) {
-					sendingRole = sendRolesApi(accountRoles.id, accountId, myUserId);
+					sendingRole = sendRolesApi(
+						accountRoles.id,
+						accountId,
+						myUserId
+					);
 				}
-			});	
-			if(sendingRole){
-				updateInviteStatus();	
-			}	
+			});
+			if (sendingRole) {
+				updateInviteStatus();
+			}
 		} else {
 			console.error('Failed to fetch user data:', response);
 		}
@@ -150,7 +159,7 @@ const getRolesId = async (accountId, myUserId) => {
 	}
 };
 
-const sendRolesApi = async (roleId, accountId, userId) => {	
+const sendRolesApi = async (roleId, accountId, userId) => {
 	try {
 		const response = await fetch(
 			`${baseURL}/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
@@ -164,7 +173,7 @@ const sendRolesApi = async (roleId, accountId, userId) => {
 			}
 		);
 		if (response.ok) {
-	     return true;
+			return true;
 		} else {
 			console.error('Failed to fetch user data:', response);
 
@@ -182,7 +191,7 @@ const updateInviteStatus = async () => {
 		const response = await fetch(
 			`${baseURL}/o/c/useradditionalinfos/${userAdditionalInfosId}`,
 			{
-				body:JSON.stringify({
+				body: JSON.stringify({
 					acceptInviteStatus: true,
 				}),
 				headers: {
@@ -194,15 +203,14 @@ const updateInviteStatus = async () => {
 			}
 		);
 		if (response.ok) {
-			return true;
+			const jsonJserAccountData = JSON.stringify(userAccountData);
+			localStorage.setItem('userAccountData', jsonJserAccountData);
+			window.location.href =
+				'http://localhost:8080/web/marketplace/dashboard';
 		} else {
 			console.error('Failed to fetch user data:', response);
-
-			return false;
 		}
 	} catch (error) {
 		console.error('An error occurred:', error);
-
-		return false;
 	}
 };

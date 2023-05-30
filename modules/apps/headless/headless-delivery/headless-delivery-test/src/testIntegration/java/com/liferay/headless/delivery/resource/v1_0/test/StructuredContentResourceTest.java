@@ -179,14 +179,14 @@ public class StructuredContentResourceTest
 			testGetSiteStructuredContentsPage_getIrrelevantSiteId(),
 			irrelevantStructuredContent);
 
-		StructuredContent structuredContent = randomStructuredContent();
+		StructuredContent structuredContent1 = randomStructuredContent();
 
-		structuredContent.setPriority((Double)null);
+		structuredContent1.setPriority((Double)null);
 
-		StructuredContent postStructuredContent =
+		StructuredContent postStructuredContent1 =
 			structuredContentResource.postSiteStructuredContent(
 				testGetSiteStructuredContentsPage_getSiteId(),
-				structuredContent);
+				structuredContent1);
 
 		Page<StructuredContent> page =
 			structuredContentResource.getSiteStructuredContentsPage(
@@ -196,7 +196,37 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(1, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(postStructuredContent),
+			Arrays.asList(postStructuredContent1),
+			(List<StructuredContent>)page.getItems());
+
+		assertValid(page);
+
+		// Filter structured content by a given priority
+
+		StructuredContent structuredContent2 = randomStructuredContent();
+
+		StructuredContent postStructuredContent2 =
+			structuredContentResource.postSiteStructuredContent(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				structuredContent2);
+
+		StructuredContent patchStructuredContent =
+			structuredContentResource.patchStructuredContent(
+				postStructuredContent2.getId(),
+				new StructuredContent() {
+					{
+						priority = Double.valueOf(1.3);
+					}
+				});
+
+		page = structuredContentResource.getSiteStructuredContentsPage(
+			testGroup.getGroupId(), true, null, null, "priority eq 1.3",
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(patchStructuredContent),
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);

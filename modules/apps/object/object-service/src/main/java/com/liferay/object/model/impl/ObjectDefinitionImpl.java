@@ -73,7 +73,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 			return null;
 		}
 
-		return getDBTableName() + "_l10n";
+		return getDBTableName() + "_l";
 	}
 
 	@Override

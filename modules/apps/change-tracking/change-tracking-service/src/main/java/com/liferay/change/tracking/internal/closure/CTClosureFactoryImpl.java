@@ -49,11 +49,15 @@ import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.function.Function;
 
 import javax.sql.DataSource;
@@ -215,7 +219,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 			}
 		}
 
-		return GraphUtil.getNodeMap(nodes, edgeMap);
+		return _getNodeMap(nodes, edgeMap);
 	}
 
 	private List<Long> _collectParentPrimaryKeys(
@@ -268,6 +272,43 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		}
 
 		return newParentPrimaryKeys;
+	}
+
+	private void _filterCyclingEdges(
+		Edge edge, Map<Node, Collection<Edge>> edgeMap,
+		Deque<Edge> backtraceEdges, Set<Edge> cyclingEdges,
+		Set<Edge> resolvedEdges) {
+
+		if (backtraceEdges.contains(edge)) {
+			cyclingEdges.add(edge);
+
+			return;
+		}
+
+		if (resolvedEdges.contains(edge) || cyclingEdges.contains(edge)) {
+			return;
+		}
+
+		Collection<Edge> nextEdges = edgeMap.get(edge.getToNode());
+
+		if (nextEdges == null) {
+			resolvedEdges.add(edge);
+
+			return;
+		}
+
+		backtraceEdges.push(edge);
+
+		for (Edge nextEdge : nextEdges) {
+			_filterCyclingEdges(
+				nextEdge, edgeMap, backtraceEdges, cyclingEdges, resolvedEdges);
+		}
+
+		backtraceEdges.pop();
+
+		if (!cyclingEdges.contains(edge)) {
+			resolvedEdges.add(edge);
+		}
 	}
 
 	private Predicate _getChildPKColumnPredicate(
@@ -369,6 +410,38 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		}
 
 		return dslQuery;
+	}
+
+	private Map<Node, Collection<Node>> _getNodeMap(
+		List<Node> nodes, Map<Node, Collection<Edge>> edgeMap) {
+
+		Deque<Edge> backtraceEdges = new LinkedList<>();
+		Set<Edge> cyclingEdges = new HashSet<>();
+		Set<Edge> resolvedEdges = new HashSet<>();
+
+		for (Collection<Edge> edges : edgeMap.values()) {
+			for (Edge edge : edges) {
+				_filterCyclingEdges(
+					edge, edgeMap, backtraceEdges, cyclingEdges, resolvedEdges);
+			}
+		}
+
+		Map<Node, Collection<Node>> nodeMap = new HashMap<>();
+
+		for (Edge edge : resolvedEdges) {
+			Collection<Node> children = nodeMap.computeIfAbsent(
+				edge.getFromNode(), node -> new ArrayList<>());
+
+			Node toNode = edge.getToNode();
+
+			children.add(toNode);
+
+			nodes.remove(toNode);
+		}
+
+		nodeMap.put(Node.ROOT_NODE, nodes);
+
+		return nodeMap;
 	}
 
 	private PreparedStatement _getPreparedStatement(

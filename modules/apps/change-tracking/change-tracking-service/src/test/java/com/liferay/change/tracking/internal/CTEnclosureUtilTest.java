@@ -15,20 +15,23 @@
 package com.liferay.change.tracking.internal;
 
 import com.liferay.change.tracking.closure.CTClosure;
+import com.liferay.change.tracking.internal.closure.CTClosureFactoryImpl;
 import com.liferay.change.tracking.internal.closure.CTClosureImpl;
 import com.liferay.change.tracking.internal.closure.Edge;
-import com.liferay.change.tracking.internal.closure.GraphUtil;
 import com.liferay.change.tracking.internal.closure.Node;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,13 +65,14 @@ public class CTEnclosureUtilTest {
 		Node node5 = new Node(3, 5);
 		Node node6 = new Node(4, 6);
 
-		Set<Node> nodes = new HashSet<>(
+		List<Node> nodes = new ArrayList<>(
 			Arrays.asList(node1, node2, node3, node4, node5));
 
 		CTClosure ctClosure = new CTClosureImpl(
 			1,
-			GraphUtil.getNodeMap(
-				nodes,
+			ReflectionTestUtil.invoke(
+				new CTClosureFactoryImpl(), "_getNodeMap",
+				new Class<?>[] {List.class, Map.class}, nodes,
 				HashMapBuilder.<Node, Collection<Edge>>put(
 					node1,
 					Arrays.asList(

@@ -7,7 +7,10 @@ definition {
 
 		var key_fieldFieldLabel = ${fieldFieldLabel};
 		var key_fieldName = ${fieldName};
-		var fieldReference = StringUtil.replace(${fieldFieldLabel}, " ", "");
+
+		if (!(isSet(fieldReference))) {
+			var fieldReference = StringUtil.replace(${fieldFieldLabel}, " ", "");
+		}
 
 		if (isSet(fieldLocation)) {
 			DragAndDrop.javaScriptDragAndDropToObject(

@@ -142,10 +142,10 @@ public class FunctionObjectEntryManagerImpl
 		return _toObjectEntries(
 			_launch(
 				new RequestBodyBuilder(
-				).companyId(
-					_companyId
 				).aggregation(
 					aggregation
+				).companyId(
+					_companyId
 				).filterString(
 					filterString
 				).locale(

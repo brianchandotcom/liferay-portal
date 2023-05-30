@@ -39,9 +39,6 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -98,24 +95,13 @@ public class ExportRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			MimeTypesUtil.getContentType(fileName));
 	}
 
-	protected void unsetDDLWebConfigurationActivator(
-		DDLWebConfigurationActivator ddlWebConfigurationActivator) {
-
-		_ddlWebConfigurationActivator = null;
-	}
-
 	@Reference
 	private DDLExporterFactory _ddlExporterFactory;
 
 	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDLWebConfigurationActivator"
-	)
-	private volatile DDLWebConfigurationActivator _ddlWebConfigurationActivator;
+	@Reference
+	private DDLWebConfigurationActivator _ddlWebConfigurationActivator;
 
 }

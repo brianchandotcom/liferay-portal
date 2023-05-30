@@ -1780,6 +1780,129 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11535. Sitemap contains product urls also for other than site's languages"
+	@priority = 4
+	test CanSiteCurrentLanguageAffectSiteMap {
+		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#CanSiteCurrentLanguageAffectSiteMap";
+
+		task ("Given an account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce",
+				accountEntryType = "Business");
+		}
+
+		task ("And two product's name and friendly URL are translated") {
+			var completeProductTranslateList = ListUtil.newListFromString("ABS Sensor:pt-BR:Sensor ABS:sensor-abs,Wear Sensors:ca-ES:Sensors Wear:sensors-wear");
+
+			for (var index : list "0,1") {
+
+				CommerceProducts.openProductsAdmin();
+
+				var productStringList = ListUtil.get(${completeProductTranslateList}, ${index});
+				var productStringList = StringUtil.replace(${productStringList}, ":", ",");
+				var productStringList = ListUtil.newListFromString(${productStringList});
+				
+
+				var entryName = ListUtil.get(${productStringList}, 0);
+
+				CommerceNavigator.searchEntry(entryName = "${entryName}");
+
+				CommerceNavigator.gotoEntry(entryName = "${entryName}");
+
+				var locale = ListUtil.get(${productStringList}, 1);
+
+				PortletEntry.changeLocale(
+					fieldName = "Name",
+					locale = "${locale}");
+
+				var translatedName = ListUtil.get(${productStringList}, 2);
+
+				Type(
+					locator1 = "TextInput#NAME",
+					value1 = "${translatedName}");
+
+				PortletEntry.changeLocale(
+					fieldName = "Friendly URL",
+					locale = "${locale}");
+
+				var translatedNameFriendlyURL = ListUtil.get(${productStringList}, 3);
+
+				Type(
+					key_fieldLabel = "Friendly URL",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${translatedNameFriendlyURL}");
+
+				Button.clickPublish();
+			}
+		}
+
+		task ("And the admin remove the Catalan from the current language list") {
+			var basePortalURL = PropsUtil.get("portal.url");
+
+			Site.openSiteSettingsAdmin(
+				baseURL = ${basePortalURL},
+				siteURLKey = "minium");
+
+			Click(
+				key_itemName = "Localization",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Define a custom default language and additional available languages for this site.");
+
+			Click(
+				key_language = "Catalan (Spain)",
+				locator1 = "CommerceEntry#CURRENT_LANGUAGE");
+
+			Click(
+				ariaLabel = "Transfer Item Right to Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			PortalSettings._saveDisplaySettings();
+		}
+
+		task ("And Uuid of the product is acquired") {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Minium",
+				site = "true");
+
+			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+
+			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
+				field = "uuid",
+				groupName = "Minium",
+				title = "Product Detail");
+		}
+
+		task ("And the Product Detail page sitemap link is opened") {
+			var uuid = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].uuid");
+
+			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
+
+			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+		}
+
+		task ("Then the product translated with the Catalan is not present") {
+			AssertElementNotPresent.assertElementNotPresentNoWaitForSPAReFresh(
+				key_basePortalURL = ${basePortalURL},
+				key_language = "ca",
+				key_productName = "sensors-wear",
+				locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL");
+
+			AssertElementNotPresent.assertElementNotPresentNoWaitForSPAReFresh(
+				key_basePortalURL = ${basePortalURL},
+				key_languageHref = "/ca",
+				key_languageLoc = "",
+				key_productName = "sensors-wear",
+				key_productNameLang = "ca-ES",
+				key_productURLName = "wear-sensors",
+				locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+		}
+
+		Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+	}
+
 	@description = "This is a test for COMMERCE-10639. Sitemaps display the language tags properly"
 	@priority = 3
 	test CanViewLanguageTagsOnSitemapPage {

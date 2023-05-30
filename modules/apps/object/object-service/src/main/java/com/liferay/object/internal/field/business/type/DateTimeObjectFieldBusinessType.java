@@ -19,11 +19,9 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -146,11 +144,6 @@ public class DateTimeObjectFieldBusinessType
 					objectField.getObjectFieldSettings(),
 					_userLocalService.getUser(userId)),
 				StringPool.UTC, value));
-	}
-
-	@Override
-	public boolean isVisible(ObjectDefinition objectDefinition) {
-		return FeatureFlagManagerUtil.isEnabled("LPS-143068");
 	}
 
 	private String _getDateTimePattern(String value) {

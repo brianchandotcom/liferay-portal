@@ -127,8 +127,7 @@ export default function PredefinedValuesTable({
 
 					newValue: (
 						<div className="lfr-object-web__predefined-values-table-new-value">
-							{Liferay.FeatureFlags['LPS-143068'] &&
-							renderDatePicker ? (
+							{renderDatePicker ? (
 								<DatePicker
 									error={predefinedErrors.get(name)}
 									hideFeedback

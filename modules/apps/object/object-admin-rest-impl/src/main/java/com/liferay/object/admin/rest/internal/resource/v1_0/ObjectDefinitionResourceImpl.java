@@ -509,14 +509,6 @@ public class ObjectDefinitionResourceImpl
 
 		if (objectDefinition.getObjectFields() != null) {
 			for (ObjectField objectField : objectDefinition.getObjectFields()) {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-143068") &&
-					Objects.equals(
-						objectField.getBusinessTypeAsString(),
-						ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
-
-					throw new UnsupportedOperationException();
-				}
-
 				long listTypeDefinitionId =
 					ObjectFieldUtil.getListTypeDefinitionId(
 						serviceBuilderObjectDefinition.getCompanyId(),

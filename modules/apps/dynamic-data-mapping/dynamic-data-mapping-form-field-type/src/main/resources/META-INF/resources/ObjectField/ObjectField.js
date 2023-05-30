@@ -85,7 +85,8 @@ const ObjectField = ({
 					normalizedDataType.includes(type.toLowerCase())
 				) {
 					return false;
-				} else if (localized) {
+				}
+				else if (localized) {
 					return false;
 				}
 				else if (
@@ -184,12 +185,14 @@ const ObjectDefinitionObjectField = ({
 	}, [objectDefinitionId, previousObjectDefinitionId, refetch]);
 
 	const options =
-		resource?.objectFields?.filter(({localized}) => !localized).map(({label, name}) => {
-			return {
-				label: label[themeDisplay.getDefaultLanguageId()] ?? name,
-				value: name,
-			};
-		}) || [];
+		resource?.objectFields
+			?.filter(({localized}) => !localized)
+			.map(({label, name}) => {
+				return {
+					label: label[themeDisplay.getDefaultLanguageId()] ?? name,
+					value: name,
+				};
+			}) || [];
 
 	return (
 		<Select

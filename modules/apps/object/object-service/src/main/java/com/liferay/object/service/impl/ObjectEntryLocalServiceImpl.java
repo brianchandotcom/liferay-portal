@@ -49,6 +49,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
+import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
 import com.liferay.object.internal.filter.parser.ObjectFilterParserServiceRegistry;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
@@ -1687,40 +1688,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private Predicate _fillObjectFieldPredicate(
-		Column<?, Object> column, String dbType, String search) {
-
-		if (StringUtil.equals(
-				dbType, ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
-			dbType.equals(ObjectFieldConstants.DB_TYPE_DOUBLE)) {
-
-			BigDecimal searchBigDecimal = BigDecimal.valueOf(
-				GetterUtil.getDouble(search));
-
-			if (searchBigDecimal.compareTo(BigDecimal.ZERO) != 0) {
-				return column.eq(searchBigDecimal);
-			}
-		}
-		else if (StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB) ||
-				 StringUtil.equals(
-					 dbType, ObjectFieldConstants.DB_TYPE_STRING)) {
-
-			return column.like("%" + search + "%");
-		}
-		else if (StringUtil.equals(
-					dbType, ObjectFieldConstants.DB_TYPE_INTEGER) ||
-				 StringUtil.equals(dbType, ObjectFieldConstants.DB_TYPE_LONG)) {
-
-			long searchLong = GetterUtil.getLong(search);
-
-			if (searchLong != 0L) {
-				return column.eq(searchLong);
-			}
-		}
-
-		return null;
-	}
-
 	private Predicate _fillPredicate(
 			long objectDefinitionId, Predicate predicate, String search)
 		throws PortalException {
@@ -1749,8 +1716,9 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			Predicate objectFieldPredicate = _fillObjectFieldPredicate(
-				(Column<?, Object>)column, objectField.getDBType(), search);
+			Predicate objectFieldPredicate =
+				ObjectEntrySearchUtil.getObjectFieldPredicate(
+					(Column<?, Object>)column, objectField.getDBType(), search);
 
 			if (searchPredicate == null) {
 				searchPredicate = objectFieldPredicate;
@@ -2400,6 +2368,12 @@ public class ObjectEntryLocalServiceImpl
 					return _inlineSQLHelper.getPermissionWherePredicate(
 						objectDefinition2.getClassName(), primaryKeyColumn);
 				}
+			).and(
+				ObjectEntrySearchUtil.getRelatedModelsPredicate(
+					dynamicObjectDefinitionTable,
+					_objectDefinitionPersistence.fetchByPrimaryKey(
+						objectRelationship.getObjectDefinitionId2()),
+					_objectFieldLocalService, search)
 			)
 		);
 	}

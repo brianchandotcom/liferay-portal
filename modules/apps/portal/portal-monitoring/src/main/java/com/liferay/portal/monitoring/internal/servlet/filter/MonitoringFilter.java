@@ -49,9 +49,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rajesh Thiagarajan
@@ -201,7 +198,7 @@ public class MonitoringFilter
 
 		long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 
-		if ((plid > 0) && (_layoutLocalService != null)) {
+		if (plid > 0) {
 			try {
 				layout = _layoutLocalService.getLayout(plid);
 
@@ -235,12 +232,8 @@ public class MonitoringFilter
 	@Reference
 	private DataSampleFactory _dataSampleFactory;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile LayoutLocalService _layoutLocalService;
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private MessageBus _messageBus;

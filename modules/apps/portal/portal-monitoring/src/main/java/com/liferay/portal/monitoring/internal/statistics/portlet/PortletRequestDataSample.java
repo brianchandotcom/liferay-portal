@@ -91,10 +91,6 @@ public class PortletRequestDataSample extends BaseDataSample {
 			return;
 		}
 
-		if (portal == null) {
-			return;
-		}
-
 		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
 			portletRequest);
 

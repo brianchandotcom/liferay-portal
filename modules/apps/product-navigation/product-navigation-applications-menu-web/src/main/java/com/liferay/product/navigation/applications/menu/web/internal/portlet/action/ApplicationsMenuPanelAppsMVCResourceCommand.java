@@ -283,7 +283,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			max -= recentGroups.size();
 		}
 
-		if (max > 0) {
+		if (max >= 0) {
 			List<Group> filteredGroups = new ArrayList<>();
 
 			User user = themeDisplay.getUser();

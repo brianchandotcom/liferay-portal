@@ -512,6 +512,14 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 	}
 
+	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
+		String externalReferenceCode, long companyId,
+		long objectDefinitionId1) {
+
+		return objectRelationshipPersistence.fetchByERC_C_ODI1(
+			externalReferenceCode, companyId, objectDefinitionId1);
+	}
+
 	@Override
 	public ObjectRelationship fetchObjectRelationshipByObjectDefinitionId(
 		long objectDefinitionId, String name) {

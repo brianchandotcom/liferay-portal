@@ -55,7 +55,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, primaryKey, QueryUtil.ALL_POS,
+			groupId, objectRelationshipId, primaryKey, null, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		if (relatedModels.isEmpty()) {
@@ -121,8 +121,8 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 	}
 
 	public List<ObjectEntry> getRelatedModels(
-			long groupId, long objectRelationshipId, long primaryKey, int start,
-			int end)
+			long groupId, long objectRelationshipId, long primaryKey,
+			String search, int start, int end)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -131,12 +131,13 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, objectRelationship.isReverse(), start, end);
+			true, objectRelationship.isReverse(), search, start, end);
 	}
 
 	@Override
 	public int getRelatedModelsCount(
-			long groupId, long objectRelationshipId, long primaryKey)
+			long groupId, long objectRelationshipId, long primaryKey,
+			String search)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -145,7 +146,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryService.getManyToManyObjectEntriesCount(
 			groupId, objectRelationship.getObjectRelationshipId(), primaryKey,
-			true, objectRelationship.isReverse());
+			true, objectRelationship.isReverse(), search);
 	}
 
 	@Override
@@ -160,7 +161,7 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 
 		return _objectEntryService.getManyToManyObjectEntries(
 			groupId, objectRelationship.getObjectRelationshipId(),
-			objectEntryId, false, objectRelationship.isReverse(),
+			objectEntryId, false, objectRelationship.isReverse(), null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

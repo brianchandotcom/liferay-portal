@@ -82,7 +82,7 @@ public class RelatedModelsFDSDataProvider
 		return TransformUtil.transform(
 			(List<ObjectEntry>)objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
-				objectRelationshipId, objectEntryId,
+				objectRelationshipId, objectEntryId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
 			objectEntry -> new RelatedModel(
@@ -120,7 +120,7 @@ public class RelatedModelsFDSDataProvider
 
 		return objectRelatedModelsProvider.getRelatedModelsCount(
 			objectScopeProvider.getGroupId(httpServletRequest),
-			objectRelationshipId, objectEntryId);
+			objectRelationshipId, objectEntryId, fdsKeywords.getKeywords());
 	}
 
 	@Reference

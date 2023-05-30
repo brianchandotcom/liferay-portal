@@ -98,7 +98,7 @@ public class Validator {
 			sourceConnection, destinationConnection, recorder);
 
 		Map<String, Release> destinationReleaseMap = DatabaseUtil.getReleaseMap(
-			sourceConnection);
+			destinationConnection);
 
 		List<Release> sourceReleaseEntries = DatabaseUtil.getReleaseEntries(
 			sourceConnection);
@@ -179,7 +179,7 @@ public class Validator {
 			"needs to be verified in the destination database before the " +
 				"migration");
 		recorder.registerWarnings(
-			missingSourceModules, "is not present in the destination database");
+			missingDestinationModules, "is not present in the source database");
 		recorder.registerWarnings(
 			missingSourceModules, "is not present in the destination database");
 	}

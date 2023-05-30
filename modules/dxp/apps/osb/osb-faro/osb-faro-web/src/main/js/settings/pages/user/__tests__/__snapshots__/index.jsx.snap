@@ -43,47 +43,71 @@ exports[`UserRoutes should render 1`] = `
       <div
         class="card card-root page-display"
       >
-        <ul
-          class="nav-root page-subnav mx-4 my-3 nav nav-underline"
-          role="tablist"
+        <nav
+          class="page-subnav mx-4 my-3 navbar navbar-collapse-relative navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
         >
-          <li
-            class="nav-item"
-            role="presentation"
+          <div
+            class="container-fluid container-fluid-max-xl"
           >
-            <a
-              class="nav-link"
-              href="/workspace/23/settings/users"
-              role="tab"
+            <button
+              aria-expanded="false"
+              class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+              type="button"
+            >
+              <span
+                class="navbar-text-truncate"
+              />
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </button>
+            <div
+              class="navbar-collapse collapse"
             >
               <div
-                class="mb-2"
+                class="container-fluid container-fluid-max-xl"
               >
-                <b>
-                  Manage Users
-                </b>
+                <ul
+                  class="navbar-nav"
+                >
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      href="/workspace/23/settings/users"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        Manage Users
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      href="/workspace/23/settings/users/requests"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        Requests
+                      </span>
+                    </a>
+                  </li>
+                </ul>
               </div>
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            role="presentation"
-          >
-            <a
-              class="nav-link"
-              href="/workspace/23/settings/users/requests"
-              role="tab"
-            >
-              <div
-                class="mb-2"
-              >
-                <b>
-                  Requests
-                </b>
-              </div>
-            </a>
-          </li>
-        </ul>
+            </div>
+          </div>
+        </nav>
       </div>
     </div>
   </div>

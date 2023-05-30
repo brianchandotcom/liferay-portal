@@ -145,7 +145,7 @@ exports[`Channels List should render 1`] = `
                   role="presentation"
                 >
                   <button
-                    class="button-root nav-btn btn btn-primary"
+                    class="button-root nav-btn p-2 btn btn-primary"
                     data-testid="addproperty-button"
                     type="button"
                   >

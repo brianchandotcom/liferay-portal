@@ -152,7 +152,7 @@ exports[`DataSourceList should render 1`] = `
                   role="presentation"
                 >
                   <a
-                    class="button-root nav-btn btn btn-primary"
+                    class="button-root btn btn-sm btn-primary"
                     href="/workspace/23/settings/data-source/add"
                   >
                     Add Data Source

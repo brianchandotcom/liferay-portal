@@ -66,51 +66,71 @@ exports[`Events should render 1`] = `
       <div
         class="card card-root page-display"
       >
-        <div
-          class="d-flex justify-content-between"
+        <nav
+          class="my-3 navbar navbar-collapse-relative navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
         >
-          <ul
-            class="nav-root page-subnav mx-4 my-3 nav nav-underline"
-            role="tablist"
+          <div
+            class="container-fluid container-fluid-max-xl"
           >
-            <li
-              class="nav-item"
-              role="presentation"
+            <button
+              aria-expanded="false"
+              class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+              type="button"
             >
-              <a
-                class="nav-link"
-                href="/workspace/23/settings/definitions/events/default"
-                role="tab"
+              <span
+                class="navbar-text-truncate"
+              />
+              <svg
+                class="lexicon-icon lexicon-icon-caret-bottom"
+                role="presentation"
               >
-                <div
-                  class="mb-2"
-                >
-                  <b>
-                    Default Events
-                  </b>
-                </div>
-              </a>
-            </li>
-            <li
-              class="nav-item"
-              role="presentation"
+                <use
+                  xlink:href="#caret-bottom"
+                />
+              </svg>
+            </button>
+            <div
+              class="navbar-collapse collapse"
             >
-              <a
-                class="nav-link"
-                href="/workspace/23/settings/definitions/events/custom"
-                role="tab"
+              <div
+                class="container-fluid container-fluid-max-xl"
               >
-                <div
-                  class="mb-2"
+                <ul
+                  class="navbar-nav"
                 >
-                  <b>
-                    Custom Events
-                  </b>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      href="/workspace/23/settings/definitions/events/default"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        Default Events
+                      </span>
+                    </a>
+                  </li>
+                  <li
+                    class="nav-item"
+                  >
+                    <a
+                      class="nav-link"
+                      href="/workspace/23/settings/definitions/events/custom"
+                    >
+                      <span
+                        class="navbar-text-truncate"
+                      >
+                        Custom Events
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
       </div>
     </div>
   </div>

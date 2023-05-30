@@ -63,8 +63,11 @@ function SelectEntityInput({
 						const valueJSON = JSON.parse(event.value);
 
 						onChange({
-							displayValue: valueJSON.segmentsEntryName,
-							value: valueJSON.segmentsEntryId,
+							displayValue:
+								valueJSON.name || valueJSON.segmentsEntryName,
+							value:
+								valueJSON.segmentsEntryId ||
+								valueJSON.userGroupId,
 						});
 					}
 					catch {

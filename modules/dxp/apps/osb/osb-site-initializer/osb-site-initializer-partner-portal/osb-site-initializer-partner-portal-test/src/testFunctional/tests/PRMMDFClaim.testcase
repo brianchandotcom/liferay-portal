@@ -57,133 +57,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-185927. Verify that when the MDF Claim is 'In Finance Review' status, the CFM can change to 'Claim Paid' status"
-	@priority = 5
-	test CFMCanChangeStatusToClaimPaid {
-		property test.name.skip.portal.instance = "PRMMDFClaim#CFMCanChangeStatusToClaimPaid";
-
-		task ("Given that a new claim is created and approved") {
-			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
-
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xlsx",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.png");
-
-			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-		}
-
-		task ("And the CMM changes the claim status to 'In Finance Review'") {
-			JSONPRM.changeClaimStatus(
-				claimStatus = "In Finance Review",
-				claimId = ${staticClaimId1},
-				userEmailAddress = "cmm@liferaytest.com");
-		}
-
-		task ("And the CFM goes to the created claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cfm@liferaytest.com",
-				userLoginFullName = "Channel Finnance Manager");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("When the CFM click on State Manager") {
-			PRMMDFClaim.clickOnStateManager();
-		}
-
-		task ("Then the 'Claim Paid' option will be visible") {
-			PRMMDFClaim.viewStatusOptionVisible(statusButton = "Claim Paid");
-		}
-
-		task ("And when the CFM change the status to 'Claim Paid'") {
-			PRMMDFClaim.changeClaimStatus(
-				statusButton = "Claim Paid",
-				amountReceived = "500",
-				checkNumber = "001");
-		}
-
-		task ("Then the claim summary will be updated with the added information") {
-			PRMMDFClaim.viewClaimSummary(
-				paymentReceived = "500",
-				checkId = "001");
-		}
-	}
-
-	@description = "This is a test for LPS-185928. Verify that when the MDF Claim is 'In Finance Review' status, the CMM can't change to 'Claim Paid' status"
-	@priority = 4
-	test CMMCannotChangeStatusToClaimPaid {
-		property test.name.skip.portal.instance = "PRMMDFClaim#CMMCannotChangeStatusToClaimPaid";
-
-		task ("Given that a new claim is created and approved") {
-			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
-
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xlsx",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.png");
-
-			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-		}
-
-		task ("And the CMM goes to the created claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmm@liferaytest.com",
-				userLoginFullName = "Channel Marketing Manager");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("And change the status to 'In Finance Review'") {
-			PRMMDFClaim.changeClaimStatus(statusButton = "In Finance Review");
-		}
-
-		task ("When the CMM clicks again on the State Manager") {
-			PRMMDFClaim.clickOnStateManager();
-		}
-
-		task ("Then the 'Claim Paid' option will be not visible") {
-			PRMMDFClaim.viewStatusOptionNotVisible(statusButton = "Claim Paid");
-		}
-	}
-
-	@description = "This is a test for LPS-185929. Verify that when the MDF Claim is 'In Finance Review' status, the CMD can't change to 'Claim Paid' status"
-	@priority = 4
-	test CMDCannotChangeStatusToClaimPaid {
-		property test.name.skip.portal.instance = "PRMMDFClaim#CMDCannotChangeStatusToClaimPaid";
-
-		task ("Given that a new claim is created and approved") {
-			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
-
-			PRMMDFClaim.createNewClaim(
-				listLeads = "Document_1.xlsx",
-				reimbursementInvoice = "Document_1.png",
-				thirdInvoice = "Document_1.png");
-
-			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-		}
-
-		task ("And the CFM goes to the created claim") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "cmd@liferaytest.com",
-				userLoginFullName = "Channel Marketing Director");
-
-			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-		}
-
-		task ("And change the status to 'In Finance Review'") {
-			PRMMDFClaim.changeClaimStatus(statusButton = "In Finance Review");
-		}
-
-		task ("When the CMD clicks again on the State Manager") {
-			PRMMDFClaim.clickOnStateManager();
-		}
-
-		task ("Then the 'Claim Paid' option will be not visible") {
-			PRMMDFClaim.viewStatusOptionNotVisible(statusButton = "Claim Paid");
-		}
-	}
-
 	@description = "This is a test for LPS-175292. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportAllVisibleClaims {
@@ -563,6 +436,133 @@ definition {
 
 		task ("Then the Claim Type is Partial") {
 			PRMMDFClaim.viewClaimType(claimType = "Partial");
+		}
+	}
+
+	@description = "This is a test for LPS-185927. Verify that when the MDF Claim is 'In Finance Review' status, the CFM can change to 'Claim Paid' status"
+	@priority = 5
+	test CFMCanChangeStatusToClaimPaid {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CFMCanChangeStatusToClaimPaid";
+
+		task ("Given that a new claim is created and approved") {
+			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("And the CMM changes the claim status to 'In Finance Review'") {
+			JSONPRM.changeClaimStatus(
+				claimId = ${staticClaimId1},
+				claimStatus = "In Finance Review",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("And the CFM goes to the created claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cfm@liferaytest.com",
+				userLoginFullName = "Channel Finnance Manager");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("When the CFM click on State Manager") {
+			PRMMDFClaim.clickOnStateManager();
+		}
+
+		task ("Then the 'Claim Paid' option will be visible") {
+			PRMMDFClaim.viewStatusOptionVisible(statusButton = "Claim Paid");
+		}
+
+		task ("And when the CFM change the status to 'Claim Paid'") {
+			PRMMDFClaim.changeClaimStatus(
+				amountReceived = 500,
+				checkNumber = 001,
+				statusButton = "Claim Paid");
+		}
+
+		task ("Then the claim summary will be updated with the added information") {
+			PRMMDFClaim.viewClaimSummary(
+				checkId = 001,
+				paymentReceived = 500);
+		}
+	}
+
+	@description = "This is a test for LPS-185929. Verify that when the MDF Claim is 'In Finance Review' status, the CMD can't change to 'Claim Paid' status"
+	@priority = 5
+	test CMDCannotChangeStatusToClaimPaid {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CMDCannotChangeStatusToClaimPaid";
+
+		task ("Given that a new claim is created and approved") {
+			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("And the CFM goes to the created claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmd@liferaytest.com",
+				userLoginFullName = "Channel Marketing Director");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And change the status to 'In Finance Review'") {
+			PRMMDFClaim.changeClaimStatus(statusButton = "In Finance Review");
+		}
+
+		task ("When the CMD clicks again on the State Manager") {
+			PRMMDFClaim.clickOnStateManager();
+		}
+
+		task ("Then the 'Claim Paid' option will be not visible") {
+			PRMMDFClaim.viewStatusOptionNotVisible(statusButton = "Claim Paid");
+		}
+	}
+
+	@description = "This is a test for LPS-185928. Verify that when the MDF Claim is 'In Finance Review' status, the CMM can't change to 'Claim Paid' status"
+	@priority = 5
+	test CMMCannotChangeStatusToClaimPaid {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CMMCannotChangeStatusToClaimPaid";
+
+		task ("Given that a new claim is created and approved") {
+			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("And the CMM goes to the created claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And change the status to 'In Finance Review'") {
+			PRMMDFClaim.changeClaimStatus(statusButton = "In Finance Review");
+		}
+
+		task ("When the CMM clicks again on the State Manager") {
+			PRMMDFClaim.clickOnStateManager();
+		}
+
+		task ("Then the 'Claim Paid' option will be not visible") {
+			PRMMDFClaim.viewStatusOptionNotVisible(statusButton = "Claim Paid");
 		}
 	}
 

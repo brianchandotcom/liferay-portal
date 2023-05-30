@@ -7,35 +7,61 @@ definition {
 			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
 	}
 
-	macro viewClaimSummary {
-		if(isSet(claimType)) {
-			AssertElementPresent(
-				locator1 = "PRMMDFClaim#SUMMARY_PANEL",
-				key_panelItem = "Type",
-				key_panelId = "type",
-				key_itemValue = ${claimType});
+	@summary = "Change MDF status"
+	macro changeClaimStatus {
+		var key_statusButton = ${statusButton};
+
+		if (${statusButton} == "Cancel") {
+			ClickNoError(
+				buttonId = "status-cancel",
+				locator1 = "Button#BUTTON_ID");
 		}
-		if(isSet(amountClaimed)) {
-			AssertElementPresent(
-				locator1 = "PRMMDFClaim#SUMMARY_PANEL",
-				key_panelItem = "Amount Claimed",
-				key_panelId = "amount-claimed",
-				key_itemValue = ${amountClaimed});
+		else {
+			ScrollWebElementIntoView(locator1 = "PRMMDFClaim#STATUS_DROPDOWN");
+
+			if (IsElementNotPresent(key_activeStatus = "true", locator1 = "PRMMDFClaim#STATE_MANAGER_DROPDOWN_STATUS")) {
+				PRMMDFClaim.clickOnStateManager();
+			}
+
+			ClickNoError(
+				key_statusButton = ${statusButton},
+				locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
 		}
-		if(isSet(paymentReceived)) {
-			AssertElementPresent(
-				locator1 = "PRMMDFClaim#SUMMARY_PANEL",
-				key_panelItem = "Payment Received",
-				key_panelId = "payment-received",
-				key_itemValue = ${paymentReceived});
+
+		if ((${statusButton} == "Request More Info") || (${statusButton} == "In Finance Review") || (${statusButton} == "Reject")) {
+			if (!(isSet(statusChangeMotivation))) {
+				var statusChangeMotivation = "Status Change Motivation";
+			}
+
+			Type(
+				key_fieldId = "descriptionTextArea",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${statusChangeMotivation});
+
+			Button.click(button = ${statusButton});
+
+			SelectFrameTop();
 		}
-		if(isSet(checkId)) {
-			AssertElementPresent(
-				locator1 = "PRMMDFClaim#SUMMARY_PANEL",
-				key_panelItem = "Check",
-				key_panelId = "check",
-				key_itemValue = ${checkId});
+
+		if (${statusButton} == "Claim Paid") {
+			Type(
+				key_placeHolder = "Amount Received",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${amountReceived});
+
+			Type(
+				key_placeHolder = "Check Number",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${checkNumber});
+
+			Button.click(button = "Submit");
+
+			SelectFrameTop();
 		}
+	}
+
+	macro clickOnStateManager {
+		ClickNoError(locator1 = "PRMMDFClaim#STATUS_DROPDOWN");
 	}
 
 	@summary = "Create a new claim on MDF detail page"
@@ -189,76 +215,6 @@ definition {
 		}
 	}
 
-	macro clickOnStateManager {
-		ClickNoError(locator1 = "PRMMDFClaim#STATUS_DROPDOWN");
-	}
-
-	@summary = "Change MDF status"
-	macro changeClaimStatus {
-		var key_statusButton = ${statusButton};
-
-		if (${statusButton} == "Cancel") {
-			ClickNoError(
-				buttonId = "status-cancel",
-				locator1 = "Button#BUTTON_ID");
-		}
-		else {
-			ScrollWebElementIntoView(locator1 = "PRMMDFClaim#STATUS_DROPDOWN");
-
-			if (IsElementNotPresent(locator1 = "PRMMDFClaim#STATE_MANAGER_DROPDOWN_STATUS", key_activeStatus = "true")) {
-				PRMMDFClaim.clickOnStateManager();
-			}
-
-			ClickNoError(
-				key_statusButton = ${statusButton},
-				locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
-		}
-
-		if ((${statusButton} == "Request More Info") || (${statusButton} == "In Finance Review") || (${statusButton} == "Reject")) {
-			if (!(isSet(statusChangeMotivation))) {
-				var statusChangeMotivation = "Status Change Motivation";
-			}
-
-			Type(
-				key_fieldId = "descriptionTextArea",
-				locator1 = "TextArea#ANY_ID",
-				value1 = ${statusChangeMotivation});
-
-			Button.click(button = ${statusButton});
-
-			SelectFrameTop();
-		}
-
-		if ((${statusButton} == "Claim Paid")) {
-			Type(
-				key_placeHolder = "Amount Received",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = ${amountReceived});
-
-			Type(
-				key_placeHolder = "Check Number",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = ${checkNumber});
-
-			Button.click(button = "Submit");
-
-			SelectFrameTop();
-		}
-	}
-
-	macro viewStatusOptionNotVisible {
-		AssertElementNotPresent(
-			key_statusButton = ${statusButton},
-			locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
-	}
-
-	macro viewStatusOptionVisible {
-		AssertElementPresent(
-			key_statusButton = ${statusButton},
-			locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
-	}
-
-
 	@summary = "Partially create a new claim on the MDF details page"
 	macro partialNewClaim {
 		Button.click(button = "New Claim");
@@ -313,11 +269,57 @@ definition {
 			locator1 = "PRMMDFClaim#ATTACHMENT_NAME");
 	}
 
+	macro viewClaimSummary {
+		if (isSet(claimType)) {
+			AssertElementPresent(
+				key_itemValue = ${claimType},
+				key_panelId = "type",
+				key_panelItem = "Type",
+				locator1 = "PRMMDFClaim#SUMMARY_PANEL");
+		}
+
+		if (isSet(amountClaimed)) {
+			AssertElementPresent(
+				key_itemValue = ${amountClaimed},
+				key_panelId = "amount-claimed",
+				key_panelItem = "Amount Claimed",
+				locator1 = "PRMMDFClaim#SUMMARY_PANEL");
+		}
+
+		if (isSet(paymentReceived)) {
+			AssertElementPresent(
+				key_itemValue = ${paymentReceived},
+				key_panelId = "payment-received",
+				key_panelItem = "Payment Received",
+				locator1 = "PRMMDFClaim#SUMMARY_PANEL");
+		}
+
+		if (isSet(checkId)) {
+			AssertElementPresent(
+				key_itemValue = ${checkId},
+				key_panelId = "check",
+				key_panelItem = "Check",
+				locator1 = "PRMMDFClaim#SUMMARY_PANEL");
+		}
+	}
+
 	@summary = "View claim type on MDF Request details page"
 	macro viewClaimType {
 		AssertElementPresent(
 			key_claimType = ${claimType},
 			locator1 = "PRMMDFClaim#CLAIM_TYPE");
+	}
+
+	macro viewStatusOptionNotVisible {
+		AssertElementNotPresent(
+			key_statusButton = ${statusButton},
+			locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
+	}
+
+	macro viewStatusOptionVisible {
+		AssertElementPresent(
+			key_statusButton = ${statusButton},
+			locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
 	}
 
 }

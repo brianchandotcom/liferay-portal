@@ -87,14 +87,8 @@ public class ObjectEntryExtensionProviderTest {
 				RandomTestUtil.randomBoolean()
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).localized(
-				false
 			).name(
 				"boolean"
-			).required(
-				false
-			).state(
-				false
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new DateObjectFieldBuilder(
@@ -108,14 +102,10 @@ public class ObjectEntryExtensionProviderTest {
 				RandomTestUtil.randomBoolean()
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).localized(
-				false
 			).name(
 				"date"
 			).required(
 				true
-			).state(
-				false
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new DecimalObjectFieldBuilder(
@@ -129,14 +119,8 @@ public class ObjectEntryExtensionProviderTest {
 				RandomTestUtil.randomBoolean()
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).localized(
-				false
 			).name(
 				"decimal"
-			).required(
-				false
-			).state(
-				false
 			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new PrecisionDecimalObjectFieldBuilder(
@@ -150,14 +134,10 @@ public class ObjectEntryExtensionProviderTest {
 				RandomTestUtil.randomBoolean()
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).localized(
-				false
 			).name(
 				"precisionDecimal"
 			).required(
 				true
-			).state(
-				false
 			).build());
 
 		_user = UserTestUtil.addUser();

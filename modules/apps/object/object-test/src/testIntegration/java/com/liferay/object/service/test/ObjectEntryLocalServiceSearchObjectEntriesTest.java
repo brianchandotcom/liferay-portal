@@ -579,8 +579,6 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 				"beta"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
-			).required(
-				false
 			).build());
 
 		return objectField.getObjectFieldId();

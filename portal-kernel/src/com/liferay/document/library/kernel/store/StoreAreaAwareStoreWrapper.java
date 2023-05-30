@@ -40,10 +40,15 @@ public class StoreAreaAwareStoreWrapper implements Store {
 			String versionLabel, InputStream inputStream)
 		throws PortalException {
 
-		Store store = _storeSupplier.get();
+		StoreArea.withStoreArea(
+			StoreArea.NEW,
+			() -> {
+				Store store = _storeSupplier.get();
 
-		store.addFile(
-			companyId, repositoryId, fileName, versionLabel, inputStream);
+				store.addFile(
+					companyId, repositoryId, fileName, versionLabel,
+					inputStream);
+			});
 	}
 
 	@Override

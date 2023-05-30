@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public enum StoreArea {
 
-	DELETED("_deleted"), LIVE(StringPool.BLANK);
+	DELETED("_deleted"), LIVE(StringPool.BLANK), NEW("_new");
 
 	public static String getCurrentStoreAreaPath(
 		long companyId, long repositoryId, String... path) {

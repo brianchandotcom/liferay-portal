@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -89,7 +90,7 @@ public class JournalArticleTextEmbeddingModelDocumentContributor
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			"content");
 
-		if (ddmFormFieldValues.isEmpty()) {
+		if (ListUtil.isEmpty(ddmFormFieldValues)) {
 			return StringPool.BLANK;
 		}
 

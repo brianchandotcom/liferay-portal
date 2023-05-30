@@ -262,7 +262,7 @@ const UserList: React.FC<IUserListProps> = ({
 				<Nav>
 					<Nav.Item>
 						<ClayButton
-							className='button-root nav-btn'
+							className='button-root nav-btn p-2'
 							displayType='primary'
 							onClick={handleInviteModal}
 						>

@@ -17,6 +17,7 @@ import {
 } from 'test/graphql-data';
 import {mockIndividual} from 'test/data';
 import {Routes} from 'shared/util/router';
+import {waitForLoading} from 'test/helpers';
 
 jest.unmock('react-dom');
 
@@ -99,9 +100,7 @@ describe('IndividualProfileCard', () => {
 
 		jest.runAllTimers();
 
-		await waitForElementToBeRemoved(() =>
-			container.querySelector('.spinner-root')
-		);
+		await waitForLoading(container);
 
 		const searchInput = getByPlaceholderText('Search');
 

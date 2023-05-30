@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.model.listener;
+package com.liferay.journal.web.internal.exception;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
 

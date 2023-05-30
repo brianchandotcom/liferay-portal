@@ -17,6 +17,7 @@ package com.liferay.journal.web.internal.model.listener;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.exception.DDMStructureValidationModelListenerException;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;

@@ -2903,10 +2903,15 @@ public class ObjectEntryLocalServiceImpl
 
 				int index = 1;
 
-				_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
-				_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
+				_setColumn(
+					preparedStatement, index++, Types.BIGINT, objectEntryId);
+				_setColumn(
+					preparedStatement, index++, Types.VARCHAR, languageId);
 
-				for (ObjectField objectField : dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
+				for (ObjectField objectField :
+						dynamicObjectDefinitionLocalizationTable.
+							getObjectFields()) {
+
 					Column<?, ?> column =
 						dynamicObjectDefinitionLocalizationTable.getColumn(
 							objectField.getDBColumnName());

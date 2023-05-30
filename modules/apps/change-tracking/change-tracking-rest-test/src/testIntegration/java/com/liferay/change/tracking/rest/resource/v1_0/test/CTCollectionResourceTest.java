@@ -20,6 +20,7 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.rest.client.dto.v1_0.CTCollection;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Status;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -148,7 +149,24 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 			CTCollection ctCollection)
 		throws Exception {
 
-		return ctCollectionResource.postCTCollection(ctCollection);
+		CTCollection postCTCollection = ctCollectionResource.postCTCollection(
+			ctCollection);
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(
+					postCTCollection.getId());
+
+		serviceBuilderCTCollection.setCreateDate(ctCollection.getDateCreated());
+		serviceBuilderCTCollection.setModifiedDate(
+			ctCollection.getDateModified());
+
+		serviceBuilderCTCollection =
+			_ctCollectionLocalService.updateCTCollection(
+				serviceBuilderCTCollection);
+
+		return ctCollectionResource.getCTCollection(
+			serviceBuilderCTCollection.getCtCollectionId());
 	}
 
 	@Override
@@ -217,6 +235,9 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 				exceptionClass.getSimpleName(), jsonObject.get("type"));
 		}
 	}
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private CTPreferencesLocalService _ctPreferencesLocalService;

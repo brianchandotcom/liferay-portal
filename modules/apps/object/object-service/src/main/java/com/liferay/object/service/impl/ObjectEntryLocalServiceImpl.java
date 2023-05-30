@@ -2808,11 +2808,11 @@ public class ObjectEntryLocalServiceImpl
 		Connection connection,
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
-		String insertIntoStatement, Map<String, Serializable> values,
+		String sql, Map<String, Serializable> values,
 		Locale locale, long objectEntryId, List<ObjectField> objectFields) {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				insertIntoStatement)) {
+				sql)) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 

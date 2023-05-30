@@ -9,38 +9,5 @@
 		"objectActionExecutorKey": "notification",
 		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]"
-	},
-	{
-		"active": true,
-		"conditionExpression": "password != \" \"",
-		"description": "",
-		"errorMessage": {
-		},
-		"externalReferenceCode": "MARKETPLACE-OBJECT-ACTION-2",
-		"label": {
-			"en_US": "passwordUpdate"
-		},
-		"name": "passwordUpdate",
-		"objectActionExecutorKey": "update-object-entry",
-		"objectActionTriggerKey": "onAfterAdd",
-		"parameters": {
-			"objectDefinitionExternalReferenceCode": "MARKETPLACE-OBJECT-DEFINITION-1",
-			"predefinedValues": [
-				{
-					"businessType": "Text",
-					"inputAsValue": true,
-					"label": {
-						"en_US": "password"
-					},
-					"name": "password",
-					"value": "\" \""
-				}
-			]
-		},
-		"status": {
-			"code": 1,
-			"label": "success",
-			"label_i18n": "Success"
-		}
 	}
 ]

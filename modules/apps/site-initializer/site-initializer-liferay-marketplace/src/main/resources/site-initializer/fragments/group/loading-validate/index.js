@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @liferay/portal/no-global-fetch */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -15,11 +16,14 @@
 
 const baseURL = Liferay.ThemeDisplay.getPortalURL();
 const userSessionId = Liferay.ThemeDisplay.getUserId();
+let userRoles = [];
+let userAdditionalInfosId = '';
+let sendingRole = false;
 
 const getUserAccountsById = async () => {
 	try {
 		const response = await fetch(
-			`${baseURL}/o/headless-admin-user/v1.0/user-accounts/${userSessionId}`,
+			`${baseURL}/o/c/useradditionalinfos/?filter=r_userToUserAddInfo_userId eq '${userSessionId}'`,
 			{
 				headers: {
 					'content-type': 'application/json',
@@ -30,35 +34,15 @@ const getUserAccountsById = async () => {
 		);
 
 		if (response.ok) {
-			const user = [];
 			const userData = await response.json();
-			user.push(userData);
-			setAccountInUser(user);
-		} else {
-			console.error('Failed to fetch user data:', response.status);
-		}
-	} catch (error) {
-		console.error('An error occurred:', error);
-	}
-};
-
-const getRolesId = async () => {
-	try {
-		const response = await fetch(
-			`${baseURL}/o/headless-admin-user/v1.0/accounts/'${userSessionId}'/account-roles`,
-			{
-				headers: {
-					'content-type': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-				method: 'GET',
-			}
-		);
-
-		if (response.ok) {
-			const roleId = '';
-			const userAccount = await response.json();
-			roleId = userAccount.id;
+			userData.items.map((data) => {
+				if (data.acceptInviteStatus === false) {
+					userAdditionalInfosId = data.id;
+					getMyUserAccount(data);
+					const arrayRoles = data.roles.split('/');
+					userRoles = arrayRoles.filter((item) => item !== '');
+				}
+			});
 		} else {
 			console.error('Failed to fetch user data:', response.status);
 		}
@@ -69,43 +53,156 @@ const getRolesId = async () => {
 
 getUserAccountsById();
 
-const setAccountInUser = (userLog) => {
-	let externalReferenceCode = '';
-	let emailAddress = '';
-	let accountId = '';
-
-	const userAccount = document.querySelector('#user-account b');
-	userLog?.map((user) => {
-		emailAddress = user.emailAddress;
-		user?.accountBriefs?.map((userAccountBriefs) => {
-			externalReferenceCode = userAccountBriefs.externalReferenceCode;
-			accountId = userAccountBriefs.id;
-			userAccount.textContent = userAccountBriefs?.name;
-		});
-	});
-
-	postAccount(accountId, externalReferenceCode, emailAddress);
-};
-
-const postAccount = async (userId, erc, email) => {
+const getMyUserAccount = async (userAdditional) => {
 	try {
 		const response = await fetch(
-			`${baseURL}/o/headless-admin-user/v1.0/accounts/by-external-reference-code/${erc}/account-roles/${userId}/user-accounts/by-email-address/${email}`,
+			`${baseURL}/o/headless-admin-user/v1.0/my-user-account`,
 			{
 				headers: {
 					'content-type': 'application/json',
 					'x-csrf-token': Liferay.authToken,
 				},
-				method: 'POST',
+				method: 'GET',
 			}
 		);
 
 		if (response.ok) {
-			await response.json();
+			let accountId;
+			let roleId;
+			const userAccount = document.querySelector('#user-account b');
+			const myUser = await response.json();
+			myUser?.accountBriefs?.map((userAccountBriefs) => {
+				userAccount.textContent = userAccountBriefs?.name;
+				if (
+					userAdditional.r_accountToUserAdditionalInfos_accountEntryId ===
+					userAccountBriefs.id
+				) {
+					accountId = userAccountBriefs.id;
+					userAccountBriefs.roleBriefs?.map(async (role) => {
+						roleId = role.id;
+					});
+				}
+			});
+			deleteRoleFromUser(accountId, roleId, myUser.id);
 		} else {
 			console.error('Failed to fetch user data:', response.status);
 		}
 	} catch (error) {
 		console.error('An error occurred:', error);
+	}
+};
+
+getMyUserAccount();
+
+const deleteRoleFromUser = async (accountId, roleId, myUserId) => {
+	try {
+		const response = await fetch(
+			`${baseURL}/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${myUserId}`,
+			{
+				headers: {
+					'content-type': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'DELETE',
+			}
+		);
+
+		if (response.ok) {
+			getRolesId(accountId, myUserId);
+		} else {
+			console.error('Failed to fetch user data:', response.status);
+			
+		}
+	} catch (error) {
+		console.error('An error occurred:', error);
+	}
+};
+
+const getRolesId = async (accountId, myUserId) => {
+	try {
+		const response = await fetch(
+			`${baseURL}/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles`,
+			{
+				headers: {
+					'content-type': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'GET',
+			}
+		);
+
+		if (response.ok) {
+			
+			const userAccountRole = await response.json();
+			userAccountRole?.items?.map((accountRoles) => {
+				if (userRoles.includes(accountRoles.name)) {
+					sendingRole = sendRolesApi(accountRoles.id, accountId, myUserId);
+				}
+			});	
+			if(sendingRole){
+				updateInviteStatus();	
+			}	
+		} else {
+			console.error('Failed to fetch user data:', response);
+		}
+	} catch (error) {
+		console.error('An error occurred:', error);
+	}
+};
+
+const sendRolesApi = async (roleId, accountId, userId) => {	
+	try {
+		const response = await fetch(
+			`${baseURL}/o/headless-admin-user/v1.0/accounts/${accountId}/account-roles/${roleId}/user-accounts/${userId}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'POST',
+			}
+		);
+		if (response.ok) {
+	     return true;
+		} else {
+			console.error('Failed to fetch user data:', response);
+
+			return false;
+		}
+	} catch (error) {
+		console.error('An error occurred:', error);
+
+		return false;
+	}
+};
+
+const updateInviteStatus = async () => {
+	try {
+		const response = await fetch(
+			`${baseURL}/o/c/useradditionalinfos/${userAdditionalInfosId}`,
+			{
+				body:JSON.stringify({
+					acceptInviteStatus: true,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+				method: 'PATCH',
+			}
+		);
+		if (response.ok) {
+			return true;
+		} else {
+			console.error('Failed to fetch user data:', response);
+
+			return false;
+		}
+	} catch (error) {
+		console.error('An error occurred:', error);
+
+		return false;
 	}
 };

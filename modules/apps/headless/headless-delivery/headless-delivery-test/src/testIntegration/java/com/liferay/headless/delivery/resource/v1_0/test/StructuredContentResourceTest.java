@@ -34,6 +34,8 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -75,7 +77,9 @@ import java.io.InputStream;
 
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -159,6 +163,43 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				deleteStructuredContentMyRatingHttpResponse(
 					irrelevantStructuredContent.getId()));
+	}
+
+	@Override
+	@Test
+	public void testGetSiteStructuredContentsPage() throws Exception {
+		super.testGetSiteStructuredContentsPage();
+
+		// Filter structured content by default priority
+
+		StructuredContent irrelevantStructuredContent =
+			randomIrrelevantStructuredContent();
+
+		structuredContentResource.postSiteStructuredContent(
+			testGetSiteStructuredContentsPage_getIrrelevantSiteId(),
+			irrelevantStructuredContent);
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setPriority((Double)null);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				structuredContent);
+
+		Page<StructuredContent> page =
+			structuredContentResource.getSiteStructuredContentsPage(
+				testGroup.getGroupId(), true, null, null, "priority eq 0.0",
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(postStructuredContent),
+			(List<StructuredContent>)page.getItems());
+
+		assertValid(page);
 	}
 
 	@Override

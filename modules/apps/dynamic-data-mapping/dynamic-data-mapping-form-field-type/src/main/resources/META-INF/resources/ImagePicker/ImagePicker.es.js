@@ -284,9 +284,8 @@ const Main = ({
 
 	if (prevEditingLanguageId !== editingLanguageId && localizable) {
 		value =
-			localizedValue[editingLanguageId] !== undefined
-				? localizedValue[editingLanguageId]
-				: localizedValue[defaultLanguageId];
+			localizedValue[editingLanguageId] ??
+			localizedValue[defaultLanguageId];
 	}
 
 	const getErrorMessages = (errorMessage, isSignedIn) => {

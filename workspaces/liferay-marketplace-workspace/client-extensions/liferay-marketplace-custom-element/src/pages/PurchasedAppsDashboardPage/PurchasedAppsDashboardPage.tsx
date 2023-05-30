@@ -240,6 +240,7 @@ export function PurchasedAppsDashboardPage() {
 								);
 
 								const results = await Promise.all(promises);
+
 								return results.find(
 									(attachment) => attachment !== null
 								);
@@ -252,10 +253,10 @@ export function PurchasedAppsDashboardPage() {
 							provisioning: order.orderStatusInfo.label_i18n,
 							purchasedBy: order.author,
 							purchasedDate: formattedDate,
+							thumbnail: orderThumbnail?.src as string,
 							type: placeOrderItem.subscription
 								? 'Subscription'
 								: 'Perpetual',
-							thumbnail: orderThumbnail?.src as string,
 							version: !Object.keys(version).length
 								? ''
 								: version,

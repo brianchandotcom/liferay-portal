@@ -17,13 +17,11 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useEffect, useState} from 'react';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
 import {
 	AppProps,
 	DashboardTable,
 } from '../../components/DashboardTable/DashboardTable';
 import {PublishedAppsDashboardTableRow} from '../../components/DashboardTable/PublishedAppsDashboardTableRow';
-import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
 import {
 	getAccountInfoFromCommerce,
 	getAccounts,
@@ -50,7 +48,6 @@ import {
 	getRolesList,
 	initialAccountsState,
 	initialDashboardNavigationItems,
-	memberTableHeaders,
 	publisherRoles,
 } from './PublishedDashboardPageUtil';
 
@@ -60,8 +57,8 @@ import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import projectsIcon from '../../assets/icons/projects_icon.svg';
 import {Liferay} from '../../liferay/liferay';
+import {MembersPage} from '../MembersPage/MembersPage';
 import {ProjectsPage} from '../ProjectsPage/ProjectsPage';
-import { MembersPage } from '../MembersPage/MembersPage';
 
 interface PublishedAppTable {
 	items: AppProps[];
@@ -77,16 +74,6 @@ const appMessages = {
 		title: 'No Apps Yet',
 	},
 	title: 'Apps',
-};
-
-const memberMessages = {
-	description: 'Manage users in your development team and invite new ones',
-	emptyStateMessage: {
-		description1: 'Create new members and they will show up here.',
-		description2: 'Click on “New Member” to start.',
-		title: 'No Members Yet',
-	},
-	title: 'Members',
 };
 
 const solutionMessages = {
@@ -116,7 +103,7 @@ export function PublishedAppsDashboardPage() {
 	const [selectedNavigationItem, setSelectedNavigationItem] =
 		useState('Apps');
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
-	const [selectedMember, setSelectedMember] = useState<MemberProps>();
+	const [_selectedMember, setSelectedMember] = useState<MemberProps>();
 	const [selectedAccount, setSelectedAccount] = useState<Account>(
 		initialAccountsState[0]
 	);
@@ -480,8 +467,6 @@ export function PublishedAppsDashboardPage() {
 					selectedAccount={selectedAccount}
 					setShowDashboardNavigation={setShowDashboardNavigation}
 				/>
-					
-				
 			)}
 
 			{!loading && selectedNavigationItem === 'Account' && (

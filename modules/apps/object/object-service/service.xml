@@ -581,6 +581,10 @@
 	</entity>
 	<entity local-service="true" name="ObjectRelationship" remote-service="true" uuid="true">
 
+		<!-- External reference code -->
+
+		<column name="externalReferenceCode" type="String" />
+
 		<!-- PK fields -->
 
 		<column name="objectRelationshipId" primary="true" type="long" />
@@ -641,6 +645,11 @@
 		<finder name="DTN_R" return-type="ObjectRelationship">
 			<finder-column name="dbTableName" />
 			<finder-column name="reverse" />
+		</finder>
+		<finder name="ERC_C_ODI1" return-type="ObjectRelationship">
+			<finder-column name="externalReferenceCode" />
+			<finder-column name="companyId" />
+			<finder-column name="objectDefinitionId1" />
 		</finder>
 		<finder name="ODI1_ODI2_T" return-type="Collection">
 			<finder-column name="objectDefinitionId1" />

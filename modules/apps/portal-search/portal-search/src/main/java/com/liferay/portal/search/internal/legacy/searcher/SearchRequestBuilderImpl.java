@@ -588,8 +588,12 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		).federatedSearchKey(
 			federatedSearchKey
 		).withSearchContext(
-			searchContext -> searchContext.setCompanyId(
-				_searchContext.getCompanyId())
+			searchContext -> {
+				searchContext.setCompanyId(_searchContext.getCompanyId());
+				searchContext.setLayout(_searchContext.getLayout());
+				searchContext.setTimeZone(_searchContext.getTimeZone());
+				searchContext.setUserId(_searchContext.getUserId());
+			}
 		);
 	}
 

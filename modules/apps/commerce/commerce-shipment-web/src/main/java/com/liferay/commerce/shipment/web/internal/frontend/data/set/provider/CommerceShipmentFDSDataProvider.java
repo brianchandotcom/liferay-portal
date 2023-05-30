@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
-import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
@@ -184,7 +183,7 @@ public class CommerceShipmentFDSDataProvider
 	private long[] _getAccountEntryIds(long userId) throws PortalException {
 		if (!_portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
-				AccountActionKeys.MANAGE_ACCOUNTS)) {
+				"MANAGE_ALL_ACCOUNTS")) {
 
 			List<AccountEntry> accountEntries =
 				_accountEntryLocalService.getUserAccountEntries(

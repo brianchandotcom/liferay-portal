@@ -193,21 +193,20 @@ public class Validator {
 			"Release_ table has the following servlet context names with a " +
 				"failed state: ";
 
-		String failedServletContextNames = String.join(
-			", ", DatabaseUtil.getFailedServletContextNames(sourceConnection));
+		List<String> failedServletContextNames =
+			DatabaseUtil.getFailedServletContextNames(sourceConnection);
 
 		if (!failedServletContextNames.isEmpty()) {
-			recorder.registerError(
-				"Source " + message + failedServletContextNames);
+			recorder.registerErrors(
+				failedServletContextNames, "Source " + message);
 		}
 
-		failedServletContextNames = String.join(
-			", ",
-			DatabaseUtil.getFailedServletContextNames(destinationConnection));
+		failedServletContextNames = DatabaseUtil.getFailedServletContextNames(
+			destinationConnection);
 
 		if (!failedServletContextNames.isEmpty()) {
-			recorder.registerError(
-				"Destination " + message + failedServletContextNames);
+			recorder.registerErrors(
+				failedServletContextNames, "Destination " + message);
 		}
 	}
 

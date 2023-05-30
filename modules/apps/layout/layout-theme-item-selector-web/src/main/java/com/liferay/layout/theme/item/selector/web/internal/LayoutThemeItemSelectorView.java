@@ -22,9 +22,7 @@ import com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorC
 import com.liferay.layout.theme.item.selector.web.internal.display.context.LayoutThemeItemSelectorDisplayContext;
 import com.liferay.layout.theme.item.selector.web.internal.item.selector.LayoutThemeItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -35,7 +33,6 @@ import java.util.Locale;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -105,16 +102,5 @@ public class LayoutThemeItemSelectorView
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.theme.item.selector.web)"
-	)
-	private ServletContext _servletContext;
 
 }

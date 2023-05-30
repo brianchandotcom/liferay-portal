@@ -482,18 +482,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 				"layoutRevisionId", layoutRevision.getLayoutRevisionId());
 		}
 
-		JSONObject actionsJSONObject = jsonObject.getJSONArray(
-			"actions"
-		).getJSONObject(
-			0
-		);
-
-		JSONArray actionsJSONArray = (JSONArray)actionsJSONObject.get("items");
-
-		if (actionsJSONArray.length() == 0) {
-			jsonObject.remove("actions");
-		}
-
 		return jsonObject;
 	}
 

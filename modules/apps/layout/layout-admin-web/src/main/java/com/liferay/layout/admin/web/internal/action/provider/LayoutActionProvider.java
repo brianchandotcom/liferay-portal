@@ -136,12 +136,16 @@ public class LayoutActionProvider {
 			);
 		}
 
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"items", itemsJSONArray
-			).put(
-				"type", "group"
-			));
+		if (itemsJSONArray.length() > 0) {
+			return JSONUtil.putAll(
+				JSONUtil.put(
+					"items", itemsJSONArray
+				).put(
+					"type", "group"
+				));
+		}
+
+		return null;
 	}
 
 	private JSONObject _getAddChildCollectionPageJSONObject(Layout layout) {

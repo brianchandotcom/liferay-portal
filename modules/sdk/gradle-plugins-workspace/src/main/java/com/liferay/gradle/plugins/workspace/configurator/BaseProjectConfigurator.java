@@ -131,7 +131,7 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 			project.getRootProject(),
 			RootProjectConfigurator.BUILD_DOCKER_IMAGE_TASK_NAME);
 
-		buildDockerImageTask.dependsOn(deployTask);
+		buildDockerImageTask.dependsOn(copy);
 
 		return copy;
 	}

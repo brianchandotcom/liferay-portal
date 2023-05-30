@@ -12,12 +12,13 @@
  * details.
  */
 
-import ClayForm, {ClayToggle} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import {
 	Card,
 	FormError,
 	Input,
 	InputLocalized,
+	Toggle,
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
@@ -80,7 +81,7 @@ export default function BasicInfo({
 			/>
 
 			<ClayForm.Group>
-				<ClayToggle
+				<Toggle
 					disabled={readOnly}
 					label={Liferay.Language.get('active')}
 					name="indexed"

@@ -16,11 +16,11 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {ClayToggle} from '@clayui/form';
 import {
 	Card,
 	ExpressionBuilder,
 	SidebarCategory,
+	Toggle,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
@@ -128,7 +128,7 @@ export function DefaultValueContainer({
 			)}
 
 			{!values.state && (
-				<ClayToggle
+				<Toggle
 					label={Liferay.Language.get('use-default-value')}
 					onToggle={(toggled) => {
 						handleToggle(toggled);

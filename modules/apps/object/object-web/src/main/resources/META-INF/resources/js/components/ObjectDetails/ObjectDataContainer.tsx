@@ -12,12 +12,12 @@
  * details.
  */
 
-import {ClayToggle} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {
 	FormError,
 	Input,
 	InputLocalized,
+	Toggle,
 } from '@liferay/object-js-components-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
@@ -101,7 +101,7 @@ export function ObjectDataContainer({
 					value={dbTableName}
 				/>
 
-				<ClayToggle
+				<Toggle
 					disabled={
 						!isApproved ||
 						isReadOnly ||

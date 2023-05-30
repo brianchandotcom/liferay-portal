@@ -12,10 +12,8 @@
  * details.
  */
 
-import {ClayToggle} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import {ClayTooltipProvider} from '@clayui/tooltip';
+import {Toggle} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import './TranslationsContainer.scss';
@@ -38,7 +36,7 @@ export function TranslationsContainer({
 		>
 			<ClayPanel.Body>
 				<div className="lfr-objects-translations-container">
-					<ClayToggle
+					<Toggle
 						disabled={values.active}
 						label={Liferay.Language.get(
 							'enable-entry-translations'
@@ -49,20 +47,10 @@ export function TranslationsContainer({
 							})
 						}
 						toggled={values.enableLocalization}
+						tooltip={Liferay.Language.get(
+							'enable-entry-translations-in-all-fields'
+						)}
 					/>
-
-					<ClayTooltipProvider>
-						<span
-							title={Liferay.Language.get(
-								'enable-entry-translations-in-all-fields'
-							)}
-						>
-							<ClayIcon
-								className="lfr-objects-translations-container-tooltip-icon"
-								symbol="question-circle-full"
-							/>
-						</span>
-					</ClayTooltipProvider>
 				</div>
 			</ClayPanel.Body>
 		</ClayPanel>

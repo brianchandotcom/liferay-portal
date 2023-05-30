@@ -13,8 +13,8 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
-import {Card, SingleSelect} from '@liferay/object-js-components-web';
+import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import {Card, SingleSelect, Toggle} from '@liferay/object-js-components-web';
 import React, {useMemo} from 'react';
 
 import {defaultLanguageId} from '../../../../utils/constants';
@@ -67,7 +67,7 @@ export function SearchableContainer({
 			)}
 
 			<ClayForm.Group>
-				<ClayToggle
+				<Toggle
 					disabled={objectField.businessType === 'Encrypted'}
 					label={Liferay.Language.get('searchable')}
 					name="indexed"

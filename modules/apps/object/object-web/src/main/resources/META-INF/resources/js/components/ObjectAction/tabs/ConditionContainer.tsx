@@ -13,8 +13,12 @@
  */
 
 import {ActionError} from '..';
-import ClayForm, {ClayToggle} from '@clayui/form';
-import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
+import ClayForm from '@clayui/form';
+import {
+	Card,
+	ExpressionBuilder,
+	Toggle,
+} from '@liferay/object-js-components-web';
 import React from 'react';
 
 interface ConditionContainerProps {
@@ -40,7 +44,7 @@ export function ConditionContainer({
 			title={Liferay.Language.get('condition')}
 		>
 			<ClayForm.Group>
-				<ClayToggle
+				<Toggle
 					disabled={values.objectActionTriggerKey === 'standalone'}
 					label={Liferay.Language.get('enable-condition')}
 					name="condition"

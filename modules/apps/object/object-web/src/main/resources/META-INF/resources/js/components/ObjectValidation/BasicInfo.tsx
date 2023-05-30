@@ -12,8 +12,12 @@
  * details.
  */
 
-import {ClayToggle} from '@clayui/form';
-import {Card, Input, InputLocalized} from '@liferay/object-js-components-web';
+import {
+	Card,
+	Input,
+	InputLocalized,
+	Toggle,
+} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {TriggerEventContainer} from './TriggerEventContainer';
@@ -49,7 +53,7 @@ export function BasicInfo({
 					value={values.engineLabel}
 				/>
 
-				<ClayToggle
+				<Toggle
 					disabled={disabled}
 					label={Liferay.Language.get('active-validation')}
 					onToggle={(active) => setValues({active})}

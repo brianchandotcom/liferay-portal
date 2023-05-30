@@ -13,9 +13,13 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayToggle} from '@clayui/form';
 import {useModal} from '@clayui/modal';
-import {Panel, PanelBody, PanelHeader} from '@liferay/object-js-components-web';
+import {
+	Panel,
+	PanelBody,
+	PanelHeader,
+	Toggle,
+} from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
 import {TYPES, useLayoutContext} from '../objectLayoutContext';
@@ -56,7 +60,7 @@ export function ObjectLayoutBox({
 				<PanelHeader
 					contentRight={
 						<>
-							<ClayToggle
+							<Toggle
 								aria-label={Liferay.Language.get('collapsible')}
 								disabled={disabled}
 								label={Liferay.Language.get('collapsible')}

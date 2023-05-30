@@ -212,15 +212,10 @@ definition {
 		}
 
 		task ("When: The exported data is imported into a new virtual instance site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "System",
-				panel = "Control Panel",
-				portlet = "Virtual Instances");
-
-			PortalInstances.addCP(
-				mailDomain = "liferay.com",
-				virtualHost = "www.able.com",
-				webId = "www.able.com");
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 
 			User.firstLoginPG(
 				password = "test",

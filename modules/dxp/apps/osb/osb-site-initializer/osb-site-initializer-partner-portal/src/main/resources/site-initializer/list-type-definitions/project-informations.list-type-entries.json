@@ -56,10 +56,10 @@
 		"type": "string"
 	},
 	{
-		"key": "resellerDistributorDealerPortal",
-		"name": "Reseller/Distributor/Dealer Portal",
+		"key": "resellerDistributorPortal",
+		"name": "Reseller/Distributor Portal",
 		"name_i18n": {
-			"en-US": "Reseller/Distributor/Dealer Portal"
+			"en-US": "Reseller/Distributor Portal"
 		},
 		"type": "string"
 	},
@@ -72,10 +72,10 @@
 		"type": "string"
 	},
 	{
-		"key": "vendorSupplierPortal",
-		"name": "Vendor/Supplier Portal",
+		"key": "dealerSupplierPortal",
+		"name": "Dealer/Supplier Portal",
 		"name_i18n": {
-			"en-US": "Vendor/Supplier Portal"
+			"en-US": "Dealer/Supplier Portal"
 		},
 		"type": "string"
 	}

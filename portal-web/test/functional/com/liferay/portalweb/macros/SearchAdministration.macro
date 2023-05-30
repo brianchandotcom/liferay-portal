@@ -31,6 +31,12 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");
 
+		if (${concurrentReindex} == "true") {
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Concurrent");
+		}
+
 		if (${executionScope} == "All Instances") {
 			Check.checkNotVisible(
 				locator1 = "Radio#ANY",

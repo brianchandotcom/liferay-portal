@@ -14,68 +14,52 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.source.formatter.parser.JavaTerm;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Cavalcanti
  */
-public class JavaUpgradeServiceTrackerListCheck extends BaseFileCheck {
+public class JavaUpgradeServiceTrackerListCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws IOException {
+			String fileName, String absolutePath, JavaTerm javaTerm,
+			String fileContent)
+		throws Exception {
 
-		boolean checkNextLine = false;
-		String[] lines = content.split(StringPool.NEW_LINE);
+		List<String> importNames = javaTerm.getImportNames();
 
-		for (String line : lines) {
-			if (line.contains("ServiceTrackerList") || checkNextLine) {
-				if (line.contains(StringPool.LESS_THAN)) {
-					checkNextLine = false;
+		String javaTermContent = javaTerm.getContent();
 
-					if (_hasTwoElements(line)) {
-						content = StringUtil.replace(
-							content, line, _replaceLine(line));
-					}
-				}
-				else {
-					checkNextLine = !checkNextLine;
-				}
-			}
+		if (!importNames.contains(
+				"com.liferay.osgi.service.tracker.collections.list." +
+					"ServiceTrackerList")) {
+
+			return javaTermContent;
 		}
 
-		return content;
-	}
+		Matcher matcher = _serviceTrackerListVariablePattern.matcher(
+			javaTermContent);
 
-	private boolean _hasTwoElements(String line) {
-		if ((line.indexOf(StringPool.COMMA) > line.indexOf(
-				StringPool.LESS_THAN)) &&
-			(line.indexOf(StringPool.COMMA) < line.indexOf(
-				StringPool.GREATER_THAN))) {
-
-			return true;
+		if (matcher.find()) {
+			javaTermContent = StringUtil.replace(
+				javaTermContent, matcher.group(1), matcher.group(2));
 		}
 
-		return false;
+		return javaTermContent;
 	}
 
-	private String _replaceLine(String line) {
-		String newLine = StringPool.BLANK;
-		char[] lineArray = line.toCharArray();
-
-		for (int i = 0; i < line.length(); i++) {
-			if ((i < line.indexOf(StringPool.COMMA)) ||
-				(i >= line.indexOf(StringPool.GREATER_THAN))) {
-
-				newLine += lineArray[i];
-			}
-		}
-
-		return newLine;
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_VARIABLE};
 	}
+
+	private static final Pattern _serviceTrackerListVariablePattern =
+		Pattern.compile("ServiceTrackerList\\s*<((.+), .+)>");
 
 }

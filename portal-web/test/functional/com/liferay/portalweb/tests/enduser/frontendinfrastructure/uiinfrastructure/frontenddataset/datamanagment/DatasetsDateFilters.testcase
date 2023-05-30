@@ -151,3 +151,33 @@ definition {
 		}
 
 	}
+
+	@description = "LPS-185352 - Confirms an error message is displayed when the user tries to create a new date filter with invalid date range."
+	@priority = 4
+	test CannotSaveAnInvalidDateRangeInDateFields {
+		task("And click on the 'Create Filter' button") {
+			Button.click(button = "Create Filter");
+		}
+		
+		task("When the user adds a name") {
+			Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				value1 = "Test");
+		}
+
+		task("And adds 'dateCreated' to the filter") {
+			Type(locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+				value1 = "dateCreated");
+		}
+
+		task("And selects a date on From field"){
+			FrontendDataSet.selectFromFieldDates(key_dateNumber = "20");
+		}
+
+		task("And selects a date on To field that is before From field date") {
+			FrontendDataSet.selectToFieldDates(key_dateNumber = "13");
+		}
+
+		task("Then an error message appears"){
+			AssertVisible(locator1 = "FrontendDataSetAdmin#NEW_FILTER_INVALID_DATE");
+		}
+	}

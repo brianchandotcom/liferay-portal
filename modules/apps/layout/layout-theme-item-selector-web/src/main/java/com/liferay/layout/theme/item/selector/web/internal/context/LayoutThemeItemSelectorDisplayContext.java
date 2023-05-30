@@ -15,7 +15,7 @@
 package com.liferay.layout.theme.item.selector.web.internal.context;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.theme.item.selector.web.internal.comparator.ThemeNameComparator;
+import com.liferay.layout.theme.item.selector.web.internal.util.comparator.ThemeNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;

@@ -1213,12 +1213,9 @@ definition {
 
 		task ("Given a user has a display page template in a site template") {
 			JSONSiteTemplate.addSiteTemplate(
-				active = "Yes",
 				description = "Site description",
 				siteTemplateName = ${siteTemplateName});
-		}
 
-		task ("When the user makes some changes on configuration of display page template") {
 			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			LexiconEntry.gotoEntryMenuItem(
@@ -1239,7 +1236,7 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Then the user could save changes") {
+		task ("When the user accesses to the configuration page of display page template") {
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
 				item = "Edit");
@@ -1249,7 +1246,9 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
+		}
 
+		task ("Then the user could save changes") {
 			PortletEntry.save();
 		}
 	}

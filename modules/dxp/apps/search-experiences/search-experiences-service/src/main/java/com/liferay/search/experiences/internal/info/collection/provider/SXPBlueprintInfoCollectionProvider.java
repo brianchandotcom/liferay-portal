@@ -68,6 +68,8 @@ public class SXPBlueprintInfoCollectionProvider
 		CollectionQuery collectionQuery) {
 
 		try {
+			Pagination pagination = collectionQuery.getPagination();
+
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
@@ -75,8 +77,12 @@ public class SXPBlueprintInfoCollectionProvider
 				_searchRequestBuilderFactory.builder(
 				).companyId(
 					serviceContext.getCompanyId()
+				).from(
+					pagination.getStart()
 				).emptySearchEnabled(
 					true
+				).size(
+					pagination.getEnd() - pagination.getStart()
 				).withSearchContext(
 					searchContext -> {
 						CategoriesInfoFilter categoriesInfoFilter =
@@ -126,10 +132,6 @@ public class SXPBlueprintInfoCollectionProvider
 
 						searchContext.setLocale(serviceContext.getLocale());
 
-						Pagination pagination = collectionQuery.getPagination();
-
-						searchContext.setEnd(pagination.getEnd());
-
 						KeywordsInfoFilter keywordsInfoFilter =
 							collectionQuery.getInfoFilter(
 								KeywordsInfoFilter.class);
@@ -139,7 +141,6 @@ public class SXPBlueprintInfoCollectionProvider
 								keywordsInfoFilter.getKeywords());
 						}
 
-						searchContext.setStart(pagination.getStart());
 						searchContext.setTimeZone(serviceContext.getTimeZone());
 						searchContext.setUserId(serviceContext.getUserId());
 					}

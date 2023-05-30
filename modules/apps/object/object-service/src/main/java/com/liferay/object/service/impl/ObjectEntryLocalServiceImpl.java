@@ -1585,13 +1585,13 @@ public class ObjectEntryLocalServiceImpl
 
 		sb.append(")");
 
-		String insertIntoStatement = sb.toString();
+		String sql = sb.toString();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + insertIntoStatement);
+			_log.debug("SQL: " + sql);
 		}
 
-		return insertIntoStatement;
+		return sql;
 	}
 
 	private String _createUpdateLocalizationTableSQL(
@@ -3588,23 +3588,23 @@ public class ObjectEntryLocalServiceImpl
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionLocalizationTable.getObjectFields();
 
-		String updateSQL = _createUpdateLocalizationTableSQL(
+		String sql = _createUpdateLocalizationTableSQL(
 			dynamicObjectDefinitionLocalizationTable, objectEntryId,
 			objectFields, values);
 
-		if (updateSQL == null) {
+		if (sql == null) {
 			return;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + updateSQL);
+			_log.debug("SQL: " + sql);
 		}
 
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				updateSQL)) {
+				sql)) {
 
 			int index = 1;
 

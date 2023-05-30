@@ -574,11 +574,11 @@ definition {
 
 		SelectFrameTop();
 
-		Button.clickAdd();
-
-		Alert.viewSuccessMessage();
+		Button.click(button = "Add");
 
 		SelectFrameTop();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro viewAssetList {

@@ -64,7 +64,7 @@ definition {
 				-d '{
 					"query": {
 						"match": {
-							"_type": "LiferayDocumentType"
+							"_type": "_doc"
 						}
 					}
 				}'

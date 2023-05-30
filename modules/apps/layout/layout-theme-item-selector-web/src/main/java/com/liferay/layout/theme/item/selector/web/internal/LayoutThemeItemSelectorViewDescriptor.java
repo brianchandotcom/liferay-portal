@@ -18,7 +18,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.layout.theme.item.selector.web.internal.context.LayoutThemeItemSelectorDisplayContext;
+import com.liferay.layout.theme.item.selector.web.internal.display.context.LayoutThemeItemSelectorDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Theme;
 

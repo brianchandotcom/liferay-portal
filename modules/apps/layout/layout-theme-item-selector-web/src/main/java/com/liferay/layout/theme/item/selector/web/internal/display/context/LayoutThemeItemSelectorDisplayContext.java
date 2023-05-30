@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.theme.item.selector.web.internal.context;
+package com.liferay.layout.theme.item.selector.web.internal.display.context;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.theme.item.selector.web.internal.util.comparator.ThemeNameComparator;

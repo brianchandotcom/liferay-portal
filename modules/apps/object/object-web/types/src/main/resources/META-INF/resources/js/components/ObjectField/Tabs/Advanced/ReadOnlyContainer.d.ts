@@ -14,14 +14,17 @@
 
 /// <reference types="react" />
 
+import {SidebarCategory} from '@liferay/object-js-components-web';
 interface ReadOnlyContainerProps {
 	disabled?: boolean;
+	readOnlySidebarElements: SidebarCategory[];
 	requiredField: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
 export declare function ReadOnlyContainer({
 	disabled,
+	readOnlySidebarElements,
 	requiredField,
 	setValues,
 	values,

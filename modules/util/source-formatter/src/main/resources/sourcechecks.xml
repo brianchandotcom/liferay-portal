@@ -1592,6 +1592,10 @@
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
 		</check>
+		<check name="UpgradeJavaMultiVMPoolUtilCheck">
+			<category name="Upgrade" />
+			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />
+		</check>
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />

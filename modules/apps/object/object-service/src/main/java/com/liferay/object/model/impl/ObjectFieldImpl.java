@@ -38,6 +38,11 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 	}
 
 	@Override
+	public String getI18nObjectFieldName() {
+		return getName() + "_i18n";
+	}
+
+	@Override
 	public ObjectDefinition getObjectDefinition() throws PortalException {
 		return ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 			getObjectDefinitionId());

@@ -604,7 +604,7 @@
 		</check>
 		<check name="JavaUpgradeServiceTrackerListCheck">
 			<category name="Upgrade" />
-			<description name="Replace number of parameters of ServiceTrackerList" />
+			<description name="Replace the number of generic type arguments in ServiceTrackerList" />
 		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />

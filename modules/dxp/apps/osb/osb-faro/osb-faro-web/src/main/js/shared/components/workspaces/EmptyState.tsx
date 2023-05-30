@@ -76,6 +76,7 @@ export const CardEmpty: React.FC<ICardItemProps> = ({
 			<p>{description}</p>
 			{href ? (
 				<ClayLink
+					button
 					displayType='secondary'
 					href={href}
 					{...otherButtonProps}

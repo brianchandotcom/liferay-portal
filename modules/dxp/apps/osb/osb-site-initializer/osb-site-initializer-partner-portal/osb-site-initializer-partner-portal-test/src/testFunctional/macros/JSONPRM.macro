@@ -124,7 +124,8 @@ definition {
 			targetMarketOptions = ${targetMarketOptions},
 			targetRolesOptions = ${targetRolesOptions},
 			totalCostOfExpense = ${totalCostOfExpense},
-			totalMDFRequestAmount = ${totalMDFRequestAmount});
+			totalMDFRequestAmount = ${totalMDFRequestAmount},
+			userEmailAddress = ${userEmailAddress});
 
 		var requestId = JSONPRMAPI.addMDF(
 			accountEntryName = ${accountEntryName},

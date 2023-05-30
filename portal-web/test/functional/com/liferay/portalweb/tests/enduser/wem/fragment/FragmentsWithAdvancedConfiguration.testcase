@@ -255,49 +255,25 @@ definition {
 				portletName = "Search Results");
 		}
 
-		task ("Add a Paragraph fragment to a content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+		task ("Add a Paragraph fragment to each content page") {
+			for (var pageNum : list "1,2,3,4") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Page Name ${pageNum}",
+					type = "content");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Paragraph");
-		}
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Page Name ${pageNum}",
+					siteName = "Test Site Name");
 
-		task ("Edit the inline content of Paragraph") {
-			PageEditor.gotoTab(tabName = "Page Content");
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Paragraph");
 
-			PageEditor.editFragmentTextViaPageContentPanel(
-				itemName = "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
-				text = "This has footer text and should not be in search results");
-
-			PageEditor.waitForAutoSave();
-
-			PageEditor.publish();
-		}
-
-		task ("Create a couple more content pages with the same Paragraph fragment") {
-			for (var pageNum : list "1,2,3") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "Copy",
-					pageName = "Test Page Name");
-
-				MenuItem.click(menuItem = "Page");
-
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				PortletEntry.inputName(name = "Page Name ${pageNum}");
-
-				Button.clickAdd();
-
-				SelectFrameTop();
-
-				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "Edit",
-					pageName = "Page Name ${pageNum}");
+				PageEditor.editFragmentText(
+					fragmentName = "Paragraph",
+					id = "element-text",
+					text = "This has footer text and should not be in search results");
 
 				PageEditor.publish();
 			}
@@ -310,11 +286,7 @@ definition {
 
 			SearchPortlets.searchEmbedded(searchTerm = "footer");
 
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = "Test Page Name",
-				searchAssetType = "Page");
-
-			for (var pageNum : list "1,2,3") {
+			for (var pageNum : list "1,2,3,4") {
 				SearchResultPortlet.viewSearchResults(
 					searchAssetTitle = "Page Name ${pageNum}",
 					searchAssetType = "Page");
@@ -323,7 +295,7 @@ definition {
 
 		task ("Check Hide from Site Search Results checkbox in Advanced Settings") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
+				pageName = "Page Name 1",
 				siteName = "Test Site Name");
 
 			PageEditor.gotoAdvanced(fragmentName = "Paragraph");
@@ -341,10 +313,10 @@ definition {
 			SearchPortlets.searchEmbedded(searchTerm = "footer");
 
 			SearchResultPortlet.viewSearchResultNotPresent(
-				searchAssetTitle = "Test Page Name",
+				searchAssetTitle = "Page Name 1",
 				searchAssetType = "Page");
 
-			for (var pageNum : list "1,2,3") {
+			for (var pageNum : list "2,3,4") {
 				SearchResultPortlet.viewSearchResults(
 					searchAssetTitle = "Page Name ${pageNum}",
 					searchAssetType = "Page");

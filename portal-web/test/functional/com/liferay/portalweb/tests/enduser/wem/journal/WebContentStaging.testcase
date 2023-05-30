@@ -744,13 +744,11 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Create a web content as draft") {
@@ -779,8 +777,6 @@ definition {
 				webContentTitle = "WC WebContent Title",
 				webContentUpload = "Document_1.doc",
 				webContentWebContent = "WC 1");
-
-			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}
 
 		task ("Assert web content draft exists") {

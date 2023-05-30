@@ -446,7 +446,7 @@ definition {
 		}
 
 		task ("View the cards in the Overview tab") {
-			for (var cardTitle : list "Total Individuals,Known,Anonymous,Enriched Profiles,Active Individuals,Top Interests as of Today") {
+			for (var cardTitle : list "Total Individuals,Known,Anonymous,Enriched Profiles,Active Individuals,Top Interests as of Yesterday") {
 				ACCards.viewCards(cardTitle = ${cardTitle});
 			}
 		}

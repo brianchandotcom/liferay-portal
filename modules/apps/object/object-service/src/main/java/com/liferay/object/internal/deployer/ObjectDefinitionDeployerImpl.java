@@ -217,6 +217,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
+				InfoCollectionProvider.class,
+				new ObjectEntrySingleFormVariationInfoCollectionProvider(
+					_assetCategoryLocalService, _assetTagLocalService,
+					_assetVocabularyLocalService, _groupLocalService,
+					_listTypeEntryLocalService, objectDefinition,
+					_objectEntryLocalService, _objectEntryManagerRegistry,
+					_objectFieldLocalService, _objectLayoutLocalService,
+					_objectScopeProviderRegistry),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
 				KeywordQueryContributor.class,
 				new ObjectEntryKeywordQueryContributor(
 					_objectFieldLocalService, _objectViewLocalService),
@@ -357,21 +371,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					modelSearchDefinition.setModelSummaryContributor(
 						objectEntryModelSummaryContributor);
 				}));
-
-		_bundleContext.registerService(
-			InfoCollectionProvider.class,
-			new ObjectEntrySingleFormVariationInfoCollectionProvider(
-				_assetCategoryLocalService, _assetTagLocalService,
-				_assetVocabularyLocalService, _groupLocalService,
-				_listTypeEntryLocalService, objectDefinition,
-				_objectEntryLocalService, _objectEntryManagerRegistry,
-				_objectFieldLocalService, _objectLayoutLocalService,
-				_objectScopeProviderRegistry),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"company.id", objectDefinition.getCompanyId()
-			).put(
-				"item.class.name", objectDefinition.getClassName()
-			).build());
 
 		try {
 			for (Locale locale : LanguageUtil.getAvailableLocales()) {

@@ -552,14 +552,14 @@ public class DefaultObjectEntryManagerImpl
 				objectRelatedModelsProvider.getRelatedModels(
 					serviceBuilderObjectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
-					serviceBuilderObjectEntry.getPrimaryKey(),
+					serviceBuilderObjectEntry.getPrimaryKey(), null,
 					_getStartPosition(pagination),
 					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				serviceBuilderObjectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				serviceBuilderObjectEntry.getPrimaryKey()));
+				serviceBuilderObjectEntry.getPrimaryKey(), null));
 	}
 
 	@Override
@@ -591,7 +591,7 @@ public class DefaultObjectEntryManagerImpl
 					objectRelatedModelsProvider.getRelatedModels(
 						serviceBuilderObjectEntry.getGroupId(),
 						objectRelationship.getObjectRelationshipId(),
-						serviceBuilderObjectEntry.getPrimaryKey(),
+						serviceBuilderObjectEntry.getPrimaryKey(), null,
 						_getStartPosition(pagination),
 						_getEndPosition(pagination)),
 				baseModel -> _toDTO(
@@ -603,7 +603,7 @@ public class DefaultObjectEntryManagerImpl
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				serviceBuilderObjectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(),
-				serviceBuilderObjectEntry.getPrimaryKey()));
+				serviceBuilderObjectEntry.getPrimaryKey(), null));
 	}
 
 	@Override
@@ -1030,12 +1030,12 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext,
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
-					objectEntryId, _getStartPosition(pagination),
+					objectEntryId, null, _getStartPosition(pagination),
 					_getEndPosition(pagination))),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),
-				objectEntryId));
+				objectEntryId, null));
 	}
 
 	private boolean _hasRelatedObjectEntries(
@@ -1072,7 +1072,7 @@ public class DefaultObjectEntryManagerImpl
 				count = objectRelatedModelsProvider.getRelatedModelsCount(
 					serviceBuilderObjectEntry.getGroupId(),
 					objectRelationship.getObjectRelationshipId(),
-					serviceBuilderObjectEntry.getPrimaryKey());
+					serviceBuilderObjectEntry.getPrimaryKey(), null);
 			}
 			catch (Exception exception) {
 				_log.error(exception);

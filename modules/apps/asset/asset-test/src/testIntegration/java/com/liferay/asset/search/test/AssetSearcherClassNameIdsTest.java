@@ -183,10 +183,10 @@ public class AssetSearcherClassNameIdsTest {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
-		return assetSearcher.search(searchContext);
+		return baseSearcher.search(searchContext);
 	}
 
 	@Inject

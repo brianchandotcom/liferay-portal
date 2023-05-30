@@ -98,14 +98,14 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 
 		assetEntryQuery.setGroupIds(new long[] {siteId});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		return Page.of(
 			new HashMap<>(), transform(facets.values(), FacetUtil::toFacet),
 			transform(
 				_assetHelper.getAssetEntries(
-					assetSearcher.search(searchContext)),
+					baseSearcher.search(searchContext)),
 				this::_toContentElement),
 			pagination,
 			_assetHelper.searchCount(searchContext, assetEntryQuery));

@@ -497,10 +497,10 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		assetEntryQuery.setAllCategoryIds(allCategoryIds);
 		assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
-		BooleanQuery booleanQuery = assetSearcher.getFullQuery(searchContext);
+		BooleanQuery booleanQuery = baseSearcher.getFullQuery(searchContext);
 
 		return booleanQuery.getPreBooleanFilter();
 	}

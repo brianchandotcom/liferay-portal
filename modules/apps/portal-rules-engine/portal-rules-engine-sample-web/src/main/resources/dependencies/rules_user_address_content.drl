@@ -93,10 +93,10 @@ function List getAssetEntries(
 	queryConfig.setHighlightEnabled(false);
 	queryConfig.setScoreEnabled(false);
 
-	BaseSearcher assetSearcher =
+	BaseSearcher baseSearcher =
 		AssetSearcherFactoryUtil.createAssetSearcher(assetEntryQuery);
 
-	Hits hits = assetSearcher.search(searchContext);
+	Hits hits = baseSearcher.search(searchContext);
 
 	List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 

@@ -499,10 +499,10 @@ public class AssetHelperImpl implements AssetHelper {
 
 		_prepareSearchContext(searchContext, assetEntryQuery, start, end);
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
-		return assetSearcher.search(searchContext);
+		return baseSearcher.search(searchContext);
 	}
 
 	@Override
@@ -566,10 +566,10 @@ public class AssetHelperImpl implements AssetHelper {
 
 		_prepareSearchContext(searchContext, assetEntryQuery, start, end);
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		return new BaseModelSearchResult<>(
 			getAssetEntries(hits), hits.getLength());
@@ -584,10 +584,10 @@ public class AssetHelperImpl implements AssetHelper {
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
-		return assetSearcher.searchCount(searchContext);
+		return baseSearcher.searchCount(searchContext);
 	}
 
 	@Override
@@ -710,10 +710,10 @@ public class AssetHelperImpl implements AssetHelper {
 				ArrayUtil.append(
 					groupIds, assetEntryQuerySearchContext.getGroupIds()));
 
-			BaseSearcher assetSearcher =
+			BaseSearcher baseSearcher =
 				_assetSearcherFactory.createAssetSearcher(assetEntryQuery);
 
-			BooleanQuery booleanQuery = assetSearcher.getFullQuery(
+			BooleanQuery booleanQuery = baseSearcher.getFullQuery(
 				assetEntryQuerySearchContext);
 
 			BooleanClause<Query>[] booleanClauses =

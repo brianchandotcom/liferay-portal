@@ -105,10 +105,10 @@ public class AssetSearcherPermissionsTest {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
-		assetSearcher.search(searchContext);
+		baseSearcher.search(searchContext);
 	}
 
 	protected void setGuestUser() throws Exception {

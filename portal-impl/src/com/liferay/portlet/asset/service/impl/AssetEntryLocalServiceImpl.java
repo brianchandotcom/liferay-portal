@@ -1211,10 +1211,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(_hasScoreSort(searchContext));
 
-		BaseSearcher assetSearcher =
+		BaseSearcher baseSearcher =
 			AssetSearcherFactoryUtil.createAssetSearcher(assetEntryQuery);
 
-		return assetSearcher.search(searchContext);
+		return baseSearcher.search(searchContext);
 	}
 
 	protected long doSearchCount(
@@ -1245,10 +1245,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 
-		BaseSearcher assetSearcher =
+		BaseSearcher baseSearcher =
 			AssetSearcherFactoryUtil.createAssetSearcher(assetEntryQuery);
 
-		return assetSearcher.searchCount(searchContext);
+		return baseSearcher.searchCount(searchContext);
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(

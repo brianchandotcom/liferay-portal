@@ -124,7 +124,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -132,7 +132,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(true);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 	}
@@ -149,7 +149,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -157,7 +157,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(false);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 2, hits.getLength());
 	}
@@ -175,7 +175,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -183,7 +183,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(true);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 3, hits.getLength());
 	}
@@ -200,7 +200,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -208,7 +208,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(false);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 2, hits.getLength());
 	}
@@ -228,7 +228,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -236,7 +236,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(true);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 	}
@@ -256,7 +256,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -264,7 +264,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(true);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 3, hits.getLength());
 	}
@@ -282,7 +282,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -290,7 +290,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(true);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 2, hits.getLength());
 	}
@@ -307,7 +307,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -315,7 +315,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(false);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 	}
@@ -333,7 +333,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -341,7 +341,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(true);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
@@ -358,7 +358,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher assetSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -366,7 +366,7 @@ public class AssetSearcherTest {
 
 		searchContext.setIncludeInternalAssetCategories(false);
 
-		Hits hits = assetSearcher.search(searchContext);
+		Hits hits = baseSearcher.search(searchContext);
 
 		Assert.assertEquals(hits.toString(), 1, hits.getLength());
 	}

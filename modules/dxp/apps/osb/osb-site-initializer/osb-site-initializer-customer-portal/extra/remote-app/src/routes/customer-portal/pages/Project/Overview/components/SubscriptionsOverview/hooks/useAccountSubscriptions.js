@@ -39,7 +39,9 @@ export default function useAccountSubscriptions(
 				variables: {
 					filter: `accountSubscriptionGroupERC eq '${
 						accountSubcriptionGroup.externalReferenceCode
-					}'${getSubscriptionStatusFilter(lastSubscriptionStatus)}`,
+					}'${getSubscriptionStatusFilter(
+						lastSubscriptionStatus
+					)} and instanceSize ne '0'`,
 				},
 			});
 		}

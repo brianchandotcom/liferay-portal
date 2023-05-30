@@ -26,7 +26,9 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -76,13 +78,13 @@ public class ValidatorTest {
 
 	@Test
 	public void testHigherVersionModule() throws SQLException {
-		_mockModuleVersion("module.2.service", "1.0.0");
+		_mockReleaseSchemaVersion("module2.service", "1.0.0");
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module.2.service is in a lower version in " +
-					"destination database"));
+				"ERROR: Module module2.service needs to be upgraded in " +
+					"destination database before the migration"));
 	}
 
 	@Test
@@ -117,35 +119,46 @@ public class ValidatorTest {
 
 	@Test
 	public void testLowerVersionModule() throws SQLException {
-		_mockModuleVersion("module.1", "10.0.0");
+		_mockReleaseSchemaVersion("module1", "10.0.0");
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module.1 needs to be upgraded in source " +
+				"ERROR: Module module1 needs to be upgraded in source " +
 					"database before the migration"));
 	}
 
 	@Test
-	public void testMissingNotServiceModule() throws SQLException {
-		_mockMissingModules("module.1");
+	public void testMissingDestinationNotServiceModule() throws SQLException {
+		_mockMissingDestinationModule("module1");
 
 		_executeAndAssert(
 			false, true,
 			Arrays.asList(
-				"WARNING: Module module.1 will not be available in the " +
-					"destination"));
+				"WARNING: Module module1 is not present in the source " +
+					"database"));
 	}
 
 	@Test
-	public void testMissingServiceModule() throws SQLException {
-		_mockMissingModules("module.2.service");
+	public void testMissingDestinationServiceModule() throws SQLException {
+		_mockMissingDestinationModule("module2.service");
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module.2.service will not be available in the " +
-					"destination"));
+				"ERROR: Module module2.service needs to be installed in the " +
+					"source database before the migration"));
+	}
+
+	@Test
+	public void testMissingSourceModule() throws SQLException {
+		_mockMissingSourceModule("module1");
+
+		_executeAndAssert(
+			false, true,
+			Arrays.asList(
+				"WARNING: Module module1 is not present in the destination " +
+					"database"));
 	}
 
 	@Test
@@ -197,34 +210,33 @@ public class ValidatorTest {
 
 	@Test
 	public void testUnverifiedDestinationModule() throws SQLException {
-		_mockupUnverifiedModule("module.2", false);
+		_mockupReleaseVerified("module2", false);
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module.2 needs to be verified in the " +
-					"destination before the migration"));
+				"ERROR: Module module2 needs to be verified in the " +
+					"destination database before the migration"));
 	}
 
 	@Test
 	public void testUnverifiedSourceModule() throws SQLException {
-		_mockupUnverifiedModule("module.2.service", true);
+		_mockupReleaseVerified("module2.service", true);
 
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Module module.2.service needs to be verified in the " +
-					"source before the migration"));
+				"ERROR: Module module2.service needs to be verified in the " +
+					"source database before the migration"));
 	}
 
 	private List<Release> _createReleaseElements() {
 		return Arrays.asList(
+			new Release("module1.service", Version.parseVersion("3.5.1"), true),
 			new Release(
-				"module.1.service", Version.parseVersion("3.5.1"), true),
-			new Release(
-				"module.2.service", Version.parseVersion("5.0.0"), false),
-			new Release("module.1", Version.parseVersion("2.3.2"), true),
-			new Release("module.2", Version.parseVersion("5.1.0"), true));
+				"module2.service", Version.parseVersion("5.0.0"), false),
+			new Release("module1", Version.parseVersion("2.3.2"), true),
+			new Release("module2", Version.parseVersion("5.1.0"), true));
 	}
 
 	private void _executeAndAssert(
@@ -269,7 +281,35 @@ public class ValidatorTest {
 		);
 	}
 
-	private void _mockMissingModules(String module) {
+	private void _mockMissingDestinationModule(String servletContextName) {
+		List<Release> releases = _createReleaseElements();
+
+		Map<String, Release> releaseMap = new HashMap<>();
+
+		List<Release> missingDestinationModuleReleases = new ArrayList<>();
+
+		for (Release release : releases) {
+			releaseMap.put(release.getServletContextName(), release);
+
+			if (!servletContextName.equals(release.getServletContextName())) {
+				missingDestinationModuleReleases.add(release);
+			}
+		}
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
+		).thenReturn(
+			missingDestinationModuleReleases
+		);
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+		).thenReturn(
+			releaseMap
+		);
+	}
+
+	private void _mockMissingSourceModule(String servletContextName) {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
@@ -278,18 +318,19 @@ public class ValidatorTest {
 			releases
 		);
 
-		for (Release release : releases) {
-			String servletContextName = release.getServletContextName();
+		Map<String, Release> releaseMap = new HashMap<>();
 
-			if (!servletContextName.equals(module)) {
-				_databaseMockedStatic.when(
-					() -> DatabaseUtil.getReleaseEntry(
-						_destinationConnection, servletContextName)
-				).thenReturn(
-					release
-				);
+		for (Release release : releases) {
+			if (!servletContextName.equals(release.getServletContextName())) {
+				releaseMap.put(release.getServletContextName(), release);
 			}
 		}
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+		).thenReturn(
+			releaseMap
+		);
 	}
 
 	private void _mockMissingTables(
@@ -308,7 +349,9 @@ public class ValidatorTest {
 		);
 	}
 
-	private void _mockModuleVersion(String module, String version) {
+	private void _mockReleaseSchemaVersion(
+		String servletContextName, String schemaVersion) {
+
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
@@ -317,25 +360,28 @@ public class ValidatorTest {
 			releases
 		);
 
-		for (Release release : releases) {
-			String servletContextName = release.getServletContextName();
+		Map<String, Release> releaseMap = new HashMap<>();
 
-			if (servletContextName.equals(module)) {
+		for (Release release : releases) {
+			if (servletContextName.equals(release.getServletContextName())) {
 				release = new Release(
-					servletContextName, Version.parseVersion(version),
+					servletContextName, Version.parseVersion(schemaVersion),
 					release.getVerified());
 			}
 
-			_databaseMockedStatic.when(
-				() -> DatabaseUtil.getReleaseEntry(
-					_destinationConnection, servletContextName)
-			).thenReturn(
-				release
-			);
+			releaseMap.put(release.getServletContextName(), release);
 		}
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+		).thenReturn(
+			releaseMap
+		);
 	}
 
-	private void _mockupUnverifiedModule(String module, boolean verified) {
+	private void _mockupReleaseVerified(
+		String servletContextName, boolean verified) {
+
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
@@ -344,21 +390,22 @@ public class ValidatorTest {
 			releases
 		);
 
-		for (Release release : releases) {
-			String servletContextName = release.getServletContextName();
+		Map<String, Release> releaseMap = new HashMap<>();
 
-			if (servletContextName.equals(module)) {
+		for (Release release : releases) {
+			if (servletContextName.equals(release.getServletContextName())) {
 				release = new Release(
 					servletContextName, release.getSchemaVersion(), verified);
 			}
 
-			_databaseMockedStatic.when(
-				() -> DatabaseUtil.getReleaseEntry(
-					_destinationConnection, servletContextName)
-			).thenReturn(
-				release
-			);
+			releaseMap.put(release.getServletContextName(), release);
 		}
+
+		_databaseMockedStatic.when(
+			() -> DatabaseUtil.getReleaseMap(_destinationConnection)
+		).thenReturn(
+			releaseMap
+		);
 	}
 
 	private void _mockWebIds(boolean valid) {

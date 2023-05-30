@@ -1,0 +1,52 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+    setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given the creation of a new dataset") {
+			FrontendDataSetAdmin.goToDatasetAdminPage();
+
+			JSONFrontendDatasetEntries._createDatasetEntry(
+				datasetName = "Dataset Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a dataset view") {
+			JSONFrontendDatasetEntries._createFDSViewViaAPI(
+				datasetName = "Dataset Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				dataSetViewName = "View Fields Test");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToSpecificViewPage(
+				datasetName = "Dataset Fields Test",
+				key_viewName = "View Fields Test");
+		}
+        
+        task ("When the user accesses the Filters tab") {
+			FrontendDataSetAdmin.goToTab(tabName = "Filters");
+		}
+    }
+
+    tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		FrontendDataSetAdmin.deleteAllDatasetEntries();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}

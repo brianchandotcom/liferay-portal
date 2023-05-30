@@ -15,6 +15,7 @@ patch {
 
 	fileNames "org/apache/felix/resolver/ResolverImpl.java"
 	fileNames "org/eclipse/osgi/container/ModuleDatabase.java"
+	fileNames "org/eclipse/osgi/container/ModuleRevisions.java"
 	fileNames "org/eclipse/osgi/framework/util/CaseInsensitiveDictionaryMap.java"
 	fileNames "org/eclipse/osgi/internal/framework/EquinoxConfiguration.java"
 	fileNames "org/eclipse/osgi/internal/framework/EquinoxContainerAdaptor.java"

@@ -150,8 +150,7 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 
 	function _handleVariantDeletion(variantId) {
 		const body = {
-			classNameId: page.classNameId,
-			classPK: page.classPK,
+			plid: page.plid,
 			segmentsExperimentRelId: variantId,
 		};
 
@@ -194,9 +193,8 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 
 	function _handleVariantEditionSave({name, variantId}) {
 		const body = {
-			classNameId: page.classNameId,
-			classPK: page.classPK,
 			name,
+			plid: page.plid,
 			segmentsExperimentRelId: variantId,
 		};
 
@@ -216,9 +214,8 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 
 	function _handleVariantCreation({name}) {
 		const body = {
-			classNameId: page.classNameId,
-			classPK: page.classPK,
 			name,
+			plid: page.plid,
 			segmentsExperimentId: experiment.segmentsExperimentId,
 		};
 

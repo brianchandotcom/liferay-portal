@@ -71,8 +71,7 @@ const _runExperimentMockGenerator = (segmentsExperiment) => ({status}) =>
 	});
 
 export default function renderApp({
-	classNameId = '',
-	classPK = '',
+	plid = '',
 	initialGoals = segmentsGoals,
 	initialExperimentHistory = [],
 	initialSegmentsExperiment,
@@ -116,8 +115,7 @@ export default function renderApp({
 				},
 				imagesPath: '',
 				page: {
-					classNameId,
-					classPK,
+					plid,
 					type,
 				},
 			}}

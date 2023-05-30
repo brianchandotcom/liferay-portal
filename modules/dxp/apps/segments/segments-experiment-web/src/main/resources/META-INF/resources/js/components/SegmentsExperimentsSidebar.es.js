@@ -183,12 +183,11 @@ function SegmentsExperimentsSidebar({
 		} = experimentData;
 
 		const body = {
-			classNameId: page.classNameId,
-			classPK: page.classPK,
 			description,
 			goal,
 			goalTarget,
 			name,
+			plid: page.plid,
 			segmentsExperienceId,
 		};
 

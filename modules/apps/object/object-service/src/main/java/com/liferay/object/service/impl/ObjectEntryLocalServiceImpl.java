@@ -2805,53 +2805,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _insertIntoLocalizationTable(
-		Connection connection,
-		DynamicObjectDefinitionLocalizationTable
-			dynamicObjectDefinitionLocalizationTable,
-		Locale locale, long objectEntryId, List<ObjectField> objectFields,
-		String sql, Map<String, Serializable> values) {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql)) {
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			int index = 1;
-
-			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
-			_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
-
-			for (ObjectField objectField : objectFields) {
-				Column<?, ?> column =
-					dynamicObjectDefinitionLocalizationTable.getColumn(
-						objectField.getDBColumnName());
-
-				Map<String, String> localizedValues =
-					(Map<String, String>)values.get(
-						objectField.getI18nObjectFieldName());
-
-				String value = StringPool.BLANK;
-
-				if (localizedValues != null) {
-					value = Objects.toString(
-						localizedValues.get(languageId), StringPool.BLANK);
-				}
-
-				_setColumn(
-					preparedStatement, index++, column.getSQLType(), value);
-			}
-
-			preparedStatement.executeUpdate();
-
-			FinderCacheUtil.clearDSLQueryCache(
-				dynamicObjectDefinitionLocalizationTable.getTableName());
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-	}
-
-	private void _insertIntoLocalizationTable(
 			ObjectDefinition objectDefinition, long objectEntryId,
 			Map<String, Serializable> values)
 		throws PortalException {
@@ -2943,11 +2896,44 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryPersistence.getDataSource());
 
 		for (Locale locale : locales) {
-			_insertIntoLocalizationTable(
-				connection, dynamicObjectDefinitionLocalizationTable,
-				locale, objectEntryId,
-				dynamicObjectDefinitionLocalizationTable.getObjectFields(), sql,
-				values);
+			try (PreparedStatement preparedStatement = connection.prepareStatement(
+					sql)) {
+
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				int index = 1;
+
+				_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
+				_setColumn(preparedStatement, index++, Types.VARCHAR, languageId);
+
+				for (ObjectField objectField : dynamicObjectDefinitionLocalizationTable.getObjectFields()) {
+					Column<?, ?> column =
+						dynamicObjectDefinitionLocalizationTable.getColumn(
+							objectField.getDBColumnName());
+
+					Map<String, String> localizedValues =
+						(Map<String, String>)values.get(
+							objectField.getI18nObjectFieldName());
+
+					String value = StringPool.BLANK;
+
+					if (localizedValues != null) {
+						value = Objects.toString(
+							localizedValues.get(languageId), StringPool.BLANK);
+					}
+
+					_setColumn(
+						preparedStatement, index++, column.getSQLType(), value);
+				}
+
+				preparedStatement.executeUpdate();
+
+				FinderCacheUtil.clearDSLQueryCache(
+					dynamicObjectDefinitionLocalizationTable.getTableName());
+			}
+			catch (Exception exception) {
+				throw new SystemException(exception);
+			}
 		}
 	}
 

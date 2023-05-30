@@ -346,4 +346,39 @@ definition {
 			threadCount = 2);
 	}
 
+	@description = "This test ensures that the new templates are set as the default and new terms (Message siblings, Message parents and Root message body) are included in the definition of terms."
+	@priority = 4
+	test RootMessageSiblingsAndParentsAreDefinedInDefaultTemplates {
+		property custom.properties = "feature.flag.LPS-182020=true${line.separator}message.boards.email.message.added.body=${resource:com/liferay/portlet/messageboards/dependencies/email_message_added_body_LPS-182020.tmpl}${line.separator}message.boards.email.message.updated.body=${resource:com/liferay/portlet/messageboards/dependencies/email_message_updated_body_LPS-182020.tmpl}";
+
+		MessageboardsPortlet.ViewMessageEmailTemplate(
+			content = "[$MESSAGE_SIBLINGS$] [$MESSAGE_USER_NAME$] NEW [$MESSAGE_BODY$] Reply",
+			messageAddedEmail = "true",
+			messageBody = "There is 1 new reply in the thread,[$ROOT_MESSAGE_BODY$],[$MESSAGE_PARENT$],1 New Comment,[$MESSAGE_PARENT$],Replies To Last Message",
+			messageSubject = "[$MESSAGE_SUBJECT$]",
+			messageURL = "[$MESSAGE_URL$]",
+			siteURLKey = "guest");
+
+		for (var definitionOfTerm : list "[$MESSAGE_PARENT$],The message body of the parent message,[$MESSAGE_SIBLINGS$],The message thread of messages at the same level,[$ROOT_MESSAGE_BODY$],The message body of the original message") {
+			AssertElementPresent(
+				key_definitionOfTerm = ${definitionOfTerm},
+				key_number = 1,
+				locator1 = "MessageBoardsAdminConfiguration#DEFINITION_OF_TERMS");
+		}
+
+		MessageboardsPortlet.ViewMessageEmailTemplate(
+			content = "[$MESSAGE_SIBLINGS$] [$MESSAGE_USER_NAME$] EDITED [$MESSAGE_BODY$] Reply",
+			messageBody = "1 new reply was edited,[$ROOT_MESSAGE_BODY$],[$MESSAGE_PARENT$],1 Edited Comment,[$MESSAGE_PARENT$],Replies To Last Message",
+			messageSubject = "[$MESSAGE_SUBJECT$]",
+			messageURL = "[$MESSAGE_URL$]",
+			siteURLKey = "guest");
+
+		for (var definitionOfTerm : list "[$MESSAGE_PARENT$],The message body of the parent message,[$MESSAGE_SIBLINGS$],The message thread of messages at the same level,[$ROOT_MESSAGE_BODY$],The message body of the original message") {
+			AssertElementPresent(
+				key_definitionOfTerm = ${definitionOfTerm},
+				key_number = 2,
+				locator1 = "MessageBoardsAdminConfiguration#DEFINITION_OF_TERMS");
+		}
+	}
+
 }

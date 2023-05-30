@@ -14,8 +14,6 @@
 
 package com.liferay.layout.list.retriever;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -23,15 +21,14 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsEntryLayoutListRetriever
-	<T extends ItemSelectorReturnType, S extends ListObjectReference>
-		extends LayoutListRetriever<T, S> {
+	<T extends ListObjectReference> {
 
-	public default long getDefaultVariationSegmentsEntryId(S s) {
+	public default long getDefaultVariationSegmentsEntryId(T t) {
 		return 0;
 	}
 
 	public default boolean hasSegmentsEntryVariation(
-		S s, long segmentsEntryId) {
+		T t, long segmentsEntryId) {
 
 		return false;
 	}

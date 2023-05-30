@@ -336,9 +336,9 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return segmentsEntryIds;
 		}
 
-		SegmentsEntryLayoutListRetriever<?, ListObjectReference>
+		SegmentsEntryLayoutListRetriever<ListObjectReference>
 			segmentsEntryLayoutListRetriever =
-				(SegmentsEntryLayoutListRetriever<?, ListObjectReference>)
+				(SegmentsEntryLayoutListRetriever<ListObjectReference>)
 					layoutListRetriever;
 
 		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(

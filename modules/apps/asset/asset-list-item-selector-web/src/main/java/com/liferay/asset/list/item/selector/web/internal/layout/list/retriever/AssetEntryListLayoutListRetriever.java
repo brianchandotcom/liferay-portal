@@ -48,8 +48,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutListRetriever.class)
 public class AssetEntryListLayoutListRetriever
-	implements SegmentsEntryLayoutListRetriever
-		<InfoListItemSelectorReturnType, ClassedModelListObjectReference> {
+	implements LayoutListRetriever
+		<InfoListItemSelectorReturnType, ClassedModelListObjectReference>,
+			   SegmentsEntryLayoutListRetriever
+				   <ClassedModelListObjectReference> {
 
 	@Override
 	public List<Object> getList(

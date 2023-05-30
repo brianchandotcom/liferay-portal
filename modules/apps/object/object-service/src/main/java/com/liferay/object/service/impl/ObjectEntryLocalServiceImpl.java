@@ -2958,6 +2958,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		Map<String, Serializable> insertValues = new HashMap<>();
+		Map<String, Serializable> updateValues = new HashMap<>();
 
 		List<String> languageIds = new ArrayList<>(
 			objectEntryPersistence.dslQuery(
@@ -2987,9 +2988,8 @@ public class ObjectEntryLocalServiceImpl
 
 			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
 				if (languageIds.contains(entry.getKey())) {
-					_updateLocalizationTable(
-						dynamicObjectDefinitionLocalizationTable,
-						entry.getKey(), objectEntryId,
+					updateValues.put(
+						entry.getKey(),
 						HashMapBuilder.<String, Serializable>put(
 							objectField.getI18nObjectFieldName(),
 							HashMapBuilder.put(
@@ -3026,6 +3026,9 @@ public class ObjectEntryLocalServiceImpl
 
 		_insertIntoLocalizationTable(
 			objectDefinition, objectEntryId, insertValues);
+		_updateLocalizationTable(
+			dynamicObjectDefinitionLocalizationTable, objectEntryId,
+			updateValues);
 	}
 
 	private void _insertIntoTable(

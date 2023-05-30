@@ -2808,8 +2808,8 @@ public class ObjectEntryLocalServiceImpl
 		Connection connection,
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable,
-		String sql, Map<String, Serializable> values,
-		Locale locale, long objectEntryId, List<ObjectField> objectFields) {
+		Locale locale, long objectEntryId, List<ObjectField> objectFields,
+		String sql, Map<String, Serializable> values) {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
@@ -2945,8 +2945,9 @@ public class ObjectEntryLocalServiceImpl
 		for (Locale locale : locales) {
 			_insertIntoLocalizationTable(
 				connection, dynamicObjectDefinitionLocalizationTable,
-				sql, values, locale, objectEntryId,
-				dynamicObjectDefinitionLocalizationTable.getObjectFields());
+				locale, objectEntryId,
+				dynamicObjectDefinitionLocalizationTable.getObjectFields(), sql,
+				values);
 		}
 	}
 

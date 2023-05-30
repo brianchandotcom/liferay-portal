@@ -84,8 +84,9 @@ public class UserGroupItemSelectorView
 		UserGroupItemSelectorViewDisplayContext
 			userGroupItemSelectorViewDisplayContext =
 				new UserGroupItemSelectorViewDisplayContext(
-					_userGroupLocalService, _usersAdmin, httpServletRequest,
-					portletURL, itemSelectedEventName);
+					_userGroupLocalService, userGroupItemSelectorCriterion,
+					_usersAdmin, httpServletRequest, portletURL,
+					itemSelectedEventName);
 
 		servletRequest.setAttribute(
 			UserGroupItemSelectorWebKeys.

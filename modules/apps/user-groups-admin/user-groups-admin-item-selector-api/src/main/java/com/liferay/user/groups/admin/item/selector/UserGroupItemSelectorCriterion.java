@@ -20,4 +20,17 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Alessio Antonio Rendina
  */
 public class UserGroupItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public boolean isFilterManageableUserGroups() {
+		return _filterManageableUserGroups;
+	}
+
+	public void setFilterManageableUserGroups(
+		boolean filterManageableUserGroups) {
+
+		_filterManageableUserGroups = filterManageableUserGroups;
+	}
+
+	private boolean _filterManageableUserGroups;
+
 }

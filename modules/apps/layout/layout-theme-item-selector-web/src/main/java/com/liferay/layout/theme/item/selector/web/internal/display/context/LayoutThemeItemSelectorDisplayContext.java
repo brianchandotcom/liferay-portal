@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -96,14 +95,13 @@ public class LayoutThemeItemSelectorDisplayContext {
 			orderByAsc = true;
 		}
 
-		List<Theme> themes = ListUtil.sort(
-			ThemeLocalServiceUtil.getPageThemes(
-				themeDisplay.getCompanyId(),
-				groupDisplayContextHelper.getLiveGroupId(),
-				themeDisplay.getUserId()),
-			new ThemeNameComparator(orderByAsc));
-
-		themesSearchContainer.setResultsAndTotal(() -> themes, themes.size());
+		themesSearchContainer.setResultsAndTotal(
+			ListUtil.sort(
+				ThemeLocalServiceUtil.getPageThemes(
+					themeDisplay.getCompanyId(),
+					groupDisplayContextHelper.getLiveGroupId(),
+					themeDisplay.getUserId()),
+				new ThemeNameComparator(orderByAsc)));
 
 		_themesSearchContainer = themesSearchContainer;
 

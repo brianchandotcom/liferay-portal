@@ -116,7 +116,7 @@ public class TaxonomyCategoryResourceTest
 		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
 			_internalAssetVocabulary);
 
-		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlattenAndNameField(
+		_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlattenWithOnlyNameField(
 			_assetVocabulary);
 	}
 
@@ -427,7 +427,7 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	private void
-			_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlattenAndNameField(
+			_testGetTaxonomyVocabularyTaxonomyCategoriesPageFlattenWithOnlyNameField(
 				AssetVocabulary assetVocabulary)
 		throws Exception {
 

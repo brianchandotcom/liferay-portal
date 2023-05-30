@@ -56,7 +56,7 @@ public class ContentSecurityPolicyFilterTest {
 	public void testProcessFilter() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(false, "")) {
+					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection();
 
@@ -71,7 +71,7 @@ public class ContentSecurityPolicyFilterTest {
 
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(true, "")) {
+					_getCompanyConfigurationTemporarySwapper(true, null, "")) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection();
 
@@ -92,7 +92,8 @@ public class ContentSecurityPolicyFilterTest {
 
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(true, policy)) {
+					_getCompanyConfigurationTemporarySwapper(
+						true, null, policy)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection();
 
@@ -115,7 +116,8 @@ public class ContentSecurityPolicyFilterTest {
 
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
-					_getCompanyConfigurationTemporarySwapper(true, policy)) {
+					_getCompanyConfigurationTemporarySwapper(
+						true, null, policy)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection();
 
@@ -149,11 +151,30 @@ public class ContentSecurityPolicyFilterTest {
 
 			httpURLConnection.disconnect();
 		}
+
+		try (CompanyConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper(
+						true, new String[] {"/c/portal/layout", "/web/guest"},
+						policy)) {
+
+			HttpURLConnection httpURLConnection = _openHttpURLConnection();
+
+			Map<String, List<String>> headerFields =
+				httpURLConnection.getHeaderFields();
+
+			Assert.assertFalse(
+				headerFields.containsKey("Content-Security-Policy"));
+
+			String content = _getContent(httpURLConnection);
+
+			Assert.assertFalse(content.contains("nonce="));
+		}
 	}
 
 	private CompanyConfigurationTemporarySwapper
 			_getCompanyConfigurationTemporarySwapper(
-				boolean enabled, String policy)
+				boolean enabled, String[] excludedPaths, String policy)
 		throws Exception {
 
 		return new CompanyConfigurationTemporarySwapper(
@@ -162,6 +183,8 @@ public class ContentSecurityPolicyFilterTest {
 				"configuration.ContentSecurityPolicyConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"enabled", enabled
+			).put(
+				"excludedPaths", excludedPaths
 			).put(
 				"policy", policy
 			).build(),

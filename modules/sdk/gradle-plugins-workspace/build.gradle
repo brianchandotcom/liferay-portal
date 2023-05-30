@@ -122,7 +122,9 @@ copyGradleTestProjects {
 }
 
 copyRepo {
-	from "src/gradleTest/repo"
+	dependsOn copyGradleTestDependencies
+
+	from gradleTestDependenciesDir
 	into new File(buildDir, "gradleTest/repo")
 }
 

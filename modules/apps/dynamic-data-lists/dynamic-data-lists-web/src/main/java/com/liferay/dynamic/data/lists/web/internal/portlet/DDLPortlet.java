@@ -54,9 +54,6 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -196,12 +193,6 @@ public class DDLPortlet extends MVCPortlet {
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}
 
-	protected void unsetDDLWebConfigurationActivator(
-		DDLWebConfigurationActivator ddlWebConfigurationActivator) {
-
-		_ddlWebConfigurationActivator = null;
-	}
-
 	private void _setCloseRedirect(ActionRequest actionRequest) {
 		String closeRedirect = ParamUtil.getString(
 			actionRequest, "closeRedirect");
@@ -231,13 +222,8 @@ public class DDLPortlet extends MVCPortlet {
 	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDLWebConfigurationActivator"
-	)
-	private volatile DDLWebConfigurationActivator _ddlWebConfigurationActivator;
+	@Reference
+	private DDLWebConfigurationActivator _ddlWebConfigurationActivator;
 
 	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;

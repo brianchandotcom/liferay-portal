@@ -54,9 +54,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -202,12 +199,6 @@ public class DDLDisplayPortlet extends MVCPortlet {
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}
 
-	protected void unsetDDLWebConfigurationActivator(
-		DDLWebConfigurationActivator ddlWebConfigurationActivator) {
-
-		_ddlWebConfigurationActivator = null;
-	}
-
 	private static final String _ALIAS = "dynamic-data-list";
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -225,13 +216,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDLWebConfigurationActivator"
-	)
-	private volatile DDLWebConfigurationActivator _ddlWebConfigurationActivator;
+	@Reference
+	private DDLWebConfigurationActivator _ddlWebConfigurationActivator;
 
 	@Reference
 	private DDMDisplayRegistry _ddmDisplayRegistry;

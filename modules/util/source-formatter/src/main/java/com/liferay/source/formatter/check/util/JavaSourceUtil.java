@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.File;
@@ -36,6 +37,41 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class JavaSourceUtil extends SourceUtil {
+
+	public static String addImport(String content, String... newImports) {
+		String[] imports = StringUtil.splitLines(
+			JavaImportsFormatter.getImports(content));
+
+		List<String> neededImports = new ArrayList<>();
+
+		for (String newImport : newImports) {
+			if (!ArrayUtil.contains(imports, newImport)) {
+				neededImports.add(newImport);
+			}
+		}
+
+		if (neededImports.isEmpty()) {
+			return content;
+		}
+
+		if (imports.length == 0) {
+			String packageName = getPackageName(content);
+
+			return StringUtil.replace(
+				content, packageName,
+				StringBundler.concat(
+					packageName, StringPool.NEW_LINE, StringPool.NEW_LINE,
+					StringUtil.merge(neededImports, StringPool.NEW_LINE)));
+		}
+
+		String lastImport = imports[imports.length - 1];
+
+		return StringUtil.replace(
+			content, lastImport,
+			StringBundler.concat(
+				lastImport, StringPool.NEW_LINE,
+				StringUtil.merge(neededImports, StringPool.NEW_LINE)));
+	}
 
 	public static String getClassName(String fileName) {
 		int x = fileName.lastIndexOf(CharPool.SLASH);

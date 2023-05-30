@@ -23,6 +23,7 @@ import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
@@ -102,7 +103,8 @@ public class CommercePriceEntryLocalServiceImpl
 	public CommercePriceEntry addCommercePriceEntry(
 			String externalReferenceCode, long cProductId,
 			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
+			boolean priceOnApplication, BigDecimal promoPrice,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Calendar calendar = new GregorianCalendar();
@@ -112,8 +114,8 @@ public class CommercePriceEntryLocalServiceImpl
 			commercePriceListId, true, null, null, null, null,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
-			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price, false,
-			promoPrice, serviceContext);
+			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price,
+			priceOnApplication, promoPrice, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -177,6 +179,15 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		if (!commercePriceList.isCatalogBasePriceList()) {
+			priceOnApplication = false;
+		}
+
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 		commercePriceEntry.setPromoPrice(promoPrice);
 
@@ -576,7 +587,8 @@ public class CommercePriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			long commercePriceEntryId, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -586,8 +598,8 @@ public class CommercePriceEntryLocalServiceImpl
 			commercePriceEntryId, true, true, null, null, null, null,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
-			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price, false,
-			promoPrice, serviceContext);
+			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price,
+			priceOnApplication, promoPrice, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -640,6 +652,14 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setPrice(price);
+
+		CommercePriceList commercePriceList =
+			commercePriceEntry.getCommercePriceList();
+
+		if (!commercePriceList.isCatalogBasePriceList()) {
+			priceOnApplication = false;
+		}
+
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 		commercePriceEntry.setPromoPrice(promoPrice);
 

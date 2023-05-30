@@ -85,7 +85,7 @@ public class EditCommercePriceEntryMVCActionCommand
 
 			_commercePriceEntryService.addCommercePriceEntry(
 				null, addCPInstanceId, commercePriceListId,
-				cpInstance.getPrice(), cpInstance.getPromoPrice(),
+				cpInstance.getPrice(), false, cpInstance.getPromoPrice(),
 				serviceContext);
 		}
 	}

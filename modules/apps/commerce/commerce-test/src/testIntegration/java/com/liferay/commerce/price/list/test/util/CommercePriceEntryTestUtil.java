@@ -48,7 +48,7 @@ public class CommercePriceEntryTestUtil {
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, BigDecimal.ZERO,
+			commercePriceListId, price, false, BigDecimal.ZERO,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}

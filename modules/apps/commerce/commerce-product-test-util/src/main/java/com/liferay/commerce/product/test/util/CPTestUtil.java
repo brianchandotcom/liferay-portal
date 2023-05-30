@@ -784,7 +784,7 @@ public class CPTestUtil {
 			StringPool.BLANK, cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), cpInstance.getPrice(),
-			null,
+			false, null,
 			ServiceContextTestUtil.getServiceContext(cpInstance.getGroupId()));
 	}
 

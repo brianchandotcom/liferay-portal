@@ -89,7 +89,7 @@ public class CommercePriceEntryTestUtil {
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(), commercePriceListId,
-			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}
@@ -105,7 +105,7 @@ public class CommercePriceEntryTestUtil {
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, BigDecimal.ZERO,
+			commercePriceListId, price, false, BigDecimal.ZERO,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}

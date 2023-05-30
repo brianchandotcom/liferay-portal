@@ -58,7 +58,8 @@ public class CommercePriceEntryServiceImpl
 	@Override
 	public CommercePriceEntry addCommercePriceEntry(
 			String externalReferenceCode, long cpInstanceId,
-			long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+			long commercePriceListId, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -72,7 +73,7 @@ public class CommercePriceEntryServiceImpl
 		return commercePriceEntryLocalService.addCommercePriceEntry(
 			externalReferenceCode, cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(), commercePriceListId, price,
-			promoPrice, serviceContext);
+			priceOnApplication, promoPrice, serviceContext);
 	}
 
 	@Override
@@ -321,7 +322,8 @@ public class CommercePriceEntryServiceImpl
 
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			long commercePriceEntryId, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -334,7 +336,8 @@ public class CommercePriceEntryServiceImpl
 			ActionKeys.UPDATE);
 
 		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, price, promoPrice, serviceContext);
+			commercePriceEntryId, price, priceOnApplication, promoPrice,
+			serviceContext);
 	}
 
 	@Override

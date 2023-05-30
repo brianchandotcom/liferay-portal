@@ -827,13 +827,14 @@ public class CommerceSiteInitializer {
 			_commercePriceEntryLocalService.addCommercePriceEntry(
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), price,
+				commercePriceList.getCommercePriceListId(), price, false,
 				BigDecimal.ZERO, serviceContext);
 		}
 		else {
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(), price,
-				BigDecimal.ZERO, serviceContext);
+				commercePriceEntry.isPriceOnApplication(), BigDecimal.ZERO,
+				serviceContext);
 		}
 	}
 

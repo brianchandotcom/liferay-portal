@@ -146,7 +146,7 @@ public class CommercePriceEntriesImporter {
 			_commercePriceEntryLocalService.addCommercePriceEntry(
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), price,
+				commercePriceList.getCommercePriceListId(), price, false,
 				BigDecimal.ZERO, serviceContext);
 		}
 	}
@@ -200,7 +200,7 @@ public class CommercePriceEntriesImporter {
 		_commercePriceEntryLocalService.addCommercePriceEntry(
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(),
-			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
 			serviceContext);
 	}
 

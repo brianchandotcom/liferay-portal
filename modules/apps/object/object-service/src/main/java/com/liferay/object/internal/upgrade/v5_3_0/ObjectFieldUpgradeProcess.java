@@ -15,7 +15,6 @@
 package com.liferay.object.internal.upgrade.v5_3_0;
 
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -35,12 +34,9 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String selectSQL = SQLTransformer.transform(
-			"select ObjectField.objectFieldId, ObjectField.businessType, " +
-				"ObjectField.name from ObjectField");
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				selectSQL);
+				"select ObjectField.objectFieldId, ObjectField.businessType, " +
+					"ObjectField.name from ObjectField");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

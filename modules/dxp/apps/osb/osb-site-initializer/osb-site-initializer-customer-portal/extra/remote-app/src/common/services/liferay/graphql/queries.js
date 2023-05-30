@@ -17,12 +17,13 @@ export const getDXPCloudPageInfo = gql`
 			accountSubscriptions(filter: $accountSubscriptionsFilter) {
 				items {
 					accountKey
-					hasDisasterDataCenterRegion
 					externalReferenceCode
+					hasDisasterDataCenterRegion
 					name
 				}
 			}
-			dXPCDataCenterRegions {
+
+			dXPCDataCenterRegions(sort: "name:asc") {
 				items {
 					dxpcDataCenterRegionId
 					name

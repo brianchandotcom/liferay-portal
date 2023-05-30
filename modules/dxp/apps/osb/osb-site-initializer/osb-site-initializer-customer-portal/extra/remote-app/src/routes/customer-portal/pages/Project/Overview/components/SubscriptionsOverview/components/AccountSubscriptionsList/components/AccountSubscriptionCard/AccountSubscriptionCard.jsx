@@ -53,9 +53,11 @@ const AccountSubscriptionCard = ({
 				{loading ? (
 					<Skeleton className="mb-3 py-1" height={45} width={48} />
 				) : (
-					<div className="mb-3 py-1 text-center">
-						<IconSVG height={45} width={45} />
-					</div>
+					IconSVG && (
+						<div className="mb-3 py-1 text-center">
+							<IconSVG height={45} width={45} />
+						</div>
+					)
 				)}
 
 				{loading ? (

@@ -22,6 +22,7 @@ import {
 export const LOGO_PATH_TYPES = {
 	[PRODUCT_TYPES.analyticsCloud]: AnalyticsIcon,
 	[PRODUCT_TYPES.commerce]: CommerceIcon,
+	[PRODUCT_TYPES.commerceCloud]: CommerceIcon,
 	[PRODUCT_TYPES.dxp]: DXPIcon,
 	[PRODUCT_TYPES.enterpriseSearch]: EnterpriseIcon,
 	[PRODUCT_TYPES.dxpCloud]: DXPIcon,

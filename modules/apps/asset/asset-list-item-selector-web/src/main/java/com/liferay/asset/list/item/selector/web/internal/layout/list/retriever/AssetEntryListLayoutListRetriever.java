@@ -33,6 +33,7 @@ import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +53,13 @@ public class AssetEntryListLayoutListRetriever
 		<InfoListItemSelectorReturnType, ClassedModelListObjectReference>,
 			   SegmentsEntryLayoutListRetriever
 				   <ClassedModelListObjectReference> {
+
+	@Override
+	public long getDefaultVariationSegmentsEntryId(
+		ClassedModelListObjectReference classedModelListObjectReference) {
+
+		return SegmentsEntryConstants.ID_DEFAULT;
+	}
 
 	@Override
 	public List<Object> getList(

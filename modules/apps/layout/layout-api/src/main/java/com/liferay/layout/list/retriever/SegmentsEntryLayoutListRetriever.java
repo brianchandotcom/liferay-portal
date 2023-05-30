@@ -23,14 +23,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SegmentsEntryLayoutListRetriever
 	<T extends ListObjectReference> {
 
-	public default long getDefaultVariationSegmentsEntryId(T t) {
-		return 0;
-	}
+	public long getDefaultVariationSegmentsEntryId(T t);
 
-	public default boolean hasSegmentsEntryVariation(
-		T t, long segmentsEntryId) {
-
-		return false;
-	}
+	public boolean hasSegmentsEntryVariation(T t, long segmentsEntryId);
 
 }

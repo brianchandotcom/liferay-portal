@@ -172,11 +172,11 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				onSelect: function (selectedItem) {
 					const A = AUI();
 
-					const entityId = selectedItem.entityid;
-					const entityName = A.Escape.html(selectedItem.entityname);
+					const itemValue = JSON.parse(selectedItem.value);
+
 					const label = Liferay.Util.sub(
 						'<liferay-ui:message key="remove-x" />',
-						entityName
+						itemValue.name
 					);
 					const rowColumns = [];
 
@@ -185,19 +185,19 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 					removeButton = removeButton
 						.replace('TOKEN_ARIA_LABEL', label)
-						.replace('TOKEN_DATA_ROW_ID', entityId)
+						.replace('TOKEN_DATA_ROW_ID', itemValue.userGroupId)
 						.replace('TOKEN_TITLE', label);
 
-					rowColumns.push(entityName);
+					rowColumns.push(itemValue.name);
 					rowColumns.push(removeButton);
 
-					searchContainer.addRow(rowColumns, entityId);
+					searchContainer.addRow(rowColumns, itemValue.userGroupId);
 
 					searchContainer.updateDataStore();
 
-					A.Array.removeItem(deleteUserGroupIds, entityId);
+					A.Array.removeItem(deleteUserGroupIds, itemValue.userGroupId);
 
-					addUserGroupIds.push(entityId);
+					addUserGroupIds.push(itemValue.userGroupId);
 
 					document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = addUserGroupIds.join(
 						','
@@ -209,18 +209,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				selectedData: searchContainer.getData(true),
 				selectEventName: '<portlet:namespace />selectUserGroup',
 				title: '<liferay-ui:message arguments="user-group" key="select-x" />',
-
-				<%
-				PortletURL selectUserGroupURL = PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(request, UserGroup.class.getName(), PortletProvider.Action.BROWSE)
-				).setParameter(
-					"p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId())
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildPortletURL();
-				%>
-
-				url: '<%= selectUserGroupURL.toString() %>',
+				url: '<%= userDisplayContext.getUserGroupItemSelectorURL() %>',
 			});
 		});
 	</aui:script>

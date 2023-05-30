@@ -221,7 +221,7 @@ InitDisplayContext initDisplayContext = new InitDisplayContext(request, portletN
 
 boolean filterManageableOrganizations = initDisplayContext.isFilterManageableOrganizations();
 
-UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

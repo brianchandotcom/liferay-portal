@@ -8,7 +8,16 @@ import {MenuItem} from './types';
 
 const UserMenuDropdownItem: React.FC<
 	React.ComponentProps<typeof ClayDropDown.Item> & MenuItem
-> = ({active, className, icon, iconAlignment, label, onClick, url}) => {
+> = ({
+	active,
+	className,
+	externalLink,
+	icon,
+	iconAlignment,
+	label,
+	onClick,
+	url
+}) => {
 	const Content = () => {
 		if (iconAlignment === 'left') {
 			return (
@@ -34,14 +43,20 @@ const UserMenuDropdownItem: React.FC<
 	return (
 		<ClayDropDown.Item className={getCN(className, {active})}>
 			{url ? (
-				<ClayLink
-					block
-					className='button-root'
-					displayType='unstyled'
-					href={url}
-				>
-					<Content />
-				</ClayLink>
+				externalLink ? (
+					<a className='button-root link-unstyled' href={url}>
+						<Content />
+					</a>
+				) : (
+					<ClayLink
+						block
+						className='button-root'
+						displayType='unstyled'
+						href={url}
+					>
+						<Content />
+					</ClayLink>
+				)
 			) : (
 				<ClayButton
 					block

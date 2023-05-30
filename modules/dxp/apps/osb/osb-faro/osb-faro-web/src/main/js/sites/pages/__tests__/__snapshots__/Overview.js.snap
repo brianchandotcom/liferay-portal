@@ -566,6 +566,7 @@ exports[`Sites Dashboard Overview render 1`] = `
             <span
               aria-hidden="true"
               class="spinner-root spinner-center spinner-spacer loading-animation"
+              data-aria-hidden="true"
             />
           </div>
         </div>

@@ -10,6 +10,7 @@ exports[`Row renders 1`] = `
     >
       <div
         class="drag-handle"
+        draggable="true"
       >
         <svg
           class="lexicon-icon lexicon-icon-drag icon-root"

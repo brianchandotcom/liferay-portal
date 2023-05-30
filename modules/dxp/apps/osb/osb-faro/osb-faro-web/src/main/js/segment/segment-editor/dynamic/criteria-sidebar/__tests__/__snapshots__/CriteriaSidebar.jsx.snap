@@ -91,6 +91,7 @@ exports[`CriteriaSidebar should render 1`] = `
           >
             <li
               class="criteria-sidebar-item-root color--"
+              draggable="true"
             >
               <span
                 class="inline-item"
@@ -135,6 +136,7 @@ exports[`CriteriaSidebar should render 1`] = `
           >
             <li
               class="criteria-sidebar-item-root color--"
+              draggable="true"
             >
               <span
                 class="inline-item"

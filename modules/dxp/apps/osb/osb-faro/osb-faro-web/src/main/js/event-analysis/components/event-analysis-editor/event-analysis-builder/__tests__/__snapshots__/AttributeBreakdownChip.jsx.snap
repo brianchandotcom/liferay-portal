@@ -13,6 +13,7 @@ exports[`AttributeBreakdownChip render 1`] = `
       >
         <div
           class="drag-handle"
+          draggable="true"
         >
           <svg
             class="lexicon-icon lexicon-icon-drag icon-root"

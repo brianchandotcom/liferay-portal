@@ -16,7 +16,6 @@ package com.liferay.user.groups.admin.item.selector.web.internal.display.context
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -46,14 +45,12 @@ public class UserGroupItemSelectorViewDisplayContext {
 		UserGroupLocalService userGroupLocalService,
 		UserGroupItemSelectorCriterion userGroupItemSelectorCriterion,
 		UsersAdmin usersAdmin, HttpServletRequest httpServletRequest,
-		PortletURL portletURL, String itemSelectedEventName) {
+		PortletURL portletURL) {
 
 		_userGroupLocalService = userGroupLocalService;
 		_userGroupItemSelectorCriterion = userGroupItemSelectorCriterion;
 		_usersAdmin = usersAdmin;
-		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
-		_itemSelectedEventName = itemSelectedEventName;
 
 		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -61,10 +58,6 @@ public class UserGroupItemSelectorViewDisplayContext {
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public String getItemSelectedEventName() {
-		return _itemSelectedEventName;
 	}
 
 	public String getOrderByCol() {
@@ -81,9 +74,7 @@ public class UserGroupItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
-	public SearchContainer<UserGroup> getSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<UserGroup> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -131,8 +122,6 @@ public class UserGroupItemSelectorViewDisplayContext {
 		return ParamUtil.getLongValues(_renderRequest, "checkedUserGroupIds");
 	}
 
-	private final HttpServletRequest _httpServletRequest;
-	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

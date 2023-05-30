@@ -1,11 +1,11 @@
 import ClayTable from '@clayui/table';
-import HTML5Backend from 'react-dnd-html5-backend';
 import React from 'react';
 import Row, {Column} from './Row';
 import TextTruncate from 'shared/components/TextTruncate';
 import {curry, flow} from 'lodash';
 import {DndProvider} from 'react-dnd';
 import {getRowIdentifierValue} from 'shared/components/table';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {moveItem} from 'shared/util/array';
 
 interface IDndTableProps {

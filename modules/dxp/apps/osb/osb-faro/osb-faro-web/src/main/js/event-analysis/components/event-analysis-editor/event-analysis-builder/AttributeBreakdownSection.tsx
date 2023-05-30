@@ -2,7 +2,6 @@ import AttributeBreakdownChip from './AttributeBreakdownChip';
 import AttributeBreakdownDropdown from './attribute-breakdown-dropdown';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import HTML5Backend from 'react-dnd-html5-backend';
 import React from 'react';
 import {
 	AddBreakdown,
@@ -15,6 +14,7 @@ import {
 import {Align} from '@clayui/drop-down';
 import {Attributes, Breakdowns, Filters} from 'event-analysis/utils/types';
 import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 const MAX_ATTRIBUTES = 3;
 

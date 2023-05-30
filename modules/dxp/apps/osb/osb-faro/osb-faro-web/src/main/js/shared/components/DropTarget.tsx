@@ -1,7 +1,7 @@
 import getCN from 'classnames';
-import HTML5Backend, {NativeTypes} from 'react-dnd-html5-backend';
 import React from 'react';
 import {DndProvider, useDrop} from 'react-dnd';
+import {HTML5Backend, NativeTypes} from 'react-dnd-html5-backend';
 
 interface ITargetProps extends React.HTMLAttributes<HTMLElement> {
 	message: React.ReactNode;

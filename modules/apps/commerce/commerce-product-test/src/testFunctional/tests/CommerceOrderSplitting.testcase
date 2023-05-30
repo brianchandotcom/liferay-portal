@@ -1027,6 +1027,136 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11280. The admin can see updates to the supplier shipped quantity are reflected to the customer order"
+	@priority = 5
+	test CanSeeUpdatedSupplierShippedQuantityOnTheCustomerOrder {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a product with 'Master' catalog, with price and inventory created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU",
+				warehouseName = "Italy");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+		}
+
+		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "Simple Product,U-Joint") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the admin reaches the Orders Admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+		}
+
+		task ("And the customer order is splitted") {
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the admin goes inside a supplier order (e.g. the one containing the product from the Master catalog)") {
+			CommerceOrders.openOrdersAdmin();
+
+			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 25.00')]//..//div[(@class='dnd-td')][1]");
+			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 64.00')]//..//div[(@class='dnd-td')][1]");
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 25.00");
+		}
+
+		task ("And updates the order item quantity to 2") {
+			CommerceOrders.editOrderItemDetails(
+				orderItemQuantity = 2,
+				orderItemSku = "TESTSKU");
+		}
+
+		task ("And completes the order checkout delivering 1 quantity of the product") {
+			CommerceOrders.checkoutFullWorkflow(
+				orderId = ${supplierOrderId},
+				sku = "TESTSKU",
+				warehouse = "Italy");
+		}
+
+		task ("When the admin goes into that order entry again") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 25.00");
+		}
+
+		task ("Then, following the workflow of the shipment, the outstanding quantity of that product from the customer order is correctly decreased by 1 and equals to 1") {
+			CommerceOrders.checkoutFullWorkflow(
+				orderIds = ${customerOrderId},
+				outstandingQuantities = 1,
+				outstandingQuantity = "true",
+				productSkus = "TESTSKU",
+				warehouse = "Italy");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11439. CanTheCustomerOrderStatusIsUpdatedOnlyIfAllSupplierOrdersAreCompleted"
 	@priority = 4
 	test CanTheCustomerOrderStatusIsUpdatedOnlyIfAllSupplierOrdersAreCompleted {

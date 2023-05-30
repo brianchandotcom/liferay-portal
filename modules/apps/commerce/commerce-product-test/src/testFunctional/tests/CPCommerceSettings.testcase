@@ -136,24 +136,76 @@ definition {
 		}
 
 		task ("Then the default and translated category friendly URL are shown") {
-			for (var categoryName : list "brake-system,system-brake-es") {
-				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
-					key_basePortalURL = ${basePortalURL},
-					key_categoryName = ${categoryName},
-					locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL");
-			}
+			for (var categoryNameList : list "brake-system:,system-brake-es:ca") {
+				var categoryName = StringUtil.extractFirst(${categoryNameList}, ":");
+				var categoryNameLanguage = StringUtil.extractLast(${categoryNameList}, ":");
 
-			for (var categoryURLName : list "brake-system,system-brake-es") {
-				for (var category : list "brake-system:en-US,system-brake-es:ca-ES") {
-					var categoryName = StringUtil.extractFirst(${category}, ":");
-					var categoryNameLang = StringUtil.extractLast(${category}, ":");
-
+				if (${categoryNameLanguage} == "") {
 					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
 						key_basePortalURL = ${basePortalURL},
 						key_categoryName = ${categoryName},
-						key_categoryNameLang = ${categoryNameLang},
-						key_categoryURLName = ${categoryURLName},
-						locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL_HREF_HREFLANG");
+						locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL");
+				}
+				else {
+					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+						key_basePortalURL = ${basePortalURL},
+						key_categoryName = ${categoryName},
+						key_language = ${categoryNameLanguage},
+						locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL");
+				}
+			}
+
+			for (var categoryURLName : list "brake-system,system-brake-es") {
+				for (var categoryNameList : list "brake-system:en-US,system-brake-es:ca-ES") {
+					var categoryName = StringUtil.extractFirst(${categoryNameList}, ":");
+					var categoryNameLang = StringUtil.extractLast(${categoryNameList}, ":");
+
+					if (${categoryURLName} == "brake-system") {
+						if (${categoryName} == "system-brake-es") {
+							var categoryLanguage = "/ca";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = ${categoryLanguage},
+								key_languageLoc = "",
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
+					else {
+						if (${categoryName} == "system-brake-es") {
+							var categoryLanguage = "/ca";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = ${categoryLanguage},
+								key_languageLoc = ${categoryLanguage},
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = "",
+								key_languageLoc = ${categoryLanguage},
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
 				}
 			}
 

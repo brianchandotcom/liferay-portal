@@ -844,26 +844,70 @@ definition {
 		}
 
 		task ("Then the default and translated product's friendly URL are shown with the Locale language") {
-			for (var productName : list "abs-sensor,sensor-abs") {
+			for (var productNameList : list "abs-sensor:en,sensor-abs:ca") {
+				var productName = StringUtil.extractFirst(${productNameList}, ":");
+				var productNameLanguage = StringUtil.extractLast(${productNameList}, ":");
+
 				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
 					key_basePortalURL = ${basePortalURL},
-					key_language = "en",
+					key_language = ${productNameLanguage},
 					key_productName = ${productName},
 					locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL");
 			}
 
 			for (var productURLName : list "abs-sensor,sensor-abs") {
-				for (var product : list "abs-sensor:en-US,sensor-abs:ca-ES") {
-					var productName = StringUtil.extractFirst(${product}, ":");
-					var productNameLang = StringUtil.extractLast(${product}, ":");
+				for (var productNameList : list "abs-sensor:en-US,sensor-abs:ca-ES") {
+					var productName = StringUtil.extractFirst(${productNameList}, ":");
+					var productNameLang = StringUtil.extractLast(${productNameList}, ":");
 
-					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
-						key_basePortalURL = ${basePortalURL},
-						key_language = "en",
-						key_productName = ${productName},
-						key_productNameLang = ${productNameLang},
-						key_productURLName = ${productURLName},
-						locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+					if (${productURLName} == "abs-sensor") {
+						if (${productName} == "sensor-abs") {
+							var productLanguage = "/ca";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = ${productLanguage},
+								key_languageLoc = "/en",
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = "/en",
+								key_languageLoc = "/en",
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
+					else {
+						if (${productName} == "sensor-abs") {
+							var productLanguage = "/ca";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = ${productLanguage},
+								key_languageLoc = ${productLanguage},
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = "/en",
+								key_languageLoc = ${productLanguage},
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
 				}
 			}
 
@@ -893,26 +937,70 @@ definition {
 		}
 
 		task ("Then the category friendly URL are shown with the Locale language") {
-			for (var categoryName : list "brake-system,system-brake-es") {
+			for (var categoryNameList : list "brake-system:en,system-brake-es:ca") {
+				var categoryName = StringUtil.extractFirst(${categoryNameList}, ":");
+				var categoryNameLanguage = StringUtil.extractLast(${categoryNameList}, ":");
+
 				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
 					key_basePortalURL = ${basePortalURL},
 					key_categoryName = ${categoryName},
-					key_language = "en",
+					key_language = ${categoryNameLanguage},
 					locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL");
 			}
 
 			for (var categoryURLName : list "brake-system,system-brake-es") {
-				for (var category : list "brake-system:en-US,system-brake-es:ca-ES") {
-					var categoryName = StringUtil.extractFirst(${category}, ":");
-					var categoryNameLang = StringUtil.extractLast(${category}, ":");
+				for (var categoryNameList : list "brake-system:en-US,system-brake-es:ca-ES") {
+					var categoryName = StringUtil.extractFirst(${categoryNameList}, ":");
+					var categoryNameLang = StringUtil.extractLast(${categoryNameList}, ":");
 
-					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
-						key_basePortalURL = ${basePortalURL},
-						key_categoryName = ${categoryName},
-						key_categoryNameLang = ${categoryNameLang},
-						key_categoryURLName = ${categoryURLName},
-						key_language = "en",
-						locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+					if (${categoryURLName} == "brake-system") {
+						if (${categoryName} == "system-brake-es") {
+							var categoryLanguage = "/ca";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = ${categoryLanguage},
+								key_languageLoc = "/en",
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = "/en",
+								key_languageLoc = "/en",
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
+					else {
+						if (${categoryName} == "system-brake-es") {
+							var categoryLanguage = "/ca";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = ${categoryLanguage},
+								key_languageLoc = ${categoryLanguage},
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_categoryName = ${categoryName},
+								key_categoryNameLang = ${categoryNameLang},
+								key_categoryURLName = ${categoryURLName},
+								key_languageHref = "/en",
+								key_languageLoc = ${categoryLanguage},
+								locator1 = "CommerceEntry#CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
 				}
 			}
 
@@ -1753,11 +1841,23 @@ definition {
 		}
 
 		task ("Then the default and translated product's friendly URL are shown") {
-			for (var productName : list "abs-sensor,sensor-abs") {
-				AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
-					key_basePortalURL = ${basePortalURL},
-					key_productName = ${productName},
-					locator1 = "CommerceEntry#PRODUCT_DETAIL_SITEMAP_URL");
+			for (var productNameList : list "abs-sensor:,sensor-abs:pt") {
+				var productName = StringUtil.extractFirst(${productNameList}, ":");
+				var productNameLanguage = StringUtil.extractLast(${productNameList}, ":");
+
+				if (${productNameLanguage} == "") {
+					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+						key_basePortalURL = ${basePortalURL},
+						key_productName = ${productName},
+						locator1 = "CommerceEntry#PRODUCT_DETAIL_SITEMAP_URL");
+				}
+				else {
+					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+						key_basePortalURL = ${basePortalURL},
+						key_language = ${productNameLanguage},
+						key_productName = ${productName},
+						locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL");
+				}
 			}
 
 			for (var productURLName : list "abs-sensor,sensor-abs") {
@@ -1765,12 +1865,52 @@ definition {
 					var productName = StringUtil.extractFirst(${product}, ":");
 					var productNameLang = StringUtil.extractLast(${product}, ":");
 
-					AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
-						key_basePortalURL = ${basePortalURL},
-						key_productName = ${productName},
-						key_productNameLang = ${productNameLang},
-						key_productURLName = ${productURLName},
-						locator1 = "CommerceEntry#PRODUCT_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+					if (${productURLName} == "abs-sensor") {
+						if (${productName} == "sensor-abs") {
+							var productLanguage = "/pt";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = ${productLanguage},
+								key_languageLoc = "",
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
+					else {
+						if (${productName} == "sensor-abs") {
+							var productLanguage = "/pt";
+
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = ${productLanguage},
+								key_languageLoc = ${productLanguage},
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+						else {
+							AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
+								key_basePortalURL = ${basePortalURL},
+								key_languageHref = "",
+								key_languageLoc = ${productLanguage},
+								key_productName = ${productName},
+								key_productNameLang = ${productNameLang},
+								key_productURLName = ${productURLName},
+								locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
+						}
+					}
 				}
 			}
 

@@ -235,7 +235,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-183949. Confirm that pagination cannot have characters in pagination items field"
+	@description = "Blocked by LPS-183152. LPS-183949 Confirm that pagination cannot have characters in pagination items field"
 	@ignore = "true"
 	@priority = 4
 	test CannotUseCharactersInPaginationItems {

@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_1</td>
+	<td>xpath=(//body[contains(@class,'cke_editable')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_SOURCE_VALUE</td>
 	<td>//input[contains(@id,'AdminPortlet_content')]</td>
 	<td></td>
@@ -71,8 +76,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_TEXT_1</td>
+	<td>xpath=(//body[contains(@class,'cke_editable') and contains(.,'${key_text}')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_TEXT_HREF</td>
 	<td>//body//a[normalize-space(text()) = '${key_text}' and contains(@href, '${key_href}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_TEXT_HREF_1</td>
+	<td>xpath=(//body//a[normalize-space(text()) = '${key_text}' and contains(@href, '${key_href}')])[1]</td>
 	<td></td>
 </tr>
 <tr>

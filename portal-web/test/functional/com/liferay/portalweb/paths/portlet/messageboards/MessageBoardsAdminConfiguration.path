@@ -32,6 +32,11 @@
 <!--MESSAGE_ADDED_EMAIL-->
 
 <tr>
+	<td>DEFINITION_OF_TERMS</td>
+	<td>//div[contains(@id,'definition-of-terms_${key_number}')]//*[normalize-space()='${key_definitionOfTerm}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'emailMessageAddedEnabled')]</td>
 	<td></td>

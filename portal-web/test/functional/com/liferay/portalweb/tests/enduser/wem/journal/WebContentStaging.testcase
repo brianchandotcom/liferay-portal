@@ -3,61 +3,57 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Web Content Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page");
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
+		task ("Sign in") {
+			User.firstLoginPG();
 		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Staging Test Page");
 		}
 	}
 
 	@description = "Assert Web Content created From Structure is published Via SAP"
 	@priority = 4
 	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				title = "WC 1");
 		}
 
 		task ("Activate Staging") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
-			Staging.activateStagingCP(siteName = "Site Name");
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 
 		task ("Add a web content structure with all fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
+			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Add a web content template with all fields") {
@@ -71,7 +67,7 @@ definition {
 		}
 
 		task ("Add first web content based on new structure and template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -107,7 +103,7 @@ definition {
 				confirmMessage = "Are you sure you want to publish the selected web content?",
 				entry = "WC WebContent Title 1");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContent.viewTitle(
 				onLive = "true",
@@ -115,11 +111,11 @@ definition {
 		}
 
 		task ("Delete first web content via SAP") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			WebContent.deleteStagedCP(
 				pageName = "Staging Test Page",
-				siteName = "Site Name",
+				siteName = ${randomSiteName},
 				webContentTitle = "WC WebContent Title 1");
 		}
 
@@ -160,7 +156,7 @@ definition {
 		}
 
 		task ("Verify both Web Content exist") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContent.viewTitle(
 				onLive = "true",
@@ -169,98 +165,6 @@ definition {
 			WebContent.viewTitle(
 				onLive = "true",
 				webContentTitle = "WC WebContent Title 2");
-		}
-	}
-
-	@description = "This is a use case for LPS-163499. Asserts a web content with an image field is displayed after publishing to live."
-	@priority = 3
-	test CanPublishWebContentWithImageField {
-		task ("Given a user creates a Web Content Structure, Template, and a Web Content with an image field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-			NavItem.gotoStructures();
-
-			WebContentStructures.addCP(structureName = "My Image");
-
-			DEBuilder.addField(
-				fieldLabel = "Image",
-				fieldName = "Image");
-
-			DEBuilder.editFieldReference(
-				fieldLabel = "Image",
-				fieldReference = "myimage");
-
-			WebContentStructures.saveCP();
-
-			NavItem.gotoTemplates();
-
-			WebContentTemplates.addCP(
-				structureName = "My Image",
-				templateName = "My Image",
-				templateScript = "<#if (myimage.getData())?? && myimage.getData() != ''><img alt='${myimage.getAttribute('alt')}' data-fileentryid='${myimage.getAttribute('fileEntryId')}' src='${myimage.getAttribute('url')}' /></#if>");
-
-			NavItem.gotoWebContent();
-
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "My Image");
-
-			WebContent.addWithStructureCP(
-				dmFolderName = "Provided by Liferay",
-				imageFileName = "tree.png",
-				navTab = "Documents and Media",
-				structureName = "My Image",
-				templateName = "My Image",
-				webContentImage = "tree.png",
-				webContentTitle = "My Image");
-
-			PortletEntry.publish();
-		}
-
-		task ("And given the user creates a Web Content Display on the home page for the image and stages the site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Edit",
-				pageName = "Home");
-
-			PageEditor.addWidget(
-				portletName = "Web Content Display",
-				targetFragmentName = "Container");
-
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "My Image");
-
-			JSONStaging.enableLocalStaging(groupName = "Guest");
-		}
-
-		task ("When the user publishes the changes to the staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest-staging");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Edit",
-				pageName = "Home");
-
-			WaitForElementPresent(
-				key_content = "[@data-analytics-asset-title='My Image']",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
-
-			PortletEntry.publish();
-		}
-
-		task ("Then the image will be displayed on the live site after publishing") {
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Home");
-
-			Staging.gotoPublishToLive();
-
-			Staging.publishToLive();
-
-			Navigator.gotoSitePage(
-				pageName = "Home",
-				siteName = "Guest");
-
-			AssertElementPresent(
-				key_content = "[@data-analytics-asset-title='My Image']",
-				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 		}
 	}
 
@@ -390,18 +294,18 @@ definition {
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				title = "WC 1");
 		}
 
 		task ("Activate Staging") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
-			Staging.activateStagingCP(siteName = "Site Name");
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 
 		task ("Add a web content structure with all fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			NavItem.gotoStructures();
 
@@ -425,7 +329,7 @@ definition {
 		}
 
 		task ("Add a web content based on new structure and template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -459,9 +363,9 @@ definition {
 		}
 
 		task ("View web content in live") {
-			ProductMenu.gotoLiveSite(site = "Site Name");
+			ProductMenu.gotoLiveSite(site = ${randomSiteName});
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			AssertTextEquals.assertPartialText(
 				key_webContentTitle = "Web Content Title",
@@ -476,7 +380,7 @@ definition {
 		property test.name.skip.portal.instance = "WebContentStaging#PublishWebContentWithFeeds";
 
 		task ("Given a site designer has web content feeds") {
-			JSONStaging.enableLocalStaging(groupName = "Site Name");
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 
 			SystemSettings.openSystemSettingsAdmin();
 
@@ -490,48 +394,48 @@ definition {
 			SystemSettings.saveConfiguration();
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Staging Test Page",
 				site = "false",
 				widgetName = "Asset Publisher");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			NavItem.gotoFeeds();
 
 			WebContentFeeds.addCP(
 				feedTitle = "Web Content Feed",
-				pageFriendlyURL = "/web/site-name-staging/staging-test-page",
+				pageFriendlyURL = "/web/${siteURLKey}-staging/staging-test-page",
 				structureName = "Basic Web Content");
 
 			WebContentFeeds.viewTableEntryCP(feedName = "Web Content Feed");
 
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			Staging.gotoPublishToLive();
 
 			Staging.publishToLive();
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			NavItem.gotoFeeds();
 
 			WebContentFeeds.viewTableEntryCP(feedName = "Web Content Feed");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Second Page",
 				site = "false");
 
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Site Name (Staging)",
+				groupName = "${randomSiteName} (Staging)",
 				layoutName = "Second Page",
 				site = "false",
 				widgetName = "Web Content Display");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			NavItem.gotoFeeds();
 
@@ -544,7 +448,7 @@ definition {
 
 			var entryExternalURL = StringUtil.replace(${webContentFeedURL}, "http://", "");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -561,13 +465,13 @@ definition {
 		task ("When the site designer displays web contents on Web Content Display") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Second Page",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
 
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			Staging.gotoPublishToLive();
 
@@ -577,7 +481,7 @@ definition {
 		task ("Then the feedId on staging and on live should be different") {
 			Navigator.gotoSitePage(
 				pageName = "Second Page",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			var webContentFeedURL = selenium.getWebElementAttribute("//div[contains(@class,'journal-content-article')]//a[contains(@href,'rss')]", "href");
 
@@ -586,6 +490,92 @@ definition {
 			TestUtils.assertNotEquals(
 				actual = ${liveFeedId},
 				expected = ${stagingFeedId});
+		}
+	}
+
+	@description = "This is a use case for LPS-163499. Asserts a web content with an image field is displayed after publishing to live."
+	@priority = 3
+	test PublishWebContentWithImageField {
+		task ("Given a user displayes a web content with image on a draft content page") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = ${randomSiteName},
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpeg");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "My Image");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image",
+				fieldReference = "myimage");
+
+			WebContentStructures.saveCP();
+
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "My Image");
+
+			WebContentTemplates.addCP(
+				templateName = "My Image",
+				templateScript = "<#if (myimage.getData())?? && myimage.getData() != ''><img alt='${myimage.getAttribute('alt')}' data-fileentryid='${myimage.getAttribute('fileEntryId')}' src='${myimage.getAttribute('url')}' /></#if>");
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "My Image");
+
+			WebContent.addWithStructureCP(
+				imageFileName = "Document Title",
+				navTab = "Documents and Media",
+				webContentImage = "Document Title",
+				webContentTitle = "My Image");
+
+			PortletEntry.publish();
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Home",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = ${randomSiteName});
+
+			PageEditor.addWidget(portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "My Image");
+
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
+		}
+
+		task ("When the user publishes the content page in the staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "${randomSiteName} Staging");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the image will be displayed on the live site after publishing to live") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "${randomSiteName} Staging");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = ${randomSiteName});
+
+			AssertElementPresent(
+				key_content = "[@data-analytics-asset-title='My Image']",
+				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 		}
 	}
 
@@ -599,12 +589,12 @@ definition {
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				title = "WC 1");
 		}
 
 		task ("Create structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			NavItem.gotoStructures();
 
@@ -645,7 +635,7 @@ definition {
 		}
 
 		task ("Create a template") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			NavItem.gotoTemplates();
 
@@ -657,7 +647,7 @@ definition {
 		}
 
 		task ("Create and Publish Web Content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -672,29 +662,29 @@ definition {
 		}
 
 		task ("Export web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
 		}
 
 		task ("Create another site") {
-			HeadlessSite.addSite(siteName = "Site Name B");
+			HeadlessSite.addSite(siteName = "${randomSiteName} B");
 		}
 
 		task ("Enable Staging in created site") {
-			Staging.openStagingAdmin(siteURLKey = "site-name-b");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-b");
 
-			Staging.activateStagingCP(siteName = "Site Name B");
+			Staging.activateStagingCP(siteName = "${randomSiteName} B");
 		}
 
 		task ("Import web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-b-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-b-staging");
 
 			LAR.importPortlet(larFileName = "WebContent_portlet.lar");
 		}
 
 		task ("Assert web content has been imported in staging") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-b-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-b-staging");
 
 			WebContent.viewWithStructureCP(
 				webContentText = "Web Content Text",
@@ -702,7 +692,7 @@ definition {
 		}
 
 		task ("Publish the site to live") {
-			Staging.openStagingAdmin(siteURLKey = "site-name-b-staging");
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-b-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -714,7 +704,7 @@ definition {
 		}
 
 		task ("Assert web content has been published") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-b");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-b");
 
 			AssertTextEquals.assertPartialText(
 				key_webContentTitle = "Web Content Title",
@@ -723,7 +713,7 @@ definition {
 		}
 
 		task ("Delete created site") {
-			JSONGroup.deleteGroupByName(groupName = "Site Name B");
+			JSONGroup.deleteGroupByName(groupName = "${randomSiteName} B");
 		}
 	}
 
@@ -735,12 +725,12 @@ definition {
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				title = "WC 1");
 		}
 
 		task ("Create structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			NavItem.gotoStructures();
 
@@ -752,7 +742,7 @@ definition {
 		}
 
 		task ("Create a web content as draft") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -780,7 +770,7 @@ definition {
 		}
 
 		task ("Assert web content draft exists") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContentNavigator.gotoViewStatus(
 				webContentStatus = "DRAFT",
@@ -788,21 +778,21 @@ definition {
 		}
 
 		task ("Activate Staging with page versioning") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
 			Staging.activateStagingCP(
 				pageVersioningEnabled = "true",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Check web content draft is not present in staging") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			AssertTextNotPresent(value1 = "WC WebContent Title");
 		}
 
 		task ("Check web content draft is not present in life") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-life");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-life");
 
 			AssertTextNotPresent(value1 = "WC WebContent Title");
 		}
@@ -815,7 +805,7 @@ definition {
 
 		task ("Create three web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 				WebContentNavigator.gotoAddCP();
 
@@ -825,21 +815,21 @@ definition {
 
 				PortletEntry.publish();
 
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 				WebContent.viewTitle(webContentTitle = ${webContentTitle});
 			}
 		}
 
 		task ("Activate Staging") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
 
-			Staging.activateStagingCP(siteName = "Site Name");
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 
 		task ("Edit the web contents") {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 				WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
@@ -852,7 +842,7 @@ definition {
 
 		task ("Assert web content has been edited") {
 			for (var webContentTitle : list "WC WebContent Title 1 Edit,WC WebContent Title 2 Edit,WC WebContent Title 3 Edit") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
 
 				WebContent.viewTitle(webContentTitle = ${webContentTitle});
 			}

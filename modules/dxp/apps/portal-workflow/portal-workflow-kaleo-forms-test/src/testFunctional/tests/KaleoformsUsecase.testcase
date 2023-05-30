@@ -1932,9 +1932,9 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",
-			newConnectorLabel = "Approve");
+			connectorLabelEdit = "Approve");
 
-		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
+		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",
 			nodeName = "Approve");
 
@@ -3035,9 +3035,9 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",
-			newConnectorLabel = "Approve");
+			connectorLabelEdit = "Approve");
 
-		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
+		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",
 			nodeName = "Approve");
 

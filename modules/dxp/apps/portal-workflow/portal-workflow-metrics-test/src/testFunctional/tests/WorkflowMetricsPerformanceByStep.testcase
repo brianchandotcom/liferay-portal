@@ -262,7 +262,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",
-			newConnectorLabel = "Approve");
+			connectorLabelEdit = "Approve");
 
 		Button.clickUpdate();
 
@@ -629,7 +629,7 @@ definition {
 
 			ProcessBuilderKaleoDesignerReact.editConnector(
 				connectorLabel = "APPROVE",
-				newConnectorLabel = "Approve");
+				connectorLabelEdit = "Approve");
 
 			Button.clickUpdate();
 		}
@@ -943,7 +943,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "APPROVE",
-			newConnectorLabel = "Approve");
+			connectorLabelEdit = "Approve");
 
 		Button.clickUpdate();
 

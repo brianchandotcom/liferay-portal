@@ -2110,7 +2110,7 @@ definition {
 			connectorOut = "start",
 			key_direction = "right");
 
-		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
+		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "START-END CONNECTOR",
 			nodeName = "New Name");
 
@@ -3949,7 +3949,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "STARTENDCONNECTOR",
-			newConnectorLabel = "EditedConnector");
+			connectorLabelEdit = "EditedConnector");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "EDITEDCONNECTOR");
 
@@ -4027,7 +4027,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editConnector(
 			connectorLabel = "TRANSITION LABEL",
-			newConnectorLabel = "LIFERAY LATAM");
+			connectorLabelEdit = "LIFERAY LATAM");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "LIFERAY LATAM");
 

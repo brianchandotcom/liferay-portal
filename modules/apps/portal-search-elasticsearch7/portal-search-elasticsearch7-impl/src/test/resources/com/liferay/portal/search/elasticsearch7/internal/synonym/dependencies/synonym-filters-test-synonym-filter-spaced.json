@@ -1,6 +1,6 @@
 {
 	"mappings": {
-		"LiferayDocumentType": {
+		"_doc": {
 			"properties": {
 				"content": {
 					"analyzer": "english",

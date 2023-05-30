@@ -163,11 +163,13 @@ public class CompanyIndexFactoryTest {
 	}
 
 	@Test
-	public void testAdditionalTypeMappingsWithRootType() throws Exception {
+	public void testAdditionalTypeMappingsWithLegacyRootType()
+		throws Exception {
+
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalTypeMappings()
 		).thenReturn(
-			_loadAdditionalTypeMappingsWithRootType()
+			_loadAdditionalTypeMappingsWithLegacyRootType()
 		);
 
 		_assertAdditionalTypeMappings();
@@ -690,12 +692,12 @@ public class CompanyIndexFactoryTest {
 			getClass(), "CompanyIndexFactoryTest-additionalAnalyzers.json");
 	}
 
-	private String _loadAdditionalTypeMappingsWithRootType() {
+	private String _loadAdditionalTypeMappingsWithLegacyRootType() {
 		try {
 			return ResourceUtil.getResourceAsString(
 				getClass(),
-				"CompanyIndexFactoryTest-additionalTypeMappings-with-root-" +
-					"type.json");
+				"CompanyIndexFactoryTest-additionalTypeMappings-with-legacy-" +
+					"root-type.json");
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

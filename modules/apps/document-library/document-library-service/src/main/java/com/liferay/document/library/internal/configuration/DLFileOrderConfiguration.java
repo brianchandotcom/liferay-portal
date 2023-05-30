@@ -18,8 +18,6 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Sam Ziemer
  */
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
 	id = "com.liferay.document.library.internal.configuration.DLFileOrderConfiguration",
 	localization = "content/Language", name = "dl-file-order-configuration-name"
 )
-@ProviderType
 public interface DLFileOrderConfiguration {
 
 	@Meta.AD(

@@ -2,5 +2,5 @@ Bundle-Name: Liferay Layout Theme Item Selector API
 Bundle-SymbolicName: com.liferay.layout.theme.item.selector.api
 Bundle-Version: 1.0.0
 Export-Package:\
-com.liferay.layout.theme.item.selector
-com.liferay.layout.theme.item.selector.criterion
+	com.liferay.layout.theme.item.selector,\
+	com.liferay.layout.theme.item.selector.criterion

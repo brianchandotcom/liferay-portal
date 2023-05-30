@@ -16,10 +16,12 @@ package com.liferay.change.tracking.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.exception.CTCollectionStatusException;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Publication;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Status;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -142,7 +144,20 @@ public class PublicationResourceTest extends BasePublicationResourceTestCase {
 			Publication publication)
 		throws Exception {
 
-		return publicationResource.postPublication(publication);
+		Publication postPublication = publicationResource.postPublication(
+			publication);
+
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			postPublication.getId());
+
+		ctCollection.setCreateDate(publication.getDateCreated());
+		ctCollection.setModifiedDate(publication.getDateModified());
+
+		ctCollection = _ctCollectionLocalService.updateCTCollection(
+			ctCollection);
+
+		return publicationResource.getPublication(
+			ctCollection.getCtCollectionId());
 	}
 
 	@Override
@@ -209,6 +224,9 @@ public class PublicationResourceTest extends BasePublicationResourceTestCase {
 				exceptionClass.getSimpleName(), jsonObject.get("type"));
 		}
 	}
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private CTPreferencesLocalService _ctPreferencesLocalService;

@@ -17,6 +17,7 @@ package com.liferay.object.internal.related.models;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
+import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -378,6 +379,12 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 					return companyIdColumn.eq(objectField.getCompanyId());
 				}
+			).and(
+				ObjectEntrySearchUtil.getRelatedModelsPredicate(
+					dynamicObjectDefinitionTable,
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectRelationship.getObjectDefinitionId2()),
+					_objectFieldLocalService, search)
 			)
 		);
 	}

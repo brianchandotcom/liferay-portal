@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.online;
+package com.liferay.portal.upgrade.live;
 
 /**
  * @author Kevin Lee
  */
 @FunctionalInterface
-public interface OnlineUpgradeProcess {
+public interface LiveUpgradeProcess {
 
 	public void upgrade(String tableName) throws Exception;
 

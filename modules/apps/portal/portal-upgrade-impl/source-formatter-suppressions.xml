@@ -2,7 +2,7 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="src/main/java/com/liferay/portal/upgrade/internal/online/OnlineUpgradeExecutorImpl\.java" />
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="src/main/java/com/liferay/portal/upgrade/internal/live/LiveUpgradeExecutorImpl\.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="src/main/java/com/liferay/portal/upgrade/internal/report/UpgradeReport\.java" />
 	</source-check>
 </suppressions>

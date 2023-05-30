@@ -2,6 +2,6 @@ Bundle-Name: Liferay Portal Upgrade API
 Bundle-SymbolicName: com.liferay.portal.upgrade.api
 Bundle-Version: 12.1.0
 Export-Package:\
-	com.liferay.portal.upgrade.online,\
+	com.liferay.portal.upgrade.live,\
 	com.liferay.portal.upgrade.registry,\
 	com.liferay.portal.upgrade.release

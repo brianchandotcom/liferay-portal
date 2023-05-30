@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.online;
+package com.liferay.portal.upgrade.live;
 
 /**
  * @author Kevin Lee
  */
-public interface OnlineUpgradeExecutor {
+public interface LiveUpgradeExecutor {
 
 	public void upgrade(
-			String tableName, OnlineUpgradeProcess... onlineUpgradeProcesses)
+			String tableName, LiveUpgradeProcess... liveUpgradeProcesses)
 		throws Exception;
 
 }

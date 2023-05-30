@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.online;
+package com.liferay.portal.upgrade.live;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 /**
  * @author Kevin Lee
  */
-public class OnlineUpgradeProcessFactory {
+public class LiveUpgradeProcessFactory {
 
-	public static OnlineUpgradeProcess alterColumnName(
+	public static LiveUpgradeProcess alterColumnName(
 		String oldColumnName, String newColumnDefinition) {
 
 		return tableName -> {
@@ -34,7 +34,7 @@ public class OnlineUpgradeProcessFactory {
 		};
 	}
 
-	public static OnlineUpgradeProcess alterColumnType(
+	public static LiveUpgradeProcess alterColumnType(
 		String columnName, String newColumnType) {
 
 		return tableName -> {

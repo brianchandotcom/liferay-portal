@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.online.OnlineUpgradeExecutor;
-import com.liferay.portal.upgrade.online.OnlineUpgradeProcessFactory;
+import com.liferay.portal.upgrade.live.LiveUpgradeExecutor;
+import com.liferay.portal.upgrade.live.LiveUpgradeProcessFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Kevin Lee
  */
 @RunWith(Arquillian.class)
-public class OnlineUpgradeExecutorTest {
+public class LiveUpgradeExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -90,9 +90,9 @@ public class OnlineUpgradeExecutorTest {
 
 	@Test
 	public void testAlterColumnName() throws Exception {
-		_onlineUpgradeExecutor.upgrade(
+		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
-			OnlineUpgradeProcessFactory.alterColumnName(
+			LiveUpgradeProcessFactory.alterColumnName(
 				"name", "title VARCHAR(128) not null"));
 
 		String tempTableName = _getTempTableName();
@@ -105,9 +105,9 @@ public class OnlineUpgradeExecutorTest {
 
 	@Test
 	public void testAlterColumnType() throws Exception {
-		_onlineUpgradeExecutor.upgrade(
+		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
-			OnlineUpgradeProcessFactory.alterColumnType(
+			LiveUpgradeProcessFactory.alterColumnType(
 				"name", "VARCHAR(255) null"));
 
 		String tempTableName = _getTempTableName();
@@ -122,7 +122,7 @@ public class OnlineUpgradeExecutorTest {
 	@Test
 	public void testEmptyUpgrade() throws Exception {
 		try {
-			_onlineUpgradeExecutor.upgrade(_TABLE_NAME);
+			_liveUpgradeExecutor.upgrade(_TABLE_NAME);
 
 			Assert.fail();
 		}
@@ -133,11 +133,11 @@ public class OnlineUpgradeExecutorTest {
 
 	@Test
 	public void testMultipleUpgrades() throws Exception {
-		_onlineUpgradeExecutor.upgrade(
+		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
-			OnlineUpgradeProcessFactory.alterColumnName(
+			LiveUpgradeProcessFactory.alterColumnName(
 				"name", "title VARCHAR(128) not null"),
-			OnlineUpgradeProcessFactory.alterColumnType(
+			LiveUpgradeProcessFactory.alterColumnType(
 				"title", "VARCHAR(255) null"));
 
 		String tempTableName = _getTempTableName();
@@ -172,17 +172,17 @@ public class OnlineUpgradeExecutorTest {
 
 	private String _getTempTableName() {
 		return ReflectionTestUtil.invoke(
-			_onlineUpgradeExecutor, "_getTempTableName",
+			_liveUpgradeExecutor, "_getTempTableName",
 			new Class<?>[] {String.class}, _TABLE_NAME);
 	}
 
-	private static final String _TABLE_NAME = "OnlineUpgradeTest";
+	private static final String _TABLE_NAME = "LiveUpgradeTest";
 
 	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
 
 	@Inject
-	private OnlineUpgradeExecutor _onlineUpgradeExecutor;
+	private LiveUpgradeExecutor _liveUpgradeExecutor;
 
 }

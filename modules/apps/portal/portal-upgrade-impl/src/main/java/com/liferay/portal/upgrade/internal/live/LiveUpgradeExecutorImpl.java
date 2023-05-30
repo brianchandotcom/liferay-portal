@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.internal.online;
+package com.liferay.portal.upgrade.internal.live;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.upgrade.online.OnlineUpgradeExecutor;
-import com.liferay.portal.upgrade.online.OnlineUpgradeProcess;
+import com.liferay.portal.upgrade.live.LiveUpgradeExecutor;
+import com.liferay.portal.upgrade.live.LiveUpgradeProcess;
 
 import java.sql.Connection;
 
@@ -29,16 +29,16 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Kevin Lee
  */
-@Component(service = OnlineUpgradeExecutor.class)
-public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
+@Component(service = LiveUpgradeExecutor.class)
+public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 
 	@Override
 	public void upgrade(
-			String tableName, OnlineUpgradeProcess... onlineUpgradeProcesses)
+			String tableName, LiveUpgradeProcess... liveUpgradeProcesses)
 		throws Exception {
 
-		if ((onlineUpgradeProcesses == null) ||
-			(onlineUpgradeProcesses.length == 0)) {
+		if ((liveUpgradeProcesses == null) ||
+			(liveUpgradeProcesses.length == 0)) {
 
 			throw new IllegalArgumentException(
 				"At least one upgrade step is required");
@@ -51,10 +51,8 @@ public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
 
 			db.copyTableStructure(connection, tableName, tempTableName);
 
-			for (OnlineUpgradeProcess onlineUpgradeProcess :
-					onlineUpgradeProcesses) {
-
-				onlineUpgradeProcess.upgrade(tempTableName);
+			for (LiveUpgradeProcess liveUpgradeProcess : liveUpgradeProcesses) {
+				liveUpgradeProcess.upgrade(tempTableName);
 			}
 
 			db.copyTableRows(connection, tableName, tempTableName);
@@ -62,11 +60,10 @@ public class OnlineUpgradeExecutorImpl implements OnlineUpgradeExecutor {
 	}
 
 	private String _getTempTableName(String tableName) {
-		return _UPGRADE_ONLINE_TABLE_NAME_PREFIX.concat(tableName);
+		return _UPGRADE_LIVE_TABLE_NAME_PREFIX.concat(tableName);
 	}
 
-	private static final String _UPGRADE_ONLINE_TABLE_NAME_PREFIX =
-		GetterUtil.get(
-			PropsUtil.get("upgrade.online.table.name.prefix"), "tmp_");
+	private static final String _UPGRADE_LIVE_TABLE_NAME_PREFIX =
+		GetterUtil.get(PropsUtil.get("upgrade.live.table.name.prefix"), "tmp_");
 
 }

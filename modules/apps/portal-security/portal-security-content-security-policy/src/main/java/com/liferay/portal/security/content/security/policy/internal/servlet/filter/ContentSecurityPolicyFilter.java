@@ -178,8 +178,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 				contentSecurityPolicyConfiguration.excludedPaths()) {
 
 			if (Validator.isNotNull(excludedPath) &&
-				requestURI.startsWith(
-					StringUtil.toLowerCase(excludedPath))) {
+				requestURI.startsWith(StringUtil.toLowerCase(excludedPath))) {
 
 				return true;
 			}

@@ -114,6 +114,25 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
 	}
 
+	@summary = "This macro back section by breadcrumb."
+	macro backSectionBreadcrumb {
+		for (var n : list "1,2,3,4") {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\BACK_SPACE");
+		}
+
+		if (isSet(value)) {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${value});
+
+			AssertTextEquals(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${value});
+		}
+	}
+
 	@summary = "This macro change the pagination."
 	macro changePagination {
 		Click(
@@ -305,31 +324,6 @@ definition {
 		Click(locator1 = "Testray#ADD_PROJECT");
 	}
 
-	@summary = "This macro back section by breadcrumb."
-	macro gotoBackBreadcrumb {
-		KeyPress(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "\BACK_SPACE");
-
-		KeyPress(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "\BACK_SPACE");
-
-		KeyPress(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = "\BACK_SPACE");
-
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${value});
-
-		if (isSet(value)) {
-			KeyPress(
-				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-				value1 = "\BACK_SPACE");
-		}
-	}
-
 	@summary = "This macro access the breadcrumb."
 	macro gotoBreadcrumb {
 		KeyPress(
@@ -376,9 +370,15 @@ definition {
 
 	@summary = "This macro access next section in breadcrumb."
 	macro nextSectionBreadcrumb {
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${project});
+		if (isSet(project)) {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${project});
+
+			AssertTextEquals(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${project});
+		}
 
 		if (isSet(project)) {
 			KeyPress(
@@ -386,9 +386,15 @@ definition {
 				value1 = "\TAB");
 		}
 
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${routine});
+		if (isSet(routine)) {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${routine});
+
+			AssertTextEquals(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${routine});
+		}
 
 		if (isSet(routine)) {
 			KeyPress(
@@ -396,14 +402,46 @@ definition {
 				value1 = "\TAB");
 		}
 
-		Type(
-			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
-			value1 = ${build});
+		if (isSet(build)) {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${build});
+
+			AssertTextEquals(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${build});
+		}
 
 		if (isSet(build)) {
 			KeyPress(
 				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
 				value1 = "\TAB");
+		}
+
+		if (isSet(run)) {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${run});
+
+			AssertTextEquals(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${run});
+		}
+
+		if (isSet(run)) {
+			KeyPress(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = "\TAB");
+		}
+
+		if (isSet(caseResult)) {
+			Type(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${caseResult});
+
+			AssertTextEquals(
+				locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
+				value1 = ${caseResult});
 		}
 
 		Testray.confirmBreadcrumb();

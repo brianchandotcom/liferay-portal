@@ -458,17 +458,17 @@ definition {
 	macro editConnector {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
-		Type(
-			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_LABEL",
-			value1 = ${newConnectorLabel});
-	}
+		if (isSet(connectorLabelEdit)) {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_LABEL",
+				value1 = ${connectorLabelEdit});
+		}
 
-	macro editConnectorTransitionField {
-		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
-
-		Type(
-			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_NAME",
-			value1 = ${nodeName});
+		if (isSet(nodeName)) {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_CONNECTOR_NAME",
+				value1 = ${nodeName});
+		}
 	}
 
 	macro editNodeInformationField {

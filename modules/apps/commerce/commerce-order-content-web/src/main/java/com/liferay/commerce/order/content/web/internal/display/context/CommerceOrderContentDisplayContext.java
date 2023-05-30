@@ -22,7 +22,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentMethodConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -33,7 +32,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderType;
-import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration;
@@ -57,7 +55,6 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
-import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -143,7 +140,6 @@ public class CommerceOrderContentDisplayContext {
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
 			CommercePaymentMethodRegistry commercePaymentMethodRegistry,
-			CommerceShipmentItemService commerceShipmentItemService,
 			CommerceTermEntryService commerceTermEntryService,
 			ConfigurationProvider configurationProvider,
 			DLAppLocalService dlAppLocalService,
@@ -166,7 +162,6 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
-		_commerceShipmentItemService = commerceShipmentItemService;
 		_commerceTermEntryService = commerceTermEntryService;
 		_configurationProvider = configurationProvider;
 		_dlAppLocalService = dlAppLocalService;
@@ -447,18 +442,12 @@ public class CommerceOrderContentDisplayContext {
 		return commerceChannel.getPriceDisplayType();
 	}
 
-	public List<CommerceShipmentItem> getCommerceShipmentItems(
-			long commerceOrderItemId)
-		throws PortalException {
+	public String getCommerceShipmentItemsApiUrl() throws PortalException {
+		long commerceOrderItemId = ParamUtil.getLong(
+			_httpServletRequest, "commerceOrderItemId");
 
-		return _commerceShipmentItemService.
-			getCommerceShipmentItemsByCommerceOrderItemId(commerceOrderItemId);
-	}
-
-	public String getCommerceShipmentStatusLabel(int status) {
-		return LanguageUtil.get(
-			_httpServletRequest,
-			CommerceShipmentConstants.getShipmentStatusLabel(status));
+		return "/o/headless-commerce-delivery-order/v1.0/placed-order-items/" +
+			commerceOrderItemId + "/placed-order-item-shipments";
 	}
 
 	public String getCSVTemplateDownloadURL() throws Exception {
@@ -1358,7 +1347,6 @@ public class CommerceOrderContentDisplayContext {
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CommerceTermEntryService _commerceTermEntryService;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPRequestHelper _cpRequestHelper;

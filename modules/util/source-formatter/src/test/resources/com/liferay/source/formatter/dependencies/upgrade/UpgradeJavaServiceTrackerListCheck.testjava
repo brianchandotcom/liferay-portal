@@ -12,6 +12,7 @@
  * details.
  */
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 
 /**
  * @author Michael Cavalcanti
@@ -19,10 +20,12 @@
 @Component(service = CTServiceRegistry.class)
 public class UpgradeJavaServiceTrackerListCheck {
 
-    private ServiceTrackerList <CTEventListener, CTEventListener> _serviceTrackerList;
-    private ServiceTrackerList 
-        <ServiceConnectionProvider, ServiceConnectionProvider> tracker;
-    private ServiceTrackerList <CTEventListener> _serviceTrackerList;
+    private ServiceTrackerList <CTEventListener, CTEventListener> _serviceTrackerList1;
+    private ServiceTrackerList
+        <ServiceConnectionProvider, ServiceConnectionProvider> _serviceTrackerList2;
+    private ServiceTrackerList<Indexer<?>, Indexer<?>> _serviceTrackerList3;
+    private ServiceTrackerList<? extends Indexer, ? extends Indexer> _serviceTrackerList4;
+    private ServiceTrackerList <CTEventListener> _serviceTrackerList5;
     private ServiceTrackerMap<Long, CTService<?>> _serviceTrackerMap;
 
 }

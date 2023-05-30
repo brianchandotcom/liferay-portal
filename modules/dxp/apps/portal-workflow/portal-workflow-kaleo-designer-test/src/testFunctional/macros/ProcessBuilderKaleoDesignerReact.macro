@@ -719,7 +719,7 @@ definition {
 	}
 
 	macro openTranslationLanguageDropdown {
-		Click.mouseOverClick(
+		Click.javaScriptClick(
 			key_title = "select-translation-language",
 			locator1 = "Button#ANY_TITLE");
 	}

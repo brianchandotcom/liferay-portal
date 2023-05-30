@@ -462,7 +462,6 @@ definition {
 	}
 
 	@description = "Verify that the user can add translations"
-	@ignore = "true"
 	@priority = 4
 	test CanAddTranslations {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTranslations";

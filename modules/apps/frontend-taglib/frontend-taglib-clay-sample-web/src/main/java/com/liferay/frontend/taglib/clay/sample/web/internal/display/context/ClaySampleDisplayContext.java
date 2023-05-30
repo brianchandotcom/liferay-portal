@@ -92,6 +92,11 @@ public class ClaySampleDisplayContext {
 			}
 		).add(
 			tabsItem -> {
+				tabsItem.setLabel("Panel");
+				tabsItem.setPanelId("panel");
+			}
+		).add(
+			tabsItem -> {
 				tabsItem.setLabel("Progress Bars");
 				tabsItem.setPanelId("progress_bars");
 			}

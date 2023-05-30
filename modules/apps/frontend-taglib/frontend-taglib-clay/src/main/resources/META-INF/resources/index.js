@@ -20,6 +20,8 @@ export {default as Link} from './Link';
 export {default as Multiselect} from './Multiselect';
 export {default as NavigationBar} from './NavigationBar';
 export {default as PaginationBar} from './PaginationBar';
+export {default as Panel} from './Panel';
+export {default as PanelGroup} from './PanelGroup';
 export {default as Select} from './Select';
 export {default as Tabs} from './Tabs';
 export {default as HorizontalCard} from './cards/HorizontalCard';

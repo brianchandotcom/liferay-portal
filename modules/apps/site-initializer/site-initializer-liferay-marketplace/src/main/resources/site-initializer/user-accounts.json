@@ -2,7 +2,11 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "MKT-ACCOUNT-1"
+				"externalReferenceCode": "MKT-ACCOUNT-1",
+				"roleBriefs": [
+					"App Editor",
+					"Account Administrator"
+				]
 			}
 		],
 		"alternateName": "jane.acme",
@@ -18,7 +22,11 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "MKT-ACCOUNT-1"
+				"externalReferenceCode": "MKT-ACCOUNT-1",
+				"roleBriefs": [
+					"App Editor",
+					"Account Administrator"
+				]
 			}
 		],
 		"alternateName": "steven.acme",
@@ -34,7 +42,10 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "MKT-ACCOUNT-1"
+				"externalReferenceCode": "MKT-ACCOUNT-1",
+				"roleBriefs": [
+					"App Editor"
+				]
 			}
 		],
 		"alternateName": "john.developer",
@@ -50,7 +61,10 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "MKT-ACCOUNT-1"
+				"externalReferenceCode": "MKT-ACCOUNT-1",
+				"roleBriefs": [
+					"App Editor"
+				]
 			}
 		],
 		"alternateName": "marie.developer",

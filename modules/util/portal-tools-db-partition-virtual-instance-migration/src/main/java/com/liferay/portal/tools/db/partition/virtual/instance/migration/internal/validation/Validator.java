@@ -100,7 +100,7 @@ public class Validator {
 		Map<String, Release> destinationReleaseMap = DatabaseUtil.getReleaseMap(
 			destinationConnection);
 
-		List<Release> sourceReleaseEntries = DatabaseUtil.getReleaseEntries(
+		List<Release> sourceReleases = DatabaseUtil.getReleases(
 			sourceConnection);
 
 		List<String> missingDestinationModules = new ArrayList<>();
@@ -112,7 +112,7 @@ public class Validator {
 		List<String> unverifiedSourceModules = new ArrayList<>();
 		List<String> unverifiedDestinationModules = new ArrayList<>();
 
-		for (Release sourceRelease : sourceReleaseEntries) {
+		for (Release sourceRelease : sourceReleases) {
 			String sourceServletContextName =
 				sourceRelease.getServletContextName();
 

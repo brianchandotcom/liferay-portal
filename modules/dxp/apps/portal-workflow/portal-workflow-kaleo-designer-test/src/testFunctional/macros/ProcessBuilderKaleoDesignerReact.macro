@@ -755,20 +755,11 @@ definition {
 	}
 
 	macro selectTranslationLanguage {
-		var key_translationOptionSelected = ${translationOptionSelected};
-		var key_translationOption = ${newTranslationOption};
-		var key_translationStatus = ${translationStatus};
+		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 
 		Click(
-			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY",
-			translationOption = ${translationOptionSelected});
-
-		if (isSet(translationOption)) {
-			Click(
-				locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL",
-				translationOption = ${newTranslationOption},
-				translationStatus = ${translationStatus});
-		}
+			key_locale = ${key_locale},
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
 	macro uploadDefinition {

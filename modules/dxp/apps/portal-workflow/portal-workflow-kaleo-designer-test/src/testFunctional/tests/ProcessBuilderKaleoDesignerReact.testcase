@@ -478,10 +478,14 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titre l'epreuve");
 
+<<<<<<< Updated upstream
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
 			newTranslationOption = "pt_BR",
 			translationOptionSelected = "fr-fr",
 			translationStatus = "label-warning");
+=======
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(key_locale = "pt_BR");
+>>>>>>> Stashed changes
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
 
@@ -493,9 +497,18 @@ definition {
 			newTranslationOption = "fr_FR",
 			translationStatus = "success");
 
+<<<<<<< Updated upstream
 		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
 			newTranslationOption = "pt_BR",
 			translationStatus = "success");
+=======
+		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
+
+		AssertTextEquals(
+			key_locale = "pt_BR",
+			locator1 = "Translation#TRANSLATION_LANGUAGE_STATUS_LABEL",
+			value1 = "Translated");
+>>>>>>> Stashed changes
 	}
 
 	@description = "Verify that is possible to select Account role type for role assignments"
@@ -4810,7 +4823,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
 
+<<<<<<< Updated upstream
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
+=======
+		Click(
+			key_locale = "en_US",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+>>>>>>> Stashed changes
 
 		ProcessBuilderKaleoDesignerReact.viewTranslationDropdownNotPresent();
 	}

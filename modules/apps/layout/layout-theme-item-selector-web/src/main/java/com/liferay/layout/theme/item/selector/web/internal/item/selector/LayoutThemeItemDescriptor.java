@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.theme.item.selector.web.internal;
+package com.liferay.layout.theme.item.selector.web.internal.item.selector;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;

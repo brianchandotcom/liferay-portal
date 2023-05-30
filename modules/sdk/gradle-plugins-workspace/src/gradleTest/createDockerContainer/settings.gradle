@@ -42,4 +42,5 @@ gradle.projectsEvaluated {
 			gradle.liferayWorkspace.dockerImageId
 		}
 	}
+
 }

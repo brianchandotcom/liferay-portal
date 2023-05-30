@@ -230,6 +230,31 @@ public class StructuredContentResourceTest
 			(List<StructuredContent>)page.getItems());
 
 		assertValid(page);
+
+		// Sort structured content by descending priority
+
+		StructuredContent structuredContent3 = randomStructuredContent();
+
+		structuredContent3.setPriority(Double.valueOf(1.1));
+
+		StructuredContent postStructuredContent3 =
+			structuredContentResource.postSiteStructuredContent(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				structuredContent3);
+
+		page = structuredContentResource.getSiteStructuredContentsPage(
+			testGroup.getGroupId(), true, null, null, null,
+			Pagination.of(1, 10), "priority:desc");
+
+		Assert.assertEquals(3, page.getTotalCount());
+
+		assertEquals(
+			Arrays.asList(
+				patchStructuredContent, postStructuredContent3,
+				postStructuredContent1),
+			(List<StructuredContent>)page.getItems());
+
+		assertValid(page);
 	}
 
 	@Override

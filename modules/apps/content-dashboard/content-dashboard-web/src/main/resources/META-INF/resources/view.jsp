@@ -60,11 +60,18 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 					<clay:content-col>
 						<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "configure-chart") %>">
 							<clay:button
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"chartConfigurationURL", contentDashboardAdminDisplayContext.getPortletURL()
+									).put(
+										"portletSelector", "#p_p_id_" + contentDashboardAdminDisplayContext.getPortletDisplayId()
+									).build()
+								%>'
 								borderless="<%= true %>"
 								cssClass="component-action"
 								displayType="secondary"
 								icon="cog"
-								onClick="<%= contentDashboardAdminDisplayContext.getOnClickConfiguration() %>"
+								propsTransformer="js/ConfigurationButtonPropsTransformer"
 								small="<%= true %>"
 							/>
 						</span>

@@ -61,7 +61,7 @@ definition {
 	macro chooseOptionNewFilterDropdown {
 		var key_option = ${key_option};
 
-		Type(locator1 = "FrontendDataSetAdmin#SELECT_DROPDOWN",
+		Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SELECT_OPTION",
 			value1 = ${key_option});
 	}
 }

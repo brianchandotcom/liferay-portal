@@ -216,3 +216,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-185357 - Confirms the user can save a new date filter."
+	@priority = 5
+	test CanSaveDateFilter {
+		task("And click on the Create Filter button") {
+			Button.click(button = "Create Filter");
+		}
+		
+		task("When the user adds a name") {
+			Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				value1 = "Test");
+		}
+
+		task("And adds dateCreated to the filter") {
+			Type(locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+				value1 = "dateCreated");
+		}
+
+		task ("And selects a date on From field") {
+			FrontendDataSet.selectFromFieldDates(key_dateNumber = "15");
+		}
+
+		task ("And selects a date on To field"){
+			FrontendDataSet.selectToFieldDates(key_dateNumber = "25");
+		}
+
+		task("And clicks on the Save button"){
+			Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_SAVE_BUTTON");
+		}
+
+		task("Then a successful message is displayed"){
+			Alert.viewSuccessMessage();
+		}
+
+		task("And New filter modal is closed and the changes are applied"){
+			AssertVisible(locator1 = "FrontendDataSetAdmin#FILTERS_ENTRY",
+			key_entryName = "Test");
+		}
+	}
+}

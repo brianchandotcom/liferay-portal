@@ -1,7 +1,8 @@
 import EmptyDropZone from '../EmptyDropZone';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
-import {wrapInTestContext} from 'react-dnd-test-utils';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 jest.unmock('react-dom');
 
@@ -9,9 +10,11 @@ describe('EmptyDropZone', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const EmptyDropZoneContext = wrapInTestContext(EmptyDropZone);
-
-		const {container} = render(<EmptyDropZoneContext />);
+		const {container} = render(
+			<DndProvider backend={HTML5Backend}>
+				<EmptyDropZone />
+			</DndProvider>
+		);
 
 		expect(container).toMatchSnapshot();
 	});

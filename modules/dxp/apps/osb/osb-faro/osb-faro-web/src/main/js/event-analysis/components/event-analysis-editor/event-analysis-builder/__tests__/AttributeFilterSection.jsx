@@ -3,6 +3,8 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-components';
 import {AttributeFilterSection} from '../AttributeFilterSection';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
@@ -16,12 +18,14 @@ describe('AttributeFilterSection', () => {
 			<Route path={Routes.EVENT_ANALYSIS}>
 				<ApolloProvider client={client}>
 					<Provider store={mockStore()}>
-						<AttributeFilterSection
-							attributes={[]}
-							filterOrder={[]}
-							filters={[]}
-							{...props}
-						/>
+						<DndProvider backend={HTML5Backend}>
+							<AttributeFilterSection
+								attributes={[]}
+								filterOrder={[]}
+								filters={[]}
+								{...props}
+							/>
+						</DndProvider>
 					</Provider>
 				</ApolloProvider>
 			</Route>

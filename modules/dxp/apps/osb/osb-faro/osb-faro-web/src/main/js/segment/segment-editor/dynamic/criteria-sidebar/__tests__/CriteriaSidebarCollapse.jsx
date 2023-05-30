@@ -2,9 +2,10 @@ import * as data from 'test/data';
 import CriteriaSidebarCollapse from '../CriteriaSidebarCollapse';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
 import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
-import {wrapInTestContext} from 'react-dnd-test-utils';
 
 jest.unmock('react-dom');
 
@@ -39,31 +40,27 @@ describe('CriteriaSidebarCollapse', () => {
 	afterEach(cleanup);
 
 	it('should render', () => {
-		const CriteriaSidebarCollapseWithContext = wrapInTestContext(
-			CriteriaSidebarCollapse
-		);
-
 		const {container} = render(
-			<CriteriaSidebarCollapseWithContext
-				propertyGroupsIList={propertyGroupsIList}
-				propertyKey='interests'
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebarCollapse
+					propertyGroupsIList={propertyGroupsIList}
+					propertyKey='interests'
+				/>
+			</DndProvider>
 		);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render w/ no results for only one subgroup', () => {
-		const CriteriaSidebarCollapseWithContext = wrapInTestContext(
-			CriteriaSidebarCollapse
-		);
-
 		const {queryByText} = render(
-			<CriteriaSidebarCollapseWithContext
-				propertyGroupsIList={propertyGroupsIList}
-				propertyKey='interests'
-				searchValue='Actions'
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebarCollapse
+					propertyGroupsIList={propertyGroupsIList}
+					propertyKey='interests'
+					searchValue='Actions'
+				/>
+			</DndProvider>
 		);
 
 		expect(queryByText('No results were found.')).toBeTruthy();
@@ -73,10 +70,12 @@ describe('CriteriaSidebarCollapse', () => {
 
 	it('should render w/ no results', () => {
 		const {queryByText} = render(
-			<CriteriaSidebarCollapse
-				propertyGroupsIList={propertyGroupsIList}
-				searchValue='should not exist'
-			/>
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebarCollapse
+					propertyGroupsIList={propertyGroupsIList}
+					searchValue='should not exist'
+				/>
+			</DndProvider>
 		);
 
 		expect(queryByText('No results were found.')).toBeTruthy();

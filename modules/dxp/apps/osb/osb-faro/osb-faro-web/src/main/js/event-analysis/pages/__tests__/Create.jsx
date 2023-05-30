@@ -12,6 +12,8 @@ import {
 	waitForElementToBeRemoved
 } from '@testing-library/react';
 import {DISPLAY_NAME} from 'shared/util/pagination';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
 import {mockEventDefinitionsReq, mockTimeRangeReq} from 'test/graphql-data';
@@ -61,7 +63,9 @@ const WrappedComponent = () => (
 					]}
 				>
 					<Route path={Routes.EVENT_ANALYSIS_CREATE}>
-						<EventAnalysisCreate />
+						<DndProvider backend={HTML5Backend}>
+							<EventAnalysisCreate />
+						</DndProvider>
 					</Route>
 				</MemoryRouter>
 			</MockedProvider>

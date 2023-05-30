@@ -1,6 +1,8 @@
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
+import {DndProvider} from 'react-dnd';
 import {FileDropTarget, FileItem, getFileSizeLabel} from '../FileDropTarget';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {shallow} from 'enzyme';
 
 jest.unmock('react-dom');
@@ -11,7 +13,9 @@ describe('FileDropTarget', () => {
 
 		it('should render', () => {
 			const {container} = render(
-				<FileDropTarget onChange={jest.fn()} uploadURL='/foo' />
+				<DndProvider backend={HTML5Backend}>
+					<FileDropTarget onChange={jest.fn()} uploadURL='/foo' />
+				</DndProvider>
 			);
 
 			expect(container).toMatchSnapshot();
@@ -57,16 +61,22 @@ describe('FileDropTarget', () => {
 		afterEach(cleanup);
 
 		it('renders', () => {
-			const {container} = render(<FileItem file={{name: 'Test.csv'}} />);
+			const {container} = render(
+				<DndProvider backend={HTML5Backend}>
+					<FileItem file={{name: 'Test.csv'}} />
+				</DndProvider>
+			);
 
 			expect(container).toMatchSnapshot();
 		});
 
 		it('renders w/ error', () => {
 			const {container} = render(
-				<FileItem
-					file={{completed: true, name: 'Test.csv', status: 400}}
-				/>
+				<DndProvider backend={HTML5Backend}>
+					<FileItem
+						file={{completed: true, name: 'Test.csv', status: 400}}
+					/>
+				</DndProvider>
 			);
 
 			expect(container.querySelector('.error-message')).not.toBeNull();
@@ -77,9 +87,11 @@ describe('FileDropTarget', () => {
 
 		it('renders w/ success', () => {
 			const {container} = render(
-				<FileItem
-					file={{completed: true, name: 'Test.csv', size: 1024}}
-				/>
+				<DndProvider backend={HTML5Backend}>
+					<FileItem
+						file={{completed: true, name: 'Test.csv', size: 1024}}
+					/>
+				</DndProvider>
 			);
 
 			expect(container.querySelector('.success-invert')).not.toBeNull();

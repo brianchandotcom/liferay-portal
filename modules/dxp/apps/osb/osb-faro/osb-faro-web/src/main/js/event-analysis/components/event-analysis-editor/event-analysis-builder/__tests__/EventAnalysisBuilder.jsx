@@ -3,6 +3,8 @@ import EventAnalysisBuilder from '../index';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-components';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
@@ -16,7 +18,9 @@ describe('Event Analysis Builder', () => {
 			<Route path={Routes.EVENT_ANALYSIS}>
 				<ApolloProvider client={client}>
 					<Provider store={mockStore()}>
-						<EventAnalysisBuilder {...props} />
+						<DndProvider backend={HTML5Backend}>
+							<EventAnalysisBuilder {...props} />
+						</DndProvider>
 					</Provider>
 				</ApolloProvider>
 			</Route>

@@ -4,6 +4,8 @@ import React from 'react';
 import SegmentEditor, {validateSegmentEditor} from '../index';
 import {BrowserRouter} from 'react-router-dom';
 import {cleanup, render} from '@testing-library/react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {Provider} from 'react-redux';
 import {Segment} from 'shared/util/records';
 import {SegmentStates} from 'shared/util/constants';
@@ -19,7 +21,9 @@ describe('SegmentEditor', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
-					<SegmentEditor channelId='321' groupId='23' />
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor channelId='321' groupId='23' />
+					</DndProvider>
 				</BrowserRouter>
 			</Provider>
 		);
@@ -31,18 +35,20 @@ describe('SegmentEditor', () => {
 		const {getByText} = render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
-					<SegmentEditor
-						channelId='321'
-						groupId='23'
-						segment={data.getImmutableMock(
-							Segment,
-							data.mockSegment,
-							123,
-							{
-								state: SegmentStates.Disabled
-							}
-						)}
-					/>
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							segment={data.getImmutableMock(
+								Segment,
+								data.mockSegment,
+								123,
+								{
+									state: SegmentStates.Disabled
+								}
+							)}
+						/>
+					</DndProvider>
 				</BrowserRouter>
 			</Provider>
 		);

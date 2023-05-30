@@ -2,6 +2,8 @@ import client from 'shared/apollo/client';
 import Edit from '../Edit';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {Provider} from 'react-redux';
 import {render, waitForElementToBeRemoved} from '@testing-library/react';
 import {SegmentTypes} from 'shared/util/constants';
@@ -16,7 +18,9 @@ jest.unmock('react-dom');
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
 		<StaticRouter>
-			<Edit groupId='23' {...props} />
+			<DndProvider backend={HTML5Backend}>
+				<Edit groupId='23' {...props} />
+			</DndProvider>
 		</StaticRouter>
 	</Provider>
 );
@@ -81,14 +85,6 @@ describe('Edit', () => {
 
 		jest.runAllTimers();
 
-		// TODO: LRAC-8210 Uncomment for release 3.1
-		// await waitForElementToBeRemoved(() =>
-		// 	container.querySelector('.loading-root')
-		// ).then(() => {
-		// 	expect(getByText('Dynamic Segment')).toBeTruthy();
-		// });
-
-		// TODO: LRAC-8210 Remove for release 3.1
 		expect(getByText('Dynamic Segment')).toBeTruthy();
 	});
 

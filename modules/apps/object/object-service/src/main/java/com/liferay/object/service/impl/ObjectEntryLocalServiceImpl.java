@@ -138,7 +138,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
@@ -160,6 +159,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -1999,15 +1999,14 @@ public class ObjectEntryLocalServiceImpl
 			return null;
 		}
 
-		User user = GuestOrUserUtil.getGuestOrUser();
-
 		return dynamicObjectDefinitionLocalizationTable.getForeignKeyColumn(
 		).eq(
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 		).and(
 			dynamicObjectDefinitionLocalizationTable.getLanguageIdColumn(
 			).eq(
-				LocaleUtil.toLanguageId(user.getLocale())
+				LocaleUtil.toLanguageId(
+					LocaleThreadLocal.getThemeDisplayLocale())
 			)
 		);
 	}

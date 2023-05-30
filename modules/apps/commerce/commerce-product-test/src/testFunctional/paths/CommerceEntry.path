@@ -1362,7 +1362,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LANGUAGE_SITEMAP_URL_HREF_HREFLANG</td>
-	<td>//*[text()='${key_basePortalURL}/${key_language}/web/minium/g/${key_categoryURLName}']/following-sibling::*[@href = '${key_basePortalURL}/${key_language}/web/minium/g/${key_categoryName}'][@hreflang='${key_categoryNameLang}']</td>
+	<td>//*[text()='${key_basePortalURL}${key_languageLoc}/web/minium/g/${key_categoryURLName}']/following-sibling::*[@href = '${key_basePortalURL}${key_languageHref}/web/minium/g/${key_categoryName}'][@hreflang='${key_categoryNameLang}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -1372,7 +1372,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG</td>
-	<td>//*[text()='${key_basePortalURL}/${key_language}/web/minium/p/${key_productURLName}']/following-sibling::*[@href = '${key_basePortalURL}/${key_language}/web/minium/p/${key_productName}'][@hreflang='${key_productNameLang}']</td>
+	<td>//*[text()='${key_basePortalURL}${key_languageLoc}/web/minium/p/${key_productURLName}']/following-sibling::*[@href = '${key_basePortalURL}${key_languageHref}/web/minium/p/${key_productName}'][@hreflang='${key_productNameLang}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -1385,7 +1385,11 @@
 	<td>//*[text()='${key_basePortalURL}/web/minium/p/${key_productURLName}']/following-sibling::*[@href = '${key_basePortalURL}/web/minium/p/${key_productName}'][@hreflang='${key_productNameLang}']</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>CURRENT_LANGUAGE</td>
+	<td>//label[contains(.,'Current')]/..//select/option[contains(.,'${key_language}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * @author Michael Cavalcanti
  */
-public class UpgradeJavaServiceTrackerListCheck extends BaseFileCheck {
+public class JavaUpgradeServiceTrackerListCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

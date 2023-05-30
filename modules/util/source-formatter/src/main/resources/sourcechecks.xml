@@ -602,6 +602,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="JavaUpgradeServiceTrackerListCheck">
+			<category name="Upgrade" />
+			<description name="Replace number of parameters of ServiceTrackerList" />
+		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />
 			<description name="Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`)." />
@@ -1583,10 +1587,6 @@
 		<check name="UpgradeJavaCheck">
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />
-		</check>
-		<check name="UpgradeJavaServiceTrackerListCheck">
-			<category name="Upgrade" />
-			<description name="Replace number of parameters of ServiceTrackerList" />
 		</check>
 		<check name="UpgradeVelocityCommentMigrationCheck">
 			<category name="Upgrade" />

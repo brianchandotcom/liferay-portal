@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORTS_DETAIL_GROUP_ID</td>
+	<td>//span[contains(@class,'control-label') and contains (.,'Group ID')]/parent::div[contains(@class,'ddm-field-group')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPORTS_DETAIL_ADDITIONAL_INFORMATION</td>
 	<td>//span[contains(@class,'control-label') and contains (.,'Additional Information')]/parent::div[contains(@class,'ddm-field-group')]</td>
 	<td></td>
@@ -107,6 +112,11 @@
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
 	<td>//select[contains(@id,'AuditPortlet_andOperator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_GROUP_ID_FIELD</td>
+	<td>//input[contains(@id,'AuditPortlet_groupId')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -56,6 +56,9 @@ definition {
 		else if (${searchTerm} == ${userName}) {
 			var reportFieldKey = "USER_NAME";
 		}
+		else if (${searchTerm} == ${groupId}) {
+			var reportFieldKey = "GROUP_ID";
+		}
 
 		Click(locator1 = "Icon#ADVANCED_SEARCH");
 
@@ -90,9 +93,11 @@ definition {
 			Click(locator1 = "Icon#BASIC_SEARCH");
 		}
 
-		AssertTextEquals(
-			locator1 = "AuditReports#REPORTS_TABLE_${reportFieldKey}_1",
-			value1 = ${searchTerm});
+		if (${searchTerm} != ${groupId}) {
+			AssertTextEquals(
+				locator1 = "AuditReports#REPORTS_TABLE_${reportFieldKey}_1",
+				value1 = ${searchTerm});
+		}
 	}
 
 	macro searchViaKeywords {
@@ -152,6 +157,12 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "AuditReports#REPORTS_DETAIL_CLIENT_IP",
 				value1 = ${clientIp});
+		}
+
+		if (isSet(groupId)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AuditReports#REPORTS_DETAIL_GROUP_ID",
+				value1 = ${groupId});
 		}
 	}
 

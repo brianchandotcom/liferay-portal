@@ -24,6 +24,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -182,6 +183,13 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 			layoutTypeSettingsUnicodeProperties.putAll(
 				layout.getTypeSettingsProperties());
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-153951") &&
+				layout.isDraftLayout()) {
+
+				layoutTypeSettingsUnicodeProperties.put(
+					"designConfigurationModified", StringPool.TRUE);
+			}
 
 			layout = _layoutService.updateLayout(
 				groupId, layout.isPrivateLayout(), layout.getLayoutId(),

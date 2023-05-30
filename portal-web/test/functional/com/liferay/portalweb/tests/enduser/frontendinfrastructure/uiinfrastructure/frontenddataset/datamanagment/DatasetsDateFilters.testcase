@@ -50,3 +50,31 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 	}
+
+    @description = "LPS-185344 - Confirms the From and To fields are displayed when creating a new date filter."
+	@priority = 5
+	test AssertDateFieldsArePresent {
+		task("And click on the 'Create Filter' button") {
+			Button.click(button = "Create Filter");
+		}
+
+		task("When the user adds a name") {
+			Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				value1 = "Test");
+		}
+
+		task("And adds 'dateCreated' to the filter") {
+			Type(locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+				value1 = "dateCreated");			
+		}
+
+		task("Then 'From' field is present") {
+			AssertVisible(locator1= "FrontendDataSetAdmin#LABEL",
+				key_label = "From");
+		}
+
+		task("And 'To' field is also present ") {
+			AssertVisible(locator1= "FrontendDataSetAdmin#LABEL",
+				key_label = "To");
+		}
+	}

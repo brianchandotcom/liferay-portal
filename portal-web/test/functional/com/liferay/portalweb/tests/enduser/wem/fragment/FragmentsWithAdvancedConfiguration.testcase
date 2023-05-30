@@ -3,35 +3,27 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Fragments";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
@@ -42,12 +34,12 @@ definition {
 
 		task ("Add a fragment collection") {
 			JSONFragment.addFragmentCollection(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				name = "Collection Name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
@@ -104,7 +96,7 @@ definition {
 		task ("Add a new fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -135,7 +127,7 @@ definition {
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoAdvanced(fragmentName = "Fragment Name");
 
@@ -153,23 +145,23 @@ definition {
 
 		task ("Add a Home page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Home",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Home");
 		}
 
 		task ("Add a Search Results widget to a Search page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Search");
 
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.addPG(
 				categoryName = "Search",
@@ -179,7 +171,7 @@ definition {
 		task ("Add a Button fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -193,7 +185,7 @@ definition {
 		task ("Search 'Go Somewhere' from page search bar, assert a search result about Button fragment") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Home",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
 
@@ -205,7 +197,7 @@ definition {
 		task ("Check Hide from Site Search Results checkbox in Advanced Settings") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoAdvanced(fragmentName = "Button");
 
@@ -219,7 +211,7 @@ definition {
 		task ("Search 'Go Somewhere' from page search bar, assert no search result about Button fragment") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Home",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
 
@@ -232,23 +224,23 @@ definition {
 	test HideSingleResultInMultipleResultsInAdvancedSettings {
 		task ("Add a Home page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Home",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Home");
 		}
 
 		task ("Add a Search Results widget to a Search page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Search");
 
 			Navigator.gotoSitePage(
 				pageName = "Search",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Portlet.addPG(
 				categoryName = "Search",
@@ -258,13 +250,13 @@ definition {
 		task ("Add a Paragraph fragment to each content page") {
 			for (var pageNum : list "1,2,3,4") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					layoutName = "Page Name ${pageNum}",
 					type = "content");
 
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Page Name ${pageNum}",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -282,7 +274,7 @@ definition {
 		task ("Search 'footer' from page search bar, the fragments on all the pages show up in the search results") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Home",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			SearchPortlets.searchEmbedded(searchTerm = "footer");
 
@@ -296,7 +288,7 @@ definition {
 		task ("Check Hide from Site Search Results checkbox in Advanced Settings") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.gotoAdvanced(fragmentName = "Paragraph");
 
@@ -308,7 +300,7 @@ definition {
 		task ("Search 'footer' from page search bar, assert the page with Hide from Site Search Results checked does not appear in the search result") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Home",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			SearchPortlets.searchEmbedded(searchTerm = "footer");
 
@@ -330,7 +322,7 @@ definition {
 		task ("Given a Page creator has a content page with a Heading fragment") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -355,7 +347,7 @@ definition {
 			task ("Add a Container to page") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+					siteName = ${randomSiteName});
 
 				PageEditor.addFragment(
 					collectionName = "Layout Elements",

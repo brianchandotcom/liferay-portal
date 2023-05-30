@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Fragments";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -47,17 +39,17 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Type");
 		}
 
 		task ("Add 2 categories in Type vocabulary") {
 			var suvId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "SUV",
 				vocabularyName = "Type");
 			var carId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Car",
 				vocabularyName = "Type");
 		}
@@ -66,7 +58,7 @@ definition {
 			for (var style : list "X,Y,3") {
 				JSONWebcontent.addWebContent(
 					content = "Tesla Model ${style}",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Tesla Model ${style}");
 			}
 		}
@@ -76,13 +68,13 @@ definition {
 				JSONDocument.addFile(
 					assetCategoryIds = ${suvId},
 					dmDocumentTitle = "BMW ${style}",
-					groupName = "Test Site Name");
+					groupName = ${randomSiteName});
 			}
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -90,7 +82,7 @@ definition {
 		task ("Add a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -268,7 +260,7 @@ definition {
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Warehouse") {
 				JSONCategory.addVocabulary(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${vocabularyName});
 			}
 		}
@@ -276,21 +268,21 @@ definition {
 		task ("Add 8 categories in Size vocabulary") {
 			for (var categoryName : list "6.5 inch,7 inch,7.5 inch,8 inch,8.5 inch") {
 				JSONCategory.addCategory(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${categoryName},
 					vocabularyName = "Size");
 			}
 
 			var inch90Id = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "9 inch",
 				vocabularyName = "Size");
 			var inch95Id = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "9.5 inch",
 				vocabularyName = "Size");
 			var inch100Id = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "10 inch",
 				vocabularyName = "Size");
 		}
@@ -298,21 +290,21 @@ definition {
 		task ("Add 8 categories in Warehouse vocabulary") {
 			for (var categoryName : list "Canada,England,Japan,France,Brazil") {
 				JSONCategory.addCategory(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${categoryName},
 					vocabularyName = "Warehouse");
 			}
 
 			var usId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "United States",
 				vocabularyName = "Warehouse");
 			var cnId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "China",
 				vocabularyName = "Warehouse");
 			var esId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Spain",
 				vocabularyName = "Warehouse");
 		}
@@ -321,7 +313,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch100Id},${usId}",
 				content = "Air Force 1",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Air Force 1");
 		}
 
@@ -329,7 +321,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch95Id},${cnId}",
 				content = "Air Jordan 1",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Air Jordan 1");
 		}
 
@@ -337,7 +329,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch90Id},${usId}",
 				content = "Air Max 1",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Air Max 1");
 		}
 
@@ -345,19 +337,19 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${inch100Id},${esId}",
 				content = "LeBron VIII",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "LeBron VIII");
 		}
 
 		task ("Add a manual collection with All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -369,7 +361,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -498,7 +490,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("View all web contents shown in Collection Display") {
@@ -576,20 +568,20 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Availability");
 		}
 
 		task ("Add the first category in Availability") {
 			var instockId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Instock",
 				vocabularyName = "Availability");
 		}
 
 		task ("Add the second category in Availability") {
 			var selloutId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Sellout",
 				vocabularyName = "Availability");
 		}
@@ -597,7 +589,7 @@ definition {
 		task ("Add the first web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 1",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title 1");
 		}
 
@@ -605,7 +597,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${selloutId},
 				content = "Web Content Content 2",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title 2");
 		}
 
@@ -613,19 +605,19 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${instockId},
 				content = "Web Content Content 3",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title 3");
 		}
 
 		task ("Add a manual collection named Hot Sale for All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Hot Sale");
 		}
 
 		task ("Select the second and third web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Hot Sale");
 
@@ -640,12 +632,12 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				subType = "Basic Web Content");
 		}
 
 		task ("Add a Collection Display to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -698,7 +690,7 @@ definition {
 		}
 
 		task ("Select the display page template as Specific in the first web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
 
@@ -771,27 +763,27 @@ definition {
 			HeadlessWebcontent.addBasicWebContent(
 				assetTagNames = "huawei",
 				content = "Wenjie M5",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Wenjie M5");
 
 			HeadlessBlog.addBlogEntry(
 				assetTagNames = "electric",
 				content = "GA8 Intelligent System",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "GA8 Intelligent System");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "GA8 Interior",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -808,13 +800,13 @@ definition {
 				assetType = "Basic Document");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -865,7 +857,7 @@ definition {
 		task ("Then the page designer filters the Collection Display by tags at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Page.selectTagInCollectionFilter(tagName = "huawei");
 
@@ -914,34 +906,34 @@ definition {
 			HeadlessWebcontent.addBasicWebContent(
 				assetTagNames = "huawei",
 				content = "Wenjie M5",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Wenjie M5");
 
 			HeadlessBlog.addBlogEntry(
 				assetTagNames = "electric",
 				content = "GA8 Intelligent System",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "GA8 Intelligent System");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "GA8 Interior",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1011,7 +1003,7 @@ definition {
 		task ("When the page designer filters the Collection Display by huawei tag at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			Page.selectTagInCollectionFilter(tagName = "huawei");
 		}
@@ -1072,33 +1064,33 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Levis 501");
 		}
 
 		task ("Add a blog") {
 			HeadlessBlog.addBlogEntry(
 				content = "LeBron VIII",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "LeBron VIII");
 		}
 
 		task ("Add a document") {
 			JSONDocument.addFile(
 				dmDocumentTitle = "AirPods",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 		}
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -1106,7 +1098,7 @@ definition {
 		task ("Add a Collection Display fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1154,7 +1146,7 @@ definition {
 		task ("View the Collection Filter doesn't appear at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertElementNotPresent(
 				index = 1,
@@ -1164,7 +1156,7 @@ definition {
 		task ("Select the Keywords type in Collection Filter") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.editCollectionFilter(
 				filter = "Keywords",
@@ -1196,7 +1188,7 @@ definition {
 		task ("Filter results of Collection Display by keywords at View mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var n = 1;
 
@@ -1220,33 +1212,33 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Levis 501",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Levis 501");
 		}
 
 		task ("Add a blog") {
 			HeadlessBlog.addBlogEntry(
 				content = "LeBron VIII",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "LeBron VIII");
 		}
 
 		task ("Add a document") {
 			JSONDocument.addFile(
 				dmDocumentTitle = "AirPods",
-				groupName = "Test Site Name");
+				groupName = ${randomSiteName});
 		}
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -1254,7 +1246,7 @@ definition {
 		task ("Add a Collection Display fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1352,7 +1344,7 @@ definition {
 		task ("Filter results of Collection Display by multiple keywords at View mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var n = 1;
 
@@ -1397,21 +1389,21 @@ definition {
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
 				JSONCategory.addVocabulary(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${title});
 			}
 		}
 
 		task ("Add a category in Vocabulary A") {
 			var categoryAId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category A",
 				vocabularyName = "Vocabulary A");
 		}
 
 		task ("Add a category in Vocabulary B") {
 			var categoryBId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category B",
 				vocabularyName = "Vocabulary B");
 		}
@@ -1420,7 +1412,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryAId},
 				content = "Web Content Content With Category A",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Category A");
 		}
 
@@ -1428,7 +1420,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				content = "Web Content Content With Both Categories",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Both Categories");
 		}
 
@@ -1436,7 +1428,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryAId},
 				content = "Blogs Entry Content With Category A",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Category A");
 		}
 
@@ -1444,7 +1436,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				content = "Blogs Entry Content With Both Categories",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Both Categories");
 		}
 
@@ -1452,7 +1444,7 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryAId},
 				dmDocumentTitle = "Document Title With Category A",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -1461,20 +1453,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				dmDocumentTitle = "Document Title With Both Categories",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1624,7 +1616,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Assert the order of elements inside of Container") {
@@ -1698,30 +1690,30 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add three subcategories in category") {
 			var subcategoryAId = JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Category Name",
 				title = "Subcategory A",
 				vocabularyName = "Vocabulary Name");
 			var subcategoryBId = JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Category Name",
 				title = "Subcategory B",
 				vocabularyName = "Vocabulary Name");
 			var subcategoryCId = JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Category Name",
 				title = "Subcategory C",
 				vocabularyName = "Vocabulary Name");
@@ -1730,7 +1722,7 @@ definition {
 		task ("Add a web content based on Basic Web Content without category") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
@@ -1738,14 +1730,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${subcategoryAId},
 				content = "Web Content Content With Subcategory",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Subcategory");
 		}
 
 		task ("Add a blogs entry without category") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
@@ -1753,14 +1745,14 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${subcategoryBId},
 				content = "Blogs Entry Content With Subcategory",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Subcategory");
 		}
 
 		task ("Add a document without category") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -1769,20 +1761,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${subcategoryCId},
 				dmDocumentTitle = "Document Title With Subcategory",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -1939,7 +1931,7 @@ definition {
 		task ("Navigate to page at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("View the order of elements inside of Container") {
@@ -2040,13 +2032,13 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -2054,7 +2046,7 @@ definition {
 		task ("Add a web content based on Basic Web Content without category") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
@@ -2062,14 +2054,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Category");
 		}
 
 		task ("Add a blogs entry without category") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
@@ -2077,14 +2069,14 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Category");
 		}
 
 		task ("Add a document without category") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -2093,20 +2085,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -2203,7 +2195,7 @@ definition {
 		task ("Navigate to page at view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("View the order of elements inside of Container") {
@@ -2256,21 +2248,21 @@ definition {
 		task ("Add two vocabularies") {
 			for (var title : list "Vocabulary A,Vocabulary B") {
 				JSONCategory.addVocabulary(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${title});
 			}
 		}
 
 		task ("Add a category in Vocabulary A") {
 			var categoryAId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category A",
 				vocabularyName = "Vocabulary A");
 		}
 
 		task ("Add a category in Vocabulary B") {
 			var categoryBId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category B",
 				vocabularyName = "Vocabulary B");
 		}
@@ -2279,7 +2271,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryAId},
 				content = "Web Content Content With Category A",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Category A");
 		}
 
@@ -2287,7 +2279,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				content = "Web Content Content With Both Categories",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Both Categories");
 		}
 
@@ -2295,7 +2287,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryAId},
 				content = "Blogs Entry Content With Category A",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Category A");
 		}
 
@@ -2303,7 +2295,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				content = "Blogs Entry Content With Both Categories",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Both Categories");
 		}
 
@@ -2311,7 +2303,7 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryAId},
 				dmDocumentTitle = "Document Title With Category A",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -2320,20 +2312,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = "${categoryAId},${categoryBId}",
 				dmDocumentTitle = "Document Title With Both Categories",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a manual collection with All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -2357,7 +2349,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -2507,7 +2499,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Assert the order of elements inside of Container") {
@@ -2581,21 +2573,21 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add three categories") {
 			var categoryAId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category A",
 				vocabularyName = "Vocabulary Name");
 			var categoryBId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category B",
 				vocabularyName = "Vocabulary Name");
 			var categoryCId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category C",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -2603,7 +2595,7 @@ definition {
 		task ("Add a web content based on Basic Web Content without category") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
@@ -2611,14 +2603,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryAId},
 				content = "Web Content Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Category");
 		}
 
 		task ("Add a blogs entry without category") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
@@ -2626,14 +2618,14 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryBId},
 				content = "Blogs Entry Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Category");
 		}
 
 		task ("Add a document without category") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -2642,20 +2634,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryCId},
 				dmDocumentTitle = "Document Title With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a manual collection with All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -2679,7 +2671,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -2818,7 +2810,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Assert the order of elements inside of Container") {
@@ -2915,13 +2907,13 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -2929,7 +2921,7 @@ definition {
 		task ("Add a web content based on Basic Web Content without category") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title");
 		}
 
@@ -2937,14 +2929,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Category");
 		}
 
 		task ("Add a blogs entry without category") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title");
 		}
 
@@ -2952,14 +2944,14 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Category");
 		}
 
 		task ("Add a document without category") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -2968,20 +2960,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a manual collection with All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -3005,7 +2997,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -3102,7 +3094,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Assert the order of elements inside of Container") {
@@ -3171,7 +3163,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Category");
 		}
 
@@ -3179,7 +3171,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${subcategoryId},
 				content = "Web Content Content With Subcategory",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Web Content Title With Subcategory");
 		}
 
@@ -3187,7 +3179,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Category");
 		}
 
@@ -3195,7 +3187,7 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${subcategoryId},
 				content = "Blogs Entry Content With Subcategory",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Blogs Entry Title With Subcategory");
 		}
 
@@ -3203,7 +3195,7 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title With Category",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 		}
@@ -3212,20 +3204,20 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				assetCategoryIds = ${subcategoryId},
 				dmDocumentTitle = "Document Title With Subcategory",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a manual collection with All Types") {
 			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Manual Collection");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
@@ -3249,7 +3241,7 @@ definition {
 		}
 
 		task ("Add a collection page based on manual collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
@@ -3348,7 +3340,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Assert the order of elements inside of Container") {
@@ -3402,7 +3394,7 @@ definition {
 			for (var style : list "501,510,512") {
 				JSONWebcontent.addWebContent(
 					content = ${style},
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${style});
 			}
 		}
@@ -3411,14 +3403,14 @@ definition {
 			for (var style : list "X,Y,S") {
 				HeadlessBlog.addBlogEntry(
 					content = "Model ${style}",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = "Model ${style}");
 			}
 		}
 
 		task ("Add the first dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Levis");
@@ -3426,14 +3418,14 @@ definition {
 
 		task ("Add the second dynamic collection for Blogs Entry") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "Blogs Entry",
 				title = "Tesla");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 		}
@@ -3441,7 +3433,7 @@ definition {
 		task ("Add the first Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -3589,7 +3581,7 @@ definition {
 		task ("Filter results of multiple Collection Displays by multiple Collection Filters at View mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var n = 1;
 
@@ -3649,46 +3641,46 @@ definition {
 		task ("Add two vocabularies") {
 			for (var vocabularyName : list "Size,Color") {
 				JSONCategory.addVocabulary(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${vocabularyName});
 			}
 		}
 
 		task ("Add three categories in Size vocabulary") {
 			var largeId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Large",
 				vocabularyName = "Size");
 			var mediumId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Medium",
 				vocabularyName = "Size");
 			var smallId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Small",
 				vocabularyName = "Size");
 		}
 
 		task ("Add a category in Color vocabulary") {
 			JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Pure Color",
 				vocabularyName = "Color");
 		}
 
 		task ("Add three subcategories in Pure Color cabulary") {
 			var blueId = JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Pure Color",
 				title = "Blue",
 				vocabularyName = "Color");
 			var redId = JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Pure Color",
 				title = "Red",
 				vocabularyName = "Color");
 			var greenId = JSONCategory.addSubcategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				parentCategoryName = "Pure Color",
 				title = "Green",
 				vocabularyName = "Color");
@@ -3698,7 +3690,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${largeId},${greenId}",
 				content = "T-shirt 1",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "T-shirt 1");
 		}
 
@@ -3706,7 +3698,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${mediumId},${greenId}",
 				content = "T-shirt 2",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "T-shirt 2");
 		}
 
@@ -3714,7 +3706,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${smallId},${redId}",
 				content = "T-shirt 3",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "T-shirt 3");
 		}
 
@@ -3722,19 +3714,19 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${largeId},${blueId}",
 				content = "T-shirt 4",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "T-shirt 4");
 		}
 
 		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -3947,7 +3939,7 @@ definition {
 		task ("Navigate to page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Collection Page Name",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("View the source label of the second Collection Filter is T-shirt Color") {
@@ -4006,23 +3998,23 @@ definition {
 	test ViewNoResultsFoundInCollectionDisplayWhenNoMatchedCollectionItems {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Type");
 		}
 
 		task ("Add 4 categories in Type vocabulary") {
 			var suvId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "SUV",
 				vocabularyName = "Type");
 			var carId = JSONCategory.addCategory(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Car",
 				vocabularyName = "Type");
 
 			for (var title : list "Trunk,Hatchback") {
 				JSONCategory.addCategory(
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${title},
 					vocabularyName = "Type");
 			}
@@ -4032,7 +4024,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${carId},
 				content = "Tesla Model X",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Tesla Model X");
 		}
 
@@ -4040,7 +4032,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${suvId},
 				content = "Tesla Model Y",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Tesla Model Y");
 		}
 
@@ -4048,20 +4040,20 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${carId},
 				content = "Tesla Model 3",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				title = "Tesla Model 3");
 		}
 
 		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemType = "All Types",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add the first content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 1",
 				type = "content");
 		}
@@ -4069,7 +4061,7 @@ definition {
 		task ("Add a Collection Display fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -4142,7 +4134,7 @@ definition {
 		task ("View No Results Found in Collection Dipslay when search BMW at View mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name 1",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var n = 1;
 
@@ -4167,7 +4159,7 @@ definition {
 
 		task ("Add the second content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name 2",
 				type = "content");
 		}
@@ -4175,7 +4167,7 @@ definition {
 		task ("Add a Collection Display fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -4240,7 +4232,7 @@ definition {
 		task ("View No Results Found in Collection Dipslay when select Hatchback at View mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name 2",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			var n = 1;
 

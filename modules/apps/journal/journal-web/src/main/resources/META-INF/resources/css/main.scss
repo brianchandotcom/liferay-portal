@@ -9,8 +9,7 @@ $toolbarZIndex: 971;
 $controlMenuHeight: 56px;
 $sidebarHeaderHeight: 104px;
 $sidebarWidth: 398px;
-
-$portletLayoutMargin: 35px;
+$sidebarWidthClosed: 40px;
 
 $productMenuTransitionDuration: 0.5s;
 $productMenuWidth: 320px;
@@ -205,7 +204,13 @@ $productMenuWidth: 320px;
 			}
 
 			.contextual-sidebar-mr {
-				margin-right: $sidebarWidth;
+				margin: 0 $sidebarWidthClosed + 4px 0 4px;
+				padding-top: $toolbarHeight + 1.5rem;
+
+				@include media-breakpoint-up(lg) {
+					margin: 0 $sidebarWidth + 8px 0 0;
+					padding-top: $toolbarDesktopHeight;
+				}
 			}
 
 			.contextual-sidebar-mr-n {

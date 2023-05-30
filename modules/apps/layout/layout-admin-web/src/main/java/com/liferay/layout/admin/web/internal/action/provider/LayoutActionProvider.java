@@ -84,28 +84,39 @@ public class LayoutActionProvider {
 			itemsJSONArray.put(() -> _getPreviewDraftActionJSONObject(layout));
 		}
 
-		if (!layout.isTypeCollection() &&
+		boolean showAddChildPageAction =
+			_layoutActionsHelper.isShowAddChildPageAction(layout);
+
+		if (showAddChildPageAction && !layout.isTypeCollection() &&
 			Validator.isNotNull(_getAddLayoutURL(layout.getPlid()))) {
 
 			itemsJSONArray.put(() -> _getAddChildPageJSONObject(layout));
 		}
 
-		if (!layout.isTypeCollection() &&
+		if (showAddChildPageAction && !layout.isTypeCollection() &&
 			Validator.isNotNull(_getAddCollectionLayoutURL(layout.getPlid()))) {
 
 			itemsJSONArray.put(
 				() -> _getAddChildCollectionPageJSONObject(layout));
 		}
 
-		itemsJSONArray.put(
-			JSONUtil.put("type", "divider")
-		).put(
-			() -> _getCopyPageJSONObject(layout)
-		).put(
-			JSONUtil.put("type", "divider")
-		).put(
-			() -> _getConfigureJSONObject(layout)
-		);
+		Group group = layout.getGroup();
+
+		if (_layoutActionsHelper.isShowCopyLayoutAction(layout, group)) {
+			itemsJSONArray.put(
+				JSONUtil.put("type", "divider")
+			).put(
+				() -> _getCopyPageJSONObject(layout)
+			);
+		}
+
+		if (_layoutActionsHelper.isShowConfigureAction(layout)) {
+			itemsJSONArray.put(
+				JSONUtil.put("type", "divider")
+			).put(
+				() -> _getConfigureJSONObject(layout)
+			);
+		}
 
 		if (layout.isTypeCollection() &&
 			Validator.isNotNull(_getViewCollectionItemsURL(layout))) {
@@ -113,13 +124,17 @@ public class LayoutActionProvider {
 			itemsJSONArray.put(() -> _getViewCollectionItemsJSONObject(layout));
 		}
 
-		itemsJSONArray.put(
-			() -> _getPermissionsJSONObject(layout)
-		).put(
-			JSONUtil.put("type", "divider")
-		).put(
-			() -> _getDeleteJSONObject(afterDeleteSelectedLayout, layout)
-		);
+		if (_layoutActionsHelper.isShowPermissionsAction(layout, group)) {
+			itemsJSONArray.put(() -> _getPermissionsJSONObject(layout));
+		}
+
+		if (_layoutActionsHelper.isShowDeleteAction(layout)) {
+			itemsJSONArray.put(
+				JSONUtil.put("type", "divider")
+			).put(
+				() -> _getDeleteJSONObject(afterDeleteSelectedLayout, layout)
+			);
+		}
 
 		return JSONUtil.putAll(
 			JSONUtil.put(

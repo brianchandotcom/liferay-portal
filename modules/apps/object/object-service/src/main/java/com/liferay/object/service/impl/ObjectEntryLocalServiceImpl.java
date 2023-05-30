@@ -1535,65 +1535,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private String _createInsertIntoLocalizationTableSQL(
-			DynamicObjectDefinitionLocalizationTable
-				dynamicObjectDefinitionLocalizationTable,
-			Map<String, Serializable> values)
-		throws PortalException {
-
-		if (dynamicObjectDefinitionLocalizationTable == null) {
-			return null;
-		}
-
-		List<ObjectField> objectFields =
-			dynamicObjectDefinitionLocalizationTable.getObjectFields();
-
-		if (objectFields.isEmpty()) {
-			return null;
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append("insert into ");
-		sb.append(dynamicObjectDefinitionLocalizationTable.getName());
-		sb.append(" (");
-		sb.append(
-			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
-		sb.append(", languageId");
-
-		int count = 2;
-
-		for (ObjectField objectField : objectFields) {
-			if (objectField.isRequired() &&
-				!values.containsKey(objectField.getI18nObjectFieldName())) {
-
-				throw new ObjectEntryValuesException.Required(
-					objectField.getName());
-			}
-
-			sb.append(", ");
-			sb.append(objectField.getDBColumnName());
-
-			count++;
-		}
-
-		sb.append(") values (?");
-
-		for (int i = 1; i < count; i++) {
-			sb.append(", ?");
-		}
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("SQL: " + sql);
-		}
-
-		return sql;
-	}
-
 	private void _deleteFileEntries(
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
@@ -2920,12 +2861,54 @@ public class ObjectEntryLocalServiceImpl
 				DynamicObjectDefinitionLocalizationTableFactory.create(
 					objectDefinition, _objectFieldLocalService);
 
-		String insertIntoLocalizationTableSQL =
-			_createInsertIntoLocalizationTableSQL(
-				dynamicObjectDefinitionLocalizationTable, values);
-
-		if (insertIntoLocalizationTableSQL == null) {
+		if (dynamicObjectDefinitionLocalizationTable == null) {
 			return;
+		}
+
+		List<ObjectField> objectFields =
+			dynamicObjectDefinitionLocalizationTable.getObjectFields();
+
+		if (objectFields.isEmpty()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("insert into ");
+		sb.append(dynamicObjectDefinitionLocalizationTable.getName());
+		sb.append(" (");
+		sb.append(
+			dynamicObjectDefinitionLocalizationTable.getForeignKeyColumnName());
+		sb.append(", languageId");
+
+		int count = 2;
+
+		for (ObjectField objectField : objectFields) {
+			if (objectField.isRequired() &&
+				!values.containsKey(objectField.getI18nObjectFieldName())) {
+
+				throw new ObjectEntryValuesException.Required(
+					objectField.getName());
+			}
+
+			sb.append(", ");
+			sb.append(objectField.getDBColumnName());
+
+			count++;
+		}
+
+		sb.append(") values (?");
+
+		for (int i = 1; i < count; i++) {
+			sb.append(", ?");
+		}
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("SQL: " + sql);
 		}
 
 		Set<Locale> locales = new HashSet<>();
@@ -2962,7 +2945,7 @@ public class ObjectEntryLocalServiceImpl
 		for (Locale locale : locales) {
 			_insertIntoLocalizationTable(
 				connection, dynamicObjectDefinitionLocalizationTable,
-				insertIntoLocalizationTableSQL, values, locale, objectEntryId,
+				sql, values, locale, objectEntryId,
 				dynamicObjectDefinitionLocalizationTable.getObjectFields());
 		}
 	}

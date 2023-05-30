@@ -96,6 +96,6 @@ public class MimeTypeSizeLimitUtil {
 		MimeTypeSizeLimitUtil.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"[a-zA-Z0-9][a-zA-Z0-9$!#&^_-]*");
+		"[a-zA-Z0-9][a-zA-Z0-9$!#&^_+-]*");
 
 }

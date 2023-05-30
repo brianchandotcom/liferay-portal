@@ -34,7 +34,6 @@ import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.GenericUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,7 +50,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -83,7 +81,6 @@ import java.util.Set;
 
 import javax.portlet.ActionURL;
 import javax.portlet.ResourceURL;
-import javax.portlet.WindowStateException;
 
 /**
  * @author Cristina González
@@ -318,49 +315,30 @@ public class ContentDashboardAdminDisplayContext {
 			contentDashboardItem);
 	}
 
-	public String getOnClickConfiguration() throws WindowStateException {
-		StringBundler sb = new StringBundler(13);
+	public String getPanelState() {
+		return SessionClicks.get(
+			_portal.getHttpServletRequest(_liferayPortletRequest),
+			"com.liferay.content.dashboard.web_panelState", "closed");
+	}
 
-		sb.append("Liferay.Portlet.openModal({namespace: '");
-
+	public String getPortletDisplayId() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		sb.append(portletDisplay.getNamespace());
-
-		sb.append("', onClose: function() {Liferay.Portlet.refresh('#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_')}, portletSelector: '#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', portletId: '");
-		sb.append(portletDisplay.getId());
-		sb.append("', title: '");
-		sb.append(
-			ResourceBundleUtil.getString(_resourceBundle, "configuration"));
-		sb.append("', url: '");
-
-		sb.append(
-			HtmlUtil.escapeJS(
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/content_dashboard/edit_content_dashboard_configuration"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString()));
-
-		sb.append("'}); return false;");
-
-		return sb.toString();
+		return portletDisplay.getId();
 	}
 
-	public String getPanelState() {
-		return SessionClicks.get(
-			_portal.getHttpServletRequest(_liferayPortletRequest),
-			"com.liferay.content.dashboard.web_panelState", "closed");
+	public String getPortletURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/content_dashboard/edit_content_dashboard_configuration"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public String getReviewDateString() {

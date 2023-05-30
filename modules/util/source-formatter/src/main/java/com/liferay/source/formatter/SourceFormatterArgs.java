@@ -31,6 +31,8 @@ public class SourceFormatterArgs {
 
 	public static final String BASE_DIR_NAME = "./";
 
+	public static final boolean CHECK_ERC_USAGE = false;
+
 	public static final boolean CHECK_VULNERABILITIES = false;
 
 	public static final int COMMIT_COUNT = 0;
@@ -145,6 +147,10 @@ public class SourceFormatterArgs {
 		return _autoFix;
 	}
 
+	public boolean isCheckErcUsage() {
+		return _checkErcUsage;
+	}
+
 	public boolean isCheckVulnerabilities() {
 		return _checkVulnerabilities;
 	}
@@ -215,6 +221,10 @@ public class SourceFormatterArgs {
 
 	public void setCheckCategoryNames(List<String> checkCategoryNames) {
 		_checkCategoryNames = checkCategoryNames;
+	}
+
+	public void setCheckErcUsage(boolean checkErcUsage) {
+		_checkErcUsage = checkErcUsage;
 	}
 
 	public void setCheckNames(List<String> checkNames) {
@@ -327,6 +337,7 @@ public class SourceFormatterArgs {
 	private boolean _autoFix = AUTO_FIX;
 	private String _baseDirName = BASE_DIR_NAME;
 	private List<String> _checkCategoryNames = new ArrayList<>();
+	private boolean _checkErcUsage = CHECK_ERC_USAGE;
 	private List<String> _checkNames = new ArrayList<>();
 	private boolean _checkVulnerabilities = CHECK_VULNERABILITIES;
 	private int _commitCount = COMMIT_COUNT;

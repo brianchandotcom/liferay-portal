@@ -883,6 +883,11 @@
 
 		<!-- Module Source Checks -->
 
+		<check name="JavaLocalServiceImplErcUsageCheck">
+			<category name="Productivity" />
+			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaModuleClassGetResourceCallCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that dependencies files are located in the correct directory." />
@@ -925,6 +930,11 @@
 		<check name="JavaOSGiReferenceCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@Component` annotation." />
+		</check>
+		<check name="JavaServiceImplErcUsageCheck">
+			<category name="Productivity" />
+			<description name="Automatically generates and ensures that `externalReferenceCode` is properly used in remote `*ServiceImpl` add method." />
+			<property name="enabled" value="false" />
 		</check>
 
 		<!-- Plugin Source Checks -->

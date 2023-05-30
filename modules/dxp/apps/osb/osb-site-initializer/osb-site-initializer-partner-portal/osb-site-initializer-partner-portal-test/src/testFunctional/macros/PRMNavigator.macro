@@ -22,6 +22,10 @@ definition {
 		Open(locator1 = "${baseURL}/web/${siteNameURL}/l/${claimId}");
 
 		echo("${baseURL}/web/${siteNameURL}/l/${claimId}");
+
+		WaitForVisible(
+			key_title = "MDF Claim",
+			locator1 = "Header#H1_TITLE");
 	}
 
 	macro gotoMDF {
@@ -40,6 +44,10 @@ definition {
 		Open(locator1 = "${baseURL}/web/${siteNameURL}/l/${requestId}");
 
 		echo("${baseURL}/web/${siteNameURL}/l/${requestId}");
+
+		WaitForVisible(
+			key_title = "Campaign MDF Request",
+			locator1 = "Header#H1_TITLE");
 	}
 
 	macro goToNavItem {

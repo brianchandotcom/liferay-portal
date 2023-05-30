@@ -193,7 +193,7 @@ export function mockSearchResults(itemsPerPage = 10) {
 			_id: `com.liferay.journal.model.JournalArticle_PORTLET_${i}`,
 			_index: 'liferay-20099',
 			_score: score,
-			_type: 'LiferayDocumentType',
+			_type: '_doc',
 			fields,
 		});
 

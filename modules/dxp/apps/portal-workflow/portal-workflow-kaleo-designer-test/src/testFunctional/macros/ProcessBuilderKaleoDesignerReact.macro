@@ -718,6 +718,12 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#HIDE_ANGLE_ICON");
 	}
 
+	macro openTranslationLanguageDropdown {
+		Click.mouseOverClick(
+			key_title = "select-translation-language",
+			locator1 = "Button#ANY_TITLE");
+	}
+
 	macro restorePreviousVersion {
 		Click(
 			key_number = ${number},

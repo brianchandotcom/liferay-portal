@@ -23,6 +23,7 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -153,6 +155,18 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		}
 
 		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
+			UnicodeProperties typeSettingsUnicodeProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.remove("designConfigurationModified");
+
+			draftLayout = _layoutLocalService.updateLayout(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(),
+				typeSettingsUnicodeProperties.toString());
+		}
 
 		long originalUserId = PrincipalThreadLocal.getUserId();
 

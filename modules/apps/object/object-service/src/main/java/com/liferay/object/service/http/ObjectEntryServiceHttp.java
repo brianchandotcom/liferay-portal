@@ -298,7 +298,7 @@ public class ObjectEntryServiceHttp {
 			getManyToManyObjectEntries(
 				HttpPrincipal httpPrincipal, long groupId,
 				long objectRelationshipId, long primaryKey, boolean related,
-				boolean reverse, int start, int end)
+				boolean reverse, String search, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -308,7 +308,7 @@ public class ObjectEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectRelationshipId, primaryKey, related,
-				reverse, start, end);
+				reverse, search, start, end);
 
 			Object returnObj = null;
 
@@ -342,7 +342,7 @@ public class ObjectEntryServiceHttp {
 	public static int getManyToManyObjectEntriesCount(
 			HttpPrincipal httpPrincipal, long groupId,
 			long objectRelationshipId, long primaryKey, boolean related,
-			boolean reverse)
+			boolean reverse, String search)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -352,7 +352,7 @@ public class ObjectEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectRelationshipId, primaryKey, related,
-				reverse);
+				reverse, search);
 
 			Object returnObj = null;
 
@@ -512,7 +512,7 @@ public class ObjectEntryServiceHttp {
 			getOneToManyObjectEntries(
 				HttpPrincipal httpPrincipal, long groupId,
 				long objectRelationshipId, long primaryKey, boolean related,
-				int start, int end)
+				String search, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -522,7 +522,7 @@ public class ObjectEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectRelationshipId, primaryKey, related,
-				start, end);
+				search, start, end);
 
 			Object returnObj = null;
 
@@ -555,7 +555,8 @@ public class ObjectEntryServiceHttp {
 
 	public static int getOneToManyObjectEntriesCount(
 			HttpPrincipal httpPrincipal, long groupId,
-			long objectRelationshipId, long primaryKey, boolean related)
+			long objectRelationshipId, long primaryKey, boolean related,
+			String search)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -564,7 +565,8 @@ public class ObjectEntryServiceHttp {
 				_getOneToManyObjectEntriesCountParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, objectRelationshipId, primaryKey, related);
+				methodKey, groupId, objectRelationshipId, primaryKey, related,
+				search);
 
 			Object returnObj = null;
 
@@ -827,11 +829,12 @@ public class ObjectEntryServiceHttp {
 	private static final Class<?>[] _getManyToManyObjectEntriesParameterTypes6 =
 		new Class[] {
 			long.class, long.class, long.class, boolean.class, boolean.class,
-			int.class, int.class
+			String.class, int.class, int.class
 		};
 	private static final Class<?>[]
 		_getManyToManyObjectEntriesCountParameterTypes7 = new Class[] {
-			long.class, long.class, long.class, boolean.class, boolean.class
+			long.class, long.class, long.class, boolean.class, boolean.class,
+			String.class
 		};
 	private static final Class<?>[] _getModelResourcePermissionParameterTypes8 =
 		new Class[] {com.liferay.object.model.ObjectEntry.class};
@@ -841,12 +844,12 @@ public class ObjectEntryServiceHttp {
 		new Class[] {String.class, long.class, long.class};
 	private static final Class<?>[] _getOneToManyObjectEntriesParameterTypes11 =
 		new Class[] {
-			long.class, long.class, long.class, boolean.class, int.class,
-			int.class
+			long.class, long.class, long.class, boolean.class, String.class,
+			int.class, int.class
 		};
 	private static final Class<?>[]
 		_getOneToManyObjectEntriesCountParameterTypes12 = new Class[] {
-			long.class, long.class, long.class, boolean.class
+			long.class, long.class, long.class, boolean.class, String.class
 		};
 	private static final Class<?>[]
 		_hasModelResourcePermissionParameterTypes13 = new Class[] {

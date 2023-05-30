@@ -45,7 +45,6 @@ public class DynamicObjectDefinitionLocalizationTable
 		createColumn(
 			objectDefinition.getPKObjectFieldDBColumnName(), Long.class,
 			Types.BIGINT, Column.FLAG_DEFAULT);
-
 		createColumn(
 			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

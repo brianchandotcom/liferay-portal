@@ -8,13 +8,13 @@
 	"learn-custom-element": {
 		"en_US": {
 			"message": "Learn more about custom element client extensions.",
-			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/browser-based-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type"
+			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type"
 		}
 	},
 	"learn-iframe": {
 		"en_US": {
 			"message": "Learn more about IFrame client extensions.",
-			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/browser-based-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-iframe-type"
+			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-iframe-type"
 		}
 	}
 }

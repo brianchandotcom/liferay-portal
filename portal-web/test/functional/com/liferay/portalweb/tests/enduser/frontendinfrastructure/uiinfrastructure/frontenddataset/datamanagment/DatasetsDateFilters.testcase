@@ -181,3 +181,38 @@ definition {
 			AssertVisible(locator1 = "FrontendDataSetAdmin#NEW_FILTER_INVALID_DATE");
 		}
 	}
+
+	@description = "LPS-185354 - Confirms the user can cancel a new date filter creation."
+	@priority = 4
+	test CanCancelDateFilterCreation {
+		task("And click on the Create Filter button") {
+			Button.click(button = "Create Filter");
+		}
+		
+		task("When the user adds a name") {
+			Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				value1 = "Test");
+		}
+
+		task("And adds 'dateCreated' to the filter") {
+			Type(locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+				value1 = "dateCreated");
+		}
+
+		task("And selects a date on From field"){
+			FrontendDataSet.selectFromFieldDates(key_dateNumber = "10");
+		}
+
+		task("And selects a date on To field") {
+			FrontendDataSet.selectToFieldDates(key_dateNumber = "20");
+		}
+
+		task("And clicks on Cancel button"){
+			Click(locator1 = "FrontendDataSetAdmin#NEW_FILTER_CANCEL_BUTTON");
+		}
+
+		task("Then New filter modal is closed and the changes are not applied"){
+			AssertVisible(locator1= "FrontendDataSetAdmin#CREATE_FILTER_BUTTON");
+		}
+	}
+

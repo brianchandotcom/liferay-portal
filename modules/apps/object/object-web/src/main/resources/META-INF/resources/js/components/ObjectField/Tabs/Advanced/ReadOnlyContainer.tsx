@@ -13,11 +13,16 @@
  */
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
-import {Card, ExpressionBuilder} from '@liferay/object-js-components-web';
+import {
+	Card,
+	ExpressionBuilder,
+	SidebarCategory,
+} from '@liferay/object-js-components-web';
 import React from 'react';
 
 interface ReadOnlyContainerProps {
 	disabled?: boolean;
+	readOnlySidebarElements: SidebarCategory[];
 	requiredField: boolean;
 	setValues: (value: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
@@ -25,6 +30,7 @@ interface ReadOnlyContainerProps {
 
 export function ReadOnlyContainer({
 	disabled,
+	readOnlySidebarElements,
 	requiredField,
 	setValues,
 	values,
@@ -86,6 +92,7 @@ export function ReadOnlyContainer({
 								parentWindow.Liferay.fire(
 									'openExpressionBuilderModal',
 									{
+										eventSidebarElements: readOnlySidebarElements,
 										header: Liferay.Language.get(
 											'expression-builder'
 										),

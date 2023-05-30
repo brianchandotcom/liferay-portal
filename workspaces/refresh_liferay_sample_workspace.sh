@@ -188,7 +188,7 @@ function DadJoke() {
 			.then((joke) => {
 				setJoke(joke);
 			});
-	}, []);
+	}, [joke, setJoke]);
 
 	if (!joke) {
 		return <div>Loading...</div>;

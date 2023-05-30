@@ -97,7 +97,9 @@ export function InviteMemberModal({
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
+
 		let user: UserAccount;
+
 		if (formValid) {
 			user = await getUserByEmail(formFields.email);
 			if (!user) {
@@ -110,8 +112,11 @@ export function InviteMemberModal({
 					jsonBody
 				);
 			}
+
 			user = await getUserByEmail(formFields.email);
+
 			await addAccountRolesToUser(user);
+
 			setTimeout(() => location.reload(), 200);
 		}
 	};
@@ -120,6 +125,7 @@ export function InviteMemberModal({
 		const isValid = checkboxValues.some(
 			(checkbox: CheckboxRole) => checkbox.isChecked
 		);
+
 		setFormValid(isValid);
 	};
 
@@ -133,6 +139,7 @@ export function InviteMemberModal({
 
 			return role;
 		}, []);
+
 		setCheckboxRoles(rolesChecked);
 		validateForm(rolesChecked);
 	};

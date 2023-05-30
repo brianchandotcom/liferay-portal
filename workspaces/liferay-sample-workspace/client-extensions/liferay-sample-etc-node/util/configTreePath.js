@@ -18,39 +18,40 @@ import path from 'path';
 import config from '../config';
 
 async function* walk(dir) {
-    if (fs.existsSync(dir) === false) {
-        return;
-    }
+	if (fs.existsSync(dir) === false) {
+		return;
+	}
 
-    const dirents = await fs.promises.opendir(dir, {
-        withFileTypes: true,
-    });
+	const dirents = await fs.promises.opendir(dir, {
+		withFileTypes: true,
+	});
 
-    for await (const dirent of dirents) {
-        if (dirent.name.startsWith('..')) {
-            continue;
-        }
+	for await (const dirent of dirents) {
+		if (dirent.name.startsWith('..')) {
+			continue;
+		}
 
-        const entryPath = path.join(dir, dirent.name);
+		const entryPath = path.join(dir, dirent.name);
 
-        if (dirent.isDirectory()) {
-            yield* walk(entryPath);
-        } else {
-            yield entryPath;
-        }
-    }
+		if (dirent.isDirectory()) {
+			yield* walk(entryPath);
+		}
+		else {
+			yield entryPath;
+		}
+	}
 }
 
 const configTreeMap = async () => {
-    for await (const configFile of walk(config.configTreePath)) {
-        const configFileName = configFile.substring(
-            configFile.lastIndexOf('/') + 1
-        );
+	for await (const configFile of walk(config.configTreePath)) {
+		const configFileName = configFile.substring(
+			configFile.lastIndexOf('/') + 1
+		);
 
-        config[configFileName] = fs.readFileSync(configFile, 'utf-8');
-    }
+		config[configFileName] = fs.readFileSync(configFile, 'utf-8');
+	}
 
-    return config;
+	return config;
 };
 
 export default await configTreeMap();

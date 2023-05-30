@@ -61,8 +61,7 @@ export function MembersPage({
 	selectedAccount,
 }: MembersPageProps) {
 	const [visible, setVisible] = useState<boolean>(false);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading] = useState<boolean>(false);
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
 

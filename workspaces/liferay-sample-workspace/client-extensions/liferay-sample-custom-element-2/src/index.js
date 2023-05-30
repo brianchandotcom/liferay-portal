@@ -41,7 +41,9 @@ const App = ({route}) => {
 			{Liferay.ThemeDisplay.isSignedIn() && (
 				<div>
 					<Comic />
+
 					<hr />
+
 					<DadJoke />
 				</div>
 			)}

@@ -78,3 +78,33 @@ definition {
 				key_label = "To");
 		}
 	}
+
+	@description = "LPS-185346 - Confirms the date fields values when creating a new date filter are YYYY-MM-DD."
+	@priority = 3
+	test AssertDateFieldsFormat {
+		task("And click on the 'Create Filter' button") {
+			Button.click(button = "Create Filter");
+		}
+		
+		task("When the user adds a name") {
+			Type(locator1 = "FrontendDataSetAdmin#NEW_FILTER_NAME",
+				value1 = "Test");
+		}
+
+		task("And adds 'dateCreated' to the filter") {
+			Type(locator1 = "FrontendDataSetAdmin#FILTER_BY_DROPDOWN",
+				value1 = "dateCreated");
+		}
+
+		task("Then the default value is 'YYYY-MM-DD' in 'From' field"){
+			AssertVisible(locator1 = "FrontendDataSetAdmin#DATE_FIELD_PLACEHOLDER",
+			key_placeholderText = "YYYY-MM-DD",
+			key_dateField = "From");
+		}
+
+		task("And the default value is 'YYYY-MM-DD' in 'To' field") {
+			AssertVisible(locator1 = "FrontendDataSetAdmin#DATE_FIELD_PLACEHOLDER",
+			key_placeholderText = "YYYY-MM-DD",
+			key_dateField = "To");
+		}
+	}

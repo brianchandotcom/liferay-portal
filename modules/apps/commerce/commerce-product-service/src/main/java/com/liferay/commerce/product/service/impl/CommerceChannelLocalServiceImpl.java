@@ -112,6 +112,7 @@ public class CommerceChannelLocalServiceImpl
 			}
 		}
 
+		_validateAccountEntry(accountEntryId);
 		_validateType(type);
 
 		long commerceChannelId = counterLocalService.increment();
@@ -122,9 +123,6 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setCompanyId(user.getCompanyId());
 		commerceChannel.setUserId(user.getUserId());
 		commerceChannel.setUserName(user.getFullName());
-
-		_validateAccountEntry(accountEntryId);
-
 		commerceChannel.setAccountEntryId(accountEntryId);
 		commerceChannel.setSiteGroupId(siteGroupId);
 		commerceChannel.setName(name);
@@ -416,14 +414,13 @@ public class CommerceChannelLocalServiceImpl
 			String commerceCurrencyCode)
 		throws PortalException {
 
+		_validateAccountEntry(accountEntryId);
 		_validateType(type);
 
 		CommerceChannel commerceChannel =
 			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
 
 		long oldSiteGroupId = commerceChannel.getSiteGroupId();
-
-		_validateAccountEntry(accountEntryId);
 
 		commerceChannel.setAccountEntryId(accountEntryId);
 		commerceChannel.setSiteGroupId(siteGroupId);
@@ -618,18 +615,20 @@ public class CommerceChannelLocalServiceImpl
 	private void _validateAccountEntry(long accountEntryId)
 		throws PortalException {
 
-		if (accountEntryId != 0) {
-			AccountEntry accountEntry =
-				_accountEntryLocalService.getAccountEntry(accountEntryId);
+		if (accountEntryId == 0) {
+			return;
+		}
 
-			if (!StringUtil.equals(
-					accountEntry.getType(),
-					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER)) {
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			accountEntryId);
 
-				throw new AccountEntryTypeException(
-					"Channel can only be assigned with an account type:" +
-						AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER);
-			}
+		if (!StringUtil.equals(
+				accountEntry.getType(),
+				AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER)) {
+
+			throw new AccountEntryTypeException(
+				"Channel can only be assigned with an account entry type:" +
+					AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER);
 		}
 	}
 

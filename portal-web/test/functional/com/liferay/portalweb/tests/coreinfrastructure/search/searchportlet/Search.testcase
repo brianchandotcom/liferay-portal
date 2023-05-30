@@ -548,13 +548,13 @@ definition {
 
 		task ("Create two object entries") {
 			JSONObject.addObjectEntryViaJSONAPI(
-				fieldName = "Apple Fruit",
-				fieldValue = "title",
+				fieldName = "title",
+				fieldValue = "Apple Fruit",
 				objectName = "CustomObject");
 
 			JSONObject.addObjectEntryViaJSONAPI(
-				fieldName = "Banana Fruit",
-				fieldValue = "title",
+				fieldName = "title",
+				fieldValue = "Banana Fruit",
 				objectName = "CustomObject");
 		}
 

@@ -297,7 +297,7 @@ public class ValidatorTest {
 		}
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleases(_sourceConnection)
 		).thenReturn(
 			missingDestinationModuleReleases
 		);
@@ -313,7 +313,7 @@ public class ValidatorTest {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleases(_sourceConnection)
 		).thenReturn(
 			releases
 		);
@@ -355,7 +355,7 @@ public class ValidatorTest {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleases(_sourceConnection)
 		).thenReturn(
 			releases
 		);
@@ -385,7 +385,7 @@ public class ValidatorTest {
 		List<Release> releases = _createReleaseElements();
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getReleaseEntries(_sourceConnection)
+			() -> DatabaseUtil.getReleases(_sourceConnection)
 		).thenReturn(
 			releases
 		);

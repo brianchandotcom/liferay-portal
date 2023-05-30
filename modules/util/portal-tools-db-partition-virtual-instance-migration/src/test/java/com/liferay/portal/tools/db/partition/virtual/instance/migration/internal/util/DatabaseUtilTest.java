@@ -38,7 +38,37 @@ import org.mockito.Mockito;
 public class DatabaseUtilTest {
 
 	@Test
-	public void testGetReleaseEntries() throws SQLException {
+	public void testGetReleaseMapEntry() throws SQLException {
+		Release testRelease = new Release(
+			"module", Version.parseVersion("14.2.4"), true);
+
+		_mockGetReleaseMap(testRelease, true);
+
+		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
+			_connection);
+
+		Release release = releaseMap.get("module");
+
+		Assert.assertNotNull(release);
+
+		Assert.assertTrue(release.equals(testRelease));
+	}
+
+	@Test
+	public void testGetReleaseMapNotFoundEntry() throws SQLException {
+		Release testRelease = new Release(
+			"module", Version.parseVersion("14.2.4"), true);
+
+		_mockGetReleaseMap(testRelease, false);
+
+		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
+			_connection);
+
+		Assert.assertNull(releaseMap.get("module"));
+	}
+
+	@Test
+	public void testGetReleases() throws SQLException {
 		Release module1Release = new Release(
 			"module1", Version.parseVersion("14.2.4"), true);
 		Release module2Release = new Release(
@@ -95,48 +125,17 @@ public class DatabaseUtilTest {
 			module2Release.getVerified()
 		);
 
-		List<Release> releaseEntries = DatabaseUtil.getReleaseEntries(
-			_connection);
+		List<Release> releases = DatabaseUtil.getReleases(_connection);
 
-		Assert.assertTrue(releaseEntries.size() == 2);
+		Assert.assertTrue(releases.size() == 2);
 
-		Release module1Entry = releaseEntries.get(0);
+		Release module1Entry = releases.get(0);
 
 		Assert.assertTrue(module1Entry.equals(module1Release));
 
-		Release module2Entry = releaseEntries.get(1);
+		Release module2Entry = releases.get(1);
 
 		Assert.assertTrue(module2Entry.equals(module2Release));
-	}
-
-	@Test
-	public void testGetReleaseMapEntry() throws SQLException {
-		Release testRelease = new Release(
-			"module", Version.parseVersion("14.2.4"), true);
-
-		_mockGetReleaseMap(testRelease, true);
-
-		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
-			_connection);
-
-		Release release = releaseMap.get("module");
-
-		Assert.assertNotNull(release);
-
-		Assert.assertTrue(release.equals(testRelease));
-	}
-
-	@Test
-	public void testGetReleaseMapNotFoundEntry() throws SQLException {
-		Release testRelease = new Release(
-			"module", Version.parseVersion("14.2.4"), true);
-
-		_mockGetReleaseMap(testRelease, false);
-
-		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
-			_connection);
-
-		Assert.assertNull(releaseMap.get("module"));
 	}
 
 	@Test

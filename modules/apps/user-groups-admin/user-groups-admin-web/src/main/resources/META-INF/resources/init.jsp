@@ -52,7 +52,6 @@ page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %>
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
-page import="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil" %><%@
@@ -63,7 +62,6 @@ page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -75,7 +73,6 @@ page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEn
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys" %><%@
 page import="com.liferay.user.groups.admin.web.internal.display.context.EditUserGroupAssignmentsManagementToolbarDisplayContext" %><%@
-page import="com.liferay.user.groups.admin.web.internal.display.context.SelectUserGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.user.groups.admin.web.internal.display.context.ViewUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.user.groups.admin.web.internal.frontend.taglib.clay.servlet.taglib.UserVerticalCard" %><%@
 page import="com.liferay.user.groups.admin.web.internal.portlet.action.ActionUtil" %><%@
@@ -100,20 +97,8 @@ boolean filterManageableOrganizations = true;
 
 Group scopeGroup = themeDisplay.getScopeGroup();
 
-if (permissionChecker.hasPermission(scopeGroup, User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {
+if (portletName.equals(PortletProviderUtil.getPortletId(PortalMyAccountApplicationType.MyAccount.CLASS_NAME, PortletProvider.Action.VIEW)) || permissionChecker.hasPermission(scopeGroup, Organization.class.getName(), Organization.class.getName(), ActionKeys.VIEW) || permissionChecker.hasPermission(scopeGroup, User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {
 	filterManageableOrganizations = false;
-}
-
-String portletId = PortletProviderUtil.getPortletId(PortalMyAccountApplicationType.MyAccount.CLASS_NAME, PortletProvider.Action.VIEW);
-
-if (portletName.equals(portletId) || permissionChecker.hasPermission(scopeGroup, Organization.class.getName(), Organization.class.getName(), ActionKeys.VIEW)) {
-	filterManageableOrganizations = false;
-}
-
-boolean filterManageableUserGroups = true;
-
-if (portletName.equals(portletId) || permissionChecker.hasPermission(scopeGroup, UserGroup.class.getName(), UserGroup.class.getName(), ActionKeys.VIEW)) {
-	filterManageableUserGroups = false;
 }
 %>
 

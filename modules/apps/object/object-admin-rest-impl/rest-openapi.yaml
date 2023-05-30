@@ -385,6 +385,8 @@ components:
                     items:
                         $ref: "#/components/schemas/ObjectLayoutBox"
                     type: array
+                objectRelationshipExternalReferenceCode:
+                    type: string
                 objectRelationshipId:
                     format: int64
                     type: integer

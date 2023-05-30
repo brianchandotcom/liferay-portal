@@ -32,7 +32,6 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
-import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
@@ -83,8 +82,8 @@ public class ViewCommerceOrderDeliveryTermsMVCRenderCommand
 						_commerceOrderStatusRegistry, _commerceOrderTypeService,
 						_commercePaymentMethodGroupRelLocalService,
 						_commercePaymentMethodRegistry,
-						_commerceShipmentItemService, _commerceTermEntryService,
-						_configurationProvider, _dlAppLocalService,
+						_commerceTermEntryService, _configurationProvider,
+						_dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);
@@ -145,9 +144,6 @@ public class ViewCommerceOrderDeliveryTermsMVCRenderCommand
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
-
-	@Reference
-	private CommerceShipmentItemService _commerceShipmentItemService;
 
 	@Reference
 	private CommerceTermEntryService _commerceTermEntryService;

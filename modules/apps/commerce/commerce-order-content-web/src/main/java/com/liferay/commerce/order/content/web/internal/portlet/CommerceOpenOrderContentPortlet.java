@@ -108,8 +108,8 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 						_commerceOrderStatusRegistry, _commerceOrderTypeService,
 						_commercePaymentMethodGroupRelLocalService,
 						_commercePaymentMethodRegistry,
-						_commerceShipmentItemService, _commerceTermEntryService,
-						_configurationProvider, _dlAppLocalService,
+						_commerceTermEntryService, _configurationProvider,
+						_dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);

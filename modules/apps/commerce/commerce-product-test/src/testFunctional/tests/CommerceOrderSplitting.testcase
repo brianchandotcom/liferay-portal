@@ -69,16 +69,16 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -241,16 +241,16 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -460,21 +460,21 @@ definition {
 			CommerceNavigator.goToHealthCheckAdmin();
 		}
 
-		task ("Then a new health check 'Order Split By Catalog Action' is present") {
+		task ("Then a new health check 'Order Split by Catalog Action' is present") {
 			AssertElementPresent(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 		}
 
 		task ("And if the new health check is checked") {
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -501,7 +501,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "ObjectAction#SELECT_ACTION_TYPE",
-				value1 = "Split Order By Catalog");
+				value1 = "Split Order by Catalog");
 		}
 	}
 
@@ -552,16 +552,16 @@ definition {
 				usePercentage = "true");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -693,16 +693,16 @@ definition {
 				warehouseName = "Italy");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -839,7 +839,7 @@ definition {
 				actionName = "customAction",
 				active = "true",
 				inputExpression = "orderStatus = 1",
-				thenAction = "Split Order By Catalog",
+				thenAction = "Split Order by Catalog",
 				whenAction = "On Order Status Update");
 		}
 
@@ -934,16 +934,16 @@ definition {
 				warehouseName = "Italy");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -1063,16 +1063,16 @@ definition {
 				warehouseName = "Italy");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -1201,7 +1201,7 @@ definition {
 				actionName = "customAction",
 				active = "true",
 				inputExpression = "Test",
-				thenAction = "Split Order By Catalog",
+				thenAction = "Split Order by Catalog",
 				whenAction = "On Order Status Update");
 		}
 
@@ -1209,18 +1209,18 @@ definition {
 			CommerceNavigator.goToHealthCheckAdmin();
 		}
 
-		task ("Then the 'Order Split By Catalog Action' health check is checked and non clickable") {
+		task ("Then the 'Order Split by Catalog Action' health check is checked and non clickable") {
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
-		task ("But if the admin goes back to change the Commerce Order object's Action from "Split Order By Catalog" to other one") {
+		task ("But if the admin goes back to change the Commerce Order object's Action from "Split Order by Catalog" to other one") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectSystemObject(label = "Commerce Order");
@@ -1239,17 +1239,17 @@ definition {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			AssertElementNotPresent(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "disabled",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 	}
@@ -1295,7 +1295,7 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And 2 actions 'Split Order By Catalog' with the default settings are created within Commerce Order object") {
+		task ("And 2 actions 'Split Order by Catalog' with the default settings are created within Commerce Order object") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectSystemObject(label = "Commerce Order");
@@ -1308,7 +1308,7 @@ definition {
 					actionName = "customAction${num}",
 					active = "true",
 					inputExpression = "orderStatus = 10",
-					thenAction = "Split Order By Catalog",
+					thenAction = "Split Order by Catalog",
 					whenAction = "On Order Status Update");
 			}
 		}
@@ -1411,16 +1411,16 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -1557,16 +1557,16 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And 2 actions 'Split Order By Catalog' that one using health check, the other using expression 'orderStatus = 1' are created under Commerce Order object") {
+		task ("And 2 actions 'Split Order by Catalog' that one using health check, the other using expression 'orderStatus = 1' are created under Commerce Order object") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 
 			ObjectAdmin.openObjectAdmin();
@@ -1580,7 +1580,7 @@ definition {
 				actionName = "customAction2",
 				active = "true",
 				inputExpression = "orderStatus = 1",
-				thenAction = "Split Order By Catalog",
+				thenAction = "Split Order by Catalog",
 				whenAction = "On Order Status Update");
 		}
 
@@ -1695,16 +1695,16 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 
@@ -1844,16 +1844,16 @@ definition {
 				warehouseName = "Test Warehouse");
 		}
 
-		task ("And the 'Order Split By Catalog Action' health check is checked") {
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
 			CommerceNavigator.goToHealthCheckAdmin();
 
 			Click(
-				key_buttonRowName = "Order Split By Catalog Action",
+				key_buttonRowName = "Order Split by Catalog Action",
 				key_buttonStatus = "",
 				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
 
 			WaitForElementPresent(
-				key_value = "Order Split By Catalog Action",
+				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 		}
 

@@ -82,7 +82,7 @@ public class PLOEntryModelListener
 
 		try {
 			MethodHandler methodHandler = new MethodHandler(
-				_onNotifyMethodKey, getOSGiServiceIdentifier(), methodType,
+				_onNotifyMethodKey, methodType, getOSGiServiceIdentifier(),
 				ploEntry);
 
 			ClusterRequest clusterRequest =

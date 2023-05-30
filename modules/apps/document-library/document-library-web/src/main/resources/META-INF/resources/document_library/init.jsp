@@ -23,7 +23,6 @@ page import="com.liferay.digital.signature.constants.DigitalSignaturePortletKeys
 page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.document.library.exception.DLStorageQuotaExceededException" %><%@
 page import="com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException" %><%@
-page import="com.liferay.document.library.kernel.exception.InvalidFolderException" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileShortcut" %><%@
 page import="com.liferay.document.library.kernel.model.DLVersionNumberIncrease" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@

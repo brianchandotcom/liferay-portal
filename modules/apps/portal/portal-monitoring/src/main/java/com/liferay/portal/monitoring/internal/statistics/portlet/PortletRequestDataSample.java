@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
 import com.liferay.portal.monitoring.internal.MonitorNames;
@@ -48,7 +47,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 		_requestType = requestType;
 
 		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(portletResponse);
+			portal.getLiferayPortletResponse(portletResponse);
 
 		Portlet portlet = liferayPortletResponse.getPortlet();
 

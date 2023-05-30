@@ -453,7 +453,22 @@ public class StructuredContentResourceTest
 
 		_testPostAssetLibraryStructuredContentWithDefaultERCAndUUID();
 
-		_testPostAssetLibraryStructuredContentWithGivenERC();
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		_testPostAssetLibraryStructuredContentWithGivenERC(
+			externalReferenceCode);
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		StructuredContent postStructuredContent =
+			testPostAssetLibraryStructuredContent_addStructuredContent(
+				structuredContent);
+
+		externalReferenceCode = String.valueOf(postStructuredContent.getId());
+
+		_testPostAssetLibraryStructuredContentWithGivenERC(
+			externalReferenceCode);
 	}
 
 	@Override
@@ -1339,10 +1354,13 @@ public class StructuredContentResourceTest
 		assertValid(postStructuredContent);
 	}
 
-	private void _testPostAssetLibraryStructuredContentWithGivenERC()
+	private void _testPostAssetLibraryStructuredContentWithGivenERC(
+			String externalReferenceCode)
 		throws Exception {
 
 		StructuredContent randomStructuredContent = randomStructuredContent();
+
+		randomStructuredContent.setExternalReferenceCode(externalReferenceCode);
 
 		StructuredContent postStructuredContent =
 			testPostAssetLibraryStructuredContent_addStructuredContent(
@@ -1351,7 +1369,7 @@ public class StructuredContentResourceTest
 		Assert.assertNotNull(postStructuredContent.getExternalReferenceCode());
 
 		Assert.assertEquals(
-			randomStructuredContent.getExternalReferenceCode(),
+			externalReferenceCode,
 			postStructuredContent.getExternalReferenceCode());
 		assertValid(postStructuredContent);
 	}

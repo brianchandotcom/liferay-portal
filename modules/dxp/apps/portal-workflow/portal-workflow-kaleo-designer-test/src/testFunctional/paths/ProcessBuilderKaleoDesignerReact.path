@@ -90,19 +90,6 @@
 	<td></td>
 </tr>
 <tr>
-<<<<<<< HEAD
-=======
-	<td>TRANSLATION_COUNTRY_LABEL_TEXT</td>
-	<td>//*[@role='menuitem'][@class='dropdown-item'][.//div[contains(.,'${key_translationOption}')]] //*[contains(@class,'label-item')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TRANSLATION_LANGUAGE_MENU_ITEM</td>
-	<td>//*[@role='menuitem'][@class='dropdown-item'][.//div[contains(.,'${key_translationOption}')]]</td>
-	<td></td>
-</tr>
-<tr>
->>>>>>> b555e72 (LPS-185947 Change tests accordingly)
 	<td>TRANSLATION_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']</td>
 	<td></td>

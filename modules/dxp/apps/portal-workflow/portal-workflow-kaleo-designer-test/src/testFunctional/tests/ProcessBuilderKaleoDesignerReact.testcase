@@ -478,14 +478,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titre l'epreuve");
 
-<<<<<<< Updated upstream
-		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
-			newTranslationOption = "pt_BR",
-			translationOptionSelected = "fr-fr",
-			translationStatus = "label-warning");
-=======
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(key_locale = "pt_BR");
->>>>>>> Stashed changes
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
 
@@ -497,18 +490,12 @@ definition {
 			newTranslationOption = "fr_FR",
 			translationStatus = "success");
 
-<<<<<<< Updated upstream
-		ProcessBuilderKaleoDesignerReact.viewTranslationLanguageStatus(
-			newTranslationOption = "pt_BR",
-			translationStatus = "success");
-=======
 		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 
 		AssertTextEquals(
 			key_locale = "pt_BR",
 			locator1 = "Translation#TRANSLATION_LANGUAGE_STATUS_LABEL",
 			value1 = "Translated");
->>>>>>> Stashed changes
 	}
 
 	@description = "Verify that is possible to select Account role type for role assignments"
@@ -1595,7 +1582,7 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
 
 		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
 
@@ -4821,21 +4808,11 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
-=======
 		Click(
 			key_locale = "en_US",
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
->>>>>>> Stashed changes
-=======
-		Click(
-			key_translationOption = "en_US",
-			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_LANGUAGE_MENU_ITEM");
->>>>>>> b555e72 (LPS-185947 Change tests accordingly)
 
 		AssertElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
 	}

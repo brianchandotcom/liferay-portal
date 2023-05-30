@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.function.Predicate;
+
 /**
  * @author Adolfo Pérez
  */
@@ -34,6 +36,18 @@ public enum StoreArea {
 		StoreArea storeArea = _storeAreaThreadLocal.get();
 
 		return storeArea.getPath(companyId, repositoryId, path);
+	}
+
+	public static StoreArea tryRunWithStoreAreas(
+		Predicate<StoreArea> predicate, StoreArea... storeAreas) {
+
+		for (StoreArea storeArea : storeAreas) {
+			if (predicate.test(storeArea)) {
+				return storeArea;
+			}
+		}
+
+		return null;
 	}
 
 	public static <T extends Throwable> void withStoreArea(

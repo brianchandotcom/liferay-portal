@@ -27,6 +27,7 @@ import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.CopyWriter;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
@@ -179,22 +180,34 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	@Override
-	public void copy(String sourceFileName, String destinationFileName) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
-			return;
+	public boolean copy(String sourceFileName, String destinationFileName) {
+		try {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+				return true;
+			}
+
+			CopyWriter copyWriter = _gcsStore.copy(
+				Storage.CopyRequest.newBuilder(
+				).setSource(
+					_gcsStoreConfiguration.bucketName(), sourceFileName
+				).setTarget(
+					BlobId.of(
+						_gcsStoreConfiguration.bucketName(),
+						destinationFileName)
+				).build());
+
+			while (!copyWriter.isDone()) {
+				copyWriter.copyChunk();
+			}
+
+			return true;
 		}
+		catch (StorageException storageException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(storageException);
+			}
 
-		CopyWriter copyWriter = _gcsStore.copy(
-			Storage.CopyRequest.newBuilder(
-			).setSource(
-				_gcsStoreConfiguration.bucketName(), sourceFileName
-			).setTarget(
-				BlobId.of(
-					_gcsStoreConfiguration.bucketName(), destinationFileName)
-			).build());
-
-		while (!copyWriter.isDone()) {
-			copyWriter.copyChunk();
+			return false;
 		}
 	}
 

@@ -25,6 +25,6 @@ public interface StoreAreaProcessor {
 		long companyId, int deletionQuota, TemporalAmount temporalAmount,
 		String startOffset);
 
-	public void copy(String sourceFileName, String destinationFileName);
+	public boolean copy(String sourceFileName, String destinationFileName);
 
 }

@@ -68,11 +68,15 @@ public class StoreAreaAwareStoreWrapper implements Store {
 						store.getFileVersions(
 							companyId, repositoryId, fileName)) {
 
-					storeAreaProcessor.copy(
-						StoreArea.LIVE.getPath(
-							companyId, repositoryId, fileName, versionLabel),
-						StoreArea.DELETED.getPath(
-							companyId, repositoryId, fileName, versionLabel));
+					StoreArea.tryRunWithStoreAreas(
+						sourceStoreArea -> storeAreaProcessor.copy(
+							sourceStoreArea.getPath(
+								companyId, repositoryId, fileName,
+								versionLabel),
+							StoreArea.DELETED.getPath(
+								companyId, repositoryId, fileName,
+								versionLabel)),
+						StoreArea.LIVE, StoreArea.NEW);
 				}
 			}
 		}
@@ -89,11 +93,13 @@ public class StoreAreaAwareStoreWrapper implements Store {
 			StoreAreaProcessor storeAreaProcessor =
 				_storeAreaProcessorSupplier.get();
 
-			storeAreaProcessor.copy(
-				StoreArea.LIVE.getPath(
-					companyId, repositoryId, fileName, versionLabel),
-				StoreArea.DELETED.getPath(
-					companyId, repositoryId, fileName, versionLabel));
+			StoreArea.tryRunWithStoreAreas(
+				sourceStoreArea -> storeAreaProcessor.copy(
+					sourceStoreArea.getPath(
+						companyId, repositoryId, fileName, versionLabel),
+					StoreArea.DELETED.getPath(
+						companyId, repositoryId, fileName, versionLabel)),
+				StoreArea.LIVE, StoreArea.NEW);
 		}
 
 		Store store = _storeSupplier.get();

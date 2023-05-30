@@ -111,11 +111,13 @@ public class DLStoreImpl implements DLStore {
 		throws PortalException {
 
 		if (_storeAreaProcessor != null) {
-			_storeAreaProcessor.copy(
-				StoreArea.LIVE.getPath(
-					companyId, repositoryId, fileName, fromVersionLabel),
-				StoreArea.LIVE.getPath(
-					companyId, repositoryId, fileName, toVersionLabel));
+			StoreArea.tryRunWithStoreAreas(
+				sourceStoreArea -> _storeAreaProcessor.copy(
+					sourceStoreArea.getPath(
+						companyId, repositoryId, fileName, fromVersionLabel),
+					StoreArea.NEW.getPath(
+						companyId, repositoryId, fileName, toVersionLabel)),
+				StoreArea.LIVE, StoreArea.NEW);
 		}
 		else {
 			_wrappedStore.addFile(
@@ -298,11 +300,14 @@ public class DLStoreImpl implements DLStore {
 					companyId, repositoryId, fileName)) {
 
 			if (_storeAreaProcessor != null) {
-				_storeAreaProcessor.copy(
-					StoreArea.LIVE.getPath(
-						companyId, repositoryId, fileName, versionLabel),
-					StoreArea.LIVE.getPath(
-						companyId, newRepositoryId, fileName, versionLabel));
+				StoreArea.tryRunWithStoreAreas(
+					sourceStoreArea -> _storeAreaProcessor.copy(
+						sourceStoreArea.getPath(
+							companyId, repositoryId, fileName, versionLabel),
+						StoreArea.NEW.getPath(
+							companyId, newRepositoryId, fileName,
+							versionLabel)),
+					StoreArea.LIVE, StoreArea.NEW);
 			}
 			else {
 				_wrappedStore.addFile(
@@ -323,11 +328,13 @@ public class DLStoreImpl implements DLStore {
 		throws PortalException {
 
 		if (_storeAreaProcessor != null) {
-			_storeAreaProcessor.copy(
-				StoreArea.LIVE.getPath(
-					companyId, repositoryId, fileName, fromVersionLabel),
-				StoreArea.LIVE.getPath(
-					companyId, repositoryId, fileName, toVersionLabel));
+			StoreArea.tryRunWithStoreAreas(
+				sourceStoreArea -> _storeAreaProcessor.copy(
+					sourceStoreArea.getPath(
+						companyId, repositoryId, fileName, fromVersionLabel),
+					StoreArea.NEW.getPath(
+						companyId, repositoryId, fileName, toVersionLabel)),
+				StoreArea.LIVE, StoreArea.NEW);
 		}
 		else {
 			_wrappedStore.addFile(

@@ -54,28 +54,6 @@ public class DatabaseUtil {
 		return failedServletContextNames;
 	}
 
-	public static List<Release> getReleaseEntries(Connection connection)
-		throws SQLException {
-
-		List<Release> releaseEntries = new ArrayList<>();
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select servletContextName, schemaVersion, verified from " +
-					"Release_");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				releaseEntries.add(
-					new Release(
-						resultSet.getString(1),
-						Version.parseVersion(resultSet.getString(2)),
-						resultSet.getBoolean(3)));
-			}
-		}
-
-		return releaseEntries;
-	}
-
 	public static Map<String, Release> getReleaseMap(Connection connection)
 		throws SQLException {
 
@@ -97,6 +75,28 @@ public class DatabaseUtil {
 		}
 
 		return releaseMap;
+	}
+
+	public static List<Release> getReleases(Connection connection)
+		throws SQLException {
+
+		List<Release> releases = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select servletContextName, schemaVersion, verified from " +
+					"Release_");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				releases.add(
+					new Release(
+						resultSet.getString(1),
+						Version.parseVersion(resultSet.getString(2)),
+						resultSet.getBoolean(3)));
+			}
+		}
+
+		return releases;
 	}
 
 	public static List<String> getTables(Connection connection)

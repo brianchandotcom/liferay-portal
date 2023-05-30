@@ -51,6 +51,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SCOPE</td>
+		<td>//label[contains(.,'Scope')]/following-sibling::div//input</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>TITLE_FIELD</td>
 		<td>//label[contains(.,'Title Field')]/following-sibling::div//input</td>
 		<td></td>

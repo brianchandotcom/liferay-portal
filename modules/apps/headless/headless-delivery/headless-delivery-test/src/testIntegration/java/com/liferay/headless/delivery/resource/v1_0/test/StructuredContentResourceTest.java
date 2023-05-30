@@ -477,6 +477,27 @@ public class StructuredContentResourceTest
 			postStructuredContent2, LocaleUtil.toW3cLanguageId(locale));
 		assertEquals(randomLocalizedStructuredContent2, postStructuredContent2);
 		assertValid(postStructuredContent2);
+
+		// Structured content with the default priority
+
+		locale = LocaleUtil.getDefault();
+
+		StructuredContent randomStructuredContent = _randomStructuredContent(
+			locale);
+
+		StructuredContentResource structuredContentResource =
+			_buildStructureContentResource(locale);
+
+		randomStructuredContent.setPriority((Double)null);
+
+		StructuredContent postStructuredContent3 =
+			structuredContentResource.postSiteStructuredContent(
+				testGetSiteStructuredContentsPage_getSiteId(),
+				randomStructuredContent);
+
+		Assert.assertEquals(
+			Double.valueOf(0.0), postStructuredContent3.getPriority());
+		assertValid(postStructuredContent3);
 	}
 
 	@Override

@@ -321,10 +321,16 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			return segmentsEntryIds;
 		}
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			_httpServletRequest, "segmentsExperienceId", -1);
+
+		if (segmentsExperienceId <= 0) {
+			return segmentsEntryIds;
+		}
+
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				ParamUtil.getLong(
-					_httpServletRequest, "segmentsExperienceId", -1));
+				segmentsExperienceId);
 
 		if (segmentsExperience == null) {
 			return segmentsEntryIds;

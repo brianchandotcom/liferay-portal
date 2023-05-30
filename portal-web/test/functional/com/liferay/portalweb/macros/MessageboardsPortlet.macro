@@ -315,6 +315,77 @@ definition {
 		}
 	}
 
+	macro ViewMessageEmailTemplate {
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (${messageAddedEmail} == "true") {
+			AssertClick(
+				locator1 = "MessageBoardsAdminConfiguration#SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL",
+				value1 = "Message Added Email");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			if (isSet(messageURL)) {
+				AssertElementPresent(
+					key_href = ${messageURL},
+					key_text = ${messageSubject},
+					locator1 = "CKEditor#BODY_TEXT_HREF");
+			}
+
+			if (isSet(messageBody)) {
+				for (var messageBody : list ${messageBody}) {
+					AssertElementPresent(
+						key_text = ${messageBody},
+						locator1 = "CKEditor#BODY_TEXT");
+				}
+			}
+
+			if (isSet(content)) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "CKEditor#BODY",
+					value1 = ${content});
+			}
+		}
+		else {
+			AssertClick(
+				locator1 = "MessageBoardsAdminConfiguration#SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL",
+				value1 = "Message Updated Email");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+			if (isSet(messageURL)) {
+				AssertElementPresent(
+					key_href = ${messageURL},
+					key_text = ${messageSubject},
+					locator1 = "CKEditor#BODY_TEXT_HREF_1");
+			}
+
+			if (isSet(messageBody)) {
+				for (var messageBody : list ${messageBody}) {
+					AssertElementPresent(
+						key_text = ${messageBody},
+						locator1 = "CKEditor#BODY_TEXT_1");
+				}
+			}
+
+			if (isSet(content)) {
+				AssertTextEquals.assertPartialText(
+					locator1 = "CKEditor#BODY_1",
+					value1 = ${content});
+			}
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro viewNoPermissionCP {
 		var key_portletTitle = "Message Boards";
 

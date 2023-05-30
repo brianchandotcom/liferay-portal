@@ -3,7 +3,7 @@
 	[#assign layoutPath = currentURL?ends_with("/")?then("home", "/home") /]
 
 	<script>
-		Liferay.Util.navigate("${currentURL + layoutPath}");
+		window.location.assign("${currentURL + layoutPath}");
 	</script>
 [/#if]
 

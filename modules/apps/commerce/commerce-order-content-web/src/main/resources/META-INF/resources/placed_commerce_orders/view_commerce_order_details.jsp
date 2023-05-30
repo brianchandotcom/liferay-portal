@@ -161,7 +161,7 @@ if (backURL != null) {
 			<div class="col-md-3">
 				<dl class="commerce-list">
 					<dt><liferay-ui:message key="order-status" /></dt>
-					<dd><%= commerceOrderContentDisplayContext.getCommerceOrderStatus(commerceOrder) %></dd>
+					<dd><%= commerceOrderContentDisplayContext.getCommerceOrderStatusLabel(commerceOrder) %></dd>
 				</dl>
 			</div>
 		</div>

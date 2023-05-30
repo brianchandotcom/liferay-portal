@@ -370,22 +370,22 @@ public class CommerceOrderContentDisplayContext {
 			getCommerceOrder(), _commerceContext);
 	}
 
-	public String getCommerceOrderStatus(CommerceOrder commerceOrder) {
-		String commerceStatusLabel = LanguageUtil.get(
+	public String getCommerceOrderStatusLabel(CommerceOrder commerceOrder) {
+		String commerceOrderStatusLabel = LanguageUtil.get(
 			_httpServletRequest,
 			CommerceOrderConstants.getOrderStatusLabel(
 				commerceOrder.getOrderStatus()));
 
-		if (commerceStatusLabel == null) {
+		if (commerceOrderStatusLabel == null) {
 			CommerceOrderStatus commerceOrderStatus =
 				_commerceOrderStatusRegistry.getCommerceOrderStatus(
 					commerceOrder.getOrderStatus());
 
-			commerceStatusLabel = commerceOrderStatus.getLabel(
+			commerceOrderStatusLabel = commerceOrderStatus.getLabel(
 				_cpRequestHelper.getLocale());
 		}
 
-		return commerceStatusLabel;
+		return commerceOrderStatusLabel;
 	}
 
 	public String getCommerceOrderTime(CommerceOrder commerceOrder) {

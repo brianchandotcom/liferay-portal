@@ -252,7 +252,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectFieldLocalService.getObjectFields(objectDefinitionId),
 			values);
 
-		_validateLocalizedValues(objectDefinitionId, values);
 		_validateValues(
 			user.isGuestUser(), objectDefinitionId, null,
 			objectDefinition.getPortletId(), serviceContext, userId, values);
@@ -337,8 +336,6 @@ public class ObjectEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validateLocalizedValues(
-			objectDefinition.getObjectDefinitionId(), values);
 		_validateValues(
 			user.isGuestUser(), objectDefinition.getObjectDefinitionId(), null,
 			objectDefinition.getClassName(), serviceContext, userId, values);
@@ -1290,7 +1287,6 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_validateLocalizedValues(objectEntry.getObjectDefinitionId(), values);
 		_validateValues(
 			user.isGuestUser(), objectEntry.getObjectDefinitionId(),
 			objectEntry, objectDefinition.getPortletId(), serviceContext,
@@ -3852,42 +3848,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateLocalizedValues(
-			long objectDefinitionId, Map<String, Serializable> values)
-		throws PortalException {
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getLocalizedObjectFields(
-				objectDefinitionId);
-
-		for (ObjectField objectField : objectFields) {
-			Map<String, String> localizedValues =
-				(Map<String, String>)values.get(
-					objectField.getI18nObjectFieldName());
-
-			if ((localizedValues == null) || localizedValues.isEmpty()) {
-				continue;
-			}
-
-			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
-				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
-
-					_validateTextMaxLength(
-						65000, entry.getValue(), objectField.getObjectFieldId(),
-						objectField.getI18nObjectFieldName());
-				}
-				else if (objectField.compareBusinessType(
-							ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
-
-					_validateTextMaxLength(
-						280, entry.getValue(), objectField.getObjectFieldId(),
-						objectField.getI18nObjectFieldName());
-				}
-			}
-		}
-	}
-
 	private void _validateObjectStateTransition(
 			Map.Entry<String, Serializable> entry, long listTypeDefinitionId,
 			ObjectEntry objectEntry, long objectFieldId, long userId)
@@ -4104,6 +4064,37 @@ public class ObjectEntryLocalServiceImpl
 			String portletId, ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
 		throws PortalException {
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getLocalizedObjectFields(
+				objectDefinitionId);
+
+		for (ObjectField objectField : objectFields) {
+			Map<String, String> localizedValues =
+				(Map<String, String>)values.get(
+					objectField.getI18nObjectFieldName());
+
+			if ((localizedValues == null) || localizedValues.isEmpty()) {
+				continue;
+			}
+
+			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+
+					_validateTextMaxLength(
+						65000, entry.getValue(), objectField.getObjectFieldId(),
+						objectField.getI18nObjectFieldName());
+				}
+				else if (objectField.compareBusinessType(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+					_validateTextMaxLength(
+						280, entry.getValue(), objectField.getObjectFieldId(),
+						objectField.getI18nObjectFieldName());
+				}
+			}
+		}
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			_validateValues(

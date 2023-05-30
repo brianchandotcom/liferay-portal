@@ -147,6 +147,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-185929. Verify that when the MDF Claim is 'In Finance Review' status, the CMD can't change to 'Claim Paid' status"
+	@priority = 4
+	test CMDCannotChangeStatusToClaimPaid {
+		property test.name.skip.portal.instance = "PRMMDFClaim#CMDCannotChangeStatusToClaimPaid";
+
+		task ("Given that a new claim is created and approved") {
+			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("And the CFM goes to the created claim") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmd@liferaytest.com",
+				userLoginFullName = "Channel Marketing Director");
+
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And change the status to 'In Finance Review'") {
+			PRMMDFClaim.changeClaimStatus(statusButton = "In Finance Review");
+		}
+
+		task ("When the CMD clicks again on the State Manager") {
+			PRMMDFClaim.clickOnStateManager();
+		}
+
+		task ("Then the 'Claim Paid' option will be not visible") {
+			PRMMDFClaim.viewStatusOptionNotVisible(statusButton = "Claim Paid");
+		}
+	}
+
 	@description = "This is a test for LPS-175292. Verify that is possible to export all visible Claims"
 	@priority = 4
 	test CanExportAllVisibleClaims {

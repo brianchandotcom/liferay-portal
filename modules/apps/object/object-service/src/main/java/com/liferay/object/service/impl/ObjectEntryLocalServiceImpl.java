@@ -2895,10 +2895,10 @@ public class ObjectEntryLocalServiceImpl
 		Connection connection = _currentConnection.getConnection(
 			objectEntryPersistence.getDataSource());
 
-		for (Locale locale : locales) {
-			try (PreparedStatement preparedStatement = connection.prepareStatement(
-					sql)) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
 
+			for (Locale locale : locales) {
 				String languageId = LocaleUtil.toLanguageId(locale);
 
 				int index = 1;
@@ -2926,14 +2926,16 @@ public class ObjectEntryLocalServiceImpl
 						preparedStatement, index++, column.getSQLType(), value);
 				}
 
-				preparedStatement.executeUpdate();
+				preparedStatement.addBatch();
+			}
 
-				FinderCacheUtil.clearDSLQueryCache(
-					dynamicObjectDefinitionLocalizationTable.getTableName());
-			}
-			catch (Exception exception) {
-				throw new SystemException(exception);
-			}
+			preparedStatement.executeBatch();
+
+			FinderCacheUtil.clearDSLQueryCache(
+				dynamicObjectDefinitionLocalizationTable.getTableName());
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 

@@ -60,6 +60,26 @@
 	<td>//button[contains(@data-target,'mdfClaimActivitiesPanel')]//*[text()='Activity Name']//following::div[contains(@id,'mdfClaimActivitiesPanel')]//table//*[text()='Budget Breakdown']//following::div/*[text()='${key_attachmentName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>STATUS_DROPDOWN</td>
+	<td>//button[@id='dropdownMDFClaimStatus']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_OPTION_DROPDOWN</td>
+	<td>//button[@id='dropdownMDFClaimStatus']//following-sibling::ul/li[contains(text(),'${key_statusButton}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUMMARY_PANEL</td>
+	<td>//div[contains(@class,'mdf-claim-details-summary')]//div/*[text()='${key_panelItem}']/following-sibling::*[@id='mdf-claim-${key_panelId}' and contains(text(),'${key_itemValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATE_MANAGER_DROPDOWN_STATUS</td>
+	<td>//button[@id='dropdownMDFClaimStatus'][@aria-expanded='${key_activeStatus}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

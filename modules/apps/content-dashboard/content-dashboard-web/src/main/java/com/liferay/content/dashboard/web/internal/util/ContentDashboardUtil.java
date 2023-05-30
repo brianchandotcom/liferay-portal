@@ -17,8 +17,14 @@ package com.liferay.content.dashboard.web.internal.util;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardConstants;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletPreferences;
@@ -36,11 +42,33 @@ public class ContentDashboardUtil {
 		String[] assetVocabularyIds = portletPreferences.getValues(
 			"assetVocabularyIds", new String[0]);
 
-		if (assetVocabularyIds.length == 0) {
-			return _getDefaultAssetVocabularyIds(renderRequest);
+		if (ArrayUtil.isNotEmpty(assetVocabularyIds)) {
+			return GetterUtil.getLongValues(assetVocabularyIds);
 		}
 
-		return GetterUtil.getLongValues(assetVocabularyIds);
+		long[] defaultAssetVocabularyIds = _getDefaultAssetVocabularyIds(
+			renderRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			portletPreferences.setValues(
+				"assetVocabularyIds",
+				ArrayUtil.toStringArray(defaultAssetVocabularyIds));
+
+			PortletPreferencesLocalServiceUtil.updatePreferences(
+				themeDisplay.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, 0,
+				ContentDashboardPortletKeys.CONTENT_DASHBOARD_ADMIN,
+				portletPreferences);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return defaultAssetVocabularyIds;
 	}
 
 	private static long[] _getDefaultAssetVocabularyIds(
@@ -65,5 +93,8 @@ public class ContentDashboardUtil {
 			stageAssetVocabulary.getVocabularyId()
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentDashboardUtil.class);
 
 }

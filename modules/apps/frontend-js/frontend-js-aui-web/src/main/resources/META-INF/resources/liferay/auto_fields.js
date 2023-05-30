@@ -454,15 +454,9 @@ AUI.add(
 
 					const contentBox = instance._contentBox;
 
-					const allRowsNodes = contentBox.all('.lfr-form-row')._nodes;
-
-					const visibleRows = [];
-
-					for (let i = 0; i < allRowsNodes.length; i++) {
-						if (allRowsNodes[i].checkVisibility()) {
-							visibleRows.push(allRowsNodes[i]);
-						}
-					}
+					const visibleRows = contentBox
+						.all('.lfr-form-row')
+						.filter((node) => node.getDOMNode().checkVisibility());
 
 					const visibleRowsLength = visibleRows.length;
 

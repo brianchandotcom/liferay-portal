@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.demo.data.creator.WorkflowMetricsSLADefinitionDemoDataCreator;
@@ -30,7 +31,6 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.util.NodeUtil;
 import com.liferay.portal.workflow.metrics.rest.spi.resource.SPINodeResource;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.Collection;
@@ -204,9 +204,7 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 
 	private SPINodeResource<Node> _getSPINodeResource(long companyId) {
 		return new SPINodeResource<>(
-			companyId, _nodeWorkflowMetricsIndexNameBuilder,
-			_processWorkflowMetricsIndexNameBuilder, _queries,
-			_searchRequestExecutor,
+			companyId, _indexNameBuilder, _queries, _searchRequestExecutor,
 			document -> NodeUtil.toNode(
 				document, _language,
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -249,15 +247,10 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 	}
 
 	@Reference
+	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference
 	private Language _language;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
 
 	@Reference
 	private Queries _queries;

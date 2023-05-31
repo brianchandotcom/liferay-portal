@@ -191,6 +191,15 @@ const VocabulariesSelectionBox = ({
 					selected: rightSelected,
 				}}
 			/>
+
+			<input
+				name={`${portletNamespace}assetVocabularyIds`}
+				readOnly
+				type="hidden"
+				value={rightElements
+					.map((rightItem) => rightItem.value)
+					.join(',')}
+			/>
 		</div>
 	);
 };

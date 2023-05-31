@@ -49,6 +49,7 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import com.liferay.portal.util.PropsUtil;
 import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -287,6 +288,10 @@ public abstract class BaseDBPartitionTestCase {
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",
 				defaultCurrentConnection);
+
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
+				_DEFAULT_MIGRATE_SETTING);
 		}
 	}
 
@@ -312,6 +317,10 @@ public abstract class BaseDBPartitionTestCase {
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",
 				defaultCurrentConnection);
+
+			ReflectionTestUtil.setFieldValue(
+				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
+				_DEFAULT_MIGRATE_SETTING);
 		}
 	}
 
@@ -398,6 +407,10 @@ public abstract class BaseDBPartitionTestCase {
 		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
 	private static boolean _dbPartitionEnabled;
 	private static LazyConnectionDataSourceProxy _lazyConnectionDataSourceProxy;
+
+	private static final boolean _DEFAULT_MIGRATE_SETTING =
+		GetterUtil.getBoolean(
+			PropsUtil.get("database.partition.migrate.enabled"));
 
 	@Inject
 	private static Props _props;

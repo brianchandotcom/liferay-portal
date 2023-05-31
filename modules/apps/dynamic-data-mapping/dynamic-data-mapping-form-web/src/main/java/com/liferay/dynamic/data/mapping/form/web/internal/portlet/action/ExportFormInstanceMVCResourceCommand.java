@@ -45,9 +45,6 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -127,12 +124,6 @@ public class ExportFormInstanceMVCResourceCommand
 			MimeTypesUtil.getContentType(fileName));
 	}
 
-	protected void unsetDDMFormWebConfigurationActivator(
-		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator) {
-
-		_ddmFormWebConfigurationActivator = null;
-	}
-
 	private OrderByComparator<DDMFormInstanceRecord> _getOrderByComparator(
 		ResourceRequest resourceRequest) {
 
@@ -166,13 +157,7 @@ public class ExportFormInstanceMVCResourceCommand
 	@Reference
 	private DDMFormInstanceService _ddmFormInstanceService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDMFormWebConfigurationActivator"
-	)
-	private volatile DDMFormWebConfigurationActivator
-		_ddmFormWebConfigurationActivator;
+	@Reference
+	private DDMFormWebConfigurationActivator _ddmFormWebConfigurationActivator;
 
 }

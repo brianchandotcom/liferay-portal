@@ -23,7 +23,15 @@ import org.junit.Test;
 public class VersionTest {
 
 	@Test
-	public void testCompareEqualFinalVersions() {
+	public void testCompareFinalToStepVersion() {
+		Version version1 = Version.parseVersion("1.2.3");
+		Version version2 = Version.parseVersion("1.2.3.step-2");
+
+		Assert.assertTrue(version1.compareTo(version2) > 0);
+	}
+
+	@Test
+	public void testCompareSameFinalVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 		Version version2 = Version.parseVersion("1.2.3");
 
@@ -31,19 +39,11 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testCompareEqualStepVersions() {
+	public void testCompareSameStepVersions() {
 		Version version1 = Version.parseVersion("1.2.3.step-3");
 		Version version2 = Version.parseVersion("1.2.3.step-3");
 
 		Assert.assertTrue(version1.compareTo(version2) == 0);
-	}
-
-	@Test
-	public void testCompareFinalToStepVersion() {
-		Version version1 = Version.parseVersion("1.2.3");
-		Version version2 = Version.parseVersion("1.2.3.step-2");
-
-		Assert.assertTrue(version1.compareTo(version2) > 0);
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testEqualFinalVersions() {
+	public void testEqualSameFinalVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 		Version version2 = Version.parseVersion("1.2.3");
 
@@ -71,7 +71,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testEqualStepVersions() {
+	public void testEqualSameStepVersions() {
 		Version version1 = Version.parseVersion("1.2.3.step-1");
 		Version version2 = Version.parseVersion("1.2.3.step-1");
 

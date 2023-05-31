@@ -321,6 +321,21 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public ObjectField fetchObjectField(long objectFieldId) {
+		ObjectField objectField = objectFieldPersistence.fetchByPrimaryKey(
+			objectFieldId);
+
+		if (objectField != null) {
+			objectField.setObjectFieldSettings(
+				_objectFieldSettingLocalService.
+					getObjectFieldObjectFieldSettings(
+						objectField.getObjectFieldId()));
+		}
+
+		return objectField;
+	}
+
+	@Override
 	public ObjectField fetchObjectField(long objectDefinitionId, String name) {
 		return objectFieldPersistence.fetchByODI_N(objectDefinitionId, name);
 	}

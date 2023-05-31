@@ -207,7 +207,7 @@ definition {
 				locator1 = "//div[@aria-label='Product Menu']",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//button[contains(@aria-label,'Go to Other Site or Library')]");
+			TestUtils.assertElementFocused(element = "//button[contains(@aria-label,'Go to Other Site')]");
 		}
 	}
 

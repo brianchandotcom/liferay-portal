@@ -446,6 +446,117 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-184799. The Link to Page field is still mapped through a fragment on a Content Page even after the site being imported."
+	@priority = 4
+	test ExportImportSiteWithMappedLinkToPageField {
+		task ("Given a page designer has a fragment mapped to the Link to Page field") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "Test Site Name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Title");
+
+			DataEngine.addField(
+				fieldLabel = "Link to Page",
+				fieldName = "Link to Page");
+
+			WebContentStructures.saveCP();
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+			WebContent.addWithStructureCP(webContentTitle = "support Link to Page field");
+
+			DERenderer.inputDataInLinkToPageField(
+				linkToPageContent = "Test Page Name 1",
+				linkToPageFieldLabel = "Link to Page");
+
+			PortletEntry.publish();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = "support Link to Page field",
+				field = "Link to Page",
+				navItem = "Web Content");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_url = "/web/test-site-name/test-page-name-1",
+				locator1 = "Fragment#FRAGMENT_LINK");
+		}
+
+		task ("When the user accesses to the Export admin") {
+			task ("Then the user could export the site") {
+				LAR.openExportAdmin(siteScopeName = "Test Site Name");
+			}
+
+			LexiconEntry.gotoAdd();
+
+			LAR._exportSite();
+
+			var larFileName = LAR.getLarFileName();
+
+			LAR.downloadLar();
+		}
+
+		task ("When the user imports the exported file to a new site") {
+			HeadlessSite.addSite(siteName = "Site Name B");
+
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name B",
+				layoutUtilityPageName = "404 Error");
+
+			LAR.importSiteCP(
+				larFileName = ${larFileName},
+				siteName = "Site Name B");
+		}
+
+		task ("Then the mapped URL should be persisted") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Site Name B");
+
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_url = "web/site-name-b/test-page-name-1",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			AssertLocation.assertPartialLocation(value1 = "web/site-name-b/test-page-name-1");
+		}
+	}
+
 	@description = "This is a use case for LPS-120198. Export and import the whole site where a content page with fragment linked to page."
 	@priority = 4
 	test ExportImportSiteWithMappedPage {

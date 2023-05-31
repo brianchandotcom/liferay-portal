@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.chart.servlet.taglib.soy;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.chart.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.chart.model.geomap.GeomapConfig;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringPool;
@@ -40,14 +38,8 @@ public class GeomapTag extends TemplateRendererTag {
 
 	@Override
 	public String getModule() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName(
-			"clay-charts/lib/" + _moduleBaseName);
+		return StringPool.OPEN_CURLY_BRACE + _moduleBaseName +
+			"} from frontend-taglib-chart/exports/clay-charts.js";
 	}
 
 	public void setConfig(GeomapConfig geomapConfig) {

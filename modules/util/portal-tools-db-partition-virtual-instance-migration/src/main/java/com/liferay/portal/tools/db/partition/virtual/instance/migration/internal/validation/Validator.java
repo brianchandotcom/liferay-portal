@@ -189,16 +189,14 @@ public class Validator {
 			ValidatorRecorder recorder)
 		throws SQLException {
 
-		String message =
-			"Release_ table has the following servlet context names with a " +
-				"failed state: ";
+		String message = "has a failed Release state in the ? database";
 
 		List<String> failedServletContextNames =
 			DatabaseUtil.getFailedServletContextNames(sourceConnection);
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
-				failedServletContextNames, "Source " + message);
+				failedServletContextNames, message.replace("?", "source"));
 		}
 
 		failedServletContextNames = DatabaseUtil.getFailedServletContextNames(
@@ -206,7 +204,7 @@ public class Validator {
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
-				failedServletContextNames, "Destination " + message);
+				failedServletContextNames, message.replace("?", "destination"));
 		}
 	}
 

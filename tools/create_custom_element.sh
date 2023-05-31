@@ -141,7 +141,10 @@ function create_react_app {
 
 	mv README.md README.markdown
 
-	echo "SKIP_PREFLIGHT_CHECK=true" > ".env"
+	cat <<EOF > .env
+DISABLE_ESLINT_PLUGIN=true
+SKIP_PREFLIGHT_CHECK=true
+EOF
 
 	sed -i -e "s|<div id=\"root\"></div>|<${CUSTOM_ELEMENT_NAME} route=\"hello-world\"></${CUSTOM_ELEMENT_NAME}>|g" public/index.html
 

@@ -45,9 +45,36 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 /**
  * @author Nícolas Moura
+ * @author Michael Cavalcanti
  */
-public class UpgradeJavaCheck {
+@Component(
+	immediate = true, 
+	property = {
+		"clay.data.set.display.name=commercePendingOrderItems", 
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	},
+	service = FDSView.class
+)
+public class UpgradeJavaCheck extends BaseTableFDSView{
+
+	@Override
+	public FDSTableSchema getFDSTableSchema() {
+		FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();
+		FDSTableSchemaField nameField = fDSTableSchemaBuilder.addFDSTableSchemaField("name", "name");
+
+		return fDSTableSchemaBuilder.build();
+	}
+
+	@Reference
+    private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;
+	
 }

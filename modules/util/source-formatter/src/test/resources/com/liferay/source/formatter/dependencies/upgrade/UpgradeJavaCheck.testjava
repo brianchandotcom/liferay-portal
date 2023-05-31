@@ -45,9 +45,36 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 /**
  * @author Nícolas Moura
+ * @author Michael Cavalcanti
  */
-public class UpgradeJavaCheck {
+@Component(
+	immediate = true, 
+	property = {
+		"clay.data.set.display.name=commercePendingOrderItems", 
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	},
+	service = ClayDataSetDisplayView.class
+)
+public class UpgradeJavaCheck extends BaseTableClayDataSetDisplayView{
+
+	@Override
+	public ClayTableSchema getClayTableSchema() {
+		ClayTableSchemaBuilder clayTableSchemaBuilder = _clayTableSchemaBuilderFactory.create();
+		ClayTableSchemaField nameField = clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+
+		return clayTableSchemaBuilder.build();
+	}
+
+	@Reference
+    private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
+	
 }

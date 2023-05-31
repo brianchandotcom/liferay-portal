@@ -144,40 +144,40 @@ public class SolrIndexingFixture implements IndexingFixture {
 		SolrQueryTranslator solrQueryTranslator = new SolrQueryTranslator();
 
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_booleanQueryTranslator",
+			solrQueryTranslator, "booleanQueryTranslator",
 			new BooleanQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_disMaxQueryTranslator",
+			solrQueryTranslator, "disMaxQueryTranslator",
 			new DisMaxQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_fuzzyQueryTranslator",
+			solrQueryTranslator, "fuzzyQueryTranslator",
 			new FuzzyQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_matchAllQueryTranslator",
+			solrQueryTranslator, "matchAllQueryTranslator",
 			new MatchAllQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_matchQueryTranslator",
+			solrQueryTranslator, "matchQueryTranslator",
 			new MatchQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_moreLikeThisQueryTranslator",
+			solrQueryTranslator, "moreLikeThisQueryTranslator",
 			new MoreLikeThisQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_multiMatchQueryTranslator",
+			solrQueryTranslator, "multiMatchQueryTranslator",
 			new MultiMatchQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_nestedQueryTranslator",
+			solrQueryTranslator, "nestedQueryTranslator",
 			new NestedQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_stringQueryTranslator",
+			solrQueryTranslator, "stringQueryTranslator",
 			new StringQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_termQueryTranslator",
+			solrQueryTranslator, "termQueryTranslator",
 			new TermQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_termRangeQueryTranslator",
+			solrQueryTranslator, "termRangeQueryTranslator",
 			new TermRangeQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "_wildcardQueryTranslator",
+			solrQueryTranslator, "wildcardQueryTranslator",
 			new WildcardQueryTranslatorImpl());
 
 		return solrQueryTranslator;

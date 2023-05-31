@@ -304,6 +304,25 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 		return SXPBlueprintUtil.toSXPBlueprint(json);
 	}
 
+	public SXPBlueprint putSXPBlueprintByExternalReferenceCode(
+			String externalReferenceCode, SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		com.liferay.search.experiences.model.SXPBlueprint
+			serviceBuilderSxpBlueprint =
+				_sxpBlueprintService.getSXPBlueprintByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
+
+		if (serviceBuilderSxpBlueprint != null) {
+			return patchSXPBlueprint(
+				serviceBuilderSxpBlueprint.getSXPBlueprintId(), sxpBlueprint);
+		}
+
+		return postSXPBlueprint(sxpBlueprint);
+	}
+
 	private String _getConfigurationJSON(SXPBlueprint sxpBlueprint) {
 		if (sxpBlueprint.getConfiguration() == null) {
 			return null;

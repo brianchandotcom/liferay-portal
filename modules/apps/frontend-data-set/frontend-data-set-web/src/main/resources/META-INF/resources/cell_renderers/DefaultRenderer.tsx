@@ -63,7 +63,11 @@ const DefaultRenderer: React.FC<{
 	options: DefaultRendererOptions;
 	value: DefaultRendererValue;
 }> = ({options, value}) => {
-	if (typeof value === 'number' || typeof value === 'string') {
+	if (
+		typeof value === 'number' ||
+		typeof value === 'string' ||
+		React.isValidElement(value)
+	) {
 		return <Wrapper options={options}>{value}</Wrapper>;
 	}
 

@@ -47,6 +47,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -206,8 +208,12 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 	@Reference
 	private Html _html;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private LayoutCrawler _layoutCrawler;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile LayoutCrawler _layoutCrawler;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

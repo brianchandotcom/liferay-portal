@@ -1,8 +1,8 @@
 <definition>
-	<command name="configureBreadcrumb">
+	<command summary="default summary" name="configureBreadcrumb">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION"/>
 	</command>
-	<command prose="I want to print rows-hash table: ${table}" name="echoRowsHashTable" arguments="rawTable,rowsHashTable,table">
+	<command summary="default summary" prose="I want to print rows-hash table: ${table}" name="echoRowsHashTable" arguments="rawTable,rowsHashTable,table">
 		<var name="rowsHashTable" from="${table}" type="RowsHashTable"/>
 		<for param="row" table="${rowsHashTable}">
 			<execute macro="TableEcho#echoTwoVars">
@@ -18,7 +18,7 @@
 			</execute>
 		</for>
 	</command>
-	<command prose="I assert the ${breadcrumbName}" name="viewPG" arguments="breadcrumbName,allLinksChecked,videoGenerationTimeMaxWaitTime,videoGenerationTimeCounter,check,url">
+	<command summary="default summary" prose="I assert the ${breadcrumbName}" name="viewPG" arguments="breadcrumbName,allLinksChecked,videoGenerationTimeMaxWaitTime,videoGenerationTimeCounter,check,url">
 		<var name="key_breadcrumbName" value="${breadcrumbName}"/>
 		<var static="true" name="breadcrumbNameUppercase" method="StringUtil#upperCase('${breadcrumbName}')"/>
 		<var name="integer" method="MathUtil#sum('5', '5')"/>

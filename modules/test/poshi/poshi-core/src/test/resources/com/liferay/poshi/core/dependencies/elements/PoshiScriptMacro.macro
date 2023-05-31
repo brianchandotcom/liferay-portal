@@ -1,10 +1,12 @@
 definition {
 
+	@summary = "default summary"
 	macro configureBreadcrumb() {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
 	@prose = "I want to print rows-hash table: ${table}"
+	@summary = "default summary"
 	macro echoRowsHashTable(rawTable,rowsHashTable,table) {
 		var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
 
@@ -24,6 +26,7 @@ definition {
 	}
 
 	@prose = "I assert the ${breadcrumbName}"
+	@summary = "default summary"
 	macro viewPG(breadcrumbName,allLinksChecked,videoGenerationTimeMaxWaitTime,videoGenerationTimeCounter,check,url) {
 		var key_breadcrumbName = ${breadcrumbName};
 		static var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});

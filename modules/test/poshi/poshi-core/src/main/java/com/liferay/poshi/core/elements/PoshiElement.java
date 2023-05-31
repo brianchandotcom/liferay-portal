@@ -314,7 +314,7 @@ public abstract class PoshiElement
 
 		sb.append(blockName);
 
-		if (blockName.startsWith("macro")) {
+		if (blockName.startsWith("macro") || blockName.startsWith("function")) {
 			sb.append("(");
 
 			if (Validator.isNotNull(attributeValue("arguments"))) {

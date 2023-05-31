@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(service = FragmentRenderer.class)
-public class DatasetFragmentRenderer implements FragmentRenderer {
+public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {

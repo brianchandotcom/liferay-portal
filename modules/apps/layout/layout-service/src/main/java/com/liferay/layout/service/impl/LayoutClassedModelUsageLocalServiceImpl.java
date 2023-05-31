@@ -15,11 +15,13 @@
 package com.liferay.layout.service.impl;
 
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.model.LayoutClassedModelUsageTable;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.service.base.LayoutClassedModelUsageLocalServiceBaseImpl;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Group;
@@ -177,7 +179,18 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	public int getUniqueLayoutClassedModelUsagesCount(
 		long classNameId, long classPK) {
 
-		return layoutClassedModelUsageFinder.countByC_C(classNameId, classPK);
+		return layoutClassedModelUsagePersistence.dslQueryCount(
+			DSLQueryFactoryUtil.selectDistinct(
+				LayoutClassedModelUsageTable.INSTANCE.plid
+			).from(
+				LayoutClassedModelUsageTable.INSTANCE
+			).where(
+				LayoutClassedModelUsageTable.INSTANCE.classNameId.eq(
+					classNameId
+				).and(
+					LayoutClassedModelUsageTable.INSTANCE.classPK.eq(classPK)
+				)
+			));
 	}
 
 	@Override

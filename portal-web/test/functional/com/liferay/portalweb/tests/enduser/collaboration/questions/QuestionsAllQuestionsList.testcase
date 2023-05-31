@@ -71,4 +71,58 @@ definition {
             LexiconCard.viewCardPresent(card = "Topic Name");
         }
 	}
+
+    @description = "Story ID: LPS-153187 | Test Summary: Verify if the user can access all questions by dropdown."
+	@priority = 5
+	test CanAccessAllQuestionsOnDropdown {
+        task ("Given that add two categories and questions") {
+            JSONMBMessage.addCategory(
+                categoryDescription = "Description",
+                categoryName = "Questions Test Topic",
+                userEmailAddress = "test@liferay.com");
+
+            JSONMBMessage.addCategory(
+                categoryDescription = "Description",
+                categoryName = "Questions Category",
+                userEmailAddress = "test@liferay.com");
+
+            JSONQuestions.addQuestion(
+                bodyField = "Content AddQuestion",
+                categoryName = "Questions Test Topic",
+                groupName = "Guest",
+                titleField = "Question1");
+
+            JSONQuestions.addQuestion(
+                bodyField = "AddQuestion2",
+                categoryName = "Questions Category",
+                groupName = "Guest",
+                titleField = "Question2");
+        }
+
+        task ("And go to Questions Test Topic") {
+            Navigator.gotoPage(pageName = "Questions Page");
+
+            LexiconCard.clickCard(card = "Questions Test Topic");
+        }
+
+        task ("When select all questions on dropdown") {
+            Click(
+                key_topicName = "Questions Test Topic",
+                locator1 = "Questions#QUESTIONS_BREADCRUMB_PARENT_TOPIC_BUTTON");
+
+            Click(
+                key_topicName = "All Questions",
+                locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_OPTION");
+        }
+
+        task ("Then can see all questions") {
+            AssertElementPresent(
+                key_questionTitle = "Question1",
+                locator1 = "Questions#QUESTIONS_TITLE");
+
+            AssertElementPresent(
+                key_questionTitle = "Question2",
+                locator1 = "Questions#QUESTIONS_TITLE");
+        }
+	}
 }

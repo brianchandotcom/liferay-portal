@@ -1,0 +1,42 @@
+@component-name = "portal-questions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Questions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Questions Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 2,
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Message Boards");
+
+			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+				Questions.tearDown();
+			}
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+}

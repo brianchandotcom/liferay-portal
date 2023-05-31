@@ -490,7 +490,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								_objectDefinitionLocalService,
 								_objectEntryManagerRegistry,
 								_objectRelatedModelsProviderRegistry,
-								_objectRelationshipService,
+								_objectRelationshipLocalService,
 								_persistedModelLocalServiceRegistry);
 						}
 

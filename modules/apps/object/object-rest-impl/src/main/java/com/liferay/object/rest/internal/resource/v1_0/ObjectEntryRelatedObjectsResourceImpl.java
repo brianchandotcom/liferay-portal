@@ -23,7 +23,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,14 +45,14 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		ObjectRelationshipService objectRelationshipService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
-		_objectRelationshipService = objectRelationshipService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_persistedModelLocalServiceRegistry =
 			persistedModelLocalServiceRegistry;
 	}
@@ -72,7 +72,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			defaultObjectEntryManager, currentObjectEntryId);
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
+			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 
@@ -114,7 +114,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 					_objectDefinition.getStorageType()));
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
+			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 
@@ -155,7 +155,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 					_objectDefinition.getStorageType()));
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
+			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 
@@ -196,7 +196,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		defaultObjectEntryManager.getObjectEntry(
 			_getDTOConverterContext(relatedObjectEntryId),
 			_getRelatedObjectDefinition(
-				_objectRelationshipService.getObjectRelationship(
+				_objectRelationshipLocalService.getObjectRelationship(
 					_objectDefinition.getObjectDefinitionId(),
 					objectRelationshipName)),
 			relatedObjectEntryId);
@@ -276,7 +276,8 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
-	private final ObjectRelationshipService _objectRelationshipService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final PersistedModelLocalServiceRegistry
 		_persistedModelLocalServiceRegistry;
 

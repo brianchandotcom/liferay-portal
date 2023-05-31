@@ -512,7 +512,7 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipService.getObjectRelationship(
+			_objectRelationshipLocalService.getObjectRelationship(
 				objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName);
 

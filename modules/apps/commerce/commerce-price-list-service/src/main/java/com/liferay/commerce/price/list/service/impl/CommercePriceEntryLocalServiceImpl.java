@@ -23,7 +23,6 @@ import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
-import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListPersistence;
@@ -179,15 +178,6 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setPrice(price);
-
-		CommercePriceList commercePriceList =
-			CommercePriceListLocalServiceUtil.getCommercePriceList(
-				commercePriceListId);
-
-		if (!commercePriceList.isCatalogBasePriceList()) {
-			priceOnApplication = false;
-		}
-
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 		commercePriceEntry.setPromoPrice(promoPrice);
 
@@ -652,14 +642,6 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpirationDate(expirationDate);
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setPrice(price);
-
-		CommercePriceList commercePriceList =
-			commercePriceEntry.getCommercePriceList();
-
-		if (!commercePriceList.isCatalogBasePriceList()) {
-			priceOnApplication = false;
-		}
-
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 
 		commercePriceEntry.setPromoPrice(promoPrice);

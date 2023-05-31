@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Luis Ortiz
  */
-public class ValidatorRecorderTest {
+public class RecorderTest {
 
 	@Before
 	public void setUp() {
@@ -42,7 +42,7 @@ public class ValidatorRecorderTest {
 
 	@Test
 	public void testError() {
-		ValidatorRecorder recorder = new ValidatorRecorder();
+		Recorder recorder = new Recorder();
 
 		recorder.registerError("A simple message");
 
@@ -58,7 +58,7 @@ public class ValidatorRecorderTest {
 
 	@Test
 	public void testMultipleError() {
-		ValidatorRecorder recorder = new ValidatorRecorder();
+		Recorder recorder = new Recorder();
 
 		List<String> modules = Arrays.asList("module1", "module2", "module3");
 
@@ -80,7 +80,7 @@ public class ValidatorRecorderTest {
 
 	@Test
 	public void testMultipleWarning() {
-		ValidatorRecorder recorder = new ValidatorRecorder();
+		Recorder recorder = new Recorder();
 
 		List<String> modules = Arrays.asList("module1", "module2", "module3");
 
@@ -102,7 +102,7 @@ public class ValidatorRecorderTest {
 
 	@Test
 	public void testPrintingOrder() {
-		ValidatorRecorder recorder = new ValidatorRecorder();
+		Recorder recorder = new Recorder();
 
 		recorder.registerWarning("A simple warning message");
 		recorder.registerError("A simple error message");
@@ -124,7 +124,7 @@ public class ValidatorRecorderTest {
 
 	@Test
 	public void testWarning() {
-		ValidatorRecorder recorder = new ValidatorRecorder();
+		Recorder recorder = new Recorder();
 
 		recorder.registerWarning("A simple message");
 		recorder.printMessages();

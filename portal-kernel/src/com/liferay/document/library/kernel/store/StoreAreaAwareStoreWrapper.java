@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -129,7 +130,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		return StoreArea.tryGetWithStoreAreas(
 			() -> store.getFileAsStream(
 				companyId, repositoryId, fileName, versionLabel),
-			StoreArea.LIVE, StoreArea.NEW);
+			Objects::nonNull, null, StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override
@@ -158,7 +159,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		return StoreArea.tryGetWithStoreAreas(
 			() -> store.getFileSize(
 				companyId, repositoryId, fileName, versionLabel),
-			StoreArea.LIVE, StoreArea.NEW);
+			Objects::nonNull, 0L, StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override
@@ -186,7 +187,7 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		return StoreArea.tryGetWithStoreAreas(
 			() -> store.hasFile(
 				companyId, repositoryId, fileName, versionLabel),
-			StoreArea.LIVE, StoreArea.NEW);
+			Boolean.TRUE::equals, false, StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	private boolean _isStoreAreaSupported() {

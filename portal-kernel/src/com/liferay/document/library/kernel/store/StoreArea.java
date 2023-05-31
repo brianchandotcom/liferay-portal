@@ -69,18 +69,19 @@ public enum StoreArea {
 	}
 
 	public static <T, E extends Exception> T tryGetWithStoreAreas(
-			UnsafeSupplier<T, E> unsafeSupplier, StoreArea... storeAreas)
+			UnsafeSupplier<T, E> unsafeSupplier, Predicate<T> predicate,
+			T defaultValue, StoreArea... storeAreas)
 		throws E {
 
 		for (StoreArea storeArea : storeAreas) {
 			T result = StoreArea.withStoreArea(storeArea, unsafeSupplier);
 
-			if (result != null) {
+			if (predicate.test(result)) {
 				return result;
 			}
 		}
 
-		return null;
+		return defaultValue;
 	}
 
 	public static StoreArea tryRunWithStoreAreas(

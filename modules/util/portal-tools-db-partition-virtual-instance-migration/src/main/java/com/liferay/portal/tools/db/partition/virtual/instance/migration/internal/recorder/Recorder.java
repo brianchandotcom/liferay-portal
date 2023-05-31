@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation;
+package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.recorder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +51,9 @@ public class Recorder {
 		_errors.add(message);
 	}
 
-	public void registerErrors(
-		List<String> servletContextNames, String message) {
-
-		for (String module : servletContextNames) {
-			_errors.add("Module " + module + " " + message);
+	public void registerErrors(List<String> moduleNames, String message) {
+		for (String moduleName : moduleNames) {
+			_errors.add("Module " + moduleName + " " + message);
 		}
 	}
 
@@ -63,11 +61,9 @@ public class Recorder {
 		_warnings.add(message);
 	}
 
-	public void registerWarnings(
-		List<String> servletContextNames, String message) {
-
-		for (String module : servletContextNames) {
-			_warnings.add("Module " + module + " " + message);
+	public void registerWarnings(List<String> moduleNames, String message) {
+		for (String moduleName : moduleNames) {
+			_warnings.add("Module " + moduleName + " " + message);
 		}
 	}
 

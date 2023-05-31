@@ -136,7 +136,9 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return store.getFileNames(companyId, repositoryId, dirName);
+		return StoreArea.mergeWithStoreAreas(
+			() -> store.getFileNames(companyId, repositoryId, dirName),
+			StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override
@@ -159,7 +161,9 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return store.getFileVersions(companyId, repositoryId, fileName);
+		return StoreArea.mergeWithStoreAreas(
+			() -> store.getFileVersions(companyId, repositoryId, fileName),
+			StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override

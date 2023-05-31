@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -37,6 +40,23 @@ public enum StoreArea {
 		StoreArea storeArea = _storeAreaThreadLocal.get();
 
 		return storeArea.getPath(companyId, repositoryId, path);
+	}
+
+	public static <E extends Exception> String[] mergeWithStoreAreas(
+			UnsafeSupplier<String[], E> supplier, StoreArea... storeAreas)
+		throws E {
+
+		List<String> list = new ArrayList<>();
+
+		for (StoreArea storeArea : storeAreas) {
+			String[] strings = StoreArea.withStoreArea(storeArea, supplier);
+
+			if (strings != null) {
+				Collections.addAll(list, strings);
+			}
+		}
+
+		return list.toArray(new String[0]);
 	}
 
 	public static <T extends Exception> void runWithStoreAreas(

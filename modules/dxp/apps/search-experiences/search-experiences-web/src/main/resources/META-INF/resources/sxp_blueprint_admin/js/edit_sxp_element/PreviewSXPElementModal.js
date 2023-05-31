@@ -14,12 +14,13 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import ErrorBoundary from '../shared/ErrorBoundary';
 import JSONSXPElement from '../shared/JSONSXPElement';
 import SXPElement from '../shared/sxp_element/index';
 import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
+import isEmpty from '../utils/functions/is_empty';
 import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';
 import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_element';
 
@@ -28,6 +29,8 @@ export default function PreviewSXPElementModal({
 	onTitleAndDescriptionChange,
 	sxpElementJSONObject,
 }) {
+	const titleAndDescriptionRef = useRef({});
+
 	const [loading, setLoading] = useState(false);
 	const [preview, setPreview] = useState({
 		sxpElementJSONObject: {},
@@ -35,15 +38,23 @@ export default function PreviewSXPElementModal({
 	});
 	const [visible, setVisible] = useState(false);
 
-	const {observer} = useModal({
-		onClose: () => {
-			setVisible(false);
+	const _handleClose = () => {
+		setVisible(false);
 
-			setPreview({
-				sxpElementJSONObject: {},
-				uiConfigurationValues: {},
-			});
-		},
+		setPreview({
+			sxpElementJSONObject: {},
+			uiConfigurationValues: {},
+		});
+
+		if (!isEmpty(titleAndDescriptionRef.current)) {
+			onTitleAndDescriptionChange(titleAndDescriptionRef.current);
+
+			titleAndDescriptionRef.current = {};
+		}
+	};
+
+	const {observer} = useModal({
+		onClose: _handleClose,
 	});
 
 	const _fetchPreview = () => {
@@ -67,7 +78,7 @@ export default function PreviewSXPElementModal({
 					uiConfigurationValues: getUIConfigurationValues(jsonObject),
 				});
 
-				onTitleAndDescriptionChange({description, title});
+				titleAndDescriptionRef.current = {description, title};
 			})
 			.catch(() => {
 				setPreview({

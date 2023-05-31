@@ -12,6 +12,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
 import DeactivateKeysTable from '../../../containers/DeactivateKeysTable';
 import GenerateNewKey from '../../../containers/GenerateNewKey';
@@ -34,6 +35,7 @@ import ProductOutlet from './Outlets/ProductOutlet';
 
 const ProjectRoutes = () => {
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
+	const {featureFlags} = useAppPropertiesContext();
 
 	useEffect(() => {
 		if (project && subscriptionGroups) {
@@ -104,15 +106,17 @@ const ProjectRoutes = () => {
 								path="new"
 							/>
 
-							<Route
-								element={
-									<DeactivateKeysTable
-										initialFilter="startswith(productName,'Portal')"
-										productName={PRODUCT_TYPES.portal}
-									/>
-								}
-								path="deactivate"
-							/>
+							{featureFlags.includes('LPS-186175') && (
+								<Route
+									element={
+										<DeactivateKeysTable
+											initialFilter="startswith(productName,'Portal')"
+											productName={PRODUCT_TYPES.portal}
+										/>
+									}
+									path="deactivate"
+								/>
+							)}
 						</Route>
 
 						<Route

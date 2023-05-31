@@ -15,6 +15,7 @@
 package com.liferay.document.library.kernel.store;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -47,6 +48,21 @@ public enum StoreArea {
 		}
 	}
 
+	public static <T, E extends Exception> T tryGetWithStoreAreas(
+			UnsafeSupplier<T, E> unsafeSupplier, StoreArea... storeAreas)
+		throws E {
+
+		for (StoreArea storeArea : storeAreas) {
+			T result = StoreArea.withStoreArea(storeArea, unsafeSupplier);
+
+			if (result != null) {
+				return result;
+			}
+		}
+
+		return null;
+	}
+
 	public static StoreArea tryRunWithStoreAreas(
 		Predicate<StoreArea> predicate, StoreArea... storeAreas) {
 
@@ -63,12 +79,25 @@ public enum StoreArea {
 			StoreArea storeArea, UnsafeRunnable<T> unsafeRunnable)
 		throws T {
 
+		StoreArea.withStoreArea(
+			storeArea,
+			() -> {
+				unsafeRunnable.run();
+
+				return null;
+			});
+	}
+
+	public static <T, E extends Throwable> T withStoreArea(
+			StoreArea storeArea, UnsafeSupplier<T, E> unsafeSupplier)
+		throws E {
+
 		StoreArea oldStoreArea = _storeAreaThreadLocal.get();
 
 		try {
 			_storeAreaThreadLocal.set(storeArea);
 
-			unsafeRunnable.run();
+			return unsafeSupplier.get();
 		}
 		finally {
 			_storeAreaThreadLocal.set(oldStoreArea);

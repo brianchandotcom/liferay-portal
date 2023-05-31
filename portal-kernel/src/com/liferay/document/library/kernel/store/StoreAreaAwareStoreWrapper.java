@@ -124,8 +124,10 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return store.getFileAsStream(
-			companyId, repositoryId, fileName, versionLabel);
+		return StoreArea.tryGetWithStoreAreas(
+			() -> store.getFileAsStream(
+				companyId, repositoryId, fileName, versionLabel),
+			StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override
@@ -145,8 +147,10 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return store.getFileSize(
-			companyId, repositoryId, fileName, versionLabel);
+		return StoreArea.tryGetWithStoreAreas(
+			() -> store.getFileSize(
+				companyId, repositoryId, fileName, versionLabel),
+			StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override
@@ -165,7 +169,10 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
+		return StoreArea.tryGetWithStoreAreas(
+			() -> store.hasFile(
+				companyId, repositoryId, fileName, versionLabel),
+			StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	private boolean _isStoreAreaSupported() {

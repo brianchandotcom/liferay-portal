@@ -83,7 +83,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 					writer.write(symbol);
 
 					if (!Validator.isBlank(alias) &&
-							!Objects.equals(alias, symbol)) {
+						!Objects.equals(alias, symbol)) {
 
 						writer.write(" as ");
 						writer.write(alias);
@@ -251,8 +251,8 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 
 					if (!Validator.isBlank(alias)) {
 						if (usedAliases.containsKey(alias)) {
-							IntegerWrapper integerWrapper =
-								usedAliases.get(alias);
+							IntegerWrapper integerWrapper = usedAliases.get(
+								alias);
 
 							alias += integerWrapper.getValue();
 

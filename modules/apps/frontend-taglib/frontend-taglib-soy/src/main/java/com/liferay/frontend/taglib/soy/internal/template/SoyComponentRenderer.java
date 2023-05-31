@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.soy.internal.template;
 
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -24,7 +25,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

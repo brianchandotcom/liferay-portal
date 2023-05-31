@@ -44,15 +44,13 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 			setTemplateNamespace("ClayChart.render");
 		}
 
-
 		return super.doStartTag();
 	}
 
 	@Override
 	public String getModule() {
-		return
-			StringPool.OPEN_CURLY_BRACE + _moduleBaseName +
-				"} from frontend-taglib-chart/exports/clay-charts.js";
+		return StringPool.OPEN_CURLY_BRACE + _moduleBaseName +
+			"} from frontend-taglib-chart/exports/clay-charts.js";
 	}
 
 	public void setConfig(ChartConfig<?> chartConfig) {
@@ -87,7 +85,6 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 	}
 
 	private final String _moduleBaseName;
-
 	private final String _templateNamespace;
 
 }

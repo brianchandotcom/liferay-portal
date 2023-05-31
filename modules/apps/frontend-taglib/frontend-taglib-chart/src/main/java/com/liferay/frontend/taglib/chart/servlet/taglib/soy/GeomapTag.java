@@ -38,9 +38,8 @@ public class GeomapTag extends TemplateRendererTag {
 
 	@Override
 	public String getModule() {
-		return
-			StringPool.OPEN_CURLY_BRACE + _moduleBaseName +
-				"} from frontend-taglib-chart/exports/clay-charts.js";
+		return StringPool.OPEN_CURLY_BRACE + _moduleBaseName +
+			"} from frontend-taglib-chart/exports/clay-charts.js";
 	}
 
 	public void setConfig(GeomapConfig geomapConfig) {

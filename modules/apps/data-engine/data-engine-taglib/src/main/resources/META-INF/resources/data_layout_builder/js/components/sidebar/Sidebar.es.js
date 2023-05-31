@@ -159,6 +159,12 @@ const SidebarTitle = ({className, title}) => (
 
 				builder.classList.remove('ddm-form-builder--sidebar-open');
 				sidebar.classList.remove('multi-panel-sidebar-content-open');
+
+				const builderTab = document.querySelector(
+					`[data-panel-id="Builder"]`
+				);
+				builderTab?.focus();
+				builderTab.ariaSelected = false;
 			}}
 			size="sm"
 			symbol="times"

@@ -18,6 +18,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import useLoad from '../../hooks/useLoad.es';
@@ -49,6 +50,8 @@ export default function MultiPanelSidebar({
 	const load = useLoad();
 	const sidebarPanelsRef = useRef(sidebarPanels);
 	const tabListRef = useRef();
+
+	const [activePanel, setActivePanel] = useState('fields');
 
 	const [panelComponents, setPanelComponents] = useState([]);
 
@@ -125,6 +128,10 @@ export default function MultiPanelSidebar({
 		}
 
 		const newOpen = closeButtonPressed ? open : !open;
+
+		if (sidebarPanelId !== currentPanelId) {
+			setActivePanel(sidebarPanelId);
+		}
 
 		onChange({
 			sidebarOpen: sidebarPanelId !== currentPanelId || newOpen,
@@ -248,10 +255,16 @@ export default function MultiPanelSidebar({
 				</div>
 
 				<div
-					aria-label={Liferay.Language.get('sidebar')}
+					aria-label={sub(
+						Liferay.Language.get('x-panel'),
+						sidebarPanels[activePanel].label
+					)}
 					className={classNames('multi-panel-sidebar-content', {
 						'multi-panel-sidebar-content-open': open,
 					})}
+					data-sidebar-content={activePanel}
+					role="tabpanel"
+					tabIndex="-1"
 				>
 					{hasError ? (
 						<div>

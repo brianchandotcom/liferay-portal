@@ -79,6 +79,12 @@ export default function InfoPanel({title, url}) {
 							sidebar.classList.remove(
 								'multi-panel-sidebar-content-open'
 							);
+
+							const tab = document.querySelector(
+								`[data-panel-id="${title}"]`
+							);
+							tab?.focus();
+							tab.ariaSelected = false;
 						}}
 						size="sm"
 						symbol="times"

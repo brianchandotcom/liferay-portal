@@ -1147,7 +1147,8 @@ public class SourceFormatter {
 				(line.contains("feature.flag") ||
 				 line.contains("FeatureFlagManagerUtil.isEnabled(") ||
 				 line.contains("Liferay-Site-Initializer-Feature-Flag:") ||
-				 line.contains("Liferay.FeatureFlags['"))) {
+				 line.contains("Liferay.FeatureFlags['") ||
+				 line.contains("\"featureFlag\": \""))) {
 
 				return true;
 			}

@@ -5,6 +5,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
+			"featureFlag": "LPS-184413",
 			"importStrategy": "ON_ERROR_FAIL",
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"

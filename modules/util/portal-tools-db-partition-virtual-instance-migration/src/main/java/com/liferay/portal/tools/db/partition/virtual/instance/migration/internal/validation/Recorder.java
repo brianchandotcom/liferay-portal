@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Luis Ortiz
  */
-public class ValidatorRecorder {
+public class Recorder {
 
 	public boolean hasErrors() {
 		return !_errors.isEmpty();

@@ -16,8 +16,8 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migration;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.error.ErrorCodes;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util.DatabaseUtil;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation.Recorder;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation.Validator;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation.ValidatorRecorder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -120,7 +120,7 @@ public class VirtualInstanceMigration {
 					_exitWithCode(ErrorCodes.DESTINATION_NOT_DEFAULT);
 				}
 
-				ValidatorRecorder recorder = Validator.validateDatabases(
+				Recorder recorder = Validator.validateDatabases(
 					_sourceConnection, _destinationConnection);
 
 				if (recorder.hasErrors() || recorder.hasWarnings()) {

@@ -23,7 +23,7 @@ import org.junit.Test;
 public class VersionTest {
 
 	@Test
-	public void testCompareFinalToStepVersion() {
+	public void testCompareToFinalToStepVersion() {
 		Version version1 = Version.parseVersion("1.2.3");
 		Version version2 = Version.parseVersion("1.2.3.step-2");
 
@@ -31,7 +31,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testCompareSameFinalVersions() {
+	public void testCompareToSameFinalVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 		Version version2 = Version.parseVersion("1.2.3");
 
@@ -39,7 +39,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testCompareSameStepVersions() {
+	public void testCompareToSameStepVersions() {
 		Version version1 = Version.parseVersion("1.2.3.step-3");
 		Version version2 = Version.parseVersion("1.2.3.step-3");
 
@@ -47,7 +47,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testCompareSteps() {
+	public void testCompareToSteps() {
 		Version version1 = Version.parseVersion("1.2.3.step-1");
 		Version version2 = Version.parseVersion("1.2.3.step-2");
 
@@ -55,7 +55,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testCompareStepToFinalVersion() {
+	public void testCompareToStepToFinalVersion() {
 		Version version1 = Version.parseVersion("1.2.3.step-2");
 		Version version2 = Version.parseVersion("1.2.3");
 
@@ -63,7 +63,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testEqualSameFinalVersions() {
+	public void testEqualsSameFinalVersions() {
 		Version version1 = Version.parseVersion("1.2.3");
 		Version version2 = Version.parseVersion("1.2.3");
 
@@ -71,7 +71,7 @@ public class VersionTest {
 	}
 
 	@Test
-	public void testEqualSameStepVersions() {
+	public void testEqualsSameStepVersions() {
 		Version version1 = Version.parseVersion("1.2.3.step-1");
 		Version version2 = Version.parseVersion("1.2.3.step-1");
 

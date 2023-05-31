@@ -829,6 +829,8 @@ public class CommercePriceListLocalServiceImpl
 					groupId, commerceAccountId, commerceAccountGroupIds,
 					commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type
 				).orderBy(
+					CommercePriceEntryTable.INSTANCE.priceOnApplication.
+						descending(),
 					CommercePriceEntryTable.INSTANCE.price.ascending()
 				).limit(
 					0, 1

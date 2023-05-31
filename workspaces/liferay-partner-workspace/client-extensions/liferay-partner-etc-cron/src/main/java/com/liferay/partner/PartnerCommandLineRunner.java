@@ -14,23 +14,19 @@
 
 package com.liferay.partner;
 
-import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
-import com.liferay.object.admin.rest.client.pagination.Page;
-import com.liferay.object.admin.rest.client.pagination.Pagination;
-import com.liferay.partner.dto.Activity;
-import com.liferay.partner.service.ActivityService;
-import com.liferay.petra.function.transform.TransformUtil;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.Collection;
-
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.MediaType;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Jair Medeiros
@@ -42,65 +38,154 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		ZonedDateTime nowZonedDateTime = ZonedDateTime.now();
 
-		Page<Activity> activitiesPage = _activityService.getEntriesPage(
-			null,
-			"activityStatus eq 'approved' and startDate le " +
-				nowZonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE),
-			Pagination.of(1, -1), null);
+		String formattedNowZonedDateTime = nowZonedDateTime.format(
+			DateTimeFormatter.ISO_LOCAL_DATE);
 
-		if (activitiesPage.getTotalCount() > 0) {
-			Collection<Activity> activities = TransformUtil.transform(
-				activitiesPage.getItems(),
-				activity -> {
-					ListTypeEntry expiredListTypeEntry = new ListTypeEntry() {
-						{
-							setKey("active");
-							setName("Active");
-						}
-					};
+		String response = WebClient.create(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).get(
+		).uri(
+			uriBuilder -> {
+				uriBuilder.queryParam("page", String.valueOf(1));
+				uriBuilder.queryParam("pageSize", String.valueOf(-1));
 
-					activity.setActivityStatus(expiredListTypeEntry);
+				uriBuilder.queryParam(
+					"filter",
+					"activityStatus eq 'approved' and startDate le " +
+						formattedNowZonedDateTime);
 
-					return activity;
-				});
+				return uriBuilder.path(
+					"/o/c/activities"
+				).build();
+			}
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
 
-			_activityService.putEntryBatch(null, new JSONArray(activities));
+		JSONObject responseJSONObject = new JSONObject(response);
+
+		if (responseJSONObject.getInt("totalCount") > 0) {
+			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+				JSONObject activityStatusJSONObject =
+					itemJSONObject.getJSONObject("activityStatus");
+
+				activityStatusJSONObject.put(
+					"key", "active"
+				).put(
+					"name", "Active"
+				);
+			}
+
+			WebClient.create(
+				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+			).put(
+			).uri(
+				uriBuilder -> uriBuilder.path(
+					"/o/c/activities/batch"
+				).build()
+			).accept(
+				MediaType.APPLICATION_JSON
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).header(
+				"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+			).bodyValue(
+				itemsJSONArray.toString()
+			).retrieve(
+			).bodyToMono(
+				Void.class
+			).block();
 		}
 
+		ZonedDateTime nowZonedDateTimeMinus30Days = nowZonedDateTime.minusDays(
+			30);
+
 		String formattedNowZonedDateTimeMinus30Days =
-			nowZonedDateTime.minusDays(
-				30
-			).format(
-				DateTimeFormatter.ISO_LOCAL_DATE
-			);
+			nowZonedDateTimeMinus30Days.format(
+				DateTimeFormatter.ISO_LOCAL_DATE);
 
-		activitiesPage = _activityService.getEntriesPage(
-			null,
-			"activityStatus eq 'active' and endDate lt " +
-				formattedNowZonedDateTimeMinus30Days,
-			Pagination.of(1, -1), null);
+		response = WebClient.create(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).get(
+		).uri(
+			uriBuilder -> {
+				uriBuilder.queryParam("page", String.valueOf(1));
+				uriBuilder.queryParam("pageSize", String.valueOf(-1));
 
-		if (activitiesPage.getTotalCount() > 0) {
-			Collection<Activity> activities = TransformUtil.transform(
-				activitiesPage.getItems(),
-				activity -> {
-					ListTypeEntry expiredListTypeEntry = new ListTypeEntry() {
-						{
-							setKey("expired");
-							setName("Expired");
-						}
-					};
+				uriBuilder.queryParam(
+					"filter",
+					"activityStatus eq 'active' and endDate lt " +
+						formattedNowZonedDateTimeMinus30Days);
 
-					activity.setActivityStatus(expiredListTypeEntry);
+				return uriBuilder.path(
+					"/o/c/activities"
+				).build();
+			}
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
 
-					return activity;
-				});
+		responseJSONObject = new JSONObject(response);
 
-			_activityService.putEntryBatch(null, new JSONArray(activities));
+		if (responseJSONObject.getInt("totalCount") > 0) {
+			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+				JSONObject activityStatusJSONObject =
+					itemJSONObject.getJSONObject("activityStatus");
+
+				activityStatusJSONObject.put(
+					"key", "expired"
+				).put(
+					"name", "Expired"
+				);
+			}
+
+			WebClient.create(
+				_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+			).put(
+			).uri(
+				uriBuilder -> uriBuilder.path(
+					"/o/c/activities/batch"
+				).build()
+			).accept(
+				MediaType.APPLICATION_JSON
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).header(
+				"Authorization", "Bearer " + _oAuth2AccessToken.getTokenValue()
+			).bodyValue(
+				itemsJSONArray.toString()
+			).retrieve(
+			).bodyToMono(
+				Void.class
+			).block();
 		}
 	}
 
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	private String _lxcDXPMainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _lxcDXPServerProtocol;
+
 	@Autowired
-	private ActivityService _activityService;
+	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

@@ -18,7 +18,6 @@ import com.google.re2j.Pattern;
 import com.google.re2j.PatternSyntaxException;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.redirect.configuration.RedirectPatternConfigurationProvider;
-import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectPatternEntry;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 
@@ -126,10 +124,6 @@ public class EditRedirectPatternsMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getUserAgent(Map<String, String[]> parameterMap, int i) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-175850")) {
-			return RedirectConstants.USER_AGENT_ALL;
-		}
-
 		String[] userAgents = parameterMap.get("userAgent_" + i);
 
 		if ((userAgents.length != 0) && Validator.isNotNull(userAgents[0])) {

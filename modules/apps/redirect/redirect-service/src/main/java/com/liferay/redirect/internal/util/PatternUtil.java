@@ -17,8 +17,6 @@ package com.liferay.redirect.internal.util;
 import com.google.re2j.Pattern;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.redirect.constants.RedirectConstants;
 import com.liferay.redirect.model.RedirectPatternEntry;
 
 import java.util.ArrayList;
@@ -32,35 +30,18 @@ public class PatternUtil {
 	public static List<RedirectPatternEntry> parse(String[] patternStrings) {
 		List<RedirectPatternEntry> redirectPatternEntries = new ArrayList<>();
 
-		int limit = 2;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-175850")) {
-			limit = 3;
-		}
-
 		for (String patternString : patternStrings) {
 			String[] parts = patternString.split("\\s+", 3);
 
-			if ((parts.length < limit) || parts[0].isEmpty() ||
-				parts[1].isEmpty()) {
+			if ((parts.length < 3) || parts[0].isEmpty() ||
+				parts[1].isEmpty() || parts[2].isEmpty()) {
 
 				continue;
 			}
 
-			String userAgent = RedirectConstants.USER_AGENT_ALL;
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-175850")) {
-				if (parts[2].isEmpty()) {
-					continue;
-				}
-
-				userAgent = parts[2];
-			}
-
 			redirectPatternEntries.add(
 				new RedirectPatternEntry(
-					Pattern.compile(_normalize(parts[0])), parts[1],
-					userAgent));
+					Pattern.compile(_normalize(parts[0])), parts[1], parts[2]));
 		}
 
 		return redirectPatternEntries;

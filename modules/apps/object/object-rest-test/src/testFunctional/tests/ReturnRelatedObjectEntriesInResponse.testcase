@@ -1,7 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
-	property custom.properties = "feature.flag.LPS-153117=true";
+	property custom.properties = "feature.flag.LPS-153117=true${line.separator}feature.flag.LPS-165819=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Object";
@@ -101,7 +101,7 @@ definition {
 
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
-		JSONUser.tearDownNonAdminUsers();
+		JSONUser.tearDownNonAdminUsersNoSelenium();
 
 		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
@@ -111,7 +111,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnChildAndParentsWithPostChildStudentInManyToManyRelationship {
-		property custom.properties = "feature.flag.LPS-165819=true";
 		property portal.acceptance = "true";
 
 		task ("When with postStudent to create a student and two related users") {
@@ -172,7 +171,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnChildAndParentWithPostChildUserInManyToManyRelationship {
-		property custom.properties = "feature.flag.LPS-165819=true";
 		property portal.acceptance = "true";
 
 		task ("When with postUserAccount to create a userAccount and two related students") {
@@ -204,7 +202,6 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanReturnChildAndParentWithPostChildUserInOneToManyRelationship {
-		property custom.properties = "feature.flag.LPS-165819=true";
 		property portal.acceptance = "true";
 
 		task ("When with postUserAccount to create a user and a related student") {
@@ -297,7 +294,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnUpdatedChildAndParentsWithPatchChildStudentInManyToManyRelationship {
-		property custom.properties = "feature.flag.LPS-165819=true";
 		property portal.acceptance = "true";
 
 		task ("And Given with postStudent to create a student and two related users") {
@@ -348,7 +344,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnUpdatedChildAndParentsWithPatchChildUserInManyToManyRelationship {
-		property custom.properties = "feature.flag.LPS-165819=true";
 		property portal.acceptance = "true";
 
 		task ("And Given with postUserAccount to create a userAccount and two related students") {
@@ -580,7 +575,6 @@ definition {
 	@disable-webdriver = "true"
 	@priority = 4
 	test CanReturnUpdatedParentAndChildrenWithPutParentStudentInOneToManyRelationship {
-		property custom.properties = "feature.flag.LPS-165819=true";
 		property portal.acceptance = "true";
 
 		task ("And Given with postStudent to create a student and two related users") {

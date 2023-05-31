@@ -168,6 +168,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.override.model.PLOEntry;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.test.rule.Inject;
@@ -2123,6 +2125,34 @@ public class BundleSiteInitializerTest {
 		_assertResourcePermission1();
 	}
 
+	private void _assertPLOEntries1() {
+		PLOEntry ploEntry1 = _ploEntryLocalService.fetchPLOEntry(
+			_group.getCompanyId(), "test-portal-language-override-1", "en_US");
+
+		Assert.assertEquals(
+			"Test Portal Language Override 1", ploEntry1.getValue());
+
+		PLOEntry ploEntry2 = _ploEntryLocalService.fetchPLOEntry(
+			_group.getCompanyId(), "test-portal-language-override-2", "en_US");
+
+		Assert.assertEquals(
+			"Test Portal Language Override 2", ploEntry2.getValue());
+	}
+
+	private void _assertPLOEntries2() {
+		PLOEntry ploEntry1 = _ploEntryLocalService.fetchPLOEntry(
+			_group.getCompanyId(), "test-portal-language-override-1", "en_US");
+
+		Assert.assertEquals(
+			"Test Portal Language Override 1 Update", ploEntry1.getValue());
+
+		PLOEntry ploEntry2 = _ploEntryLocalService.fetchPLOEntry(
+			_group.getCompanyId(), "test-portal-language-override-2", "en_US");
+
+		Assert.assertEquals(
+			"Test Portal Language Override 2 Update", ploEntry2.getValue());
+	}
+
 	private void _assertPortletSettings() {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
@@ -3228,6 +3258,7 @@ public class BundleSiteInitializerTest {
 		_assertObjectDefinitions1();
 		_assertOrganizations1();
 		_assertPermissions();
+		_assertPLOEntries1();
 		_assertPortletSettings();
 		_assertSAPEntries();
 		_assertSegmentsEntries();
@@ -3255,12 +3286,16 @@ public class BundleSiteInitializerTest {
 		_assertListTypeDefinitions2();
 		_assertObjectDefinitions2();
 		_assertOrganizations2();
+		_assertPLOEntries2();
 		_assertResourcePermission2();
 		_assertUserAccounts2();
 	}
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private static PLOEntryLocalService _ploEntryLocalService;
 
 	@Inject
 	private AccountResource.Factory _accountResourceFactory;

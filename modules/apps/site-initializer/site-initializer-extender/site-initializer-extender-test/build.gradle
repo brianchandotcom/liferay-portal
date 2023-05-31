@@ -23,6 +23,7 @@ dependencies {
 	testIntegrationCompile project(":apps:notification:notification-rest-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")
 	testIntegrationCompile project(":apps:object:object-api")
+	testIntegrationCompile project(":apps:portal-language:portal-language-override-api")
 	testIntegrationCompile project(":apps:portal-security:portal-security-service-access-policy-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":apps:segments:segments-api")

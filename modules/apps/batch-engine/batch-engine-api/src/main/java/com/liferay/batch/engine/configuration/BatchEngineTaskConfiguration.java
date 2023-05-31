@@ -37,6 +37,12 @@ public interface BatchEngineTaskConfiguration {
 	public int completedTasksCleanerScanInterval();
 
 	@Meta.AD(
+		deflt = "30", description = "delegate-threshold-description",
+		name = "delegate-threshold", required = false
+	)
+	public int delegateThreshold();
+
+	@Meta.AD(
 		deflt = "30", description = "orphanage-threshold-description",
 		name = "orphanage-threshold", required = false
 	)

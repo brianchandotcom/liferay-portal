@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.unit;
 
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
@@ -22,6 +23,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -48,6 +50,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.promise.Deferred;
@@ -56,7 +59,10 @@ import org.osgi.util.promise.Promise;
 /**
  * @author Matija Petanjek
  */
-@Component(service = BatchEngineUnitProcessor.class)
+@Component(
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
+	service = BatchEngineUnitProcessor.class
+)
 public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Override
@@ -81,6 +87,12 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				}
 			}
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_batchEngineTaskConfiguration = ConfigurableUtil.createConfigurable(
+			BatchEngineTaskConfiguration.class, properties);
 	}
 
 	private String _getFullEntityClassName(
@@ -161,7 +173,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Promise<ComponentInstance<?>> promise = deferred.getPromise();
 
 		promise.delay(
-			TimeUnit.SECOND.toMillis(30)
+			TimeUnit.SECOND.toMillis(
+				_batchEngineTaskConfiguration.delegateThreshold())
 		).thenAccept(
 			componentInstance -> {
 				if (!disposed.get()) {
@@ -238,6 +251,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineUnitProcessorImpl.class);
+
+	private BatchEngineTaskConfiguration _batchEngineTaskConfiguration;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -48,6 +48,13 @@ generateJSPJava {
 	enabled = false
 }
 
+node {
+	global = false
+	nodeVersion = "16.17.0"
+	useNpm = false
+	yarnVersion = "1.22.19"
+}
+
 packageRunWebpack {
 	if (project.hasProperty("faroEnvironmentName")) {
 		environment "FARO_ENVIRONMENT_NAME", faroEnvironmentName

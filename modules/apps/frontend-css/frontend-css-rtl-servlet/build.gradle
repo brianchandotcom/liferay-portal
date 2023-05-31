@@ -1,7 +1,7 @@
 dependencies {
 	compileInclude group: "com.google.code.findbugs", name: "annotations", version: "2.0.3"
-	compileInclude group: "com.helger", name: "ph-commons", version: "6.2.4"
-	compileInclude group: "com.helger", name: "ph-css", version: "4.1.0"
+	compileInclude group: "com.helger", name: "ph-commons", version: "8.6.0"
+	compileInclude group: "com.helger", name: "ph-css", version: "5.0.3"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

@@ -40,23 +40,9 @@ public class Validator {
 
 		_validateTables(sourceConnection, destinationConnection, recorder);
 
-		_checkWebIds(sourceConnection, destinationConnection, recorder);
+		_validateWebId(sourceConnection, destinationConnection, recorder);
 
 		return recorder;
-	}
-
-	private static void _checkWebIds(
-			Connection sourceConnection, Connection destinationConnection,
-			Recorder recorder)
-		throws SQLException {
-
-		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);
-
-		if (DatabaseUtil.hasWebId(destinationConnection, sourceWebId)) {
-			recorder.registerWarning(
-				"webId " + sourceWebId +
-					" already exists in destination database");
-		}
 	}
 
 	private static void _validateRelease(
@@ -206,6 +192,20 @@ public class Validator {
 					"Table " + tableName +
 						" is not present in source database");
 			}
+		}
+	}
+
+	private static void _validateWebId(
+			Connection sourceConnection, Connection destinationConnection,
+			Recorder recorder)
+		throws SQLException {
+
+		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);
+
+		if (DatabaseUtil.hasWebId(destinationConnection, sourceWebId)) {
+			recorder.registerError(
+				"WebId " + sourceWebId +
+					" already exists in destination database");
 		}
 	}
 

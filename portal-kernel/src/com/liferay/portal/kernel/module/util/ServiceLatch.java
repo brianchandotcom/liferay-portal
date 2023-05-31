@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.module.util;
 
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -120,9 +122,16 @@ public class ServiceLatch {
 			if (_serviceTrackersCount.decrementAndGet() == 0) {
 				_openRunnable.run();
 
-				for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
-					serviceTracker.close();
-				}
+				DependencyManagerSyncUtil.registerSyncCallable(
+					() -> {
+						for (ServiceTracker<?, ?> serviceTracker :
+								_serviceTrackers) {
+
+							serviceTracker.close();
+						}
+
+						return null;
+					});
 			}
 
 			return service;

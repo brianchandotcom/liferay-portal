@@ -81,7 +81,9 @@ public class StoreAreaAwareStoreWrapper implements Store {
 			}
 		}
 
-		store.deleteDirectory(companyId, repositoryId, dirName);
+		StoreArea.runWithStoreAreas(
+			() -> store.deleteDirectory(companyId, repositoryId, dirName),
+			StoreArea.LIVE, StoreArea.NEW);
 	}
 
 	@Override
@@ -89,11 +91,13 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
+		StoreArea storeArea = StoreArea.LIVE;
+
 		if (_isStoreAreaSupported()) {
 			StoreAreaProcessor storeAreaProcessor =
 				_storeAreaProcessorSupplier.get();
 
-			StoreArea.tryRunWithStoreAreas(
+			storeArea = StoreArea.tryRunWithStoreAreas(
 				sourceStoreArea -> storeAreaProcessor.copy(
 					sourceStoreArea.getPath(
 						companyId, repositoryId, fileName, versionLabel),
@@ -102,9 +106,14 @@ public class StoreAreaAwareStoreWrapper implements Store {
 				StoreArea.LIVE, StoreArea.NEW);
 		}
 
-		Store store = _storeSupplier.get();
+		StoreArea.withStoreArea(
+			storeArea,
+			() -> {
+				Store store = _storeSupplier.get();
 
-		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+				store.deleteFile(
+					companyId, repositoryId, fileName, versionLabel);
+			});
 	}
 
 	@Override

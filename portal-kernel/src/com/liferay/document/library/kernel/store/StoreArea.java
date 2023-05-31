@@ -38,6 +38,15 @@ public enum StoreArea {
 		return storeArea.getPath(companyId, repositoryId, path);
 	}
 
+	public static <T extends Exception> void runWithStoreAreas(
+			UnsafeRunnable<T> unsafeRunnable, StoreArea... storeAreas)
+		throws T {
+
+		for (StoreArea storeArea : storeAreas) {
+			StoreArea.withStoreArea(storeArea, unsafeRunnable);
+		}
+	}
+
 	public static StoreArea tryRunWithStoreAreas(
 		Predicate<StoreArea> predicate, StoreArea... storeAreas) {
 

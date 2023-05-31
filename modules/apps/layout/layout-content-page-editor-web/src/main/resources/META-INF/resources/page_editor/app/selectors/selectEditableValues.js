@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function selectEditableValue(
+export default function selectEditableValues(
 	{fragmentEntryLinks},
 	fragmentEntryLinkId
 ) {

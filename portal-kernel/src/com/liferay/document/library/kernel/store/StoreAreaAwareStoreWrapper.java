@@ -58,18 +58,15 @@ public class StoreAreaAwareStoreWrapper implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		Store store = _storeSupplier.get();
-
 		if (_isStoreAreaSupported()) {
 			StoreAreaProcessor storeAreaProcessor =
 				_storeAreaProcessorSupplier.get();
 
 			for (String fileName :
-					store.getFileNames(companyId, repositoryId, dirName)) {
+					getFileNames(companyId, repositoryId, dirName)) {
 
 				for (String versionLabel :
-						store.getFileVersions(
-							companyId, repositoryId, fileName)) {
+						getFileVersions(companyId, repositoryId, fileName)) {
 
 					StoreArea.tryRunWithStoreAreas(
 						sourceStoreArea -> storeAreaProcessor.copy(
@@ -83,6 +80,8 @@ public class StoreAreaAwareStoreWrapper implements Store {
 				}
 			}
 		}
+
+		Store store = _storeSupplier.get();
 
 		StoreArea.runWithStoreAreas(
 			() -> store.deleteDirectory(companyId, repositoryId, dirName),

@@ -18,8 +18,6 @@ import com.google.re2j.Pattern;
 import com.google.re2j.PatternSyntaxException;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.redirect.model.RedirectPatternEntry;
 
@@ -31,8 +29,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 /**
@@ -48,14 +44,6 @@ public class PatternUtilTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-
-		PropsUtil.setProps(_props);
-
-		Mockito.when(
-			_props.get("feature.flag.LPS-175850")
-		).thenReturn(
-			"false"
-		);
 	}
 
 	@Test
@@ -102,13 +90,6 @@ public class PatternUtilTest {
 			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz "})));
 		Assert.assertTrue(
 			ListUtil.isEmpty(PatternUtil.parse(new String[] {"xyz"})));
-
-		Mockito.when(
-			_props.get("feature.flag.LPS-175850")
-		).thenReturn(
-			"true"
-		);
-
 		Assert.assertTrue(
 			ListUtil.isEmpty(PatternUtil.parse(new String[] {" xyz abc"})));
 		Assert.assertTrue(
@@ -163,8 +144,5 @@ public class PatternUtilTest {
 
 		return pattern.pattern();
 	}
-
-	@Mock
-	private Props _props;
 
 }

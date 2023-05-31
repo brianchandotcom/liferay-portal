@@ -82,7 +82,6 @@ definition {
 	@description = "This test checks that the user can redirect to destination URL when the user agent configured as bot."
 	@priority = 5
 	test CanRedirectToDestinationURLWhenUserAgentConfiguredAsBot {
-		property custom.properties = "feature.flag.LPS-175850=true";
 		property test.name.skip.portal.instance = "RedirectPattern#CanRedirectToDestinationURLWhenUserAgentConfiguredAsBot";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -119,8 +118,6 @@ definition {
 	@description = "This test checks that the user can redirect to destination URL when the user agent configured as human."
 	@priority = 5
 	test CanRedirectToDestinationURLWhenUserAgentConfiguredAsHuman {
-		property custom.properties = "feature.flag.LPS-175850=true";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		Redirect.openToPatterns(siteURLKey = "test-site");
@@ -173,8 +170,6 @@ definition {
 	@description = "This test checks that the long destination URL can be clipped."
 	@priority = 5
 	test CanViewClippedDestinationURL {
-		property custom.properties = "feature.flag.LPS-175850=true";
-
 		Redirect.openToPatterns(siteURLKey = "test-site");
 
 		Redirect.addPattern(

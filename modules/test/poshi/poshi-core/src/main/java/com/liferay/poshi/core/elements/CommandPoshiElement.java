@@ -173,6 +173,32 @@ public class CommandPoshiElement extends PoshiElement {
 					addAttribute("arguments", arguments);
 				}
 			}
+			else if (commandType.equals("function")) {
+				String arguments = getParentheticalContent(
+					blockNameMatcher.group(4));
+
+				if (Validator.isNull(arguments)) {
+					StringBuilder sb = new StringBuilder();
+
+					for (String argument :
+							generateRequiredArguments(blockContent)) {
+
+						sb.append(argument + ",");
+					}
+
+					String requiredArguments = sb.toString();
+
+					if (!requiredArguments.isEmpty()) {
+						addAttribute(
+							"arguments",
+							requiredArguments.substring(
+								0, requiredArguments.length() - 1));
+					}
+				}
+				else {
+					addAttribute("arguments", arguments);
+				}
+			}
 		}
 
 		for (String poshiScriptSnippet : getPoshiScriptSnippets(blockContent)) {

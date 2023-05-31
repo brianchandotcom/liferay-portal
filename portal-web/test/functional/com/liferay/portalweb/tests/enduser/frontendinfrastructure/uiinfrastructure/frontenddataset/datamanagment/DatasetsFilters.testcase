@@ -1,0 +1,157 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Frontend Dataset";
+	property testray.main.component.name = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given creating a Data Set via API") {
+			FrontendDataSetAdmin.goToDatasetAdminPage();
+
+			FrontendDataSetAdmin.createDatasetEntryViaAPI(
+				datasetName = "Dataset Fields Test",
+				restApplication = "/c/fdsfields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And a dataset view created via api") {
+			FrontendDataSetAdmin.createFDSViewViaAPI(
+				datasetName = "Dataset Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToSpecificViewPage(
+				datasetName = "Dataset Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab.") {
+			FrontendDataSetAdmin.goToTab(tabName = "Filters");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		FrontendDataSetAdmin.deleteAllDatasetEntries();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-183476. Confirm that all fields in the schema are displayed"
+	@ignore = "true"
+	@priority = 3
+	test AssertAllFieldsAreDisplayedInSchema {
+
+		// TODO LPS-183476 AssertAllFieldsAreDisplayedInSchema pending implementation
+
+	}
+
+	@description = "LPS-183476. Confirm that the 'Filter By Field' drop-down carries all fields available in the schema"
+	@ignore = "true"
+	@priority = 5
+	test AssertDropdownHasAllFields {
+
+		// TODO LPS-183476 AssertDropdownHasAllFields pending implementation
+
+	}
+
+	@description = "LPS-176184. Confirm that when 'Name Field' is not provided, it is filled with the same name as field name."
+	@priority = 3
+	test AssertNameIsFilledByDefault {
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Choose an ID in the Filter By field") {
+			FrontendDataSetAdmin.selectFilters(filterType = "id");
+		}
+
+		task ("And Clicks Save") {
+			Button.clickSave();
+		}
+
+		task ("Then Confirm that the name of the saved filter is the same name as the chosen field") {
+			AssertElementPresent(
+				chosenFilter = "id",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
+	}
+
+	@description = "LPS-176184. Confirm that 'No default filters were created.' and 'Start creating a filter to display specific data' messages are displayed"
+	@priority = 3
+	test CanAssertNoDefaultFilters {
+		task ("Then asserts the message: 'No default filters were created. Start creating a filter to display specific data' is displayed") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No default filters were created.");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_TEXT",
+				value1 = "Start creating a Filter to display specific Data.");
+		}
+	}
+
+	@description = "LPS-183476. Confirm that the New filter modal is closed and the changes are not applied when canceling on Cancel button"
+	@ignore = "true"
+	@priority = 3
+	test CanCancelFilterCreationonCancelButton {
+
+		// TODO LPS-183476 CanCancelFilterCreationonCancelButton pending implementation
+
+	}
+
+	@description = "LPS-183476. Confirm that the New filter modal is closed and the changes are not applied when canceling on Close (X) button"
+	@ignore = "true"
+	@priority = 3
+	test CanCancelFilterCreationonCloseButton {
+
+		// TODO LPS-183476 CanCancelFilterCreationonCloseButton pending implementation
+
+	}
+
+	@description = "LPS-176184. Confirm that 'Filter By' field cannot be empty"
+	@priority = 3
+	test CannotLeaveFilterByEmpty {
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Fill the name filter with Test filter") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Test Filter");
+		}
+
+		task ("Then Comfirm that is not possible clicks save button") {
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
+	@description = "LPS-183476. Confirm that when searching one of the created filters and clicking on search icon the corresponding result is displayed"
+	@ignore = "true"
+	@priority = 3
+	test CanSearchFilterOnIcon {
+
+		// TODO LPS-183476 CanSearchFilterOnIcon pending implementation
+
+	}
+
+}

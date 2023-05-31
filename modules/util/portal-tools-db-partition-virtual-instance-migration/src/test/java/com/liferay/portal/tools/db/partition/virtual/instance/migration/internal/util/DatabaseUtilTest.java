@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util;
 
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.Release;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.release.Release;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 
 import java.sql.Connection;
@@ -39,27 +39,25 @@ public class DatabaseUtilTest {
 
 	@Test
 	public void testGetReleaseMapEntry() throws SQLException {
-		Release testRelease = new Release(
+		Release release = new Release(
 			"module", Version.parseVersion("14.2.4"), true);
 
-		_mockGetReleaseMap(testRelease, true);
+		_mockGetReleaseMap(release, true);
 
 		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
 			_connection);
 
-		Release release = releaseMap.get("module");
+		Assert.assertNotNull(releaseMap.get("module"));
 
-		Assert.assertNotNull(release);
-
-		Assert.assertTrue(release.equals(testRelease));
+		Assert.assertTrue(release.equals(releaseMap.get("module")));
 	}
 
 	@Test
 	public void testGetReleaseMapNotFoundEntry() throws SQLException {
-		Release testRelease = new Release(
+		Release release = new Release(
 			"module", Version.parseVersion("14.2.4"), true);
 
-		_mockGetReleaseMap(testRelease, false);
+		_mockGetReleaseMap(release, false);
 
 		Map<String, Release> releaseMap = DatabaseUtil.getReleaseMap(
 			_connection);
@@ -106,15 +104,15 @@ public class DatabaseUtilTest {
 			module2Release.getServletContextName()
 		);
 
-		Version module1Version = module1Release.getSchemaVersion();
-		Version module2Version = module2Release.getSchemaVersion();
+		Version module1SchemaVersion = module1Release.getSchemaVersion();
+		Version module2SchemaVersion = module2Release.getSchemaVersion();
 
 		Mockito.when(
 			_resultSet.getString(2)
 		).thenReturn(
-			module1Version.toString()
+			module1SchemaVersion.toString()
 		).thenReturn(
-			module2Version.toString()
+			module2SchemaVersion.toString()
 		);
 
 		Mockito.when(
@@ -262,7 +260,7 @@ public class DatabaseUtilTest {
 	public void testHasNotWebId() throws SQLException {
 		_mockWebId(false);
 
-		Assert.assertFalse(DatabaseUtil.hasWebId(_connection, "portlet2"));
+		Assert.assertFalse(DatabaseUtil.hasWebId(_connection, "webId"));
 
 		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
 			String.class);
@@ -272,14 +270,14 @@ public class DatabaseUtilTest {
 		).setString(
 			Mockito.eq(1), valueCapture.capture()
 		);
-		Assert.assertEquals("portlet2", valueCapture.getValue());
+		Assert.assertEquals("webId", valueCapture.getValue());
 	}
 
 	@Test
 	public void testHasWebId() throws SQLException {
 		_mockWebId(true);
 
-		Assert.assertTrue(DatabaseUtil.hasWebId(_connection, "portlet1"));
+		Assert.assertTrue(DatabaseUtil.hasWebId(_connection, "webId"));
 
 		ArgumentCaptor<String> valueCapture = ArgumentCaptor.forClass(
 			String.class);
@@ -289,7 +287,7 @@ public class DatabaseUtilTest {
 		).setString(
 			Mockito.eq(1), valueCapture.capture()
 		);
-		Assert.assertEquals("portlet1", valueCapture.getValue());
+		Assert.assertEquals("webId", valueCapture.getValue());
 	}
 
 	@Test

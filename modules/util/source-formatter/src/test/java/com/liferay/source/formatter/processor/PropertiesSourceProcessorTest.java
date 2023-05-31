@@ -28,20 +28,25 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testLanguageKeyContext() throws Exception {
-		test(SourceProcessorTestParameters
-			.create("LanguageKeysContext.testproperties")
-			.addExpectedMessage(
-				"The Key 'a' should with [context] or a context suffix to indicate specific meaning"
+		test(
+			SourceProcessorTestParameters.create(
+				"LanguageKeysContext.testproperties"
 			).addExpectedMessage(
-				"The Key 'add' should with [context] or a context suffix to indicate specific meaning"
+				"The Key 'a' should with [context] to indicate specific meaning"
 			).addExpectedMessage(
-				"The Key 'alert' should with [context] or a context suffix to indicate specific meaning"
+				"The Key 'add' should with [context] to indicate specific " +
+					"meaning"
+			).addExpectedMessage(
+				"The Key 'alert' should with [context] to indicate specific " +
+					"meaning"
 			).addExpectedMessage(
 				"The Key 'answer[n]' contain unqualified context for 'n'"
 			).addExpectedMessage(
-				"The Key 'average' should with [context] or a context suffix to indicate specific meaning"
+				"The Key 'average' should with [context] to indicate " +
+					"specific meaning"
 			).addExpectedMessage(
-				"The Key 'order' should with [context] or a context suffix to indicate specific meaning"
+				"The Key 'order' should with [context] to indicate specific " +
+					"meaning"
 			).addExpectedMessage(
 				"The Key 'order[...]' contain unqualified context for '...'"
 			).addExpectedMessage(

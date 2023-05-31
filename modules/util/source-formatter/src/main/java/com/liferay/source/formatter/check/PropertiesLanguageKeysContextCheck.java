@@ -112,8 +112,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 					fileName,
 					StringBundler.concat(
 						"The Key '", key,
-						"' should with [context] or a context suffix to ",
-						"indicate specific meaning"));
+						"' should with [context] to indicate specific ",
+						"meaning"));
 			}
 		}
 	}

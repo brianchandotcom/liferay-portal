@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.web.internal.display.context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
@@ -22,9 +23,6 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -98,7 +96,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 	public Map<String, Object> getData() {
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		return objectMapper.convertValue(_getTopLevelClayVerticalNavItem(), Map.class);
+		return objectMapper.convertValue(
+			_getTopLevelClayVerticalNavItem(), Map.class);
 	}
 
 	private ClayVerticalNavItem _getApplicationsClayVerticalNavItem() {
@@ -142,9 +141,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 
 		return ClayVerticalNavItem.create(
 			LanguageUtil.get(_locale, "applications"),
-			clayVerticalNavItem -> {
-				clayVerticalNavItem.addItems(clayVerticalNavItems);
-			});
+			clayVerticalNavItem -> clayVerticalNavItem.addItems(
+				clayVerticalNavItems));
 	}
 
 	private String _getBackURL() {
@@ -179,122 +177,6 @@ public class EditRolePermissionsNavigationDisplayContext {
 		).buildString();
 	}
 
-	private ClayVerticalNavItem _getTopLevelClayVerticalNavItem() {
-		ClayVerticalNavItem topLevelClayVerticalNavItem = new ClayVerticalNavItem(null);
-
-		topLevelClayVerticalNavItem.addItems(_getSummaryClayVerticalNavItem());
-
-		int roleType = _role.getType();
-
-		if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-			topLevelClayVerticalNavItem.addItems(
-				_getUsersAndOrganizationsClayVerticalNavItem());
-		}
-		else if (roleType == RoleConstants.TYPE_REGULAR) {
-			topLevelClayVerticalNavItem.addItems(
-				ClayVerticalNavItem.create(
-					LanguageUtil.get(_locale, "control-panel"),
-					clayVerticalNavItem -> {
-						clayVerticalNavItem.addItems(
-							ClayVerticalNavItem.create(
-								LanguageUtil.get(_locale, "general-permissions"),
-								_getPortletResourceClayVerticalNavItemConsumer(PortletKeys.PORTAL))
-						);
-
-						clayVerticalNavItem.addItems(_getPanelCategoryClayVerticalNavItems(
-							PanelCategoryKeys.CONTROL_PANEL));
-
-						clayVerticalNavItem.setInitialExpanded(true);
-					})
-			);
-
-			topLevelClayVerticalNavItem.addItems(
-				ClayVerticalNavItem.create(
-					LanguageUtil.get(_locale, "commerce"),
-					clayVerticalNavItem -> {
-						clayVerticalNavItem.addItems(_getPanelCategoryClayVerticalNavItems(
-						PanelCategoryKeys.COMMERCE));
-						clayVerticalNavItem.setInitialExpanded(true);
-					})
-			);
-
-			topLevelClayVerticalNavItem.addItems(
-				ClayVerticalNavItem.create(
-					LanguageUtil.get(_locale, "applications-menu"),
-					clayVerticalNavItem -> {
-						clayVerticalNavItem.addItems(_getPanelCategoryClayVerticalNavItems(
-						PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS));
-						clayVerticalNavItem.setInitialExpanded(true);
-					})
-			);
-		}
-
-		if (!_accountRoleGroupScope) {
-			String[] excludedPanelAppKeys =
-				(String[])_httpServletRequest.getAttribute(
-					RolesAdminWebKeys.EXCLUDED_PANEL_APP_KEYS);
-
-			for (String panelCategoryKey :
-					(String[])_httpServletRequest.getAttribute(
-						RolesAdminWebKeys.PANEL_CATEGORY_KEYS)) {
-
-				ClayVerticalNavItem panelCategoryClayVerticalNavItem =
-					_getPanelCategoryClayVerticalNavItem(
-						_panelCategoryRegistry.getPanelCategory(
-							panelCategoryKey),
-						excludedPanelAppKeys);
-
-				if (panelCategoryClayVerticalNavItem != null) {
-					topLevelClayVerticalNavItem.addItems(panelCategoryClayVerticalNavItem);
-				}
-			}
-		}
-
-		topLevelClayVerticalNavItem.addItems(
-			ClayVerticalNavItem.create(
-				LanguageUtil.get(
-					_locale, "site-and-asset-library-administration"),
-				clayVerticalNavItem -> {
-					clayVerticalNavItem.addItems(
-						_getSiteAdministrationPanelCategoryClayVerticalNavItems());
-					clayVerticalNavItem.addItems(
-						_getApplicationsClayVerticalNavItem());
-				}));
-
-		if (roleType == RoleConstants.TYPE_REGULAR) {
-			topLevelClayVerticalNavItem.addItems(
-				ClayVerticalNavItem.create(
-					LanguageUtil.get(_locale, "user"),
-					clayVerticalNavItem -> {
-						clayVerticalNavItem.addItems(_getUserClayVerticalNavItems());
-					}));
-
-			List<PanelCategory> panelCategories = new ArrayList<>();
-
-			panelCategories.addAll(
-				_panelCategoryRegistry.getChildPanelCategories(
-					PanelCategoryKeys.APPLICATIONS_MENU));
-			panelCategories.addAll(
-				_panelCategoryRegistry.getChildPanelCategories(
-					PanelCategoryKeys.ROOT));
-
-			for (PanelCategory panelCategory : panelCategories) {
-				if (ListUtil.isNotEmpty(
-						_panelAppRegistry.getPanelApps(panelCategory))) {
-
-					ClayVerticalNavItem panelCategoryClayVerticalNavItem =
-						_getUnfilteredPanelCategoryClayVerticalNavItem(panelCategory);
-
-					if (panelCategoryClayVerticalNavItem != null) {
-						topLevelClayVerticalNavItem.addItems(panelCategoryClayVerticalNavItem);
-					}
-				}
-			}
-		}
-
-		return topLevelClayVerticalNavItem;
-	}
-
 	private ClayVerticalNavItem _getPanelCategoryClayVerticalNavItem(
 		PanelCategory panelCategory, String[] excludedPanelAppKeys) {
 
@@ -308,9 +190,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
 
 		for (PanelApp panelApp : panelApps) {
-			Portlet panelAppPortlet =
-				PortletLocalServiceUtil.getPortletById(
-					_themeDisplay.getCompanyId(), panelApp.getPortletId());
+			Portlet panelAppPortlet = PortletLocalServiceUtil.getPortletById(
+				_themeDisplay.getCompanyId(), panelApp.getPortletId());
 
 			String controlPanelEntryClassName =
 				panelAppPortlet.getControlPanelEntryClass();
@@ -337,12 +218,14 @@ public class EditRolePermissionsNavigationDisplayContext {
 				ClayVerticalNavItem.create(
 					PortalUtil.getPortletLongTitle(
 						panelAppPortlet, _servletContext, _locale),
-					_getPortletResourceClayVerticalNavItemConsumer(panelAppPortlet.getPortletId())));
+					_getPortletResourceClayVerticalNavItemConsumer(
+						panelAppPortlet.getPortletId())));
 		}
 
 		return ClayVerticalNavItem.create(
 			panelCategory.getLabel(_locale),
-			clayVerticalNavItem -> clayVerticalNavItem.addItems(clayVerticalNavItems));
+			clayVerticalNavItem -> clayVerticalNavItem.addItems(
+				clayVerticalNavItems));
 	}
 
 	private List<ClayVerticalNavItem> _getPanelCategoryClayVerticalNavItems(
@@ -354,8 +237,9 @@ public class EditRolePermissionsNavigationDisplayContext {
 				_panelCategoryRegistry.getChildPanelCategories(
 					panelCategoryKey)) {
 
-			ClayVerticalNavItem panelCategoryClayVerticalNavItem = _getPanelCategoryClayVerticalNavItem(
-				panelCategory, new String[0]);
+			ClayVerticalNavItem panelCategoryClayVerticalNavItem =
+				_getPanelCategoryClayVerticalNavItem(
+					panelCategory, new String[0]);
 
 			if (panelCategoryClayVerticalNavItem != null) {
 				clayVerticalNavItems.add(panelCategoryClayVerticalNavItem);
@@ -376,7 +260,20 @@ public class EditRolePermissionsNavigationDisplayContext {
 		return _portletResource;
 	}
 
-	private List<ClayVerticalNavItem> _getSiteAdministrationPanelCategoryClayVerticalNavItems() {
+	private Consumer<ClayVerticalNavItem>
+		_getPortletResourceClayVerticalNavItemConsumer(String portletResource) {
+
+		return clayVerticalNavItem -> {
+			clayVerticalNavItem.setActive(
+				_portletResource.equals(portletResource));
+			clayVerticalNavItem.put(
+				"resourceURL", _getEditPermissionsResourceURL(portletResource));
+		};
+	}
+
+	private List<ClayVerticalNavItem>
+		_getSiteAdministrationPanelCategoryClayVerticalNavItems() {
+
 		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
 
 		for (PanelCategory panelCategory :
@@ -387,8 +284,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 				_getUnfilteredPanelCategoryClayVerticalNavItem(panelCategory);
 
 			if (clayVerticalNavItem != null) {
-				clayVerticalNavItems.add(
-					clayVerticalNavItem);
+				clayVerticalNavItems.add(clayVerticalNavItem);
 			}
 		}
 
@@ -399,7 +295,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 		return ClayVerticalNavItem.create(
 			LanguageUtil.get(_locale, "summary"),
 			clayVerticalNavItem -> {
-				clayVerticalNavItem.setActive(Validator.isNull(_getPortletResource()));
+				clayVerticalNavItem.setActive(
+					Validator.isNull(_getPortletResource()));
 				clayVerticalNavItem.put("className", "mb-4");
 				clayVerticalNavItem.put("ignoreFilter", true);
 				clayVerticalNavItem.put(
@@ -420,10 +317,129 @@ public class EditRolePermissionsNavigationDisplayContext {
 						"roleId", _role.getRoleId()
 					).setParameter(
 						"p_p_isolated", "true"
-					).buildString()
-				);
+					).buildString());
+			});
+	}
+
+	private ClayVerticalNavItem _getTopLevelClayVerticalNavItem() {
+		ClayVerticalNavItem topLevelClayVerticalNavItem =
+			new ClayVerticalNavItem(null);
+
+		topLevelClayVerticalNavItem.addItems(_getSummaryClayVerticalNavItem());
+
+		int roleType = _role.getType();
+
+		if (roleType == RoleConstants.TYPE_ORGANIZATION) {
+			topLevelClayVerticalNavItem.addItems(
+				_getUsersAndOrganizationsClayVerticalNavItem());
+		}
+		else if (roleType == RoleConstants.TYPE_REGULAR) {
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
+					LanguageUtil.get(_locale, "control-panel"),
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(
+							ClayVerticalNavItem.create(
+								LanguageUtil.get(
+									_locale, "general-permissions"),
+								_getPortletResourceClayVerticalNavItemConsumer(
+									PortletKeys.PORTAL)));
+
+						clayVerticalNavItem.addItems(
+							_getPanelCategoryClayVerticalNavItems(
+								PanelCategoryKeys.CONTROL_PANEL));
+
+						clayVerticalNavItem.setInitialExpanded(true);
+					}));
+
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
+					LanguageUtil.get(_locale, "commerce"),
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(
+							_getPanelCategoryClayVerticalNavItems(
+								PanelCategoryKeys.COMMERCE));
+						clayVerticalNavItem.setInitialExpanded(true);
+					}));
+
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
+					LanguageUtil.get(_locale, "applications-menu"),
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(
+							_getPanelCategoryClayVerticalNavItems(
+								PanelCategoryKeys.
+									APPLICATIONS_MENU_APPLICATIONS));
+						clayVerticalNavItem.setInitialExpanded(true);
+					}));
+		}
+
+		if (!_accountRoleGroupScope) {
+			String[] excludedPanelAppKeys =
+				(String[])_httpServletRequest.getAttribute(
+					RolesAdminWebKeys.EXCLUDED_PANEL_APP_KEYS);
+
+			for (String panelCategoryKey :
+					(String[])_httpServletRequest.getAttribute(
+						RolesAdminWebKeys.PANEL_CATEGORY_KEYS)) {
+
+				ClayVerticalNavItem panelCategoryClayVerticalNavItem =
+					_getPanelCategoryClayVerticalNavItem(
+						_panelCategoryRegistry.getPanelCategory(
+							panelCategoryKey),
+						excludedPanelAppKeys);
+
+				if (panelCategoryClayVerticalNavItem != null) {
+					topLevelClayVerticalNavItem.addItems(
+						panelCategoryClayVerticalNavItem);
+				}
 			}
-		);
+		}
+
+		topLevelClayVerticalNavItem.addItems(
+			ClayVerticalNavItem.create(
+				LanguageUtil.get(
+					_locale, "site-and-asset-library-administration"),
+				clayVerticalNavItem -> {
+					clayVerticalNavItem.addItems(
+						_getSiteAdministrationPanelCategoryClayVerticalNavItems());
+					clayVerticalNavItem.addItems(
+						_getApplicationsClayVerticalNavItem());
+				}));
+
+		if (roleType == RoleConstants.TYPE_REGULAR) {
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
+					LanguageUtil.get(_locale, "user"),
+					clayVerticalNavItem -> clayVerticalNavItem.addItems(
+						_getUserClayVerticalNavItems())));
+
+			List<PanelCategory> panelCategories = new ArrayList<>();
+
+			panelCategories.addAll(
+				_panelCategoryRegistry.getChildPanelCategories(
+					PanelCategoryKeys.APPLICATIONS_MENU));
+			panelCategories.addAll(
+				_panelCategoryRegistry.getChildPanelCategories(
+					PanelCategoryKeys.ROOT));
+
+			for (PanelCategory panelCategory : panelCategories) {
+				if (ListUtil.isNotEmpty(
+						_panelAppRegistry.getPanelApps(panelCategory))) {
+
+					ClayVerticalNavItem panelCategoryClayVerticalNavItem =
+						_getUnfilteredPanelCategoryClayVerticalNavItem(
+							panelCategory);
+
+					if (panelCategoryClayVerticalNavItem != null) {
+						topLevelClayVerticalNavItem.addItems(
+							panelCategoryClayVerticalNavItem);
+					}
+				}
+			}
+		}
+
+		return topLevelClayVerticalNavItem;
 	}
 
 	private ClayVerticalNavItem _getUnfilteredPanelCategoryClayVerticalNavItem(
@@ -452,8 +468,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 							_getPortletResourceClayVerticalNavItemConsumer(
 								panelAppPortlet.getPortletId())));
 				}
-			}
-		);
+			});
 	}
 
 	private List<ClayVerticalNavItem> _getUserClayVerticalNavItems() {
@@ -486,18 +501,8 @@ public class EditRolePermissionsNavigationDisplayContext {
 		return ClayVerticalNavItem.create(
 			PortalUtil.getPortletLongTitle(
 				usersAdminPortlet, _servletContext, _locale),
-			_getPortletResourceClayVerticalNavItemConsumer(usersAdminPortlet.getPortletId()));
-	}
-
-
-	private Consumer<ClayVerticalNavItem> _getPortletResourceClayVerticalNavItemConsumer(
-		String portletResource) {
-
-		return clayVerticalNavItem -> {
-			clayVerticalNavItem.setActive(_portletResource.equals(portletResource));
-			clayVerticalNavItem.put(
-				"resourceURL", _getEditPermissionsResourceURL(portletResource));
-		};
+			_getPortletResourceClayVerticalNavItemConsumer(
+				usersAdminPortlet.getPortletId()));
 	}
 
 	private final Boolean _accountRoleGroupScope;

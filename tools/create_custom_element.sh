@@ -104,7 +104,7 @@ function create_angular_app {
 	sed -i \
 		-e 's/{ NgModule }/{ Injector, NgModule }/' \
 		-e '/@angular\/core/aimport { createCustomElement } from "@angular/elements";' \
-		-e '/@NgModule({/a\  entryComponents: [AppComponent],' \
+		-e '/@NgModule({/a\  bootstrap: [AppComponent],' \
 		-e '/bootstrap: /d' \
 		-e 's/class AppModule { }/class AppModule {/' \
 		-e '/class AppModule {/a\ ' \

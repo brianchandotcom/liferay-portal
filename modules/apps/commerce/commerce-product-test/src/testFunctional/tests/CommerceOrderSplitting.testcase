@@ -1227,12 +1227,25 @@ definition {
 
 			ObjectAdmin.goToActionsTab();
 
-			ObjectAdmin.editObjectAction(
-				fieldName = "External Reference Code",
-				inputExpressionValue = "",
-				inputMethod = "false",
-				thenAction = "Update an Object Entry",
-				viewEntry = "Custom Action");
+			ObjectAdmin.goToActionDetails(viewEntry = "Custom Action");
+
+			ObjectAdmin.viewDetails();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_tabName = "Action Builder",
+				locator1 = "ObjectAction#TAB_GENERIC");
+
+			Click(locator1 = "ObjectAction#SELECT_ACTION_TYPE");
+
+			Click(
+				key_type = "Update an Object Entry",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+
+			PortletEntry.save();
+
+			Refresh();
 		}
 
 		task ("Then the health check is clickable again") {

@@ -66,7 +66,14 @@ const ProjectOutlet = () => {
 		if (shouldUpdate) {
 			setHeaderActions({actions, item: testrayProject, mutate});
 		}
-	}, [actions, mutate, shouldUpdate, setHeaderActions, testrayProject]);
+	}, [
+		actions,
+		mutate,
+		pathname,
+		shouldUpdate,
+		setHeaderActions,
+		testrayProject,
+	]);
 
 	useEffect(() => {
 		if (testrayProjects) {

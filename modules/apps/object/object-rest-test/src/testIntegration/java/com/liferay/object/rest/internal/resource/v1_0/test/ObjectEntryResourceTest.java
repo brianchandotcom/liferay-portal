@@ -3387,9 +3387,9 @@ public class ObjectEntryResourceTest {
 			_userAccountJSONObject.getLong("id"), _objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		// Many to Many and One to Many relationships
-		// Filtering by fields
-		// TODO update once LPS-185883 LPS-17875 fixed
+		// Many to many and one to many relationships, filter by fields
+
+		// TODO Update once LPS-185883 and LPS-17875 are fixed
 
 		int nestedFieldDepth = 5;
 

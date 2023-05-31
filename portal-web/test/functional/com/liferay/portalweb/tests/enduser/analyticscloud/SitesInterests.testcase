@@ -37,6 +37,44 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Change time filter in Interest card"
+	@priority = 3
+	test ChangeInterestTimeFilter {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${propertyName});
+		}
+
+		task ("Assert Interests card is set to Last 30 days by default and there are no results") {
+			ACNavigation.goToSites();
+
+			ACCards.viewCards(cardTitle = "Interests");
+
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Interests",
+				timeFilterRange = "Last 30 Days");
+
+			ACInterests.assertNoCurrentInterests();
+		}
+
+		task ("Assert Interests card change time filter") {
+			ACTimeFilter.clickTimeFilterButton(cardName = "Interests");
+
+			ACTimeFilter.setYesterday();
+
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Interests",
+				timeFilterRange = "Yesterday");
+
+			ACInterests.assertNoCurrentInterests();
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Site overview interests card shows what the top interests are"
 	@ignore = true
 	@priority = 5

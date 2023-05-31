@@ -226,6 +226,12 @@ public class CommandPoshiElement extends PoshiElement {
 
 			String name = poshiElementAttribute.getName();
 
+			if (name.equals("summary") &&
+				!poshiProperties.generateCommandSignature) {
+
+				continue;
+			}
+
 			if (name.equals("arguments") || name.equals("name")) {
 				continue;
 			}

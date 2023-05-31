@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_CARD_PRICE_ON_APPLICATION</td>
-	<td>//p[@title='${key_productName}']/..//span[(@class='price compact')][normalize-space(text())='Price On Application']</td>
+	<td>//p[@title='${key_productName}']/..//span[(@class='price-value')][normalize-space(text())='Price On Application']</td>
 	<td></td>
 </tr>
 <tr>
@@ -313,6 +313,11 @@
 <tr>
 	<td>PRODUCT_DETAILS_NET_PRICE</td>
 	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-final')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_DETAILS_PRICE_ON_APPLICATION</td>
+	<td>//div[contains(@class,'price')]//span[(@class='price-on-application price-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -587,6 +592,11 @@
 <tr>
 	<td>MINI_CART_ITEM_LIST_PRICE_VALUE</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../..//span[@class='price-value' and contains(.,'$ ${key_productPrice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_PRICE_ON_APPLICATION</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../../../..//div[contains(@class,'price')]//span[(@class='price-on-application price-value')]</td>
 	<td></td>
 </tr>
 <tr>

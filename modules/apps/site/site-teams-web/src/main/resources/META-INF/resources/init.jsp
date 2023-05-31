@@ -44,11 +44,8 @@ page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LinkedHashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
@@ -57,8 +54,6 @@ page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAss
 page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsUsersDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.display.context.SelectTeamDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.display.context.SelectTeamManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SelectUserGroupsDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SelectUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SelectUsersDisplayContext" %><%@
@@ -69,8 +64,7 @@ page import="com.liferay.site.teams.web.internal.frontend.taglib.clay.servlet.ta
 page import="com.liferay.site.teams.web.internal.frontend.taglib.clay.servlet.taglib.UserUserCard" %><%@
 page import="com.liferay.site.teams.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider" %>
 
-<%@ page import="java.util.Map" %><%@
-page import="java.util.Objects" %>
+<%@ page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

@@ -395,7 +395,11 @@ public class FriendlyURLServlet extends HttpServlet {
 				if (Validator.isNotNull(
 						PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
-					throw exception;
+					if (exception instanceof NoSuchLayoutException) {
+						throw exception;
+					}
+
+					throw new NoSuchLayoutException(exception);
 				}
 
 				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);

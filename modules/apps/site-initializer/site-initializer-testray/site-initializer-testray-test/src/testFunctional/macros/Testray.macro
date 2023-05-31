@@ -330,7 +330,7 @@ definition {
 	macro kebabMenuOption {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		Click(
+		ClickNoError(
 			key_kebabOption = ${kebabOption},
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}

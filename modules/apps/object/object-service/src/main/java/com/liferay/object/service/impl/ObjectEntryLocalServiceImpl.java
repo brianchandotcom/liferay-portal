@@ -2199,6 +2199,10 @@ public class ObjectEntryLocalServiceImpl
 
 					return null;
 				}
+			).and(
+				ObjectEntrySearchUtil.getRelatedModelsPredicate(
+					dynamicObjectDefinitionTable, objectDefinition2,
+					_objectFieldLocalService, search)
 			)
 		);
 	}

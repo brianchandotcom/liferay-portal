@@ -9,7 +9,7 @@ allprojects {
 }
 
 runGradleTest {
-	dependsOn ":modules:foo:foo-service:buildService", ":modules:foo:foo-test:testIntegrationClasses"
+	dependsOn ":modules:foo:foo-service:buildService", ":modules:foo:foo-service:build",":modules:foo:foo-test:testIntegrationClasses"
 
 	doLast {
 		Project fooTestProject = project(":modules:foo:foo-test")

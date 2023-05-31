@@ -4,14 +4,7 @@ buildService {
 }
 
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
-	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly project(":modules:foo:foo-api")
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 }
 
 group = "foo"

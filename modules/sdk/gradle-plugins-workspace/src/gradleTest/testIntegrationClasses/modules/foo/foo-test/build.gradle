@@ -1,13 +1,17 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.19"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test.integration"
-	testIntegrationCompile group: "junit", name: "junit"
-	testIntegrationCompile group: "log4j", name: "log4j"
-	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	testIntegrationCompile group: "org.slf4j", name: "slf4j-api"
-	testIntegrationCompile group: "org.springframework", name: "spring-core"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge"
+	testIntegrationCompile group: "com.liferay.portal", name: "release.portal.api"
+	testIntegrationCompile group: "junit", name: "junit", version: "4.13.1"
+	testIntegrationCompile group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.1.LIFERAY-PATCHED-1"
+	testIntegrationCompile group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
+	testIntegrationCompile group: "org.slf4j", name: "log4j-over-slf4j", version: "1.7.25"
 	testIntegrationCompile project(":modules:foo:foo-api")
+	testIntegrationCompile project(":modules:foo:foo-service")
+
+	testModules group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge.connector"
+	testModules group: "com.liferay.portal", name: "com.liferay.portal.test", version: "latest.release"
+	testModules group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "latest.release"
+	testModules group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.core", version: "latest.release"
+	testModules project(":modules:foo:foo-api")
+	testModules project(":modules:foo:foo-service")
 }

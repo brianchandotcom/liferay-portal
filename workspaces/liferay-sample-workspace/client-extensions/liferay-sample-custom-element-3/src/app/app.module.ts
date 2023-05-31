@@ -19,7 +19,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 
 @NgModule({
-	entryComponents: [AppComponent],
+	bootstrap: [AppComponent],
 	declarations: [AppComponent],
 	imports: [BrowserModule],
 	providers: [],

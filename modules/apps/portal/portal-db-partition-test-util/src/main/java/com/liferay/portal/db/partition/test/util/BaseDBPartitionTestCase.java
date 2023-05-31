@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +50,6 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-import com.liferay.portal.util.PropsUtil;
 import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -403,14 +403,14 @@ public abstract class BaseDBPartitionTestCase {
 	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";
 
+	private static final boolean _DEFAULT_MIGRATE_SETTING =
+		GetterUtil.getBoolean(
+			PropsUtil.get("database.partition.migrate.enabled"));
+
 	private static final DataSource _currentDataSource =
 		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
 	private static boolean _dbPartitionEnabled;
 	private static LazyConnectionDataSourceProxy _lazyConnectionDataSourceProxy;
-
-	private static final boolean _DEFAULT_MIGRATE_SETTING =
-		GetterUtil.getBoolean(
-			PropsUtil.get("database.partition.migrate.enabled"));
 
 	@Inject
 	private static Props _props;

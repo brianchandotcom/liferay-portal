@@ -288,7 +288,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		catch (Exception exception) {
 			safeCloseable.close();
 
-			if(newDBPartitionAdded){
+			if (newDBPartitionAdded) {
 				DBPartitionUtil.removeDBPartition(companyId);
 			}
 

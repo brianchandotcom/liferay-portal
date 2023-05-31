@@ -90,6 +90,7 @@ page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannelAccountEntryRel" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@

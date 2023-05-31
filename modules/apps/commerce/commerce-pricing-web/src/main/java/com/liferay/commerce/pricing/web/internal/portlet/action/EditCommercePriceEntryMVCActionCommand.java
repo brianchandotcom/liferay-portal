@@ -170,8 +170,8 @@ public class EditCommercePriceEntryMVCActionCommand
 			long commercePriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
-		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "price", BigDecimal.ZERO);
+		boolean bulkPricing = ParamUtil.getBoolean(
+			actionRequest, "bulkPricing");
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 		BigDecimal discountLevel1 = (BigDecimal)ParamUtil.getNumber(
@@ -182,9 +182,6 @@ public class EditCommercePriceEntryMVCActionCommand
 			actionRequest, "discountLevel3", BigDecimal.ZERO);
 		BigDecimal discountLevel4 = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "discountLevel4", BigDecimal.ZERO);
-		boolean bulkPricing = ParamUtil.getBoolean(
-			actionRequest, "bulkPricing");
-
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -222,8 +219,24 @@ public class EditCommercePriceEntryMVCActionCommand
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommercePriceEntry.class.getName(), actionRequest);
+		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "price", BigDecimal.ZERO);
+		boolean priceOnApplication = ParamUtil.getBoolean(
+			actionRequest, "priceOnApplication");
+
+		if (priceOnApplication) {
+			CommercePriceEntry commercePriceEntry =
+				_commercePriceEntryService.getCommercePriceEntry(
+					commercePriceEntryId);
+
+			bulkPricing = commercePriceEntry.isBulkPricing();
+			overrideDiscount = !commercePriceEntry.isDiscountDiscovery();
+			discountLevel1 = commercePriceEntry.getDiscountLevel1();
+			discountLevel2 = commercePriceEntry.getDiscountLevel2();
+			discountLevel3 = commercePriceEntry.getDiscountLevel3();
+			discountLevel4 = commercePriceEntry.getDiscountLevel4();
+			price = commercePriceEntry.getPrice();
+		}
 
 		return _commercePriceEntryService.updateCommercePriceEntry(
 			commercePriceEntryId, bulkPricing, !overrideDiscount,
@@ -231,7 +244,9 @@ public class EditCommercePriceEntryMVCActionCommand
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, false, serviceContext);
+			neverExpire, price, priceOnApplication,
+			ServiceContextFactory.getInstance(
+				CommercePriceEntry.class.getName(), actionRequest));
 	}
 
 	@Reference

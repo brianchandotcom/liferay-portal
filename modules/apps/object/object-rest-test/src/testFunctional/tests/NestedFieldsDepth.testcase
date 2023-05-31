@@ -32,7 +32,7 @@ definition {
 				name = "University");
 		}
 
-		task ("And Given studentUsers, usersUniversities, universitySubjects, subjectsUsers, userBooks, booksAuthors") {
+		task ("And Given studentUsers, usersUniversities, universitySubjects, subjectsUsers, userBooks, booksAuthors, userStudents, studentsUniversities") {
 			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
 				childObjectName = "User",
 				name = "studentUsers",
@@ -67,6 +67,18 @@ definition {
 				childObjectName = "Author",
 				name = "booksAuthors",
 				parentObjectName = "Book",
+				type = "manyToMany");
+
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				name = "userStudents",
+				parentObjectName = "User",
+				type = "oneToMany");
+
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "University",
+				name = "studentsUniversities",
+				parentObjectName = "Student",
 				type = "manyToMany");
 		}
 
@@ -132,6 +144,17 @@ definition {
 				parent_plural_label = "books",
 				parentEntryName = "Functions",
 				relationshipName = "booksAuthors");
+
+			UserAccountAPI.relateObjectEntries(
+				customObjectId = ${studentEntryId},
+				relationshipName = "userStudents",
+				userAccountId = ${userId});
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "students",
+				objectEntry1 = ${studentEntryId},
+				objectEntry2 = ${universityEntryId},
+				relationshipName = "studentsUniversities");
 		}
 	}
 
@@ -220,6 +243,97 @@ definition {
 	}
 
 	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetFirstSystemToCustomRelationshipDataWithNestedFieldsDepthSetTo5 {
+		task ("When getUserAccountsPage with nestedFields=userStudents and nestedFieldsDepth=5") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(
+				longParameterValue = "nestedFields=userStudents",
+				nestedFieldsDepth = 5);
+		}
+
+		task ("Then the data of userStudents is visible in payload") {
+			var studentName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items[1].userStudents[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${studentName},
+				expected = "Jane");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CanGetFirstSystemToCustomRelationshipDataWithNestedFieldsDepthSetToZero {
+		task ("When getUserAccountsPage with nestedFields=userStudents and nestedFieldsDepth=0") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(
+				longParameterValue = "nestedFields=userStudents",
+				nestedFieldsDepth = 0);
+		}
+
+		task ("Then the data of userStudents is visible in payload") {
+			var studentName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items[1].userStudents[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${studentName},
+				expected = "Jane");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test CanGetSystemToCustomCustomToCustomRelationshipsDataWithDepth5 {
+		task ("When getUserAccountsPage with nestedFields=userStudents,studentsUniversities,universitySubjects,subjectsUsers,userBooks,booksAuthors and nestedFieldsDepth=5") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(
+				longParameterValue = "nestedFields=userStudents%2CstudentsUniversities%2CuniversitySubjects%2CsubjectsUsers%2CuserBooks%2CbooksAuthors",
+				nestedFieldsDepth = 5);
+		}
+
+		task ("Then the data for userStudents, studentsUniversities, universitySubjects, subjectsUsers, userBooks, are visible in payload") {
+			var bookName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items[1].userStudents[0].studentsUniversities[0].universitySubjects[0].subjectsUsers[0].userBooks[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${bookName},
+				expected = "Functions");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test CanGetSystemToCustomCustomToCustomRelationshipsSpecificFieldsWithDepth5 {
+		task ("When getUserAccountsPage with nestedFields=userStudents,studentsUniversities,universitySubjects,subjectsUsers,userBooks,booksAuthors and nestedFieldsDepth=5 and fields=userStudents.studentsUniversities.universitySubjects.subjectsUsers.userBooks.name") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(
+				fieldsValue = "userStudents.studentsUniversities.universitySubjects.subjectsUsers.userBooks.name",
+				longParameterValue = "nestedFields=userStudents%2CstudentsUniversities%2CuniversitySubjects%2CsubjectsUsers%2CuserBooks%2CbooksAuthors",
+				nestedFieldsDepth = 5);
+		}
+
+		task ("Then only name field of userBooks node is visible in payload showing other relationship nodes as empty") {
+			var bookName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items..name");
+
+			TestUtils.assertEquals(
+				actual = ${bookName},
+				expected = "Functions");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test CanGetSystemToCustomObjectRelationshipDataAsNestedField {
+		task ("When getUserAccountsPage with nestedFields=userStudents") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(
+				longParameterValue = "nestedFields=userStudents",
+				nestedFieldsDepth = 0);
+		}
+
+		task ("Then the data of userStudents is visible in payload") {
+			var studentName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items[1].userStudents[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${studentName},
+				expected = "Jane");
+		}
+	}
+
+	@disable-webdriver = "true"
 	@priority = 5
 	test CannnotGetCustomToSystemCustomToCustomRelationshipsDataOfDepthHigherThan5 {
 		task ("When GetStudentsPage with nestedFields=studentUsers,usersUniversities,universitySubjects,subjectsUsers,userBooks,booksAuthors and nestedFieldsDepth=6") {
@@ -233,6 +347,40 @@ definition {
 
 			TestUtils.assertEquals(
 				actual = ${authorName},
+				expected = "");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 4
+	test CannnotGetSystemToCustomCustomToCustomRelationshipsDataOfDepthHigherThan5 {
+		task ("When getUserAccountsPage with nestedFields=userStudents,studentsUniversities,universitySubjects,subjectsUsers,userBooks,booksAuthors and nestedFieldsDepth=6") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(
+				longParameterValue = "nestedFields=userStudents%2CstudentsUniversities%2CuniversitySubjects%2CsubjectsUsers%2CuserBooks%2CbooksAuthors",
+				nestedFieldsDepth = 6);
+		}
+
+		task ("Then the data of booksAuthors is not visible in payload") {
+			var authorName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items[0].userStudents[0].studentsUniversities[0].universitySubjects[0].subjectsUsers[0].userBooks[0].booksAuthors[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${authorName},
+				expected = "");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 3
+	test CannotGetFirstSystemToCustomRelationshipDataWithOnlyNestedFieldsDepthParameter {
+		task ("When getUserAccountsPage with nestedFieldsDepth=0") {
+			var responseEntries = UserAccountAPI.getSystemObjectsWithNestedFieldAndNestedFieldsDepth(nestedFieldsDepth = 0);
+		}
+
+		task ("Then no relationbships data is visible in payload") {
+			var studentName = JSONUtil.getWithJSONPath(${responseEntries}, "$..items[1].userStudents[0].name");
+
+			TestUtils.assertEquals(
+				actual = ${studentName},
 				expected = "");
 		}
 	}

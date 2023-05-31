@@ -1013,7 +1013,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 	@Reference
 	private DDM _ddm;
 
-	@Reference
+	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@Reference

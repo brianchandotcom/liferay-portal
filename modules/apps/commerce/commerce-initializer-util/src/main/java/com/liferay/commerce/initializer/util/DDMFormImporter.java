@@ -315,7 +315,7 @@ public class DDMFormImporter {
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
-	@Reference
+	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@Reference

@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -156,7 +157,7 @@ public class SiteInitializerExtender
 				_objectFieldLocalService, _objectFieldResourceFactory,
 				_objectRelationshipLocalService,
 				_objectRelationshipResourceFactory, _organizationLocalService,
-				_organizationResourceFactory, _portal,
+				_organizationResourceFactory, _ploEntryLocalService, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _sapEntryLocalService,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
@@ -273,7 +274,7 @@ public class SiteInitializerExtender
 				_objectFieldLocalService, _objectFieldResourceFactory,
 				_objectRelationshipLocalService,
 				_objectRelationshipResourceFactory, _organizationLocalService,
-				_organizationResourceFactory, _portal,
+				_organizationResourceFactory, _ploEntryLocalService, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _sapEntryLocalService,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
@@ -450,6 +451,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private OrganizationResource.Factory _organizationResourceFactory;
+
+	@Reference
+	private PLOEntryLocalService _ploEntryLocalService;
 
 	@Reference
 	private Portal _portal;

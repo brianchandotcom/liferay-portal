@@ -170,6 +170,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -274,7 +275,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		OrganizationLocalService organizationLocalService,
-		OrganizationResource.Factory organizationResourceFactory, Portal portal,
+		OrganizationResource.Factory organizationResourceFactory,
+		PLOEntryLocalService ploEntryLocalService, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -351,6 +353,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_organizationLocalService = organizationLocalService;
 		_organizationResourceFactory = organizationResourceFactory;
+		_ploEntryLocalService = ploEntryLocalService;
 		_portal = portal;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
@@ -595,6 +598,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addOrUpdateResourcePermissions(
 					objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
 					serviceContext));
+			_invoke(() -> _setPLOEntries(serviceContext));
 
 			_invoke(() -> _updateGroupSiteInitializerKey(groupId));
 		}
@@ -4667,6 +4671,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _setPLOEntries(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/plo-entries.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			_ploEntryLocalService.setPLOEntries(
+				serviceContext.getCompanyId(), serviceContext.getUserId(),
+				jsonObject.getString("key"),
+				SiteInitializerUtil.toMap(jsonObject.getString("value")));
+		}
+	}
+
 	private void _setResourcePermissions(
 			long companyId, String name, JSONArray permissionsJSONArray,
 			String primKey)
@@ -4925,6 +4951,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory;
 	private final OrganizationLocalService _organizationLocalService;
 	private final OrganizationResource.Factory _organizationResourceFactory;
+	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
 	private final Map<String, String> _releaseInfoStringUtilReplaceValues;
 	private final ResourceActionLocalService _resourceActionLocalService;

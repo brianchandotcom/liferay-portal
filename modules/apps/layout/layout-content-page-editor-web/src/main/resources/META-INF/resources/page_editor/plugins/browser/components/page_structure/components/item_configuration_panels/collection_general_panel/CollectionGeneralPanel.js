@@ -111,7 +111,12 @@ export function CollectionGeneralPanel({item}) {
 				itemId: item.itemId,
 				segmentsExperienceId,
 			}).then(({url}) => url),
-		key: [CACHE_KEYS.collectionConfigurationUrl, collection?.key],
+		key: [
+			CACHE_KEYS.collectionConfigurationUrl,
+			collection?.key,
+			item.itemId,
+			segmentsExperienceId,
+		],
 	});
 
 	const previewItem = useDisplayPagePreviewItem();

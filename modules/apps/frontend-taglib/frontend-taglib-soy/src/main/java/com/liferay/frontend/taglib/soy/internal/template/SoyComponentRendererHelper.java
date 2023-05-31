@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.soy.internal.template;
 
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +22,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.aui.AMDRequire;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
+import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -29,12 +33,15 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,16 +53,16 @@ import javax.servlet.http.HttpServletRequest;
 public class SoyComponentRendererHelper {
 
 	public SoyComponentRendererHelper(
+		AbsolutePortalURLBuilder absolutePortalURLBuilder,
 		HttpServletRequest httpServletRequest,
 		ComponentDescriptor componentDescriptor, Map<String, ?> context,
 		Portal portal) {
 
+		_absolutePortalURLBuilder = absolutePortalURLBuilder;
 		_httpServletRequest = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
 		_context = new HashMap<>(context);
 		_portal = portal;
-
-		_moduleName = _getModuleName(componentDescriptor.getModule());
 
 		_wrapperId = _generateWrapperId(
 			(String)_context.get("id"), componentDescriptor.getComponentId());
@@ -72,7 +79,12 @@ public class SoyComponentRendererHelper {
 		_renderTemplate(writer);
 
 		if (_componentDescriptor.isRenderJavascript()) {
-			_renderJavaScript(writer);
+			if (ESImportUtil.isESImport(_componentDescriptor.getModule())) {
+				_renderEcmaScript(writer);
+			}
+			else {
+				_renderJavaScript(writer);
+			}
 		}
 	}
 
@@ -100,7 +112,7 @@ public class SoyComponentRendererHelper {
 		return selector;
 	}
 
-	private String _getModuleName(String module) {
+	private String _getModuleAlias(String module) {
 		String moduleName = StringUtil.extractLast(
 			module, CharPool.FORWARD_SLASH);
 
@@ -131,6 +143,72 @@ public class SoyComponentRendererHelper {
 		}
 	}
 
+	private void _renderEcmaScript(Writer writer) throws IOException {
+
+		// AMD requires and ES imports
+
+		List<AMDRequire> amdRequires = new ArrayList<>();
+
+		List<ESImport> esImports = new ArrayList<>();
+
+		esImports.add(
+			ESImportUtil.getESImport(
+				_absolutePortalURLBuilder, "componentModule",
+				_componentDescriptor.getModule()));
+
+		for (String dependency : _componentDescriptor.getDependencies()) {
+			if (ESImportUtil.isESImport(dependency)) {
+				esImports.add(
+					ESImportUtil.getESImport(
+						_absolutePortalURLBuilder, dependency));
+			}
+			else {
+				amdRequires.add(new AMDRequire(dependency));
+			}
+		}
+
+		// Code
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		String componentJavaScript = StringUtil.replace(
+			_JAVA_SCRIPT_TPL,
+			new String[] {"$CONTEXT", "$ID", "$MODULE", "$WRAPPER"},
+			new String[] {
+				jsonSerializer.serializeDeep(_context), _wrapperId,
+				"componentModule",
+				jsonSerializer.serialize(_componentDescriptor.isWrapper())
+			});
+
+		// Render the ECMAScript code
+
+		if (_componentDescriptor.isPositionInLine()) {
+			ScriptData scriptData = new ScriptData();
+
+			scriptData.append(
+				_portal.getPortletId(_httpServletRequest),
+				new JSFragment(amdRequires, componentJavaScript, esImports));
+
+			scriptData.writeTo(writer);
+		}
+		else {
+			ScriptData scriptData =
+				(ScriptData)_httpServletRequest.getAttribute(
+					WebKeys.AUI_SCRIPT_DATA);
+
+			if (scriptData == null) {
+				scriptData = new ScriptData();
+
+				_httpServletRequest.setAttribute(
+					WebKeys.AUI_SCRIPT_DATA, scriptData);
+			}
+
+			scriptData.append(
+				_portal.getPortletId(_httpServletRequest),
+				new JSFragment(amdRequires, componentJavaScript, esImports));
+		}
+	}
+
 	private void _renderJavaScript(Writer writer) throws IOException {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
@@ -138,18 +216,21 @@ public class SoyComponentRendererHelper {
 		String wrapperString = jsonSerializer.serialize(
 			_componentDescriptor.isWrapper());
 
+		String moduleAlias = _getModuleAlias(_componentDescriptor.getModule());
+
 		String componentJavaScript = StringUtil.replace(
 			_JAVA_SCRIPT_TPL,
 			new String[] {"$CONTEXT", "$ID", "$MODULE", "$WRAPPER"},
 			new String[] {
-				contextString, _wrapperId, _moduleName, wrapperString
+				contextString, _wrapperId, moduleAlias + ".default",
+				wrapperString
 			});
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(_componentDescriptor.getModule());
 		sb.append(" as ");
-		sb.append(_moduleName);
+		sb.append(moduleAlias);
 
 		Set<String> dependencies = _componentDescriptor.getDependencies();
 
@@ -239,11 +320,11 @@ public class SoyComponentRendererHelper {
 		_JAVA_SCRIPT_TPL = js;
 	}
 
+	private final AbsolutePortalURLBuilder _absolutePortalURLBuilder;
 	private final ComponentDescriptor _componentDescriptor;
 	private final Map<String, Object> _context;
 	private final String _elementSelector;
 	private final HttpServletRequest _httpServletRequest;
-	private final String _moduleName;
 	private final Portal _portal;
 	private final String _wrapperId;
 

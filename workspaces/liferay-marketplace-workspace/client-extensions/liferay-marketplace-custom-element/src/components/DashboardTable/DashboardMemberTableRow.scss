@@ -1,0 +1,11 @@
+.invited-member{
+    color: gray;
+    .dashboard-table{
+        &-row-name-text{
+            color:inherit
+        }
+        &-row-text{
+            color: inherit;
+        }
+    }
+}

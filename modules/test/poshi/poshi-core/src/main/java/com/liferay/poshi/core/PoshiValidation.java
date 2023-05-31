@@ -1138,6 +1138,9 @@ public class PoshiValidation {
 	protected static void validateMacroCommandName(PoshiElement poshiElement) {
 		String attributeName = poshiElement.attributeValue("name");
 
+		validateRequiredAttributeNames(
+			poshiElement, Arrays.asList("summary"), poshiElement.getPath());
+
 		if (attributeName.contains("Url")) {
 			_exceptions.add(
 				new PoshiElementException(

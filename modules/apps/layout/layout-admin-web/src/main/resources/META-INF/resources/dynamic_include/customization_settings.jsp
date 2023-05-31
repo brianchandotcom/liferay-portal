@@ -22,9 +22,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(CustomizationSettingsControlMenuJSPDynamicInclude.CUSTOMIZATION_SETTINGS_LAYOUT_UPDATE_PERMISSION));
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/customization_settings.css") %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
+<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/customization_settings.css") %>" rel="stylesheet" type="text/css" />
 
 <liferay-ui:success key='<%= LayoutAdminPortletKeys.GROUP_PAGES + "requestProcessed" %>' message="your-request-completed-successfully" />
 
@@ -32,7 +30,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 	<div class="control-menu-level-2">
 		<clay:container-fluid>
 			<ul class="control-menu-level-2-nav control-menu-nav flex-column flex-md-row">
-				<li class="control-menu-nav-item flex-shrink-1 c-mb-0">
+				<li class="c-mb-0 control-menu-nav-item flex-shrink-1">
 					<span class="text-info">
 						<clay:icon
 							data='<%=
@@ -63,7 +61,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 				</li>
 
 				<c:if test="<%= hasUpdateLayoutPermission %>">
-					<li class="control-menu-nav-item flex-shrink-0 c-mb-0 c-ml-2">
+					<li class="c-mb-0 c-ml-2 control-menu-nav-item flex-shrink-0">
 						<aui:input id='<%= portletNamespace + "manageCustomization" %>' inlineField="<%= true %>" label="<%= StringPool.BLANK %>" labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>' labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>' name="manageCustomization" type="toggle-switch" useNamespace="<%= false %>" wrappedField="<%= true %>" />
 
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
@@ -80,7 +78,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 					/>
 				</c:if>
 
-				<li class="control-menu-nav-item d-md-block d-none flex-shrink-0 c-ml-2">
+				<li class="c-ml-2 control-menu-nav-item d-md-block d-none flex-shrink-0">
 
 					<%
 					CustomizationSettingsActionDropdownItemsProvider customizationSettingsActionDropdownItemsProvider = new CustomizationSettingsActionDropdownItemsProvider(request);

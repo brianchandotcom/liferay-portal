@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.display.context;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
@@ -22,7 +23,6 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -61,6 +60,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.portlet.RenderResponse;
 
@@ -96,28 +96,12 @@ public class EditRolePermissionsNavigationDisplayContext {
 	}
 
 	public Map<String, Object> getData() {
-		return HashMapBuilder.<String, Object>put(
-			"items", _getNavItemsJSONArray()
-		).build();
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		return objectMapper.convertValue(_getTopLevelClayVerticalNavItem(), Map.class);
 	}
 
-	private void _addPanelCategoryItems(
-		JSONArray panelCategoryNavItemsJSONArray, String panelCategoryKey) {
-
-		for (PanelCategory panelCategory :
-				_panelCategoryRegistry.getChildPanelCategories(
-					panelCategoryKey)) {
-
-			JSONObject panelCategoryJSONObject = _getPanelCategoryJSONObject(
-				panelCategory, new String[0]);
-
-			if (panelCategoryJSONObject != null) {
-				panelCategoryNavItemsJSONArray.put(panelCategoryJSONObject);
-			}
-		}
-	}
-
-	private JSONObject _getApplicationsNavItemsJSONObject() {
+	private ClayVerticalNavItem _getApplicationsClayVerticalNavItem() {
 		Set<String> hiddenPortletIds = Collections.emptySet();
 
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
@@ -130,8 +114,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 			hiddenPortletIds = hiddenPortletCategory.getPortletIds();
 		}
 
-		JSONArray applicationsNavItemsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
 
 		boolean includeSystemPortlets = false;
 
@@ -150,16 +133,18 @@ public class EditRolePermissionsNavigationDisplayContext {
 				continue;
 			}
 
-			applicationsNavItemsJSONArray.put(
-				_getNavItemJSONObject(
+			clayVerticalNavItems.add(
+				ClayVerticalNavItem.create(
 					PortalUtil.getPortletLongTitle(
 						portlet, _servletContext, _locale),
-					portletId));
+					_getPortletResourceClayVerticalNavItemConsumer(portletId)));
 		}
 
-		return _getNavItemJSONObject(
+		return ClayVerticalNavItem.create(
 			LanguageUtil.get(_locale, "applications"),
-			applicationsNavItemsJSONArray);
+			clayVerticalNavItem -> {
+				clayVerticalNavItem.addItems(clayVerticalNavItems);
+			});
 	}
 
 	private String _getBackURL() {
@@ -194,72 +179,53 @@ public class EditRolePermissionsNavigationDisplayContext {
 		).buildString();
 	}
 
-	private JSONObject _getNavItemJSONObject(
-		String label, JSONArray navItemsJSONArray) {
+	private ClayVerticalNavItem _getTopLevelClayVerticalNavItem() {
+		ClayVerticalNavItem topLevelClayVerticalNavItem = new ClayVerticalNavItem(null);
 
-		return JSONUtil.put(
-			"items", navItemsJSONArray
-		).put(
-			"label", label
-		);
-	}
-
-	private JSONObject _getNavItemJSONObject(
-		String label, JSONArray navItemsJSONArray, Boolean initialExpanded) {
-
-		return _getNavItemJSONObject(
-			label, navItemsJSONArray
-		).put(
-			"initialExpanded", initialExpanded
-		);
-	}
-
-	private JSONObject _getNavItemJSONObject(
-		String label, String portletResource) {
-
-		return JSONUtil.put(
-			"active", _portletResource.equals(portletResource)
-		).put(
-			"label", label
-		).put(
-			"resourceURL", _getEditPermissionsResourceURL(portletResource)
-		);
-	}
-
-	private JSONArray _getNavItemsJSONArray() {
-		JSONArray navItemsJSONArray = JSONUtil.put(_getSummaryJSONObject());
+		topLevelClayVerticalNavItem.addItems(_getSummaryClayVerticalNavItem());
 
 		int roleType = _role.getType();
 
 		if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-			navItemsJSONArray.put(_getUsersAndOrganizationsJSONObject());
+			topLevelClayVerticalNavItem.addItems(
+				_getUsersAndOrganizationsClayVerticalNavItem());
 		}
 		else if (roleType == RoleConstants.TYPE_REGULAR) {
-			JSONArray controlPanelPanelCategoryNavItemsJSONArray = JSONUtil.put(
-				_getNavItemJSONObject(
-					LanguageUtil.get(_locale, "general-permissions"),
-					PortletKeys.PORTAL));
-
-			_addPanelCategoryItems(
-				controlPanelPanelCategoryNavItemsJSONArray,
-				PanelCategoryKeys.CONTROL_PANEL);
-
-			navItemsJSONArray.put(
-				_getNavItemJSONObject(
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
 					LanguageUtil.get(_locale, "control-panel"),
-					controlPanelPanelCategoryNavItemsJSONArray, true)
-			).put(
-				_getNavItemJSONObject(
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(
+							ClayVerticalNavItem.create(
+								LanguageUtil.get(_locale, "general-permissions"),
+								_getPortletResourceClayVerticalNavItemConsumer(PortletKeys.PORTAL))
+						);
+
+						clayVerticalNavItem.addItems(_getPanelCategoryClayVerticalNavItems(
+							PanelCategoryKeys.CONTROL_PANEL));
+
+						clayVerticalNavItem.setInitialExpanded(true);
+					})
+			);
+
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
 					LanguageUtil.get(_locale, "commerce"),
-					_getPanelCategoryNavItemsJSONArray(
-						PanelCategoryKeys.COMMERCE),
-					true)
-			).put(
-				_getNavItemJSONObject(
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(_getPanelCategoryClayVerticalNavItems(
+						PanelCategoryKeys.COMMERCE));
+						clayVerticalNavItem.setInitialExpanded(true);
+					})
+			);
+
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
 					LanguageUtil.get(_locale, "applications-menu"),
-					_getPanelCategoryNavItemsJSONArray(
-						PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS),
-					true)
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(_getPanelCategoryClayVerticalNavItems(
+						PanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS));
+						clayVerticalNavItem.setInitialExpanded(true);
+					})
 			);
 		}
 
@@ -272,35 +238,36 @@ public class EditRolePermissionsNavigationDisplayContext {
 					(String[])_httpServletRequest.getAttribute(
 						RolesAdminWebKeys.PANEL_CATEGORY_KEYS)) {
 
-				JSONObject panelCategoryJSONObject =
-					_getPanelCategoryJSONObject(
+				ClayVerticalNavItem panelCategoryClayVerticalNavItem =
+					_getPanelCategoryClayVerticalNavItem(
 						_panelCategoryRegistry.getPanelCategory(
 							panelCategoryKey),
 						excludedPanelAppKeys);
 
-				if (panelCategoryJSONObject != null) {
-					navItemsJSONArray.put(panelCategoryJSONObject);
+				if (panelCategoryClayVerticalNavItem != null) {
+					topLevelClayVerticalNavItem.addItems(panelCategoryClayVerticalNavItem);
 				}
 			}
 		}
 
-		JSONArray siteAdministrationPanelCategoryNavItemsJSONArray =
-			_getSiteAdministrationPanelCategoryNavItemsJSONArray();
-
-		siteAdministrationPanelCategoryNavItemsJSONArray.put(
-			_getApplicationsNavItemsJSONObject());
-
-		navItemsJSONArray.put(
-			_getNavItemJSONObject(
+		topLevelClayVerticalNavItem.addItems(
+			ClayVerticalNavItem.create(
 				LanguageUtil.get(
 					_locale, "site-and-asset-library-administration"),
-				siteAdministrationPanelCategoryNavItemsJSONArray));
+				clayVerticalNavItem -> {
+					clayVerticalNavItem.addItems(
+						_getSiteAdministrationPanelCategoryClayVerticalNavItems());
+					clayVerticalNavItem.addItems(
+						_getApplicationsClayVerticalNavItem());
+				}));
 
 		if (roleType == RoleConstants.TYPE_REGULAR) {
-			navItemsJSONArray.put(
-				_getNavItemJSONObject(
+			topLevelClayVerticalNavItem.addItems(
+				ClayVerticalNavItem.create(
 					LanguageUtil.get(_locale, "user"),
-					_getUserNavItemsJSONArray()));
+					clayVerticalNavItem -> {
+						clayVerticalNavItem.addItems(_getUserClayVerticalNavItems());
+					}));
 
 			List<PanelCategory> panelCategories = new ArrayList<>();
 
@@ -315,80 +282,87 @@ public class EditRolePermissionsNavigationDisplayContext {
 				if (ListUtil.isNotEmpty(
 						_panelAppRegistry.getPanelApps(panelCategory))) {
 
-					JSONObject panelCategoryJSONObject =
-						_getUnfilteredPanelCategoryJSONObject(panelCategory);
+					ClayVerticalNavItem panelCategoryClayVerticalNavItem =
+						_getUnfilteredPanelCategoryClayVerticalNavItem(panelCategory);
 
-					if (panelCategoryJSONObject != null) {
-						navItemsJSONArray.put(panelCategoryJSONObject);
+					if (panelCategoryClayVerticalNavItem != null) {
+						topLevelClayVerticalNavItem.addItems(panelCategoryClayVerticalNavItem);
 					}
 				}
 			}
 		}
 
-		return navItemsJSONArray;
+		return topLevelClayVerticalNavItem;
 	}
 
-	private JSONObject _getPanelCategoryJSONObject(
+	private ClayVerticalNavItem _getPanelCategoryClayVerticalNavItem(
 		PanelCategory panelCategory, String[] excludedPanelAppKeys) {
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			panelCategory);
 
-		if (!panelApps.isEmpty()) {
-			JSONArray panelCategoryNavItemsJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			for (PanelApp panelApp : panelApps) {
-				Portlet panelAppPortlet =
-					PortletLocalServiceUtil.getPortletById(
-						_themeDisplay.getCompanyId(), panelApp.getPortletId());
-
-				String controlPanelEntryClassName =
-					panelAppPortlet.getControlPanelEntryClass();
-				ControlPanelEntry controlPanelEntry =
-					panelAppPortlet.getControlPanelEntryInstance();
-
-				if (Objects.equals(
-						controlPanelEntryClassName,
-						AdministratorControlPanelEntry.class.getName()) ||
-					Objects.equals(
-						controlPanelEntryClassName,
-						OmniadminControlPanelEntry.class.getName()) ||
-					AdministratorControlPanelEntry.class.isAssignableFrom(
-						controlPanelEntry.getClass()) ||
-					OmniadminControlPanelEntry.class.isAssignableFrom(
-						controlPanelEntry.getClass()) ||
-					ArrayUtil.contains(
-						excludedPanelAppKeys, panelApp.getPortletId())) {
-
-					continue;
-				}
-
-				panelCategoryNavItemsJSONArray.put(
-					_getNavItemJSONObject(
-						PortalUtil.getPortletLongTitle(
-							panelAppPortlet, _servletContext, _locale),
-						panelAppPortlet.getPortletId()));
-			}
-
-			return _getNavItemJSONObject(
-				panelCategory.getLabel(_locale),
-				panelCategoryNavItemsJSONArray);
+		if (panelApps.isEmpty()) {
+			return null;
 		}
 
-		return null;
+		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
+
+		for (PanelApp panelApp : panelApps) {
+			Portlet panelAppPortlet =
+				PortletLocalServiceUtil.getPortletById(
+					_themeDisplay.getCompanyId(), panelApp.getPortletId());
+
+			String controlPanelEntryClassName =
+				panelAppPortlet.getControlPanelEntryClass();
+			ControlPanelEntry controlPanelEntry =
+				panelAppPortlet.getControlPanelEntryInstance();
+
+			if (Objects.equals(
+					controlPanelEntryClassName,
+					AdministratorControlPanelEntry.class.getName()) ||
+				Objects.equals(
+					controlPanelEntryClassName,
+					OmniadminControlPanelEntry.class.getName()) ||
+				AdministratorControlPanelEntry.class.isAssignableFrom(
+					controlPanelEntry.getClass()) ||
+				OmniadminControlPanelEntry.class.isAssignableFrom(
+					controlPanelEntry.getClass()) ||
+				ArrayUtil.contains(
+					excludedPanelAppKeys, panelApp.getPortletId())) {
+
+				continue;
+			}
+
+			clayVerticalNavItems.add(
+				ClayVerticalNavItem.create(
+					PortalUtil.getPortletLongTitle(
+						panelAppPortlet, _servletContext, _locale),
+					_getPortletResourceClayVerticalNavItemConsumer(panelAppPortlet.getPortletId())));
+		}
+
+		return ClayVerticalNavItem.create(
+			panelCategory.getLabel(_locale),
+			clayVerticalNavItem -> clayVerticalNavItem.addItems(clayVerticalNavItems));
 	}
 
-	private JSONArray _getPanelCategoryNavItemsJSONArray(
+	private List<ClayVerticalNavItem> _getPanelCategoryClayVerticalNavItems(
 		String panelCategoryKey) {
 
-		JSONArray panelCategoryNavItemsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
 
-		_addPanelCategoryItems(
-			panelCategoryNavItemsJSONArray, panelCategoryKey);
+		for (PanelCategory panelCategory :
+				_panelCategoryRegistry.getChildPanelCategories(
+					panelCategoryKey)) {
 
-		return panelCategoryNavItemsJSONArray;
+			ClayVerticalNavItem panelCategoryClayVerticalNavItem = _getPanelCategoryClayVerticalNavItem(
+				panelCategory, new String[0]);
+
+			if (panelCategoryClayVerticalNavItem != null) {
+				clayVerticalNavItems.add(panelCategoryClayVerticalNavItem);
+			}
+		}
+
+		return clayVerticalNavItems;
 	}
 
 	private String _getPortletResource() {
@@ -402,89 +376,88 @@ public class EditRolePermissionsNavigationDisplayContext {
 		return _portletResource;
 	}
 
-	private JSONArray _getSiteAdministrationPanelCategoryNavItemsJSONArray() {
-		JSONArray siteAdministrationPanelCategoryNavItemsJSONArray =
-			JSONFactoryUtil.createJSONArray();
+	private List<ClayVerticalNavItem> _getSiteAdministrationPanelCategoryClayVerticalNavItems() {
+		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
 
 		for (PanelCategory panelCategory :
 				_panelCategoryRegistry.getChildPanelCategories(
 					PanelCategoryKeys.SITE_ADMINISTRATION)) {
 
-			JSONObject panelCategoryJSONObject =
-				_getUnfilteredPanelCategoryJSONObject(panelCategory);
+			ClayVerticalNavItem clayVerticalNavItem =
+				_getUnfilteredPanelCategoryClayVerticalNavItem(panelCategory);
 
-			if (panelCategoryJSONObject != null) {
-				siteAdministrationPanelCategoryNavItemsJSONArray.put(
-					panelCategoryJSONObject);
+			if (clayVerticalNavItem != null) {
+				clayVerticalNavItems.add(
+					clayVerticalNavItem);
 			}
 		}
 
-		return siteAdministrationPanelCategoryNavItemsJSONArray;
+		return clayVerticalNavItems;
 	}
 
-	private JSONObject _getSummaryJSONObject() {
-		return JSONUtil.put(
-			"active", Validator.isNull(_getPortletResource())
-		).put(
-			"className", "mb-4"
-		).put(
-			"ignoreFilter", true
-		).put(
-			"label", LanguageUtil.get(_locale, "summary")
-		).put(
-			"resourceURL",
-			ResourceURLBuilder.createResourceURL(
-				_renderResponse
-			).setMVCPath(
-				"/view_resources.jsp"
-			).setCMD(
-				Constants.VIEW
-			).setBackURL(
-				_getBackURL()
-			).setTabs1(
-				"roles"
-			).setParameter(
-				"accountRoleGroupScope", _accountRoleGroupScope
-			).setParameter(
-				"roleId", _role.getRoleId()
-			).setParameter(
-				"p_p_isolated", "true"
-			).buildString()
+	private ClayVerticalNavItem _getSummaryClayVerticalNavItem() {
+		return ClayVerticalNavItem.create(
+			LanguageUtil.get(_locale, "summary"),
+			clayVerticalNavItem -> {
+				clayVerticalNavItem.setActive(Validator.isNull(_getPortletResource()));
+				clayVerticalNavItem.put("className", "mb-4");
+				clayVerticalNavItem.put("ignoreFilter", true);
+				clayVerticalNavItem.put(
+					"resourceURL",
+					ResourceURLBuilder.createResourceURL(
+						_renderResponse
+					).setMVCPath(
+						"/view_resources.jsp"
+					).setCMD(
+						Constants.VIEW
+					).setBackURL(
+						_getBackURL()
+					).setTabs1(
+						"roles"
+					).setParameter(
+						"accountRoleGroupScope", _accountRoleGroupScope
+					).setParameter(
+						"roleId", _role.getRoleId()
+					).setParameter(
+						"p_p_isolated", "true"
+					).buildString()
+				);
+			}
 		);
 	}
 
-	private JSONObject _getUnfilteredPanelCategoryJSONObject(
+	private ClayVerticalNavItem _getUnfilteredPanelCategoryClayVerticalNavItem(
 		PanelCategory panelCategory) {
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			panelCategory);
 
-		if (!panelApps.isEmpty()) {
-			JSONArray panelCategoryNavItemsJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			for (PanelApp panelApp : panelApps) {
-				Portlet panelAppPortlet =
-					PortletLocalServiceUtil.getPortletById(
-						_themeDisplay.getCompanyId(), panelApp.getPortletId());
-
-				panelCategoryNavItemsJSONArray.put(
-					_getNavItemJSONObject(
-						PortalUtil.getPortletLongTitle(
-							panelAppPortlet, _servletContext, _locale),
-						panelAppPortlet.getPortletId()));
-			}
-
-			return _getNavItemJSONObject(
-				panelCategory.getLabel(_locale),
-				panelCategoryNavItemsJSONArray);
+		if (panelApps.isEmpty()) {
+			return null;
 		}
 
-		return null;
+		return ClayVerticalNavItem.create(
+			panelCategory.getLabel(_locale),
+			clayVerticalNavItem -> {
+				for (PanelApp panelApp : panelApps) {
+					Portlet panelAppPortlet =
+						PortletLocalServiceUtil.getPortletById(
+							_themeDisplay.getCompanyId(),
+							panelApp.getPortletId());
+
+					clayVerticalNavItem.addItems(
+						ClayVerticalNavItem.create(
+							PortalUtil.getPortletLongTitle(
+								panelAppPortlet, _servletContext, _locale),
+							_getPortletResourceClayVerticalNavItemConsumer(
+								panelAppPortlet.getPortletId())));
+				}
+			}
+		);
 	}
 
-	private JSONArray _getUserNavItemsJSONArray() {
-		JSONArray userNavItemsJSONArray = JSONFactoryUtil.createJSONArray();
+	private List<ClayVerticalNavItem> _getUserClayVerticalNavItems() {
+		List<ClayVerticalNavItem> clayVerticalNavItems = new ArrayList<>();
 
 		for (BasePersonalMenuEntry basePersonalMenuEntry :
 				_personalMenuEntryHelper.getBasePersonalMenuEntries()) {
@@ -493,26 +466,38 @@ public class EditRolePermissionsNavigationDisplayContext {
 				_themeDisplay.getCompanyId(),
 				basePersonalMenuEntry.getPortletId());
 
-			userNavItemsJSONArray.put(
-				_getNavItemJSONObject(
+			clayVerticalNavItems.add(
+				ClayVerticalNavItem.create(
 					PortalUtil.getPortletLongTitle(
 						personalPortlet, _servletContext, _locale),
-					personalPortlet.getPortletId()));
+					_getPortletResourceClayVerticalNavItemConsumer(
+						personalPortlet.getPortletId())));
 		}
 
-		return userNavItemsJSONArray;
+		return clayVerticalNavItems;
 	}
 
-	private JSONObject _getUsersAndOrganizationsJSONObject() {
+	private ClayVerticalNavItem _getUsersAndOrganizationsClayVerticalNavItem() {
 		Portlet usersAdminPortlet = PortletLocalServiceUtil.getPortletById(
 			_themeDisplay.getCompanyId(),
 			PortletProviderUtil.getPortletId(
 				User.class.getName(), PortletProvider.Action.VIEW));
 
-		return _getNavItemJSONObject(
+		return ClayVerticalNavItem.create(
 			PortalUtil.getPortletLongTitle(
 				usersAdminPortlet, _servletContext, _locale),
-			usersAdminPortlet.getPortletId());
+			_getPortletResourceClayVerticalNavItemConsumer(usersAdminPortlet.getPortletId()));
+	}
+
+
+	private Consumer<ClayVerticalNavItem> _getPortletResourceClayVerticalNavItemConsumer(
+		String portletResource) {
+
+		return clayVerticalNavItem -> {
+			clayVerticalNavItem.setActive(_portletResource.equals(portletResource));
+			clayVerticalNavItem.put(
+				"resourceURL", _getEditPermissionsResourceURL(portletResource));
+		};
 	}
 
 	private final Boolean _accountRoleGroupScope;

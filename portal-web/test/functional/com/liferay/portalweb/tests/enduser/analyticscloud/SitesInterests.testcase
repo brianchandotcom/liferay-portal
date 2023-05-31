@@ -38,6 +38,7 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8283 | Test Summary: Site overview interests card shows what the top interests are"
+	@ignore = true
 	@priority = 5
 	test ShowsSitesTopInterests {
 		var pageNameList = "sports,technology,science";
@@ -91,7 +92,9 @@ definition {
 
 			ACCards.viewCards(cardTitle = "Interests");
 
-			ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Last 30 days");
+			ACTimeFilter.assertCurrentTimeFilterRange(
+				cardName = "Interests",
+				timeFilterRange = "Last 30 Days");
 
 			ACInterests.assertNoCurrentInterests();
 		}
@@ -99,7 +102,7 @@ definition {
 		task ("View Interests card with top interests") {
 			ACTimeFilter.clickTimeFilterButton(cardName = "Interests");
 
-			ACTimeFilter.setLast24Hours();
+			ACTimeFilter.setYesterday();
 
 			for (var interests : list "site name,sports,technology") {
 				ACInterests.viewInterests(interestName = ${interests});

@@ -124,7 +124,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -149,7 +149,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -175,7 +175,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -200,7 +200,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -228,7 +228,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -256,7 +256,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -282,7 +282,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -307,7 +307,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -333,7 +333,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -358,7 +358,7 @@ public class AssetSearcherTest {
 				_publicAssetCategory2.getCategoryId()
 			});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(

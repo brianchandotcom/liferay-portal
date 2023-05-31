@@ -94,7 +94,7 @@ function List getAssetEntries(
 	queryConfig.setScoreEnabled(false);
 
 	BaseSearcher baseSearcher =
-		AssetSearcherFactoryUtil.createAssetSearcher(assetEntryQuery);
+		AssetSearcherFactoryUtil.createBaseSearcher(assetEntryQuery);
 
 	Hits hits = baseSearcher.search(searchContext);
 

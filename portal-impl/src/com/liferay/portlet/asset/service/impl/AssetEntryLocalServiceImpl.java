@@ -1211,8 +1211,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(_hasScoreSort(searchContext));
 
-		BaseSearcher baseSearcher =
-			AssetSearcherFactoryUtil.createAssetSearcher(assetEntryQuery);
+		BaseSearcher baseSearcher = AssetSearcherFactoryUtil.createBaseSearcher(
+			assetEntryQuery);
 
 		return baseSearcher.search(searchContext);
 	}
@@ -1245,8 +1245,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 
-		BaseSearcher baseSearcher =
-			AssetSearcherFactoryUtil.createAssetSearcher(assetEntryQuery);
+		BaseSearcher baseSearcher = AssetSearcherFactoryUtil.createBaseSearcher(
+			assetEntryQuery);
 
 		return baseSearcher.searchCount(searchContext);
 	}

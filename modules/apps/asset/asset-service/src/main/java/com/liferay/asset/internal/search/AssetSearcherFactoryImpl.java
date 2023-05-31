@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSearcherFactoryImpl implements AssetSearcherFactory {
 
 	@Override
-	public BaseSearcher createAssetSearcher(AssetEntryQuery assetEntryQuery) {
+	public BaseSearcher createBaseSearcher(AssetEntryQuery assetEntryQuery) {
 		AssetSearcher assetSearcher =
 			(AssetSearcher)AssetSearcher.getInstance();
 

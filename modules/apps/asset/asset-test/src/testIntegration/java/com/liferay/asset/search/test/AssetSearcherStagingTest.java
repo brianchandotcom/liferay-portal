@@ -204,7 +204,7 @@ public class AssetSearcherStagingTest {
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		return baseSearcher.search(searchContext);

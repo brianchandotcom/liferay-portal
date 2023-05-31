@@ -497,7 +497,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		assetEntryQuery.setAllCategoryIds(allCategoryIds);
 		assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		BooleanQuery booleanQuery = baseSearcher.getFullQuery(searchContext);

@@ -98,7 +98,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 
 		assetEntryQuery.setGroupIds(new long[] {siteId});
 
-		BaseSearcher baseSearcher = _assetSearcherFactory.createAssetSearcher(
+		BaseSearcher baseSearcher = _assetSearcherFactory.createBaseSearcher(
 			assetEntryQuery);
 
 		return Page.of(

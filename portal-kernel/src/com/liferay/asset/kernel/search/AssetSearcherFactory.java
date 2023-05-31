@@ -25,6 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetSearcherFactory {
 
-	public BaseSearcher createAssetSearcher(AssetEntryQuery assetEntryQuery);
+	public BaseSearcher createBaseSearcher(AssetEntryQuery assetEntryQuery);
 
 }

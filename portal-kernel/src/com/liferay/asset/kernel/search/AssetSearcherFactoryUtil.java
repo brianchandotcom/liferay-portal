@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class AssetSearcherFactoryUtil {
 
-	public static BaseSearcher createAssetSearcher(
+	public static BaseSearcher createBaseSearcher(
 		AssetEntryQuery assetEntryQuery) {
 
-		return _assetSearcherFactory.createAssetSearcher(assetEntryQuery);
+		return _assetSearcherFactory.createBaseSearcher(assetEntryQuery);
 	}
 
 	private static volatile AssetSearcherFactory _assetSearcherFactory =

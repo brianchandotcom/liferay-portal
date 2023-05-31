@@ -96,6 +96,8 @@ public class SalesforceObjectEntryManagerImpl
 			ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
+		validateReadOnly(null, objectDefinition, objectEntry);
+
 		JSONObject responseJSONObject = _salesforceHttp.post(
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
@@ -188,6 +190,8 @@ public class SalesforceObjectEntryManagerImpl
 		checkPortletResourcePermission(
 			ActionKeys.UPDATE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
+
+		validateReadOnly(externalReferenceCode, objectDefinition, objectEntry);
 
 		_salesforceHttp.patch(
 			companyId, getGroupId(objectDefinition, scopeKey),

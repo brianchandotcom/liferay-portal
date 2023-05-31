@@ -17,13 +17,16 @@ package com.liferay.object.internal.system.model.listener;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.entry.util.ObjectEntryReadOnlyUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -46,6 +49,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -342,6 +347,49 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 		return baseModel.getModelAttributes();
 	}
 
+	private void _validateReadOnly(
+			T originalModel, T model, ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		if (EntityExtensionThreadLocal.getExtendedProperties() == null) {
+			return;
+		}
+
+		Map<String, Object> extendedProperties = new HashMap<>(
+			EntityExtensionThreadLocal.getExtendedProperties());
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		if (originalModel == null) {
+			ObjectEntryReadOnlyUtil.validateReadOnly(
+				new HashMap<>(), extendedProperties, _ddmExpressionFactory,
+				objectFields);
+
+			_skipValidateReadOnly.set(true);
+
+			return;
+		}
+
+		if (_skipValidateReadOnly.get()) {
+			return;
+		}
+
+		ObjectEntryReadOnlyUtil.validateReadOnly(
+			HashMapBuilder.putAll(
+				originalModel.getModelAttributes()
+			).putAll(
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						objectDefinition,
+						GetterUtil.getLong(model.getPrimaryKeyObj()))
+			).build(),
+			extendedProperties, _ddmExpressionFactory, objectFields);
+
+		_skipValidateReadOnly.set(true);
+	}
+
 	private void _validateSystemObject(T originalModel, T model)
 		throws ModelListenerException {
 
@@ -360,6 +408,8 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 				userId = _getUserId(model);
 			}
 
+			_validateReadOnly(originalModel, model, objectDefinition);
+
 			_objectValidationRuleLocalService.validate(
 				model, objectDefinition.getObjectDefinitionId(),
 				_getPayloadJSONObject(
@@ -373,6 +423,12 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionManagerModelListener.class);
+
+	private static final ThreadLocal<Boolean> _skipValidateReadOnly =
+		new CentralizedThreadLocal<>(
+			SystemObjectDefinitionManagerModelListener.class +
+				"._skipValidateReadOnly",
+			() -> false);
 
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DTOConverterRegistry _dtoConverterRegistry;

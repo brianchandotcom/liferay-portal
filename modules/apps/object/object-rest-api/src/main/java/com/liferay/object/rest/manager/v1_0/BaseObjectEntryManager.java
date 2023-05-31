@@ -15,10 +15,14 @@
 package com.liferay.object.rest.manager.v1_0;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.object.entry.util.ObjectEntryReadOnlyUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -31,6 +35,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -100,6 +105,40 @@ public abstract class BaseObjectEntryManager {
 		return modelResourcePermission.getPortletResourcePermission();
 	}
 
+	protected void validateReadOnly(
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Object> values = new HashMap<>();
+
+		if (externalReferenceCode != null) {
+			ObjectEntry serviceBuilderObjectEntry =
+				objectEntryLocalService.fetchObjectEntry(
+					externalReferenceCode,
+					objectDefinition.getObjectDefinitionId());
+
+			if (serviceBuilderObjectEntry == null) {
+				return;
+			}
+
+			values.putAll(
+				objectEntryLocalService.getValues(serviceBuilderObjectEntry));
+
+			values.putAll(
+				objectEntryLocalService.getSystemValues(
+					serviceBuilderObjectEntry));
+		}
+
+		ObjectEntryReadOnlyUtil.validateReadOnly(
+			values, objectEntry.getProperties(), ddmExpressionFactory,
+			objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()));
+	}
+
+	@Reference
+	protected DDMExpressionFactory ddmExpressionFactory;
+
 	@Reference
 	protected DepotEntryLocalService depotEntryLocalService;
 
@@ -108,6 +147,12 @@ public abstract class BaseObjectEntryManager {
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected ObjectEntryLocalService objectEntryLocalService;
+
+	@Reference
+	protected ObjectFieldLocalService objectFieldLocalService;
 
 	@Reference
 	protected ObjectScopeProviderRegistry objectScopeProviderRegistry;

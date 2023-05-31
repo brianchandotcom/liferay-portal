@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template.react.renderer.internal;
 
-import com.liferay.petra.string.CharPool;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -58,18 +58,10 @@ public class ReactRendererUtil {
 		List<ESImport> esImports = new ArrayList<>();
 
 		for (String dependency : componentDescriptor.getDependencies()) {
-			if (dependency.contains(" from ")) {
-				String[] parts = dependency.split(" from ");
-
-				String symbolName = _getSymbolName(parts[0]);
-
+			if (ESImportUtil.isESImport(dependency)) {
 				esImports.add(
-					new ESImport(
-						symbolName,
-						absolutePortalURLBuilder.forESModule(
-							parts[1], "index.js"
-						).build(),
-						symbolName));
+					ESImportUtil.getESImport(
+						absolutePortalURLBuilder, dependency));
 			}
 			else {
 				amdRequires.add(new AMDRequire(dependency));
@@ -77,37 +69,22 @@ public class ReactRendererUtil {
 		}
 
 		esImports.add(
-			new ESImport(
-				absolutePortalURLBuilder.forESModule(
-					"portal-template-react-renderer-impl", "index.js"
-				).build(),
-				"render"));
-
-		String module = componentDescriptor.getModule();
-
-		String[] parts = module.split(" from ");
+			ESImportUtil.getESImport(
+				absolutePortalURLBuilder,
+				"{render} from portal-template-react-renderer-impl"));
 
 		esImports.add(
-			new ESImport(
-				"componentModule",
-				absolutePortalURLBuilder.forESModule(
-					parts[1], "index.js"
-				).build(),
-				_getSymbolName(parts[0])));
+			ESImportUtil.getESImport(
+				absolutePortalURLBuilder, "componentModule",
+				componentDescriptor.getModule()));
 
 		String propsTransformer = componentDescriptor.getPropsTransformer();
 
 		if (Validator.isNotNull(propsTransformer)) {
-			if (propsTransformer.contains(" from ")) {
-				parts = propsTransformer.split(" from ");
-
+			if (ESImportUtil.isESImport(propsTransformer)) {
 				esImports.add(
-					new ESImport(
-						"propsTransformer",
-						absolutePortalURLBuilder.forESModule(
-							parts[1], "index.js"
-						).build(),
-						_getSymbolName(parts[0])));
+					ESImportUtil.getESImport(
+						absolutePortalURLBuilder, propsTransformer));
 			}
 			else {
 				amdRequires.add(
@@ -122,7 +99,7 @@ public class ReactRendererUtil {
 		if (Validator.isNotNull(propsTransformer)) {
 			contentSB.append("propsTransformer");
 
-			if (!propsTransformer.contains(" from ")) {
+			if (!ESImportUtil.isESImport(propsTransformer)) {
 				contentSB.append(".default");
 			}
 
@@ -242,23 +219,6 @@ public class ReactRendererUtil {
 				javascriptSB.toString(), dependenciesSB.toString(),
 				ScriptData.ModulesType.ES6);
 		}
-	}
-
-	private static String _getSymbolName(String importedSymbol) {
-		importedSymbol = importedSymbol.trim();
-
-		if ((importedSymbol.charAt(0) != CharPool.OPEN_CURLY_BRACE) ||
-			(importedSymbol.charAt(importedSymbol.length() - 1) !=
-				CharPool.CLOSE_CURLY_BRACE)) {
-
-			throw new IllegalArgumentException(
-				"Invalid import syntax: " + importedSymbol);
-		}
-
-		importedSymbol = importedSymbol.substring(
-			1, importedSymbol.length() - 1);
-
-		return importedSymbol.trim();
 	}
 
 }

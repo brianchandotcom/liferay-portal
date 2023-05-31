@@ -189,21 +189,23 @@ public class ReactRendererUtilTest {
 		Assert.assertEquals(esImports.toString(), 5, esImports.size());
 
 		_assertESImportEquals(
-			"dep1", "deps-context#index.js", "dep1", esImports.get(0));
+			StringPool.BLANK, "deps-context#index.js", "dep1",
+			esImports.get(0));
 
 		_assertESImportEquals(
-			"dep2", "deps-context#index.js", "dep2", esImports.get(1));
+			StringPool.BLANK, "deps-context#index.js", "dep2",
+			esImports.get(1));
 
 		_assertESImportEquals(
-			"render", "portal-template-react-renderer-impl#index.js", "render",
-			esImports.get(2));
+			StringPool.BLANK, "portal-template-react-renderer-impl#index.js",
+			"render", esImports.get(2));
 
 		_assertESImportEquals(
 			"componentModule", "my-context#index.js", "component",
 			esImports.get(3));
 
 		_assertESImportEquals(
-			"propsTransformer", "props-transformer-context#index.js",
+			StringPool.BLANK, "props-transformer-context#index.js",
 			"propsTransformer", esImports.get(4));
 	}
 

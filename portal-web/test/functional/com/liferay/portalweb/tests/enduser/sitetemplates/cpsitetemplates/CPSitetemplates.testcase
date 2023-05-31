@@ -578,7 +578,9 @@ definition {
 		}
 
 		task ("And: Navigate to the site to trigger the propagation") {
-			Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
 
 			Refresh();
 		}
@@ -1371,7 +1373,7 @@ definition {
 		}
 
 		task ("And: Navigate to the Site Name B to trigger the propagation") {
-			Navigator.openSitePage(
+			Navigator.gotoSitePage(
 				pageName = "Home",
 				siteName = "Site Name B");
 

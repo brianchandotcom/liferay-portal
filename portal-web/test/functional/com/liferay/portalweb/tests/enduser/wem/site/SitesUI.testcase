@@ -297,4 +297,24 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-176154. The site administrater should see site initializers under Provided by Liferay tab when create a new site."
+	@priority = 3
+	test ViewSiteInitializersUnderProvidedByLiferayTab {
+		task ("Given a site administrater accesses to the Sites admin") {
+			Site.openSitesAdmin();
+		}
+
+		task ("When the site administrater creates a new site") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the site administrater could see site initializers under Provided by Liferay tab") {
+			Navigator.viewActivatedNavTab(navTab = "Provided by Liferay");
+
+			for (var siteInitializerName : list "Blank Site,Welcome") {
+				LexiconCard.viewCardPresent(card = ${siteInitializerName});
+			}
+		}
+	}
+
 }

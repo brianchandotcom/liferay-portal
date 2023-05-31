@@ -1492,6 +1492,8 @@ definition {
 
 		LAR.importPortlet(larFileName = "DocumentsandMedia_portlet.lar");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewTagInfo(tagName = "tag name");

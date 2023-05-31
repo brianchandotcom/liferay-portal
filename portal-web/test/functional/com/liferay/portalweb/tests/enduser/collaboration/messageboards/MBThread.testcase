@@ -381,6 +381,8 @@ definition {
 			larFileName = "message-boards-thread.lar",
 			uploadFrom = "dependencies");
 
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
 		MessageboardsThread.viewCP(
 			replyCount = 0,
 			threadBody = "MB Thread Message Body",

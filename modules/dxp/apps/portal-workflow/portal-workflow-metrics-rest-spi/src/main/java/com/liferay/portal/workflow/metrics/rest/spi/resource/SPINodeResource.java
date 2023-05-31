@@ -26,10 +26,11 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.workflow.metrics.search.index.name.WorkflowMetricsIndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexEntityNameConstants;
 
 import java.util.List;
 
@@ -39,17 +40,12 @@ import java.util.List;
 public class SPINodeResource<T> {
 
 	public SPINodeResource(
-		long companyId,
-		WorkflowMetricsIndexNameBuilder nodeWorkflowMetricsIndexNameBuilder,
-		WorkflowMetricsIndexNameBuilder processWorkflowMetricsIndexNameBuilder,
-		Queries queries, SearchRequestExecutor searchRequestExecutor,
+		long companyId, IndexNameBuilder indexNameBuilder, Queries queries,
+		SearchRequestExecutor searchRequestExecutor,
 		UnsafeFunction<Document, T, SystemException> transformUnsafeFunction) {
 
 		_companyId = companyId;
-		_nodeWorkflowMetricsIndexNameBuilder =
-			nodeWorkflowMetricsIndexNameBuilder;
-		_processWorkflowMetricsIndexNameBuilder =
-			processWorkflowMetricsIndexNameBuilder;
+		_indexNameBuilder = indexNameBuilder;
 		_queries = queries;
 		_searchRequestExecutor = searchRequestExecutor;
 		_transformUnsafeFunction = transformUnsafeFunction;
@@ -59,7 +55,8 @@ public class SPINodeResource<T> {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			_nodeWorkflowMetricsIndexNameBuilder.getIndexName(_companyId));
+			_indexNameBuilder.getIndexName(_companyId) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_NODE);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -88,7 +85,8 @@ public class SPINodeResource<T> {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			_processWorkflowMetricsIndexNameBuilder.getIndexName(_companyId));
+			_indexNameBuilder.getIndexName(_companyId) +
+				WorkflowMetricsIndexEntityNameConstants.SUFFIX_PROCESS);
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -118,10 +116,7 @@ public class SPINodeResource<T> {
 	}
 
 	private final long _companyId;
-	private final WorkflowMetricsIndexNameBuilder
-		_nodeWorkflowMetricsIndexNameBuilder;
-	private final WorkflowMetricsIndexNameBuilder
-		_processWorkflowMetricsIndexNameBuilder;
+	private final IndexNameBuilder _indexNameBuilder;
 	private final Queries _queries;
 	private final SearchRequestExecutor _searchRequestExecutor;
 	private final UnsafeFunction<Document, T, SystemException>

@@ -103,6 +103,16 @@ const ProjectRoutes = () => {
 								}
 								path="new"
 							/>
+
+							<Route
+								element={
+									<DeactivateKeysTable
+										initialFilter="startswith(productName,'Portal')"
+										productName={PRODUCT_TYPES.portal}
+									/>
+								}
+								path="deactivate"
+							/>
 						</Route>
 
 						<Route

@@ -51,6 +51,9 @@ public class PoshiProperties extends Properties {
 
 	public static final String DEBUG_STACKTRACE = "debug.stacktrace";
 
+	public static final String GENERATE_COMMAND_SIGNATURE =
+		"generate.command.signature";
+
 	public static final String GET_LOCATION_MAX_RETRIES =
 		"get.location.max.retries";
 
@@ -296,6 +299,8 @@ public class PoshiProperties extends Properties {
 	public String browserVersion = getProperty(BROWSER_VERSION);
 	public Boolean debugStacktrace = GetterUtil.getBoolean(
 		getProperty(DEBUG_STACKTRACE));
+	public Boolean generateCommandSignature = GetterUtil.getBoolean(
+		getProperty(GENERATE_COMMAND_SIGNATURE));
 	public int getLocationMaxRetries = GetterUtil.getInteger(
 		getProperty(GET_LOCATION_MAX_RETRIES));
 	public int getLocationTimeout = GetterUtil.getInteger(

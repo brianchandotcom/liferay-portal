@@ -73,7 +73,7 @@
 	"danger": "Danger",
 	"data-center-location": "Data Center Location",
 	"deactivate": "Deactivate",
-	"deactivate-dxp-activation-keys": "Deactivate DXP Activation Keys",
+	"deactivate-x-activation-keys": "Deactivate {0} Activation Keys",
 	"deactivate-x-key": "Deactivate {0} Key",
 	"deactivate-x-keys": "Deactivate {0} Keys",
 	"deactivated-key-s-request": "Deactivated key's request",

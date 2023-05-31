@@ -220,6 +220,225 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11560. Verify when we complete checkout and there is more than 1 active order type for the channel, the order type is the one selected on the Select Order Type popup"
+	@priority = 5
+	test CanCompleteCheckoutWithSelectedOrderType {
+		property portal.acceptance = "true";
+
+		task ("Given two active order types with Display Order = 0 are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					displayOrder = 0,
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("When the buyer adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("And these two order types can be selected on the order type selector, Order Type 2 is selected by default") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			AssertSelectedLabel(
+				locator1 = "Select#TYPE",
+				value1 = "Test Order Type 2");
+
+			for (var orderTypeNumber : list "1,2") {
+				AssertElementPresent(
+					key_typeName = "Test Order Type ${orderTypeNumber}",
+					locator1 = "Select#TYPE_SELECTED");
+			}
+
+			Button.click(button = "Add Order");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("When the buyer completes the checkout with Order Type 2") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("Then Order Type 2 is present in the Placed Orders list") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			AssertElementPresent(
+				key_entry = "Commerce Account",
+				key_orderType = "Test Order Type 2",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_ORDER_TYPE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11591. Verify when we add a product to the cart and there is one active order type eligible for the channel, then the Select Order Type popup is not shown"
+	@priority = 5
+	test CanCreateOrderAutomaticallyWhenThereIsOnlyOneEligibleOrderType {
+		property portal.acceptance = "true";
+
+		task ("Given two active order types are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And one order type is eligible with Minium Portal channel, the other with non-Minium Portal channel") {
+			CommerceOrders.openOrderTypesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Type 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceOrders.openOrderTypesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Type 2");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Test Channel");
+		}
+
+		task ("When the buyer adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the Select Order Type popup is not shown with the one order type eligible for Minium Portal channel") {
+			AssertElementNotPresent(locator1 = "IFrame#MODAL_IFRAME");
+
+			AssertElementPresent(
+				key_itemCount = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+		}
+
+		task ("And the Test Order Type 1 eligible for Minium Portal channel is present in the Placed Orders list") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			AssertElementPresent(
+				key_entry = "Commerce Account",
+				key_orderType = "Test Order Type 1",
+				locator1 = "CommerceOrders#PENDING_ORDERS_LIST_ORDER_TYPE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11563. Verify when we remove the products from mini-cart and there is more than 1 active order type for the channel, the Select Order Type popup will not show again and can complete checkout with the previously selected order type"
+	@priority = 3
+	test CannotChangeSelectedOrderTypeInAnOpenOrder {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And the buyer adds a product to the cart with Order Type 1") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				orderType = "Test Order Type 1",
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When the buyer removes all the products from the mini-cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Remove All Items");
+
+			Button.click(button = "Yes");
+
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN55861",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
+				value1 = "U-Joint");
+		}
+
+		task ("And the buyer adds a product to the cart again") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the Select Order Type popup is not shown") {
+			AssertElementNotPresent(locator1 = "IFrame#MODAL_IFRAME");
+
+			AssertElementPresent(
+				key_itemCount = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+		}
+
+		task ("And the buyer can complete checkout with the previously selected Test Order Type 1") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			AssertElementPresent(
+				key_entry = "Commerce Account",
+				key_orderType = "Test Order Type 1",
+				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_ORDER_TYPE");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10053. An error message shows up when the eligibility element is already linked"
 	@priority = 3
 	test CannotSelectOrderTypeEligibilitiesTwice {
@@ -251,6 +470,342 @@ definition {
 
 		task ("Then an error message is shown") {
 			Alert.viewErrorMessage(errorMessage = "The order type relation already exists.");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11565. Verify when we add a product to the cart and there is more than 1 active order type and 1 inactive order type for the channel, only the active ones are shown on the Select Order Type popup"
+	@priority = 3
+	test CannotViewAnInactiveOrderType {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types and one inactive order type are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "false",
+				orderTypeDescription = "Test Order Type Description 3",
+				orderTypeName = "Test Order Type 3");
+		}
+
+		task ("When the buyer adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then two active order types can be selected on the order type selector, Order Type 1 is selected by default") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			AssertSelectedLabel(
+				locator1 = "Select#TYPE",
+				value1 = "Test Order Type 1");
+
+			for (var orderTypeNumber : list "1,2") {
+				AssertElementPresent(
+					key_typeName = "Test Order Type ${orderTypeNumber}",
+					locator1 = "Select#TYPE_SELECTED");
+			}
+		}
+
+		task ("And the inactive order type is not shown") {
+			AssertElementNotPresent(
+				key_typeName = "Test Order Type 3",
+				locator1 = "Select#TYPE_SELECTED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11564. Verify when we delete the order from Pending Orders page and there is more than 1 active order type for the channel, we can reselect the order type when adding a product to the cart"
+	@priority = 3
+	test CanReselectOrderTypeAfterDeletingTheOrderFromPendingOrdersPage {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And the buyer adds a product to the cart with Order Type 1") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				orderType = "Test Order Type 1",
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When the buyer deletes the order with Order Type 1 on the Pending Orders page ") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+
+			Click(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_itemCount = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+		}
+
+		task ("And the buyer adds a product to the cart again") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the Select Order Type popup is shown again") {
+			AssertElementPresent(locator1 = "IFrame#MODAL_IFRAME");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11573. Verify when we add a product to the cart and there are more than 2 active order types and more than 1 order type eligible for Minium Portal channel, then the Select Order Type popup is shown"
+	@priority = 3
+	test CanSelectOnlyEligibleOrderType {
+		property portal.acceptance = "false";
+
+		task ("Given three active order types are created") {
+			for (var orderTypeNumber : list "1,2,3") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And the channel eligibility for two order types is set to Minium Portal, one is set to non-Minium Portal") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceOrders.openOrderTypesAdmin();
+
+				CommerceNavigator.gotoEntry(entryName = "Test Order Type ${orderTypeNumber}");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+				CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+			}
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceOrders.openOrderTypesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Type 3");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Test Channel");
+		}
+
+		task ("When the buyer adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the Select Order Type popup is shown with the two order types eligible for Minium Portal channel") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			for (var orderTypeNumber : list "1,2") {
+				AssertElementPresent(
+					key_typeName = "Test Order Type ${orderTypeNumber}",
+					locator1 = "Select#TYPE_SELECTED");
+			}
+
+			AssertElementNotPresent(
+				key_typeName = "Test Order Type 3",
+				locator1 = "Select#TYPE_SELECTED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11561. Verify when we add a product to the cart and there is more than 1 active order type for the channel, we need to select the order type on the first attempt, the popup won't show when we add a second product to the cart"
+	@priority = 3
+	test CanSelectOrderTypeFirstTimeAddingProductToCart {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And the buyer adds a product to the cart with Order Type 1") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				orderType = "Test Order Type 1",
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When the buyer adds other products to the cart") {
+			Click(
+				key_productName = "Mount",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the Select Order Type popup is not shown") {
+			AssertElementNotPresent(locator1 = "IFrame#MODAL_IFRAME");
+
+			AssertElementPresent(
+				key_itemCount = 2,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11562. Verify when we complete checkout and there is more than 1 active order type for the channel, we can reselect the order type when adding a product to the cart"
+	@priority = 3
+	test CanSelectOrderTypeForANewOrder {
+		property portal.acceptance = "false";
+
+		task ("Given two active order types are created") {
+			for (var orderTypeNumber : list "1,2") {
+				CommerceJSONOrdersAPI._addOrderType(
+					active = "true",
+					orderTypeDescription = "Test Order Type Description ${orderTypeNumber}",
+					orderTypeName = "Test Order Type ${orderTypeNumber}");
+			}
+		}
+
+		task ("And the buyer adds a product to the cart with Order Type 1") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				orderType = "Test Order Type 1",
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When the buyer completes the checkout with Order Type 1") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+
+		task ("And the buyer adds a product to the cart again") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the Select Order Type popup is shown again") {
+			AssertElementPresent(locator1 = "IFrame#MODAL_IFRAME");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11558. Verify when we add a product to the cart and there is more than 1 active order type for the channel, the order type with the highest priority (lower display order) is selected on the Select Order Type popup"
+	@priority = 5
+	test CanViewHighestPriorityOrderTypeIsSetByDefault {
+		property portal.acceptance = "true";
+
+		task ("Given an active order type with display order 2") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				displayOrder = 2,
+				orderTypeDescription = "Test Order Type 1 Description",
+				orderTypeName = "Test Order Type 1");
+		}
+
+		task ("And given an active order type with display order 1") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				displayOrder = 1,
+				orderTypeDescription = "Test Order Type 2 Description",
+				orderTypeName = "Test Order Type 2");
+		}
+
+		task ("When the buyer logs in and adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then on the Select Order Type popup, Test Order Type 2 is selected by default since it has a higher priority") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+			AssertSelectedLabel(
+				locator1 = "Select#TYPE",
+				value1 = "Test Order Type 2");
+
+			Button.click(button = "Add Order");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			AssertElementPresent(
+				key_orderType = "Test Order Type 2",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}
 
@@ -387,51 +942,6 @@ definition {
 		task ("Then a new order is created and the order type field is empty") {
 			AssertElementPresent(
 				key_orderType = "",
-				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
-		}
-	}
-
-	@description = "Verify when creating an order with add to cart and there are more than 1 active order types for the channel, the order type with the highest priority (lower display order) is set in the order"
-	@priority = 5
-	test OrderTypeIsAutoAssignedByHighestPriorityToNewOrderWhenTheUserAddsToCart {
-		property portal.acceptance = "true";
-
-		task ("Given an active order type with display order 2") {
-			CommerceJSONOrdersAPI._addOrderType(
-				active = "true",
-				displayOrder = 2,
-				orderTypeDescription = "Test Order Type 1 Description",
-				orderTypeName = "Test Order Type 1");
-		}
-
-		task ("And given an active order type with display order 1") {
-			CommerceJSONOrdersAPI._addOrderType(
-				active = "true",
-				displayOrder = 1,
-				orderTypeDescription = "Test Order Type 2 Description",
-				orderTypeName = "Test Order Type 2");
-		}
-
-		task ("When the buyer logs in and adds a product to the cart") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-
-			FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = 1);
-		}
-
-		task ("Then a new order is automatically created and the order type is set to Test Order Type 2 since it has higher priority") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
-
-			Button.click(button = "View");
-
-			AssertElementPresent(
-				key_orderType = "Test Order Type 2",
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
 		}
 	}

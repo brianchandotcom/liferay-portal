@@ -1693,6 +1693,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-6766. User cannot set the special character as the Product URL Separators on System/Instance Settings"
+	@priority = 3
+	test CannotSetSpecialCharacterAsProductURLSeparators {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#CannotSetSpecialCharacterAsProductURLSeparators";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When a special character in the Product URL Separator under the Catalog of System Settings is set") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Catalog",
+				configurationName = "Friendly URL",
+				configurationScope = "Virtual Instance Scope");
+
+			Type(
+				key_labelName = "Product URL Separator",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = "À");
+		}
+
+		task ("Then the special character cannot be saved") {
+			Button.click(button = "Save");
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+			FormFields.viewFieldValidationErrorMessage(
+				fieldName = "Product URL Separator",
+				fieldValidationErrorMessage = "This field is invalid.");
+		}
+
+		task ("And the buyer can view a product URL with the default 'p'") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
+		}
+
+		task ("When a special character in the Product URL Separator under the Catalog of Instance Settings is set") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Catalog",
+				configurationName = "Friendly URL",
+				configurationScope = "Virtual Instance Scope");
+
+			Type(
+				key_labelName = "Product URL Separator",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = "À");
+		}
+
+		task ("Then the special character cannot be saved") {
+			Button.click(button = "Save");
+
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+			FormFields.viewFieldValidationErrorMessage(
+				fieldName = "Product URL Separator",
+				fieldValidationErrorMessage = "This field is invalid.");
+		}
+
+		task ("And the buyer can view a product URL with the default 'p'") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/p/u-joint");
+		}
+	}
+
 	@description = "COMMERCE-9674 | As a buyer, I want to be able to view the incoming dates/quantities for a multiple SKUs product"
 	@priority = 5
 	test CanViewMultipleSkusProductIncomingQuantity {

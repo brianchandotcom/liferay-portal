@@ -98,8 +98,10 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Destination Release_ table has the following servlet " +
-					"context names with a failed state: module1, module2"));
+				"ERROR: Module module1 has a failed Release state in the " +
+					"destination database",
+				"ERROR: Module module2 has a failed Release state in the " +
+					"destination database"));
 	}
 
 	@Test
@@ -113,8 +115,10 @@ public class ValidatorTest {
 		_executeAndAssert(
 			true, false,
 			Arrays.asList(
-				"ERROR: Source Release_ table has the following servlet " +
-					"context names with a failed state: module1, module2"));
+				"ERROR: Module module1 has a failed Release state in the " +
+					"source database",
+				"ERROR: Module module2 has a failed Release state in the " +
+					"source database"));
 	}
 
 	@Test

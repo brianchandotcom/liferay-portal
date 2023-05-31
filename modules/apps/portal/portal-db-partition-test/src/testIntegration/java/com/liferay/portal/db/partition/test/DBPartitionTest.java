@@ -171,15 +171,19 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						"select schema_name from information_schema.schemata;");
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
+				String partition = null;
+
 				while (resultSet.next()) {
-					String partition = resultSet.getString(1);
+					partition = resultSet.getString(1);
 
 					if (partition.equals(orphanedPartition)) {
 						removeDBPartition(companyId, false);
 
-						Assert.fail();
+						break;
 					}
 				}
+
+				Assert.assertNotEquals(partition, orphanedPartition);
 			}
 		}
 	}

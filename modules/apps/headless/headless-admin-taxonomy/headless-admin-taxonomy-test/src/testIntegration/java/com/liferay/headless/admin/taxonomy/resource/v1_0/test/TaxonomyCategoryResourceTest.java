@@ -32,6 +32,8 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyCategorySerDes;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.headless.admin.taxonomy.client.problem.Problem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -126,6 +128,8 @@ public class TaxonomyCategoryResourceTest
 
 		super.
 			testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode();
+
+		_testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeFailureExternalReferenceCodeNotFound();
 	}
 
 	@Override
@@ -503,6 +507,37 @@ public class TaxonomyCategoryResourceTest
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory1.getId());
+	}
+
+	private void _testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeFailureExternalReferenceCodeNotFound()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory =
+			testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		String externalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		try {
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						taxonomyCategory),
+					externalReferenceCode);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No AssetCategory exists with the key {",
+					"externalReferenceCode=", externalReferenceCode,
+					", groupId=", taxonomyCategory.getSiteId(), "}"),
+				problem.getTitle());
+		}
 	}
 
 	private void _testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(

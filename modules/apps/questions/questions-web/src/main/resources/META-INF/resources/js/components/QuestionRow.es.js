@@ -41,12 +41,18 @@ export default function QuestionRow({
 				name: question.creator.name,
 				portraitURL: question.creator.image,
 				userId: String(question.creator.id),
+				...(Liferay.FeatureFlags['LPS-185892'] && {
+					userGroups: question.creator?.userGroupInfos[0]?.name,
+				}),
 		  }
 		: {
 				link: `/questions/${sectionTitle}`,
 				name: '',
 				portraitURL: '',
 				userId: '0',
+				...(Liferay.FeatureFlags['LPS-185892'] && {
+					userGroups: '',
+				}),
 		  };
 
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
@@ -187,12 +193,25 @@ export default function QuestionRow({
 							userId={creatorInformation.userId}
 						/>
 
-						<strong className="c-ml-2 text-dark">
+						<strong className="c-m-2 text-dark">
 							{creatorInformation.name ||
 								Liferay.Language.get(
 									'anonymous-user-configuration-name'
 								)}
 						</strong>
+
+						{!!creatorInformation.userGroups && (
+							<ClayLabel
+								className="mb-2"
+								displayType={
+									creatorInformation.userGroups === 'Partner'
+										? 'info'
+										: 'warning'
+								}
+							>
+								{creatorInformation.userGroups}
+							</ClayLabel>
+						)}
 					</Link>
 
 					<EditedTimestamp

@@ -381,6 +381,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 			<local name="path" />
 
 			<propertyregex
+				defaultValue="${env.PATH}"
 				global="true"
 				input="${env.PATH}"
 				property="path"

@@ -1,0 +1,14 @@
+[
+	{
+		"key": "test-portal-language-override-1",
+		"value": {
+			"en-US": "Test Portal Language Override 1"
+		}
+	},
+	{
+		"key": "test-portal-language-override-2",
+		"value": {
+			"en-US": "Test Portal Language Override 2"
+		}
+	}
+]

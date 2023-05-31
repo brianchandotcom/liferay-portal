@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.util;
 
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.Release;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.release.Release;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 
 import java.sql.Connection;

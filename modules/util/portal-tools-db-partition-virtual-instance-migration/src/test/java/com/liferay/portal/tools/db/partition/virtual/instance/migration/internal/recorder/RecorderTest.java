@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.validation;
+package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.recorder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -79,7 +79,7 @@ public class RecorderTest {
 	}
 
 	@Test
-	public void testMultipleWarning() {
+	public void testMultipleWarnings() {
 		Recorder recorder = new Recorder();
 
 		List<String> modules = Arrays.asList("module1", "module2", "module3");

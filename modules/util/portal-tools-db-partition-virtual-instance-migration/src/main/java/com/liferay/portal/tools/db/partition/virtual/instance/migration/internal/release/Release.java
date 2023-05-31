@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal;
+package com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.release;
 
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.internal.version.Version;
 

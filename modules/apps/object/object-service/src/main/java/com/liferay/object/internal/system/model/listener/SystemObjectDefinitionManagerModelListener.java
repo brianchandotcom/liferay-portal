@@ -14,11 +14,13 @@
 
 package com.liferay.object.internal.system.model.listener;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -54,20 +56,24 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> {
 
 	public SystemObjectDefinitionManagerModelListener(
+		DDMExpressionFactory ddmExpressionFactory,
 		DTOConverterRegistry dtoConverterRegistry, JSONFactory jsonFactory,
 		Class<T> modelClass, ObjectActionEngine objectActionEngine,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectFieldLocalService objectFieldLocalService,
 		ObjectValidationRuleLocalService objectValidationRuleLocalService,
 		SystemObjectDefinitionManager systemObjectDefinitionManager,
 		UserLocalService userLocalService) {
 
+		_ddmExpressionFactory = ddmExpressionFactory;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_jsonFactory = jsonFactory;
 		_modelClass = modelClass;
 		_objectActionEngine = objectActionEngine;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
 		_objectValidationRuleLocalService = objectValidationRuleLocalService;
 		_systemObjectDefinitionManager = systemObjectDefinitionManager;
 		_userLocalService = userLocalService;
@@ -368,12 +374,14 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemObjectDefinitionManagerModelListener.class);
 
+	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final JSONFactory _jsonFactory;
 	private final Class<?> _modelClass;
 	private final ObjectActionEngine _objectActionEngine;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectValidationRuleLocalService
 		_objectValidationRuleLocalService;
 	private final SystemObjectDefinitionManager _systemObjectDefinitionManager;

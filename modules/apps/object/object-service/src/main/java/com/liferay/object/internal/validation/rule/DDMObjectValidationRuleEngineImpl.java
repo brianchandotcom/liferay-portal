@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
-import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
+import com.liferay.object.dynamic.data.mapping.expression.ObjectEntryDDMExpressionFieldAccessor;
 import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDDMExpressionParameterAccessor;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;

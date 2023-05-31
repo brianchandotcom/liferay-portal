@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.object.definition.notification.term.util,\
 	com.liferay.object.deployer,\
 	com.liferay.object.display.context,\
+	com.liferay.object.dynamic.data.mapping.expression,\
 	com.liferay.object.entry.util,\
 	com.liferay.object.exception,\
 	com.liferay.object.field.builder,\

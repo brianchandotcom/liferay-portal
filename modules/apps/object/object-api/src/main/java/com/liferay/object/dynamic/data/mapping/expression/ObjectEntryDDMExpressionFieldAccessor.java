@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.dynamic.data.mapping.expression;
+package com.liferay.object.dynamic.data.mapping.expression;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFieldAccessor;
 import com.liferay.dynamic.data.mapping.expression.GetFieldPropertyRequest;

@@ -139,7 +139,7 @@ public class DatabaseUtilTest {
 	}
 
 	@Test
-	public void testGetTables() throws SQLException {
+	public void testGetTableNames() throws SQLException {
 		Mockito.when(
 			_connection.getMetaData()
 		).thenReturn(
@@ -248,14 +248,14 @@ public class DatabaseUtilTest {
 			true
 		);
 
-		List<String> tables = DatabaseUtil.getTables(_connection);
+		List<String> tableNames = DatabaseUtil.getTableNames(_connection);
 
-		Assert.assertTrue(tables.size() == 2);
+		Assert.assertTrue(tableNames.size() == 2);
 
-		Assert.assertTrue(tables.contains("Table1"));
-		Assert.assertTrue(tables.contains("Table2"));
-		Assert.assertFalse(tables.contains("Company"));
-		Assert.assertFalse(tables.contains("Object_x_25000"));
+		Assert.assertTrue(tableNames.contains("Table1"));
+		Assert.assertTrue(tableNames.contains("Table2"));
+		Assert.assertFalse(tableNames.contains("Company"));
+		Assert.assertFalse(tableNames.contains("Object_x_25000"));
 	}
 
 	@Test

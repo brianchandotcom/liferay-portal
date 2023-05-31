@@ -338,18 +338,18 @@ public class ValidatorTest {
 	}
 
 	private void _mockMissingTables(
-		List<String> sourceTables, List<String> destinationTables) {
+		List<String> sourceTableNames, List<String> destinationTableNames) {
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getTables(_sourceConnection)
+			() -> DatabaseUtil.getTableNames(_sourceConnection)
 		).thenReturn(
-			sourceTables
+			sourceTableNames
 		);
 
 		_databaseMockedStatic.when(
-			() -> DatabaseUtil.getTables(_destinationConnection)
+			() -> DatabaseUtil.getTableNames(_destinationConnection)
 		).thenReturn(
-			destinationTables
+			destinationTableNames
 		);
 	}
 

@@ -66,6 +66,10 @@ const Modal = ({
 	const eventHandlersRef = useRef([]);
 
 	const processClose = useCallback(() => {
+		if (!open) {
+			return;
+		}
+
 		onOpenChange(false);
 
 		document.body.classList.remove('modal-open');
@@ -81,7 +85,7 @@ const Modal = ({
 		if (onClose) {
 			onClose();
 		}
-	}, [eventHandlersRef, onClose, onOpenChange]);
+	}, [eventHandlersRef, onClose, onOpenChange, open]);
 
 	const onButtonClick = ({formId, onClick, type}) => {
 		const submitForm = (form) => {

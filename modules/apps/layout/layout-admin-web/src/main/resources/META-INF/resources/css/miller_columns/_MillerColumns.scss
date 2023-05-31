@@ -17,7 +17,7 @@
 	}
 
 	&.drop-target .miller-columns-item:last-child {
-		box-shadow: inset 0 -2px 0 0 #0b5fff;
+		box-shadow: inset 0 -2px 0 0 $primary;
 	}
 
 	@include media-breakpoint-up(md) {
@@ -62,27 +62,15 @@
 		box-shadow: inset 0 0 0 0.125rem $primary;
 	}
 
-	.custom-checkbox .custom-control-label {
-		z-index: 2;
-
-		&:after,
-		&:before {
-			top: -1px;
-		}
-	}
-
 	.miller-columns-item-actions,
 	.miller-columns-item-quick-action {
 		padding: 0 0 0 0.25rem;
-		z-index: 2;
 	}
 
 	.miller-columns-item-drag-handler {
 		color: $gray-500;
 		cursor: move;
-		font-size: 1rem;
 		top: 2px;
-		z-index: 2;
 	}
 
 	&:not(.dragging) .miller-columns-item-mask {
@@ -93,7 +81,6 @@
 		transition: box-shadow 150ms ease-in-out;
 		width: 100%;
 		will-change: box-shadow;
-		z-index: 1;
 
 		&:focus {
 			box-shadow: inset 0 0 0 0.125rem $primary-l1;
@@ -104,21 +91,6 @@
 	.miller-columns-item-child-indicator {
 		padding: 0 0 0 0.5rem;
 		top: 2px;
-	}
-
-	.list-group-title .text-truncate {
-		z-index: 2;
-	}
-
-	.list-group-subtitle .label {
-		flex-shrink: 2;
-
-		.label-item {
-			display: block;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
 	}
 }
 

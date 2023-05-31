@@ -37,10 +37,6 @@ export default function TabCollection({
 		initialOpen
 	);
 
-	const [isSearchResultOpen, setIsSearchResultOpen] = useState(
-		isSearchResult
-	);
-
 	const onRemoveHighlighted = (itemIndex) => {
 		if (collection.collectionId !== HIGHLIGHTED_COLLECTION_ID) {
 			return;
@@ -65,9 +61,8 @@ export default function TabCollection({
 	return (
 		<TabCollectionCollapse
 			collapseRef={collapseRef}
-			isSearchResultOpen={isSearchResultOpen}
-			open={open || isSearchResultOpen}
-			setIsSearchResultOpen={setIsSearchResultOpen}
+			isSearchResult={isSearchResult}
+			open={open}
 			setOpen={setOpen}
 			title={collection.label}
 		>
@@ -77,7 +72,7 @@ export default function TabCollection({
 						collection={collection}
 						displayStyle={displayStyle}
 						initialOpen={false}
-						isSearchResult={isSearchResultOpen}
+						isSearchResult={isSearchResult}
 						key={index}
 					/>
 				))}
@@ -146,18 +141,18 @@ TabPortletItems.proptypes = {
 function TabCollectionCollapse({
 	children,
 	collapseRef,
-	isSearchResultOpen,
+	isSearchResult,
 	open,
-	setIsSearchResultOpen,
 	setOpen,
 	title,
 }) {
-	const handleOpen = (nextOpen) => {
-		setOpen(nextOpen);
-	};
+	const [searchOpen, setSearchOpen] = useState(true);
+
+	const isOpen = isSearchResult ? searchOpen : open;
+	const setIsOpen = isSearchResult ? setSearchOpen : setOpen;
 
 	const {isTarget, setElement} = useKeyboardNavigation({
-		handleOpen,
+		handleOpen: setIsOpen,
 		type: LIST_ITEM_TYPES.header,
 	});
 
@@ -168,7 +163,7 @@ function TabCollectionCollapse({
 			role="none"
 		>
 			<button
-				aria-expanded={open ? 'true' : 'false'}
+				aria-expanded={isOpen ? 'true' : 'false'}
 				aria-haspopup="menu"
 				className={classNames(
 					'btn',
@@ -176,13 +171,10 @@ function TabCollectionCollapse({
 					'collapse-icon',
 					'sheet-subtitle',
 					{
-						collapsed: !open,
+						collapsed: !isOpen,
 					}
 				)}
-				onClick={() => {
-					setOpen(!open);
-					setIsSearchResultOpen(!isSearchResultOpen);
-				}}
+				onClick={() => setIsOpen(!isOpen)}
 				ref={setElement}
 				role="menuitem"
 				tabIndex={isTarget ? 0 : -1}
@@ -193,17 +185,17 @@ function TabCollectionCollapse({
 
 					<span
 						className={`text-secondary collapse-icon-${
-							open ? 'open' : 'closed'
+							isOpen ? 'open' : 'closed'
 						}`}
 					>
 						<ClayIcon
-							symbol={open ? 'angle-down' : 'angle-right'}
+							symbol={isOpen ? 'angle-down' : 'angle-right'}
 						/>
 					</span>
 				</span>
 			</button>
 
-			{open && children}
+			{isOpen && children}
 		</li>
 	);
 }

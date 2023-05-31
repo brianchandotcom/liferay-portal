@@ -454,6 +454,8 @@ definition {
 
 		Click(locator1 = "Button#PERMISSIONS");
 
+		SetWindowSize.maximizeWindow();
+
 		SelectFrameTop();
 
 		IFrame.selectModalFrame();
@@ -465,8 +467,6 @@ definition {
 		Check.checkNotVisible(
 			key_roleTitle = "site-member",
 			locator1 = "Permissions#CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX");
-
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
 
 		PortletEntry.save();
 

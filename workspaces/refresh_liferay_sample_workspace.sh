@@ -113,6 +113,8 @@ EOF
 
 	../tools/create_custom_element.sh liferay-sample-custom-element-2 react
 
+	sed '/"eslintConfig": {/,/},/d' liferay-sample-custom-element-2/package.json | awk '!/^,$/' > temp.json && mv temp.json liferay-sample-custom-element-2/package.json
+
 	mkdir -p liferay-sample-custom-element-2/src/common/components
 
 	cat <<EOF > liferay-sample-custom-element-2/src/common/components/Comic.js

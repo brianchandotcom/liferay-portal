@@ -56,8 +56,10 @@ public class CommerceMLSearchEngineHelper {
 			createIndexRequest.setSource(
 				JSONUtil.put(
 					"mappings",
-					_jsonFactory.createJSONObject(
-						StringUtil.read(getClass(), indexMappingFileName))
+					JSONUtil.put(
+						"_doc",
+						_jsonFactory.createJSONObject(
+							StringUtil.read(getClass(), indexMappingFileName)))
 				).put(
 					"settings",
 					_jsonFactory.createJSONObject(

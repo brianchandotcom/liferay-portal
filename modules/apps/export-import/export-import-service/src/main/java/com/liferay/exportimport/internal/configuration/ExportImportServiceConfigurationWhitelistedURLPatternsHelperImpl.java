@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Collections;
@@ -131,6 +132,9 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 	private final Map<Long, URLPatternMapper<Boolean>> _urlPatternMappers =
 		Collections.synchronizedMap(new LinkedHashMap<>());

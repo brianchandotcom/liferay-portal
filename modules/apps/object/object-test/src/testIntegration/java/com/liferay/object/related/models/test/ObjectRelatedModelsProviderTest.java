@@ -38,7 +38,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -55,6 +54,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -126,115 +126,73 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntry1to1ObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition2.getObjectDefinitionId(),
+		_addObjectRelationship(
+			_objectDefinition1, _objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
-
-		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				_objectDefinition2.getClassName(),
-				_objectDefinition2.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
-
-		Assert.assertNotNull(objectRelatedModelsProvider);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
 
-		List<ObjectEntry> objectEntries =
-			objectRelatedModelsProvider.getRelatedModels(
-				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 1);
 
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
-
-		try {
-			_addObjectEntry(
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.OneToOneConstraintViolation.class,
+			String.format(
+				"One to one constraint violation for %s.%s with value %s",
+				_relationshipObjectField.getDBTableName(),
+				_relationshipObjectField.getDBColumnName(),
+				objectEntry1.getObjectEntryId()),
+			() -> _addObjectEntry(
 				_objectDefinition2.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
-					objectField.getName(), objectEntry1.getObjectEntryId()
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException objectEntryValuesException) {
-			Assert.assertTrue(
-				StringUtil.startsWith(
-					objectEntryValuesException.getMessage(),
-					"One to one constraint violation for "));
-		}
-
-		try {
-			_updateObjectEntry(
+					_relationshipObjectField.getName(),
+					objectEntry1.getObjectEntryId()
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.OneToOneConstraintViolation.class,
+			String.format(
+				"One to one constraint violation for %s.%s with value %s",
+				_relationshipObjectField.getDBTableName(),
+				_relationshipObjectField.getDBColumnName(),
+				objectEntry1.getObjectEntryId()),
+			() -> _updateObjectEntry(
 				objectEntry2.getObjectEntryId(),
 				HashMapBuilder.<String, Serializable>put(
-					objectField.getName(), objectEntry1.getObjectEntryId()
-				).build());
-
-			Assert.fail();
-		}
-		catch (ObjectEntryValuesException objectEntryValuesException) {
-			Assert.assertTrue(
-				StringUtil.startsWith(
-					objectEntryValuesException.getMessage(),
-					"One to one constraint violation for "));
-		}
+					_relationshipObjectField.getName(),
+					objectEntry1.getObjectEntryId()
+				).build()));
 
 		_updateObjectEntry(
 			objectEntry3.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
-		Assert.assertEquals(
-			objectEntries,
-			_objectEntryLocalService.getOneToManyObjectEntries(
-				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry1.getObjectEntryId(), true, null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS));
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 1);
 
 		_updateObjectEntry(
 			objectEntry3.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), 0
+				_relationshipObjectField.getName(), 0
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
+			_objectRelationship);
 	}
 
 	@Test
@@ -243,98 +201,83 @@ public class ObjectRelatedModelsProviderTest {
 
 		_testSystemObjectEntry1toMObjectRelatedModelsProviderImpl();
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectDefinition2.getObjectDefinitionId(),
+		_addObjectRelationship(
+			_objectDefinition1, _objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				_objectDefinition2.getClassName(),
-				_objectDefinition2.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		Assert.assertNotNull(objectRelatedModelsProvider);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
 
-		List<ObjectEntry> objectEntries =
-			objectRelatedModelsProvider.getRelatedModels(
-				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				"able", "First Entry"
+			).put(
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 1);
 
 		_addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				"able", "Second Entry"
+			).put(
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 2);
 
 		_updateObjectEntry(
 			objectEntry2.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				"able", "Third Entry"
+			).put(
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 3);
 
-		Assert.assertEquals(objectEntries.toString(), 3, objectEntries.size());
+		// Get related models with search
+
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), StringUtil.randomString(), 0);
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(),
+			String.valueOf(objectEntry2.getObjectEntryId()), 1);
+		_testSearchRelatedModels(objectEntry1.getObjectEntryId(), "First ", 1);
+		_testSearchRelatedModels(objectEntry1.getObjectEntryId(), "d Entry", 2);
+		_testSearchRelatedModels(objectEntry1.getObjectEntryId(), "Entry", 3);
 
 		_updateObjectEntry(
 			objectEntry3.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), 0
+				_relationshipObjectField.getName(), 0
 			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 2);
 
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		// View permission
 
 		_setUser(_user);
 
 		_assertViewPermission(
-			_objectDefinition2, objectRelatedModelsProvider, objectRelationship,
-			objectEntry1, objectEntry2.getObjectEntryId());
+			_objectDefinition2, objectEntry1, objectEntry2.getObjectEntryId());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
+			_objectRelationship);
 
 		_setUser(TestPropsValues.getUser());
+
+		// Object relationship deletion type cascade
 
 		ObjectDefinition scopeSiteObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -356,55 +299,27 @@ public class ObjectRelatedModelsProviderTest {
 				TestPropsValues.getUserId(),
 				scopeSiteObjectDefinition.getObjectDefinitionId());
 
-		objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				scopeSiteObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				scopeSiteObjectDefinition.getClassName(),
-				scopeSiteObjectDefinition.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		Assert.assertNotNull(objectRelatedModelsProvider);
+		_addObjectRelationship(
+			_objectDefinition1, scopeSiteObjectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry4.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_testGetRelatedModels(objectEntry4.getObjectEntryId(), 0);
 
 		Group group = GroupTestUtil.addGroup();
 
-		ObjectField objectRelationshipObjectField2 =
-			_objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2());
-
-		ObjectEntry objectEntry5 = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			group.getGroupId(),
 			scopeSiteObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectRelationshipObjectField2.getName(),
+				_relationshipObjectField.getName(),
 				objectEntry4.getObjectEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry4.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_testGetRelatedModels(objectEntry4.getObjectEntryId(), 1);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
 
@@ -412,52 +327,23 @@ public class ObjectRelatedModelsProviderTest {
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry5.getObjectEntryId()));
 
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				objectRelationship.getLabelMap());
+		// Object relationship deletion type disassociate
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE);
 
 		ObjectEntry objectEntry6 = _addObjectEntry(
 			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
 
-		ObjectEntry objectEntry7 = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+		ObjectEntry objectEntry7 = _addObjectEntry(
+			group.getGroupId(),
 			scopeSiteObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectRelationshipObjectField2.getName(),
+				_relationshipObjectField.getName(),
 				objectEntry6.getObjectEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry6.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
-
-		try {
-			_objectEntryLocalService.deleteObjectEntry(objectEntry6);
-
-			Assert.fail();
-		}
-		catch (RequiredObjectRelationshipException
-					requiredObjectRelationshipException) {
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Object relationship ",
-					objectRelationship.getObjectRelationshipId(),
-					" does not allow deletes"),
-				requiredObjectRelationshipException.getMessage());
-		}
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				objectRelationship.getLabelMap());
+		_testGetRelatedModels(objectEntry6.getObjectEntryId(), 1);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry6);
 
@@ -465,15 +351,37 @@ public class ObjectRelatedModelsProviderTest {
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry7.getObjectEntryId()));
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry6.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry6.getObjectEntryId(), 0);
 
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		// Object relationship deletion type prevent
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+
+		ObjectEntry objectEntry8 = _addObjectEntry(
+			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+
+		_updateObjectEntry(
+			objectEntry7.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				_relationshipObjectField.getName(),
+				objectEntry8.getObjectEntryId()
+			).build());
+
+		_testGetRelatedModels(objectEntry8.getObjectEntryId(), 1);
+
+		AssertUtils.assertFailure(
+			RequiredObjectRelationshipException.class,
+			StringBundler.concat(
+				"Object relationship ",
+				_objectRelationship.getObjectRelationshipId(),
+				" does not allow deletes"),
+			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry8));
+
+		_testGetRelatedModels(objectEntry8.getObjectEntryId(), 1);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
+			_objectRelationship);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			scopeSiteObjectDefinition);
@@ -505,191 +413,144 @@ public class ObjectRelatedModelsProviderTest {
 
 		long[] userIds = _addUsers(3);
 
-		ObjectDefinition systemObjectDefinition = null;
+		ObjectDefinition systemObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), User.class.getName());
 
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionLocalService.getSystemObjectDefinitions()) {
-
-			if (StringUtil.equals(objectDefinition.getName(), "User")) {
-				systemObjectDefinition = objectDefinition;
-
-				break;
-			}
-		}
-
-		Assert.assertNotNull(systemObjectDefinition);
-
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_objectDefinition1.getObjectDefinitionId(),
-			systemObjectDefinition.getObjectDefinitionId(),
+		_addObjectRelationship(
+			_objectDefinition1, systemObjectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				systemObjectDefinition.getClassName(),
-				systemObjectDefinition.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		Assert.assertNotNull(objectRelatedModelsProvider);
-
-		ObjectEntry objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry1 = _addObjectEntry(
 			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
 
-		List<ObjectEntry> objectEntries =
-			objectRelatedModelsProvider.getRelatedModels(
-				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry.getObjectEntryId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_addObjectRelationshipMappingTableValues(
+			objectEntry1.getObjectEntryId(), userIds[0]);
+		_addObjectRelationshipMappingTableValues(
+			objectEntry1.getObjectEntryId(), userIds[1]);
 
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getObjectEntryId(), userIds[0],
-			ServiceContextTestUtil.getServiceContext());
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getObjectEntryId(), userIds[1],
-			ServiceContextTestUtil.getServiceContext());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 2);
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		// Get related models with search
 
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), StringUtil.randomString(), 0);
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), String.valueOf(userIds[0]), 1);
 
-		ObjectRelationship reverseObjectRelationship =
+		User user = _userLocalService.getUser(userIds[1]);
+
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), user.getFirstName(), 1);
+
+		// Object relationship deletion type cascade
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
+
+		_userLocalService.deleteUser(userIds[1]);
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+
+		AssertUtils.assertFailure(
+			NoSuchUserException.class,
+			"No User exists with the primary key " + userIds[1],
+			() -> _userLocalService.getUser(userIds[1]));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+
+		AssertUtils.assertFailure(
+			NoSuchUserException.class,
+			"No User exists with the primary key " + userIds[0],
+			() -> _userLocalService.getUser(userIds[0]));
+
+		// Object relationship deletion type disassociate
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE);
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+
+		_addObjectRelationshipMappingTableValues(
+			objectEntry2.getObjectEntryId(), userIds[2]);
+
+		_testGetRelatedModels(objectEntry2.getObjectEntryId(), 1);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
+
+		_testGetRelatedModels(objectEntry2.getObjectEntryId(), 0);
+
+		Assert.assertNotNull(_userLocalService.fetchUser(userIds[2]));
+
+		// Object relationship deletion type prevent
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			_objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "Entry"
+			).build());
+
+		_addObjectRelationshipMappingTableValues(
+			objectEntry3.getObjectEntryId(), userIds[2]);
+
+		AssertUtils.assertFailure(
+			RequiredObjectRelationshipException.class,
+			StringBundler.concat(
+				"Object relationship ",
+				_objectRelationship.getObjectRelationshipId(),
+				" does not allow deletes"),
+			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry3));
+
+		// Reverse object relationship
+
+		_objectRelationship =
 			_objectRelationshipLocalService.fetchReverseObjectRelationship(
-				objectRelationship, true);
+				_objectRelationship, true);
 
-		objectRelatedModelsProvider =
+		_objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
 				_objectDefinition1.getClassName(),
 				_objectDefinition1.getCompanyId(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		List<ObjectEntry> reverseObjectEntries =
-			objectRelatedModelsProvider.getRelatedModels(
-				0, reverseObjectRelationship.getObjectRelationshipId(),
-				userIds[0], null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			_objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "New Entry"
+			).build());
 
-		Assert.assertEquals(
-			reverseObjectEntries.toString(), 1, reverseObjectEntries.size());
+		_addObjectRelationshipMappingTableValues(
+			userIds[2], objectEntry4.getObjectEntryId());
 
-		try {
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+		_testGetRelatedModels(userIds[2], 2);
 
-			Assert.fail();
-		}
-		catch (RequiredObjectRelationshipException
-					requiredObjectRelationshipException) {
+		// Get related models with search
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Object relationship ",
-					objectRelationship.getObjectRelationshipId(),
-					" does not allow deletes"),
-				requiredObjectRelationshipException.getMessage());
-		}
+		_testSearchRelatedModels(userIds[2], StringUtil.randomString(), 0);
+		_testSearchRelatedModels(
+			userIds[2], String.valueOf(objectEntry3.getObjectEntryId()), 1);
+		_testSearchRelatedModels(userIds[2], "New", 1);
+		_testSearchRelatedModels(userIds[2], "Entry", 2);
 
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				objectRelationship.getLabelMap());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry);
-
-		objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				systemObjectDefinition.getClassName(),
-				systemObjectDefinition.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
-
-		objectEntry = _addObjectEntry(
-			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
-
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getObjectEntryId(), userIds[1],
-			ServiceContextTestUtil.getServiceContext());
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getObjectEntryId(), userIds[2],
-			ServiceContextTestUtil.getServiceContext());
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				objectRelationship.getLabelMap());
-
-		_userLocalService.deleteUser(userIds[2]);
-
-		try {
-			_userLocalService.getUser(userIds[2]);
-
-			Assert.fail();
-		}
-		catch (NoSuchUserException noSuchUserException) {
-			Assert.assertEquals(
-				"No User exists with the primary key " + userIds[2],
-				noSuchUserException.getMessage());
-		}
-
-		Assert.assertNotNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry.getObjectEntryId()));
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry);
-
-		Assert.assertNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry.getObjectEntryId()));
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
-
-		try {
-			_userLocalService.getUser(userIds[1]);
-
-			Assert.fail();
-		}
-		catch (NoSuchUserException noSuchUserException) {
-			Assert.assertEquals(
-				"No User exists with the primary key " + userIds[1],
-				noSuchUserException.getMessage());
-		}
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
+		_objectRelationshipLocalService.deleteObjectRelationships(
+			_objectDefinition1.getObjectDefinitionId());
 
 		Assert.assertNull(
 			_objectRelationshipLocalService.fetchObjectRelationship(
-				reverseObjectRelationship.getObjectRelationshipId()));
+				_objectRelationship.getObjectRelationshipId()));
 	}
 
 	private AccountEntry _addAccountEntry(long userId) throws Exception {
@@ -711,11 +572,19 @@ public class ObjectRelatedModelsProviderTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
+				Collections.emptyList());
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			null, TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
+			LocalizedMapUtil.getLocalizedMap("Able"), false, "able", null, null,
+			false, false, Collections.emptyList());
+
+		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
+
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -723,25 +592,58 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private ObjectEntry _addObjectEntry(
-			long objectDefinitionId, Map<String, Serializable> values)
+			long groupId, long objectDefinitionId,
+			Map<String, Serializable> values)
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, objectDefinitionId, values,
+			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private ObjectRelationship _addObjectRelationship(
-			long objectDefinitionId1, long objectDefinitionId2,
+	private ObjectEntry _addObjectEntry(
+			long objectDefinitionId, Map<String, Serializable> values)
+		throws Exception {
+
+		return _addObjectEntry(0, objectDefinitionId, values);
+	}
+
+	private void _addObjectRelationship(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, String deletionType,
 			String relationshipType)
 		throws Exception {
 
-		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(), objectDefinitionId1,
-			objectDefinitionId2, 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), relationshipType);
+		_objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0, deletionType,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), relationshipType);
+
+		if (!StringUtil.equals(
+				relationshipType,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			_relationshipObjectField = _objectFieldLocalService.getObjectField(
+				_objectRelationship.getObjectFieldId2());
+		}
+
+		_objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				objectDefinition2.getClassName(),
+				objectDefinition2.getCompanyId(), relationshipType);
+	}
+
+	private void _addObjectRelationshipMappingTableValues(
+			long primaryKey1, long primaryKey2)
+		throws Exception {
+
+		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
+			TestPropsValues.getUserId(),
+			_objectRelationship.getObjectRelationshipId(), primaryKey1,
+			primaryKey2, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private long[] _addUsers(int count) throws Exception {
@@ -758,16 +660,13 @@ public class ObjectRelatedModelsProviderTest {
 
 	private void _assertViewPermission(
 			int expectedRelatedModelsCount, ObjectDefinition objectDefinition,
-			ObjectRelatedModelsProvider<ObjectEntry>
-				objectRelatedModelsProvider,
-			ObjectRelationship objectRelationship,
 			ObjectEntry parentObjectEntry, long primKey, int scope)
 		throws Exception {
 
 		Assert.assertEquals(
 			0,
-			objectRelatedModelsProvider.getRelatedModelsCount(
-				0, objectRelationship.getObjectRelationshipId(),
+			_objectRelatedModelsProvider.getRelatedModelsCount(
+				0, _objectRelationship.getObjectRelationshipId(),
 				parentObjectEntry.getObjectEntryId(), null));
 
 		_resourcePermissionLocalService.setResourcePermissions(
@@ -777,8 +676,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		Assert.assertEquals(
 			expectedRelatedModelsCount,
-			objectRelatedModelsProvider.getRelatedModelsCount(
-				0, objectRelationship.getObjectRelationshipId(),
+			_objectRelatedModelsProvider.getRelatedModelsCount(
+				0, _objectRelationship.getObjectRelationshipId(),
 				parentObjectEntry.getObjectEntryId(), null));
 
 		_resourcePermissionLocalService.removeResourcePermission(
@@ -787,20 +686,15 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private void _assertViewPermission(
-			ObjectDefinition objectDefinition,
-			ObjectRelatedModelsProvider<ObjectEntry>
-				objectRelatedModelsProvider,
-			ObjectRelationship objectRelationship,
-			ObjectEntry parentObjectEntry, long primKey)
+			ObjectDefinition objectDefinition, ObjectEntry parentObjectEntry,
+			long primKey)
 		throws Exception {
 
 		_assertViewPermission(
-			2, objectDefinition, objectRelatedModelsProvider,
-			objectRelationship, parentObjectEntry,
+			2, objectDefinition, parentObjectEntry,
 			TestPropsValues.getCompanyId(), ResourceConstants.SCOPE_COMPANY);
 		_assertViewPermission(
-			1, objectDefinition, objectRelatedModelsProvider,
-			objectRelationship, parentObjectEntry, primKey,
+			1, objectDefinition, parentObjectEntry, primKey,
 			ResourceConstants.SCOPE_INDIVIDUAL);
 	}
 
@@ -809,6 +703,18 @@ public class ObjectRelatedModelsProviderTest {
 			PermissionCheckerFactoryUtil.create(user));
 
 		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
+	private void _testGetRelatedModels(long primaryKey, int expectedSize)
+		throws Exception {
+
+		List<ObjectEntry> objectEntries =
+			_objectRelatedModelsProvider.getRelatedModels(
+				0, _objectRelationship.getObjectRelationshipId(), primaryKey,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			objectEntries.toString(), expectedSize, objectEntries.size());
 	}
 
 	private void _testObjectEntry1toMObjectUnrelatedModelsProviderImpl(
@@ -834,9 +740,9 @@ public class ObjectRelatedModelsProviderTest {
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 					companyId, AccountEntry.class.getName());
 
-			ObjectRelationship objectRelationship = _addObjectRelationship(
-				objectDefinition.getObjectDefinitionId(),
-				systemObjectDefinition.getObjectDefinitionId(),
+			_addObjectRelationship(
+				objectDefinition, systemObjectDefinition,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 			AccountEntry accountEntry1 = _addAccountEntry(user.getUserId());
@@ -847,33 +753,21 @@ public class ObjectRelatedModelsProviderTest {
 				Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext());
 
-			ObjectField objectRelationshipObjectField2 =
-				_objectFieldLocalService.getObjectField(
-					objectRelationship.getObjectFieldId2());
-
 			_objectEntryLocalService.
 				addOrUpdateExtensionDynamicObjectDefinitionTableValues(
 					user.getUserId(), systemObjectDefinition,
 					accountEntry1.getAccountEntryId(),
 					HashMapBuilder.<String, Serializable>put(
-						objectRelationshipObjectField2.getName(),
+						_relationshipObjectField.getName(),
 						objectEntry.getObjectEntryId()
 					).build(),
 					ServiceContextTestUtil.getServiceContext());
 
-			ObjectRelatedModelsProvider<ObjectEntry>
-				objectRelatedModelsProvider =
-					_objectRelatedModelsProviderRegistry.
-						getObjectRelatedModelsProvider(
-							systemObjectDefinition.getClassName(),
-							systemObjectDefinition.getCompanyId(),
-							ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 			List<ObjectEntry> unrelatedObjectEntries =
-				objectRelatedModelsProvider.getUnrelatedModels(
+				_objectRelatedModelsProvider.getUnrelatedModels(
 					companyId, 0, systemObjectDefinition,
 					objectEntry.getObjectEntryId(),
-					objectRelationship.getObjectRelationshipId());
+					_objectRelationship.getObjectRelationshipId());
 
 			Assert.assertEquals(
 				unrelatedObjectEntries.toString(), 1,
@@ -884,23 +778,23 @@ public class ObjectRelatedModelsProviderTest {
 					user.getUserId(), systemObjectDefinition,
 					accountEntry2.getAccountEntryId(),
 					HashMapBuilder.<String, Serializable>put(
-						objectRelationshipObjectField2.getName(),
+						_relationshipObjectField.getName(),
 						objectEntry.getObjectEntryId()
 					).build(),
 					ServiceContextTestUtil.getServiceContext());
 
 			unrelatedObjectEntries =
-				objectRelatedModelsProvider.getUnrelatedModels(
+				_objectRelatedModelsProvider.getUnrelatedModels(
 					companyId, 0, systemObjectDefinition,
 					objectEntry.getObjectEntryId(),
-					objectRelationship.getObjectRelationshipId());
+					_objectRelationship.getObjectRelationshipId());
 
 			Assert.assertEquals(
 				unrelatedObjectEntries.toString(), 0,
 				unrelatedObjectEntries.size());
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship.getObjectRelationshipId());
+				_objectRelationship.getObjectRelationshipId());
 
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition.getObjectDefinitionId());
@@ -923,181 +817,162 @@ public class ObjectRelatedModelsProviderTest {
 			ObjectDefinition objectDefinition2)
 		throws Exception {
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			objectDefinition1.getObjectDefinitionId(),
-			objectDefinition2.getObjectDefinitionId(),
+		_addObjectRelationship(
+			objectDefinition1, objectDefinition2,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				objectDefinition2.getClassName(),
-				objectDefinition2.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		Assert.assertNotNull(objectRelatedModelsProvider);
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "First Entry"
+			).build());
 
-		List<ObjectEntry> objectEntries =
-			objectRelatedModelsProvider.getRelatedModels(
-				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
+		_addObjectRelationshipMappingTableValues(
+			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId());
 
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId(),
-			ServiceContextTestUtil.getServiceContext());
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 1);
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+			objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"able", "Second Entry"
+			).build());
 
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), objectEntry3.getObjectEntryId(),
-			ServiceContextTestUtil.getServiceContext());
+		_addObjectRelationshipMappingTableValues(
+			objectEntry1.getObjectEntryId(), objectEntry3.getObjectEntryId());
 
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 2);
 
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		// Get related models with search
+
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), StringUtil.randomString(), 0);
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(),
+			String.valueOf(objectEntry2.getObjectEntryId()), 1);
+		_testSearchRelatedModels(objectEntry1.getObjectEntryId(), "First ", 1);
+		_testSearchRelatedModels(objectEntry1.getObjectEntryId(), " Entry", 2);
+
+		// View permission
 
 		_setUser(_user);
 
 		_assertViewPermission(
-			objectDefinition2, objectRelatedModelsProvider, objectRelationship,
-			objectEntry1, objectEntry2.getObjectEntryId());
+			objectDefinition2, objectEntry1, objectEntry2.getObjectEntryId());
 
 		_setUser(TestPropsValues.getUser());
 
-		try {
-			_objectEntryLocalService.deleteObjectEntry(objectEntry1);
+		// Object relationship deletion type cascade
 
-			Assert.fail();
-		}
-		catch (RequiredObjectRelationshipException
-					requiredObjectRelationshipException) {
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Object relationship ",
-					objectRelationship.getObjectRelationshipId(),
-					" does not allow deletes"),
-				requiredObjectRelationshipException.getMessage());
-		}
+		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
 
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry1.getObjectEntryId()));
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				objectRelationship.getLabelMap());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				objectRelationship.getLabelMap());
-
-		objectEntry1 = _addObjectEntry(
-			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
-
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId(),
-			ServiceContextTestUtil.getServiceContext());
-
-		objectEntry3 = _addObjectEntry(
-			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
-
-		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
-			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), objectEntry3.getObjectEntryId(),
-			ServiceContextTestUtil.getServiceContext());
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
-
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry3.getObjectEntryId()));
 
-		Assert.assertNotNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				objectEntry1.getObjectEntryId()));
-
-		objectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry1.getObjectEntryId(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 1);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry1.getObjectEntryId()));
-
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry2.getObjectEntryId()));
 
+		// Object relationship deletion type disassociate
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE);
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+		ObjectEntry objectEntry6 = _addObjectEntry(
+			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
+
+		_addObjectRelationshipMappingTableValues(
+			objectEntry4.getObjectEntryId(), objectEntry5.getObjectEntryId());
+		_addObjectRelationshipMappingTableValues(
+			objectEntry4.getObjectEntryId(), objectEntry6.getObjectEntryId());
+
+		_testGetRelatedModels(objectEntry4.getObjectEntryId(), 2);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
+
+		_testGetRelatedModels(objectEntry4.getObjectEntryId(), 0);
+
+		// Object relationship deletion type prevent
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+
+		ObjectEntry objectEntry7 = _addObjectEntry(
+			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap());
+
+		_addObjectRelationshipMappingTableValues(
+			objectEntry7.getObjectEntryId(), objectEntry5.getObjectEntryId());
+		_addObjectRelationshipMappingTableValues(
+			objectEntry7.getObjectEntryId(), objectEntry6.getObjectEntryId());
+
+		_testGetRelatedModels(objectEntry7.getObjectEntryId(), 2);
+
+		AssertUtils.assertFailure(
+			RequiredObjectRelationshipException.class,
+			StringBundler.concat(
+				"Object relationship ",
+				_objectRelationship.getObjectRelationshipId(),
+				" does not allow deletes"),
+			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry7));
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry7.getObjectEntryId()));
+
+		_testGetRelatedModels(objectEntry7.getObjectEntryId(), 2);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry6);
+
+		_testGetRelatedModels(objectEntry7.getObjectEntryId(), 1);
+
+		// Reverse object relationship
+
 		ObjectRelationship reverseObjectRelationship =
 			_objectRelationshipLocalService.fetchReverseObjectRelationship(
-				objectRelationship, true);
+				_objectRelationship, true);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
+			_objectRelationship);
 
 		Assert.assertNull(
 			_objectRelationshipLocalService.fetchObjectRelationship(
 				reverseObjectRelationship.getObjectRelationshipId()));
+	}
+
+	private void _testSearchRelatedModels(
+			long primaryKey, String search, int expectedSize)
+		throws Exception {
+
+		List<ObjectEntry> objectEntries =
+			_objectRelatedModelsProvider.getRelatedModels(
+				0, _objectRelationship.getObjectRelationshipId(), primaryKey,
+				search, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			objectEntries.toString(), expectedSize, objectEntries.size());
 	}
 
 	private void _testSystemObjectEntry1toMObjectRelatedModelsProviderImpl()
@@ -1105,47 +980,19 @@ public class ObjectRelatedModelsProviderTest {
 
 		long[] userIds = _addUsers(3);
 
-		ObjectDefinition systemObjectDefinition = null;
+		ObjectDefinition systemObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), User.class.getName());
 
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionLocalService.getSystemObjectDefinitions()) {
-
-			if (StringUtil.equals(objectDefinition.getName(), "User")) {
-				systemObjectDefinition = objectDefinition;
-
-				break;
-			}
-		}
-
-		Assert.assertNotNull(systemObjectDefinition);
-
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			_objectDefinition2.getObjectDefinitionId(),
-			systemObjectDefinition.getObjectDefinitionId(),
+		_addObjectRelationship(
+			_objectDefinition2, systemObjectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		ObjectEntry objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry1 = _addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
 
-		ObjectRelatedModelsProvider objectRelatedModelsProvider =
-			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
-				systemObjectDefinition.getClassName(),
-				systemObjectDefinition.getCompanyId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		Assert.assertNotNull(objectRelatedModelsProvider);
-
-		List<BaseModel<?>> relatedObjectEntries =
-			objectRelatedModelsProvider.getRelatedModels(
-				0, objectRelationship.getObjectRelationshipId(),
-				objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 0);
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			TestPropsValues.getUserId(),
@@ -1153,96 +1000,74 @@ public class ObjectRelatedModelsProviderTest {
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
 			).put(
-				objectField.getName(), objectEntry.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
-
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[1],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
 			).put(
-				objectField.getName(), objectEntry.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
-
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			TestPropsValues.getUserId(),
 			systemObjectDefinition.getObjectDefinitionId(), userIds[2],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
 			).put(
-				objectField.getName(), objectEntry.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build());
 
-		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 3);
 
-		Assert.assertEquals(
-			relatedObjectEntries.toString(), 3, relatedObjectEntries.size());
+		// Get related models with search
 
-		objectRelatedModelsProvider.disassociateRelatedModels(
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), StringUtil.randomString(), 0);
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), String.valueOf(userIds[1]), 1);
+
+		User user = _userLocalService.getUser(userIds[2]);
+
+		_testSearchRelatedModels(
+			objectEntry1.getObjectEntryId(), user.getFirstName(), 1);
+
+		// Disassociate related models
+
+		_objectRelatedModelsProvider.disassociateRelatedModels(
 			TestPropsValues.getUserId(),
-			objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), userIds[0]);
+			_objectRelationship.getObjectRelationshipId(),
+			objectEntry1.getPrimaryKey(), userIds[0]);
 
-		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		_testGetRelatedModels(objectEntry1.getObjectEntryId(), 2);
 
-		Assert.assertEquals(
-			relatedObjectEntries.toString(), 2, relatedObjectEntries.size());
+		// Object relationship deletion type cascade
 
-		try {
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
 
-			Assert.fail();
-		}
-		catch (RequiredObjectRelationshipException
-					requiredObjectRelationshipException) {
+		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
 
-			Assert.assertEquals(
-				StringBundler.concat(
-					"Object relationship ",
-					objectRelationship.getObjectRelationshipId(),
-					" does not allow deletes"),
-				requiredObjectRelationshipException.getMessage());
-		}
+		AssertUtils.assertFailure(
+			NoSuchUserException.class,
+			"No User exists with the primary key " + userIds[1],
+			() -> _userLocalService.getUser(userIds[1]));
+		AssertUtils.assertFailure(
+			NoSuchUserException.class,
+			"No User exists with the primary key " + userIds[2],
+			() -> _userLocalService.getUser(userIds[2]));
 
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				objectRelationship.getLabelMap());
+		// Object relationship deletion type disassociate
 
-		objectEntry = _objectEntryLocalService.deleteObjectEntry(objectEntry);
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE);
 
-		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
-
-		objectRelationship =
-			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				objectRelationship.getLabelMap());
-
-		objectEntry = _addObjectEntry(
+		ObjectEntry objectEntry2 = _addObjectEntry(
 			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
-
-		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			relatedObjectEntries.toString(), 0, relatedObjectEntries.size());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			TestPropsValues.getUserId(),
@@ -1250,58 +1075,63 @@ public class ObjectRelatedModelsProviderTest {
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
 			).put(
-				objectField.getName(), objectEntry.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry2.getObjectEntryId()
 			).build());
+
+		_testGetRelatedModels(objectEntry2.getObjectEntryId(), 1);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
+
+		_testGetRelatedModels(objectEntry2.getObjectEntryId(), 0);
+
+		Assert.assertNotNull(_userLocalService.fetchUser(userIds[0]));
+
+		// Object relationship deletion type prevent
+
+		_updateObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap());
 
 		_objectEntryLocalService.insertIntoOrUpdateExtensionTable(
 			TestPropsValues.getUserId(),
-			systemObjectDefinition.getObjectDefinitionId(), userIds[1],
+			systemObjectDefinition.getObjectDefinitionId(), userIds[0],
 			HashMapBuilder.<String, Serializable>put(
 				"textField", RandomTestUtil.randomString()
 			).put(
-				objectField.getName(), objectEntry.getObjectEntryId()
+				_relationshipObjectField.getName(),
+				objectEntry3.getObjectEntryId()
 			).build());
 
-		relatedObjectEntries = objectRelatedModelsProvider.getRelatedModels(
-			0, objectRelationship.getObjectRelationshipId(),
-			objectEntry.getPrimaryKey(), null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		AssertUtils.assertFailure(
+			RequiredObjectRelationshipException.class,
+			StringBundler.concat(
+				"Object relationship ",
+				_objectRelationship.getObjectRelationshipId(),
+				" does not allow deletes"),
+			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry3));
 
-		Assert.assertEquals(
-			relatedObjectEntries.toString(), 2, relatedObjectEntries.size());
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry);
-
-		try {
-			_userLocalService.getUser(userIds[0]);
-
-			Assert.fail();
-		}
-		catch (NoSuchUserException noSuchUserException) {
-			Assert.assertEquals(
-				"No User exists with the primary key " + userIds[0],
-				noSuchUserException.getMessage());
-		}
-
-		try {
-			_userLocalService.getUser(userIds[1]);
-
-			Assert.fail();
-		}
-		catch (NoSuchUserException noSuchUserException) {
-			Assert.assertEquals(
-				"No User exists with the primary key " + userIds[1],
-				noSuchUserException.getMessage());
-		}
+		_testGetRelatedModels(objectEntry3.getObjectEntryId(), 1);
 	}
 
-	private void _updateObjectEntry(
+	private ObjectEntry _updateObjectEntry(
 			long objectEntryId, Map<String, Serializable> values)
 		throws Exception {
 
-		_objectEntryLocalService.updateObjectEntry(
+		return _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId, values,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _updateObjectRelationship(String deletionType)
+		throws Exception {
+
+		_objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				_objectRelationship.getObjectRelationshipId(), 0, deletionType,
+				_objectRelationship.getLabelMap());
 	}
 
 	private static PermissionChecker _originalPermissionChecker;
@@ -1329,12 +1159,19 @@ public class ObjectRelatedModelsProviderTest {
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
 
+	private ObjectRelatedModelsProvider<ObjectEntry>
+		_objectRelatedModelsProvider;
+
 	@Inject
 	private ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
 
+	private ObjectRelationship _objectRelationship;
+
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	private ObjectField _relationshipObjectField;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

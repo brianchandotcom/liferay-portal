@@ -116,7 +116,7 @@ definition {
 		}
 
 		task ("View All Interests list in workspace") {
-			ACCards.viewCards(cardTitle = "Top Interests as of Today");
+			ACCards.viewCards(cardTitle = "Top Interests as of Yesterday");
 
 			Click(locator1 = "ACInterests#VIEW_ALL_INTERESTS_BUTTON");
 

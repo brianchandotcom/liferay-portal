@@ -78,7 +78,7 @@ definition {
 		task ("Set time filter use 24 hours") {
 			ACTimeFilter.clickTimeFilterButton();
 
-			ACTimeFilter.setLast24Hours();
+			ACTimeFilter.setYesterday();
 
 			// Unable to perform the declaration because the data does not appear at the time
 
@@ -137,7 +137,7 @@ definition {
 		task ("Set time filter use 24 hours") {
 			ACTimeFilter.clickTimeFilterButton();
 
-			ACTimeFilter.setLast24Hours();
+			ACTimeFilter.setYesterday();
 
 			// Unable to perform the declaration because the data does not appear at the time
 
@@ -200,7 +200,7 @@ definition {
 		task ("Set time filter use 24 hours") {
 			ACTimeFilter.clickTimeFilterButton();
 
-			ACTimeFilter.setLast24Hours();
+			ACTimeFilter.setYesterday();
 
 			// Unable to perform the declaration because the data does not appear at the time
 

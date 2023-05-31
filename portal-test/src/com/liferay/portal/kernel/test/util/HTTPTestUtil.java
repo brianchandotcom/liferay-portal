@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.test.util;
 
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -39,8 +41,7 @@ public class HTTPTestUtil {
 		options.addHeader(
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.addHeader(
-			"Authorization",
-			"Basic " + Base64.encode("test@liferay.com:test".getBytes()));
+			"Authorization", "Basic " + Base64.encode(_credentials.getBytes()));
 		options.setLocation("http://localhost:8080/o/" + endpoint);
 		options.setMethod(httpMethod);
 
@@ -52,5 +53,22 @@ public class HTTPTestUtil {
 
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
+
+	public static <T extends Throwable> void withCredentials(
+			String email, String password, UnsafeRunnable<T> unsafeRunnable)
+		throws T {
+
+		String previousCredentials = _credentials;
+		_credentials = email + StringPool.COLON + password;
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			_credentials = previousCredentials;
+		}
+	}
+
+	private static String _credentials = "test@liferay.com:test";
 
 }

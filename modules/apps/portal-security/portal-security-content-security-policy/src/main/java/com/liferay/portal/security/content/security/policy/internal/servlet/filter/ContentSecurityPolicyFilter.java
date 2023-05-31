@@ -169,9 +169,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			return false;
 		}
 
-		for (String internallyExcludedPath :
-				_INTERNALLY_EXCLUDED_PATHS) {
-
+		for (String internallyExcludedPath : _INTERNALLY_EXCLUDED_PATHS) {
 			if (Validator.isNotNull(internallyExcludedPath) &&
 				requestURI.startsWith(
 					StringUtil.toLowerCase(internallyExcludedPath))) {

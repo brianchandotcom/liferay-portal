@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import {AppContext} from './AppContext';
-import {CodeMirrorEditor} from './CodeMirrorEditor';
+import CodeMirrorEditor from './CodeMirrorEditor';
 
 export function Editor({autocompleteData, initialScript, mode}) {
 	const {inputChannel, portletNamespace} = useContext(AppContext);
@@ -26,6 +26,8 @@ export function Editor({autocompleteData, initialScript, mode}) {
 
 	const scriptRef = useRef(script);
 	scriptRef.current = script;
+
+	const codeMirrorRef = useRef(null);
 
 	useEffect(() => {
 		const refreshHandler = Liferay.on(
@@ -41,6 +43,8 @@ export function Editor({autocompleteData, initialScript, mode}) {
 
 				if (scriptRef.current === initialScript) {
 					setScript('');
+
+					codeMirrorRef.current?.setValue('');
 				}
 
 				Liferay.fire(`${portletNamespace}saveTemplate`);
@@ -62,6 +66,8 @@ export function Editor({autocompleteData, initialScript, mode}) {
 			`${portletNamespace}scriptImported`,
 			(event) => {
 				setScript(event.script);
+
+				codeMirrorRef.current?.setValue(event.script);
 
 				openToast({
 					message: sub(
@@ -207,6 +213,7 @@ export function Editor({autocompleteData, initialScript, mode}) {
 				inputChannel={inputChannel}
 				mode={mode}
 				onChange={setScript}
+				ref={codeMirrorRef}
 			/>
 		</>
 	);

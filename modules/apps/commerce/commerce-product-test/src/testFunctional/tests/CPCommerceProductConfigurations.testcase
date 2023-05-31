@@ -1795,42 +1795,42 @@ definition {
 			var completeProductTranslateList = ListUtil.newListFromString("ABS Sensor:pt-BR:Sensor ABS:sensor-abs,Wear Sensors:ca-ES:Sensors Wear:sensors-wear");
 
 			for (var index : list "0,1") {
-
 				CommerceProducts.openProductsAdmin();
 
 				var productStringList = ListUtil.get(${completeProductTranslateList}, ${index});
+
 				var productStringList = StringUtil.replace(${productStringList}, ":", ",");
+
 				var productStringList = ListUtil.newListFromString(${productStringList});
-				
 
 				var entryName = ListUtil.get(${productStringList}, 0);
 
-				CommerceNavigator.searchEntry(entryName = "${entryName}");
+				CommerceNavigator.searchEntry(entryName = ${entryName});
 
-				CommerceNavigator.gotoEntry(entryName = "${entryName}");
+				CommerceNavigator.gotoEntry(entryName = ${entryName});
 
 				var locale = ListUtil.get(${productStringList}, 1);
 
 				PortletEntry.changeLocale(
 					fieldName = "Name",
-					locale = "${locale}");
+					locale = ${locale});
 
 				var translatedName = ListUtil.get(${productStringList}, 2);
 
 				Type(
 					locator1 = "TextInput#NAME",
-					value1 = "${translatedName}");
+					value1 = ${translatedName});
 
 				PortletEntry.changeLocale(
 					fieldName = "Friendly URL",
-					locale = "${locale}");
+					locale = ${locale});
 
 				var translatedNameFriendlyURL = ListUtil.get(${productStringList}, 3);
 
 				Type(
 					key_fieldLabel = "Friendly URL",
 					locator1 = "TextInput#GENERIC_TEXT_INPUT",
-					value1 = "${translatedNameFriendlyURL}");
+					value1 = ${translatedNameFriendlyURL});
 
 				Button.clickPublish();
 			}

@@ -30,11 +30,11 @@ import java.util.Map;
  */
 public class Validator {
 
-	public static ValidatorRecorder validateDatabases(
+	public static Recorder validateDatabases(
 			Connection sourceConnection, Connection destinationConnection)
 		throws SQLException {
 
-		ValidatorRecorder recorder = new ValidatorRecorder();
+		Recorder recorder = new Recorder();
 
 		_validateRelease(sourceConnection, destinationConnection, recorder);
 
@@ -47,7 +47,7 @@ public class Validator {
 
 	private static void _checkWebIds(
 			Connection sourceConnection, Connection destinationConnection,
-			ValidatorRecorder recorder)
+			Recorder recorder)
 		throws SQLException {
 
 		String sourceWebId = DatabaseUtil.getWebId(sourceConnection);
@@ -61,7 +61,7 @@ public class Validator {
 
 	private static void _validateRelease(
 			Connection sourceConnection, Connection destinationConnection,
-			ValidatorRecorder recorder)
+			Recorder recorder)
 		throws SQLException {
 
 		_validateReleaseState(
@@ -156,7 +156,7 @@ public class Validator {
 
 	private static void _validateReleaseState(
 			Connection sourceConnection, Connection destinationConnection,
-			ValidatorRecorder recorder)
+			Recorder recorder)
 		throws SQLException {
 
 		String message = "has a failed Release state in the ? database";
@@ -180,7 +180,7 @@ public class Validator {
 
 	private static void _validateTables(
 			Connection sourceConnection, Connection destinationConnection,
-			ValidatorRecorder recorder)
+			Recorder recorder)
 		throws SQLException {
 
 		List<String> sourceTableNames = DatabaseUtil.getTableNames(

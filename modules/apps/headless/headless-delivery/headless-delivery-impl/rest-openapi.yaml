@@ -1051,6 +1051,12 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                userGroupInformations:
+                    description:
+                        A list of userGroups information.
+                    items:
+                        $ref: "#/components/schemas/UserGroupInformation"
+                    type: array
             type: object
         CreatorStatistics:
             # @review
@@ -5348,6 +5354,22 @@ components:
                     # @review
                     description:
                         The localized submission of URL type.
+            type: object
+        UserGroupInformation:
+            description:
+                The author's user groups information.
+            properties:
+                id:
+                    description:
+                        The ID of the user group.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The name of the user group.
+                    readOnly: true
+                    type: string
             type: object
         UtilityPageTemplate:
             description:

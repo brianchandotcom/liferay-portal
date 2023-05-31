@@ -233,7 +233,7 @@ definition {
 	@description = "LPS-108138 - Verify that the message -The selected steps have transitioned successfully- is displayed when several steps are transitioned at once"
 	@priority = 3
 	test MessageIsDisplayedWhenSeveralStepsAreTransitionedAtOnce {
-		property portal.upstream = "quarantine";
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -249,7 +249,7 @@ definition {
 		for (var blogNumber : list "1,2") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry ${blogNumber} Content",
-				entryTitle = "Blogs Entry Title ${blogNumber}");
+				entryTitle = ${blogNumber});
 		}
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
@@ -258,9 +258,9 @@ definition {
 
 		for (var instanceNameNumber : list "1,2") {
 			Workflow.assignTaskToUser(
-				assetTitle = "Blogs Entry Title ${instanceNameNumber}",
+				assetTitle = ${instanceNameNumber},
 				assetType = "Blogs Entry",
-				assigneeName = "test (Test Test)",
+				assigneeName = "test (TEST Test)",
 				workflowTask = "Review");
 		}
 
@@ -286,7 +286,15 @@ definition {
 
 		Button.clickDone();
 
-		Alert.viewSuccessMessageText(successMessage = "The selected steps have transitioned successfully");
+		WorkflowMetrics.goToWorkflowProcessMetricsAndTotalCompleted(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry: 1",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		AssertElementPresent(
+			key_workflowInstanceName = "Blogs Entry: 2",
+			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
 	}
 
 	@description = "LPS-108138 - Verify that the message -Select a transition- and -All steps require a transition to be selected to complete this action.- are displayed when the user clicks on Done without selecting all transitions"

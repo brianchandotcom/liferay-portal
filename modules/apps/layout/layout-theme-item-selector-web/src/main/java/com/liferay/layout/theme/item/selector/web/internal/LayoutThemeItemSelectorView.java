@@ -20,7 +20,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.theme.item.selector.criterion.LayoutThemeItemSelectorCriterion;
 import com.liferay.layout.theme.item.selector.web.internal.display.context.LayoutThemeItemSelectorDisplayContext;
-import com.liferay.layout.theme.item.selector.web.internal.item.selector.LayoutThemeItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.JavaConstants;
 

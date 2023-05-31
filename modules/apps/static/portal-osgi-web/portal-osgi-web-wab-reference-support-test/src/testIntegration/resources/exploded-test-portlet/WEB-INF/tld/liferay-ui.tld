@@ -2949,7 +2949,7 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>A minute interval displayed in the input. The default value is <![CDATA[<code>30</code>]]>.</description>
+			<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 			<name>minuteInterval</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

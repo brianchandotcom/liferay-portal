@@ -400,6 +400,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-184799. The page creator can map the Link to Page field in a fragment from a content page."
+	@priority = 5
+	test MapLinkToPageFieldToFragment {
+		task ("Given a page designer has content pages and a web content with the Link to Page field") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name 1",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Title");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Link to Page",
+				fieldName = "Link to Page");
+
+			WebContentStructures.saveCP();
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+			WebContent.addWithStructureCP(webContentTitle = "support Link to Page field");
+
+			DERenderer.inputDataInLinkToPageField(
+				linkToPageContent = "Test Page Name 1",
+				linkToPageFieldLabel = "Link to Page");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the user maps the Link to Page field to fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = "support Link to Page field",
+				field = "Link to Page",
+				navItem = "Web Content");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the user could accesses to the linked page via fragment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name 2",
+				siteName = ${randomSiteName});
+
+			Click(
+				key_append = "[normalize-space(text())='Go Somewhere']",
+				key_url = "/web/${siteURLKey}/test-page-name-1",
+				locator1 = "Fragment#FRAGMENT_LINK");
+
+			Page.viewCurrentPage(pageName = "Test Page Name 1");
+		}
+	}
+
 	@description = "This is a test for LPS-120094. Map manual URL to Image fragment."
 	@priority = 5
 	test MapManualURLToImageFragment {

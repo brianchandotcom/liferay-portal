@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>FILTERS_ENTRY</td>
-	<td>//*[contains(text(), '${key_entryName}')]</td>
+	<td>//span[contains(text(), '${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>

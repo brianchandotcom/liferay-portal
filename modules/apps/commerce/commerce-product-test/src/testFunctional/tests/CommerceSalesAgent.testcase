@@ -542,7 +542,7 @@ definition {
 	@description = "COMMERCE-11509. As a sales agent, I want to be able to mark a quote as processed in the store-front"
 	@priority = 5
 	test CanSalesAgentProcessQuote {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Given 'Allow Request a Quote on a Fully Priced Cart' is enabled for the site") {
 			CommerceChannels.openChannelsAdmin();

@@ -71,9 +71,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -307,14 +304,8 @@ public class DDMFormPortlet extends MVCPortlet {
 	@Reference
 	private DDMFormValuesMerger _ddmFormValuesMerger;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDMFormWebConfigurationActivator"
-	)
-	private volatile DDMFormWebConfigurationActivator
-		_ddmFormWebConfigurationActivator;
+	@Reference
+	private DDMFormWebConfigurationActivator _ddmFormWebConfigurationActivator;
 
 	@Reference
 	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;

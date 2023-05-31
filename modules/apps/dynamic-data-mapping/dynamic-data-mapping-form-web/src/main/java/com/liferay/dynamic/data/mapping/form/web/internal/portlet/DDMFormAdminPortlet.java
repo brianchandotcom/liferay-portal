@@ -59,9 +59,6 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Bruno Basto
@@ -184,12 +181,6 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void unsetDDMFormWebConfigurationActivator(
-		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator) {
-
-		_ddmFormWebConfigurationActivator = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormAdminPortlet.class);
 
@@ -241,14 +232,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 	@Reference
 	private DDMFormValuesMerger _ddmFormValuesMerger;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDMFormWebConfigurationActivator"
-	)
-	private volatile DDMFormWebConfigurationActivator
-		_ddmFormWebConfigurationActivator;
+	@Reference
+	private DDMFormWebConfigurationActivator _ddmFormWebConfigurationActivator;
 
 	@Reference
 	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;

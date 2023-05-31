@@ -1339,6 +1339,71 @@ public class StructuredContentResourceTest
 			postStructuredContent3.getId());
 	}
 
+	private void _testGetStructuredContentAssetLibrary() throws Exception {
+
+		// Get structured content inside folder in Asset Library
+
+		JournalFolder journalFolder1 = JournalTestUtil.addFolder(
+			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContent(
+					journalFolder1.getFolderId(), structuredContent);
+
+		StructuredContent getStructuredContent1 =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertEquals(
+			journalFolder1.getFolderId(),
+			(long)getStructuredContent1.getStructuredContentFolderId());
+
+		// Get structured content inside current folder in Asset Library
+
+		JournalFolder journalFolder2 = JournalTestUtil.addFolder(
+			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		_journalArticleLocalService.moveArticle(
+			testDepotEntry.getGroupId(), postStructuredContent.getKey(),
+			journalFolder2.getFolderId(),
+			ServiceContextTestUtil.getServiceContext(
+				testDepotEntry.getGroupId()));
+
+		StructuredContent getStructuredContent2 =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertEquals(
+			journalFolder2.getFolderId(),
+			(long)getStructuredContent2.getStructuredContentFolderId());
+
+		// Get structured content inside current subfolder in Asset Library
+
+		JournalFolder journalFolder3 = JournalTestUtil.addFolder(
+			testDepotEntry.getGroupId(), journalFolder2.getFolderId(),
+			RandomTestUtil.randomString());
+
+		_journalArticleLocalService.moveArticle(
+			testDepotEntry.getGroupId(), postStructuredContent.getKey(),
+			journalFolder3.getFolderId(),
+			ServiceContextTestUtil.getServiceContext(
+				testDepotEntry.getGroupId()));
+
+		StructuredContent getStructuredContent3 =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		Assert.assertEquals(
+			journalFolder3.getFolderId(),
+			(long)getStructuredContent3.getStructuredContentFolderId());
+	}
+
 	private void _testPostAssetLibraryStructuredContentWithDefaultERCAndUUID()
 		throws Exception {
 
@@ -1412,71 +1477,6 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			externalReferenceCode,
 			putStructuredContent2.getExternalReferenceCode());
-	}
-
-	private void _testGetStructuredContentAssetLibrary() throws Exception {
-
-		// Get structured content inside folder in Asset Library
-
-		JournalFolder journalFolder1 = JournalTestUtil.addFolder(
-			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
-
-		StructuredContent structuredContent = randomStructuredContent();
-
-		structuredContent.setContentStructureId(
-			_depotDDMStructure.getStructureId());
-
-		StructuredContent postStructuredContent =
-			structuredContentResource.
-				postStructuredContentFolderStructuredContent(
-					journalFolder1.getFolderId(), structuredContent);
-
-		StructuredContent getStructuredContent1 =
-			structuredContentResource.getStructuredContent(
-				postStructuredContent.getId());
-
-		Assert.assertEquals(
-			journalFolder1.getFolderId(),
-			(long)getStructuredContent1.getStructuredContentFolderId());
-
-		// Get structured content inside current folder in Asset Library
-
-		JournalFolder journalFolder2 = JournalTestUtil.addFolder(
-			testDepotEntry.getGroupId(), RandomTestUtil.randomString());
-
-		_journalArticleLocalService.moveArticle(
-			testDepotEntry.getGroupId(), postStructuredContent.getKey(),
-			journalFolder2.getFolderId(),
-			ServiceContextTestUtil.getServiceContext(
-				testDepotEntry.getGroupId()));
-
-		StructuredContent getStructuredContent2 =
-			structuredContentResource.getStructuredContent(
-				postStructuredContent.getId());
-
-		Assert.assertEquals(
-			journalFolder2.getFolderId(),
-			(long)getStructuredContent2.getStructuredContentFolderId());
-
-		// Get structured content inside current subfolder in Asset Library
-
-		JournalFolder journalFolder3 = JournalTestUtil.addFolder(
-			testDepotEntry.getGroupId(), journalFolder2.getFolderId(),
-			RandomTestUtil.randomString());
-
-		_journalArticleLocalService.moveArticle(
-			testDepotEntry.getGroupId(), postStructuredContent.getKey(),
-			journalFolder3.getFolderId(),
-			ServiceContextTestUtil.getServiceContext(
-				testDepotEntry.getGroupId()));
-
-		StructuredContent getStructuredContent3 =
-			structuredContentResource.getStructuredContent(
-				postStructuredContent.getId());
-
-		Assert.assertEquals(
-			journalFolder3.getFolderId(),
-			(long)getStructuredContent3.getStructuredContentFolderId());
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {

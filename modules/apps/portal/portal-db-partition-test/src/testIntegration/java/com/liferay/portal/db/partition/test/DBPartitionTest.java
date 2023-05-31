@@ -167,7 +167,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		catch (Exception exception) {
 			try (Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
-					connection.prepareStatement("SHOW SCHEMAS;");
+					connection.prepareStatement(
+						"select schema_name from information_schema.schemata;");
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

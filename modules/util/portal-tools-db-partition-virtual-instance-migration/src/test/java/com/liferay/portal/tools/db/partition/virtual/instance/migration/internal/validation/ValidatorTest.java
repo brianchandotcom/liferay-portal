@@ -247,7 +247,7 @@ public class ValidatorTest {
 			boolean hasErrors, boolean hasWarnings, List<String> messages)
 		throws SQLException {
 
-		ValidatorRecorder recorder = Validator.validateDatabases(
+		Recorder recorder = Validator.validateDatabases(
 			_sourceConnection, _destinationConnection);
 
 		Assert.assertEquals(hasErrors, recorder.hasErrors());

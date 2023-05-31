@@ -78,6 +78,8 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			GetterUtil.getLong(
 				ddmFormFieldRenderingContext.getProperty("objectEntryId"))
 		).put(
+			"objectFieldBusinessType", _getObjectFielTypeDate(ddmFormField)
+		).put(
 			"parameterObjectFieldName",
 			GetterUtil.getString(
 				ddmFormField.getProperty("parameterObjectFieldName"))
@@ -223,6 +225,23 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 				getValue(
 					GetterUtil.getString(
 						ddmFormField.getProperty("objectDefinitionId")))));
+	}
+
+	private String _getObjectFielTypeDate(DDMFormField ddmFormField) {
+		String objectFieldBusinessType = "";
+
+		ObjectDefinition objectDefinition = _getObjectDefinition(ddmFormField);
+
+		if ((objectDefinition != null) &&
+			(objectDefinition.getTitleObjectFieldId() > 0)) {
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+			objectFieldBusinessType = objectField.getBusinessType();
+		}
+
+		return objectFieldBusinessType;
 	}
 
 	private String _getValueKey(DDMFormField ddmFormField) {

@@ -548,6 +548,28 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	public ObjectEntry fetchManyToOneObjectEntry(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		DSLQuery dslQuery = _getManyToOneObjectEntriesGroupByStep(
+			groupId, objectRelationship, primaryKey,
+			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Get one to many related object entries: " + dslQuery);
+		}
+
+		List<ObjectEntry> objectEntries = objectEntryPersistence.dslQuery(
+			dslQuery);
+
+		if (objectEntries.isEmpty()) {
+			return null;
+		}
+
+		return objectEntries.get(0);
+	}
+
 	@Override
 	public ObjectEntry fetchObjectEntry(
 		String externalReferenceCode, long objectDefinitionId) {
@@ -2204,6 +2226,41 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntrySearchUtil.getRelatedModelsPredicate(
 					dynamicObjectDefinitionTable, objectDefinition2,
 					_objectFieldLocalService, search)
+			)
+		);
+	}
+
+	private GroupByStep _getManyToOneObjectEntriesGroupByStep(
+			long groupId, long objectRelationshipId, long primaryKey,
+			FromStep fromStep)
+		throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.findByPrimaryKey(
+				objectRelationshipId);
+
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(
+				objectRelationship.getObjectDefinitionId2());
+		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
+			objectRelationship.getObjectFieldId2());
+
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+		return fromStep.from(
+			extensionDynamicObjectDefinitionTable
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				(Expression<Long>)
+					extensionDynamicObjectDefinitionTable.getColumn(
+						objectField.getDBColumnName()))
+		).where(
+			primaryKeyColumn.eq(
+				primaryKey
+			).and(
+				ObjectEntryTable.INSTANCE.groupId.eq(groupId)
 			)
 		);
 	}

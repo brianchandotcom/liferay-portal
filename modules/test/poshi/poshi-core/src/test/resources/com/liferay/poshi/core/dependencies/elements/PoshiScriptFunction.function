@@ -11,11 +11,11 @@ definition {
 
 		selenium.mouseDown(${locator1});
 
-		selenium.mouseMoveAt(${locator2}, "0,50");
+		selenium.mouseMoveAt(${locator1}, "0,50");
 
-		selenium.mouseRelease(${locator2});
+		selenium.mouseRelease();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors(${locator1});
 
 		selenium.assertLiferayErrors();
 	}

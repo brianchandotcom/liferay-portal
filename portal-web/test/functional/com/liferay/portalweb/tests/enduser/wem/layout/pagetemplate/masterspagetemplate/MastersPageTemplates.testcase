@@ -566,8 +566,6 @@ definition {
 		task ("View the Custom Masters Page Template is still selected") {
 			Navigator.gotoBack();
 
-			ContentPages.gotoPageEditor();
-
 			PageEditor.gotoTab(tabName = "Page Design Options");
 
 			AssertElementPresent(

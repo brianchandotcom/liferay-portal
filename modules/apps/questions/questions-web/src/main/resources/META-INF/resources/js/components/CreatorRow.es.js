@@ -39,6 +39,10 @@ export default withRouter(
 							'anonymous-user-configuration-name'
 						)}
 				</p>
+
+				{Liferay.FeatureFlags['LPS-185892'] &&
+					creator.userGroupInfos &&
+					creator.userGroupInfos[0]?.name}
 			</div>
 
 			<UserPopover creator={creator} statistics={creatorStatistics} />

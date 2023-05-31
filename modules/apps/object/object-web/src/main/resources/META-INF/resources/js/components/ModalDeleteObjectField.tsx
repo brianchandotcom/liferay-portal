@@ -69,7 +69,7 @@ function ModalDeleteObjectField({
 			<ClayModal.Body>
 				<p>
 					{Liferay.Language.get(
-						'this-action-cannot-be-undone-and-will-permanently-delete-this-field\'s-data'
+						"this-action-cannot-be-undone-and-will-permanently-delete-this-field's-data"
 					)}
 				</p>
 

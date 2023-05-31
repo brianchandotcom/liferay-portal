@@ -266,13 +266,15 @@ export function ModalAddObjectLayoutTab({
 									{selectedRelationshipInfo.labelContent}
 								</ClayLabel>
 							}
-							creationLanguageId={defaultLanguageId}
 							emptyStateMessage={Liferay.Language.get(
 								'there-are-no-relationship-for-this-object'
 							)}
 							error={errors.objectRelationshipId}
 							items={filteredRelationships}
 							label={Liferay.Language.get('relationship')}
+							onActive={(item) =>
+								item.name === selectedRelationship?.name
+							}
 							onChangeQuery={setQuery}
 							onSelectItem={(item) => {
 								setSelectedRelationship(item);

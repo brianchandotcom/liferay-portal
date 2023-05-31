@@ -184,15 +184,15 @@ export default function ModalAddObjectLayoutField({
 									)}
 							</>
 						}
-						creationLanguageId={
-							selectedObjectField?.indexedLanguageId as Liferay.Language.Locale
-						}
 						emptyStateMessage={Liferay.Language.get(
 							'there-are-no-fields-for-this-object'
 						)}
 						error={errors.objectFieldName}
 						items={filteredObjectFields}
 						label={Liferay.Language.get('field')}
+						onActive={(item) =>
+							item.name === selectedObjectField?.name
+						}
 						onChangeQuery={setQuery}
 						onSelectItem={(item: ObjectField) => {
 							setReadOnlyField(item.readOnly);

@@ -115,14 +115,12 @@ export function DefinitionOfTerms({
 			{Liferay.FeatureFlags['LPS-165849'] ? (
 				<>
 					<AutoComplete<ObjectDefinition>
-						creationLanguageId={
-							selectedEntity?.defaultLanguageId as Locale
-						}
 						emptyStateMessage={Liferay.Language.get(
 							'no-entities-were-found'
 						)}
 						items={filteredObjectDefinitions ?? []}
 						label={Liferay.Language.get('entity')}
+						onActive={(item) => item.name === selectedEntity?.name}
 						onChangeQuery={setQuery}
 						onSelectItem={(item) => {
 							getObjectFieldTerms(item);
@@ -203,14 +201,14 @@ export function DefinitionOfTerms({
 				>
 					<ClayPanel.Body>
 						<AutoComplete<ObjectDefinition>
-							creationLanguageId={
-								selectedEntity?.defaultLanguageId as Locale
-							}
 							emptyStateMessage={Liferay.Language.get(
 								'no-entities-were-found'
 							)}
 							items={filteredObjectDefinitions ?? []}
 							label={Liferay.Language.get('entity')}
+							onActive={(item) =>
+								item.name === selectedEntity?.name
+							}
 							onChangeQuery={setQuery}
 							onSelectItem={(item) => {
 								getObjectFieldTerms(item);

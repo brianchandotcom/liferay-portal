@@ -97,11 +97,11 @@ export default function SelectRelationship({
 
 	return (
 		<AutoComplete<LabelNameObject>
-			creationLanguageId={creationLanguageId as Liferay.Language.Locale}
 			emptyStateMessage={Liferay.Language.get('no-parameters-were-found')}
 			error={error}
 			items={filteredOptions ?? []}
 			label={Liferay.Language.get('parameter')}
+			onActive={(item) => item.name === selectedValue?.name}
 			onChangeQuery={setQuery}
 			onSelectItem={({name}) => {
 				onChange(

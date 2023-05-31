@@ -143,15 +143,15 @@ export function Attachments({setValues, values}: IProps) {
 				<div className="lfr__notification-template-attachments">
 					<div className="lfr__notification-template-attachments-fields">
 						<AutoComplete<ObjectDefinition>
-							creationLanguageId={
-								selectedEntity?.defaultLanguageId as Locale
-							}
 							emptyStateMessage={Liferay.Language.get(
 								'no-data-sources-were-found'
 							)}
 							hasEmptyItem
 							items={filteredObjectDefinitions ?? []}
 							label={Liferay.Language.get('data-source')}
+							onActive={(item) =>
+								selectedEntity?.name === item.name
+							}
 							onChangeQuery={setQuery}
 							onSelectEmptyStateItem={(emptyStateItem) => {
 								setAttachmentsFields([]);

@@ -83,14 +83,12 @@ export function FreeMarkerTemplateEditor({
 		<CodeEditorLocalized
 			CustomSidebarContent={
 				<AutoComplete<ObjectDefinition>
-					creationLanguageId={
-						selectedEntity?.defaultLanguageId as Locale
-					}
 					emptyStateMessage={Liferay.Language.get(
 						'no-entities-were-found'
 					)}
 					items={filteredEntities ?? []}
 					label={Liferay.Language.get('entity')}
+					onActive={(item) => item.name === selectedEntity?.name}
 					onChangeQuery={setQuery}
 					onSelectItem={(item) => {
 						setSelectedEntity(item);

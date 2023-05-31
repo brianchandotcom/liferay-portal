@@ -131,10 +131,7 @@ export function ScopeContainer({
 					}
 				/>
 
-				<AutoComplete
-					creationLanguageId={
-						values.defaultLanguageId as Liferay.Language.Locale
-					}
+				<AutoComplete<KeyValuePair>
 					disabled={
 						(Liferay.FeatureFlags['LPS-167253']
 							? !values.modifiable && values.system
@@ -147,6 +144,7 @@ export function ScopeContainer({
 					error={errors.titleObjectFieldId}
 					items={filteredPanelCategoryKey}
 					label={Liferay.Language.get('panel-category-key')}
+					onActive={(item) => selectedPanelCategoryKey === item.value}
 					onChangeQuery={setPanelCategoryKeyQuery}
 					onSelectItem={({key, value}: KeyValuePair) => {
 						setValues({

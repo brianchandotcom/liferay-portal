@@ -87,7 +87,7 @@ export function AggregationFormBase({
 		setSelectRelatedObjectRelationship,
 	] = useState<TObjectRelationship>();
 	const [selectedSummarizeField, setSelectedSummarizeField] = useState<
-		string
+		LabelNameObject
 	>();
 	const [
 		selectedAggregationFunction,
@@ -190,13 +190,14 @@ export function AggregationFormBase({
 					setSelectedAggregationFunction(currentFunction);
 
 					if (currentSummarizeField) {
-						setSelectedSummarizeField(
-							getLocalizableLabel(
+						setSelectedSummarizeField({
+							label: getLocalizableLabel(
 								creationLanguageId2 as Liferay.Language.Locale,
 								currentSummarizeField.label,
 								currentSummarizeField.name
-							)
-						);
+							),
+							name: currentSummarizeField.name,
+						});
 					}
 				}
 			};
@@ -215,7 +216,10 @@ export function AggregationFormBase({
 		objectRelationship: TObjectRelationship
 	) => {
 		setSelectRelatedObjectRelationship(objectRelationship);
-		setSelectedSummarizeField('');
+		setSelectedSummarizeField({
+			label: '',
+			name: '',
+		});
 
 		const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
 			objectRelationship.objectDefinitionExternalReferenceCode2
@@ -277,7 +281,10 @@ export function AggregationFormBase({
 		let newObjectFieldSettings: ObjectFieldSetting[] | undefined;
 
 		if (value === 'COUNT') {
-			setSelectedSummarizeField('');
+			setSelectedSummarizeField({
+				label: '',
+				name: '',
+			});
 
 			const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
 				(fieldSettings) => fieldSettings.name !== 'objectFieldName'
@@ -316,13 +323,14 @@ export function AggregationFormBase({
 	};
 
 	const handleSummarizeFieldChange = (objectField: ObjectField) => {
-		setSelectedSummarizeField(
-			getLocalizableLabel(
+		setSelectedSummarizeField({
+			label: getLocalizableLabel(
 				creationLanguageId2 as Liferay.Language.Locale,
 				objectField.label,
 				objectField.name
-			)
-		);
+			),
+			name: objectField.name,
+		});
 
 		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
 			...objectFieldSettings.filter(
@@ -342,13 +350,15 @@ export function AggregationFormBase({
 	return (
 		<>
 			<AutoComplete<TObjectRelationship>
-				creationLanguageId={creationLanguageId2}
 				emptyStateMessage={Liferay.Language.get(
 					'no-relationships-were-found'
 				)}
 				error={errors.objectRelationshipName}
 				items={filteredObjectRelationships ?? []}
 				label={Liferay.Language.get('relationship')}
+				onActive={(item) =>
+					item.name === selectedRelatedObjectRelationship?.name
+				}
 				onChangeQuery={setRelationshipsQuery}
 				onSelectItem={(item) => {
 					handleChangeRelatedObjectRelationship(item);
@@ -386,22 +396,22 @@ export function AggregationFormBase({
 
 			{selectedAggregationFunction?.value !== 'COUNT' && (
 				<AutoComplete<ObjectField>
-					creationLanguageId={
-						creationLanguageId2 as Liferay.Language.Locale
-					}
 					emptyStateMessage={Liferay.Language.get(
 						'no-fields-were-found'
 					)}
 					error={errors.objectFieldName}
 					items={filteredObjectRelationshipFields ?? []}
 					label={Liferay.Language.get('field')}
+					onActive={(item) =>
+						item.name === selectedSummarizeField?.name
+					}
 					onChangeQuery={setRelationshipFieldsQuery}
 					onSelectItem={(item) => {
 						handleSummarizeFieldChange(item);
 					}}
 					query={relationshipFieldsQuery}
 					required
-					value={selectedSummarizeField}
+					value={selectedSummarizeField?.label}
 				>
 					{({label, name}) => (
 						<div className="d-flex justify-content-between">

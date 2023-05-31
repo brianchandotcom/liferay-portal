@@ -434,14 +434,12 @@ export default function ObjectFieldFormBase({
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
 				<AutoComplete<Partial<PickList>>
-					creationLanguageId={
-						creationLanguageId2 as Liferay.Language.Locale
-					}
 					disabled={disabled}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}
 					items={filteredPicklist}
 					label={Liferay.Language.get('picklist')}
+					onActive={(item) => item.name === selectedPicklist?.name}
 					onChangeQuery={setPicklistQuery}
 					onSelectItem={(item) => {
 						Liferay.FeatureFlags['LPS-163716']

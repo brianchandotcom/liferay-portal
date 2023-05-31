@@ -14,16 +14,9 @@
 
 import React from 'react';
 import './index.scss';
-interface AutoCompleteProps<
-	T extends {
-		label?: LocalizedValue<string> | string;
-		name?: string;
-		value?: string;
-	}
-> extends React.HTMLAttributes<HTMLElement> {
+interface AutoCompleteProps<T> extends React.HTMLAttributes<HTMLElement> {
 	children: (item: T) => React.ReactNode;
 	contentRight?: React.ReactNode;
-	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	emptyStateMessage: string;
 	error?: string;
@@ -31,6 +24,7 @@ interface AutoCompleteProps<
 	hasEmptyItem?: boolean;
 	items: T[];
 	label: string;
+	onActive?: (item: T) => boolean;
 	onChangeQuery: (value: string) => void;
 	onSelectEmptyStateItem?: (emptyStateItem: EmptyStateItem) => void;
 	onSelectItem: (item: T) => void;
@@ -45,17 +39,10 @@ declare type EmptyStateItem = {
 	id: string;
 	label: string;
 };
-export default function AutoComplete<
-	T extends {
-		label?: LocalizedValue<string> | string;
-		name?: string;
-		value?: string;
-	}
->({
+export default function AutoComplete<T>({
 	children,
 	className,
 	contentRight,
-	creationLanguageId,
 	disabled,
 	emptyStateMessage,
 	error,
@@ -64,6 +51,7 @@ export default function AutoComplete<
 	id,
 	items,
 	label,
+	onActive,
 	onChangeQuery,
 	onSelectEmptyStateItem,
 	onSelectItem,

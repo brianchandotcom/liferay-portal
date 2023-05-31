@@ -141,12 +141,15 @@ export function ModalAddDefaultSortColumn({
 				<ClayModal.Body>
 					{!isEditingSort && (
 						<AutoComplete<TObjectViewColumn>
-							creationLanguageId={creationLanguageId}
 							emptyStateMessage={Liferay.Language.get(
 								'there-are-no-columns-added-in-this-view-yet'
 							)}
 							items={filteredObjectSortColumn}
 							label={Liferay.Language.get('columns')}
+							onActive={(item) =>
+								item.objectFieldName ===
+								selectedObjectSortColumn?.objectFieldName
+							}
 							onChangeQuery={setQuery}
 							onSelectItem={(item) => {
 								setSelectedObjectSortColumn(item);

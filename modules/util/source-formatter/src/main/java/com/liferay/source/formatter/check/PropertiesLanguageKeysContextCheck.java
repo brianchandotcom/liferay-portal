@@ -83,7 +83,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 
 			String context = key.substring(pos);
 
-			if (context.matches("\\[[\\.\\w+]*\\]")) {
+			if (context.matches("\\[[-\\.\\w+]*\\]")) {
 				context = context.substring(1, context.length() - 1);
 			}
 			else {

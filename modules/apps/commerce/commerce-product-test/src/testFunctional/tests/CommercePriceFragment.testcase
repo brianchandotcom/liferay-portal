@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Shopping Experience";
@@ -412,6 +412,71 @@ definition {
 					locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
 					value1 = ${promoPrice});
 			}
+		}
+	}
+
+	@description = "COMMERCE-11635. As a buyer user, I can verify that the Price On Application label is visible on the Price Fragment for a product SKU marked as Price On Application."
+	@priority = 4
+	test CanViewPriceOnApplicationLabelOnPriceFragment {
+		property portal.acceptance = "false";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("And marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("And a new Display Page Template for Commerce Product is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the Price Fragment is deployed") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Price",
+				index = 1);
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer navigates to the U-Joint's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+		}
+
+		task ("Then 'Price On Application' is shown as the active price on the Price Fragment") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
 		}
 	}
 

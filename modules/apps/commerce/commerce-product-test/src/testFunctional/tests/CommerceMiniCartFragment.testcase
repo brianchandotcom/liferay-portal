@@ -169,4 +169,74 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11634. As a buyer user, I can verify that the Price On Application label is visible on the Mini Cart Fragment for a product SKU marked as Price On Application."
+	@priority = 4
+	test CanViewPriceOnApplicationLabelOnMiniCartFragment {
+		property portal.acceptance = "false";
+
+		task ("Given a public page is added with the Mini Cart fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Test Mini Cart Fragment Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Mini Cart Fragment Page",
+				siteName = "Minium");
+
+			PageEditor.addFragment(
+				collectionName = "Cart",
+				fragmentName = "Mini Cart");
+
+			PageEditor.publish();
+		}
+
+		task ("And the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("When the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When buyer adds the product marked as Price On Application to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Catalog");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then 'Price On Application' label is shown in the Mini Cart Fragment for the specific product with an info alert and Submit button is disabled") {
+			CommerceEntry.gotoMenuTab(menuTab = "Test Mini Cart Fragment Page");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN55861",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_ON_APPLICATION");
+
+			AssertElementPresent(
+				key_infoMessage = "In your cart there are price on application products. You need to request a quote to complete the checkout.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			AssertElementPresent(
+				key_text = "Submit",
+				locator1 = "Button#ANY_DISABLED");
+		}
+	}
+
 }

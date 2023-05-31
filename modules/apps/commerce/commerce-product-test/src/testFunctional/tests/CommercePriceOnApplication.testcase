@@ -569,4 +569,83 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11619. As a buyer user, I can verify that the Price On Application label is visible on the storefront for a product SKU marked as Price On Application."
+	@priority = 5
+	test CanViewPriceOnApplicationLabelOnStoreFront {
+		property portal.acceptance = "true";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("When the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("Then 'Price On Application' is shown as the active price both on the product card and product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
+		}
+
+		task ("When the buyer adds a product with a base price and the one marked as 'Price On Application' to the cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			for (var productName : list "U-Joint,Transmission Cooler Line Assembly") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+		}
+
+		task ("Then 'Price On Application' label is shown in the Mini Cart for the specific product with an info alert and Submit button is disabled") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN55861",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_ON_APPLICATION");
+
+			AssertElementPresent(
+				key_infoMessage = "In your cart there are price on application products. You need to request a quote to complete the checkout.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			AssertElementPresent(
+				key_text = "Submit",
+				locator1 = "Button#ANY_DISABLED");
+		}
+
+		task ("When the buyer clicks Request A Quote button navigating directly to the Open Order's Details Page") {
+			Button.click(button = "Request a Quote");
+		}
+
+		task ("Then 'Price On Application' label is shown for the order item on the Open Order's Details Page") {
+			AssertTextEquals(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
+				value1 = "Price On Application");
+
+			AssertTextEquals(
+				key_productName = "Transmission Cooler Line Assembly",
+				locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
+				value1 = "$ 15.00");
+		}
+	}
+
 }

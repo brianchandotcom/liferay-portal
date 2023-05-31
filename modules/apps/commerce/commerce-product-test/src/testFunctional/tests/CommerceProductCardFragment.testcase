@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Shopping Experience";
@@ -500,6 +500,66 @@ definition {
 			CommerceWishList.assertWishListProduct(
 				productName = "U-Joint",
 				wishListName = "Default");
+		}
+	}
+
+	@description = "COMMERCE-11636. As a buyer user, I can verify that the Price On Application label is visible on the Product Card Fragment for a product SKU marked as Price On Application."
+	@priority = 4
+	test CanViewPriceOnApplicationLabelOnProductCardFragment {
+		property portal.acceptance = "false";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("And marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("And a Product Card fragment is deployed on the DPT") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Product DPT");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Product",
+				fragmentName = "Product Card",
+				index = 1);
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Product DPT");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the buyer navigates to the U-Joint's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+		}
+
+		task ("Then 'Price On Application' is shown as the active price on the Product Card Fragment") {
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 		}
 	}
 

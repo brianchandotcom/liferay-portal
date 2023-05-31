@@ -14,11 +14,13 @@
 
 package com.liferay.document.library.kernel.store;
 
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 /**
@@ -136,9 +138,13 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return StoreArea.mergeWithStoreAreas(
+		String[] fileNames = StoreArea.mergeWithStoreAreas(
 			() -> store.getFileNames(companyId, repositoryId, dirName),
 			StoreArea.LIVE, StoreArea.NEW);
+
+		Arrays.sort(fileNames);
+
+		return fileNames;
 	}
 
 	@Override
@@ -161,9 +167,13 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return StoreArea.mergeWithStoreAreas(
+		String[] fileVersions = StoreArea.mergeWithStoreAreas(
 			() -> store.getFileVersions(companyId, repositoryId, fileName),
 			StoreArea.LIVE, StoreArea.NEW);
+
+		Arrays.sort(fileVersions, DLUtil::compareVersions);
+
+		return fileVersions;
 	}
 
 	@Override

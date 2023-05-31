@@ -99,7 +99,7 @@ public class DatabaseUtil {
 		return releases;
 	}
 
-	public static List<String> getTables(Connection connection)
+	public static List<String> getTableNames(Connection connection)
 		throws SQLException {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();

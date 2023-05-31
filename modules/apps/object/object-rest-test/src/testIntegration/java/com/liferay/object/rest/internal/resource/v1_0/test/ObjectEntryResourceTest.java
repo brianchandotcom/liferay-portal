@@ -3363,15 +3363,8 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPS-165819")
 	@Test
-	public void testGetNestedFieldDetailsInRelationshipsWithSystemObjectDefinition1()
+	public void testGetNestedFieldDetailsInRelationshipsWithSystemObjectDefinition()
 		throws Exception {
-
-		/*
-
-		// Add a comment here and change the other comments in the 2 blocks
-		// below. Make sure the comments are sorted.
-
-		int nestedFieldDepth = 5;
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _userSystemObjectDefinition,
@@ -3393,6 +3386,12 @@ public class ObjectEntryResourceTest {
 			_userSystemObjectDefinition, _objectDefinition4,
 			_userAccountJSONObject.getLong("id"), _objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		// Many to Many and One to Many relationships
+		// Filtering by fields
+		// TODO update once LPS-185883 LPS-17875 fixed
+
+		int nestedFieldDepth = 5;
 
 		String endpoint = StringBundler.concat(
 			_objectDefinition1.getRESTContextPath(), "?fields=",
@@ -3420,73 +3419,70 @@ public class ObjectEntryResourceTest {
 				_objectRelationship5.getName()
 			},
 			new String[][] {
-				{"", ""}, {"", ""}, {"", ""}, {"", ""}, {"", ""},
-				{_OBJECT_FIELD_NAME_4, String.valueOf(_OBJECT_FIELD_VALUE_4)}
+				{"", "", Boolean.TRUE.toString()},
+				{"", "", Boolean.TRUE.toString()},
+				{"", "", Boolean.TRUE.toString()},
+				{"", "", Boolean.TRUE.toString()},
+				{"", "", Boolean.TRUE.toString()},
+				{
+					_OBJECT_FIELD_NAME_4, String.valueOf(_OBJECT_FIELD_VALUE_4),
+					Boolean.TRUE.toString()
+				}
 			},
 			new Type[] {
 				Type.ONE_TO_MANY, Type.MANY_TO_MANY, Type.ONE_TO_MANY,
 				Type.MANY_TO_MANY, Type.ONE_TO_MANY
-			});*/
+			});
 
 		// Many to many relationship
 
-		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _userSystemObjectDefinition,
-			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
-			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
 		_testGetNestedFieldDetailsInRelationships(
-			_objectRelationship2.getName(), null,
-			_objectRelationship2.getName(), _objectDefinition1,
+			_objectRelationship4.getName(), null,
+			_objectRelationship4.getName(), _objectDefinition3,
 			new String[][] {
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
-			_objectRelationship2.getName(), 3, _objectRelationship2.getName(),
-			_objectDefinition1,
+			_objectRelationship4.getName(), 3, _objectRelationship4.getName(),
+			_objectDefinition3,
 			new String[][] {
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
-			_objectRelationship2.getName(), 5, _objectRelationship2.getName(),
-			_objectDefinition1,
+			_objectRelationship4.getName(), 5, _objectRelationship4.getName(),
+			_objectDefinition3,
 			new String[][] {
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
-			_objectRelationship2.getName(), 6, _objectRelationship2.getName(),
-			_objectDefinition1,
+			_objectRelationship4.getName(), 6, _objectRelationship4.getName(),
+			_objectDefinition3,
 			new String[][] {
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)},
-				{_OBJECT_FIELD_NAME_1, String.valueOf(_OBJECT_FIELD_VALUE_1)},
+				{_OBJECT_FIELD_NAME_3, String.valueOf(_OBJECT_FIELD_VALUE_3)},
 				{_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)}
 			},
 			Type.MANY_TO_MANY);
 
 		// One to many relationship
-
-		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition1, _userSystemObjectDefinition,
-			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_testGetNestedFieldDetailsInRelationships(
 			_objectRelationship1.getName(), null,
@@ -5010,7 +5006,7 @@ public class ObjectEntryResourceTest {
 			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
 	}
 
-	/*private void _assertNestedFieldsFieldsInRelationships(
+	private void _assertNestedFieldsFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,
 		String[] nestedFieldNames,
 		String[][] objectFieldNamesAndObjectFieldValues, Type[] types) {
@@ -5019,10 +5015,24 @@ public class ObjectEntryResourceTest {
 			Assert.assertNull(jsonObject);
 		}
 		else {
+			String notPresent;
+
+			if (objectFieldNamesAndObjectFieldValues[currentDepth][1].equals(
+					jsonObject.getString(
+						objectFieldNamesAndObjectFieldValues[currentDepth]
+							[0]))) {
+
+				notPresent = "true";
+			}
+			else {
+				notPresent = "false";
+			}
+
 			Assert.assertEquals(
-				objectFieldNamesAndObjectFieldValues[currentDepth][1],
-				jsonObject.getString(
-					objectFieldNamesAndObjectFieldValues[currentDepth][0]));
+				"Incorrect presence of field " +
+					objectFieldNamesAndObjectFieldValues[currentDepth][0],
+				objectFieldNamesAndObjectFieldValues[currentDepth][2],
+				notPresent);
 		}
 
 		if ((currentDepth == depth) ||
@@ -5042,7 +5052,7 @@ public class ObjectEntryResourceTest {
 				jsonObject, nestedFieldNames[currentDepth],
 				types[currentDepth]),
 			nestedFieldNames, objectFieldNamesAndObjectFieldValues, types);
-	}*/
+	}
 
 	private void _assertNestedFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,

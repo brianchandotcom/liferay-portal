@@ -72,13 +72,11 @@ definition {
 			collectionName = "Content Display",
 			fragmentName = "Display Page Content");
 
-		Button.clickPublish();
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name",
-			navItem = "Open Graph",
-			siteURLKey = "test-site-name");
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
@@ -123,6 +121,10 @@ definition {
 			mappedField = "ImageAlt",
 			mappedFieldValue = "Image Alt is Author Name: ${authorName:Author Name}",
 			textType = "TextArea");
+
+		Navigator.closeWindow();
+
+		PageEditor.publish();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -186,11 +188,15 @@ definition {
 			groupName = "Test Site Name",
 			subType = "DM Document Type Name");
 
-		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name",
-			navItem = "SEO",
-			siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "SEO");
 
 		OpenGraph.mapEditableTextToField(
 			field = "File Name",
@@ -274,13 +280,11 @@ definition {
 			collectionName = "Content Display",
 			fragmentName = "Display Page Content");
 
-		Button.clickPublish();
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name",
-			navItem = "Open Graph",
-			siteURLKey = "test-site-name");
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "Open Graph");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",
@@ -337,6 +341,10 @@ definition {
 			mappedField = "ImageAlt",
 			mappedFieldValue = ${mappedFieldValue},
 			textType = "TextArea");
+
+		Navigator.closeWindow();
+
+		PageEditor.publish();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -414,11 +422,15 @@ definition {
 			groupName = "Test Site Name",
 			subType = "WC Structure Name");
 
-		DisplayPageTemplatesAdmin.openToDisplayPageTemplateConfiguration(
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name",
-			navItem = "SEO",
-			siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Navigator.gotoNavNested(navNested = "SEO");
 
 		OpenGraph.mapEditableTextToField(
 			field = "Text",

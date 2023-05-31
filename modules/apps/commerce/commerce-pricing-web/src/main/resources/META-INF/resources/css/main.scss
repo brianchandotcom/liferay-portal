@@ -44,3 +44,36 @@
 		}
 	}
 }
+
+.price-entry-price-settings {
+	margin-top: 20px;
+
+	&.disabled {
+		cursor: not-allowed;
+		opacity: 0.4;
+		pointer-events: none;
+	}
+
+	.discount-label-wrapper {
+		label {
+			padding-right: 10px;
+		}
+	}
+
+	.fieldset-legend {
+		border-bottom: 1px solid #cdced9;
+		font-size: 1rem;
+		text-transform: uppercase;
+	}
+
+	.management-bar {
+		.container-fluid {
+			padding: 0;
+		}
+	}
+
+	.panel-body {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

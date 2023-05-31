@@ -61,6 +61,10 @@ public class CommercePriceEntryTableFDSView extends BaseTableFDSView {
 			"hasTierPrice", "tiered-price",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
+		).add(
+			"priceOnApplication", "price-on-application",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
 		).build();
 	}
 

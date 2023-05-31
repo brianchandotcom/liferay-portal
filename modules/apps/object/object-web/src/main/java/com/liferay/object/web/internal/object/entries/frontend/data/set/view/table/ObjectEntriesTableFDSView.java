@@ -235,7 +235,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 							StringUtil.replaceLast(
 								objectField.getName(), "Id", ""),
 							StringPool.PERIOD, titleObjectField.getName())),
-					label, false, objectField.getObjectFieldSettings(), false);
+					label, false, titleObjectField.getObjectFieldSettings(),
+					false);
 			}
 		}
 	}

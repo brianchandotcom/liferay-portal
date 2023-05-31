@@ -812,7 +812,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-78049 - Multiple Navigation Menus can be deleted Filter by All."
+	@description = "LPS-78049 - Multiple Navigation Menus can be deleted by select all."
 	@priority = 3
 	test DeleteMultipleNavigationMenus {
 		property portal.acceptance = "true";
@@ -829,8 +829,6 @@ definition {
 
 		task ("Delete all navigation menus") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-
-			ManagementBar.setFilterAndOrder(filterBy = "All");
 
 			NavigationMenusAdmin.deleteAllCP();
 		}

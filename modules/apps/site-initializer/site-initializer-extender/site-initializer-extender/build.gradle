@@ -38,6 +38,7 @@ dependencies {
 	compileOnly project(":apps:object:object-admin-rest-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-rest-api")
+	compileOnly project(":apps:portal-language:portal-language-override-api")
 	compileOnly project(":apps:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:client-extension:client-extension-api")

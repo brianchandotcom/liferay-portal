@@ -91,7 +91,7 @@ export default function MasterLayoutConfiguration({
 			masterLayout.plid &&
 			masterLayout.plid !== DEFAULT_MASTER_LAYOUT_PLID ? (
 				<div className="d-flex">
-					<ClayForm.Group className="flex-grow-1 mb-0">
+					<ClayForm.Group className="c-mb-0 flex-grow-1">
 						<ClayInput
 							id={`${portletNamespace}masterLayout`}
 							onClick={handleChangeMasterButtonClick}
@@ -103,7 +103,7 @@ export default function MasterLayoutConfiguration({
 					<ClayLink
 						aria-label={Liferay.Language.get('edit-master')}
 						button={{monospaced: true}}
-						className="ml-2"
+						className="c-ml-2"
 						displayType="secondary"
 						href={editMasterLayoutURL}
 					>
@@ -112,7 +112,7 @@ export default function MasterLayoutConfiguration({
 
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('change-master')}
-						className="ml-2"
+						className="c-ml-2"
 						displayType="secondary"
 						onClick={handleChangeMasterButtonClick}
 						symbol="change"
@@ -120,7 +120,7 @@ export default function MasterLayoutConfiguration({
 				</div>
 			) : (
 				<div className="d-flex">
-					<ClayForm.Group className="flex-grow-1 mb-0">
+					<ClayForm.Group className="c-mb-0 flex-grow-1">
 						<ClayInput
 							id={`${portletNamespace}masterLayout`}
 							onClick={handleChangeMasterButtonClick}
@@ -131,7 +131,7 @@ export default function MasterLayoutConfiguration({
 
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('change-master')}
-						className="ml-2"
+						className="c-ml-2"
 						displayType="secondary"
 						onClick={handleChangeMasterButtonClick}
 						symbol="plus"

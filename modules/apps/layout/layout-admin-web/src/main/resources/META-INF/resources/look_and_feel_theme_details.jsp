@@ -65,7 +65,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 		sm="5"
 	>
 		<clay:image-card
-			cssClass="mb-0"
+			cssClass="c-mb-0"
 			imageAlt='<%= Validator.isNotNull(selTheme.getName()) ? HtmlUtil.escapeAttribute(selTheme.getName()) : "" %>'
 			imageSrc='<%= themeDisplay.getCDNBaseURL() + HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) + HtmlUtil.escapeAttribute(selTheme.getImagesPath()) + "/thumbnail.png" %>'
 			subtitle='<%= ((selPluginPackage != null) && Validator.isNotNull(selPluginPackage.getAuthor())) ? HtmlUtil.escape(selPluginPackage.getAuthor()) : "" %>'
@@ -74,7 +74,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 	</clay:col>
 
 	<clay:col
-		cssClass="pl-4 pt-3"
+		cssClass="c-pl-4 c-pt-3"
 		size="6"
 		sm="7"
 	>
@@ -118,7 +118,7 @@ String styleBookWarningMessage = layoutsAdminDisplayContext.getStyleBookWarningM
 
 				<c:choose>
 					<c:when test='<%= type.equals("checkbox") %>'>
-						<aui:input label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" wrapperCssClass="mb-3" />
+						<aui:input label="<%= HtmlUtil.escape(name) %>" labelCssClass="font-weight-normal" name="<%= propertyName %>" type="checkbox" value="<%= value %>" wrapperCssClass="c-mb-3" />
 					</c:when>
 					<c:when test='<%= type.equals("text") || type.equals("textarea") %>'>
 						<aui:input label="<%= HtmlUtil.escape(name) %>" name="<%= propertyName %>" type="<%= type %>" value="<%= value %>" />
@@ -215,7 +215,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 							<img alt="" class="aspect-ratio-item-flush" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" />
 						</div>
 
-						<div class="card-body p-2">
+						<div class="c-p-2 card-body">
 							<div class="card-row">
 								<div class="card-title text-truncate">
 									<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>

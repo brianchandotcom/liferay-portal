@@ -45,7 +45,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 
 <liferay-frontend:edit-form
 	action="<%= editLayoutSetURL %>"
-	cssClass="pt-0"
+	cssClass="c-pt-0"
 	enctype="multipart/form-data"
 	method="post"
 	name="fm"
@@ -61,7 +61,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<aui:input name="layoutSetId" type="hidden" value="<%= selLayoutSet.getLayoutSetId() %>" />
 	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-	<h2 class="mb-4 text-7"><liferay-ui:message key="design" /></h2>
+	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:form-navigator

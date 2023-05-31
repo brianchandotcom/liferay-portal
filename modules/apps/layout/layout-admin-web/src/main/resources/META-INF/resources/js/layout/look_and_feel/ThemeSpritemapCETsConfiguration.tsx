@@ -88,7 +88,7 @@ export default function ThemeSpritemapCETsConfiguration({
 							<>
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('replace')}
-									className="mr-2"
+									className="c-mr-2"
 									displayType="secondary"
 									onClick={onClick}
 									symbol="change"

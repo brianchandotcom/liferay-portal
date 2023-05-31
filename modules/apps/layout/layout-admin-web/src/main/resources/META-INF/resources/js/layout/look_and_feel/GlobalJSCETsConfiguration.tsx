@@ -268,7 +268,7 @@ export default function GlobalJSCETsConfiguration({
 								<React.Fragment key={scriptLocation}>
 									<ClayTable.Row>
 										<ClayTable.Cell
-											className="list-group-header-title py-2"
+											className="c-py-2 list-group-header-title"
 											colSpan={5}
 										>
 											{scriptLocation === 'bottom'
@@ -338,11 +338,11 @@ function AddExtensionButton({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					className="mb-3"
+					className="c-mb-3"
 					displayType="secondary"
 					type="button"
 				>
-					<ClayIcon className="mr-2" symbol="plus" />
+					<ClayIcon className="c-mr-2" symbol="plus" />
 
 					{Liferay.Language.get('add-javascript-client-extensions')}
 				</ClayButton>

@@ -101,7 +101,7 @@ export default function Favicon({
 			{values.imgURL && (
 				<img
 					alt={values.title}
-					className="mb-2"
+					className="c-mb-2"
 					height="16"
 					src={values.imgURL}
 					width="16"
@@ -115,7 +115,7 @@ export default function Favicon({
 
 				<div className="d-flex">
 					<ClayInput
-						className="mr-2"
+						className="c-mr-2"
 						id={`${portletNamespace}basicInputText`}
 						onClick={onChangeFaviconButtonClick}
 						readOnly={true}
@@ -124,7 +124,7 @@ export default function Favicon({
 
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('select-favicon')}
-						className="flex-shrink-0 mr-2"
+						className="c-mr-2 flex-shrink-0"
 						displayType="secondary"
 						onClick={onChangeFaviconButtonClick}
 						symbol="change"

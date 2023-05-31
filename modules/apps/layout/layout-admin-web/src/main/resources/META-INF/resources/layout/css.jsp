@@ -67,7 +67,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	collapsible="<%= true %>"
 	label="custom-css"
 >
-	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="mb-0" />
+	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-css-is-loaded-after-the-theme" />

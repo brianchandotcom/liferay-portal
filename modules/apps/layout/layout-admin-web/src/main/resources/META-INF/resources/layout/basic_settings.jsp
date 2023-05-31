@@ -36,7 +36,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 
 <div class="d-flex">
 	<c:if test="<%= layoutLookAndFeelDisplayContext.hasEditableMasterLayout() %>">
-		<div class="flex-grow-1 mr-4">
+		<div class="c-mr-4 flex-grow-1">
 			<react:component
 				module="js/layout/look_and_feel/MasterLayoutConfiguration"
 				props="<%= layoutLookAndFeelDisplayContext.getMasterLayoutConfigurationProps() %>"

@@ -62,7 +62,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 	collapsible="<%= true %>"
 	label="custom-css"
 >
-	<aui:input label="css" name="regularCss" type="textarea" value="<%= selLayoutSet.getCss() %>" wrapperCssClass="mb-0 mt-4" />
+	<aui:input label="css" name="regularCss" type="textarea" value="<%= selLayoutSet.getCss() %>" wrapperCssClass="c-mb-0 c-mt-4" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="this-css-is-loaded-after-the-theme" />

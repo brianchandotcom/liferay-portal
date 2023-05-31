@@ -70,7 +70,7 @@ if (selLayout != null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "customizableDescription" %>' label="customizable" labelCssClass="font-weight-normal" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="checkbox" value="<%= selLayout.isCustomizable() %>" wrapperCssClass="mb-2" />
+		<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "customizableDescription" %>' label="customizable" labelCssClass="font-weight-normal" name='<%= "TypeSettingsProperties--" + LayoutConstants.CUSTOMIZABLE_LAYOUT + "--" %>' type="checkbox" value="<%= selLayout.isCustomizable() %>" wrapperCssClass="c-mb-2" />
 
 		<p class="text-3 text-secondary" id="<portlet:namespace />customizableDescription">
 			<liferay-ui:message key="customizable-help" />

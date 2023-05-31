@@ -99,7 +99,7 @@ export default function LayoutPageTemplateEntryCard({
 	return (
 		<>
 			<div
-				className="btn card card-type-asset file-card p-0 position-relative"
+				className="btn c-p-0 card card-type-asset file-card position-relative"
 				onClick={onClick}
 				onKeyDown={onKeyDown}
 				role="option"
@@ -123,7 +123,7 @@ export default function LayoutPageTemplateEntryCard({
 					<ClayCard.Row className="c-gap-2">
 						<div className="autofit-col autofit-col-expand autofit-col-shrink">
 							<ClayCard.Description
-								className="mb-0"
+								className="c-mb-0"
 								displayType="title"
 							>
 								{title}
@@ -179,7 +179,7 @@ export default function LayoutPageTemplateEntryCard({
 						{Liferay.Language.get('preview-page-template')}
 					</ClayModal.Header>
 
-					<ClayModal.Body className="p-0">
+					<ClayModal.Body className="c-p-0">
 						<PreviewModalContent
 							addLayoutURL={addLayoutURL}
 							entryIndex={entryIndex}
@@ -281,7 +281,7 @@ function PreviewModalContent({
 
 	return (
 		<div className="bg-dark d-flex flex-column h-100 layout-page-template-entry-preview-modal">
-			<div className="bg-white d-flex justify-content-end p-3">
+			<div className="bg-white c-p-3 d-flex justify-content-end">
 				<ClayButton
 					onClick={() => {
 						onPreviewOpenChange(false);
@@ -306,7 +306,7 @@ function PreviewModalContent({
 			<div className="align-items-center d-flex flex-grow-1 flex-row">
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('go-to-previous-template')}
-					className="btn-xl ml-1 text-white"
+					className="btn-xl c-ml-1 text-white"
 					displayType="unstyled"
 					onClick={() => updateEntryIndex('previous')}
 					symbol="angle-left"
@@ -352,19 +352,19 @@ function PreviewModalContent({
 
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('go-to-next-template')}
-					className="btn-xl mr-1 text-white"
+					className="btn-xl c-mr-1 text-white"
 					displayType="unstyled"
 					onClick={() => updateEntryIndex('next')}
 					symbol="angle-right"
 				/>
 			</div>
 
-			<header className="bg-secondary-d2 d-flex p-3 text-light">
-				<p className="flex-grow-1 m-0 text-center">
+			<header className="bg-secondary-d2 c-p-3 d-flex text-light">
+				<p className="c-m-0 flex-grow-1 text-center">
 					{layoutPageTemplateEntry.name}
 				</p>
 
-				<p className="m-0">
+				<p className="c-m-0">
 					{Liferay.Util.sub(
 						Liferay.Language.get('x-of-x'),
 						entryIndex + 1,

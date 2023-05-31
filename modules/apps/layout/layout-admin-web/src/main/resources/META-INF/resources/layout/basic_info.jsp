@@ -34,7 +34,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 <c:if test="<%= !layoutsAdminDisplayContext.isDraft() && !selLayout.isSystem() %>">
 	<aui:input ignoreRequestValue="<%= SessionErrors.isEmpty(liferayPortletRequest) %>" label="name" localized="<%= true %>" name="nameMapAsXML" required="<%= true %>" type="text" value="<%= layoutsAdminDisplayContext.getNameMapAsXML() %>" />
 
-	<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "hiddenDescription" %>' label="hidden-from-menu-display" labelCssClass="font-weight-normal" name="hidden" type="checkbox" value="<%= selLayout.isHidden() %>" wrapperCssClass="mb-2" />
+	<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "hiddenDescription" %>' label="hidden-from-menu-display" labelCssClass="font-weight-normal" name="hidden" type="checkbox" value="<%= selLayout.isHidden() %>" wrapperCssClass="c-mb-2" />
 
 	<p class="text-3 text-secondary" id="<portlet:namespace />hiddenDescription">
 		<liferay-ui:message key="hidden-from-navigation-menu-widget-help-message" />

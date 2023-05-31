@@ -42,7 +42,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 
 <liferay-frontend:edit-form
 	action='<%= HttpComponentsUtil.addParameter(editLayoutURL, "refererPlid", plid) %>'
-	cssClass="pt-0"
+	cssClass="c-pt-0"
 	enctype="multipart/form-data"
 	method="post"
 	name="editLayoutFm"
@@ -87,7 +87,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 
 	</c:if>
 
-	<h2 class="mb-4 text-7"><liferay-ui:message key="general" /></h2>
+	<h2 class="c-mb-4 text-7"><liferay-ui:message key="general" /></h2>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />

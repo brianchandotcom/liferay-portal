@@ -153,12 +153,12 @@ export default function GlobalCSSCETsConfiguration({
 			</p>
 
 			<ClayButton
-				className="mb-3"
+				className="c-mb-3"
 				displayType="secondary"
 				onClick={handleClick}
 				type="button"
 			>
-				<ClayIcon className="mr-2" symbol="plus" />
+				<ClayIcon className="c-mr-2" symbol="plus" />
 
 				{Liferay.Language.get('add-css-client-extensions')}
 			</ClayButton>

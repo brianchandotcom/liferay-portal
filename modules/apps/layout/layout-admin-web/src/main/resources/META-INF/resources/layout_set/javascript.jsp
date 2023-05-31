@@ -42,7 +42,7 @@ UnicodeProperties layoutSetTypeSettingsUnicodeProperties = selLayoutSet.getSetti
 	collapsible="<%= true %>"
 	label="custom-javascript"
 >
-	<aui:input label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="mb-0 mt-4" />
+	<aui:input label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0 c-mt-4" />
 
 	<p class="text-secondary">
 		<liferay-ui:message key="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" />

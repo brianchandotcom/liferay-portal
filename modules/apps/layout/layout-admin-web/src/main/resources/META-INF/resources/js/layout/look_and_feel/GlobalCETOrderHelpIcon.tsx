@@ -35,7 +35,7 @@ export function GlobalCETOrderHelpIcon({buttonId, children, title}: IProps) {
 				trigger={
 					<span
 						aria-describedby={buttonId}
-						className="d-block ml-1"
+						className="c-ml-1 d-block"
 						onBlur={() => setShow(false)}
 						onFocus={() => setShow(true)}
 						onMouseEnter={() => setShow(true)}

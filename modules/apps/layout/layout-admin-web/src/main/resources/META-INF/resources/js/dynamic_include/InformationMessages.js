@@ -75,7 +75,7 @@ export default function ({
 			{showModifiedLayoutMessage && (
 				<div>
 					<p
-						className="message-info mt-0"
+						className="c-mt-0 message-info"
 						dangerouslySetInnerHTML={{
 							__html: Liferay.Language.get(
 								'this-page-has-been-changed-since-the-last-update-from-the-site-template'
@@ -94,7 +94,7 @@ export default function ({
 			)}
 
 			{showLinkedLayoutMessage && (
-				<p className="message-info my-0">{linkedLayoutMessage}</p>
+				<p className="c-my-0 message-info">{linkedLayoutMessage}</p>
 			)}
 		</ClayPopover>
 	);

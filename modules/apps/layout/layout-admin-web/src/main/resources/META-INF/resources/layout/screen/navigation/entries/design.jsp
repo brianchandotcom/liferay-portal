@@ -42,7 +42,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 <liferay-frontend:edit-form
 	action='<%= HttpComponentsUtil.addParameter(editLayoutURL, "refererPlid", plid) %>'
-	cssClass="pt-0"
+	cssClass="c-pt-0"
 	enctype="multipart/form-data"
 	method="post"
 	name="editLayoutFm"
@@ -72,7 +72,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 	</c:if>
 
-	<h2 class="mb-4 text-7"><liferay-ui:message key="design" /></h2>
+	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />

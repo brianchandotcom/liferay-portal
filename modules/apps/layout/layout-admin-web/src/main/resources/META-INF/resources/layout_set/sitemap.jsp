@@ -65,7 +65,7 @@ if (!virtualHostnames.containsKey(PortalUtil.getHost(request))) {
 		<li>
 			<div class="d-flex">
 				<clay:link
-					cssClass="mr-2"
+					cssClass="c-mr-2"
 					href='<%= "https://siteexplorer.search.yahoo.com/submit/ping?sitemap=" + HtmlUtil.escapeURL(sitemapUrl) %>'
 					label="Yahoo!"
 					target="_blank"

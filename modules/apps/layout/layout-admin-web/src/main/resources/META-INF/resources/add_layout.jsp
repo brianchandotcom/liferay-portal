@@ -42,7 +42,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					<liferay-ui:message key="add-this-page-to-the-following-menus" />
 
 					<clay:container-fluid
-						cssClass="auto-site-navigation-menus mt-3"
+						cssClass="auto-site-navigation-menus c-mt-3"
 					>
 						<clay:row>
 
@@ -70,7 +70,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					%>
 
 					<clay:container-fluid
-						cssClass="auto-site-navigation-menus mt-3"
+						cssClass="auto-site-navigation-menus c-mt-3"
 					>
 						<clay:row>
 							<aui:input id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>' label='<%= LanguageUtil.format(request, "add-this-page-to-x", HtmlUtil.escape(autoSiteNavigationMenu.getName())) %>' name="TypeSettingsProperties--siteNavigationMenuId--" type="checkbox" value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>" />
@@ -80,7 +80,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 			</c:choose>
 
 			<c:if test="<%= layoutsAdminDisplayContext.hasRequiredVocabularies() %>">
-				<aui:fieldset cssClass="mb-4">
+				<aui:fieldset cssClass="c-mb-4">
 					<div class="h3 sheet-subtitle"><liferay-ui:message key="categorization" /></div>
 
 					<c:choose>

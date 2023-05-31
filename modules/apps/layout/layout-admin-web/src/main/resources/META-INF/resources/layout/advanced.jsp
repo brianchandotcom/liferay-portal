@@ -48,7 +48,7 @@ String targetType = GetterUtil.getString(layoutTypeSettingsUnicodeProperties.get
 %>
 
 <div class="d-flex">
-	<aui:select cssClass="propagatable-field" id="targetType" label="target-type" name="TypeSettingsProperties--targetType--" wrapperCssClass="mr-3 w-50">
+	<aui:select cssClass="propagatable-field" id="targetType" label="target-type" name="TypeSettingsProperties--targetType--" wrapperCssClass="c-mr-3 w-50">
 		<aui:option label="specific-frame" selected='<%= !Objects.equals(targetType, "useNewTab") %>' value="" />
 		<aui:option label="new-tab" selected='<%= Objects.equals(targetType, "useNewTab") %>' value="useNewTab" />
 	</aui:select>

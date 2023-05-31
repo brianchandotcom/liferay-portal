@@ -371,7 +371,7 @@ const MillerColumnsItem = ({
 			</a>
 
 			{draggable && (
-				<ClayLayout.ContentCol className="miller-columns-item-drag-handler pl-0">
+				<ClayLayout.ContentCol className="c-pl-0 miller-columns-item-drag-handler">
 					<ClayIcon symbol="drag" />
 				</ClayLayout.ContentCol>
 			)}
@@ -386,7 +386,7 @@ const MillerColumnsItem = ({
 				</ClayLayout.ContentCol>
 			)}
 
-			<ClayLayout.ContentCol className="pl-1" expand>
+			<ClayLayout.ContentCol className="c-pl-1" expand>
 				<h4 className="list-group-title text-truncate-inline">
 					{viewUrl ? (
 						<ClayLink

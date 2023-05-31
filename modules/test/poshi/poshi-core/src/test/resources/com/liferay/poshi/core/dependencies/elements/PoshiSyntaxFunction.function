@@ -1,5 +1,5 @@
 <definition default="dragAndDropPortletToObject" summary="Drag and drop portlet to an object">
-	<command name="dragAndDropPortletToObject">
+	<command name="dragAndDropPortletToObject" arguments="locator1,value1">
 		<execute function="WaitForSPARefresh"/>
 		<execute function="Pause" locator1="1000"/>
 		<execute selenium="waitForText" argument1="${locator1}" argument2="${value1}"/>

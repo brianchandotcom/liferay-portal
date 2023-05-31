@@ -20,6 +20,7 @@ export default function ObjectRelationship({
 	labelKey,
 	name,
 	objectEntryId,
+	objectFieldBusinessType,
 	onBlur,
 	onChange,
 	onFocus,
@@ -38,6 +39,7 @@ interface IProps {
 	labelKey?: string;
 	name: string;
 	objectEntryId: string;
+	objectFieldBusinessType: string;
 	onBlur?: React.FocusEventHandler<HTMLInputElement>;
 	onChange: (event: {
 		target: {

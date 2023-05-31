@@ -320,6 +320,8 @@ definition {
 			CKEditor.addSourceContent(content = ${wikiPageContent});
 		}
 		else {
+			WaitForElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			Type(

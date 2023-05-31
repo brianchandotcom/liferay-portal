@@ -142,6 +142,8 @@ definition {
 
 			SelectWindow.selectPopUp(locator1 = "null");
 
+			Navigator.gotoNavTab(navTab = "SEO");
+
 			AssertElementPresent(
 				key_title = "SEO",
 				locator1 = "Header#H2_TITLE");

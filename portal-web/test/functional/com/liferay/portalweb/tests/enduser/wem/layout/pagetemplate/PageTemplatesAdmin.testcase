@@ -114,7 +114,7 @@ definition {
 		}
 
 		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
-			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,cog,password-policies,trash");
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,password-policies,trash");
 		}
 
 		task ("When the Page Template creator opens the dropdown menu of management toolbar after selecting the new display page template") {

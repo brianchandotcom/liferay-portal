@@ -18,9 +18,10 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -31,30 +32,32 @@ import java.io.File;
  */
 public class DDMFormUploadValidator {
 
-	public static String[] getGuestUploadFileExtensions() {
-		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator =
-			_ddmFormWebConfigurationActivatorSnapshot.get();
+	public static String[] getGuestUploadFileExtensions()
+		throws ConfigurationException {
 
 		DDMFormWebConfiguration ddmFormWebConfiguration =
-			ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				DDMFormWebConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
 
 		return StringUtil.split(
 			ddmFormWebConfiguration.guestUploadFileExtensions());
 	}
 
-	public static long getGuestUploadMaximumFileSize() {
-		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator =
-			_ddmFormWebConfigurationActivatorSnapshot.get();
+	public static long getGuestUploadMaximumFileSize()
+		throws ConfigurationException {
 
 		DDMFormWebConfiguration ddmFormWebConfiguration =
-			ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				DDMFormWebConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
 
 		return ddmFormWebConfiguration.guestUploadMaximumFileSize() *
 			_FILE_LENGTH_MB;
 	}
 
 	public static void validateFileExtension(String fileName)
-		throws FileExtensionException {
+		throws ConfigurationException, FileExtensionException {
 
 		String extension = null;
 
@@ -76,7 +79,7 @@ public class DDMFormUploadValidator {
 	}
 
 	public static void validateFileSize(File file, String fileName)
-		throws FileSizeException, InvalidFileException {
+		throws ConfigurationException, FileSizeException, InvalidFileException {
 
 		if (file == null) {
 			throw new InvalidFileException("File is null for " + fileName);
@@ -96,10 +99,5 @@ public class DDMFormUploadValidator {
 	}
 
 	private static final long _FILE_LENGTH_MB = 1024 * 1024;
-
-	private static final Snapshot<DDMFormWebConfigurationActivator>
-		_ddmFormWebConfigurationActivatorSnapshot = new Snapshot<>(
-			DDMFormUploadValidator.class,
-			DDMFormWebConfigurationActivator.class, null, true);
 
 }

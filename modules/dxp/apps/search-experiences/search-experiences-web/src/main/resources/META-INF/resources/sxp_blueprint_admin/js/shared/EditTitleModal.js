@@ -61,11 +61,11 @@ export default function EditTitleModal({
 
 	const defaultLocaleBCP47 = formatLocaleWithDashes(defaultLocale);
 
-	const [description_i18n, setDescription_i18n] = useState(
+	const [descriptionI18n, setDescriptionI18n] = useState(
 		initialDescriptionI18n
 	);
 	const [hasError, setHasError] = useState(false);
-	const [title_i18n, setTitle_i18n] = useState(initialTitleI18n);
+	const [titleI18n, setTitleI18n] = useState(initialTitleI18n);
 
 	const descriptionInputRef = useRef();
 	const titleInputRef = useRef();
@@ -75,7 +75,7 @@ export default function EditTitleModal({
 			setHasError(!event.currentTarget.value);
 		}
 		else {
-			setHasError(!title_i18n[defaultLocaleBCP47]);
+			setHasError(!titleI18n[defaultLocaleBCP47]);
 		}
 	};
 
@@ -87,13 +87,16 @@ export default function EditTitleModal({
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (!title_i18n[defaultLocaleBCP47]) {
+		if (!titleI18n[defaultLocaleBCP47]) {
 			setHasError(true);
 
 			titleInputRef.current.focus();
 		}
 		else {
-			onSubmit({description_i18n, title_i18n});
+			onSubmit({
+				description_i18n: descriptionI18n,
+				title_i18n: titleI18n,
+			});
 
 			onClose();
 		}
@@ -149,11 +152,11 @@ export default function EditTitleModal({
 							onSelectedLocaleChange={_handleSelectedLocaleChange(
 								titleInputRef
 							)}
-							onTranslationsChange={setTitle_i18n}
+							onTranslationsChange={setTitleI18n}
 							placeholder=""
 							ref={titleInputRef}
 							selectedLocale={selectedLocale}
-							translations={disabled ? {} : title_i18n}
+							translations={disabled ? {} : titleI18n}
 						/>
 
 						{hasError && (
@@ -187,11 +190,11 @@ export default function EditTitleModal({
 							onSelectedLocaleChange={_handleSelectedLocaleChange(
 								descriptionInputRef
 							)}
-							onTranslationsChange={setDescription_i18n}
+							onTranslationsChange={setDescriptionI18n}
 							placeholder=""
 							ref={descriptionInputRef}
 							selectedLocale={selectedLocale}
-							translations={disabled ? {} : description_i18n}
+							translations={disabled ? {} : descriptionI18n}
 						/>
 					</div>
 				</ClayModal.Body>

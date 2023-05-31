@@ -23,7 +23,7 @@ import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import getUIConfigurationValues from '../utils/sxp_element/get_ui_configuration_values';
 import isCustomJSONSXPElement from '../utils/sxp_element/is_custom_json_sxp_element';
 
-export default function PreviewSXPElement({
+export default function PreviewSXPElementModal({
 	isSXPElementJSONInvalid,
 	onTitleAndDescriptionChange,
 	sxpElementJSONObject,

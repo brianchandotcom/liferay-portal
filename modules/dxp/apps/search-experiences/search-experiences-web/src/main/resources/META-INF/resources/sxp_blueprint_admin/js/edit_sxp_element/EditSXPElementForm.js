@@ -45,7 +45,7 @@ import formatLocaleWithUnderscores from '../utils/language/format_locale_with_un
 import renameKeys from '../utils/language/rename_keys';
 import sub from '../utils/language/sub';
 import {openErrorToast, setInitialSuccessToast} from '../utils/toasts';
-import PreviewSXPElement from './PreviewSXPElement';
+import PreviewSXPElementModal from './PreviewSXPElementModal';
 import SidebarPanel from './SidebarPanel';
 
 /**
@@ -200,11 +200,14 @@ function EditSXPElementForm({
 	const [expandAllVariables, setExpandAllVariables] = useState(false);
 	const [description, setDescription] = useState(initialDescription);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [isTitleEdited, setIsTitleEdited] = useState(false);
 	const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [showVariablesSidebar, setShowVariablesSidebar] = useState(false);
 	const [title, setTitle] = useState(initialTitle);
+	const [
+		isTitleAndDescriptionEdited,
+		setIsTitleAndDescriptionEdited,
+	] = useState(false);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
 		initialElementJSONEditorValueString
 	);
@@ -308,8 +311,8 @@ function EditSXPElementForm({
 	 * Parses CodeMirror text after user types into it or submits changes
 	 * on title and description modal. Validates `title_i18n` and
 	 * `description_i18n` and updates `sxpElementJSONObject` if parsing
-	 * succeeds. Also updates `isTitleEdited` if the `title_i18n` or
-	 * `description_i18n` changed.
+	 * succeeds. Also updates `isTitleAndDescriptionEdited` if the `title_i18n`
+	 * or `description_i18n` changed.
 	 */
 	const _handleJSONEditorValueChange = (value) => {
 		setElementJSONEditorValue(value);
@@ -326,7 +329,7 @@ function EditSXPElementForm({
 				['title_i18n', 'description_i18n']
 			)
 		) {
-			setIsTitleEdited(true);
+			setIsTitleAndDescriptionEdited(true);
 		}
 	};
 
@@ -499,8 +502,8 @@ function EditSXPElementForm({
 	/**
 	 * Called after clicking 'Done' in title and description edit modal.
 	 * Updates `title_i18n`, `description_i18n` inside CodeMirror editor,
-	 * which triggers `_handleJSONEditorValueChange`. Sets `isTitleEdited`
-	 * to true.
+	 * which triggers `_handleJSONEditorValueChange`. Sets
+	 * `isTitleAndDescriptionEdited` to true.
 	 */
 	const _handleTitleAndDescriptionChange = ({
 		description_i18n,
@@ -521,22 +524,22 @@ function EditSXPElementForm({
 				)
 			);
 
-			setIsTitleEdited(true);
+			setIsTitleAndDescriptionEdited(true);
 		}
 	};
 
 	/**
 	 * Called after clicking 'Preview' in the toolbar. Updates the
 	 * `title` and `description` with the new translations, as long as the
-	 * title is not empty. Also resets the `isTitleEdited` in order for
-	 * them to show on the toolbar.
+	 * title is not empty. Also resets the `isTitleAndDescriptionEdited`
+	 * in order for them to show on the toolbar.
 	 */
 	const _handleTitleAndDescriptionPreview = ({description, title}) => {
 		if (title) {
 			setDescription(description);
 			setTitle(title);
 
-			setIsTitleEdited(false);
+			setIsTitleAndDescriptionEdited(false);
 		}
 	};
 
@@ -568,7 +571,6 @@ function EditSXPElementForm({
 						formatLocaleWithDashes
 					)}
 					disableTitleAndDescriptionModal={isSXPElementJSONInvalid}
-					edited={isTitleEdited}
 					isSubmitting={isSubmitting}
 					onCancel={redirectURL}
 					onSubmit={_handleSubmit}
@@ -577,6 +579,7 @@ function EditSXPElementForm({
 					}
 					readOnly={readOnly}
 					title={title}
+					titleAndDescriptionEdited={isTitleAndDescriptionEdited}
 					titleI18n={renameKeys(
 						sxpElementJSONObject.title_i18n,
 						formatLocaleWithDashes
@@ -594,7 +597,7 @@ function EditSXPElementForm({
 					)}
 
 					<ClayToolbar.Item>
-						<PreviewSXPElement
+						<PreviewSXPElementModal
 							isSXPElementJSONInvalid={isSXPElementJSONInvalid}
 							onTitleAndDescriptionChange={
 								_handleTitleAndDescriptionPreview

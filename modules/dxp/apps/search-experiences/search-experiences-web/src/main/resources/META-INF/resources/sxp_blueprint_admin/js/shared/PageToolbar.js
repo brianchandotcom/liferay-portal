@@ -68,7 +68,6 @@ export default function PageToolbar({
 	description,
 	descriptionI18n,
 	disableTitleAndDescriptionModal = false,
-	edited,
 	isSubmitting,
 	onCancel,
 	onChangeTab,
@@ -78,6 +77,7 @@ export default function PageToolbar({
 	tab,
 	tabs,
 	title,
+	titleAndDescriptionEdited,
 	titleI18n,
 }) {
 	const {availableLanguages, defaultLocale, locale} = useContext(
@@ -166,7 +166,7 @@ export default function PageToolbar({
 										onClick={_handleClickEdit('title')}
 									>
 										<div className="entry-title text-truncate">
-											{(!edited
+											{(!titleAndDescriptionEdited
 												? title
 												: titleI18n[displayLocale]) || (
 												<span className="entry-title-blank">
@@ -199,14 +199,14 @@ export default function PageToolbar({
 												className="entry-description text-truncate"
 												data-tooltip-align="bottom"
 												title={
-													!edited
+													!titleAndDescriptionEdited
 														? description
 														: descriptionI18n[
 																displayLocale
 														  ]
 												}
 											>
-												{(!edited
+												{(!titleAndDescriptionEdited
 													? description
 													: descriptionI18n[
 															displayLocale
@@ -300,7 +300,6 @@ PageToolbar.propTypes = {
 	description: PropTypes.string,
 	descriptionI18n: PropTypes.object,
 	disableTitleAndDescriptionModal: PropTypes.bool,
-	edited: PropTypes.bool,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,
@@ -310,5 +309,6 @@ PageToolbar.propTypes = {
 	tab: PropTypes.string,
 	tabs: PropTypes.object,
 	title: PropTypes.string,
+	titleAndDescriptionEdited: PropTypes.bool,
 	titleI18n: PropTypes.object,
 };

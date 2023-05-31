@@ -15,30 +15,21 @@
 package com.liferay.portal.search.solr8.internal.query;
 
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author André de Oliveira
- * @author Miguel Angelo Caldas Gallindo
+ * @author Joao Victor Alves
  */
 @Component(
-	property = "search.engine.impl=Solr", service = QueryTranslator.class
+	property = "search.engine.impl=Solr", service = LuceneQueryConverter.class
 )
-public class SolrQueryTranslator
-	extends BaseQueryVisitor implements QueryTranslator<String> {
+public class SolrLuceneQueryConverter
+	extends BaseQueryVisitor implements LuceneQueryConverter {
 
 	@Override
-	public String translate(Query query, SearchContext searchContext) {
-		org.apache.lucene.search.Query luceneQuery = query.accept(this);
-
-		if (luceneQuery != null) {
-			return luceneQuery.toString();
-		}
-
-		return null;
+	public org.apache.lucene.search.Query convert(Query query) {
+		return query.accept(this);
 	}
 
 }

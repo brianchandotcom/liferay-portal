@@ -14,6 +14,12 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
@@ -48,6 +54,30 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 
 /**
  * @author Nícolas Moura
+ * @author Michael Cavalcanti
  */
-public class UpgradeJavaCheck {
+@Component(
+	immediate = true,
+	property = {
+		"clay.data.set.display.name=commercePendingOrderItems",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	},
+	service = FDSView.class
+)
+public class UpgradeJavaCheck extends BaseTableFDSView {
+
+	@Override
+	public FDSTableSchema getFDSTableSchema() {
+		FDSTableSchemaBuilder fDSTableSchemaBuilder =
+			_fDSTableSchemaBuilderFactory.create();
+
+		FDSTableSchemaField nameFDSTableSchemaField =
+			fDSTableSchemaBuilder.addFDSTableSchemaField("name", "name");
+
+		return fDSTableSchemaBuilder.build();
+	}
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;
+
 }

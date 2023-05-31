@@ -17,6 +17,7 @@ package com.liferay.object.internal.related.models;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
+import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
@@ -342,6 +343,10 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					return companyIdColumn.eq(
 						objectRelationship.getCompanyId());
 				}
+			).and(
+				ObjectEntrySearchUtil.getRelatedModelsPredicate(
+					dynamicObjectDefinitionTable, objectDefinition2,
+					_objectFieldLocalService, search)
 			)
 		);
 	}

@@ -62,8 +62,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(
 			_allFileNames, new String[] {"**/test/**"},
 			new String[] {
-				"**/bnd.bnd", "**/*.java", "**/*.js", "**/*.jsp", "**/*.jspf",
-				"**/*.jsx", "**/*.ts", "**/*.tsx"
+				"**/bnd.bnd", "**/*.java", "**/*.js", "**/*.json", "**/*.jsp",
+				"**/*.jspf", "**/*.jsx", "**/*.ts", "**/*.tsx"
 			},
 			getSourceFormatterExcludes(), true);
 
@@ -88,6 +88,10 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern1));
 				featureFlags.addAll(_getFeatureFlags(fileContent));
+			}
+			else if (fileName.endsWith(".json")) {
+				featureFlags.addAll(
+					_getFeatureFlags(fileContent, _featureFlagPattern4));
 			}
 			else {
 				featureFlags.addAll(
@@ -200,6 +204,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"FeatureFlagManagerUtil\\.isEnabled\\(");
 	private static final Pattern _featureFlagPattern3 = Pattern.compile(
 		"Liferay\\.FeatureFlags\\['(.+?)'\\]");
+	private static final Pattern _featureFlagPattern4 = Pattern.compile(
+		"\"featureFlag\": \"(.+?)\",?");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 

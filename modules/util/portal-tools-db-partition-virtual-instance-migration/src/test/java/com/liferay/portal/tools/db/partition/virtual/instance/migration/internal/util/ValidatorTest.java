@@ -63,9 +63,9 @@ public class ValidatorTest {
 		_mockWebIds(false);
 
 		_executeAndAssert(
-			false, true,
+			true, false,
 			Arrays.asList(
-				"WARNING: webId " + _TEST_WEB_ID +
+				"ERROR: WebId " + _TEST_WEB_ID +
 					" already exists in destination database"));
 	}
 

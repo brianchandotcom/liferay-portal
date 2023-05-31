@@ -52,13 +52,15 @@ public class DeepPaginationConfigurationWrapper {
 		int pointInTimeKeepAliveSeconds) {
 
 		if ((pointInTimeKeepAliveSeconds > 0) &&
-			(pointInTimeKeepAliveSeconds < 60)) {
+			(pointInTimeKeepAliveSeconds <= 60)) {
 
 			return pointInTimeKeepAliveSeconds;
 		}
 
-		return 60;
+		return _DEFAULT_POINT_IN_TIME_KEEP_ALIVE_SECONDS;
 	}
+
+	private static final int _DEFAULT_POINT_IN_TIME_KEEP_ALIVE_SECONDS = 60;
 
 	private volatile DeepPaginationConfiguration _deepPaginationConfiguration;
 

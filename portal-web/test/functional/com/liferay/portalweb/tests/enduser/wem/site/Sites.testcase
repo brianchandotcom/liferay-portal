@@ -3,24 +3,16 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Sites Administration";
 	property testray.main.component.name = "Sites Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
 	setUp {
-		TestCase.setUpPortalInstance();
-
 		User.firstLoginPG();
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Site.tearDownCP();
-		}
 	}
 
 	@description = "Inactive and reactive site."
@@ -42,23 +34,23 @@ definition {
 		}
 
 		task ("Add a site and add a page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Inactive the created site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
-			Site.inactivateCP(siteName = "Site Name");
+			Site.inactivateCP(siteName = ${randomSiteName});
 		}
 
 		task ("View Inactive Request Message") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/web/site-name");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${siteURLKey}");
 
 			Page.viewInactiveRequestMessage(resource = "site");
 		}
@@ -66,11 +58,11 @@ definition {
 		task ("Active the created site") {
 			Site.openSitesAdmin();
 
-			Site.activateInactive(siteName = "Site Name");
+			Site.activateInactive(siteName = ${randomSiteName});
 		}
 
 		task ("View no Inactive Request Message") {
-			Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			AssertTextNotPresent(value1 = "This site is inactive. Please contact the administrator.");
 		}
@@ -80,18 +72,18 @@ definition {
 	@priority = 4
 	test AddChildChildSite {
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a child site to the site") {
 			HeadlessSite.addSite(
-				parentSiteName = "Site Name",
+				parentSiteName = ${randomSiteName},
 				siteName = "Child Site Name");
 		}
 
 		task ("Add a child site to the child site") {
 			HeadlessSite.addSite(
-				grandParentSiteName = "Site Name",
+				grandParentSiteName = ${randomSiteName},
 				parentSiteName = "Child Site Name",
 				siteName = "Grandchild Site Name");
 		}
@@ -101,7 +93,7 @@ definition {
 
 			Site.viewChildCP(
 				childSiteName = "Child Site Name",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("View the child site to the child site") {
@@ -115,15 +107,15 @@ definition {
 	@priority = 3
 	test AddPublicVirtualHostsSiteURL {
 		task ("Add a site and a page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Add a virtual host to the public page") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 			Site.addVirtualHostsURLCP(
 				pageVirtualHosts = "true",
@@ -135,7 +127,7 @@ definition {
 
 			Site.viewVirtualHostsURLPG(
 				pageName = "Site Page",
-				siteName = "Site Name",
+				siteName = ${randomSiteName},
 				sitePageURL = "http://www.able.com:8080/site-page");
 		}
 	}
@@ -144,13 +136,13 @@ definition {
 	@priority = 3
 	test AddSiteWithCommaInName {
 		task ("Add a site with comma") {
-			HeadlessSite.addSite(siteName = "Site Name,");
+			HeadlessSite.addSite(siteName = "${randomSiteName},");
 		}
 
 		task ("View the site added") {
 			Site.openSitesAdmin();
 
-			Site.viewCP(siteName = "Site Name,");
+			Site.viewCP(siteName = "${randomSiteName},");
 		}
 	}
 
@@ -158,14 +150,14 @@ definition {
 	@priority = 3
 	test AddSiteWithInvalidDuplicateName {
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Try to add a site with the same name and assert could not add it") {
 			Site.openSitesAdmin();
 
 			Site.viewCannotAdd(
-				siteName = "Site Name",
+				siteName = ${randomSiteName},
 				siteNameInvalid = "Duplicate");
 		}
 	}
@@ -173,7 +165,7 @@ definition {
 	@description = "Unable to add site name with blank name, invalid characters * and numeric."
 	@priority = 3
 	test AddSiteWithInvalidName {
-		for (var siteName : list " ,Site Name*,22222") {
+		for (var siteName : list " ,${randomSiteName}*,22222") {
 			Site.openSitesAdmin();
 
 			Site.viewCannotAdd(
@@ -188,28 +180,28 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a public page and private page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Public Page");
 
 			JSONLayout.addPrivateLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Private Page");
 		}
 
 		task ("Edit friendly URL to null") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 			Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
 		}
 
 		task ("View the the end of firend URL changes to site ID") {
 			var siteId = JSONGroupAPI._getGroupIdByName(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				site = "true");
 
 			AssertTextEquals(
@@ -218,7 +210,7 @@ definition {
 		}
 
 		task ("Assert can't access public page via old friendly URL") {
-			Navigator.openSiteURL(siteName = "site-name");
+			Navigator.openSiteURL(siteName = ${siteURLKey});
 
 			Page.viewNoPG(pageName = "Public Page");
 
@@ -228,7 +220,7 @@ definition {
 		}
 
 		task ("Assert can't access private page via old friendly URL") {
-			Navigator.openPrivateSiteURL(siteName = "site-name");
+			Navigator.openPrivateSiteURL(siteName = ${siteURLKey});
 
 			Page.viewNoPG(pageName = "Private Page");
 
@@ -244,21 +236,21 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Edit site name") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 			Site.editCP(
-				siteName = "Site Name",
-				siteNameEdit = "Site Name Edit");
+				siteName = ${randomSiteName},
+				siteNameEdit = "${randomSiteName} Edit");
 		}
 
 		task ("View site name edited") {
 			Site.openSitesAdmin();
 
-			Site.viewCP(siteName = "Site Name Edit");
+			Site.viewCP(siteName = "${randomSiteName} Edit");
 		}
 	}
 
@@ -270,21 +262,21 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a public page and private page to the site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 
 			JSONLayout.addPrivateLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Edit friendly URL to alpha") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 			Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
 		}
@@ -294,7 +286,7 @@ definition {
 
 			Site.viewSiteFriendlyURLPG(
 				pageName = "Public Page",
-				siteName = "Site Name",
+				siteName = ${randomSiteName},
 				sitePageURL = "${portalURL}/web/alpha");
 		}
 
@@ -303,7 +295,7 @@ definition {
 
 			Site.viewSiteFriendlyURLPG(
 				pageName = "Private Page",
-				siteName = "Site Name",
+				siteName = ${randomSiteName},
 				sitePageURL = "${portalURL}/group/alpha");
 		}
 	}
@@ -317,30 +309,30 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site and a public page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Edit friendly URL to have 2 slashes") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 			Site.editFriendlyURLCP(
 				friendlyURLInvalid = "true",
-				siteFriendlyURL = "/site-name",
+				siteFriendlyURL = "/${siteURLKey}",
 				siteFriendlyURLEdit = "/alpha/alpha");
 		}
 
 		task ("View friendly URL doesn't change") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Site Page");
 
-			PagesAdmin.viewBaseFriendlyURL(siteFriendlyURL = "${portalURL}/web/site-name");
+			PagesAdmin.viewBaseFriendlyURL(siteFriendlyURL = "${portalURL}/web/${siteURLKey}");
 		}
 	}
 
@@ -349,42 +341,42 @@ definition {
 	test SearchSite {
 		property portal.acceptance = "true";
 
-		HeadlessSite.addSite(siteName = "Site Name");
+		HeadlessSite.addSite(siteName = ${randomSiteName});
 
 		Site.openSitesAdmin();
 
-		Site.searchCP(siteName = "Site Name");
+		Site.searchCP(siteName = ${randomSiteName});
 	}
 
 	@description = "Can not choose its own site as parent site."
 	@priority = 3
 	test SiteCannotBeItsOwnParent {
-		HeadlessSite.addSite(siteName = "Site Name");
+		HeadlessSite.addSite(siteName = ${randomSiteName});
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",
-			parentSiteName = "Site Name");
+			parentSiteName = ${randomSiteName});
 	}
 
 	@description = "Can not choose its own site as parent site in staging."
 	@priority = 3
 	test SiteCannotBeItsOwnParentStaging {
 		task ("Add a site and a public page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Enable local staging for the site") {
-			JSONStaging.enableLocalStaging(groupName = "Site Name");
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 		}
 
 		task ("View page in staging and live site") {
-			Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = ${randomSiteName});
 
 			Navigator.gotoStagedView();
 
@@ -392,17 +384,19 @@ definition {
 		}
 
 		task ("Assert could not select its own site as parent site") {
-			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 			Site.selectParentSite(
 				chooseButtonAvailable = "false",
-				parentSiteName = "Site Name");
+				parentSiteName = ${randomSiteName});
 		}
 	}
 
 	@description = "This is a test case for LRQA-5853. Disbale Content Sharing in instance level and view child Sites doesn't display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
+		property test.name.skip.portal.instance = "Sites#ViewContentSharingDisabledAcrossSitesViaAP";
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		PortalSettings.gotoConfiguration(
@@ -414,30 +408,30 @@ definition {
 
 		PortalSettings.configureContentSharingSubSitesCP(subSites = "enabledByDefault");
 
-		HeadlessSite.addSite(siteName = "Site Name");
+		HeadlessSite.addSite(siteName = ${randomSiteName});
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = ${randomSiteName},
 			layoutName = "AP Test Page");
 
 		HeadlessSite.addSite(
-			parentSiteName = "Site Name",
+			parentSiteName = ${randomSiteName},
 			siteName = "Child SiteName");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Child SiteName",
 			layoutName = "WC Test Page",
-			parentGroupName = "Site Name");
+			parentGroupName = ${randomSiteName});
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
+			groupName = ${randomSiteName},
 			layoutName = "AP Test Page",
 			widgetName = "Asset Publisher");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Child SiteName",
 			layoutName = "WC Test Page",
-			parentGroupName = "Site Name",
+			parentGroupName = ${randomSiteName},
 			widgetName = "Web Content Display");
 
 		Navigator.openSiteURL(siteName = "Child SiteName");
@@ -450,47 +444,47 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		AssetPublisherPortlet.configureSiteScopePG(
 			siteName = "Child SiteName",
 			siteScopeType = "Child Site");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			childSite = "true",
 			contentSharingAcrossSitesEnabled = "false",
 			liferaySiteName = ${siteName});
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		AssetPublisherPortlet.viewContentSharingPG(
 			assetContent = "WC WebContent Content",
 			assetTitle = "WC WebContent Title",
-			siteScope1 = "Site Name",
+			siteScope1 = ${randomSiteName},
 			siteScope2 = "Child SiteName");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		Blogs.addViaAPSelectScope(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
-			siteScope = "Site Name");
+			siteScope = ${randomSiteName});
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Child SiteName",
 			layoutName = "WC Test Page",
-			parentGroupName = "Site Name",
+			parentGroupName = ${randomSiteName},
 			widgetName = "Asset Publisher");
 
 		Navigator.openSiteURL(siteName = "Child SiteName");
 
 		AssetPublisherPortlet.configureSiteScopePG(
-			siteName = "Site Name",
+			siteName = ${randomSiteName},
 			siteScopeType = "Parent Site");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			childSite = "true",
@@ -502,13 +496,15 @@ definition {
 		AssetPublisherPortlet.viewContentSharingPG(
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title",
-			siteScope1 = "Site Name",
+			siteScope1 = ${randomSiteName},
 			siteScope2 = "Child SiteName");
 	}
 
 	@description = "This is a test case for LRQA-6014. Enable Content Sharing in instance level and view child Sites display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
+		property test.name.skip.portal.instance = "Sites#ViewContentSharingEnabledAcrossSitesViaAP";
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		PortalSettings.gotoConfiguration(
@@ -525,7 +521,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		Site.addBlankCP(siteName = "Site Name");
+		Site.addBlankCP(siteName = ${randomSiteName});
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -533,17 +529,17 @@ definition {
 
 		PagesAdmin.addPage(pageName = "AP Test Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		AssetPublisherPortlet.viewConfigureSiteScopeContentSharingPG(
 			contentSharingAcrossSitesEnabled = "true",
 			liferaySiteName = ${siteName});
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = ${randomSiteName});
 
 		Blogs.addViaAP(
 			entryContent = "Blogs Entry Content",
@@ -570,14 +566,14 @@ definition {
 
 		Navigator.gotoPage(pageName = "AP Test Page");
 
-		AssetPublisherPortlet.configureScope(otherSite = "Site Name");
+		AssetPublisherPortlet.configureScope(otherSite = ${randomSiteName});
 
 		Navigator.gotoPage(pageName = "AP Test Page");
 
 		AssetPublisherPortlet.viewContentSharingPG(
 			assetContent = "Blogs Entry Content",
 			assetTitle = "Blogs Entry Title",
-			siteScope1 = "Site Name",
+			siteScope1 = ${randomSiteName},
 			siteScope2 = ${siteName});
 	}
 
@@ -601,32 +597,32 @@ definition {
 		Site.openSitesAdmin();
 
 		task ("Add a site and a public page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Add a child site to the site and a public page in it") {
 			HeadlessSite.addSite(
-				parentSiteName = "Site Name",
+				parentSiteName = ${randomSiteName},
 				siteName = "Child SiteName");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child SiteName",
 				layoutName = "Site Page",
-				parentGroupName = "Site Name");
+				parentGroupName = ${randomSiteName});
 		}
 
 		task ("Add a child site to the child site and a public page in it") {
 			HeadlessSite.addSite(
-				grandParentSiteName = "Site Name",
+				grandParentSiteName = ${randomSiteName},
 				parentSiteName = "Child SiteName",
 				siteName = "Child ChildSiteName");
 
 			JSONLayout.addPublicLayout(
-				grandParentGroupName = "Site Name",
+				grandParentGroupName = ${randomSiteName},
 				groupName = "Child ChildSiteName",
 				layoutName = "Site Page",
 				parentGroupName = "Child SiteName");
@@ -637,7 +633,7 @@ definition {
 
 			Site.viewChildCP(
 				childSiteName = "Child SiteName",
-				siteName = "Site Name");
+				siteName = ${randomSiteName});
 
 			Site.viewChildCP(
 				childSiteName = "Child ChildSiteName",
@@ -648,7 +644,7 @@ definition {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Child SiteName",
 				layoutName = "Site Page",
-				parentGroupName = "Site Name",
+				parentGroupName = ${randomSiteName},
 				widgetName = "Sites Directory");
 		}
 
@@ -667,7 +663,7 @@ definition {
 				pageName = "Site Page",
 				siteName = "Child SiteName");
 
-			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomSiteName});
 		}
 	}
 
@@ -675,32 +671,32 @@ definition {
 	@priority = 4
 	test ViewSiteHierarchiesViaSitesDirectory {
 		task ("Add a site and a public page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 
 			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Site Page");
 		}
 
 		task ("Add a child site to the site and a public page in it") {
 			HeadlessSite.addSite(
-				parentSiteName = "Site Name",
+				parentSiteName = ${randomSiteName},
 				siteName = "Child Site1Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child Site1Name",
 				layoutName = "Site Page",
-				parentGroupName = "Site Name");
+				parentGroupName = ${randomSiteName});
 		}
 
 		task ("Add a child site to the child site and a public page in it") {
 			HeadlessSite.addSite(
-				grandParentSiteName = "Site Name",
+				grandParentSiteName = ${randomSiteName},
 				parentSiteName = "Child Site1Name",
 				siteName = "Child ChildSite1Name");
 
 			JSONLayout.addPublicLayout(
-				grandParentGroupName = "Site Name",
+				grandParentGroupName = ${randomSiteName},
 				groupName = "Child ChildSite1Name",
 				layoutName = "Site Page",
 				parentGroupName = "Child Site1Name");
@@ -708,12 +704,12 @@ definition {
 
 		task ("Add another child site to the child site and a public page in it") {
 			HeadlessSite.addSite(
-				grandParentSiteName = "Site Name",
+				grandParentSiteName = ${randomSiteName},
 				parentSiteName = "Child Site1Name",
 				siteName = "Child ChildSite2Name");
 
 			JSONLayout.addPublicLayout(
-				grandParentGroupName = "Site Name",
+				grandParentGroupName = ${randomSiteName},
 				groupName = "Child ChildSite2Name",
 				layoutName = "Site Page",
 				parentGroupName = "Child Site1Name");
@@ -721,20 +717,20 @@ definition {
 
 		task ("Add another child site to the site and a public page in it") {
 			HeadlessSite.addSite(
-				parentSiteName = "Site Name",
+				parentSiteName = ${randomSiteName},
 				siteName = "Child Site2Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Child Site2Name",
 				layoutName = "Site Page",
-				parentGroupName = "Site Name");
+				parentGroupName = ${randomSiteName});
 		}
 
 		task ("Add a Sites Directory to the first child site public page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Child Site1Name",
 				layoutName = "Site Page",
-				parentGroupName = "Site Name",
+				parentGroupName = ${randomSiteName},
 				widgetName = "Sites Directory");
 		}
 
@@ -755,7 +751,7 @@ definition {
 		}
 
 		task ("View Top level site displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomSiteName});
 		}
 
 		task ("Configure Sites Directory to display in Parent Level") {
@@ -769,7 +765,7 @@ definition {
 		}
 
 		task ("View Parent level site displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomSiteName});
 		}
 
 		task ("Configure Sites Directory to display in Siblings") {
@@ -806,7 +802,7 @@ definition {
 
 		task ("Add a Sites Directory to the first child site of first child site") {
 			JSONLayout.addWidgetToPublicLayout(
-				grandParentGroupName = "Site Name",
+				grandParentGroupName = ${randomSiteName},
 				groupName = "Child ChildSite1Name",
 				layoutName = "Site Page",
 				parentGroupName = "Child Site1Name",
@@ -830,7 +826,7 @@ definition {
 		}
 
 		task ("View Top level site displayed") {
-			SitesDirectory.viewDescriptivePG(siteName = "Site Name");
+			SitesDirectory.viewDescriptivePG(siteName = ${randomSiteName});
 		}
 
 		task ("Configure Sites Directory to display in Parent Level") {

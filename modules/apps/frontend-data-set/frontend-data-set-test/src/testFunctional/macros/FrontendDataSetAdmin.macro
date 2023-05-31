@@ -338,6 +338,12 @@ definition {
 			value1 = ${searchTerm});
 	}
 
+	macro selectFilters {
+		Select(
+			locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT",
+			value1 = ${filterType});
+	}
+
 	macro selectProvider {
 		Click(
 			dropdownLabel = "Choose an Option",

@@ -67,6 +67,37 @@ definition {
 
 		// TODO LPS-183476 AssertDropdownHasAllFields pending implementation
 
+	test AssertAllFieldsAreDisplayedInSchema {
+
+		// TODO LPS-183476 AssertAllFieldsAreDisplayedInSchema pending implementation
+
+	}
+
+	@description = "LPS-183476. Confirm that the 'Filter By Field' drop-down carries all fields available in the schema"
+	@ignore = "true"
+	@priority = 5
+	test AssertDropdownHasAllFields {
+
+		// TODO LPS-183476 AssertDropdownHasAllFields pending implementation
+
+	}
+
+	@description = "LPS-183476. Confirm that the selected option in the drop-down will show up in the column field"
+	@ignore = "true"
+	@priority = 5
+	test AssertFilterIsPresentInColumn {
+
+		// TODO LPS-183476 AssertFilterIsPresentInColumn pending implementation
+
+	}
+
+	@description = "LPS-183476. Confirm that the selected filter is actually displayed"
+	@ignore = "true"
+	@priority = 5
+	test AssertFiltersCanBeSelected {
+
+		// TODO LPS-183476 AssertFiltersCanBeSelected pending implementation
+
 	}
 
 	@description = "LPS-176184. Confirm that when 'Name Field' is not provided, it is filled with the same name as field name."
@@ -145,7 +176,16 @@ definition {
 		}
 	}
 
-	@description = "LPS-183476. Confirm that when searching one of the created filters and clicking on search icon the corresponding result is displayed"
+	@description = "LPS-183476. Confirm that when searching one of the created filters and pressing Enter Key the corresponding result is displayed"
+	@ignore = "true"
+	@priority = 4
+	test CanSearchFilterOnEnterKey {
+
+		// TODO LPS-183476 CanSearchFilterOnEnterKey pending implementation
+
+	}
+
+	@description = "LPS-183476. Confirm that "
 	@ignore = "true"
 	@priority = 3
 	test CanSearchFilterOnIcon {

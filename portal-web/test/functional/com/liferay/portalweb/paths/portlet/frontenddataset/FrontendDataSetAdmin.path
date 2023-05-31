@@ -215,6 +215,19 @@
 	<td>//*[contains(text(), 'Date range is invalid. "From" must be before "to"')]</td>
 	<td></td>
 </tr>
+
+<!-- DATA SET PAGINATION -->
+
+<tr>
+	<td>FILTER_BY_SELECT</td>
+	<td>//div[label[contains(.,'Filter By')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_TABLE_CELL</td>
+	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_tableRow}]//td[contains(.,'${chosenFilter}')][${key_tableColumn}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

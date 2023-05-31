@@ -39,4 +39,36 @@ definition {
 			PagesAdmin.tearDownCP();
 		}
 	}
+
+	@description = "Story ID: LPS-153187 | Test Summary: Verify if the user can create a new Topic."
+	@priority = 5
+	test CanCreateATopic {
+        task ("Given that go to Questions Page") {
+            Navigator.openURL();
+
+            ProductMenu.gotoPortlet(
+                category = "Site Builder",
+                portlet = "Pages");
+
+            PagesAdmin.gotoPageEllipsisMenuItem(
+                menuItem = "View",
+                pageName = "Questions Page");
+        }
+
+        task ("When add a new topic") {
+            ScrollWebElementIntoView(
+                key_text = "New Topic",
+                locator1 = "Button#ANY");
+
+            Button.click(button = "New Topic");
+
+            Questions.addRootTopic(
+                rootTopicDescription = "Topic Description",
+                rootTopicName = "Topic Name");
+        }
+
+        task ("Then can see the topic card created") {
+            LexiconCard.viewCardPresent(card = "Topic Name");
+        }
+	}
 }

@@ -139,6 +139,7 @@ definition {
 					nestedField = ${nestedField},
 					numberOfRelatedObjectEntries = ${numberOfRelatedObjectEntries},
 					objectEntryId = ${objectEntryId},
+					oneToManyChild = ${oneToManyChild},
 					relatedEntryExternalReferenceCode = ${relatedEntryExternalReferenceCode},
 					relatedEntryFieldName = ${relatedEntryFieldName});
 			}
@@ -148,9 +149,11 @@ definition {
 	}
 
 	macro assertCorrectObjectEntryValuesInResponse {
-		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectJsonPath},${expectedValues}");
+		Variables.assertDefined(parameterList = "${objectJsonPath},${expectedValues}");
 
-		var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
+		if (!(isSet(response))) {
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = ${en_US_plural_label});
+		}
 
 		var actualValues = JSONUtil.getWithJSONPath(${response}, ${objectJsonPath});
 

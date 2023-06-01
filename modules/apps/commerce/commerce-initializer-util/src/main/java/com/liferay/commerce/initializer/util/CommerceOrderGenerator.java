@@ -312,7 +312,9 @@ public class CommerceOrderGenerator {
 					"status", () -> WorkflowConstants.STATUS_APPROVED
 				).put(
 					"types",
-					_commerceAccountHelper.getAccountEntryTypes(groupId)
+					_commerceAccountHelper.getAccountEntryTypes(
+						_commerceChannelLocalService.
+							getCommerceChannelGroupIdBySiteGroupId(groupId))
 				).build(),
 				QueryUtil.ALL_POS, 0, null, false);
 

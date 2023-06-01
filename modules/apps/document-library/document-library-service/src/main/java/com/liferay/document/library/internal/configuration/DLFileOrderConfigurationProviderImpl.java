@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFileOrderConfigurationProviderImpl
 	implements DLFileOrderConfigurationProvider {
 
-	public String getCompanyOrderByColumn(long compnayId)
+	public String getCompanyOrderByColumn(long companyId)
 		throws ConfigurationException {
 
 		DLFileOrderConfiguration dlFileOrderConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				DLFileOrderConfiguration.class, compnayId);
+				DLFileOrderConfiguration.class, companyId);
 
 		return dlFileOrderConfiguration.orderByColumn();
 	}

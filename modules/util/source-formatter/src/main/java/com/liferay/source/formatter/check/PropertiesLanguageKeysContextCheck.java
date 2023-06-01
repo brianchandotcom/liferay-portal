@@ -17,7 +17,6 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 	}
 
 	private boolean _isContinuousString(String context) {
-		if (context.length() == 1) {
+		if (ArrayUtil.contains(_ALLOW_CONTEXT, context)) {
 			return false;
 		}
 
@@ -95,7 +94,7 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			}
 
 			if (ArrayUtil.contains(_UNQUALIFIED_CONTEXT, context) ||
-				((context.length() == 1) && !StringUtil.equals(context, "v")) ||
+				context.matches("\\d+") || context.matches("\\.+") ||
 				_isContinuousString(context)) {
 
 				addMessage(
@@ -118,8 +117,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String[] _UNQUALIFIED_CONTEXT = {
-		"", "null", "#s", "..."
-	};
+	private static final String[] _ALLOW_CONTEXT = {"de", "n", "v"};
+
+	private static final String[] _UNQUALIFIED_CONTEXT = {"", "null"};
 
 }

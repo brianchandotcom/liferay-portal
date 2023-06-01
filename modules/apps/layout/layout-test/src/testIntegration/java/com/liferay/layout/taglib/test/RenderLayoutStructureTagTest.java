@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -96,18 +94,10 @@ public class RenderLayoutStructureTagTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		_layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -117,19 +107,26 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	public void testRemovedLayoutTemplateId() throws Exception {
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
+			StringPool.BLANK, _serviceContext);
+
 		UnicodeProperties typeSettingsUnicodeProperties =
-			_layout.getTypeSettingsProperties();
+			layout.getTypeSettingsProperties();
 
 		typeSettingsUnicodeProperties.setProperty(
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
 			"removed-template-id");
 
-		_layout = LayoutLocalServiceUtil.updateLayout(
-			_layout.getGroupId(), _layout.isPrivateLayout(),
-			_layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
+		layout = LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			typeSettingsUnicodeProperties.toString());
 
 		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)_layout.getLayoutType();
+			(LayoutTypePortlet)layout.getLayoutType();
 
 		Assert.assertEquals(
 			"removed-template-id", layoutTypePortlet.getLayoutTemplateId());
@@ -141,15 +138,15 @@ public class RenderLayoutStructureTagTest {
 			_getDefaultMasterLayoutStructure());
 
 		renderLayoutStructureTag.doTag(
-			_getMockHttpServletRequest(), new MockHttpServletResponse());
+			_getMockHttpServletRequest(layout), new MockHttpServletResponse());
 
 		Assert.assertEquals(
 			PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID,
 			layoutTypePortlet.getLayoutTemplateId());
 
-		_layout = _layoutLocalService.fetchLayout(_layout.getPlid());
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
 
-		layoutTypePortlet = (LayoutTypePortlet)_layout.getLayoutType();
+		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 
 		Assert.assertEquals(
 			"removed-template-id", layoutTypePortlet.getLayoutTemplateId());
@@ -425,45 +422,6 @@ public class RenderLayoutStructureTagTest {
 		).build();
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest()
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setLayout(_layout);
-
-		LayoutSet layoutSet = _layout.getLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-
-		themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)_layout.getLayoutType());
-		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-		themeDisplay.setRequest(mockHttpServletRequest);
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockHttpServletRequest.setAttribute(
-			"ORIGINAL_HTTP_SERVLET_REQUEST",
-			_getOriginalMockHttpServletRequest());
-
-		mockHttpServletRequest.setMethod(HttpMethods.GET);
-
-		return mockHttpServletRequest;
-	}
-
 	private MockHttpServletRequest _getMockHttpServletRequest(Layout layout)
 		throws Exception {
 
@@ -472,42 +430,16 @@ public class RenderLayoutStructureTagTest {
 				_companyLocalService.getCompany(layout.getCompanyId()), _group,
 				layout);
 
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 
-		return mockHttpServletRequest;
-	}
-
-	private MockHttpServletRequest _getOriginalMockHttpServletRequest()
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLayout(_layout);
-
-		LayoutSet layoutSet = _layout.getLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-
-		themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)_layout.getLayoutType());
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(mockHttpServletRequest);
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockHttpServletRequest.setMethod(HttpMethods.GET);
+			"ORIGINAL_HTTP_SERVLET_REQUEST", mockHttpServletRequest);
 
 		return mockHttpServletRequest;
 	}
@@ -540,8 +472,6 @@ public class RenderLayoutStructureTagTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Layout _layout;
-
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
@@ -553,5 +483,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	private ServiceContext _serviceContext;
 
 }

@@ -21,13 +21,16 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
 
@@ -67,6 +70,24 @@ public class LayoutDesignScreenNavigationEntry
 	public String getScreenNavigationKey() {
 		return LayoutScreenNavigationEntryConstants.
 			SCREEN_NAVIGATION_KEY_LAYOUT;
+	}
+
+	@Override
+	public String getStatusLabel(Locale locale, Layout layout) {
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			draftLayout.getTypeSettingsProperties();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-153951") &&
+			GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					"designConfigurationModified"))) {
+
+			return _language.get(_getResourceBundle(locale), "draft");
+		}
+
+		return null;
 	}
 
 	@Override

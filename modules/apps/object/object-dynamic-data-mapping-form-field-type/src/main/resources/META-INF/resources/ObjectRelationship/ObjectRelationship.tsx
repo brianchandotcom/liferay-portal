@@ -15,6 +15,7 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import {useDebounce} from '@clayui/shared';
+import {DateTimeRenderer} from '@liferay/frontend-data-set-web';
 import {
 	FORM_EVENT_TYPES,
 	useForm,
@@ -27,17 +28,6 @@ import React, {useEffect, useRef, useState} from 'react';
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-function dateStructure(date: string): string {
-	const dateObj = new Date(date);
-	const day = dateObj.getUTCDate();
-	const month = dateObj.getUTCMonth() + 1;
-	const year = dateObj.getUTCFullYear();
-
-	return `${month.toString().padStart(2, '0')}-${day
-		.toString()
-		.padStart(2, '0')}-${year}`;
-}
 
 async function fetchOptions<T>(url: string) {
 	const response = await fetch(url, {
@@ -60,9 +50,17 @@ function getLabel<T extends ObjectMap<any>>(
 
 	if (typeof value !== 'object') {
 		if (objectFieldBusinessType === 'Date') {
-			const dateFormat = dateStructure(String(value));
-
-			return dateFormat;
+			return DateTimeRenderer({
+				options: {
+					format: {
+						day: 'numeric',
+						month: 'short',
+						timeZone: 'UTC',
+						year: 'numeric',
+					},
+				},
+				value: String(value),
+			});
 		}
 
 		return value ? String(value) : '';

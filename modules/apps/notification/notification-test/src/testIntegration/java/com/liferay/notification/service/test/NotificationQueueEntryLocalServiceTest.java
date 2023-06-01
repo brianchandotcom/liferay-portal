@@ -70,7 +70,8 @@ public class NotificationQueueEntryLocalServiceTest {
 			NotificationTemplateUtil.createNotificationRecipientSetting(
 				"to", "to@liferay.com"));
 	}
-	
+
+	@FeatureFlags("LPS-178816")
 	@Test
 	public void testAddNotificationQueueEntry() throws Exception {
 		Assert.assertEquals(

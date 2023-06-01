@@ -129,8 +129,6 @@ public class SXPBlueprintInfoCollectionProvider
 							"search.experiences.scope.group.id",
 							themeDisplay.getScopeGroupId());
 
-						searchContext.setLocale(serviceContext.getLocale());
-
 						KeywordsInfoFilter keywordsInfoFilter =
 							collectionQuery.getInfoFilter(
 								KeywordsInfoFilter.class);
@@ -140,6 +138,7 @@ public class SXPBlueprintInfoCollectionProvider
 								keywordsInfoFilter.getKeywords());
 						}
 
+						searchContext.setLocale(serviceContext.getLocale());
 						searchContext.setTimeZone(serviceContext.getTimeZone());
 						searchContext.setUserId(serviceContext.getUserId());
 					}

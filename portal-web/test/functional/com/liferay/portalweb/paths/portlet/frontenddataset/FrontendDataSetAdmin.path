@@ -134,6 +134,19 @@
 	<td>//div[contains(@class,'form-group')]//input[contains(@id,'ViewDefaultItemsPerPage')]</td>
 	<td></td>
 </tr>
+
+<!-- DATA SET DEFAULT SORT -->
+
+<tr>
+	<td>FIELD_SELECT</td>
+	<td>//div[label[contains(.,'Field')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SORTING_SELECT</td>
+	<td>//div[label[contains(.,'Sorting')]]/select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

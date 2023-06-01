@@ -183,66 +183,6 @@ for (long defaultTeamId : defaultTeamIds) {
 </liferay-ui:search-container>
 
 <aui:script use="liferay-search-container">
-	const bindModifyLink = function (config) {
-		const searchContainer = config.searchContainer;
-
-		searchContainer.get('contentBox').delegate(
-			'click',
-			(event) => {
-				const link = event.currentTarget;
-
-				searchContainer.deleteRow(
-					link.ancestor('tr'),
-					link.getAttribute('data-rowId')
-				);
-			},
-			'.modify-link'
-		);
-	};
-
-	const bindSelectLink = function (config) {
-		const searchContainer = config.searchContainer;
-
-		const selectLink = document.getElementById(config.linkId);
-
-		selectLink.addEventListener('click', (event) => {
-			let searchContainerData = searchContainer.getData();
-
-			if (!searchContainerData.length) {
-				searchContainerData = [];
-			}
-			else {
-				searchContainerData = searchContainerData.split(',');
-			}
-
-			const ids = document.getElementById(config.inputId).value;
-
-			const uri = new URL(config.uri);
-
-			uri.searchParams.set(config.urlParam, ids);
-
-			Liferay.Util.openSelectionModal({
-				onSelect: function (event) {
-					const entityId = event.entityid;
-
-					const rowColumns = [
-						Liferay.Util.escape(event.entityname),
-						'<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="' +
-							entityId +
-							'" title="<%= LanguageUtil.get(request, "remove") %>" type="button"><%= UnicodeFormatter.toString(removeRoleIcon) %></button>',
-					];
-
-					searchContainer.addRow(rowColumns, entityId);
-
-					searchContainer.updateDataStore();
-				},
-				selectEventName: config.id,
-				selectedData: searchContainerData,
-				title: config.title,
-				url: uri.toString(),
-			});
-		});
-	};
 
 	<%
 	PortletURL selectSiteRoleURL = PortletURLBuilder.create(
@@ -262,23 +202,69 @@ for (long defaultTeamId : defaultTeamIds) {
 	String selectSiteRolePortletId = PortletProviderUtil.getPortletId(Role.class.getName(), PortletProvider.Action.BROWSE);
 	%>
 
-	const siteRolesConfig = {
-		id: '<portlet:namespace />selectSiteRole',
-		idAttr: 'roleid',
-		inputId: '<portlet:namespace />siteRolesSearchContainerPrimaryKeys',
-		linkId: '<portlet:namespace />selectSiteRoleLink',
-		searchContainer: Liferay.SearchContainer.get(
-			'<portlet:namespace />siteRolesSearchContainer'
-		),
-		title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-		titleAttr: 'roletitle',
-		uri: '<%= selectSiteRoleURL.toString() %>',
-		urlParam:
-			'<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds',
-	};
+	const siteRolesSearchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />siteRolesSearchContainer'
+	);
 
-	bindModifyLink(siteRolesConfig);
-	bindSelectLink(siteRolesConfig);
+	siteRolesSearchContainer.get('contentBox').delegate(
+		'click',
+		(event) => {
+			const link = event.currentTarget;
+
+			siteRolesSearchContainer.deleteRow(
+				link.ancestor('tr'),
+				link.getAttribute('data-rowId')
+			);
+		},
+		'.modify-link'
+	);
+
+	const selectSiteRoleLink = document.getElementById(
+		'<portlet:namespace />selectSiteRoleLink'
+	);
+
+	selectSiteRoleLink.addEventListener('click', (event) => {
+		let searchContainerData = siteRolesSearchContainer.getData();
+
+		if (!searchContainerData.length) {
+			searchContainerData = [];
+		}
+		else {
+			searchContainerData = searchContainerData.split(',');
+		}
+
+		const ids = document.getElementById(
+			'<portlet:namespace />siteRolesSearchContainerPrimaryKeys'
+		).value;
+
+		const uri = new URL('<%= selectSiteRoleURL.toString() %>');
+
+		uri.searchParams.set(
+			'<%= PortalUtil.getPortletNamespace(selectSiteRolePortletId) %>roleIds',
+			ids
+		);
+
+		Liferay.Util.openSelectionModal({
+			onSelect: function (event) {
+				const entityId = event.entityid;
+
+				const rowColumns = [
+					Liferay.Util.escape(event.entityname),
+					'<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="' +
+						entityId +
+						'" title="<%= LanguageUtil.get(request, "remove") %>" type="button"><%= UnicodeFormatter.toString(removeRoleIcon) %></button>',
+				];
+
+				siteRolesSearchContainer.addRow(rowColumns, entityId);
+
+				siteRolesSearchContainer.updateDataStore();
+			},
+			selectEventName: '<portlet:namespace />selectSiteRole',
+			selectedData: searchContainerData,
+			title: '<liferay-ui:message arguments="site-role" key="select-x" />',
+			url: uri.toString(),
+		});
+	});
 
 	<%
 	PortletURL selectTeamURL = PortletURLBuilder.create(
@@ -294,21 +280,67 @@ for (long defaultTeamId : defaultTeamIds) {
 	String selectTeamPortletId = PortletProviderUtil.getPortletId(Team.class.getName(), PortletProvider.Action.BROWSE);
 	%>
 
-	const teamsConfig = {
-		id: '<portlet:namespace />selectTeam',
-		idAttr: 'teamid',
-		inputId: '<portlet:namespace />teamsSearchContainerPrimaryKeys',
-		linkId: '<portlet:namespace />selectTeamLink',
-		searchContainer: Liferay.SearchContainer.get(
-			'<portlet:namespace />teamsSearchContainer'
-		),
-		title: '<liferay-ui:message arguments="team" key="select-x" />',
-		titleAttr: 'teamname',
-		uri: '<%= selectTeamURL.toString() %>',
-		urlParam:
-			'<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds',
-	};
+	const teamsSearchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />teamsSearchContainer'
+	);
 
-	bindModifyLink(teamsConfig);
-	bindSelectLink(teamsConfig);
+	teamsSearchContainer.get('contentBox').delegate(
+		'click',
+		(event) => {
+			const link = event.currentTarget;
+
+			teamsSearchContainer.deleteRow(
+				link.ancestor('tr'),
+				link.getAttribute('data-rowId')
+			);
+		},
+		'.modify-link'
+	);
+
+	const selectTeamLink = document.getElementById(
+		'<portlet:namespace />selectTeamLink'
+	);
+
+	selectTeamLink.addEventListener('click', (event) => {
+		let searchContainerData = teamsSearchContainer.getData();
+
+		if (!searchContainerData.length) {
+			searchContainerData = [];
+		}
+		else {
+			searchContainerData = searchContainerData.split(',');
+		}
+
+		const ids = document.getElementById(
+			'<portlet:namespace />teamsSearchContainerPrimaryKeys'
+		).value;
+
+		const uri = new URL('<%= selectTeamURL.toString() %>');
+
+		uri.searchParams.set(
+			'<%= PortalUtil.getPortletNamespace(selectTeamPortletId) %>teamIds',
+			ids
+		);
+
+		Liferay.Util.openSelectionModal({
+			onSelect: function (event) {
+				const entityId = event.entityid;
+
+				const rowColumns = [
+					Liferay.Util.escape(event.entityname),
+					'<button aria-label="<%= LanguageUtil.get(request, "remove") %>" class="btn btn-monospaced btn-outline-borderless btn-outline-secondary float-right lfr-portal-tooltip modify-link" data-rowId="' +
+						entityId +
+						'" title="<%= LanguageUtil.get(request, "remove") %>" type="button"><%= UnicodeFormatter.toString(removeRoleIcon) %></button>',
+				];
+
+				teamsSearchContainer.addRow(rowColumns, entityId);
+
+				teamsSearchContainer.updateDataStore();
+			},
+			selectEventName: '<portlet:namespace />selectTeam',
+			selectedData: searchContainerData,
+			title: '<liferay-ui:message arguments="team" key="select-x" />',
+			url: uri.toString(),
+		});
+	});
 </aui:script>

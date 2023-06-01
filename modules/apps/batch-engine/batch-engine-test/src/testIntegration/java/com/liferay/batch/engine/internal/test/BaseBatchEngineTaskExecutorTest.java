@@ -112,10 +112,13 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		testBlogPostingBatchEngineTaskItemDelegate =
+			new TestBlogPostingBatchEngineTaskItemDelegate();
+
 		_batchEngineTaskItemDelegateServiceRegistration =
 			bundleContext.registerService(
 				BatchEngineTaskItemDelegate.class.getName(),
-				new TestBlogPostingBatchEngineTaskItemDelegate(),
+				testBlogPostingBatchEngineTaskItemDelegate,
 				new HashMapDictionary<String, String>());
 	}
 
@@ -442,6 +445,9 @@ public class BaseBatchEngineTaskExecutorTest {
 
 	@DeleteAfterTestRun
 	protected Group group;
+
+	protected TestBlogPostingBatchEngineTaskItemDelegate
+		testBlogPostingBatchEngineTaskItemDelegate;
 
 	@DeleteAfterTestRun
 	protected User user;

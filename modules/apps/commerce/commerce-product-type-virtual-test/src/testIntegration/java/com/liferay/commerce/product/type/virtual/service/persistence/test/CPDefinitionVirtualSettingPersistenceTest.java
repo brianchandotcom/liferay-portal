@@ -169,7 +169,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 		newCPDefinitionVirtualSetting.setSampleFileEntryId(
 			RandomTestUtil.nextLong());
 
-		newCPDefinitionVirtualSetting.setSampleUrl(
+		newCPDefinitionVirtualSetting.setSampleURL(
 			RandomTestUtil.randomString());
 
 		newCPDefinitionVirtualSetting.setTermsOfUseRequired(
@@ -255,8 +255,8 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			existingCPDefinitionVirtualSetting.getSampleFileEntryId(),
 			newCPDefinitionVirtualSetting.getSampleFileEntryId());
 		Assert.assertEquals(
-			existingCPDefinitionVirtualSetting.getSampleUrl(),
-			newCPDefinitionVirtualSetting.getSampleUrl());
+			existingCPDefinitionVirtualSetting.getSampleURL(),
+			newCPDefinitionVirtualSetting.getSampleURL());
 		Assert.assertEquals(
 			existingCPDefinitionVirtualSetting.isTermsOfUseRequired(),
 			newCPDefinitionVirtualSetting.isTermsOfUseRequired());
@@ -349,7 +349,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"fileEntryId", true, "url", true, "activationStatus", true,
 			"duration", true, "maxUsages", true, "useSample", true,
-			"sampleFileEntryId", true, "sampleUrl", true, "termsOfUseRequired",
+			"sampleFileEntryId", true, "sampleURL", true, "termsOfUseRequired",
 			true, "termsOfUseContent", true,
 			"termsOfUseJournalArticleResourcePrimKey", true, "override", true,
 			"lastPublishDate", true);
@@ -725,7 +725,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 		cpDefinitionVirtualSetting.setSampleFileEntryId(
 			RandomTestUtil.nextLong());
 
-		cpDefinitionVirtualSetting.setSampleUrl(RandomTestUtil.randomString());
+		cpDefinitionVirtualSetting.setSampleURL(RandomTestUtil.randomString());
 
 		cpDefinitionVirtualSetting.setTermsOfUseRequired(
 			RandomTestUtil.randomBoolean());

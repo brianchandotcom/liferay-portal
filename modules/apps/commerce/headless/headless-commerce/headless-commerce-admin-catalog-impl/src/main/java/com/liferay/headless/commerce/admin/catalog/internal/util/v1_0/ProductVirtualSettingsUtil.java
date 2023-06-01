@@ -87,7 +87,7 @@ public class ProductVirtualSettingsUtil {
 
 		if (useSample) {
 			sampleAttachmentURL = _validateURL(
-				productVirtualSettings.getSampleUrl());
+				productVirtualSettings.getSampleURL());
 
 			sampleFileEntryId = FileEntryUtil.getFileEntryId(
 				productVirtualSettings.getSampleAttachment(),
@@ -174,14 +174,14 @@ public class ProductVirtualSettingsUtil {
 
 		if (useSample) {
 			sampleAttachmentURL = _validateURL(
-				productVirtualSettings.getSampleUrl());
+				productVirtualSettings.getSampleURL());
 
 			if (Validator.isNull(sampleAttachmentURL)) {
 				if (Validator.isNull(
 						productVirtualSettings.getSampleAttachment())) {
 
 					sampleAttachmentURL =
-						cpDefinitionVirtualSetting.getSampleUrl();
+						cpDefinitionVirtualSetting.getSampleURL();
 				}
 				else {
 					sampleFileEntryId = FileEntryUtil.getFileEntryId(

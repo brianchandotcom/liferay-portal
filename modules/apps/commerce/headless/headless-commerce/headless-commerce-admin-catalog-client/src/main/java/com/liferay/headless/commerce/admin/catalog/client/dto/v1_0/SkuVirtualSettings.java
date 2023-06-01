@@ -203,26 +203,26 @@ public class SkuVirtualSettings implements Cloneable, Serializable {
 
 	protected String sampleSrc;
 
-	public String getSampleUrl() {
-		return sampleUrl;
+	public String getSampleURL() {
+		return sampleURL;
 	}
 
-	public void setSampleUrl(String sampleUrl) {
-		this.sampleUrl = sampleUrl;
+	public void setSampleURL(String sampleURL) {
+		this.sampleURL = sampleURL;
 	}
 
-	public void setSampleUrl(
-		UnsafeSupplier<String, Exception> sampleUrlUnsafeSupplier) {
+	public void setSampleURL(
+		UnsafeSupplier<String, Exception> sampleURLUnsafeSupplier) {
 
 		try {
-			sampleUrl = sampleUrlUnsafeSupplier.get();
+			sampleURL = sampleURLUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String sampleUrl;
+	protected String sampleURL;
 
 	public String getSrc() {
 		return src;

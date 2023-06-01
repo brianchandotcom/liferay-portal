@@ -1488,7 +1488,7 @@ components:
                         URL to download the sample file
                     readOnly: true
                     type: string
-                sampleUrl:
+                sampleURL:
                     description:
                         URL of the sample file
                     type: string
@@ -1788,7 +1788,7 @@ components:
                         URL to download the sample file
                     readOnly: true
                     type: string
-                sampleUrl:
+                sampleURL:
                     description:
                         URL of the sample file
                     type: string

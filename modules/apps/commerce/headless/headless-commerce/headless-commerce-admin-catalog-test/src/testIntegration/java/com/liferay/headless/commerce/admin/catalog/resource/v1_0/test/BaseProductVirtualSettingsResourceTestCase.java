@@ -188,7 +188,7 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 		productVirtualSettings.setAttachment(regex);
 		productVirtualSettings.setSampleAttachment(regex);
 		productVirtualSettings.setSampleSrc(regex);
-		productVirtualSettings.setSampleUrl(regex);
+		productVirtualSettings.setSampleURL(regex);
 		productVirtualSettings.setSrc(regex);
 		productVirtualSettings.setUrl(regex);
 
@@ -203,7 +203,7 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 		Assert.assertEquals(
 			regex, productVirtualSettings.getSampleAttachment());
 		Assert.assertEquals(regex, productVirtualSettings.getSampleSrc());
-		Assert.assertEquals(regex, productVirtualSettings.getSampleUrl());
+		Assert.assertEquals(regex, productVirtualSettings.getSampleURL());
 		Assert.assertEquals(regex, productVirtualSettings.getSrc());
 		Assert.assertEquals(regex, productVirtualSettings.getUrl());
 	}
@@ -398,8 +398,8 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("sampleUrl", additionalAssertFieldName)) {
-				if (productVirtualSettings.getSampleUrl() == null) {
+			if (Objects.equals("sampleURL", additionalAssertFieldName)) {
+				if (productVirtualSettings.getSampleURL() == null) {
 					valid = false;
 				}
 
@@ -657,10 +657,10 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("sampleUrl", additionalAssertFieldName)) {
+			if (Objects.equals("sampleURL", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						productVirtualSettings1.getSampleUrl(),
-						productVirtualSettings2.getSampleUrl())) {
+						productVirtualSettings1.getSampleURL(),
+						productVirtualSettings2.getSampleURL())) {
 
 					return false;
 				}
@@ -893,9 +893,9 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("sampleUrl")) {
+		if (entityFieldName.equals("sampleURL")) {
 			sb.append("'");
-			sb.append(String.valueOf(productVirtualSettings.getSampleUrl()));
+			sb.append(String.valueOf(productVirtualSettings.getSampleURL()));
 			sb.append("'");
 
 			return sb.toString();
@@ -992,7 +992,7 @@ public abstract class BaseProductVirtualSettingsResourceTestCase {
 					RandomTestUtil.randomString());
 				sampleSrc = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				sampleUrl = StringUtil.toLowerCase(
+				sampleURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				src = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				termsOfUseJournalArticleId = RandomTestUtil.randomLong();

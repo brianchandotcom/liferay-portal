@@ -83,7 +83,7 @@ public class SkuVirtualSettingsDTOConverter
 					cpDefinitionVirtualSetting.getDuration());
 				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
 				override = cpDefinitionVirtualSetting.isOverride();
-				sampleUrl = cpDefinitionVirtualSetting.getSampleUrl();
+				sampleURL = cpDefinitionVirtualSetting.getSampleURL();
 				termsOfUseContent = LanguageUtils.getLanguageIdMap(
 					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
 				termsOfUseRequired =

@@ -44,7 +44,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 					String className, long classPK, long fileEntryId,
 					String url, int activationStatus, long duration,
 					int maxUsages, boolean useSample, long sampleFileEntryId,
-					String sampleUrl, boolean termsOfUseRequired,
+					String sampleURL, boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
 					long termsOfUseJournalArticleResourcePrimKey,
@@ -55,7 +55,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 
 		return _cpDefinitionVirtualSettingService.addCPDefinitionVirtualSetting(
 			className, classPK, fileEntryId, url, activationStatus, duration,
-			maxUsages, useSample, sampleFileEntryId, sampleUrl,
+			maxUsages, useSample, sampleFileEntryId, sampleURL,
 			termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePrimKey, override, serviceContext);
 	}
@@ -67,7 +67,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 					String className, long classPK, long fileEntryId,
 					String url, int activationStatus, long duration,
 					int maxUsages, boolean useSample, long sampleFileEntryId,
-					String sampleUrl, boolean termsOfUseRequired,
+					String sampleURL, boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
 					long termsOfUseJournalArticleResourcePrimKey,
@@ -77,7 +77,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 
 		return _cpDefinitionVirtualSettingService.addCPDefinitionVirtualSetting(
 			className, classPK, fileEntryId, url, activationStatus, duration,
-			maxUsages, useSample, sampleFileEntryId, sampleUrl,
+			maxUsages, useSample, sampleFileEntryId, sampleURL,
 			termsOfUseRequired, termsOfUseContentMap,
 			termsOfUseJournalArticleResourcePrimKey, serviceContext);
 	}
@@ -121,7 +121,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 					long cpDefinitionVirtualSettingId, long fileEntryId,
 					String url, int activationStatus, long duration,
 					int maxUsages, boolean useSample, long sampleFileEntryId,
-					String sampleUrl, boolean termsOfUseRequired,
+					String sampleURL, boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
 					long termsOfUseJournalArticleResourcePrimKey,
@@ -134,7 +134,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 			updateCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSettingId, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				sampleFileEntryId, sampleURL, termsOfUseRequired,
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				override, serviceContext);
 	}
@@ -146,7 +146,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 					long cpDefinitionVirtualSettingId, long fileEntryId,
 					String url, int activationStatus, long duration,
 					int maxUsages, boolean useSample, long sampleFileEntryId,
-					String sampleUrl, boolean termsOfUseRequired,
+					String sampleURL, boolean termsOfUseRequired,
 					java.util.Map<java.util.Locale, String>
 						termsOfUseContentMap,
 					long termsOfUseJournalArticleResourcePrimKey,
@@ -158,7 +158,7 @@ public class CPDefinitionVirtualSettingServiceWrapper
 			updateCPDefinitionVirtualSetting(
 				cpDefinitionVirtualSettingId, fileEntryId, url,
 				activationStatus, duration, maxUsages, useSample,
-				sampleFileEntryId, sampleUrl, termsOfUseRequired,
+				sampleFileEntryId, sampleURL, termsOfUseRequired,
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				serviceContext);
 	}

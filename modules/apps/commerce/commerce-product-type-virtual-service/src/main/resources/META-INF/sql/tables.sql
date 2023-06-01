@@ -17,7 +17,7 @@ create table CPDefinitionVirtualSetting (
 	maxUsages INTEGER,
 	useSample BOOLEAN,
 	sampleFileEntryId LONG,
-	sampleUrl VARCHAR(255) null,
+	sampleURL VARCHAR(255) null,
 	termsOfUseRequired BOOLEAN,
 	termsOfUseContent STRING null,
 	termsOfUseArticleResourcePK LONG,

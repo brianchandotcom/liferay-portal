@@ -380,14 +380,14 @@ public interface CPDefinitionVirtualSettingModel
 	 * @return the sample url of this cp definition virtual setting
 	 */
 	@AutoEscape
-	public String getSampleUrl();
+	public String getSampleURL();
 
 	/**
 	 * Sets the sample url of this cp definition virtual setting.
 	 *
-	 * @param sampleUrl the sample url of this cp definition virtual setting
+	 * @param sampleURL the sample url of this cp definition virtual setting
 	 */
-	public void setSampleUrl(String sampleUrl);
+	public void setSampleURL(String sampleURL);
 
 	/**
 	 * Returns the terms of use required of this cp definition virtual setting.

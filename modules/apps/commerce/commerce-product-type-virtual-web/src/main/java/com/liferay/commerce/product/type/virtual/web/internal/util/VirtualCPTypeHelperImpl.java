@@ -70,8 +70,8 @@ public class VirtualCPTypeHelperImpl implements VirtualCPTypeHelper {
 			return StringPool.BLANK;
 		}
 
-		if (cpDefinitionVirtualSetting.isUseSampleUrl()) {
-			return cpDefinitionVirtualSetting.getSampleUrl();
+		if (cpDefinitionVirtualSetting.isUseSampleURL()) {
+			return cpDefinitionVirtualSetting.getSampleURL();
 		}
 
 		FileEntry fileEntry = _dlAppService.getFileEntry(

@@ -65,7 +65,7 @@ public class CPDefinitionVirtualSettingWrapper
 		attributes.put("maxUsages", getMaxUsages());
 		attributes.put("useSample", isUseSample());
 		attributes.put("sampleFileEntryId", getSampleFileEntryId());
-		attributes.put("sampleUrl", getSampleUrl());
+		attributes.put("sampleURL", getSampleURL());
 		attributes.put("termsOfUseRequired", isTermsOfUseRequired());
 		attributes.put("termsOfUseContent", getTermsOfUseContent());
 		attributes.put(
@@ -188,10 +188,10 @@ public class CPDefinitionVirtualSettingWrapper
 			setSampleFileEntryId(sampleFileEntryId);
 		}
 
-		String sampleUrl = (String)attributes.get("sampleUrl");
+		String sampleURL = (String)attributes.get("sampleURL");
 
-		if (sampleUrl != null) {
-			setSampleUrl(sampleUrl);
+		if (sampleURL != null) {
+			setSampleURL(sampleURL);
 		}
 
 		Boolean termsOfUseRequired = (Boolean)attributes.get(
@@ -434,8 +434,8 @@ public class CPDefinitionVirtualSettingWrapper
 	 * @return the sample url of this cp definition virtual setting
 	 */
 	@Override
-	public String getSampleUrl() {
-		return model.getSampleUrl();
+	public String getSampleURL() {
+		return model.getSampleURL();
 	}
 
 	/**
@@ -635,8 +635,8 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
-	public boolean isUseSampleUrl() {
-		return model.isUseSampleUrl();
+	public boolean isUseSampleURL() {
+		return model.isUseSampleURL();
 	}
 
 	@Override
@@ -839,11 +839,11 @@ public class CPDefinitionVirtualSettingWrapper
 	/**
 	 * Sets the sample url of this cp definition virtual setting.
 	 *
-	 * @param sampleUrl the sample url of this cp definition virtual setting
+	 * @param sampleURL the sample url of this cp definition virtual setting
 	 */
 	@Override
-	public void setSampleUrl(String sampleUrl) {
-		model.setSampleUrl(sampleUrl);
+	public void setSampleURL(String sampleURL) {
+		model.setSampleURL(sampleURL);
 	}
 
 	/**

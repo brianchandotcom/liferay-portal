@@ -427,7 +427,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 				duration = RandomTestUtil.nextLong();
 				maxUsages = RandomTestUtil.nextInt();
 				override = true;
-				sampleUrl = "https://liferay.com";
+				sampleURL = "https://liferay.com";
 				termsOfUseRequired = false;
 				url = "https://liferay.com";
 				useSample = true;
@@ -458,8 +458,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			postSkuVirtualSettings.getOverride(),
 			randomSkuVirtualSettings.getOverride());
 		Assert.assertEquals(
-			postSkuVirtualSettings.getSampleUrl(),
-			randomSkuVirtualSettings.getSampleUrl());
+			postSkuVirtualSettings.getSampleURL(),
+			randomSkuVirtualSettings.getSampleURL());
 		Assert.assertEquals(
 			postSkuVirtualSettings.getTermsOfUseRequired(),
 			randomSkuVirtualSettings.getTermsOfUseRequired());

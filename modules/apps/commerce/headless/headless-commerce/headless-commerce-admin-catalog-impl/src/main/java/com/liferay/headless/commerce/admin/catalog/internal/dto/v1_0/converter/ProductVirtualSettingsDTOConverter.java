@@ -79,7 +79,7 @@ public class ProductVirtualSettingsDTOConverter
 				duration = TimeUnit.MILLISECONDS.toDays(
 					cpDefinitionVirtualSetting.getDuration());
 				maxUsages = cpDefinitionVirtualSetting.getMaxUsages();
-				sampleUrl = cpDefinitionVirtualSetting.getSampleUrl();
+				sampleURL = cpDefinitionVirtualSetting.getSampleURL();
 				termsOfUseContent = LanguageUtils.getLanguageIdMap(
 					cpDefinitionVirtualSetting.getTermsOfUseContentMap());
 				termsOfUseRequired =

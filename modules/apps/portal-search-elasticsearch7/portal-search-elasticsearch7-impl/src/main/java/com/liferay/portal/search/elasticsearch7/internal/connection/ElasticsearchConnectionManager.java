@@ -139,9 +139,17 @@ public class ElasticsearchConnectionManager
 	public String getLocalClusterConnectionId() {
 		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
 
+		CrossClusterReplicationConfigurationHelper
+			currentCrossClusterReplicationConfigurationHelper =
+				crossClusterReplicationConfigurationHelper;
+
 		if (localClusterNode == null) {
+			if (currentCrossClusterReplicationConfigurationHelper == null) {
+				return null;
+			}
+
 			List<String> localClusterConnectionIds =
-				crossClusterReplicationConfigurationHelper.
+				currentCrossClusterReplicationConfigurationHelper.
 					getLocalClusterConnectionIds();
 
 			return localClusterConnectionIds.get(0);
@@ -149,17 +157,19 @@ public class ElasticsearchConnectionManager
 
 		InetAddress portalInetAddress = localClusterNode.getPortalInetAddress();
 
-		if (portalInetAddress == null) {
+		if ((portalInetAddress == null) ||
+			(currentCrossClusterReplicationConfigurationHelper == null)) {
+
 			return null;
 		}
+
+		Map<String, String> localClusterConnectionConfigurations =
+			currentCrossClusterReplicationConfigurationHelper.
+				getLocalClusterConnectionIdsMap();
 
 		String localClusterNodeHostName =
 			portalInetAddress.getHostName() + StringPool.COLON +
 				localClusterNode.getPortalPort();
-
-		Map<String, String> localClusterConnectionConfigurations =
-			crossClusterReplicationConfigurationHelper.
-				getLocalClusterConnectionIdsMap();
 
 		return localClusterConnectionConfigurations.get(
 			localClusterNodeHostName);

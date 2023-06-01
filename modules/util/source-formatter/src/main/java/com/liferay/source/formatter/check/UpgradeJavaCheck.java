@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -88,8 +89,8 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 
 		if (!newVariablesList.isEmpty()) {
 			content = StringUtil.replace(
-				content, oldVariablesList.toArray(new String[0]),
-				newVariablesList.toArray(new String[0]));
+				content, ArrayUtil.toStringArray(oldVariablesList),
+				ArrayUtil.toStringArray(newVariablesList));
 		}
 
 		return content;

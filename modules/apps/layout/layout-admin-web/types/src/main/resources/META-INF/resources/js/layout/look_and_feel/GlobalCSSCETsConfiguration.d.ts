@@ -17,6 +17,7 @@
 export default function GlobalCSSCETsConfiguration({
 	globalCSSCETSelectorURL,
 	globalCSSCETs: initialGlobalCSSCETs,
+	isReadOnly,
 	portletNamespace,
 	selectGlobalCSSCETsEventName,
 }: IProps): JSX.Element;
@@ -29,6 +30,7 @@ interface IGlobalCSSCET {
 interface IProps {
 	globalCSSCETSelectorURL: string;
 	globalCSSCETs: IGlobalCSSCET[];
+	isReadOnly: boolean;
 	portletNamespace: string;
 	selectGlobalCSSCETsEventName: string;
 }

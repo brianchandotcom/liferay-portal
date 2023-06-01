@@ -15,12 +15,14 @@
 /// <reference types="react" />
 
 export default function ThemeSpritemapCETsConfiguration({
+	isReadOnly,
 	portletNamespace,
 	selectThemeSpritemapCETEventName,
 	themeSpritemapCET,
 	themeSpritemapCETSelectorURL,
 }: IProps): JSX.Element;
 interface IProps {
+	isReadOnly: boolean;
 	portletNamespace: string;
 	selectThemeSpritemapCETEventName: string;
 	themeSpritemapCET: {

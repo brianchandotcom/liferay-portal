@@ -538,6 +538,8 @@ public class LayoutsAdminDisplayContext {
 		).put(
 			"imgURL", getFaviconURL()
 		).put(
+			"isReadOnly", isReadOnly()
+		).put(
 			"themeFaviconCETExternalReferenceCode",
 			getThemeFaviconCETExternalReferenceCode()
 		).put(

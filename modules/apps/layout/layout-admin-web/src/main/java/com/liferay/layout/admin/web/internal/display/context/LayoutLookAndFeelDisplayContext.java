@@ -171,6 +171,8 @@ public class LayoutLookAndFeelDisplayContext {
 					"p_l_back_url", editLayoutURL);
 			}
 		).put(
+			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
+		).put(
 			"masterLayoutName", getMasterLayoutName()
 		).put(
 			"masterLayoutPlid",
@@ -238,6 +240,8 @@ public class LayoutLookAndFeelDisplayContext {
 							"selectStyleBook",
 						styleBookEntryItemSelectorCriterion));
 			}
+		).put(
+			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
 		).put(
 			"styleBookEntryId",
 			() -> {

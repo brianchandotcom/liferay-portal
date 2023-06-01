@@ -19,6 +19,7 @@ import React, {useState} from 'react';
 
 export default function StyleBookConfiguration({
 	changeStyleBookURL,
+	isReadOnly,
 	portletNamespace,
 	styleBookEntryId: initialStyleBookEntryId,
 	styleBookEntryName: initialStyleBookEntryName,
@@ -29,6 +30,10 @@ export default function StyleBookConfiguration({
 	});
 
 	const handleChangeStyleBookClick = () => {
+		if (isReadOnly) {
+			return;
+		}
+
 		openSelectionModal({
 			iframeBodyCssClass: '',
 			onSelect(selectedItem) {
@@ -72,6 +77,7 @@ export default function StyleBookConfiguration({
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('change-style-book')}
 					className="c-ml-2"
+					disabled={isReadOnly}
 					displayType="secondary"
 					onClick={handleChangeStyleBookClick}
 					symbol="plus"

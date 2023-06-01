@@ -516,10 +516,10 @@ definition {
 		}
 
 		task ("When the user accesses to the Export admin") {
-			task ("Then the user could export the site") {
-				LAR.openExportAdmin(siteScopeName = "Test Site Name");
-			}
+			LAR.openExportAdmin(siteScopeName = "Test Site Name");
+		}
 
+		task ("Then the user could export the site") {
 			LexiconEntry.gotoAdd();
 
 			LAR._exportSite();

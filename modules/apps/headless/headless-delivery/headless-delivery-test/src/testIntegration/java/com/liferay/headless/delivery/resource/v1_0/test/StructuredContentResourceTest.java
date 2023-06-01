@@ -457,22 +457,15 @@ public class StructuredContentResourceTest
 
 		_testPostAssetLibraryStructuredContentWithDefaultERCAndUUID();
 
-		String externalReferenceCode = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
 		_testPostAssetLibraryStructuredContentWithGivenERC(
-			externalReferenceCode);
-
-		StructuredContent structuredContent = randomStructuredContent();
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 		StructuredContent postStructuredContent =
 			testPostAssetLibraryStructuredContent_addStructuredContent(
-				structuredContent);
-
-		externalReferenceCode = String.valueOf(postStructuredContent.getId());
+				randomStructuredContent());
 
 		_testPostAssetLibraryStructuredContentWithGivenERC(
-			externalReferenceCode);
+			String.valueOf(postStructuredContent.getId()));
 	}
 
 	@Override

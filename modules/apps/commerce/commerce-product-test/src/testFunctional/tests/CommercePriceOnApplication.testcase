@@ -500,9 +500,12 @@ definition {
 	}
 
 	@description = "COMMERCE-11550 | As an admin user, I want to be able to override 'Price On Application' set for the sku using a Promotion"
+	@ignore = "true"
 	@priority = 5
 	test CanPromotionPriceOverridePriceOnApplicationSet {
 		property portal.acceptance = "true";
+
+		// This test needs to be readapted and ignore tag should be removed with COMMERCE-11276
 
 		task ("Given the admin navigates to a product's sku details") {
 			CommerceProducts.openProductsAdmin();

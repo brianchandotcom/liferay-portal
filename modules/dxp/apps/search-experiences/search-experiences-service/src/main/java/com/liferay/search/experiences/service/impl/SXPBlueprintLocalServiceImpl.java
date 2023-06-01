@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -156,17 +157,15 @@ public class SXPBlueprintLocalServiceImpl
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
-		// Use sxpBlueprintPersistence instead of sxpBlueprintLocalService if
-		// possible. Also, this will break database partitioning. Please fix
-		// that and resend.
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				List<SXPBlueprint> sxpBlueprints =
+					sxpBlueprintPersistence.findByCompanyId(companyId);
 
-		List<SXPBlueprint> sxpBlueprints =
-			sxpBlueprintLocalService.getSXPBlueprints(
-				0, sxpBlueprintLocalService.getSXPBlueprintsCount());
-
-		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-			_registerCollectionProvider(sxpBlueprint);
-		}
+				for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
+					_registerCollectionProvider(sxpBlueprint);
+				}
+			});
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -282,6 +281,9 @@ public class SXPBlueprintLocalServiceImpl
 	private AssetHelper _assetHelper;
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private Language _language;

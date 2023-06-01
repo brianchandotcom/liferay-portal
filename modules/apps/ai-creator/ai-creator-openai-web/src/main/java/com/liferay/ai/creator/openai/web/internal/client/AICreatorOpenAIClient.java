@@ -15,9 +15,12 @@
 package com.liferay.ai.creator.openai.web.internal.client;
 
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -42,7 +45,19 @@ public class AICreatorOpenAIClient {
 		try (InputStream inputStream = _http.URLtoInputStream(options)) {
 			Http.Response response = options.getResponse();
 
-			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+				StringUtil.read(inputStream));
+
+			if (responseJSONObject.has("error")) {
+				JSONObject errorJSONObject = responseJSONObject.getJSONObject(
+					"error");
+
+				throw new AICreatorOpenAIClientException(
+					errorJSONObject.getString("code"),
+					errorJSONObject.getString("message"),
+					response.getResponseCode());
+			}
+			else if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				throw new AICreatorOpenAIClientException(
 					response.getResponseCode());
 			}
@@ -65,5 +80,8 @@ public class AICreatorOpenAIClient {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

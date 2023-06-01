@@ -23,10 +23,20 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		_responseCode = responseCode;
 	}
 
+	public AICreatorOpenAIClientException(
+		String code, String message, int responseCode) {
+
+		super(message);
+
+		_code = code;
+		_responseCode = responseCode;
+	}
+
 	public AICreatorOpenAIClientException(Throwable throwable) {
 		super(throwable.getMessage(), throwable);
 	}
 
+	private String _code = "unexpected_error";
 	private int _responseCode;
 
 }

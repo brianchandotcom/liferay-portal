@@ -46,9 +46,6 @@ public class StructuredContentFolderResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_irrelevantJournalFolder = JournalTestUtil.addFolder(
-			irrelevantGroup.getGroupId(), RandomTestUtil.randomString());
-
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -248,7 +245,5 @@ public class StructuredContentFolderResourceTest
 
 		assertValid(page);
 	}
-
-	private JournalFolder _irrelevantJournalFolder;
 
 }

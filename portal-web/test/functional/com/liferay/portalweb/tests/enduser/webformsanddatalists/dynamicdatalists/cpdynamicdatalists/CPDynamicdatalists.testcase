@@ -1187,7 +1187,12 @@ definition {
 			fieldName = "LinkToPage",
 			pagePrivacy = "Public");
 
-		PortletEntry.publish();
+		Click(
+			key_indexNumber = 1,
+			key_text = "Publish",
+			locator1 = "Button#ANY_N");
+
+		Alert.viewSuccessMessage();
 
 		Navigator.openURL();
 

@@ -106,19 +106,40 @@ public class NotificationQueueEntryLocalServiceTest {
 		notificationQueueEntry =
 			_notificationQueueEntryLocalService.updateStatus(
 				notificationQueueEntry.getNotificationQueueEntryId(),
-				NotificationQueueEntryConstants.STATUS_FAILED);
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		try {
+			_notificationQueueEntryLocalService.resendNotificationQueueEntry(
+				notificationQueueEntry.getNotificationQueueEntryId());
+
+			Assert.fail();
+		}
+		catch (NotificationQueueEntryStatusException
+					notificationQueueEntryStatusException) {
 
 		Assert.assertEquals(
-			NotificationQueueEntryConstants.STATUS_FAILED,
-			notificationQueueEntry.getStatus());
+				"Notification queue entry " +
+					notificationQueueEntry.getNotificationQueueEntryId() +
+						" has already been sent",
+				notificationQueueEntryStatusException.getMessage());
+		}
+
+		notificationQueueEntry =
+			_notificationQueueEntryLocalService.updateStatus(
+				notificationQueueEntry.getNotificationQueueEntryId(),
+				NotificationQueueEntryConstants.STATUS_FAILED);
 
 		notificationQueueEntry =
 			_notificationQueueEntryLocalService.resendNotificationQueueEntry(
 				notificationQueueEntry.getNotificationQueueEntryId());
 
-		Assert.assertEquals(
-			NotificationQueueEntryConstants.STATUS_UNSENT,
-			notificationQueueEntry.getStatus());
+		notificationQueueEntry =
+			_notificationQueueEntryLocalService.updateStatus(
+				notificationQueueEntry.getNotificationQueueEntryId(),
+				NotificationQueueEntryConstants.STATUS_UNSENT);
+
+		_notificationQueueEntryLocalService.resendNotificationQueueEntry(
+			notificationQueueEntry.getNotificationQueueEntryId());
 	}
 
 	private NotificationQueueEntry _addNotificationQueueEntry()

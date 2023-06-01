@@ -475,11 +475,9 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
 
-			WebContent.addWithStructureCP(webContentTitle = "support Link to Page field");
-
-			DERenderer.inputDataInLinkToPageField(
-				linkToPageContent = "Test Page Name 1",
-				linkToPageFieldLabel = "Link to Page");
+			WebContent.addWithStructureCP(
+				webContentLinkToPage = "Test Page Name 1",
+				webContentTitle = "support Link to Page field");
 
 			PortletEntry.publish();
 

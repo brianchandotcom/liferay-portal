@@ -205,7 +205,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	private static final Pattern _featureFlagPattern3 = Pattern.compile(
 		"Liferay\\.FeatureFlags\\['(.+?)'\\]");
 	private static final Pattern _featureFlagPattern4 = Pattern.compile(
-		"\"featureFlag\": \"(.+?)\",?");
+		"\"featureFlag\": \"(.+?)\"");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 

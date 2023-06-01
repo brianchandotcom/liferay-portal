@@ -1167,6 +1167,16 @@ public class ObjectFieldLocalServiceImpl
 				"Business type encrypted is disabled");
 		}
 
+		if (Validator.isNull(PropsValues.OBJECT_ENCRYPTION_ALGORITHM)) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encryption algorithm is required for business type encrypted");
+		}
+
+		if (Validator.isNull(PropsValues.OBJECT_ENCRYPTION_KEY)) {
+			throw new ObjectFieldBusinessTypeException(
+				"Encryption key is required for business type encrypted");
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 

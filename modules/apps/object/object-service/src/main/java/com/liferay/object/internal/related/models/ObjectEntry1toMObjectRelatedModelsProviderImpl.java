@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ManyToOneObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -40,7 +41,8 @@ import java.util.Objects;
  * @author Brian Wing Shun Chan
  */
 public class ObjectEntry1toMObjectRelatedModelsProviderImpl
-	implements ObjectRelatedModelsProvider<ObjectEntry> {
+	implements ManyToOneObjectRelatedModelsProvider<ObjectEntry>,
+			   ObjectRelatedModelsProvider<ObjectEntry> {
 
 	public ObjectEntry1toMObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
@@ -134,6 +136,15 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				0
 			).build(),
 			new ServiceContext());
+	}
+
+	@Override
+	public ObjectEntry fetchRelatedModel(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		return _objectEntryService.fetchManyToOneObjectEntry(
+			groupId, objectRelationshipId, primaryKey);
 	}
 
 	@Override

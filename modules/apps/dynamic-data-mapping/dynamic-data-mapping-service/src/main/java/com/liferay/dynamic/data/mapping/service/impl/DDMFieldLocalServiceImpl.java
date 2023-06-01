@@ -52,14 +52,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -610,23 +611,26 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 		int newDDMFieldsCount = 0;
 
-		List<DDMField> ddmFields = ddmFieldPersistence.findByStorageId(
-			storageId);
+		Map<String, DDMField> ddmFieldsMap = new HashMap<>();
 
-		Set<Long> matchedDDMFieldIds = new HashSet<>();
+		ListUtil.isNotEmptyForEach(
+			ddmFieldPersistence.findByStorageId(storageId),
+			ddmField -> ddmFieldsMap.put(
+				_getKey(ddmField.getFieldName(), ddmField.getInstanceId()),
+				ddmField));
 
-		iterate:
 		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfoMap.values()) {
-			for (DDMField ddmField : ddmFields) {
-				if (ddmFieldInfo._instanceId.equals(ddmField.getInstanceId())) {
-					matchedDDMFieldIds.add(ddmField.getFieldId());
+			String key = _getKey(
+				ddmFieldInfo._fieldName, ddmFieldInfo._instanceId);
 
-					ddmFieldEntries.add(
-						new AbstractMap.SimpleImmutableEntry<>(
-							ddmField, ddmFieldInfo));
+			if (ddmFieldsMap.containsKey(key)) {
+				ddmFieldEntries.add(
+					new AbstractMap.SimpleImmutableEntry<>(
+						ddmFieldsMap.get(key), ddmFieldInfo));
 
-					continue iterate;
-				}
+				ddmFieldsMap.remove(key);
+
+				continue;
 			}
 
 			ddmFieldEntries.add(
@@ -635,13 +639,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			newDDMFieldsCount++;
 		}
 
-		if (matchedDDMFieldIds.size() < ddmFields.size()) {
-			for (DDMField ddmField : ddmFields) {
-				if (!matchedDDMFieldIds.contains(ddmField.getFieldId())) {
-					ddmFieldEntries.add(
-						new AbstractMap.SimpleImmutableEntry<>(ddmField, null));
-				}
-			}
+		for (DDMField ddmField : ddmFieldsMap.values()) {
+			ddmFieldEntries.add(
+				new AbstractMap.SimpleImmutableEntry<>(ddmField, null));
 		}
 
 		List<Map.Entry<DDMFieldAttribute, DDMFieldAttributeInfo>>
@@ -649,10 +649,28 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 		int newDDMFieldAttributesCount = 0;
 
-		List<DDMFieldAttribute> ddmFieldAttributes =
-			_ddmFieldAttributePersistence.findByStorageId(storageId);
+		Map<Long, Map<String, DDMFieldAttribute>> ddmFieldsAttributesMap =
+			new HashMap<>();
 
-		Set<Long> matchedDDMFieldAttributeIds = new HashSet<>();
+		ListUtil.isNotEmptyForEach(
+			_ddmFieldAttributePersistence.findByStorageId(storageId),
+			ddmFieldAttribute -> {
+				Map<String, DDMFieldAttribute> ddmFieldAttributesMap =
+					ddmFieldsAttributesMap.get(ddmFieldAttribute.getFieldId());
+
+				if (ddmFieldAttributesMap == null) {
+					ddmFieldAttributesMap = new HashMap<>();
+
+					ddmFieldsAttributesMap.put(
+						ddmFieldAttribute.getFieldId(), ddmFieldAttributesMap);
+				}
+
+				ddmFieldAttributesMap.put(
+					_getKey(
+						ddmFieldAttribute.getAttributeName(),
+						ddmFieldAttribute.getLanguageId()),
+					ddmFieldAttribute);
+			});
 
 		for (Map.Entry<DDMField, DDMFieldInfo> ddmFieldEntry :
 				ddmFieldEntries) {
@@ -668,33 +686,34 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			for (List<DDMFieldAttributeInfo> ddmFieldAttributeInfos :
 					ddmFieldInfo._ddmFieldAttributeInfos.values()) {
 
-				iterate:
 				for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
 						ddmFieldAttributeInfos) {
 
-					if (ddmField != null) {
-						for (DDMFieldAttribute ddmFieldAttribute :
-								ddmFieldAttributes) {
+					if ((ddmField != null) &&
+						ddmFieldsAttributesMap.containsKey(
+							ddmField.getFieldId())) {
 
-							if ((ddmField.getFieldId() ==
-									ddmFieldAttribute.getFieldId()) &&
-								Objects.equals(
-									ddmFieldAttributeInfo._languageId,
-									ddmFieldAttribute.getLanguageId()) &&
-								Objects.equals(
-									ddmFieldAttributeInfo._attributeName,
-									ddmFieldAttribute.getAttributeName())) {
+						Map<String, DDMFieldAttribute> ddmFieldAttributesMap =
+							ddmFieldsAttributesMap.get(ddmField.getFieldId());
 
-								matchedDDMFieldAttributeIds.add(
-									ddmFieldAttribute.getFieldAttributeId());
+						String key = _getKey(
+							ddmFieldAttributeInfo._attributeName,
+							ddmFieldAttributeInfo._languageId);
 
-								ddmFieldAttributeEntries.add(
-									new AbstractMap.SimpleImmutableEntry<>(
-										ddmFieldAttribute,
-										ddmFieldAttributeInfo));
+						if (ddmFieldAttributesMap.containsKey(key)) {
+							ddmFieldAttributeEntries.add(
+								new AbstractMap.SimpleImmutableEntry<>(
+									ddmFieldAttributesMap.get(key),
+									ddmFieldAttributeInfo));
 
-								continue iterate;
+							ddmFieldAttributesMap.remove(key);
+
+							if (MapUtil.isEmpty(ddmFieldAttributesMap)) {
+								ddmFieldsAttributesMap.remove(
+									ddmField.getFieldId());
 							}
+
+							continue;
 						}
 					}
 
@@ -707,15 +726,15 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			}
 		}
 
-		if (matchedDDMFieldAttributeIds.size() < ddmFieldAttributes.size()) {
-			for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-				if (!matchedDDMFieldAttributeIds.contains(
-						ddmFieldAttribute.getFieldAttributeId())) {
+		for (Map<String, DDMFieldAttribute> ddmFieldAttributesMap :
+				ddmFieldsAttributesMap.values()) {
 
-					ddmFieldAttributeEntries.add(
-						new AbstractMap.SimpleImmutableEntry<>(
-							ddmFieldAttribute, null));
-				}
+			for (DDMFieldAttribute ddmFieldAttribute :
+					ddmFieldAttributesMap.values()) {
+
+				ddmFieldAttributeEntries.add(
+					new AbstractMap.SimpleImmutableEntry<>(
+						ddmFieldAttribute, null));
 			}
 		}
 
@@ -820,6 +839,10 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		}
 
 		return ddmFormValues;
+	}
+
+	private String _getKey(String... parameters) {
+		return StringUtil.merge(parameters, StringPool.POUND);
 	}
 
 	private String _getValueString(

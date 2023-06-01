@@ -292,9 +292,9 @@ public class EntityCacheImpl
 		try {
 			return (FinderCacheImpl)_finderCacheSnapshot.get();
 		}
-		catch (IllegalStateException illegalStateException) {
+		catch (IllegalStateException | NullPointerException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(illegalStateException);
+				_log.debug(exception);
 			}
 
 			return null;

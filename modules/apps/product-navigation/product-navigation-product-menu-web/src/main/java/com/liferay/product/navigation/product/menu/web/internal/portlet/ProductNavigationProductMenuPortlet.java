@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.display.context.LayoutsTreeDisplayContext;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -86,6 +89,17 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 			return;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!_productNavigationControlMenuManager.isShowControlMenu(
+				themeDisplay.getScopeGroup(), themeDisplay.getLayout(),
+				themeDisplay.getUserId())) {
+
+			return;
+		}
+
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 		renderRequest.setAttribute(
@@ -131,6 +145,10 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ProductNavigationControlMenuManager
+		_productNavigationControlMenuManager;
 
 	@Reference
 	private SiteNavigationMenuItemLocalService

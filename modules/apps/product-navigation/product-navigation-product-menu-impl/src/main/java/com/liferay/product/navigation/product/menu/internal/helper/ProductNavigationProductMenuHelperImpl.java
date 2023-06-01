@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import java.util.List;
@@ -61,7 +62,11 @@ public class ProductNavigationProductMenuHelperImpl
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 
-		if (layoutMode.equals(Constants.PREVIEW)) {
+		if (layoutMode.equals(Constants.PREVIEW) ||
+			!_productNavigationControlMenuManager.isShowControlMenu(
+				themeDisplay.getScopeGroup(), themeDisplay.getLayout(),
+				themeDisplay.getUserId())) {
+
 			return false;
 		}
 
@@ -166,5 +171,9 @@ public class ProductNavigationProductMenuHelperImpl
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	@Reference
+	private ProductNavigationControlMenuManager
+		_productNavigationControlMenuManager;
 
 }

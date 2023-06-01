@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
@@ -81,6 +82,13 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (!_productNavigationControlMenuManager.isShowControlMenu(
+				scopeGroup, themeDisplay.getLayout(),
+				themeDisplay.getUserId())) {
+
+			return;
+		}
 
 		if ((_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot()) &&
 			_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
@@ -243,5 +251,9 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ProductNavigationControlMenuManager
+		_productNavigationControlMenuManager;
 
 }

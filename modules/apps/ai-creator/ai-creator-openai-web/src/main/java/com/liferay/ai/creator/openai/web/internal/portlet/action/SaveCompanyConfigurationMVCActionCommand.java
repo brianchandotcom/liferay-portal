@@ -15,24 +15,14 @@
 package com.liferay.ai.creator.openai.web.internal.portlet.action;
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
-import com.liferay.ai.creator.openai.web.internal.client.AICreatorOpenAIClient;
-import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,15 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class SaveCompanyConfigurationMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseSaveConfigurationMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected void checkPermission(ThemeDisplay themeDisplay)
+		throws PortletException {
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -69,50 +55,20 @@ public class SaveCompanyConfigurationMVCActionCommand
 
 			throw new PortletException(principalException);
 		}
+	}
 
-		String successMessageKey = "your-request-completed-successfully";
-
-		String apiKey = ParamUtil.getString(actionRequest, "apiKey");
-
-		if (Validator.isNotNull(apiKey)) {
-			try {
-				_aiCreatorOpenAIClient.validateAPIKey(apiKey);
-
-				successMessageKey = "your-api-key-was-successfully-added";
-			}
-			catch (AICreatorOpenAIClientException
-						aiCreatorOpenAIClientException) {
-
-				SessionErrors.add(
-					actionRequest, aiCreatorOpenAIClientException.getClass(),
-					aiCreatorOpenAIClientException);
-
-				hideDefaultErrorMessage(actionRequest);
-
-				sendRedirect(actionRequest, actionResponse);
-
-				return;
-			}
-		}
+	@Override
+	protected void saveAICreatorOpenAIConfiguration(
+			String apiKey, boolean enableOpenAI, ThemeDisplay themeDisplay)
+		throws ConfigurationException {
 
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				themeDisplay.getCompanyId(), apiKey,
-				ParamUtil.getBoolean(actionRequest, "enableOpenAI"));
-
-		SessionMessages.add(
-			actionRequest, "requestProcessed",
-			_language.get(themeDisplay.getLocale(), successMessageKey));
+				themeDisplay.getCompanyId(), apiKey, enableOpenAI);
 	}
-
-	@Reference
-	private AICreatorOpenAIClient _aiCreatorOpenAIClient;
 
 	@Reference
 	private AICreatorOpenAIConfigurationManager
 		_aiCreatorOpenAIConfigurationManager;
-
-	@Reference
-	private Language _language;
 
 }

@@ -69,3 +69,23 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 		/>
 	</clay:content-col>
 </clay:content-row>
+
+<%
+	AICreatorOpenAIClientException aiCreatorOpenAIClientException = null;
+
+	if (MultiSessionErrors.contains(liferayPortletRequest, AICreatorOpenAIClientException.class.getName())) {
+		aiCreatorOpenAIClientException = (AICreatorOpenAIClientException)MultiSessionErrors.get(liferayPortletRequest, AICreatorOpenAIClientException.class.getName());
+	}
+%>
+
+<c:if test="<%= aiCreatorOpenAIClientException != null %>">
+	<aui:script>
+		Liferay.Util.openToast({
+		autoClose: 10000,
+		message:
+		'<%= HtmlUtil.escapeJS(aiCreatorOpenAIClientException.getLocalizedMessage(locale)) %>',
+		title: '<liferay-ui:message key="error" />:',
+		type: 'danger',
+		});
+	</aui:script>
+</c:if>

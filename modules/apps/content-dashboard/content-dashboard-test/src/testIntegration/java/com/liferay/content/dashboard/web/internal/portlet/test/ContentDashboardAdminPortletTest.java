@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -259,30 +258,6 @@ public class ContentDashboardAdminPortletTest {
 		Assert.assertNotNull(context);
 		Assert.assertEquals(
 			LanguageConstants.VALUE_RTL, context.get("languageDirection"));
-	}
-
-	@Test
-	public void testGetOnClickConfiguration() throws Exception {
-		MVCPortlet mvcPortlet = (MVCPortlet)_portlet;
-
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_getMockLiferayPortletRenderRequest();
-
-		mvcPortlet.render(
-			mockLiferayPortletRenderRequest,
-			new MockLiferayPortletRenderResponse());
-
-		String onClickConfiguration = ReflectionTestUtil.invoke(
-			mockLiferayPortletRenderRequest.getAttribute(
-				"com.liferay.content.dashboard.web.internal.display.context." +
-					"ContentDashboardAdminDisplayContext"),
-			"getOnClickConfiguration", new Class<?>[0]);
-
-		Assert.assertTrue(
-			onClickConfiguration.contains(
-				HtmlUtil.escapeJS(
-					"mvcRenderCommandName=/content_dashboard" +
-						"/edit_content_dashboard_configuration")));
 	}
 
 	@Test

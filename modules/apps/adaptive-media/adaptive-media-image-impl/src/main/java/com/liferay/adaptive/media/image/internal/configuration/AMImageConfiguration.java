@@ -49,20 +49,4 @@ public interface AMImageConfiguration {
 	)
 	public boolean gifsicleEnabled();
 
-	/**
-	 * Set the maximum image size for adaptive media generation. Images larger
-	 * than this value will not generate adaptive media images. A value of -1
-	 * indicates that all images will generate adaptive media images. A value of
-	 * 0 indicates that no adaptive media images will be generated.
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             DLFileEntryConfiguration#previewableProcessorMaxSize()}
-	 */
-	@Deprecated
-	@Meta.AD(
-		deflt = "104857600", description = "max-image-size-key-description",
-		name = "max-image-size", required = false
-	)
-	public int imageMaxSize();
-
 }

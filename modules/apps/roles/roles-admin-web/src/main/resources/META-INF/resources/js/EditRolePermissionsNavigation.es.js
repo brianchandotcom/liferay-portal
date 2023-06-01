@@ -14,12 +14,18 @@
 
 import {ClayInput} from '@clayui/form';
 import {ClayVerticalNav} from '@clayui/nav';
-import {cancelDebounce, debounce} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import {useDebounce} from '@clayui/shared';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-export default function GroupLabels({items, portletNamespace}) {
-	const [activeItemResourceURL, setActiveItemResourceURL] = useState();
+export default function EditRolePermissionsNavigation({
+	items,
+	portletNamespace,
+}) {
+	const [activeItemId, setActiveItemId] = useState();
+	const [expandedKeys, setExpandedKeys] = useState(new Set([]));
 	const [filterQuery, setFilterQuery] = useState('');
+
+	const debouncedFilterQuery = useDebounce(filterQuery, 200);
 
 	const handleItemClick = useCallback(
 		(item, portletNamespace) => {
@@ -27,91 +33,111 @@ export default function GroupLabels({items, portletNamespace}) {
 
 			window[method](item.resourceURL);
 
-			setActiveItemResourceURL(item.resourceURL);
+			setActiveItemId(item.id);
 		},
-		[setActiveItemResourceURL]
+		[setActiveItemId]
 	);
 
-	const processItems = (items) => {
-		const processedItems = [];
-		let hasActiveChild = false;
+	const processItems = useCallback(
+		(items) => {
+			const processedExpandedKeys = new Set([]);
+			const processedItems = [];
+			let hasActiveChild = false;
 
-		items.forEach((item) => {
-			const {label, resourceURL} = item;
-			const normalizedFilterQuery = filterQuery.trim().toLowerCase();
-
-			const hasFilterQuery = normalizedFilterQuery !== '';
-
-			const showItem =
-				!hasFilterQuery ||
-				item.items ||
-				item.ignoreFilter ||
-				label.toLowerCase().includes(normalizedFilterQuery);
-
-			if (showItem) {
-				const active = activeItemResourceURL
-					? activeItemResourceURL === resourceURL
-					: item.active;
-
-				if (active) {
-					hasActiveChild = true;
-				}
-
-				const processedItem = {
-					active,
-					className: item.className,
-					initialExpanded: hasFilterQuery || !!item.initialExpanded,
+			items.forEach((item) => {
+				const {
+					className,
+					id,
+					items: childItems,
 					label,
-				};
+					resourceURL,
+				} = item;
+				const normalizedFilterQuery = debouncedFilterQuery
+					.trim()
+					.toLowerCase();
 
-				if (item.items) {
-					const [
-						processedChildItems,
-						hasActiveGrandchild,
-					] = processItems(item.items);
+				const hasFilterQuery = normalizedFilterQuery !== '';
 
-					if (!processedChildItems.length) {
-						return;
-					}
+				const showItem =
+					!hasFilterQuery ||
+					item.items ||
+					item.ignoreFilter ||
+					label.toLowerCase().includes(normalizedFilterQuery);
 
-					if (hasActiveGrandchild) {
+				if (showItem) {
+					const processedItem = {
+						id,
+						label,
+					};
+
+					const active = activeItemId
+						? activeItemId === id
+						: item.active;
+
+					if (active) {
 						hasActiveChild = true;
 
-						processedItem.initialExpanded = true;
+						processedItem.active = true;
 					}
 
-					processedItem.items = processedChildItems;
+					if (className) {
+						processedItem.className = className;
+					}
+
+					if (resourceURL) {
+						processedItem.onClick = () =>
+							handleItemClick(item, portletNamespace);
+					}
+
+					if (childItems) {
+						const [
+							processedChildItems,
+							childExpandedKeys,
+							hasActiveGrandchild,
+						] = processItems(childItems);
+
+						if (!processedChildItems.length) {
+							return;
+						}
+
+						processedItem.items = processedChildItems;
+
+						if (
+							hasFilterQuery ||
+							(!hasFilterQuery && hasActiveGrandchild) ||
+							item.initialExpanded
+						) {
+							processedExpandedKeys.add(id);
+						}
+
+						childExpandedKeys.forEach((key) =>
+							processedExpandedKeys.add(key)
+						);
+
+						if (hasActiveGrandchild) {
+							hasActiveChild = true;
+						}
+					}
+
+					processedItems.push(processedItem);
 				}
+			});
 
-				if (resourceURL) {
-					processedItem.onClick = () =>
-						handleItemClick(item, portletNamespace);
-				}
+			return [processedItems, processedExpandedKeys, hasActiveChild];
+		},
+		[activeItemId, debouncedFilterQuery, handleItemClick, portletNamespace]
+	);
 
-				processedItems.push(processedItem);
-			}
-		});
+	const [processedItems, processedExpandedKeys] = useMemo(
+		() => processItems(items),
+		[processItems, items]
+	);
 
-		return [processedItems, hasActiveChild];
-	};
-
-	const [processedItems] = processItems(items);
-
-	const debouncedSetFilterQuery = debounce((event) => {
-		setFilterQuery(event.target.value);
-	}, 200);
-
-	const inputHandler = (event) => {
-		event.persist();
-
-		debouncedSetFilterQuery(event);
-	};
-
-	useEffect(() => {
-		return () => {
-			cancelDebounce(debouncedSetFilterQuery);
-		};
-	}, [debouncedSetFilterQuery]);
+	useEffect(
+		() => setExpandedKeys(processedExpandedKeys),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[debouncedFilterQuery]
+	);
 
 	return (
 		<>
@@ -119,14 +145,26 @@ export default function GroupLabels({items, portletNamespace}) {
 				<ClayInput
 					autoComplete="off"
 					className="bg-white mb-4"
-					onChange={inputHandler}
+					onChange={(event) => setFilterQuery(event.target.value)}
 					placeholder={Liferay.Language.get('search')}
 					type="text"
+					value={filterQuery}
 				/>
 			</div>
 
 			{processedItems.length > 1 ? (
-				<ClayVerticalNav items={processedItems} large />
+				<ClayVerticalNav
+					expandedKeys={expandedKeys}
+					items={processedItems}
+					large
+					onExpandedChange={setExpandedKeys}
+				>
+					{(item) => (
+						<ClayVerticalNav.Item {...item}>
+							{item.label}
+						</ClayVerticalNav.Item>
+					)}
+				</ClayVerticalNav>
 			) : (
 				<div className="alert">
 					{Liferay.Language.get('there-are-no-results')}

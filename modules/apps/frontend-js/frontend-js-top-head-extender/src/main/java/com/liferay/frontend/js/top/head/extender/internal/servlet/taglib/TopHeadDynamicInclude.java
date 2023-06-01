@@ -136,8 +136,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 		if (resourceType.equals(PortalWebResourceConstants.RESOURCE_TYPE_JS)) {
 			_portalWebResources = null;
-
-			_rebuild();
 		}
 	}
 

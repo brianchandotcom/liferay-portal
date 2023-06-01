@@ -48,6 +48,7 @@ const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'bottom';
 export default function GlobalJSCETsConfiguration({
 	globalJSCETSelectorURL,
 	globalJSCETs: initialGlobalJSCETs,
+	isReadOnly,
 	portletNamespace,
 	selectGlobalJSCETsEventName,
 }: IProps) {
@@ -160,8 +161,7 @@ export default function GlobalJSCETsConfiguration({
 
 						if (isDuplicated) {
 							duplicatedGlobalJSCETs.push(nextGlobalJSCET);
-						}
-						else {
+						} else {
 							nextGlobalJSCETs.push(nextGlobalJSCET);
 						}
 					});
@@ -214,6 +214,7 @@ export default function GlobalJSCETsConfiguration({
 
 			<AddExtensionButton
 				addGlobalJSCET={addGlobalJSCET}
+				isReadOnly={isReadOnly}
 				portletNamespace={portletNamespace}
 			/>
 
@@ -315,11 +316,13 @@ export default function GlobalJSCETsConfiguration({
 
 interface IAddExtensionButton {
 	addGlobalJSCET: (scriptLocation: IScriptLocationOptions) => unknown;
+	isReadOnly: boolean;
 	portletNamespace: string;
 }
 
 function AddExtensionButton({
 	addGlobalJSCET,
+	isReadOnly,
 	portletNamespace,
 }: IAddExtensionButton) {
 	const [active, setActive] = useState(false);
@@ -339,6 +342,7 @@ function AddExtensionButton({
 			trigger={
 				<ClayButton
 					className="c-mb-3"
+					disabled={isReadOnly}
 					displayType="secondary"
 					type="button"
 				>
@@ -443,6 +447,7 @@ interface IGlobalJSCETGroup {
 interface IProps {
 	globalJSCETSelectorURL: string;
 	globalJSCETs: IGlobalJSCET[];
+	isReadOnly: boolean;
 	portletNamespace: string;
 	selectGlobalJSCETsEventName: string;
 }

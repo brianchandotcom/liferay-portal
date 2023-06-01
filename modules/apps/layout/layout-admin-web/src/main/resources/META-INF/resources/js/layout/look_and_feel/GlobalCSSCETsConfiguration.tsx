@@ -25,6 +25,7 @@ import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
 export default function GlobalCSSCETsConfiguration({
 	globalCSSCETSelectorURL,
 	globalCSSCETs: initialGlobalCSSCETs,
+	isReadOnly,
 	portletNamespace,
 	selectGlobalCSSCETsEventName,
 }: IProps) {
@@ -69,6 +70,10 @@ export default function GlobalCSSCETsConfiguration({
 	};
 
 	const handleClick = () => {
+		if (isReadOnly) {
+			return;
+		}
+
 		openSelectionModal<{value: string[]}>({
 			multiple: true,
 			onSelect(selectedItems) {
@@ -154,6 +159,7 @@ export default function GlobalCSSCETsConfiguration({
 
 			<ClayButton
 				className="c-mb-3"
+				disabled={isReadOnly}
 				displayType="secondary"
 				onClick={handleClick}
 				type="button"
@@ -258,6 +264,7 @@ interface IGlobalCSSCET {
 interface IProps {
 	globalCSSCETSelectorURL: string;
 	globalCSSCETs: IGlobalCSSCET[];
+	isReadOnly: boolean;
 	portletNamespace: string;
 	selectGlobalCSSCETsEventName: string;
 }

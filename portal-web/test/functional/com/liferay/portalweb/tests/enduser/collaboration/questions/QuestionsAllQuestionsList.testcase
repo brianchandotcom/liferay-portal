@@ -84,13 +84,11 @@ definition {
 		}
 
 		task ("Then can see all questions") {
-			AssertElementPresent(
-				key_questionTitle = "Question1",
-				locator1 = "Questions#QUESTIONS_TITLE");
-
-			AssertElementPresent(
-				key_questionTitle = "Question2",
-				locator1 = "Questions#QUESTIONS_TITLE");
+			for (var questionsList : list "Question1,Question2") {
+				AssertElementPresent(
+					key_questionTitle = ${questionsList},
+					locator1 = "Questions#QUESTIONS_TITLE");
+			}
 		}
 	}
 

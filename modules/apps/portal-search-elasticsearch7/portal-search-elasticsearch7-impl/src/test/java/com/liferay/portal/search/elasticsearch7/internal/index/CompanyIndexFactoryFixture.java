@@ -87,16 +87,11 @@ public class CompanyIndexFactoryFixture {
 		_companyIndexFactory = new CompanyIndexFactory();
 
 		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_companyIndexFactoryHelper",
+			getCompanyIndexFactoryHelper());
+		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
 			createElasticsearchConfigurationWrapper());
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_elasticsearchConnectionManager",
-			_elasticsearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_indexNameBuilder",
-			new TestIndexNameBuilder());
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_jsonFactory", new JSONFactoryImpl());
 
 		ReflectionTestUtil.invoke(
 			_companyIndexFactory, "activate",
@@ -104,6 +99,33 @@ public class CompanyIndexFactoryFixture {
 			SystemBundleUtil.getBundleContext());
 
 		return _companyIndexFactory;
+	}
+
+	public CompanyIndexFactoryHelper getCompanyIndexFactoryHelper() {
+		if (_companyIndexFactoryHelper != null) {
+			return _companyIndexFactoryHelper;
+		}
+
+		_companyIndexFactoryHelper = new CompanyIndexFactoryHelper();
+
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_elasticsearchConfigurationWrapper",
+			createElasticsearchConfigurationWrapper());
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_elasticsearchConnectionManager",
+			_elasticsearchConnectionManager);
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_indexNameBuilder",
+			new TestIndexNameBuilder());
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_jsonFactory", new JSONFactoryImpl());
+
+		ReflectionTestUtil.invoke(
+			_companyIndexFactoryHelper, "activate",
+			new Class<?>[] {BundleContext.class},
+			SystemBundleUtil.getBundleContext());
+
+		return _companyIndexFactoryHelper;
 	}
 
 	public String getIndexName() {
@@ -118,6 +140,13 @@ public class CompanyIndexFactoryFixture {
 				_companyIndexFactory, "deactivate", new Class<?>[0]);
 
 			_companyIndexFactory = null;
+		}
+
+		if (_companyIndexFactoryHelper != null) {
+			ReflectionTestUtil.invoke(
+				_companyIndexFactoryHelper, "deactivate", new Class<?>[0]);
+
+			_companyIndexFactoryHelper = null;
 		}
 
 		if (_frameworkUtilMockedStatic != null) {
@@ -162,6 +191,7 @@ public class CompanyIndexFactoryFixture {
 	}
 
 	private CompanyIndexFactory _companyIndexFactory;
+	private CompanyIndexFactoryHelper _companyIndexFactoryHelper;
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 	private final ElasticsearchConnectionManager
 		_elasticsearchConnectionManager;

@@ -96,6 +96,13 @@ public class CompanyIdIndexNameBuilderTest {
 
 			_companyIndexFactory = null;
 		}
+
+		if (_companyIndexFactoryHelper != null) {
+			ReflectionTestUtil.invoke(
+				_companyIndexFactoryHelper, "deactivate", new Class<?>[0]);
+
+			_companyIndexFactoryHelper = null;
+		}
 	}
 
 	@Test
@@ -174,16 +181,30 @@ public class CompanyIdIndexNameBuilderTest {
 
 		companyIdIndexNameBuilder.setIndexNamePrefix(indexNamePrefix);
 
+		_companyIndexFactoryHelper = new CompanyIndexFactoryHelper();
+
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_elasticsearchConfigurationWrapper",
+			createElasticsearchConfigurationWrapper());
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_indexNameBuilder",
+			companyIdIndexNameBuilder);
+		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactoryHelper, "_jsonFactory", new JSONFactoryImpl());
+
+		ReflectionTestUtil.invoke(
+			_companyIndexFactoryHelper, "activate",
+			new Class<?>[] {BundleContext.class},
+			SystemBundleUtil.getBundleContext());
+
 		_companyIndexFactory = new CompanyIndexFactory();
 
 		ReflectionTestUtil.setFieldValue(
+			_companyIndexFactory, "_companyIndexFactoryHelper",
+			_companyIndexFactoryHelper);
+		ReflectionTestUtil.setFieldValue(
 			_companyIndexFactory, "_elasticsearchConfigurationWrapper",
 			createElasticsearchConfigurationWrapper());
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_indexNameBuilder",
-			companyIdIndexNameBuilder);
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_jsonFactory", new JSONFactoryImpl());
 
 		ReflectionTestUtil.invoke(
 			_companyIndexFactory, "activate",
@@ -218,6 +239,7 @@ public class CompanyIdIndexNameBuilderTest {
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 	private CompanyIndexFactory _companyIndexFactory;
+	private CompanyIndexFactoryHelper _companyIndexFactoryHelper;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

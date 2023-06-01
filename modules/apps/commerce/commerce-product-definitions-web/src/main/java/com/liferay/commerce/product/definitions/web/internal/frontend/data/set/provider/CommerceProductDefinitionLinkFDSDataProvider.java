@@ -33,10 +33,16 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.text.DateFormat;
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +80,14 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 					cpDefinitionId, fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition());
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
+
 			for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
 				CProduct cProduct = cpDefinitionLink.getCProduct();
 
@@ -87,10 +101,6 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 
 				Date createDate = cpDefinitionLink.getCreateDate();
 
-				String createDateDescription = _language.getTimeDescription(
-					httpServletRequest,
-					System.currentTimeMillis() - createDate.getTime(), true);
-
 				String statusDisplayStyle = StringPool.BLANK;
 
 				if (cpDefinitionLink.getStatus() ==
@@ -102,9 +112,7 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 				productLinks.add(
 					new ProductLink(
 						cpDefinitionLink.getCPDefinitionLinkId(),
-						_language.format(
-							httpServletRequest, "x-ago", createDateDescription,
-							false),
+						dateTimeFormat.format(createDate),
 						new ImageField(
 							name, "rounded", "lg",
 							cpDefinition.getDefaultImageThumbnailSrc(

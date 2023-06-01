@@ -18,17 +18,29 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentElement;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.ContentElementResource;
+import com.liferay.headless.delivery.client.serdes.v1_0.ContentElementSerDes;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.Inject;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,6 +50,14 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ContentElementResourceTest
 	extends BaseContentElementResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetAssetLibraryContentElementsPage() throws Exception {
+		super.testGetAssetLibraryContentElementsPage();
+
+		_testGetAssetLibraryContentElementsPageWithOnlyAssetLibraryKeyField();
+	}
 
 	@Override
 	@Test
@@ -176,6 +196,59 @@ public class ContentElementResourceTest
 		);
 	}
 
+	private void _testGetAssetLibraryContentElementsPageWithOnlyAssetLibraryKeyField()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(LocaleUtil.getDefault(), name), null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
+		ContentElement contentElement = randomContentElement();
+
+		testGetAssetLibraryContentElementsPage_addContentElement(
+			_testDepotEntry.getDepotEntryId(), contentElement);
+
+		ContentElementResource.Builder builder =
+			ContentElementResource.builder();
+
+		contentElementResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"fields", "content.assetLibraryKey"
+		).build();
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"content",
+			_jsonFactory.createJSONObject(
+			).put(
+				"assetLibraryKey", name
+			));
+
+		Page<ContentElement> page =
+			contentElementResource.getAssetLibraryContentElementsPage(
+				_testDepotEntry.getDepotEntryId(), null, null, null,
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEquals(
+			ContentElementSerDes.toDTO(jsonObject.toString()),
+			page.fetchFirstItem());
+
+		assertValid(page);
+	}
+
 	private ContentElement _toContentElement(JournalArticle journalArticle) {
 		return new ContentElement() {
 			{
@@ -187,5 +260,10 @@ public class ContentElementResourceTest
 
 	private final Map<ContentElement, Map<String, Object>> _fieldValueMaps =
 		new IdentityHashMap<>();
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	private DepotEntry _testDepotEntry;
 
 }

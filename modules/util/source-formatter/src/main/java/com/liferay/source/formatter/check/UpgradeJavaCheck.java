@@ -59,27 +59,28 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 		for (String importName : javaClass.getImportNames()) {
 			String newImportName = importsMap.get(importName);
 
-			if (newImportName != null) {
-				content = StringUtil.replace(
-					content,
-					StringBundler.concat(
-						"import ", importName, StringPool.SEMICOLON),
-					StringBundler.concat(
-						"import ", newImportName, StringPool.SEMICOLON));
+			if (newImportName == null) {
+				continue;
+			}
 
-				String className = SourceFormatterUtil.getSimpleName(
-					importName);
-				String newClassName = SourceFormatterUtil.getSimpleName(
-					newImportName);
+			content = StringUtil.replace(
+				content,
+				StringBundler.concat(
+					"import ", importName, StringPool.SEMICOLON),
+				StringBundler.concat(
+					"import ", newImportName, StringPool.SEMICOLON));
 
-				if (!className.equals(newClassName)) {
-					oldVariablesList.add(className);
-					oldVariablesList.add(
-						StringUtil.lowerCaseFirstLetter(className));
-					newVariablesList.add(newClassName);
-					newVariablesList.add(
-						StringUtil.lowerCaseFirstLetter(newClassName));
-				}
+			String className = SourceFormatterUtil.getSimpleName(importName);
+			String newClassName = SourceFormatterUtil.getSimpleName(
+				newImportName);
+
+			if (!className.equals(newClassName)) {
+				oldVariablesList.add(className);
+				oldVariablesList.add(
+					StringUtil.lowerCaseFirstLetter(className));
+				newVariablesList.add(newClassName);
+				newVariablesList.add(
+					StringUtil.lowerCaseFirstLetter(newClassName));
 			}
 		}
 

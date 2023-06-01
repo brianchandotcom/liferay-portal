@@ -12,10 +12,38 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("When Create a DataSet ") {
+			FrontendDataSetAdmin.goToDatasetAdminPage();
+
+			FrontendDataSetAdmin.createDataSet(
+				key_name = "Test Dataset",
+				key_type = "/c/fdssorts");
+
+			Refresh();
+		}
+
+		task ("When go to the View page of the dataset created.") {
+			FrontendDataSetAdmin.goToViews(dataSetName = "Test Dataset");
+		}
+
+		task ("And adding a dataset view") {
+			FrontendDataSetAdmin.createDataSetView(
+				description = "View Description",
+				key_name = "View Test");
+		}
+
+		task ("When the user accesses the sorting tab") {
+			FrontendDataSetAdmin.goToTab(
+				dataSetViewName = "View Test",
+				tabName = "Sorting");
+		}
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		FrontendDataSetAdmin.deleteAllDatasetViews();
 
 		FrontendDataSetAdmin.deleteAllDatasetEntries();
 
@@ -25,57 +53,103 @@ definition {
 	}
 
 	@description = "LPS-185324. Confirm that the new default classification modal is displayed, the field is required."
-	@ignore = "true"
 	@priority = 4
 	test CanAssertFieldIsRequired {
+		task ("And adds a new default sort, on "+" button or "New Default Sort" button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185324 CanAssertFieldIsRequired pending implementation
+		task ("And the new default sort modal is displayed") {
+			AssertElementPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "New Default Sort");
+		}
 
+		task ("Then Field is required") {
+			AssertElementPresent(
+				key_text = "Field",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
 	}
 
 	@description = "LPS-185325. Confirm that the new default classification modal is displayed, the sorting is required."
-	@ignore = "true"
 	@priority = 4
 	test CanAssertSortingIsRequired {
+		task ("And adds a new default sort, on "+" button or "New Default Sort" button") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185325 CanAssertSortingIsRequired pending implementation
+		task ("And the new default sort modal is displayed") {
+			AssertElementPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "New Default Sort");
+		}
 
+		task ("Then Sorting is required") {
+			AssertElementPresent(
+				key_text = "Sorting",
+				locator1 = "RaylifeApplicationModal#MODAL_DESCRIPTION");
+		}
 	}
 
 	@description = "LPS-185326. Confirm that the Default Sort was created successfully."
-	@ignore = "true"
 	@priority = 3
 	test CanCreateDefaultSort {
+		task ("And adding a new default sort ") {
+			FrontendDataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
 
-		// TODO LPS-185326 CanCreateDefaultSort pending implementation
-
-	}
-
-	@description = "LPS-185328. Confirm that the dataset and view created via the API appears when searched."
-	@ignore = "true"
-	@priority = 4
-	test CanCreateDefaultSortViaAPI {
-
-		// TODO LPS-185328 CanCreateDefaultSortViaAPI pending implementation
-
+		task ("Then the success message will be the Liferay generic message") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "Your request completed successfully.");
+		}
 	}
 
 	@description = "LPS-185322. Confirm that the new default sorting modal is displayed."
-	@ignore = "true"
 	@priority = 4
 	test CanDisplayedDefaultSort {
+		task ("And adds a new default sort, on "+" button or "New Default Sort" button.") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-185322 CanDisplayedDefaultSort pending implementation
-
+		task ("And the new default sort modal is displayed") {
+			AssertElementPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "New Default Sort");
+		}
 	}
 
 	@description = "LPS-185327. Confirm that the search bar responds when we search for one of the options."
-	@ignore = "true"
 	@priority = 4
 	test CanSearchSortingInSearchBar {
+		task ("And adding a new default sort/the fields are selected ") {
+			FrontendDataSetAdmin.createASort(
+				key_field = "creator",
+				key_sorting = "Descending");
+		}
 
-		// TODO LPS-185327 CanSearchSortingInSearchBar pending implementation
+		task ("And then the search bar responds when we search one of the options listed") {
+			Type(
+				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+				value1 = "creator");
 
+			FrontendDataSetAdmin.assertFieldsOnTable(
+				key_position = 1,
+				keyName = "creator");
+		}
+
+		task ("Then the search bar responds when we search for a non-existent option") {
+			Type(
+				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+				value1 = "any");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
 	}
 
 }

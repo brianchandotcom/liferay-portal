@@ -25,6 +25,10 @@ public interface StoreAreaProcessor {
 		long companyId, int deletionQuota, TemporalAmount temporalAmount,
 		String startOffset);
 
+	public String cleanUpNewStoreArea(
+		long companyId, int evictionQuota, TemporalAmount temporalAmount,
+		String startOffset);
+
 	public boolean copy(String sourceFileName, String destinationFileName);
 
 }

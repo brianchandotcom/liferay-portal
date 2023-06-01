@@ -51,53 +51,18 @@ definition {
 		}
 	}
 
-	@description = "LPS-183476. Confirm that all fields in the schema are displayed"
-	@ignore = "true"
-	@priority = 3
+	@description = "LPS-176184. Confirm that all fields in the schema are displayed"
+	@priority = 5
 	test AssertAllFieldsAreDisplayedInSchema {
+		task ("And clicks to add a new filter") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-183476 AssertAllFieldsAreDisplayedInSchema pending implementation
+		task ("asserts all fields in the schema are displayed") {
+			Click(locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT");
 
-	}
-
-	@description = "LPS-183476. Confirm that the 'Filter By Field' drop-down carries all fields available in the schema"
-	@ignore = "true"
-	@priority = 5
-	test AssertDropdownHasAllFields {
-
-		// TODO LPS-183476 AssertDropdownHasAllFields pending implementation
-
-	test AssertAllFieldsAreDisplayedInSchema {
-
-		// TODO LPS-183476 AssertAllFieldsAreDisplayedInSchema pending implementation
-
-	}
-
-	@description = "LPS-183476. Confirm that the 'Filter By Field' drop-down carries all fields available in the schema"
-	@ignore = "true"
-	@priority = 5
-	test AssertDropdownHasAllFields {
-
-		// TODO LPS-183476 AssertDropdownHasAllFields pending implementation
-
-	}
-
-	@description = "LPS-183476. Confirm that the selected option in the drop-down will show up in the column field"
-	@ignore = "true"
-	@priority = 5
-	test AssertFilterIsPresentInColumn {
-
-		// TODO LPS-183476 AssertFilterIsPresentInColumn pending implementation
-
-	}
-
-	@description = "LPS-183476. Confirm that the selected filter is actually displayed"
-	@ignore = "true"
-	@priority = 5
-	test AssertFiltersCanBeSelected {
-
-		// TODO LPS-183476 AssertFiltersCanBeSelected pending implementation
-
+			FrontendDataSetAdmin.assertSearchFilters(key_filterList = "creator,externalReferenceCode,id,status,createDate,fieldName,from,modifiedDate,name,r_fdsViewFDSDateFilterRelationship_c_fdsViewId,rendererType,r_fdsViewFDSDateFilterRelationship_c_fdsViewERC,to,type");
+		}
 	}
 
 	@description = "LPS-176184. Confirm that when 'Name Field' is not provided, it is filled with the same name as field name."

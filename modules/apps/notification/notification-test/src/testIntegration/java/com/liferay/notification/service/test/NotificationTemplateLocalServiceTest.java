@@ -63,7 +63,8 @@ public class NotificationTemplateLocalServiceTest {
 		try {
 			_notificationTemplateLocalService.addNotificationTemplate(
 				NotificationTemplateUtil.createNotificationContext(
-					user, StringUtil.randomString(256)));
+					user, StringUtil.randomString(256),
+					NotificationConstants.TYPE_USER_NOTIFICATION));
 
 			Assert.fail();
 		}
@@ -77,7 +78,8 @@ public class NotificationTemplateLocalServiceTest {
 
 		_notificationTemplateLocalService.addNotificationTemplate(
 			NotificationTemplateUtil.createNotificationContext(
-				user, StringUtil.randomString(255)));
+				user, StringUtil.randomString(255),
+				NotificationConstants.TYPE_USER_NOTIFICATION));
 
 		NotificationTemplate notificationTemplate =
 			_notificationTemplateLocalService.addNotificationTemplate(

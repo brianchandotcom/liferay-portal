@@ -1346,6 +1346,8 @@ public class LayoutsAdminDisplayContext {
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 		return HashMapBuilder.<String, Object>put(
+			"isReadOnly", isReadOnly()
+		).put(
 			"placeholder", _getPlaceholder()
 		).put(
 			"selectThemeCSSClientExtensionEventName",

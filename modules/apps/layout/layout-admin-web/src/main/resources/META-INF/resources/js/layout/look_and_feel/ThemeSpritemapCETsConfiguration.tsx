@@ -19,6 +19,7 @@ import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function ThemeSpritemapCETsConfiguration({
+	isReadOnly,
 	portletNamespace,
 	selectThemeSpritemapCETEventName,
 	themeSpritemapCET = {cetExternalReferenceCode: '', name: ''},
@@ -30,6 +31,10 @@ export default function ThemeSpritemapCETsConfiguration({
 	);
 
 	const onClick = () => {
+		if (isReadOnly) {
+			return true;
+		}
+
 		openSelectionModal<{value: string}>({
 			onSelect: (selectedItem) => {
 				const item = JSON.parse(selectedItem.value);
@@ -89,6 +94,7 @@ export default function ThemeSpritemapCETsConfiguration({
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('replace')}
 									className="c-mr-2"
+									disabled={isReadOnly}
 									displayType="secondary"
 									onClick={onClick}
 									symbol="change"
@@ -96,6 +102,7 @@ export default function ThemeSpritemapCETsConfiguration({
 
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('delete')}
+									disabled={isReadOnly}
 									displayType="secondary"
 									onClick={() => {
 										setExtensionName('');
@@ -107,6 +114,7 @@ export default function ThemeSpritemapCETsConfiguration({
 						) : (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('select')}
+								disabled={isReadOnly}
 								displayType="secondary"
 								onClick={onClick}
 								symbol="plus"
@@ -120,6 +128,7 @@ export default function ThemeSpritemapCETsConfiguration({
 }
 
 interface IProps {
+	isReadOnly: boolean;
 	portletNamespace: string;
 	selectThemeSpritemapCETEventName: string;
 	themeSpritemapCET: {

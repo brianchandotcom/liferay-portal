@@ -18,6 +18,7 @@ import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function ThemeCSSReplacementSelector({
+	isReadOnly,
 	placeholder,
 	portletNamespace,
 	selectThemeCSSClientExtensionEventName,
@@ -31,6 +32,10 @@ export default function ThemeCSSReplacementSelector({
 	);
 
 	const onClick = () => {
+		if (isReadOnly) {
+			return;
+		}
+
 		openSelectionModal<{value: string}>({
 			onSelect: (selectedItem) => {
 				const item = JSON.parse(selectedItem.value);
@@ -82,6 +87,7 @@ export default function ThemeCSSReplacementSelector({
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('replace')}
 									className="c-mr-2"
+									disabled={isReadOnly}
 									displayType="secondary"
 									onClick={onClick}
 									symbol="change"
@@ -89,6 +95,7 @@ export default function ThemeCSSReplacementSelector({
 
 								<ClayButtonWithIcon
 									aria-label={Liferay.Language.get('delete')}
+									disabled={isReadOnly}
 									displayType="secondary"
 									onClick={() => {
 										setExtensionName('');
@@ -100,6 +107,7 @@ export default function ThemeCSSReplacementSelector({
 						) : (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('select')}
+								disabled={isReadOnly}
 								displayType="secondary"
 								onClick={onClick}
 								symbol="plus"
@@ -113,6 +121,7 @@ export default function ThemeCSSReplacementSelector({
 }
 
 interface IProps {
+	isReadOnly: boolean;
 	placeholder: string;
 	portletNamespace: string;
 	selectThemeCSSClientExtensionEventName: string;

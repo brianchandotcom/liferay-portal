@@ -97,6 +97,8 @@ public class LayoutLookAndFeelDisplayContext {
 					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
 			).buildString()
 		).put(
+			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
+		).put(
 			"selectGlobalCSSCETsEventName", "selectGlobalCSSCETs"
 		).build();
 	}
@@ -116,6 +118,8 @@ public class LayoutLookAndFeelDisplayContext {
 					true, "selectGlobalJSCETs",
 					ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 			).buildString()
+		).put(
+			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
 		).put(
 			"selectGlobalJSCETsEventName", "selectGlobalJSCETs"
 		).build();
@@ -297,6 +301,8 @@ public class LayoutLookAndFeelDisplayContext {
 		String className, long classPK) {
 
 		return HashMapBuilder.<String, Object>put(
+			"isReadOnly", _layoutsAdminDisplayContext.isReadOnly()
+		).put(
 			"selectThemeSpritemapCETEventName", "selectThemeSpritemapCET"
 		).put(
 			"themeSpritemapCET",

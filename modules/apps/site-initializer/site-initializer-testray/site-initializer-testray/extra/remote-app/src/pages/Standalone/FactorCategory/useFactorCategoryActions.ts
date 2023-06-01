@@ -38,6 +38,7 @@ const useFactorCategoryActions = () => {
 				testrayFactorCategoryRest
 					.removeResource(id)
 					?.then(() => removeItemFromList(mutate, id), modal.onSave)
+					.then(modal.onSuccess)
 					.catch(modal.onError),
 			icon: 'trash',
 			name: i18n.translate('delete'),

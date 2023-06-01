@@ -83,7 +83,7 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 			}
 		}
 
-		if (newVariablesList != null) {
+		if (!newVariablesList.isEmpty()) {
 			content = StringUtil.replace(
 				content, oldVariablesList.toArray(new String[0]),
 				newVariablesList.toArray(new String[0]));

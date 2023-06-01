@@ -827,6 +827,29 @@ definition {
 		Button.clickSave();
 	}
 
+	macro updateProductVirtualSettingOverride {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Virtual Settings Override");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Override",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		CommerceProducts.updateVirtualSkuConfiguration(
+			activationStatus = ${activationStatus},
+			enableSample = ${enableSample},
+			key_contentType = ${key_contentType},
+			key_fieldLabel = ${key_fieldLabel},
+			maxDownloads = ${maxDownloads},
+			sampleFileName = ${sampleFileName},
+			virtualProductFile = ${virtualProductFile});
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro updateVirtualSkuActivationStatus {
 		if (IsElementPresent(key_contentType = ${key_contentType}, locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
 			Click(

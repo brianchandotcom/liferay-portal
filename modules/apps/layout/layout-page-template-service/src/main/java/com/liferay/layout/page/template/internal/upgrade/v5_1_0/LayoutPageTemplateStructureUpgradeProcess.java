@@ -176,7 +176,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"? where segmentsExperienceId = 0 and ",
 					"segmentsExperimentId in (select ",
 					"SegmentsExperiment.segmentsExperimentId from ",
-					"SegmentsExperiment where classPK = ? or classPK = ?)"))) {
+					"SegmentsExperiment where plid = ?)"))) {
 
 			preparedStatement.setLong(1, defaultSegmentsExperienceId);
 			preparedStatement.setLong(2, draftPlid);
@@ -193,8 +193,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update SegmentsExperiment set segmentsExperienceId = ? " +
-					"where segmentsExperienceId = 0 and (classPK = ? or " +
-						"classPK = ?)")) {
+					"where segmentsExperienceId = 0 and plid = ?")) {
 
 			preparedStatement.setLong(1, defaultSegmentsExperienceId);
 			preparedStatement.setLong(2, draftPlid);

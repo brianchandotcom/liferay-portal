@@ -73,6 +73,14 @@ public class SXPElementServiceUtil {
 		return getService().getSXPElement(sxpElementId);
 	}
 
+	public static SXPElement getSXPElementByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getSXPElementByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static SXPElement updateSXPElement(
 			long sxpElementId, Map<java.util.Locale, String> descriptionMap,
 			String elementDefinitionJSON, String schemaVersion, boolean hidden,

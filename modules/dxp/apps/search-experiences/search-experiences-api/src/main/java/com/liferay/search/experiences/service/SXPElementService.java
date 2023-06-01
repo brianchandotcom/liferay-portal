@@ -73,6 +73,11 @@ public interface SXPElementService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SXPElement getSXPElement(long sxpElementId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SXPElement getSXPElementByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
 	public SXPElement updateSXPElement(
 			long sxpElementId, Map<Locale, String> descriptionMap,
 			String elementDefinitionJSON, String schemaVersion, boolean hidden,

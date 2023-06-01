@@ -178,6 +178,49 @@ public class SXPElementServiceHttp {
 	}
 
 	public static com.liferay.search.experiences.model.SXPElement
+			getSXPElementByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long companyId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SXPElementServiceUtil.class,
+				"getSXPElementByExternalReferenceCode",
+				_getSXPElementByExternalReferenceCodeParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.search.experiences.model.SXPElement)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.search.experiences.model.SXPElement
 			updateSXPElement(
 				HttpPrincipal httpPrincipal, long sxpElementId,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -190,7 +233,7 @@ public class SXPElementServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SXPElementServiceUtil.class, "updateSXPElement",
-				_updateSXPElementParameterTypes3);
+				_updateSXPElementParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId, descriptionMap, elementDefinitionJSON,
@@ -237,7 +280,11 @@ public class SXPElementServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getSXPElementParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateSXPElementParameterTypes3 =
+	private static final Class<?>[]
+		_getSXPElementByExternalReferenceCodeParameterTypes3 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _updateSXPElementParameterTypes4 =
 		new Class[] {
 			long.class, java.util.Map.class, String.class, String.class,
 			boolean.class, java.util.Map.class,

@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1355,7 +1356,8 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(
 			journalFolder1.getFolderId(),
-			(long)getStructuredContent1.getStructuredContentFolderId());
+			GetterUtil.getLong(
+				getStructuredContent1.getStructuredContentFolderId()));
 
 		// Get structured content inside current folder in Asset Library
 
@@ -1374,7 +1376,8 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(
 			journalFolder2.getFolderId(),
-			(long)getStructuredContent2.getStructuredContentFolderId());
+			GetterUtil.getLong(
+				getStructuredContent2.getStructuredContentFolderId()));
 
 		// Get structured content inside current subfolder in Asset Library
 
@@ -1394,7 +1397,8 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(
 			journalFolder3.getFolderId(),
-			(long)getStructuredContent3.getStructuredContentFolderId());
+			GetterUtil.getLong(
+				getStructuredContent3.getStructuredContentFolderId()));
 	}
 
 	private void _testPostAssetLibraryStructuredContentWithDefaultERCAndUUID()

@@ -30,11 +30,7 @@ definition {
 		}
 
 		task ("Delete Testray Site and Client Extensions") {
-			Testray.tearDownCP();
-
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
+			Testray.testrayApisTearDown();
 		}
 
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
@@ -128,7 +124,7 @@ definition {
 		}
 
 		task ("And when go to the users informations") {
-			Testray.goToProjectPage(projectName = "analyst@testray.com");
+			Testray.goToProjectPage(projectName = "lead@testray.com");
 		}
 
 		task ("Then can not see the Delete user button") {

@@ -30,7 +30,7 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testLanguageKeyContext() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
-				"LanguageKeysContext.testproperties"
+				"content/Language.testproperties"
 			).addExpectedMessage(
 				"The Key 'a' should with [context] to indicate specific meaning"
 			).addExpectedMessage(

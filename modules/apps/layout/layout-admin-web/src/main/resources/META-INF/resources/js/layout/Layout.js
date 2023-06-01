@@ -23,6 +23,7 @@ const Layout = ({
 	initialBreadcrumbEntries,
 	initialLayoutColumns,
 	isPrivateLayoutsEnabled,
+	isSiteTemplate,
 	languageId,
 	moveItemURL,
 	namespace,
@@ -174,6 +175,7 @@ const Layout = ({
 			<MillerColumns
 				initialColumns={layoutColumns}
 				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
+				isSiteTemplate={isSiteTemplate}
 				namespace={namespace}
 				onColumnsChange={updateBreadcrumbs}
 				onItemMove={saveData}
@@ -195,6 +197,7 @@ export default function ({
 		layoutColumns,
 		moveItemURL,
 		searchContainerId,
+		siteTemplate = false,
 	},
 }) {
 	return (
@@ -203,6 +206,7 @@ export default function ({
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}
 			isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
+			isSiteTemplate={siteTemplate}
 			languageId={languageId}
 			moveItemURL={moveItemURL}
 			namespace={namespace}

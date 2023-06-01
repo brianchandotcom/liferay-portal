@@ -166,6 +166,7 @@ const noop = () => {};
 
 const MillerColumnsItem = ({
 	isPrivateLayoutsEnabled,
+	isSiteTemplate,
 	item: {
 		actions = [],
 		active,
@@ -186,6 +187,7 @@ const MillerColumnsItem = ({
 		title,
 		url,
 		viewUrl,
+		urlConflict = false,
 	},
 	items,
 	namespace,
@@ -350,6 +352,14 @@ const MillerColumnsItem = ({
 		}
 	}, [active, dropZone, isOver, itemId, onItemStayHover]);
 
+	const warningMessage = isSiteTemplate
+		? Liferay.Language.get(
+				'there-is-a-page-with-the-same-friendly-url-in-a-site-using-this-site-template'
+		  )
+		: Liferay.Language.get(
+				'there-is-a-page-with-the-same-friendly-url-in-the-site-template'
+		  );
+
 	return (
 		<ClayLayout.ContentRow
 			className={classNames('list-group-item-flex miller-columns-item', {
@@ -390,6 +400,12 @@ const MillerColumnsItem = ({
 				<h4 className="list-group-title text-truncate-inline">
 					{viewUrl ? (
 						<ClayLink
+							aria-label={
+								Liferay.FeatureFlags['LPS-174471'] &&
+								urlConflict
+									? `${title}. ${warningMessage}`
+									: title
+							}
 							className="text-truncate"
 							href={viewUrl}
 							target={target}
@@ -399,6 +415,14 @@ const MillerColumnsItem = ({
 					) : (
 						<span className="text-truncate">{title}</span>
 					)}
+
+					{Liferay.FeatureFlags['LPS-174471'] && urlConflict ? (
+						<ClayIcon
+							className="align-self-center c-ml-2 flex-shrink-0 icon-warning lfr-portal-tooltip text-warning"
+							data-title={warningMessage}
+							symbol="warning-full"
+						/>
+					) : null}
 				</h4>
 
 				{description && (

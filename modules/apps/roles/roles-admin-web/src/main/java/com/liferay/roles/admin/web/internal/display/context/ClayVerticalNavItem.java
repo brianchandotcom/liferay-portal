@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.portal.kernel.security.SecureRandomUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +44,11 @@ public class ClayVerticalNavItem {
 
 		clayVerticalNavItemConsumer.accept(clayVerticalNavItem);
 
+		if (clayVerticalNavItem.id == null) {
+			clayVerticalNavItem.setId(
+				_CLAY_VERTICAL_NAV_ITEM + SecureRandomUtil.nextLong());
+		}
+
 		return clayVerticalNavItem;
 	}
 
@@ -65,12 +72,19 @@ public class ClayVerticalNavItem {
 		this.active = active;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public void setInitialExpanded(boolean initialExpanded) {
 		this.initialExpanded = initialExpanded;
 	}
 
 	@JsonProperty
 	protected boolean active;
+
+	@JsonProperty
+	protected String id;
 
 	@JsonProperty
 	protected boolean initialExpanded;
@@ -83,5 +97,8 @@ public class ClayVerticalNavItem {
 
 	@JsonAnyGetter
 	protected final Map<String, Object> properties = new HashMap<>();
+
+	private static final String _CLAY_VERTICAL_NAV_ITEM =
+		"CLAY_VERTICAL_NAV_ITEM";
 
 }

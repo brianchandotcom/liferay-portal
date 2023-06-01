@@ -15,7 +15,6 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -23,14 +22,10 @@ import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolde
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Collections;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,18 +35,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class StructuredContentFolderResourceTest
 	extends BaseStructuredContentFolderResourceTestCase {
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
-	}
 
 	@Override
 	@Test

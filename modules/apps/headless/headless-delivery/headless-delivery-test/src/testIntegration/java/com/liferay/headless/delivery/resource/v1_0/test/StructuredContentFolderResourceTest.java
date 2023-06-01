@@ -22,9 +22,8 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -54,12 +53,7 @@ public class StructuredContentFolderResourceTest
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 	}
 
 	@Override

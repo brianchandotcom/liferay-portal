@@ -28,9 +28,8 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 
@@ -202,12 +201,7 @@ public class ContentElementResourceTest
 
 		DepotEntry depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(LocaleUtil.getDefault(), name), null,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 
 		testGetAssetLibraryContentElementsPage_addContentElement(
 			depotEntry.getDepotEntryId(), randomContentElement());

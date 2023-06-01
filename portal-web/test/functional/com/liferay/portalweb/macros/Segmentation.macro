@@ -283,15 +283,12 @@ definition {
 
 			Click(locator1 = "Modal#SELECT_BUTTON");
 		}
-		else if (isSet(chooseItem)) {
+		else if (isSet(selectCard)) {
 			Button.clickSelect();
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertClick(
-				key_rowEntry = ${chooseItem},
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHOOSE",
-				value1 = "Choose");
+			LexiconCard.clickCardTitle(card = ${selectCard});
 
 			SelectFrame(value1 = "relative=top");
 		}

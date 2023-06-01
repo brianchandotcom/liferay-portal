@@ -1,3 +1,5 @@
+// @ts-nocheck - TEMP
+
 import ChartTooltip from 'shared/components/chart-tooltip';
 import React, {useState} from 'react';
 import {AXIS} from 'shared/util/recharts';

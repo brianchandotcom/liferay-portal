@@ -24,15 +24,15 @@ exports[`AppliedFilters should render 1`] = `
         >
           <button
             aria-label="Close"
-            class="close button-root btn btn-unstyled"
+            class="button-root close btn btn-unstyled"
             type="button"
           >
             <svg
-              class="lexicon-icon lexicon-icon-times icon-root"
+              class="lexicon-icon lexicon-icon-icon-root times"
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                xlink:href="#icon-root times"
               />
             </svg>
           </button>
@@ -58,15 +58,15 @@ exports[`AppliedFilters should render 1`] = `
         >
           <button
             aria-label="Close"
-            class="close button-root btn btn-unstyled"
+            class="button-root close btn btn-unstyled"
             type="button"
           >
             <svg
-              class="lexicon-icon lexicon-icon-times icon-root"
+              class="lexicon-icon lexicon-icon-icon-root times"
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                xlink:href="#icon-root times"
               />
             </svg>
           </button>

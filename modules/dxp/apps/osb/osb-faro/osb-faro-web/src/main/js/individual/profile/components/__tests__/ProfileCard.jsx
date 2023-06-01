@@ -13,7 +13,6 @@ import {
 } from 'test/graphql-data';
 import {mockIndividual} from 'test/data';
 import {Routes} from 'shared/util/router';
-import {waitForLoading} from 'test/helpers';
 
 jest.unmock('react-dom');
 

@@ -74,7 +74,7 @@ exports[`Workspace Empty State should render 1`] = `
           90 Day Full Feature Trial
         </p>
         <a
-          class="c-link link-secondary text-decoration-underline"
+          class="btn btn-secondary"
           href="/workspace/add/trial"
         >
           Start Free Trial

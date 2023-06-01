@@ -1,9 +1,9 @@
 import AudienceReportDonut from './AudienceReportDonut';
 import AudienceReportStateRenderer from './AudienceReportStateRenderer';
-import gql from 'graphql-tag';
 import HTMLBarChart from 'shared/components/HTMLBarChart';
 import InfoPopover, {IInfoPopoverProps} from 'shared/components/InfoPopover';
 import React from 'react';
+import {DocumentNode} from 'graphql';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatData} from './util';
 import {getFilters, RawFilters} from 'shared/util/filter';
@@ -95,7 +95,7 @@ interface IAudienceReportProps<TRawData>
 	extends Partial<IAudienceReportBaseCardProps> {
 	filters: RawFilters;
 	rangeSelectors: RangeSelectors;
-	Query: typeof gql;
+	Query: DocumentNode;
 	mapper: (data: TRawData) => TData;
 	name: Name;
 }

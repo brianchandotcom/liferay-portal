@@ -1,4 +1,5 @@
-import Button from 'shared/components/Button';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 interface ILabelProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -11,14 +12,14 @@ export const Label: React.FC<ILabelProps> = ({label, onRemove}) => (
 		<span className='label-item label-item-expand'>{label}</span>
 
 		<span className='label-item label-item-after'>
-			<Button
+			<ClayButton
 				aria-label={Liferay.Language.get('close')}
-				className='close'
-				display='unstyled'
-				icon='times'
-				iconAlignment='right'
+				className='button-root close'
+				displayType='unstyled'
 				onClick={onRemove}
-			/>
+			>
+				<ClayIcon symbol='icon-root times' />
+			</ClayButton>
 		</span>
 	</span>
 );

@@ -133,7 +133,6 @@ public class StructuredContentResourceTest
 			irrelevantGroup.getGroupId(), RandomTestUtil.randomString());
 		_journalFolder = JournalTestUtil.addFolder(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
-
 		_layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
@@ -1407,7 +1406,6 @@ public class StructuredContentResourceTest
 		StructuredContent randomStructuredContent = randomStructuredContent();
 
 		randomStructuredContent.setExternalReferenceCode("");
-
 		randomStructuredContent.setUuid("");
 
 		StructuredContent postStructuredContent =
@@ -1435,7 +1433,6 @@ public class StructuredContentResourceTest
 				randomStructuredContent);
 
 		Assert.assertNotNull(postStructuredContent.getExternalReferenceCode());
-
 		Assert.assertEquals(
 			externalReferenceCode,
 			postStructuredContent.getExternalReferenceCode());

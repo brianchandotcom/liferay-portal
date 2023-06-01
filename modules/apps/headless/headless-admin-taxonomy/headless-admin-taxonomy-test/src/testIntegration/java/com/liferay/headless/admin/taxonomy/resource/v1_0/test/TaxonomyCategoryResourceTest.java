@@ -29,9 +29,7 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
-import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyCategorySerDes;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -443,22 +441,24 @@ public class TaxonomyCategoryResourceTest
 			_addTaxonomyCategoryWithParentAssetVocabulary(
 				irrelevantAssetVocabulary);
 
-		GraphQLField graphQLField = new GraphQLField(
-			"taxonomyVocabularyTaxonomyCategories",
-			HashMapBuilder.<String, Object>put(
-				"flatten", true
-			).put(
-				"taxonomyVocabularyId", assetVocabulary.getVocabularyId()
-			).build(),
-			new GraphQLField("items", new GraphQLField("name")),
-			new GraphQLField("totalCount"));
+		TaxonomyCategoryResource.Builder builder =
+			TaxonomyCategoryResource.builder();
 
-		JSONObject taxonomyCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/taxonomyVocabularyTaxonomyCategories");
+		taxonomyCategoryResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"fields", "name"
+		).build();
 
-		Assert.assertEquals(
-			2, taxonomyCategoriesJSONObject.getLong("totalCount"));
+		Page<TaxonomyCategory> page =
+			taxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					assetVocabulary.getVocabularyId(), true, null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
 
 		TaxonomyCategory getTaxonomyCategory1 = new TaxonomyCategory() {
 			{
@@ -473,9 +473,9 @@ public class TaxonomyCategoryResourceTest
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(getTaxonomyCategory1, getTaxonomyCategory2),
-			Arrays.asList(
-				TaxonomyCategorySerDes.toDTOs(
-					taxonomyCategoriesJSONObject.getString("items"))));
+			(List<TaxonomyCategory>)page.getItems());
+
+		assertValid(page);
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			irrelevantTaxonomyCategory.getId());

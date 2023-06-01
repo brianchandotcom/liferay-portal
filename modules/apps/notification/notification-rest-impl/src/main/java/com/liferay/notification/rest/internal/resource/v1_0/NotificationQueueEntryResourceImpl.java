@@ -247,7 +247,9 @@ public class NotificationQueueEntryResourceImpl
 								getClassNameId();
 
 						if (classNameId == 0) {
-							return null;
+							return _language.get(
+								contextAcceptLanguage.getPreferredLocale(),
+								"added-via-api");
 						}
 
 						NotificationHandler notificationHandler =

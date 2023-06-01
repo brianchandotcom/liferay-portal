@@ -109,7 +109,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 			String trimmedLine = StringUtil.trim(lines[i]);
 
-			if (!trimmedLine.startsWith("|") && !trimmedLine.endsWith("|")) {
+			if (!trimmedLine.startsWith("|") || !trimmedLine.endsWith("|")) {
 				return tripleQuotesContent;
 			}
 

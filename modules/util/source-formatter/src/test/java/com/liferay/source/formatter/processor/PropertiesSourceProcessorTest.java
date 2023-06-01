@@ -32,33 +32,34 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"content/Language.testproperties"
 			).addExpectedMessage(
-				"The Key 'a' should with [context] to indicate specific meaning"
+				"The context '' is invalid in the key 'order[]'"
 			).addExpectedMessage(
-				"The Key 'add' should with [context] to indicate specific " +
-					"meaning"
+				"The context '...' is invalid in the key 'order[...]'"
 			).addExpectedMessage(
-				"The Key 'alert' should with [context] to indicate specific " +
-					"meaning"
+				"The context '0' is invalid in the key 'order[0]'"
 			).addExpectedMessage(
-				"The Key 'average' should with [context] to indicate " +
-					"specific meaning"
+				"The context '123' is invalid in the key 'order[123]'"
 			).addExpectedMessage(
-				"The Key 'order' should with [context] to indicate specific " +
-					"meaning"
+				"The context 'abc' is invalid in the key 'order[abc]'"
 			).addExpectedMessage(
-				"The Key 'order[...]' contain unqualified context for '...'"
+				"The context 'x' is invalid in the key 'order[x]'"
 			).addExpectedMessage(
-				"The Key 'order[0]' contain unqualified context for '0'"
+				"The context 'xyz' is invalid in the key 'order[xyz]'"
 			).addExpectedMessage(
-				"The Key 'order[123]' contain unqualified context for '123'"
+				"The key for 'a' should have the context in [] to indicate " +
+					"the specific meaning"
 			).addExpectedMessage(
-				"The Key 'order[]' contain unqualified context for ''"
+				"The key for 'add' should have the context in [] to indicate " +
+					"the specific meaning"
 			).addExpectedMessage(
-				"The Key 'order[abc]' contain unqualified context for 'abc'"
+				"The key for 'alert' should have the context in [] to " +
+					"indicate the specific meaning"
 			).addExpectedMessage(
-				"The Key 'order[x]' contain unqualified context for 'x'"
+				"The key for 'average' should have the context in [] to " +
+					"indicate the specific meaning"
 			).addExpectedMessage(
-				"The Key 'order[xyz]' contain unqualified context for 'xyz'"
+				"The key for 'order' should have the context in [] to " +
+					"indicate the specific meaning"
 			));
 	}
 

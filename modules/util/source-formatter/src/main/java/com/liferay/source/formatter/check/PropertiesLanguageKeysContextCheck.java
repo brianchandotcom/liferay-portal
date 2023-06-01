@@ -58,9 +58,9 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The Key '", matcher.group(1),
-						"' should with [context] to indicate specific ",
-						"meaning"));
+						"The key for '", matcher.group(1),
+						"' should have the context in [] to indicate the ",
+						"specific meaning"));
 			}
 
 			String bracketsContent = matcher.group(3);
@@ -79,8 +79,8 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The Key '", key, "' contain unqualified context for '",
-						bracketsContent, "'"));
+						"The context '", bracketsContent,
+						"' is invalid in the key '", key, "'"));
 			}
 		}
 

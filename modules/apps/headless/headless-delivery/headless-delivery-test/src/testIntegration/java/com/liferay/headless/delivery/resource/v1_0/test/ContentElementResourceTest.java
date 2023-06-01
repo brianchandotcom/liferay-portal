@@ -225,15 +225,15 @@ public class ContentElementResourceTest
 			"fields", "content.assetLibraryKey"
 		).build();
 
-		JSONObject jsonObject = JSONUtil.put(
-			"content", JSONUtil.put("assetLibraryKey", name));
-
 		Page<ContentElement> page =
 			contentElementResource.getAssetLibraryContentElementsPage(
 				_testDepotEntry.getDepotEntryId(), null, null, null,
 				Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
+
+		JSONObject jsonObject = JSONUtil.put(
+			"content", JSONUtil.put("assetLibraryKey", name));
 
 		assertEquals(
 			ContentElementSerDes.toDTO(jsonObject.toString()),

@@ -14,6 +14,13 @@
 
 package com.liferay.ai.creator.openai.web.internal.exception;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.net.HttpURLConnection;
+
+import java.util.Locale;
+import java.util.Objects;
+
 /**
  * @author Lourdes Fernández Besada
  */
@@ -34,6 +41,21 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 
 	public AICreatorOpenAIClientException(Throwable throwable) {
 		super(throwable.getMessage(), throwable);
+	}
+
+	public String getLocalizedMessage(Locale locale) {
+		if ((_responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) ||
+			Objects.equals(_code, "invalid_api_key")) {
+
+			return LanguageUtil.get(
+				locale,
+				"incorrect-api-key-provided.-ensure-the-api-key-used-is-" +
+					"correct,-clear-your-browser-cache,-or-generate-a-new-key");
+		}
+
+		return LanguageUtil.get(
+			locale,
+			"an-unexpected-error-occurred-while-validating-the-api-key");
 	}
 
 	private String _code = "unexpected_error";

@@ -40,8 +40,6 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"The Key 'alert' should with [context] to indicate specific " +
 					"meaning"
 			).addExpectedMessage(
-				"The Key 'answer[n]' contain unqualified context for 'n'"
-			).addExpectedMessage(
 				"The Key 'average' should with [context] to indicate " +
 					"specific meaning"
 			).addExpectedMessage(

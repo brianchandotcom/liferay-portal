@@ -72,6 +72,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_SCREEN_NAME_FIELD_DISABLED</td>
+	<td>//input[contains(@id,'screenName') and @disabled='disabled']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_SUFFIX_SELECT</td>
 	<td>//div[contains(.,'Suffix')]/select</td>
 	<td></td>

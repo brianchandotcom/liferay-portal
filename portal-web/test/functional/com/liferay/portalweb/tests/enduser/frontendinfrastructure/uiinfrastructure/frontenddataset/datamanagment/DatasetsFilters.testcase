@@ -103,13 +103,26 @@ definition {
 		}
 	}
 
-	@description = "LPS-183476. Confirm that the New filter modal is closed and the changes are not applied when canceling on Cancel button"
-	@ignore = "true"
+	@description = "LPS-176184. Confirm that the New filter modal is closed and the changes are not applied when canceling on Cancel button"
 	@priority = 3
-	test CanCancelFilterCreationonCancelButton {
+	test CanCancelFilterCreationOnCancelButton {
+		task ("And clicks to add a new filter") {
+			LexiconEntry.gotoAdd();
+		}
 
-		// TODO LPS-183476 CanCancelFilterCreationonCancelButton pending implementation
+		task ("Then click on the "Cancel button"") {
+			Button.clickCancel();
+		}
 
+		task ("And assert the New filter modal is closed and the changes are not applied") {
+			AssertElementNotPresent(
+				key_modalTitle = "New Filter",
+				locator1 = "Button#CLOSE_MODAL");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No default filters were created.");
+		}
 	}
 
 	@description = "LPS-183476. Confirm that the New filter modal is closed and the changes are not applied when canceling on Close (X) button"

@@ -827,14 +827,14 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 			<OrderableTable
 				actions={[
 					{
-						icon: 'trash',
-						label: Liferay.Language.get('delete'),
-						onClick: handleDelete,
-					},
-					{
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
 						onClick: handleEdit,
+					},
+					{
+						icon: 'trash',
+						label: Liferay.Language.get('delete'),
+						onClick: handleDelete,
 					},
 				]}
 				disableSave={!newFiltersOrder.length}

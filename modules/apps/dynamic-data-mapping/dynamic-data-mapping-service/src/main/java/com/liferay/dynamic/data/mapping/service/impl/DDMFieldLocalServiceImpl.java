@@ -329,7 +329,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			ddmFormValues.getDDMFormFieldValues(), null);
 
 		DDMFormUpdateContext ddmFormUpdateContext = _getDDMFormUpdateContext(
-			ddmFieldInfoMap, storageId);
+			ddmFieldInfoMap, ddmFormFieldsMap, storageId);
 
 		long batchCounter = 0;
 
@@ -450,17 +450,8 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			ddmFieldAttribute.setAttributeName(
 				ddmFieldAttributeInfo._attributeName);
 			ddmFieldAttribute.setLanguageId(ddmFieldAttributeInfo._languageId);
-
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(
-				ddmFieldAttributeInfo._ddmFieldInfo._fieldName);
-
-			if ((ddmFormField == null) ||
-				!GetterUtil.getBoolean(
-					ddmFormField.getProperty("persistReadOnlyValue"))) {
-
-				ddmFieldAttribute.setAttributeValue(
-					ddmFieldAttributeInfo._attributeValue);
-			}
+			ddmFieldAttribute.setAttributeValue(
+				ddmFieldAttributeInfo._attributeValue);
 
 			_ddmFieldAttributePersistence.update(ddmFieldAttribute);
 		}
@@ -604,7 +595,8 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	}
 
 	private DDMFormUpdateContext _getDDMFormUpdateContext(
-		Map<String, DDMFieldInfo> ddmFieldInfoMap, long storageId) {
+		Map<String, DDMFieldInfo> ddmFieldInfoMap,
+		Map<String, DDMFormField> ddmFormFieldsMap, long storageId) {
 
 		List<Map.Entry<DDMField, DDMFieldInfo>> ddmFieldEntries =
 			new ArrayList<>();
@@ -682,6 +674,13 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			}
 
 			DDMField ddmField = ddmFieldEntry.getKey();
+
+			if (_persistReadOnlyValues(
+					ddmField, ddmFieldAttributeEntries, ddmFieldInfoMap,
+					ddmFieldsAttributesMap, ddmFormFieldsMap)) {
+
+				continue;
+			}
 
 			for (List<DDMFieldAttributeInfo> ddmFieldAttributeInfos :
 					ddmFieldInfo._ddmFieldAttributeInfos.values()) {
@@ -869,6 +868,51 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		}
 
 		return jsonObject.toString();
+	}
+
+	private boolean _persistReadOnlyValues(
+		DDMField ddmField,
+		List<Map.Entry<DDMFieldAttribute, DDMFieldAttributeInfo>>
+			ddmFieldAttributeEntries,
+		Map<String, DDMFieldInfo> ddmFieldInfoMap,
+		Map<Long, Map<String, DDMFieldAttribute>> ddmFieldsAttributesMap,
+		Map<String, DDMFormField> ddmFormFieldsMap) {
+
+		if ((ddmField == null) ||
+			!ddmFieldsAttributesMap.containsKey(ddmField.getFieldId())) {
+
+			return false;
+		}
+
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(
+			ddmField.getFieldName());
+
+		if ((ddmFormField == null) ||
+			!GetterUtil.getBoolean(
+				ddmFormField.getProperty("persistReadOnlyValue"))) {
+
+			return false;
+		}
+
+		Map<String, DDMFieldAttribute> ddmFieldAttributesMap =
+			ddmFieldsAttributesMap.get(ddmField.getFieldId());
+
+		for (DDMFieldAttribute ddmFieldAttribute :
+				ddmFieldAttributesMap.values()) {
+
+			ddmFieldAttributeEntries.add(
+				new AbstractMap.SimpleImmutableEntry<>(
+					ddmFieldAttribute,
+					new DDMFieldAttributeInfo(
+						ddmFieldAttribute.getAttributeName(),
+						ddmFieldAttribute.getAttributeValue(),
+						ddmFieldInfoMap.get(ddmField.getInstanceId()),
+						ddmFieldAttribute.getLanguageId())));
+		}
+
+		ddmFieldsAttributesMap.remove(ddmField.getFieldId());
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

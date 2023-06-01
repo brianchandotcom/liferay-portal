@@ -331,6 +331,125 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	public void testRenderCollectionStyledLayoutStructureItemSelectingSegmentsExperienceWithSameSegmentsEntry()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		JournalArticle expectedJournalArticle1 = _addJournalArticle(
+			ddmStructure);
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			expectedJournalArticle1.getResourcePrimKey());
+
+		JournalArticle expectedJournalArticle2 = _addJournalArticle(
+			ddmStructure);
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			expectedJournalArticle2.getResourcePrimKey());
+
+		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), "Test");
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry1.getEntryId()},
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry2.getEntryId()},
+			segmentsEntry.getSegmentsEntryId(), _serviceContext);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_createLayoutStructure(
+			layout,
+			layoutStructure -> {
+				CollectionStyledLayoutStructureItem
+					collectionStyledLayoutStructureItem =
+						(CollectionStyledLayoutStructureItem)
+							layoutStructure.
+								addCollectionStyledLayoutStructureItem(
+									layoutStructure.getMainItemId(), 0);
+
+				collectionStyledLayoutStructureItem.setCollectionJSONObject(
+					JSONUtil.put(
+						"classNameId",
+						_portal.getClassNameId(AssetListEntry.class)
+					).put(
+						"classPK", assetListEntry.getAssetListEntryId()
+					).put(
+						"itemType", JournalArticle.class.getName()
+					).put(
+						"type", InfoListItemSelectorReturnType.class.getName()
+					));
+
+				collectionStyledLayoutStructureItem.setListStyle(
+					"com.liferay.journal.web.internal.info.list.renderer." +
+						"BulletedJournalArticleBasicInfoListRenderer");
+			},
+			segmentsExperience.getSegmentsExperienceId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
+
+		mockHttpServletRequest.addParameter(
+			"segmentsExperienceId",
+			String.valueOf(segmentsExperience.getSegmentsExperienceId()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		RenderLayoutStructureTag renderLayoutStructureTag =
+			_getRenderLayoutStructureTag(
+				layout, mockHttpServletRequest, mockHttpServletResponse,
+				segmentsExperience.getSegmentsExperienceId());
+
+		renderLayoutStructureTag.doTag(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		List<JournalArticle> actualJournalArticles =
+			(List<JournalArticle>)mockHttpServletRequest.getAttribute(
+				"liferay-info:info-list-grid:infoListObjects");
+
+		Assert.assertNotNull(actualJournalArticles);
+
+		Assert.assertEquals(
+			actualJournalArticles.toString(), 1, actualJournalArticles.size());
+
+		JournalArticle actualJournalArticle = actualJournalArticles.get(0);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-183723")) {
+			Assert.assertEquals(
+				expectedJournalArticle2.getArticleId(),
+				actualJournalArticle.getArticleId());
+		}
+		else {
+			Assert.assertEquals(
+				expectedJournalArticle1.getArticleId(),
+				actualJournalArticle.getArticleId());
+		}
+	}
+
+	@Test
 	public void testRenderFormWithInfoFormException() throws Exception {
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
 

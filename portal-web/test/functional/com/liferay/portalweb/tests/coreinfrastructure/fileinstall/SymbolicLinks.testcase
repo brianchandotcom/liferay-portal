@@ -19,6 +19,7 @@ definition {
 		property skip.start.app.server = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "SymbolicLinks#SetLiferayHomeToASymbolicLink";
+		property testcase.url = "http://www.example.com";
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -30,7 +31,12 @@ definition {
 
 		Portlet.startServer(keepOSGiState = "true");
 
-		User.firstLoginPG();
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
 	}
 
 }

@@ -187,7 +187,12 @@ function ModalAddObjectField({
 										onToggle={(localized) =>
 											setValues({
 												localized,
-												required: Liferay.FeatureFlags['LPS-172017'] ? !localized && values.required : values.required
+												required: Liferay.FeatureFlags[
+													'LPS-172017'
+												]
+													? !localized &&
+													  values.required
+													: values.required,
 											})
 										}
 										toggled={values.localized}

@@ -44,7 +44,7 @@ public interface DLFileOrderConfiguration {
 	public String orderByColumn();
 
 	@Meta.AD(
-		deflt = "desc", name = "sort-by",
+		deflt = "desc", name = "sort-direction",
 		optionLabels = {"ascending", "descending"},
 		optionValues = {"asc", "desc"}, required = false
 	)

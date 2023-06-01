@@ -12,15 +12,12 @@
  * details.
  */
 
-import {DATA_SET_EVENT} from '@liferay/frontend-data-set-web';
+import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {getOpener, getTop} from 'frontend-js-web';
 
 class SidePanelListenersInitializer {
 	constructor() {
-		Liferay.on(
-			DATA_SET_EVENT.OPEN_MODAL,
-			this.handleOpenModalFromSidePanel
-		);
+		Liferay.on(FDS_EVENT.OPEN_MODAL, this.handleOpenModalFromSidePanel);
 
 		document.body.classList.remove('open');
 
@@ -32,22 +29,19 @@ class SidePanelListenersInitializer {
 
 					const parentWindow = getOpener();
 
-					parentWindow.Liferay.fire(DATA_SET_EVENT.CLOSE_SIDE_PANEL);
+					parentWindow.Liferay.fire(FDS_EVENT.CLOSE_SIDE_PANEL);
 				});
 			});
 	}
 
 	dispose() {
-		Liferay.detach(
-			DATA_SET_EVENT.OPEN_MODAL,
-			this.handleOpenModalFromSidePanel
-		);
+		Liferay.detach(FDS_EVENT.OPEN_MODAL, this.handleOpenModalFromSidePanel);
 	}
 
 	handleOpenModalFromSidePanel(payload) {
 		const topWindow = getTop();
 
-		topWindow.Liferay.fire(DATA_SET_EVENT.OPEN_MODAL_FROM_IFRAME, payload);
+		topWindow.Liferay.fire(FDS_EVENT.OPEN_MODAL_FROM_IFRAME, payload);
 	}
 }
 

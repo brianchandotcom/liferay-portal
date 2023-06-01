@@ -640,6 +640,8 @@ definition {
 				assetTitle = "Web Content Title 1",
 				assetType = "Web Content Article",
 				personalizedVariation = "New Segment");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "New Segment");
 		}
 
 		task ("Add a Collection Display fragment to content page") {

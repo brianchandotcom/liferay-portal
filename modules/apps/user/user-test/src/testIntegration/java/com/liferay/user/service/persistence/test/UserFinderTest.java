@@ -19,11 +19,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
@@ -31,7 +33,9 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -98,6 +102,15 @@ public class UserFinderTest {
 			_groupUser.getUserId(), _socialUser.getUserId(),
 			SocialRelationConstants.TYPE_BI_CONNECTION);
 
+		_team = _teamLocalService.addTeam(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_teamUser = UserTestUtil.addUser();
+
+		_teamLocalService.addUserTeam(_teamUser.getUserId(), _team);
+
 		_userGroup = UserGroupTestUtil.addUserGroup();
 		_userGroupUser = UserTestUtil.addUser();
 
@@ -115,6 +128,10 @@ public class UserFinderTest {
 
 		_organizationLocalService.deleteOrganization(_organization1);
 		_organizationLocalService.deleteOrganization(_organization2);
+
+		_userLocalService.deleteUser(_teamUser);
+
+		_teamLocalService.deleteTeam(_team);
 
 		_userLocalService.deleteUser(_socialUser);
 		_userLocalService.deleteUser(_userGroupUser);
@@ -147,6 +164,12 @@ public class UserFinderTest {
 		).put(
 			"usersRoles", _roleId
 		).build();
+
+		_inheritedUserTeamsParams = LinkedHashMapBuilder.<String, Object>put(
+			"inherit", Boolean.TRUE
+		).put(
+			"usersTeams", new Long[] {_team.getTeamId()}
+		).build();
 	}
 
 	@After
@@ -156,6 +179,7 @@ public class UserFinderTest {
 		_groupLocalService.clearOrganizationGroups(
 			_organization1.getOrganizationId());
 		_groupLocalService.clearUserGroupGroups(_userGroup.getUserGroupId());
+		_teamLocalService.clearUserGroupTeams(_userGroup.getUserGroupId());
 	}
 
 	@Test
@@ -201,6 +225,21 @@ public class UserFinderTest {
 			WorkflowConstants.STATUS_APPROVED, _inheritedUserRolesParams);
 
 		Assert.assertEquals(expectedCount + 2, count);
+	}
+
+	@Test
+	public void testCountByKeywordsWithInheritedTeams() throws Exception {
+		int expectedCount = _userFinder.countByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserTeamsParams);
+
+		_teamLocalService.addUserGroupTeam(_userGroup.getUserGroupId(), _team);
+
+		int count = _userFinder.countByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserTeamsParams);
+
+		Assert.assertEquals(expectedCount + 1, count);
 	}
 
 	@Test
@@ -345,6 +384,26 @@ public class UserFinderTest {
 	}
 
 	@Test
+	public void testFindByKeywordsWithInheritedTeams() throws Exception {
+		List<User> expectedUsers = _userFinder.findByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserTeamsParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		_teamLocalService.addUserGroupTeam(_userGroup.getUserGroupId(), _team);
+
+		List<User> users = _userFinder.findByKeywords(
+			TestPropsValues.getCompanyId(), null,
+			WorkflowConstants.STATUS_APPROVED, _inheritedUserTeamsParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(users.toString(), users.contains(_teamUser));
+		Assert.assertTrue(users.toString(), users.contains(_userGroupUser));
+		Assert.assertEquals(
+			users.toString(), expectedUsers.size() + 1, users.size());
+	}
+
+	@Test
 	public void testFindBySocialUsers() throws Exception {
 		List<User> users = _userFinder.findBySocialUsers(
 			TestPropsValues.getCompanyId(), _groupUser.getUserId(),
@@ -382,6 +441,12 @@ public class UserFinderTest {
 	private static SocialRelationLocalService _socialRelationLocalService;
 
 	private static User _socialUser;
+	private static Team _team;
+
+	@Inject
+	private static TeamLocalService _teamLocalService;
+
+	private static User _teamUser;
 	private static UserGroup _userGroup;
 
 	@Inject
@@ -395,6 +460,7 @@ public class UserFinderTest {
 	private int _inheritedUserGroupsExpectedCount;
 	private LinkedHashMap<String, Object> _inheritedUserGroupsParams;
 	private LinkedHashMap<String, Object> _inheritedUserRolesParams;
+	private LinkedHashMap<String, Object> _inheritedUserTeamsParams;
 	private long _roleId;
 
 	@Inject

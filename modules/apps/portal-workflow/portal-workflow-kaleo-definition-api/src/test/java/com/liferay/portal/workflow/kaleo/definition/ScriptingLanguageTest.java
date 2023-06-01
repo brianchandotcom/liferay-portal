@@ -36,8 +36,7 @@ public class ScriptingLanguageTest {
 	public void testParseScriptingLanguages() throws Exception {
 		for (String value :
 				new String[] {
-					"beanshell", "drl", "groovy", "java", "javascript",
-					"python", "ruby", "function#foo", "function#foo-bar"
+					"drl", "groovy", "java", "function#foo", "function#foo-bar"
 				}) {
 
 			ScriptLanguage scriptLanguage = ScriptLanguage.parse(value);
@@ -47,8 +46,9 @@ public class ScriptingLanguageTest {
 
 		for (String value :
 				new String[] {
-					"beanshellV", "something", "function#-foo",
-					"function#Foo-bar", "function#foo-bar-"
+					"beanshell", "beanshellV", "javascript", "python", "ruby",
+					"something", "function#-foo", "function#Foo-bar",
+					"function#foo-bar-"
 				}) {
 
 			try {

@@ -183,7 +183,7 @@ definition {
 	macro addSourceXMLBasicDefinition {
 		var sourceXml = '''
 <?xml version="1.0"?>
-<workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_6.2.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">${line.separator}
+<workflow-definition${line.separator} xmlns="urn:liferay.com:liferay-workflow_7.4.0"${line.separator} xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"${line.separator} xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd">${line.separator}
 <name>Workflow Definition Name</name>${line.separator}${line.separator}
 
 <description>${line.separator}
@@ -225,7 +225,7 @@ definition {
 <script>${line.separator}
 </script>${line.separator}${line.separator}
 
-<script-language>javascript</script-language>${line.separator}${line.separator}
+<script-language>groovy</script-language>${line.separator}${line.separator}
 
 <execution-type>onEntry</execution-type>${line.separator}
 </action>${line.separator}

@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/frontend-data-set-web": "*",
 		"data-engine-js-components-web": "*",
 		"dynamic-data-mapping-form-field-type": "*",
 		"frontend-js-web": "*"

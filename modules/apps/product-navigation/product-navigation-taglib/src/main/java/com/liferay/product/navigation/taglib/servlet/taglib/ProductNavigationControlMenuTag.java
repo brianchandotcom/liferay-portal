@@ -15,6 +15,7 @@
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -124,19 +126,30 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 			return false;
 		}
 
-		// Temporary workaround for LPS-175648
-
-		if (_ROLE_NAMES.length == 0) {
-			return true;
-		}
-
 		HttpServletRequest httpServletRequest = getRequest();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn()) {
+		ProductNavigationControlMenuManager
+			productNavigationControlMenuManager =
+				ServletContextUtil.getProductNavigationControlMenuManager();
+
+		if (!productNavigationControlMenuManager.isShowControlMenu(
+				themeDisplay.getScopeGroup(), themeDisplay.getLayout(),
+				themeDisplay.getUserId())) {
+
+			return false;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-176136")) {
+			return true;
+		}
+
+		// Temporary workaround for LPS-175648
+
+		if ((_ROLE_NAMES.length == 0) || !themeDisplay.isSignedIn()) {
 			return true;
 		}
 

@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
+import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuManager;
 
 import javax.servlet.ServletContext;
 
@@ -47,6 +48,12 @@ public class ServletContextUtil {
 		return _productNavigationControlMenuEntryRegistrySnapshot.get();
 	}
 
+	public static ProductNavigationControlMenuManager
+		getProductNavigationControlMenuManager() {
+
+		return _productNavigationControlMenuManagerSnapshot.get();
+	}
+
 	public static ServletContext getServletContext() {
 		return _servletContextSnapshot.get();
 	}
@@ -64,6 +71,10 @@ public class ServletContextUtil {
 		_productNavigationControlMenuEntryRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class,
 			ProductNavigationControlMenuEntryRegistry.class);
+	private static final Snapshot<ProductNavigationControlMenuManager>
+		_productNavigationControlMenuManagerSnapshot = new Snapshot<>(
+			ServletContextUtil.class,
+			ProductNavigationControlMenuManager.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,

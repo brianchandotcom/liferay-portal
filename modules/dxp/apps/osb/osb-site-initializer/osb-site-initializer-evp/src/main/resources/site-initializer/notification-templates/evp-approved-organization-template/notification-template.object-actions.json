@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "(organizationStatus == \"awaitingFinanceApproval\" OR organizationStatus == \"verified\")  AND organizationStatus != oldValue(\"organizationStatus\")",
+		"externalReferenceCode": "EVP-ORGANIZATION-NOTIFICATION-01",
+		"label": {
+			"en_US": "EVP Approved Organization Template"
+		},
+		"name": "EVPApprovedOrganizationTemplate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPOrganization$]"
+	}
+]

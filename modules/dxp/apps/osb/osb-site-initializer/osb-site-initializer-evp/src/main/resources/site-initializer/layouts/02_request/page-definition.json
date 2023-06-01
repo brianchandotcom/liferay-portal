@@ -136,7 +136,7 @@
 																						},
 																						{
 																							"fieldName": "siteKey",
-																							"fieldValue": "EVP"
+																							"fieldValue": "[$GROUP_KEY$]"
 																						}
 																					]
 																				}
@@ -192,7 +192,7 @@
 																						},
 																						{
 																							"fieldName": "siteKey",
-																							"fieldValue": "EVP"
+																							"fieldValue": "[$GROUP_KEY$]"
 																						}
 																					]
 																				}
@@ -904,7 +904,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "evp-request-kebab-button",
-																						"siteKey": "EVP"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																					},
@@ -973,14 +973,15 @@
 															"fragmentStyle": {
 																"borderColor": "colorNeutral4",
 																"height": "65px",
-																"maxWidth": "20%",
+																"maxWidth": "18%",
 																"paddingLeft": "2",
-																"width": "20%"
+																"width": "18%"
 															},
 															"indexed": true,
 															"layout": {
 																"align": "Center",
 																"borderColor": "colorNeutral4",
+																"contentDisplay": "FlexRow",
 																"opacity": 100,
 																"widthType": "Fluid"
 															}
@@ -1458,7 +1459,7 @@
 																				"definition": {
 																					"fragment": {
 																						"key": "evp-request-kebab-button",
-																						"siteKey": "EVP"
+																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
 																					},

@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "organizationStatus == \"rejected\" AND organizationStatus != oldValue(\"organizationStatus\")",
+		"externalReferenceCode": "EVP-ORGANIZATION-NOTIFICATION-03",
+		"label": {
+			"en_US": "EVP Rejected Organization Template"
+		},
+		"name": "EVPRejectedOrganizationTemplate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPOrganization$]"
+	}
+]

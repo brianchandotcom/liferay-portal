@@ -1,0 +1,14 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "organizationStatus == \"awaitingMoreInfoFromEmployee\" AND organizationStatus != oldValue(\"organizationStatus\")",
+		"externalReferenceCode": "EVP-ORGANIZATION-NOTIFICATION-02",
+		"label": {
+			"en_US": "EVP Need More Info Organization Template"
+		},
+		"name": "EVPNeedMoreInfoOrganizationTemplate",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterUpdate",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:EVPOrganization$]"
+	}
+]

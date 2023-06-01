@@ -654,7 +654,7 @@
 																					},
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/evp/calendar_icon-svg?download=true"
+																							"en_US": "/documents/d/[$GROUP_KEY$]/calendar_icon-svg?download=true"
 																						}
 																					}
 																				},
@@ -809,7 +809,7 @@
 																					},
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/evp/watch_icon-svg?download=true"
+																							"en_US": "/documents/d/[$GROUP_KEY$]/watch_icon-svg?download=true"
 																						}
 																					}
 																				},
@@ -956,7 +956,7 @@
 																					},
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/evp/money_icon-svg?download=true"
+																							"en_US": "/documents/d/[$GROUP_KEY$]/money_icon-svg?download=true"
 																						}
 																					}
 																				},
@@ -1160,7 +1160,7 @@
 																					},
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/evp/heart_icon-svg?download=true"
+																							"en_US": "/documents/d/[$GROUP_KEY$]/heart_icon-svg?download=true"
 																						}
 																					}
 																				},
@@ -1307,7 +1307,7 @@
 																					},
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/evp/community_icon-svg?download=true"
+																							"en_US": "/documents/d/[$GROUP_KEY$]/community_icon-svg?download=true"
 																						}
 																					}
 																				},
@@ -1519,7 +1519,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/evp/evp_process_icon-svg?download=true"
+																							"en_US": "/documents/d/[$GROUP_KEY$]/evp_process_icon-svg?download=true"
 																						}
 																					}
 																				},

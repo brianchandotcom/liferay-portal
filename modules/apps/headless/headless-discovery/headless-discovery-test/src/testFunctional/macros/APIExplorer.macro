@@ -57,6 +57,14 @@ definition {
 			parameter = ${parameter},
 			value1 = ${value});
 
+		if (isSet(parameter_two)) {
+			Type(
+				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
+				method = ${method},
+				parameter = ${parameter_two},
+				value1 = ${value_two});
+		}
+
 		if (isSet(requestBody)) {
 			Type(
 				locator1 = "OpenAPI#REQUEST_BODY",
@@ -126,6 +134,9 @@ definition {
 
 		if (isSet(api)) {
 			Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/${api}/${version}/openapi.json");
+		}
+		else if (isSet(customObjectPlural)) {
+			Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/c/${customObjectPlural}/openapi.json");
 		}
 		else {
 			Navigator.openSpecificURL(url = "${portalURL}/o/api");

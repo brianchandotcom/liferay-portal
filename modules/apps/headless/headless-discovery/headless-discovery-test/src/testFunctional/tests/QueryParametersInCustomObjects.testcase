@@ -1,0 +1,285 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Manager object definition with mandatory field 'name' created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_plural_label = "managers",
+				name = "Manager");
+		}
+
+		task ("Given Employee object definition with non-mandatory field 'name' created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_plural_label = "employees",
+				name = "Employee");
+		}
+
+		task ("And Given Department object definition with mandatory field 'name' created") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_plural_label = "departments",
+				name = "Department");
+		}
+
+		task ("And Given one-to-many departmentManagers relationsip created being department the parent") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Manager",
+				name = "departmentManagers",
+				parentObjectName = "Department",
+				type = "oneToMany");
+		}
+
+		task ("And Given many-to-many managersEmployees relationsip created being Manager the parent") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Employee",
+				name = "managersEmployees",
+				parentObjectName = "Manager",
+				type = "manyToMany");
+		}
+
+		task ("And Given created entry Manager 'Jane' related to created entry Department 'Financial'") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "managers",
+				name = "Jane");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "departments",
+				name = "Financial");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "managers",
+				childEntryName = "Jane",
+				parent_plural_label = "departments",
+				parentEntryName = "Financial",
+				relationshipName = "departmentManagers");
+		}
+
+		task ("And Given Manager 'Jane' related to created entry Employee 'John'") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "employees",
+				name = "John");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "employees",
+				childEntryName = "John",
+				parent_plural_label = "managers",
+				parentEntryName = "Jane",
+				relationshipName = "managersEmployees");
+		}
+
+		QueryParametersInCustomObjects.setUpGlobalObjectEntryValues();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			HeadlessPortalInstanceAPI.cleanAllPortalInstances();
+		}
+	}
+
+	@priority = 3
+	test CanUseFieldsParameterInCustomObjectCollection {
+		task ("When in API Explorer o/c/managers requesting getManagersPage with fields=name,id") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "managers");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getManagersPage",
+				parameter = "fields",
+				service = "Manager",
+				value = "name,id");
+		}
+
+		task ("Then in items of the page I can see name and id values only") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getManagersPage",
+				value1 = "\"items\": [     {       \"id\": ${staticManagerId},       \"name\": \"Jane\"     }   ]");
+		}
+	}
+
+	@priority = 3
+	test CanUseFieldsParameterWithNonExistingFieldName {
+		task ("When in API Explorer o/c/departments requesting getDepartmentsPage with fields=non-existing-field") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "departments");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getDepartmentsPage",
+				parameter = "fields",
+				service = "Department",
+				value = "non-existing-field");
+		}
+
+		task ("Then the items node will be returned empty") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getDepartmentsPage",
+				value1 = "\"items\": [     {}   ]");
+		}
+	}
+
+	@priority = 3
+	test CanUseFieldsParameterWithNonMandatoryFields {
+		task ("When in API Explorer o/c/employees requesting getEmployeesPage with fields=name") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "employees");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getEmployeesPage",
+				parameter = "fields",
+				service = "Employee",
+				value = "name");
+		}
+
+		task ("Then in items of the page I can see name value only") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployeesPage",
+				value1 = "\"items\": [     {       \"name\": \"John\"     }   ]");
+		}
+	}
+
+	@priority = 3
+	test CanUseNestedFieldsParameterWithManyToManyRelationshipName {
+		task ("When in API Explorer o/c/employees requesting getEmployee with {employeeId} nestedFields=managersEmployees") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "employees");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getEmployee",
+				parameter = "employeeId",
+				parameter_two = "nestedFields",
+				service = "Employee",
+				value = ${staticEmployeeId},
+				value_two = "managersEmployees");
+		}
+
+		task ("Then I can see Jane's details nested in the response") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"managersEmployees\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"name\": \"Jane\"");
+		}
+	}
+
+	@priority = 3
+	test CanUseNestedFieldsParameterWithOneToManyRelationshipName {
+		task ("When in API Explorer o/c/departments requesting getDepartmentsPage with nestedFields=departmentManagers") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "departments");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getDepartmentsPage",
+				parameter = "nestedFields",
+				service = "Department",
+				value = "departmentManagers");
+		}
+
+		task ("Then I can see Jane's details nested in Financial department") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getDepartmentsPage",
+				value1 = "\"departmentManagers\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getDepartmentsPage",
+				value1 = "\"name\": \"Jane\"");
+		}
+	}
+
+	@priority = 3
+	test CanUseRestrictFieldsParameterInCustomObjectEntry {
+		task ("When in API Explorer o/c/managers requesting getManager with {managerId} with restrictFields=name,id") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "managers");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getManager",
+				parameter = "managerId",
+				parameter_two = "restrictFields",
+				service = "Manager",
+				value = ${staticManagerId},
+				value_two = "name,id");
+		}
+
+		task ("Then in items of the page I do not see name nor id values") {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getManager",
+				value1 = "\"id\": ${staticManagerId}");
+
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getManager",
+				value1 = "\"name\": \"Jane\"");
+		}
+	}
+
+	@priority = 3
+	test CanUseRestrictFieldsParameterWithNonExistingFieldName {
+		task ("When in API Explorer o/c/employees requesting getEmployee with {employeeId} restrictFields=non-exiting-field") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "employees");
+
+			APIExplorer.executeAPIMethodWithParameters(
+				method = "getEmployee",
+				parameter = "employeeId",
+				service = "Employee",
+				value = ${staticEmployeeId});
+		}
+
+		task ("Then the entry in items node will contain all fields values of the employee") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"dateCreated\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"dateModified\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"externalReferenceCode\": \"${staticEmployeeErc}\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"id\": ${staticEmployeeId}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"keywords\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"name\": \"John\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"status\"");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getEmployee",
+				value1 = "\"taxonomyCategoryBriefs\"");
+		}
+	}
+
+}

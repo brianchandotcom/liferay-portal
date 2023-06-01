@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal:portal-local-service-tree-test-util")
 	testIntegrationCompile project(":apps:portal:portal-verify-test-util")
 	testIntegrationCompile project(":apps:site:site-api")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

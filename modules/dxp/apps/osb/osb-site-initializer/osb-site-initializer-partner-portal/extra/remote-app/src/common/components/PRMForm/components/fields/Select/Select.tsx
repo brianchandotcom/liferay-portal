@@ -41,15 +41,15 @@ const Select = ({
 	const getValue = () => {
 		if (typeof field.value === 'object') {
 			if (
-				field.value.id
-					? field.value.id
-					: field.value.externalReferenceCode
+				field.value.externalReferenceCode
+					? field.value.externalReferenceCode
+					: field.value.id
 			) {
 				return (
 					String(
-						field.value.id
-							? field.value.id
-							: field.value.externalReferenceCode
+						field.value.externalReferenceCode
+							? field.value.externalReferenceCode
+							: field.value.id
 					) || ''
 				);
 			}

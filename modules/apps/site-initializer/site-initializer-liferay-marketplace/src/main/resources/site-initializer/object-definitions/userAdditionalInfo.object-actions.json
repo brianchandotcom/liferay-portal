@@ -1,0 +1,30 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "mothersName != \" \"",
+		"description": "",
+		"errorMessage": {
+		},
+		"externalReferenceCode": "MARKETPLACE-OBJECT-ACTION-2",
+		"label": {
+			"en_US": "passwordUpdate"
+		},
+		"name": "passwordUpdate",
+		"objectActionExecutorKey": "update-object-entry",
+		"objectActionTriggerKey": "onAfterAdd",
+		"parameters": {
+			"objectDefinitionExternalReferenceCode": "MARKETPLACE-OBJECT-DEFINITION-1",
+			"predefinedValues": [
+				{
+					"businessType": "Text",
+					"inputAsValue": true,
+					"label": {
+						"en_US": "mothersName"
+					},
+					"name": "mothersName",
+					"value": "\" \""
+				}
+			]
+		}
+	}
+]

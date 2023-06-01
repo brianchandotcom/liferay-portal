@@ -38,7 +38,7 @@ const getUserAccountsById = async () => {
 
 		if (response.ok) {
 			const userData = await response.json();
-			userData.items.map((data) => {
+			userData?.items?.map((data) => {
 				if (data.acceptInviteStatus === false) {
 					userAdditionalInfosId = data.id;
 					getMyUserAccount(data);
@@ -46,15 +46,15 @@ const getUserAccountsById = async () => {
 					userRoles = arrayRoles.filter((item) => item !== '');
 				}
 			});
-		} else {
+		}
+		else {
 			console.error('Failed to fetch user data:', response.status);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		console.error('An error occurred:', error);
 	}
 };
-
-getUserAccountsById();
 
 const getMyUserAccount = async (userAdditional) => {
 	try {
@@ -77,12 +77,13 @@ const getMyUserAccount = async (userAdditional) => {
 			myUser?.accountBriefs?.map((userAccountBriefs) => {
 				userAccount.textContent = userAccountBriefs?.name;
 				userAccountData.accountName = userAccountBriefs?.name;
+
 				if (
-					userAdditional?.r_accountToUserAdditionalInfos_accountEntryId ===
+					userAdditional?.r_accountEntryToUserAdditionalInfo_accountEntryId ===
 					userAccountBriefs.id
 				) {
 					accountId = userAccountBriefs.id;
-					userAccountBriefs.roleBriefs?.map(async (role) => {
+					userAccountBriefs.roleBriefs?.map((role) => {
 						roleId = role.id;
 					});
 				}
@@ -91,15 +92,15 @@ const getMyUserAccount = async (userAdditional) => {
 			if (accountId && roleId && myUser.id) {
 				deleteRoleFromUser(accountId, roleId, myUser.id);
 			}
-		} else {
+		}
+		else {
 			console.error('Failed to fetch user data:', response.status);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		console.error('An error occurred:', error);
 	}
 };
-
-getMyUserAccount();
 
 const deleteRoleFromUser = async (accountId, roleId, myUserId) => {
 	try {
@@ -116,10 +117,12 @@ const deleteRoleFromUser = async (accountId, roleId, myUserId) => {
 
 		if (response.ok) {
 			getRolesId(accountId, myUserId);
-		} else {
+		}
+		else {
 			console.error('Failed to fetch user data:', response.status);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		console.error('An error occurred:', error);
 	}
 };
@@ -151,10 +154,12 @@ const getRolesId = async (accountId, myUserId) => {
 			if (sendingRole) {
 				updateInviteStatus();
 			}
-		} else {
+		}
+		else {
 			console.error('Failed to fetch user data:', response);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		console.error('An error occurred:', error);
 	}
 };
@@ -174,12 +179,14 @@ const sendRolesApi = async (roleId, accountId, userId) => {
 		);
 		if (response.ok) {
 			return true;
-		} else {
+		}
+		else {
 			console.error('Failed to fetch user data:', response);
 
 			return false;
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		console.error('An error occurred:', error);
 
 		return false;
@@ -205,12 +212,25 @@ const updateInviteStatus = async () => {
 		if (response.ok) {
 			const jsonJserAccountData = JSON.stringify(userAccountData);
 			localStorage.setItem('userAccountData', jsonJserAccountData);
-			window.location.href =
-				'http://localhost:8080/web/marketplace/dashboard';
-		} else {
+			window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/dashboard`;
+		}
+		else {
 			console.error('Failed to fetch user data:', response);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		console.error('An error occurred:', error);
 	}
 };
+
+const getSiteURL = () => {
+	const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+
+	if (layoutRelativeURL.includes('web')) {
+		return layoutRelativeURL.split('/').slice(0, 3).join('/');
+	}
+
+	return '';
+};
+
+getUserAccountsById();

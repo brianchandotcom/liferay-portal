@@ -12,10 +12,10 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayModal, {useModal} from '@clayui/modal';
-import {useEffect, useState} from 'react';
+import ClayButton from "@clayui/button";
+import ClayForm, { ClayCheckbox, ClayInput } from "@clayui/form";
+import ClayModal, { useModal } from "@clayui/modal";
+import { useEffect, useState } from "react";
 
 import './inviteMemberModal.scss';
 import {
@@ -32,35 +32,35 @@ import { createPassword } from '../../utils/createPassword';
 import { Liferay } from '../../liferay/liferay';
 
 interface InviteMemberModalProps {
-	handleClose: () => void;
-	selectedAccount: Account;
+  handleClose: () => void;
+  selectedAccount: Account;
 }
 
 interface CheckboxRole {
-	isChecked: boolean;
-	roleName: string;
+  isChecked: boolean;
+  roleName: string;
 }
 
 export function InviteMemberModal({
-	handleClose,
-	selectedAccount,
+  handleClose,
+  selectedAccount,
 }: InviteMemberModalProps) {
-	const {observer, onClose} = useModal({
-		onClose: () => handleClose(),
-	});
+  const { observer, onClose } = useModal({
+    onClose: () => handleClose(),
+  });
 
-	const [formFields, setFormFields] = useState({
-		email: '',
-		firstName: '',
-		lastName: '',
-	});
-	const [checkboxRoles, setCheckboxRoles] = useState<CheckboxRole[]>([]);
-	const [formValid, setFormValid] = useState<boolean>(false);
+  const [formFields, setFormFields] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+  });
+  const [checkboxRoles, setCheckboxRoles] = useState<CheckboxRole[]>([]);
+  const [formValid, setFormValid] = useState<boolean>(false);
 
   const [accountRoles, setAccountRoles] = useState<AccountRole[]>();
-  const [userPassword, setUserPassword] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>("");
 
-	const listOfRoles = ['Account Administrator', 'App Editor'];
+  const listOfRoles = ["Account Administrator", "App Editor"];
 
   useEffect(() => {
     const mapRoles = listOfRoles.map((role) => {
@@ -72,7 +72,7 @@ export function InviteMemberModal({
   }, []);
 
   const jsonBody = {
-    alternateName: formFields.email.replace('@', '-'),
+    alternateName: formFields.email.replace("@", "-"),
     emailAddress: formFields.email,
     familyName: formFields.lastName,
     givenName: formFields.firstName,
@@ -80,10 +80,10 @@ export function InviteMemberModal({
   };
 
   const getCheckedRoles = () => {
-    let checkedRole = '';
+    let checkedRole = "";
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
-        checkedRole = checkedRole + checkboxRole.roleName + '/';
+        checkedRole = checkedRole + checkboxRole.roleName + "/";
       }
     }
     return checkedRole;
@@ -98,7 +98,7 @@ export function InviteMemberModal({
     for (const checkboxRole of checkboxRoles) {
       if (checkboxRole.isChecked) {
         const matchingAccountRole = accountRoles?.find(
-          (accountRole: AccountRole) => accountRole.name == 'Invited Member'
+          (accountRole: AccountRole) => accountRole.name == "Invited Member"
         );
         if (matchingAccountRole) {
           await callRolesApi(
@@ -134,116 +134,108 @@ export function InviteMemberModal({
         formFields.firstName,
         myUser.givenName,
         Liferay.ThemeDisplay.getPortalURL() +
-          '/c/login?redirect=' +
-          getSiteURL(),
+          "/c/login?redirect=" +
+          getSiteURL() +
+          "/loadingpagevalidation",
         getCheckedRoles()
       );
-      onClose()
+      onClose();
     }
   };
 
-	const validateForm = (checkboxValues: CheckboxRole[]) => {
-		const isValid = checkboxValues.some(
-			(checkbox: CheckboxRole) => checkbox.isChecked
-		);
+  const validateForm = (checkboxValues: CheckboxRole[]) => {
+    const isValid = checkboxValues.some(
+      (checkbox: CheckboxRole) => checkbox.isChecked
+    );
 
-		setFormValid(isValid);
-	};
+    setFormValid(isValid);
+  };
 
-	const handleCheck = (selectedRoleName: String) => {
-		const rolesChecked = checkboxRoles.map((role) => {
-			if (selectedRoleName === role.roleName) {
-				role.isChecked = !role.isChecked;
+  const handleCheck = (selectedRoleName: String) => {
+    const rolesChecked = checkboxRoles.map((role) => {
+      if (selectedRoleName === role.roleName) {
+        role.isChecked = !role.isChecked;
 
-				return role;
-			}
+        return role;
+      }
 
-			return role;
-		}, []);
+      return role;
+    }, []);
     setCheckboxRoles(rolesChecked);
-		validateForm(rolesChecked);
-	};
+    validateForm(rolesChecked);
+  };
 
-	return (
-		<ClayModal observer={observer} size="lg">
-			<ClayModal.Header>Invite New Member</ClayModal.Header>
+  return (
+    <ClayModal observer={observer} size="lg">
+      <ClayModal.Header>Invite New Member</ClayModal.Header>
 
-			<ClayModal.Body>
-				<ClayForm onSubmit={handleSubmit}>
-					<ClayForm.Group>
-						<div>
-							<ClayModal.TitleSection>
-								<ClayModal.Title>Invite</ClayModal.Title>
-							</ClayModal.TitleSection>
+      <ClayModal.Body>
+        <ClayForm onSubmit={handleSubmit}>
+          <ClayForm.Group>
+            <div>
+              <ClayModal.TitleSection>
+                <ClayModal.Title>Invite</ClayModal.Title>
+              </ClayModal.TitleSection>
 
-							<hr className="solid"></hr>
-						</div>
+              <hr className="solid"></hr>
+            </div>
 
-						<div className="d-flex justify-content-between pb-5">
-							<div className="form-group pr-3 w-50">
-								<label
-									className="control-label pb-1"
-									htmlFor="firstName"
-								>
-									First Name
-								</label>
+            <div className="d-flex justify-content-between pb-5">
+              <div className="form-group pr-3 w-50">
+                <label className="control-label pb-1" htmlFor="firstName">
+                  First Name
+                </label>
 
-								<ClayInput
-									id="firstName"
-									onChange={(event) => {
-										setFormFields({
-											...formFields,
-											firstName: event.target.value,
-										});
-									}}
-									required={true}
-									type="text"
-								/>
-							</div>
+                <ClayInput
+                  id="firstName"
+                  onChange={(event) => {
+                    setFormFields({
+                      ...formFields,
+                      firstName: event.target.value,
+                    });
+                  }}
+                  required={true}
+                  type="text"
+                />
+              </div>
 
-							<div className="form-group pl-3 w-50">
-								<label
-									className="control-label pb-1"
-									htmlFor="lastName"
-								>
-									Last Name
-								</label>
+              <div className="form-group pl-3 w-50">
+                <label className="control-label pb-1" htmlFor="lastName">
+                  Last Name
+                </label>
 
-								<ClayInput
-									id="lastName"
-									onChange={(event) => {
-										setFormFields({
-											...formFields,
-											lastName: event.target.value,
-										});
-									}}
-									required={true}
-									type="text"
-								/>
-							</div>
-						</div>
+                <ClayInput
+                  id="lastName"
+                  onChange={(event) => {
+                    setFormFields({
+                      ...formFields,
+                      lastName: event.target.value,
+                    });
+                  }}
+                  required={true}
+                  type="text"
+                />
+              </div>
+            </div>
 
-						<div className="form-group">
-							<label
-								className="control-label pb-1"
-								htmlFor="emailAddress"
-							>
-								Email
-							</label>
+            <div className="form-group">
+              <label className="control-label pb-1" htmlFor="emailAddress">
+                Email
+              </label>
 
-							<ClayInput
-								id="emailAddress"
-								onChange={(event) => {
-									setFormFields({
-										...formFields,
-										email: event.target.value,
-									});
-								}}
-								required={true}
-								type="text"
-							/>
-						</div>
-					</ClayForm.Group>
+              <ClayInput
+                id="emailAddress"
+                onChange={(event) => {
+                  setFormFields({
+                    ...formFields,
+                    email: event.target.value,
+                  });
+                }}
+                required={true}
+                type="text"
+              />
+            </div>
+          </ClayForm.Group>
 
           <ClayForm.Group>
             <div className="pt-4">

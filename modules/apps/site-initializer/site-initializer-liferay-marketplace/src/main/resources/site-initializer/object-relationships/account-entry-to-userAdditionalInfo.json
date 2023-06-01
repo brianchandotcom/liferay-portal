@@ -3,7 +3,7 @@
 	"label": {
 		"en_US": "Account to User Additional Info"
 	},
-	"name": "accountToUserAdditionalInfos",
+	"name": "accountEntryToUserAdditionalInfo",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]",
 	"objectDefinitionName2": "UserAdditionalInfo",

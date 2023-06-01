@@ -65,7 +65,8 @@ public class TierPriceTag extends IncludeTag {
 						_cpInstance.getCPInstanceUuid());
 
 				if ((commercePriceEntry != null) &&
-					commercePriceEntry.isHasTierPrice()) {
+					commercePriceEntry.isHasTierPrice() &&
+					!commercePriceEntry.isPriceOnApplication()) {
 
 					_commerceTierPriceEntries =
 						CommerceTierPriceEntryLocalServiceUtil.

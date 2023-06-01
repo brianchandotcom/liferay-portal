@@ -1986,11 +1986,6 @@ public class CommerceOrderItemLocalServiceImpl
 		if (!unitPriceCommerceMoney.isEmpty()) {
 			unitPrice = unitPriceCommerceMoney.getPrice();
 		}
-		else if (unitPriceCommerceMoney.isPriceOnApplication() &&
-				 !unitPromoPriceCommerceMoney.isEmpty()) {
-
-			unitPrice = unitPromoPriceCommerceMoney.getPrice();
-		}
 
 		commerceOrderItem.setUnitPrice(unitPrice);
 
@@ -2009,19 +2004,11 @@ public class CommerceOrderItemLocalServiceImpl
 
 		BigDecimal unitPriceWithTaxAmount = BigDecimal.ZERO;
 
-		if (unitPriceWithTaxAmountCommerceMoney != null) {
-			if (!unitPriceWithTaxAmountCommerceMoney.isEmpty()) {
-				unitPriceWithTaxAmount =
-					unitPriceWithTaxAmountCommerceMoney.getPrice();
-			}
-			else if (unitPriceWithTaxAmountCommerceMoney.
-						isPriceOnApplication() &&
-					 (unitPromoPriceWithTaxAmountCommerceMoney != null) &&
-					 !unitPromoPriceWithTaxAmountCommerceMoney.isEmpty()) {
+		if ((unitPriceWithTaxAmountCommerceMoney != null) &&
+			!unitPriceWithTaxAmountCommerceMoney.isEmpty()) {
 
-				unitPriceWithTaxAmount =
-					unitPromoPriceWithTaxAmountCommerceMoney.getPrice();
-			}
+			unitPriceWithTaxAmount =
+				unitPriceWithTaxAmountCommerceMoney.getPrice();
 		}
 
 		commerceOrderItem.setUnitPriceWithTaxAmount(unitPriceWithTaxAmount);

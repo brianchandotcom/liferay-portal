@@ -116,16 +116,14 @@ public class ProductHelperImpl implements ProductHelper {
 				commerceProductPrice.getFinalPriceWithTaxAmount(),
 				commerceProductPrice.getUnitPriceWithTaxAmount(),
 				commerceProductPrice.getUnitPromoPriceWithTaxAmount(),
-				commerceProductPrice.getDiscountValueWithTaxAmount(),
-				commerceProductPrice.isPriceOnApplication(), locale);
+				commerceProductPrice.getDiscountValueWithTaxAmount(), locale);
 		}
 
 		return _getPriceModel(
 			commerceProductPrice.getFinalPrice(),
 			commerceProductPrice.getUnitPrice(),
 			commerceProductPrice.getUnitPromoPrice(),
-			commerceProductPrice.getDiscountValue(),
-			commerceProductPrice.isPriceOnApplication(), locale);
+			commerceProductPrice.getDiscountValue(), locale);
 	}
 
 	@Override
@@ -212,15 +210,18 @@ public class ProductHelperImpl implements ProductHelper {
 			CommerceMoney finalPriceCommerceMoney,
 			CommerceMoney unitPriceCommerceMoney,
 			CommerceMoney unitPromoPriceCommerceMoney,
-			CommerceDiscountValue commerceDiscountValue,
-			boolean priceOnApplication, Locale locale)
+			CommerceDiscountValue commerceDiscountValue, Locale locale)
 		throws PortalException {
 
 		PriceModel priceModel = new PriceModel(
 			unitPriceCommerceMoney.format(locale));
 
-		if (unitPriceCommerceMoney.isPriceOnApplication()) {
-			priceModel.setPrice(unitPromoPriceCommerceMoney.format(locale));
+		boolean priceOnApplication = false;
+
+		if (unitPriceCommerceMoney.isPriceOnApplication() ||
+			unitPromoPriceCommerceMoney.isPriceOnApplication()) {
+
+			priceOnApplication = true;
 		}
 
 		priceModel.setPriceOnApplication(priceOnApplication);

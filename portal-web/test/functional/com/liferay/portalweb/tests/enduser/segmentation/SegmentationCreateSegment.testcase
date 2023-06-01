@@ -2000,7 +2000,6 @@ definition {
 	@uitest
 	test AddSegmentByUserUserGroup {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentByUserUserGroup";
 
 		task ("Add user") {
 			JSONUser.addUser(

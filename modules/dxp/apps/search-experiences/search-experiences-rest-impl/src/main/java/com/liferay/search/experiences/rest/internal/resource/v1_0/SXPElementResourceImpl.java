@@ -40,6 +40,7 @@ import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldSet;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.UiConfiguration;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
@@ -92,6 +93,22 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpElementService.getSXPElement(sxpElementId));
+	}
+
+	@Override
+	public SXPElement getSXPElementByExternalReferenceCode(
+		String externalReferenceCode)
+		throws Exception {
+
+		return _sxpElementDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				externalReferenceCode,
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			_sxpElementService.getSXPElementByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode));
 	}
 
 	@Override

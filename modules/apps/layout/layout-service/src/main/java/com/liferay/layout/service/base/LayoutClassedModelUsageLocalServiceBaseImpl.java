@@ -22,7 +22,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
-import com.liferay.layout.service.persistence.LayoutClassedModelUsageFinder;
 import com.liferay.layout.service.persistence.LayoutClassedModelUsagePersistence;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -673,9 +672,6 @@ public abstract class LayoutClassedModelUsageLocalServiceBaseImpl
 	@Reference
 	protected LayoutClassedModelUsagePersistence
 		layoutClassedModelUsagePersistence;
-
-	@Reference
-	protected LayoutClassedModelUsageFinder layoutClassedModelUsageFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

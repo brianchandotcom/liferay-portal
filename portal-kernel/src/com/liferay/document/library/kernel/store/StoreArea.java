@@ -17,6 +17,7 @@ package com.liferay.document.library.kernel.store;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -46,14 +47,30 @@ public enum StoreArea {
 			UnsafeSupplier<String[], E> supplier, StoreArea... storeAreas)
 		throws E {
 
+		Exception exception1 = null;
+		int failureCount = 0;
+
 		List<String> list = new ArrayList<>();
 
 		for (StoreArea storeArea : storeAreas) {
-			String[] strings = StoreArea.withStoreArea(storeArea, supplier);
+			try {
+				String[] strings = StoreArea.withStoreArea(storeArea, supplier);
 
-			if (strings != null) {
-				Collections.addAll(list, strings);
+				if (strings != null) {
+					Collections.addAll(list, strings);
+				}
 			}
+			catch (Exception exception2) {
+				failureCount++;
+
+				if (exception1 == null) {
+					exception1 = exception2;
+				}
+			}
+		}
+
+		if (failureCount == storeAreas.length) {
+			return ReflectionUtil.throwException(exception1);
 		}
 
 		return list.toArray(new String[0]);
@@ -63,8 +80,24 @@ public enum StoreArea {
 			UnsafeRunnable<T> unsafeRunnable, StoreArea... storeAreas)
 		throws T {
 
+		Exception exception1 = null;
+		int failureCount = 0;
+
 		for (StoreArea storeArea : storeAreas) {
-			StoreArea.withStoreArea(storeArea, unsafeRunnable);
+			try {
+				StoreArea.withStoreArea(storeArea, unsafeRunnable);
+			}
+			catch (Exception exception2) {
+				failureCount++;
+
+				if (exception1 == null) {
+					exception1 = exception2;
+				}
+			}
+		}
+
+		if (failureCount == storeAreas.length) {
+			ReflectionUtil.throwException(exception1);
 		}
 	}
 
@@ -73,12 +106,25 @@ public enum StoreArea {
 			T defaultValue, StoreArea... storeAreas)
 		throws E {
 
-		for (StoreArea storeArea : storeAreas) {
-			T result = StoreArea.withStoreArea(storeArea, unsafeSupplier);
+		Exception exception1 = null;
 
-			if (predicate.test(result)) {
-				return result;
+		for (StoreArea storeArea : storeAreas) {
+			try {
+				T result = StoreArea.withStoreArea(storeArea, unsafeSupplier);
+
+				if (predicate.test(result)) {
+					return result;
+				}
 			}
+			catch (Exception exception2) {
+				if (exception1 == null) {
+					exception1 = exception2;
+				}
+			}
+		}
+
+		if (exception1 != null) {
+			return ReflectionUtil.throwException(exception1);
 		}
 
 		return defaultValue;
@@ -87,10 +133,23 @@ public enum StoreArea {
 	public static StoreArea tryRunWithStoreAreas(
 		Predicate<StoreArea> predicate, StoreArea... storeAreas) {
 
+		Exception exception1 = null;
+
 		for (StoreArea storeArea : storeAreas) {
-			if (predicate.test(storeArea)) {
-				return storeArea;
+			try {
+				if (predicate.test(storeArea)) {
+					return storeArea;
+				}
 			}
+			catch (Exception exception2) {
+				if (exception1 == null) {
+					exception1 = exception2;
+				}
+			}
+		}
+
+		if (exception1 != null) {
+			return ReflectionUtil.throwException(exception1);
 		}
 
 		return null;

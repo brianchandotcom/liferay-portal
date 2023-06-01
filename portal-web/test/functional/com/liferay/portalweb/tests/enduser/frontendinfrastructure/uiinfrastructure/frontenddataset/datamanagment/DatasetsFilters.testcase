@@ -187,22 +187,28 @@ definition {
 		}
 	}
 
-	@description = "LPS-183476. Confirm that when searching one of the created filters and pressing Enter Key the corresponding result is displayed"
-	@ignore = "true"
-	@priority = 4
-	test CanSearchFilterOnEnterKey {
-
-		// TODO LPS-183476 CanSearchFilterOnEnterKey pending implementation
-
-	}
-
-	@description = "LPS-183476. Confirm that "
-	@ignore = "true"
+	@description = "LPS-176184. Confirm that is possible search filter when click on search icon"
 	@priority = 3
 	test CanSearchFilterOnIcon {
+		task ("And adds two or more new filters") {
+			FrontendDataSetAdmin.createFilters(key_filterList = "creator,id");
+		}
 
-		// TODO LPS-183476 CanSearchFilterOnIcon pending implementation
+		task ("Then the user searches for one of the created filters") {
+			FrontendDataSetAdmin.searchField(searchTerm = "creator");
+		}
 
+		task ("And clicks the search icon") {
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+		}
+
+		task ("Then the corresponding result is displayed.") {
+			AssertElementPresent(
+				chosenFilter = "creator",
+				key_tableColumn = 1,
+				key_tableRow = 1,
+				locator1 = "FrontendDataSetAdmin#FILTER_TABLE_CELL");
+		}
 	}
 
 }

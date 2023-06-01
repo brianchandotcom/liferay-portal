@@ -34,6 +34,10 @@ public class PropertiesLanguageKeysContextCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (!fileName.endsWith("/content/Language.properties")) {
+			return content;
+		}
+
 		_checkLanguageKeysContext(fileName, absolutePath, content);
 
 		return content;

@@ -209,10 +209,8 @@ public class ContentElementResourceTest
 				}
 			});
 
-		ContentElement contentElement = randomContentElement();
-
 		testGetAssetLibraryContentElementsPage_addContentElement(
-			depotEntry.getDepotEntryId(), contentElement);
+			depotEntry.getDepotEntryId(), randomContentElement());
 
 		ContentElementResource.Builder builder =
 			ContentElementResource.builder();

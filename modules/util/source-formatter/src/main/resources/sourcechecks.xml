@@ -1625,6 +1625,10 @@
 			<description name="Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeJavaGetFileMethodCheck">
+			<category name="Upgrade" />
+			<description name="Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile'" />
+		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />

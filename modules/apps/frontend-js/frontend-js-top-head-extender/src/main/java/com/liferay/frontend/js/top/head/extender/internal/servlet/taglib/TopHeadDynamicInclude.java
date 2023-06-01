@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,22 +103,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
-	protected void addPortalWebResources(
-		PortalWebResources portalWebResources) {
-
-		String resourceType = portalWebResources.getResourceType();
-
-		if (resourceType.equals(PortalWebResourceConstants.RESOURCE_TYPE_JS)) {
-			_portalWebResources = portalWebResources;
-
-			_rebuild();
-		}
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
 	protected void addTopHeadResources(
 		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {
 
@@ -127,16 +112,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 
 		_rebuild();
-	}
-
-	protected void removePortalWebResources(
-		PortalWebResources portalWebResources) {
-
-		String resourceType = portalWebResources.getResourceType();
-
-		if (resourceType.equals(PortalWebResourceConstants.RESOURCE_TYPE_JS)) {
-			_portalWebResources = null;
-		}
 	}
 
 	protected void removeTopHeadResources(
@@ -159,8 +134,12 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private synchronized void _rebuild() {
+		PortalWebResources portalWebResources =
+			PortalWebResourcesUtil.getPortalWebResources(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS);
+
 		if ((_bundleContext == null) || (_portal == null) ||
-			(_portalWebResources == null)) {
+			(portalWebResources == null)) {
 
 			return;
 		}
@@ -230,13 +209,9 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			comboRequestAbsolutePortalURLBuilder =
 				absolutePortalURLBuilder.forComboRequest();
 
-		long timestamp = -1;
-
-		if (_portalWebResources != null) {
-			timestamp = _portalWebResources.getLastModified();
-		}
-
-		comboRequestAbsolutePortalURLBuilder.setTimestamp(timestamp);
+		comboRequestAbsolutePortalURLBuilder.setTimestamp(
+			PortalWebResourcesUtil.getLastModified(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS));
 
 		String comboURL = comboRequestAbsolutePortalURLBuilder.build();
 
@@ -291,7 +266,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	@Reference
 	private Portal _portal;
 
-	private PortalWebResources _portalWebResources;
 	private final Collection<ServiceReference<TopHeadResources>>
 		_topHeadResourcesServiceReferences = new TreeSet<>();
 

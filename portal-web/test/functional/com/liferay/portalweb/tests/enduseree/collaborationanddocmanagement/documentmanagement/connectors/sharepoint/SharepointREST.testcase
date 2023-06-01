@@ -462,6 +462,27 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_1.odt");
 	}
 
+	@description = "This test ensures that users can not copy assets from SharePoint."
+	@priority = 4
+	test CannotCopyAssetsFromRepository {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "SharepointREST#CannotCopyAssetsFromRepository";
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "Documentos compartidos");
+
+		LexiconEntry.viewNoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "Document_1.jpg");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.jpg");
+	}
+
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
 	@priority = 3
 	test CanPublishRepository {

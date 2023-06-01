@@ -104,6 +104,95 @@ definition {
 			textContent = "Text");
 	}
 
+	@description = "This ensures that a depot document can be copied to another folder."
+	@priority = 5
+	test CanCopyDocumentToOtherFolder {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			targetFolderName = "DM Folder Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a depot folder can be copied to another folder."
+	@priority = 5
+	test CanCopyFolderToOtherFolder {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name1",
+			groupName = "Test Depot Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name2",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name1",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.copy(
+			dmFolderName = "DM Folder Name1",
+			targetFolderName = "DM Folder Name2");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name1");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name2");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name1");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name1",
+			parentFolderName = "DM Folder Name2");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
 	@description = "This ensures that a folder can be deleted in a depot."
 	@priority = 5
 	@refactordone

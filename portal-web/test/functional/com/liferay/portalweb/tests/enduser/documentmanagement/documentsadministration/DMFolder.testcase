@@ -179,6 +179,42 @@ definition {
 		Ratings.viewRateLike(ratingLikeCount = 1);
 	}
 
+	@description = "This test ensures that a folder can be copied to the global site folder."
+	@priority = 5
+	test CanCopyFolderToGlobalSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.copy(
+			dmFolderName = "DM Folder Name",
+			homeFolder = "true",
+			siteName = "Global");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
 	@priority = 5
 	@refactordone
 	test CanDeleteDocumentInFolder {
@@ -521,6 +557,32 @@ definition {
 		DMFolder.moveToRecycleBinCP(
 			assetType = "Documents Folder",
 			dmFolderName = "DM Folder Name");
+	}
+
+	@description = "This test ensures that an error is displayed when copying a duplicated folder."
+	@priority = 4
+	test CannotCopyDuplicatedDocument {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.copy(
+			copyDuplicatedDocument = "true",
+			dmFolderName = "DM Folder Name",
+			homeFolder = "true",
+			siteName = "Site Name");
 	}
 
 	@priority = 3

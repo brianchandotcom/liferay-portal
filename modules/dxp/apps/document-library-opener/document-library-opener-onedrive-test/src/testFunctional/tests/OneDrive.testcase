@@ -448,6 +448,138 @@ definition {
 			locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
+	@description = "This test ensures that a One Drive doc in a depot can be copied from depot to site."
+	@priority = 5
+	test CanCopyWordDocumentFromDepotToSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "OneDrive#CanCopyWordDocumentFromDepotToSite";
+
+		var num = MathUtil.randomNumber(10);
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Copying Word Doc Title ${num}");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Copying Word Doc Title ${num}",
+			dmDocumentTypeName = "Word");
+
+		DMDocument.gotoEntry(dmDocumentTitle = "Copying Word Doc Title ${num}");
+
+		DMDocument.checkinCP(revision = "Current");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Copying Word Doc Title ${num}",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copying Word Doc Title ${num}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copying Word Doc Title ${num}");
+	}
+
+	@description = "This test ensures that a One Drive doc in a depot can be copied to the another folder."
+	@priority = 5
+	test CanCopyWordDocumentToOtherFolderInDepot {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "OneDrive#CanCopyWordDocumentToOtherFolderInDepot";
+
+		var num = MathUtil.randomNumber(10);
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Copying Word Doc Title ${num}");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Copying Word Doc Title ${num}",
+			dmDocumentTypeName = "Word");
+
+		DMDocument.gotoEntry(dmDocumentTitle = "Copying Word Doc Title ${num}");
+
+		DMDocument.checkinCP(revision = "Current");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Copying Word Doc Title ${num}",
+			targetFolderName = "DM Folder Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copying Word Doc Title ${num}");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copying Word Doc Title ${num}");
+	}
+
+	@description = "This test ensures that a One Drive doc in a site can be copied to the other site folder."
+	@priority = 5
+	test CanCopyWordDocumentToOtherSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "OneDrive#CanCopyWordDocumentToOtherSite";
+
+		var num = MathUtil.randomNumber(10);
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Copying Word Doc Title ${num}");
+
+		Navigator.openURL();
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Copying Word Doc Title ${num}",
+			dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Copying Word Doc Title ${num}");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Copying Word Doc Title ${num}",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copying Word Doc Title ${num}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copying Word Doc Title ${num}");
+	}
+
 	@description = "This test covers LPS-130200. It ensures that users can edit the entry through Office 365 after checkin the entry from the document editor."
 	@priority = 4
 	test CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor {

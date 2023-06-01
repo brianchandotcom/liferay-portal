@@ -376,6 +376,125 @@ definition {
 			value1 = "Untitled");
 	}
 
+	@description = "This ensures that a Google document can be copied from depot to site."
+	@priority = 5
+	test CanCopyGoogleDocFromDepotToSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "GoogleDrive#CanCopyGoogleDocFromDepotToSite";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			depotName = "Test Depot Name",
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit(depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Untitled",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Untitled");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Untitled");
+	}
+
+	@description = "This test ensures that a Google Drive doc in a depot can be copied to another folder."
+	@priority = 5
+	test CanCopyGoogleDocToOtherFolderInDepot {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "GoogleDrive#CanCopyGoogleDocToOtherFolderInDepot";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			depotName = "Test Depot Name",
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit(depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Untitled",
+			targetFolderName = "DM Folder Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Untitled");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Untitled");
+	}
+
+	@description = "This test ensures that a Google Drive doc in a site can be copied to the other site folder."
+	@priority = 5
+	test CanCopyGoogleDocToOtherSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+		property test.name.skip.portal.instance = "GoogleDrive#CanCopyGoogleDocToOtherSite";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Untitled",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "Untitled");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Untitled");
+	}
+
 	@description = "This test covers LPS-107584. It ensures that a checked out google document cannot be edited by another user."
 	@priority = 4
 	test CheckOutGoogleDoc {

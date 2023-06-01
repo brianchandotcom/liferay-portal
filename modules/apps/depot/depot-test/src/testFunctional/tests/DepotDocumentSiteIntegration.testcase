@@ -182,6 +182,75 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This ensures that a document in a depot can be copied to the site folder."
+	@priority = 5
+	test CanCopyDocumentFromDepotToSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a folder in a depot can be copied to the site folder."
+	@priority = 5
+	test CanCopyFolderFromDepotToSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.copy(
+			dmFolderName = "DM Folder Name",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."
 	@priority = 5
 	@refactordone

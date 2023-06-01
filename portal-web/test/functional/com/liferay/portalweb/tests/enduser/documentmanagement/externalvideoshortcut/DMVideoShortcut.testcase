@@ -495,6 +495,35 @@ definition {
 			videoShortcutList = "Test Facebook Video,Test Vimeo Video,Test YouTube Video,Test Facebook Video");
 	}
 
+	@description = "This test ensures that a video shortcut can be copied to a site folder."
+	@priority = 5
+	test CanCopyVideoShortcutToOtherSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test YouTube Video",
+			videoURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "Test YouTube Video",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "Test YouTube Video");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Test YouTube Video");
+	}
+
 	@description = "This ensures that a video shortcut can be edited with a YouTube shortened URL."
 	@priority = 5
 	@refactordone

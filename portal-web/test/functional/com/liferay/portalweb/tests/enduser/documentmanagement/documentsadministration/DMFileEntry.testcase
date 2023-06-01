@@ -703,6 +703,109 @@ definition {
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.0");
 	}
 
+	@description = "This test ensures that a document can be copied to the global site folder."
+	@priority = 5
+	test CanCopyDocumentToGlobalSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Global");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "global");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
+	@description = "This test ensures that a draft document can be copied to a site folder."
+	@priority = 4
+	test CanCopyDraftDocumentToOtherSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.checkOutFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This test ensures that a pending document can be copied to a site folder."
+	@priority = 4
+	test CanCopyPendingDocumentToOtherSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "homeFolder",
+			homeFolder = "true",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "DM Document Title");
+	}
+
 	@description = "This test covers LPS-90736. It makes sure that all files are deleted when user selects all."
 	@priority = 4
 	@refactordone
@@ -1746,6 +1849,36 @@ definition {
 			siteName = "Site Name");
 
 		DMPortlet.viewDefaultPG();
+	}
+
+	@description = "This test ensures that an error is displayed when copying a duplicated file."
+	@priority = 4
+	test CannotCopyDuplicatedDocument {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			copyDuplicatedDocument = "true",
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
 	}
 
 	@description = "This test ensures that a checked out document cannot be edited by another user."

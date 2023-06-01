@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -69,11 +70,15 @@ public class SaveCompanyConfigurationMVCActionCommand
 			throw new PortletException(principalException);
 		}
 
+		String successMessageKey = "your-request-completed-successfully";
+
 		String apiKey = ParamUtil.getString(actionRequest, "apiKey");
 
 		if (Validator.isNotNull(apiKey)) {
 			try {
 				_aiCreatorOpenAIClient.validateAPIKey(apiKey);
+
+				successMessageKey = "your-api-key-was-successfully-added";
 			}
 			catch (AICreatorOpenAIClientException
 						aiCreatorOpenAIClientException) {
@@ -94,6 +99,10 @@ public class SaveCompanyConfigurationMVCActionCommand
 			saveAICreatorOpenAICompanyConfiguration(
 				themeDisplay.getCompanyId(), apiKey,
 				ParamUtil.getBoolean(actionRequest, "enableOpenAI"));
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			_language.get(themeDisplay.getLocale(), successMessageKey));
 	}
 
 	@Reference

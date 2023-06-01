@@ -77,6 +77,7 @@ const MillerColumns = ({
 	onItemStayHover,
 	rtl,
 	searchContainer,
+	isSiteTemplate,
 }) => {
 	const ref = useRef();
 
@@ -269,6 +270,7 @@ const MillerColumns = ({
 						columnItems={column.items}
 						columnsContainer={ref}
 						isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
+						isSiteTemplate={isSiteTemplate}
 						items={items}
 						key={index}
 						namespace={namespace}

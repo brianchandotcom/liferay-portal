@@ -159,6 +159,20 @@ definition {
 		}
 	}
 
+	macro createFilters {
+		for (var key_filterType : list ${key_filterList}) {
+			LexiconEntry.gotoAdd();
+
+			Select(
+				locator1 = "FrontendDataSetAdmin#FILTER_BY_SELECT",
+				value1 = ${key_filterType});
+
+			Click(
+				key_text = "Save",
+				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
+		}
+	}
+
 	macro deleteAllDatasetEntries {
 		FrontendDataSetAdmin.goToDatasetAdminPage();
 

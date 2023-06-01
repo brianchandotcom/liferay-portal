@@ -46,6 +46,16 @@ public class VerticalCardTag extends BaseCardTag {
 		return super.doStartTag();
 	}
 
+	public String getAriaLabel() {
+		VerticalCard verticalCard = getVerticalCard();
+
+		if ((_ariaLabel == null) && (verticalCard != null)) {
+			return verticalCard.getAriaLabel();
+		}
+
+		return _ariaLabel;
+	}
+
 	@Override
 	public String getIcon() {
 		String icon = super.getIcon();
@@ -262,6 +272,10 @@ public class VerticalCardTag extends BaseCardTag {
 		return _showSticker;
 	}
 
+	public void setAriaLabel(String ariaLabel) {
+		_ariaLabel = ariaLabel;
+	}
+
 	public void setFlushHorizontal(boolean flushHorizontal) {
 		_flushHorizontal = flushHorizontal;
 	}
@@ -342,6 +356,7 @@ public class VerticalCardTag extends BaseCardTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_ariaLabel = null;
 		_flushHorizontal = null;
 		_flushVertical = null;
 		_imageAlt = null;
@@ -368,6 +383,7 @@ public class VerticalCardTag extends BaseCardTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		props.put("ariaLabel", getAriaLabel());
 		props.put("description", getSubtitle());
 		props.put("displayType", _getDisplayType());
 		props.put("flushHorizontal", isFlushHorizontal());
@@ -556,9 +572,19 @@ public class VerticalCardTag extends BaseCardTag {
 		jspWriter.write("<div class=\"card-body\"><div class=\"card-row\">");
 		jspWriter.write("<div class=\"autofit-col autofit-col-expand\">");
 
+		jspWriter.write("<p class=\"card-title\"");
+
+		String ariaLabel = getAriaLabel();
+
+		if (Validator.isNotNull(ariaLabel)) {
+			jspWriter.write(" aria-label=\"");
+			jspWriter.write(HtmlUtil.escapeAttribute(ariaLabel));
+			jspWriter.write("\"");
+		}
+
 		String title = getTitle();
 
-		jspWriter.write("<p class=\"card-title\" title=\"");
+		jspWriter.write(" title=\"");
 
 		if (Validator.isNotNull(title)) {
 			jspWriter.write(HtmlUtil.escapeAttribute(title));
@@ -668,6 +694,7 @@ public class VerticalCardTag extends BaseCardTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:verticalcard:";
 
+	private String _ariaLabel;
 	private Boolean _flushHorizontal;
 	private Boolean _flushVertical;
 	private String _imageAlt;

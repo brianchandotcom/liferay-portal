@@ -24,6 +24,7 @@ import normalizeDropdownItems from '../normalize_dropdown_items';
 export default function VerticalCard({
 	actions,
 	additionalProps: _additionalProps,
+	ariaLabel,
 	componentId: _componentId,
 	cssClass,
 	description,
@@ -118,6 +119,7 @@ export default function VerticalCard({
 	return (
 		<ClayCardWithInfo
 			actions={normalizedActions}
+			aria-label={ariaLabel}
 			checkboxProps={{
 				name: inputName ?? '',
 				value: inputValue ?? '',

@@ -24,6 +24,10 @@ import java.util.Map;
  */
 public interface VerticalCard extends BaseClayCard {
 
+	public default String getAriaLabel() {
+		return null;
+	}
+
 	public default String getIcon() {
 		return null;
 	}

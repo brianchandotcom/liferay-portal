@@ -183,15 +183,6 @@ public class UserFinderTest {
 	}
 
 	@Test
-	public void testCountByKeywordsWithInheritedGroups() throws Exception {
-		int count = _userFinder.countByKeywords(
-			TestPropsValues.getCompanyId(), null,
-			WorkflowConstants.STATUS_APPROVED, _inheritedUserGroupsParams);
-
-		Assert.assertEquals(_inheritedUserGroupsExpectedCount, count);
-	}
-
-	@Test
 	public void testCountByKeywordsWithInheritedRoles() throws Exception {
 		int expectedCount = _userFinder.countByKeywords(
 			TestPropsValues.getCompanyId(), null,

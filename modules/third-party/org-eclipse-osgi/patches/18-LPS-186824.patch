@@ -1,0 +1,126 @@
+diff --git a/org/eclipse/osgi/container/ModuleRevisions.java b/org/eclipse/osgi/container/ModuleRevisions.java
+index 907a05dbef89..393237993ef8 100644
+--- a/org/eclipse/osgi/container/ModuleRevisions.java
++++ b/org/eclipse/osgi/container/ModuleRevisions.java
+@@ -11,7 +11,10 @@
+ package org.eclipse.osgi.container;
+ 
+ import java.util.ArrayList;
++import java.util.Deque;
+ import java.util.List;
++import java.util.concurrent.ConcurrentLinkedDeque;
++import java.util.concurrent.atomic.AtomicMarkableReference;
+ import org.osgi.framework.Bundle;
+ import org.osgi.framework.wiring.BundleRevision;
+ import org.osgi.framework.wiring.BundleRevisions;
+@@ -26,15 +29,10 @@ import org.osgi.framework.wiring.BundleRevisions;
+  * @since 3.10
+  */
+ public final class ModuleRevisions implements BundleRevisions {
+-	private final Object monitor = new Object();
+ 	private final Module module;
+ 	private final ModuleContainer container;
+-	/* @GuardedBy("monitor") */
+-	private final List<ModuleRevision> revisions = new ArrayList<>(1);
+-	/* @GuardedBy("monitor") */
+-	private boolean uninstalled = false;
+-	/* @GuardedBy("monitor") */
+-	private ModuleRevision uninstalledCurrent;
++	private final Deque<ModuleRevision> revisions = new ConcurrentLinkedDeque<>();
++	private volatile ModuleRevision uninstalledCurrent;
+ 
+ 	ModuleRevisions(Module module, ModuleContainer container) {
+ 		this.module = module;
+@@ -56,9 +54,7 @@ public final class ModuleRevisions implements BundleRevisions {
+ 
+ 	@Override
+ 	public List<BundleRevision> getRevisions() {
+-		synchronized (monitor) {
+-			return new ArrayList<BundleRevision>(revisions);
+-		}
++		return new ArrayList<BundleRevision>(revisions);
+ 	}
+ 
+ 	/**
+@@ -67,9 +63,7 @@ public final class ModuleRevisions implements BundleRevisions {
+ 	 * @return the list of module revisions
+ 	 */
+ 	public List<ModuleRevision> getModuleRevisions() {
+-		synchronized (monitor) {
+-			return new ArrayList<>(revisions);
+-		}
++		return new ArrayList<>(revisions);
+ 	}
+ 
+ 	/**
+@@ -79,52 +73,45 @@ public final class ModuleRevisions implements BundleRevisions {
+ 	 *     or {@code null} if the current revision does not exist.
+ 	 */
+ 	ModuleRevision getCurrentRevision() {
+-		synchronized (monitor) {
+-			if (uninstalled) {
+-				return uninstalledCurrent;
+-			}
+-			if (revisions.isEmpty()) {
+-				return null;
+-			}
+-			return revisions.get(0);
++		ModuleRevision moduleRevision = uninstalledCurrent;
++
++		if (moduleRevision == null) {
++			moduleRevision = revisions.peek();
+ 		}
++
++		return moduleRevision;
+ 	}
+ 
+ 	ModuleRevision addRevision(ModuleRevision revision) {
+-		synchronized (monitor) {
+-			revisions.add(0, revision);
+-		}
++		revisions.push(revision);
++
+ 		return revision;
+ 	}
+ 
+ 	boolean removeRevision(ModuleRevision revision) {
+ 		try {
+-			synchronized (monitor) {
+-				return revisions.remove(revision);
+-			}
++			return revisions.remove(revision);
+ 		} finally {
+ 			module.cleanup(revision);
+ 		}
+ 	}
+ 
+ 	boolean isUninstalled() {
+-		synchronized (monitor) {
+-			return uninstalled;
+-		}
++		return uninstalledCurrent != null;
+ 	}
+ 
+ 	void uninstall() {
+-		synchronized (monitor) {
+-			uninstalled = true;
+-			// save off the current revision
+-			if (revisions.isEmpty()) {
+-				throw new IllegalStateException("Revisions is empty on uninstall!"); //$NON-NLS-1$
+-			}
+-			uninstalledCurrent = revisions.get(0);
++		ModuleRevision moduleRevision = revisions.peek();
++
++		if (moduleRevision == null) {
++			throw new IllegalStateException("Revisions is empty on uninstall!"); //$NON-NLS-1$
+ 		}
++
++		uninstalledCurrent = moduleRevision;
+ 	}
+ 
+ 	public String toString() {
+ 		return "moduleID=" + module.getId(); //$NON-NLS-1$
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

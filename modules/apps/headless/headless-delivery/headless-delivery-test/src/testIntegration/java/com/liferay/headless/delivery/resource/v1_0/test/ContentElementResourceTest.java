@@ -26,14 +26,13 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
-import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -226,14 +225,8 @@ public class ContentElementResourceTest
 			"fields", "content.assetLibraryKey"
 		).build();
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		jsonObject.put(
-			"content",
-			_jsonFactory.createJSONObject(
-			).put(
-				"assetLibraryKey", name
-			));
+		JSONObject jsonObject = JSONUtil.put(
+			"content", JSONUtil.put("assetLibraryKey", name));
 
 		Page<ContentElement> page =
 			contentElementResource.getAssetLibraryContentElementsPage(
@@ -260,10 +253,6 @@ public class ContentElementResourceTest
 
 	private final Map<ContentElement, Map<String, Object>> _fieldValueMaps =
 		new IdentityHashMap<>();
-
-	@Inject
-	private JSONFactory _jsonFactory;
-
 	private DepotEntry _testDepotEntry;
 
 }

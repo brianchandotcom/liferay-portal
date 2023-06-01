@@ -200,7 +200,7 @@ public class ContentElementResourceTest
 
 		String name = RandomTestUtil.randomString();
 
-		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(LocaleUtil.getDefault(), name), null,
 			new ServiceContext() {
 				{
@@ -212,7 +212,7 @@ public class ContentElementResourceTest
 		ContentElement contentElement = randomContentElement();
 
 		testGetAssetLibraryContentElementsPage_addContentElement(
-			_testDepotEntry.getDepotEntryId(), contentElement);
+			depotEntry.getDepotEntryId(), contentElement);
 
 		ContentElementResource.Builder builder =
 			ContentElementResource.builder();
@@ -227,7 +227,7 @@ public class ContentElementResourceTest
 
 		Page<ContentElement> page =
 			contentElementResource.getAssetLibraryContentElementsPage(
-				_testDepotEntry.getDepotEntryId(), null, null, null,
+				depotEntry.getDepotEntryId(), null, null, null,
 				Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -253,6 +253,5 @@ public class ContentElementResourceTest
 
 	private final Map<ContentElement, Map<String, Object>> _fieldValueMaps =
 		new IdentityHashMap<>();
-	private DepotEntry _testDepotEntry;
 
 }

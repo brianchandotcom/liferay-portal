@@ -156,6 +156,10 @@ public class SXPBlueprintLocalServiceImpl
 	public void setAopProxy(Object aopProxy) {
 		super.setAopProxy(aopProxy);
 
+		// Use sxpBlueprintPersistence instead of sxpBlueprintLocalService if
+		// possible. Also, this will break database partitioning. Please fix
+		// that and resend.
+
 		List<SXPBlueprint> sxpBlueprints =
 			sxpBlueprintLocalService.getSXPBlueprints(
 				0, sxpBlueprintLocalService.getSXPBlueprintsCount());

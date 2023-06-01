@@ -181,17 +181,11 @@ definition {
 
 		task ("Given I create a new 'Category' via API") {
 			JSONTestray.addFactorCategory(categoryName = ${categoryName});
-		}
 
-		task ("When I go to manage system Categories") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
-
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
 		}
 
-		task ("And I delete newly created category") {
+		task ("When I delete newly created category") {
 			TestrayManage.deleteCategory(
 				nameCategory = ${categoryName},
 				selectCategories = "Categories");

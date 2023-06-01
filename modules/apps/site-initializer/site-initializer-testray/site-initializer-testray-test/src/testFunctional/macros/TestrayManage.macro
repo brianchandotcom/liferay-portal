@@ -176,7 +176,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	@summary = "This macro delete a categorie."
+	@summary = "This macro delete a category."
 	macro deleteCategory {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -215,7 +215,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "This macro edit a categorie."
+	@summary = "This macro edit a category."
 	macro editCategoryOption {
 		Type(
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
@@ -226,7 +226,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	@summary = "This macro edit a categorie."
+	@summary = "This macro edit a category."
 	macro editCategoryTitle {
 		TestrayContextMenu.clickContextMenuProjects(name = ${category});
 
@@ -254,7 +254,7 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	@summary = "This macro edit the options in the categorie."
+	@summary = "This macro edit the options in the category."
 	macro editOptionTitle {
 		TestrayContextMenu.clickContextMenuProjects(name = ${option});
 
@@ -294,7 +294,7 @@ definition {
 			valueName = ${currentTeamName});
 	}
 
-	@summary = "This macro select options in the categorie."
+	@summary = "This macro select options in the category."
 	macro selectOptionDropdownCategory {
 		Click(locator1 = "TestrayManage#DROPDOWN_CATEGORIES");
 

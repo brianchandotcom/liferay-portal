@@ -4045,6 +4045,51 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
+	@description = "This is a use case for LPS-177878. TC-1: Verify Service Accounts portlet in CP, no password section,screen name cannot change,roles can assigned removed."
+	@priority = 5
+	test ServiceAccountsSmoke {
+		task ("Given go to service accounts in control panel assert all section except password") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Service Accounts");
+
+			UserNavigator.gotoEdit(rowEntry = "default-service-account default-service-account");
+
+			User.assertSection(sectionName = "Information,Organizations,Memberships,Roles,Profile and Dashboard,Apps");
+
+			AssertElementNotPresent(
+				key_assetTitle = "Password",
+				locator1 = "NavBar#ASSET_TITLE");
+		}
+
+		task ("And screen name cannot be changed") {
+			User.assertScreenNameDisabled();
+		}
+
+		task ("When assigned or removed roles") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Service Accounts");
+
+			User.assignRegularRoleCP(
+				roleTitle = "Portal Content Reviewer",
+				userScreenName = "default-service-account");
+		}
+
+		task ("Then roles can be assigned or removed from the default service account") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Service Accounts");
+
+			User.unassignRegularRoleCP(
+				regularRoleName = "Portal Content Reviewer",
+				userScreenName = "default-service-account");
+		}
+	}
+
 	@description = "This test makes sure the default account roles are present in Roles Admin."
 	@priority = 4
 	test SharedAccountRoleDisplaysInAllAccounts {

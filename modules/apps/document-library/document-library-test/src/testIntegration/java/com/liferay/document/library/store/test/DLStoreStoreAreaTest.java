@@ -115,7 +115,7 @@ public class DLStoreStoreAreaTest {
 				fileName, Store.VERSION_DEFAULT));
 
 		StoreArea.withStoreArea(
-			StoreArea.LIVE,
+			StoreArea.NEW,
 			() -> _assertHasStoreFile(fileName, Store.VERSION_DEFAULT));
 	}
 
@@ -238,6 +238,8 @@ public class DLStoreStoreAreaTest {
 		StoreArea.withStoreArea(
 			StoreArea.DELETED,
 			() -> _assertHasStoreFile(fileName, Store.VERSION_DEFAULT));
+		StoreArea.withStoreArea(
+			StoreArea.NEW, () -> _assertHasStoreFile(fileName, "2.0"));
 	}
 
 	private void _addFile(String fileName, String version) throws Exception {

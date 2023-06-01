@@ -248,7 +248,7 @@ public class GCSStoreStoreAreaProcessorTest {
 
 		StoreAreaProcessor storeAreaProcessor = (StoreAreaProcessor)_store;
 
-		storeAreaProcessor.copy(
+		boolean copied = storeAreaProcessor.copy(
 			StoreArea.LIVE.getPath(
 				_group.getCompanyId(), _group.getGroupId(), fileName,
 				Store.VERSION_DEFAULT),
@@ -256,12 +256,28 @@ public class GCSStoreStoreAreaProcessorTest {
 				_group.getCompanyId(), _group.getGroupId(), fileName,
 				Store.VERSION_DEFAULT));
 
+		Assert.assertTrue(copied);
+
 		StoreArea.withStoreArea(
 			StoreArea.DELETED,
 			() -> Assert.assertTrue(
 				_store.hasFile(
 					_group.getCompanyId(), _group.getGroupId(), fileName,
 					Store.VERSION_DEFAULT)));
+	}
+
+	@Test
+	public void testCopyNonexistantFile() throws Exception {
+		StoreAreaProcessor storeAreaProcessor = (StoreAreaProcessor)_store;
+
+		Assert.assertFalse(
+			storeAreaProcessor.copy(
+				StoreArea.LIVE.getPath(
+					_group.getCompanyId(), _group.getGroupId(),
+					StringUtil.randomString(), Store.VERSION_DEFAULT),
+				StoreArea.LIVE.getPath(
+					_group.getCompanyId(), _group.getGroupId(),
+					StringUtil.randomString(), Store.VERSION_DEFAULT)));
 	}
 
 	private static Configuration _configuration;

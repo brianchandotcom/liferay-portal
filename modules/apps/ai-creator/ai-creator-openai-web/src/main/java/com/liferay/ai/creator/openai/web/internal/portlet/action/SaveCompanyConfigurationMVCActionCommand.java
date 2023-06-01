@@ -15,14 +15,19 @@
 package com.liferay.ai.creator.openai.web.internal.portlet.action;
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
+import com.liferay.ai.creator.openai.web.internal.client.AICreatorOpenAIClient;
+import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -64,15 +69,41 @@ public class SaveCompanyConfigurationMVCActionCommand
 			throw new PortletException(principalException);
 		}
 
+		String apiKey = ParamUtil.getString(actionRequest, "apiKey");
+
+		if (Validator.isNotNull(apiKey)) {
+			try {
+				_aiCreatorOpenAIClient.validateAPIKey(apiKey);
+			}
+			catch (AICreatorOpenAIClientException
+						aiCreatorOpenAIClientException) {
+
+				SessionErrors.add(
+					actionRequest, aiCreatorOpenAIClientException.getClass(),
+					aiCreatorOpenAIClientException);
+
+				hideDefaultErrorMessage(actionRequest);
+
+				sendRedirect(actionRequest, actionResponse);
+
+				return;
+			}
+		}
+
 		_aiCreatorOpenAIConfigurationManager.
 			saveAICreatorOpenAICompanyConfiguration(
-				themeDisplay.getCompanyId(),
-				ParamUtil.getString(actionRequest, "apiKey"),
+				themeDisplay.getCompanyId(), apiKey,
 				ParamUtil.getBoolean(actionRequest, "enableOpenAI"));
 	}
 
 	@Reference
+	private AICreatorOpenAIClient _aiCreatorOpenAIClient;
+
+	@Reference
 	private AICreatorOpenAIConfigurationManager
 		_aiCreatorOpenAIConfigurationManager;
+
+	@Reference
+	private Language _language;
 
 }

@@ -43,7 +43,7 @@ const getUserAccountsById = async () => {
 					userAdditionalInfosId = data.id;
 					getMyUserAccount(data);
 					const arrayRoles = data.roles.split('/');
-					userRoles = arrayRoles.filter((item) => item !== '');
+					userRoles = arrayRoles.filter((role) => role !== '');
 				}
 			});
 		}

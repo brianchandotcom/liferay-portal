@@ -1,16 +1,8 @@
 #loading-validate {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
 	gap: 24px;
-	justify-content: center;
-	margin-top: 15%;
-	padding: 0px;
 }
 
 #msg-loading {
-	align-items: center;
-	display: flex;
 	font-family: 'Source Sans Pro';
 	font-size: 16px;
 	font-style: normal;

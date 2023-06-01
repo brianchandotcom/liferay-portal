@@ -1284,7 +1284,8 @@ public class CTCollectionLocalServiceImpl
 
 	private static final int[] _STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
-		WorkflowConstants.STATUS_SCHEDULED, WorkflowConstants.STATUS_IN_TRASH
+		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_SCHEDULED,
+		WorkflowConstants.STATUS_IN_TRASH
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -37,7 +37,7 @@ public class CPDefinitionInfoItemCapabilitiesProvider
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
 		return ListUtil.fromArray(
-			_displayPageInfoItemCapability, _templatePageInfoItemCapability);
+			_displayPageInfoItemCapability, _templateInfoItemCapability);
 	}
 
 	@Reference(
@@ -45,7 +45,9 @@ public class CPDefinitionInfoItemCapabilitiesProvider
 	)
 	private InfoItemCapability _displayPageInfoItemCapability;
 
-	@Reference
-	private TemplateInfoItemCapability _templatePageInfoItemCapability;
+	@Reference(
+		target = "(info.item.capability.key=" + TemplateInfoItemCapability.KEY + ")"
+	)
+	private InfoItemCapability _templateInfoItemCapability;
 
 }

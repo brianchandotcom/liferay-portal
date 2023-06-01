@@ -91,8 +91,10 @@ public class TemplateInfoItemCapabilitiesProviderTracker {
 	@Reference
 	private TemplateEntryLocalService _templateEntryLocalService;
 
-	@Reference
-	private TemplateInfoItemCapability _templateInfoItemCapability;
+	@Reference(
+		target = "(info.item.capability.key=" + TemplateInfoItemCapability.KEY + ")"
+	)
+	private InfoItemCapability _templateInfoItemCapability;
 
 	@Reference
 	private TemplateNodeFactory _templateNodeFactory;

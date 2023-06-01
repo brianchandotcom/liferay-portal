@@ -37,7 +37,9 @@ public class AssetEntryInfoItemCapabilitiesProvider
 		return ListUtil.fromArray(_templateInfoItemCapability);
 	}
 
-	@Reference
-	private TemplateInfoItemCapability _templateInfoItemCapability;
+	@Reference(
+		target = "(info.item.capability.key=" + TemplateInfoItemCapability.KEY + ")"
+	)
+	private InfoItemCapability _templateInfoItemCapability;
 
 }

@@ -24,7 +24,8 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
  */
 public interface TemplateInfoItemCapability extends InfoItemCapability {
 
-	public static final String KEY = TemplateInfoItemCapability.class.getName();
+	public static final String KEY =
+		"com.liferay.template.info.item.capability.TemplateInfoItemCapability";
 
 	public static final Class<?>[] REQUIRED_INFO_ITEM_SERVICE_CLASSES =
 		new Class<?>[] {

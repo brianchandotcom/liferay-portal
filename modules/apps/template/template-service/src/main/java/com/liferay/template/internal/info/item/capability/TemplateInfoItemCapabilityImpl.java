@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	service = {InfoItemCapability.class, TemplateInfoItemCapability.class}
+	property = "info.item.capability.key=" + TemplateInfoItemCapability.KEY,
+	service = InfoItemCapability.class
 )
 public class TemplateInfoItemCapabilityImpl
 	implements TemplateInfoItemCapability {

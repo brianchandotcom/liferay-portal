@@ -142,7 +142,7 @@ public class GCSStoreStoreAreaProcessorTest {
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpDeletedStoreArea(
-					_group.getCompanyId(), 1, Duration.ofDays(1),
+					_group.getCompanyId(), 1, name -> true, Duration.ofDays(1),
 					StringPool.BLANK);
 
 				Assert.assertTrue(
@@ -175,8 +175,8 @@ public class GCSStoreStoreAreaProcessorTest {
 
 				do {
 					startOffset = storeAreaProcessor.cleanUpDeletedStoreArea(
-						_group.getCompanyId(), 1, Duration.ofDays(-1),
-						startOffset);
+						_group.getCompanyId(), 1, name -> true,
+						Duration.ofDays(-1), startOffset);
 
 					runCount++;
 				}
@@ -214,7 +214,7 @@ public class GCSStoreStoreAreaProcessorTest {
 					(StoreAreaProcessor)_store;
 
 				storeAreaProcessor.cleanUpDeletedStoreArea(
-					_group.getCompanyId(), 1, Duration.ofDays(-1),
+					_group.getCompanyId(), 1, name -> true, Duration.ofDays(-1),
 					StringPool.BLANK);
 
 				Assert.assertFalse(
@@ -222,6 +222,127 @@ public class GCSStoreStoreAreaProcessorTest {
 						_group.getCompanyId(), _group.getGroupId(), fileName,
 						Store.VERSION_DEFAULT));
 			});
+	}
+
+	@Test
+	public void testCleanupNewStoreAreaKeepsRecentFiles() throws Exception {
+		StoreArea.withStoreArea(
+			StoreArea.NEW,
+			() -> {
+				String fileName = StringUtil.randomString();
+
+				_store.addFile(
+					_group.getCompanyId(), _group.getGroupId(), fileName,
+					Store.VERSION_DEFAULT,
+					new UnsyncByteArrayInputStream(new byte[0]));
+
+				Assert.assertTrue(
+					_store.hasFile(
+						_group.getCompanyId(), _group.getGroupId(), fileName,
+						Store.VERSION_DEFAULT));
+
+				StoreAreaProcessor storeAreaProcessor =
+					(StoreAreaProcessor)_store;
+
+				storeAreaProcessor.cleanUpNewStoreArea(
+					_group.getCompanyId(), 1, name -> false, Duration.ofDays(1),
+					StringPool.BLANK);
+
+				Assert.assertTrue(
+					_store.hasFile(
+						_group.getCompanyId(), _group.getGroupId(), fileName,
+						Store.VERSION_DEFAULT));
+			});
+	}
+
+	@Test
+	public void testCleanupNewStoreAreaMovesFilesIncrementally()
+		throws Exception {
+
+		StoreArea.withStoreArea(
+			StoreArea.NEW,
+			() -> {
+				for (String fileName : RandomTestUtil.randomStrings(4)) {
+					_store.addFile(
+						_group.getCompanyId(), _group.getGroupId(), fileName,
+						Store.VERSION_DEFAULT,
+						new UnsyncByteArrayInputStream(new byte[0]));
+				}
+
+				StoreAreaProcessor storeAreaProcessor =
+					(StoreAreaProcessor)_store;
+
+				int runCount = 0;
+
+				String startOffset = StringPool.BLANK;
+
+				do {
+					startOffset = storeAreaProcessor.cleanUpNewStoreArea(
+						_group.getCompanyId(), 1, name -> false,
+						Duration.ofDays(-1), startOffset);
+
+					runCount++;
+				}
+				while (Validator.isNotNull(startOffset));
+
+				Assert.assertTrue(runCount > 1);
+
+				String[] fileNames = _store.getFileNames(
+					_group.getCompanyId(), _group.getGroupId(),
+					StringPool.BLANK);
+
+				Assert.assertEquals(
+					Arrays.toString(fileNames), 0, fileNames.length);
+			});
+
+		StoreArea.withStoreArea(
+			StoreArea.LIVE,
+			() -> {
+				String[] fileNames = _store.getFileNames(
+					_group.getCompanyId(), _group.getGroupId(),
+					StringPool.BLANK);
+
+				Assert.assertEquals(
+					Arrays.toString(fileNames), 4, fileNames.length);
+			});
+	}
+
+	@Test
+	public void testCleanupNewStoreAreaMovesOldFiles() throws Exception {
+		String fileName = StringUtil.randomString();
+
+		StoreArea.withStoreArea(
+			StoreArea.NEW,
+			() -> {
+				_store.addFile(
+					_group.getCompanyId(), _group.getGroupId(), fileName,
+					Store.VERSION_DEFAULT,
+					new UnsyncByteArrayInputStream(new byte[0]));
+
+				Assert.assertTrue(
+					_store.hasFile(
+						_group.getCompanyId(), _group.getGroupId(), fileName,
+						Store.VERSION_DEFAULT));
+
+				StoreAreaProcessor storeAreaProcessor =
+					(StoreAreaProcessor)_store;
+
+				storeAreaProcessor.cleanUpNewStoreArea(
+					_group.getCompanyId(), 1, name -> false,
+					Duration.ofDays(-1), StringPool.BLANK);
+
+				Assert.assertFalse(
+					_store.hasFile(
+						_group.getCompanyId(), _group.getGroupId(), fileName,
+						Store.VERSION_DEFAULT));
+			});
+
+		StoreArea.withStoreArea(
+			StoreArea.LIVE,
+			() -> Assert.assertTrue(
+				_store.hasFile(
+					_group.getCompanyId(), _group.getGroupId(), fileName,
+					Store.VERSION_DEFAULT)));
 	}
 
 	@Test

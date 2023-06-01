@@ -43,20 +43,26 @@ public class StoreAreaAwareStoreWrapper implements Store {
 			String versionLabel, InputStream inputStream)
 		throws PortalException {
 
-		StoreArea.withStoreArea(
-			StoreArea.NEW,
-			() -> {
-				Store store = _storeSupplier.get();
+		Store store = _storeSupplier.get();
 
-				store.addFile(
+		if (_isStoreAreaSupported()) {
+			StoreArea.withStoreArea(
+				StoreArea.NEW,
+				() -> store.addFile(
 					companyId, repositoryId, fileName, versionLabel,
-					inputStream);
-			});
+					inputStream));
+		}
+		else {
+			store.addFile(
+				companyId, repositoryId, fileName, versionLabel, inputStream);
+		}
 	}
 
 	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
+
+		Store store = _storeSupplier.get();
 
 		if (_isStoreAreaSupported()) {
 			StoreAreaProcessor storeAreaProcessor =
@@ -79,13 +85,14 @@ public class StoreAreaAwareStoreWrapper implements Store {
 						StoreArea.LIVE, StoreArea.NEW);
 				}
 			}
+
+			StoreArea.runWithStoreAreas(
+				() -> store.deleteDirectory(companyId, repositoryId, dirName),
+				StoreArea.LIVE, StoreArea.NEW);
 		}
-
-		Store store = _storeSupplier.get();
-
-		StoreArea.runWithStoreAreas(
-			() -> store.deleteDirectory(companyId, repositoryId, dirName),
-			StoreArea.LIVE, StoreArea.NEW);
+		else {
+			store.deleteDirectory(companyId, repositoryId, dirName);
+		}
 	}
 
 	@Override
@@ -93,29 +100,28 @@ public class StoreAreaAwareStoreWrapper implements Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
-		StoreArea storeArea = StoreArea.LIVE;
+		Store store = _storeSupplier.get();
 
 		if (_isStoreAreaSupported()) {
 			StoreAreaProcessor storeAreaProcessor =
 				_storeAreaProcessorSupplier.get();
 
-			storeArea = StoreArea.tryRunWithStoreAreas(
+			StoreArea storeArea = StoreArea.tryRunWithStoreAreas(
 				sourceStoreArea -> storeAreaProcessor.copy(
 					sourceStoreArea.getPath(
 						companyId, repositoryId, fileName, versionLabel),
 					StoreArea.DELETED.getPath(
 						companyId, repositoryId, fileName, versionLabel)),
 				StoreArea.LIVE, StoreArea.NEW);
+
+			StoreArea.withStoreArea(
+				storeArea,
+				() -> store.deleteFile(
+					companyId, repositoryId, fileName, versionLabel));
 		}
-
-		StoreArea.withStoreArea(
-			storeArea,
-			() -> {
-				Store store = _storeSupplier.get();
-
-				store.deleteFile(
-					companyId, repositoryId, fileName, versionLabel);
-			});
+		else {
+			store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+		}
 	}
 
 	@Override
@@ -126,10 +132,15 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return StoreArea.tryGetWithStoreAreas(
-			() -> store.getFileAsStream(
-				companyId, repositoryId, fileName, versionLabel),
-			Objects::nonNull, null, StoreArea.LIVE, StoreArea.NEW);
+		if (_isStoreAreaSupported()) {
+			return StoreArea.tryGetWithStoreAreas(
+				() -> store.getFileAsStream(
+					companyId, repositoryId, fileName, versionLabel),
+				Objects::nonNull, null, StoreArea.LIVE, StoreArea.NEW);
+		}
+
+		return store.getFileAsStream(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
@@ -138,13 +149,17 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		String[] fileNames = StoreArea.mergeWithStoreAreas(
-			() -> store.getFileNames(companyId, repositoryId, dirName),
-			StoreArea.LIVE, StoreArea.NEW);
+		if (_isStoreAreaSupported()) {
+			String[] fileNames = StoreArea.mergeWithStoreAreas(
+				() -> store.getFileNames(companyId, repositoryId, dirName),
+				StoreArea.LIVE, StoreArea.NEW);
 
-		Arrays.sort(fileNames);
+			Arrays.sort(fileNames);
 
-		return fileNames;
+			return fileNames;
+		}
+
+		return store.getFileNames(companyId, repositoryId, dirName);
 	}
 
 	@Override
@@ -155,10 +170,15 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return StoreArea.tryGetWithStoreAreas(
-			() -> store.getFileSize(
-				companyId, repositoryId, fileName, versionLabel),
-			Objects::nonNull, 0L, StoreArea.LIVE, StoreArea.NEW);
+		if (_isStoreAreaSupported()) {
+			return StoreArea.tryGetWithStoreAreas(
+				() -> store.getFileSize(
+					companyId, repositoryId, fileName, versionLabel),
+				Objects::nonNull, 0L, StoreArea.LIVE, StoreArea.NEW);
+		}
+
+		return store.getFileSize(
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
@@ -167,13 +187,17 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		String[] fileVersions = StoreArea.mergeWithStoreAreas(
-			() -> store.getFileVersions(companyId, repositoryId, fileName),
-			StoreArea.LIVE, StoreArea.NEW);
+		if (_isStoreAreaSupported()) {
+			String[] fileVersions = StoreArea.mergeWithStoreAreas(
+				() -> store.getFileVersions(companyId, repositoryId, fileName),
+				StoreArea.LIVE, StoreArea.NEW);
 
-		Arrays.sort(fileVersions, DLUtil::compareVersions);
+			Arrays.sort(fileVersions, DLUtil::compareVersions);
 
-		return fileVersions;
+			return fileVersions;
+		}
+
+		return store.getFileVersions(companyId, repositoryId, fileName);
 	}
 
 	@Override
@@ -183,10 +207,14 @@ public class StoreAreaAwareStoreWrapper implements Store {
 
 		Store store = _storeSupplier.get();
 
-		return StoreArea.tryGetWithStoreAreas(
-			() -> store.hasFile(
-				companyId, repositoryId, fileName, versionLabel),
-			Boolean.TRUE::equals, false, StoreArea.LIVE, StoreArea.NEW);
+		if (_isStoreAreaSupported()) {
+			return StoreArea.tryGetWithStoreAreas(
+				() -> store.hasFile(
+					companyId, repositoryId, fileName, versionLabel),
+				Boolean.TRUE::equals, false, StoreArea.LIVE, StoreArea.NEW);
+		}
+
+		return store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
 	private boolean _isStoreAreaSupported() {

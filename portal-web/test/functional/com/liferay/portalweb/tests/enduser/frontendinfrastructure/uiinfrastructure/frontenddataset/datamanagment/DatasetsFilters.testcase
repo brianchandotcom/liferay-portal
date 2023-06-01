@@ -17,23 +17,23 @@ definition {
 			FrontendDataSetAdmin.goToDatasetAdminPage();
 
 			FrontendDataSetAdmin.createDatasetEntryViaAPI(
-				datasetName = "Dataset Fields Test",
-				restApplication = "/c/fdsfields",
+				datasetName = "Dataset Test",
+				restApplication = "/c/fdsdatefilters",
 				restEndpoint = "/",
-				restSchema = "FDSField");
+				restSchema = "FDSDateFilter");
 		}
 
 		task ("And a dataset view created via api") {
 			FrontendDataSetAdmin.createFDSViewViaAPI(
-				datasetName = "Dataset Fields Test",
-				dataSetViewDescription = "FDSViewDescription",
-				key_dataSetViewNameList = "View Fields Test");
+				datasetName = "Dataset Test",
+				dataSetViewDescription = "Description Test",
+				key_dataSetViewNameList = "View Test");
 		}
 
 		task ("When go to the View page of the dataset created.") {
 			FrontendDataSetAdmin.goToSpecificViewPage(
-				datasetName = "Dataset Fields Test",
-				key_viewName = "View Fields Test");
+				datasetName = "Dataset Test",
+				key_viewName = "View Test");
 		}
 
 		task ("When the user accesses the Filters tab.") {

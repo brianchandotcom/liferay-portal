@@ -32,6 +32,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
@@ -3491,10 +3492,14 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			preparedStatement.setBigDecimal(
-				index, new BigDecimal(String.valueOf(value)));
+				index,
+				new BigDecimal(_toPeriodSeparator(String.valueOf(value))));
 		}
 		else if (sqlType == Types.DOUBLE) {
-			preparedStatement.setDouble(index, GetterUtil.getDouble(value));
+			preparedStatement.setDouble(
+				index,
+				GetterUtil.getDouble(
+					_toPeriodSeparator(String.valueOf(value))));
 		}
 		else if (sqlType == Types.INTEGER) {
 			preparedStatement.setInt(index, GetterUtil.getInteger(value));
@@ -3556,6 +3561,16 @@ public class ObjectEntryLocalServiceImpl
 
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	private String _toPeriodSeparator(String value) {
+		if (Validator.isNull(value) || !NumberUtil.hasDecimalSeparator(value)) {
+			return value;
+		}
+
+		return StringUtil.replace(
+			value, value.charAt(NumberUtil.getDecimalSeparatorIndex(value)),
+			'.');
 	}
 
 	private void _updateLocalizationTable(

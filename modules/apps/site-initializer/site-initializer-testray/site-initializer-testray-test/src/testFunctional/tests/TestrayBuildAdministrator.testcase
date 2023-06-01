@@ -281,16 +281,15 @@ definition {
 		property test.name.skip.portal.instance = "TestrayBuildAdministrator#AdminCanNotAddDuplicateBuild";
 
 		task ("Given that the user add a new build") {
+			JSONTestray.addBuild(
+				buildName = ${buildName},
+				productVersion = ${productVersion},
+				projectName = ${projectName},
+				routineName = ${routineName});
+
 			Testray.goToProjectPage(projectName = ${projectName});
 
 			TestrayRoutines.goToRoutine(routineName = ${routineName});
-
-			TestrayBuild.addBuildViaUI(
-				buildFieldName = ${buildName},
-				caseName = ${caseName},
-				dropdownItem = "New Build",
-				productVersionOption = ${productVersion},
-				routine = ${routineName});
 		}
 
 		task ("When add a build with duplicated name") {

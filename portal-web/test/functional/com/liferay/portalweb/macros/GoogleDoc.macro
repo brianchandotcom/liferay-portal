@@ -87,21 +87,38 @@ definition {
 	}
 
 	macro saveAndExit {
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
+		if (isSet(depotName)) {
+			var key_text = "Save and Return to ${depotName}";
 
-		var key_text = "Save and Return to ${siteName}";
+			AssertElementPresent(locator1 = "Button#ANY");
 
-		AssertElementPresent(locator1 = "Button#ANY");
+			AssertClick(
+				locator1 = "Button#ANY",
+				value1 = "Save and Return to ${depotName}");
 
-		AssertClick(
-			locator1 = "Button#ANY",
-			value1 = "Save and Return to ${siteName}");
+			Alert.viewSuccessMessage();
 
-		Alert.viewSuccessMessage();
+			WaitForElementNotPresent(
+				locator1 = "Button#ANY",
+				value1 = "Save and Return to ${depotName}");
+		}
+		else {
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		WaitForElementNotPresent(
-			locator1 = "Button#ANY",
-			value1 = "Save and Return to ${siteName}");
+			var key_text = "Save and Return to ${siteName}";
+
+			AssertElementPresent(locator1 = "Button#ANY");
+
+			AssertClick(
+				locator1 = "Button#ANY",
+				value1 = "Save and Return to ${siteName}");
+
+			Alert.viewSuccessMessage();
+
+			WaitForElementNotPresent(
+				locator1 = "Button#ANY",
+				value1 = "Save and Return to ${siteName}");
+		}
 
 		Navigator.openURL();
 	}

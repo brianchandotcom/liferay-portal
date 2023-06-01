@@ -59,11 +59,18 @@ definition {
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 		}
 
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
+		if (isSet(depotName)) {
+			AssertElementPresent(
+				key_text = "Save and Return to ${depotName}",
+				locator1 = "Button#ANY");
+		}
+		else {
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		AssertElementPresent(
-			key_text = "Save and Return to ${siteName}",
-			locator1 = "Button#ANY");
+			AssertElementPresent(
+				key_text = "Save and Return to ${siteName}",
+				locator1 = "Button#ANY");
+		}
 	}
 
 }

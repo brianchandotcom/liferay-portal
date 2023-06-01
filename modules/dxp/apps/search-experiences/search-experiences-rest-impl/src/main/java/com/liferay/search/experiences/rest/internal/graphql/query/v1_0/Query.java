@@ -344,6 +344,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElementByExternalReferenceCode(externalReferenceCode: ___){actions, createDate, description, description_i18n, elementDefinition, externalReferenceCode, hidden, id, modifiedDate, readOnly, schemaVersion, title, title_i18n, type, userName, version}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SXPElement sXPElementByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource ->
+				sxpElementResource.getSXPElementByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sXPElement(sxpElementId: ___){actions, createDate, description, description_i18n, elementDefinition, externalReferenceCode, hidden, id, modifiedDate, readOnly, schemaVersion, title, title_i18n, type, userName, version}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField

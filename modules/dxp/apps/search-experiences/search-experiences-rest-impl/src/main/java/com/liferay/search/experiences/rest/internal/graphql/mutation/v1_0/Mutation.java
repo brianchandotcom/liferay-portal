@@ -400,6 +400,20 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public SXPElement updateSXPElementByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("sxpElement") SXPElement sxpElement)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sxpElementResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sxpElementResource ->
+				sxpElementResource.putSXPElementByExternalReferenceCode(
+					externalReferenceCode, sxpElement));
+	}
+
+	@GraphQLField
 	public SXPElement createSXPElementPreview(
 			@GraphQLName("sxpElement") SXPElement sxpElement)
 		throws Exception {

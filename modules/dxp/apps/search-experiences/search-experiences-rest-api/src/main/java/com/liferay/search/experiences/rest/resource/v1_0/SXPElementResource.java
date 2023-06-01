@@ -72,6 +72,14 @@ public interface SXPElementResource {
 			SXPElement sxpElement, String callbackURL, Object object)
 		throws Exception;
 
+	public SXPElement getSXPElementByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public SXPElement putSXPElementByExternalReferenceCode(
+			String externalReferenceCode, SXPElement sxpElement)
+		throws Exception;
+
 	public SXPElement postSXPElementPreview(SXPElement sxpElement)
 		throws Exception;
 

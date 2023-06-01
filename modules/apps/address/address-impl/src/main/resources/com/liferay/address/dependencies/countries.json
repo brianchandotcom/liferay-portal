@@ -34,7 +34,7 @@
 	{
 		"a2": "AS",
 		"a3": "ASM",
-		"idd": 684,
+		"idd": 1,
 		"name": "american-samoa",
 		"number": 16,
 		"zipRequired": true
@@ -58,7 +58,7 @@
 	{
 		"a2": "AI",
 		"a3": "AIA",
-		"idd": 264,
+		"idd": 1,
 		"name": "anguilla",
 		"number": 660,
 		"zipRequired": true
@@ -74,7 +74,7 @@
 	{
 		"a2": "AG",
 		"a3": "ATG",
-		"idd": 268,
+		"idd": 1,
 		"name": "antigua-barbuda",
 		"number": 28,
 		"zipRequired": false
@@ -130,7 +130,7 @@
 	{
 		"a2": "BS",
 		"a3": "BHS",
-		"idd": 242,
+		"idd": 1,
 		"name": "bahamas",
 		"number": 44,
 		"zipRequired": false
@@ -154,7 +154,7 @@
 	{
 		"a2": "BB",
 		"a3": "BRB",
-		"idd": 246,
+		"idd": 1,
 		"name": "barbados",
 		"number": 52,
 		"zipRequired": true
@@ -194,7 +194,7 @@
 	{
 		"a2": "BM",
 		"a3": "BMU",
-		"idd": 441,
+		"idd": 1,
 		"name": "bermuda",
 		"number": 60,
 		"zipRequired": true
@@ -266,7 +266,7 @@
 	{
 		"a2": "VG",
 		"a3": "VGB",
-		"idd": 284,
+		"idd": 1,
 		"name": "british-virgin-islands",
 		"number": 92,
 		"zipRequired": true
@@ -338,7 +338,7 @@
 	{
 		"a2": "KY",
 		"a3": "CYM",
-		"idd": 345,
+		"idd": 1,
 		"name": "cayman-islands",
 		"number": 136,
 		"zipRequired": true
@@ -490,7 +490,7 @@
 	{
 		"a2": "DM",
 		"a3": "DMA",
-		"idd": 767,
+		"idd": 1,
 		"name": "dominica",
 		"number": 212,
 		"zipRequired": false
@@ -498,7 +498,7 @@
 	{
 		"a2": "DO",
 		"a3": "DOM",
-		"idd": 829,
+		"idd": 1,
 		"name": "dominican-republic",
 		"number": 214,
 		"zipRequired": true
@@ -698,7 +698,7 @@
 	{
 		"a2": "GD",
 		"a3": "GRD",
-		"idd": 473,
+		"idd": 1,
 		"name": "grenada",
 		"number": 308,
 		"zipRequired": true
@@ -714,7 +714,7 @@
 	{
 		"a2": "GU",
 		"a3": "GUM",
-		"idd": 671,
+		"idd": 1,
 		"name": "guam",
 		"number": 316,
 		"zipRequired": true
@@ -874,7 +874,7 @@
 	{
 		"a2": "JM",
 		"a3": "JAM",
-		"idd": 876,
+		"idd": 1,
 		"name": "jamaica",
 		"number": 388,
 		"zipRequired": false
@@ -1162,7 +1162,7 @@
 	{
 		"a2": "MS",
 		"a3": "MSR",
-		"idd": 664,
+		"idd": 1,
 		"name": "montserrat",
 		"number": 500,
 		"zipRequired": true
@@ -1282,7 +1282,7 @@
 	{
 		"a2": "MP",
 		"a3": "MNP",
-		"idd": 670,
+		"idd": 1,
 		"name": "northern-mariana-islands",
 		"number": 580,
 		"zipRequired": true
@@ -1394,7 +1394,7 @@
 	{
 		"a2": "PR",
 		"a3": "PRI",
-		"idd": 939,
+		"idd": 1,
 		"name": "puerto-rico",
 		"number": 630,
 		"zipRequired": true
@@ -1522,7 +1522,7 @@
 	{
 		"a2": "SX",
 		"a3": "SXM",
-		"idd": 721,
+		"idd": 1,
 		"name": "sint-maarten",
 		"number": 534,
 		"zipRequired": true
@@ -1626,7 +1626,7 @@
 	{
 		"a2": "KN",
 		"a3": "KNA",
-		"idd": 869,
+		"idd": 1,
 		"name": "st-kitts",
 		"number": 659,
 		"zipRequired": false
@@ -1634,7 +1634,7 @@
 	{
 		"a2": "LC",
 		"a3": "LCA",
-		"idd": 758,
+		"idd": 1,
 		"name": "st-lucia",
 		"number": 662,
 		"zipRequired": false
@@ -1658,7 +1658,7 @@
 	{
 		"a2": "VC",
 		"a3": "VCT",
-		"idd": 784,
+		"idd": 1,
 		"name": "st-vincent",
 		"number": 670,
 		"zipRequired": true
@@ -1778,7 +1778,7 @@
 	{
 		"a2": "TT",
 		"a3": "TTO",
-		"idd": 868,
+		"idd": 1,
 		"name": "trinidad-tobago",
 		"number": 780,
 		"zipRequired": false
@@ -1810,7 +1810,7 @@
 	{
 		"a2": "TC",
 		"a3": "TCA",
-		"idd": 649,
+		"idd": 1,
 		"name": "turks-caicos",
 		"number": 796,
 		"zipRequired": true
@@ -1874,7 +1874,7 @@
 	{
 		"a2": "VI",
 		"a3": "VIR",
-		"idd": 340,
+		"idd": 1,
 		"name": "united-states-virgin-islands",
 		"number": 850,
 		"zipRequired": true

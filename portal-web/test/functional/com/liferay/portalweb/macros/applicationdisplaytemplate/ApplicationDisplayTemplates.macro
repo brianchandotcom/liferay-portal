@@ -71,6 +71,8 @@ definition {
 				inputFieldId = "importScript",
 				locator1 = "TextInput#INPUT_ID",
 				value1 = ${filePath});
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 		}
 
 		PortletEntry.save();

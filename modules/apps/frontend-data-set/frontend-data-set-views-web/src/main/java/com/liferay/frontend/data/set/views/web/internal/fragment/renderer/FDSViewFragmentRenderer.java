@@ -79,7 +79,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"fields",
 					JSONUtil.putAll(
 						JSONUtil.put(
-							"label", "dataset-view"
+							"label", "data-set-view"
 						).put(
 							"name", "itemSelector"
 						).put(
@@ -94,7 +94,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "dataset");
+		return _language.get(locale, "data-set");
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					StringBundler.concat(
 						"<div class=\"portlet-msg-info\">",
 						_language.get(
-							httpServletRequest, "select-a-dataset-view"),
+							httpServletRequest, "select-a-data-set-view"),
 						"</div>"));
 			}
 

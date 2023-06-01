@@ -25,4 +25,4 @@ export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
 
 // Data Set Events API
 
-export {default as DATA_SET_EVENT} from './utils/eventsDefinitions';
+export {default as FDS_EVENT} from './utils/eventsDefinitions';

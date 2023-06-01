@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.item.selector.web.internal.item.selector;
+package com.liferay.user.groups.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;

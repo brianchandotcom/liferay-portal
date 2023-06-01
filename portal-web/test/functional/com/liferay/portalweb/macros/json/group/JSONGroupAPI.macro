@@ -351,6 +351,57 @@ definition {
 		return ${groupId};
 	}
 
+	@summary = "Get the groupId from any existing site by using groupName"
+	macro _getGroupIdByNameViaOtherUser {
+		Variables.assertDefined(parameterList = "${groupName},${site}");
+
+		if (isSet(portalInstanceName)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${portalInstanceName}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var companyId = JSONCompany.getCompanyId(
+			creatorEmailAddress = ${creatorEmailAddress},
+			creatorPassword = ${creatorPassword},
+			portalInstanceName = ${portalInstanceName},
+			portalURL = ${portalURL});
+
+		var parentGroupId = JSONGroupSetter.setParentGroupId(
+			grandParentGroupName = ${grandParentGroupName},
+			parentGroupName = ${parentGroupName},
+			portalInstanceName = ${portalInstanceName},
+			portalURL = ${portalURL});
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
+
+		var groupId = JSONCurlUtil.get(${curl}, "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
+
+		if (${groupId} == "") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		echo("## * GroupId: ${groupId}");
+
+		return ${groupId};
+	}
+
 	@summary = "Get the groupKey from any existing site by using groupName"
 	macro _getGroupKeyByName {
 		Variables.assertDefined(parameterList = "${groupName},${site}");

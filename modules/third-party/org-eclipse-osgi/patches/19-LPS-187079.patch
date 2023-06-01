@@ -1,0 +1,141 @@
+diff --git a/org/eclipse/osgi/internal/loader/BundleLoader.java b/org/eclipse/osgi/internal/loader/BundleLoader.java
+index d797d422f869..25ef7f960ef7 100644
+--- a/org/eclipse/osgi/internal/loader/BundleLoader.java
++++ b/org/eclipse/osgi/internal/loader/BundleLoader.java
+@@ -26,7 +26,11 @@ import java.util.LinkedHashSet;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
++import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.atomic.AtomicBoolean;
++import java.util.concurrent.locks.Lock;
++import java.util.concurrent.locks.ReadWriteLock;
++import java.util.concurrent.locks.ReentrantReadWriteLock;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ import org.eclipse.osgi.container.Module;
+@@ -101,14 +105,20 @@ public class BundleLoader extends ModuleLoader {
+ 	private final Collection<String> exportedPackages;
+ 	private final BundleLoaderSources exportSources;
+ 
++	private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
++
++	private final Lock readLock = readWriteLock.readLock();
++
++	private final Lock writeLock = readWriteLock.writeLock();
++
+ 	/* cache of required package sources. Key is packagename, value is PackageSource */
+ 	private final KeyedHashSet requiredSources = new KeyedHashSet(false);
+ 	/* cache of imported packages. Key is packagename, Value is PackageSource */
+-	private final KeyedHashSet importedSources = new KeyedHashSet(false);
++	private final Map<String, PackageSource> importedSources = new ConcurrentHashMap<>();
+ 	private final List<ModuleWire> requiredBundleWires;
+ 
+ 	/* @GuardedBy("importedSources") */
+-	private boolean importsInitialized = false;
++	private volatile boolean importsInitialized = false;
+ 	/* @GuardedBy("importedSources") */
+ 	private boolean dynamicAllPackages;
+ 	/* If not null, list of package stems to import dynamically. */
+@@ -781,13 +791,8 @@ public class BundleLoader extends ModuleLoader {
+ 		boolean subPackages = (options & BundleWiring.LISTRESOURCES_RECURSE) != 0;
+ 		List<String> packages = new ArrayList<>();
+ 		// search imported package names
+-		KeyedHashSet importSources = getImportedSources(null);
+-		KeyedElement[] imports;
+-		synchronized (importSources) {
+-			imports = importSources.elements();
+-		}
+-		for (KeyedElement keyedElement : imports) {
+-			String id = ((PackageSource) keyedElement).getId();
++		Map<String, PackageSource> importSources = getImportedSources(null);
++		for (String id : importSources.keySet()) {
+ 			if (id.equals(pkgName) || (subPackages && isSubPackage(pkgName, id)))
+ 				packages.add(id);
+ 		}
+@@ -1126,13 +1131,16 @@ public class BundleLoader extends ModuleLoader {
+ 	}
+ 
+ 	private PackageSource findImportedSource(String pkgName, Collection<BundleLoader> visited) {
+-		KeyedHashSet imports = getImportedSources(visited);
+-		synchronized (imports) {
+-			return (PackageSource) imports.getByKey(pkgName);
+-		}
++		Map<String, PackageSource> imports = getImportedSources(visited);
++
++		return imports.get(pkgName);
+ 	}
+ 
+-	private KeyedHashSet getImportedSources(Collection<BundleLoader> visited) {
++	private Map<String, PackageSource> getImportedSources(Collection<BundleLoader> visited) {
++		if (importsInitialized) {
++			return importedSources;
++		}
++
+ 		synchronized (importedSources) {
+ 			if (importsInitialized) {
+ 				return importedSources;
+@@ -1142,7 +1150,7 @@ public class BundleLoader extends ModuleLoader {
+ 				for (ModuleWire importWire : importWires) {
+ 					PackageSource source = createExportPackageSource(importWire, visited);
+ 					if (source != null) {
+-						importedSources.add(source);
++						importedSources.put(source.getId(), source);
+ 					}
+ 				}
+ 			}
+@@ -1163,9 +1171,8 @@ public class BundleLoader extends ModuleLoader {
+ 				if (debug.DEBUG_LOADER) {
+ 					Debug.println("BundleLoader[" + this + "] using dynamic import source: " + source); //$NON-NLS-1$ //$NON-NLS-2$
+ 				}
+-				synchronized (importedSources) {
+-					importedSources.add(source);
+-				}
++
++				importedSources.put(source.getId(), source);
+ 				return source;
+ 			}
+ 		}
+@@ -1173,11 +1180,17 @@ public class BundleLoader extends ModuleLoader {
+ 	}
+ 
+ 	private PackageSource findRequiredSource(String pkgName, Collection<BundleLoader> visited) {
+-		synchronized (requiredSources) {
++		readLock.lock();
++
++		try {
+ 			PackageSource result = (PackageSource) requiredSources.getByKey(pkgName);
+ 			if (result != null)
+ 				return result.isNullSource() ? null : result;
+ 		}
++		finally {
++			readLock.unlock();
++		}
++
+ 		if (visited == null)
+ 			visited = new ArrayList<>();
+ 		if (!visited.contains(this))
+@@ -1203,9 +1216,16 @@ public class BundleLoader extends ModuleLoader {
+ 			PackageSource[] srcs = result.toArray(new PackageSource[result.size()]);
+ 			source = createMultiSource(pkgName, srcs);
+ 		}
+-		synchronized (requiredSources) {
++
++		writeLock.lock();
++
++		try {
+ 			requiredSources.add(source);
+ 		}
++		finally {
++			writeLock.unlock();
++		}
++
+ 		return source.isNullSource() ? null : source;
+ 	}
+ 
+@@ -1244,3 +1264,4 @@ public class BundleLoader extends ModuleLoader {
+ 		return triggerClassLoaded.get();
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

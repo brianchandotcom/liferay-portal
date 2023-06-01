@@ -15,6 +15,16 @@ definition {
 					"articleBody": "${bodyField}"
 				}'
 		''';
+
+		KoroneikiAccountAPI._tearDownAccountsViaAccountFieldNameAndValue(
+			fieldName = "Code",
+			table = '''
+				| PROKORKORPRO |
+				| PROONEONEPRO |
+				| PROKORONEPRO |
+				| PROKOR       |
+				| PROONE       |
+			''');
 	}
 
 }

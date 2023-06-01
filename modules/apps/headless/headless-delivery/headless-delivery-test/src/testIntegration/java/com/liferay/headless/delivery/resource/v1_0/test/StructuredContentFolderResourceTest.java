@@ -205,13 +205,11 @@ public class StructuredContentFolderResourceTest
 	private void _testGetStructuredContentFolderStructuredContentFoldersPageWithProfileURL()
 		throws Exception {
 
-		StructuredContentFolder structuredContentFolder =
-			_randomStructuredContentFolder();
-
 		StructuredContentFolder postStructuredContentFolder =
 			structuredContentFolderResource.
 				postAssetLibraryStructuredContentFolder(
-					testDepotEntry.getDepotEntryId(), structuredContentFolder);
+					testDepotEntry.getDepotEntryId(),
+					_randomStructuredContentFolder());
 
 		StructuredContentFolderResource.Builder builder =
 			StructuredContentFolderResource.builder();

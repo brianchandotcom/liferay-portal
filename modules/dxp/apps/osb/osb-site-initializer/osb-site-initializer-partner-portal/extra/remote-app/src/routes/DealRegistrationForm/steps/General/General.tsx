@@ -47,17 +47,16 @@ const General = ({
 			[setFieldValue]
 		)
 	);
-	const {data: mdfActivities} = useGetMDFActivity(values.partnerAccount.id);
+
+	const {data: mdfActivities} = useGetMDFActivity(
+		values.partnerAccount.externalReferenceCode
+	);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
-			(_, company, currency, accountExternalReferenceCode) => {
+			(_, company, currency) => {
 				setFieldValue('partnerAccount', company);
 				setFieldValue('currency', currency);
-				setFieldValue(
-					'accountExternalReferenceCode',
-					accountExternalReferenceCode
-				);
 			},
 			[setFieldValue]
 		),

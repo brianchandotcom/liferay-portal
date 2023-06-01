@@ -20,7 +20,7 @@ export function getDTOFromDealRegistration(
 ): DealRegistrationDTO {
 	const dealObject: DealRegistrationDTO = {
 		accountExternalReferenceCode:
-			dealRegistration.accountExternalReferenceCode,
+			dealRegistration.partnerAccount.externalReferenceCode,
 		additionalContactEmailAddress:
 			dealRegistration.additionalContact?.emailAddress,
 		additionalContactFirstName:

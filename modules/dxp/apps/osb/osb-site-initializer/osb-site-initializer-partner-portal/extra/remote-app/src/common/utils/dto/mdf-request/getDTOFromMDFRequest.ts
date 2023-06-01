@@ -18,7 +18,7 @@ export function getDTOFromMDFRequest(
 	externalReferenceCodeFromSF?: string
 ): MDFRequestDTO {
 	return {
-		accountExternalReferenceCode: mdfRequest.accountExternalReferenceCode,
+		accountExternalReferenceCode: mdfRequest.company?.externalReferenceCode,
 		additionalOption: mdfRequest.additionalOption,
 		companyName: mdfRequest.company?.name,
 		currency: mdfRequest.currency,
@@ -44,7 +44,8 @@ export function getDTOFromMDFRequest(
 		overallCampaignDescription: mdfRequest.overallCampaignDescription,
 		overallCampaignName: mdfRequest.overallCampaignName,
 		partnerCountry: mdfRequest.partnerCountry,
-		r_accToMDFReqs_accountEntryId: mdfRequest.company?.id,
+		r_accToMDFReqs_accountEntryERC:
+			mdfRequest.company?.externalReferenceCode,
 		r_usrToMDFReqs_userId: mdfRequest.id
 			? mdfRequest.r_usrToMDFReqs_userId
 			: Number(Liferay.ThemeDisplay.getUserId()),

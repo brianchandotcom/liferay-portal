@@ -10,7 +10,7 @@
  */
 
 import {Liferay} from '../..';
-import LiferayAccountBrief from '../../../../interfaces/liferayAccountBrief';
+import MDFRequestDTO from '../../../../interfaces/dto/mdfRequestDTO';
 import MDFRequestBudget from '../../../../interfaces/mdfRequestBudget';
 import getDTOFromMDFRequestBudget from '../../../../utils/dto/mdf-request-budget/getDTOFromMDFRequestBudget';
 import {LiferayAPIs} from '../../common/enums/apis';
@@ -21,7 +21,7 @@ export default async function updateMDFRequestActivityBudget(
 	apiOption: ResourceName,
 	budget: MDFRequestBudget,
 	activityExternalReferenceCode: string,
-	company?: LiferayAccountBrief
+	dtoMDFRequest: MDFRequestDTO
 ) {
 	return await liferayFetcher.put(
 		`/o/${LiferayAPIs.OBJECT}/${apiOption}/by-external-reference-code/${budget.externalReferenceCode}`,
@@ -29,7 +29,7 @@ export default async function updateMDFRequestActivityBudget(
 		getDTOFromMDFRequestBudget(
 			budget,
 			activityExternalReferenceCode,
-			company
+			dtoMDFRequest.r_accToMDFReqs_accountEntryERC
 		)
 	);
 }

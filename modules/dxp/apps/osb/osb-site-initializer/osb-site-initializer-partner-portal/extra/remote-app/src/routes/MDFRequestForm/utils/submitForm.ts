@@ -134,13 +134,14 @@ export default async function submitForm(
 							if (
 								dtoActivity.id &&
 								dtoActivity.externalReferenceCode &&
-								budget.id
+								budget.id &&
+								dtoMDFRequest
 							) {
 								await updateMDFRequestActivityBudget(
 									ResourceName.BUDGET,
 									budget,
 									dtoActivity.externalReferenceCode,
-									values.company
+									dtoMDFRequest
 								);
 								if (budget.removed) {
 									await deleteMDFRequestActivityBudgets(
@@ -149,12 +150,15 @@ export default async function submitForm(
 									);
 								}
 							}
-							else if (dtoActivity.externalReferenceCode) {
+							else if (
+								dtoActivity.externalReferenceCode &&
+								dtoMDFRequest
+							) {
 								await createMDFRequestActivityBudget(
 									ResourceName.BUDGET,
 									budget,
 									dtoActivity.externalReferenceCode,
-									values.company
+									dtoMDFRequest
 								);
 							}
 						});

@@ -10,13 +10,12 @@
  */
 
 import MDFRequestActivityDTO from '../../../interfaces/dto/mdfRequestActivityDTO';
-import LiferayAccountBrief from '../../../interfaces/liferayAccountBrief';
 import MDFRequestActivity from '../../../interfaces/mdfRequestActivity';
 
 export default function getDTOFromMDFRequestActivity(
 	mdfRequestActivity: MDFRequestActivity,
 	externalReferenceCodeFromSF?: string,
-	company?: LiferayAccountBrief,
+	accountEntryExternalReferenceCode?: string,
 	mdfRequestExternalReferenceCode?: string
 ): MDFRequestActivityDTO {
 	const {activityDescription, ...newMDFRequestActivity} = mdfRequestActivity;
@@ -35,7 +34,7 @@ export default function getDTOFromMDFRequestActivity(
 			', '
 		),
 		mdfRequestExternalReferenceCode,
-		r_accToActs_accountEntryId: company?.id,
+		r_accToActs_accountEntryERC: accountEntryExternalReferenceCode,
 		r_mdfReqToActs_c_mdfRequestERC: mdfRequestExternalReferenceCode,
 	};
 }

@@ -17,11 +17,11 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetMDFActivity(accountEntryId?: number) {
+export default function useGetMDFActivity(accountEntryERC?: string) {
 	return useSWR(
-		accountEntryId
+		accountEntryERC
 			? [
-					`/o/${LiferayAPIs.OBJECT}/activities?filter=r_accToActs_accountEntryId eq '${accountEntryId}'`,
+					`/o/${LiferayAPIs.OBJECT}/activities?filter=r_accToActs_accountEntryERC eq '${accountEntryERC}'`,
 					Liferay.authToken,
 			  ]
 			: null,

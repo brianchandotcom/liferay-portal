@@ -32,7 +32,7 @@ export default function useDynamicFieldEntries(skipCompanies?: boolean) {
 		() =>
 			userAccount?.accountBriefs.map((accountBrief) => ({
 				label: accountBrief.name,
-				value: accountBrief.id,
+				value: accountBrief.externalReferenceCode,
 			})) as React.OptionHTMLAttributes<HTMLOptionElement>[] | undefined,
 		[userAccount?.accountBriefs]
 	);

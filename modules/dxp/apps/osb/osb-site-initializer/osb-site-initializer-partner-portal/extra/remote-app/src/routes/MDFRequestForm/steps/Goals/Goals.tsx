@@ -47,19 +47,10 @@ const Goals = ({
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
-			(
-				partnerCountry,
-				company,
-				currency,
-				accountExternalReferenceCode
-			) => {
+			(partnerCountry, company, currency) => {
 				setFieldValue('company', company);
 				setFieldValue('partnerCountry', partnerCountry);
 				setFieldValue('currency', currency);
-				setFieldValue(
-					'accountExternalReferenceCode',
-					accountExternalReferenceCode
-				);
 			},
 			[setFieldValue]
 		),
@@ -191,7 +182,10 @@ const Goals = ({
 					<div className="d-flex justify-content-end mr-auto">
 						<Button
 							className="inline-item inline-item-after pl-0"
-							disabled={submitted || !values.company?.id}
+							disabled={
+								submitted ||
+								!values.company?.externalReferenceCode
+							}
 							displayType={null}
 							onClick={() =>
 								onSaveAsDraft?.(values, formikHelpers)

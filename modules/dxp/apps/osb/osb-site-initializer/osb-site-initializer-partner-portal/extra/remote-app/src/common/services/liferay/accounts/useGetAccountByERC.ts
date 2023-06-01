@@ -24,11 +24,13 @@ interface Account {
 	partnerCountry: string;
 }
 
-export default function useGetAccountById(accountId: number | undefined) {
+export default function useGetAccountByERC(
+	externalReferenceCode: string | undefined
+) {
 	return useSWR(
-		accountId
+		externalReferenceCode
 			? [
-					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/${accountId}`,
+					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${externalReferenceCode}`,
 					Liferay.authToken,
 			  ]
 			: null,

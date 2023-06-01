@@ -12,6 +12,7 @@
 import Role from './role';
 
 export default interface LiferayAccountBrief {
+	externalReferenceCode?: string;
 	id?: number;
 	name?: string;
 	roleBriefs?: Role[];

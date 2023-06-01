@@ -29,7 +29,7 @@ export default async function createMDFRequestActivities(
 		getDTOFromMDFRequestActivity(
 			mdfRequestActivity,
 			externalReferenceCodeFromSF,
-			mdfRequestDTO.r_accToMDFReqs_accountEntry,
+			mdfRequestDTO.r_accToMDFReqs_accountEntryERC,
 			mdfRequestDTO.externalReferenceCode
 		)
 	);
